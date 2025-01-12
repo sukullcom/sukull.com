@@ -1,0 +1,21 @@
+Copyright 2025 Sukull.com. All rights reserved.
+
+This project and all associated files, documentation, and resources are proprietary to Sukull.com and are protected under applicable copyright laws and international treaties.
+
+Permission is NOT granted to use, copy, modify, distribute, or create derivative works based on this project, in whole or in part, for any purpose, without prior written consent from Sukull.com.
+
+**Restrictions**:
+1. Unauthorized use, duplication, or distribution of this project or any part thereof is strictly prohibited.
+2. Any attempt to reverse engineer, decompile, or extract source code is prohibited.
+3. Commercial use, redistribution, or publication of this project is prohibited without express written permission from Sukull.com.
+
+**Disclaimer**:
+This project is provided "AS IS," without warranties of any kind, express or implied, including but not limited to the implied warranties of merchantability, fitness for a particular purpose, or non-infringement. Sukull.com shall not be held liable for any claims, damages, or other liabilities, whether in an action of contract, tort, or otherwise, arising from or in connection with this project or its use.
+
+**Contact Information**:
+For inquiries, permissions, or any other concerns regarding this project, please contact:
+
+Email: info@sukull.com  
+Website: [https://www.sukull.com](https://www.sukull.com)
+
+Unauthorized use of this project may result in legal action to the fullest extent permitted by law.
