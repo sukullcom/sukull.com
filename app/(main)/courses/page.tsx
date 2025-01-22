@@ -1,16 +1,22 @@
+import { redirect } from "next/navigation";
 import { getCourses, getUserProgress, getSchools } from "@/db/queries";
 import { List } from "./list";
 import { SchoolSelector } from "./school-selector";
+import { getServerUser } from "@/lib/auth.server";
 
-const CoursesPage = async () => {
-  const coursesData = getCourses();
-  const userProgressData = getUserProgress();
-  const schoolsData = getSchools();
+export default async function CoursesPage() {
+  // 1) Token kontrolü
+  const user = await getServerUser();
+  if (!user) {
+    // Kullanıcı yok => /login
+    redirect("/login?error=You must log in first");
+  }
 
+  // 2) Ardından veritabanı sorguları
   const [courses, userProgress, schools] = await Promise.all([
-    coursesData,
-    userProgressData,
-    schoolsData,
+    getCourses(),
+    getUserProgress(), // userProgress'i userId üzerinden alacak
+    getSchools(),
   ]);
 
   return (
@@ -22,6 +28,4 @@ const CoursesPage = async () => {
       <List courses={courses} activeCourseId={userProgress?.activeCourseId} />
     </div>
   );
-};
-
-export default CoursesPage;
+}

@@ -1,17 +1,37 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
-import {
-  ClerkLoaded,
-  ClerkLoading,
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/nextjs";
-import { Loader } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged, signOut as firebaseSignOut } from "firebase/auth";
+import { auth } from "@/app/firebase-client"; // firebase client
+import { useRouter } from "next/navigation";
 
 export const Header = () => {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+      } else {
+        setUser(null);
+      }
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    // Firebase oturumu kapat
+    await firebaseSignOut(auth);
+    // sunucu cookiesini temizle
+    await fetch("/api/clearToken", { method: "POST" });
+    router.push("/login");
+  };
+
   return (
     <header className="h-20 w-full border-b-2 border-slate-200 px-4">
       <div className="lg:max-w-screen-lg mx-auto flex items-center justify-between h-full">
@@ -21,31 +41,34 @@ export const Header = () => {
             Sukull
           </h1>
         </div>
-        <ClerkLoading>
-          <Loader className="h-5 w-5 text-muted-foreground animate-spin" />
-        </ClerkLoading>
-        <ClerkLoaded>
-          <SignedIn>
-            <UserButton 
-            
-            signInUrl="/courses"
-            afterSwitchSessionUrl="/courses"
-            
-            />
-          </SignedIn>
-          <SignedOut>
-            <SignInButton
-              mode="modal"
-              signUpFallbackRedirectUrl="/courses"
-              forceRedirectUrl="/courses"
 
-            >
-              <Button size="lg" variant="ghost">
-                Gİrİş Yap
+        {loading && (
+          <div className="flex items-center gap-2">
+            <div className="animate-spin h-5 w-5 border-2 border-gray-400 rounded-full border-r-transparent"></div>
+            <span>Yükleniyor...</span>
+          </div>
+        )}
+
+        {!loading && (
+          <>
+            {user ? (
+              <Button variant="ghost" size="lg" onClick={handleLogout}>
+                Çıkış Yap
               </Button>
-            </SignInButton>
-          </SignedOut>
-        </ClerkLoaded>
+            ) : (
+              <Button
+                size="lg"
+                variant="ghost"
+                onClick={() => {
+                  // Login sayfasına gidelim
+                  router.push("/login");
+                }}
+              >
+                Giriş Yap
+              </Button>
+            )}
+          </>
+        )}
       </div>
     </header>
   );

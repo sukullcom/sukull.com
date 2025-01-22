@@ -6,8 +6,8 @@ import {
   pgTable,
   serial,
   text,
-  uuid,
   timestamp,
+  uniqueIndex 
 } from "drizzle-orm/pg-core";
 
 export const courses = pgTable("courses", {
@@ -171,7 +171,7 @@ export const userProgressRelations = relations(userProgress, ({ one }) => ({
   }),
 }));
 
-//////////////ADDED////////////
+// Private Lesson -----------------------------------
 export const privateLessonApplications = pgTable(
   "private_lesson_applications",
   {
@@ -240,7 +240,7 @@ export const quizOptionsRelations = relations(quizOptions, ({ one }) => ({
   }),
 }));
 
-// Code Editor
+// Code Editor -----------------------------------
 export const snippets = pgTable("snippets", {
   id: serial("id").primaryKey(),
   userId: text("user_id").notNull(),
@@ -259,3 +259,4 @@ export const snippetsRelations = relations(snippets, ({ one }) => ({
     references: [userProgress.userId],
   }),
 }));
+

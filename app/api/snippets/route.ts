@@ -1,13 +1,12 @@
 // app/api/snippets/route.ts
 
 import { NextResponse } from "next/server";
-import { auth } from "@clerk/nextjs/server";
-import { getUserSnippetCount, createSnippet, getAllSnippets } from "@/db/queries";
+import { getAllSnippets, getUserSnippetCount, createSnippet } from "@/db/queries";
 import db from "@/db/drizzle";
 import { eq } from "drizzle-orm";
 import { userProgress } from "@/db/schema";
+import { getServerUser } from "@/lib/auth.server";
 
-// -- 1) GET route for listing all snippets (with optional search) --
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
   const search = searchParams.get("search") || undefined;
@@ -21,13 +20,14 @@ export async function GET(req: Request) {
   }
 }
 
-// -- 2) POST route for creating a new snippet (this is your existing code) --
 export async function POST(req: Request) {
   try {
-    const { userId } = auth();
-    if (!userId) {
+    const user = await getServerUser();
+    if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+
+    const userId = user.uid;
 
     const userP = await db.query.userProgress.findFirst({
       where: eq(userProgress.userId, userId),
@@ -38,7 +38,6 @@ export async function POST(req: Request) {
       },
     });
 
-    // If userProgress row is not found
     if (!userP) {
       return NextResponse.json(
         { error: "User not found in user_progress table." },
@@ -46,7 +45,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check user has > 10k points
     if (userP.points < 10000) {
       return NextResponse.json(
         { error: "You do not have enough points to share a snippet." },
@@ -54,7 +52,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check user share count < 3
     const count = await getUserSnippetCount(userId);
     if (count >= 3) {
       return NextResponse.json(
@@ -73,7 +70,6 @@ export async function POST(req: Request) {
       );
     }
 
-    // Insert snippet
     await createSnippet({
       userId,
       userName: userP.userName || "Anonymous",
@@ -86,9 +82,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("Error in POST /api/snippets:", err);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

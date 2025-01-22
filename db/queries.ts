@@ -1,6 +1,6 @@
 import { cache } from "react";
 import db from "@/db/drizzle";
-import { avg, eq, ilike, or, sql } from "drizzle-orm";
+import { and, avg, desc, eq, ilike, or, sql } from "drizzle-orm";
 import {
   challengeProgress,
   courses,
@@ -13,14 +13,15 @@ import {
   teacherApplications,
   snippets,
 } from "@/db/schema";
-import { auth } from "@clerk/nextjs/server";
+import { getServerUser } from "@/lib/auth.server";
+
 
 export const getUserProgress = cache(async () => {
-  const { userId } = await auth();
-
-  if (!userId) {
+  const user = await getServerUser();
+  if (!user) {
     return null;
   }
+  const userId = user.uid;
 
   const data = await db.query.userProgress.findFirst({
     where: eq(userProgress.userId, userId),
@@ -33,7 +34,9 @@ export const getUserProgress = cache(async () => {
 });
 
 export const getUnits = cache(async () => {
-  const { userId } = await auth();
+  const user = await getServerUser();
+  if (!user) return [];
+  const userId = user.uid;
   const userProgress = await getUserProgress();
 
   if (!userId || !userProgress?.activeCourseId) {
@@ -107,7 +110,12 @@ export const getCourseById = cache(async (courseId: number) => {
 });
 
 export const getCourseProgress = cache(async () => {
-  const { userId } = await auth();
+  const user = await getServerUser();
+  if (!user) {
+    return null;
+  }
+  const userId = user.uid;
+  
   const userProgress = await getUserProgress();
 
   if (!userId || !userProgress?.activeCourseId) {
@@ -154,11 +162,9 @@ export const getCourseProgress = cache(async () => {
 });
 
 export const getLesson = cache(async (id?: number) => {
-  const { userId } = await auth();
-
-  if (!userId) {
-    return null;
-  }
+  const user = await getServerUser();
+  if (!user) return null;
+  const userId = user.uid;
 
   const courseProgress = await getCourseProgress();
 
@@ -224,10 +230,11 @@ export const getLessonPercentage = cache(async () => {
 
 
 export const getTopTenUsers = cache(async () => {
-  const { userId } = await auth()
-
-  if (!userId) {
-    return []
+  // İsteğe göre kullanıcı girişine bağımlı kılmayabilirsiniz;
+  // ama orijinalde userId yoksa boş array döndürüyordu.
+  const user = await getServerUser();
+  if (!user) {
+    return [];
   }
 
   const data = await db.query.userProgress.findMany({
@@ -315,11 +322,11 @@ export const getElementarySchoolPoints = cache(async () => {
 
 
 export const getUserRank = cache(async () => {
-  const { userId } = await auth();
-
-  if (!userId) {
+  const user = await getServerUser();
+  if (!user) {
     return null;
   }
+  const userId = user.uid;
 
   // Get current user's points and school ID
   const userProgressData = await db.query.userProgress.findFirst({
@@ -497,3 +504,4 @@ export const getAllSnippets = cache(
       .orderBy(sql`created_at DESC`);
   }
 );
+

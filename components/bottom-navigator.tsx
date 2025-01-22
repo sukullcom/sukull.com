@@ -1,18 +1,35 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Loader } from "lucide-react";
-import { ClerkLoaded, ClerkLoading, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "@/app/firebase-client";
+import { Button } from "./ui/button";
 
 type BottomNavigatorProps = {
   className?: string;
 };
 
 export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
+  const router = useRouter();
   const pathname = usePathname();
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsub();
+  }, []);
+
+  const handleSignOut = async () => {
+    await signOut(auth);
+    await fetch("/api/clearToken", { method: "POST" });
+    router.push("/login");
+  };
 
   const navItems = [
     { href: "/learn", iconSrc: "/desk.svg" },
@@ -26,10 +43,10 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
   return (
     <div
       className={cn(
-        "fixed bottom-0 left-0 w-full bg-white border-t flex justify-around items-center px-4 py-2 shadow-md z-50", // Ensure z-index is high
+        "fixed bottom-0 left-0 w-full bg-white border-t flex justify-around items-center px-4 py-2 shadow-md z-50",
         className
       )}
-      style={{ height: "64px" }} // Explicitly set height
+      style={{ height: "64px" }}
     >
       {navItems.map((item) => {
         const isActive = pathname === item.href;
@@ -44,7 +61,7 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
           >
             <Image
               src={item.iconSrc}
-              alt={""}
+              alt=""
               className="mr-5"
               height={48}
               width={48}
@@ -53,15 +70,13 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
         );
       })}
       <div className="p-4">
-        <ClerkLoading>
-          <Loader
-            className="h-5 w-5 text-muted-foreground animate-spin"
-            aria-label="Yükleniyor..."
-          />
-        </ClerkLoading>
-        <ClerkLoaded>
-          <UserButton afterSwitchSessionUrl="/" />
-        </ClerkLoaded>
+        {user ? (
+          <Button variant="danger" onClick={handleSignOut}>
+            Çıkış
+          </Button>
+        ) : (
+          <Button variant="secondary" onClick={() => router.push("/login")}>Giriş</Button>
+        )}
       </div>
     </div>
   );

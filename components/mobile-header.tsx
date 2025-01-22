@@ -1,6 +1,5 @@
 import { getUserProgress } from "@/db/queries";
 import { UserProgress } from "./user-progress";
-import { redirect } from "next/navigation";
 import { Button } from "./ui/button";
 import Link from "next/link";
 

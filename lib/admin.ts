@@ -1,10 +1,12 @@
-import { auth } from "@clerk/nextjs/server";
+import { getServerUser } from "./auth.server";
 
 const adminIds = process.env.ADMIN_IDS ? process.env.ADMIN_IDS.split(",") : [];
 
 
-export const isAdmin = () => {
-  const { userId } = auth();
+export const isAdmin = async () => {
+  const user = await getServerUser();
+  if (!user) return null;
+  const userId = user.uid;
 
   if (!userId) {
     return false

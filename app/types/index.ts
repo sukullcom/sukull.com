@@ -1,4 +1,5 @@
 import { Monaco } from "@monaco-editor/react";
+import { Key, ReactNode } from "react";
 
 export interface Theme {
   id: string;

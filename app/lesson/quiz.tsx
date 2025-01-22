@@ -1,7 +1,7 @@
 "use client";
 
 import { challengeOptions, challenges } from "@/db/schema";
-import { useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { Header } from "./header";
 import { QuestionBubble } from "./question-bubble";
 import { Challenge } from "./challenge";
@@ -35,132 +35,89 @@ export const Quiz = ({
   initialPoints,
   initialLessonId,
   initialLessonChallenges,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   userSubscription,
 }: Props) => {
-  const { open: openHeartsModal } = useHeartsModal()
-  const { open: openPracticeModal } = usePracticeModal()
+  // *******************************
+  // 1) Audio Elements
+  // *******************************
+  const [finishAudioEl, , finishControls] = useAudio({
+    src: "/finish.mp3",
+    autoPlay: false,
+  });
+  const [correctAudioEl, , correctControls] = useAudio({
+    src: "/correct.wav",
+    autoPlay: false,
+  });
+  const [incorrectAudioEl, , incorrectControls] = useAudio({
+    src: "/incorrect.wav",
+    autoPlay: false,
+  });
 
-  useMount(() => {
-    if (initialPercentage === 100) {
-      openPracticeModal()
-    }
-  })
+  // Ders bittiğinde finish sesini sadece 1 kere çalmak için
+  const finishPlayedRef = useRef(false);
+
+  // *******************************
+  // 2) Hooks and States
+  // *******************************
+  const { open: openHeartsModal } = useHeartsModal();
+  const { open: openPracticeModal } = usePracticeModal();
 
   const { width, height } = useWindowSize();
   const router = useRouter();
-
-  const [finishAudio] = useAudio({ src: "/finish.mp3", autoPlay:true });
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [correctAudio, _c, correctControls] = useAudio({ src: "/correct.wav" });
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [incorrectAudio, _i, incorrectControls] = useAudio({
-    src: "/incorrect.wav",
-  });
   const [pending, startTransition] = useTransition();
 
   const [lessonId] = useState(initialLessonId);
   const [hearts, setHearts] = useState(initialHearts);
   const [points, setPoints] = useState(initialPoints);
-  const [percentage, setPercentage] = useState(() => {
-    return initialPercentage === 100 ? 0 : initialPercentage
-  });
-  const [challenges] = useState(initialLessonChallenges);
-  const [activeIndex, setActiveIndex] = useState(() => {
-    const uncompletedIndex = challenges.findIndex(
-      (challenge) => !challenge.completed
-    );
 
-    return uncompletedIndex === -1 ? 0 : uncompletedIndex;
+  // eğer initialPercentage=100 (bütün sorular tamam), practice
+  const [percentage, setPercentage] = useState(() =>
+    initialPercentage === 100 ? 0 : initialPercentage
+  );
+
+  const [challenges] = useState(initialLessonChallenges);
+
+  // Aktif challenge bul
+  const [activeIndex, setActiveIndex] = useState(() => {
+    const idx = challenges.findIndex((c) => !c.completed);
+    return idx === -1 ? 0 : idx;
   });
 
   const [selectedOption, setSelectedOption] = useState<number>();
   const [status, setStatus] = useState<"correct" | "wrong" | "none">("none");
 
+  useMount(() => {
+    if (initialPercentage === 100) {
+      // practice
+      openPracticeModal();
+    }
+  });
+
+  // *******************************
+  // 3) Check if lesson finished
+  // *******************************
   const challenge = challenges[activeIndex];
-  const options = challenge?.challengeOptions ?? [];
+  const lessonFinished = !challenge;
 
-  const onNext = () => {
-    setActiveIndex((current) => current + 1);
-  };
-
-  const onSelect = (id: number) => {
-    if (status !== "none") return;
-
-    setSelectedOption(id);
-  };
-
-  const onContinue = () => {
-    if (!selectedOption) return;
-
-    if (status === "wrong") {
-      setStatus("none");
-      setSelectedOption(undefined);
-      return;
+  // Ders bittiğinde finish sesini çal
+  useEffect(() => {
+    if (lessonFinished && !finishPlayedRef.current) {
+      finishPlayedRef.current = true;
+      finishControls.play(); // Tek sefer
     }
+  }, [lessonFinished, finishControls]);
 
-    if (status === "correct") {
-      onNext();
-      setStatus("none");
-      setSelectedOption(undefined);
-      return;
-    }
-
-    const correctOption = options.find((option) => option.correct);
-
-    if (!correctOption) {
-      return;
-    }
-
-    if (correctOption.id === selectedOption) {
-      startTransition(() => {
-        upsertChallengeProgress(challenge.id)
-          .then((response) => {
-            if (response?.error === "hearts") {
-              openHeartsModal()
-              return;
-            }
-
-            correctControls.play();
-            setStatus("correct");
-            setPercentage((prev) => prev + 100 / challenges.length);
-
-            // This is a practice
-            if (initialPercentage === 100) {
-              setHearts((prev) => Math.min(prev + 1, 5));
-              setPoints((prev) => prev + 2);
-
-            } else{
-              setPoints((prev) => prev + 10);
-            }
-          })
-          .catch(() => toast.error("Something went wrong. Please try again."));
-      });
-    } else {
-      startTransition(() => {
-        reduceHearts(challenge.id)
-          .then((response) => {
-            if (response?.error === "hearts") {
-              openHeartsModal()
-              return;
-            }
-
-            incorrectControls.play();
-            setStatus("wrong");
-            if (!response?.error) {
-              setHearts((prev) => Math.max(prev - 1, 0));
-              setPoints((prev) => prev - 10);
-            }
-          })
-          .catch(() => toast.error("Something went wrong. Please try again."));
-      });
-    }
-  };
-
-  if (!challenge) {
+  // *******************************
+  // 4) If lesson is finished
+  // *******************************
+  if (lessonFinished) {
     return (
       <>
-        {finishAudio}
+        {/* Audio DOM elements */}
+        {finishAudioEl}
+        {correctAudioEl}
+        {incorrectAudioEl}
+
         <Confetti
           width={width}
           height={height}
@@ -201,20 +158,95 @@ export const Quiz = ({
     );
   }
 
-  const title =
-    challenge.type === "ASSIST"
-      ? "Select the correct meaning"
-      : challenge.question;
+  // *******************************
+  // 5) Normal case: we have an active challenge
+  // *******************************
+  const { challengeOptions = [], type } = challenge;
+  const title = type === "ASSIST" ? "Select the correct meaning" : challenge.question;
 
+  // onNext
+  const onNext = () => {
+    setStatus("none");
+    setSelectedOption(undefined);
+    setActiveIndex((current) => current + 1);
+  };
+
+  // onContinue
+  const onContinue = () => {
+    if (!selectedOption) return;
+
+    // If we are in 'wrong' or 'correct' state => Next step
+    if (status === "wrong") {
+      setStatus("none");
+      setSelectedOption(undefined);
+      return;
+    }
+    if (status === "correct") {
+      onNext();
+      return;
+    }
+
+    // Normal check
+    const correctOption = challengeOptions.find((o) => o.correct);
+    if (!correctOption) return;
+
+    if (correctOption.id === selectedOption) {
+      // correct
+      startTransition(() => {
+        upsertChallengeProgress(challenge.id)
+          .then((response) => {
+            if (response?.error === "hearts") {
+              openHeartsModal();
+              return;
+            }
+            correctControls.play();
+            setStatus("correct");
+            setPercentage((prev) => prev + 100 / challenges.length);
+
+            // practice?
+            if (initialPercentage === 100) {
+              setHearts((prev) => Math.min(prev + 1, 5));
+              setPoints((prev) => prev + 2);
+            } else {
+              setPoints((prev) => prev + 10);
+            }
+          })
+          .catch(() => toast.error("Something went wrong. Please try again."));
+      });
+    } else {
+      // wrong
+      startTransition(() => {
+        reduceHearts(challenge.id)
+          .then((response) => {
+            if (response?.error === "hearts") {
+              openHeartsModal();
+              return;
+            }
+
+            incorrectControls.play();
+            setStatus("wrong");
+            if (!response?.error) {
+              setHearts((prev) => Math.max(prev - 1, 0));
+              setPoints((prev) => prev - 10);
+            }
+          })
+          .catch(() => toast.error("Something went wrong. Please try again."));
+      });
+    }
+  };
+
+  // *******************************
+  // 6) Render the ongoing challenge
+  // *******************************
   return (
     <>
-      {incorrectAudio}
-      {correctAudio}
-      <Header
-        hearts={hearts}
-        percentage={percentage}
-        //hasActiveSubscription={!!userSubscription?.isActive}
-      />
+      {/* Audio DOM elements (her zaman render) */}
+      {finishAudioEl}
+      {correctAudioEl}
+      {incorrectAudioEl}
+
+      <Header hearts={hearts} percentage={percentage} />
+
       <div className="flex-1">
         <div className="h-full flex items-center justify-center">
           <div className="kg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col gap-y-12">
@@ -222,16 +254,20 @@ export const Quiz = ({
               {title}
             </h1>
             <div>
-              {challenge.type == "ASSIST" && (
+              {type === "ASSIST" && (
                 <QuestionBubble question={challenge.question} />
               )}
               <Challenge
-                options={options}
-                onSelect={onSelect}
+                options={challengeOptions}
+                onSelect={(id) => {
+                  if (status === "none") {
+                    setSelectedOption(id);
+                  }
+                }}
                 status={status}
                 selectedOption={selectedOption}
                 disabled={pending}
-                type={challenge.type}
+                type={type}
               />
             </div>
           </div>
@@ -241,6 +277,7 @@ export const Quiz = ({
         disabled={pending || !selectedOption}
         status={status}
         onCheck={onContinue}
+        lessonId={lessonId}
       />
     </>
   );
