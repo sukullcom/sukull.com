@@ -1,11 +1,9 @@
 // app/api/protected/route.ts
 import { NextResponse } from "next/server";
-import { verifyIdToken } from "@/lib/firebaseAdmin";
+import { verifySessionCookie } from "@/lib/firebaseAdmin";
 
-// Bu route'a "fetch" yaparken cookie içindeki 'token'ı headers'a koyabilirsiniz,
-// veya session cookie'yi Node tarafında okursunuz (server actions gibi).
 export async function GET(request: Request) {
-  // Örnek: cookie'den token alalım
+  // 1) Cookie'den "token" çek
   const cookies = request.headers.get("cookie") || "";
   const tokenMatch = cookies.match(/token=([^;]+)/);
   const token = tokenMatch?.[1];
@@ -15,11 +13,13 @@ export async function GET(request: Request) {
   }
 
   try {
-    const decoded = await verifyIdToken(token);
-    // Token geçerli, user uid:
+    // 2) Session cookie doğrula
+    const decoded = await verifySessionCookie(token);
+    // Token geçerli => user uid:
     console.log("UID:", decoded.uid);
     return NextResponse.json({ message: "Protected content!" });
   } catch (error) {
-    return NextResponse.json({ error: "Invalid token" }, { status: 403 });
+    // 3) Geçersiz/Expire vs => 403
+    return NextResponse.json({ error: "Invalid or expired session" }, { status: 403 });
   }
 }

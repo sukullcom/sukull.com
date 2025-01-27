@@ -5,7 +5,7 @@ import { getAllSnippets, getUserSnippetCount, createSnippet } from "@/db/queries
 import db from "@/db/drizzle";
 import { eq } from "drizzle-orm";
 import { userProgress } from "@/db/schema";
-import { getServerUser } from "@/lib/auth.server";
+import { getServerUser } from "@/lib/auth";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);

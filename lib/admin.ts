@@ -1,16 +1,18 @@
-import { getServerUser } from "./auth.server";
+import { getServerUser } from "./auth";
 
-const adminIds = process.env.ADMIN_IDS ? process.env.ADMIN_IDS.split(",") : [];
-
+const adminEmails = process.env.ADMIN_EMAILS
+  ? process.env.ADMIN_EMAILS.split(",")
+  : [];
 
 export const isAdmin = async () => {
   const user = await getServerUser();
   if (!user) return null;
-  const userId = user.uid;
 
-  if (!userId) {
-    return false
+  const userEmail = user.email; // Access the user's email from the token
+  if (!userEmail) {
+    return false;
   }
 
-  return adminIds.includes(userId);
+  // Check if the user's email is in the list of admin emails
+  return adminEmails.includes(userEmail);
 };

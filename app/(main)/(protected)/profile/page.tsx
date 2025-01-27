@@ -1,39 +1,32 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
-import { toast } from "sonner"; // veya başka bir toast
-import { updateProfileAction } from "@/actions/profile"; // server action
+import { toast } from "sonner";
+import { updateProfileAction } from "@/actions/profile";
 import { Button } from "@/components/ui/button";
 import { AvatarGenerator } from "random-avatar-generator";
 
 async function fetchProfileData() {
-  // /api/me endpointinden userName, userImageSrc bilgilerini çekeceğiz
   const res = await fetch("/api/me");
   if (!res.ok) {
     throw new Error("Profil bilgileri alınamadı");
   }
-  return res.json();
-}
-
-function generateRandomAvatarUrl() {
-  // random-avatar-generator kütüphanesini kullanarak rastgele avatar
-  const generator = new AvatarGenerator();
-  return generator.generateRandomAvatar(); // bir URL dönecek, genelde https://...
+  return res.json(); // { userName, userImageSrc, profileLocked }
 }
 
 export default function ProfilePage() {
   const [username, setUsername] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
+  const [profileLocked, setProfileLocked] = useState(false);
   const [initLoading, setInitLoading] = useState(true);
   const [pending, startTransition] = useTransition();
 
   useEffect(() => {
-    // 1) Mevcut profil verisini çek
     fetchProfileData()
       .then((data) => {
-        // data: { userName, userImageSrc }
         setUsername(data.userName || "User");
         setAvatarUrl(data.userImageSrc || "");
+        setProfileLocked(data.profileLocked || false);
         setInitLoading(false);
       })
       .catch((err) => {
@@ -44,19 +37,23 @@ export default function ProfilePage() {
   }, []);
 
   const handleRandomAvatar = () => {
-    const newAvatar = generateRandomAvatarUrl();
-    setAvatarUrl(newAvatar);
+    if (profileLocked) return;
+    const generator = new AvatarGenerator();
+    setAvatarUrl(generator.generateRandomAvatar());
   };
 
   const handleSave = async () => {
+    if (profileLocked) return;
     startTransition(() => {
       updateProfileAction(username, avatarUrl)
         .then(() => {
-          toast.success("Profil güncellendi!");
+          toast.success("Profil güncellendi. Artık tekrar değiştiremezsiniz.");
+          // set locked so UI updates
+          setProfileLocked(true);
         })
         .catch((err) => {
           console.error(err);
-          toast.error("Profil güncellenirken hata oluştu.");
+          toast.error(err.message || "Profil güncellenirken hata oluştu.");
         });
     });
   };
@@ -70,7 +67,6 @@ export default function ProfilePage() {
       <h1 className="text-2xl font-bold mb-4">Profil Ayarları</h1>
 
       <div className="flex flex-col items-center gap-4">
-        {/* Avatar önizleme - next/image yerine <img> */}
         <div className="w-32 h-32 overflow-hidden rounded-full border border-gray-300">
           {avatarUrl ? (
             <img
@@ -86,7 +82,11 @@ export default function ProfilePage() {
             />
           )}
         </div>
-        <Button variant="secondary" onClick={handleRandomAvatar} disabled={pending}>
+        <Button
+          variant="secondary"
+          onClick={handleRandomAvatar}
+          disabled={pending || profileLocked}
+        >
           Rastgele Avatar
         </Button>
       </div>
@@ -99,15 +99,16 @@ export default function ProfilePage() {
           className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          disabled={profileLocked}
         />
       </div>
 
       <Button
         className="mt-6 w-full py-3 rounded-xl bg-green-600 hover:bg-green-500 text-white font-semibold"
         onClick={handleSave}
-        disabled={pending}
+        disabled={pending || profileLocked}
       >
-        Kaydet
+        {profileLocked ? "Profil Kilitlendi" : "Kaydet"}
       </Button>
     </div>
   );

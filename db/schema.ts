@@ -158,6 +158,7 @@ export const userProgress = pgTable("user_progress", {
   schoolId: integer("school_id").references(() => schools.id, {
     onDelete: "set null",
   }), // integer type
+  profileLocked: boolean("profileLocked").default(false).notNull(),
 });
 
 export const userProgressRelations = relations(userProgress, ({ one }) => ({

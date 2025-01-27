@@ -1,6 +1,6 @@
 // app/api/me/route.ts
 import { NextResponse } from "next/server";
-import { getServerUser } from "@/lib/auth.server";
+import { getServerUser } from "@/lib/auth";
 import db from "@/db/drizzle";
 import { userProgress } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -14,19 +14,20 @@ export async function GET() {
 
   const row = await db.query.userProgress.findFirst({
     where: eq(userProgress.userId, userId),
-    columns: {
-      userName: true,
-      userImageSrc: true,
-    },
   });
 
   if (!row) {
-    // Kaydı yoksa da varsayılan dönebiliriz
+    // Could create or return defaults
     return NextResponse.json({
       userName: "User",
       userImageSrc: "/mascot_purple.svg",
+      profileLocked: false,
     });
   }
 
-  return NextResponse.json(row);
+  return NextResponse.json({
+    userName: row.userName,
+    userImageSrc: row.userImageSrc,
+    profileLocked: row.profileLocked,
+  });
 }

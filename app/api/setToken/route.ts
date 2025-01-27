@@ -1,15 +1,6 @@
 // app/api/setToken/route.ts
 import { NextRequest, NextResponse } from "next/server";
-
-// Cookie seçenekleri
-const cookieOptions = {
-  name: "token",
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  path: "/",
-  // sameSite: "strict", // dilediğiniz gibi
-  maxAge: 60 * 60 * 24 * 7, // 1 hafta örneğin
-};
+import { adminAuth } from "@/lib/firebaseAdmin";
 
 export async function POST(request: NextRequest) {
   try {
@@ -17,17 +8,17 @@ export async function POST(request: NextRequest) {
     if (!token) {
       return NextResponse.json({ error: "No token provided" }, { status: 400 });
     }
-    // Burada token valid mi kontrol etmek isterseniz firebase-admin verify falan
-    // AMA genelde middleware istemediğimiz için burayı basit tutuyoruz
 
-    // Cookie ayarla
+    // create session cookie from the ID token
+    const expiresIn = 7 * 24 * 60 * 60 * 1000; // 7 days
+    const sessionCookie = await adminAuth.createSessionCookie(token, { expiresIn });
+
     const response = NextResponse.json({ success: true });
-    response.cookies.set(cookieOptions.name, token, {
-      httpOnly: cookieOptions.httpOnly,
-      secure: cookieOptions.secure,
-      path: cookieOptions.path,
-      maxAge: cookieOptions.maxAge,
-      // sameSite: "strict",
+    response.cookies.set("token", sessionCookie, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: expiresIn / 1000,
     });
     return response;
   } catch (error) {

@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { getCourses, getUserProgress, getSchools } from "@/db/queries";
 import { List } from "./list";
 import { SchoolSelector } from "./school-selector";
-import { getServerUser } from "@/lib/auth.server";
+import { getServerUser } from "@/lib/auth";
 
 export default async function CoursesPage() {
   // 1) Token kontrolü

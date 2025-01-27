@@ -54,7 +54,7 @@ export const Sidebar = ({ className }: Props) => {
             width={40}
             alt="Sukull Mascot"
           />
-          <h1 className="text-2xl font-extrabold text-green-600 tracking-wide">
+          <h1 className="text-2xl font-extrabold text-green-500 tracking-wide">
             Sukull
           </h1>
         </div>
@@ -75,15 +75,25 @@ export const Sidebar = ({ className }: Props) => {
         <SidebarItem label="Laboratuvarlar" href="/lab" iconSrc={labIcon} />
         <SidebarItem label="Hedefler" href="/quests" iconSrc={questsIcon} />
         <SidebarItem label="Çantam" href="/shop" iconSrc={shopIcon} />
+        <SidebarItem label="Çalışma Arkadaşı" href="/study-buddy" iconSrc="/study_buddy.png" />
+        <SidebarItem label="Profil" href="/profile" iconSrc="/mascot_blue.svg" />
       </div>
       <div className="p-4">
-        {loading ? (
-          <div className="animate-spin h-5 w-5 border-2 border-gray-400 rounded-full border-r-transparent" />
-        ) : user ? (
-          <Button variant="danger" onClick={handleSignOut}>Çıkış Yap</Button>
-        ) : (
-          <Button variant="secondary" onClick={() => router.push("/login")}>Giriş Yap</Button>
-        )}
+       {( <Button
+        onClick={handleSignOut}
+          variant="secondary"
+          className="justify-start h-[52px] flex items-center"
+        >
+          <Image
+            src="/exit_.png"
+            alt="Çıkış Yap"
+            className="mr-1"
+            height={36}
+            width={36}
+          />
+          <span className="text-left">Çıkış Yap</span>
+        </Button>)}
+
       </div>
     </div>
   );

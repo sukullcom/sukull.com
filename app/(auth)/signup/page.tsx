@@ -6,6 +6,7 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
+  sendEmailVerification,
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -35,15 +36,23 @@ export default function SignupPage() {
   const handleSignup = async () => {
     setFormError("");
     try {
+      // 1) Create user in Firebase Auth
       const userCred = await createUserWithEmailAndPassword(auth, email, password);
+
+      // 2) Send them a verification email
+      // (You can choose to do this conditionally if user email not verified, etc.)
+      await sendEmailVerification(userCred.user);
+
+      // 3) Get ID token to create a session cookie
       const idToken = await userCred.user.getIdToken();
 
+      // 4) Call our custom signup endpoint
       const res = await fetch("/api/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           token: idToken,
-          displayName: displayName.trim(),
+          displayName: displayName.trim(), // Drizzle + Firebase displayName
         }),
       });
       if (!res.ok) {
@@ -51,6 +60,7 @@ export default function SignupPage() {
         throw new Error(data.error || "Sunucu hatası. Lütfen tekrar deneyin.");
       }
 
+      // 5) Go to main page
       router.push("/learn");
     } catch (err: any) {
       console.error("Signup error:", err);
@@ -67,8 +77,11 @@ export default function SignupPage() {
     try {
       const provider = new GoogleAuthProvider();
       const userCred = await signInWithPopup(auth, provider);
-      const idToken = await userCred.user.getIdToken();
 
+      // If user’s email not verified, you can call sendEmailVerification here
+      // But Google sign-in is usually verified by default.
+
+      const idToken = await userCred.user.getIdToken();
       const userDisplayName = userCred.user.displayName || "";
 
       const res = await fetch("/api/signup", {
@@ -96,50 +109,50 @@ export default function SignupPage() {
   };
 
   return (
-    <div
-      className="relative min-h-screen flex items-center justify-center bg-cover bg-center"
-      style={{ backgroundImage: "url('/background.jpg')" }}
-    >
-      <div className="w-full max-w-sm bg-white/30 backdrop-blur-lg rounded-3xl shadow-xl p-6 mx-4">
-        <h1 className="text-3xl font-bold text-center mb-6 text-green-600">
+    <div className="max-w-[988px] mx-auto flex-1 flex flex-col lg:flex-row items-center justify-center p-4 gap-2">
+      {/* Left side image */}
+      <div className="relative w-[240px] h-[240px] lg:w-[424px] lg:h-[424px] mb-8 lg:mb-0">
+        <Image src="/hero.svg" fill alt="Hero" />
+      </div>
+
+      {/* Right side form */}
+      <div className="w-full max-w-md bg-white rounded-3xl border-2 border-gray-200 shadow-xl p-6">
+        <h1 className="text-3xl font-bold text-center mb-6 text-green-500">
           Kayıt Ol
         </h1>
         <div className="flex flex-col space-y-4">
           <input
             type="text"
             placeholder="Kullanıcı Adı"
-            className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
           />
           <input
             type="email"
             placeholder="Email"
-            className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="password"
             placeholder="Şifre"
-            className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           {formError && <p className="text-red-500 text-sm">{formError}</p>}
         </div>
+
         <div className="mt-5 space-y-3">
-          <Button
-            onClick={handleSignup}
-            variant="default"
-            className="w-full py-3 rounded-xl bg-green-600 hover:bg-green-500 border-0 text-white font-semibold"
-          >
+          <Button onClick={handleSignup} variant="secondary" className="w-full">
             E-posta ile Kayıt Ol
           </Button>
           <Button
             onClick={handleGoogleSignup}
-            variant="secondaryOutline"
-            className="w-full py-3 rounded-xl flex items-center justify-center gap-2 bg-white border border-gray-300 font-semibold hover:bg-gray-100"
+            variant="default"
+            className="w-full py-5 gap-2"
           >
             <Image
               src="/google-logo.png"
@@ -151,11 +164,12 @@ export default function SignupPage() {
             Google ile Kayıt Ol
           </Button>
         </div>
+
         <p className="text-center text-sm mt-6">
           Zaten bir hesabın var mı?{" "}
           <a
             href="/login"
-            className="text-green-600 font-semibold underline hover:text-green-500"
+            className="text-green-500 font-semibold underline hover:text-green-500"
           >
             Giriş Yap
           </a>

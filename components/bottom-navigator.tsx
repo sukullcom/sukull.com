@@ -62,21 +62,29 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
             <Image
               src={item.iconSrc}
               alt=""
-              className="mr-5"
+              className="mr-2"
               height={48}
               width={48}
             />
           </Link>
         );
       })}
-      <div className="p-4">
-        {user ? (
-          <Button variant="danger" onClick={handleSignOut}>
-            Çıkış
+      <div className="p-2">
+        {
+          <Button
+            onClick={handleSignOut}
+            variant="secondary"
+            className="justify-start h-[44px] flex items-center"
+          >
+            <Image
+              src="/exit_.png"
+              alt="Çıkış Yap"
+              height={32}
+              width={32}
+            />
+            <span className="text-left">Çıkış</span>
           </Button>
-        ) : (
-          <Button variant="secondary" onClick={() => router.push("/login")}>Giriş</Button>
-        )}
+        }
       </div>
     </div>
   );

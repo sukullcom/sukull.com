@@ -5,7 +5,7 @@ import { getUserProgress } from "@/db/queries";
 import { challengeProgress, challenges, schools, userProgress } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { getServerUser } from "@/lib/auth.server";
+import { getServerUser } from "@/lib/auth";
 
 export const upsertChallengeProgress = async (challengeId: number) => {
   const user = await getServerUser();

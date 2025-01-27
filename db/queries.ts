@@ -13,7 +13,7 @@ import {
   teacherApplications,
   snippets,
 } from "@/db/schema";
-import { getServerUser } from "@/lib/auth.server";
+import { getServerUser } from "@/lib/auth";
 
 
 export const getUserProgress = cache(async () => {

@@ -1,10 +1,11 @@
-// app/actions/profile.ts
 "use server";
 
-import { getServerUser } from "@/lib/auth.server";
+import { getServerUser } from "@/lib/auth";
 import db from "@/db/drizzle";
 import { userProgress } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { adminAuth } from "@/lib/firebaseAdmin"; // for admin SDK
+import { getFirestore } from "firebase-admin/firestore"; // for Firestore admin
 
 export async function updateProfileAction(newName: string, newImage: string) {
   const user = await getServerUser();
@@ -13,14 +14,43 @@ export async function updateProfileAction(newName: string, newImage: string) {
   }
   const userId = user.uid;
 
-  // userProgress satırını güncelle
+  const row = await db.query.userProgress.findFirst({
+    where: eq(userProgress.userId, userId),
+  });
+  if (!row) {
+    throw new Error("No userProgress found");
+  }
+  if (row.profileLocked) {
+    throw new Error("Profile changes locked.");
+  }
+
+  // 1) Update Drizzle
   await db
     .update(userProgress)
     .set({
-      userName: newName || "User",
-      userImageSrc: newImage || "/mascot_purple.svg",
+      userName: newName,
+      userImageSrc: newImage,
+      profileLocked: true,
     })
     .where(eq(userProgress.userId, userId));
+
+  // 2) Update Firebase Auth displayName (optional)
+  await adminAuth.updateUser(userId, {
+    displayName: newName,
+    photoURL: newImage,
+  });
+
+  // 3) Also mirror that name into Firestore (server admin SDK)
+  //    So the "study-buddy" page can read userName from Firestore without an API route
+  const firestore = getFirestore();
+  await firestore.collection("users").doc(userId).set(
+    {
+      userName: newName,
+      userImageSrc: newImage,
+      updatedAt: new Date(),
+    },
+    { merge: true }
+  );
 
   return true;
 }

@@ -7,7 +7,7 @@ import { challengeProgress, challenges, schools, userProgress } from "@/db/schem
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { getServerUser } from "@/lib/auth.server";
+import { getServerUser } from "@/lib/auth";
 
 export const updateTotalPointsForSchools = async () => {
   const allSchools = await db.query.schools.findMany();

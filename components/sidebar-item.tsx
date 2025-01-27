@@ -30,8 +30,8 @@ export const SidebarItem = ({
           src={iconSrc}
           alt={label}
           className="mr-3"
-          height={48}
-          width={48}
+          height={42}
+          width={42}
         />
         <span className="text-left">{label}</span> 
       </Link>
