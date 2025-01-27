@@ -1,3 +1,4 @@
+// actions/profile.ts
 "use server";
 
 import { getServerUser } from "@/lib/auth";
@@ -7,7 +8,11 @@ import { eq } from "drizzle-orm";
 import { adminAuth } from "@/lib/firebaseAdmin"; // for admin SDK
 import { getFirestore } from "firebase-admin/firestore"; // for Firestore admin
 
-export async function updateProfileAction(newName: string, newImage: string) {
+export async function updateProfileAction(
+  newName: string,
+  newImage: string,
+  schoolId: number // we add one more param
+) {
   const user = await getServerUser();
   if (!user) {
     throw new Error("Not authenticated");
@@ -28,25 +33,26 @@ export async function updateProfileAction(newName: string, newImage: string) {
   await db
     .update(userProgress)
     .set({
-      userName: newName,
-      userImageSrc: newImage,
+      userName: newName || "Anonymous",
+      userImageSrc: newImage || "/mascot_purple.svg",
+      schoolId,
       profileLocked: true,
     })
     .where(eq(userProgress.userId, userId));
 
   // 2) Update Firebase Auth displayName (optional)
   await adminAuth.updateUser(userId, {
-    displayName: newName,
+    displayName: newName || "Anonymous",
     photoURL: newImage,
   });
 
-  // 3) Also mirror that name into Firestore (server admin SDK)
-  //    So the "study-buddy" page can read userName from Firestore without an API route
+  // 3) Mirror to Firestore
   const firestore = getFirestore();
   await firestore.collection("users").doc(userId).set(
     {
-      userName: newName,
-      userImageSrc: newImage,
+      userName: newName || "Anonymous",
+      userImageSrc: newImage || "/mascot_purple.svg",
+      schoolId,
       updatedAt: new Date(),
     },
     { merge: true }

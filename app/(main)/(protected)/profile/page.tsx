@@ -6,49 +6,76 @@ import { updateProfileAction } from "@/actions/profile";
 import { Button } from "@/components/ui/button";
 import { AvatarGenerator } from "random-avatar-generator";
 
+// 1) Fetch user’s current profile => { userName, userImageSrc, profileLocked, schoolId }
 async function fetchProfileData() {
   const res = await fetch("/api/me");
   if (!res.ok) {
     throw new Error("Profil bilgileri alınamadı");
   }
-  return res.json(); // { userName, userImageSrc, profileLocked }
+  return res.json(); // e.g. { userName, userImageSrc, profileLocked, schoolId }
+}
+
+// 2) Fetch all schools => returns [{ id: number, name: string }, ...]
+async function fetchAllSchools() {
+  const res = await fetch("/api/schools");
+  if (!res.ok) {
+    throw new Error("Okullar yüklenemedi");
+  }
+  return res.json();
 }
 
 export default function ProfilePage() {
   const [username, setUsername] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
   const [profileLocked, setProfileLocked] = useState(false);
+  const [selectedSchoolId, setSelectedSchoolId] = useState<number | null>(null);
+
   const [initLoading, setInitLoading] = useState(true);
   const [pending, startTransition] = useTransition();
 
+  // List of schools for the select
+  const [allSchools, setAllSchools] = useState<any[]>([]);
+
   useEffect(() => {
-    fetchProfileData()
-      .then((data) => {
-        setUsername(data.userName || "User");
-        setAvatarUrl(data.userImageSrc || "");
-        setProfileLocked(data.profileLocked || false);
+    // 3) Load both profile & schools in parallel
+    Promise.all([fetchProfileData(), fetchAllSchools()])
+      .then(([profile, schools]) => {
+        // from /api/me
+        setUsername(profile.userName || "Anonymous");
+        setAvatarUrl(profile.userImageSrc || "/mascot_purple.svg");
+        setProfileLocked(profile.profileLocked || false);
+        setSelectedSchoolId(profile.schoolId ?? null);
+
+        // from /api/schools
+        setAllSchools(schools); // e.g. [ {id: 1, name: "Boğaziçi"}, ... ]
+
         setInitLoading(false);
       })
       .catch((err) => {
-        console.error(err);
-        toast.error("Profil bilgileri yüklenemedi.");
+        console.error("Profile or schools load error:", err);
+        toast.error("Bilgiler yüklenemedi.");
         setInitLoading(false);
       });
   }, []);
 
+  // Handle random avatar if not locked
   const handleRandomAvatar = () => {
     if (profileLocked) return;
     const generator = new AvatarGenerator();
     setAvatarUrl(generator.generateRandomAvatar());
   };
 
+  // Save => calls your server action
   const handleSave = async () => {
     if (profileLocked) return;
+    if (!selectedSchoolId) {
+      toast.error("Lütfen bir okul seçin!");
+      return;
+    }
     startTransition(() => {
-      updateProfileAction(username, avatarUrl)
+      updateProfileAction(username, avatarUrl, selectedSchoolId)
         .then(() => {
-          toast.success("Profil güncellendi. Artık tekrar değiştiremezsiniz.");
-          // set locked so UI updates
+          toast.success("Profil güncellendi. Artık değiştiremezsiniz!");
           setProfileLocked(true);
         })
         .catch((err) => {
@@ -66,21 +93,19 @@ export default function ProfilePage() {
     <div className="max-w-md mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Profil Ayarları</h1>
 
-      <div className="flex flex-col items-center gap-4">
+      {profileLocked && (
+        <p className="text-sm text-red-600 mb-2">
+          Bu profil kilitlenmiştir, artık değişiklik yapamazsınız.
+        </p>
+      )}
+
+      <div className="flex flex-col items-center gap-4 mb-4">
         <div className="w-32 h-32 overflow-hidden rounded-full border border-gray-300">
-          {avatarUrl ? (
-            <img
-              src={avatarUrl}
-              alt="Avatar"
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <img
-              src="/mascot_purple.svg"
-              alt="Default Avatar"
-              className="w-full h-full object-cover"
-            />
-          )}
+          <img
+            src={avatarUrl}
+            alt="Avatar"
+            className="w-full h-full object-cover"
+          />
         </div>
         <Button
           variant="secondary"
@@ -91,20 +116,42 @@ export default function ProfilePage() {
         </Button>
       </div>
 
-      <div className="mt-6 space-y-3">
+      <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">
           Kullanıcı Adı
         </label>
         <input
-          className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="w-full border border-gray-300 p-2 rounded-xl"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           disabled={profileLocked}
         />
       </div>
 
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700">
+          Okul Seç
+        </label>
+        <select
+          className="w-full border border-gray-300 p-2 rounded-xl"
+          value={selectedSchoolId ? String(selectedSchoolId) : ""}
+          onChange={(e) => {
+            const val = e.target.value;
+            setSelectedSchoolId(val ? Number(val) : null);
+          }}
+          disabled={profileLocked}
+        >
+          <option value="">-Seç-</option>
+          {allSchools.map((sch) => (
+            <option key={sch.id} value={String(sch.id)}>
+              {sch.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <Button
-        className="mt-6 w-full py-3 rounded-xl bg-green-600 hover:bg-green-500 text-white font-semibold"
+        className="w-full py-3 bg-green-600 text-white rounded-xl"
         onClick={handleSave}
         disabled={pending || profileLocked}
       >

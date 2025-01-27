@@ -12,16 +12,24 @@ export async function GET() {
   }
   const userId = user.uid;
 
+  // Find userProgress row, including schoolId
   const row = await db.query.userProgress.findFirst({
     where: eq(userProgress.userId, userId),
+    columns: {
+      userName: true,
+      userImageSrc: true,
+      profileLocked: true,
+      schoolId: true,    // Must fetch the user’s chosen school if any
+    },
   });
 
+  // If no row, return defaults
   if (!row) {
-    // Could create or return defaults
     return NextResponse.json({
-      userName: "User",
+      userName: "Anonymous",
       userImageSrc: "/mascot_purple.svg",
       profileLocked: false,
+      schoolId: null,
     });
   }
 
@@ -29,5 +37,6 @@ export async function GET() {
     userName: row.userName,
     userImageSrc: row.userImageSrc,
     profileLocked: row.profileLocked,
+    schoolId: row.schoolId,
   });
 }
