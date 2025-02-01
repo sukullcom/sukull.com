@@ -18,15 +18,18 @@ import {
   updateDoc,
   deleteDoc,
   limit as fsLimit,
+  Timestamp,
 } from "firebase/firestore";
+import { Button } from "@/components/ui/button";
 
-// Types for schools
+// Import our new WarningModal
+import { WarningModal } from "@/components/modals/warning-modal";
+
 type SchoolItem = {
   id: number;
   name: string;
 };
 
-// Pagination settings
 const POSTS_PER_PAGE = 10;
 const THIRTY_DAYS_IN_MS = 30 * 24 * 60 * 60 * 1000;
 
@@ -39,7 +42,7 @@ export default function StudyBuddyPage() {
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [loadingUser, setLoadingUser] = useState(true);
 
-  // Tabs: allPosts, myPosts, chats
+  // Tabs
   const [activeTab, setActiveTab] = useState<"allPosts" | "myPosts" | "chats">(
     "allPosts"
   );
@@ -49,24 +52,24 @@ export default function StudyBuddyPage() {
   // ==============================
   const [allSchools, setAllSchools] = useState<SchoolItem[]>([]);
   const PURPOSE_OPTIONS = [
-    "YKS sınavı",
+    "YKS Sınavı",
     "TUS Sınavı",
     "ALES Sınavı",
     "KPSS Sınavı",
-    "LGS sınavı",
+    "LGS Sınavı",
     "Üniversite Vizeleri",
-    "Kitap okuma",
+    "Kitap Okuma",
     "Yazılım Öğrenme",
     "Tez Çalışması",
     "Yüksek Lisans Çalışması",
-    "Lise okul sınavı",
+    "Lise Okul Sınavı",
     "Diğer",
   ];
   const [filterPurpose, setFilterPurpose] = useState("");
-  const [filterSchoolId, setFilterSchoolId] = useState("");
+  const [schoolSearchTerm, setSchoolSearchTerm] = useState("");
 
   // ==============================
-  // 1) All Posts (with local pagination)
+  // 1) All Posts
   // ==============================
   const [allPostsRaw, setAllPostsRaw] = useState<any[]>([]);
   const [loadingPosts, setLoadingPosts] = useState(false);
@@ -99,8 +102,15 @@ export default function StudyBuddyPage() {
   const messageEndRef = useRef<HTMLDivElement>(null);
 
   // ==============================
-  // Auth effect
+  // Warning Modal State
   // ==============================
+  const [warningOpen, setWarningOpen] = useState(false);
+  const [warningMessage, setWarningMessage] = useState("");
+  function showWarning(msg: string) {
+    setWarningMessage(msg);
+    setWarningOpen(true);
+  }
+
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user || null);
@@ -109,9 +119,7 @@ export default function StudyBuddyPage() {
     return () => unsub();
   }, []);
 
-  // ==============================
   // Load all schools
-  // ==============================
   useEffect(() => {
     fetch("/api/schools")
       .then((res) => res.json())
@@ -124,41 +132,44 @@ export default function StudyBuddyPage() {
   }, []);
 
   // ==============================
-  // 1) All Posts: we fetch everything at once based on filters
+  // 1) All Posts
   // ==============================
   useEffect(() => {
     if (!currentUser) return;
     if (activeTab !== "allPosts") return;
 
-    // We reset pagination
     setCurrentPage(0);
     loadAllPosts();
-  }, [activeTab, currentUser, filterPurpose, filterSchoolId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeTab, currentUser, filterPurpose, schoolSearchTerm]);
 
   async function loadAllPosts() {
     setLoadingPosts(true);
-    // We'll do a single Firestore query that sorts by createdAt desc
-    // Then we do local filtering or handle the filtering in the query if you store schoolId in post doc.
     try {
       const postsRef = collection(db, "studyBuddyPosts");
-      let qBase = query(postsRef, orderBy("createdAt", "desc"));
-      // If you do store the schoolId in the doc, you can do:
-      // if (filterSchoolId) qBase = query(qBase, where("schoolId", "==", Number(filterSchoolId)));
-      // if (filterPurpose) qBase = query(qBase, where("purpose", "==", filterPurpose));
-
+      const qBase = query(postsRef, orderBy("createdAt", "desc"));
       const snap = await getDocs(qBase);
+
       const postPromises = snap.docs.map(async (docSnap) => {
         const data = docSnap.data();
         let userName = "User";
         let userSchoolId = data.schoolId ?? null;
+        let userAvatar: string | null = null;
 
-        // If we do not store the schoolId in the doc, fetch from user doc:
         if (data.userId) {
           const userDoc = await getDoc(doc(db, "users", data.userId));
           if (userDoc.exists()) {
             userName = userDoc.data().userName || "User";
             userSchoolId = userDoc.data().schoolId || null;
+            userAvatar = userDoc.data().userImageSrc || null;
           }
+        }
+
+        // Convert schoolId -> schoolName
+        let userSchoolName = "";
+        if (userSchoolId) {
+          const schObj = allSchools.find((s) => s.id === userSchoolId);
+          userSchoolName = schObj ? schObj.name : "";
         }
 
         return {
@@ -166,18 +177,24 @@ export default function StudyBuddyPage() {
           ...data,
           userName,
           userSchoolId,
+          userSchoolName,
+          userAvatar,
         };
       });
+
       const allPostsFetched = await Promise.all(postPromises);
 
-      // client-side filter:
+      // Client-side filter
       let filtered = allPostsFetched;
       if (filterPurpose) {
-        filtered = filtered.filter((p) => (p as { purpose?: string }).purpose === filterPurpose);
-      }
-      if (filterSchoolId) {
         filtered = filtered.filter(
-          (p) => String(p.userSchoolId) === filterSchoolId
+          (p) => (p as { purpose?: string }).purpose === filterPurpose
+        );
+      }
+      if (schoolSearchTerm.trim()) {
+        const term = schoolSearchTerm.toLowerCase();
+        filtered = filtered.filter((p) =>
+          p.userSchoolName?.toLowerCase().includes(term)
         );
       }
 
@@ -188,103 +205,132 @@ export default function StudyBuddyPage() {
     setLoadingPosts(false);
   }
 
-  // Now we slice the raw array for the current page
+  // Pagination
   const startIndex = currentPage * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
   const displayedPosts = allPostsRaw.slice(startIndex, endIndex);
   const totalPages = Math.ceil(allPostsRaw.length / POSTS_PER_PAGE);
 
   function goToNextPage() {
-    if (currentPage < totalPages - 1) {
-      setCurrentPage((prev) => prev + 1);
-    }
+    if (currentPage < totalPages - 1) setCurrentPage((prev) => prev + 1);
   }
   function goToPrevPage() {
-    if (currentPage > 0) {
-      setCurrentPage((prev) => prev - 1);
-    }
+    if (currentPage > 0) setCurrentPage((prev) => prev - 1);
   }
 
   // ==============================
-  // Create Post (one per month limit)
+  // Create Post (2 per month limit)
   // ==============================
   async function handleCreatePost() {
     setCreationError("");
+
     if (!postPurpose) {
       setCreationError("Bir çalışma amacı seçmelisiniz.");
       return;
     }
-    // check last post date
-    const userPostsRef = collection(db, "studyBuddyPosts");
-    const qUser = query(
-      userPostsRef,
-      where("userId", "==", currentUser.uid),
-      orderBy("createdAt", "desc"),
-      fsLimit(1)
-    );
-    const snap = await getDocs(qUser);
-    if (!snap.empty) {
-      const lastPost = snap.docs[0].data();
-      const lastTime = lastPost.createdAt?.toDate?.();
-      if (lastTime) {
-        const diff = Date.now() - lastTime.getTime();
-        if (diff < THIRTY_DAYS_IN_MS) {
-          const daysRemaining = Math.ceil(
-            (THIRTY_DAYS_IN_MS - diff) / (1000 * 60 * 60 * 24)
-          );
-          setCreationError(
-            `Son 30 gün içinde bir post oluşturdunuz. ${daysRemaining} gün daha beklemelisiniz.`
-          );
-          return;
-        }
-      }
+    const trimmedReason = postReason.trim();
+    if (trimmedReason.length === 0) {
+      setCreationError("Açıklama boş olamaz.");
+      return;
+    }
+    if (trimmedReason.length > 256) {
+      setCreationError("Açıklama 256 karakteri geçemez.");
+      return;
     }
 
-    // create doc
-    await addDoc(userPostsRef, {
+    if (!currentUser) return;
+
+    // 2 posts in the last 30 days
+    const now = Date.now();
+    const thirtyDaysAgo = new Date(now - THIRTY_DAYS_IN_MS);
+
+    // Query how many posts user has in last 30 days
+    const postsRef = collection(db, "studyBuddyPosts");
+    const qUser = query(
+      postsRef,
+      where("userId", "==", currentUser.uid),
+      where("createdAt", ">", Timestamp.fromDate(thirtyDaysAgo))
+    );
+    const snap = await getDocs(qUser);
+
+    if (snap.size >= 2) {
+      setCreationError("Aylık 2 gönderi sınırına ulaştınız.");
+      return;
+    }
+
+    // Ok to create
+    await addDoc(postsRef, {
       userId: currentUser.uid,
       purpose: postPurpose,
       reason: postReason.trim(),
       createdAt: serverTimestamp(),
-      // optionally store schoolId if you want
-      // schoolId: ...
     });
     setPostPurpose("");
     setPostReason("");
     setShowNewPostForm(false);
     setCreationError("");
 
-    // re-load
     loadAllPosts();
   }
 
-  // open chat from post
+  // ==============================
+  // Open chat with monthly limit (2 new distinct partners)
+  // ==============================
   async function handleOpenChat(post: any) {
-    if (post.userId === currentUser.uid) return;
+    if (!currentUser) return;
+    if (post.userId === currentUser.uid) return; // can't chat with self
+
     setActiveTab("chats");
 
+    // Check if chat with this user already exists
     const participants = [currentUser.uid, post.userId].sort();
     const cRef = collection(db, "studyBuddyChats");
     const qCheck = query(cRef, where("participants", "==", participants));
     const existing = await getDocs(qCheck);
 
-    let chatRef = null;
-    if (!existing.empty) {
-      chatRef = existing.docs[0].ref;
-    } else {
+    if (existing.empty) {
+      // This is a brand-new chat with a new user => monthly limit check
+      const now = Date.now();
+      const thirtyDaysAgo = new Date(now - THIRTY_DAYS_IN_MS);
+
+      const qC = query(
+        cRef,
+        where("participants", "array-contains", currentUser.uid),
+        where("lastUpdated", ">", Timestamp.fromDate(thirtyDaysAgo))
+      );
+      const snapC = await getDocs(qC);
+
+      // Distinct partner IDs
+      const distinctPartners = new Set<string>();
+      snapC.forEach((docSnap) => {
+        const chatData = docSnap.data();
+        const ps: string[] = chatData.participants || [];
+        const other = ps.find((uid) => uid !== currentUser.uid);
+        if (other) distinctPartners.add(other);
+      });
+
+      if (distinctPartners.size >= 2) {
+        // Instead of alert, we show our WarningModal
+        showWarning("Her ay en fazla 2 farklı kişiyle sohbet başlatabilirsiniz!");
+        return;
+      }
+
+      // otherwise create new chat
       const newChatObj = {
         participants,
         participantsData: {},
         lastMessage: "",
         lastUpdated: serverTimestamp(),
       };
-      chatRef = await addDoc(cRef, newChatObj);
-    }
-    if (chatRef) {
-      const docSnap = await getDoc(chatRef);
+      const newRef = await addDoc(cRef, newChatObj);
+      const docSnap = await getDoc(newRef);
       if (docSnap.exists()) {
         setSelectedChat({ id: docSnap.id, ...docSnap.data() });
       }
+    } else {
+      // Chat already exists, just open it
+      const docSnap = existing.docs[0];
+      setSelectedChat({ id: docSnap.id, ...docSnap.data() });
     }
   }
 
@@ -295,6 +341,7 @@ export default function StudyBuddyPage() {
     if (!currentUser) return;
     if (activeTab !== "myPosts") return;
     loadMyPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab, currentUser]);
 
   async function loadMyPosts() {
@@ -307,10 +354,7 @@ export default function StudyBuddyPage() {
         orderBy("createdAt", "desc")
       );
       const snap = await getDocs(qMy);
-      const results = snap.docs.map((d) => ({
-        id: d.id,
-        ...d.data(),
-      }));
+      const results = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
       setMyPosts(results);
     } catch (err) {
       console.error("Error loading my posts:", err);
@@ -330,11 +374,15 @@ export default function StudyBuddyPage() {
     setEditReason("");
   }
   async function saveEditPost(postId: string) {
+    const trimmedReason = editReason.trim();
+    if (trimmedReason.length > 256) {
+      setCreationError("Açıklama 256 karakteri geçemez.");
+      return;
+    }
     await updateDoc(doc(db, "studyBuddyPosts", postId), {
       purpose: editPurpose,
-      reason: editReason,
+      reason: trimmedReason,
     });
-    // update local state
     setMyPosts((prev) =>
       prev.map((p) =>
         p.id === postId ? { ...p, purpose: editPurpose, reason: editReason } : p
@@ -372,6 +420,7 @@ export default function StudyBuddyPage() {
     );
     const unsub = onSnapshot(qC, async (snap) => {
       const rawChats = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+      // For each chat, fetch participants data (like avatar)
       const newChats = await Promise.all(
         rawChats.map(async (c: any) => {
           const newParts: any = {};
@@ -380,9 +429,10 @@ export default function StudyBuddyPage() {
             if (ud.exists()) {
               newParts[uid] = {
                 userName: ud.data()?.userName || "User",
+                avatarUrl: ud.data()?.userImageSrc || null,
               };
             } else {
-              newParts[uid] = { userName: "User" };
+              newParts[uid] = { userName: "User", avatarUrl: null };
             }
           }
           return { ...c, participantsData: newParts };
@@ -418,17 +468,45 @@ export default function StudyBuddyPage() {
     }
   }, [messages]);
 
+  // ==============================
+  // Send Message (limit 100 per 30 days, each <=200 chars)
+  // ==============================
   async function handleSendMessage() {
-    if (!selectedChat || !newMessage.trim()) return;
+    if (!selectedChat) return;
+    const trimmed = newMessage.trim();
+    if (!trimmed) return; // empty
+    if (trimmed.length > 200) {
+      showWarning("Mesaj 200 karakteri aşamaz!");
+      return;
+    }
+
+    // Check monthly message limit
+    const now = Date.now();
+    const thirtyDaysAgo = new Date(now - THIRTY_DAYS_IN_MS);
+
+    const msgsRef = collection(db, "studyBuddyMessages");
+    // All messages from currentUser in last 30 days
+    const qUserMsgs = query(
+      msgsRef,
+      where("sender", "==", currentUser.uid),
+      where("createdAt", ">", Timestamp.fromDate(thirtyDaysAgo))
+    );
+    const snap = await getDocs(qUserMsgs);
+    if (snap.size >= 100) {
+      showWarning("Aylık 100 mesaj sınırına ulaştınız.");
+      return;
+    }
+
+    // If checks pass, send
     const chatId = selectedChat.id;
-    await addDoc(collection(db, "studyBuddyMessages"), {
+    await addDoc(msgsRef, {
       chatId,
       sender: currentUser.uid,
-      content: newMessage.trim(),
+      content: trimmed,
       createdAt: serverTimestamp(),
     });
     await updateDoc(doc(db, "studyBuddyChats", chatId), {
-      lastMessage: newMessage.trim(),
+      lastMessage: trimmed,
       lastUpdated: serverTimestamp(),
     });
     setNewMessage("");
@@ -444,246 +522,102 @@ export default function StudyBuddyPage() {
     return <div className="p-4">Lütfen giriş yapın.</div>;
   }
 
-  // Now we can render
+  // Helper: Truncate last message
+  function truncatedMessage(message: string, maxLength = 40) {
+    if (!message) return "";
+    return message.length > maxLength
+      ? message.slice(0, maxLength) + "..."
+      : message;
+  }
+
   return (
-    <div className="max-w-[1200px] mx-auto p-4 flex flex-col gap-4">
-      {/* Tabs */}
-      <div className="flex gap-4">
-        <button
-          className={`px-4 py-2 rounded ${
-            activeTab === "allPosts" ? "bg-green-500 text-white" : "bg-gray-200"
-          }`}
-          onClick={() => setActiveTab("allPosts")}
-        >
-          All Posts
-        </button>
-        <button
-          className={`px-4 py-2 rounded ${
-            activeTab === "myPosts" ? "bg-green-500 text-white" : "bg-gray-200"
-          }`}
-          onClick={() => setActiveTab("myPosts")}
-        >
-          My Posts
-        </button>
-        <button
-          className={`px-4 py-2 rounded ${
-            activeTab === "chats" ? "bg-green-500 text-white" : "bg-gray-200"
-          }`}
-          onClick={() => setActiveTab("chats")}
-        >
-          Chats
-        </button>
-      </div>
-
-      {/* ALL POSTS TAB */}
-      {activeTab === "allPosts" && (
-        <div className="flex flex-col gap-4">
-          {/* Filter Panel */}
-          <div className="flex flex-wrap gap-4 items-center p-4 bg-gray-100 rounded">
-            <div>
-              <label className="block text-sm font-semibold">Amaç</label>
-              <select
-                value={filterPurpose}
-                onChange={(e) => setFilterPurpose(e.target.value)}
-                className="border p-2 rounded"
-              >
-                <option value="">Hepsi</option>
-                {PURPOSE_OPTIONS.map((opt) => (
-                  <option key={opt} value={opt}>
-                    {opt}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-semibold">Okul</label>
-              <select
-                value={filterSchoolId}
-                onChange={(e) => setFilterSchoolId(e.target.value)}
-                className="border p-2 rounded"
-              >
-                <option value="">Hepsi</option>
-                {allSchools.map((sch) => (
-                  <option key={sch.id} value={String(sch.id)}>
-                    {sch.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <button
-              onClick={() => setShowNewPostForm(!showNewPostForm)}
-              className="ml-auto bg-blue-600 text-white px-3 py-2 rounded"
+    <>
+      <div className="h-screen flex flex-col bg-gray-50">
+        <div className="border-2 rounded-xl p-6 shadow-lg bg-white w-full max-w-[1200px] mx-auto flex-1 flex flex-col">
+          {/* Tab Buttons */}
+          <div className="flex gap-2">
+            <Button
+              variant={activeTab === "allPosts" ? "secondary" : "default"}
+              size="sm"
+              onClick={() => setActiveTab("allPosts")}
             >
-              Create New Post
-            </button>
+              Bütün Gönderİler
+            </Button>
+            <Button
+              variant={activeTab === "myPosts" ? "secondary" : "default"}
+              size="sm"
+              onClick={() => setActiveTab("myPosts")}
+            >
+              Gönderİlerİm
+            </Button>
+            <Button
+              variant={activeTab === "chats" ? "secondary" : "default"}
+              size="sm"
+              onClick={() => setActiveTab("chats")}
+            >
+              Sohbetlerİm
+            </Button>
           </div>
 
-          {/* Create New Post Form */}
-          {showNewPostForm && (
-            <div className="p-4 border bg-white rounded">
-              <h3 className="text-lg font-bold mb-2">Create a Post</h3>
-              {creationError && (
-                <div className="text-red-500 text-sm mb-2">{creationError}</div>
-              )}
-              <div className="mb-2">
-                <label className="block text-sm font-semibold">Amaç</label>
-                <select
-                  className="border p-2 rounded w-full"
-                  value={postPurpose}
-                  onChange={(e) => setPostPurpose(e.target.value)}
-                >
-                  <option value="">-Seç-</option>
-                  {PURPOSE_OPTIONS.map((opt) => (
-                    <option key={opt} value={opt}>
-                      {opt}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="mb-2">
-                <label className="block text-sm font-semibold">Açıklama</label>
-                <textarea
-                  className="border p-2 rounded w-full"
-                  value={postReason}
-                  onChange={(e) => setPostReason(e.target.value)}
-                  placeholder="Neden çalışma arkadaşı arıyorsun?"
-                />
-              </div>
-              <button
-                onClick={handleCreatePost}
-                className="bg-green-600 text-white px-3 py-2 rounded"
-              >
-                Gönder
-              </button>
-            </div>
-          )}
-
-          {/* Displayed Posts (currentPage slice) */}
-          <div className="bg-white border p-4 rounded min-h-[200px]">
-            {loadingPosts ? (
-              <div>Yükleniyor...</div>
-            ) : (
-              <>
-                {displayedPosts.length === 0 ? (
-                  <div>Post yok (veya filtreye uyan yok).</div>
-                ) : (
-                  displayedPosts.map((post) => {
-                    // Find userSchoolId => school name
-                    let schoolName = "";
-                    if (post.userSchoolId) {
-                      const found = allSchools.find(
-                        (s) => s.id === post.userSchoolId
-                      );
-                      schoolName = found ? found.name : "";
-                    }
-                    const createdAtDate = post.createdAt?.toDate
-                      ? post.createdAt.toDate()
-                      : null;
-                    return (
-                      <div
-                        key={post.id}
-                        className="border-b last:border-none py-3"
-                      >
-                        <div className="text-sm text-gray-500">
-                          Tarih:{" "}
-                          {createdAtDate
-                            ? createdAtDate.toLocaleString()
-                            : "N/A"}
-                        </div>
-                        <div className="font-semibold">
-                          Gönderen: {post.userName}
-                        </div>
-                        {schoolName && (
-                          <div className="text-sm">Okul: {schoolName}</div>
-                        )}
-                        {post.purpose && (
-                          <div className="text-sm">Amaç: {post.purpose}</div>
-                        )}
-                        <div className="text-sm text-gray-700">
-                          Açıklama: {post.reason}
-                        </div>
-                        {post.userId !== currentUser.uid && (
-                          <button
-                            onClick={() => handleOpenChat(post)}
-                            className="mt-1 px-2 py-1 bg-green-500 text-white text-sm rounded"
-                          >
-                            Mesaj At
-                          </button>
-                        )}
-                      </div>
-                    );
-                  })
-                )}
-                {/* Pagination Buttons */}
-                <div className="flex justify-between mt-2">
-                  <button
-                    onClick={goToPrevPage}
-                    disabled={currentPage === 0}
-                    className="px-3 py-1 bg-blue-200 rounded disabled:opacity-50"
-                  >
-                    Önceki Sayfa
-                  </button>
-                  <button
-                    onClick={goToNextPage}
-                    disabled={currentPage >= totalPages - 1}
-                    className="px-3 py-1 bg-blue-200 rounded disabled:opacity-50"
-                  >
-                    Sonraki Sayfa
-                  </button>
-                </div>
-                <div className="text-sm text-gray-700 mt-2">
-                  Sayfa {currentPage + 1} / {totalPages}
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* MY POSTS TAB */}
-      {activeTab === "myPosts" && (
-        <div className="bg-white border p-4 rounded min-h-[200px]">
-          <h2 className="text-xl font-bold mb-4">My Posts</h2>
-          {loadingMyPosts ? (
-            <div>Yükleniyor...</div>
-          ) : myPosts.length === 0 ? (
-            <div>Hiç postunuz yok.</div>
-          ) : (
-            myPosts.map((post) => {
-              const isEditing = editingPostId === post.id;
-              const isDeleting = deleteConfirmId === post.id;
-              const createdAtDate = post.createdAt?.toDate
-                ? post.createdAt.toDate()
-                : null;
-
-              return (
-                <div
-                  key={post.id}
-                  className="border-b last:border-none py-3 space-y-2"
-                >
-                  <div className="text-sm text-gray-500">
-                    Tarih:{" "}
-                    {createdAtDate ? createdAtDate.toLocaleString() : "N/A"}
+          <div className="flex-1 overflow-hidden mt-4">
+            {/* ALL POSTS TAB */}
+            {activeTab === "allPosts" && (
+              <div className="h-full flex flex-col">
+                {/* Filter Panel */}
+                <div className="p-4 rounded-md bg-gray-100 flex flex-wrap gap-4 items-center">
+                  {/* Purpose Filter */}
+                  <div>
+                    <label className="block text-sm font-medium">Bu Neyin Hazırlığı</label>
+                    <select
+                      value={filterPurpose}
+                      onChange={(e) => setFilterPurpose(e.target.value)}
+                      className="mt-1 block rounded-md p-1 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    >
+                      <option value="">Hepsi</option>
+                      {PURPOSE_OPTIONS.map((opt) => (
+                        <option key={opt} value={opt}>
+                          {opt}
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                  {!isEditing && (
-                    <>
-                      <div className="text-sm font-semibold">
-                        Amaç: {post.purpose}
-                      </div>
-                      <div className="text-sm text-gray-700">
-                        Açıklama: {post.reason}
-                      </div>
-                    </>
-                  )}
-                  {isEditing && (
-                    <>
-                      <label className="block text-sm font-semibold">
-                        Amaç
-                      </label>
+
+                  {/* School Search Input */}
+                  <div>
+                    <label className="block text-sm font-medium">Okula Göre Ara</label>
+                    <input
+                      type="text"
+                      placeholder="Okul ismi..."
+                      value={schoolSearchTerm}
+                      onChange={(e) => setSchoolSearchTerm(e.target.value)}
+                      className="mt-1 block rounded-md p-1 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    />
+                  </div>
+
+                  {/* Create New Post Button */}
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    className="ml-auto"
+                    onClick={() => setShowNewPostForm(!showNewPostForm)}
+                  >
+                    Yenİ Gönderİ Oluştur
+                  </Button>
+                </div>
+
+                {/* Create New Post Form */}
+                {showNewPostForm && (
+                  <div className="border-2 rounded-md p-4 space-y-3 bg-white mt-4 mx-1">
+                    <h3 className="text-lg font-bold">Gönderi Oluştur</h3>
+                    {creationError && (
+                      <div className="text-red-500 text-sm">{creationError}</div>
+                    )}
+                    <div>
+                      <label className="block text-sm font-medium">Bu Neyin Hazırlığı</label>
                       <select
-                        className="border p-1 rounded w-full"
-                        value={editPurpose}
-                        onChange={(e) => setEditPurpose(e.target.value)}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        value={postPurpose}
+                        onChange={(e) => setPostPurpose(e.target.value)}
                       >
                         <option value="">-Seç-</option>
                         {PURPOSE_OPTIONS.map((opt) => (
@@ -692,181 +626,403 @@ export default function StudyBuddyPage() {
                           </option>
                         ))}
                       </select>
-                      <label className="block text-sm font-semibold mt-2">
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium">
                         Açıklama
                       </label>
                       <textarea
-                        className="border p-1 rounded w-full"
-                        value={editReason}
-                        onChange={(e) => setEditReason(e.target.value)}
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        value={postReason}
+                        onChange={(e) => setPostReason(e.target.value)}
+                        placeholder="Neden çalışma arkadaşı arıyorsun? (max 256 karakter)"
+                        maxLength={256}
                       />
+                    </div>
+                    <Button variant="secondary" onClick={handleCreatePost}>
+                      Gönder
+                    </Button>
+                  </div>
+                )}
+
+                {/* Posts list container */}
+                <div
+                  className="
+                    flex-1 mt-4 mx-1 border-2 rounded-md p-4 bg-white overflow-y-auto
+                    scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-200
+                  "
+                >
+                  {loadingPosts ? (
+                    <div>Yükleniyor...</div>
+                  ) : (
+                    <>
+                      {displayedPosts.length === 0 ? (
+                        <div>Post yok (veya filtreye uyan yok).</div>
+                      ) : (
+                        displayedPosts.map((post) => {
+                          const createdAtDate = post.createdAt?.toDate
+                            ? post.createdAt.toDate()
+                            : null;
+
+                          return (
+                            <div
+                              key={post.id}
+                              className="border-b last:border-none py-3"
+                            >
+                              <div className="text-sm text-gray-500">
+                                Oluşturulma Zamanı:{" "}
+                                {createdAtDate
+                                  ? createdAtDate.toLocaleString()
+                                  : "N/A"}
+                              </div>
+                              <div className="font-semibold">
+                                Gönderen: {post.userName}
+                              </div>
+                              {post.userSchoolName && (
+                                <div className="text-sm">
+                                  Okul: {post.userSchoolName}
+                                </div>
+                              )}
+                              {post.purpose && (
+                                <div className="text-sm">
+                                  Bu Neyin Hazırlığı: {post.purpose}
+                                </div>
+                              )}
+                              <div className="text-sm text-gray-700">
+                                Açıklama: {post.reason}
+                              </div>
+                              {post.userId !== currentUser?.uid && (
+                                <Button
+                                  variant="primary"
+                                  size="sm"
+                                  className="mt-2"
+                                  onClick={() => handleOpenChat(post)}
+                                >
+                                  Mesaj At
+                                </Button>
+                              )}
+                            </div>
+                          );
+                        })
+                      )}
                     </>
                   )}
-
-                  {/* Buttons */}
-                  <div className="flex gap-2">
-                    {!isEditing && !isDeleting && (
-                      <>
-                        <button
-                          onClick={() => startEditingPost(post)}
-                          className="px-2 py-1 bg-yellow-300 rounded text-black text-sm"
-                        >
-                          Düzenle
-                        </button>
-                        <button
-                          onClick={() => startDeletePost(post.id)}
-                          className="px-2 py-1 bg-red-500 rounded text-white text-sm"
-                        >
-                          Sil
-                        </button>
-                      </>
-                    )}
-                    {isEditing && (
-                      <>
-                        <button
-                          onClick={() => saveEditPost(post.id)}
-                          className="px-2 py-1 bg-green-500 text-white rounded text-sm"
-                        >
-                          Kaydet
-                        </button>
-                        <button
-                          onClick={cancelEditPost}
-                          className="px-2 py-1 bg-gray-300 rounded text-sm"
-                        >
-                          İptal
-                        </button>
-                      </>
-                    )}
-                    {isDeleting && (
-                      <div className="flex items-center gap-2 text-sm">
-                        <span>Silmek istediğinize emin misiniz?</span>
-                        <button
-                          onClick={confirmDeletePost}
-                          className="px-2 py-1 bg-red-500 text-white rounded"
-                        >
-                          Evet, sil
-                        </button>
-                        <button
-                          onClick={cancelDeletePost}
-                          className="px-2 py-1 bg-gray-300 rounded"
-                        >
-                          İptal
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })
-          )}
-        </div>
-      )}
-
-      {/* CHATS TAB */}
-      {activeTab === "chats" && (
-        <div className="flex flex-col md:flex-row gap-4">
-          {/* Chat List */}
-          <div className="w-full md:w-1/3 border p-4 rounded space-y-2">
-            <h2 className="text-xl font-bold mb-2">Sohbetler</h2>
-            {loadingChats ? (
-              <div>Yükleniyor...</div>
-            ) : chats.length === 0 ? (
-              <div>Hiç sohbet yok.</div>
-            ) : (
-              <ul className="space-y-3">
-                {chats.map((chat) => {
-                  const otherUid = chat.participants.find(
-                    (id: string) => id !== currentUser.uid
-                  );
-                  const otherName =
-                    chat.participantsData[otherUid]?.userName || "User";
-                  return (
-                    <li
-                      key={chat.id}
-                      className="border p-3 rounded cursor-pointer hover:bg-gray-100"
-                      onClick={() => setSelectedChat(chat)}
-                    >
-                      <div className="font-semibold">{otherName}</div>
-                      <div className="text-sm text-gray-600">
-                        {chat.lastMessage || ""}
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-          </div>
-
-          {/* Chat Messages */}
-          <div className="w-full md:w-2/3 border p-4 rounded flex flex-col">
-            {!selectedChat ? (
-              <div className="text-gray-500">
-                Bir sohbet seçmek için sol listeden tıklayın.
-              </div>
-            ) : (
-              <>
-                <div className="pb-2 mb-2 border-b">
-                  <h3 className="text-lg font-semibold">Chat</h3>
-                  <p className="text-sm text-gray-600">
-                    {selectedChat.participants
-                      .filter((uid: string) => uid !== currentUser.uid)
-                      .map(
-                        (uid: string) => selectedChat.participantsData[uid]?.userName
-                      )
-                      .join(", ")}
-                  </p>
                 </div>
 
-                <div className="flex-1 overflow-y-auto space-y-2 mb-2 pr-2">
-                  {messages.map((msg) => {
-                    const isMine = msg.sender === currentUser.uid;
-                    return (
-                      <div
-                        key={msg.id}
-                        className={`flex ${
-                          isMine ? "justify-end" : "justify-start"
-                        }`}
-                      >
-                        <div
-                          className={`p-2 rounded mb-1 max-w-xs ${
-                            isMine
-                              ? "bg-blue-500 text-white"
-                              : "bg-gray-200 text-gray-800"
-                          }`}
-                        >
-                          {msg.content}
-                        </div>
-                      </div>
-                    );
-                  })}
-                  <div ref={messageEndRef} />
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <input
-                    className="flex-1 border p-2 rounded"
-                    placeholder="Mesaj..."
-                    value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        handleSendMessage();
-                      }
-                    }}
-                  />
-                  <button
-                    onClick={handleSendMessage}
-                    className="px-3 py-2 bg-blue-600 text-white rounded"
+                {/* Pagination */}
+                <div className="flex justify-between mt-4 mx-1">
+                  <Button
+                    variant="primaryOutline"
+                    size="sm"
+                    onClick={goToPrevPage}
+                    disabled={currentPage === 0}
                   >
-                    Gönder
-                  </button>
+                    Önceki Sayfa
+                  </Button>
+                  <Button
+                    variant="primaryOutline"
+                    size="sm"
+                    onClick={goToNextPage}
+                    disabled={currentPage >= totalPages - 1}
+                  >
+                    Sonraki Sayfa
+                  </Button>
                 </div>
-              </>
+                <div className="text-sm text-gray-700 mx-1">
+                  Sayfa {currentPage + 1} / {totalPages}
+                </div>
+              </div>
+            )}
+
+            {/* MY POSTS TAB */}
+            {activeTab === "myPosts" && (
+              <div className="h-full flex flex-col">
+                <div
+                  className="
+                    flex-1 mt-2 border-2 rounded-md p-4 bg-white overflow-y-auto mx-1
+                    scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-200
+                  "
+                >
+                  <h2 className="text-xl font-bold mb-4">My Posts</h2>
+                  {loadingMyPosts ? (
+                    <div>Yükleniyor...</div>
+                  ) : myPosts.length === 0 ? (
+                    <div>Hiç postunuz yok.</div>
+                  ) : (
+                    myPosts.map((post) => {
+                      const isEditing = editingPostId === post.id;
+                      const isDeleting = deleteConfirmId === post.id;
+                      const createdAtDate = post.createdAt?.toDate
+                        ? post.createdAt.toDate()
+                        : null;
+
+                      return (
+                        <div
+                          key={post.id}
+                          className="border-b last:border-none py-3 space-y-2"
+                        >
+                          <div className="text-sm text-gray-500">
+                            Oluşturulma Zamanı:{" "}
+                            {createdAtDate
+                              ? createdAtDate.toLocaleString()
+                              : "N/A"}
+                          </div>
+                          {!isEditing ? (
+                            <>
+                              <div className="text-sm font-semibold">
+                                Bu Neyin Hazırlığı: {post.purpose}
+                              </div>
+                              <div className="text-sm text-gray-700">
+                                Açıklama: {post.reason}
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <label className="block text-sm font-medium">
+                                Bu Neyin Hazırlığı
+                              </label>
+                              <select
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                value={editPurpose}
+                                onChange={(e) => setEditPurpose(e.target.value)}
+                              >
+                                <option value="">-Seç-</option>
+                                {PURPOSE_OPTIONS.map((opt) => (
+                                  <option key={opt} value={opt}>
+                                    {opt}
+                                  </option>
+                                ))}
+                              </select>
+                              <label className="block text-sm font-medium mt-2">
+                                Açıklama
+                              </label>
+                              <textarea
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                                value={editReason}
+                                onChange={(e) => setEditReason(e.target.value)}
+                              />
+                            </>
+                          )}
+
+                          {/* Buttons */}
+                          <div className="flex gap-2">
+                            {!isEditing && !isDeleting && (
+                              <>
+                                <Button
+                                  variant="primaryOutline"
+                                  size="sm"
+                                  onClick={() => startEditingPost(post)}
+                                >
+                                  Düzenle
+                                </Button>
+                                <Button
+                                  variant="danger"
+                                  size="sm"
+                                  onClick={() => startDeletePost(post.id)}
+                                >
+                                  Sil
+                                </Button>
+                              </>
+                            )}
+                            {isEditing && (
+                              <>
+                                <Button
+                                  variant="secondary"
+                                  size="sm"
+                                  onClick={() => saveEditPost(post.id)}
+                                >
+                                  Kaydet
+                                </Button>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={cancelEditPost}
+                                >
+                                  İptal
+                                </Button>
+                              </>
+                            )}
+                            {isDeleting && (
+                              <div className="flex items-center gap-2 text-sm">
+                                <span>Silmek istediğinize emin misiniz?</span>
+                                <Button
+                                  variant="danger"
+                                  size="sm"
+                                  onClick={confirmDeletePost}
+                                >
+                                  Evet, sil
+                                </Button>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={cancelDeletePost}
+                                >
+                                  İptal
+                                </Button>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* CHATS TAB */}
+            {activeTab === "chats" && (
+              <div className="h-full flex flex-col md:flex-row gap-4">
+                {/* Chat List */}
+                <div
+                  className="
+                    border-2 rounded-md p-4 bg-white w-full md:w-1/3
+                    overflow-y-auto scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-200
+                  "
+                >
+                  <h2 className="text-xl font-bold mb-2">Sohbetler</h2>
+                  {loadingChats ? (
+                    <div>Yükleniyor...</div>
+                  ) : chats.length === 0 ? (
+                    <div>Hiç sohbet yok.</div>
+                  ) : (
+                    <ul className="space-y-2">
+                      {chats.map((chat) => {
+                        // find the other user
+                        const otherUid = chat.participants.find(
+                          (id: string) => id !== currentUser.uid
+                        );
+                        const otherData = chat.participantsData[otherUid];
+                        const otherName = otherData?.userName || "User";
+                        const otherAvatar = otherData?.avatarUrl || "/default.png";
+
+                        const shortLastMsg = truncatedMessage(
+                          chat.lastMessage,
+                          12
+                        );
+
+                        return (
+                          <li
+                            key={chat.id}
+                            className="border rounded p-2 cursor-pointer hover:bg-gray-100"
+                            onClick={() => setSelectedChat(chat)}
+                          >
+                            <div className="flex items-center gap-2">
+                              <img
+                                src={otherAvatar}
+                                alt="avatar"
+                                className="w-8 h-8 rounded-full object-cover"
+                              />
+                              <div>
+                                <div className="font-semibold">{otherName}</div>
+                                <div className="text-sm text-gray-600 truncate">
+                                  {shortLastMsg}
+                                </div>
+                              </div>
+                            </div>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </div>
+
+                {/* Chat Messages */}
+                <div className="border-2 rounded-md p-4 bg-white flex-1 flex flex-col">
+                  {!selectedChat ? (
+                    <div className="text-gray-500">
+                      Bir sohbet seçmek için sol listeden tıklayın.
+                    </div>
+                  ) : (
+                    <>
+                      {/* Header */}
+                      <div className="pb-2 mb-2 border-b">
+                        <h3 className="text-lg font-semibold">Sohbet</h3>
+                        <p className="text-sm text-gray-600">
+                          {selectedChat.participants
+                            .filter((uid: string) => uid !== currentUser.uid)
+                            .map((uid: string) => {
+                              const d = selectedChat.participantsData[uid];
+                              return d?.userName || "User";
+                            })
+                            .join(", ")}
+                        </p>
+                      </div>
+
+                      {/* Messages area (max ~15 lines) */}
+                      <div
+                        className="
+                          overflow-y-auto overflow-x-hidden space-y-2 pr-2
+                          scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-200
+                          max-h-80
+                        "
+                      >
+                        {messages.map((msg) => {
+                          const isMine = msg.sender === currentUser.uid;
+                          return (
+                            <div
+                              key={msg.id}
+                              className={`flex ${
+                                isMine ? "justify-end" : "justify-start"
+                              }`}
+                            >
+                              <div
+                                className={`
+                                  p-2 rounded mb-1 max-w-sm
+                                  whitespace-pre-wrap break-words
+                                  ${
+                                    isMine
+                                      ? "bg-blue-500 text-white"
+                                      : "bg-gray-200 text-gray-800"
+                                  }
+                                `}
+                              >
+                                {msg.content}
+                              </div>
+                            </div>
+                          );
+                        })}
+                        <div ref={messageEndRef} />
+                      </div>
+
+                      {/* Message Input */}
+                      <div className="mt-2 flex items-center gap-2">
+                        <input
+                          className="flex-1 border rounded-md p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                          placeholder="Mesaj (max 200 karakter)"
+                          value={newMessage}
+                          onChange={(e) => setNewMessage(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              e.preventDefault();
+                              handleSendMessage();
+                            }
+                          }}
+                        />
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          onClick={handleSendMessage}
+                        >
+                          Gönder
+                        </Button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
             )}
           </div>
         </div>
-      )}
-    </div>
+        <div className="pb-12"></div>
+      </div>
+
+      {/* Our WarningModal, displayed if warningOpen === true */}
+      <WarningModal
+        open={warningOpen}
+        message={warningMessage}
+        onClose={() => setWarningOpen(false)}
+      />
+    </>
   );
 }

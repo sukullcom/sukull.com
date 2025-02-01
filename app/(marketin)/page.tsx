@@ -50,7 +50,7 @@ export default function Home() {
           )}
           {user && (
             <Button size="lg" variant="secondary" className="w-full" asChild>
-              <Link href="/learn">Öğrenmeye Devam Et</Link>
+              <Link prefetch={false} href="/learn">Öğrenmeye Devam Et</Link>
             </Button>
           )}
         </div>

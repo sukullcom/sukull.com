@@ -1,4 +1,3 @@
-// actions/profile.ts
 "use server";
 
 import { getServerUser } from "@/lib/auth";
@@ -11,7 +10,7 @@ import { getFirestore } from "firebase-admin/firestore"; // for Firestore admin
 export async function updateProfileAction(
   newName: string,
   newImage: string,
-  schoolId: number // we add one more param
+  schoolId: number
 ) {
   const user = await getServerUser();
   if (!user) {
@@ -40,10 +39,11 @@ export async function updateProfileAction(
     })
     .where(eq(userProgress.userId, userId));
 
-  // 2) Update Firebase Auth displayName (optional)
+  // 2) Update Firebase Auth displayName (OPTIONAL photo)
+  // If you do not want the user’s firebase Auth photoURL overwritten, just comment out:
   await adminAuth.updateUser(userId, {
     displayName: newName || "Anonymous",
-    photoURL: newImage,
+    // photoURL: newImage, // <--- comment out to avoid overwriting with Google link
   });
 
   // 3) Mirror to Firestore

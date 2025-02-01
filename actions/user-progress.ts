@@ -69,8 +69,8 @@ export const upsertUserProgress = async (courseId: number) => {
   }
 
   const existing = await getUserProgress();
-  const userName = user.name || "User";
-  const userImageSrc = user.picture || "/mascot_purple.svg";
+  const userName = existing?.userName || user.name || "User";
+  const userImageSrc = existing?.userImageSrc || "/mascot_purple.svg";
 
   if (existing) {
     await db

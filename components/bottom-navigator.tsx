@@ -52,6 +52,7 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
         const isActive = pathname === item.href;
         return (
           <Link
+          prefetch={false}
             key={item.href}
             href={item.href}
             className={cn(
@@ -69,20 +70,20 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
           </Link>
         );
       })}
-      <div className="p-2">
+      <div className="">
         {
           <Button
             onClick={handleSignOut}
             variant="secondary"
-            className="justify-start h-[44px] flex items-center"
+            className="justify-start h-[44px] flex items-center pl-3"
           >
             <Image
-              src="/exit_.png"
+              src="/exit.png"
               alt="Çıkış Yap"
-              height={32}
-              width={32}
+              height={20}
+              width={20}
             />
-            <span className="text-left">Çıkış</span>
+            <span className="text-left pr-1">Çıkış</span>
           </Button>
         }
       </div>

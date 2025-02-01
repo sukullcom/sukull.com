@@ -150,7 +150,7 @@ export default function LoginPage() {
         <p className="text-center text-sm mt-6">
           Şifreni mi unuttun?{" "}
           <a
-            href="/forgot-password"
+            href="/password-reset"
             className="text-green-500 font-semibold underline hover:text-green-500"
           >
             Şifremi Unuttum

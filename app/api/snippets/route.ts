@@ -45,9 +45,9 @@ export async function POST(req: Request) {
       );
     }
 
-    if (userP.points < 10000) {
+    if (userP.points < 5000) {
       return NextResponse.json(
-        { error: "You do not have enough points to share a snippet." },
+        { error: "You need to have 5000 points to share a snippet." },
         { status: 403 }
       );
     }

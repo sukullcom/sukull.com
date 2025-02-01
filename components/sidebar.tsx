@@ -46,7 +46,7 @@ export const Sidebar = ({ className }: Props) => {
         className
       )}
     >
-      <Link href="/learn">
+      <Link prefetch={false} href="/learn">
         <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3">
           <Image
             src="/mascot_purple.svg"
@@ -76,7 +76,7 @@ export const Sidebar = ({ className }: Props) => {
         <SidebarItem label="Hedefler" href="/quests" iconSrc={questsIcon} />
         <SidebarItem label="Çantam" href="/shop" iconSrc={shopIcon} />
         <SidebarItem label="Çalışma Arkadaşı" href="/study-buddy" iconSrc="/study_buddy.png" />
-        <SidebarItem label="Profil" href="/profile" iconSrc="/mascot_blue.svg" />
+        <SidebarItem label="Profİl" href="/profile" iconSrc="/mascot_blue.svg" />
       </div>
       <div className="p-4">
        {( <Button
@@ -85,11 +85,11 @@ export const Sidebar = ({ className }: Props) => {
           className="justify-start h-[52px] flex items-center"
         >
           <Image
-            src="/exit_.png"
+            src="/exit.png"
             alt="Çıkış Yap"
             className="mr-1"
-            height={36}
-            width={36}
+            height={26}
+            width={26}
           />
           <span className="text-left">Çıkış Yap</span>
         </Button>)}

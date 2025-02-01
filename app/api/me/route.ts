@@ -1,4 +1,3 @@
-// app/api/me/route.ts
 import { NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
 import db from "@/db/drizzle";
@@ -19,7 +18,7 @@ export async function GET() {
       userName: true,
       userImageSrc: true,
       profileLocked: true,
-      schoolId: true,    // Must fetch the user’s chosen school if any
+      schoolId: true,
     },
   });
 

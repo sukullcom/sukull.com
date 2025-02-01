@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
     // Return ID, name
     const data = await db.query.schools.findMany({
       orderBy: (s, { asc }) => [asc(s.name)],
-      columns: { id: true, name: true },
+      columns: { id: true, name: true, type: true },
     });
     return NextResponse.json(data);
   } catch (err) {

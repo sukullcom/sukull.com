@@ -1,7 +1,7 @@
 
 import { create } from "zustand";
 import { CodeEditorState } from "@/app/types";
-import { LANGUAGE_CONFIG } from "@/app/(main)/(protected)/lab/compLab/sukull-code-editor/constants";
+import { LANGUAGE_CONFIG } from "@/app/(main)/(protected)/lab/sukull-code-editor/constants";
 import { Monaco } from "@monaco-editor/react";
 
 const getInitialState = () => {

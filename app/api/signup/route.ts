@@ -1,13 +1,13 @@
-// app/api/signup/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { adminAuth } from "@/lib/firebaseAdmin";
+import { getFirestore } from "firebase-admin/firestore";
 import db from "@/db/drizzle";
 import { userProgress } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function POST(req: NextRequest) {
   try {
-    const { token, displayName, avatarUrl } = await req.json();
+    const { token, displayName } = await req.json();
     if (!token) {
       return NextResponse.json({ error: "No token provided" }, { status: 400 });
     }
@@ -35,21 +35,50 @@ export async function POST(req: NextRequest) {
       maxAge: expiresIn / 1000,
     });
 
-    // 4) create / update user in Drizzle
+    // 4) create/update user in Drizzle
     const existing = await db.query.userProgress.findFirst({
       where: eq(userProgress.userId, userId),
     });
 
+    const nameToUse = displayName || "User";
+
     if (!existing) {
       await db.insert(userProgress).values({
         userId,
-        userName: displayName || "User",
-        userImageSrc: avatarUrl || "/mascot_purple.svg",
+        userName: nameToUse,
+        // Always default to mascot_purple.svg at the beginning
+        userImageSrc: "/mascot_purple.svg",
+      });
+
+      // Also create user doc in Firestore with default image
+      const firestore = getFirestore();
+      await firestore.collection("users").doc(userId).set({
+        userName: nameToUse,
+        userImageSrc: "/mascot_purple.svg",
+        schoolId: null,
+        createdAt: new Date(),
       });
     } else {
+      // If userProgress row exists, just update displayName (if provided)
       if (displayName) {
-        await db.update(userProgress).set({ userName: displayName }).where(eq(userProgress.userId, userId));
+        await db
+          .update(userProgress)
+          .set({ userName: displayName })
+          .where(eq(userProgress.userId, userId));
       }
+
+      // Also update Firestore user doc's displayName
+      const firestore = getFirestore();
+      await firestore
+        .collection("users")
+        .doc(userId)
+        .set(
+          {
+            userName: nameToUse,
+            updatedAt: new Date(),
+          },
+          { merge: true }
+        );
     }
 
     return response;

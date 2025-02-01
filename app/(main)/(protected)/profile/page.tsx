@@ -5,6 +5,8 @@ import { toast } from "sonner";
 import { updateProfileAction } from "@/actions/profile";
 import { Button } from "@/components/ui/button";
 import { AvatarGenerator } from "random-avatar-generator";
+import { ProfileSchoolSelector } from "./profile-school-selector";
+import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 
 // 1) Fetch user’s current profile => { userName, userImageSrc, profileLocked, schoolId }
 async function fetchProfileData() {
@@ -15,7 +17,7 @@ async function fetchProfileData() {
   return res.json(); // e.g. { userName, userImageSrc, profileLocked, schoolId }
 }
 
-// 2) Fetch all schools => returns [{ id: number, name: string }, ...]
+// 2) Fetch all schools => returns [{ id: number, name: string, type: string }, ...]
 async function fetchAllSchools() {
   const res = await fetch("/api/schools");
   if (!res.ok) {
@@ -33,7 +35,7 @@ export default function ProfilePage() {
   const [initLoading, setInitLoading] = useState(true);
   const [pending, startTransition] = useTransition();
 
-  // List of schools for the select
+  // All schools
   const [allSchools, setAllSchools] = useState<any[]>([]);
 
   useEffect(() => {
@@ -47,7 +49,7 @@ export default function ProfilePage() {
         setSelectedSchoolId(profile.schoolId ?? null);
 
         // from /api/schools
-        setAllSchools(schools); // e.g. [ {id: 1, name: "Boğaziçi"}, ... ]
+        setAllSchools(schools);
 
         setInitLoading(false);
       })
@@ -86,77 +88,83 @@ export default function ProfilePage() {
   };
 
   if (initLoading) {
-    return <div className="p-4">Yükleniyor...</div>;
+    // Show progress
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="w-16 h-16">
+          <CircularProgressbarWithChildren value={50}>
+            <p className="text-sm">Yükleniyor...</p>
+          </CircularProgressbarWithChildren>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="max-w-md mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Profil Ayarları</h1>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-12 px-4">
+      <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-white w-full max-w-md">
+        <h1 className="text-2xl font-bold text-center text-gray-800">
+          Profil Ayarları
+        </h1>
 
-      {profileLocked && (
-        <p className="text-sm text-red-600 mb-2">
-          Bu profil kilitlenmiştir, artık değişiklik yapamazsınız.
-        </p>
-      )}
+        {profileLocked && (
+          <p className="text-sm text-red-600 text-center">
+            Profil bilgilerinde artık değişiklik yapılamaz.
+          </p>
+        )}
 
-      <div className="flex flex-col items-center gap-4 mb-4">
-        <div className="w-32 h-32 overflow-hidden rounded-full border border-gray-300">
-          <img
-            src={avatarUrl}
-            alt="Avatar"
-            className="w-full h-full object-cover"
+        {/* Avatar + Randomize Button */}
+        <div className="flex flex-col items-center space-y-4">
+          <div className="w-32 h-32 overflow-hidden rounded-full border-2 border-gray-300">
+            <img
+              src={avatarUrl}
+              alt="Avatar"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <Button
+            variant="secondary"
+            size="lg"
+            onClick={handleRandomAvatar}
+            disabled={pending || profileLocked}
+          >
+            Rastgele Avatar Oluştur
+          </Button>
+        </div>
+
+        {/* Username */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Kullanıcı Adı
+          </label>
+          <input
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-3"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            disabled={profileLocked}
           />
         </div>
+
+        {/* School Selector */}
+        <div>
+          <ProfileSchoolSelector
+            schools={allSchools}
+            disabled={profileLocked}
+            initialSchoolId={selectedSchoolId}
+            onSelect={(schoolId) => setSelectedSchoolId(schoolId)}
+          />
+        </div>
+
         <Button
-          variant="secondary"
-          onClick={handleRandomAvatar}
+          variant="primary"
+          size="lg"
+          className="w-full"
+          onClick={handleSave}
           disabled={pending || profileLocked}
         >
-          Rastgele Avatar
+          {profileLocked ? "Profil Kİlİtlendİ" : "Kaydet"}
         </Button>
       </div>
-
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700">
-          Kullanıcı Adı
-        </label>
-        <input
-          className="w-full border border-gray-300 p-2 rounded-xl"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          disabled={profileLocked}
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700">
-          Okul Seç
-        </label>
-        <select
-          className="w-full border border-gray-300 p-2 rounded-xl"
-          value={selectedSchoolId ? String(selectedSchoolId) : ""}
-          onChange={(e) => {
-            const val = e.target.value;
-            setSelectedSchoolId(val ? Number(val) : null);
-          }}
-          disabled={profileLocked}
-        >
-          <option value="">-Seç-</option>
-          {allSchools.map((sch) => (
-            <option key={sch.id} value={String(sch.id)}>
-              {sch.name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <Button
-        className="w-full py-3 bg-green-600 text-white rounded-xl"
-        onClick={handleSave}
-        disabled={pending || profileLocked}
-      >
-        {profileLocked ? "Profil Kilitlendi" : "Kaydet"}
-      </Button>
     </div>
   );
 }

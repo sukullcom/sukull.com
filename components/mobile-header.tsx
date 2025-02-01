@@ -13,15 +13,15 @@ export const MobileHeader = async () => {
   }
 
   return (
-    <nav className="lg:hidden px-6 h-[50px] flex items-center bg-white border-b fixed top-0 w-full z-50">
+    <nav className="lg:hidden h-[55px] flex items-center bg-white border-b fixed top-0 w-full z-50">
       <UserProgress
         activeCourse={userProgress.activeCourse}
         hearts={userProgress.hearts}
         points={userProgress.points}
         hasActiveSubscription={false}
       />
-      <Link href={"/private-lesson"}>
-        <Button variant="sidebarOutline">Özel Ders Al / Ver</Button>
+      <Link prefetch={false} href={"/private-lesson"}>
+        <Button className="ml-2 mr-2" variant="sidebarOutline">Özel Ders Al / Ver</Button>
       </Link>
     </nav>
   );

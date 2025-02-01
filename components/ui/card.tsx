@@ -8,9 +8,18 @@ interface CardProps {
   title: string;
   href: string;
   buttonText: string;
+  variant?: "locked" | "super";
+  disabled?: boolean;
 }
 
-const Card = ({ imageSrc, title, href, buttonText }: CardProps) => {
+const Card = ({
+  imageSrc,
+  title,
+  href,
+  buttonText,
+  variant = "super",
+  disabled = false,
+}: CardProps) => {
   return (
     <div
       className={cn(
@@ -18,30 +27,42 @@ const Card = ({ imageSrc, title, href, buttonText }: CardProps) => {
       )}
     >
       <div className="flex flex-col items-center">
-        {/* Card Image */}
+        {/* Kartın Resmi */}
         <div className="relative aspect-square mb-4 max-h-[120px] lg:max-h-[200px] w-full">
-          <Image src={imageSrc} alt={title} fill className="rounded-lg" />
+          <Image
+            src={imageSrc}
+            alt={title}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="rounded-lg"
+          />
         </div>
 
-        {/* Card Title */}
-        <h3
-          className={cn(
-            "text-center text-gray-800 text-lg lg:text-xl font-semibold"
-          )}
-        >
+        {/* Kart Başlığı */}
+        <h3 className="text-center text-gray-800 text-lg lg:text-xl font-semibold">
           {title}
         </h3>
       </div>
 
-      {/* Card Button */}
-      <Link href={href}>
+      {/* Kart Butonu */}
+      {disabled ? (
         <Button
-          className="mt-4 w-full py-2 text-sm lg:text-base font-medium rounded-lg bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700 transition-colors"
-          variant={"super"}
+          className="mt-4 w-full py-1.5 text-xs lg:text-xs font-medium rounded-lg bg-gray-500 text-white cursor-not-allowed whitespace-normal text-center"
+          variant="locked"
+          disabled
         >
           {buttonText}
         </Button>
-      </Link>
+      ) : (
+        <Link prefetch={false} href={href}>
+          <Button
+            className="mt-4 w-full py-2 text-sm lg:text-base font-medium rounded-lg bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700 transition-colors"
+            variant={variant}
+          >
+            {buttonText}
+          </Button>
+        </Link>
+      )}
     </div>
   );
 };

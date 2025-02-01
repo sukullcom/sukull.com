@@ -22,9 +22,7 @@ export default function SnippetCard({ snippet }: { snippet: Snippet }) {
       className="p-6 bg-[#1e1e2e] rounded-xl border border-gray-800"
     >
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-xl font-semibold text-white">
-          {snippet.title}
-        </h3>
+        <h3 className="text-xl font-semibold text-white">{snippet.title}</h3>
         <img
           src={`/language_logos/${snippet.language}.png`}
           alt={snippet.language}
@@ -32,16 +30,15 @@ export default function SnippetCard({ snippet }: { snippet: Snippet }) {
         />
       </div>
 
-      <p className="text-sm text-gray-300 mb-2">
-        By {snippet.userName}
-      </p>
+      <p className="text-sm text-gray-300 mb-2">By {snippet.userName}</p>
       <p className="text-sm text-gray-400 mb-4 line-clamp-3">
         {snippet.description}
       </p>
 
       {/* Link to /editor page with snippetId */}
       <Link
-        href={`/lab/compLab/sukull-code-editor?snippetId=${snippet.id}`}
+        prefetch={false}
+        href={`/lab/sukull-code-editor?snippetId=${snippet.id}`}
         className="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition-colors"
       >
         <span>Open in Editor</span>

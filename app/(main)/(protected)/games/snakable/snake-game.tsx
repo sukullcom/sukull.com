@@ -28,6 +28,7 @@ interface Topic {
   words: Word[];
 }
 
+// We now have 20 topics, each with 5 words => 100 total words
 const topics: Topic[] = [
   {
     name: "Animals",
@@ -49,13 +50,197 @@ const topics: Topic[] = [
       { english: "MANGO", turkish: "Mango" },
     ],
   },
-  // Add more topics here
+  {
+    name: "Colors",
+    words: [
+      { english: "RED", turkish: "Kırmızı" },
+      { english: "BLUE", turkish: "Mavi" },
+      { english: "GREEN", turkish: "Yeşil" },
+      { english: "YELLOW", turkish: "Sarı" },
+      { english: "BLACK", turkish: "Siyah" },
+    ],
+  },
+  {
+    name: "Weather",
+    words: [
+      { english: "SUNNY", turkish: "Güneşli" },
+      { english: "RAINY", turkish: "Yağmurlu" },
+      { english: "CLOUDY", turkish: "Bulutlu" },
+      { english: "WINDY", turkish: "Rüzgarlı" },
+      { english: "SNOWY", turkish: "Karlı" },
+    ],
+  },
+  {
+    name: "BodyParts",
+    words: [
+      { english: "HEAD", turkish: "Baş" },
+      { english: "HAND", turkish: "El" },
+      { english: "FOOT", turkish: "Ayak" },
+      { english: "EYE", turkish: "Göz" },
+      { english: "EAR", turkish: "Kulak" },
+    ],
+  },
+  {
+    name: "Vehicles",
+    words: [
+      { english: "CAR", turkish: "Araba" },
+      { english: "TRAIN", turkish: "Tren" },
+      { english: "PLANE", turkish: "Uçak" },
+      { english: "SHIP", turkish: "Gemi" },
+      { english: "TRUCK", turkish: "Kamyon" },
+    ],
+  },
+  {
+    name: "Kitchen",
+    words: [
+      { english: "SPOON", turkish: "Kaşık" },
+      { english: "FORK", turkish: "Çatal" },
+      { english: "KNIFE", turkish: "Bıçak" },
+      { english: "PLATE", turkish: "Tabak" },
+      { english: "GLASS", turkish: "Bardak" },
+    ],
+  },
+  {
+    name: "House",
+    words: [
+      { english: "DOOR", turkish: "Kapı" },
+      { english: "WINDOW", turkish: "Pencere" },
+      { english: "ROOF", turkish: "Çatı" },
+      { english: "FLOOR", turkish: "Zemin" },
+      { english: "WALL", turkish: "Duvar" },
+    ],
+  },
+  {
+    name: "Music",
+    words: [
+      { english: "NOTE", turkish: "Nota" },
+      { english: "SONG", turkish: "Şarkı" },
+      { english: "DRUM", turkish: "Davul" },
+      { english: "HARP", turkish: "Arp" },
+      { english: "FLUTE", turkish: "Flüt" },
+    ],
+  },
+  {
+    name: "Hobbies",
+    words: [
+      { english: "READ", turkish: "Okumak" },
+      { english: "DRAW", turkish: "Çizmek" },
+      { english: "SWIM", turkish: "Yüzmek" },
+      { english: "BAKE", turkish: "Fırında pişirmek" },
+      { english: "GARDEN", turkish: "Bahçe ile uğraşmak" },
+    ],
+  },
+  {
+    name: "Sports",
+    words: [
+      { english: "SOCCER", turkish: "Futbol" },
+      { english: "TENNIS", turkish: "Tenis" },
+      { english: "BOXING", turkish: "Boks" },
+      { english: "GOLF", turkish: "Golf" },
+      { english: "CHESS", turkish: "Satranç" },
+    ],
+  },
+  {
+    name: "Emotions",
+    words: [
+      { english: "HAPPY", turkish: "Mutlu" },
+      { english: "SAD", turkish: "Üzgün" },
+      { english: "ANGRY", turkish: "Kızgın" },
+      { english: "AFRAID", turkish: "Korkmuş" },
+      { english: "EXCITED", turkish: "Heyecanlı" },
+    ],
+  },
+  {
+    name: "Occupations",
+    words: [
+      { english: "DOCTOR", turkish: "Doktor" },
+      { english: "TEACHER", turkish: "Öğretmen" },
+      { english: "ENGINEER", turkish: "Mühendis" },
+      { english: "LAWYER", turkish: "Avukat" },
+      { english: "CHEF", turkish: "Aşçı" },
+    ],
+  },
+  {
+    name: "School",
+    words: [
+      { english: "BOOK", turkish: "Kitap" },
+      { english: "PEN", turkish: "Kalem" },
+      { english: "DESK", turkish: "Sıra / Masa" },
+      { english: "BOARD", turkish: "Tahta" },
+      { english: "BAG", turkish: "Çanta" },
+    ],
+  },
+  {
+    name: "Technology",
+    words: [
+      { english: "PHONE", turkish: "Telefon" },
+      { english: "LAPTOP", turkish: "Dizüstü Bilgisayar" },
+      { english: "ROBOT", turkish: "Robot" },
+      { english: "DRONE", turkish: "Drone" },
+      { english: "SCREEN", turkish: "Ekran" },
+    ],
+  },
+  {
+    name: "Drinks",
+    words: [
+      { english: "WATER", turkish: "Su" },
+      { english: "TEA", turkish: "Çay" },
+      { english: "COFFEE", turkish: "Kahve" },
+      { english: "JUICE", turkish: "Meyve Suyu" },
+      { english: "MILK", turkish: "Süt" },
+    ],
+  },
+  {
+    name: "Vegetables",
+    words: [
+      { english: "CARROT", turkish: "Havuç" },
+      { english: "TOMATO", turkish: "Domates" },
+      { english: "POTATO", turkish: "Patates" },
+      { english: "ONION", turkish: "Soğan" },
+      { english: "PEPPER", turkish: "Biber" },
+    ],
+  },
+  {
+    name: "Countries",
+    words: [
+      { english: "TURKEY", turkish: "Türkiye" },
+      { english: "GERMANY", turkish: "Almanya" },
+      { english: "FRANCE", turkish: "Fransa" },
+      { english: "CHINA", turkish: "Çin" },
+      { english: "JAPAN", turkish: "Japonya" },
+    ],
+  },
+  {
+    name: "Clothes",
+    words: [
+      { english: "SHIRT", turkish: "Gömlek" },
+      { english: "PANTS", turkish: "Pantolon" },
+      { english: "SKIRT", turkish: "Etek" },
+      { english: "SHOES", turkish: "Ayakkabı" },
+      { english: "HAT", turkish: "Şapka" },
+    ],
+  },
+  {
+    name: "Family",
+    words: [
+      { english: "MOTHER", turkish: "Anne" },
+      { english: "FATHER", turkish: "Baba" },
+      { english: "SISTER", turkish: "Kız Kardeş" },
+      { english: "BROTHER", turkish: "Erkek Kardeş" },
+      { english: "CHILD", turkish: "Çocuk" },
+    ],
+  },
 ];
 
 const SnakeGame = () => {
   const router = useRouter();
-  const [finishAudio] = useAudio({ src: "/finish.mp3", autoPlay: true });
   const { width, height } = useWindowSize();
+
+  // 1) We store the audio elements in these variables:
+  const [eatAudioEl, , , eatAudioRef] = useAudio({
+    src: "/correct.wav",
+    autoPlay: false,
+  });
 
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
   const [words, setWords] = useState<Word[]>([]);
@@ -67,30 +252,34 @@ const SnakeGame = () => {
   const [showCongrats, setShowCongrats] = useState(false);
   const [totalWordsCompleted, setTotalWordsCompleted] = useState(0);
   const [snake, setSnake] = useState<Position[]>([{ x: 0, y: 0 }]);
-  const [direction, setDirection] = useState<"UP" | "DOWN" | "LEFT" | "RIGHT">(
-    "RIGHT"
-  );
+  const [direction, setDirection] =
+    useState<"UP" | "DOWN" | "LEFT" | "RIGHT">("RIGHT");
   const [letterIndex, setLetterIndex] = useState<number>(1);
   const [collectedLetters, setCollectedLetters] = useState<string[]>([]);
   const [foodItems, setFoodItems] = useState<FoodItem[]>([]);
   const [gameOver, setGameOver] = useState<boolean>(false);
   const [gameFinished, setGameFinished] = useState<boolean>(false);
-  const [score, setScore] = useState<number>(0); // Letters collected in current word
-  const [totalScore, setTotalScore] = useState<number>(0); // Total points earned
+  const [score, setScore] = useState<number>(0); // Letters for current word
+  const [totalScore, setTotalScore] = useState<number>(0); // Sum of points
   const gridSize = 10;
 
-  // Handle key press for snake direction
+  // **Always render these audio elements** so their refs exist at mount:
+  // This ensures we avoid the "ref is empty" warning.
+  // We'll place them at the very top-level of our return below.
+
+  // Key press: arrow keys
   const handleKeyPress = useCallback((event: KeyboardEvent) => {
     setDirection((prevDirection) => {
       if (event.key === "ArrowUp" && prevDirection !== "DOWN") return "UP";
       if (event.key === "ArrowDown" && prevDirection !== "UP") return "DOWN";
       if (event.key === "ArrowLeft" && prevDirection !== "RIGHT") return "LEFT";
-      if (event.key === "ArrowRight" && prevDirection !== "LEFT") return "RIGHT";
+      if (event.key === "ArrowRight" && prevDirection !== "LEFT")
+        return "RIGHT";
       return prevDirection;
     });
   }, []);
 
-  // Handle touch controls for snake direction
+  // Touch controls
   const handleDirectionChange = (
     newDirection: "UP" | "DOWN" | "LEFT" | "RIGHT"
   ) => {
@@ -107,14 +296,14 @@ const SnakeGame = () => {
     });
   };
 
+  // Move on to next word
   const startNewWord = () => {
     if (currentWordIndex + 1 >= words.length) {
-      // All words completed
+      // All words done
       setGameOver(true);
       setShowCongrats(true);
       setGameFinished(true);
     } else {
-      // Move to the next word
       const nextIndex = currentWordIndex + 1;
       setCurrentWordIndex(nextIndex);
       const newWord = words[nextIndex];
@@ -124,20 +313,14 @@ const SnakeGame = () => {
       setSnake([{ x: 0, y: 0 }]);
       setDirection("RIGHT");
       setFoodItems([]);
-      setScore(0); // Reset score for new word
+      setScore(0);
     }
   };
 
-  // Load the eat sound effect
-  const [eatAudio, , , eatAudioRef] = useAudio({
-    src: "/correct.wav",
-    autoPlay: false,
-  });
-
-  // Adjust the volume of the eat sound
+  // Adjust the volume of the eat sound (once it's in the DOM)
   useEffect(() => {
     if (eatAudioRef.current) {
-      eatAudioRef.current.volume = 0.5; // Volume between 0.0 and 1.0
+      eatAudioRef.current.volume = 0.5;
     }
   }, [eatAudioRef]);
 
@@ -146,13 +329,13 @@ const SnakeGame = () => {
 
     let newHead: Position = { ...snake[0] };
 
-    // Move the snake based on the current direction
+    // Move based on direction
     if (direction === "UP") newHead.y -= 1;
     if (direction === "DOWN") newHead.y += 1;
     if (direction === "LEFT") newHead.x -= 1;
     if (direction === "RIGHT") newHead.x += 1;
 
-    // Check if the snake hits the wall or itself
+    // Check collisions
     if (
       newHead.x < 0 ||
       newHead.x >= gridSize ||
@@ -166,88 +349,84 @@ const SnakeGame = () => {
       return;
     }
 
-    // Check if snake eats any food item
+    // Check for food
     const foodEatenIndex = foodItems.findIndex(
       (item) => item.x === newHead.x && item.y === newHead.y
     );
 
-    if (foodEatenIndex !== -1) {
+    if (foodEatenIndex !== -1 && word) {
       const eatenFood = foodItems[foodEatenIndex];
 
-      if (eatenFood.letter === word!.english[letterIndex]) {
-        // Correct letter collected
-        // Play eat sound
+      if (eatenFood.letter === word.english[letterIndex]) {
+        // Correct letter => play "eat" sound
         eatAudioRef.current?.play();
 
         const newSnake = [newHead, ...snake];
         setSnake(newSnake);
         setCollectedLetters([...collectedLetters, eatenFood.letter]);
-        setScore(score + 1); // Increment score for current word
+        setScore(score + 1);
 
-        if (letterIndex + 1 >= word!.english.length) {
-          // Word completed
+        // Check if entire word is collected
+        if (letterIndex + 1 >= word.english.length) {
+          // Word done
           try {
-            await addPointsToUser(3); // Add 3 points to the database
-            console.log("Points updated successfully!");
+            await addPointsToUser(3); // +3 points
           } catch (error) {
             console.error("Error updating points:", error);
           }
 
-          setTotalWordsCompleted(totalWordsCompleted + 1);
-          setTotalScore(totalScore + 3); // Update totalScore by 3 points
+          setTotalWordsCompleted((prev) => prev + 1);
+          setTotalScore((prev) => prev + 3);
 
+          // Check if last word in topic
           if (currentWordIndex + 1 >= words.length) {
-            // All words completed
             setGameOver(true);
             setShowCongrats(true);
             setGameFinished(true);
           } else {
-            // Prepare for the next word
             startNewWord();
           }
           return;
         } else {
+          // Move to next letter
           setLetterIndex(letterIndex + 1);
         }
       } else {
-        // Wrong letter, game over
+        // Wrong letter => game over
         setGameOver(true);
         setShowCongrats(true);
         setGameFinished(true);
         return;
       }
     } else {
-      // Move snake normally (without growing)
+      // Move snake normally
       const newSnake = [newHead, ...snake.slice(0, snake.length - 1)];
       setSnake(newSnake);
     }
   };
 
-  // Generate multiple food items (letters), ensuring correct letter is included
+  // Create multiple letters, ensuring correct letter is included
   const generateFoodItems = () => {
     if (!word) return;
-    let items: FoodItem[] = [];
+    const items: FoodItem[] = [];
 
-    // Generate the correct letter
-    let correctPosition: Position;
+    // correct letter
+    let correctPos: Position;
     do {
-      correctPosition = {
+      correctPos = {
         x: Math.floor(Math.random() * gridSize),
         y: Math.floor(Math.random() * gridSize),
       };
     } while (
-      snake.some(
-        (segment) =>
-          segment.x === correctPosition.x && segment.y === correctPosition.y
-      )
+      snake.some((seg) => seg.x === correctPos.x && seg.y === correctPos.y)
     );
 
     items.push({
-      ...correctPosition,
+      ...correctPos,
       letter: word.english[letterIndex],
     });
 
-    // Generate random letters
+    // random letters
     for (let i = 0; i < 4; i++) {
       let position: Position;
       do {
@@ -256,9 +435,7 @@ const SnakeGame = () => {
           y: Math.floor(Math.random() * gridSize),
         };
       } while (
-        snake.some(
-          (segment) => segment.x === position.x && segment.y === position.y
-        ) ||
+        snake.some((seg) => seg.x === position.x && seg.y === position.y) ||
         items.some((item) => item.x === position.x && item.y === position.y)
       );
 
@@ -271,65 +448,64 @@ const SnakeGame = () => {
     setFoodItems(items);
   };
 
-  // Game loop
+  // Interval for moving snake
   useEffect(() => {
-    if (gameOver || !gameStarted) return;
-
+    if (!gameStarted || gameOver) return;
     const interval = setInterval(() => {
       moveSnake();
     }, 200);
-
     return () => clearInterval(interval);
-  }, [snake, direction, gameOver, gameStarted]);
+  }, [snake, direction, gameOver, gameStarted, moveSnake]);
 
-  // Listen for key presses
+  // Keydown for arrow control
   useEffect(() => {
     if (!gameStarted) return;
-
     window.addEventListener("keydown", handleKeyPress);
     return () => window.removeEventListener("keydown", handleKeyPress);
-  }, [handleKeyPress, gameStarted]);
+  }, [gameStarted, handleKeyPress]);
 
-  // Generate initial food items
+  // Generate initial letters
   useEffect(() => {
     if (gameStarted) {
       generateFoodItems();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameStarted]);
 
-  // Generate new food items when letterIndex changes
+  // Generate new letters when letterIndex changes
   useEffect(() => {
     if (!gameOver && word && letterIndex < word.english.length && gameStarted) {
       generateFoodItems();
     }
-  }, [letterIndex, gameOver, gameStarted]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [letterIndex]);
 
-  // When word changes, reset the collected letters
+  // Reset collected letters when a new word is set
   useEffect(() => {
     if ((gameStarted || countdown !== null) && word) {
       setCollectedLetters([word.english[0]]);
       setLetterIndex(1);
       generateFoodItems();
     }
-  }, [word, gameStarted, countdown]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [word]);
 
   // Countdown effect
   useEffect(() => {
     if (countdown === null) return;
-
     if (countdown > 0) {
       const timer = setTimeout(() => {
         setCountdown(countdown - 1);
       }, 1000);
       return () => clearTimeout(timer);
     } else {
-      // Countdown finished, start the game
+      // Done => game starts
       setCountdown(null);
       setGameStarted(true);
     }
   }, [countdown]);
 
-  // Reset the game to play again
+  // Reset everything
   const playAgain = () => {
     setSelectedTopic(null);
     setWords([]);
@@ -345,64 +521,67 @@ const SnakeGame = () => {
     setTotalWordsCompleted(0);
     setShowCongrats(false);
     setFoodItems([]);
-    setGameStarted(false); // Return to start screen
-    setGameFinished(false); // Reset game finished state
+    setGameStarted(false);
+    setGameFinished(false);
     setCountdown(null);
   };
 
   if (gameFinished) {
+    // End screen
     return (
-      <div className="relative overflow-hidden w-full h-screen p-4">
-        {finishAudio}
-        <Confetti
-          width={width}
-          height={height}
-          recycle={false}
-          numberOfPieces={500}
-          tweenDuration={10000}
-          className="absolute top-0 left-0"
-        />
-        <div className="flex flex-col gap-y-4 lg:gap-y-8 max-w-lg mx-auto text-center items-center">
-          <Image
-            src="/finish.svg"
-            alt="Finish"
-            className="hidden lg:block mt-40"
-            height={100}
-            width={100}
+      <>
+
+        <div className="relative overflow-hidden w-full h-screen p-4">
+          <Confetti
+            width={width}
+            height={height}
+            recycle={false}
+            numberOfPieces={500}
+            tweenDuration={10000}
+            className="absolute top-0 left-0"
           />
-          <Image
-            src="/finish.svg"
-            alt="Finish"
-            className="block lg:hidden mt-40"
-            height={60}
-            width={60}
-          />
-          <h1 className="text-xl lg:text-3xl font-bold text-neutral-700">
-            {totalWordsCompleted > 0
-              ? "Tebrikler! Oyunu tamamladınız."
-              : "Neredeyse oluyordu!"}
-          </h1>
-          <div className="flex items-center gap-x-4 w-full justify-center">
-            <div className="bg-white shadow-md rounded-lg p-4">
-              <p className="text-gray-700 text-sm">Toplam Puan</p>
-              <p className="text-2xl font-bold text-green-600">{totalScore}</p>
+          <div className="flex flex-col gap-y-4 lg:gap-y-8 max-w-lg mx-auto text-center items-center">
+            <Image
+              src="/finish.svg"
+              alt="Finish"
+              className="hidden lg:block mt-40"
+              height={100}
+              width={100}
+            />
+            <Image
+              src="/finish.svg"
+              alt="Finish"
+              className="block lg:hidden mt-40"
+              height={60}
+              width={60}
+            />
+            <h1 className="text-xl lg:text-3xl font-bold text-neutral-700">
+              {totalWordsCompleted > 0
+                ? "Tebrikler! Oyunu tamamladınız."
+                : "Neredeyse oluyordu!"}
+            </h1>
+            <div className="flex items-center gap-x-4 w-full justify-center">
+              <div className="bg-white shadow-md rounded-lg p-4">
+                <p className="text-gray-700 text-sm">Toplam Puan</p>
+                <p className="text-2xl font-bold text-green-600">{totalScore}</p>
+              </div>
+            </div>
+            <div className="flex gap-4 mt-4">
+              <Button variant={"secondary"} onClick={playAgain}>
+                Tekrar Oyna
+              </Button>
+
+              <Link href={"/games"} prefetch={false}>
+                <Button variant={"danger"}>Oyunu Bitir</Button>
+              </Link>
             </div>
           </div>
-          <div className="flex gap-4 mt-4">
-            <Button variant={"secondary"} onClick={playAgain}>
-              Tekrar Oyna
-            </Button>
-
-            <Link href={"/games"}>
-              <Button variant={"danger"}>Oyunu Bitir</Button>
-            </Link>
-          </div>
         </div>
-      </div>
+      </>
     );
   }
 
-  // Render the grid, snake, and food items
+  // Game board
   const renderGrid = () => {
     let grid = [];
     for (let y = 0; y < gridSize; y++) {
@@ -444,90 +623,86 @@ const SnakeGame = () => {
   };
 
   return (
-    <div className="relative w-full flex flex-col items-center">
-      <div className="flex flex-col items-center mt-10">
-        <h1 className="text-2xl font-bold mb-4">Kelime ve Yılan Oyunu</h1>
+    <>
+      {/* 2) Render eat audio element so it exists in DOM */}
+      {eatAudioEl}
 
-        {!gameStarted && countdown === null ? (
-          // Start Screen
-          <div className="text-center">
-            {!selectedTopic ? (
-              <>
-                <p className="text-lg mb-4">Lütfen bir konu seçin:</p>
-                <div className="grid grid-cols-2 gap-2">
-                  {topics.map((topic) => (
-                    <Button
-                      key={topic.name}
-                      variant="secondary"
-                      onClick={() => setSelectedTopic(topic)}
-                    >
-                      {topic.name}
-                    </Button>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <>
-                <p className="text-lg mb-4">
-                  Seçilen Konu: <strong>{selectedTopic.name}</strong>
-                </p>
-                <Button
-                  variant="super"
-                  onClick={() => {
-                    // Start countdown from 3
-                    setCountdown(3);
-                    // Initialize other necessary state variables
-                    setWords(selectedTopic.words);
-                    setWord(selectedTopic.words[0]);
-                    setCollectedLetters([selectedTopic.words[0].english[0]]);
-                    setSnake([{ x: 0, y: 0 }]);
-                    setDirection("RIGHT");
-                    setLetterIndex(1);
-                  }}
-                >
-                  Oyuna Başla
-                </Button>
-              </>
-            )}
-          </div>
-        ) : (
-          // Game Screen
-          <>
-            {eatAudio}
-            {word && (
-              <>
-                <h2 className="text-xl font-medium mb-2">
-                  Kelime: {word.english}
-                </h2>
-                <h2 className="text-xl font-medium mb-2">
-                  Anlam: {word.turkish}
-                </h2>
+      <div className="relative w-full flex flex-col items-center">
+        <div className="flex flex-col items-center mt-10">
+          <h1 className="text-2xl font-bold mb-4">Kelime ve Yılan Oyunu</h1>
 
-                {/* Removed the display of collected letters, next letter, and total score */}
-              </>
-            )}
-
-            {/* Display the game grid */}
-            <div
-              className="grid grid-cols-10 gap-0"
-              style={{
-                gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
-                gridTemplateRows: `repeat(${gridSize}, 1fr)`,
-              }}
-            >
-              {renderGrid()}
+          {!gameStarted && countdown === null ? (
+            // Start Screen
+            <div className="text-center">
+              {!selectedTopic ? (
+                <>
+                  <p className="text-lg mb-4">Lütfen bir konu seçin:</p>
+                  <div className="grid grid-cols-2 gap-2">
+                    {topics.map((topic) => (
+                      <Button
+                        key={topic.name}
+                        variant="secondary"
+                        onClick={() => setSelectedTopic(topic)}
+                      >
+                        {topic.name}
+                      </Button>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="text-lg mb-4">
+                    Seçilen Konu: <strong>{selectedTopic.name}</strong>
+                  </p>
+                  <Button
+                    variant="super"
+                    onClick={() => {
+                      setCountdown(3); // Start from 3
+                      setWords(selectedTopic.words);
+                      setWord(selectedTopic.words[0]);
+                      setCollectedLetters([selectedTopic.words[0].english[0]]);
+                      setSnake([{ x: 0, y: 0 }]);
+                      setDirection("RIGHT");
+                      setLetterIndex(1);
+                    }}
+                  >
+                    Oyuna Başla
+                  </Button>
+                </>
+              )}
             </div>
+          ) : (
+            // Game Screen
+            <>
+              {word && (
+                <>
+                  <h2 className="text-xl font-medium mb-2">
+                    Kelime: {word.english}
+                  </h2>
+                  <h2 className="text-xl font-medium mb-2">
+                    Çevirisi: {word.turkish}
+                  </h2>
+                </>
+              )}
 
-            {countdown !== null ? (
-              // Countdown Overlay
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-75">
-                <h2 className="text-5xl font-bold mb-4">{countdown}</h2>
-                <p className="text-lg">Hazırlanın, oyun başlıyor!</p>
+              <div
+                className="grid grid-cols-10 gap-0"
+                style={{
+                  gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
+                  gridTemplateRows: `repeat(${gridSize}, 1fr)`,
+                }}
+              >
+                {renderGrid()}
               </div>
-            ) : (
-              // On-Screen Controls (if game is started)
-              <>
-                {/* On-Screen Controls */}
+
+              {countdown !== null ? (
+                // Countdown overlay
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-75">
+                  <h2 className="text-5xl font-bold mb-4">{countdown}</h2>
+                  <p className="text-lg">Hazırlanın, oyun başlıyor!</p>
+                </div>
+              ) : (
+                // On-Screen Controls
                 <div className="mt-4 flex flex-col items-center">
                   <div className="flex">
                     <Button
@@ -562,12 +737,12 @@ const SnakeGame = () => {
                     </Button>
                   </div>
                 </div>
-              </>
-            )}
-          </>
-        )}
+              )}
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

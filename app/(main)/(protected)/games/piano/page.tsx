@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 // Define all keys
 const KEYS = [
@@ -26,20 +26,16 @@ const KEYS = [
 // Define a set of pieces (songs/exercises) with their notes
 const PIECES = [
   {
-    name: "On My Own",
+    name: "Kendi Kendine Çal",
     notes: [], // No predefined notes for free play
   },
   {
-    name: "Lord Of The Rings",
+    name: "Yüzüklerin Efendisi",
     notes: [
       "s", "t", "h", "t", "d", "s", "t", "h", "j", "s", "w", "h", "t", "g", "t", "d", 
       "s", "d", "t", "h", "d", "t", "s", "t", "h", "j", "h", "t", "d", "s", "d", "t", 
       "h", "t", "d", "s", "t", "t", "h", "j", "s", "w", "h", "f", "d", "s", "d", "t", 
       "h", "t", "d", "s", "t", "h", "j", "j", "h", "t", "d", "s", "d", "t", "t", "j", 
-      "w", "s", "w", "s", "j", "w", "s", "w", "w", "j", "w", "s", "w", "w", "w", "s", 
-      "w", "w", "s", "s", "s", "u", "h", "g", "f", "d", "d", "a", "a", "a", "s", "g", 
-      "h", "u", "h", "u", "a", "d", "f", "t", "y", "j", "y", "t", "d", "g", "j", "w", 
-      "d", "e", "j", "y", "t", "d", "g", "j", "w", "y", "t", "d", "e", "d"
     ],
   },
   {
@@ -122,11 +118,11 @@ const PIECES = [
     notes: ["g", "h", "g", "f", "d", "f", "g", "s", "d", "f", "d", "f", "g", "g", "h", "g", "f", "d", "f", "g", "s", "g", "d", "a"],
   },
   {
-    name: "Happy Birthday",
-    notes: ["a", "a", "s", "a", "f", "d", "a", "a", "s", "a", "g", "f", "a", "a", "a", "h", "f", "d", "s", "u", "u", "h", "f", "g", "f"],
+    name: "İyi ki Doğdun",
+    notes: ["a", "a", "s", "a", "f", "d", "a", "a", "s", "a", "g", "f", "a", "a", "k", "h", "f", "d", "s", "h", "u", "u", "h", "f", "g", "f"],
   },
   {
-    name: "Twinkle Twinkle",
+    name: "Daha Dün Annemiz",
     notes: [
       "a", "a", "g", "g", "h", "h", "g",
       "f", "f", "d", "d", "s", "s", "a",
@@ -146,66 +142,79 @@ export default function PianoPage() {
   const [notes, setNotes] = useState<string[]>([]);
   const [currentNoteIndex, setCurrentNoteIndex] = useState(0);
 
-  // For chords: track what keys in the current chord are pressed
+  // For chords: track which keys in the current chord are pressed
   const [pressedChordKeys, setPressedChordKeys] = useState<string[]>([]);
 
-  const playTune = (keyChar: string) => {
-    // If you have a special character like 'ş', ensure you have a corresponding audio file
-    // or rename that key to something ASCII-friendly like 'x' in KEYS and notes.
-    const safeKeyChar = keyChar.replace("ş", "s"); // If needed, adjust this logic.
-    const audio = new Audio(`/tunes2/${safeKeyChar}.wav`);
-    audio.volume = volume;
-    audio.play().catch((err) => console.error("Audio playback error:", err));
-  };
+  // This plays the audio for a single key
+  const playTune = useCallback(
+    (keyChar: string) => {
+      const audio = new Audio(`/tunes/${keyChar}.wav`);
+      audio.volume = volume;
+      audio.play().catch((err) => console.error("Audio playback error:", err));
+    },
+    [volume]
+  );
 
-  const handleKeyDown = (e: KeyboardEvent) => {
-    const pressedKey = e.key.toLowerCase();
-    handleKeyPress(pressedKey);
-  };
-
-  const handleKeyPress = (pressedKey: string) => {
-    if (!notes.length) {
-      // No piece selected, just play if exists
-      if (KEYS.find((k) => k.key === pressedKey)) {
-        playTune(pressedKey);
+  // If user hits a physical key, handle it
+  const handleKeyPress = useCallback(
+    (pressedKey: string) => {
+      // If there's no piece selected, just free-play (if valid)
+      if (!notes.length) {
+        if (KEYS.some((k) => k.key === pressedKey)) {
+          playTune(pressedKey);
+        }
+        return;
       }
-      return;
-    }
-  
-    const currentNote = notes[currentNoteIndex];
-    const chordKeys = currentNote.split("+");
-  
-    // Check if pressedKey is in chordKeys
-    if (chordKeys.includes(pressedKey)) {
-      // Play the tune
+
+      // We have an active piece with chords
+      const currentNote = notes[currentNoteIndex];
+      if (!currentNote) return;
+
+      const chordKeys = currentNote.split("+");
+      if (!chordKeys.includes(pressedKey)) {
+        // The user pressed a key not in the chord; ignore
+        return;
+      }
+
+      // If the pressed key is in the chord, play it
       playTune(pressedKey);
-  
-      // Update pressedChordKeys immediately in a local variable
+
+      // Add it to pressedChordKeys if not already there
       let newPressed = pressedChordKeys;
       if (!newPressed.includes(pressedKey)) {
         newPressed = [...newPressed, pressedKey];
       }
-  
-      // Now check if all chord keys are pressed
+
+      // Check if all chord keys are pressed
       const allPressed = chordKeys.every((ck) => newPressed.includes(ck));
-  
-      // Update the state with the new pressed keys
+
+      // Update state
       setPressedChordKeys(newPressed);
-  
+
       if (allPressed) {
-        // Move to next note
+        // Move to the next note
         setCurrentNoteIndex((prev) => prev + 1);
         // Reset pressedChordKeys for the next chord
         setPressedChordKeys([]);
       }
-    }
-  };
-  
+    },
+    [notes, currentNoteIndex, pressedChordKeys, playTune]
+  );
 
+  // We attach a keydown listener to the document
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      const pressed = e.key.toLowerCase();
+      handleKeyPress(pressed);
+    },
+    [handleKeyPress]
+  );
+
+  // Effect: attach/detach keydown listener once we have stable handleKeyDown
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [notes, currentNoteIndex, pressedChordKeys, volume]);
+  }, [handleKeyDown]);
 
   const startOver = () => {
     setCurrentNoteIndex(0);
@@ -221,7 +230,7 @@ export default function PianoPage() {
     }
   };
 
-  // Determine which keys should be green (the next chord)
+  // Determine which keys (next chord) should be highlighted in green
   let nextChordKeys: string[] = [];
   if (notes.length > 0 && currentNoteIndex < notes.length) {
     nextChordKeys = notes[currentNoteIndex].split("+");
@@ -232,10 +241,10 @@ export default function PianoPage() {
       <div className="bg-[#141414] rounded-2xl p-6 w-full max-w-4xl">
         {/* Header */}
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-[#B2B2B2] gap-4">
-          <h2 className="text-xl sm:text-2xl font-semibold">Playable PIANO</h2>
+          <h2 className="text-xl sm:text-2xl font-semibold">Sukull Piyano</h2>
           <div className="flex flex-wrap items-center gap-4">
             <div className="flex items-center space-x-3">
-              <span className="text-lg font-medium">Volume</span>
+              <span className="text-lg font-medium">Ses Yüksekliği</span>
               <input
                 type="range"
                 min="0"
@@ -247,7 +256,7 @@ export default function PianoPage() {
               />
             </div>
             <div className="flex items-center space-x-3">
-              <span className="text-lg font-medium">Show Keys</span>
+              <span className="text-lg font-medium">Tuşlar Göster</span>
               <label className="relative inline-block w-12 h-6">
                 <input
                   type="checkbox"
@@ -286,6 +295,7 @@ export default function PianoPage() {
             </button>
           </div>
         )}
+
         {/* Info about current note */}
         {notes.length > 0 && (
           <div className="mb-4 text-white">
@@ -327,7 +337,7 @@ export default function PianoPage() {
                 "bg-gradient-to-b from-white to-gray-200",
                 "border border-black",
                 "h-[230px] w-[70px]",
-                "text-gray-600"
+                "text-gray-600",
               ];
 
               const blackKeyClasses = [
@@ -335,7 +345,7 @@ export default function PianoPage() {
                 "h-[140px] w-[44px]",
                 "mx-[-22px]",
                 "z-20",
-                "text-gray-300"
+                "text-gray-300",
               ];
 
               let classes = [
@@ -344,7 +354,9 @@ export default function PianoPage() {
               ].join(" ");
 
               if (showKeys) {
-                classes += " before:content-[attr(data-key)] before:absolute before:bottom-5 before:left-1/2 before:-translate-x-1/2 before:text-gray-600 before:text-base";
+                // Show the label in the center
+                classes +=
+                  " before:content-[attr(data-key)] before:absolute before:bottom-5 before:left-1/2 before:-translate-x-1/2 before:text-base";
               }
 
               if (highlight) {
@@ -358,7 +370,7 @@ export default function PianoPage() {
                   onClick={() => handleKeyPress(k.key)}
                   data-key={k.key}
                   className={classes}
-                ></li>
+                />
               );
             })}
           </ul>

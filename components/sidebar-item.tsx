@@ -25,7 +25,7 @@ export const SidebarItem = ({
       className="justify-start h-[52px] flex items-center"
       asChild
     >
-      <Link href={href} className="flex items-center">
+      <Link prefetch={false} href={href} className="flex items-center">
         <Image
           src={iconSrc}
           alt={label}

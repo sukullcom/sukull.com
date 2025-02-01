@@ -1,4 +1,3 @@
-// lib/auth.ts
 "use server";
 import { cookies } from "next/headers";
 import { verifySessionCookie } from "./firebaseAdmin";

@@ -39,8 +39,7 @@ export default function SignupPage() {
       // 1) Create user in Firebase Auth
       const userCred = await createUserWithEmailAndPassword(auth, email, password);
 
-      // 2) Send them a verification email
-      // (You can choose to do this conditionally if user email not verified, etc.)
+      // 2) Send them a verification email (optional)
       await sendEmailVerification(userCred.user);
 
       // 3) Get ID token to create a session cookie
@@ -52,7 +51,7 @@ export default function SignupPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           token: idToken,
-          displayName: displayName.trim(), // Drizzle + Firebase displayName
+          displayName: displayName.trim(),
         }),
       });
       if (!res.ok) {
@@ -78,8 +77,7 @@ export default function SignupPage() {
       const provider = new GoogleAuthProvider();
       const userCred = await signInWithPopup(auth, provider);
 
-      // If user’s email not verified, you can call sendEmailVerification here
-      // But Google sign-in is usually verified by default.
+      // Usually Google's email is verified by default.
 
       const idToken = await userCred.user.getIdToken();
       const userDisplayName = userCred.user.displayName || "";

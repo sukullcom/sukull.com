@@ -6,21 +6,27 @@ import { getUserProgress } from "@/db/queries";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 
-const gamesData = [
+interface GameData {
+  id: string;
+  name: string;
+  imageSrc: string;
+}
+
+const gamesData: GameData[] = [
   {
     id: "snakable",
     name: "Snakable",
-    imageSrc: "/games.svg",
+    imageSrc: "/snake.png",
   },
   {
     id: "SubScribe",
     name: "SubScribe",
-    imageSrc: "/games.svg",
+    imageSrc: "/subscribe.png",
   },
   {
     id: "piano",
     name: "Piano",
-    imageSrc: "/games.svg",
+    imageSrc: "/piyano.png",
   },
 ];
 
@@ -28,6 +34,7 @@ const GamesPage = async () => {
   const userProgress = await getUserProgress();
   if (!userProgress || !userProgress.activeCourse) {
     redirect("/courses");
+    return null;
   }
 
   return (
