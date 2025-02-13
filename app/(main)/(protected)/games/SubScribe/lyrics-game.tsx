@@ -63,7 +63,7 @@ export default function LyricsGame({ lyrics, onTryAgain }: LyricsGameProps) {
   if (remainingMissingWords > 0) {
     actionElement = (
       <span className="text-md text-gray-700">
-        Remaining words: {remainingMissingWords}
+        Kalan kelime sayısı: {remainingMissingWords}
       </span>
     );
   } else if (!finishButtonClicked) {
@@ -92,7 +92,7 @@ export default function LyricsGame({ lyrics, onTryAgain }: LyricsGameProps) {
       <div className="sticky top-0 bg-white p-4 border-b border-gray-200 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <img src="/points.svg" alt="Points Icon" className="w-6 h-6" />
-          <h2 className="text-xl font-semibold">Points: {points}</h2>
+          <h2 className="text-xl font-semibold">Puan: {points}</h2>
         </div>
         <div className="text-right flex items-center gap-4">{actionElement}</div>
       </div>

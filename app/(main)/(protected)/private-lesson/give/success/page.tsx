@@ -29,7 +29,7 @@ export default function TeacherSuccessPage() {
         <Button
           variant="primary"
           size="lg"
-          onClick={() => router.push("/")}
+          onClick={() => router.push("/private-lesson")}
         >
           Anasayfa'ya Dön
         </Button>

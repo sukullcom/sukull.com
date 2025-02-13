@@ -56,6 +56,7 @@ const LeaderboardPage = async () => {
           activeCourse={userProgress.activeCourse}
           hearts={userProgress.hearts}
           points={userProgress.points}
+          istikrar={userProgress.istikrar}
           hasActiveSubscription={false}
         />
         <Quests points={userProgress.points} />

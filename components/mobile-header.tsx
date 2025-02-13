@@ -1,7 +1,7 @@
+// components/mobile-header.tsx
 import { getUserProgress } from "@/db/queries";
 import { UserProgress } from "./user-progress";
-import { Button } from "./ui/button";
-import Link from "next/link";
+
 
 export const MobileHeader = async () => {
   const userProgressData = getUserProgress();
@@ -18,11 +18,10 @@ export const MobileHeader = async () => {
         activeCourse={userProgress.activeCourse}
         hearts={userProgress.hearts}
         points={userProgress.points}
+        istikrar={userProgress.istikrar}
         hasActiveSubscription={false}
       />
-      <Link prefetch={false} href={"/private-lesson"}>
-        <Button className="ml-2 mr-2" variant="sidebarOutline">Özel Ders Al / Ver</Button>
-      </Link>
+
     </nav>
   );
 };

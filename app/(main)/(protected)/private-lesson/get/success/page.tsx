@@ -27,7 +27,7 @@ export default function StudentSuccessPage() {
           Özel ders talebiniz bize ulaştı. En kısa sürede sizinle iletişime
           geçeceğiz.
         </p>
-        <Button variant="primary" size="lg" onClick={() => router.push("/")}>
+        <Button variant="primary" size="lg" onClick={() => router.push("/private-lesson")}>
           Anasayfa'ya Dön
         </Button>
       </div>

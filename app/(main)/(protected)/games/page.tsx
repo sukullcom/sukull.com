@@ -16,17 +16,17 @@ const gamesData: GameData[] = [
   {
     id: "snakable",
     name: "Snakable",
-    imageSrc: "/snake.png",
+    imageSrc: "/snake.svg",
   },
   {
     id: "SubScribe",
     name: "SubScribe",
-    imageSrc: "/subscribe.png",
+    imageSrc: "/subscribe.svg",
   },
   {
     id: "piano",
     name: "Piano",
-    imageSrc: "/piyano.png",
+    imageSrc: "/piano.svg",
   },
 ];
 
@@ -44,6 +44,7 @@ const GamesPage = async () => {
           activeCourse={userProgress.activeCourse}
           hearts={userProgress.hearts}
           points={userProgress.points}
+          istikrar={userProgress.istikrar}
           hasActiveSubscription={false}
         />
       </StickyWrapper>

@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button";
 
 // Import our new WarningModal
 import { WarningModal } from "@/components/modals/warning-modal";
+import { Loader } from "lucide-react";
 
 type SchoolItem = {
   id: number;
@@ -311,7 +312,9 @@ export default function StudyBuddyPage() {
 
       if (distinctPartners.size >= 2) {
         // Instead of alert, we show our WarningModal
-        showWarning("Her ay en fazla 2 farklı kişiyle sohbet başlatabilirsiniz!");
+        showWarning(
+          "Her ay en fazla 2 farklı kişiyle sohbet başlatabilirsiniz!"
+        );
         return;
       }
 
@@ -516,7 +519,7 @@ export default function StudyBuddyPage() {
   // Guard
   // ==============================
   if (loadingUser) {
-    return <div className="p-4">Yükleniyor...</div>;
+    return <Loader className="h-6 w-6 text-muted-foreground animate-spin" />;
   }
   if (!currentUser) {
     return <div className="p-4">Lütfen giriş yapın.</div>;
@@ -567,7 +570,9 @@ export default function StudyBuddyPage() {
                 <div className="p-4 rounded-md bg-gray-100 flex flex-wrap gap-4 items-center">
                   {/* Purpose Filter */}
                   <div>
-                    <label className="block text-sm font-medium">Bu Neyin Hazırlığı</label>
+                    <label className="block text-sm font-medium">
+                      Bu Neyin Hazırlığı
+                    </label>
                     <select
                       value={filterPurpose}
                       onChange={(e) => setFilterPurpose(e.target.value)}
@@ -584,7 +589,9 @@ export default function StudyBuddyPage() {
 
                   {/* School Search Input */}
                   <div>
-                    <label className="block text-sm font-medium">Okula Göre Ara</label>
+                    <label className="block text-sm font-medium">
+                      Okula Göre Ara
+                    </label>
                     <input
                       type="text"
                       placeholder="Okul ismi..."
@@ -610,10 +617,14 @@ export default function StudyBuddyPage() {
                   <div className="border-2 rounded-md p-4 space-y-3 bg-white mt-4 mx-1">
                     <h3 className="text-lg font-bold">Gönderi Oluştur</h3>
                     {creationError && (
-                      <div className="text-red-500 text-sm">{creationError}</div>
+                      <div className="text-red-500 text-sm">
+                        {creationError}
+                      </div>
                     )}
                     <div>
-                      <label className="block text-sm font-medium">Bu Neyin Hazırlığı</label>
+                      <label className="block text-sm font-medium">
+                        Bu Neyin Hazırlığı
+                      </label>
                       <select
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         value={postPurpose}
@@ -653,7 +664,7 @@ export default function StudyBuddyPage() {
                   "
                 >
                   {loadingPosts ? (
-                    <div>Yükleniyor...</div>
+                    <Loader className="h-6 w-6 text-muted-foreground animate-spin" />
                   ) : (
                     <>
                       {displayedPosts.length === 0 ? (
@@ -685,7 +696,7 @@ export default function StudyBuddyPage() {
                               )}
                               {post.purpose && (
                                 <div className="text-sm">
-                                  Bu Neyin Hazırlığı: {post.purpose}
+                                  Çalışmaya Göre Ara: {post.purpose}
                                 </div>
                               )}
                               <div className="text-sm text-gray-700">
@@ -725,7 +736,7 @@ export default function StudyBuddyPage() {
                     onClick={goToNextPage}
                     disabled={currentPage >= totalPages - 1}
                   >
-                    Sonraki Sayfa
+                    Sonrakİ Sayfa
                   </Button>
                 </div>
                 <div className="text-sm text-gray-700 mx-1">
@@ -745,7 +756,7 @@ export default function StudyBuddyPage() {
                 >
                   <h2 className="text-xl font-bold mb-4">My Posts</h2>
                   {loadingMyPosts ? (
-                    <div>Yükleniyor...</div>
+                    <Loader className="h-6 w-6 text-muted-foreground animate-spin" />
                   ) : myPosts.length === 0 ? (
                     <div>Hiç postunuz yok.</div>
                   ) : (
@@ -770,7 +781,7 @@ export default function StudyBuddyPage() {
                           {!isEditing ? (
                             <>
                               <div className="text-sm font-semibold">
-                                Bu Neyin Hazırlığı: {post.purpose}
+                                Çalışmaya Göre Ara: {post.purpose}
                               </div>
                               <div className="text-sm text-gray-700">
                                 Açıklama: {post.reason}
@@ -779,7 +790,7 @@ export default function StudyBuddyPage() {
                           ) : (
                             <>
                               <label className="block text-sm font-medium">
-                                Bu Neyin Hazırlığı
+                                Çalışmaya Göre Ara
                               </label>
                               <select
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
@@ -882,7 +893,7 @@ export default function StudyBuddyPage() {
                 >
                   <h2 className="text-xl font-bold mb-2">Sohbetler</h2>
                   {loadingChats ? (
-                    <div>Yükleniyor...</div>
+                    <Loader className="h-6 w-6 text-muted-foreground animate-spin" />
                   ) : chats.length === 0 ? (
                     <div>Hiç sohbet yok.</div>
                   ) : (
@@ -894,7 +905,8 @@ export default function StudyBuddyPage() {
                         );
                         const otherData = chat.participantsData[otherUid];
                         const otherName = otherData?.userName || "User";
-                        const otherAvatar = otherData?.avatarUrl || "/default.png";
+                        const otherAvatar =
+                          otherData?.avatarUrl || "/mascot_purple.svg";
 
                         const shortLastMsg = truncatedMessage(
                           chat.lastMessage,

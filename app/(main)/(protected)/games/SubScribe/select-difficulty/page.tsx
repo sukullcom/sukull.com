@@ -3,10 +3,10 @@
 import { useSearchParams, useRouter } from "next/navigation";
 
 const difficulties = [
-  { label: "Easy (25% missing words)", value: 0.25 },
-  { label: "Medium (50% missing words)", value: 0.5 },
-  { label: "Hard (75% missing words)", value: 0.75 },
-  { label: "Extreme (100% missing words)", value: 1.0 },
+  { label: "Kolay", value: 0.25 },
+  { label: "Orta", value: 0.5 },
+  { label: "Zor", value: 0.75 },
+  { label: "Aşırı Zor", value: 1.0 },
 ];
 
 export default function SelectDifficultyPage() {
@@ -25,10 +25,10 @@ export default function SelectDifficultyPage() {
 
   return (
     <div style={{ padding: "20px", maxWidth: "700px", margin: "auto" }}>
-      <h1 className="text-3xl font-bold mb-6">Select Difficulty</h1>
+      <h1 className="text-3xl font-bold mb-6">Zorluk Seç</h1>
 
       <div className="mb-6">
-        <h2 className="text-xl font-semibold mb-2">How Does the Game Work?</h2>
+        <h2 className="text-xl font-semibold mb-2">Nasıl Çalışır?</h2>
         <div className="max-h-64 overflow-y-auto grid grid-cols-1 gap-2 scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-200 pr-2">
           <p>
             In this game, you'll be presented with a transcript from a YouTube

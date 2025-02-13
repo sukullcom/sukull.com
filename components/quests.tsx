@@ -14,7 +14,7 @@ export const Quests = ({ points }: Props) => {
       <div className="flex items-center justify-between w-full space-y-2">
         <h3 className="font-bold text-lg">Görevler</h3>
         <Link prefetch={false} href="/quests">
-          <Button size="sm" variant="primaryOutline">
+          <Button size="sm" variant="primaryOutline" className="bg-gray">
             Hepsİnİ gör {/* Düzeltilmiş Türkçe karakter */}
           </Button>
         </Link>

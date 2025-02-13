@@ -78,7 +78,7 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
             className="justify-start h-[44px] flex items-center pl-3"
           >
             <Image
-              src="/exit.png"
+              src="/exit.svg"
               alt="Çıkış Yap"
               height={20}
               width={20}

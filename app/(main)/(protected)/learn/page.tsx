@@ -1,3 +1,4 @@
+// app/(main)/(protected)/learn/page.tsx
 import { FeedWrapper } from "@/components/feed-wrapper";
 import { StickyWrapper } from "@/components/sticky-wrapper";
 import { Header } from "./header";
@@ -42,6 +43,7 @@ const LearnPage = async () => {
           activeCourse={userProgress.activeCourse}
           hearts={userProgress.hearts}
           points={userProgress.points}
+          istikrar={userProgress.istikrar}
           hasActiveSubscription={false}
         />
         <Quests points={userProgress.points} />

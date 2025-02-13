@@ -7,6 +7,7 @@ import { QuestionBubble } from "./question-bubble";
 import { Challenge } from "./challenge";
 import { Footer } from "./footer";
 import { upsertChallengeProgress } from "@/actions/challenge-progress";
+import { markLessonComplete } from "@/actions/lesson-progress"; // NEW: import the streak updater
 import { toast } from "sonner";
 import { reduceHearts } from "@/actions/user-progress";
 import { useAudio, useWindowSize, useMount } from "react-use";
@@ -53,7 +54,7 @@ export const Quiz = ({
     autoPlay: false,
   });
 
-  // Ders bittiğinde finish sesini sadece 1 kere çalmak için
+  // Used to play finish audio only once when lesson is complete
   const finishPlayedRef = useRef(false);
 
   // *******************************
@@ -70,14 +71,14 @@ export const Quiz = ({
   const [hearts, setHearts] = useState(initialHearts);
   const [points, setPoints] = useState(initialPoints);
 
-  // eğer initialPercentage=100 (bütün sorular tamam), practice
+  // If initialPercentage === 100 (all questions complete), practice
   const [percentage, setPercentage] = useState(() =>
     initialPercentage === 100 ? 0 : initialPercentage
   );
 
   const [challenges] = useState(initialLessonChallenges);
 
-  // Aktif challenge bul
+  // Find active (not yet completed) challenge
   const [activeIndex, setActiveIndex] = useState(() => {
     const idx = challenges.findIndex((c) => !c.completed);
     return idx === -1 ? 0 : idx;
@@ -88,7 +89,6 @@ export const Quiz = ({
 
   useMount(() => {
     if (initialPercentage === 100) {
-      // practice
       openPracticeModal();
     }
   });
@@ -99,16 +99,29 @@ export const Quiz = ({
   const challenge = challenges[activeIndex];
   const lessonFinished = !challenge;
 
-  // Ders bittiğinde finish sesini çal
+  // Play finish audio once when lesson is complete
   useEffect(() => {
     if (lessonFinished && !finishPlayedRef.current) {
       finishPlayedRef.current = true;
-      finishControls.play(); // Tek sefer
+      finishControls.play();
     }
   }, [lessonFinished, finishControls]);
 
   // *******************************
-  // 4) If lesson is finished
+  // 4) Automatically update streak (istikrar) when lesson is finished
+  // *******************************
+  const lessonCompletedCalledRef = useRef(false);
+  useEffect(() => {
+    if (lessonFinished && !lessonCompletedCalledRef.current) {
+      lessonCompletedCalledRef.current = true;
+      markLessonComplete().catch((err) =>
+        console.error("Failed to update streak", err)
+      );
+    }
+  }, [lessonFinished]);
+
+  // *******************************
+  // 5) Render finished lesson screen
   // *******************************
   if (lessonFinished) {
     return (
@@ -159,23 +172,24 @@ export const Quiz = ({
   }
 
   // *******************************
-  // 5) Normal case: we have an active challenge
+  // 6) Normal case: we have an active challenge
   // *******************************
   const { challengeOptions = [], type } = challenge;
-  const title = type === "ASSIST" ? "Select the correct meaning" : challenge.question;
+  const title =
+    type === "ASSIST" ? "Select the correct meaning" : challenge.question;
 
-  // onNext
+  // onNext: move to next challenge
   const onNext = () => {
     setStatus("none");
     setSelectedOption(undefined);
     setActiveIndex((current) => current + 1);
   };
 
-  // onContinue
+  // onContinue: handle answer checking
   const onContinue = () => {
     if (!selectedOption) return;
 
-    // If we are in 'wrong' or 'correct' state => Next step
+    // If already in 'wrong' or 'correct' state => Next step
     if (status === "wrong") {
       setStatus("none");
       setSelectedOption(undefined);
@@ -186,12 +200,12 @@ export const Quiz = ({
       return;
     }
 
-    // Normal check
+    // Check the answer
     const correctOption = challengeOptions.find((o) => o.correct);
     if (!correctOption) return;
 
     if (correctOption.id === selectedOption) {
-      // correct
+      // Answer is correct
       startTransition(() => {
         upsertChallengeProgress(challenge.id)
           .then((response) => {
@@ -203,7 +217,6 @@ export const Quiz = ({
             setStatus("correct");
             setPercentage((prev) => prev + 100 / challenges.length);
 
-            // practice?
             if (initialPercentage === 100) {
               setHearts((prev) => Math.min(prev + 1, 5));
               setPoints((prev) => prev + 2);
@@ -211,10 +224,12 @@ export const Quiz = ({
               setPoints((prev) => prev + 10);
             }
           })
-          .catch(() => toast.error("Something went wrong. Please try again."));
+          .catch(() =>
+            toast.error("Something went wrong. Please try again.")
+          );
       });
     } else {
-      // wrong
+      // Answer is wrong
       startTransition(() => {
         reduceHearts(challenge.id)
           .then((response) => {
@@ -230,17 +245,19 @@ export const Quiz = ({
               setPoints((prev) => prev - 10);
             }
           })
-          .catch(() => toast.error("Something went wrong. Please try again."));
+          .catch(() =>
+            toast.error("Something went wrong. Please try again.")
+          );
       });
     }
   };
 
   // *******************************
-  // 6) Render the ongoing challenge
+  // 7) Render the ongoing challenge
   // *******************************
   return (
     <>
-      {/* Audio DOM elements (her zaman render) */}
+      {/* Always render audio DOM elements */}
       {finishAudioEl}
       {correctAudioEl}
       {incorrectAudioEl}

@@ -73,9 +73,9 @@ export const Sidebar = ({ className }: Props) => {
           iconSrc={leaderboardIcon}
         />
         <SidebarItem label="Laboratuvarlar" href="/lab" iconSrc={labIcon} />
-        <SidebarItem label="Hedefler" href="/quests" iconSrc={questsIcon} />
+        <SidebarItem label="Görevler" href="/quests" iconSrc={questsIcon} />
         <SidebarItem label="Çantam" href="/shop" iconSrc={shopIcon} />
-        <SidebarItem label="Çalışma Arkadaşı" href="/study-buddy" iconSrc="/study_buddy.png" />
+        <SidebarItem label="Çalışma Arkadaşı" href="/study-buddy" iconSrc="/study_buddy.svg" />
         <SidebarItem label="Profİl" href="/profile" iconSrc="/mascot_blue.svg" />
       </div>
       <div className="p-4">
@@ -85,7 +85,7 @@ export const Sidebar = ({ className }: Props) => {
           className="justify-start h-[52px] flex items-center"
         >
           <Image
-            src="/exit.png"
+            src="/exit.svg"
             alt="Çıkış Yap"
             className="mr-1"
             height={26}

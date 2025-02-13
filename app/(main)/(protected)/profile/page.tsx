@@ -32,7 +32,6 @@ export default function ProfilePage() {
   const [profileLocked, setProfileLocked] = useState(false);
   const [selectedSchoolId, setSelectedSchoolId] = useState<number | null>(null);
 
-  const [initLoading, setInitLoading] = useState(true);
   const [pending, startTransition] = useTransition();
 
   // All schools
@@ -51,12 +50,10 @@ export default function ProfilePage() {
         // from /api/schools
         setAllSchools(schools);
 
-        setInitLoading(false);
       })
       .catch((err) => {
         console.error("Profile or schools load error:", err);
         toast.error("Bilgiler yüklenemedi.");
-        setInitLoading(false);
       });
   }, []);
 
@@ -87,18 +84,6 @@ export default function ProfilePage() {
     });
   };
 
-  if (initLoading) {
-    // Show progress
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="w-16 h-16">
-          <CircularProgressbarWithChildren value={50}>
-            <p className="text-sm">Yükleniyor...</p>
-          </CircularProgressbarWithChildren>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-12 px-4">

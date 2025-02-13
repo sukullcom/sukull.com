@@ -1,3 +1,4 @@
+// db/schema.ts
 import { relations } from "drizzle-orm";
 import {
   boolean,
@@ -10,6 +11,7 @@ import {
   uniqueIndex 
 } from "drizzle-orm/pg-core";
 
+// Courses
 export const courses = pgTable("courses", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
@@ -21,6 +23,7 @@ export const coursesRelations = relations(courses, ({ many }) => ({
   units: many(units),
 }));
 
+// Units
 export const units = pgTable("units", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
@@ -39,13 +42,12 @@ export const unitRelations = relations(units, ({ many, one }) => ({
   lessons: many(lessons),
 }));
 
+// Lessons
 export const lessons = pgTable("lessons", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
   unitId: integer("unit_id")
-    .references(() => units.id, {
-      onDelete: "cascade",
-    })
+    .references(() => units.id, { onDelete: "cascade" })
     .notNull(),
   order: integer("order").notNull(),
 });
@@ -58,14 +60,13 @@ export const lessonsRelations = relations(lessons, ({ one, many }) => ({
   challenges: many(challenges),
 }));
 
+// Challenges
 export const challengesEnum = pgEnum("type", ["SELECT", "ASSIST"]);
 
 export const challenges = pgTable("challenges", {
   id: serial("id").primaryKey(),
   lessonId: integer("lesson_id")
-    .references(() => lessons.id, {
-      onDelete: "cascade",
-    })
+    .references(() => lessons.id, { onDelete: "cascade" })
     .notNull(),
   type: challengesEnum("type").notNull(),
   question: text("question").notNull(),
@@ -81,12 +82,11 @@ export const challengesRelations = relations(challenges, ({ one, many }) => ({
   challengeProgress: many(challengeProgress),
 }));
 
+// Challenge Options
 export const challengeOptions = pgTable("challenge_options", {
   id: serial("id").primaryKey(),
   challengeId: integer("challenge_id")
-    .references(() => challenges.id, {
-      onDelete: "cascade",
-    })
+    .references(() => challenges.id, { onDelete: "cascade" })
     .notNull(),
   text: text("text").notNull(),
   correct: boolean("correct").notNull(),
@@ -94,38 +94,31 @@ export const challengeOptions = pgTable("challenge_options", {
   audioSrc: text("audio_src"),
 });
 
-export const challengeOptionsRelations = relations(
-  challengeOptions,
-  ({ one, many }) => ({
-    challenges: one(challenges, {
-      fields: [challengeOptions.challengeId],
-      references: [challenges.id],
-    }),
-  })
-);
+export const challengeOptionsRelations = relations(challengeOptions, ({ one, many }) => ({
+  challenges: one(challenges, {
+    fields: [challengeOptions.challengeId],
+    references: [challenges.id],
+  }),
+}));
 
+// Challenge Progress
 export const challengeProgress = pgTable("challenge_progress", {
   id: serial("id").primaryKey(),
   userId: text("user_id").notNull(),
   challengeId: integer("challenge_id")
-    .references(() => challenges.id, {
-      onDelete: "cascade",
-    })
+    .references(() => challenges.id, { onDelete: "cascade" })
     .notNull(),
   completed: boolean("completed").notNull().default(false),
 });
 
-export const challengeProgressRelations = relations(
-  challengeProgress,
-  ({ one, many }) => ({
-    challenges: one(challenges, {
-      fields: [challengeProgress.challengeId],
-      references: [challenges.id],
-    }),
-  })
-);
+export const challengeProgressRelations = relations(challengeProgress, ({ one, many }) => ({
+  challenges: one(challenges, {
+    fields: [challengeProgress.challengeId],
+    references: [challenges.id],
+  }),
+}));
 
-// Define the ENUM for school types
+// Schools
 export const schoolTypeEnum = pgEnum("school_type", [
   "university",
   "high_school",
@@ -133,32 +126,31 @@ export const schoolTypeEnum = pgEnum("school_type", [
   "elementary_school",
 ]);
 
-// Update the `schools` table
 export const schools = pgTable("schools", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   totalPoints: integer("total_points").notNull().default(0),
-  type: schoolTypeEnum("type").notNull().default("elementary_school"), // Add the school type column
+  type: schoolTypeEnum("type").notNull().default("elementary_school"),
 });
 
-////////ADDED Define relationships for `schools`
 export const schoolsRelations = relations(schools, ({ many }) => ({
   users: many(userProgress),
 }));
 
+// User Progress
 export const userProgress = pgTable("user_progress", {
   userId: text("user_id").primaryKey(),
   userName: text("user_name").notNull().default("User"),
   userImageSrc: text("user_image_src").notNull().default("/mascot_purple.svg"),
-  activeCourseId: integer("active_course_id").references(() => courses.id, {
-    onDelete: "cascade",
-  }),
+  activeCourseId: integer("active_course_id")
+    .references(() => courses.id, { onDelete: "cascade" }),
   hearts: integer("hearts").notNull().default(5),
   points: integer("points").notNull().default(0),
-  schoolId: integer("school_id").references(() => schools.id, {
-    onDelete: "set null",
-  }), // integer type
+  schoolId: integer("school_id")
+    .references(() => schools.id, { onDelete: "set null" }),
   profileLocked: boolean("profileLocked").default(false).notNull(),
+  istikrar: integer("istikrar").notNull().default(0),
+  lastLessonCompletedAt: timestamp("last_lesson_completed_at"),
 });
 
 export const userProgressRelations = relations(userProgress, ({ one }) => ({
@@ -172,27 +164,23 @@ export const userProgressRelations = relations(userProgress, ({ one }) => ({
   }),
 }));
 
-// Private Lesson -----------------------------------
-export const privateLessonApplications = pgTable(
-  "private_lesson_applications",
-  {
-    id: serial("id").primaryKey(),
-    studentName: text("student_name").notNull(),
-    studentSurname: text("student_surname").notNull(),
-    studentPhoneNumber: text("student_phone_number").notNull(),
-    studentEmail: text("student_email").notNull(),
-    field: text("field").notNull(),
-    studentNeeds: text("student_needs"), // Optional
-  }
-);
+// Private Lesson Applications (Öğrenci Başvuruları)
+// (priceRange is required)
+export const privateLessonApplications = pgTable("private_lesson_applications", {
+  id: serial("id").primaryKey(),
+  studentName: text("student_name").notNull(),
+  studentSurname: text("student_surname").notNull(),
+  studentPhoneNumber: text("student_phone_number").notNull(),
+  studentEmail: text("student_email").notNull(),
+  field: text("field").notNull(),
+  priceRange: text("price_range").notNull(),
+  studentNeeds: text("student_needs"),
+});
 
-// Relations for student applications (if any)
-export const privateLessonApplicationsRelations = relations(
-  privateLessonApplications,
-  ({}) => ({})
-);
+export const privateLessonApplicationsRelations = relations(privateLessonApplications, ({}) => ({}));
 
-// Table for storing teacher applications
+// Teacher Applications (Öğretmen Başvuruları)
+// (priceRange is required and classification is stored as well)
 export const teacherApplications = pgTable("teacher_applications", {
   id: serial("id").primaryKey(),
   field: text("field").notNull(),
@@ -202,28 +190,37 @@ export const teacherApplications = pgTable("teacher_applications", {
   teacherSurname: text("teacher_surname"),
   teacherPhoneNumber: text("teacher_phone_number"),
   teacherEmail: text("teacher_email"),
-  // Add more fields as needed
+  priceRange: text("price_range").notNull(),
+  classification: text("classification"),
 });
 
-// Relations for teacher applications (if any)
-export const teacherApplicationsRelations = relations(
-  teacherApplications,
-  ({}) => ({})
-);
+export const teacherApplicationsRelations = relations(teacherApplications, ({}) => ({}));
 
-// Table for quiz questions
+// English Group Applications (İngilizce Konuşma Grubu Başvuruları)
+export const englishGroupApplications = pgTable("english_group_applications", {
+  id: serial("id").primaryKey(),
+  participantName: text("participant_name").notNull(),
+  participantSurname: text("participant_surname").notNull(),
+  participantPhoneNumber: text("participant_phone_number").notNull(),
+  participantEmail: text("participant_email").notNull(),
+  quizResult: integer("quiz_result").notNull().default(0),
+  // Now store classification as e.g. A1..C2 or '' if not assigned
+  classification: text("classification").default(""),
+});
+
+export const englishGroupApplicationsRelations = relations(englishGroupApplications, ({}) => ({}));
+
+// Quiz Questions and Options
 export const quizQuestions = pgTable("quiz_questions", {
   id: serial("id").primaryKey(),
   field: text("field").notNull(),
   questionText: text("question_text").notNull(),
 });
 
-// Relations for quiz questions
 export const quizQuestionsRelations = relations(quizQuestions, ({ many }) => ({
   options: many(quizOptions),
 }));
 
-// Table for quiz options
 export const quizOptions = pgTable("quiz_options", {
   id: serial("id").primaryKey(),
   questionId: integer("question_id")
@@ -233,7 +230,6 @@ export const quizOptions = pgTable("quiz_options", {
   isCorrect: boolean("is_correct").notNull().default(false),
 });
 
-// Relations for quiz options
 export const quizOptionsRelations = relations(quizOptions, ({ one }) => ({
   question: one(quizQuestions, {
     fields: [quizOptions.questionId],
@@ -241,7 +237,7 @@ export const quizOptionsRelations = relations(quizOptions, ({ one }) => ({
   }),
 }));
 
-// Code Editor -----------------------------------
+// Code Editor
 export const snippets = pgTable("snippets", {
   id: serial("id").primaryKey(),
   userId: text("user_id").notNull(),
@@ -254,10 +250,8 @@ export const snippets = pgTable("snippets", {
 });
 
 export const snippetsRelations = relations(snippets, ({ one }) => ({
-  //If you want to relate it back to userProgress, you can do that here
   user: one(userProgress, {
     fields: [snippets.userId],
     references: [userProgress.userId],
   }),
 }));
-

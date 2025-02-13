@@ -9,90 +9,98 @@ export default function GiveLessonPage() {
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [field, setField] = useState("");
   const [questions, setQuestions] = useState<any[]>([]);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState<number[]>([]);
   const [score, setScore] = useState(0);
+
   const [formData, setFormData] = useState({
     teacherName: "",
     teacherSurname: "",
     teacherPhoneNumber: "",
     teacherEmail: "",
+    priceRange: "",
   });
 
   const router = useRouter();
 
-  const handleFieldSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChangeField = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setField(e.target.value);
   };
 
   const handleStartQuiz = async () => {
+    if (!field) {
+      return toast.error("Lütfen bir alan seçiniz.");
+    }
     const res = await fetch(`/api/private-lesson/quiz?field=${field}`);
-    if (res.ok) {
-      const data = await res.json();
+    if (!res.ok) {
+      toast.error("Bir hata oluştu, lütfen tekrar deneyin.");
+      return;
+    }
+    const data = await res.json();
+    if (!data.questions) {
+      toast.error("Bir hata oluştu, lütfen tekrar deneyin.");
+      return;
+    }
+    if (data.questions.length === 0) {
+      // no quiz => skip to form
+      setStep(3);
+    } else {
       setQuestions(data.questions);
       setStep(2);
-    } else {
-      toast.error("Bir hata oluştu. Lütfen tekrar deneyin.");
     }
   };
 
-  const handleOptionSelect = (optionId: number) => {
-    const updatedSelectedOptions = [...selectedOptions];
-    updatedSelectedOptions[currentQuestionIndex] = optionId;
-    setSelectedOptions(updatedSelectedOptions);
+  const handleOptionSelect = (optId: number) => {
+    const updated = [...selectedOptions];
+    updated[currentIndex] = optId;
+    setSelectedOptions(updated);
   };
 
-  const handleNextQuestion = () => {
-    setCurrentQuestionIndex(currentQuestionIndex + 1);
-  };
+  const handleNextQuestion = () => setCurrentIndex((prev) => prev + 1);
 
-  const handleSubmitQuiz = () => {
-    let correctAnswers = 0;
-    questions.forEach((question, index) => {
-      const selectedOptionId = selectedOptions[index];
-      const selectedOption = question.options.find(
-        (option: any) => option.id === selectedOptionId
-      );
-      if (selectedOption && selectedOption.isCorrect) {
-        correctAnswers++;
-      }
+  const handleFinishQuiz = () => {
+    let correctCount = 0;
+    questions.forEach((q, idx) => {
+      const selectedId = selectedOptions[idx];
+      const correctOpt = q.options.find((o: any) => o.isCorrect);
+      if (correctOpt && correctOpt.id === selectedId) correctCount++;
     });
-    setScore(correctAnswers);
+    setScore(correctCount);
 
-    if (correctAnswers >= 2) {
+    // Need at least 7 for pass
+    if (correctCount >= 7) {
       setStep(3);
     } else {
       toast.error(
-        `Maalesef yeterli puan alamadınız. Doğru cevap sayısı: ${correctAnswers}`
+        `Maalesef yeterli puan alamadınız. Doğru cevap sayısı: ${correctCount}.`
       );
       router.push("/");
     }
   };
 
-  const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFormInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleFormSubmit = async (e: React.FormEvent) => {
+  const handleSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
-    const applicationData = {
+    const body = {
+      ...formData,
       field,
       quizResult: score,
       passed: true,
-      ...formData,
     };
 
     const res = await fetch("/api/private-lesson/give", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(applicationData),
+      body: JSON.stringify(body),
     });
-
-    if (res.ok) {
-      router.push("/private-lesson/give/success");
-    } else {
+    if (!res.ok) {
       toast.error("Bir hata oluştu. Lütfen tekrar deneyin.");
+      return;
     }
+    router.push("/private-lesson/give/success");
   };
 
   return (
@@ -105,96 +113,77 @@ export default function GiveLessonPage() {
         />
       </div>
       <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-white w-full max-w-4xl">
-        {step === 1 && <p className="text-sm text-gray-500 mb-4">Adım 1 / 3</p>}
-        {step === 2 && <p className="text-sm text-gray-500 mb-4">Adım 2 / 3</p>}
-        {step === 3 && <p className="text-sm text-gray-500 mb-4">Adım 3 / 3</p>}
+        {/* Title & info block, as get/page.tsx style */}
+        <h1 className="text-2xl font-bold text-center text-gray-800">
+          Özel Ders Vermek İstiyorum
+        </h1>
 
         {step === 1 && (
-          <div className="space-y-6">
-            <h1 className="text-2xl font-bold text-center text-gray-800">
-              Özel Ders Vermek İçin Başvur
-            </h1>
-            <p className="text-gray-600 text-center">
-              Bu bilgiler, sizin uzmanlık alanınızı belirleyip öğrencilerle en
-              iyi şekilde eşleşmenizi sağlayacak.
-            </p>
+          <div className="space-y-4">
             <div>
-              <label
-                htmlFor="field"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label className="block text-sm font-medium text-gray-700">
                 Hangi alanda ders vermek istiyorsunuz?
               </label>
               <select
-                id="field"
-                value={field}
-                onChange={handleFieldSelection}
+                name="field"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                value={field}
+                onChange={handleChangeField}
               >
                 <option value="">Seçiniz</option>
-                <option value="Matematik">Matematik</option>
-                <option value="Fizik">Fizik</option>
+                <option value="English">İngilizce</option>
+                <option value="Mathematics">Matematik</option>
+                <option value="Physics">Fizik</option>
+                <option value="Chess">Satranç</option>
               </select>
             </div>
-            <div className="pt-4">
-              <Button
-                onClick={handleStartQuiz}
-                disabled={!field}
-                variant="primary"
-                size="lg"
-                className="w-full"
-              >
-                Teste Başla
-              </Button>
-            </div>
+            <Button
+              variant="primary"
+              size="lg"
+              className="w-full"
+              onClick={handleStartQuiz}
+            >
+              Devam Et
+            </Button>
           </div>
         )}
 
         {step === 2 && questions.length > 0 && (
-          <div className="space-y-6">
+          <div className="space-y-4">
             <h2 className="text-xl font-bold text-gray-800">
-              Soru {currentQuestionIndex + 1} / {questions.length}
+              Soru {currentIndex + 1} / {questions.length}
             </h2>
-            <p className="text-gray-700">
-              {questions[currentQuestionIndex].questionText}
-            </p>
-            <div className="space-y-4">
-              {questions[currentQuestionIndex].options.map((option: any) => (
-                <div key={option.id} className="flex items-center">
+            <p>{questions[currentIndex].questionText}</p>
+            <div className="space-y-2">
+              {questions[currentIndex].options.map((opt: any) => (
+                <label
+                  key={opt.id}
+                  className="flex items-center space-x-2 border p-2 rounded-md"
+                >
                   <input
                     type="radio"
-                    id={`option-${option.id}`}
-                    name={`question-${currentQuestionIndex}`}
-                    value={option.id}
-                    checked={
-                      selectedOptions[currentQuestionIndex] === option.id
-                    }
-                    onChange={() => handleOptionSelect(option.id)}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                    name={`q-${currentIndex}`}
+                    checked={selectedOptions[currentIndex] === opt.id}
+                    onChange={() => handleOptionSelect(opt.id)}
                   />
-                  <label
-                    htmlFor={`option-${option.id}`}
-                    className="ml-3 block text-sm text-gray-700"
-                  >
-                    {option.text}
-                  </label>
-                </div>
+                  <span>{opt.text}</span>
+                </label>
               ))}
             </div>
-            <div className="pt-4 flex justify-end space-x-4">
-              {currentQuestionIndex < questions.length - 1 ? (
+            <div className="flex justify-end">
+              {currentIndex < questions.length - 1 ? (
                 <Button
-                  onClick={handleNextQuestion}
-                  disabled={selectedOptions[currentQuestionIndex] === undefined}
                   variant="primary"
+                  disabled={selectedOptions[currentIndex] == null}
+                  onClick={handleNextQuestion}
                 >
-                  Sonraki Soru
+                  Sonrakİ Soru
                 </Button>
               ) : (
                 <Button
-                  onClick={handleSubmitQuiz}
-                  disabled={selectedOptions[currentQuestionIndex] === undefined}
                   variant="primary"
+                  disabled={selectedOptions[currentIndex] == null}
+                  onClick={handleFinishQuiz}
                 >
                   Testi Bitir
                 </Button>
@@ -203,116 +192,114 @@ export default function GiveLessonPage() {
           </div>
         )}
 
-        {step === 2 && questions.length === 0 && (
-          <div className="text-center space-y-4">
-            <p>Bu alan için soru bulunamadı.</p>
-            <Button
-              onClick={() => setStep(1)}
-              variant="secondary"
-              className="mt-4"
-            >
-              Geri Dön
-            </Button>
-          </div>
-        )}
-
         {step === 3 && (
-          <div className="space-y-6">
-            <h1 className="text-2xl font-bold text-center text-gray-800">
-              Tebrikler! Testi Başarıyla Geçtiniz.
-            </h1>
-            <p className="text-center text-gray-700">
-              Doğru cevap sayısı: {score} / {questions.length}
+          <form onSubmit={handleSubmitForm} className="space-y-4">
+            <div>
+              <label
+                htmlFor="teacherName"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Adınız
+              </label>
+              <input
+                type="text"
+                name="teacherName"
+                id="teacherName"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                placeholder="Örneğin: Mehmet"
+                value={formData.teacherName}
+                onChange={handleFormInput}
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="teacherSurname"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Soyadınız
+              </label>
+              <input
+                type="text"
+                name="teacherSurname"
+                id="teacherSurname"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                placeholder="Örneğin: Demir"
+                value={formData.teacherSurname}
+                onChange={handleFormInput}
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="teacherPhoneNumber"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Telefon Numaranız
+              </label>
+              <input
+                type="tel"
+                name="teacherPhoneNumber"
+                id="teacherPhoneNumber"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                placeholder="05xx xxx xx xx"
+                value={formData.teacherPhoneNumber}
+                onChange={handleFormInput}
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="teacherEmail"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Email Adresiniz
+              </label>
+              <input
+                type="email"
+                name="teacherEmail"
+                id="teacherEmail"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                placeholder="ornek@mail.com"
+                value={formData.teacherEmail}
+                onChange={handleFormInput}
+                required
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="priceRange"
+                className="block text-sm font-medium text-gray-700"
+              >
+                1 Saatlik Ders İçin Talep Ettiğiniz Fiyat Aralığı (Öğrenci
+                eşleştirmesi için gereklidir.)
+              </label>
+              <input
+                type="text"
+                name="priceRange"
+                id="priceRange"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                placeholder="Örneğin: 200-300 TL"
+                value={formData.priceRange}
+                onChange={handleFormInput}
+                required
+              />
+            </div>
+            <p className="text-xs text-gray-500">
+              Bilgileriniz yalnızca size uygun öğrenciyi belirlemek ve sizinle iletişim
+              kurmak amacıyla kullanılacaktır.
             </p>
-            <form onSubmit={handleFormSubmit} className="space-y-4">
-              <div>
-                <label
-                  htmlFor="teacherName"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Adınız
-                </label>
-                <input
-                  type="text"
-                  name="teacherName"
-                  id="teacherName"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-                  placeholder="Örneğin: Mehmet"
-                  value={formData.teacherName}
-                  onChange={handleFormChange}
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="teacherSurname"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Soyadınız
-                </label>
-                <input
-                  type="text"
-                  name="teacherSurname"
-                  id="teacherSurname"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-                  placeholder="Örneğin: Demir"
-                  value={formData.teacherSurname}
-                  onChange={handleFormChange}
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="teacherPhoneNumber"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Telefon Numaranız
-                </label>
-                <input
-                  type="tel"
-                  name="teacherPhoneNumber"
-                  id="teacherPhoneNumber"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-                  placeholder="05xx xxx xx xx"
-                  value={formData.teacherPhoneNumber}
-                  onChange={handleFormChange}
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="teacherEmail"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Email Adresiniz
-                </label>
-                <input
-                  type="email"
-                  name="teacherEmail"
-                  id="teacherEmail"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-500 focus:ring-green-500"
-                  placeholder="ornek@mail.com"
-                  value={formData.teacherEmail}
-                  onChange={handleFormChange}
-                  required
-                />
-              </div>
-              <p className="text-xs text-gray-500">
-                Bu bilgileri yalnızca uygun öğrencilerle sizi eşleştirmek ve
-                iletişim kurmak için kullanacağız.
-              </p>
-              <div className="pt-4">
-                <Button
-                  type="submit"
-                  variant="secondary"
-                  size="lg"
-                  className="w-full"
-                >
-                  Başvuruyu Gönder
-                </Button>
-              </div>
-            </form>
-          </div>
+            <div className="pt-4">
+              <Button
+                type="submit"
+                variant="primary"
+                size="lg"
+                className="w-full"
+              >
+                Başvuruyu Gönder
+              </Button>
+            </div>
+          </form>
         )}
       </div>
     </div>

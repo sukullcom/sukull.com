@@ -18,58 +18,58 @@ const labsData: LabData[] = [
   {
     id: "LeetCode",
     name: "LeetCode",
-    imageSrc: "/bilgisayar.png",
+    imageSrc: "/computer.svg",
     category: "Bilgisayar Laboratuvarı",
   },
   {
     id: "sukull-code-editor",
     name: "Sukull Code Editor",
-    imageSrc: "/bilgisayar.png",
+    imageSrc: "/computer.svg",
     category: "Bilgisayar Laboratuvarı",
   },
   {
     id: "sukull-code-editor/snippets",
     name: "Code Snippets",
-    imageSrc: "/bilgisayar.png",
+    imageSrc: "/computer.svg",
     category: "Bilgisayar Laboratuvarı",
   },
   {
     id: "biology-experiments", // henüz geliştirme aşamasında
     name: "Biyoloji Deneyleri",
-    imageSrc: "/biyoloji.png",
+    imageSrc: "/biology.svg",
     category: "Biyoloji Laboratuvarı",
     development: true,
   },
   {
     id: "human-body",
     name: "İnsan Vücudu",
-    imageSrc: "/biyoloji.png",
+    imageSrc: "/biology.svg",
     category: "Biyoloji Laboratuvarı",
   },
   {
     id: "journey-of-food",
     name: "Yiyeceklerin Yolculuğu",
-    imageSrc: "/biyoloji.png",
+    imageSrc: "/biology.svg",
     category: "Biyoloji Laboratuvarı",
   },
   {
     id: "chemistry-experiments", // henüz geliştirme aşamasında
     name: "Kimya Laboratuvarı",
-    imageSrc: "/kimya.png",
+    imageSrc: "/chemistry.svg",
     category: "Kimya Laboratuvarı",
     development: true,
   },
   {
     id: "physics-experiments", // henüz geliştirme aşamasında
     name: "Fizik Deneyleri",
-    imageSrc: "/fizik.png",
+    imageSrc: "/physics.svg",
     category: "Fizik Laboratuvarı",
     development: true,
   },
   {
     id: "organic-chemistry", // henüz geliştirme aşamasında
     name: "Organik Kimya",
-    imageSrc: "/kimya.png",
+    imageSrc: "/chemistry.svg",
     category: "Kimya Laboratuvarı",
     development: true,
   },
@@ -91,6 +91,7 @@ const LabsPage = async () => {
           activeCourse={userProgress.activeCourse}
           hearts={userProgress.hearts}
           points={userProgress.points}
+          istikrar={userProgress.istikrar}
           hasActiveSubscription={false}
         />
       </StickyWrapper>

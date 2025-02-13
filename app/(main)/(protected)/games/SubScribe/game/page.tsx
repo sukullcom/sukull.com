@@ -382,7 +382,7 @@ export default function GamePage() {
 
   return (
     <div className="game-page" style={{ padding: "20px", maxWidth: "800px", margin: "auto" }}>
-      <h1>Complete the Lyrics Game</h1>
+      <h1 className="py-4 text-xl font-bold">Oyunu Tamamla</h1>
       {videoId && <VideoPlayer videoId={videoId} />}
       {error && <p className="error-message">{error}</p>}
       <LyricsGame lyrics={lyrics} onTryAgain={handleTryAgain} />

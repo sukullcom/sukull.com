@@ -12,6 +12,7 @@ export default function GetLessonPage() {
     studentPhoneNumber: "",
     studentEmail: "",
     field: "",
+    priceRange: "",
     studentNeeds: "",
   });
 
@@ -55,13 +56,9 @@ export default function GetLessonPage() {
           Özel Ders Başvurusu
         </h1>
         <p className="text-gray-600 text-center">
-          Lütfen aşağıdaki formu doldurarak bize ihtiyaçlarınızı iletin. Bu
+          Lütfen aşağıdaki formu doldurarak bize taleplerinizi iletin. Bu
           bilgiler, size en uygun öğretmeni bulmamıza yardımcı olacaktır.
         </p>
-        <div className="bg-gray-100 p-4 rounded-md text-sm text-gray-700 italic">
-          "Sayenizde kısa sürede mükemmel bir matematik öğretmeni buldum ve
-          notlarım ciddi ölçüde yükseldi!" — Ayşe, Lise Öğrencisi
-        </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label
@@ -159,6 +156,24 @@ export default function GetLessonPage() {
           </div>
           <div>
             <label
+              htmlFor="priceRange"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Talep Ettiğiniz Fiyat Aralığı (Öğretmen eşleştirmesi için gereklidir.)
+            </label>
+            <input
+              type="text"
+              name="priceRange"
+              id="priceRange"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              placeholder="Örneğin: 100-200 TL"
+              value={formData.priceRange}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div>
+            <label
               htmlFor="studentNeeds"
               className="block text-sm font-medium text-gray-700"
             >
@@ -174,7 +189,7 @@ export default function GetLessonPage() {
             />
           </div>
           <p className="text-xs text-gray-500">
-            Bilgileriniz yalnızca size uygun öğretmeni belirlemek ve iletişim
+            Bilgileriniz yalnızca size uygun öğretmeni belirlemek ve sizinle iletişim
             kurmak amacıyla kullanılacaktır.
           </p>
           <div className="pt-4">
