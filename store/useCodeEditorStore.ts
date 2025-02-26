@@ -1,7 +1,7 @@
 
 import { create } from "zustand";
 import { CodeEditorState } from "@/app/types";
-import { LANGUAGE_CONFIG } from "@/app/(main)/(protected)/lab/sukull-code-editor/constants";
+import { LANGUAGE_CONFIG } from "@/app/(main)/sukull-code-editor/constants";
 import { Monaco } from "@monaco-editor/react";
 
 const getInitialState = () => {
@@ -37,7 +37,8 @@ export const useCodeEditorStore = create<CodeEditorState>((set, get) => {
     editor: null,
     executionResult: null,
 
-    getCode: () => get().editor?.getValue() || "",
+
+    getCode: () => get().editor?.getModel()?.getValue() || "",
 
     setEditor: (editor: Monaco) => {
       const savedCode = localStorage.getItem(`editor-code-${get().language}`);

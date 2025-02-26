@@ -1,12 +1,17 @@
 import "dotenv/config";
-import { drizzle } from "drizzle-orm/neon-http";
-import { neon } from "@neondatabase/serverless";
+import { drizzle } from "drizzle-orm/postgres-js";
+import { Pool } from "pg";
 
 import * as schema from "../db/schema";
 
-const sql = neon(process.env.DATABASE_URL!);
-// @ts-ignore
-const db = drizzle(sql, { schema });
+// Create a connection pool using the Supabase DATABASE_URL
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL!,
+});
+
+
+// Initialize drizzle with the pool and your schema
+const db = drizzle(pool.options.connectionString!, { schema });
 
 const main = async () => {
   try {
@@ -372,7 +377,6 @@ const main = async () => {
     }
 
     // Insert quiz questions and options
-    // Function to insert quiz questions and options
     const insertQuizQuestions = async (field: string, questionsData: any[]) => {
       for (const q of questionsData) {
         const insertedQuestion = await db
@@ -444,8 +448,6 @@ const main = async () => {
     // Insert the quiz questions into the database
     await insertQuizQuestions("Matematik", mathQuestions);
     await insertQuizQuestions("Fizik", physicsQuestions);
-
-
 
     console.log("Database seeded successfully");
   } catch (error) {

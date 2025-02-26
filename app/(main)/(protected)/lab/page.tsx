@@ -20,6 +20,7 @@ const labsData: LabData[] = [
     name: "LeetCode",
     imageSrc: "/computer.svg",
     category: "Bilgisayar Laboratuvarı",
+    development: true,
   },
   {
     id: "sukull-code-editor",
@@ -29,45 +30,45 @@ const labsData: LabData[] = [
   },
   {
     id: "sukull-code-editor/snippets",
-    name: "Code Snippets",
+    name: "Sukull Kod Kütüphanesi",
     imageSrc: "/computer.svg",
     category: "Bilgisayar Laboratuvarı",
   },
   {
-    id: "biology-experiments", // henüz geliştirme aşamasında
+    id: "lab/biology-experiments", // henüz geliştirme aşamasında
     name: "Biyoloji Deneyleri",
     imageSrc: "/biology.svg",
     category: "Biyoloji Laboratuvarı",
     development: true,
   },
   {
-    id: "human-body",
+    id: "lab/human-body",
     name: "İnsan Vücudu",
     imageSrc: "/biology.svg",
     category: "Biyoloji Laboratuvarı",
   },
   {
-    id: "journey-of-food",
+    id: "lab/journey-of-food",
     name: "Yiyeceklerin Yolculuğu",
     imageSrc: "/biology.svg",
     category: "Biyoloji Laboratuvarı",
   },
   {
-    id: "chemistry-experiments", // henüz geliştirme aşamasında
+    id: "lab/chemistry-experiments", // henüz geliştirme aşamasında
     name: "Kimya Laboratuvarı",
     imageSrc: "/chemistry.svg",
     category: "Kimya Laboratuvarı",
     development: true,
   },
   {
-    id: "physics-experiments", // henüz geliştirme aşamasında
+    id: "lab/physics-experiments", // henüz geliştirme aşamasında
     name: "Fizik Deneyleri",
     imageSrc: "/physics.svg",
     category: "Fizik Laboratuvarı",
     development: true,
   },
   {
-    id: "organic-chemistry", // henüz geliştirme aşamasında
+    id: "lab/organic-chemistry", // henüz geliştirme aşamasında
     name: "Organik Kimya",
     imageSrc: "/chemistry.svg",
     category: "Kimya Laboratuvarı",
@@ -86,15 +87,6 @@ const LabsPage = async () => {
 
   return (
     <div className="flex flex-row-reverse gap-[48px] px-6">
-      <StickyWrapper>
-        <UserProgress
-          activeCourse={userProgress.activeCourse}
-          hearts={userProgress.hearts}
-          points={userProgress.points}
-          istikrar={userProgress.istikrar}
-          hasActiveSubscription={false}
-        />
-      </StickyWrapper>
       <FeedWrapper>
         <div className="w-full flex flex-col items-center">
           <Image
@@ -122,7 +114,7 @@ const LabsPage = async () => {
                           key={lab.id}
                           imageSrc={lab.imageSrc}
                           title={lab.name}
-                          href={lab.development ? "#" : `/lab/${lab.id}`}
+                          href={lab.development ? "#" : `/${lab.id}`}
                           buttonText={
                             lab.development ? "Gelİştİrme\nAşamasında" : "İncele"
                           }

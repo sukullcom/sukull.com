@@ -4,11 +4,10 @@ import { List } from "./list";
 import { getServerUser } from "@/lib/auth";
 
 export default async function CoursesPage() {
-  // 1) Token kontrolü
+
   const user = await getServerUser();
   if (!user) {
-    // Kullanıcı yok => /login
-    redirect("/login?error=You must log in first");
+    redirect("/login");
   }
 
   // 2) Ardından veritabanı sorguları

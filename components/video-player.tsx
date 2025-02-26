@@ -13,7 +13,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId }) => {
   const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
   return (
-    <div className="player-wrapper" style={{ position: "relative", paddingTop: "56.25%" }}>
+    <div className="player-wrapper rounded-xl overflow-hidden mb-4 shadow-lg" style={{ position: "relative", paddingTop: "56.25%" }}>
       <ReactPlayer
         url={videoUrl}
         className="react-player"

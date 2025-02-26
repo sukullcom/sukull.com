@@ -130,7 +130,7 @@ const FoodSimulationPage = () => {
   };
 
   return (
-    <div className="min-h-screen p-8 flex flex-col items-center gap-8 bg-white">
+    <div className="min-h-screen p-8 flex flex-col items-center gap-8 bg-gray">
       {gameFinished && <Confetti recycle={false} numberOfPieces={500} />}
       {correctAudio}
       {incorrectAudio}

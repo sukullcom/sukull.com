@@ -14,15 +14,6 @@ const SnakeGamePage = async () => {
 
   return (
     <div className="flex flex-row-reverse gap-[48px] px-6">
-      <StickyWrapper>
-        <UserProgress
-          activeCourse={userProgress.activeCourse}
-          hearts={userProgress.hearts}
-          points={userProgress.points}
-          istikrar={userProgress.istikrar}
-          hasActiveSubscription={false}
-        />
-      </StickyWrapper>
       <FeedWrapper>
         <SnakeGame />
       </FeedWrapper>

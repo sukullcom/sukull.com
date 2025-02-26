@@ -8,7 +8,7 @@ export const GET = async (
   req: Request,
   { params }: { params: { courseId: number } }
 ) => {
-  if (!isAdmin()) {
+  if (!(await isAdmin())) {
     return new NextResponse("Unauthorized", { status: 403 });
   }
 
@@ -23,7 +23,7 @@ export const PUT = async (
   req: Request,
   { params }: { params: { courseId: number } }
 ) => {
-  if (!isAdmin()) {
+  if (!(await isAdmin())) {
     return new NextResponse("Unauthorized", { status: 403 });
   }
 
@@ -43,7 +43,7 @@ export const DELETE = async (
   req: Request,
   { params }: { params: { courseId: number } }
 ) => {
-  if (!isAdmin()) {
+  if (!(await isAdmin())) {
     return new NextResponse("Unauthorized", { status: 403 });
   }
 

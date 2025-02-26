@@ -1,16 +1,8 @@
-"use server";
-import { cookies } from "next/headers";
-import { verifySessionCookie } from "./firebaseAdmin";
+// lib/auth.ts
+import { createClient } from '@/utils/supabase/server'
 
 export async function getServerUser() {
-  const token = cookies().get("token")?.value;
-  if (!token) return null;
-
-  try {
-    const decoded = await verifySessionCookie(token);
-    return decoded; // { uid, email, ... }
-  } catch (err) {
-    console.error("getServerUser error:", err);
-    return null;
-  }
+  const supabase = await createClient()
+  const { data } = await supabase.auth.getUser()
+  return data.user || null
 }

@@ -10,7 +10,7 @@ import { getServerUser } from "@/lib/auth";
 export const markLessonComplete = async () => {
   const user = await getServerUser();
   if (!user) throw new Error("Unauthorized");
-  const userId = user.uid;
+  const userId = user.id;
 
   const currentUserProgress = await db.query.userProgress.findFirst({
     where: eq(userProgress.userId, userId),

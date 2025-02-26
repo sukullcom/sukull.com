@@ -8,8 +8,29 @@ import {
   serial,
   text,
   timestamp,
+  json,
   uniqueIndex 
 } from "drizzle-orm/pg-core";
+
+// Define your IUserLink type (for TypeScript)
+export interface IUserLink {
+  id: string;
+  label: string;
+  url: string;
+}
+
+// Define a "users" table for storing profile details
+export const users = pgTable("users", {
+  id: text("id").primaryKey(),              // Auth user id
+  email: text("email").notNull(),
+  name: text("name").notNull(),               // This holds the username
+  description: text("description").default(""),
+  avatar: text("avatar").default(""),
+  provider: text("provider").notNull(),       // e.g., 'google', 'github', or 'email'
+  links: json("links").$type<IUserLink[]>().notNull().default([]),
+  created_at: timestamp("created_at").defaultNow().notNull(),
+  updated_at: timestamp("updated_at").defaultNow().notNull(),
+});
 
 // Courses
 export const courses = pgTable("courses", {
@@ -253,5 +274,54 @@ export const snippetsRelations = relations(snippets, ({ one }) => ({
   user: one(userProgress, {
     fields: [snippets.userId],
     references: [userProgress.userId],
+  }),
+}));
+
+
+// Study Buddy Posts
+export const studyBuddyPosts = pgTable("study_buddy_posts", {
+  id: serial("id").primaryKey(),
+  user_id: text("user_id").notNull(), // references auth user id
+  purpose: text("purpose").notNull(),
+  reason: text("reason").notNull(),
+  created_at: timestamp("created_at").defaultNow().notNull(),
+});
+
+// Study Buddy Chats
+// We store participants as JSON (an array of user IDs)
+export const studyBuddyChats = pgTable("study_buddy_chats", {
+  id: serial("id").primaryKey(),
+  participants: json("participants").$type<string[]>().notNull(),
+  last_message: text("last_message").default(""),
+  last_updated: timestamp("last_updated").defaultNow().notNull(),
+});
+
+// Study Buddy Messages
+export const studyBuddyMessages = pgTable("study_buddy_messages", {
+  id: serial("id").primaryKey(),
+  chat_id: integer("chat_id")
+    .references(() => studyBuddyChats.id, { onDelete: "cascade" })
+    .notNull(),
+  sender: text("sender").notNull(),
+  content: text("content").notNull(),
+  created_at: timestamp("created_at").defaultNow().notNull(),
+});
+
+// Optionally, you can define relations for these new tables:
+export const studyBuddyPostsRelations = relations(studyBuddyPosts, ({ one }) => ({
+  user: one(users, {
+    fields: [studyBuddyPosts.user_id],
+    references: [users.id],
+  }),
+}));
+
+export const studyBuddyChatsRelations = relations(studyBuddyChats, ({ many }) => ({
+  messages: many(studyBuddyMessages),
+}));
+
+export const studyBuddyMessagesRelations = relations(studyBuddyMessages, ({ one }) => ({
+  chat: one(studyBuddyChats, {
+    fields: [studyBuddyMessages.chat_id],
+    references: [studyBuddyChats.id],
   }),
 }));

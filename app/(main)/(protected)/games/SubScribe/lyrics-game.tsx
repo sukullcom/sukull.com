@@ -89,7 +89,7 @@ export default function LyricsGame({ lyrics, onTryAgain }: LyricsGameProps) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="sticky top-0 bg-white p-4 border-b border-gray-200 flex items-center justify-between">
+      <div className="sticky top-0 bg-white rounded-xl p-4 border-b border-gray-200 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <img src="/points.svg" alt="Points Icon" className="w-6 h-6" />
           <h2 className="text-xl font-semibold">Puan: {points}</h2>
@@ -97,7 +97,7 @@ export default function LyricsGame({ lyrics, onTryAgain }: LyricsGameProps) {
         <div className="text-right flex items-center gap-4">{actionElement}</div>
       </div>
 
-      <div className="max-h-96 overflow-y-auto p-4 bg-gray-50 border border-gray-200 rounded-lg scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-200 pr-2">
+      <div className="max-h-96 overflow-y-auto p-4 bg-gray-50 border border-gray-200 rounded-xl scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-200 pr-2">
         {lyrics.map((line, index) => (
           <LyricLine
             key={index}

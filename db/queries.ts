@@ -22,7 +22,7 @@ export const getUserProgress = cache(async () => {
   if (!user) {
     return null;
   }
-  const userId = user.uid;
+  const userId = user.id;
 
   const data = await db.query.userProgress.findFirst({
     where: eq(userProgress.userId, userId),
@@ -37,7 +37,7 @@ export const getUserProgress = cache(async () => {
 export const getUnits = cache(async () => {
   const user = await getServerUser();
   if (!user) return [];
-  const userId = user.uid;
+  const userId = user.id;
   const userProgress = await getUserProgress();
 
   if (!userId || !userProgress?.activeCourseId) {
@@ -115,7 +115,7 @@ export const getCourseProgress = cache(async () => {
   if (!user) {
     return null;
   }
-  const userId = user.uid;
+  const userId = user.id;
   
   const userProgress = await getUserProgress();
 
@@ -165,7 +165,7 @@ export const getCourseProgress = cache(async () => {
 export const getLesson = cache(async (id?: number) => {
   const user = await getServerUser();
   if (!user) return null;
-  const userId = user.uid;
+  const userId = user.id;
 
   const courseProgress = await getCourseProgress();
 
@@ -327,7 +327,7 @@ export const getUserRank = cache(async () => {
   if (!user) {
     return null;
   }
-  const userId = user.uid;
+  const userId = user.id;
 
   // Get current user's points and school ID
   const userProgressData = await db.query.userProgress.findFirst({
@@ -529,26 +529,33 @@ export const getUserSnippetCount = cache(async (userId: string) => {
 export const getAllSnippets = cache(
   async ({
     search,
+    language,
+    limit = 20,
+    offset = 0,
   }: {
     search?: string;
+    language?: string;
+    limit?: number;
+    offset?: number;
   }) => {
-    // If no search provided, just return all
-    if (!search) {
-      return db.select().from(snippets).orderBy(sql`created_at DESC`);
-    }
-
-    // If search is provided, we want to match language, title or userName
-    // using ILIKE (case-insensitive). 
     return db
       .select()
       .from(snippets)
-      .where(
-        or(
-          ilike(snippets.language, `%${search}%`),
-          ilike(snippets.title, `%${search}%`),
-          ilike(snippets.userName, `%${search}%`)
-        )
-      )
-      .orderBy(sql`created_at DESC`);
+      .$dynamic() // Enable dynamic query building
+      .where((qb) => {
+        if (search) {
+          return or(
+            ilike(snippets.language, `%${search}%`),
+            ilike(snippets.title, `%${search}%`),
+            ilike(snippets.userName, `%${search}%`)
+          );
+        }
+        return undefined; // No condition if no search
+      })
+      .where((qb) => (language ? eq(snippets.language, language) : undefined))
+      .orderBy(sql`created_at DESC`)
+      .limit(limit)
+      .offset(offset);
   }
 );
+

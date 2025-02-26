@@ -27,7 +27,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const userId = user.uid;
+    const userId = user.id;
 
     const userP = await db.query.userProgress.findFirst({
       where: eq(userProgress.userId, userId),

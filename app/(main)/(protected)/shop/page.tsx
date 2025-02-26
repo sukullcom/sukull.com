@@ -1,11 +1,8 @@
 import { FeedWrapper } from "@/components/feed-wrapper";
-import { StickyWrapper } from "@/components/sticky-wrapper";
-import { UserProgress } from "@/components/user-progress";
 import { getUserProgress } from "@/db/queries";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { Items } from "./items";
-import { Quests } from "@/components/quests";
 import { SocialMediaLinks } from "@/components/social_media";
 
 const ShopPage = async () => {
@@ -19,19 +16,6 @@ const ShopPage = async () => {
 
   return (
     <div className="flex flex-row-reverse gap-[48px] px-6">
-      <StickyWrapper>
-        <UserProgress
-          activeCourse={userProgress.activeCourse}
-          hearts={userProgress.hearts}
-          points={userProgress.points}
-          istikrar={userProgress.istikrar}
-          hasActiveSubscription={false}
-        />
-        <Quests points={userProgress.points} />
-        <div className="mt-4">
-          <SocialMediaLinks />
-        </div>
-      </StickyWrapper>
       <FeedWrapper>
         <div className="w-full flex flex-col items-center">
           <Image src="/mascot_pink.svg" alt="Shop" height={90} width={90} />

@@ -5,7 +5,7 @@ import { courses } from "@/db/schema"
 import { isAdmin } from "@/lib/admin"
 
 export const GET = async () => {
-    if (!isAdmin()) {
+    if (!(await isAdmin())) {
         return new NextResponse("Unauthorized", { status: 401 })
     }
     const data = await db.query.courses.findMany()
@@ -15,7 +15,7 @@ export const GET = async () => {
 
 
 export const POST = async (req: Request) => {
-    if (!isAdmin()) {
+    if (!(await isAdmin())) {
         return new NextResponse("Unauthorized", { status: 401 })
     }
     const body = await req.json()

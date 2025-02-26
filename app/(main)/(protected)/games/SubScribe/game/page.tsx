@@ -310,7 +310,7 @@ export default function GamePage() {
     const fetchTranscript = async () => {
       if (!videoId) {
         setLoading(false);
-        setError("Invalid video ID.");
+        setError("Geçersiz video ID.");
         return;
       }
 
@@ -381,8 +381,7 @@ export default function GamePage() {
   if (!transcript.length) return <p>No transcript available for this video.</p>;
 
   return (
-    <div className="game-page" style={{ padding: "20px", maxWidth: "800px", margin: "auto" }}>
-      <h1 className="py-4 text-xl font-bold">Oyunu Tamamla</h1>
+    <div className="game-page" style={{maxWidth: "750px", margin: "auto" }}>
       {videoId && <VideoPlayer videoId={videoId} />}
       {error && <p className="error-message">{error}</p>}
       <LyricsGame lyrics={lyrics} onTryAgain={handleTryAgain} />

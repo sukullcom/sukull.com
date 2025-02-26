@@ -5,16 +5,14 @@ import Image from "next/image";
 import { SidebarItem } from "./sidebar-item";
 import learnIcon from "@/public/desk.svg";
 import leaderboardIcon from "@/public/leaderboard.svg";
-import questsIcon from "@/public/quests.svg";
 import shopIcon from "@/public/bag.svg";
 import gameIcon from "@/public/games.svg";
 import labIcon from "@/public/lab.svg";
 import privateLessonIcon from "@/public/private_lesson.svg";
 import { useEffect, useState } from "react";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "@/app/firebase-client";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
+import { createClient } from "@/utils/supabase/client";
 
 type Props = {
   className?: string;
@@ -24,20 +22,17 @@ export const Sidebar = ({ className }: Props) => {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
+    const supabase = createClient();
+    supabase.auth.getSession().then(({ data }: { data: { session: { user: any } | null } }) => {
+      setUser(data.session?.user || null);
     });
-    return () => unsub();
   }, []);
 
-  const handleSignOut = async () => {
-    await signOut(auth);
-    await fetch("/api/clearToken", { method: "POST" });
+  async function handleLogout() {
+    await createClient().auth.signOut();
     router.push("/login");
-  };
+  }
 
   return (
     <div
@@ -73,14 +68,13 @@ export const Sidebar = ({ className }: Props) => {
           iconSrc={leaderboardIcon}
         />
         <SidebarItem label="Laboratuvarlar" href="/lab" iconSrc={labIcon} />
-        <SidebarItem label="Görevler" href="/quests" iconSrc={questsIcon} />
         <SidebarItem label="Çantam" href="/shop" iconSrc={shopIcon} />
         <SidebarItem label="Çalışma Arkadaşı" href="/study-buddy" iconSrc="/study_buddy.svg" />
         <SidebarItem label="Profİl" href="/profile" iconSrc="/mascot_blue.svg" />
       </div>
       <div className="p-4">
        {( <Button
-        onClick={handleSignOut}
+        onClick={handleLogout}
           variant="secondary"
           className="justify-start h-[52px] flex items-center"
         >

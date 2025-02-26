@@ -1,8 +1,6 @@
 // app/(main)/(protected)/learn/page.tsx
 import { FeedWrapper } from "@/components/feed-wrapper";
-import { StickyWrapper } from "@/components/sticky-wrapper";
 import { Header } from "./header";
-import { UserProgress } from "@/components/user-progress";
 import {
   getCourseProgress,
   getLessonPercentage,
@@ -12,7 +10,6 @@ import {
 import { redirect } from "next/navigation";
 import { Unit } from "./unit";
 import { lessons, units as unitsSchema } from "@/db/schema";
-import { Quests } from "@/components/quests";
 
 const LearnPage = async () => {
   const userProgressData = getUserProgress();
@@ -33,21 +30,11 @@ const LearnPage = async () => {
   }
 
   if (!courseProgress) {
-    redirect("/courses");
+    return;
   }
 
   return (
     <div className="flex flex-row-reverse gap-[48px] px-6">
-      <StickyWrapper>
-        <UserProgress
-          activeCourse={userProgress.activeCourse}
-          hearts={userProgress.hearts}
-          points={userProgress.points}
-          istikrar={userProgress.istikrar}
-          hasActiveSubscription={false}
-        />
-        <Quests points={userProgress.points} />
-      </StickyWrapper>
       <FeedWrapper>
         <Header title={userProgress.activeCourse.title} />
         {units.map((unit) => (

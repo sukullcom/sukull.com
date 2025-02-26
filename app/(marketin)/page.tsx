@@ -1,21 +1,31 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import Link from "next/link";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/app/firebase-client";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+'use client';
+
+import { useState, useEffect } from 'react';
+import { Session } from '@supabase/supabase-js';
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { createClient } from '@/utils/supabase/client';
+import { auth } from '@/utils/auth';
+
+const supabaseClient = createClient();
 
 export default function Home() {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
+  const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+    supabaseClient.auth.getSession().then(({ data }: { data: { session: Session | null } }) => {
+      setSession(data.session);
     });
-    return () => unsubscribe();
+    const { data: authListener } = supabaseClient.auth.onAuthStateChange(
+      (_: unknown, session: Session | null) => {
+        setSession(session);
+      }    );
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
   }, []);
 
   return (
@@ -28,29 +38,31 @@ export default function Home() {
           Sukull ile öğren, pratik yap ve keşfet
         </h1>
         <div className="flex flex-col items-center gap-y-3 max-w-[330px] w-full">
-          {!user && (
+          {!session && (
             <>
               <Button
                 size="lg"
                 variant="secondary"
                 className="w-full"
-                onClick={() => router.push("/signup")}
+                onClick={() => router.push('/create-account')}
               >
-                Haydi Başlayalım
+                Haydİ Başlayalım
               </Button>
               <Button
                 size="lg"
                 variant="primaryOutline"
                 className="w-full"
-                onClick={() => router.push("/login")}
+                onClick={() => router.push('/login')}
               >
                 Zaten hesabın var mı
               </Button>
             </>
           )}
-          {user && (
+          {session && (
             <Button size="lg" variant="secondary" className="w-full" asChild>
-              <Link prefetch={false} href="/learn">Öğrenmeye Devam Et</Link>
+              <Link prefetch={false} href="/learn">
+                Öğrenmeye Devam Et
+              </Link>
             </Button>
           )}
         </div>

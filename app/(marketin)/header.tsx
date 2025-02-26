@@ -1,35 +1,35 @@
-"use client";
+'use client';
+import { Session } from '@supabase/supabase-js';
+import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { createClient } from '@/utils/supabase/client';
 
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { onAuthStateChanged, signOut as firebaseSignOut } from "firebase/auth";
-import { auth } from "@/app/firebase-client"; // firebase client
-import { useRouter } from "next/navigation";
+const supabaseClient = createClient();
 
 export const Header = () => {
   const router = useRouter();
+  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-      } else {
-        setUser(null);
-      }
+    supabaseClient.auth.getSession().then(({ data }: { data: { session: Session | null } }) => {
+      setSession(data.session);
       setLoading(false);
     });
-    return () => unsubscribe();
+    const { data: listener } = supabaseClient.auth.onAuthStateChange((_: any, session: Session | null) => {
+      setSession(session);
+      setLoading(false);
+    });
+    return () => {
+      listener.subscription.unsubscribe();
+    };
   }, []);
 
   const handleLogout = async () => {
-    // Firebase oturumu kapat
-    await firebaseSignOut(auth);
-    // sunucu cookiesini temizle
-    await fetch("/api/clearToken", { method: "POST" });
-    router.push("/login");
+    await supabaseClient.auth.signOut();
+    router.push('/login');
   };
 
   return (
@@ -37,37 +37,17 @@ export const Header = () => {
       <div className="lg:max-w-screen-lg mx-auto flex items-center justify-between h-full">
         <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3">
           <Image src="/mascot_purple.svg" height={40} width={40} alt="Mascot" />
-          <h1 className="text-2xl font-extrabold text-green-600 tracking-wide">
-            Sukull
-          </h1>
+          <h1 className="text-2xl font-extrabold text-green-600 tracking-wide">Sukull</h1>
         </div>
-
-        {loading && (
-          <div className="flex items-center gap-2">
-            <div className="animate-spin h-5 w-5 border-2 border-gray-400 rounded-full border-r-transparent"></div>
-            <span>Yükleniyor...</span>
-          </div>
-        )}
-
-        {!loading && (
-          <>
-            {user ? (
-              <Button variant="ghost" size="lg" onClick={handleLogout}>
-                Çıkış Yap
-              </Button>
-            ) : (
-              <Button
-                size="lg"
-                variant="ghost"
-                onClick={() => {
-                  // Login sayfasına gidelim
-                  router.push("/login");
-                }}
-              >
-                Giriş Yap
-              </Button>
-            )}
-          </>
+        {loading && <div className="text-sm">Yükleniyor...</div>}
+        {!loading && session ? (
+          <Button variant="ghost" size="lg" onClick={handleLogout}>
+            Çıkış Yap
+          </Button>
+        ) : (
+          <Button size="lg" variant="ghost" onClick={() => router.push('/login')}>
+            Gİrİş Yap
+          </Button>
         )}
       </div>
     </header>

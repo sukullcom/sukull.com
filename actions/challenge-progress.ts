@@ -12,7 +12,7 @@ export const upsertChallengeProgress = async (challengeId: number) => {
   if (!user) {
     throw new Error("Unauthorized");
   }
-  const userId = user.uid;
+  const userId = user.id;
 
   const currentUserProgress = await getUserProgress();
   if (!currentUserProgress) {
@@ -56,7 +56,6 @@ export const upsertChallengeProgress = async (challengeId: number) => {
 
     revalidatePath("/learn");
     revalidatePath(`/lesson/${lessonId}`);
-    revalidatePath("/quests");
     revalidatePath("/leaderboard");
     return;
   }
@@ -94,7 +93,6 @@ export const upsertChallengeProgress = async (challengeId: number) => {
   // Revalidate
   revalidatePath("/learn");
   revalidatePath(`/lesson/${lessonId}`);
-  revalidatePath("/quests");
   revalidatePath("/leaderboard");
 };
 
@@ -103,7 +101,7 @@ export async function addPointsToUser(pointsToAdd: number) {
   if (!user) {
     throw new Error("Unauthorized");
   }
-  const userId = user.uid;
+  const userId = user.id;
 
   const currentUserProgress = await db.query.userProgress.findFirst({
     where: eq(userProgress.userId, userId),
@@ -134,6 +132,5 @@ export async function addPointsToUser(pointsToAdd: number) {
 
   revalidatePath("/learn");
   revalidatePath("/lesson");
-  revalidatePath("/quests");
   revalidatePath("/leaderboard");
 }

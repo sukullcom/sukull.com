@@ -38,7 +38,7 @@ export default function SnippetCard({ snippet }: { snippet: Snippet }) {
       {/* Link to /editor page with snippetId */}
       <Link
         prefetch={false}
-        href={`/lab/sukull-code-editor?snippetId=${snippet.id}`}
+        href={`/sukull-code-editor?snippetId=${snippet.id}`}
         className="inline-flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition-colors"
       >
         <span>Open in Editor</span>

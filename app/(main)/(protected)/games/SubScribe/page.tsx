@@ -81,7 +81,7 @@ export default function VideoSelectionPage() {
   
     const videoId = getVideoIdFromUrl(videoUrl);
     if (!videoId) {
-      alert("Invalid YouTube URL. Please provide a valid link.");
+      alert("Lütfen geçerli bir YouTube URL giriniz.");
       return;
     }
   
