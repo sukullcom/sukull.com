@@ -1,23 +1,20 @@
 import "dotenv/config";
 import { drizzle } from "drizzle-orm/postgres-js";
-import { Pool } from "pg";
+import postgres from "postgres";
 
 import * as schema from "../db/schema";
 
-// Create a connection pool using the Supabase DATABASE_URL
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL!,
-});
+// Create a postgres-js client using the DATABASE_URL
+const client = postgres(process.env.DATABASE_URL!);
 
-
-// Initialize drizzle with the pool and your schema
-const db = drizzle(pool.options.connectionString!, { schema });
+// Initialize drizzle with the client and your schema
+const db = drizzle(client, { schema });
 
 const main = async () => {
   try {
     console.log("Seeding database");
 
-    // Delete all existing data
+    // Delete all existing data in proper order
     await Promise.all([
       db.delete(schema.challengeOptions),
       db.delete(schema.challengeProgress),
@@ -30,7 +27,7 @@ const main = async () => {
       db.delete(schema.quizOptions),
       db.delete(schema.quizQuestions),
       db.delete(schema.teacherApplications),
-      db.delete(schema.privateLessonApplications),
+      db.delete(schema.privateLessonApplications)
     ]);
 
     // Insert schools with types
@@ -67,16 +64,14 @@ const main = async () => {
         // Elementary Schools
         { name: "Zafer İlkokulu", totalPoints: 0, type: "elementary_school" },
         { name: "Barış İlkokulu", totalPoints: 0, type: "elementary_school" },
-        { name: "İstiklal İlkokulu", totalPoints: 0, type: "elementary_school" },
+        { name: "İstiklal İlkokulu", totalPoints: 0, type: "elementary_school" }
       ])
       .returning();
 
     // Insert courses
     const courses = await db
       .insert(schema.courses)
-      .values([
-        { title: "Spanish", imageSrc: "/es.svg" },
-      ])
+      .values([{ title: "Spanish", imageSrc: "/es.svg" }])
       .returning();
 
     // For each course, insert units
@@ -168,7 +163,7 @@ const main = async () => {
             ])
             .returning();
 
-          // For each challenge, insert challenge options
+          // For each challenge, insert challenge options based on order
           for (const challenge of challenges) {
             if (challenge.order === 1) {
               await db.insert(schema.challengeOptions).values([
@@ -195,7 +190,6 @@ const main = async () => {
                 },
               ]);
             }
-
             if (challenge.order === 2) {
               await db.insert(schema.challengeOptions).values([
                 {
@@ -221,7 +215,6 @@ const main = async () => {
                 },
               ]);
             }
-
             if (challenge.order === 3) {
               await db.insert(schema.challengeOptions).values([
                 {
@@ -247,7 +240,6 @@ const main = async () => {
                 },
               ]);
             }
-
             if (challenge.order === 4) {
               await db.insert(schema.challengeOptions).values([
                 {
@@ -270,7 +262,6 @@ const main = async () => {
                 },
               ]);
             }
-
             if (challenge.order === 5) {
               await db.insert(schema.challengeOptions).values([
                 {
@@ -296,7 +287,6 @@ const main = async () => {
                 },
               ]);
             }
-
             if (challenge.order === 6) {
               await db.insert(schema.challengeOptions).values([
                 {
@@ -322,7 +312,6 @@ const main = async () => {
                 },
               ]);
             }
-
             if (challenge.order === 7) {
               await db.insert(schema.challengeOptions).values([
                 {
@@ -348,7 +337,6 @@ const main = async () => {
                 },
               ]);
             }
-
             if (challenge.order === 8) {
               await db.insert(schema.challengeOptions).values([
                 {
@@ -407,8 +395,8 @@ const main = async () => {
           { text: "3", isCorrect: false },
           { text: "4", isCorrect: true },
           { text: "5", isCorrect: false },
-          { text: "6", isCorrect: false },
-        ],
+          { text: "6", isCorrect: false }
+        ]
       },
       {
         questionText: "5 x 6 kaç eder?",
@@ -416,10 +404,9 @@ const main = async () => {
           { text: "11", isCorrect: false },
           { text: "30", isCorrect: true },
           { text: "60", isCorrect: false },
-          { text: "35", isCorrect: false },
-        ],
-      },
-      // Add more Matematik questions as needed
+          { text: "35", isCorrect: false }
+        ]
+      }
     ];
 
     // Define quiz questions for 'Fizik'
@@ -430,8 +417,8 @@ const main = async () => {
           { text: "300.000 km/s", isCorrect: true },
           { text: "150.000 km/s", isCorrect: false },
           { text: "30.000 km/s", isCorrect: false },
-          { text: "3.000 km/s", isCorrect: false },
-        ],
+          { text: "3.000 km/s", isCorrect: false }
+        ]
       },
       {
         questionText: "Yerçekimi ivmesi yaklaşık kaç m/s²'dir?",
@@ -439,15 +426,32 @@ const main = async () => {
           { text: "9.8 m/s²", isCorrect: true },
           { text: "10 m/s²", isCorrect: false },
           { text: "8.5 m/s²", isCorrect: false },
-          { text: "12 m/s²", isCorrect: false },
-        ],
-      },
-      // Add more Fizik questions as needed
+          { text: "12 m/s²", isCorrect: false }
+        ]
+      }
     ];
 
-    // Insert the quiz questions into the database
+    // Insert quiz questions into the database
     await insertQuizQuestions("Matematik", mathQuestions);
     await insertQuizQuestions("Fizik", physicsQuestions);
+
+    // Optional: Insert a sample userProgress row for testing streak functionality
+    await db.insert(schema.userProgress).values([
+      {
+        userId: "sample-user-id",
+        userName: "Sample User",
+        userImageSrc: "/mascot_purple.svg",
+        activeCourseId: courses[0].id,
+        hearts: 5,
+        points: 0,
+        schoolId: schools[0].id,
+        profileLocked: false,
+        istikrar: 0,
+        dailyTarget: 50,
+        lastStreakCheck: null,
+        previousTotalPoints: 0,
+      }
+    ]);
 
     console.log("Database seeded successfully");
   } catch (error) {

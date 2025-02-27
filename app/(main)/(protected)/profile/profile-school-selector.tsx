@@ -45,7 +45,7 @@ export const ProfileSchoolSelector = ({
 
   return (
     <div
-      className={`rounded-lg border border-gray-300 p-4 bg-gray-50 shadow-sm ${
+      className={`rounded-lg border border-gray-200 p-4 bg-gray-50 shadow-sm ${
         disabled ? "opacity-60 pointer-events-none" : ""
       }`}
     >

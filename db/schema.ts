@@ -171,8 +171,12 @@ export const userProgress = pgTable("user_progress", {
     .references(() => schools.id, { onDelete: "set null" }),
   profileLocked: boolean("profileLocked").default(false).notNull(),
   istikrar: integer("istikrar").notNull().default(0),
-  lastLessonCompletedAt: timestamp("last_lesson_completed_at"),
+  //lastLessonCompletedAt: timestamp("last_lesson_completed_at"),
+  dailyTarget: integer("daily_target").notNull().default(50), // Kullanıcının belirlediği günlük hedeflenen puan
+  lastStreakCheck: timestamp("last_streak_check"), // En son streak kontrol tarihi
+  previousTotalPoints: integer("previous_total_points").default(0), // Son kontrol anındaki toplam puan
 });
+
 
 export const userProgressRelations = relations(userProgress, ({ one }) => ({
   activeCourse: one(courses, {
@@ -323,5 +327,20 @@ export const studyBuddyMessagesRelations = relations(studyBuddyMessages, ({ one 
   chat: one(studyBuddyChats, {
     fields: [studyBuddyMessages.chat_id],
     references: [studyBuddyChats.id],
+  }),
+}));
+
+// Daily Streak
+export const userDailyStreak = pgTable("user_daily_streak", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull(),
+  // Store the day (date only; no time)
+  date: timestamp("date").notNull(),
+  achieved: boolean("achieved").notNull().default(false),
+});
+export const userDailyStreakRelations = relations(userDailyStreak, ({ one }) => ({
+  user: one(users, {
+    fields: [userDailyStreak.userId],
+    references: [users.id],
   }),
 }));

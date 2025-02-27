@@ -6,6 +6,7 @@ import { challengeProgress, challenges, schools, userProgress } from "@/db/schem
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { getServerUser } from "@/lib/auth";
+import { updateDailyStreak } from "@/actions/daily-streak";
 
 export const upsertChallengeProgress = async (challengeId: number) => {
   const user = await getServerUser();
@@ -31,10 +32,9 @@ export const upsertChallengeProgress = async (challengeId: number) => {
     where: and(
       eq(challengeProgress.userId, userId),
       eq(challengeProgress.challengeId, challengeId)
-    ),
+    )
   });
 
-  // Örn: kullanıcı hearts = 0 ise ve ilk defa challenge yapıyorsa engelle
   const isPractice = !!existingChallengeProgress;
   if (currentUserProgress.hearts === 0 && !isPractice) {
     return { error: "hearts" };
@@ -54,26 +54,33 @@ export const upsertChallengeProgress = async (challengeId: number) => {
       })
       .where(eq(userProgress.userId, userId));
 
+      // Allow a short delay for the update to be visible
+      await new Promise(resolve => setTimeout(resolve, 100));
+      await updateDailyStreak();
+
     revalidatePath("/learn");
     revalidatePath(`/lesson/${lessonId}`);
     revalidatePath("/leaderboard");
     return;
   }
 
-  // Challenge progress yoksa insert
+  // Insert new challenge progress
   await db.insert(challengeProgress).values({
     challengeId,
     userId,
     completed: true,
   });
 
-  // User points +10
   await db
     .update(userProgress)
     .set({ points: currentUserProgress.points + 10 })
     .where(eq(userProgress.userId, userId));
 
-  // Recalculate school total if needed
+  // Allow a short delay so the updated points are visible
+  await new Promise(resolve => setTimeout(resolve, 100));
+  await updateDailyStreak();
+
+  // Recalculate school total points if needed
   const userSchool = await db.query.userProgress.findFirst({
     where: eq(userProgress.userId, userId),
     columns: { schoolId: true },
@@ -90,7 +97,6 @@ export const upsertChallengeProgress = async (challengeId: number) => {
       .where(eq(schools.id, userSchool.schoolId));
   }
 
-  // Revalidate
   revalidatePath("/learn");
   revalidatePath(`/lesson/${lessonId}`);
   revalidatePath("/leaderboard");
@@ -117,13 +123,16 @@ export async function addPointsToUser(pointsToAdd: number) {
     .set({ points: newPoints })
     .where(eq(userProgress.userId, userId));
 
+  // Delay to let update be visible before recalculating streak
+  await new Promise(resolve => setTimeout(resolve, 100));
+  await updateDailyStreak();
+
   if (currentUserProgress.schoolId) {
     const schoolUsers = await db.query.userProgress.findMany({
       where: eq(userProgress.schoolId, currentUserProgress.schoolId),
       columns: { points: true },
     });
     const newTotalPoints = schoolUsers.reduce((sum, u) => sum + u.points, 0);
-
     await db
       .update(schools)
       .set({ totalPoints: newTotalPoints })
@@ -134,3 +143,40 @@ export async function addPointsToUser(pointsToAdd: number) {
   revalidatePath("/lesson");
   revalidatePath("/leaderboard");
 }
+
+export const reduceHearts = async (challengeId: number) => {
+  const user = await getServerUser();
+  if (!user) throw new Error("Unauthorized");
+  const userId = user.id;
+  const currentUserProgress = await getUserProgress();
+  if (!currentUserProgress) throw new Error("User progress not found");
+  const challenge = await db.query.challenges.findFirst({ where: eq(challenges.id, challengeId) });
+  if (!challenge) throw new Error("Challenge not found");
+  const lessonId = challenge.lessonId;
+  const existingCP = await db.query.challengeProgress.findFirst({
+    where: and(
+      eq(challengeProgress.userId, userId),
+      eq(challengeProgress.challengeId, challengeId)
+    )
+  });
+  const isPractice = !!existingCP;
+  if (isPractice) return { error: "practice" };
+  if (currentUserProgress.hearts === 0) return { error: "hearts" };
+
+  await db
+    .update(userProgress)
+    .set({
+      hearts: Math.max(currentUserProgress.hearts - 1, 0),
+      points: currentUserProgress.points - 10,
+    })
+    .where(eq(userProgress.userId, userId));
+
+  // Delay before recalculating streak
+  await new Promise(resolve => setTimeout(resolve, 100));
+  await updateDailyStreak();
+
+  revalidatePath("/shop");
+  revalidatePath("/learn");
+  revalidatePath("/leaderboard");
+  revalidatePath(`/lesson/${lessonId}`);
+};

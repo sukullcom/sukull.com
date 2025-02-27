@@ -8,6 +8,13 @@
       "when": 1739451727296,
       "tag": "0000_calm_domino",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1740581350628,
+      "tag": "0001_graceful_rumiko_fujikawa",
+      "breakpoints": true
     }
   ]
 }

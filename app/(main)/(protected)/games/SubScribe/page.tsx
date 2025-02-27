@@ -107,7 +107,7 @@ export default function VideoSelectionPage() {
   return (
     <div style={{ padding: "20px", maxWidth: "700px", margin: "auto" }}>
       <h1 className="text-xl font-bold">SubScribe</h1>
-      <p className="py-4">İstediğin bir Youtube videosunun bağlantısını girerek başla</p>
+      <p className="py-4">En fazla 6 dk uzunluğunda istediğin bir Youtube videosunun bağlantısını girerek başla</p>
       <input
         type="text"
         placeholder="YouTube Video URL"

@@ -7,7 +7,6 @@ import { QuestionBubble } from "./question-bubble";
 import { Challenge } from "./challenge";
 import { Footer } from "./footer";
 import { upsertChallengeProgress } from "@/actions/challenge-progress";
-import { markLessonComplete } from "@/actions/lesson-progress"; // NEW: import the streak updater
 import { toast } from "sonner";
 import { reduceHearts } from "@/actions/user-progress";
 import { useAudio, useWindowSize, useMount } from "react-use";
@@ -106,19 +105,6 @@ export const Quiz = ({
       finishControls.play();
     }
   }, [lessonFinished, finishControls]);
-
-  // *******************************
-  // 4) Automatically update streak (istikrar) when lesson is finished
-  // *******************************
-  const lessonCompletedCalledRef = useRef(false);
-  useEffect(() => {
-    if (lessonFinished && !lessonCompletedCalledRef.current) {
-      lessonCompletedCalledRef.current = true;
-      markLessonComplete().catch((err) =>
-        console.error("Failed to update streak", err)
-      );
-    }
-  }, [lessonFinished]);
 
   // *******************************
   // 5) Render finished lesson screen

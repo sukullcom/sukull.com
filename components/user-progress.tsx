@@ -13,18 +13,18 @@ type Props = {
   hasActiveSubscription: boolean;
 };
 
-export const UserProgress = ({ 
-  activeCourse, 
-  points, 
-  hearts, 
+export const UserProgress = ({
+  activeCourse,
+  points,
+  hearts,
   istikrar,
-  hasActiveSubscription 
+  hasActiveSubscription,
 }: Props) => {
   return (
     <div className="flex items-center justify-center gap-x-1 w-full">
       <Link prefetch={false} href="/courses">
         <Button variant="ghost" className="p-2">
-          <Image 
+          <Image
             src={activeCourse.imageSrc}
             alt={activeCourse.title}
             className="rounded-md border"
@@ -35,22 +35,45 @@ export const UserProgress = ({
       </Link>
       <Link prefetch={false} href="/shop">
         <Button variant="ghost" className="text-orange-500 p-2">
-          <Image src="/points.svg" height={28} width={28} alt="Points" className="mr-1" />
+          <Image
+            src="/points.svg"
+            height={28}
+            width={28}
+            alt="Points"
+            className="mr-1"
+          />
           {points}
         </Button>
       </Link>
       <Link prefetch={false} href="/shop">
         <Button variant="ghost" className="text-rose-500 p-2">
-          <Image src="/heart.svg" height={22} width={22} alt="Hearts" className="mr-2" />
-          {hasActiveSubscription ? <InfinityIcon className="h-4 w-4 stroke-[3]" /> : hearts}
+          <Image
+            src="/heart.svg"
+            height={22}
+            width={22}
+            alt="Hearts"
+            className="mr-2"
+          />
+          {hasActiveSubscription ? (
+            <InfinityIcon className="h-4 w-4 stroke-[3]" />
+          ) : (
+            hearts
+          )}
         </Button>
       </Link>
       <Link prefetch={false} href="#">
         <Button variant="ghost" className="text-red-500 p-2">
-        <Image src="/istikrar.svg" height={22} width={22} alt="Hearts" className="mr-2" />
-        {istikrar}
+          <Image
+            src="/istikrar.svg"
+            height={22}
+            width={22}
+            alt="İstikrar"
+            className="mr-2"
+          />
+          {istikrar}
         </Button>
       </Link>
+
       <Link prefetch={false} href={"/private-lesson"}>
         <Button className="p-2 text-xs" variant="sidebarOutline">
           Özel Ders Al / Ver
