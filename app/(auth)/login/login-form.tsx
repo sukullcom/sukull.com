@@ -87,6 +87,7 @@ export function LoginForm() {
       <p className="text-center text-sm mt-6">
         Şifreni mi unuttun?{" "}
         <Link
+          prefetch={false}
           href="/forgot-password"
           className="text-green-500 font-semibold underline hover:text-green-500"
         >
@@ -96,6 +97,7 @@ export function LoginForm() {
       <p className="text-center text-sm mt-3">
         Hesabın yok mu?{" "}
         <Link
+          prefetch={false}
           href="/create-account"
           className="text-green-500 font-semibold underline hover:text-green-500"
         >

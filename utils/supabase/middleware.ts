@@ -13,7 +13,8 @@ const publicPaths = [
   '/auth-error',
 ]
 
-export async function updateSession(request: NextRequest) {
+export function createClient(request: NextRequest) {
+  // Create a response object that we'll modify and return
   let response = NextResponse.next({ request })
 
   // Create a server client (SSR) for reading cookies
@@ -32,6 +33,12 @@ export async function updateSession(request: NextRequest) {
       },
     }
   )
+
+  return { supabase, response }
+}
+
+export async function updateSession(request: NextRequest) {
+  const { supabase, response } = createClient(request)
 
   const {
     data: { session },

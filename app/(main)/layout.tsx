@@ -11,7 +11,9 @@ export default function MainLayout({ children }: { children: ReactNode }) {
       <Sidebar className="hidden lg:flex" />
       <BottomNavigator className="lg:hidden" />
       <main className="lg:pl-[256px] h-full pt-[50px] lg:pt-0 pb-[64px]">
-        <div className="max-w-[1256px] mx-auto pt-6 h-full">{children}</div>
+        <div className="max-w-[1256px] mx-auto pt-6 h-full">
+          {children}
+        </div>
       </main>
     </>
   );

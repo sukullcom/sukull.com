@@ -60,7 +60,7 @@ export default function GroupLessonPage() {
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-12 px-4">
       <div className="mb-8">
         <img
-          src="/mascot_blue.svg"
+          src="/mascot_pink.svg"
           alt="mascot"
           className="h-24 mx-auto mt-6"
         />

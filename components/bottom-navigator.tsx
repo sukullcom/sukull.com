@@ -50,7 +50,7 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
     { href: "/learn", iconSrc: "/desk.svg" },
     { href: "/leaderboard", iconSrc: "/leaderboard.svg" },
     { href: "/study-buddy", iconSrc: "/study_buddy.svg" },
-    { href: "/profile", iconSrc: "/mascot_blue.svg" },
+    { href: "/profile", iconSrc: "/mascot_normal.svg" },
   ];
 
   // Dropdown items for Games, Lab, and Shop
@@ -97,6 +97,7 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
       {/* Dropdown toggle as a Link */}
       <div className="relative" ref={dropdownRef}>
         <Link
+          prefetch={false}
           href="#"
           onClick={(e) => {
             e.preventDefault();
@@ -112,6 +113,7 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
               {dropdownItems.map((item) => (
                 <li key={item.href}>
                   <Link
+                    prefetch={false}
                     href={item.href}
                     className="flex items-center px-4 py-2 hover:bg-gray-100"
                     onClick={() => setDropdownOpen(false)}

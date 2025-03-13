@@ -261,6 +261,7 @@ const SnakeGame = () => {
   const [gameFinished, setGameFinished] = useState<boolean>(false);
   const [score, setScore] = useState<number>(0); // Letters for current word
   const [totalScore, setTotalScore] = useState<number>(0); // Sum of points
+  const [wordCompletedFreeze, setWordCompletedFreeze] = useState<boolean>(false); // New state for freeze after word completed
   const gridSize = 10;
 
   // **Always render these audio elements** so their refs exist at mount:
@@ -269,6 +270,11 @@ const SnakeGame = () => {
 
   // Key press: arrow keys
   const handleKeyPress = useCallback((event: KeyboardEvent) => {
+    // Prevent default scrolling behavior for arrow keys
+    if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) {
+      event.preventDefault();
+    }
+    
     setDirection((prevDirection) => {
       if (event.key === "ArrowUp" && prevDirection !== "DOWN") return "UP";
       if (event.key === "ArrowDown" && prevDirection !== "UP") return "DOWN";
@@ -325,7 +331,7 @@ const SnakeGame = () => {
   }, [eatAudioRef]);
 
   const moveSnake = async () => {
-    if (gameOver || !gameStarted) return;
+    if (gameOver || !gameStarted || wordCompletedFreeze) return; // Don't move snake during word completion freeze
 
     let newHead: Position = { ...snake[0] };
 
@@ -384,7 +390,8 @@ const SnakeGame = () => {
             setShowCongrats(true);
             setGameFinished(true);
           } else {
-            startNewWord();
+            // Instead of immediately going to next word, set the freeze state
+            setWordCompletedFreeze(true);
           }
           return;
         } else {
@@ -410,6 +417,20 @@ const SnakeGame = () => {
     if (!word) return;
     const items: FoodItem[] = [];
 
+    // Helper function to check if a position is in the respawn area (top-left 3x3)
+    const isInRespawnArea = (pos: Position) => pos.x < 3 && pos.y < 3;
+    
+    // Helper function to check if a position is too close to existing items
+    const isTooCloseToOtherItems = (pos: Position) => {
+      // Check if the position is adjacent to any existing item (including diagonals)
+      return items.some(item => {
+        const distanceX = Math.abs(item.x - pos.x);
+        const distanceY = Math.abs(item.y - pos.y);
+        // Consider positions adjacent if they are 1 cell away (including diagonals)
+        return distanceX <= 1 && distanceY <= 1;
+      });
+    };
+
     // correct letter
     let correctPos: Position;
     do {
@@ -418,7 +439,8 @@ const SnakeGame = () => {
         y: Math.floor(Math.random() * gridSize),
       };
     } while (
-      snake.some((seg) => seg.x === correctPos.x && seg.y === correctPos.y)
+      snake.some((seg) => seg.x === correctPos.x && seg.y === correctPos.y) ||
+      isInRespawnArea(correctPos) // Avoid respawn area for correct letter
     );
 
     items.push({
@@ -429,20 +451,35 @@ const SnakeGame = () => {
     // random letters
     for (let i = 0; i < 4; i++) {
       let position: Position;
+      let attempts = 0;
+      const maxAttempts = 100; // Limit attempts to prevent infinite loops
+      
       do {
         position = {
           x: Math.floor(Math.random() * gridSize),
           y: Math.floor(Math.random() * gridSize),
         };
+        attempts++;
+        
+        // If we've tried too many times and can't find a suitable position, break the loop
+        if (attempts > maxAttempts) {
+          console.log("Could not find suitable position after many attempts");
+          break;
+        }
       } while (
         snake.some((seg) => seg.x === position.x && seg.y === position.y) ||
-        items.some((item) => item.x === position.x && item.y === position.y)
+        items.some((item) => item.x === position.x && item.y === position.y) ||
+        isInRespawnArea(position) || // Avoid respawn area for random letters
+        isTooCloseToOtherItems(position) // Ensure letters aren't too close to each other
       );
-
-      items.push({
-        ...position,
-        letter: String.fromCharCode(65 + Math.floor(Math.random() * 26)),
-      });
+      
+      // Only add the letter if a suitable position was found
+      if (attempts <= maxAttempts) {
+        items.push({
+          ...position,
+          letter: String.fromCharCode(65 + Math.floor(Math.random() * 26)),
+        });
+      }
     }
 
     setFoodItems(items);
@@ -489,6 +526,22 @@ const SnakeGame = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [word]);
+
+  // Add new effect for word completion freeze
+  useEffect(() => {
+    if (!wordCompletedFreeze) return;
+    
+    // Log for debugging
+    console.log("Word completed, transitioning to next word after 1 second");
+    
+    const timer = setTimeout(() => {
+      setWordCompletedFreeze(false);
+      startNewWord(); // Move to next word after freeze
+      console.log("Starting new word after freeze");
+    }, 1000); // 1 second freeze
+    
+    return () => clearTimeout(timer);
+  }, [wordCompletedFreeze]);
 
   // Countdown effect
   useEffect(() => {
@@ -700,6 +753,12 @@ const SnakeGame = () => {
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-75">
                   <h2 className="text-5xl font-bold mb-4">{countdown}</h2>
                   <p className="text-lg">Hazırlanın, oyun başlıyor!</p>
+                </div>
+              ) : wordCompletedFreeze ? (
+                // Word completed overlay
+                <div className="absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-75">
+                  <h2 className="text-3xl font-bold mb-4">✓</h2>
+                  <p className="text-lg">Kelime tamamlandı!</p>
                 </div>
               ) : (
                 // On-Screen Controls

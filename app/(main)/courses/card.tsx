@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils"
 import { Check } from "lucide-react"
 import Image from "next/image"
+import { memo } from "react"
 
 type Props = {
     title: string
@@ -11,7 +12,7 @@ type Props = {
     active?: boolean
 }
 
-export const Card = ({
+export const Card = memo(({
     title,
     id,
     imageSrc,
@@ -19,11 +20,24 @@ export const Card = ({
     onClick,
     active,
 }: Props) => {
+    // Handle click with keyboard accessibility
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onClick(id);
+        }
+    };
+    
     return (
         <div
             onClick={() => onClick(id)}
+            onKeyDown={handleKeyDown}
+            role="button"
+            tabIndex={disabled ? -1 : 0}
+            aria-disabled={disabled}
+            aria-label={`Kurs: ${title}${active ? ' (aktif)' : ''}`}
             className={cn(
-                "h-full border-2 rounded-xl border-b-4 hover:bg-black/5 cursor-pointer active:border-b-2 flex flex-col items-center justify-between p-3 pb-6 min-h-[217px] min-w-[200px]",
+                "h-full border-2 rounded-xl border-b-4 hover:bg-black/5 cursor-pointer active:border-b-2 flex flex-col items-center justify-between p-3 pb-6 min-h-[217px] min-w-[200px] transition-colors",
                 disabled && "pointer-events-none opacity-50"
             )}
         >
@@ -35,15 +49,19 @@ export const Card = ({
                 )}
             </div>
             <Image 
-            src={imageSrc}
-            alt={title}
-            height={70}
-            width={93.33}
-            className="rounded-lg drop-shadow-md border object-cover"
+                src={imageSrc}
+                alt={title}
+                height={70}
+                width={93.33}
+                loading="lazy"
+                className="rounded-lg drop-shadow-md border object-cover"
             />
             <p className="text-neutral-700 text-center font-bold mt-3">
                 {title}
             </p>
         </div>
     )
-}
+})
+
+// Add display name for better debugging
+Card.displayName = "Card";

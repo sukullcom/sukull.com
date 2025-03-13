@@ -39,7 +39,7 @@ export function Footer() {
         </Button>
         <Button size="lg" variant="ghost" className="w-full">
           <Image
-            src="/mascot_sad.svg"
+            src="/mascot_red.svg"
             alt="Italian"
             height={32}
             width={40}
@@ -49,7 +49,7 @@ export function Footer() {
         </Button>
         <Button size="lg" variant="ghost" className="w-full">
           <Image
-            src="/mascot_bad.svg"
+            src="/mascot_normal.svg"
             alt="Japanese"
             height={32}
             width={40}

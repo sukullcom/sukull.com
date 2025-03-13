@@ -2,7 +2,7 @@
 import "./globals.css";
 import { Nunito } from "next/font/google";
 import { Metadata } from "next";
-import { Toaster } from "@/components/ui/sonner";
+import { CustomToaster } from "@/components/ui/custom-toaster";
 import { ExitModal } from "@/components/modals/exit-modal";
 import { HeartsModal } from "@/components/modals/hearts-modal";
 import { PracticeModal } from "@/components/modals/practice-modal";
@@ -18,7 +18,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`${nunito.className} antialiased`}>
-        <Toaster />
+        <CustomToaster />
         <ExitModal />
         <HeartsModal />
         <PracticeModal />

@@ -10,7 +10,7 @@ function Header() {
     <div className="relative z-10">
       <div className="flex items-center lg:justify-between justify-center bg-[#111827] backdrop-blur-xl p-6 mb-4 rounded-lg">
         <div className="hidden lg:flex items-center gap-8">
-          <Link href="" className="flex items-center gap-3 group relative">
+          <Link prefetch={false} href="" className="flex items-center gap-3 group relative">
             {/* Logo hover effect */}
             <div className="absolute -inset-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-500 blur-xl" />
 

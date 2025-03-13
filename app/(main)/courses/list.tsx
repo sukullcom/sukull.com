@@ -3,7 +3,7 @@
 import { courses, userProgress } from "@/db/schema";
 import { Card } from "./card";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { useTransition, useCallback, memo } from "react";
 import { upsertUserProgress } from "@/actions/user-progress";
 import { toast } from "sonner";
 
@@ -12,27 +12,38 @@ type Props = {
     activeCourseId?: typeof userProgress.$inferSelect.activeCourseId;
 }
 
-export const List = ({courses, activeCourseId}: Props) => {
-    const router = useRouter()
-    const [pending, startTransition] = useTransition()
+// Memoize the card component to prevent unnecessary re-renders
+const MemoizedCard = memo(Card);
 
-    const onClick = (id: number) => {
-        if (pending) return
+export const List = ({courses, activeCourseId}: Props) => {
+    const router = useRouter();
+    const [pending, startTransition] = useTransition();
+
+    // Memoize the onClick handler to prevent recreation on each render
+    const onClick = useCallback((id: number) => {
+        if (pending) return;
 
         if (id === activeCourseId){
-            return router.push("/learn")
+            return router.push("/learn");
         }
 
         startTransition(() => {
-            upsertUserProgress(id).catch(() => toast.error("Something went wrong."))
-        })
-    }
+            upsertUserProgress(id)
+                .then(() => {
+                    // Success: redirect to learn page
+                    router.push("/learn");
+                })
+                .catch((error) => {
+                    console.error("Failed to update course progress:", error);
+                    toast.error("Ders ilerlemeniz güncellenirken bir hata oluştu. Lütfen tekrar deneyin.");
+                });
+        });
+    }, [pending, activeCourseId, router]);
 
     return (
-        // <div className="pt-6 grid grid-cols-2 lg:grid-cols-[repeat(auto-fill, minmax(210px,1fr))] gap-4">
         <div className="pt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {courses.map((course) => (
-                <Card
+                <MemoizedCard
                     key={course.id}
                     id={course.id}
                     title={course.title}
@@ -42,6 +53,11 @@ export const List = ({courses, activeCourseId}: Props) => {
                     active={course.id === activeCourseId}
                 />
             ))}
+            {courses.length === 0 && (
+                <div className="col-span-full text-center py-10 text-gray-500">
+                    Mevcut ders bulunmamaktadır.
+                </div>
+            )}
         </div>
-    )
+    );
 }

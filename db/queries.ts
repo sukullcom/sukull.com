@@ -13,6 +13,8 @@ import {
   teacherApplications,
   snippets,
   englishGroupApplications,
+  users,
+  teacherAvailability,
 } from "@/db/schema";
 import { getServerUser } from "@/lib/auth";
 
@@ -441,6 +443,7 @@ export const getQuizQuestionsByField = cache(async (field: string) => {
 
 // Save teacher application (Öğretmen - Özel Ders Ver)
 export async function saveTeacherApplication(applicationData: {
+  userId: string;
   field: string;
   quizResult: number;
   passed: boolean;
@@ -451,6 +454,71 @@ export async function saveTeacherApplication(applicationData: {
   priceRange: string;
 }) {
   return await db.insert(teacherApplications).values(applicationData);
+}
+
+// Get all teacher applications
+export async function getAllTeacherApplications() {
+  return await db.query.teacherApplications.findMany({
+    orderBy: (teacherApplications, { desc }) => [desc(teacherApplications.createdAt)],
+  });
+}
+
+// Get teacher application by ID
+export async function getTeacherApplicationById(id: number) {
+  return await db.query.teacherApplications.findFirst({
+    where: eq(teacherApplications.id, id),
+  });
+}
+
+// Get teacher application by user ID
+export async function getTeacherApplicationByUserId(userId: string) {
+  return await db.query.teacherApplications.findFirst({
+    where: eq(teacherApplications.userId, userId),
+  });
+}
+
+// Approve teacher application
+export async function approveTeacherApplication(id: number) {
+  const application = await getTeacherApplicationById(id);
+  if (!application) {
+    throw new Error("Application not found");
+  }
+
+  // Update the application status
+  await db.update(teacherApplications)
+    .set({ 
+      status: "approved",
+      updatedAt: new Date()
+    })
+    .where(eq(teacherApplications.id, id));
+
+  // Update the user's role to teacher
+  await db.update(users)
+    .set({ role: "teacher" })
+    .where(eq(users.id, application.userId));
+
+  return { success: true };
+}
+
+// Reject teacher application
+export async function rejectTeacherApplication(id: number) {
+  await db.update(teacherApplications)
+    .set({ 
+      status: "rejected",
+      updatedAt: new Date()
+    })
+    .where(eq(teacherApplications.id, id));
+
+  return { success: true };
+}
+
+// Check if user is a teacher
+export async function isTeacher(userId: string) {
+  const user = await db.query.users.findFirst({
+    where: eq(users.id, userId),
+  });
+
+  return user?.role === "teacher";
 }
 
 // Save English Group application (İngilizce Konuşma Grubu)
@@ -558,4 +626,77 @@ export const getAllSnippets = cache(
       .offset(offset);
   }
 );
+
+// Get the start date of the week containing the given date
+export function getWeekStartDate(date: Date): Date {
+  const result = new Date(date);
+  const day = result.getDay();
+  const diff = result.getDate() - day + (day === 0 ? -6 : 1); // Adjust when day is Sunday
+  result.setDate(diff);
+  result.setHours(0, 0, 0, 0);
+  return result;
+}
+
+// Get the end date of the week containing the given date
+export function getWeekEndDate(date: Date): Date {
+  const result = getWeekStartDate(date);
+  result.setDate(result.getDate() + 7);
+  return result;
+}
+
+// Get availability for a teacher for a specific week
+export async function getTeacherAvailability(teacherId: string, weekStartDate: Date) {
+  return db.query.teacherAvailability.findMany({
+    where: and(
+      eq(teacherAvailability.teacherId, teacherId),
+      eq(teacherAvailability.weekStartDate, weekStartDate)
+    ),
+    orderBy: [
+      teacherAvailability.dayOfWeek,
+      teacherAvailability.startTime
+    ]
+  });
+}
+
+// Upsert teacher availability - replace all slots for a given week
+export async function upsertTeacherAvailability(
+  teacherId: string, 
+  weekStartDate: Date, 
+  slots: { 
+    startTime: Date; 
+    endTime: Date; 
+    dayOfWeek: number;
+  }[]
+) {
+  // First, delete all existing slots for this teacher and week
+  await db.delete(teacherAvailability)
+    .where(
+      and(
+        eq(teacherAvailability.teacherId, teacherId),
+        eq(teacherAvailability.weekStartDate, weekStartDate)
+      )
+    );
+  
+  // If no new slots provided, just return
+  if (!slots.length) return [];
+  
+  // Then insert all new slots
+  return db.insert(teacherAvailability)
+    .values(
+      slots.map(slot => ({
+        teacherId,
+        startTime: slot.startTime,
+        endTime: slot.endTime,
+        dayOfWeek: slot.dayOfWeek,
+        weekStartDate
+      }))
+    )
+    .returning();
+}
+
+// Get current teacher availability (for current week)
+export async function getCurrentTeacherAvailability(teacherId: string) {
+  const weekStartDate = getWeekStartDate(new Date());
+  return getTeacherAvailability(teacherId, weekStartDate);
+}
 

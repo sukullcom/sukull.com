@@ -61,7 +61,7 @@ export const UserProgress = ({
           )}
         </Button>
       </Link>
-      <Link prefetch={false} href="#">
+      <Link prefetch={false} href="/profile">
         <Button variant="ghost" className="text-red-500 p-2">
           <Image
             src="/istikrar.svg"

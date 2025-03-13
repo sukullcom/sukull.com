@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback, useEffect } from "react";
 
 type School = { id: number; name: string; type: string };
 
@@ -11,6 +11,15 @@ type ProfileSchoolSelectorProps = {
   onSelect: (schoolId: number) => void;
 };
 
+// School type options - constant to avoid recreation
+const SCHOOL_TYPES = [
+  { value: "", label: "Okul Tipini Seç" },
+  { value: "university", label: "Üniversite" },
+  { value: "high_school", label: "Lise" },
+  { value: "secondary_school", label: "Ortaokul" },
+  { value: "elementary_school", label: "İlkokul" },
+];
+
 export const ProfileSchoolSelector = ({
   schools,
   disabled = false,
@@ -19,29 +28,58 @@ export const ProfileSchoolSelector = ({
 }: ProfileSchoolSelectorProps) => {
   const [selectedType, setSelectedType] = useState<string>("");
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [debouncedQuery, setDebouncedQuery] = useState<string>("");
   const [selectedSchoolId, setSelectedSchoolId] = useState<number | null>(
     initialSchoolId
   );
 
-  // Filter logic
-  const filteredSchools = schools
-    .filter((school) => (selectedType ? school.type === selectedType : true))
-    .filter((school) =>
-      school.name
-        .toLocaleLowerCase("tr")
-        .includes(searchQuery.toLocaleLowerCase("tr"))
-    );
+  // Debounce search query for better performance
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(searchQuery);
+    }, 300);
 
-  const onTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedType(event.target.value);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  // Memoize filtered schools to avoid recomputation on each render
+  const filteredSchools = useMemo(() => {
+    return schools
+      .filter((school) => (selectedType ? school.type === selectedType : true))
+      .filter((school) =>
+        school.name
+          .toLocaleLowerCase("tr")
+          .includes(debouncedQuery.toLocaleLowerCase("tr"))
+      );
+  }, [schools, selectedType, debouncedQuery]);
+
+  // Pre-filter schools by type for faster lookup when type changes
+  const schoolsByType = useMemo(() => {
+    return schools.reduce((acc, school) => {
+      if (!acc[school.type]) {
+        acc[school.type] = [];
+      }
+      acc[school.type].push(school);
+      return acc;
+    }, {} as Record<string, School[]>);
+  }, [schools]);
+
+  // Memoize event handlers
+  const onTypeChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newType = event.target.value;
+    setSelectedType(newType);
     setSearchQuery(""); // Reset search query when changing type
-  };
+    setDebouncedQuery(""); // Also reset debounced query
+  }, []);
 
-  const handleSchoolClick = (schoolId: number) => {
+  const handleSchoolClick = useCallback((schoolId: number) => {
     if (disabled) return;
     setSelectedSchoolId(schoolId);
-    onSelect(schoolId); 
-  };
+    onSelect(schoolId);
+  }, [disabled, onSelect]);
+
+  // Calculate if we should show the empty message
+  const showEmptyMessage = selectedType && filteredSchools.length === 0;
 
   return (
     <div
@@ -60,11 +98,11 @@ export const ProfileSchoolSelector = ({
         disabled={disabled}
         className="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500"
       >
-        <option value="">Okul Tipini Seç</option>
-        <option value="university">Üniversite</option>
-        <option value="high_school">Lise</option>
-        <option value="secondary_school">Ortaokul</option>
-        <option value="elementary_school">İlkokul</option>
+        {SCHOOL_TYPES.map(type => (
+          <option key={type.value} value={type.value}>
+            {type.label}
+          </option>
+        ))}
       </select>
 
       {/* Search Bar */}
@@ -84,27 +122,40 @@ export const ProfileSchoolSelector = ({
         <div className="max-h-64 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-2 pr-2
           scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-200"
         >
-          {filteredSchools.map((school) => (
-            <div
-              key={school.id}
-              onClick={() => handleSchoolClick(school.id)}
-              className={`border p-2 rounded-lg cursor-pointer text-center ${
-                selectedSchoolId === school.id
-                  ? "bg-green-50 border-green-600"
-                  : "hover:bg-gray-100"
-              }`}
-            >
-              <p
-                className={`font-medium ${
+          {showEmptyMessage ? (
+            <div className="col-span-2 text-center p-4 text-gray-500">
+              Aramanızla eşleşen okul bulunamadı
+            </div>
+          ) : (
+            filteredSchools.map((school) => (
+              <div
+                key={school.id}
+                onClick={() => handleSchoolClick(school.id)}
+                className={`border p-2 rounded-lg cursor-pointer text-center ${
                   selectedSchoolId === school.id
-                    ? "text-green-600"
-                    : "text-neutral-800"
+                    ? "bg-green-50 border-green-600"
+                    : "hover:bg-gray-100"
                 }`}
               >
-                {school.name}
-              </p>
-            </div>
-          ))}
+                <p
+                  className={`font-medium ${
+                    selectedSchoolId === school.id
+                      ? "text-green-600"
+                      : "text-neutral-800"
+                  }`}
+                >
+                  {school.name}
+                </p>
+              </div>
+            ))
+          )}
+        </div>
+      )}
+      
+      {/* School count info */}
+      {selectedType && filteredSchools.length > 0 && (
+        <div className="mt-2 text-xs text-gray-500 text-right">
+          {filteredSchools.length} okul gösteriliyor
         </div>
       )}
     </div>

@@ -19,6 +19,9 @@ export interface IUserLink {
   url: string;
 }
 
+// Define user roles enum
+export const userRoleEnum = pgEnum("role", ["user", "teacher", "admin"]);
+
 // Define a "users" table for storing profile details
 export const users = pgTable("users", {
   id: text("id").primaryKey(),              // Auth user id
@@ -28,6 +31,7 @@ export const users = pgTable("users", {
   avatar: text("avatar").default(""),
   provider: text("provider").notNull(),       // e.g., 'google', 'github', or 'email'
   links: json("links").$type<IUserLink[]>().notNull().default([]),
+  role: userRoleEnum("role").default("user").notNull(),
   created_at: timestamp("created_at").defaultNow().notNull(),
   updated_at: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -206,8 +210,11 @@ export const privateLessonApplicationsRelations = relations(privateLessonApplica
 
 // Teacher Applications (Öğretmen Başvuruları)
 // (priceRange is required and classification is stored as well)
+export const applicationStatusEnum = pgEnum("status", ["pending", "approved", "rejected"]);
+
 export const teacherApplications = pgTable("teacher_applications", {
   id: serial("id").primaryKey(),
+  userId: text("user_id").notNull(),
   field: text("field").notNull(),
   quizResult: integer("quiz_result").notNull().default(0),
   passed: boolean("passed").notNull().default(false),
@@ -217,9 +224,17 @@ export const teacherApplications = pgTable("teacher_applications", {
   teacherEmail: text("teacher_email"),
   priceRange: text("price_range").notNull(),
   classification: text("classification"),
+  status: applicationStatusEnum("status").default("pending").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-export const teacherApplicationsRelations = relations(teacherApplications, ({}) => ({}));
+export const teacherApplicationsRelations = relations(teacherApplications, ({ one }) => ({
+  user: one(users, {
+    fields: [teacherApplications.userId],
+    references: [users.id],
+  }),
+}));
 
 // English Group Applications (İngilizce Konuşma Grubu Başvuruları)
 export const englishGroupApplications = pgTable("english_group_applications", {
@@ -341,6 +356,25 @@ export const userDailyStreak = pgTable("user_daily_streak", {
 export const userDailyStreakRelations = relations(userDailyStreak, ({ one }) => ({
   user: one(users, {
     fields: [userDailyStreak.userId],
+    references: [users.id],
+  }),
+}));
+
+// Teacher Availability
+export const teacherAvailability = pgTable("teacher_availability", {
+  id: serial("id").primaryKey(),
+  teacherId: text("teacher_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  startTime: timestamp("start_time").notNull(),
+  endTime: timestamp("end_time").notNull(),
+  dayOfWeek: integer("day_of_week").notNull(), // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+  weekStartDate: timestamp("week_start_date").notNull(), // Store the start date of the week this availability belongs to
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const teacherAvailabilityRelations = relations(teacherAvailability, ({ one }) => ({
+  teacher: one(users, {
+    fields: [teacherAvailability.teacherId],
     references: [users.id],
   }),
 }));

@@ -20,10 +20,10 @@ export default function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
         </ul>
       </p>
       <Button asChild className="w-full">
-        <Link href="/login">Tekrar Gİrİş Yap</Link>
+        <Link prefetch={false} href="/login">Tekrar Gİrİş Yap</Link>
       </Button>
       <Button asChild variant="primaryOutline" className="w-full">
-        <Link href="/">Ana Sayfaya Dön</Link>
+        <Link prefetch={false} href="/">Ana Sayfaya Dön</Link>
       </Button>
     </div>
   );

@@ -56,6 +56,7 @@ export function ForgotPasswordForm() {
       <p className="text-center text-sm mt-6">
         Giriş yapmayı unuttun mu?{" "}
         <Link
+          prefetch={false}
           href="/login"
           className="text-green-500 font-semibold underline hover:text-green-500"
         >

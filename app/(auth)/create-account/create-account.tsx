@@ -121,6 +121,7 @@ export function CreateAccountForm() {
       <p className="text-center text-sm mt-6">
         Zaten bir hesabın var mı?{" "}
         <Link
+          prefetch={false}
           href="/login"
           className="text-green-500 font-semibold underline hover:text-green-500"
         >

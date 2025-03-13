@@ -168,7 +168,7 @@ button:focus {
 }
 
 .gutter {
-  /* Slightly softened gray so it’s not pure white but blends with the background */
+  /* Slightly softened gray so it's not pure white but blends with the background */
   background-color: #f1f5f9; 
   background-repeat: no-repeat;
   background-position: 50%;
@@ -215,4 +215,33 @@ code {
   background-color: #f3f4f6; /* or #f9fafb, whichever you prefer */
   border-color: #e5e7eb;     /* a light gray border */
   color: #1f2937;            /* darker text color for readability */
+}
+
+/* Toast styling overrides to ensure visibility */
+[data-sonner-toast] {
+  opacity: 1 !important;
+}
+
+[data-sonner-toast][data-type="error"] {
+  background-color: #fee2e2 !important;
+  color: #991b1b !important;
+  border-color: #f87171 !important;
+}
+
+[data-sonner-toast][data-type="success"] {
+  background-color: #dcfce7 !important;
+  color: #166534 !important;
+  border-color: #86efac !important;
+}
+
+[data-sonner-toast][data-type="warning"] {
+  background-color: #fef3c7 !important;
+  color: #92400e !important;
+  border-color: #fcd34d !important;
+}
+
+[data-sonner-toast][data-type="info"] {
+  background-color: #dbeafe !important;
+  color: #1e40af !important;
+  border-color: #93c5fd !important;
 }

@@ -1,7 +1,7 @@
 // app/(main)/(protected)/profile/profile-page-client.tsx
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useCallback, useMemo } from "react";
 import { toast } from "sonner";
 import { updateProfileAction } from "@/actions/profile";
 import { Button } from "@/components/ui/button";
@@ -29,29 +29,62 @@ export default function ProfilePageClient({
   const [dailyTarget, setDailyTarget] = useState(profile.dailyTarget || 50);
   const [selectedSchoolId, setSelectedSchoolId] = useState(profile.schoolId ?? null);
   const [pending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
+  
+  // Memoize the avatar generator to avoid recreating it on each render
+  const generator = useMemo(() => new AvatarGenerator(), []);
 
-  const handleRandomAvatar = () => {
+  // Use useCallback to memoize the function reference
+  const handleRandomAvatar = useCallback(() => {
     if (profile.profileLocked) return;
-    const generator = new AvatarGenerator();
-    setAvatarUrl(generator.generateRandomAvatar());
-  };
+    try {
+      setAvatarUrl(generator.generateRandomAvatar());
+    } catch (err) {
+      console.error("Error generating avatar:", err);
+      toast.error("Avatar oluşturulurken bir hata oluştu.");
+    }
+  }, [profile.profileLocked, generator]);
 
-  const handleSave = () => {
-    if (!selectedSchoolId) {
-      toast.error("Lütfen bir okul seçin!");
+  // Use useCallback for the save handler
+  const handleSave = useCallback(() => {
+    setError(null);
+    
+    if (!username.trim()) {
+      setError("Kullanıcı adı boş olamaz.");
       return;
     }
+    
+    if (!selectedSchoolId) {
+      setError("Lütfen bir okul seçin!");
+      return;
+    }
+    
     startTransition(() => {
-      updateProfileAction(username, avatarUrl, selectedSchoolId, dailyTarget)
+      updateProfileAction(username.trim(), avatarUrl, selectedSchoolId, dailyTarget)
         .then(() => {
           toast.success("Profil güncellendi! Günlük hedeflenen puan her zaman değiştirilebilir.");
         })
         .catch((err) => {
-          console.error(err);
+          console.error("Profile update error:", err);
+          setError(err.message || "Profil güncellenirken hata oluştu.");
           toast.error(err.message || "Profil güncellenirken hata oluştu.");
         });
     });
-  };
+  }, [username, avatarUrl, selectedSchoolId, dailyTarget]);
+
+  // Memoize the daily target options to avoid recreating on every render
+  const dailyTargetOptions = useMemo(() => [
+    { value: 10, label: "10" },
+    { value: 20, label: "20" },
+    { value: 30, label: "30" },
+    { value: 50, label: "50" },
+    { value: 100, label: "100" },
+    { value: 200, label: "200" },
+    { value: 500, label: "500" },
+    { value: 1000, label: "1000" },
+    { value: 2000, label: "2000" },
+    { value: 5000, label: "5000" },
+  ], []);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-12 px-4">
@@ -62,9 +95,19 @@ export default function ProfilePageClient({
             Profil bilgilerinde isim, avatar ve okul güncellenemiyor.
           </p>
         )}
+        {error && (
+          <p className="text-sm text-red-600 text-center">
+            {error}
+          </p>
+        )}
         <div className="flex flex-col items-center space-y-4">
           <div className="w-32 h-32 overflow-hidden rounded-full border-2 border-gray-300">
-            <img src={avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+            <img 
+              src={avatarUrl} 
+              alt="Avatar" 
+              className="w-full h-full object-cover"
+              loading="lazy" // Lazy load the avatar image
+            />
           </div>
           <Button
             variant="secondary"
@@ -82,6 +125,7 @@ export default function ProfilePageClient({
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             disabled={profile.profileLocked}
+            maxLength={30} // Limit username length
           />
         </div>
         <div>
@@ -91,16 +135,11 @@ export default function ProfilePageClient({
             value={dailyTarget}
             onChange={(e) => setDailyTarget(parseInt(e.target.value))}
           >
-            <option value={10}>10</option>
-            <option value={20}>20</option>
-            <option value={30}>30</option>
-            <option value={50}>50</option>
-            <option value={100}>100</option>
-            <option value={200}>200</option>
-            <option value={500}>500</option>
-            <option value={1000}>1000</option>
-            <option value={2000}>2000</option>
-            <option value={5000}>5000</option>
+            {dailyTargetOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </select>
         </div>
         <div>
@@ -115,18 +154,14 @@ export default function ProfilePageClient({
           <h2 className="text-sm font-semibold text-gray-700">Aylık İstikrar Takvimi</h2>
           <StreakCalendarAdvanced startDate={profile.startDate} />
         </div>
-        <div className="flex justify-center items-center space-x-2 mt-4">
-          <span className="text-sm text-gray-700">Toplam İstikrar:</span>
-          <span className="font-bold text-xl text-blue-600">{profile.istikrar}</span>
-        </div>
         <Button
           variant="primary"
           size="lg"
           className="w-full"
           onClick={handleSave}
-          disabled={pending || (!profile.profileLocked && !username)}
+          disabled={pending || (!profile.profileLocked && !username.trim())}
         >
-          {profile.profileLocked ? "Profil Kilitlendi" : "Kaydet"}
+          {pending ? "Kaydediliyor..." : profile.profileLocked ? "Profil Kilitlendi" : "Kaydet"}
         </Button>
       </div>
     </div>

@@ -41,7 +41,7 @@ const GamesPage = async () => {
     <div className="flex flex-row-reverse gap-[48px] px-6">
       <FeedWrapper>
         <div className="w-full flex flex-col items-center">
-          <Image src="/mascot_orange.svg" alt="Quests" height={90} width={90} />
+          <Image src="/mascot_blue.svg" alt="Games" height={120} width={120} />
           <h1 className="text-center font-bold text-neutral-800 text-2xl my-6">
             Oyunlar
           </h1>

@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { turkishToast } from "@/components/ui/custom-toaster";
 import { createClient } from "@/utils/supabase/client"; // or wherever your single client file is
+import { LoadingSpinner } from "@/components/loading-spinner";
 
 interface SchoolItem {
   id: number;
@@ -47,31 +49,35 @@ interface StudyBuddyMessage {
 const POSTS_PER_PAGE = 10;
 const THIRTY_DAYS_IN_MS = 30 * 24 * 60 * 60 * 1000;
 
+// Cache for schools data to avoid repeated fetches
+let schoolsCache: SchoolItem[] | null = null;
+let schoolsCacheTimestamp = 0;
+const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+// Create a shared warningMessages object with Turkish translations
+const warningMessages = {
+  MESSAGE_LIMIT: "Mesajlar en fazla 200 karakter olabilir.",
+  MONTHLY_MESSAGE_LIMIT: "Aylık 100 mesaj sınırına ulaştınız.",
+  MONTHLY_POST_LIMIT: "Aylık 2 gönderi sınırına ulaştınız.",
+  MONTHLY_CHAT_LIMIT: "Her ay en fazla 2 farklı kişiyle sohbet başlatabilirsiniz!",
+  EMPTY_PURPOSE: "Lütfen bir çalışma amacı seçin.",
+  EMPTY_REASON: "Lütfen açıklama ekleyin.",
+  REASON_TOO_LONG: "Açıklama en fazla 300 karakter olabilir.",
+  AUTHENTICATION_REQUIRED: "Bu işlemi gerçekleştirmek için giriş yapmalısınız.",
+  CANNOT_MESSAGE_YOURSELF: "Kendinize mesaj gönderemezsiniz.",
+  ERROR_CREATING_POST: "Gönderi oluşturulurken bir hata oluştu.",
+  ERROR_CREATING_CHAT: "Sohbet oluşturulurken bir hata oluştu.",
+  ERROR_SENDING_MESSAGE: "Mesaj gönderilirken bir hata oluştu.",
+  ERROR_LOADING_POSTS: "Gönderiler yüklenirken bir hata oluştu.",
+  ERROR_LOADING_CHATS: "Sohbetler yüklenirken bir hata oluştu.",
+};
+
 export default function StudyBuddyPage() {
   const supabase = createClient();
 
   // Auth state
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [loadingUser, setLoadingUser] = useState<boolean>(true);
-
-  useEffect(() => {
-    const loadSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      setCurrentUser(session?.user || null);
-      setLoadingUser(false);
-    };
-    loadSession();
-
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (_: any, session: { user: any } | null) => {
-        setCurrentUser(session?.user || null);
-      }    );
-    return () => {
-      authListener.subscription.unsubscribe();
-    };
-  }, [supabase]);
 
   // Tabs
   const [activeTab, setActiveTab] = useState<"allPosts" | "myPosts" | "chats">(
@@ -80,7 +86,7 @@ export default function StudyBuddyPage() {
 
   // School filtering
   const [allSchools, setAllSchools] = useState<SchoolItem[]>([]);
-  const PURPOSE_OPTIONS = [
+  const PURPOSE_OPTIONS = useMemo(() => [
     "YKS Sınavı",
     "TUS Sınavı",
     "ALES Sınavı",
@@ -93,7 +99,8 @@ export default function StudyBuddyPage() {
     "Yüksek Lisans Çalışması",
     "Lise Okul Sınavı",
     "Diğer",
-  ];
+  ], []);
+  
   const [filterPurpose, setFilterPurpose] = useState<string>("");
   const [schoolSearchTerm, setSchoolSearchTerm] = useState<string>("");
 
@@ -123,132 +130,256 @@ export default function StudyBuddyPage() {
   // Warning modal
   const [warningOpen, setWarningOpen] = useState<boolean>(false);
   const [warningMessage, setWarningMessage] = useState<string>("");
-  const showWarning = (msg: string) => {
+  
+  const showWarning = useCallback((msg: string) => {
     setWarningMessage(msg);
     setWarningOpen(true);
-  };
+    // Also show as toast for better visibility
+    turkishToast.warning(msg, {
+      style: {
+        background: '#fef3c7', 
+        color: '#92400e',
+        borderColor: '#fcd34d',
+        opacity: '1'
+      }
+    });
+  }, []);
 
-  // 1) Load schools
+  // For post editing
+  const [editingPost, setEditingPost] = useState<StudyBuddyPost | null>(null);
+  const [editPostPurpose, setEditPostPurpose] = useState<string>("");
+  const [editPostReason, setEditPostReason] = useState<string>("");
+  const [showEditPostForm, setShowEditPostForm] = useState<boolean>(false);
+
+  // Auth effect - optimized to use a single listener
+  useEffect(() => {
+    const loadSession = async () => {
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+        setCurrentUser(session?.user || null);
+        setLoadingUser(false);
+      } catch (error) {
+        console.error("Error loading session:", error);
+        setLoadingUser(false);
+      }
+    };
+    loadSession();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (_: any, session: { user: any } | null) => {
+        setCurrentUser(session?.user || null);
+      }
+    );
+    
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, [supabase]);
+
+  // 1) Load schools with caching
   useEffect(() => {
     async function loadSchools() {
-      const { data, error } = await supabase
-        .from("schools")
-        .select("id, name, type")
-        .order("name");
-      if (error) {
-        console.error("Failed to load schools:", error);
-      } else if (data) {
-        setAllSchools(data as SchoolItem[]);
+      // Check if we have a valid cache
+      const now = Date.now();
+      if (schoolsCache && now - schoolsCacheTimestamp < CACHE_TTL) {
+        setAllSchools(schoolsCache);
+        return;
+      }
+      
+      try {
+        const { data, error } = await supabase
+          .from("schools")
+          .select("id, name, type")
+          .order("name");
+          
+        if (error) {
+          console.error("Failed to load schools:", error);
+        } else if (data) {
+          // Update cache
+          schoolsCache = data as SchoolItem[];
+          schoolsCacheTimestamp = now;
+          setAllSchools(data as SchoolItem[]);
+        }
+      } catch (error) {
+        console.error("Error in loadSchools:", error);
       }
     }
+    
     loadSchools();
   }, [supabase]);
 
-  // 2) Load all posts
-  const loadAllPosts = async () => {
+  // 2) Load all posts - optimized with debouncing and pagination
+  const loadAllPosts = useCallback(async () => {
+    if (!currentUser) return;
+    
     setLoadingPosts(true);
-    const { data, error } = await supabase
-      .from("study_buddy_posts")
-      .select("*")
-      .order("created_at", { ascending: false });
+    
+    try {
+      // Build query with filters
+      let query = supabase
+        .from("study_buddy_posts")
+        .select("*")
+        .order("created_at", { ascending: false });
+      
+      // Apply purpose filter if selected
+      if (filterPurpose) {
+        query = query.eq("purpose", filterPurpose);
+      }
+      
+      const { data, error } = await query;
+      
+      if (error) {
+        console.error("Error loading posts:", error);
+        return;
+      }
 
-    if (error) {
-      console.error("Error loading posts:", error);
-      setLoadingPosts(false);
-      return;
-    }
-    if (!data) {
-      setLoadingPosts(false);
-      return;
-    }
-
-    // Enhance posts with user info
-    const posts = data as StudyBuddyPost[];
-    const enhanced = await Promise.all(
-      posts.map(async (post) => {
-        let userName = "User";
-        let userAvatar = "/mascot_purple.svg";
-        if (post.user_id) {
-          const { data: userRow } = await supabase
-            .from("users")
-            .select("name, avatar")
-            .eq("id", post.user_id)
-            .single();
-          if (userRow) {
-            userName = userRow.name || "User";
-            userAvatar = userRow.avatar || "/mascot_purple.svg";
-          }
+      // Check for posts older than 30 days and delete them
+      const thirtyDaysAgo = new Date(Date.now() - THIRTY_DAYS_IN_MS).toISOString();
+      const oldPosts = data.filter(
+        (post: StudyBuddyPost) => post.created_at < thirtyDaysAgo && post.user_id === currentUser.id
+      );
+      
+      if (oldPosts.length > 0) {
+        // Delete old posts
+        for (const post of oldPosts) {
+          await supabase
+            .from("study_buddy_posts")
+            .delete()
+            .eq("id", post.id);
         }
-
-        let userSchoolName = "";
-        if (post.school_id) {
-          const foundSchool = allSchools.find((s) => s.id === post.school_id);
-          userSchoolName = foundSchool ? foundSchool.name : "";
+        
+        // Show notification
+        if (oldPosts.length === 1) {
+          turkishToast.info("1 adet eski gönderiniz otomatik olarak silindi (30 gün limiti)");
+        } else {
+          turkishToast.info(`${oldPosts.length} adet eski gönderiniz otomatik olarak silindi (30 gün limiti)`);
         }
-
-        return {
-          ...post,
-          userName,
-          userAvatar,
-          userSchoolName,
-        };
-      })
-    );
-
-    // Apply filters
-    let filtered = enhanced;
-    if (filterPurpose) {
-      filtered = filtered.filter((p) => p.purpose === filterPurpose);
+        
+        // Reload posts
+        await loadAllPosts();
+        return;
+      }
+      
+      // Enrich posts with user data in batches to reduce DB calls
+      if (data && data.length > 0) {
+        // Get unique user IDs
+        const userIds = Array.from(new Set(data.map((post: StudyBuddyPost) => post.user_id)));
+        
+        // Fetch all users in a single query
+        const { data: usersData } = await supabase
+          .from("users")
+          .select("id, name, avatar")
+          .in("id", userIds);
+          
+        // Create a lookup map
+        const userMap = (usersData || []).reduce((acc: any, user: any) => {
+          acc[user.id] = user;
+          return acc;
+        }, {});
+        
+        // Get all school IDs
+        const schoolIds = Array.from(new Set(data.filter((p: StudyBuddyPost) => p.school_id).map((p: StudyBuddyPost) => p.school_id)));
+        
+        // Fetch all schools in a single query
+        const { data: schoolsData } = await supabase
+          .from("schools")
+          .select("id, name")
+          .in("id", schoolIds);
+          
+        // Create a lookup map
+        const schoolMap = (schoolsData || []).reduce((acc: any, school: any) => {
+          acc[school.id] = school;
+          return acc;
+        }, {});
+        
+        // Enrich posts with user and school data
+        const enrichedPosts = data.map((post: StudyBuddyPost) => {
+          const user = userMap[post.user_id];
+          const school = post.school_id ? schoolMap[post.school_id] : null;
+          
+          return {
+            ...post,
+            userName: user?.name || "User",
+            userAvatar: user?.avatar || "/mascot_purple.svg",
+            userSchoolName: school?.name || "",
+          };
+        });
+        
+        setAllPostsRaw(enrichedPosts);
+      } else {
+        setAllPostsRaw([]);
+      }
+    } catch (error) {
+      console.error("Error in loadAllPosts:", error);
+    } finally {
+      setLoadingPosts(false);
     }
-    if (schoolSearchTerm.trim()) {
-      const term = schoolSearchTerm.toLowerCase();
-      filtered = filtered.filter((p) =>
-        p.userSchoolName?.toLowerCase().includes(term)
+  }, [currentUser, filterPurpose, supabase]);
+
+  // Load posts when tab changes or filters change
+  useEffect(() => {
+    if (activeTab === "allPosts" && currentUser) {
+      loadAllPosts();
+    }
+  }, [activeTab, currentUser, filterPurpose, loadAllPosts]);
+
+  // Memoize filtered posts to avoid recalculation on every render
+  const displayedPosts = useMemo(() => {
+    const startIdx = currentPage * POSTS_PER_PAGE;
+    const endIdx = startIdx + POSTS_PER_PAGE;
+    
+    // Filter by school if search term is provided
+    let filtered = allPostsRaw;
+    if (schoolSearchTerm) {
+      filtered = allPostsRaw.filter(post => 
+        post.userSchoolName?.toLowerCase().includes(schoolSearchTerm.toLowerCase())
       );
     }
+    
+    return filtered.slice(startIdx, endIdx);
+  }, [allPostsRaw, currentPage, schoolSearchTerm]);
 
-    setAllPostsRaw(filtered);
-    setLoadingPosts(false);
-  };
+  // Calculate total pages once
+  const totalPages = useMemo(() => {
+    let filtered = allPostsRaw;
+    if (schoolSearchTerm) {
+      filtered = allPostsRaw.filter(post => 
+        post.userSchoolName?.toLowerCase().includes(schoolSearchTerm.toLowerCase())
+      );
+    }
+    return Math.max(1, Math.ceil(filtered.length / POSTS_PER_PAGE));
+  }, [allPostsRaw, schoolSearchTerm]);
 
-  useEffect(() => {
-    if (!currentUser || activeTab !== "allPosts") return;
-    setCurrentPage(0);
-    loadAllPosts();
-  }, [activeTab, currentUser, filterPurpose, schoolSearchTerm]);
-
-  // Pagination
-  const startIndex = currentPage * POSTS_PER_PAGE;
-  const endIndex = startIndex + POSTS_PER_PAGE;
-  const displayedPosts = allPostsRaw.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(allPostsRaw.length / POSTS_PER_PAGE);
-
-  const goToNextPage = () => {
+  // Pagination handlers
+  const goToNextPage = useCallback(() => {
     if (currentPage < totalPages - 1) {
-      setCurrentPage((p) => p + 1);
+      setCurrentPage(prev => prev + 1);
     }
-  };
-  const goToPrevPage = () => {
+  }, [currentPage, totalPages]);
+
+  const goToPrevPage = useCallback(() => {
     if (currentPage > 0) {
-      setCurrentPage((p) => p - 1);
+      setCurrentPage(prev => prev - 1);
     }
-  };
+  }, [currentPage]);
 
   // 4) Create new post
   async function handleCreatePost() {
     setCreationError("");
 
     if (!postPurpose) {
-      setCreationError("Bir çalışma amacı seçmelisiniz.");
+      setCreationError(warningMessages.EMPTY_PURPOSE);
       return;
     }
     const trimmedReason = postReason.trim();
     if (!trimmedReason) {
-      setCreationError("Açıklama boş olamaz.");
+      setCreationError(warningMessages.EMPTY_REASON);
       return;
     }
     if (trimmedReason.length > 256) {
-      setCreationError("Açıklama 256 karakteri geçemez.");
+      setCreationError(warningMessages.REASON_TOO_LONG);
       return;
     }
     if (!currentUser) return;
@@ -264,7 +395,7 @@ export default function StudyBuddyPage() {
       .gt("created_at", thirtyDaysAgo);
 
     if (recentPosts && recentPosts.length >= 2) {
-      setCreationError("Aylık 2 gönderi sınırına ulaştınız.");
+      setCreationError(warningMessages.MONTHLY_POST_LIMIT);
       return;
     }
 
@@ -283,6 +414,7 @@ export default function StudyBuddyPage() {
       setPostPurpose("");
       setPostReason("");
       setShowNewPostForm(false);
+      turkishToast.success("Gönderi başarıyla oluşturuldu");
       loadAllPosts();
     }
   }
@@ -320,9 +452,7 @@ export default function StudyBuddyPage() {
       });
 
       if (distinctPartners.size >= 2) {
-        showWarning(
-          "Her ay en fazla 2 farklı kişiyle sohbet başlatabilirsiniz!"
-        );
+        showWarning(warningMessages.MONTHLY_CHAT_LIMIT);
         return;
       }
 
@@ -389,27 +519,35 @@ export default function StudyBuddyPage() {
     }
   }
 
-  // 6) My Posts
-  async function loadMyPosts() {
+  // 6) My Posts - optimized
+  const loadMyPosts = useCallback(async () => {
+    if (!currentUser) return;
+    
     setLoadingMyPosts(true);
-    const { data, error } = await supabase
-      .from("study_buddy_posts")
-      .select("*")
-      .eq("user_id", currentUser?.id || "")
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      console.error("Error loading my posts:", error);
-    } else if (data) {
-      setMyPosts(data as StudyBuddyPost[]);
+    
+    try {
+      const { data, error } = await supabase
+        .from("study_buddy_posts")
+        .select("*")
+        .eq("user_id", currentUser.id)
+        .order("created_at", { ascending: false });
+  
+      if (error) {
+        console.error("Error loading my posts:", error);
+      } else if (data) {
+        setMyPosts(data as StudyBuddyPost[]);
+      }
+    } catch (error) {
+      console.error("Error in loadMyPosts:", error);
+    } finally {
+      setLoadingMyPosts(false);
     }
-    setLoadingMyPosts(false);
-  }
+  }, [currentUser, supabase]);
 
   useEffect(() => {
     if (!currentUser || activeTab !== "myPosts") return;
     loadMyPosts();
-  }, [activeTab, currentUser]);
+  }, [activeTab, currentUser, loadMyPosts]);
 
   // 7) Real-time subscription for "study_buddy_chats"
   useEffect(() => {
@@ -558,11 +696,12 @@ export default function StudyBuddyPage() {
 
   // 9) Send message
   async function handleSendMessage() {
-    if (!selectedChat) return;
+    if (!selectedChat || !newMessage.trim() || !currentUser) return;
+    
     const trimmed = newMessage.trim();
-    if (!trimmed) return;
+    
     if (trimmed.length > 200) {
-      showWarning("Mesaj 200 karakteri aşamaz!");
+      showWarning(warningMessages.MESSAGE_LIMIT);
       return;
     }
 
@@ -577,7 +716,7 @@ export default function StudyBuddyPage() {
       .gt("created_at", thirtyDaysAgo);
 
     if (recentMsgs && recentMsgs.length >= 100) {
-      showWarning("Aylık 100 mesaj sınırına ulaştınız.");
+      showWarning(warningMessages.MONTHLY_MESSAGE_LIMIT);
       return;
     }
 
@@ -604,16 +743,76 @@ export default function StudyBuddyPage() {
     }
   }
 
-  // 10) UI Helpers
-  function truncatedMessage(message: string, maxLength = 40): string {
-    if (!message) return "";
+  // Helper function to truncate messages
+  const truncatedMessage = useCallback((message: string, maxLength = 40): string => {
     return message.length > maxLength
-      ? message.slice(0, maxLength) + "..."
+      ? message.substring(0, maxLength) + "..."
       : message;
+  }, []);
+
+  // Handle post edit button click
+  function handleEditPost(post: StudyBuddyPost) {
+    setEditingPost(post);
+    setEditPostPurpose(post.purpose);
+    setEditPostReason(post.reason);
+    setShowEditPostForm(true);
+  }
+
+  // Save edited post
+  async function saveEditedPost() {
+    if (!currentUser || !editingPost) return;
+    
+    const trimmedReason = editPostReason.trim();
+    
+    // Validate input
+    if (!editPostPurpose) {
+      setCreationError(warningMessages.EMPTY_PURPOSE);
+      return;
+    }
+    
+    if (!trimmedReason) {
+      setCreationError(warningMessages.EMPTY_REASON);
+      return;
+    }
+    
+    if (trimmedReason.length > 300) {
+      setCreationError(warningMessages.REASON_TOO_LONG);
+      return;
+    }
+    
+    try {
+      const { error } = await supabase
+        .from("study_buddy_posts")
+        .update({
+          purpose: editPostPurpose,
+          reason: trimmedReason,
+        })
+        .eq("id", editingPost.id)
+        .eq("user_id", currentUser.id); // Security check
+      
+      if (error) {
+        console.error("Error updating post:", error);
+        setCreationError(warningMessages.ERROR_CREATING_POST);
+      } else {
+        setEditingPost(null);
+        setEditPostPurpose("");
+        setEditPostReason("");
+        setShowEditPostForm(false);
+        setCreationError("");
+        turkishToast.success("Gönderi başarıyla güncellendi");
+        
+        // Reload posts
+        loadAllPosts();
+        loadMyPosts();
+      }
+    } catch (error) {
+      console.error("Error in saveEditedPost:", error);
+      setCreationError(warningMessages.ERROR_CREATING_POST);
+    }
   }
 
   // 11) Render
-  if (loadingUser) return <div>Loading user...</div>;
+  if (loadingUser) return <LoadingSpinner size="md" />;
   if (!currentUser) return <div className="p-4">Lütfen giriş yapın.</div>;
 
   return (
@@ -736,7 +935,9 @@ export default function StudyBuddyPage() {
                 {/* Posts List */}
                 <div className="flex-1 mt-4 mx-1 border-2 rounded-md p-4 bg-white overflow-y-auto scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-200">
                   {loadingPosts ? (
-                    <div>Loading posts...</div>
+                    <div className="flex justify-center items-center h-40">
+                      <LoadingSpinner size="sm" />
+                    </div>
                   ) : displayedPosts.length === 0 ? (
                     <div>Post yok (veya filtreye uyan yok).</div>
                   ) : (
@@ -809,35 +1010,53 @@ export default function StudyBuddyPage() {
 
             {/* MY POSTS TAB */}
             {activeTab === "myPosts" && (
-              <div className="h-full flex flex-col">
-                <div className="flex-1 mt-2 border-2 rounded-md p-4 bg-white overflow-y-auto mx-1 scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-200">
-                  <h2 className="text-xl font-bold mb-4">Gönderilerim</h2>
-                  {loadingMyPosts ? (
-                    <div>Loading my posts...</div>
-                  ) : myPosts.length === 0 ? (
-                    <div>Hiç postunuz yok.</div>
-                  ) : (
-                    myPosts.map((post: StudyBuddyPost) => {
-                      const createdAtDate = new Date(post.created_at);
-                      return (
-                        <div
-                          key={post.id}
-                          className="border-b last:border-none py-3"
-                        >
-                          <div className="text-sm text-gray-500">
-                            Oluşturulma Zamanı: {createdAtDate.toLocaleString()}
+              <div className="bg-white shadow rounded-lg p-4">
+                <h2 className="text-xl font-bold mb-4">Gönderilerim</h2>
+                {loadingMyPosts ? (
+                  <div className="flex justify-center items-center h-40">
+                    <LoadingSpinner size="sm" />
+                  </div>
+                ) : myPosts.length === 0 ? (
+                  <div className="text-center text-gray-500 my-8">
+                    Henüz gönderi oluşturmadınız.
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {myPosts.map((post) => (
+                      <div
+                        key={post.id}
+                        className="bg-white border rounded-lg p-4 shadow"
+                      >
+                        <div className="flex justify-between items-start">
+                          <div className="flex flex-col">
+                            <span className="font-bold">{post.purpose}</span>
+                            <p className="text-gray-700 mt-2 whitespace-pre-wrap break-words">
+                              {post.reason}
+                            </p>
+                            {/* Display university name if it exists */}
+                            {post.userSchoolName && (
+                              <div className="text-gray-500 mt-2 text-sm">
+                                {post.userSchoolName}
+                              </div>
+                            )}
+                            <div className="text-gray-500 mt-2 text-sm">
+                              {new Date(post.created_at).toLocaleDateString("tr-TR")}
+                            </div>
                           </div>
-                          <div className="text-sm font-semibold">
-                            Çalışma Amacı: {post.purpose}
-                          </div>
-                          <div className="text-sm text-gray-700">
-                            Açıklama: {post.reason}
-                          </div>
+                          
+                          {/* Edit button */}
+                          <Button 
+                            variant="secondary" 
+                            size="sm"
+                            onClick={() => handleEditPost(post)}
+                          >
+                            Düzenle
+                          </Button>
                         </div>
-                      );
-                    })
-                  )}
-                </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
 
@@ -848,7 +1067,9 @@ export default function StudyBuddyPage() {
                 <div className="border-2 rounded-md p-4 bg-white w-full md:w-1/3 overflow-y-auto scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-200">
                   <h2 className="text-xl font-bold mb-2">Sohbetler</h2>
                   {loadingChats ? (
-                    <div>Loading chats...</div>
+                    <div className="flex justify-center items-center h-40">
+                      <LoadingSpinner size="sm" />
+                    </div>
                   ) : chats.length === 0 ? (
                     <div>Hiç sohbet yok.</div>
                   ) : (
@@ -977,12 +1198,88 @@ export default function StudyBuddyPage() {
         <div className="pb-12"></div>
       </div>
 
-      {/* Warning Modal */}
+      {/* Edit Post Modal */}
+      {showEditPostForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+            <h3 className="text-xl font-bold mb-4">Gönderi Düzenle</h3>
+            
+            {creationError && (
+              <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">
+                {creationError}
+              </div>
+            )}
+            
+            <div className="mb-4">
+              <label className="block mb-2 font-medium">Amaç</label>
+              <select
+                className="w-full p-2 border rounded"
+                value={editPostPurpose}
+                onChange={(e) => setEditPostPurpose(e.target.value)}
+              >
+                <option value="">Seçiniz</option>
+                {PURPOSE_OPTIONS.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+            <div className="mb-4">
+              <label className="block mb-2 font-medium">
+                Açıklama (max 300 karakter)
+              </label>
+              <textarea
+                className="w-full p-2 border rounded min-h-[100px]"
+                placeholder="Açıklamanızı yazın"
+                value={editPostReason}
+                onChange={(e) => setEditPostReason(e.target.value)}
+              />
+              <div className="text-right text-sm text-gray-500">
+                {editPostReason.length}/300
+              </div>
+            </div>
+            
+            <div className="flex justify-end space-x-2">
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  setShowEditPostForm(false);
+                  setEditingPost(null);
+                  setCreationError("");
+                }}
+              >
+                İptal
+              </Button>
+              <Button variant="primary" onClick={saveEditedPost}>
+                Kaydet
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Improved Warning Modal with mascot_sad.svg */}
       {warningOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-4 rounded">
-            <p>{warningMessage}</p>
-            <Button onClick={() => setWarningOpen(false)}>Kapat</Button>
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+            <div className="flex flex-col items-center mb-4">
+              <img 
+                src="/mascot_sad.svg" 
+                alt="Sad Mascot" 
+                className="w-20 h-20 mb-4" 
+              />
+              <h3 className="text-lg font-bold text-center">Uyarı</h3>
+            </div>
+            
+            <p className="text-center mb-6">{warningMessage}</p>
+            
+            <div className="flex justify-center">
+              <Button onClick={() => setWarningOpen(false)}>
+                Tamam
+              </Button>
+            </div>
           </div>
         </div>
       )}
