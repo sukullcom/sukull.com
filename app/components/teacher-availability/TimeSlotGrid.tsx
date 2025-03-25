@@ -16,8 +16,8 @@ const generateTimeSlots = (weekStartDate: Date) => {
     const dayNumber = date.getDay(); // 0 = Sunday, 1 = Monday, etc.
     
     const slots = [];
-    // Generate slots from 8:00 to 20:00 in 30-minute increments
-    for (let hour = 8; hour < 20; hour++) {
+    // Generate slots from 00:00 to 23:30 in 30-minute increments
+    for (let hour = 0; hour < 24; hour++) {
       for (let minute = 0; minute < 60; minute += 30) {
         const startTime = new Date(date);
         startTime.setHours(hour, minute, 0, 0);
@@ -32,6 +32,7 @@ const generateTimeSlots = (weekStartDate: Date) => {
           endTime,
           dayOfWeek: dayNumber,
           disabled: isPast,
+          selected: false, // Default to not selected
         });
       }
     }
@@ -186,7 +187,13 @@ export default function TimeSlotGrid({
         updateDaysWithSelectedSlots(formattedSavedSlots);
         setSelectedSlots(formattedSavedSlots);
         
-        toast.success('Müsait olduğunuz zamanlar kaydedildi.');
+        // Display appropriate success message based on whether slots were filtered
+        if (data.filtered) {
+          toast.success(`Müsait olduğunuz zamanlar kaydedildi. ${data.filteredCount} geçmiş zaman dilimi otomatik olarak kaldırıldı.`);
+        } else {
+          toast.success('Müsait olduğunuz zamanlar kaydedildi.');
+        }
+        
         setIsEditing(false);
       } else {
         const data = await response.json();

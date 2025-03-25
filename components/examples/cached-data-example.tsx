@@ -115,7 +115,7 @@ export function CachedDataExample({ cacheKey, ttl = 60000 }: DataExampleProps) {
         <Button 
           onClick={fetchData} 
           disabled={isLoading}
-          variant="outline"
+          variant="default"
         >
           {isLoading ? 'Loading...' : isCached() ? 'Refresh (Cached)' : 'Fetch Data'}
         </Button>
@@ -123,7 +123,7 @@ export function CachedDataExample({ cacheKey, ttl = 60000 }: DataExampleProps) {
         <Button 
           onClick={clearCache} 
           disabled={isLoading || !isCached()}
-          variant="destructive"
+          variant="danger"
           size="sm"
         >
           Clear Cache

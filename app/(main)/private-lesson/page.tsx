@@ -8,24 +8,31 @@ import { useEffect, useState } from "react";
 export default function PrivateLessonPage() {
   const router = useRouter();
   const [isTeacher, setIsTeacher] = useState(false);
+  const [isStudent, setIsStudent] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Check if the user is a teacher
+  // Check if the user is a teacher or student
   useEffect(() => {
-    const checkTeacherStatus = async () => {
+    const checkUserStatus = async () => {
       try {
-        const response = await fetch("/api/private-lesson/check-teacher-status");
-        const data = await response.json();
+        // Check teacher status
+        const teacherResponse = await fetch("/api/private-lesson/check-teacher-status");
+        const teacherData = await teacherResponse.json();
+        setIsTeacher(teacherData.teacher);
         
-        setIsTeacher(data.teacher);
+        // Check student status
+        const studentResponse = await fetch("/api/private-lesson/check-student-status");
+        const studentData = await studentResponse.json();
+        setIsStudent(studentData.student);
+        
         setLoading(false);
       } catch (error) {
-        console.error("Error checking teacher status:", error);
+        console.error("Error checking user status:", error);
         setLoading(false);
       }
     };
 
-    checkTeacherStatus();
+    checkUserStatus();
   }, []);
 
   const handleOptionClick = (option: string) => {
@@ -72,7 +79,48 @@ export default function PrivateLessonPage() {
               size="lg"
               onClick={() => router.push("/private-lesson/teacher-dashboard")}
             >
-              Öğrenci Taleplerini Görüntüle
+              Öğretmen Paneline Git
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Student view
+  if (isStudent) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-12 px-4">
+        <div className="relative w-[240px] h-[240px] lg:w-[424px] lg:h-[424px] mb-8">
+          <Image
+            src="/hero.svg"
+            alt="Hero Görseli"
+            fill
+            className="object-contain"
+          />
+        </div>
+
+        <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-white w-full max-w-md">
+          <h1 className="text-2xl font-bold text-center text-gray-800">
+            Öğrenci Paneli
+          </h1>
+          <p className="text-center text-gray-600">
+            Tebrikler! Artık onaylı bir öğrencisiniz. Öğretmenleri görüntüleyebilir ve ders alabilirsiniz.
+          </p>
+          <div className="flex flex-col space-y-4">
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => router.push("/private-lesson/teachers")}
+            >
+              Öğretmenleri Görüntüle
+            </Button>
+            <Button
+              variant="secondary"
+              size="lg"
+              onClick={() => router.push("/private-lesson/my-bookings")}
+            >
+              Randevularım
             </Button>
           </div>
         </div>

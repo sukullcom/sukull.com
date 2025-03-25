@@ -2,7 +2,7 @@
 "use server";
 
 import db from "@/db/drizzle";
-import { userProgress, users } from "@/db/schema";
+import { userProgress, users, schools } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { getServerUser } from "@/lib/auth";
 import { updateDailyStreak } from "./daily-streak";
@@ -136,4 +136,113 @@ export async function updateProfileAction(
   }
 
   return true;
+}
+
+/**
+ * Gets the user's profile data including daily streak
+ * This should be called when loading the profile page
+ */
+export async function getUserProfile() {
+  try {
+    // Update daily streak before fetching profile data
+    // This ensures the streak is up-to-date when shown to the user
+    await updateDailyStreak();
+    
+    const user = await getServerUser();
+    if (!user) return null;
+    
+    const userId = user.id;
+    
+    // Get user progress
+    const progress = await db.query.userProgress.findFirst({
+      where: eq(userProgress.userId, userId),
+      with: {
+        school: true,
+      },
+    });
+    
+    if (!progress) return null;
+    
+    // Format the current streak
+    const streak = {
+      current: progress.istikrar,
+      target: progress.dailyTarget,
+      progress: progress.points - (progress.previousTotalPoints || 0),
+    };
+    
+    // Calculate user registration date (for streak calendar)
+    const createDate = user.createdAt || new Date();
+    const startDate = new Date(createDate).toISOString();
+    
+    return {
+      userId: progress.userId,
+      userName: progress.userName,
+      userImageSrc: progress.userImageSrc,
+      hearts: progress.hearts,
+      points: progress.points,
+      dailyTarget: progress.dailyTarget,
+      previousPoints: progress.previousTotalPoints || 0,
+      streak,
+      school: progress.school,
+      startDate,
+    };
+  } catch (error) {
+    console.error("Error getting user profile:", error);
+    return null;
+  }
+}
+
+/**
+ * Updates the user's profile settings
+ */
+export async function updateUserProfile(data: {
+  schoolId?: number;
+  userName?: string;
+  dailyTarget?: number;
+}) {
+  try {
+    const user = await getServerUser();
+    if (!user) throw new Error("Unauthorized");
+    
+    const userId = user.id;
+    
+    // Create the update data
+    const updateData: any = {};
+    
+    if (data.schoolId) {
+      // Verify the school exists
+      const school = await db.query.schools.findFirst({
+        where: eq(schools.id, data.schoolId),
+      });
+      
+      if (!school) throw new Error("School not found");
+      
+      updateData.schoolId = data.schoolId;
+    }
+    
+    if (data.userName) {
+      updateData.userName = data.userName;
+    }
+    
+    if (data.dailyTarget) {
+      // Ensure daily target is a reasonable value
+      if (data.dailyTarget < 10 || data.dailyTarget > 1000) {
+        throw new Error("Daily target must be between 10 and 1000");
+      }
+      
+      updateData.dailyTarget = data.dailyTarget;
+    }
+    
+    // Only update if we have data to update
+    if (Object.keys(updateData).length > 0) {
+      await db.update(userProgress)
+        .set(updateData)
+        .where(eq(userProgress.userId, userId));
+    }
+    
+    return true;
+  } catch (error) {
+    console.error("Error updating user profile:", error);
+    return false;
+  }
 }

@@ -432,7 +432,7 @@ export default function StudyBuddyPage() {
       .select("*")
       // We can do an exact match using .eq("participants", JSON.stringify([...]))
       // so that we only get a chat whose `participants` array exactly matches
-      .eq("participants", JSON.stringify(participants));
+      .filter("participants", "cs", JSON.stringify(participants));
 
     if (!existingChats || existingChats.length === 0) {
       // Limit user to 2 new chat partners in last 30 days
@@ -442,7 +442,7 @@ export default function StudyBuddyPage() {
       const { data: recentChats } = await supabase
         .from("study_buddy_chats")
         .select("*")
-        .contains("participants", [currentUser.id])
+        .contains("participants", currentUser.id) // Single value check
         .gt("last_updated", thirtyDaysAgo);
 
       const distinctPartners = new Set<string>();
@@ -553,8 +553,6 @@ export default function StudyBuddyPage() {
   useEffect(() => {
     if (!currentUser || activeTab !== "chats") return;
 
-    // The filter must use participants=cs.["USER_ID"] for JSON array containment
-    const filterStr = `participants=cs.["${currentUser.id}"]`; // Correct JSON array format
 
     const chatChannel = supabase
       .channel(`realtime-chats-${currentUser.id}`)
@@ -564,7 +562,7 @@ export default function StudyBuddyPage() {
           event: "*",
           schema: "public",
           table: "study_buddy_chats",
-          filter: filterStr,
+          filter: `participants=cs.["${currentUser.id}"]` // Proper JSONB array syntax
         },
         async (payload: any) => {
           // payload.new will hold the inserted/updated row
@@ -606,8 +604,10 @@ export default function StudyBuddyPage() {
       const { data, error } = await supabase
         .from("study_buddy_chats")
         .select("*")
-        .filter("participants", "cs", `["${currentUser.id}"]`) // Correct JSON array filter
+        .filter("participants", "cs", `["${currentUser.id}"]`)
         .order("last_updated", { ascending: false });
+      
+        filter: `participants=cs.["${currentUser.id}"]` // Correct array syntax
 
       if (error) {
         console.error("Error fetching chats:", error);

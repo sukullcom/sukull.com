@@ -1,6 +1,6 @@
 import { cache } from "react";
 import db from "@/db/drizzle";
-import { and, avg, desc, eq, ilike, or, sql } from "drizzle-orm";
+import { and, avg, desc, eq, ilike, or, sql, asc, not } from "drizzle-orm";
 import {
   challengeProgress,
   courses,
@@ -15,6 +15,7 @@ import {
   englishGroupApplications,
   users,
   teacherAvailability,
+  lessonBookings,
 } from "@/db/schema";
 import { getServerUser } from "@/lib/auth";
 
@@ -698,5 +699,255 @@ export async function upsertTeacherAvailability(
 export async function getCurrentTeacherAvailability(teacherId: string) {
   const weekStartDate = getWeekStartDate(new Date());
   return getTeacherAvailability(teacherId, weekStartDate);
+}
+
+// Check if a user has an approved student application
+export async function isApprovedStudent(userId: string) {
+  const application = await db.query.privateLessonApplications.findFirst({
+    where: and(
+      eq(privateLessonApplications.userId, userId),
+      eq(privateLessonApplications.approved, true)
+    ),
+  });
+  
+  return !!application;
+}
+
+// Get all teachers with their meet links
+export async function getAvailableTeachers() {
+  return db.query.users.findMany({
+    where: eq(users.role, "teacher"),
+    columns: {
+      id: true,
+      name: true,
+      email: true,
+      avatar: true,
+      description: true,
+      meetLink: true,
+    },
+  });
+}
+
+// Get detailed teacher info for a specific teacher
+export async function getTeacherDetails(teacherId: string) {
+  return db.query.users.findFirst({
+    where: eq(users.id, teacherId),
+    columns: {
+      id: true,
+      name: true,
+      email: true,
+      avatar: true,
+      description: true,
+      meetLink: true,
+    },
+  });
+}
+
+// Book a lesson with a teacher
+export async function bookLesson(
+  studentId: string, 
+  teacherId: string, 
+  startTime: Date, 
+  endTime: Date,
+  notes?: string
+) {
+  // Check if the time slot is available
+  const existingBooking = await db.query.lessonBookings.findFirst({
+    where: and(
+      eq(lessonBookings.teacherId, teacherId),
+      eq(lessonBookings.startTime, startTime),
+      eq(lessonBookings.endTime, endTime),
+      not(eq(lessonBookings.status, "cancelled"))
+    ),
+  });
+  
+  if (existingBooking) {
+    throw new Error("This time slot is already booked");
+  }
+  
+  // Check if the slot is in the teacher's availability
+  const availability = await db.query.teacherAvailability.findFirst({
+    where: and(
+      eq(teacherAvailability.teacherId, teacherId),
+      eq(teacherAvailability.startTime, startTime),
+      eq(teacherAvailability.endTime, endTime)
+    ),
+  });
+  
+  if (!availability) {
+    throw new Error("This time slot is not available for booking");
+  }
+  
+  // Get the teacher's Google Meet link
+  const teacher = await db.query.users.findFirst({
+    where: eq(users.id, teacherId),
+    columns: {
+      meetLink: true
+    }
+  });
+  
+  // Create the booking
+  return db.insert(lessonBookings)
+    .values({
+      studentId,
+      teacherId,
+      startTime,
+      endTime,
+      notes,
+      meetLink: teacher?.meetLink, // Include the teacher's Google Meet link
+    })
+    .returning();
+}
+
+// Get student's bookings
+export async function getStudentBookings(studentId: string) {
+  const bookings = await db.query.lessonBookings.findMany({
+    where: eq(lessonBookings.studentId, studentId),
+    orderBy: desc(lessonBookings.startTime),
+    with: {
+      teacher: {
+        columns: {
+          id: true,
+          name: true,
+          email: true,
+          avatar: true,
+          meetLink: true,
+        }
+      }
+    },
+  });
+
+  console.log(`Found ${bookings.length} bookings for student ${studentId}`);
+  if (bookings.length > 0) {
+    console.log("Sample booking teacher data:", bookings[0].teacher);
+  }
+
+  // Fetch the teacher application for each booking to get the field
+  const bookingsWithField = await Promise.all(
+    bookings.map(async (booking) => {
+      const teacherApplication = await getTeacherApplicationByUserId(booking.teacherId);
+      
+      // Make sure to preserve the teacher object when adding new attributes
+      return {
+        ...booking,
+        field: teacherApplication?.field || "Belirtilmemiş", // Default to "Not specified" if field is missing
+      };
+    })
+  );
+
+  return bookingsWithField;
+}
+
+// Get teacher's bookings
+export async function getTeacherBookings(teacherId: string) {
+  const bookings = await db.query.lessonBookings.findMany({
+    where: eq(lessonBookings.teacherId, teacherId),
+    orderBy: desc(lessonBookings.startTime),
+    with: {
+      student: {
+        columns: {
+          id: true,
+          name: true,
+          email: true,
+          avatar: true,
+          description: true,
+        }
+      }
+    },
+  });
+
+  // Get the teacher's field from their application
+  const teacherApplication = await getTeacherApplicationByUserId(teacherId);
+  const field = teacherApplication?.field || "Belirtilmemiş"; // Default to "Not specified" if field is missing
+
+  // Add the field to all bookings and format student info
+  const bookingsWithFieldAndStudent = bookings.map((booking) => {
+    // Format student info for display
+    const studentName = booking.student?.name || "Unknown Student";
+    const studentEmail = booking.student?.email || "";
+    const studentUsername = booking.student?.description || "";
+    
+    return {
+      ...booking,
+      field,
+      studentName,
+      studentEmail,
+      studentUsername
+    };
+  });
+
+  return bookingsWithFieldAndStudent;
+}
+
+// Update booking status
+export async function updateBookingStatus(bookingId: number, status: string) {
+  return db.update(lessonBookings)
+    .set({ 
+      status,
+      updatedAt: new Date()
+    })
+    .where(eq(lessonBookings.id, bookingId))
+    .returning();
+}
+
+// Get all student applications for admin
+export async function getAllStudentApplications() {
+  const applications = await db.query.privateLessonApplications.findMany({
+    orderBy: (privateLessonApplications, { desc }) => [desc(privateLessonApplications.createdAt)],
+  });
+  
+  return applications;
+}
+
+// Approve a student application
+export async function approveStudentApplication(applicationId: number) {
+  await db
+    .update(privateLessonApplications)
+    .set({
+      approved: true,
+      status: "approved",
+    })
+    .where(eq(privateLessonApplications.id, applicationId));
+}
+
+// Reject a student application
+export async function rejectStudentApplication(applicationId: number) {
+  await db
+    .update(privateLessonApplications)
+    .set({
+      approved: false,
+      status: "rejected",
+    })
+    .where(eq(privateLessonApplications.id, applicationId));
+}
+
+// Get teacher availability for the current week
+export async function getTeacherAvailabilityForCurrentWeek(teacherId: string) {
+  try {
+    console.log(`Finding availability for teacher: ${teacherId}`);
+    
+    // Get current week start date (Monday)
+    const today = new Date();
+    const currentWeekStart = getWeekStartDate(today);
+    console.log(`Current week starts: ${currentWeekStart.toISOString()}`);
+    
+    // Query directly with the current week start date
+    const availableSlots = await db.query.teacherAvailability.findMany({
+      where: and(
+        eq(teacherAvailability.teacherId, teacherId),
+        eq(teacherAvailability.weekStartDate, currentWeekStart)
+      ),
+      orderBy: [
+        asc(teacherAvailability.dayOfWeek),
+        asc(teacherAvailability.startTime)
+      ]
+    });
+    
+    console.log(`Found ${availableSlots.length} slots for current week`);
+    return availableSlots;
+  } catch (error) {
+    console.error("Error in getTeacherAvailabilityForCurrentWeek:", error);
+    return [];
+  }
 }
 

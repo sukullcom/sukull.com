@@ -70,7 +70,10 @@ export async function POST(req: Request) {
       };
     });
     
-    // Validate that all slots are for the current week and not in the past
+    // Filter out invalid slots and separate past slots
+    const futureSlots = [];
+    const pastSlots = [];
+    
     for (const slot of processedSlots) {
       const { startTime, endTime } = slot;
       
@@ -87,19 +90,28 @@ export async function POST(req: Request) {
       
       // Check if the slot is in the past
       if (startTime < now) {
-        return NextResponse.json({ 
-          message: "Cannot set availability for past times." 
-        }, { status: 400 });
+        // Add to past slots instead of rejecting the request
+        pastSlots.push(slot);
+      } else {
+        // Only include future slots for saving
+        futureSlots.push(slot);
       }
     }
     
-    // Save the availability
+    // Warn if some slots were filtered out
+    const hasFilteredSlots = pastSlots.length > 0;
+    
+    // Save the availability (only future slots)
     try {
-      const savedSlots = await upsertTeacherAvailability(user.id, weekStartDate, processedSlots);
+      const savedSlots = await upsertTeacherAvailability(user.id, weekStartDate, futureSlots);
       
       return NextResponse.json({ 
-        message: "Availability updated successfully", 
-        availability: savedSlots 
+        message: hasFilteredSlots 
+          ? "Availability updated successfully. Some past time slots were automatically removed." 
+          : "Availability updated successfully", 
+        availability: savedSlots,
+        filtered: hasFilteredSlots,
+        filteredCount: pastSlots.length
       });
     } catch (error) {
       console.error("Database error saving teacher availability:", error);

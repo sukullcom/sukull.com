@@ -1,70 +1,78 @@
-import Link from "next/link";
-import Image from "next/image";
+import * as React from "react";
 import { cn } from "@/lib/utils";
-import { Button } from "./button";
 
-interface CardProps {
-  imageSrc: string;
-  title: string;
-  href: string;
-  buttonText: string;
-  variant?: "locked" | "super";
-  disabled?: boolean;
-}
+const Card = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      "rounded-lg border bg-card text-card-foreground shadow-sm",
+      className
+    )}
+    {...props}
+  />
+));
+Card.displayName = "Card";
 
-const Card = ({
-  imageSrc,
-  title,
-  href,
-  buttonText,
-  variant = "super",
-  disabled = false,
-}: CardProps) => {
-  return (
-    <div
-      className={cn(
-        "flex flex-col justify-between h-full border-2 rounded-xl border-b-4 hover:bg-gray-100 p-4 lg:p-6 cursor-pointer active:border-b-2 shadow-md transition-transform duration-300 hover:scale-105"
-      )}
-    >
-      <div className="flex flex-col items-center">
-        {/* Kartın Resmi */}
-        <div className="relative aspect-square mb-4 max-h-[120px] lg:max-h-[200px] w-full">
-          <Image
-            src={imageSrc}
-            alt={title}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="rounded-lg"
-          />
-        </div>
+const CardHeader = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("flex flex-col space-y-1.5 p-6", className)}
+    {...props}
+  />
+));
+CardHeader.displayName = "CardHeader";
 
-        {/* Kart Başlığı */}
-        <h3 className="text-center text-gray-800 text-lg lg:text-xl font-semibold">
-          {title}
-        </h3>
-      </div>
+const CardTitle = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLHeadingElement>
+>(({ className, ...props }, ref) => (
+  <h3
+    ref={ref}
+    className={cn(
+      "text-2xl font-semibold leading-none tracking-tight",
+      className
+    )}
+    {...props}
+  />
+));
+CardTitle.displayName = "CardTitle";
 
-      {/* Kart Butonu */}
-      {disabled ? (
-        <Button
-          className="mt-4 w-full py-1.5 text-xs lg:text-xs font-medium rounded-lg bg-gray-500 text-white cursor-not-allowed whitespace-normal text-center"
-          variant="locked"
-          disabled
-        >
-          {buttonText}
-        </Button>
-      ) : (
-        <Link prefetch={false} href={href}>
-          <Button
-            className="mt-4 w-full py-2 text-sm lg:text-base font-medium rounded-lg bg-blue-500 text-white hover:bg-blue-600 active:bg-blue-700 transition-colors"
-            variant={variant}
-          >
-            {buttonText}
-          </Button>
-        </Link>
-      )}
-    </div>
-  );
-};
+const CardDescription = React.forwardRef<
+  HTMLParagraphElement,
+  React.HTMLAttributes<HTMLParagraphElement>
+>(({ className, ...props }, ref) => (
+  <p
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+));
+CardDescription.displayName = "CardDescription";
 
-export default Card;
+const CardContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
+));
+CardContent.displayName = "CardContent";
+
+const CardFooter = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn("flex items-center p-6 pt-0", className)}
+    {...props}
+  />
+));
+CardFooter.displayName = "CardFooter";
+
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent };

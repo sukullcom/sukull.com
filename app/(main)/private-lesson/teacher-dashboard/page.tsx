@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import GoogleMeetLinkManager from "./meet-link";
 
 export default function TeacherDashboardPage() {
   const router = useRouter();
@@ -56,6 +57,9 @@ export default function TeacherDashboardPage() {
       <div className="max-w-5xl mx-auto">
         <h1 className="text-3xl font-bold text-center mb-8">Öğretmen Paneli</h1>
         
+        {/* Google Meet Link Manager */}
+        <GoogleMeetLinkManager />
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {/* Quick Actions Card */}
           <div className="bg-white rounded-xl shadow-lg p-6">
@@ -76,17 +80,20 @@ export default function TeacherDashboardPage() {
                 </svg>
               </Link>
               
-              <div className="flex items-center justify-between p-4 bg-gray-100 rounded-lg">
+              <Link 
+                href="/private-lesson/teacher-dashboard/bookings" 
+                className="flex items-center justify-between p-4 bg-primary/10 rounded-lg hover:bg-primary/20 transition"
+              >
                 <div>
                   <h3 className="font-medium">Dersleri Görüntüle</h3>
                   <p className="text-sm text-gray-600">
                     Planlanmış derslerinize göz atın
                   </p>
                 </div>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
-              </div>
+              </Link>
             </div>
           </div>
           

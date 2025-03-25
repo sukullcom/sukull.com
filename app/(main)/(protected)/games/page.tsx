@@ -1,6 +1,6 @@
 import { FeedWrapper } from "@/components/feed-wrapper";
 import { StickyWrapper } from "@/components/sticky-wrapper";
-import Card from "@/components/ui/card";
+import CustomCard from "@/components/custom-card";
 import { UserProgress } from "@/components/user-progress";
 import { getUserProgress } from "@/db/queries";
 import Image from "next/image";
@@ -51,7 +51,7 @@ const GamesPage = async () => {
           <div className="p-8">
             <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-3 gap-6 auto-rows-fr">
               {gamesData.map((game) => (
-                <Card
+                <CustomCard
                   key={game.id}
                   imageSrc={game.imageSrc}
                   title={game.name}

@@ -19,6 +19,7 @@ import { ChallengeOptionCreate } from "./challengeOption/create"
 import { ChallengeOptionEdit } from "./challengeOption/edit"
 import { defaultTheme } from 'react-admin';
 import { TeacherApplicationList } from "./teacherApplication/lists";
+import { StudentApplicationList } from "./studentApplication/lists";
 
 // Create a custom HTTP client
 const httpClient = (url: string, options: any = {}) => {
@@ -137,6 +138,12 @@ const App = () => {
                 list={TeacherApplicationList}
                 recordRepresentation="teacherName"
                 options={{ label: "Teacher Applications" }}
+            />
+            <Resource
+                name="studentApplications"
+                list={StudentApplicationList}
+                recordRepresentation="studentName"
+                options={{ label: "Student Applications" }}
             />
         </Admin>
     )

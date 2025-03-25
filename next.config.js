@@ -10,6 +10,7 @@ const nextConfig = {
     domains: [
       'localhost', 
       'bjapihizpcvfzfldcyrl.supabase.co',
+      'api.dicebear.com',
     ],
   },
 }

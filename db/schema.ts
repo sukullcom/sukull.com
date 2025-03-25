@@ -9,7 +9,9 @@ import {
   text,
   timestamp,
   json,
-  uniqueIndex 
+  uniqueIndex, 
+  jsonb,
+  index
 } from "drizzle-orm/pg-core";
 
 // Define your IUserLink type (for TypeScript)
@@ -32,6 +34,7 @@ export const users = pgTable("users", {
   provider: text("provider").notNull(),       // e.g., 'google', 'github', or 'email'
   links: json("links").$type<IUserLink[]>().notNull().default([]),
   role: userRoleEnum("role").default("user").notNull(),
+  meetLink: text("meet_link"),                // Google Meet link for teachers
   created_at: timestamp("created_at").defaultNow().notNull(),
   updated_at: timestamp("updated_at").defaultNow().notNull(),
 });
@@ -204,6 +207,10 @@ export const privateLessonApplications = pgTable("private_lesson_applications", 
   field: text("field").notNull(),
   priceRange: text("price_range").notNull(),
   studentNeeds: text("student_needs"),
+  userId: text("user_id"),
+  status: text("status").default("pending"),
+  approved: boolean("approved").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 export const privateLessonApplicationsRelations = relations(privateLessonApplications, ({}) => ({}));
@@ -310,10 +317,12 @@ export const studyBuddyPosts = pgTable("study_buddy_posts", {
 // We store participants as JSON (an array of user IDs)
 export const studyBuddyChats = pgTable("study_buddy_chats", {
   id: serial("id").primaryKey(),
-  participants: json("participants").$type<string[]>().notNull(),
+  participants: jsonb("participants").$type<string[]>().notNull(),
   last_message: text("last_message").default(""),
   last_updated: timestamp("last_updated").defaultNow().notNull(),
-});
+}, (table) => ({
+  participantsIdx: index("participants_idx").using("gin", table.participants)
+}));
 
 // Study Buddy Messages
 export const studyBuddyMessages = pgTable("study_buddy_messages", {
@@ -366,7 +375,7 @@ export const teacherAvailability = pgTable("teacher_availability", {
   teacherId: text("teacher_id").notNull().references(() => users.id, { onDelete: "cascade" }),
   startTime: timestamp("start_time").notNull(),
   endTime: timestamp("end_time").notNull(),
-  dayOfWeek: integer("day_of_week").notNull(), // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+  dayOfWeek: integer("day_of_week").notNull(), // 0 for Sunday, 1 for Monday, etc.
   weekStartDate: timestamp("week_start_date").notNull(), // Store the start date of the week this availability belongs to
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -376,5 +385,32 @@ export const teacherAvailabilityRelations = relations(teacherAvailability, ({ on
   teacher: one(users, {
     fields: [teacherAvailability.teacherId],
     references: [users.id],
+  }),
+}));
+
+// Lesson Bookings
+export const lessonBookings = pgTable("lesson_bookings", {
+  id: serial("id").primaryKey(),
+  studentId: text("student_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  teacherId: text("teacher_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  startTime: timestamp("start_time").notNull(),
+  endTime: timestamp("end_time").notNull(),
+  status: text("status").notNull().default("pending"), // pending, confirmed, completed, cancelled
+  meetLink: text("meet_link"),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const lessonBookingsRelations = relations(lessonBookings, ({ one }) => ({
+  student: one(users, {
+    fields: [lessonBookings.studentId],
+    references: [users.id],
+    relationName: "student_bookings",
+  }),
+  teacher: one(users, {
+    fields: [lessonBookings.teacherId],
+    references: [users.id],
+    relationName: "teacher_bookings",
   }),
 }));

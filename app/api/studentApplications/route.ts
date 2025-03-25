@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 
 import db from "@/db/drizzle"
-import { teacherApplications } from "@/db/schema"
+import { privateLessonApplications } from "@/db/schema"
 import { isAdmin } from "@/lib/admin"
 import { sql } from "drizzle-orm"
 
@@ -21,32 +21,19 @@ export const GET = async (req: Request) => {
     // Get total count
     const [{ count: total }] = await db.select({
         count: sql`count(*)`
-    }).from(teacherApplications);
+    }).from(privateLessonApplications);
     
     // Get paginated data
-    const data = await db.query.teacherApplications.findMany({
+    const data = await db.query.privateLessonApplications.findMany({
         limit: limit,
         offset: start,
-        orderBy: (teacherApplications, { desc }) => [desc(teacherApplications.createdAt)]
+        orderBy: (privateLessonApplications, { desc }) => [desc(privateLessonApplications.createdAt)]
     });
     
     // Add Content-Range header for React Admin pagination
     const response = NextResponse.json(data);
-    response.headers.set('Content-Range', `teacherApplications ${start}-${Math.min(end, Number(total) - 1)}/${total}`);
+    response.headers.set('Content-Range', `studentApplications ${start}-${Math.min(end, Number(total) - 1)}/${total}`);
     response.headers.set('Access-Control-Expose-Headers', 'Content-Range');
     
     return response;
 }
-
-export const POST = async (req: Request) => {
-    if (!(await isAdmin())) {
-        return new NextResponse("Unauthorized", { status: 401 })
-    }
-    const body = await req.json()
-
-    const data = await db.insert(teacherApplications).values({
-        ...body,
-    }).returning()
-
-    return NextResponse.json(data[0])
-} 
