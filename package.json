@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_TLS_REJECT_UNAUTHORIZED=0 next dev",
     "build": "npm run lint:fix && next build",
-    "start": "next start",
+    "start": "NODE_TLS_REJECT_UNAUTHORIZED=0 next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "db:studio": "npx drizzle-kit studio --host 127.0.0.1 --port 4983",

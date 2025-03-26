@@ -6,7 +6,9 @@ import * as schema from './schema';
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false
+    rejectUnauthorized: false,
+    // For older Node.js versions, you might need to specify the CA certificate
+    // ca: fs.readFileSync('/path/to/ca-certificate.crt').toString()
   }
 });
 
