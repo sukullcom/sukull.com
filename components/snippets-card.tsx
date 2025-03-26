@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 
 type Snippet = {
   id: number;
@@ -23,7 +24,7 @@ export default function SnippetCard({ snippet }: { snippet: Snippet }) {
     >
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-xl font-semibold text-white">{snippet.title}</h3>
-        <img
+        <Image
           src={`/language_logos/${snippet.language}.png`}
           alt={snippet.language}
           className="w-6 h-6 object-contain"

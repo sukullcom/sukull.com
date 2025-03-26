@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
 import { addPointsToUser } from "@/actions/challenge-progress";
 import Confetti from "react-confetti";
 import { useAudio, useWindowSize } from "react-use";
@@ -233,7 +232,6 @@ const topics: Topic[] = [
 ];
 
 const SnakeGame = () => {
-  const router = useRouter();
   const { width, height } = useWindowSize();
 
   // 1) We store the audio elements in these variables:
@@ -249,7 +247,6 @@ const SnakeGame = () => {
 
   const [gameStarted, setGameStarted] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
-  const [showCongrats, setShowCongrats] = useState(false);
   const [totalWordsCompleted, setTotalWordsCompleted] = useState(0);
   const [snake, setSnake] = useState<Position[]>([{ x: 0, y: 0 }]);
   const [direction, setDirection] =
@@ -264,50 +261,11 @@ const SnakeGame = () => {
   const [wordCompletedFreeze, setWordCompletedFreeze] = useState<boolean>(false); // New state for freeze after word completed
   const gridSize = 10;
 
-  // **Always render these audio elements** so their refs exist at mount:
-  // This ensures we avoid the "ref is empty" warning.
-  // We'll place them at the very top-level of our return below.
-
-  // Key press: arrow keys
-  const handleKeyPress = useCallback((event: KeyboardEvent) => {
-    // Prevent default scrolling behavior for arrow keys
-    if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) {
-      event.preventDefault();
-    }
-    
-    setDirection((prevDirection) => {
-      if (event.key === "ArrowUp" && prevDirection !== "DOWN") return "UP";
-      if (event.key === "ArrowDown" && prevDirection !== "UP") return "DOWN";
-      if (event.key === "ArrowLeft" && prevDirection !== "RIGHT") return "LEFT";
-      if (event.key === "ArrowRight" && prevDirection !== "LEFT")
-        return "RIGHT";
-      return prevDirection;
-    });
-  }, []);
-
-  // Touch controls
-  const handleDirectionChange = (
-    newDirection: "UP" | "DOWN" | "LEFT" | "RIGHT"
-  ) => {
-    setDirection((prevDirection) => {
-      if (
-        (newDirection === "UP" && prevDirection !== "DOWN") ||
-        (newDirection === "DOWN" && prevDirection !== "UP") ||
-        (newDirection === "LEFT" && prevDirection !== "RIGHT") ||
-        (newDirection === "RIGHT" && prevDirection !== "LEFT")
-      ) {
-        return newDirection;
-      }
-      return prevDirection;
-    });
-  };
-
-  // Move on to next word
-  const startNewWord = () => {
+  // Move startNewWord function to the top to use it in dependencies
+  const startNewWord = useCallback(() => {
     if (currentWordIndex + 1 >= words.length) {
       // All words done
       setGameOver(true);
-      setShowCongrats(true);
       setGameFinished(true);
     } else {
       const nextIndex = currentWordIndex + 1;
@@ -321,19 +279,13 @@ const SnakeGame = () => {
       setFoodItems([]);
       setScore(0);
     }
-  };
-
-  // Adjust the volume of the eat sound (once it's in the DOM)
-  useEffect(() => {
-    if (eatAudioRef.current) {
-      eatAudioRef.current.volume = 0.5;
-    }
-  }, [eatAudioRef]);
-
-  const moveSnake = async () => {
+  }, [currentWordIndex, words]);
+  
+  // Create moveSnake function with useCallback to fix dependency issues
+  const moveSnake = useCallback(async () => {
     if (gameOver || !gameStarted || wordCompletedFreeze) return; // Don't move snake during word completion freeze
 
-    let newHead: Position = { ...snake[0] };
+    const newHead: Position = { ...snake[0] };
 
     // Move based on direction
     if (direction === "UP") newHead.y -= 1;
@@ -350,7 +302,6 @@ const SnakeGame = () => {
       snake.some((segment) => segment.x === newHead.x && segment.y === newHead.y)
     ) {
       setGameOver(true);
-      setShowCongrats(true);
       setGameFinished(true);
       return;
     }
@@ -387,7 +338,6 @@ const SnakeGame = () => {
           // Check if last word in topic
           if (currentWordIndex + 1 >= words.length) {
             setGameOver(true);
-            setShowCongrats(true);
             setGameFinished(true);
           } else {
             // Instead of immediately going to next word, set the freeze state
@@ -401,7 +351,6 @@ const SnakeGame = () => {
       } else {
         // Wrong letter => game over
         setGameOver(true);
-        setShowCongrats(true);
         setGameFinished(true);
         return;
       }
@@ -410,7 +359,63 @@ const SnakeGame = () => {
       const newSnake = [newHead, ...snake.slice(0, snake.length - 1)];
       setSnake(newSnake);
     }
+  }, [
+    gameOver, 
+    gameStarted, 
+    wordCompletedFreeze, 
+    snake, 
+    direction, 
+    gridSize, 
+    foodItems, 
+    word, 
+    letterIndex, 
+    eatAudioRef, 
+    collectedLetters, 
+    score, 
+    currentWordIndex, 
+    words.length
+  ]);
+
+  // Key press: arrow keys
+  const handleKeyPress = useCallback((event: KeyboardEvent) => {
+    // Prevent default scrolling behavior for arrow keys
+    if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) {
+      event.preventDefault();
+    }
+    
+    setDirection((prevDirection) => {
+      if (event.key === "ArrowUp" && prevDirection !== "DOWN") return "UP";
+      if (event.key === "ArrowDown" && prevDirection !== "UP") return "DOWN";
+      if (event.key === "ArrowLeft" && prevDirection !== "RIGHT") return "LEFT";
+      if (event.key === "ArrowRight" && prevDirection !== "LEFT")
+        return "RIGHT";
+      return prevDirection;
+    });
+  }, []);
+
+  // Touch controls
+  const handleDirectionChange = (
+    newDirection: "UP" | "DOWN" | "LEFT" | "RIGHT"
+  ) => {
+    setDirection((prevDirection) => {
+      if (
+        (newDirection === "UP" && prevDirection !== "DOWN") ||
+        (newDirection === "DOWN" && prevDirection !== "UP") ||
+        (newDirection === "LEFT" && prevDirection !== "RIGHT") ||
+        (newDirection === "RIGHT" && prevDirection !== "LEFT")
+      ) {
+        return newDirection;
+      }
+      return prevDirection;
+    });
   };
+
+  // Adjust the volume of the eat sound (once it's in the DOM)
+  useEffect(() => {
+    if (eatAudioRef.current) {
+      eatAudioRef.current.volume = 0.5;
+    }
+  }, [eatAudioRef]);
 
   // Create multiple letters, ensuring correct letter is included
   const generateFoodItems = () => {
@@ -527,7 +532,7 @@ const SnakeGame = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [word]);
 
-  // Add new effect for word completion freeze
+  // Add startNewWord to dependency array
   useEffect(() => {
     if (!wordCompletedFreeze) return;
     
@@ -541,7 +546,7 @@ const SnakeGame = () => {
     }, 1000); // 1 second freeze
     
     return () => clearTimeout(timer);
-  }, [wordCompletedFreeze]);
+  }, [wordCompletedFreeze, startNewWord]);
 
   // Countdown effect
   useEffect(() => {
@@ -572,10 +577,9 @@ const SnakeGame = () => {
     setScore(0);
     setTotalScore(0);
     setTotalWordsCompleted(0);
-    setShowCongrats(false);
+    setGameFinished(false);
     setFoodItems([]);
     setGameStarted(false);
-    setGameFinished(false);
     setCountdown(null);
   };
 
@@ -636,7 +640,7 @@ const SnakeGame = () => {
 
   // Game board
   const renderGrid = () => {
-    let grid = [];
+    const grid = [];
     for (let y = 0; y < gridSize; y++) {
       for (let x = 0; x < gridSize; x++) {
         const isSnake = snake.some(

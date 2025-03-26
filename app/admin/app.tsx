@@ -1,6 +1,6 @@
 "use client"
 
-import { Admin, Resource, fetchUtils } from "react-admin"
+import { Admin, Resource, fetchUtils, GetListParams, GetOneParams } from "react-admin"
 import simpleRestProvider from "ra-data-simple-rest"
 import { CourseList } from "./course/lists"
 import { CourseCreate } from "./course/create"
@@ -22,7 +22,7 @@ import { TeacherApplicationList } from "./teacherApplication/lists";
 import { StudentApplicationList } from "./studentApplication/lists";
 
 // Create a custom HTTP client
-const httpClient = (url: string, options: any = {}) => {
+const httpClient = (url: string, options: RequestInit = {}) => {
     // Initialize headers properly
     if (!options.headers) {
         options.headers = new Headers();
@@ -53,7 +53,7 @@ const simpleProvider = simpleRestProvider("/api", httpClient);
 const dataProvider = {
     ...simpleProvider,
     // Override getList to handle errors better
-    getList: (resource, params) => {
+    getList: (resource: string, params: GetListParams) => {
         return simpleProvider.getList(resource, params)
             .catch(error => {
                 console.error(`Error in getList for ${resource}:`, error);
@@ -61,7 +61,7 @@ const dataProvider = {
             });
     },
     // Override getOne to handle errors better
-    getOne: (resource, params) => {
+    getOne: (resource: string, params: GetOneParams) => {
         return simpleProvider.getOne(resource, params)
             .catch(error => {
                 console.error(`Error in getOne for ${resource}:`, error);

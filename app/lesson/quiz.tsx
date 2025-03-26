@@ -35,7 +35,6 @@ export const Quiz = ({
   initialPoints,
   initialLessonId,
   initialLessonChallenges,
-  userSubscription,
 }: Props) => {
   // *******************************
   // 1) Audio Elements

@@ -19,6 +19,20 @@ import PersonIcon from '@mui/icons-material/Person';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 
+// Add this interface at the top of the file
+interface StudentApplication {
+  id: string | number;
+  studentName?: string;
+  field?: string;
+  studentEmail?: string;
+  studentPhoneNumber?: string;
+  priceRange?: string;
+  studentNeeds?: string;
+  status?: 'pending' | 'approved' | 'rejected';
+  createdAt?: string;
+  // Add other properties as needed
+}
+
 // Custom filter sidebar for student applications
 const StudentApplicationFilterSidebar = () => (
   <Card sx={{ order: -1, mr: 2, mt: 9, width: 250 }}>
@@ -59,17 +73,22 @@ const StatusDebug = () => {
 };
 
 // Custom action buttons for approving or rejecting applications
-const ApproveButton = ({ record }: { record?: any }) => {
+const ApproveButton = ({ record }: { record?: StudentApplication }) => {
   const notify = useNotify();
   const refresh = useRefresh();
-  const fullRecord = useRecordContext();
+  const fullRecord = useRecordContext<StudentApplication>();
   
   // Use the record from context if not provided via props
   const application = record || fullRecord;
   
   const handleApprove = async () => {
+    if (!application || !application.id) {
+      notify('Cannot approve application: Application ID is missing', { type: 'error' });
+      return;
+    }
+    
     try {
-      console.log("Approving application:", application?.id);
+      console.log("Approving application:", application.id);
       const response = await fetch(`/api/admin/student-applications/${application.id}`, {
         method: 'PATCH',
         headers: {
@@ -103,17 +122,22 @@ const ApproveButton = ({ record }: { record?: any }) => {
   );
 };
 
-const RejectButton = ({ record }: { record?: any }) => {
+const RejectButton = ({ record }: { record?: StudentApplication }) => {
   const notify = useNotify();
   const refresh = useRefresh();
-  const fullRecord = useRecordContext();
+  const fullRecord = useRecordContext<StudentApplication>();
   
   // Use the record from context if not provided via props
   const application = record || fullRecord;
   
   const handleReject = async () => {
+    if (!application || !application.id) {
+      notify('Cannot reject application: Application ID is missing', { type: 'error' });
+      return;
+    }
+    
     try {
-      console.log("Rejecting application:", application?.id);
+      console.log("Rejecting application:", application.id);
       const response = await fetch(`/api/admin/student-applications/${application.id}`, {
         method: 'PATCH',
         headers: {
@@ -152,8 +176,8 @@ const ApplicationPagination = () => <Pagination rowsPerPageOptions={[5, 10, 25]}
 
 // Filter component for advanced filtering
 const studentApplicationFilters = [
-  <TextInput source="studentName" label="Name" alwaysOn />,
-  <TextInput source="field" label="Field" />,
+  <TextInput key="studentName" source="studentName" label="Name" alwaysOn />,
+  <TextInput key="field" source="field" label="Field" />,
 ];
 
 export const StudentApplicationList = () => {

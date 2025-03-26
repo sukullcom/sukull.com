@@ -94,8 +94,8 @@ export default function GoogleMeetLinkManager() {
               <p>Google Meet bağlantısı nasıl oluşturulur:</p>
               <ol className="list-decimal ml-5 mt-1">
                 <li><Link href="https://meet.google.com/landing" target="_blank" className="text-blue-500 underline">Google Meet</Link> sayfasına gidin</li>
-                <li>"Yeni toplantı" düğmesine tıklayın</li>
-                <li>"Anlık toplantı başlat" seçeneğini seçin</li>
+                <li>&quot;Yeni toplantı&quot; düğmesine tıklayın</li>
+                <li>&quot;Anlık toplantı başlat&quot; seçeneğini seçin</li>
                 <li>Açılan toplantının bağlantısını kopyalayıp buraya yapıştırın</li>
               </ol>
             </div>

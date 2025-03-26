@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { format, addMinutes, isAfter, startOfDay } from 'date-fns';
+import React, { useEffect, useState, useCallback } from 'react';
+import { format, addMinutes, isAfter } from 'date-fns';
 import { tr } from 'date-fns/locale';
 import { toast } from 'sonner';
+
+// Add this interface with a different name
+interface SavedTimeSlot {
+  startTime: string | Date;
+  endTime: string | Date;
+  dayOfWeek: number;
+}
 
 // Helper to generate all time slots for a week
 const generateTimeSlots = (weekStartDate: Date) => {
   const days = [];
   const now = new Date();
-  const today = startOfDay(now);
 
   // For each day of the week (Monday to Sunday)
   for (let dayOffset = 0; dayOffset < 7; dayOffset++) {
@@ -47,19 +53,11 @@ const generateTimeSlots = (weekStartDate: Date) => {
   return days;
 };
 
-type TimeSlot = {
-  startTime: Date;
-  endTime: Date;
-  dayOfWeek: number;
-  disabled?: boolean;
-  selected?: boolean;
-};
-
 type TimeSlotGridProps = {
   weekStartDate: Date;
-  initialSelectedSlots?: TimeSlot[];
+  initialSelectedSlots?: SavedTimeSlot[];
   readOnly?: boolean;
-  onSlotsChange?: (slots: TimeSlot[]) => void;
+  onSlotsChange?: (slots: SavedTimeSlot[]) => void;
 };
 
 export default function TimeSlotGrid({ 
@@ -69,9 +67,39 @@ export default function TimeSlotGrid({
   onSlotsChange 
 }: TimeSlotGridProps) {
   const [days, setDays] = useState(generateTimeSlots(weekStartDate));
-  const [selectedSlots, setSelectedSlots] = useState<TimeSlot[]>(initialSelectedSlots);
+  const [selectedSlots, setSelectedSlots] = useState<SavedTimeSlot[]>(initialSelectedSlots);
   const [isEditing, setIsEditing] = useState(!readOnly);
   const [isSaving, setIsSaving] = useState(false);
+  
+  // Function to update the days with selected slots - memoized with useCallback
+  const updateDaysWithSelectedSlots = useCallback((slots: SavedTimeSlot[]) => {
+    setDays(currentDays => 
+      currentDays.map(day => ({
+        ...day,
+        slots: day.slots.map(slot => {
+          // Check if this slot is in the list of selected slots by comparing startTime and dayOfWeek
+          const isSelected = slots.some(
+            selectedSlot => {
+              // Convert string times to Date objects for comparison
+              const selectedStartTime = new Date(selectedSlot.startTime);
+              const slotStartTime = new Date(slot.startTime);
+              
+              return (
+                // Compare the time portions only to avoid issues with date objects
+                selectedStartTime.getHours() === slotStartTime.getHours() &&
+                selectedStartTime.getMinutes() === slotStartTime.getMinutes() &&
+                selectedSlot.dayOfWeek === slot.dayOfWeek
+              );
+            }
+          );
+          return {
+            ...slot,
+            selected: isSelected
+          };
+        })
+      }))
+    );
+  }, []);
   
   // When initialSelectedSlots changes, update the grid
   useEffect(() => {
@@ -80,42 +108,43 @@ export default function TimeSlotGrid({
     
     // Update the selectedSlots state
     setSelectedSlots(initialSelectedSlots);
-  }, [initialSelectedSlots]);
+  }, [initialSelectedSlots, updateDaysWithSelectedSlots]);
 
-  // Function to update the days with selected slots
-  const updateDaysWithSelectedSlots = (slots: TimeSlot[]) => {
-    const updatedDays = days.map(day => ({
-      ...day,
-      slots: day.slots.map(slot => {
-        // Check if this slot is in the list of selected slots by comparing startTime and dayOfWeek
-        const isSelected = slots.some(
-          selectedSlot => 
-            // Compare the time portions only to avoid issues with date objects
-            selectedSlot.startTime.getHours() === slot.startTime.getHours() &&
-            selectedSlot.startTime.getMinutes() === slot.startTime.getMinutes() &&
-            selectedSlot.dayOfWeek === slot.dayOfWeek
-        );
-        
-        return {
-          ...slot,
-          selected: isSelected
-        };
-      })
-    }));
-    
-    setDays(updatedDays);
-  };
-  
-  const toggleSlot = (clickedDay: number, clickedSlot: TimeSlot) => {
-    if (readOnly || !isEditing || clickedSlot.disabled) return;
+  const toggleSlot = (clickedDay: number, clickedSlot: { 
+    startTime: string | Date; 
+    endTime: string | Date; 
+    dayOfWeek: number;
+    disabled?: boolean;
+    selected?: boolean;
+  }) => {
+    if (readOnly || !isEditing) return;
     
     // Update the days state
     const updatedDays = [...days];
     const dayIndex = updatedDays.findIndex(day => day.dayNumber === clickedDay);
     
     if (dayIndex !== -1) {
+      // First convert the slot times to strings if they are Date objects
+      const slotStartTime = clickedSlot.startTime instanceof Date 
+        ? clickedSlot.startTime.toISOString() 
+        : clickedSlot.startTime;
+        
+      const slotEndTime = clickedSlot.endTime instanceof Date 
+        ? clickedSlot.endTime.toISOString() 
+        : clickedSlot.endTime;
+
       const slotIndex = updatedDays[dayIndex].slots.findIndex(
-        slot => slot.startTime.getTime() === clickedSlot.startTime.getTime()
+        slot => {
+          const slotTime = slot.startTime instanceof Date
+            ? slot.startTime.getTime()
+            : new Date(slot.startTime).getTime();
+            
+          const clickedTime = clickedSlot.startTime instanceof Date
+            ? clickedSlot.startTime.getTime()
+            : new Date(clickedSlot.startTime).getTime();
+            
+          return slotTime === clickedTime;
+        }
       );
       
       if (slotIndex !== -1) {
@@ -129,22 +158,30 @@ export default function TimeSlotGrid({
         setDays(updatedDays);
         
         // Update the selectedSlots array
-        let newSelectedSlots: TimeSlot[];
+        let newSelectedSlots: SavedTimeSlot[];
         
         if (isCurrentlySelected) {
           // Remove from selected slots
           newSelectedSlots = selectedSlots.filter(
-            slot => 
-              slot.startTime.getTime() !== clickedSlot.startTime.getTime() ||
-              slot.dayOfWeek !== clickedSlot.dayOfWeek
+            slot => {
+              const slotTime = typeof slot.startTime === 'string'
+                ? new Date(slot.startTime).getTime()
+                : new Date(slot.startTime).getTime();
+                
+              const clickedTime = typeof slotStartTime === 'string'
+                ? new Date(slotStartTime).getTime()
+                : new Date(slotStartTime).getTime();
+                
+              return slotTime !== clickedTime || slot.dayOfWeek !== clickedSlot.dayOfWeek;
+            }
           );
         } else {
           // Add to selected slots
           newSelectedSlots = [
             ...selectedSlots,
             {
-              startTime: clickedSlot.startTime,
-              endTime: clickedSlot.endTime,
+              startTime: slotStartTime,
+              endTime: slotEndTime,
               dayOfWeek: clickedSlot.dayOfWeek
             }
           ];
@@ -177,11 +214,22 @@ export default function TimeSlotGrid({
         const savedSlots = data.availability || [];
         
         // Format the saved slots
-        const formattedSavedSlots = savedSlots.map((slot: any) => ({
-          startTime: new Date(slot.startTime),
-          endTime: new Date(slot.endTime),
-          dayOfWeek: slot.dayOfWeek
-        }));
+        const formattedSavedSlots = savedSlots.map((slot: SavedTimeSlot) => {
+          // Convert to string if needed
+          const startTime = typeof slot.startTime === 'string' 
+            ? slot.startTime 
+            : slot.startTime.toISOString();
+          
+          const endTime = typeof slot.endTime === 'string'
+            ? slot.endTime
+            : slot.endTime.toISOString();
+            
+          return {
+            startTime,
+            endTime,
+            dayOfWeek: slot.dayOfWeek
+          };
+        });
         
         // Update the UI with the saved slots
         updateDaysWithSelectedSlots(formattedSavedSlots);
@@ -278,7 +326,15 @@ export default function TimeSlotGrid({
               return (
                 <div 
                   key={`${day.dayNumber}-${timeStr}`}
-                  onClick={() => toggleSlot(day.dayNumber, slot)}
+                  onClick={() => {
+                    if (isEditing || readOnly) {
+                      toggleSlot(day.dayNumber, {
+                        ...slot,
+                        startTime: slot.startTime.toISOString(),
+                        endTime: slot.endTime.toISOString()
+                      });
+                    }
+                  }}
                   className={`
                     text-center p-2 border text-sm
                     ${slot.selected ? 'bg-green-500 text-white' : 'bg-white'}

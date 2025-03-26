@@ -28,6 +28,12 @@ interface TimeSlot {
   isPast?: boolean;
 }
 
+interface BookedSlot {
+  startTime: string;
+  endTime: string;
+  status: string;
+}
+
 export default function TeacherDetailPage({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [teacher, setTeacher] = useState<Teacher | null>(null);
@@ -88,13 +94,13 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
         const now = new Date();
         
         // Map availability and mark slots that are already booked or in the past
-        const availabilityWithStatus = availabilityData.map((slot: any) => {
+        const availabilityWithStatus = availabilityData.map((slot: TimeSlot) => {
           const slotStartTime = new Date(slot.startTime);
           const slotEndTime = new Date(slot.endTime);
           
           // Improve comparison between availability slots and booked slots
           // Check if any booked slot overlaps with this availability slot
-          const isBooked = bookedSlotsData.some((bookedSlot: any) => {
+          const isBooked = bookedSlotsData.some((bookedSlot: BookedSlot) => {
             const bookedStartTime = new Date(bookedSlot.startTime);
             const bookedEndTime = new Date(bookedSlot.endTime);
             
@@ -181,7 +187,6 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
         throw new Error(errorData.message || "Failed to book lesson");
       }
 
-      const data = await response.json();
       toast.success("Lesson booked successfully!");
       
       // Redirect to bookings page
@@ -270,6 +275,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
                   src={`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(teacher.name)}`}
                   alt={teacher.name}
                   fill
+                  unoptimized
                   className="object-cover"
                 />
               </div>
@@ -364,7 +370,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
               <CardHeader>
                 <CardTitle>Book Your Lesson</CardTitle>
                 <CardDescription>
-                  You're booking a lesson with {teacher.name} on {getDayName(selectedSlot.dayOfWeek)} at {formatTime(selectedSlot.startTime)}
+                  You&apos;re booking a lesson with {teacher.name} on {getDayName(selectedSlot.dayOfWeek)} at {formatTime(selectedSlot.startTime)}
                 </CardDescription>
               </CardHeader>
               <CardContent>

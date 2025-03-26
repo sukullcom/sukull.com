@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { createClient } from "@/utils/supabase/client";
+import { User } from "@supabase/supabase-js";
 
 type Props = {
   className?: string;
@@ -20,11 +21,10 @@ type Props = {
 
 export const Sidebar = ({ className }: Props) => {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
   useEffect(() => {
     const supabase = createClient();
-    supabase.auth.getSession().then(({ data }: { data: { session: { user: any } | null } }) => {
+    supabase.auth.getSession().then(({ data }: { data: { session: { user: User } | null } }) => {
       setUser(data.session?.user || null);
     });
   }, []);

@@ -1,7 +1,5 @@
 import { getUserProgress } from "@/db/queries";
 import { redirect } from "next/navigation";
-import { StickyWrapper } from "@/components/sticky-wrapper";
-import { UserProgress } from "@/components/user-progress";
 import { FeedWrapper } from "@/components/feed-wrapper";
 import SnakeGame from "./snake-game";
 

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { getUserDailyStreakForMonth } from "@/actions/daily-streak";
 import { addMonths, endOfMonth, getDay, startOfMonth, format } from "date-fns";
 import { Button } from "./ui/button";
+import Image from "next/image";
 
 interface DailyRecord {
   date: string; // "YYYY-MM-DD"
@@ -29,7 +30,12 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
       const month = date.getMonth() + 1;
       const year = date.getFullYear();
       const recs = await getUserDailyStreakForMonth(month, year);
-      setRecords(recs);
+      // Convert Date objects to ISO strings before setting state
+      const formattedRecs = recs.map(rec => ({
+        ...rec,
+        date: rec.date.toISOString().split('T')[0]
+      }));
+      setRecords(formattedRecs);
     } catch (err) {
       console.error("Failed to fetch daily streak records:", err);
       setRecords([]);
@@ -112,7 +118,9 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
     return (
       <div key={index} className="w-10 h-12 flex flex-col items-center justify-center border border-gray-200 rounded-lg p-1 m-1">
         <span className="text-xs">{cell.day}</span>
-        <img
+        <Image
+          width={20}
+          height={20}
           src={achieved ? "/istikrar.svg" : "/istikrarsiz.svg"}
           alt={achieved ? "Achieved" : "Not achieved"}
           className="w-5 h-5 mt-1"

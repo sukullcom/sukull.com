@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Confetti from "react-confetti";
-import { Button } from "@/components/ui/button"; // Assuming Button component exists
+import { Button } from "@/components/ui/button";
 import { addPointsToUser } from "@/actions/challenge-progress";
-import { useAudio } from "react-use"; // Importing react-use for audio playback
-import { redirect, useRouter } from "next/navigation";
+import { useAudio } from "react-use";
+import { useRouter } from "next/navigation";
 
 const steps = [
   {
@@ -204,7 +204,7 @@ const FoodSimulationPage = () => {
       {/* Matching Game Card */}
       <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-white w-full max-w-4xl relative">
         <div className="absolute top-4 right-8 flex items-center space-x-2">
-          <img src="/points.svg" alt="Points Icon" className="w-8 h-8" />
+          <Image src="/points.svg" alt="Points Icon" width={32} height={32} className="w-8 h-8" />
           <span className="text-lg font-bold text-neutral-700">
             {totalPoints}
           </span>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { addPointsToUser } from "@/actions/challenge-progress";
 import LyricLine from "./lyrics-line";
+import Image from "next/image";
 
 interface LyricWord {
   word: string;
@@ -91,7 +92,7 @@ export default function LyricsGame({ lyrics, onTryAgain }: LyricsGameProps) {
     <div className="flex flex-col gap-4">
       <div className="sticky top-0 bg-white rounded-xl p-4 border-b border-gray-200 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <img src="/points.svg" alt="Points Icon" className="w-6 h-6" />
+          <Image src="/points.svg" alt="Points Icon" width={24} height={24} className="w-6 h-6" />
           <h2 className="text-xl font-semibold">Puan: {points}</h2>
         </div>
         <div className="text-right flex items-center gap-4">{actionElement}</div>

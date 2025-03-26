@@ -3,7 +3,6 @@ import { getUserProgress } from "@/db/queries";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { Items } from "./items";
-import { SocialMediaLinks } from "@/components/social_media";
 
 const ShopPage = async () => {
   const userProgressData = getUserProgress();

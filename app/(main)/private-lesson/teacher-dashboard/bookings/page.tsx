@@ -5,21 +5,11 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Booking } from "@/app/types";
 
-interface Booking {
-  id: number;
-  studentId: string;
-  studentName: string;
-  studentEmail: string;
-  studentUsername?: string;
-  teacherId: string;
-  field: string;
-  startTime: string;
-  endTime: string;
-  status: string;
-  meetLink?: string;
-  notes?: string;
-  createdAt: string;
+interface BookingResponse {
+  bookings: Booking[];
+  teacherMeetLink: string | null;
 }
 
 export default function TeacherBookingsPage() {
@@ -50,10 +40,10 @@ export default function TeacherBookingsPage() {
           throw new Error("Failed to fetch bookings");
         }
         
-        const data = await response.json();
+        const data: BookingResponse = await response.json();
         
         // Make sure each booking has the meet link from the response
-        const bookingsWithMeetLink = data.bookings.map((booking: any) => ({
+        const bookingsWithMeetLink = data.bookings.map((booking: Booking) => ({
           ...booking,
           meetLink: data.teacherMeetLink || booking.meetLink // Use the teacher's global meet link if available
         }));

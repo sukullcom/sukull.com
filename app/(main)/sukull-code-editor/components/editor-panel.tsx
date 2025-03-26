@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Editor } from "@monaco-editor/react";
+import React, { useEffect, useState } from "react";
+import Editor from "@monaco-editor/react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { RotateCcwIcon, ShareIcon, TypeIcon } from "lucide-react";

@@ -223,8 +223,11 @@ export const teacherApplications = pgTable("teacher_applications", {
   id: serial("id").primaryKey(),
   userId: text("user_id").notNull(),
   field: text("field").notNull(),
+  // NOTE: The following quiz-related fields are kept for database compatibility
+  // but are no longer used in the application. All teachers are auto-approved
+  // with quizResult=0 and passed=true
   quizResult: integer("quiz_result").notNull().default(0),
-  passed: boolean("passed").notNull().default(false),
+  passed: boolean("passed").notNull().default(true),
   teacherName: text("teacher_name"),
   teacherSurname: text("teacher_surname"),
   teacherPhoneNumber: text("teacher_phone_number"),
@@ -243,7 +246,8 @@ export const teacherApplicationsRelations = relations(teacherApplications, ({ on
   }),
 }));
 
-// English Group Applications (İngilizce Konuşma Grubu Başvuruları)
+// DEPRECATED: English Group Applications (İngilizce Konuşma Grubu Başvuruları)
+// This feature is no longer used but the table is kept for database compatibility
 export const englishGroupApplications = pgTable("english_group_applications", {
   id: serial("id").primaryKey(),
   participantName: text("participant_name").notNull(),
@@ -251,13 +255,13 @@ export const englishGroupApplications = pgTable("english_group_applications", {
   participantPhoneNumber: text("participant_phone_number").notNull(),
   participantEmail: text("participant_email").notNull(),
   quizResult: integer("quiz_result").notNull().default(0),
-  // Now store classification as e.g. A1..C2 or '' if not assigned
   classification: text("classification").default(""),
 });
 
 export const englishGroupApplicationsRelations = relations(englishGroupApplications, ({}) => ({}));
 
-// Quiz Questions and Options
+// DEPRECATED: Quiz Questions and Options
+// These tables are no longer used but kept for database compatibility
 export const quizQuestions = pgTable("quiz_questions", {
   id: serial("id").primaryKey(),
   field: text("field").notNull(),

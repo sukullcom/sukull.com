@@ -49,8 +49,8 @@ const LessonPagination = () => <Pagination rowsPerPageOptions={[5, 10, 25]} />;
 
 // Filter component for advanced filtering
 const lessonFilters = [
-    <TextInput source="title" label="Title" alwaysOn />,
-    <ReferenceInput source="unitId" reference="units" label="Unit" />
+    <TextInput key="title" source="title" label="Title" alwaysOn />,
+    <ReferenceInput key="unitId" source="unitId" reference="units" label="Unit" />
 ];
 
 export const LessonList = () => (

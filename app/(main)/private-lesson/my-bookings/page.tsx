@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 interface Booking {
@@ -55,9 +55,9 @@ export default function MyBookingsPage() {
         const bookingsArray = data.bookings || [];
         
         // Make sure each booking has a teacher object
-        const bookingsWithTeacher = bookingsArray.map((booking: any) => {
+        const bookingsWithTeacher = bookingsArray.map((booking: Booking) => {
           if (!booking.teacher) {
-            booking.teacher = { name: "Unknown Teacher" };
+            booking.teacher = { name: "Unknown Teacher", id: "", email: "" };
           }
           return booking;
         });

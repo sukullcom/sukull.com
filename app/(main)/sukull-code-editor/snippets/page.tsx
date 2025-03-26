@@ -12,6 +12,7 @@ import {
   X,
 } from "lucide-react";
 import SnippetCard from "@/components/snippets-card"; // Aşağıda corners rounded yapacağız
+import Image from "next/image";
 
 type Snippet = {
   id: number;
@@ -158,7 +159,7 @@ export default function SnippetsPage() {
                 `}
               >
                 <div className="flex items-center gap-2">
-                  <img
+                  <Image
                     src={`/language_logos/${lang}.png`}
                     alt={lang}
                     className="w-4 h-4 object-contain"

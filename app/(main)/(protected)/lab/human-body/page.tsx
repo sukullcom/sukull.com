@@ -6,6 +6,7 @@ import { addPointsToUser } from "@/actions/challenge-progress";
 import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const videos = [
   {
@@ -286,7 +287,7 @@ const HangmanGame = ({
     <div className="border-2 rounded-xl p-6 space-y-2 shadow-lg bg-white w-full relative">
       {/* Points with Icon */}
       <div className="absolute top-9 right-8 flex items-center space-x-2">
-        <img src="/points.svg" alt="Points Icon" className="w-6 h-6" />
+        <Image src="/points.svg" alt="Points Icon" width={24} height={24} className="w-6 h-6" />
         <span className="text-lg font-bold text-neutral-700">
           {totalPoints}
         </span>

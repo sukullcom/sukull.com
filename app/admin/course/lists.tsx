@@ -51,7 +51,7 @@ const CoursePagination = () => <Pagination rowsPerPageOptions={[5, 10, 25]} />;
 
 // Filter component for advanced filtering
 const courseFilters = [
-    <TextInput source="title" label="Title" alwaysOn />
+    <TextInput key="title" source="title" label="Title" alwaysOn />
 ];
 
 export const CourseList = () => (

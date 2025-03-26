@@ -19,9 +19,12 @@ export const GET = async (req: Request) => {
     const limit = end - start + 1;
     
     // Get total count
-    const [{ count: total }] = await db.select({
-        count: sql`count(*)`
+    const [{ count: totalCount }] = await db.select({
+        count: sql<number>`count(*)`
     }).from(challengeOptions);
+    
+    // Ensure total is a number
+    const total = Number(totalCount);
     
     // Get paginated data
     const data = await db.query.challengeOptions.findMany({

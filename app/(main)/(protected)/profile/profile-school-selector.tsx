@@ -53,17 +53,6 @@ export const ProfileSchoolSelector = ({
       );
   }, [schools, selectedType, debouncedQuery]);
 
-  // Pre-filter schools by type for faster lookup when type changes
-  const schoolsByType = useMemo(() => {
-    return schools.reduce((acc, school) => {
-      if (!acc[school.type]) {
-        acc[school.type] = [];
-      }
-      acc[school.type].push(school);
-      return acc;
-    }, {} as Record<string, School[]>);
-  }, [schools]);
-
   // Memoize event handlers
   const onTypeChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
     const newType = event.target.value;

@@ -7,6 +7,8 @@ import { updateProfileAction } from "@/actions/profile";
 import { Button } from "@/components/ui/button";
 import { ProfileSchoolSelector } from "./profile-school-selector";
 import { AvatarGenerator } from "random-avatar-generator";
+import Image from "next/image";
+import { School } from "@/app/types";
 import StreakCalendarAdvanced from "@/components/streak-calendar";
 
 export default function ProfilePageClient({
@@ -22,7 +24,7 @@ export default function ProfilePageClient({
     dailyTarget: number;
     startDate: string; // The date the user started streak tracking
   };
-  allSchools: Array<any>;
+  allSchools: School[];
 }) {
   const [username, setUsername] = useState(profile.userName || "Anonymous");
   const [avatarUrl, setAvatarUrl] = useState(profile.userImageSrc || "/mascot_purple.svg");
@@ -74,16 +76,14 @@ export default function ProfilePageClient({
 
   // Memoize the daily target options to avoid recreating on every render
   const dailyTargetOptions = useMemo(() => [
-    { value: 10, label: "10" },
-    { value: 20, label: "20" },
-    { value: 30, label: "30" },
-    { value: 50, label: "50" },
-    { value: 100, label: "100" },
-    { value: 200, label: "200" },
-    { value: 500, label: "500" },
-    { value: 1000, label: "1000" },
-    { value: 2000, label: "2000" },
-    { value: 5000, label: "5000" },
+    { value: 25, label: "25 puan" },
+    { value: 50, label: "50 puan" },
+    { value: 75, label: "75 puan" },
+    { value: 100, label: "100 puan" },
+    { value: 150, label: "150 puan" },
+    { value: 200, label: "200 puan" },
+    { value: 250, label: "250 puan" },
+    { value: 300, label: "300 puan" },
   ], []);
 
   return (
@@ -101,12 +101,14 @@ export default function ProfilePageClient({
           </p>
         )}
         <div className="flex flex-col items-center space-y-4">
-          <div className="w-32 h-32 overflow-hidden rounded-full border-2 border-gray-300">
-            <img 
+          <div className="w-32 h-32 overflow-hidden rounded-full border-2 border-gray-300 relative">
+            <Image 
               src={avatarUrl} 
               alt="Avatar" 
-              className="w-full h-full object-cover"
-              loading="lazy" // Lazy load the avatar image
+              fill
+              sizes="(max-width: 640px) 100vw, 128px"
+              className="object-cover"
+              priority
             />
           </div>
           <Button

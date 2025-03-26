@@ -14,7 +14,7 @@ type Props = {
   hasActiveSubscription: boolean;
 };
 
-export const Items = ({ hearts, points, hasActiveSubscription }: Props) => {
+export const Items = ({ hearts, points }: Props) => {
   const [pending, startTransition] = useTransition();
 
   const onRefillHearts = () => {

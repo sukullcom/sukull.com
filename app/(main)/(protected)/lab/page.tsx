@@ -1,7 +1,5 @@
 import { FeedWrapper } from "@/components/feed-wrapper";
-import { StickyWrapper } from "@/components/sticky-wrapper";
 import CustomCard from "@/components/custom-card";
-import { UserProgress } from "@/components/user-progress";
 import { getUserProgress } from "@/db/queries";
 import Image from "next/image";
 import { redirect } from "next/navigation";

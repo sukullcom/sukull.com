@@ -2,10 +2,10 @@
 
 import React, { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 import { turkishToast } from "@/components/ui/custom-toaster";
 import { createClient } from "@/utils/supabase/client"; // or wherever your single client file is
 import { LoadingSpinner } from "@/components/loading-spinner";
+import Image from "next/image";
 
 interface SchoolItem {
   id: number;
@@ -46,6 +46,15 @@ interface StudyBuddyMessage {
   created_at: string;
 }
 
+interface UserMetadata {
+  name?: string;
+  email?: string;
+  avatar?: string;
+  schoolId?: number;
+  profileComplete?: boolean;
+  [key: string]: unknown;
+}
+
 const POSTS_PER_PAGE = 10;
 const THIRTY_DAYS_IN_MS = 30 * 24 * 60 * 60 * 1000;
 
@@ -76,7 +85,11 @@ export default function StudyBuddyPage() {
   const supabase = createClient();
 
   // Auth state
-  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [currentUser, setCurrentUser] = useState<{
+    id: string;
+    email?: string;
+    user_metadata?: UserMetadata;
+  } | null>(null);
   const [loadingUser, setLoadingUser] = useState<boolean>(true);
 
   // Tabs
@@ -135,14 +148,7 @@ export default function StudyBuddyPage() {
     setWarningMessage(msg);
     setWarningOpen(true);
     // Also show as toast for better visibility
-    turkishToast.warning(msg, {
-      style: {
-        background: '#fef3c7', 
-        color: '#92400e',
-        borderColor: '#fcd34d',
-        opacity: '1'
-      }
-    });
+    turkishToast.warning(msg);
   }, []);
 
   // For post editing
@@ -167,14 +173,16 @@ export default function StudyBuddyPage() {
     };
     loadSession();
 
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (_: any, session: { user: any } | null) => {
+    // Store the full subscription object with the unsubscribe method
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event: string, session: { user: { id: string; email?: string; user_metadata?: UserMetadata } } | null) => {
         setCurrentUser(session?.user || null);
       }
     );
     
     return () => {
-      authListener.subscription.unsubscribe();
+      // Safely unsubscribe if subscription exists
+      subscription?.unsubscribe();
     };
   }, [supabase]);
 
@@ -184,23 +192,21 @@ export default function StudyBuddyPage() {
       // Check if we have a valid cache
       const now = Date.now();
       if (schoolsCache && now - schoolsCacheTimestamp < CACHE_TTL) {
-        setAllSchools(schoolsCache);
         return;
       }
       
       try {
-        const { data, error } = await supabase
+        const { data, error: schoolsError } = await supabase
           .from("schools")
           .select("id, name, type")
           .order("name");
           
-        if (error) {
-          console.error("Failed to load schools:", error);
+        if (schoolsError) {
+          console.error("Failed to load schools:", schoolsError);
         } else if (data) {
           // Update cache
           schoolsCache = data as SchoolItem[];
           schoolsCacheTimestamp = now;
-          setAllSchools(data as SchoolItem[]);
         }
       } catch (error) {
         console.error("Error in loadSchools:", error);
@@ -274,7 +280,7 @@ export default function StudyBuddyPage() {
           .in("id", userIds);
           
         // Create a lookup map
-        const userMap = (usersData || []).reduce((acc: any, user: any) => {
+        const userMap = (usersData || []).reduce((acc: Record<string, { id: string; name: string; avatar: string }>, user: { id: string; name: string; avatar: string }) => {
           acc[user.id] = user;
           return acc;
         }, {});
@@ -289,7 +295,7 @@ export default function StudyBuddyPage() {
           .in("id", schoolIds);
           
         // Create a lookup map
-        const schoolMap = (schoolsData || []).reduce((acc: any, school: any) => {
+        const schoolMap = (schoolsData || []).reduce((acc: Record<string, { id: number; name: string }>, school: { id: number; name: string }) => {
           acc[school.id] = school;
           return acc;
         }, {});
@@ -553,7 +559,6 @@ export default function StudyBuddyPage() {
   useEffect(() => {
     if (!currentUser || activeTab !== "chats") return;
 
-
     const chatChannel = supabase
       .channel(`realtime-chats-${currentUser.id}`)
       .on(
@@ -564,13 +569,13 @@ export default function StudyBuddyPage() {
           table: "study_buddy_chats",
           filter: `participants=cs.["${currentUser.id}"]` // Proper JSONB array syntax
         },
-        async (payload: any) => {
+        async (payload: { new: StudyBuddyChat; eventType: string }) => {
           // payload.new will hold the inserted/updated row
-          const changedChat = payload.new as StudyBuddyChat;
+          const changedChat = payload.new;
 
           // Enrich with participant data (the "other" user)
           const otherUid = changedChat.participants.find(
-            (id: string) => id !== currentUser.id
+            (id: string) => id !== currentUser?.id
           );
           if (otherUid) {
             const { data: userData } = await supabase
@@ -601,13 +606,13 @@ export default function StudyBuddyPage() {
 
     // Also fetch existing chats once:
     async function fetchChats() {
+      if (!currentUser) return;
+      
       const { data, error } = await supabase
         .from("study_buddy_chats")
         .select("*")
         .filter("participants", "cs", `["${currentUser.id}"]`)
         .order("last_updated", { ascending: false });
-      
-        filter: `participants=cs.["${currentUser.id}"]` // Correct array syntax
 
       if (error) {
         console.error("Error fetching chats:", error);
@@ -619,6 +624,8 @@ export default function StudyBuddyPage() {
         // Enrich each chat with participant data
         const chatsWithData = await Promise.all(
           data.map(async (chat: StudyBuddyChat) => {
+            if (!currentUser) return chat;
+            
             const otherUid = chat.participants.find(
               (id) => id !== currentUser.id
             );
@@ -645,7 +652,9 @@ export default function StudyBuddyPage() {
     fetchChats();
 
     return () => {
-      supabase.removeChannel(chatChannel);
+      if (chatChannel) {
+        supabase.removeChannel(chatChannel);
+      }
     };
   }, [currentUser, activeTab, supabase]);
 
@@ -664,15 +673,15 @@ export default function StudyBuddyPage() {
           table: "study_buddy_messages",
           filter: `chat_id=eq.${selectedChat.id}`,
         },
-        (payload: any) => {
-          setMessages((prev) => [...prev, payload.new as StudyBuddyMessage]);
+        (payload: { new: StudyBuddyMessage }) => {
+          setMessages((prev) => [...prev, payload.new]);
         }
       )
       .subscribe();
 
     // Load existing messages
     const fetchMessages = async () => {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from("study_buddy_messages")
         .select("*")
         .eq("chat_id", selectedChat.id)
@@ -683,7 +692,9 @@ export default function StudyBuddyPage() {
     fetchMessages();
 
     return () => {
-      supabase.removeChannel(messageChannel);
+      if (messageChannel) {
+        supabase.removeChannel(messageChannel);
+      }
     };
   }, [selectedChat, supabase]);
 
@@ -1099,9 +1110,12 @@ export default function StudyBuddyPage() {
                             }}
                           >
                             <div className="flex items-center gap-2">
-                              <img
+                              <Image
                                 src={otherData.avatarUrl}
+                                width={32}
+                                height={32}
                                 alt="avatar"
+                                unoptimized
                                 className="w-8 h-8 rounded-full object-cover"
                               />
                               <div>
@@ -1265,9 +1279,10 @@ export default function StudyBuddyPage() {
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg p-6 w-full max-w-md">
             <div className="flex flex-col items-center mb-4">
-              <img 
-                src="/mascot_sad.svg" 
+              <Image
+                src="/mascot_sad.svg"
                 alt="Sad Mascot" 
+                unoptimized
                 className="w-20 h-20 mb-4" 
               />
               <h3 className="text-lg font-bold text-center">Uyarı</h3>

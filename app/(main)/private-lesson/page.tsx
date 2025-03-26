@@ -40,8 +40,6 @@ export default function PrivateLessonPage() {
       router.push("/private-lesson/get");
     } else if (option === "give") {
       router.push("/private-lesson/give");
-    } else if (option === "group") {
-      router.push("/private-lesson/group");
     }
   };
 
@@ -158,14 +156,6 @@ export default function PrivateLessonPage() {
             onClick={() => handleOptionClick("get")}
           >
             Özel Ders Almak İstİyorum
-          </Button>
-          <Button
-          className="text-xs"
-            variant="danger"
-            size="lg"
-            onClick={() => handleOptionClick("group")}
-          >
-            İngİlİzce Konuşma Gruplarına Katılmak İstİyorum
           </Button>
         </div>
       </div>

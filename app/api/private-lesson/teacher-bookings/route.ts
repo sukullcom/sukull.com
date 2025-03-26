@@ -27,6 +27,7 @@ export async function GET() {
       },
     });
     
+    // Get the bookings with student info
     const bookings = await getTeacherBookings(user.id);
     
     return NextResponse.json({ 

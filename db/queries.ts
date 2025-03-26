@@ -431,30 +431,26 @@ export const saveStudentApplication = async (applicationData: {
   return data;
 };
 
-// Function to get quiz questions by field
-export const getQuizQuestionsByField = cache(async (field: string) => {
-  const questions = await db.query.quizQuestions.findMany({
-    where: eq(quizQuestions.field, field),
-    with: {
-      options: true,
-    },
-  });
-  return questions;
-});
-
 // Save teacher application (Öğretmen - Özel Ders Ver)
 export async function saveTeacherApplication(applicationData: {
   userId: string;
   field: string;
-  quizResult: number;
-  passed: boolean;
+  quizResult?: number;
+  passed?: boolean;
   teacherName?: string;
   teacherSurname?: string;
   teacherPhoneNumber?: string;
   teacherEmail?: string;
   priceRange: string;
 }) {
-  return await db.insert(teacherApplications).values(applicationData);
+  // Ensure quiz-related fields are set properly regardless of what was passed
+  const updatedData = {
+    ...applicationData,
+    quizResult: 0,
+    passed: true,
+  };
+  
+  return await db.insert(teacherApplications).values(updatedData);
 }
 
 // Get all teacher applications
@@ -522,7 +518,20 @@ export async function isTeacher(userId: string) {
   return user?.role === "teacher";
 }
 
-// Save English Group application (İngilizce Konuşma Grubu)
+// DEPRECATED: Function to get quiz questions by field
+// This function is no longer used but kept for compatibility
+export const getQuizQuestionsByField = cache(async (field: string) => {
+  const questions = await db.query.quizQuestions.findMany({
+    where: eq(quizQuestions.field, field),
+    with: {
+      options: true,
+    },
+  });
+  return questions;
+});
+
+// DEPRECATED: Save English Group application (İngilizce Konuşma Grubu)
+// This function is no longer used but kept for compatibility
 export async function saveEnglishGroupApplication(data: {
   participantName: string;
   participantSurname: string;
@@ -538,6 +547,8 @@ export async function saveEnglishGroupApplication(data: {
   return result; // array of inserted rows, typically length=1
 }
 
+// DEPRECATED: CEFR Classification function
+// This function is no longer used but kept for compatibility
 export function getCEFRClassification(score: number): string {
   // For a 50-question quiz, example:
   //  0..10 => A1
@@ -554,18 +565,27 @@ export function getCEFRClassification(score: number): string {
   return "C2";
 }
 
-// English group => store classification
+// DEPRECATED: English group => store classification
+// This function is no longer used but kept for compatibility
 export async function updateEnglishGroupClassification(id: number, quizResult: number) {
   const classification = getCEFRClassification(quizResult);
 
+  // Define a type for the return value
+  interface UpdateResult {
+    rowCount: number;
+  }
+
   // Example: update that row with quizResult & classification
-  return await db
+  const result = await db
     .update(englishGroupApplications)
     .set({
       quizResult,
       classification,
     })
     .where(eq(englishGroupApplications.id, id));
+  
+  // Add rowCount property
+  return { ...result, rowCount: result.length } as UpdateResult;
 }
 
 

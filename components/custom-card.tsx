@@ -1,15 +1,15 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
+import { ButtonProps } from "@/components/ui/button";
 
 interface CardProps {
   imageSrc: string;
   title: string;
   href: string;
   buttonText: string;
-  variant?: "default" | "locked" | "super" | "primary";
+  variant?: ButtonProps["variant"];
   disabled?: boolean;
 }
 
@@ -36,7 +36,7 @@ const CustomCard: React.FC<CardProps> = ({
         <div className="mt-auto w-full">
           <Link href={disabled ? "#" : href} className="w-full block">
             <Button 
-              variant={variant as any}
+              variant={variant}
               className="w-full whitespace-pre-line"
               disabled={disabled}
             >

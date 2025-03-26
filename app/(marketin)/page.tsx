@@ -7,7 +7,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
-import { auth } from '@/utils/auth';
 
 const supabaseClient = createClient();
 

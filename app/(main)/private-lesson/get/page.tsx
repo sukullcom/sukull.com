@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import Image from "next/image";
 
 export default function GetLessonPage() {
   const [formData, setFormData] = useState({
@@ -45,9 +46,11 @@ export default function GetLessonPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-12 px-4">
       <div className="mb-8">
-        <img
+        <Image
           src="/mascot_pink.svg"
           alt="mascot"
+          width={200}
+          height={200}
           className="h-24 mx-auto mt-6"
         />
       </div>

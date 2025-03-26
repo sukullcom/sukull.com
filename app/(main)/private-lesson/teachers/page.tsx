@@ -93,6 +93,7 @@ export default function TeachersPage() {
                       src={`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(teacher.name)}`}
                       alt={teacher.name}
                       fill
+                      unoptimized
                       className="object-cover"
                     />
                   </div>

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner";
+import Image from "next/image";
 
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
@@ -108,7 +109,7 @@ export function CreateAccountForm() {
         className="w-full py-5 gap-2"
         disabled={isLoading}
       >
-        <img
+        <Image
           src="/google-logo.png"
           alt="Google Logo"
           width={20}

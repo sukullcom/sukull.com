@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
-import { getTeacherDetails, isApprovedStudent, getTeacherAvailabilityForCurrentWeek } from "@/db/queries";
+import { getTeacherDetails, getTeacherAvailabilityForCurrentWeek } from "@/db/queries";
 import { and, eq, gte, lte, not } from "drizzle-orm";
 import db from "@/db/drizzle";
 import { lessonBookings } from "@/db/schema";

@@ -1,10 +1,7 @@
 import { updateTotalPointsForSchools } from "@/actions/user-progress";
 import { FeedWrapper } from "@/components/feed-wrapper";
-import { Quests } from "@/components/quests";
-import { StickyWrapper } from "@/components/sticky-wrapper";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import { UserProgress } from "@/components/user-progress";
 import {
   getTopTenUsers,
   getUserProgress,

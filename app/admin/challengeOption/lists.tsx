@@ -51,9 +51,9 @@ const PostPagination = () => <Pagination rowsPerPageOptions={[5, 10, 25]} />;
 
 // Filter component for advanced filtering
 const challengeOptionFilters = [
-    <TextInput source="text" label="Search" alwaysOn />,
-    <BooleanInput source="correct" label="Correct" />,
-    <ReferenceInput source="challengeId" reference="challenges" label="Challenge" />,
+    <TextInput key="text" source="text" label="Search" alwaysOn />,
+    <BooleanInput key="correct" source="correct" label="Correct" />,
+    <ReferenceInput key="challengeId" source="challengeId" reference="challenges" label="Challenge" />,
 ];
 
 export const ChallengeOptionList = () => (

@@ -55,9 +55,9 @@ const UnitPagination = () => <Pagination rowsPerPageOptions={[5, 10, 25]} />;
 
 // Filter component for advanced filtering
 const unitFilters = [
-    <TextInput source="title" label="Title" alwaysOn />,
-    <TextInput source="description" label="Description" />,
-    <ReferenceInput source="courseId" reference="courses" label="Course" />
+    <TextInput key="title" source="title" label="Title" alwaysOn />,
+    <TextInput key="description" source="description" label="Description" />,
+    <ReferenceInput key="courseId" source="courseId" reference="courses" label="Course" />
 ];
 
 export const UnitList = () => (

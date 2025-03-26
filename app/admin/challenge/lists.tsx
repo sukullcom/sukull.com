@@ -51,8 +51,9 @@ const ChallengePagination = () => <Pagination rowsPerPageOptions={[5, 10, 25]} /
 
 // Filter component for advanced filtering
 const challengeFilters = [
-    <TextInput source="question" label="Search" alwaysOn />,
+    <TextInput key="question-filter" source="question" label="Search" alwaysOn />,
     <SelectInput 
+        key="type-filter"
         source="type" 
         label="Type" 
         choices={[
@@ -60,7 +61,7 @@ const challengeFilters = [
             { id: "ASSIST", name: "Assist" }
         ]} 
     />,
-    <ReferenceInput source="lessonId" reference="lessons" label="Lesson" />
+    <ReferenceInput key="lesson-filter" source="lessonId" reference="lessons" label="Lesson" />
 ];
 
 export const ChallengeList = () => (
@@ -77,8 +78,8 @@ export const ChallengeList = () => (
             <SelectField 
                 source="type"
                 choices={[
-                    { id: "SELECT", name: "SELECT" },
-                    { id: "ASSIST", name: "ASSIST" }
+                    { id: "SELECT", name: "Select" },
+                    { id: "ASSIST", name: "Assist" }
                 ]}
             />
             <LessonReference />

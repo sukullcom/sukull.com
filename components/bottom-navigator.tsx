@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
 import { Button } from "./ui/button";
 import { createClient } from "@/utils/supabase/client";
+import { User, Session } from "@supabase/supabase-js";
 
 type BottomNavigatorProps = {
   className?: string;
@@ -15,13 +16,13 @@ type BottomNavigatorProps = {
 export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
   const router = useRouter();
   const pathname = usePathname();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const supabase = createClient();
-    supabase.auth.getSession().then(({ data: { session } }: { data: { session: any } }) => {
+    supabase.auth.getSession().then(({ data: { session } }: { data: { session: Session | null } }) => {
       setUser(session?.user || null);
     });  }, []);
 

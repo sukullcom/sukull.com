@@ -5,6 +5,7 @@
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Image from "next/image";
 
 function getVideoIdFromUrl(url: string): string | null {
   try {
@@ -130,12 +131,12 @@ export default function VideoSelectionPage() {
             className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-white text-left flex items-center gap-4 hover:bg-gray-100 transition-colors"
             style={{ cursor: "pointer" }}
           >
-            <img
+            <Image
               src={v.thumbnail}
               alt={v.title}
+              width={80}
+              height={60}
               style={{
-                width: "80px",
-                height: "60px",
                 objectFit: "cover",
                 borderRadius: "8px"
               }}

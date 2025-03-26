@@ -1,21 +1,24 @@
 "use client";
 
-import { useAudio } from "react-use";
-import { useState, useEffect } from "react";
-import Confetti from "react-confetti";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import Confetti from "react-confetti";
 
 export default function TeacherSuccessPage() {
   const router = useRouter();
-  const [finishAudio] = useAudio({ src: "/finish.mp3", autoPlay: true });
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-
+  
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setDimensions({ width: window.innerWidth, height: window.innerHeight });
-    }
+    setDimensions({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
   }, []);
+
+  const finishAudio = typeof window !== "undefined" ? (
+    <audio src="/sounds/success.mp3" autoPlay />
+  ) : null;
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6">
@@ -31,7 +34,7 @@ export default function TeacherSuccessPage() {
           size="lg"
           onClick={() => router.push("/private-lesson")}
         >
-          Anasayfa'ya Dön
+          Anasayfa&apos;ya Dön
         </Button>
       </div>
     </div>

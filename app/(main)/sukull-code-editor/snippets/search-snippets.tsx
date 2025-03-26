@@ -11,7 +11,7 @@ export default function SearchSnippets() {
 
   const handleSearch = () => {
     // Construct new query param
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(searchParams?.toString() ?? "");
     params.delete("search"); // remove old param
     if (searchTerm.trim() !== "") {
       params.set("search", searchTerm.trim());

@@ -1,5 +1,5 @@
 'use client';
-import { Session } from '@supabase/supabase-js';
+import { Session, AuthChangeEvent } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
@@ -18,7 +18,7 @@ export const Header = () => {
       setSession(data.session);
       setLoading(false);
     });
-    const { data: listener } = supabaseClient.auth.onAuthStateChange((_: any, session: Session | null) => {
+    const { data: listener } = supabaseClient.auth.onAuthStateChange((event: AuthChangeEvent, session: Session | null) => {
       setSession(session);
       setLoading(false);
     });

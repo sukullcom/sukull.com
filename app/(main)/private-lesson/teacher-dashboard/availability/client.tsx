@@ -27,10 +27,10 @@ export default function AvailabilityPageClient({
   // Parse the ISO string to Date objects
   const weekStartDateObj = new Date(weekStartDate);
   
-  // Convert the string dates to Date objects
+  // Convert the string dates to the format expected by TimeSlotGrid (with string dates, not Date objects)
   const [formattedAvailability, setFormattedAvailability] = useState(initialAvailability.map(slot => ({
-    startTime: new Date(slot.startTime),
-    endTime: new Date(slot.endTime),
+    startTime: slot.startTime, // Keep as string
+    endTime: slot.endTime, // Keep as string
     dayOfWeek: slot.dayOfWeek
   })));
 
@@ -47,8 +47,8 @@ export default function AvailabilityPageClient({
               endTime: string;
               dayOfWeek: number;
             }) => ({
-              startTime: new Date(slot.startTime),
-              endTime: new Date(slot.endTime),
+              startTime: slot.startTime, // Keep as string
+              endTime: slot.endTime, // Keep as string
               dayOfWeek: slot.dayOfWeek
             }));
             setFormattedAvailability(latest);
