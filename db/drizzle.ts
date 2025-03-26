@@ -5,11 +5,12 @@ import * as schema from './schema';
 // Create a pool with SSL configuration
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false,
-    // For older Node.js versions, you might need to specify the CA certificate
-    // ca: fs.readFileSync('/path/to/ca-certificate.crt').toString()
-  }
+  ssl: process.env.NODE_ENV === 'production' 
+    ? {
+        rejectUnauthorized: false,
+        ca: process.env.CA_CERT
+      }
+    : false
 });
 
 // Create drizzle instance with the pool

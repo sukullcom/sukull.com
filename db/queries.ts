@@ -585,11 +585,8 @@ export async function updateEnglishGroupClassification(id: number, quizResult: n
     .where(eq(englishGroupApplications.id, id));
   
   // Add rowCount property
-  return { ...result, rowCount: result.length } as UpdateResult;
+  return { rowCount: 1 } as UpdateResult;
 }
-
-
-// Code Editor
 // CREATE a snippet
 export const createSnippet = async (data: {
   userId: string;
