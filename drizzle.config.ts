@@ -11,3 +11,10 @@ export default defineConfig({
     url: process.env.DATABASE_URL!,
   },
 });
+
+// Optional for Drizzle configuration
+export const dbConfig = {
+  ssl: {
+    rejectUnauthorized: false
+  }
+};
