@@ -2,45 +2,95 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import GoogleMeetLinkManager from "./meet-link";
+import Image from "next/image";
+
+type TeacherProfile = {
+  id: string;
+  name: string;
+  email: string;
+  avatar?: string;
+  bio?: string;
+  field?: string;
+  priceRange?: string;
+};
 
 export default function TeacherDashboardPage() {
   const router = useRouter();
   const [isTeacher, setIsTeacher] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [studentRequests, setStudentRequests] = useState([]);
+  const [saving, setSaving] = useState(false);
+  const [profile, setProfile] = useState<TeacherProfile | null>(null);
+  const [bio, setBio] = useState("");
 
-  // Check if the user is a teacher
+  // Check if the user is a teacher and load profile
   useEffect(() => {
-    const checkTeacherStatus = async () => {
+    const loadTeacherProfile = async () => {
       try {
-        const response = await fetch("/api/private-lesson/check-teacher-status");
-        const data = await response.json();
+        // Check teacher status
+        const statusResponse = await fetch("/api/private-lesson/check-teacher-status");
+        const statusData = await statusResponse.json();
         
-        setIsTeacher(data.teacher);
+        if (!statusData.teacher) {
+          setIsTeacher(false);
+          setLoading(false);
+          return;
+        }
         
-        // If the user is a teacher, fetch their student requests
-        if (data.teacher) {
-          // This would be implemented in a real app to fetch actual student requests
-          setStudentRequests([]);
+        setIsTeacher(true);
+        
+        // Fetch teacher profile details
+        const profileResponse = await fetch("/api/private-lesson/teacher-details");
+        if (profileResponse.ok) {
+          const profileData = await profileResponse.json();
+          setProfile(profileData);
+          setBio(profileData.bio || "");
         }
         
         setLoading(false);
       } catch (error) {
-        console.error("Error checking teacher status:", error);
+        console.error("Error loading teacher profile:", error);
         setLoading(false);
       }
     };
 
-    checkTeacherStatus();
+    loadTeacherProfile();
   }, []);
+
+  const saveBio = async () => {
+    if (!profile) return;
+    
+    setSaving(true);
+    try {
+      const response = await fetch(`/api/private-lesson/teacher-details/${profile.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ bio })
+      });
+      
+      if (response.ok) {
+        // Update local state
+        setProfile(prev => prev ? {...prev, bio} : null);
+        alert("Profiliniz başarıyla güncellendi!");
+      } else {
+        alert("Profil güncellenirken bir hata oluştu.");
+      }
+    } catch (error) {
+      console.error("Error saving bio:", error);
+      alert("Profil güncellenirken bir hata oluştu.");
+    } finally {
+      setSaving(false);
+    }
+  };
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-screen">
         <span className="loading loading-spinner loading-lg"></span>
       </div>
     );
@@ -53,109 +103,67 @@ export default function TeacherDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4">
-      <div className="max-w-5xl mx-auto">
-        <h1 className="text-3xl font-bold text-center mb-8">Öğretmen Paneli</h1>
+    <div className="container max-w-3xl mx-auto py-12 px-4">
+      <h1 className="text-3xl font-bold mb-8">Profil Yönetimi</h1>
+      
+      <div className="space-y-8">
+        {/* Profile Summary */}
+        <div className="bg-white rounded-xl shadow-sm border p-6">
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold">{profile?.name}</h2>
+            {profile?.field && (
+              <p className="text-primary mt-1 font-medium">{profile.field}</p>
+            )}
+          </div>
+          
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Ad Soyad</label>
+              <Input value={profile?.name || ""} disabled className="bg-gray-50" />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Uzmanlık Alanı</label>
+              <Input value={profile?.field || ""} disabled className="bg-gray-50" />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Fiyat Aralığı</label>
+              <Input value={profile?.priceRange || ""} disabled className="bg-gray-50" />
+            </div>
+          </div>
+        </div>
         
-        {/* Google Meet Link Manager */}
+        {/* Bio Section */}
+        <div className="bg-white rounded-xl shadow-sm border p-6">
+          <h2 className="text-xl font-semibold mb-4">Biyografi</h2>
+          <p className="text-gray-600 text-sm mb-4">
+            Öğrencilerin sizi daha iyi tanıması için kendinizi tanıtan bir biyografi yazın.
+          </p>
+          
+          <Textarea 
+            value={bio} 
+            onChange={(e) => setBio(e.target.value)}
+            className="min-h-[150px] mb-4"
+            placeholder="Kendinizi tanıtın, eğitim ve öğretim deneyimlerinizden bahsedin..."
+          />
+          
+          <Button 
+            onClick={saveBio} 
+            disabled={saving}
+            className="w-full sm:w-auto bg-primary hover:bg-primary/90"
+          >
+            {saving ? (
+              <>
+                <span className="h-4 w-4 mr-2 border-2 border-white border-t-transparent animate-spin rounded-full"></span>
+                Kaydediliyor...
+              </>
+            ) : "Biyografiyi Kaydet"}
+          </Button>
+        </div>
+        
+        {/* Google Meet Link */}
         <GoogleMeetLinkManager />
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {/* Quick Actions Card */}
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">Hızlı İşlemler</h2>
-            <div className="space-y-4">
-              <Link 
-                href="/private-lesson/teacher-dashboard/availability" 
-                className="flex items-center justify-between p-4 bg-primary/10 rounded-lg hover:bg-primary/20 transition"
-              >
-                <div>
-                  <h3 className="font-medium">Müsait Olduğunuz Zamanları Belirleyin</h3>
-                  <p className="text-sm text-gray-600">
-                    Öğrencilerin seçebileceği ders saatlerinizi güncelleyin
-                  </p>
-                </div>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-              
-              <Link 
-                href="/private-lesson/teacher-dashboard/bookings" 
-                className="flex items-center justify-between p-4 bg-primary/10 rounded-lg hover:bg-primary/20 transition"
-              >
-                <div>
-                  <h3 className="font-medium">Dersleri Görüntüle</h3>
-                  <p className="text-sm text-gray-600">
-                    Planlanmış derslerinize göz atın
-                  </p>
-                </div>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </Link>
-            </div>
-          </div>
-          
-          {/* Welcome Card */}
-          <div className="bg-white rounded-xl shadow-lg p-6">
-            <h2 className="text-xl font-semibold mb-4">Hoş Geldiniz!</h2>
-            <p className="text-gray-600 mb-4">
-              Bu panel üzerinden öğrencilerden gelen özel ders taleplerini görüntüleyebilir, 
-              iletişim bilgilerine erişebilir ve derslerinizi organize edebilirsiniz.
-            </p>
-            <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
-              <div>
-                <h3 className="font-medium">Başarılı Öğretmen İpuçları</h3>
-                <p className="text-sm text-gray-600">
-                  Öğrenci taleplerini hızlı yanıtlamak başarı oranınızı artırır.
-                </p>
-              </div>
-              <Image
-                src="/mascot_pink.svg"
-                alt="Mascot"
-                width={80}
-                height={80}
-              />
-            </div>
-          </div>
-        </div>
-        
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h2 className="text-xl font-semibold mb-4">Öğrenci Talepleri</h2>
-          
-          {studentRequests.length === 0 ? (
-            <div className="text-center py-8">
-              <p className="text-gray-500 mb-4">Henüz yeni bir öğrenci talebi bulunmuyor.</p>
-              <Image
-                src="/empty_state.svg"
-                alt="No requests"
-                width={200}
-                height={200}
-                className="mx-auto"
-              />
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {/* This would map through actual student requests in a real implementation */}
-              {/* {studentRequests.map((request) => (
-                <div key={request.id} className="border rounded-lg p-4">
-                  <h3 className="font-medium">{request.studentName}</h3>
-                  <p className="text-sm text-gray-600">{request.field}</p>
-                </div>
-              ))} */}
-            </div>
-          )}
-          
-          <div className="mt-6 flex justify-center">
-            <Button
-              variant="default"
-              onClick={() => router.push("/private-lesson")}
-            >
-              Ana Sayfaya Dön
-            </Button>
-          </div>
-        </div>
       </div>
     </div>
   );

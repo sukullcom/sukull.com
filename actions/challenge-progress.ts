@@ -50,7 +50,7 @@ export const upsertChallengeProgress = async (challengeId: number) => {
       .update(userProgress)
       .set({
         hearts: Math.min(currentUserProgress.hearts + 1, 5),
-        points: currentUserProgress.points + 2,
+        points: currentUserProgress.points + 20,
       })
       .where(eq(userProgress.userId, userId));
 

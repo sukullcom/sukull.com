@@ -108,16 +108,20 @@ const ApproveButton = ({ record }: { record?: StudentApplication }) => {
     }
   };
   
-  // Only show if pending
-  if (application?.status && application.status !== 'pending') return null;
+  // Determine button appearance based on status
+  const isApproved = application?.status === 'approved';
+  const buttonLabel = isApproved ? "Approved" : "Approve";
+  const buttonColor = isApproved ? "success" : "primary";
   
   return (
     <Button
-      label="Approve"
+      label={buttonLabel}
       onClick={handleApprove}
-      color="primary"
-      variant="contained"
+      color={buttonColor}
+      variant={isApproved ? "outlined" : "contained"}
       startIcon={<CheckCircleIcon />}
+      disabled={isApproved}
+      title={isApproved ? "This application is already approved" : "Approve this application"}
     />
   );
 };
@@ -157,16 +161,20 @@ const RejectButton = ({ record }: { record?: StudentApplication }) => {
     }
   };
   
-  // Only show if pending
-  if (application?.status && application.status !== 'pending') return null;
+  // Determine button appearance based on status
+  const isRejected = application?.status === 'rejected';
+  const buttonLabel = isRejected ? "Rejected" : "Reject";
+  const buttonColor = isRejected ? "error" : "error";
   
   return (
     <Button
-      label="Reject"
+      label={buttonLabel}
       onClick={handleReject}
-      color="error"
-      variant="contained"
+      color={buttonColor}
+      variant={isRejected ? "outlined" : "contained"}
       startIcon={<CancelIcon />}
+      disabled={isRejected}
+      title={isRejected ? "This application is already rejected" : "Reject this application"}
     />
   );
 };

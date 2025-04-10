@@ -1,162 +1,82 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
+// User status check component that redirects to appropriate page
 export default function PrivateLessonPage() {
   const router = useRouter();
-  const [isTeacher, setIsTeacher] = useState(false);
-  const [isStudent, setIsStudent] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Check if the user is a teacher or student
   useEffect(() => {
-    const checkUserStatus = async () => {
+    const checkUserStatusAndRedirect = async () => {
       try {
         // Check teacher status
         const teacherResponse = await fetch("/api/private-lesson/check-teacher-status");
         const teacherData = await teacherResponse.json();
-        setIsTeacher(teacherData.teacher);
         
         // Check student status
         const studentResponse = await fetch("/api/private-lesson/check-student-status");
         const studentData = await studentResponse.json();
-        setIsStudent(studentData.student);
         
-        setLoading(false);
+        // Redirect based on user status
+        if (teacherData.teacher) {
+          router.push("/private-lesson/teacher-dashboard/bookings");
+        } else if (studentData.student) {
+          router.push("/private-lesson/my-bookings");
+        } else {
+          // If neither teacher nor student, stay on this page and show application options
+          setLoading(false);
+        }
       } catch (error) {
         console.error("Error checking user status:", error);
         setLoading(false);
       }
     };
 
-    checkUserStatus();
-  }, []);
-
-  const handleOptionClick = (option: string) => {
-    if (option === "get") {
-      router.push("/private-lesson/get");
-    } else if (option === "give") {
-      router.push("/private-lesson/give");
-    }
-  };
+    checkUserStatusAndRedirect();
+  }, [router]);
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-screen">
         <span className="loading loading-spinner loading-lg"></span>
       </div>
     );
   }
 
-  // Teacher view
-  if (isTeacher) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-12 px-4">
-        <div className="relative w-[240px] h-[240px] lg:w-[424px] lg:h-[424px] mb-8">
-          <Image
-            src="/hero.svg"
-            alt="Hero Görseli"
-            fill
-            className="object-contain"
-          />
-        </div>
-
-        <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-white w-full max-w-md">
-          <h1 className="text-2xl font-bold text-center text-gray-800">
-            Öğretmen Paneli
-          </h1>
-          <p className="text-center text-gray-600">
-            Tebrikler! Artık onaylı bir öğretmensiniz. Öğrencilerden gelen talepleri burada görebilirsiniz.
-          </p>
-          <div className="flex flex-col space-y-4">
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={() => router.push("/private-lesson/teacher-dashboard")}
-            >
-              Öğretmen Paneline Git
-            </Button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Student view
-  if (isStudent) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-12 px-4">
-        <div className="relative w-[240px] h-[240px] lg:w-[424px] lg:h-[424px] mb-8">
-          <Image
-            src="/hero.svg"
-            alt="Hero Görseli"
-            fill
-            className="object-contain"
-          />
-        </div>
-
-        <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-white w-full max-w-md">
-          <h1 className="text-2xl font-bold text-center text-gray-800">
-            Öğrenci Paneli
-          </h1>
-          <p className="text-center text-gray-600">
-            Tebrikler! Artık onaylı bir öğrencisiniz. Öğretmenleri görüntüleyebilir ve ders alabilirsiniz.
-          </p>
-          <div className="flex flex-col space-y-4">
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={() => router.push("/private-lesson/teachers")}
-            >
-              Öğretmenleri Görüntüle
-            </Button>
-            <Button
-              variant="secondary"
-              size="lg"
-              onClick={() => router.push("/private-lesson/my-bookings")}
-            >
-              Randevularım
-            </Button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Regular user view
+  // Only show this UI if user is neither a teacher nor a student
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-12 px-4">
-      <div className="relative w-[240px] h-[240px] lg:w-[424px] lg:h-[424px] mb-8">
-        <Image
-          src="/hero.svg"
-          alt="Hero Görseli"
-          fill
-          className="object-contain"
-        />
-      </div>
-
-      <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-white w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center text-gray-800">
-          Özel Ders
-        </h1>
-        <div className="flex flex-col space-y-4">
-          <Button
-            variant="secondary"
-            size="lg"
-            onClick={() => handleOptionClick("give")}
-          >
-            Özel Ders Vermek İstİyorum
-          </Button>
-          <Button
-            variant="primary"
-            size="lg"
-            onClick={() => handleOptionClick("get")}
-          >
-            Özel Ders Almak İstİyorum
-          </Button>
+    <div className="container mx-auto py-16 px-4">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl font-bold text-center mb-10">Özel Dersler</h1>
+        
+        <div className="grid md:grid-cols-2 gap-8">
+          <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100">
+            <h2 className="text-2xl font-semibold mb-4">Öğretmen Olmak İster misiniz?</h2>
+            <p className="text-gray-600 mb-6">
+              Bilgi ve deneyiminizi paylaşın, öğrencilere yardımcı olun ve ek gelir elde edin.
+            </p>
+            <button 
+              onClick={() => window.location.href="/private-lesson/give"}
+              className="w-full bg-blue-600 text-white font-medium py-3 rounded-lg hover:bg-blue-700 transition"
+            >
+              Öğretmen Başvurusu Yap
+            </button>
+          </div>
+          
+          <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100">
+            <h2 className="text-2xl font-semibold mb-4">Ders Almak İster misiniz?</h2>
+            <p className="text-gray-600 mb-6">
+              Alanında uzman öğretmenlerden özel ders alarak akademik başarınızı artırın.
+            </p>
+            <button 
+              onClick={() => window.location.href="/private-lesson/get"}
+              className="w-full bg-blue-600 text-white font-medium py-3 rounded-lg hover:bg-blue-700 transition"
+            >
+              Öğrenci Başvurusu Yap
+            </button>
+          </div>
         </div>
       </div>
     </div>

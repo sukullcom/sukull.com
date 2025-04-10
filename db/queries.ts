@@ -16,6 +16,7 @@ import {
   users,
   teacherAvailability,
   lessonBookings,
+  userRoleEnum
 } from "@/db/schema";
 import { getServerUser } from "@/lib/auth";
 
@@ -918,6 +919,16 @@ export async function getAllStudentApplications() {
 
 // Approve a student application
 export async function approveStudentApplication(applicationId: number) {
+  // First, get the application to find the userId
+  const application = await db.query.privateLessonApplications.findFirst({
+    where: eq(privateLessonApplications.id, applicationId),
+  });
+  
+  if (!application) {
+    throw new Error("Application not found");
+  }
+  
+  // Update the application status
   await db
     .update(privateLessonApplications)
     .set({
@@ -925,6 +936,15 @@ export async function approveStudentApplication(applicationId: number) {
       status: "approved",
     })
     .where(eq(privateLessonApplications.id, applicationId));
+    
+  // If userId exists, update the user's role to "student"
+  if (application.userId) {
+    await db.update(users)
+      .set({ role: "user" })
+      .where(eq(users.id, application.userId));
+    
+    console.log(`User ${application.userId} role updated`);
+  }
 }
 
 // Reject a student application

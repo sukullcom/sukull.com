@@ -4,7 +4,7 @@
 import { POINTS_TO_REFILL } from '@/constants';
 import db from '@/db/drizzle';
 import { getCourseById, getUserProgress } from '@/db/queries';
-import { challengeProgress, challenges, schools, userProgress } from '@/db/schema';
+import { challengeProgress, challenges, schools, userProgress, userDailyStreak } from '@/db/schema';
 import { and, eq, gt } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
@@ -205,19 +205,42 @@ export async function resetDailyStreaks() {
       where: gt(userProgress.istikrar, 0),
     });
     
+    const now = new Date();
+    // Create the start of today (midnight)
+    const todayStart = new Date(now);
+    todayStart.setHours(0, 0, 0, 0);
+    
+    // Create the start of yesterday (midnight)
+    const yesterdayStart = new Date(todayStart);
+    yesterdayStart.setDate(yesterdayStart.getDate() - 1);
+    
     // Reset streak for users who didn't meet their target
     for (const user of activeStreakUsers) {
-      const dailyEarned = user.points - (user.previousTotalPoints || 0);
+      const lastCheckDate = user.lastStreakCheck ? new Date(user.lastStreakCheck) : null;
       
-      if (dailyEarned < user.dailyTarget) {
+      // If the user hasn't logged in for more than a day, reset their streak
+      if (!lastCheckDate || lastCheckDate < yesterdayStart) {
         await db.update(userProgress)
           .set({
             istikrar: 0,
-            lastStreakCheck: new Date(),
+            lastStreakCheck: todayStart,
             previousTotalPoints: user.points,
           })
           .where(eq(userProgress.userId, user.userId));
+          
+        // Record the missed day in the streak calendar
+        const missedDate = new Date(yesterdayStart);
+        await db.insert(userDailyStreak).values({
+          userId: user.userId,
+          date: missedDate,
+          achieved: false,
+        }).onConflictDoUpdate({
+          target: [userDailyStreak.userId, userDailyStreak.date],
+          set: { achieved: false }
+        });
       }
+      // For the case where user logged in yesterday but didn't meet target,
+      // the updateDailyStreak function will handle it when they next log in
     }
     
     return true;

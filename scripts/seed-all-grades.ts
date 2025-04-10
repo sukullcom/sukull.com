@@ -19,18 +19,18 @@ async function main() {
   // // 5th Grade
   console.log("=== SEEDING 5TH GRADE COURSES ===");
   runScript("matematik-5.ts");
-  // runScript("fizik-5.ts");
-  // runScript("kimya-5.ts");
-  // runScript("biyoloji-5.ts");
-  // runScript("bilgisayar-bilimleri-5.ts");
+  runScript("fizik-5.ts");
+  runScript("kimya-5.ts");
+  runScript("biyoloji-5.ts");
+  runScript("bilgisayar-bilimleri-5.ts");
   
   // // 6th Grade
-  // console.log("=== SEEDING 6TH GRADE COURSES ===");
-  // runScript("matematik-6.ts");
-  // runScript("fizik-6.ts");
-  // runScript("kimya-6.ts");
-  // runScript("biyoloji-6.ts");
-  // runScript("bilgisayar-bilimleri-6.ts");
+  console.log("=== SEEDING 6TH GRADE COURSES ===");
+  runScript("matematik-6.ts");
+  runScript("fizik-6.ts");
+  runScript("kimya-6.ts");
+  runScript("biyoloji-6.ts");
+  runScript("bilgisayar-bilimleri-6.ts");
   
   // // 7th Grade
   // console.log("=== SEEDING 7TH GRADE COURSES ===");

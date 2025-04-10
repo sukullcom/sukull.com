@@ -63,20 +63,27 @@ export default function AvailabilityPageClient({
     fetchLatestAvailability();
   }, []);
   
-  // Format the date range for display
-  const weekEndDate = new Date(weekStartDateObj);
-  weekEndDate.setDate(weekEndDate.getDate() + 6);
-  
-  const dateRangeStr = `${format(weekStartDateObj, 'd MMMM', { locale: tr })} - ${format(weekEndDate, 'd MMMM yyyy', { locale: tr })}`;
+  // Calculate next Friday
+  const now = new Date();
+  const daysUntilNextFriday = (5 - now.getDay() + 7) % 7 || 7;
+  const nextFriday = new Date(now);
+  nextFriday.setDate(now.getDate() + daysUntilNextFriday);
   
   return (
     <div>
-      <div className="bg-white shadow rounded p-4 mb-6">
-        <h2 className="text-xl font-bold mb-2">Bu Hafta ({dateRangeStr})</h2>
-        <p className="text-gray-600">
-          Aşağıdan, bu haftaki müsait olduğunuz zamanları seçebilirsiniz. Yeşil kutucuklar seçtiğiniz zaman dilimlerini gösterir.
-          Geçmiş günler ve saatler için seçim yapamazsınız.
+      <div className="bg-white shadow rounded-lg p-4 mb-6">
+        <h2 className="text-xl font-bold mb-2">Uygunluk Takvimi</h2>
+        <p className="text-gray-600 mb-2">
+          Aşağıdan müsait olduğunuz zamanları seçebilirsiniz. Takvim bugünden başlayıp 
+          önümüzdeki {format(nextFriday, 'EEEE', { locale: tr })} gününe kadar olan günleri göstermektedir.
         </p>
+        <ul className="list-disc ml-5 text-sm text-gray-600">
+          <li>Yeşil kutucuklar seçtiğiniz müsait zamanları gösterir</li>
+          <li>Geçmiş zamanlar otomatik olarak devre dışı bırakılır</li>
+          <li>Sol taraftaki ilk sütun her zaman bugünün tarihidir</li>
+          <li>Takvim soldan sağa doğru ilerleyen 7 günü gösterir</li>
+          <li>Zamanlar 30 dakikalık dilimler halinde gösterilmektedir</li>
+        </ul>
       </div>
       
       <TimeSlotGrid 
@@ -84,11 +91,12 @@ export default function AvailabilityPageClient({
         initialSelectedSlots={formattedAvailability} 
       />
       
-      <div className="mt-6 bg-yellow-50 p-4 rounded border border-yellow-200">
-        <h3 className="font-bold mb-2">Bilgi</h3>
-        <p>
-          Her hafta yeni müsait saatleri belirlemeniz gerekmektedir. Hafta sonunda tüm müsait saatleriniz sıfırlanacaktır.
-          Bir öğrenci sizden özel ders talep ettiğinde, seçtiği zaman dilimi için bir bildirim alacaksınız.
+      <div className="mt-6 bg-yellow-50 p-4 rounded-md border border-yellow-200">
+        <h3 className="font-bold text-yellow-800 mb-2">Önemli Hatırlatma</h3>
+        <p className="text-yellow-700">
+          Bir öğrenci, müsait olduğunuzu belirttiğiniz bir zaman için ders rezervasyonu yaptığında, 
+          size bir bildirim gönderilecektir. Ayrıca, öğrenciler ders başlama süresinden 24 saat öncesine kadar 
+          ders iptali yapabilirler.
         </p>
       </div>
     </div>

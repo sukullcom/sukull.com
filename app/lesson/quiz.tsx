@@ -204,7 +204,7 @@ export const Quiz = ({
 
             if (initialPercentage === 100) {
               setHearts((prev) => Math.min(prev + 1, 5));
-              setPoints((prev) => prev + 2);
+              setPoints((prev) => prev + 20);
             } else {
               setPoints((prev) => prev + 10);
             }

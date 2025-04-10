@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
-import { getTeacherDetails, getTeacherAvailabilityForCurrentWeek } from "@/db/queries";
+import { getTeacherAvailabilityForCurrentWeek } from "@/db/queries";
 import { and, eq, gte, lte, not } from "drizzle-orm";
 import db from "@/db/drizzle";
-import { lessonBookings } from "@/db/schema";
+import { lessonBookings, users, userProgress, teacherApplications } from "@/db/schema";
 
 // Define interfaces for the availability and booking slots
 interface AvailabilitySlot {
@@ -35,55 +35,73 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    console.log("Teacher details endpoint called for ID:", params.id);
-    
     // Add a protective check for invalid teacher ID
     if (!params.id) {
-      console.log("Missing teacher ID parameter");
       return NextResponse.json({ message: "Teacher ID is required" }, { status: 400 });
     }
     
     const user = await getServerUser();
     
     if (!user) {
-      console.log("Unauthorized: No user found");
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
     
-    // For debugging, don't require student status check initially
-    // const isStudent = await isApprovedStudent(user.id);
-    // 
-    // if (!isStudent) {
-    //   console.log("Forbidden: User is not an approved student", user.id);
-    //   return NextResponse.json({ message: "Only approved students can view teacher details" }, { status: 403 });
-    // }
-    
     const teacherId = params.id;
-    console.log("Getting teacher details for ID:", teacherId);
     
-    const teacher = await getTeacherDetails(teacherId);
+    // Get teacher details from users table
+    const teacher = await db.query.users.findFirst({
+      where: eq(users.id, teacherId),
+      columns: {
+        id: true,
+        name: true,
+        email: true,
+        description: true,
+        avatar: true,
+        meetLink: true,
+      }
+    });
     
     if (!teacher) {
-      console.log("Teacher not found for ID:", teacherId);
       return NextResponse.json({ message: "Teacher not found" }, { status: 404 });
     }
     
-    console.log("Teacher found:", teacher.name);
+    // Get teacher profile image from userProgress
+    const teacherProfile = await db.query.userProgress.findFirst({
+      where: eq(userProgress.userId, teacherId),
+      columns: {
+        userImageSrc: true,
+      }
+    });
+    
+    // Get teacher application details for field and price range
+    const teacherApplication = await db.query.teacherApplications.findFirst({
+      where: eq(teacherApplications.userId, teacherId),
+      columns: {
+        field: true,
+        priceRange: true,
+      }
+    });
+    
+    // Combine all teacher details
+    const teacherWithDetails = {
+      ...teacher,
+      bio: teacher.description,
+      avatar: teacherProfile?.userImageSrc || teacher.avatar,
+      field: teacherApplication?.field || "",
+      priceRange: teacherApplication?.priceRange || "",
+    };
     
     // Get availability for the current week
-    console.log("Getting availability for teacher ID:", teacherId);
     let availability: AvailabilitySlot[] = [];
     try {
       const availabilityData = await getTeacherAvailabilityForCurrentWeek(teacherId);
       availability = availabilityData as AvailabilitySlot[];
-      console.log("Availability found:", availability.length, "slots");
     } catch (availabilityError) {
       console.error("Error fetching availability:", availabilityError);
       // Continue without availability data
     }
     
     // Get booked slots for the current week
-    console.log("Getting booked slots for teacher ID:", teacherId);
     let bookedSlots: BookingSlot[] = [];
     try {
       // Get the current week's start and end dates
@@ -95,8 +113,6 @@ export async function GET(
       
       const endOfWeek = new Date(startOfWeek);
       endOfWeek.setDate(startOfWeek.getDate() + 7);
-      
-      console.log(`Looking for bookings between ${startOfWeek.toISOString()} and ${endOfWeek.toISOString()}`);
       
       // Query the database for bookings within this week
       const bookingSlotsData = await db.query.lessonBookings.findMany({
@@ -110,40 +126,61 @@ export async function GET(
       });
       
       bookedSlots = bookingSlotsData as BookingSlot[];
-      console.log("Booked slots found:", bookedSlots.length);
-      
-      // Log each booked slot for debugging
-      bookedSlots.forEach((slot, index) => {
-        console.log(`Booked slot #${index + 1}:`, {
-          id: slot.id,
-          startTime: slot.startTime.toISOString(),
-          endTime: slot.endTime.toISOString(),
-          status: slot.status,
-          dayOfWeek: slot.startTime.getDay()
-        });
-      });
     } catch (bookingsError) {
       console.error("Error fetching booked slots:", bookingsError);
       // Continue without booked slots data
     }
     
     return NextResponse.json({ 
-      teacher, 
+      teacher: teacherWithDetails, 
       availability, 
-      bookedSlots,
-      debug: {
-        userId: user.id,
-        requestedTeacherId: teacherId,
-        availabilityCount: availability.length,
-        bookedSlotsCount: bookedSlots.length
-      }
+      bookedSlots
     });
   } catch (error) {
     console.error("Error getting teacher details:", error);
     return NextResponse.json({ 
       message: "An error occurred.", 
-      error: error instanceof Error ? error.message : "Unknown error",
-      stack: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.stack : null) : undefined
+      error: error instanceof Error ? error.message : "Unknown error"
+    }, { status: 500 });
+  }
+}
+
+export async function PATCH(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const user = await getServerUser();
+    
+    if (!user) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+    
+    // Make sure the user can only update their own profile
+    if (user.id !== params.id) {
+      return NextResponse.json({ message: "Forbidden: You can only update your own profile" }, { status: 403 });
+    }
+    
+    // Parse the request body
+    const data = await request.json();
+    
+    // Update bio (saved as description in the users table)
+    if (data.bio !== undefined) {
+      await db
+        .update(users)
+        .set({ description: data.bio })
+        .where(eq(users.id, user.id));
+    }
+    
+    return NextResponse.json({ 
+      message: "Profile updated successfully",
+      updated: true
+    });
+  } catch (error) {
+    console.error("Error updating teacher profile:", error);
+    return NextResponse.json({ 
+      message: "An error occurred while updating the profile",
+      error: error instanceof Error ? error.message : "Unknown error" 
     }, { status: 500 });
   }
 } 

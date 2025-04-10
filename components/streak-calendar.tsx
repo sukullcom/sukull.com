@@ -8,6 +8,7 @@ import { Button } from "./ui/button";
 import Image from "next/image";
 
 interface DailyRecord {
+  id: number;
   date: string; // "YYYY-MM-DD"
   achieved: boolean;
 }
@@ -27,14 +28,25 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
   const fetchRecords = async (date: Date) => {
     setLoading(true);
     try {
-      const month = date.getMonth() + 1;
+      const month = date.getMonth();  // Month should be 0-11 (JS Date standard)
       const year = date.getFullYear();
       const recs = await getUserDailyStreakForMonth(month, year);
-      // Convert Date objects to ISO strings before setting state
-      const formattedRecs = recs.map(rec => ({
-        ...rec,
-        date: rec.date.toISOString().split('T')[0]
-      }));
+      
+      // Important: Properly convert Date objects to ISO strings before setting state
+      const formattedRecs = recs.map(rec => {
+        // Extract date part only for accurate comparison
+        const dateObj = new Date(rec.date);
+        const dateStr = dateObj.toISOString().split('T')[0];
+        
+        // Debug date conversion
+        console.log(`Record: ${rec.id}, Date: ${dateStr}, Achieved: ${rec.achieved}`);
+        
+        return {
+          ...rec,
+          date: dateStr
+        };
+      });
+      
       setRecords(formattedRecs);
     } catch (err) {
       console.error("Failed to fetch daily streak records:", err);
@@ -92,7 +104,7 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
     cells.push({});
   }
 
-  // Weekday headers (customize as needed)
+  // Weekday headers
   const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   // Render a single cell. For each day:
@@ -102,11 +114,19 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
     if (!cell.day || !cell.date) {
       return <div key={index} className="w-10 h-10"></div>;
     }
+    
     let achieved = false;
     const record = records.find(r => r.date === cell.date);
+    
     if (record) {
       achieved = record.achieved;
+      // Debug matching
+      console.log(`Day ${cell.day}: Cell date ${cell.date}, Record found - achieved: ${achieved}`);
+    } else {
+      // Debug no match
+      console.log(`Day ${cell.day}: Cell date ${cell.date}, No record found`);
     }
+    
     // If the selected month is the current month and this day is in the future, force achieved = false.
     if (
       selectedDate.getFullYear() === now.getFullYear() &&
@@ -115,6 +135,7 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
     ) {
       achieved = false;
     }
+    
     return (
       <div key={index} className="w-10 h-12 flex flex-col items-center justify-center border border-gray-200 rounded-lg p-1 m-1">
         <span className="text-xs">{cell.day}</span>

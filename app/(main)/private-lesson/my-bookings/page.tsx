@@ -26,6 +26,36 @@ interface Booking {
   }
 }
 
+// Countdown timer hook
+const useCountdown = (targetDate: Date) => {
+  const [countdown, setCountdown] = useState({
+    minutes: 0,
+    seconds: 0,
+  });
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const now = new Date();
+      const difference = targetDate.getTime() - now.getTime();
+      
+      if (difference <= 0) {
+        clearInterval(intervalId);
+        setCountdown({ minutes: 0, seconds: 0 });
+        return;
+      }
+      
+      const minutes = Math.floor((difference / 1000 / 60) % 60);
+      const seconds = Math.floor((difference / 1000) % 60);
+      
+      setCountdown({ minutes, seconds });
+    }, 1000);
+    
+    return () => clearInterval(intervalId);
+  }, [targetDate]);
+  
+  return countdown;
+};
+
 export default function MyBookingsPage() {
   const router = useRouter();
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -82,53 +112,135 @@ export default function MyBookingsPage() {
     return now > lessonEndTime;
   };
 
-  // Check if the lesson time has arrived
-  const isLessonTimeActive = (startTime: string): boolean => {
-    const lessonTime = new Date(startTime);
+  // Check if the lesson time has arrived (now is within 2 minutes before start time and end time)
+  const isLessonTimeActive = (startTime: string, endTime: string): boolean => {
+    const lessonStartTime = new Date(startTime);
+    const lessonEndTime = new Date(endTime);
     const now = new Date();
-    return now >= lessonTime;
+    
+    // Create a time 2 minutes before the lesson start
+    const twoMinutesBeforeStart = new Date(lessonStartTime);
+    twoMinutesBeforeStart.setMinutes(twoMinutesBeforeStart.getMinutes() - 2);
+    
+    return now >= twoMinutesBeforeStart && now <= lessonEndTime;
+  };
+
+  // Check if a lesson can be cancelled (more than 24 hours before start)
+  const canCancelLesson = (startTime: string): boolean => {
+    const lessonStart = new Date(startTime);
+    const now = new Date();
+    const timeDiff = lessonStart.getTime() - now.getTime();
+    
+    // Return true if more than 24 hours (86400000 ms) before the lesson
+    return timeDiff > 86400000;
+  };
+
+  // Handle lesson cancellation
+  const handleCancelLesson = async (bookingId: number) => {
+    if (!confirm("Bu dersi iptal etmek istediğinizden emin misiniz? Bu işlem geri alınamaz.")) {
+      return;
+    }
+    
+    try {
+      const response = await fetch(`/api/private-lesson/cancel-lesson/${bookingId}`, {
+        method: "POST",
+      });
+      
+      if (!response.ok) {
+        throw new Error("İptal işlemi başarısız oldu.");
+      }
+      
+      // Update local state
+      setBookings(prev => prev.map(booking => 
+        booking.id === bookingId ? { ...booking, status: 'cancelled' } : booking
+      ));
+      
+      // Show success message
+      alert("Ders başarıyla iptal edildi.");
+    } catch (error) {
+      console.error("Error cancelling lesson:", error);
+      alert("Ders iptal edilemedi. Lütfen daha sonra tekrar deneyin.");
+    }
   };
 
   // Format date
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('tr-TR', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-      weekday: 'long'
-    });
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    const isToday = date.toDateString() === today.toDateString();
+    const isTomorrow = date.toDateString() === tomorrow.toDateString();
+    
+    if (isToday) {
+      return 'Bugün';
+    } else if (isTomorrow) {
+      return 'Yarın';
+    } else {
+      return date.toLocaleDateString('tr-TR', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        weekday: 'long'
+      });
+    }
   };
 
   // Format time
   const formatTime = (timeString: string) => {
     const date = new Date(timeString);
-    return date.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+    return date.toLocaleTimeString('tr-TR', { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: false // 24-hour format
+    });
   };
 
-  // Get status badge color
-  const getStatusColor = (status: string) => {
+  // Format time for display - always show 25 minutes duration
+  const formatTimeRange = (startTimeString: string) => {
+    const startTime = new Date(startTimeString);
+    
+    // Create end time as 25 minutes after start time
+    const endTime = new Date(startTime);
+    endTime.setMinutes(endTime.getMinutes() + 25);
+    
+    const formattedStartTime = startTime.toLocaleTimeString('tr-TR', { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: false
+    });
+    
+    const formattedEndTime = endTime.toLocaleTimeString('tr-TR', { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: false
+    });
+    
+    return `${formattedStartTime}-${formattedEndTime}`;
+  };
+
+  // Improved status display with simpler indicators
+  const getStatusIndicator = (status: string) => {
     switch (status) {
       case 'pending':
-        return 'bg-yellow-100 text-yellow-800';
       case 'confirmed':
-        return 'bg-green-100 text-green-800';
+        return <span className="w-2 h-2 bg-primary rounded-full inline-block mr-2"></span>;
       case 'completed':
-        return 'bg-blue-100 text-blue-800';
+        return <span className="w-2 h-2 bg-blue-500 rounded-full inline-block mr-2"></span>;
       case 'cancelled':
-        return 'bg-red-100 text-red-800';
+        return <span className="w-2 h-2 bg-red-500 rounded-full inline-block mr-2"></span>;
       default:
-        return 'bg-gray-100 text-gray-800';
+        return <span className="w-2 h-2 bg-gray-400 rounded-full inline-block mr-2"></span>;
     }
   };
 
-  // Get status label
+  // Get status label - keeping this shorter
   const getStatusLabel = (status: string) => {
     switch (status) {
       case 'pending':
-        return 'Beklemede';
       case 'confirmed':
-        return 'Onaylandı';
+        return 'Planlandı';
       case 'completed':
         return 'Tamamlandı';
       case 'cancelled':
@@ -137,6 +249,126 @@ export default function MyBookingsPage() {
         return status;
     }
   };
+
+  // Create a new component for the upcoming lesson button with countdown
+  function UpcomingLessonButton({ 
+    booking, 
+    formatTime
+  }: { 
+    booking: Booking;
+    formatTime: (timeString: string) => string;
+  }) {
+    const lessonStart = new Date(booking.startTime);
+    const now = new Date();
+    const timeUntilLesson = lessonStart.getTime() - now.getTime();
+    const isStartingSoon = timeUntilLesson <= 60 * 60 * 1000; // 1 hour or less
+    
+    // Only use the countdown hook if the lesson is starting soon
+    const countdown = isStartingSoon ? useCountdown(lessonStart) : null;
+    
+    // Check if lesson is active or in the past
+    const active = isLessonTimeActive(booking.startTime, booking.endTime);
+    const past = isLessonPast(booking.endTime);
+    const cancelled = booking.status === 'cancelled';
+    
+    // If lesson is active (and not past or cancelled), show join button
+    if (active && !past && !cancelled) {
+      return (
+        <Button 
+          variant="primary" 
+          size="lg"
+          onClick={() => window.open(booking.meetLink || booking.teacher?.meetLink, '_blank')}
+          className="w-full"
+        >
+          <span className="flex items-center justify-center">
+            <span className="mr-2 relative flex h-3 w-3">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+            </span>
+            Start Lesson
+          </span>
+        </Button>
+      );
+    }
+    
+    // Show cancel button if lesson can be cancelled (more than 24 hours before)
+    if (!past && !cancelled && canCancelLesson(booking.startTime)) {
+      return (
+        <div className="space-y-3">
+          {isStartingSoon && countdown && (
+            <div className="text-center mb-2">
+              <p className="text-sm text-primary font-medium">
+                Derse başlamasına: {String(countdown.minutes).padStart(2, '0')}:{String(countdown.seconds).padStart(2, '0')}
+              </p>
+            </div>
+          )}
+          <div className="flex gap-2">
+            <Button 
+              variant="default" 
+              size="sm"
+              disabled
+              className="flex-1 opacity-70"
+            >
+              Ders {formatTime(booking.startTime)}'de Başlayacak
+            </Button>
+            <Button 
+              variant="danger" 
+              size="sm"
+              onClick={() => handleCancelLesson(booking.id)}
+              className="flex-shrink-0"
+            >
+              İptal Et
+            </Button>
+          </div>
+          <div className="text-xs text-gray-500 italic text-center">
+            Dersi iptal etmek için 24 saaten fazla süreniz var
+          </div>
+        </div>
+      );
+    }
+    
+    // If not active yet but cancellation period has passed
+    if (!past && !cancelled) {
+      const lessonStartTime = new Date(booking.startTime);
+      const twoMinutesBeforeStart = new Date(lessonStartTime);
+      twoMinutesBeforeStart.setMinutes(twoMinutesBeforeStart.getMinutes() - 2);
+      const timeUntilActive = twoMinutesBeforeStart.getTime() - now.getTime();
+      const minutesUntilActive = Math.floor(timeUntilActive / (1000 * 60));
+      
+      return (
+        <>
+          {isStartingSoon && countdown && (
+            <div className="text-center mb-2">
+              <p className="text-sm text-primary font-medium">
+                Derse başlamasına: {String(countdown.minutes).padStart(2, '0')}:{String(countdown.seconds).padStart(2, '0')}
+              </p>
+            </div>
+          )}
+          <div className="space-y-2">
+            <Button 
+              variant="default" 
+              size="sm"
+              disabled
+              className="w-full opacity-70"
+            >
+              Ders {formatTime(booking.startTime)}'de Başlayacak
+            </Button>
+            <div className="text-xs text-gray-500 text-center">
+              {minutesUntilActive > 0 
+                ? `Derse katılma butonu ${minutesUntilActive} dakika içinde aktif olacak` 
+                : 'Derse katılma butonu çok yakında aktif olacak'}
+            </div>
+            <div className="text-xs text-red-500 text-center">
+              Derse 24 saatten az kaldığı için iptal edilemez
+            </div>
+          </div>
+        </>
+      );
+    }
+    
+    // Don't show anything for past or cancelled lessons
+    return null;
+  }
 
   // Separate bookings into upcoming and completed
   const upcomingBookings = bookings
@@ -154,7 +386,7 @@ export default function MyBookingsPage() {
   const currentLessons = currentBookings.slice(indexOfFirstLesson, indexOfLastLesson);
   const totalPages = Math.ceil(currentBookings.length / lessonsPerPage);
 
-  // Change page
+  // Pagination functions
   const goToNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
@@ -169,7 +401,7 @@ export default function MyBookingsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-screen">
         <span className="loading loading-spinner loading-lg"></span>
       </div>
     );
@@ -177,14 +409,22 @@ export default function MyBookingsPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Error</h1>
-          <p className="text-gray-700 mb-6">{error}</p>
-          <Button onClick={() => router.push("/private-lesson")}>
-            Özel Ders Sayfasına Geri Dön
-          </Button>
-        </div>
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <div className="text-red-500">{error}</div>
+        <Button onClick={() => window.location.reload()} className="mt-4">
+          Tekrar Dene
+        </Button>
+      </div>
+    );
+  }
+
+  if (!upcomingBookings.length && !completedBookings.length) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <h1 className="text-2xl font-bold mb-4">Henüz bir ders rezervasyonunuz yok</h1>
+        <Button onClick={() => router.push("/private-lesson/teachers")}>
+          Bir Ders Rezerve Et
+        </Button>
       </div>
     );
   }
@@ -193,11 +433,6 @@ export default function MyBookingsPage() {
     <div className="container mx-auto py-10 px-4">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Derslerim</h1>
-        <div className="flex gap-2">
-          <Button variant="primaryOutline" onClick={() => router.push("/private-lesson")}>
-            Özel Ders Sayfasına Geri Dön
-          </Button>
-        </div>
       </div>
 
       {bookings.length === 0 ? (
@@ -245,61 +480,55 @@ export default function MyBookingsPage() {
           ) : (
             <div className="space-y-6">
               {currentLessons.map((booking) => (
-                <Card key={booking.id} className="overflow-hidden">
-                  <CardHeader className="bg-gray-50">
+                <Card key={booking.id} className="overflow-hidden border border-gray-200 hover:shadow-md transition-shadow">
+                  <CardHeader className="pb-3 pt-4 px-5 border-b border-gray-100">
                     <div className="flex flex-wrap justify-between items-center">
                       <div>
-                        <CardTitle>{booking.teacher?.name || "Öğretmen"}</CardTitle>
+                        <CardTitle className="flex items-center text-lg">
+                          {getStatusIndicator(booking.status)}
+                          {booking.teacher?.name || "Öğretmen"}
+                        </CardTitle>
                         <div className="mt-1 text-sm font-medium text-primary">
-                          Alan: {booking.field}
+                          {booking.field}
                         </div>
                       </div>
-                      <Badge className={getStatusColor(booking.status)}>
-                        {getStatusLabel(booking.status)}
-                      </Badge>
+                      <div className="text-sm font-medium px-3 py-1 rounded-full bg-primary/10 text-primary">
+                        {formatTimeRange(booking.startTime)}
+                      </div>
                     </div>
                   </CardHeader>
-                  <CardContent className="pt-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <h3 className="text-sm font-medium text-gray-500">Tarih</h3>
-                        <p className="mt-1">{formatDate(booking.startTime)}</p>
+                  <CardContent className="p-5">
+                    <div className="flex items-center mb-4">
+                      <div className="text-base font-medium">
+                        {formatDate(booking.startTime)}
                       </div>
-                      <div>
-                        <h3 className="text-sm font-medium text-gray-500">Saat</h3>
-                        <p className="mt-1">{formatTime(booking.startTime)} - {formatTime(booking.endTime)}</p>
-                      </div>
-                      <div className="md:col-span-2">
-                        <h3 className="text-sm font-medium text-gray-500">Derse Katıl</h3>
-                        <div className="mt-2">
-                          <Button 
-                            variant="default" 
-                            size="sm"
-                            onClick={() => window.open(booking.meetLink || booking.teacher?.meetLink, '_blank')}
-                            disabled={!isLessonTimeActive(booking.startTime) || isLessonPast(booking.endTime) || booking.status === 'cancelled'}
-                            className={(!isLessonTimeActive(booking.startTime) || isLessonPast(booking.endTime) || booking.status === 'cancelled') ? "opacity-50 cursor-not-allowed" : ""}
-                          >
-                            {isLessonPast(booking.endTime) 
-                              ? "Ders Tamamlandı" 
-                              : isLessonTimeActive(booking.startTime) 
-                                ? "Google Meet ile Derse Başla" 
-                                : `Ders ${formatTime(booking.startTime)}'de Başlayacak`}
-                          </Button>
-                        </div>
-                      </div>
-                      {booking.notes && (
-                        <div className="md:col-span-2">
-                          <h3 className="text-sm font-medium text-gray-500">Notlar</h3>
-                          <p className="mt-1 text-gray-700">{booking.notes}</p>
-                        </div>
-                      )}
                     </div>
+                    
+                    {booking.notes && (
+                      <div className="mb-4 p-3 bg-gray-50 rounded-md border border-gray-100">
+                        <h3 className="text-sm font-medium text-gray-700 mb-1">Notlar</h3>
+                        <p className="text-gray-600 text-sm">{booking.notes}</p>
+                      </div>
+                    )}
+                    
+                    {activeTab === 'upcoming' && (
+                      <div className="mt-3">
+                        <UpcomingLessonButton 
+                          booking={booking} 
+                          formatTime={formatTime}
+                        />
+                      </div>
+                    )}
                   </CardContent>
-                  <CardFooter className="bg-gray-50 border-t">
-                    <div className="text-xs text-gray-500">
-                      Rezervasyon tarihi: {new Date(booking.createdAt).toLocaleDateString()}
-                    </div>
-                  </CardFooter>
+                  {activeTab === 'completed' && (
+                    <CardFooter className="py-3 px-5 bg-gray-50 border-t border-gray-100">
+                      <div className="text-xs text-gray-500 flex items-center">
+                        {getStatusIndicator(booking.status)}
+                        {booking.status === 'completed' ? "Ders tamamlandı" : 
+                         booking.status === 'cancelled' ? "Ders iptal edildi" : getStatusLabel(booking.status)}
+                      </div>
+                    </CardFooter>
+                  )}
                 </Card>
               ))}
             </div>

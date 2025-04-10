@@ -14,12 +14,37 @@ interface SavedTimeSlot {
 const generateTimeSlots = (weekStartDate: Date) => {
   const days = [];
   const now = new Date();
+  const currentDayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
+  const currentHour = now.getHours();
+  const currentMinute = now.getMinutes();
 
-  // For each day of the week (Monday to Sunday)
-  for (let dayOffset = 0; dayOffset < 7; dayOffset++) {
-    const date = new Date(weekStartDate);
+  // Calculate the end date for availability (next Friday at 23:59)
+  const endOfAvailabilityPeriod = new Date();
+  // Find the days until next Friday (5 = Friday)
+  // If today is Friday, we want next Friday
+  const daysUntilNextFriday = (5 - now.getDay() + 7) % 7 || 7;
+  endOfAvailabilityPeriod.setDate(now.getDate() + daysUntilNextFriday);
+  endOfAvailabilityPeriod.setHours(23, 59, 59, 999);
+
+  // Start from the current day and wrap around to complete 7 days
+  for (let i = 0; i < 7; i++) {
+    // Calculate the day offset based on current day
+    // We start from today (i=0) and add days sequentially
+    // This ensure the leftmost column is always today
+    const dayOffset = i;
+    
+    // Create a new date starting from today
+    const date = new Date(now);
     date.setDate(date.getDate() + dayOffset);
+    date.setHours(0, 0, 0, 0); // Reset time part to start of day
+    
     const dayNumber = date.getDay(); // 0 = Sunday, 1 = Monday, etc.
+    
+    // Check if this is today
+    const isToday = i === 0; // First column is always today
+    
+    // Check if this date is beyond our availability period
+    const isBeyondAvailabilityPeriod = date > endOfAvailabilityPeriod;
     
     const slots = [];
     // Generate slots from 00:00 to 23:30 in 30-minute increments
@@ -30,8 +55,12 @@ const generateTimeSlots = (weekStartDate: Date) => {
         
         const endTime = addMinutes(startTime, 30);
         
-        // Check if this time slot is in the past
-        const isPast = isAfter(now, startTime);
+        // Check if this time slot is in the past or beyond availability period
+        // Only mark as past if the slot is from today and the time is in the past
+        // or if the date is beyond our availability period
+        const isPast = isToday ? 
+          (hour < currentHour || (hour === currentHour && minute < currentMinute)) : 
+          isAfter(now, startTime) || isBeyondAvailabilityPeriod;
         
         slots.push({
           startTime,
@@ -256,9 +285,9 @@ export default function TimeSlotGrid({
   };
   
   return (
-    <div className="bg-white shadow rounded p-4">
-      <div className="mb-4 flex justify-between items-center">
-        <h2 className="text-xl font-bold">Müsait Olduğunuz Zamanlar</h2>
+    <div className="bg-white shadow rounded-lg p-6 border">
+      <div className="mb-6 flex justify-between items-center">
+        <h2 className="text-xl font-bold text-gray-800">Müsait Olduğunuz Zamanlar</h2>
         <div>
           {!readOnly && (
             isEditing ? (
@@ -266,9 +295,14 @@ export default function TimeSlotGrid({
                 <button
                   onClick={handleSave}
                   disabled={isSaving}
-                  className={`${isSaving ? 'bg-gray-400' : 'bg-primary'} text-white px-4 py-2 rounded flex items-center`}
+                  className={`${isSaving ? 'bg-gray-400' : 'bg-primary'} text-white px-4 py-2 rounded-md flex items-center transition-colors`}
                 >
-                  {isSaving ? 'Kaydediliyor...' : 'Kaydet'}
+                  {isSaving ? (
+                    <>
+                      <span className="h-4 w-4 mr-2 border-2 border-white border-t-transparent animate-spin rounded-full"></span>
+                      Kaydediliyor...
+                    </>
+                  ) : 'Kaydet'}
                 </button>
                 <button
                   onClick={() => {
@@ -278,7 +312,7 @@ export default function TimeSlotGrid({
                     setIsEditing(false);
                   }}
                   disabled={isSaving}
-                  className="bg-gray-200 px-4 py-2 rounded"
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md transition-colors"
                 >
                   İptal
                 </button>
@@ -286,7 +320,7 @@ export default function TimeSlotGrid({
             ) : (
               <button
                 onClick={() => setIsEditing(true)}
-                className="bg-primary text-white px-4 py-2 rounded"
+                className="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-md transition-colors"
               >
                 Düzenle
               </button>
@@ -295,19 +329,45 @@ export default function TimeSlotGrid({
         </div>
       </div>
       
-      <div className="grid grid-cols-7 gap-1">
+      <div className="grid grid-cols-7 gap-1 overflow-x-auto pb-2">
         {/* Day headers */}
-        {days.map(day => (
-          <div 
-            key={day.dayNumber} 
-            className="text-center font-bold p-2 bg-gray-100"
-          >
-            {format(day.date, 'EEEE', { locale: tr })}
-            <div className="text-sm font-normal">
-              {format(day.date, 'd MMMM', { locale: tr })}
+        {days.map(day => {
+          const isToday = 
+            day.date.getDate() === new Date().getDate() && 
+            day.date.getMonth() === new Date().getMonth() && 
+            day.date.getFullYear() === new Date().getFullYear();
+            
+          // Calculate if this day is beyond our availability period
+          const now = new Date();
+          const endOfAvailabilityPeriod = new Date();
+          const daysUntilNextFriday = (5 - now.getDay() + 7) % 7 || 7;
+          endOfAvailabilityPeriod.setDate(now.getDate() + daysUntilNextFriday);
+          endOfAvailabilityPeriod.setHours(23, 59, 59, 999);
+          
+          const isBeyondAvailabilityPeriod = day.date > endOfAvailabilityPeriod;
+            
+          return (
+            <div 
+              key={day.dayNumber} 
+              className={`text-center p-2 
+                ${isToday ? 'bg-blue-50 text-blue-700 font-bold border-b-2 border-blue-500' : 'bg-gray-100'} 
+                ${isBeyondAvailabilityPeriod ? 'opacity-50' : ''}
+                sticky top-0`}
+            >
+              <div className="font-bold flex items-center justify-center">
+                {isToday && (
+                  <span className="inline-block mr-1 px-1.5 py-0.5 text-xs bg-blue-100 text-blue-800 rounded-full">
+                    Bugün
+                  </span>
+                )}
+                {format(day.date, 'EEEE', { locale: tr })}
+              </div>
+              <div className="text-sm">
+                {format(day.date, 'd MMMM', { locale: tr })}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
         
         {/* Time grid */}
         {/* First, create an array of all unique times */}
@@ -323,11 +383,14 @@ export default function TimeSlotGrid({
               
               if (!slot) return null;
               
+              // Check if this time is an hour mark (00 minutes)
+              const isHourMark = timeStr.endsWith(':00');
+              
               return (
                 <div 
                   key={`${day.dayNumber}-${timeStr}`}
                   onClick={() => {
-                    if (isEditing || readOnly) {
+                    if ((isEditing || readOnly) && !slot.disabled) {
                       toggleSlot(day.dayNumber, {
                         ...slot,
                         startTime: slot.startTime.toISOString(),
@@ -337,9 +400,11 @@ export default function TimeSlotGrid({
                   }}
                   className={`
                     text-center p-2 border text-sm
-                    ${slot.selected ? 'bg-green-500 text-white' : 'bg-white'}
+                    ${slot.selected ? 'bg-green-500 text-white font-medium' : 'bg-white'}
                     ${slot.disabled ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'cursor-pointer hover:bg-gray-100'}
                     ${!isEditing && !readOnly ? 'cursor-default' : ''}
+                    ${isHourMark ? 'border-t-2 border-t-gray-300' : ''}
+                    transition-all duration-200
                   `}
                 >
                   {timeStr}
@@ -348,6 +413,11 @@ export default function TimeSlotGrid({
             })}
           </React.Fragment>
         ))}
+      </div>
+      
+      <div className="mt-6 text-center text-sm text-gray-500">
+        <p>Not: Zamanlar 30 dakikalık aralıklarla gösterilmektedir. Yeşil ile işaretlenen zamanlar müsait olduğunuz zamanlardır.</p>
+        <p className="mt-2 text-primary font-medium">Sadece bugünden başlayarak gelecek Cuma gününe kadar olan saatleri seçebilirsiniz.</p>
       </div>
     </div>
   );

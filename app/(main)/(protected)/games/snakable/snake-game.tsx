@@ -332,8 +332,8 @@ const SnakeGame = () => {
             console.error("Error updating points:", error);
           }
 
-          setTotalWordsCompleted((prev) => prev + 1);
-          setTotalScore((prev) => prev + 3);
+          setTotalWordsCompleted((prev) => prev + 10);
+          setTotalScore((prev) => prev + 30);
 
           // Check if last word in topic
           if (currentWordIndex + 1 >= words.length) {

@@ -15,6 +15,9 @@ interface Teacher {
   email: string;
   bio?: string;
   meetLink?: string;
+  avatar?: string;
+  field?: string;
+  priceRange?: string;
 }
 
 interface TimeSlot {
@@ -47,16 +50,12 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
   useEffect(() => {
     const fetchTeacherDetails = async () => {
       try {
-        console.log('Fetching teacher details for ID:', params.id);
         setLoading(true);
         
         const response = await fetch(`/api/private-lesson/teacher-details/${params.id}`);
         
-        console.log('Response status:', response.status);
-        
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
-          console.error('Error response:', errorData);
           
           // Handle different error status codes
           if (response.status === 403) {
@@ -73,7 +72,6 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
         }
         
         const data = await response.json();
-        console.log('Teacher data received:', data);
         
         if (!data.teacher) {
           setError("Invalid teacher data received");
@@ -88,7 +86,6 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
         
         // Get booked slots data - ensure it's always an array
         const bookedSlotsData = Array.isArray(data.bookedSlots) ? data.bookedSlots : [];
-        console.log('Booked slots received:', bookedSlotsData);
         
         // Get current date and time
         const now = new Date();
@@ -103,10 +100,6 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
           const isBooked = bookedSlotsData.some((bookedSlot: BookedSlot) => {
             const bookedStartTime = new Date(bookedSlot.startTime);
             const bookedEndTime = new Date(bookedSlot.endTime);
-            
-            // Simple string-based comparison of the dates for debugging
-            const slotTimeString = `${slotStartTime.toISOString()} - ${slotEndTime.toISOString()}`;
-            const bookedTimeString = `${bookedStartTime.toISOString()} - ${bookedEndTime.toISOString()}`;
             
             // Compare the hours and minutes, ignoring seconds and milliseconds
             const sameStartHour = slotStartTime.getHours() === bookedStartTime.getHours();
@@ -123,10 +116,6 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
             const timeMatches = sameStartHour && sameStartMinute && sameEndHour && sameEndMinute && 
                                 sameStartDay && sameStartMonth && sameStartYear;
             
-            if (timeMatches) {
-              console.log(`Found booked slot: ${slotTimeString} matches ${bookedTimeString}`);
-            }
-            
             return timeMatches;
           });
           
@@ -139,13 +128,6 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
             isPast
           };
         });
-        
-        // Log all booked slots for debugging
-        const bookedSlots = availabilityWithStatus.filter((slot: TimeSlot) => slot.isBooked);
-        console.log(`Identified ${bookedSlots.length} booked slots out of ${availabilityWithStatus.length} total slots`);
-        if (bookedSlots.length > 0) {
-          console.log('Sample booked slot:', bookedSlots[0]);
-        }
         
         setAvailability(availabilityWithStatus);
         
@@ -187,13 +169,13 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
         throw new Error(errorData.message || "Failed to book lesson");
       }
 
-      toast.success("Lesson booked successfully!");
+      toast.success("Ders başarıyla rezerve edildi!");
       
       // Redirect to bookings page
       router.push("/private-lesson/my-bookings");
     } catch (error) {
       console.error("Error booking lesson:", error);
-      toast.error(error instanceof Error ? error.message : "Failed to book lesson. Please try again.");
+      toast.error(error instanceof Error ? error.message : "Ders rezerve edilemedi. Lütfen tekrar deneyin.");
     } finally {
       setBooking(false);
     }
@@ -211,6 +193,26 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
     return date.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
   };
 
+  // Function to sort days starting from current day
+  const sortDaysByCurrentDay = (days: string[]) => {
+    const currentDay = new Date().getDay();
+    const sorted = [...days];
+    
+    // Sort by distance from current day
+    sorted.sort((a, b) => {
+      const dayA = parseInt(a);
+      const dayB = parseInt(b);
+      
+      // Calculate distance from current day (wrapping around the week)
+      const distA = (dayA - currentDay + 7) % 7;
+      const distB = (dayB - currentDay + 7) % 7;
+      
+      return distA - distB;
+    });
+    
+    return sorted;
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -226,7 +228,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
           <h1 className="text-2xl font-bold text-red-600 mb-4">Error</h1>
           <p className="text-gray-700 mb-6">{error}</p>
           <Button onClick={() => router.push("/private-lesson/teachers")}>
-            Back to Teachers
+            Öğretmenlere Dön
           </Button>
         </div>
       </div>
@@ -237,10 +239,10 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Teacher Not Found</h1>
-          <p className="text-gray-700 mb-6">The requested teacher could not be found.</p>
+          <h1 className="text-2xl font-bold text-red-600 mb-4">Öğretmen Bulunamadı</h1>
+          <p className="text-gray-700 mb-6">İstenen öğretmen bulunamadı.</p>
           <Button onClick={() => router.push("/private-lesson/teachers")}>
-            Back to Teachers
+            Öğretmenlere Dön
           </Button>
         </div>
       </div>
@@ -256,23 +258,21 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
     availabilityByDay[slot.dayOfWeek].push(slot);
   });
 
+  // Sort days to start with the current day
+  const sortedDays = sortDaysByCurrentDay(Object.keys(availabilityByDay));
+
   return (
-    <div className="container mx-auto py-10 px-4">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">{teacher.name}</h1>
-        <Button variant="primaryOutline" onClick={() => router.push("/private-lesson/teachers")}>
-          Back to Teachers
-        </Button>
-      </div>
+    <div className="container mx-auto py-10 px-4 max-w-5xl">
+      <h1 className="text-3xl font-bold mb-8">{teacher.name}</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Teacher profile */}
-        <Card className="md:col-span-1">
-          <CardHeader>
+        <Card className="md:col-span-1 bg-white shadow-md hover:shadow-lg transition-shadow">
+          <CardHeader className="pb-2">
             <div className="flex justify-center mb-4">
-              <div className="relative w-32 h-32 rounded-full overflow-hidden bg-gray-200">
+              <div className="relative w-36 h-36 rounded-full overflow-hidden bg-gray-200 border-4 border-primary/20">
                 <Image
-                  src={`https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(teacher.name)}`}
+                  src={teacher.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(teacher.name)}`}
                   alt={teacher.name}
                   fill
                   unoptimized
@@ -280,23 +280,27 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
                 />
               </div>
             </div>
-            <CardTitle className="text-center">{teacher.name}</CardTitle>
-            <CardDescription className="text-center">{teacher.email}</CardDescription>
+            <CardTitle className="text-center text-2xl">{teacher.name}</CardTitle>
+            {teacher.field && (
+              <CardDescription className="text-center font-medium text-primary text-base mt-1">
+                {teacher.field}
+              </CardDescription>
+            )}
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-4">
             <div className="space-y-4">
-              <div>
-                <h3 className="font-medium">About</h3>
-                <p className="text-gray-700 mt-1">{teacher.bio || "No bio available"}</p>
+              <div className="p-4 bg-gray-50 rounded-lg">
+                <h3 className="font-medium text-lg mb-2 text-gray-800">Biyografi</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  {teacher.bio || "Bu öğretmen henüz kendisi hakkında bilgi paylaşmamış."}
+                </p>
               </div>
-              {teacher.meetLink && (
-                <div>
-                  <h3 className="font-medium">Meet Link</h3>
-                  <p className="text-blue-600 hover:underline mt-1">
-                    <a href={teacher.meetLink} target="_blank" rel="noopener noreferrer">
-                      {teacher.meetLink}
-                    </a>
-                  </p>
+              
+              {teacher.priceRange && (
+                <div className="flex items-center justify-center mt-4">
+                  <div className="px-4 py-2 bg-green-50 text-green-700 rounded-full text-sm font-medium">
+                    Fiyat Aralığı: {teacher.priceRange}
+                  </div>
                 </div>
               )}
             </div>
@@ -305,105 +309,112 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
 
         {/* Availability and booking */}
         <div className="md:col-span-2 space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Available Time Slots</CardTitle>
-              <CardDescription>Choose a time slot to book a 30-minute lesson</CardDescription>
+          <Card className="bg-white shadow-md">
+            <CardHeader className="pb-2 border-b">
+              <CardTitle className="text-xl">Müsait Zaman Dilimleri</CardTitle>
+              <CardDescription>30 dakikalık bir ders için uygun bir zaman seçin</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-6">
               {Object.keys(availabilityByDay).length === 0 ? (
-                <div className="text-center py-8">
-                  <p className="text-gray-600">No availability found for this week.</p>
+                <div className="text-center py-8 bg-gray-50 rounded-lg">
+                  <p className="text-gray-600">Bu hafta için müsait zaman dilimi bulunamadı.</p>
                 </div>
               ) : (
                 <div className="space-y-6">
-                  {Object.entries(availabilityByDay).map(([dayNumber, slots]) => (
-                    <div key={dayNumber} className="border rounded-md p-4">
-                      <h3 className="font-medium mb-3">{getDayName(parseInt(dayNumber))}</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {slots.map(slot => {
-                          // Helper function to check if slots are the same
-                          const isSelectedSlot = selectedSlot && 
-                            slot.startTime === selectedSlot.startTime && 
-                            slot.endTime === selectedSlot.endTime;
-                          
-                          // Determine button variant based on slot status
-                          let buttonVariant: "default" | "secondaryOutline" | "primary" | "primaryOutline" = "secondaryOutline";
-                          if (isSelectedSlot) buttonVariant = "default";
-                          if (slot.isBooked) buttonVariant = "primary";
-                          
-                          return (
-                            <Button
-                              key={`${slot.startTime}-${slot.endTime}`}
-                              variant={buttonVariant}
-                              size="sm"
-                              onClick={() => {
-                                if (!slot.isBooked && !slot.isPast) {
-                                  setSelectedSlot(slot);
-                                } else if (slot.isBooked) {
-                                  toast.error("This time slot is already booked");
-                                }
-                              }}
-                              disabled={slot.isBooked || slot.isPast}
-                              className={`
-                                ${slot.isBooked ? "opacity-80 cursor-not-allowed bg-red-100 text-red-800 border-red-300" : ""}
-                                ${slot.isPast ? "opacity-50 cursor-not-allowed bg-gray-200 text-gray-500" : ""}
-                                ${isSelectedSlot ? "border-primary bg-primary/10" : ""}
-                              `}
-                            >
-                              {formatTime(slot.startTime)} - {formatTime(slot.endTime)}
-                              {slot.isBooked && " (Dolu)"}
-                              {slot.isPast && " (Geçmiş)"}
-                            </Button>
-                          );
-                        })}
+                  {sortedDays.map(dayNumber => {
+                    const slots = availabilityByDay[parseInt(dayNumber)];
+                    const isToday = new Date().getDay() === parseInt(dayNumber);
+                    
+                    return (
+                      <div key={dayNumber} className={`border rounded-md p-4 ${isToday ? 'bg-blue-50 border-blue-200' : ''}`}>
+                        <h3 className={`font-medium mb-3 flex items-center ${isToday ? 'text-blue-700' : ''}`}>
+                          {isToday && (
+                            <span className="inline-block mr-2 px-2 py-0.5 text-xs bg-blue-100 text-blue-800 rounded-full">
+                              Bugün
+                            </span>
+                          )}
+                          {getDayName(parseInt(dayNumber))}
+                        </h3>
+                        <div className="flex flex-wrap gap-2">
+                          {slots.map(slot => {
+                            // Helper function to check if slots are the same
+                            const isSelectedSlot = selectedSlot && 
+                              slot.startTime === selectedSlot.startTime && 
+                              slot.endTime === selectedSlot.endTime;
+                            
+                            return (
+                              <Button
+                                key={`${slot.startTime}-${slot.endTime}`}
+                                variant={isSelectedSlot ? "default" : "secondary"}
+                                size="sm"
+                                onClick={() => {
+                                  if (!slot.isBooked && !slot.isPast) {
+                                    setSelectedSlot(slot);
+                                  } else if (slot.isBooked) {
+                                    toast.error("Bu zaman dilimi zaten rezerve edilmiş");
+                                  }
+                                }}
+                                disabled={slot.isBooked || slot.isPast}
+                                className={`
+                                  ${slot.isBooked ? "opacity-70 bg-red-50 text-red-700 border-red-200" : ""}
+                                  ${slot.isPast ? "opacity-50 bg-gray-100 text-gray-500" : ""}
+                                  ${isSelectedSlot ? "border-primary bg-primary/10 text-primary" : ""}
+                                  transition-all
+                                `}
+                              >
+                                {formatTime(slot.startTime)} - {formatTime(slot.endTime)}
+                                {slot.isBooked && " (Dolu)"}
+                                {slot.isPast && " (Geçmiş)"}
+                              </Button>
+                            );
+                          })}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
             </CardContent>
           </Card>
 
           {selectedSlot && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Book Your Lesson</CardTitle>
+            <Card className="bg-white shadow-md border-t-4 border-primary">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-xl">Ders Rezervasyonu</CardTitle>
                 <CardDescription>
-                  You&apos;re booking a lesson with {teacher.name} on {getDayName(selectedSlot.dayOfWeek)} at {formatTime(selectedSlot.startTime)}
+                  {teacher.name} ile {getDayName(selectedSlot.dayOfWeek)} günü saat {formatTime(selectedSlot.startTime)} için bir ders rezerve ediyorsunuz
                 </CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className="pt-4">
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="notes">Notes (Optional)</Label>
+                    <Label htmlFor="notes">Notlar (İsteğe bağlı)</Label>
                     <Textarea
                       id="notes"
-                      placeholder="Add any notes or specific topics you'd like to cover"
+                      placeholder="Görüşmek istediğiniz konuları veya özel notlarınızı buraya ekleyebilirsiniz"
                       value={notes}
                       onChange={(e) => setNotes(e.target.value)}
-                      className="mt-1"
+                      className="mt-1 resize-none"
+                      rows={4}
                     />
                   </div>
                   <Button
-                    className="w-full"
+                    className="w-full bg-primary hover:bg-primary/90"
                     onClick={handleBookLesson}
                     disabled={booking}
                   >
-                    {booking ? "Booking..." : "Book Lesson"}
+                    {booking ? (
+                      <div className="flex items-center justify-center">
+                        <span className="h-4 w-4 mr-2 border-2 border-white border-t-transparent animate-spin rounded-full"></span>
+                        Rezervasyon yapılıyor...
+                      </div>
+                    ) : "Dersi Rezerve Et"}
                   </Button>
                 </div>
               </CardContent>
             </Card>
           )}
         </div>
-      </div>
-
-      {/* Debug information - remove in production */}
-      <div className="mt-10 p-4 border border-gray-200 rounded-md bg-gray-50">
-        <h3 className="font-bold mb-2">Debug Information</h3>
-        <p>Teacher ID: {params.id}</p>
-        <p>Availability Slots: {availability.length}</p>
       </div>
     </div>
   );
