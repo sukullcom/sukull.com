@@ -40,8 +40,15 @@ export async function middleware(req: NextRequest) {
   const { data: { session } } = await supabase.auth.getSession();
   
   // Auth redirect logic
-  const publicPaths = ['/', '/login', '/create-account', '/forgot-password', '/callback', '/reset-password', '/auth-error'];
-  const isPublic = publicPaths.some((path) => pathname.startsWith(path)) || 
+  const publicPaths = ['/login', '/create-account', '/forgot-password', '/callback', '/reset-password', '/auth-error'];
+  
+  // Root path is handled differently to avoid redirect loops
+  if (pathname === '/') {
+    // Don't redirect on root path - the client-side component will handle redirects
+    return response;
+  }
+  
+  const isPublic = publicPaths.some((path) => pathname === path || pathname.startsWith(path)) || 
                    pathname.startsWith('/_next') || 
                    pathname.endsWith('.svg') || 
                    pathname.endsWith('.png') || 
@@ -56,9 +63,9 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(url)
   }
   
-  if (session && (pathname === '/login' || pathname === '/create-account')) {
-    // Already logged in => redirect to home
-    return NextResponse.redirect(new URL('/', req.url))
+  if (session && publicPaths.some(path => pathname === path)) {
+    // Already logged in => redirect to /learn instead of homepage to avoid redirect loop
+    return NextResponse.redirect(new URL('/learn', req.url))
   }
   
   return response;

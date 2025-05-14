@@ -75,7 +75,7 @@ export default function PrivateLessonHeader() {
       icon: <Clock className="w-4 h-4 mr-2" />
     },
     {
-      name: "Profil",
+      name: "Profİl",
       path: "/private-lesson/teacher-dashboard",
       icon: <User className="w-4 h-4 mr-2" />
     }
