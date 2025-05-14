@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 
 interface Booking {
   id: number;
@@ -26,7 +25,7 @@ interface Booking {
   }
 }
 
-// Countdown timer hook
+// Countdown timer hook - moved outside of component to avoid conditional calling
 const useCountdown = (targetDate: Date) => {
   const [countdown, setCountdown] = useState({
     minutes: 0,
@@ -55,6 +54,19 @@ const useCountdown = (targetDate: Date) => {
   
   return countdown;
 };
+
+// Create a separate component to use the useCountdown hook consistently
+function LessonCountdown({ lessonStart }: { lessonStart: Date }) {
+  const countdown = useCountdown(lessonStart);
+  
+  return (
+    <div className="text-center mb-2">
+      <p className="text-sm text-primary font-medium">
+        Derse başlamasına: {String(countdown.minutes).padStart(2, '0')}
+      </p>
+    </div>
+  );
+}
 
 export default function MyBookingsPage() {
   const router = useRouter();
@@ -263,9 +275,6 @@ export default function MyBookingsPage() {
     const timeUntilLesson = lessonStart.getTime() - now.getTime();
     const isStartingSoon = timeUntilLesson <= 60 * 60 * 1000; // 1 hour or less
     
-    // Only use the countdown hook if the lesson is starting soon
-    const countdown = isStartingSoon ? useCountdown(lessonStart) : null;
-    
     // Check if lesson is active or in the past
     const active = isLessonTimeActive(booking.startTime, booking.endTime);
     const past = isLessonPast(booking.endTime);
@@ -295,12 +304,8 @@ export default function MyBookingsPage() {
     if (!past && !cancelled && canCancelLesson(booking.startTime)) {
       return (
         <div className="space-y-3">
-          {isStartingSoon && countdown && (
-            <div className="text-center mb-2">
-              <p className="text-sm text-primary font-medium">
-                Derse başlamasına: {String(countdown.minutes).padStart(2, '0')}:{String(countdown.seconds).padStart(2, '0')}
-              </p>
-            </div>
+          {isStartingSoon && (
+            <LessonCountdown lessonStart={lessonStart} />
           )}
           <div className="flex gap-2">
             <Button 
@@ -309,7 +314,7 @@ export default function MyBookingsPage() {
               disabled
               className="flex-1 opacity-70"
             >
-              Ders {formatTime(booking.startTime)}'de Başlayacak
+              Ders {formatTime(booking.startTime)}&apos;de Başlayacak
             </Button>
             <Button 
               variant="danger" 
@@ -337,12 +342,8 @@ export default function MyBookingsPage() {
       
       return (
         <>
-          {isStartingSoon && countdown && (
-            <div className="text-center mb-2">
-              <p className="text-sm text-primary font-medium">
-                Derse başlamasına: {String(countdown.minutes).padStart(2, '0')}:{String(countdown.seconds).padStart(2, '0')}
-              </p>
-            </div>
+          {isStartingSoon && (
+            <LessonCountdown lessonStart={lessonStart} />
           )}
           <div className="space-y-2">
             <Button 
@@ -351,7 +352,7 @@ export default function MyBookingsPage() {
               disabled
               className="w-full opacity-70"
             >
-              Ders {formatTime(booking.startTime)}'de Başlayacak
+              Ders {formatTime(booking.startTime)}&apos;de Başlayacak
             </Button>
             <div className="text-xs text-gray-500 text-center">
               {minutesUntilActive > 0 

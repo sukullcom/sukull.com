@@ -11,10 +11,9 @@ interface SavedTimeSlot {
 }
 
 // Helper to generate all time slots for a week
-const generateTimeSlots = (weekStartDate: Date) => {
+const generateTimeSlots = (initialDate: Date) => {
   const days = [];
-  const now = new Date();
-  const currentDayOfWeek = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
+  const now = new Date(initialDate);
   const currentHour = now.getHours();
   const currentMinute = now.getMinutes();
 

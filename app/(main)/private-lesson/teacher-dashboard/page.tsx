@@ -6,7 +6,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import GoogleMeetLinkManager from "./meet-link";
-import Image from "next/image";
 
 type TeacherProfile = {
   id: string;

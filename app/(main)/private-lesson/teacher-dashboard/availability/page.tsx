@@ -55,7 +55,7 @@ export default async function TeacherAvailabilityPage() {
       <div className="p-4 mb-6 bg-blue-50 border border-blue-200 rounded-md">
         <h2 className="text-lg font-medium text-blue-800 mb-2">Önemli Bilgi</h2>
         <p className="text-blue-700">
-          Bugünden başlayarak <strong>{nextFridayFormatted}</strong> günü saat 23:59'a kadar olan müsait zamanlarınızı belirleyebilirsiniz.
+          Bugünden başlayarak <strong>{nextFridayFormatted}</strong> günü saat 23:59&apos;a kadar olan müsait zamanlarınızı belirleyebilirsiniz.
           Geçmiş saatler veya bu zaman aralığı dışındaki günler için seçim yapamazsınız.
         </p>
       </div>

@@ -5,6 +5,11 @@ import db from "@/db/drizzle";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
+interface AuthError {
+  status: number;
+  message: string;
+}
+
 export async function GET() {
   try {
     // First, authenticate the user (will redirect to login if not authenticated)
@@ -39,14 +44,14 @@ export async function GET() {
     console.error("Error getting teacher bookings:", error);
     
     // Handle specific errors differently
-    if ((error as any)?.status === 401) {
+    if ((error as AuthError)?.status === 401) {
       return NextResponse.json({ 
         message: "Authentication required", 
         error: "unauthorized" 
       }, { status: 401 });
     }
     
-    if ((error as any)?.status === 403) {
+    if ((error as AuthError)?.status === 403) {
       return NextResponse.json({ 
         message: "Teacher authorization required", 
         error: "forbidden" 

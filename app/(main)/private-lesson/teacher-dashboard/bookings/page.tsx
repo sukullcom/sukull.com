@@ -1,24 +1,32 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Booking } from "@/app/types";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
-interface BookingResponse {
-  bookings: Booking[];
-  teacherMeetLink: string | null;
+interface Booking {
+  id: number;
+  studentId: string;
+  teacherId: string;
+  field: string;
+  startTime: string;
+  endTime: string;
+  status: string;
+  meetLink?: string;
+  notes?: string;
+  createdAt: string;
+  studentName: string;
+  studentEmail: string;
+  studentUsername: string;
 }
 
 export default function TeacherBookingsPage() {
-  const router = useRouter();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState<'upcoming' | 'completed'>('upcoming');
+  const [teacherMeetLink, setTeacherMeetLink] = useState<string | null>(null);
   const lessonsPerPage = 5;
 
   useEffect(() => {
@@ -32,23 +40,15 @@ export default function TeacherBookingsPage() {
         const response = await fetch("/api/private-lesson/teacher-bookings");
         
         if (!response.ok) {
-          if (response.status === 403) {
-            // Not a teacher, redirect to main page
-            router.push("/private-lesson");
-            return;
-          }
           throw new Error("Failed to fetch bookings");
         }
         
-        const data: BookingResponse = await response.json();
+        const data = await response.json();
         
-        // Make sure each booking has the meet link from the response
-        const bookingsWithMeetLink = data.bookings.map((booking: Booking) => ({
-          ...booking,
-          meetLink: data.teacherMeetLink || booking.meetLink // Use the teacher's global meet link if available
-        }));
-        
-        setBookings(bookingsWithMeetLink);
+        // Extract bookings array from the response
+        const bookingsArray = data.bookings || [];
+        setBookings(bookingsArray);
+        setTeacherMeetLink(data.teacherMeetLink);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching bookings:", error);
@@ -58,7 +58,7 @@ export default function TeacherBookingsPage() {
     };
 
     fetchBookings();
-  }, [router]);
+  }, []);
 
   // Helper functions
   // Check if a lesson is in the past
@@ -68,57 +68,70 @@ export default function TeacherBookingsPage() {
     return now > lessonEndTime;
   };
 
-  // Add this function to check if the lesson time has arrived
+  // Check if the lesson time has arrived (now is within start time and end time)
   const isLessonTimeActive = (startTime: string, endTime: string): boolean => {
     const lessonStartTime = new Date(startTime);
     const lessonEndTime = new Date(endTime);
     const now = new Date();
     
-    // Create a time 2 minutes before the lesson start
-    const twoMinutesBeforeStart = new Date(lessonStartTime);
-    twoMinutesBeforeStart.setMinutes(twoMinutesBeforeStart.getMinutes() - 2);
-    
-    return now >= twoMinutesBeforeStart && now <= lessonEndTime;
+    return now >= lessonStartTime && now <= lessonEndTime;
   };
 
   // Format date
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('tr-TR', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-      weekday: 'long'
-    });
-  };
-
-  // Format time
-  const formatTime = (timeString: string) => {
-    const date = new Date(timeString);
-    return date.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
-  };
-
-  // Improved status indicators
-  const getStatusIndicator = (status: string) => {
-    switch (status) {
-      case 'pending':
-      case 'confirmed':
-        return <span className="w-2 h-2 bg-primary rounded-full inline-block mr-2"></span>;
-      case 'completed':
-        return <span className="w-2 h-2 bg-blue-500 rounded-full inline-block mr-2"></span>;
-      case 'cancelled':
-        return <span className="w-2 h-2 bg-red-500 rounded-full inline-block mr-2"></span>;
-      default:
-        return <span className="w-2 h-2 bg-gray-400 rounded-full inline-block mr-2"></span>;
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    const isToday = date.toDateString() === today.toDateString();
+    const isTomorrow = date.toDateString() === tomorrow.toDateString();
+    
+    if (isToday) {
+      return 'Bugün';
+    } else if (isTomorrow) {
+      return 'Yarın';
+    } else {
+      return date.toLocaleDateString('tr-TR', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+        weekday: 'long'
+      });
     }
   };
 
-  // Cleaner status labels
+  // Format time range to show both start and end times
+  const formatTimeRange = (startTimeString: string) => {
+    const startTime = new Date(startTimeString);
+    const endTime = new Date(new Date(startTimeString).getTime() + 25 * 60000); // 25 minutes later
+    
+    return `${startTime.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', hour12: false })} - ${endTime.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', hour12: false })}`;
+  };
+
+  // Get status indicator
+  const getStatusIndicator = (status: string) => {
+    switch (status) {
+      case 'pending':
+        return <span className="inline-block w-2 h-2 bg-yellow-400 rounded-full mr-2" />;
+      case 'confirmed':
+        return <span className="inline-block w-2 h-2 bg-green-400 rounded-full mr-2" />;
+      case 'completed':
+        return <span className="inline-block w-2 h-2 bg-blue-400 rounded-full mr-2" />;
+      case 'cancelled':
+        return <span className="inline-block w-2 h-2 bg-red-400 rounded-full mr-2" />;
+      default:
+        return <span className="inline-block w-2 h-2 bg-gray-400 rounded-full mr-2" />;
+    }
+  };
+
+  // Get human-readable status label
   const getStatusLabel = (status: string) => {
     switch (status) {
       case 'pending':
+        return 'Beklemede';
       case 'confirmed':
-        return 'Planlandı';
+        return 'Onaylandı';
       case 'completed':
         return 'Tamamlandı';
       case 'cancelled':
@@ -126,16 +139,6 @@ export default function TeacherBookingsPage() {
       default:
         return status;
     }
-  };
-
-  // Format a time range (for displaying the lesson duration)
-  const formatTimeRange = (startTime: string) => {
-    const start = new Date(startTime);
-    const end = new Date(start);
-    end.setMinutes(end.getMinutes() + 25);
-    
-    const formatOpts: Intl.DateTimeFormatOptions = { hour: "2-digit", minute: "2-digit", hour12: false };
-    return `${start.toLocaleTimeString('tr-TR', formatOpts)} - ${end.toLocaleTimeString('tr-TR', formatOpts)}`;
   };
 
   // Separate bookings into upcoming and completed
@@ -154,7 +157,7 @@ export default function TeacherBookingsPage() {
   const currentLessons = currentBookings.slice(indexOfFirstLesson, indexOfLastLesson);
   const totalPages = Math.ceil(currentBookings.length / lessonsPerPage);
 
-  // Change page
+  // Pagination functions
   const goToNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
@@ -169,7 +172,7 @@ export default function TeacherBookingsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex items-center justify-center min-h-screen">
         <span className="loading loading-spinner loading-lg"></span>
       </div>
     );
@@ -177,14 +180,11 @@ export default function TeacherBookingsPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Error</h1>
-          <p className="text-gray-700 mb-6">{error}</p>
-          <Button onClick={() => router.push("/private-lesson/teacher-dashboard")}>
-            Öğretmen Paneline Geri Dön
-          </Button>
-        </div>
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <div className="text-red-500">{error}</div>
+        <Button onClick={() => window.location.reload()} className="mt-4">
+          Tekrar Dene
+        </Button>
       </div>
     );
   }
@@ -268,7 +268,7 @@ export default function TeacherBookingsPage() {
                         {isLessonTimeActive(booking.startTime, booking.endTime) ? (
                           <Button 
                             className="w-full bg-primary hover:bg-primary/90"
-                            onClick={() => window.open(booking.meetLink, '_blank')}
+                            onClick={() => window.open(booking.meetLink || (teacherMeetLink || ''), '_blank')}
                           >
                             <span className="flex items-center justify-center">
                               <span className="mr-2 relative flex h-3 w-3">

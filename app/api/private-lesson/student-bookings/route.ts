@@ -2,6 +2,11 @@ import { NextResponse } from "next/server";
 import { getAuthenticatedUser } from "@/lib/auth";
 import { getStudentBookings, isApprovedStudent } from "@/db/queries";
 
+interface AuthError {
+  status: number;
+  message: string;
+}
+
 export async function GET() {
   try {
     // This will automatically redirect to login if not authenticated
@@ -35,7 +40,7 @@ export async function GET() {
     console.error("Error getting student bookings:", error);
     
     // Handle specific errors differently
-    if ((error as any)?.status === 401) {
+    if ((error as AuthError)?.status === 401) {
       return NextResponse.json({ 
         message: "Authentication required", 
         error: "unauthorized" 

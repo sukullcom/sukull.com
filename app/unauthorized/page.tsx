@@ -25,7 +25,7 @@ export default function UnauthorizedPage() {
             </Link>
           </Button>
           
-          <Button asChild variant="outline">
+          <Button asChild variant="primaryOutline">
             <Link href="/login">
               Giriş Yap
             </Link>
