@@ -6,7 +6,6 @@ type School = { id: number; name: string; type: string };
 
 type ProfileSchoolSelectorProps = {
   schools: School[];
-  disabled?: boolean;
   initialSchoolId?: number | null;
   onSelect: (schoolId: number) => void;
 };
@@ -22,7 +21,6 @@ const SCHOOL_TYPES = [
 
 export const ProfileSchoolSelector = ({
   schools,
-  disabled = false,
   initialSchoolId = null,
   onSelect,
 }: ProfileSchoolSelectorProps) => {
@@ -62,20 +60,15 @@ export const ProfileSchoolSelector = ({
   }, []);
 
   const handleSchoolClick = useCallback((schoolId: number) => {
-    if (disabled) return;
     setSelectedSchoolId(schoolId);
     onSelect(schoolId);
-  }, [disabled, onSelect]);
+  }, [onSelect]);
 
   // Calculate if we should show the empty message
   const showEmptyMessage = selectedType && filteredSchools.length === 0;
 
   return (
-    <div
-      className={`rounded-lg border border-gray-200 p-4 bg-gray-50 shadow-sm ${
-        disabled ? "opacity-60 pointer-events-none" : ""
-      }`}
-    >
+    <div className="rounded-lg border border-gray-200 p-4 bg-gray-50 shadow-sm">
       <h2 className="text-lg font-semibold text-neutral-800 mb-4">
         Okulunu Seç
       </h2>
@@ -84,7 +77,6 @@ export const ProfileSchoolSelector = ({
       <select
         onChange={onTypeChange}
         value={selectedType}
-        disabled={disabled}
         className="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500"
       >
         {SCHOOL_TYPES.map(type => (
@@ -101,7 +93,6 @@ export const ProfileSchoolSelector = ({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Okul ismine göre ara..."
-          disabled={disabled}
           className="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500"
         />
       )}

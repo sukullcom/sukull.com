@@ -64,14 +64,53 @@ export const auth = {
   },
 
   async signInWithOAuth(provider: 'google' | 'github', nextUrl?: string) {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider,
-      options: {
-        redirectTo: `${location.origin}/callback?next=${nextUrl || '/'}`
-      },
-    })
-    if (error) throw error
-    return data
+    try {
+      console.log(`Starting OAuth flow for ${provider}...`);
+      
+      // Create the redirect URL with proper encoding
+      const redirectTo = `${location.origin}/api/auth/callback`;
+      console.log(`Redirect URL: ${redirectTo}`);
+      
+      // Create a state parameter that includes the nextUrl
+      const stateParam = JSON.stringify({
+        redirectTo: nextUrl || '/courses'
+      });
+      
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo,
+          scopes: provider === 'google' ? 'email profile' : undefined,
+          queryParams: {
+            ...(provider === 'google' ? {
+              access_type: 'offline',
+              prompt: 'consent',
+            } : {}),
+            state: encodeURIComponent(stateParam)
+          },
+        },
+      });
+      
+      if (error) {
+        console.error(`OAuth error for ${provider}:`, error);
+        throw error;
+      }
+      
+      if (!data.url) {
+        console.error(`No URL returned from ${provider} OAuth`);
+        throw new Error(`Failed to start ${provider} authentication`);
+      }
+      
+      console.log(`Successfully initiated ${provider} OAuth. Redirecting to: ${data.url}`);
+      
+      // Redirect to the provider's authentication page
+      window.location.href = data.url;
+      
+      return data;
+    } catch (error) {
+      console.error(`Error in signInWithOAuth for ${provider}:`, error);
+      throw error;
+    }
   },
 
   async signOut() {
@@ -86,7 +125,7 @@ export const auth = {
       .eq('email', email)
       .single()
 
-    // If user doesn’t exist or is not 'email' provider, do a “silent success”
+    // If user doesn't exist or is not 'email' provider, do a "silent success"
     if (!userData || userData.provider !== 'email') {
       return { success: true, message: 'If an account exists, a password reset link will be sent.' }
     }

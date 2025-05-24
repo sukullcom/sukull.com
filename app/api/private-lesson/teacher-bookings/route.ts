@@ -1,26 +1,35 @@
 import { NextResponse } from "next/server";
-import { getAuthenticatedUser, requireTeacher } from "@/lib/auth";
+import { getServerUser, checkUserRole } from "@/lib/auth";
 import { getTeacherBookings } from "@/db/queries";
 import db from "@/db/drizzle";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
-interface AuthError {
-  status: number;
-  message: string;
-}
-
 export async function GET() {
   try {
-    // First, authenticate the user (will redirect to login if not authenticated)
-    await getAuthenticatedUser();
+    // Get the authenticated user
+    const user = await getServerUser();
     
-    // Then verify teacher role (will redirect to unauthorized if not a teacher)
-    const teacherUser = await requireTeacher();
+    if (!user) {
+      return NextResponse.json({ 
+        message: "Authentication required", 
+        error: "unauthorized" 
+      }, { status: 401 });
+    }
+    
+    // Check if the user is a teacher
+    const isTeacher = await checkUserRole("teacher");
+    
+    if (!isTeacher) {
+      return NextResponse.json({ 
+        message: "Teacher authorization required", 
+        error: "forbidden" 
+      }, { status: 403 });
+    }
     
     // Get the teacher's info to include the meet link
     const teacherInfo = await db.query.users.findFirst({
-      where: eq(users.id, teacherUser.id),
+      where: eq(users.id, user.id),
       columns: {
         meetLink: true,
         name: true,
@@ -29,10 +38,10 @@ export async function GET() {
     });
     
     // Get the bookings with student info
-    const bookings = await getTeacherBookings(teacherUser.id);
+    const bookings = await getTeacherBookings(user.id);
     
     // Log the response for debugging
-    console.log(`Returning ${bookings.length} bookings to teacher ${teacherUser.id}`);
+    console.log(`Returning ${bookings.length} bookings to teacher ${user.id}`);
     
     return NextResponse.json({ 
       bookings,
@@ -42,21 +51,6 @@ export async function GET() {
     });
   } catch (error) {
     console.error("Error getting teacher bookings:", error);
-    
-    // Handle specific errors differently
-    if ((error as AuthError)?.status === 401) {
-      return NextResponse.json({ 
-        message: "Authentication required", 
-        error: "unauthorized" 
-      }, { status: 401 });
-    }
-    
-    if ((error as AuthError)?.status === 403) {
-      return NextResponse.json({ 
-        message: "Teacher authorization required", 
-        error: "forbidden" 
-      }, { status: 403 });
-    }
     
     return NextResponse.json({ 
       message: "Failed to retrieve bookings", 

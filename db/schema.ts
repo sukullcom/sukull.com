@@ -22,7 +22,7 @@ export interface IUserLink {
 }
 
 // Define user roles enum
-export const userRoleEnum = pgEnum("role", ["user", "teacher", "admin"]);
+export const userRoleEnum = pgEnum("role", ["user", "teacher", "admin", "student"]);
 
 // Define a "users" table for storing profile details
 export const users = pgTable("users", {

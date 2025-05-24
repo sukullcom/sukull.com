@@ -5,7 +5,7 @@ import { POINTS_TO_REFILL } from '@/constants';
 import db from '@/db/drizzle';
 import { getCourseById, getUserProgress } from '@/db/queries';
 import { challengeProgress, challenges, schools, userProgress, userDailyStreak } from '@/db/schema';
-import { and, eq, gt } from 'drizzle-orm';
+import { and, eq, gt, sql, isNotNull } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { getServerUser } from '@/lib/auth';
@@ -13,14 +13,46 @@ import { users } from '@/utils/users';
 import { updateDailyStreak } from "./daily-streak";
 
 export const updateTotalPointsForSchools = async () => {
-  const allSchools = await db.query.schools.findMany();
-  for (const school of allSchools) {
-    const schoolPointsResult = await db.query.userProgress.findMany({
-      where: eq(userProgress.schoolId, school.id),
-      columns: { points: true },
+  try {
+    // Get all schools with valid IDs
+    const schoolIds = await db.select({ id: schools.id })
+      .from(schools);
+    
+    if (!schoolIds.length) return;
+    
+    // Use a single query with GROUP BY to calculate totals for all schools at once
+    const schoolTotals = await db.select({
+      schoolId: userProgress.schoolId,
+      totalPoints: sql<number>`sum(${userProgress.points} :: int)`,
+    })
+    .from(userProgress)
+    .where(isNotNull(userProgress.schoolId))
+    .groupBy(userProgress.schoolId);
+    
+    // Create a map for quick lookup
+    const pointsBySchoolId = new Map(
+      schoolTotals.map(row => [row.schoolId, row.totalPoints || 0])
+    );
+    
+    // Prepare batch updates - only one query with all schools
+    const updates = schoolIds.map(school => ({
+      id: school.id,
+      totalPoints: pointsBySchoolId.get(school.id) || 0
+    }));
+    
+    // Update all schools in a single transaction
+    await db.transaction(async (tx) => {
+      for (const update of updates) {
+        await tx.update(schools)
+          .set({ totalPoints: update.totalPoints })
+          .where(eq(schools.id, update.id));
+      }
     });
-    const totalPoints = schoolPointsResult.reduce((sum, u) => sum + (u.points || 0), 0);
-    await db.update(schools).set({ totalPoints }).where(eq(schools.id, school.id));
+    
+    return true;
+  } catch (error) {
+    console.error("Error updating school totals:", error);
+    return false;
   }
 };
 
@@ -29,17 +61,62 @@ export const upsertUserSchool = async (schoolId: number) => {
   if (!user) throw new Error('Unauthorized');
   const userId = user.id;
   const existingUserProgress = await getUserProgress();
+  
   if (existingUserProgress) {
-    await db.update(userProgress).set({ schoolId }).where(eq(userProgress.userId, userId));
-    await updateTotalPointsForSchools();
+    const oldSchoolId = existingUserProgress.schoolId;
+    
+    // Update the user's school
+    await db.update(userProgress)
+      .set({ schoolId })
+      .where(eq(userProgress.userId, userId));
+    
+    // If user is changing schools, update points for both old and new schools
+    if (oldSchoolId !== schoolId) {
+      // Update points for the new school
+      await updateSchoolPoints(schoolId);
+      
+      // If there was a previous school, update its points too
+      if (oldSchoolId) {
+        await updateSchoolPoints(oldSchoolId);
+      }
+    }
   } else {
+    // Create new user progress
     const profile = await users.getUser(userId).catch(() => null);
     const userName = profile?.name || user.user_metadata?.full_name || 'User';
     const userImageSrc = user.user_metadata?.avatar_url || '/mascot_purple.svg';
-    await db.insert(userProgress).values({ userId, schoolId, userName, userImageSrc });
-    await updateTotalPointsForSchools();
+    
+    await db.insert(userProgress)
+      .values({ userId, schoolId, userName, userImageSrc });
+    
+    // Update only the affected school
+    await updateSchoolPoints(schoolId);
   }
 };
+
+// Helper function to update a single school's points
+async function updateSchoolPoints(schoolId: number) {
+  try {
+    if (!schoolId) return;
+    
+    // Calculate total points for just this school in one query
+    const [result] = await db.select({
+      totalPoints: sql<number>`sum(${userProgress.points} :: int)`,
+    })
+    .from(userProgress)
+    .where(eq(userProgress.schoolId, schoolId));
+    
+    // Update the school with calculated points
+    await db.update(schools)
+      .set({ totalPoints: result.totalPoints || 0 })
+      .where(eq(schools.id, schoolId));
+      
+    return true;
+  } catch (error) {
+    console.error(`Error updating points for school ${schoolId}:`, error);
+    return false;
+  }
+}
 
 export const upsertUserProgress = async (courseId: number) => {
   const user = await getServerUser();
@@ -173,21 +250,16 @@ export async function addSchoolPoints(schoolId: number, points: number) {
   try {
     if (points <= 0 || !schoolId) return false;
     
-    // Get current school
-    const school = await db.query.schools.findFirst({
-      where: eq(schools.id, schoolId),
-    });
-    
-    if (!school) return false;
-    
-    // Update school points
-    await db.update(schools)
+    // Update the school points directly with a SQL increment
+    // This avoids the need to query the current points first
+    const result = await db.update(schools)
       .set({
-        totalPoints: (school.totalPoints || 0) + points,
+        totalPoints: sql`${schools.totalPoints} + ${points}`
       })
-      .where(eq(schools.id, schoolId));
+      .where(eq(schools.id, schoolId))
+      .returning({ updated: schools.id });
     
-    return true;
+    return result.length > 0;
   } catch (error) {
     console.error("Error adding school points:", error);
     return false;

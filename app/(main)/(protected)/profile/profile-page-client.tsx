@@ -18,7 +18,6 @@ export default function ProfilePageClient({
   profile: {
     userName: string;
     userImageSrc: string;
-    profileLocked: boolean;
     schoolId: number | null;
     istikrar: number;
     dailyTarget: number;
@@ -38,14 +37,21 @@ export default function ProfilePageClient({
 
   // Use useCallback to memoize the function reference
   const handleRandomAvatar = useCallback(() => {
-    if (profile.profileLocked) return;
     try {
-      setAvatarUrl(generator.generateRandomAvatar());
+      // Generate a new random avatar URL from the avataaars.io service
+      const newAvatarUrl = generator.generateRandomAvatar();
+      console.log("Generated avatar URL:", newAvatarUrl);
+      
+      // Set the new avatar URL
+      setAvatarUrl(newAvatarUrl);
+      
+      // Show success message
+      toast.success("Yeni avatar oluşturuldu!");
     } catch (err) {
       console.error("Error generating avatar:", err);
       toast.error("Avatar oluşturulurken bir hata oluştu.");
     }
-  }, [profile.profileLocked, generator]);
+  }, [generator]);
 
   // Use useCallback for the save handler
   const handleSave = useCallback(() => {
@@ -64,7 +70,7 @@ export default function ProfilePageClient({
     startTransition(() => {
       updateProfileAction(username.trim(), avatarUrl, selectedSchoolId, dailyTarget)
         .then(() => {
-          toast.success("Profil güncellendi! Günlük hedeflenen puan her zaman değiştirilebilir.");
+          toast.success("Profil güncellendi!");
         })
         .catch((err) => {
           console.error("Profile update error:", err);
@@ -86,15 +92,13 @@ export default function ProfilePageClient({
     { value: 300, label: "300 puan" },
   ], []);
 
+  // Determine if the avatar is from avataaars.io (external URL)
+  const isExternalAvatar = avatarUrl.startsWith('http');
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-12 px-4">
       <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-white w-full max-w-md">
         <h1 className="text-2xl font-bold text-center text-gray-800">Profil Ayarları</h1>
-        {profile.profileLocked && (
-          <p className="text-sm text-red-600 text-center">
-            Profil bilgilerinde isim, avatar ve okul güncellenemiyor.
-          </p>
-        )}
         {error && (
           <p className="text-sm text-red-600 text-center">
             {error}
@@ -102,20 +106,35 @@ export default function ProfilePageClient({
         )}
         <div className="flex flex-col items-center space-y-4">
           <div className="w-32 h-32 overflow-hidden rounded-full border-2 border-gray-300 relative">
-            <Image 
-              src={avatarUrl} 
-              alt="Avatar" 
-              fill
-              sizes="(max-width: 640px) 100vw, 128px"
-              className="object-cover"
-              priority
-            />
+            {isExternalAvatar ? (
+              // For avataaars.io URLs
+              <img 
+                src={avatarUrl} 
+                alt="Avatar" 
+                className="w-full h-full object-cover"
+                onError={() => {
+                  console.error("Failed to load avatar image");
+                  setAvatarUrl("/mascot_purple.svg");
+                  toast.error("Avatar yüklenemedi, varsayılan avatar kullanılıyor");
+                }}
+              />
+            ) : (
+              // For local images
+              <Image 
+                src={avatarUrl} 
+                alt="Avatar" 
+                fill
+                sizes="(max-width: 640px) 100vw, 128px"
+                className="object-cover"
+                priority
+              />
+            )}
           </div>
           <Button
             variant="secondary"
             size="lg"
             onClick={handleRandomAvatar}
-            disabled={pending || profile.profileLocked}
+            disabled={pending}
           >
             Rastgele Avatar Oluştur
           </Button>
@@ -126,7 +145,6 @@ export default function ProfilePageClient({
             className="mt-1 block w-full rounded-md border border-gray-200 shadow-sm p-3 focus:border-blue-500 focus:ring-blue-500"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            disabled={profile.profileLocked}
             maxLength={30} // Limit username length
           />
         </div>
@@ -147,7 +165,6 @@ export default function ProfilePageClient({
         <div>
           <ProfileSchoolSelector
             schools={allSchools}
-            disabled={profile.profileLocked}
             initialSchoolId={selectedSchoolId}
             onSelect={(schoolId) => setSelectedSchoolId(schoolId)}
           />
@@ -161,9 +178,9 @@ export default function ProfilePageClient({
           size="lg"
           className="w-full"
           onClick={handleSave}
-          disabled={pending || (!profile.profileLocked && !username.trim())}
+          disabled={pending || !username.trim()}
         >
-          {pending ? "Kaydediliyor..." : profile.profileLocked ? "Profil Kilitlendi" : "Kaydet"}
+          {pending ? "Kaydediliyor..." : "Kaydet"}
         </Button>
       </div>
     </div>

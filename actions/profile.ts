@@ -67,8 +67,7 @@ export async function getAllSchoolsOnServer() {
 
 /**
  * Update profile data.
- * - If the profile is not locked, update userName, userImageSrc, schoolId and lock those fields.
- * - Regardless of profileLocked, always update the dailyTarget so that it remains editable.
+ * All fields can be updated at any time.
  */
 export async function updateProfileAction(
   newName: string,
@@ -88,27 +87,17 @@ export async function updateProfileAction(
     throw new Error("No user_progress row found for this user.");
   }
 
-  // If profile (other than dailyTarget) is locked, update only dailyTarget.
-  if (progressRow.profileLocked) {
-    await db
-      .update(userProgress)
-      .set({
-        dailyTarget: newDailyTarget,
-      })
-      .where(eq(userProgress.userId, userId));
-  } else {
-    // Otherwise update all fields and then lock the profile (except dailyTarget remains changeable)
-    await db
-      .update(userProgress)
-      .set({
-        userName: newName || "Anonymous",
-        userImageSrc: newImage || "/mascot_purple.svg",
-        schoolId,
-        dailyTarget: newDailyTarget,
-        profileLocked: true,
-      })
-      .where(eq(userProgress.userId, userId));
-  }
+  // Update all fields - profile is never locked
+  await db
+    .update(userProgress)
+    .set({
+      userName: newName || "Anonymous",
+      userImageSrc: newImage || "/mascot_purple.svg",
+      schoolId,
+      dailyTarget: newDailyTarget,
+      profileLocked: false, // Always set to false to ensure profile is never locked
+    })
+    .where(eq(userProgress.userId, userId));
 
   // Update the "users" table as well
   const existingUserRow = await db.query.users.findFirst({

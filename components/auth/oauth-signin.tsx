@@ -16,6 +16,7 @@ interface Props {
 
 function OAuthButtons({ isLoading, onLoadingChange, redirectUrl }: Props) {
   const [internalLoading, setInternalLoading] = useState(false);
+  const [providerLoading, setProviderLoading] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const nextUrl = redirectUrl || searchParams.get("next") || "/courses";
   const loading = isLoading ?? internalLoading;
@@ -24,12 +25,24 @@ function OAuthButtons({ isLoading, onLoadingChange, redirectUrl }: Props) {
   const handleOAuthSignIn = async (provider: "github" | "google") => {
     try {
       setLoading(true);
+      setProviderLoading(provider);
+      
+      // Log the attempt with more details
+      console.log(`Attempting to sign in with ${provider}...`);
+      console.log(`Next URL: ${nextUrl}`);
+      console.log(`Current location: ${window.location.href}`);
+      
+      // Call the auth method
       await auth.signInWithOAuth(provider, nextUrl);
+      
+      // Note: We won't reach this point immediately as the browser will redirect
+      console.log(`${provider} auth initiated, redirecting...`);
     } catch (error) {
+      console.error(`${provider} auth error:`, error);
       const { message } = getAuthError(error);
-      toast.error(message);
-    } finally {
+      toast.error(`${provider} girişi başarısız: ${message}`);
       setLoading(false);
+      setProviderLoading(null);
     }
   };
 
@@ -41,7 +54,11 @@ function OAuthButtons({ isLoading, onLoadingChange, redirectUrl }: Props) {
         disabled={loading}
         onClick={() => handleOAuthSignIn("github")}
       >
-        <Icons.gitHub className="mr-2 h-4 w-4" />
+        {providerLoading === "github" ? (
+          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          <Icons.gitHub className="mr-2 h-4 w-4" />
+        )}
         Github
       </Button>
       <Button
@@ -50,7 +67,11 @@ function OAuthButtons({ isLoading, onLoadingChange, redirectUrl }: Props) {
         disabled={loading}
         onClick={() => handleOAuthSignIn("google")}
       >
-        <Icons.google className="mr-2 h-4 w-4" />
+        {providerLoading === "google" ? (
+          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          <Icons.google className="mr-2 h-4 w-4" />
+        )}
         Google
       </Button>
     </div>

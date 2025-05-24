@@ -1,14 +1,16 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getServerUser } from "@/lib/auth";
-import { isApprovedStudent } from "@/db/queries";
+import db from "@/db/drizzle";
+import { users } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 export const metadata: Metadata = {
-  title: "My Bookings | Sukull",
-  description: "Manage your private lesson bookings",
+  title: "Admin Dashboard | Sukull",
+  description: "Administrative tools and controls",
 };
 
-export default async function MyBookingsLayout({
+export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -21,17 +23,20 @@ export default async function MyBookingsLayout({
       redirect("/login");
     }
     
-    // Check if user is an approved student
-    const isStudent = await isApprovedStudent(user.id);
+    // Check if user is an admin
+    const userRecord = await db.query.users.findFirst({
+      where: eq(users.id, user.id),
+      columns: { role: true }
+    });
     
-    if (!isStudent) {
-      // If authenticated but not a student, redirect to apply for student status
-      redirect("/private-lesson/get");
+    if (userRecord?.role !== "admin") {
+      // If authenticated but not an admin, redirect to unauthorized
+      redirect("/unauthorized");
     }
     
     return (
       <div className="h-full">
-        <div className="container h-full py-4">
+        <div className="h-full">
           {children}
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getAuthenticatedUser } from "@/lib/auth";
+import { getServerUser } from "@/lib/auth";
 import { getStudentBookings, isApprovedStudent } from "@/db/queries";
 
 interface AuthError {
@@ -9,8 +9,15 @@ interface AuthError {
 
 export async function GET() {
   try {
-    // This will automatically redirect to login if not authenticated
-    const user = await getAuthenticatedUser();
+    // Get the authenticated user
+    const user = await getServerUser();
+    
+    if (!user) {
+      return NextResponse.json({ 
+        message: "Authentication required", 
+        error: "unauthorized" 
+      }, { status: 401 });
+    }
     
     // Check if user is an approved student
     const isStudent = await isApprovedStudent(user.id);

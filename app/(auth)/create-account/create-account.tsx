@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner";
-import Image from "next/image";
 
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
@@ -93,30 +92,12 @@ export function CreateAccountForm() {
       {/* Sign up button */}
       <Button
         className="w-full"
-        onClick={() => null}
         type="submit"
         disabled={isLoading}
         variant="secondary"
       >
         {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
         E-posta İle Kayıt Ol
-      </Button>
-
-      {/* Google Sign Up button (optional) */}
-      <Button
-        onClick={() => null /* or your google signup code */}
-        variant="default"
-        className="w-full py-5 gap-2"
-        disabled={isLoading}
-      >
-        <Image
-          src="/google-logo.png"
-          alt="Google Logo"
-          width={20}
-          height={20}
-          className="object-contain"
-        />
-        Google İle Kayıt Ol
       </Button>
 
       <p className="text-center text-sm mt-6">
@@ -130,7 +111,7 @@ export function CreateAccountForm() {
         </Link>
       </p>
 
-      <OAuthSignIn isLoading={isLoading} onLoadingChange={setIsLoading} />
+      <OAuthSignIn isLoading={isLoading} onLoadingChange={setIsLoading} redirectUrl="/courses" />
     </form>
   );
 }

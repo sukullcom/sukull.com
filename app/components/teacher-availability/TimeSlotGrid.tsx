@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { format, addMinutes, isAfter } from 'date-fns';
 import { tr } from 'date-fns/locale';
 import { toast } from 'sonner';
@@ -10,6 +10,17 @@ interface SavedTimeSlot {
   dayOfWeek: number;
 }
 
+// Interface for slot with row and column coordinates for grid
+interface GridSlot {
+  startTime: Date;
+  endTime: Date;
+  dayOfWeek: number;
+  disabled: boolean;
+  selected: boolean;
+  row: number;
+  col: number;
+}
+
 // Helper to generate all time slots for a week
 const generateTimeSlots = (initialDate: Date) => {
   const days = [];
@@ -17,12 +28,10 @@ const generateTimeSlots = (initialDate: Date) => {
   const currentHour = now.getHours();
   const currentMinute = now.getMinutes();
 
-  // Calculate the end date for availability (next Friday at 23:59)
+  // Calculate the end date for availability (7 days from now at 23:59)
   const endOfAvailabilityPeriod = new Date();
-  // Find the days until next Friday (5 = Friday)
-  // If today is Friday, we want next Friday
-  const daysUntilNextFriday = (5 - now.getDay() + 7) % 7 || 7;
-  endOfAvailabilityPeriod.setDate(now.getDate() + daysUntilNextFriday);
+  // Set end date to 7 days from now instead of next Friday
+  endOfAvailabilityPeriod.setDate(now.getDate() + 6); // +6 because today is already day 1
   endOfAvailabilityPeriod.setHours(23, 59, 59, 999);
 
   // Start from the current day and wrap around to complete 7 days
@@ -47,6 +56,7 @@ const generateTimeSlots = (initialDate: Date) => {
     
     const slots = [];
     // Generate slots from 00:00 to 23:30 in 30-minute increments
+    let rowIndex = 0;
     for (let hour = 0; hour < 24; hour++) {
       for (let minute = 0; minute < 60; minute += 30) {
         const startTime = new Date(date);
@@ -67,7 +77,11 @@ const generateTimeSlots = (initialDate: Date) => {
           dayOfWeek: dayNumber,
           disabled: isPast,
           selected: false, // Default to not selected
+          row: rowIndex,
+          col: i, // Column is the day index
         });
+        
+        rowIndex++;
       }
     }
     
@@ -98,6 +112,15 @@ export default function TimeSlotGrid({
   const [selectedSlots, setSelectedSlots] = useState<SavedTimeSlot[]>(initialSelectedSlots);
   const [isEditing, setIsEditing] = useState(!readOnly);
   const [isSaving, setIsSaving] = useState(false);
+  
+  // State for drag selection
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStartCell, setDragStartCell] = useState<{row: number, col: number} | null>(null);
+  const [dragEndCell, setDragEndCell] = useState<{row: number, col: number} | null>(null);
+  const [dragSelectionMode, setDragSelectionMode] = useState<'select' | 'deselect' | null>(null);
+  
+  // Ref to track all grid slots for easier drag operations
+  const gridSlotsRef = useRef<GridSlot[][]>([]);
   
   // Function to update the days with selected slots - memoized with useCallback
   const updateDaysWithSelectedSlots = useCallback((slots: SavedTimeSlot[]) => {
@@ -137,6 +160,34 @@ export default function TimeSlotGrid({
     // Update the selectedSlots state
     setSelectedSlots(initialSelectedSlots);
   }, [initialSelectedSlots, updateDaysWithSelectedSlots]);
+  
+  // Organize grid slots for easier drag operations
+  useEffect(() => {
+    // Create a 2D array of all slots organized by row and column
+    const grid: GridSlot[][] = [];
+    
+    // Initialize the grid with empty rows
+    const rowCount = 48; // 24 hours * 2 (30-min slots)
+    const colCount = 7; // 7 days
+    
+    for (let i = 0; i < rowCount; i++) {
+      grid[i] = Array(colCount).fill(null);
+    }
+    
+    // Fill the grid with slots from days
+    for (const day of days) {
+      for (const slot of day.slots) {
+        if ('row' in slot && 'col' in slot) {
+          const { row, col } = slot as GridSlot;
+          if (grid[row]) {
+            grid[row][col] = slot as GridSlot;
+          }
+        }
+      }
+    }
+    
+    gridSlotsRef.current = grid;
+  }, [days]);
 
   const toggleSlot = (clickedDay: number, clickedSlot: { 
     startTime: string | Date; 
@@ -225,6 +276,114 @@ export default function TimeSlotGrid({
     }
   };
   
+  // Handle drag selection operations
+  const updateDragSelection = () => {
+    if (!isDragging || !dragStartCell || !dragEndCell || !isEditing || readOnly) return;
+    
+    // Determine the boundaries of the selection
+    const startRow = Math.min(dragStartCell.row, dragEndCell.row);
+    const endRow = Math.max(dragStartCell.row, dragEndCell.row);
+    const startCol = Math.min(dragStartCell.col, dragEndCell.col);
+    const endCol = Math.max(dragStartCell.col, dragEndCell.col);
+    
+    // Clone the current days
+    const updatedDays = [...days];
+    const newSelectedSlots: SavedTimeSlot[] = [...selectedSlots];
+    
+    // Track which slots were added or removed
+    const addedSlots: SavedTimeSlot[] = [];
+    const removedSlots: SavedTimeSlot[] = [];
+    
+    // Iterate through all days
+    for (let day of updatedDays) {
+      // Iterate through all slots in this day
+      for (let slot of day.slots) {
+        if (!('row' in slot) || !('col' in slot)) continue;
+        
+        const { row, col } = slot as unknown as { row: number, col: number };
+        const isInSelectionRange = 
+          row >= startRow && row <= endRow && 
+          col >= startCol && col <= endCol;
+        
+        // Skip disabled slots
+        if (slot.disabled) continue;
+        
+        if (isInSelectionRange) {
+          // Convert the slot times to strings
+          const slotStartTime = slot.startTime instanceof Date 
+            ? slot.startTime.toISOString() 
+            : slot.startTime;
+            
+          const slotEndTime = slot.endTime instanceof Date 
+            ? slot.endTime.toISOString() 
+            : slot.endTime;
+          
+          // Create a SavedTimeSlot object
+          const savedSlot: SavedTimeSlot = {
+            startTime: slotStartTime,
+            endTime: slotEndTime,
+            dayOfWeek: slot.dayOfWeek
+          };
+          
+          // Apply the selection mode
+          if (dragSelectionMode === 'select' && !slot.selected) {
+            // Add to selection
+            slot.selected = true;
+            addedSlots.push(savedSlot);
+          } else if (dragSelectionMode === 'deselect' && slot.selected) {
+            // Remove from selection
+            slot.selected = false;
+            removedSlots.push(savedSlot);
+          }
+        }
+      }
+    }
+    
+    // Update the selected slots list
+    let updatedSelectedSlots = newSelectedSlots;
+    
+    // Add newly selected slots
+    if (addedSlots.length > 0) {
+      updatedSelectedSlots = [...updatedSelectedSlots, ...addedSlots];
+    }
+    
+    // Remove deselected slots
+    if (removedSlots.length > 0) {
+      updatedSelectedSlots = updatedSelectedSlots.filter(slot => {
+        // Check if this slot is in the removedSlots list
+        return !removedSlots.some(removedSlot => {
+          const slotStartTime = typeof slot.startTime === 'string'
+            ? new Date(slot.startTime)
+            : new Date(slot.startTime);
+          
+          const removedStartTime = typeof removedSlot.startTime === 'string'
+            ? new Date(removedSlot.startTime)
+            : new Date(removedSlot.startTime);
+          
+          return (
+            slotStartTime.getHours() === removedStartTime.getHours() &&
+            slotStartTime.getMinutes() === removedStartTime.getMinutes() &&
+            slot.dayOfWeek === removedSlot.dayOfWeek
+          );
+        });
+      });
+    }
+    
+    // Update state
+    setDays(updatedDays);
+    setSelectedSlots(updatedSelectedSlots);
+    
+    // Call the onSlotsChange callback if provided
+    if (onSlotsChange) {
+      onSlotsChange(updatedSelectedSlots);
+    }
+  };
+  
+  // Apply drag selection when dragEndCell changes
+  useEffect(() => {
+    updateDragSelection();
+  }, [dragEndCell]);
+  
   const handleSave = async () => {
     setIsSaving(true);
     try {
@@ -283,6 +442,62 @@ export default function TimeSlotGrid({
     }
   };
   
+  // Handle mouse events for drag selection
+  const handleMouseDown = (slot: any, dayNumber: number, row: number, col: number) => {
+    if (readOnly || !isEditing || slot.disabled) return;
+    
+    setIsDragging(true);
+    setDragStartCell({ row, col });
+    setDragEndCell({ row, col });
+    // Set the drag mode based on the current selection state of the cell
+    setDragSelectionMode(slot.selected ? 'deselect' : 'select');
+    
+    // Prevent default text selection during drag
+    document.body.classList.add('select-none');
+  };
+  
+  const handleMouseMove = (row: number, col: number) => {
+    if (!isDragging || readOnly || !isEditing) return;
+    setDragEndCell({ row, col });
+  };
+  
+  const handleMouseUp = () => {
+    if (isDragging) {
+      setIsDragging(false);
+      setDragStartCell(null);
+      setDragEndCell(null);
+      setDragSelectionMode(null);
+      
+      // Re-enable text selection
+      document.body.classList.remove('select-none');
+    }
+  };
+  
+  // Add global mouse up handler to handle cases where mouse is released outside the grid
+  useEffect(() => {
+    const handleGlobalMouseUp = () => {
+      handleMouseUp();
+    };
+    
+    window.addEventListener('mouseup', handleGlobalMouseUp);
+    
+    return () => {
+      window.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, [isDragging]);
+  
+  // Helper to check if a cell is in the current drag selection
+  const isInDragSelection = (row: number, col: number) => {
+    if (!isDragging || !dragStartCell || !dragEndCell) return false;
+    
+    const startRow = Math.min(dragStartCell.row, dragEndCell.row);
+    const endRow = Math.max(dragStartCell.row, dragEndCell.row);
+    const startCol = Math.min(dragStartCell.col, dragEndCell.col);
+    const endCol = Math.max(dragStartCell.col, dragEndCell.col);
+    
+    return row >= startRow && row <= endRow && col >= startCol && col <= endCol;
+  };
+  
   return (
     <div className="bg-white shadow rounded-lg p-6 border">
       <div className="mb-6 flex justify-between items-center">
@@ -328,6 +543,16 @@ export default function TimeSlotGrid({
         </div>
       </div>
       
+      {isEditing && !readOnly && (
+        <div className="mb-4 p-3 bg-blue-50 rounded-md text-sm">
+          <p className="font-medium text-blue-800">
+            <span className="mr-2">💡</span>
+            İpucu: Fare ile sürükleyerek birden fazla zaman dilimini aynı anda seçebilirsiniz. 
+            Tek tıklama ile de zaman dilimlerini seçebilirsiniz.
+          </p>
+        </div>
+      )}
+      
       <div className="grid grid-cols-7 gap-1 overflow-x-auto pb-2">
         {/* Day headers */}
         {days.map(day => {
@@ -339,8 +564,8 @@ export default function TimeSlotGrid({
           // Calculate if this day is beyond our availability period
           const now = new Date();
           const endOfAvailabilityPeriod = new Date();
-          const daysUntilNextFriday = (5 - now.getDay() + 7) % 7 || 7;
-          endOfAvailabilityPeriod.setDate(now.getDate() + daysUntilNextFriday);
+          // Set end date to 7 days from now instead of next Friday
+          endOfAvailabilityPeriod.setDate(now.getDate() + 6); // +6 because today is already day 1
           endOfAvailabilityPeriod.setHours(23, 59, 59, 999);
           
           const isBeyondAvailabilityPeriod = day.date > endOfAvailabilityPeriod;
@@ -351,7 +576,7 @@ export default function TimeSlotGrid({
               className={`text-center p-2 
                 ${isToday ? 'bg-blue-50 text-blue-700 font-bold border-b-2 border-blue-500' : 'bg-gray-100'} 
                 ${isBeyondAvailabilityPeriod ? 'opacity-50' : ''}
-                sticky top-0`}
+                sticky top-0 z-10`}
             >
               <div className="font-bold flex items-center justify-center">
                 {isToday && (
@@ -372,10 +597,10 @@ export default function TimeSlotGrid({
         {/* First, create an array of all unique times */}
         {Array.from(new Set(days[0].slots.map(slot => 
           format(slot.startTime, 'HH:mm')
-        ))).map(timeStr => (
+        ))).map((timeStr, rowIndex) => (
           <React.Fragment key={timeStr}>
             {/* For each time, show a cell for each day */}
-            {days.map(day => {
+            {days.map((day, colIndex) => {
               const slot = day.slots.find(s => 
                 format(s.startTime, 'HH:mm') === timeStr
               );
@@ -385,25 +610,31 @@ export default function TimeSlotGrid({
               // Check if this time is an hour mark (00 minutes)
               const isHourMark = timeStr.endsWith(':00');
               
+              // Check if this cell is in the current drag selection
+              const isInSelection = isInDragSelection(rowIndex, colIndex);
+              
+              // Determine styling based on selection state, drag state, etc.
+              const isBeingSelected = isInSelection && dragSelectionMode === 'select';
+              const isBeingDeselected = isInSelection && dragSelectionMode === 'deselect';
+              
               return (
                 <div 
                   key={`${day.dayNumber}-${timeStr}`}
-                  onClick={() => {
-                    if ((isEditing || readOnly) && !slot.disabled) {
-                      toggleSlot(day.dayNumber, {
-                        ...slot,
-                        startTime: slot.startTime.toISOString(),
-                        endTime: slot.endTime.toISOString()
-                      });
-                    }
+                  onMouseDown={(e) => {
+                    e.preventDefault(); // Prevent text selection
+                    handleMouseDown(slot, day.dayNumber, rowIndex, colIndex);
                   }}
+                  onMouseMove={() => handleMouseMove(rowIndex, colIndex)}
                   className={`
                     text-center p-2 border text-sm
                     ${slot.selected ? 'bg-green-500 text-white font-medium' : 'bg-white'}
+                    ${isBeingSelected && !slot.selected ? 'bg-green-300 text-white' : ''}
+                    ${isBeingDeselected && slot.selected ? 'bg-green-200' : ''}
                     ${slot.disabled ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'cursor-pointer hover:bg-gray-100'}
                     ${!isEditing && !readOnly ? 'cursor-default' : ''}
                     ${isHourMark ? 'border-t-2 border-t-gray-300' : ''}
-                    transition-all duration-200
+                    transition-colors duration-150
+                    ${isDragging ? 'select-none' : ''}
                   `}
                 >
                   {timeStr}
@@ -416,7 +647,10 @@ export default function TimeSlotGrid({
       
       <div className="mt-6 text-center text-sm text-gray-500">
         <p>Not: Zamanlar 30 dakikalık aralıklarla gösterilmektedir. Yeşil ile işaretlenen zamanlar müsait olduğunuz zamanlardır.</p>
-        <p className="mt-2 text-primary font-medium">Sadece bugünden başlayarak gelecek Cuma gününe kadar olan saatleri seçebilirsiniz.</p>
+        <p className="mt-2">
+          <span className="font-medium text-green-600">💡 İpucu:</span> Birden fazla zaman dilimi seçmek için fare ile sürükleyip seçebilirsiniz.
+        </p>
+        <p className="mt-2 text-primary font-medium">Sadece bugünden başlayarak önümüzdeki 7 gün içindeki saatleri seçebilirsiniz.</p>
       </div>
     </div>
   );

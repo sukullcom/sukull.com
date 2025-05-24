@@ -721,6 +721,17 @@ export async function getCurrentTeacherAvailability(teacherId: string) {
 
 // Check if a user has an approved student application
 export async function isApprovedStudent(userId: string) {
+  // First check if user has student role
+  const userRecord = await db.query.users.findFirst({
+    where: eq(users.id, userId),
+    columns: { role: true }
+  });
+  
+  if (userRecord?.role === "student") {
+    return true;
+  }
+  
+  // Fall back to checking for approved application
   const application = await db.query.privateLessonApplications.findFirst({
     where: and(
       eq(privateLessonApplications.userId, userId),
@@ -940,10 +951,10 @@ export async function approveStudentApplication(applicationId: number) {
   // If userId exists, update the user's role to "student"
   if (application.userId) {
     await db.update(users)
-      .set({ role: "user" })
+      .set({ role: "student" })
       .where(eq(users.id, application.userId));
     
-    console.log(`User ${application.userId} role updated`);
+    console.log(`User ${application.userId} role updated to 'student'`);
   }
 }
 

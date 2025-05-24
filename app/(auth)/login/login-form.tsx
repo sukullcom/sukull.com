@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
-import Image from "next/image";
 
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
@@ -67,22 +66,6 @@ export function LoginForm() {
       >
         {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
         E-posta İle Gİrİş
-      </Button>
-
-      <Button
-        onClick={() => null /* or your google login code */}
-        variant="default"
-        className="w-full py-5 gap-2"
-        disabled={isLoading}
-      >
-        <Image
-          src="/google-logo.png"
-          alt="Google Logo"
-          width={20}
-          height={20}
-          className="object-contain"
-        />
-        Google İle Gİrİş
       </Button>
 
       <p className="text-center text-sm mt-6">

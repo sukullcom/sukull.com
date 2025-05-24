@@ -24,8 +24,13 @@ export const users = {
     description?: string
     links?: any[]
   }) {
+    console.log('Creating new user:', { id: user.id, email: user.email, name: user.name, provider: user.provider });
     const { data, error } = await supabase.from('users').insert([user]).single()
-    if (error) throw error
+    if (error) {
+      console.error('Error creating user:', error);
+      throw error;
+    }
+    console.log('User created successfully');
     return data
   },
 
@@ -38,33 +43,79 @@ export const users = {
    * `overrideUsername` can override the default name if provided (e.g. signUp flow).
    */
   async captureUserDetails(authUser: User, overrideUsername?: string) {
-    // Check if user row exists
-    const existing = await this.getUser(authUser.id).catch(() => null)
-    if (existing) {
-      return existing
+    try {
+      console.log('Capturing user details for:', authUser.id);
+      console.log('Auth user metadata:', JSON.stringify(authUser.user_metadata, null, 2));
+      console.log('Auth app metadata:', JSON.stringify(authUser.app_metadata, null, 2));
+      
+      // Check if user row exists
+      const existing = await this.getUser(authUser.id).catch((err) => {
+        console.log('User not found in database:', err.message);
+        return null;
+      });
+      
+      if (existing) {
+        console.log('User already exists in users table');
+        return existing
+      }
+
+      // If no user row, create new
+      const provider = authUser.app_metadata?.provider || 'email'
+      console.log('Auth provider:', provider);
+      
+      // Extract name based on provider
+      let name = overrideUsername;
+      let avatar = '';
+      
+      if (!name) {
+        if (provider === 'google') {
+          // Google can provide name in different places depending on the scope
+          name = authUser.user_metadata?.full_name || 
+                 authUser.user_metadata?.name ||
+                 authUser.user_metadata?.given_name ||
+                 authUser.email?.split('@')[0] ||
+                 'User';
+          
+          // Google can provide avatar in different places
+          avatar = authUser.user_metadata?.avatar_url || 
+                   authUser.user_metadata?.picture ||
+                   '';
+          
+          console.log('Extracted Google name:', name);
+          console.log('Extracted Google avatar:', avatar);
+        } else if (provider === 'github') {
+          name = authUser.user_metadata?.user_name || 
+                 authUser.user_metadata?.preferred_username ||
+                 authUser.email?.split('@')[0] ||
+                 'User';
+          avatar = authUser.user_metadata?.avatar_url || '';
+        } else {
+          name = authUser.user_metadata?.full_name ||
+                 authUser.email?.split('@')[0] ||
+                 'User';
+          avatar = authUser.user_metadata?.avatar_url || '';
+        }
+      }
+      
+      console.log('Creating new user with name:', name);
+      console.log('User avatar URL:', avatar);
+      
+      const email = authUser.email || ''
+
+      const newUser = {
+        id: authUser.id,
+        email,
+        name,
+        avatar,
+        provider,
+        description: '',
+        links: [],
+      }
+      return this.createUser(newUser)
+    } catch (error) {
+      console.error('Error capturing user details:', error);
+      throw error;
     }
-
-    // If no user row, create new
-    const provider = authUser.app_metadata?.provider || 'email'
-    const name =
-      overrideUsername ||
-      authUser.user_metadata?.full_name ||
-      authUser.email?.split('@')[0] ||
-      'User'
-
-    const avatar = authUser.user_metadata?.avatar_url || ''
-    const email = authUser.email || ''
-
-    const newUser = {
-      id: authUser.id,
-      email,
-      name,
-      avatar,
-      provider,
-      description: '',
-      links: [],
-    }
-    return this.createUser(newUser)
   },
 
   /**
