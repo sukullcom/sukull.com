@@ -120,14 +120,14 @@ export default function ProfilePageClient({
               />
             ) : (
               // For local images
-              <Image 
-                src={avatarUrl} 
-                alt="Avatar" 
-                fill
-                sizes="(max-width: 640px) 100vw, 128px"
-                className="object-cover"
-                priority
-              />
+            <Image 
+              src={avatarUrl} 
+              alt="Avatar" 
+              fill
+              sizes="(max-width: 640px) 100vw, 128px"
+              className="object-cover"
+              priority
+            />
             )}
           </div>
           <Button

@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import { eq } from "drizzle-orm";
 import db from "@/db/drizzle";
 import { snippets } from "@/db/schema";
+import { getServerUser } from "@/lib/auth";
 
 // Return a single snippet by ID
 export async function GET(
@@ -11,6 +12,12 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
+    // Add authentication check
+    const user = await getServerUser();
+    if (!user) {
+      return NextResponse.json({ error: "Authentication required" }, { status: 401 });
+    }
+
     const snippetId = parseInt(params.id, 10);
     if (Number.isNaN(snippetId)) {
       return NextResponse.json({ error: "Invalid snippet ID" }, { status: 400 });

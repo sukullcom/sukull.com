@@ -2,6 +2,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { YoutubeTranscript, TranscriptResponse, YoutubeTranscriptError } from "youtube-transcript";
+import { getServerUser } from "@/lib/auth";
 
 interface TranscriptLine {
   startTime: number;
@@ -9,6 +10,12 @@ interface TranscriptLine {
 }
 
 export async function GET(req: NextRequest) {
+  // Add authentication check
+  const user = await getServerUser();
+  if (!user) {
+    return NextResponse.json({ error: "Authentication required" }, { status: 401 });
+  }
+
   const { searchParams } = new URL(req.url);
   const videoId = searchParams.get("videoId");
   const lang = searchParams.get("lang") || "en"; // Default to English

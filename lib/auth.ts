@@ -8,7 +8,7 @@ import { redirect } from 'next/navigation'
 export async function getServerUser() {
   try {
     console.log('Getting server user...');
-    const supabase = await createClient()
+  const supabase = await createClient()
     const { data, error } = await supabase.auth.getUser()
     
     if (error) {

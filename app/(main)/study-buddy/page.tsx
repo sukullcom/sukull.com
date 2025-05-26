@@ -436,9 +436,7 @@ export default function StudyBuddyPage() {
     const { data: existingChats } = await supabase
       .from("study_buddy_chats")
       .select("*")
-      // We can do an exact match using .eq("participants", JSON.stringify([...]))
-      // so that we only get a chat whose `participants` array exactly matches
-      .filter("participants", "cs", JSON.stringify(participants));
+      .contains("participants", participants); // Fixed for JSONB array
 
     if (!existingChats || existingChats.length === 0) {
       // Limit user to 2 new chat partners in last 30 days
@@ -448,7 +446,7 @@ export default function StudyBuddyPage() {
       const { data: recentChats } = await supabase
         .from("study_buddy_chats")
         .select("*")
-        .contains("participants", currentUser.id) // Single value check
+        .contains("participants", [currentUser.id]) // Fixed for JSONB array
         .gt("last_updated", thirtyDaysAgo);
 
       const distinctPartners = new Set<string>();
@@ -477,6 +475,7 @@ export default function StudyBuddyPage() {
 
       if (error) {
         console.error("Error creating chat:", error);
+        showWarning(warningMessages.ERROR_CREATING_CHAT);
         return;
       }
       // Enrich newChat with the other participant's data
@@ -559,6 +558,8 @@ export default function StudyBuddyPage() {
   useEffect(() => {
     if (!currentUser || activeTab !== "chats") return;
 
+    console.log("Setting up chat realtime subscription for user:", currentUser.id);
+
     const chatChannel = supabase
       .channel(`realtime-chats-${currentUser.id}`)
       .on(
@@ -567,9 +568,10 @@ export default function StudyBuddyPage() {
           event: "*",
           schema: "public",
           table: "study_buddy_chats",
-          filter: `participants=cs.["${currentUser.id}"]` // Proper JSONB array syntax
+          filter: `participants.cs.{${currentUser.id}}` // Fixed JSONB array syntax
         },
         async (payload: { new: StudyBuddyChat; eventType: string }) => {
+          console.log("Chat realtime event:", payload);
           // payload.new will hold the inserted/updated row
           const changedChat = payload.new;
 
@@ -602,16 +604,20 @@ export default function StudyBuddyPage() {
           }
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log("Chat subscription status:", status);
+      });
 
     // Also fetch existing chats once:
     async function fetchChats() {
       if (!currentUser) return;
       
+      console.log("Fetching existing chats for user:", currentUser.id);
+      
       const { data, error } = await supabase
         .from("study_buddy_chats")
         .select("*")
-        .filter("participants", "cs", `["${currentUser.id}"]`)
+        .contains("participants", [currentUser.id]) // Fixed filter for JSONB array
         .order("last_updated", { ascending: false });
 
       if (error) {
@@ -619,6 +625,8 @@ export default function StudyBuddyPage() {
         setLoadingChats(false);
         return;
       }
+
+      console.log("Fetched chats:", data);
 
       if (data) {
         // Enrich each chat with participant data
@@ -652,6 +660,7 @@ export default function StudyBuddyPage() {
     fetchChats();
 
     return () => {
+      console.log("Cleaning up chat subscription");
       if (chatChannel) {
         supabase.removeChannel(chatChannel);
       }
@@ -661,6 +670,8 @@ export default function StudyBuddyPage() {
   // 8) Realtime subscription for messages in the selected chat
   useEffect(() => {
     if (!selectedChat) return;
+
+    console.log("Setting up message realtime subscription for chat:", selectedChat.id);
 
     // Listen for new messages in that chat
     const messageChannel = supabase
@@ -674,24 +685,40 @@ export default function StudyBuddyPage() {
           filter: `chat_id=eq.${selectedChat.id}`,
         },
         (payload: { new: StudyBuddyMessage }) => {
-          setMessages((prev) => [...prev, payload.new]);
+          console.log("Message realtime event:", payload);
+          // Only add if it's not already in the messages (to avoid duplicates from optimistic updates)
+          setMessages((prev) => {
+            const exists = prev.some(msg => msg.id === payload.new.id);
+            if (exists) return prev;
+            return [...prev, payload.new];
+          });
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log("Message subscription status:", status);
+      });
 
     // Load existing messages
     const fetchMessages = async () => {
-      const { data } = await supabase
+      console.log("Fetching messages for chat:", selectedChat.id);
+      
+      const { data, error } = await supabase
         .from("study_buddy_messages")
         .select("*")
         .eq("chat_id", selectedChat.id)
         .order("created_at", { ascending: true });
 
-      setMessages((data as StudyBuddyMessage[]) || []);
+      if (error) {
+        console.error("Error fetching messages:", error);
+      } else {
+        console.log("Fetched messages:", data);
+        setMessages((data as StudyBuddyMessage[]) || []);
+      }
     };
     fetchMessages();
 
     return () => {
+      console.log("Cleaning up message subscription for chat:", selectedChat.id);
       if (messageChannel) {
         supabase.removeChannel(messageChannel);
       }
@@ -731,17 +758,43 @@ export default function StudyBuddyPage() {
       return;
     }
 
-    const { error } = await supabase.from("study_buddy_messages").insert([
+    // Create optimistic message for immediate display
+    const optimisticMessage: StudyBuddyMessage = {
+      id: Date.now(), // Temporary ID
+      chat_id: selectedChat.id,
+      sender: currentUser.id,
+      content: trimmed,
+      created_at: new Date().toISOString(),
+    };
+
+    // Add optimistic message immediately
+    setMessages((prev) => [...prev, optimisticMessage]);
+    setNewMessage("");
+
+    // Send to server
+    const { data, error } = await supabase.from("study_buddy_messages").insert([
       {
         chat_id: selectedChat.id,
         sender: currentUser?.id || "",
         content: trimmed,
         created_at: new Date().toISOString(),
       },
-    ]);
+    ]).select().single();
+
     if (error) {
       console.error("Error sending message:", error);
+      // Remove optimistic message on error
+      setMessages((prev) => prev.filter(msg => msg.id !== optimisticMessage.id));
+      setNewMessage(trimmed); // Restore message text
+      showWarning(warningMessages.ERROR_SENDING_MESSAGE);
     } else {
+      // Replace optimistic message with real one
+      setMessages((prev) => 
+        prev.map(msg => 
+          msg.id === optimisticMessage.id ? data : msg
+        )
+      );
+      
       // Update chat's last_message and last_updated
       await supabase
         .from("study_buddy_chats")
@@ -750,7 +803,6 @@ export default function StudyBuddyPage() {
           last_updated: new Date().toISOString(),
         })
         .eq("id", selectedChat.id);
-      setNewMessage("");
     }
   }
 

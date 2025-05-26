@@ -16,65 +16,51 @@ interface Props {
 
 function OAuthButtons({ isLoading, onLoadingChange, redirectUrl }: Props) {
   const [internalLoading, setInternalLoading] = useState(false);
-  const [providerLoading, setProviderLoading] = useState<string | null>(null);
+  const [providerLoading, setProviderLoading] = useState<boolean>(false);
   const searchParams = useSearchParams();
   const nextUrl = redirectUrl || searchParams.get("next") || "/courses";
   const loading = isLoading ?? internalLoading;
   const setLoading = onLoadingChange ?? setInternalLoading;
 
-  const handleOAuthSignIn = async (provider: "github" | "google") => {
+  const handleGoogleSignIn = async () => {
     try {
       setLoading(true);
-      setProviderLoading(provider);
+      setProviderLoading(true);
       
       // Log the attempt with more details
-      console.log(`Attempting to sign in with ${provider}...`);
+      console.log("Attempting to sign in with Google...");
       console.log(`Next URL: ${nextUrl}`);
       console.log(`Current location: ${window.location.href}`);
       
       // Call the auth method
-      await auth.signInWithOAuth(provider, nextUrl);
+      await auth.signInWithOAuth('google', nextUrl);
       
       // Note: We won't reach this point immediately as the browser will redirect
-      console.log(`${provider} auth initiated, redirecting...`);
+      console.log("Google auth initiated, redirecting...");
     } catch (error) {
-      console.error(`${provider} auth error:`, error);
+      console.error("Google auth error:", error);
       const { message } = getAuthError(error);
-      toast.error(`${provider} girişi başarısız: ${message}`);
+      toast.error(`Google girişi başarısız: ${message}`);
       setLoading(false);
-      setProviderLoading(null);
+      setProviderLoading(false);
     }
   };
 
   return (
-    <div className="grid grid-cols-2 gap-4">
-      <Button
-        variant="primaryOutline"
-        type="button"
-        disabled={loading}
-        onClick={() => handleOAuthSignIn("github")}
-      >
-        {providerLoading === "github" ? (
-          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          <Icons.gitHub className="mr-2 h-4 w-4" />
-        )}
-        Github
-      </Button>
-      <Button
-        variant="primaryOutline"
-        type="button"
-        disabled={loading}
-        onClick={() => handleOAuthSignIn("google")}
-      >
-        {providerLoading === "google" ? (
-          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          <Icons.google className="mr-2 h-4 w-4" />
-        )}
-        Google
-      </Button>
-    </div>
+    <Button
+      variant="default"
+      type="button"
+      disabled={loading}
+      onClick={handleGoogleSignIn}
+      className="w-full"
+    >
+      {providerLoading ? (
+        <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+      ) : (
+        <Icons.google className="mr-2 h-4 w-4" />
+      )}
+      Google ile devam et
+    </Button>
   );
 }
 
@@ -96,16 +82,10 @@ export function OAuthSignIn(props: Props) {
 
       <Suspense
         fallback={
-          <div className="grid grid-cols-2 gap-4">
-            <Button variant="primaryOutline" disabled>
-              <Icons.gitHub className="mr-2 h-4 w-4" />
-              Github
-            </Button>
-            <Button variant="primaryOutline" disabled>
-              <Icons.google className="mr-2 h-4 w-4" />
-              Google
-            </Button>
-          </div>
+          <Button variant="default" disabled className="w-full">
+            <Icons.google className="mr-2 h-4 w-4" />
+            Google ile devam et
+          </Button>
         }
       >
         <OAuthButtons {...props} />

@@ -88,16 +88,16 @@ export async function updateProfileAction(
   }
 
   // Update all fields - profile is never locked
-  await db
-    .update(userProgress)
-    .set({
-      userName: newName || "Anonymous",
-      userImageSrc: newImage || "/mascot_purple.svg",
-      schoolId,
-      dailyTarget: newDailyTarget,
+    await db
+      .update(userProgress)
+      .set({
+        userName: newName || "Anonymous",
+        userImageSrc: newImage || "/mascot_purple.svg",
+        schoolId,
+        dailyTarget: newDailyTarget,
       profileLocked: false, // Always set to false to ensure profile is never locked
-    })
-    .where(eq(userProgress.userId, userId));
+      })
+      .where(eq(userProgress.userId, userId));
 
   // Update the "users" table as well
   const existingUserRow = await db.query.users.findFirst({

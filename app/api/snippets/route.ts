@@ -8,6 +8,12 @@ import { userProgress } from "@/db/schema";
 import { getServerUser } from "@/lib/auth";
 
 export async function GET(req: Request) {
+  // Add authentication check
+  const user = await getServerUser();
+  if (!user) {
+    return NextResponse.json({ error: "Authentication required" }, { status: 401 });
+  }
+
   const { searchParams } = new URL(req.url);
   const search = searchParams.get("search") || undefined;
 

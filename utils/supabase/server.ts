@@ -1,25 +1,12 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
-// Cache for server clients to reduce connection overhead
-const clientCache = new Map();
-
 /**
  * createClient used in server actions or server components
- * Implements connection pooling and error handling
+ * Removed caching to prevent session leakage between users
  */
 export async function createClient() {
   const cookieStore = cookies()
-  
-  // Create a cache key based on the current cookies
-  const cacheKey = cookieStore.getAll()
-    .map(cookie => `${cookie.name}=${cookie.value}`)
-    .join(';');
-    
-  // Return cached client if available
-  if (clientCache.has(cacheKey)) {
-    return clientCache.get(cacheKey);
-  }
   
   try {
     const client = createServerClient(
@@ -40,12 +27,6 @@ export async function createClient() {
         },
       }
     );
-    
-    // Store in cache with a 5-minute TTL
-    clientCache.set(cacheKey, client);
-    setTimeout(() => {
-      clientCache.delete(cacheKey);
-    }, 5 * 60 * 1000);
     
     return client;
   } catch (error) {

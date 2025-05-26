@@ -31,7 +31,7 @@ export const users = pgTable("users", {
   name: text("name").notNull(),               // This holds the username
   description: text("description").default(""),
   avatar: text("avatar").default(""),
-  provider: text("provider").notNull(),       // e.g., 'google', 'github', or 'email'
+  provider: text("provider").notNull(),       // e.g., 'google' or 'email'
   links: json("links").$type<IUserLink[]>().notNull().default([]),
   role: userRoleEnum("role").default("user").notNull(),
   meetLink: text("meet_link"),                // Google Meet link for teachers

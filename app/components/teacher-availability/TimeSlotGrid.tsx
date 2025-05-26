@@ -295,9 +295,9 @@ export default function TimeSlotGrid({
     const removedSlots: SavedTimeSlot[] = [];
     
     // Iterate through all days
-    for (let day of updatedDays) {
+    for (const day of updatedDays) {
       // Iterate through all slots in this day
-      for (let slot of day.slots) {
+      for (const slot of day.slots) {
         if (!('row' in slot) || !('col' in slot)) continue;
         
         const { row, col } = slot as unknown as { row: number, col: number };

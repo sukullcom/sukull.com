@@ -1,6 +1,13 @@
 import { NextResponse } from 'next/server';
+import { getServerUser } from '@/lib/auth';
 
 export async function GET(request: Request) {
+  // Add authentication check
+  const user = await getServerUser();
+  if (!user) {
+    return NextResponse.json({ error: "Authentication required" }, { status: 401 });
+  }
+
   // Get the URL from the query string
   const { searchParams } = new URL(request.url);
   

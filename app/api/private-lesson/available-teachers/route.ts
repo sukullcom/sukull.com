@@ -2,9 +2,16 @@ import { NextResponse } from "next/server";
 import { users } from "@/db/schema";
 import db from "@/db/drizzle";
 import { eq } from "drizzle-orm";
+import { getServerUser } from "@/lib/auth";
 
 export async function GET() {
   try {
+    // Add authentication check
+    const user = await getServerUser();
+    if (!user) {
+      return NextResponse.json({ error: "Authentication required" }, { status: 401 });
+    }
+
     // Get all users with teacher role
     const teachers = await db.query.users.findMany({
       where: eq(users.role, "teacher"),

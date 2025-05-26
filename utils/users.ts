@@ -83,12 +83,6 @@ export const users = {
           
           console.log('Extracted Google name:', name);
           console.log('Extracted Google avatar:', avatar);
-        } else if (provider === 'github') {
-          name = authUser.user_metadata?.user_name || 
-                 authUser.user_metadata?.preferred_username ||
-                 authUser.email?.split('@')[0] ||
-                 'User';
-          avatar = authUser.user_metadata?.avatar_url || '';
         } else {
           name = authUser.user_metadata?.full_name ||
                  authUser.email?.split('@')[0] ||

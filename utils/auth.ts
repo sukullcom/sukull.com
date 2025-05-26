@@ -63,9 +63,9 @@ export const auth = {
     return data
   },
 
-  async signInWithOAuth(provider: 'google' | 'github', nextUrl?: string) {
+  async signInWithOAuth(provider: 'google', nextUrl?: string) {
     try {
-      console.log(`Starting OAuth flow for ${provider}...`);
+      console.log(`Starting OAuth flow for Google...`);
       
       // Create the redirect URL with proper encoding
       const redirectTo = `${location.origin}/api/auth/callback`;
@@ -76,39 +76,37 @@ export const auth = {
         redirectTo: nextUrl || '/courses'
       });
       
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
           redirectTo,
-          scopes: provider === 'google' ? 'email profile' : undefined,
+          scopes: 'email profile',
           queryParams: {
-            ...(provider === 'google' ? {
-              access_type: 'offline',
-              prompt: 'consent',
-            } : {}),
+            access_type: 'offline',
+            prompt: 'consent',
             state: encodeURIComponent(stateParam)
           },
         },
       });
       
       if (error) {
-        console.error(`OAuth error for ${provider}:`, error);
+        console.error(`OAuth error for Google:`, error);
         throw error;
       }
       
       if (!data.url) {
-        console.error(`No URL returned from ${provider} OAuth`);
-        throw new Error(`Failed to start ${provider} authentication`);
+        console.error(`No URL returned from Google OAuth`);
+        throw new Error(`Failed to start Google authentication`);
       }
       
-      console.log(`Successfully initiated ${provider} OAuth. Redirecting to: ${data.url}`);
+      console.log(`Successfully initiated Google OAuth. Redirecting to: ${data.url}`);
       
       // Redirect to the provider's authentication page
       window.location.href = data.url;
       
       return data;
     } catch (error) {
-      console.error(`Error in signInWithOAuth for ${provider}:`, error);
+      console.error(`Error in signInWithOAuth for Google:`, error);
       throw error;
     }
   },
