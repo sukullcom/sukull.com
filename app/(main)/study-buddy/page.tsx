@@ -63,6 +63,27 @@ let schoolsCache: SchoolItem[] | null = null;
 let schoolsCacheTimestamp = 0;
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
+// Anti-spam and resource protection constants
+const MESSAGE_LIMITS = {
+  MAX_LENGTH: 200,
+  MAX_PER_MINUTE: 10,
+  MAX_PER_HOUR: 50,
+  MAX_PER_DAY: 100,
+  MIN_INTERVAL_MS: 2000, // 2 seconds between messages
+  MAX_CONSECUTIVE_SAME: 3, // Max same message in a row
+};
+
+const POST_LIMITS = {
+  MAX_REASON_LENGTH: 300,
+  MAX_PER_DAY: 2,
+  MIN_INTERVAL_MS: 60000, // 1 minute between posts
+};
+
+const CHAT_LIMITS = {
+  MAX_NEW_CHATS_PER_DAY: 2,
+  MAX_ACTIVE_CHATS: 5,
+};
+
 // Create a shared warningMessages object with Turkish translations
 const warningMessages = {
   MESSAGE_LIMIT: "Mesajlar en fazla 200 karakter olabilir.",
@@ -79,6 +100,17 @@ const warningMessages = {
   ERROR_SENDING_MESSAGE: "Mesaj gönderilirken bir hata oluştu.",
   ERROR_LOADING_POSTS: "Gönderiler yüklenirken bir hata oluştu.",
   ERROR_LOADING_CHATS: "Sohbetler yüklenirken bir hata oluştu.",
+  
+  // Anti-spam messages
+  MESSAGE_TOO_FREQUENT: "Çok hızlı mesaj gönderiyorsunuz. Lütfen 2 saniye bekleyin.",
+  MESSAGE_RATE_LIMIT_MINUTE: "Dakikada en fazla 10 mesaj gönderebilirsiniz.",
+  MESSAGE_RATE_LIMIT_HOUR: "Saatte en fazla 50 mesaj gönderebilirsiniz.",
+  MESSAGE_RATE_LIMIT_DAY: "Günde en fazla 100 mesaj gönderebilirsiniz.",
+  DUPLICATE_MESSAGE: "Aynı mesajı art arda çok fazla gönderiyorsunuz.",
+  POST_TOO_FREQUENT: "Gönderiler arasında en az 1 dakika beklemelisiniz.",
+  POST_DAILY_LIMIT: "Günde en fazla 2 gönderi oluşturabilirsiniz.",
+  TOO_MANY_ACTIVE_CHATS: "En fazla 5 aktif sohbetiniz olabilir.",
+  DAILY_CHAT_LIMIT: "Günde en fazla 2 yeni sohbet başlatabilirsiniz.",
 };
 
 export default function StudyBuddyPage() {
@@ -144,12 +176,168 @@ export default function StudyBuddyPage() {
   const [warningOpen, setWarningOpen] = useState<boolean>(false);
   const [warningMessage, setWarningMessage] = useState<string>("");
   
+  // Anti-spam tracking
+  const [lastMessageTime, setLastMessageTime] = useState<number>(0);
+  const [lastPostTime, setLastPostTime] = useState<number>(0);
+  const [recentMessages, setRecentMessages] = useState<string[]>([]);
+  const [messageCooldown, setMessageCooldown] = useState<number>(0);
+  
   const showWarning = useCallback((msg: string) => {
     setWarningMessage(msg);
     setWarningOpen(true);
     // Also show as toast for better visibility
     turkishToast.warning(msg);
   }, []);
+
+  // Anti-spam validation functions
+  const validateMessageSpam = useCallback(async (message: string): Promise<boolean> => {
+    if (!currentUser) return false;
+
+    const now = Date.now();
+    const trimmed = message.trim();
+
+    // Check message length
+    if (trimmed.length > MESSAGE_LIMITS.MAX_LENGTH) {
+      showWarning(warningMessages.MESSAGE_LIMIT);
+      return false;
+    }
+
+    // Check minimum interval between messages
+    if (now - lastMessageTime < MESSAGE_LIMITS.MIN_INTERVAL_MS) {
+      const remainingTime = Math.ceil((MESSAGE_LIMITS.MIN_INTERVAL_MS - (now - lastMessageTime)) / 1000);
+      setMessageCooldown(remainingTime);
+      showWarning(warningMessages.MESSAGE_TOO_FREQUENT);
+      return false;
+    }
+
+    // Check for duplicate consecutive messages
+    const lastThreeMessages = recentMessages.slice(-MESSAGE_LIMITS.MAX_CONSECUTIVE_SAME);
+    const duplicateCount = lastThreeMessages.filter(msg => msg === trimmed).length;
+    if (duplicateCount >= MESSAGE_LIMITS.MAX_CONSECUTIVE_SAME) {
+      showWarning(warningMessages.DUPLICATE_MESSAGE);
+      return false;
+    }
+
+    // Check rate limits from database
+    const oneMinuteAgo = new Date(now - 60 * 1000).toISOString();
+    const oneHourAgo = new Date(now - 60 * 60 * 1000).toISOString();
+    const oneDayAgo = new Date(now - 24 * 60 * 60 * 1000).toISOString();
+
+    try {
+      // Check messages in last minute
+      const { data: minuteMessages } = await supabase
+        .from("study_buddy_messages")
+        .select("id")
+        .eq("sender", currentUser.id)
+        .gt("created_at", oneMinuteAgo);
+
+      if (minuteMessages && minuteMessages.length >= MESSAGE_LIMITS.MAX_PER_MINUTE) {
+        showWarning(warningMessages.MESSAGE_RATE_LIMIT_MINUTE);
+        return false;
+      }
+
+      // Check messages in last hour
+      const { data: hourMessages } = await supabase
+        .from("study_buddy_messages")
+        .select("id")
+        .eq("sender", currentUser.id)
+        .gt("created_at", oneHourAgo);
+
+      if (hourMessages && hourMessages.length >= MESSAGE_LIMITS.MAX_PER_HOUR) {
+        showWarning(warningMessages.MESSAGE_RATE_LIMIT_HOUR);
+        return false;
+      }
+
+      // Check messages in last day
+      const { data: dayMessages } = await supabase
+        .from("study_buddy_messages")
+        .select("id")
+        .eq("sender", currentUser.id)
+        .gt("created_at", oneDayAgo);
+
+      if (dayMessages && dayMessages.length >= MESSAGE_LIMITS.MAX_PER_DAY) {
+        showWarning(warningMessages.MESSAGE_RATE_LIMIT_DAY);
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Error checking message limits:", error);
+      return true; // Allow message if check fails
+    }
+  }, [currentUser, lastMessageTime, recentMessages, showWarning, supabase]);
+
+  const validatePostSpam = useCallback(async (): Promise<boolean> => {
+    if (!currentUser) return false;
+
+    const now = Date.now();
+
+    // Check minimum interval between posts
+    if (now - lastPostTime < POST_LIMITS.MIN_INTERVAL_MS) {
+      const remainingTime = Math.ceil((POST_LIMITS.MIN_INTERVAL_MS - (now - lastPostTime)) / 1000);
+      showWarning(`${warningMessages.POST_TOO_FREQUENT} (${remainingTime} saniye kaldı)`);
+      return false;
+    }
+
+    // Check daily post limit
+    const oneDayAgo = new Date(now - 24 * 60 * 60 * 1000).toISOString();
+    
+    try {
+      const { data: dayPosts } = await supabase
+        .from("study_buddy_posts")
+        .select("id")
+        .eq("user_id", currentUser.id)
+        .gt("created_at", oneDayAgo);
+
+      if (dayPosts && dayPosts.length >= POST_LIMITS.MAX_PER_DAY) {
+        showWarning(warningMessages.POST_DAILY_LIMIT);
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Error checking post limits:", error);
+      return true; // Allow post if check fails
+    }
+  }, [currentUser, lastPostTime, showWarning, supabase]);
+
+  const validateChatSpam = useCallback(async (): Promise<boolean> => {
+    if (!currentUser) return false;
+
+    const now = Date.now();
+    const oneDayAgo = new Date(now - 24 * 60 * 60 * 1000).toISOString();
+
+    try {
+      // Check active chats limit
+      const { data: allChats } = await supabase
+        .from("study_buddy_chats")
+        .select("*");
+
+      const userChats = allChats?.filter((chat: StudyBuddyChat) => 
+        chat.participants.includes(currentUser.id)
+      ) || [];
+
+      if (userChats.length >= CHAT_LIMITS.MAX_ACTIVE_CHATS) {
+        showWarning(warningMessages.TOO_MANY_ACTIVE_CHATS);
+        return false;
+      }
+
+      // Check daily new chats limit
+      const recentChats = userChats.filter((chat: StudyBuddyChat) => 
+        chat.last_updated > oneDayAgo
+      );
+
+      if (recentChats.length >= CHAT_LIMITS.MAX_NEW_CHATS_PER_DAY) {
+        showWarning(warningMessages.DAILY_CHAT_LIMIT);
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Error checking chat limits:", error);
+      return true; // Allow chat if check fails
+    }
+  }, [currentUser, showWarning, supabase]);
 
   // For post editing
   const [editingPost, setEditingPost] = useState<StudyBuddyPost | null>(null);
@@ -384,26 +572,18 @@ export default function StudyBuddyPage() {
       setCreationError(warningMessages.EMPTY_REASON);
       return;
     }
-    if (trimmedReason.length > 256) {
+    if (trimmedReason.length > POST_LIMITS.MAX_REASON_LENGTH) {
       setCreationError(warningMessages.REASON_TOO_LONG);
       return;
     }
     if (!currentUser) return;
 
-    // Limit user to 2 posts in last 30 days
-    const thirtyDaysAgo = new Date(
-      Date.now() - THIRTY_DAYS_IN_MS
-    ).toISOString();
-    const { data: recentPosts } = await supabase
-      .from("study_buddy_posts")
-      .select("*")
-      .eq("user_id", currentUser.id)
-      .gt("created_at", thirtyDaysAgo);
+    // Validate against spam and rate limits
+    const isValid = await validatePostSpam();
+    if (!isValid) return;
 
-    if (recentPosts && recentPosts.length >= 2) {
-      setCreationError(warningMessages.MONTHLY_POST_LIMIT);
-      return;
-    }
+    // Update post timing tracking
+    setLastPostTime(Date.now());
 
     const { error } = await supabase.from("study_buddy_posts").insert([
       {
@@ -432,33 +612,47 @@ export default function StudyBuddyPage() {
 
     const participants = [currentUser.id, post.user_id].sort();
 
-    // Check if chat already exists
-    const { data: existingChats } = await supabase
-      .from("study_buddy_chats")
-      .select("*")
-      .contains("participants", participants); // Fixed for JSONB array
-
-    if (!existingChats || existingChats.length === 0) {
-      // Limit user to 2 new chat partners in last 30 days
-      const thirtyDaysAgo = new Date(
-        Date.now() - THIRTY_DAYS_IN_MS
-      ).toISOString();
-      const { data: recentChats } = await supabase
+    try {
+      // Fetch all chats and filter client-side to find existing chat
+      const { data: allChats } = await supabase
         .from("study_buddy_chats")
-        .select("*")
-        .contains("participants", [currentUser.id]) // Fixed for JSONB array
-        .gt("last_updated", thirtyDaysAgo);
-
-      const distinctPartners = new Set<string>();
-      recentChats?.forEach((chat: StudyBuddyChat) => {
-        const other = chat.participants.find((uid) => uid !== currentUser.id);
-        if (other) distinctPartners.add(other);
+        .select("*");
+      
+      const existingChat = allChats?.find((chat: StudyBuddyChat) => {
+        const chatParticipants = chat.participants.sort();
+        return chatParticipants.length === participants.length &&
+               chatParticipants.every((id, index) => id === participants[index]);
       });
 
-      if (distinctPartners.size >= 2) {
-        showWarning(warningMessages.MONTHLY_CHAT_LIMIT);
+      if (existingChat) {
+        // Chat exists, select it
+        const chatInState = chats.find((c) => c.id === existingChat.id);
+        if (chatInState) {
+          setSelectedChat(chatInState);
+        } else {
+          const otherUid = participants.find((id) => id !== currentUser.id);
+          if (otherUid) {
+            const { data: userData } = await supabase
+              .from("users")
+              .select("name, avatar")
+              .eq("id", otherUid)
+              .single();
+            existingChat.participantsData = {
+              [otherUid]: {
+                userName: userData?.name || "User",
+                avatarUrl: userData?.avatar || "/mascot_purple.svg",
+              },
+            };
+          }
+          setSelectedChat(existingChat);
+        }
         return;
       }
+
+      // No existing chat found, create a new one
+      // Validate against spam and rate limits
+      const isValid = await validateChatSpam();
+      if (!isValid) return;
 
       // Create a new chat
       const { data: newChat, error } = await supabase
@@ -478,6 +672,7 @@ export default function StudyBuddyPage() {
         showWarning(warningMessages.ERROR_CREATING_CHAT);
         return;
       }
+
       // Enrich newChat with the other participant's data
       if (newChat) {
         const otherUid = participants.find((id) => id !== currentUser.id);
@@ -496,31 +691,9 @@ export default function StudyBuddyPage() {
         }
         setSelectedChat(newChat as StudyBuddyChat);
       }
-    } else {
-      // Chat already exists, so let's see if we have it (with participantsData) in `chats` state
-      const existingChat = existingChats[0] as StudyBuddyChat;
-      const chatInState = chats.find((c) => c.id === existingChat.id);
-      if (chatInState) {
-        // We already have the enriched version in state
-        setSelectedChat(chatInState);
-      } else {
-        // If not in state for some reason, just manually enrich it again:
-        const otherUid = participants.find((id) => id !== currentUser.id);
-        if (otherUid) {
-          const { data: userData } = await supabase
-            .from("users")
-            .select("name, avatar")
-            .eq("id", otherUid)
-            .single();
-          existingChat.participantsData = {
-            [otherUid]: {
-              userName: userData?.name || "User",
-              avatarUrl: userData?.avatar || "/mascot_purple.svg",
-            },
-          };
-        }
-        setSelectedChat(existingChat);
-      }
+    } catch (error) {
+      console.error("Error in handleOpenChat:", error);
+      showWarning(warningMessages.ERROR_CREATING_CHAT);
     }
   }
 
@@ -568,12 +741,18 @@ export default function StudyBuddyPage() {
           event: "*",
           schema: "public",
           table: "study_buddy_chats",
-          filter: `participants.cs.{${currentUser.id}}` // Fixed JSONB array syntax
+          // Remove filter - we'll filter client-side since JSON array filtering is complex in realtime
         },
         async (payload: { new: StudyBuddyChat; eventType: string }) => {
           console.log("Chat realtime event:", payload);
           // payload.new will hold the inserted/updated row
           const changedChat = payload.new;
+
+          // Filter client-side: only process chats where current user is a participant
+          if (!changedChat.participants.includes(currentUser.id)) {
+            console.log("Ignoring chat - user not a participant");
+            return;
+          }
 
           // Enrich with participant data (the "other" user)
           const otherUid = changedChat.participants.find(
@@ -604,7 +783,7 @@ export default function StudyBuddyPage() {
           }
         }
       )
-      .subscribe((status) => {
+      .subscribe((status: string) => {
         console.log("Chat subscription status:", status);
       });
 
@@ -614,48 +793,62 @@ export default function StudyBuddyPage() {
       
       console.log("Fetching existing chats for user:", currentUser.id);
       
-      const { data, error } = await supabase
-        .from("study_buddy_chats")
-        .select("*")
-        .contains("participants", [currentUser.id]) // Fixed filter for JSONB array
-        .order("last_updated", { ascending: false });
+      try {
+        // Fetch all chats and filter client-side
+        const { data, error } = await supabase
+          .from("study_buddy_chats")
+          .select("*")
+          .order("last_updated", { ascending: false });
 
-      if (error) {
-        console.error("Error fetching chats:", error);
+        if (error) {
+          console.error("Error fetching chats:", error);
+          setLoadingChats(false);
+          return;
+        }
+
+        console.log("Fetched all chats:", data);
+
+        // Filter client-side for chats containing current user
+        const userChats = data?.filter((chat: StudyBuddyChat) => 
+          chat.participants.includes(currentUser.id)
+        ) || [];
+
+        console.log("Filtered user chats:", userChats);
+
+        if (userChats.length > 0) {
+          // Enrich each chat with participant data
+          const chatsWithData = await Promise.all(
+            userChats.map(async (chat: StudyBuddyChat) => {
+              if (!currentUser) return chat;
+              
+              const otherUid = chat.participants.find(
+                (id) => id !== currentUser.id
+              );
+              if (otherUid) {
+                const { data: userData } = await supabase
+                  .from("users")
+                  .select("name, avatar")
+                  .eq("id", otherUid)
+                  .single();
+                chat.participantsData = {
+                  [otherUid]: {
+                    userName: userData?.name || "User",
+                    avatarUrl: userData?.avatar || "/mascot_purple.svg",
+                  },
+                };
+              }
+              return chat;
+            })
+          );
+          setChats(chatsWithData);
+        } else {
+          setChats([]);
+        }
+      } catch (error) {
+        console.error("Error in fetchChats:", error);
+      } finally {
         setLoadingChats(false);
-        return;
       }
-
-      console.log("Fetched chats:", data);
-
-      if (data) {
-        // Enrich each chat with participant data
-        const chatsWithData = await Promise.all(
-          data.map(async (chat: StudyBuddyChat) => {
-            if (!currentUser) return chat;
-            
-            const otherUid = chat.participants.find(
-              (id) => id !== currentUser.id
-            );
-            if (otherUid) {
-              const { data: userData } = await supabase
-                .from("users")
-                .select("name, avatar")
-                .eq("id", otherUid)
-                .single();
-              chat.participantsData = {
-                [otherUid]: {
-                  userName: userData?.name || "User",
-                  avatarUrl: userData?.avatar || "/mascot_purple.svg",
-                },
-              };
-            }
-            return chat;
-          })
-        );
-        setChats(chatsWithData);
-      }
-      setLoadingChats(false);
     }
     fetchChats();
 
@@ -694,7 +887,7 @@ export default function StudyBuddyPage() {
           });
         }
       )
-      .subscribe((status) => {
+      .subscribe((status: string) => {
         console.log("Message subscription status:", status);
       });
 
@@ -732,31 +925,25 @@ export default function StudyBuddyPage() {
     }
   }, [messages]);
 
+  // Cooldown timer effect
+  useEffect(() => {
+    if (messageCooldown > 0) {
+      const timer = setTimeout(() => {
+        setMessageCooldown(prev => prev - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [messageCooldown]);
+
   // 9) Send message
   async function handleSendMessage() {
     if (!selectedChat || !newMessage.trim() || !currentUser) return;
     
     const trimmed = newMessage.trim();
     
-    if (trimmed.length > 200) {
-      showWarning(warningMessages.MESSAGE_LIMIT);
-      return;
-    }
-
-    // Limit user to 100 messages per 30 days
-    const thirtyDaysAgo = new Date(
-      Date.now() - THIRTY_DAYS_IN_MS
-    ).toISOString();
-    const { data: recentMsgs } = await supabase
-      .from("study_buddy_messages")
-      .select("*")
-      .eq("sender", currentUser?.id || "")
-      .gt("created_at", thirtyDaysAgo);
-
-    if (recentMsgs && recentMsgs.length >= 100) {
-      showWarning(warningMessages.MONTHLY_MESSAGE_LIMIT);
-      return;
-    }
+    // Validate against spam and rate limits
+    const isValid = await validateMessageSpam(trimmed);
+    if (!isValid) return;
 
     // Create optimistic message for immediate display
     const optimisticMessage: StudyBuddyMessage = {
@@ -766,6 +953,11 @@ export default function StudyBuddyPage() {
       content: trimmed,
       created_at: new Date().toISOString(),
     };
+
+    // Update anti-spam tracking
+    const now = Date.now();
+    setLastMessageTime(now);
+    setRecentMessages(prev => [...prev.slice(-MESSAGE_LIMITS.MAX_CONSECUTIVE_SAME), trimmed]);
 
     // Add optimistic message immediately
     setMessages((prev) => [...prev, optimisticMessage]);
@@ -985,9 +1177,13 @@ export default function StudyBuddyPage() {
                         className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                         value={postReason}
                         onChange={(e) => setPostReason(e.target.value)}
-                        placeholder="Neden çalışma arkadaşı arıyorsun? (max 256 karakter)"
-                        maxLength={256}
+                        placeholder={`Neden çalışma arkadaşı arıyorsun? (max ${POST_LIMITS.MAX_REASON_LENGTH} karakter)`}
+                        maxLength={POST_LIMITS.MAX_REASON_LENGTH}
                       />
+                      <div className="flex justify-between text-xs text-gray-500 mt-1">
+                        <span>{postReason.length}/{POST_LIMITS.MAX_REASON_LENGTH} karakter</span>
+                        <span>Günlük limit: {POST_LIMITS.MAX_PER_DAY} gönderi</span>
+                      </div>
                     </div>
                     <Button variant="secondary" onClick={handleCreatePost}>
                       Gönder
@@ -1233,26 +1429,35 @@ export default function StudyBuddyPage() {
                         })}
                         <div ref={messageEndRef} />
                       </div>
-                      <div className="mt-2 flex items-center gap-2">
-                        <input
-                          className="flex-1 border rounded-md p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                          placeholder="Mesaj (max 200 karakter)"
-                          value={newMessage}
-                          onChange={(e) => setNewMessage(e.target.value)}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                              e.preventDefault();
-                              handleSendMessage();
-                            }
-                          }}
-                        />
-                        <Button
-                          variant="primary"
-                          size="sm"
-                          onClick={handleSendMessage}
-                        >
-                          Gönder
-                        </Button>
+                      <div className="mt-2">
+                        <div className="flex items-center gap-2">
+                          <input
+                            className="flex-1 border rounded-md p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                            placeholder={messageCooldown > 0 ? `Bekleyin... ${messageCooldown}s` : "Mesaj yazın..."}
+                            value={newMessage}
+                            onChange={(e) => setNewMessage(e.target.value)}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter" && messageCooldown === 0) {
+                                e.preventDefault();
+                                handleSendMessage();
+                              }
+                            }}
+                            disabled={messageCooldown > 0}
+                            maxLength={MESSAGE_LIMITS.MAX_LENGTH}
+                          />
+                          <Button
+                            variant="primary"
+                            size="sm"
+                            onClick={handleSendMessage}
+                            disabled={messageCooldown > 0 || !newMessage.trim()}
+                          >
+                            {messageCooldown > 0 ? `${messageCooldown}s` : "Gönder"}
+                          </Button>
+                        </div>
+                        <div className="flex justify-between text-xs text-gray-500 mt-1">
+                          <span>{newMessage.length}/{MESSAGE_LIMITS.MAX_LENGTH} karakter</span>
+                          <span>Günlük limit: {MESSAGE_LIMITS.MAX_PER_DAY} mesaj</span>
+                        </div>
                       </div>
                     </>
                   )}
@@ -1333,7 +1538,9 @@ export default function StudyBuddyPage() {
             <div className="flex flex-col items-center mb-4">
               <Image
                 src="/mascot_sad.svg"
-                alt="Sad Mascot" 
+                alt="Sad Mascot"
+                width={80}
+                height={80}
                 unoptimized
                 className="w-20 h-20 mb-4" 
               />
