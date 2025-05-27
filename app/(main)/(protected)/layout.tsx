@@ -6,6 +6,7 @@ import { getUserProgress } from "@/db/queries";
 import { StickyWrapper } from "@/components/sticky-wrapper";
 import { UserProgress } from "@/components/user-progress";
 import { Quests } from "@/components/quests";
+import { DailyProgress } from "@/components/daily-progress";
 
 export default async function ProtectedLayout({
   children,
@@ -39,7 +40,8 @@ export default async function ProtectedLayout({
           />
         ) : null}
 
-          <Quests points={userProgress.points} />
+        <DailyProgress />
+        <Quests points={userProgress.points} />
       </StickyWrapper>
 
       {/* The main content from each nested page */}

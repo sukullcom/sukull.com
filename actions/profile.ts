@@ -17,6 +17,21 @@ export async function getProfileDataOnServer() {
   if (!user) throw new Error("Unauthorized");
   const userId = user.id;
 
+  // Get current progress to check if streak tracking is initialized
+  const progress = await db.query.userProgress.findFirst({
+    where: eq(userProgress.userId, userId),
+  });
+
+  // Initialize streak tracking if needed
+  if (progress && (progress.previousTotalPoints === null || progress.previousTotalPoints === undefined)) {
+    await db.update(userProgress)
+      .set({
+        previousTotalPoints: progress.points,
+        lastStreakCheck: new Date(),
+      })
+      .where(eq(userProgress.userId, userId));
+  }
+
   // Update daily streak before fetching profile data
   await updateDailyStreak();
 

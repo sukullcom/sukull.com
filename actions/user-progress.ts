@@ -217,6 +217,16 @@ export async function addUserPoints(points: number) {
     
     if (!progress) return null;
     
+    // Initialize streak tracking if needed
+    if (progress.previousTotalPoints === null || progress.previousTotalPoints === undefined) {
+      await db.update(userProgress)
+        .set({
+          previousTotalPoints: progress.points,
+          lastStreakCheck: new Date(),
+        })
+        .where(eq(userProgress.userId, userId));
+    }
+    
     // Update points
     const newPoints = progress.points + points;
     
@@ -269,53 +279,13 @@ export async function addSchoolPoints(schoolId: number, points: number) {
 /**
  * Resets the daily streak for all users
  * This should be run once per day at midnight via a scheduled job
+ * DEPRECATED: Use checkAndResetStreaks from daily-streak.ts instead
  */
 export async function resetDailyStreaks() {
   try {
-    // Get users who have an active streak
-    const activeStreakUsers = await db.query.userProgress.findMany({
-      where: gt(userProgress.istikrar, 0),
-    });
-    
-    const now = new Date();
-    // Create the start of today (midnight)
-    const todayStart = new Date(now);
-    todayStart.setHours(0, 0, 0, 0);
-    
-    // Create the start of yesterday (midnight)
-    const yesterdayStart = new Date(todayStart);
-    yesterdayStart.setDate(yesterdayStart.getDate() - 1);
-    
-    // Reset streak for users who didn't meet their target
-    for (const user of activeStreakUsers) {
-      const lastCheckDate = user.lastStreakCheck ? new Date(user.lastStreakCheck) : null;
-      
-      // If the user hasn't logged in for more than a day, reset their streak
-      if (!lastCheckDate || lastCheckDate < yesterdayStart) {
-        await db.update(userProgress)
-          .set({
-            istikrar: 0,
-            lastStreakCheck: todayStart,
-            previousTotalPoints: user.points,
-          })
-          .where(eq(userProgress.userId, user.userId));
-          
-        // Record the missed day in the streak calendar
-        const missedDate = new Date(yesterdayStart);
-        await db.insert(userDailyStreak).values({
-          userId: user.userId,
-          date: missedDate,
-          achieved: false,
-        }).onConflictDoUpdate({
-          target: [userDailyStreak.userId, userDailyStreak.date],
-          set: { achieved: false }
-        });
-      }
-      // For the case where user logged in yesterday but didn't meet target,
-      // the updateDailyStreak function will handle it when they next log in
-    }
-    
-    return true;
+    // Import the new function to avoid duplication
+    const { checkAndResetStreaks } = await import("./daily-streak");
+    return await checkAndResetStreaks();
   } catch (error) {
     console.error("Error resetting daily streaks:", error);
     return false;

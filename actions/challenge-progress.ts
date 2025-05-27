@@ -46,6 +46,16 @@ export const upsertChallengeProgress = async (challengeId: number) => {
       .set({ completed: true })
       .where(eq(challengeProgress.id, existingChallengeProgress.id));
 
+    // Initialize streak tracking if needed
+    if (currentUserProgress.previousTotalPoints === null || currentUserProgress.previousTotalPoints === undefined) {
+      await db.update(userProgress)
+        .set({
+          previousTotalPoints: currentUserProgress.points,
+          lastStreakCheck: new Date(),
+        })
+        .where(eq(userProgress.userId, userId));
+    }
+
     await db
       .update(userProgress)
       .set({
@@ -62,6 +72,16 @@ export const upsertChallengeProgress = async (challengeId: number) => {
     revalidatePath(`/lesson/${lessonId}`);
     revalidatePath("/leaderboard");
     return;
+  }
+
+  // Initialize streak tracking if needed
+  if (currentUserProgress.previousTotalPoints === null || currentUserProgress.previousTotalPoints === undefined) {
+    await db.update(userProgress)
+      .set({
+        previousTotalPoints: currentUserProgress.points,
+        lastStreakCheck: new Date(),
+      })
+      .where(eq(userProgress.userId, userId));
   }
 
   // Insert new challenge progress
@@ -115,6 +135,16 @@ export async function addPointsToUser(pointsToAdd: number) {
   });
   if (!currentUserProgress) {
     throw new Error("User progress not found");
+  }
+
+  // Initialize streak tracking if needed
+  if (currentUserProgress.previousTotalPoints === null || currentUserProgress.previousTotalPoints === undefined) {
+    await db.update(userProgress)
+      .set({
+        previousTotalPoints: currentUserProgress.points,
+        lastStreakCheck: new Date(),
+      })
+      .where(eq(userProgress.userId, userId));
   }
 
   const newPoints = (currentUserProgress.points || 0) + pointsToAdd;
