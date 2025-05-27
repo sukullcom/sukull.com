@@ -56,7 +56,7 @@ export default function FixStudentRolesPage() {
         <CardHeader>
           <CardTitle className="text-2xl">Fix Student Roles</CardTitle>
           <CardDescription>
-            This tool will update all users with approved student applications to have the "student" role if they don't already.
+            This tool will update all users with approved student applications to have the &ldquo;student&rdquo; role if they don&apos;t already.
             Teachers will not be affected.
           </CardDescription>
         </CardHeader>

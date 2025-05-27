@@ -189,95 +189,96 @@ export default function TimeSlotGrid({
     gridSlotsRef.current = grid;
   }, [days]);
 
-  const toggleSlot = (clickedDay: number, clickedSlot: { 
-    startTime: string | Date; 
-    endTime: string | Date; 
-    dayOfWeek: number;
-    disabled?: boolean;
-    selected?: boolean;
-  }) => {
-    if (readOnly || !isEditing) return;
-    
-    // Update the days state
-    const updatedDays = [...days];
-    const dayIndex = updatedDays.findIndex(day => day.dayNumber === clickedDay);
-    
-    if (dayIndex !== -1) {
-      // First convert the slot times to strings if they are Date objects
-      const slotStartTime = clickedSlot.startTime instanceof Date 
-        ? clickedSlot.startTime.toISOString() 
-        : clickedSlot.startTime;
-        
-      const slotEndTime = clickedSlot.endTime instanceof Date 
-        ? clickedSlot.endTime.toISOString() 
-        : clickedSlot.endTime;
-
-      const slotIndex = updatedDays[dayIndex].slots.findIndex(
-        slot => {
-          const slotTime = slot.startTime instanceof Date
-            ? slot.startTime.getTime()
-            : new Date(slot.startTime).getTime();
-            
-          const clickedTime = clickedSlot.startTime instanceof Date
-            ? clickedSlot.startTime.getTime()
-            : new Date(clickedSlot.startTime).getTime();
-            
-          return slotTime === clickedTime;
-        }
-      );
-      
-      if (slotIndex !== -1) {
-        // Toggle the selected state
-        const isCurrentlySelected = updatedDays[dayIndex].slots[slotIndex].selected;
-        updatedDays[dayIndex].slots[slotIndex] = {
-          ...updatedDays[dayIndex].slots[slotIndex],
-          selected: !isCurrentlySelected
-        };
-        
-        setDays(updatedDays);
-        
-        // Update the selectedSlots array
-        let newSelectedSlots: SavedTimeSlot[];
-        
-        if (isCurrentlySelected) {
-          // Remove from selected slots
-          newSelectedSlots = selectedSlots.filter(
-            slot => {
-              const slotTime = typeof slot.startTime === 'string'
-                ? new Date(slot.startTime).getTime()
-                : new Date(slot.startTime).getTime();
-                
-              const clickedTime = typeof slotStartTime === 'string'
-                ? new Date(slotStartTime).getTime()
-                : new Date(slotStartTime).getTime();
-                
-              return slotTime !== clickedTime || slot.dayOfWeek !== clickedSlot.dayOfWeek;
-            }
-          );
-        } else {
-          // Add to selected slots
-          newSelectedSlots = [
-            ...selectedSlots,
-            {
-              startTime: slotStartTime,
-              endTime: slotEndTime,
-              dayOfWeek: clickedSlot.dayOfWeek
-            }
-          ];
-        }
-        
-        setSelectedSlots(newSelectedSlots);
-        
-        // Call the onSlotsChange callback if provided
-        if (onSlotsChange) {
-          onSlotsChange(newSelectedSlots);
-        }
-      }
-    }
-  };
+  // Note: toggleSlot is not used but kept for potential future use
+  // const toggleSlot = (clickedDay: number, clickedSlot: { 
+  //   startTime: string | Date; 
+  //   endTime: string | Date; 
+  //   dayOfWeek: number;
+  //   disabled?: boolean;
+  //   selected?: boolean;
+  // }) => {
+  //   if (readOnly || !isEditing) return;
+  //   
+  //   // Update the days state
+  //   const updatedDays = [...days];
+  //   const dayIndex = updatedDays.findIndex(day => day.dayNumber === clickedDay);
+  //   
+  //   if (dayIndex !== -1) {
+  //     // First convert the slot times to strings if they are Date objects
+  //     const slotStartTime = clickedSlot.startTime instanceof Date 
+  //       ? clickedSlot.startTime.toISOString() 
+  //       : clickedSlot.startTime;
+  //       
+  //     const slotEndTime = clickedSlot.endTime instanceof Date 
+  //       ? clickedSlot.endTime.toISOString() 
+  //       : clickedSlot.endTime;
+  //
+  //     const slotIndex = updatedDays[dayIndex].slots.findIndex(
+  //       slot => {
+  //         const slotTime = slot.startTime instanceof Date
+  //           ? slot.startTime.getTime()
+  //           : new Date(slot.startTime).getTime();
+  //           
+  //         const clickedTime = clickedSlot.startTime instanceof Date
+  //           ? clickedSlot.startTime.getTime()
+  //           : new Date(clickedSlot.startTime).getTime();
+  //           
+  //         return slotTime === clickedTime;
+  //       }
+  //     );
+  //     
+  //     if (slotIndex !== -1) {
+  //       // Toggle the selected state
+  //       const isCurrentlySelected = updatedDays[dayIndex].slots[slotIndex].selected;
+  //       updatedDays[dayIndex].slots[slotIndex] = {
+  //         ...updatedDays[dayIndex].slots[slotIndex],
+  //         selected: !isCurrentlySelected
+  //       };
+  //       
+  //       setDays(updatedDays);
+  //       
+  //       // Update the selectedSlots array
+  //       let newSelectedSlots: SavedTimeSlot[];
+  //       
+  //       if (isCurrentlySelected) {
+  //         // Remove from selected slots
+  //         newSelectedSlots = selectedSlots.filter(
+  //           slot => {
+  //             const slotTime = typeof slot.startTime === 'string'
+  //               ? new Date(slot.startTime).getTime()
+  //               : new Date(slot.startTime).getTime();
+  //               
+  //             const clickedTime = typeof slotStartTime === 'string'
+  //               ? new Date(slotStartTime).getTime()
+  //               : new Date(slotStartTime).getTime();
+  //               
+  //             return slotTime !== clickedTime || slot.dayOfWeek !== clickedSlot.dayOfWeek;
+  //           }
+  //         );
+  //       } else {
+  //         // Add to selected slots
+  //         newSelectedSlots = [
+  //           ...selectedSlots,
+  //           {
+  //             startTime: slotStartTime,
+  //             endTime: slotEndTime,
+  //             dayOfWeek: clickedSlot.dayOfWeek
+  //           }
+  //         ];
+  //       }
+  //       
+  //       setSelectedSlots(newSelectedSlots);
+  //       
+  //       // Call the onSlotsChange callback if provided
+  //       if (onSlotsChange) {
+  //         onSlotsChange(newSelectedSlots);
+  //       }
+  //     }
+  //   }
+  // };
   
   // Handle drag selection operations
-  const updateDragSelection = () => {
+  const updateDragSelection = useCallback(() => {
     if (!isDragging || !dragStartCell || !dragEndCell || !isEditing || readOnly) return;
     
     // Determine the boundaries of the selection
@@ -377,12 +378,12 @@ export default function TimeSlotGrid({
     if (onSlotsChange) {
       onSlotsChange(updatedSelectedSlots);
     }
-  };
+  }, [isDragging, dragStartCell, dragEndCell, isEditing, readOnly, days, selectedSlots, dragSelectionMode, onSlotsChange]);
   
   // Apply drag selection when dragEndCell changes
   useEffect(() => {
     updateDragSelection();
-  }, [dragEndCell]);
+  }, [dragEndCell, updateDragSelection]);
   
   const handleSave = async () => {
     setIsSaving(true);
@@ -443,7 +444,7 @@ export default function TimeSlotGrid({
   };
   
   // Handle mouse events for drag selection
-  const handleMouseDown = (slot: any, dayNumber: number, row: number, col: number) => {
+  const handleMouseDown = (slot: GridSlot, dayNumber: number, row: number, col: number) => {
     if (readOnly || !isEditing || slot.disabled) return;
     
     setIsDragging(true);
@@ -461,7 +462,7 @@ export default function TimeSlotGrid({
     setDragEndCell({ row, col });
   };
   
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback(() => {
     if (isDragging) {
       setIsDragging(false);
       setDragStartCell(null);
@@ -471,7 +472,7 @@ export default function TimeSlotGrid({
       // Re-enable text selection
       document.body.classList.remove('select-none');
     }
-  };
+  }, [isDragging]);
   
   // Add global mouse up handler to handle cases where mouse is released outside the grid
   useEffect(() => {
@@ -484,7 +485,7 @@ export default function TimeSlotGrid({
     return () => {
       window.removeEventListener('mouseup', handleGlobalMouseUp);
     };
-  }, [isDragging]);
+  }, [handleMouseUp]);
   
   // Helper to check if a cell is in the current drag selection
   const isInDragSelection = (row: number, col: number) => {

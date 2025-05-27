@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { AvatarGenerator } from "random-avatar-generator";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export default function AvatarTestPage() {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
@@ -40,11 +41,13 @@ export default function AvatarTestPage() {
       
       {avatarUrl && (
         <div className="flex flex-col items-center">
-          <div className="w-64 h-64 border-2 border-gray-300 rounded-lg overflow-hidden mb-4">
-            <img 
+          <div className="w-64 h-64 border-2 border-gray-300 rounded-lg overflow-hidden mb-4 relative">
+            <Image 
               src={avatarUrl} 
               alt="Generated Avatar" 
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
+              unoptimized
               onError={() => {
                 setError("Failed to load avatar image");
               }}

@@ -106,20 +106,6 @@ export default function ProfilePageClient({
         )}
         <div className="flex flex-col items-center space-y-4">
           <div className="w-32 h-32 overflow-hidden rounded-full border-2 border-gray-300 relative">
-            {isExternalAvatar ? (
-              // For avataaars.io URLs
-              <img 
-                src={avatarUrl} 
-                alt="Avatar" 
-                className="w-full h-full object-cover"
-                onError={() => {
-                  console.error("Failed to load avatar image");
-                  setAvatarUrl("/mascot_purple.svg");
-                  toast.error("Avatar yüklenemedi, varsayılan avatar kullanılıyor");
-                }}
-              />
-            ) : (
-              // For local images
             <Image 
               src={avatarUrl} 
               alt="Avatar" 
@@ -127,8 +113,13 @@ export default function ProfilePageClient({
               sizes="(max-width: 640px) 100vw, 128px"
               className="object-cover"
               priority
+              unoptimized={isExternalAvatar}
+              onError={() => {
+                console.error("Failed to load avatar image");
+                setAvatarUrl("/mascot_purple.svg");
+                toast.error("Avatar yüklenemedi, varsayılan avatar kullanılıyor");
+              }}
             />
-            )}
           </div>
           <Button
             variant="secondary"

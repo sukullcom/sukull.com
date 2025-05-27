@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import db from "@/db/drizzle";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { isTeacher, isApprovedStudent } from "@/db/queries";
+import { isApprovedStudent } from "@/db/queries";
 
 export default async function PrivateLessonPage() {
   const user = await getServerUser();

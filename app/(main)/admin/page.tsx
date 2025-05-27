@@ -2,11 +2,11 @@ import { getServerUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter, CardDescription } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import db from "@/db/drizzle";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { UsersRound, School, Edit, BookOpen, PanelLeftOpen } from "lucide-react";
+import { UsersRound, School, BookOpen, PanelLeftOpen } from "lucide-react";
 
 export default async function AdminDashboardPage() {
   // Get the authenticated user
