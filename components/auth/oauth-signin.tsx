@@ -67,7 +67,7 @@ function OAuthButtons({ isLoading, onLoadingChange, redirectUrl }: Props) {
 export function OAuthSignIn(props: Props) {
   return (
     <div className="w-full">
-      {/* 
+      {/* -----
         The line + text + line container 
         (removes absolute positioning, 
         instead uses a flex layout to show lines on both sides) 

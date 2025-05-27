@@ -47,7 +47,7 @@ export function CreateAccountForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-      {/* Use the same exact classes as the old design's inputs, or adapt them */}
+      {/* ----- Use the same exact classes as the old design's inputs, or adapt them */}
       <input
         id="username"
         type="text"
