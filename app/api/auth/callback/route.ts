@@ -2,6 +2,10 @@ import { createClient } from '@/utils/supabase/server';
 import { users } from '@/utils/users';
 import { NextResponse } from 'next/server';
 
+// Ensure this route is not prerendered and is treated as dynamic
+export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
+
 export async function GET(request: Request) {
   try {
     const requestUrl = new URL(request.url);
@@ -67,7 +71,17 @@ export async function GET(request: Request) {
     return NextResponse.redirect(redirectUrl);
   } catch (error) {
     console.error('Callback error:', error);
-    const errorUrl = new URL('/auth-error', requestUrl.origin);
+    
+    // Safely handle the case where requestUrl might not be available
+    let origin: string;
+    try {
+      origin = new URL(request.url).origin;
+    } catch {
+      // Fallback to a default origin if URL parsing fails
+      origin = process.env.NEXT_PUBLIC_APP_URL || 'https://sukull.com';
+    }
+    
+    const errorUrl = new URL('/auth-error', origin);
     errorUrl.searchParams.set('error', 'Failed to sign in');
     return NextResponse.redirect(errorUrl);
   }
