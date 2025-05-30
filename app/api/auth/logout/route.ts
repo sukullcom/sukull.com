@@ -6,7 +6,7 @@ import { cookies } from 'next/headers';
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-export async function POST(request: Request) {
+export async function POST() {
   try {
     console.log('Server-side logout initiated');
     
