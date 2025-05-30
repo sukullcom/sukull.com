@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
+import { useSecureLogout } from '@/hooks/use-secure-logout';
 
 const supabaseClient = createClient();
 
@@ -12,6 +13,7 @@ export const Header = () => {
   const router = useRouter();
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const { logout, isLoggingOut } = useSecureLogout();
 
   useEffect(() => {
     supabaseClient.auth.getSession().then(({ data }: { data: { session: Session | null } }) => {
@@ -28,8 +30,10 @@ export const Header = () => {
   }, []);
 
   const handleLogout = async () => {
-    await supabaseClient.auth.signOut();
-    router.push('/login');
+    await logout({
+      showToast: true,
+      redirectTo: '/login'
+    });
   };
 
   return (
@@ -41,8 +45,13 @@ export const Header = () => {
         </div>
         {loading && <div className="text-sm">Yükleniyor...</div>}
         {!loading && session ? (
-          <Button variant="ghost" size="lg" onClick={handleLogout}>
-            Çıkış Yap
+          <Button 
+            variant="ghost" 
+            size="lg" 
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+          >
+            {isLoggingOut ? 'Çıkış yapılıyor...' : 'Çıkış Yap'}
           </Button>
         ) : (
           <Button size="lg" variant="ghost" onClick={() => router.push('/login')}>

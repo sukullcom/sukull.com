@@ -1,8 +1,19 @@
 import Image from "next/image";
 import { LoginForm } from "./login-form";
 import { OAuthDebug } from "@/components/auth/oauth-debug";
+import { Suspense } from "react";
 
-export default function LoginPage() {
+// Add search params type for error handling
+interface LoginPageProps {
+  searchParams: {
+    error?: string;
+    next?: string;
+  };
+}
+
+export default function LoginPage({ searchParams }: LoginPageProps) {
+  const { error } = searchParams;
+
   return (
     <div className="max-w-[988px] mx-auto flex-1 w-full flex flex-col items-center justify-center p-4 gap-8">
       {/* Main login section */}
@@ -17,15 +28,27 @@ export default function LoginPage() {
           <h1 className="text-3xl font-bold text-center mb-6 text-green-500">
             Giriş Yap
           </h1>
+          
+          {/* Error handling for logout failures */}
+          {error === 'logout_failed' && (
+            <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <p className="text-sm text-yellow-800">
+                Çıkış işleminde bir sorun oluştu, ancak güvenliğiniz için oturumunuz sonlandırıldı.
+              </p>
+            </div>
+          )}
+          
           <LoginForm />
         </div>
       </div>
 
       {/* Debug section - remove this after testing */}
       {process.env.NODE_ENV === 'development' && (
-        <div className="w-full max-w-4xl">
-          <OAuthDebug />
-        </div>
+        <Suspense fallback={<div>Loading debug tools...</div>}>
+          <div className="w-full max-w-4xl">
+            <OAuthDebug />
+          </div>
+        </Suspense>
       )}
     </div>
   );

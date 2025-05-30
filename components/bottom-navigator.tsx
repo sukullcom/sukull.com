@@ -1,30 +1,32 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
 import { Button } from "./ui/button";
 import { createClient } from "@/utils/supabase/client";
 import { User, Session } from "@supabase/supabase-js";
+import { useSecureLogout } from "@/hooks/use-secure-logout";
 
 type BottomNavigatorProps = {
   className?: string;
 };
 
 export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
-  const router = useRouter();
   const pathname = usePathname();
   const [user, setUser] = useState<User | null>(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const { logout, isLoggingOut } = useSecureLogout();
 
   useEffect(() => {
     const supabase = createClient();
     supabase.auth.getSession().then(({ data: { session } }: { data: { session: Session | null } }) => {
       setUser(session?.user || null);
-    });  }, []);
+    });
+  }, []);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -41,10 +43,12 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
       document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  async function handleLogout() {
-    await createClient().auth.signOut();
-    router.push("/login");
-  }
+  const handleLogout = async () => {
+    await logout({
+      showToast: true,
+      redirectTo: '/login'
+    });
+  };
 
   // Regular navigation items (excluding games, lab, shop)
   const navItems = [
@@ -65,37 +69,35 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
   return (
     <div
       className={cn(
-        "fixed bottom-0 left-0 w-full bg-white border-t flex justify-around items-center px-4 py-2 shadow-md z-50",
+        "fixed bottom-0 left-0 right-0 flex h-[60px] items-center justify-around border-t-2 border-slate-200 bg-white px-4 lg:hidden z-50",
         className
       )}
-      style={{ height: "64px" }}
     >
+      {/* Regular navigation items */}
       {navItems.map((item) => {
         const isActive = pathname === item.href;
         return (
           <Link
-            prefetch={false}
             key={item.href}
+            prefetch={false}
             href={item.href}
             className={cn(
               "flex flex-col items-center justify-center text-xs",
-              isActive
-                ? "text-green-600"
-                : "text-gray-600 hover:text-green-600"
+              isActive && "text-green-500"
             )}
           >
             <Image
               src={item.iconSrc}
               alt=""
+              height={isActive ? 44 : 42}
+              width={isActive ? 44 : 42}
               className="mr-2"
-              height={42}
-              width={42}
             />
           </Link>
         );
       })}
 
-      {/* Dropdown toggle as a Link */}
+      {/* More dropdown */}
       <div className="relative" ref={dropdownRef}>
         <Link
           prefetch={false}
@@ -138,11 +140,14 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
       <div>
         <Button
           onClick={handleLogout}
+          disabled={isLoggingOut}
           variant="secondary"
           className="justify-start h-[44px] flex items-center pl-3"
         >
           <Image src="/exit.svg" alt="Çıkış Yap" height={20} width={20} />
-          <span className="text-left pr-1">Çıkış</span>
+          <span className="text-left pr-1">
+            {isLoggingOut ? 'Çıkış...' : 'Çıkış'}
+          </span>
         </Button>
       </div>
     </div>

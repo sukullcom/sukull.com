@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { createClient } from "@/utils/supabase/client";
 import { User } from "@supabase/supabase-js";
+import { useSecureLogout } from "@/hooks/use-secure-logout";
 
 type Props = {
   className?: string;
@@ -22,6 +23,8 @@ type Props = {
 export const Sidebar = ({ className }: Props) => {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
+  const { logout, isLoggingOut } = useSecureLogout();
+
   useEffect(() => {
     const supabase = createClient();
     supabase.auth.getSession().then(({ data }: { data: { session: { user: User } | null } }) => {
@@ -29,10 +32,12 @@ export const Sidebar = ({ className }: Props) => {
     });
   }, []);
 
-  async function handleLogout() {
-    await createClient().auth.signOut();
-    router.push("/login");
-  }
+  const handleLogout = async () => {
+    await logout({
+      showToast: true,
+      redirectTo: '/login'
+    });
+  };
 
   return (
     <div
@@ -73,8 +78,9 @@ export const Sidebar = ({ className }: Props) => {
         <SidebarItem label="Profİl" href="/profile" iconSrc="/mascot_normal.svg" />
       </div>
       <div className="p-4">
-       {( <Button
-        onClick={handleLogout}
+        <Button
+          onClick={handleLogout}
+          disabled={isLoggingOut}
           variant="secondary"
           className="justify-start h-[52px] flex items-center"
         >
@@ -85,9 +91,10 @@ export const Sidebar = ({ className }: Props) => {
             height={26}
             width={26}
           />
-          <span className="text-left">Çıkış Yap</span>
-        </Button>)}
-
+          <span className="text-left">
+            {isLoggingOut ? 'Çıkış yapılıyor...' : 'Çıkış Yap'}
+          </span>
+        </Button>
       </div>
     </div>
   );

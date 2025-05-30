@@ -31,8 +31,15 @@ export async function middleware(req: NextRequest) {
     // Cache static assets aggressively
     response.headers.set('Cache-Control', 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800');
   } else if (pathname.startsWith('/api/')) {
-    // Don't cache API routes
+    // Don't cache API routes, especially auth-related ones
     response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    response.headers.set('Pragma', 'no-cache');
+    
+    // Add extra security for logout endpoint
+    if (pathname === '/api/auth/logout') {
+      response.headers.set('X-Content-Type-Options', 'nosniff');
+      response.headers.set('X-Frame-Options', 'DENY');
+    }
   } else if (
     pathname.startsWith('/leaderboard') || 
     pathname.startsWith('/shop') || 
@@ -71,7 +78,8 @@ export async function middleware(req: NextRequest) {
                    pathname.endsWith('.svg') || 
                    pathname.endsWith('.png') || 
                    pathname.endsWith('.jpg') || 
-                   pathname.endsWith('.jpeg');
+                   pathname.endsWith('.jpeg') ||
+                   pathname.startsWith('/api/auth/'); // Allow auth API routes
                    
   if (!session && !isPublic) {
     // Not logged in => redirect to login
@@ -97,7 +105,13 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    // Match all except static, images, or favicon
-    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * Feel free to modify this pattern to include more paths.
+     */
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 }

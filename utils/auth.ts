@@ -111,8 +111,50 @@ export const auth = {
   },
 
   async signOut() {
-    const { error } = await supabase.auth.signOut()
-    if (error) throw error
+    try {
+      console.log('Starting secure logout process...');
+      
+      // 1. Clear any OAuth redirect URLs from storage
+      if (typeof window !== 'undefined') {
+        sessionStorage.removeItem('oauth_redirect_url');
+        // Clear any other auth-related storage
+        localStorage.removeItem('auth_redirect_url');
+      }
+      
+      // 2. Sign out from Supabase (this invalidates the session server-side)
+      const { error } = await supabase.auth.signOut({
+        scope: 'global' // This ensures sign out from all devices/sessions
+      });
+      
+      if (error) {
+        console.error('Logout error:', error);
+        throw error;
+      }
+      
+      console.log('Logout successful - session invalidated');
+      
+      // 3. Additional cleanup for client-side state
+      if (typeof window !== 'undefined') {
+        // Clear any cached user data
+        window.localStorage.clear();
+        window.sessionStorage.clear();
+        
+        // Force a hard navigation to login to ensure complete cleanup
+        // Using location.href instead of router.push for security
+        window.location.href = '/login';
+      }
+      
+      return { success: true };
+    } catch (error) {
+      console.error('Error during logout:', error);
+      
+      // Even if logout fails, we should still redirect for security
+      if (typeof window !== 'undefined') {
+        window.location.href = '/login?error=logout_failed';
+      }
+      
+      throw error;
+    }
   },
 
   async resetPasswordRequest(email: string) {
