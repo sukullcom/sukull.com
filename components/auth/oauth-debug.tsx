@@ -4,8 +4,24 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/client";
 
+interface DebugInfo {
+  currentUrl?: string;
+  origin?: string;
+  hasSession?: boolean;
+  sessionUser?: string;
+  supabaseUrl?: string;
+  redirectUrl?: string;
+  timestamp?: string;
+  userAgent?: string;
+  localStorage?: {
+    hasOAuthRedirect: boolean;
+    oauthRedirect: string | null;
+  };
+  error?: string;
+}
+
 export function OAuthDebug() {
-  const [debugInfo, setDebugInfo] = useState<any>(null);
+  const [debugInfo, setDebugInfo] = useState<DebugInfo | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const testOAuthConfig = async () => {
@@ -20,7 +36,7 @@ export function OAuthDebug() {
       const currentUrl = window.location.href;
       const origin = window.location.origin;
       
-      const info = {
+      const info: DebugInfo = {
         currentUrl,
         origin,
         hasSession: !!session.session,
@@ -37,7 +53,8 @@ export function OAuthDebug() {
       
       setDebugInfo(info);
     } catch (error) {
-      setDebugInfo({ error: error.message });
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      setDebugInfo({ error: errorMessage });
     } finally {
       setIsLoading(false);
     }
@@ -58,7 +75,7 @@ export function OAuthDebug() {
         <Button onClick={testOAuthConfig} disabled={isLoading}>
           {isLoading ? 'Testing...' : 'Test OAuth Config'}
         </Button>
-        <Button variant="outline" onClick={clearStorage}>
+        <Button variant="secondaryOutline" onClick={clearStorage}>
           Clear Storage
         </Button>
       </div>
