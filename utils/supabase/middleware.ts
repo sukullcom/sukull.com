@@ -9,6 +9,7 @@ const publicPaths = [
   '/create-account',
   '/forgot-password',
   '/callback',
+  '/api/auth/callback',
   '/reset-password',
   '/auth-error',
 ]
@@ -40,11 +41,18 @@ export function createClient(request: NextRequest) {
 export async function updateSession(request: NextRequest) {
   const { supabase, response } = createClient(request)
 
+  const currentPath = request.nextUrl.pathname
+
+  // Check if this is an OAuth callback - let it pass through without session check
+  if (currentPath.startsWith('/api/auth/callback') || currentPath.startsWith('/callback')) {
+    console.log('OAuth callback detected, allowing through:', currentPath)
+    return response
+  }
+
   const {
     data: { session },
   } = await supabase.auth.getSession()
 
-  const currentPath = request.nextUrl.pathname
   const nextParam = request.nextUrl.searchParams.get('next')
   const nextPath =
     currentPath === '/login' || currentPath === '/create-account'
@@ -53,6 +61,7 @@ export async function updateSession(request: NextRequest) {
 
   // check if path is public
   const isPublic = publicPaths.some((path) => currentPath.startsWith(path))
+  
   if (!session && !isPublic) {
     // Not logged in => redirect to /login
     const url = request.nextUrl.clone()

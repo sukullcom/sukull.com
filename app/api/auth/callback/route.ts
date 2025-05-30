@@ -1,52 +1,74 @@
 import { createClient } from '@/utils/supabase/server';
+import { users } from '@/utils/users';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
   try {
     const requestUrl = new URL(request.url);
     const code = requestUrl.searchParams.get('code');
-    const state = requestUrl.searchParams.get('state');
+    const error = requestUrl.searchParams.get('error');
     
-    console.log('Custom OAuth callback received:', {
+    console.log('OAuth callback received:', {
       url: request.url,
       hasCode: !!code,
-      hasState: !!state
+      error: error || 'none'
     });
 
-    if (!code || !state) {
-      console.error('Missing code or state in callback');
-      return NextResponse.redirect(new URL('/auth-error?error=missing_params', request.url));
+    if (error) {
+      console.error('OAuth error received:', error);
+      const errorUrl = new URL('/auth-error', requestUrl.origin);
+      errorUrl.searchParams.set('error', error);
+      return NextResponse.redirect(errorUrl);
+    }
+
+    if (!code) {
+      console.error('No code provided in callback');
+      const errorUrl = new URL('/auth-error', requestUrl.origin);
+      errorUrl.searchParams.set('error', 'No authentication code provided');
+      return NextResponse.redirect(errorUrl);
     }
 
     // Create supabase server client
     const supabase = await createClient();
     
     // Exchange the received code for a session
-    console.log('Exchanging code for session in custom handler...');
-    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+    console.log('Exchanging code for session...');
+    const { data, error: authError } = await supabase.auth.exchangeCodeForSession(code);
 
-    if (error) {
-      console.error('Auth error during code exchange:', error);
-      return NextResponse.redirect(new URL(`/auth-error?error=${encodeURIComponent(error.message)}`, request.url));
+    if (authError) {
+      console.error('Auth error during code exchange:', authError);
+      const errorUrl = new URL('/auth-error', requestUrl.origin);
+      errorUrl.searchParams.set('error', authError.message);
+      return NextResponse.redirect(errorUrl);
     }
 
     console.log('Session created successfully for user:', data.user?.id);
-    
-    // Parse the state parameter to get the original redirect URL
-    let redirectTo = '/courses';
-    try {
-      const stateObj = JSON.parse(decodeURIComponent(state));
-      if (stateObj.redirectTo) {
-        redirectTo = stateObj.redirectTo;
+
+    // Capture user details after successful OAuth
+    if (data.user) {
+      try {
+        console.log('Capturing user details for:', data.user.email);
+        console.log('Auth provider:', data.user.app_metadata?.provider);
+        console.log('User metadata:', JSON.stringify(data.user.user_metadata, null, 2));
+        
+        await users.captureUserDetails(data.user);
+        console.log('User details captured successfully');
+      } catch (err) {
+        console.error('Error capturing user details:', err);
+        // Proceed even if capturing details fails.
       }
-    } catch (e) {
-      console.error('Error parsing state parameter:', e);
     }
 
-    // Redirect to the app
-    return NextResponse.redirect(new URL(redirectTo, requestUrl.origin));
+    // Default redirect to courses page
+    const redirectTo = '/courses';
+    const redirectUrl = new URL(redirectTo, requestUrl.origin);
+    console.log('Redirecting to:', redirectUrl.toString());
+    
+    return NextResponse.redirect(redirectUrl);
   } catch (error) {
-    console.error('Custom callback error:', error);
-    return NextResponse.redirect(new URL('/auth-error?error=callback_error', request.url));
+    console.error('Callback error:', error);
+    const errorUrl = new URL('/auth-error', requestUrl.origin);
+    errorUrl.searchParams.set('error', 'Failed to sign in');
+    return NextResponse.redirect(errorUrl);
   }
 } 

@@ -67,24 +67,18 @@ export const auth = {
     try {
       console.log(`Starting OAuth flow for Google...`);
       
-      // Create the redirect URL with proper encoding
+      // Use the correct callback URL - this should match what's configured in Supabase
       const redirectTo = `${location.origin}/api/auth/callback`;
       console.log(`Redirect URL: ${redirectTo}`);
       
-      // Create a state parameter that includes the nextUrl
-      const stateParam = JSON.stringify({
-        redirectTo: nextUrl || '/courses'
-      });
-      
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider,
-      options: {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
           redirectTo,
           scopes: 'email profile',
           queryParams: {
             access_type: 'offline',
             prompt: 'consent',
-            state: encodeURIComponent(stateParam)
           },
         },
       });
@@ -100,6 +94,11 @@ export const auth = {
       }
       
       console.log(`Successfully initiated Google OAuth. Redirecting to: ${data.url}`);
+      
+      // Store the nextUrl in sessionStorage for retrieval after OAuth
+      if (nextUrl) {
+        sessionStorage.setItem('oauth_redirect_url', nextUrl);
+      }
       
       // Redirect to the provider's authentication page
       window.location.href = data.url;
