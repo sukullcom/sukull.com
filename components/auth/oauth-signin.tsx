@@ -26,19 +26,8 @@ function OAuthButtons({ isLoading, onLoadingChange, redirectUrl }: Props) {
     try {
       setLoading(true);
       setProviderLoading(true);
-      
-      // Log the attempt with more details
-      console.log("Attempting to sign in with Google...");
-      console.log(`Next URL: ${nextUrl}`);
-      console.log(`Current location: ${window.location.href}`);
-      
-      // Call the auth method
       await auth.signInWithOAuth('google', nextUrl);
-      
-      // Note: We won't reach this point immediately as the browser will redirect
-      console.log("Google auth initiated, redirecting...");
     } catch (error) {
-      console.error("Google auth error:", error);
       const { message } = getAuthError(error);
       toast.error(`Google girişi başarısız: ${message}`);
       setLoading(false);

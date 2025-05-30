@@ -2,10 +2,30 @@
 
 import React, { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { FeedWrapper } from "@/components/feed-wrapper";
+import { StickyWrapper } from "@/components/sticky-wrapper";
 import { turkishToast } from "@/components/ui/custom-toaster";
-import { createClient } from "@/utils/supabase/client"; // or wherever your single client file is
+import { createClient } from "@/utils/supabase/client";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { PostCard } from "@/components/study-buddy/post-card";
+import { ChatCard } from "@/components/study-buddy/chat-card";
 import Image from "next/image";
+import { 
+  Users, 
+  MessageCircle, 
+  Plus, 
+  Search, 
+  Filter,
+  BookOpen,
+  Clock,
+  Send,
+  Edit,
+  AlertCircle,
+  X 
+} from "lucide-react";
 
 interface SchoolItem {
   id: number;
@@ -16,13 +36,12 @@ interface SchoolItem {
 interface StudyBuddyPost {
   id: number;
   user_id: string;
-  school_id?: number | null;
   purpose: string;
   reason: string;
   created_at: string;
   userName?: string;
-  userSchoolName?: string;
   userAvatar?: string;
+  userSchoolName?: string;
 }
 
 interface StudyBuddyChat {
@@ -69,14 +88,14 @@ const MESSAGE_LIMITS = {
   MAX_PER_MINUTE: 10,
   MAX_PER_HOUR: 50,
   MAX_PER_DAY: 100,
-  MIN_INTERVAL_MS: 2000, // 2 seconds between messages
-  MAX_CONSECUTIVE_SAME: 3, // Max same message in a row
+  MIN_INTERVAL_MS: 2000,
+  MAX_CONSECUTIVE_SAME: 3,
 };
 
 const POST_LIMITS = {
   MAX_REASON_LENGTH: 300,
   MAX_PER_DAY: 2,
-  MIN_INTERVAL_MS: 60000, // 1 minute between posts
+  MIN_INTERVAL_MS: 60000,
 };
 
 const CHAT_LIMITS = {
@@ -84,7 +103,6 @@ const CHAT_LIMITS = {
   MAX_ACTIVE_CHATS: 5,
 };
 
-// Create a shared warningMessages object with Turkish translations
 const warningMessages = {
   MESSAGE_LIMIT: "Mesajlar en fazla 200 karakter olabilir.",
   MONTHLY_MESSAGE_LIMIT: "Aylık 100 mesaj sınırına ulaştınız.",
@@ -100,8 +118,6 @@ const warningMessages = {
   ERROR_SENDING_MESSAGE: "Mesaj gönderilirken bir hata oluştu.",
   ERROR_LOADING_POSTS: "Gönderiler yüklenirken bir hata oluştu.",
   ERROR_LOADING_CHATS: "Sohbetler yüklenirken bir hata oluştu.",
-  
-  // Anti-spam messages
   MESSAGE_TOO_FREQUENT: "Çok hızlı mesaj gönderiyorsunuz. Lütfen 2 saniye bekleyin.",
   MESSAGE_RATE_LIMIT_MINUTE: "Dakikada en fazla 10 mesaj gönderebilirsiniz.",
   MESSAGE_RATE_LIMIT_HOUR: "Saatte en fazla 50 mesaj gönderebilirsiniz.",
@@ -125,9 +141,7 @@ export default function StudyBuddyPage() {
   const [loadingUser, setLoadingUser] = useState<boolean>(true);
 
   // Tabs
-  const [activeTab, setActiveTab] = useState<"allPosts" | "myPosts" | "chats">(
-    "allPosts"
-  );
+  const [activeTab, setActiveTab] = useState<"allPosts" | "myPosts" | "chats">("allPosts");
 
   // School filtering
   const [allSchools, setAllSchools] = useState<SchoolItem[]>([]);
@@ -182,12 +196,69 @@ export default function StudyBuddyPage() {
   const [recentMessages, setRecentMessages] = useState<string[]>([]);
   const [messageCooldown, setMessageCooldown] = useState<number>(0);
   
+  // For post editing
+  const [editingPost, setEditingPost] = useState<StudyBuddyPost | null>(null);
+  const [editPostPurpose, setEditPostPurpose] = useState<string>("");
+  const [editPostReason, setEditPostReason] = useState<string>("");
+  const [showEditPostForm, setShowEditPostForm] = useState<boolean>(false);
+  
+  // Add totalPosts state
+  const [totalPosts, setTotalPosts] = useState<number>(0);
+  
   const showWarning = useCallback((msg: string) => {
     setWarningMessage(msg);
     setWarningOpen(true);
-    // Also show as toast for better visibility
     turkishToast.warning(msg);
   }, []);
+
+  // Auth effect
+  useEffect(() => {
+    const loadSession = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        setCurrentUser(session?.user || null);
+        setLoadingUser(false);
+      } catch (error) {
+        console.error("Error loading session:", error);
+        setLoadingUser(false);
+      }
+    };
+    loadSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (_event: string, session: { user: { id: string; email?: string; user_metadata?: UserMetadata } } | null) => {
+        setCurrentUser(session?.user || null);
+      }
+    );
+    
+    return () => subscription?.unsubscribe();
+  }, [supabase]);
+
+  // Helper functions for filtering and pagination
+  const filteredPosts = useMemo(() => {
+    let filtered = allPostsRaw;
+    
+    if (filterPurpose) {
+      filtered = filtered.filter(post => post.purpose === filterPurpose);
+    }
+    
+    if (schoolSearchTerm) {
+      filtered = filtered.filter(post => 
+        post.userSchoolName?.toLowerCase().includes(schoolSearchTerm.toLowerCase())
+      );
+    }
+    
+    return filtered;
+  }, [allPostsRaw, filterPurpose, schoolSearchTerm]);
+
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+  const displayedPosts = filteredPosts.slice(
+    currentPage * POSTS_PER_PAGE,
+    (currentPage + 1) * POSTS_PER_PAGE
+  );
+
+  const goToNextPage = () => setCurrentPage(prev => Math.min(prev + 1, totalPages - 1));
+  const goToPrevPage = () => setCurrentPage(prev => Math.max(prev - 1, 0));
 
   // Anti-spam validation functions
   const validateMessageSpam = useCallback(async (message: string): Promise<boolean> => {
@@ -339,104 +410,41 @@ export default function StudyBuddyPage() {
     }
   }, [currentUser, showWarning, supabase]);
 
-  // For post editing
-  const [editingPost, setEditingPost] = useState<StudyBuddyPost | null>(null);
-  const [editPostPurpose, setEditPostPurpose] = useState<string>("");
-  const [editPostReason, setEditPostReason] = useState<string>("");
-  const [showEditPostForm, setShowEditPostForm] = useState<boolean>(false);
-
-  // Auth effect - optimized to use a single listener
-  useEffect(() => {
-    const loadSession = async () => {
-      try {
-        const {
-          data: { session },
-        } = await supabase.auth.getSession();
-        setCurrentUser(session?.user || null);
-        setLoadingUser(false);
-      } catch (error) {
-        console.error("Error loading session:", error);
-        setLoadingUser(false);
-      }
-    };
-    loadSession();
-
-    // Store the full subscription object with the unsubscribe method
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event: string, session: { user: { id: string; email?: string; user_metadata?: UserMetadata } } | null) => {
-        setCurrentUser(session?.user || null);
-      }
-    );
-    
-    return () => {
-      // Safely unsubscribe if subscription exists
-      subscription?.unsubscribe();
-    };
-  }, [supabase]);
-
-  // 1) Load schools with caching
-  useEffect(() => {
-    async function loadSchools() {
-      // Check if we have a valid cache
-      const now = Date.now();
-      if (schoolsCache && now - schoolsCacheTimestamp < CACHE_TTL) {
-        return;
-      }
-      
-      try {
-        const { data, error: schoolsError } = await supabase
-          .from("schools")
-          .select("id, name, type")
-          .order("name");
-          
-        if (schoolsError) {
-          console.error("Failed to load schools:", schoolsError);
-        } else if (data) {
-          // Update cache
-          schoolsCache = data as SchoolItem[];
-          schoolsCacheTimestamp = now;
-        }
-      } catch (error) {
-        console.error("Error in loadSchools:", error);
-      }
-    }
-    
-    loadSchools();
-  }, [supabase]);
-
-  // 2) Load all posts - optimized with debouncing and pagination
+  // Load all posts
   const loadAllPosts = useCallback(async () => {
     if (!currentUser) return;
     
     setLoadingPosts(true);
     
     try {
-      // Build query with filters
+      const from = currentPage * POSTS_PER_PAGE;
+      const to = from + POSTS_PER_PAGE - 1;
+
       let query = supabase
         .from("study_buddy_posts")
-        .select("*")
-        .order("created_at", { ascending: false });
+        .select("*", { count: "exact" })
+        .order("created_at", { ascending: false })
+        .range(from, to);
       
-      // Apply purpose filter if selected
       if (filterPurpose) {
         query = query.eq("purpose", filterPurpose);
       }
       
-      const { data, error } = await query;
+      const { data: postsData, error: postsError, count } = await query;
       
-      if (error) {
-        console.error("Error loading posts:", error);
+      if (postsError) {
+        console.error("Error loading posts:", postsError);
+        turkishToast.error(warningMessages.ERROR_LOADING_POSTS);
         return;
       }
 
       // Check for posts older than 30 days and delete them
       const thirtyDaysAgo = new Date(Date.now() - THIRTY_DAYS_IN_MS).toISOString();
-      const oldPosts = data.filter(
+      const oldPosts = postsData.filter(
         (post: StudyBuddyPost) => post.created_at < thirtyDaysAgo && post.user_id === currentUser.id
       );
       
       if (oldPosts.length > 0) {
-        // Delete old posts
         for (const post of oldPosts) {
           await supabase
             .from("study_buddy_posts")
@@ -444,260 +452,56 @@ export default function StudyBuddyPage() {
             .eq("id", post.id);
         }
         
-        // Show notification
         if (oldPosts.length === 1) {
           turkishToast.info("1 adet eski gönderiniz otomatik olarak silindi (30 gün limiti)");
         } else {
           turkishToast.info(`${oldPosts.length} adet eski gönderiniz otomatik olarak silindi (30 gün limiti)`);
         }
         
-        // Reload posts
         await loadAllPosts();
         return;
       }
       
-      // Enrich posts with user data in batches to reduce DB calls
-      if (data && data.length > 0) {
-        // Get unique user IDs
-        const userIds = Array.from(new Set(data.map((post: StudyBuddyPost) => post.user_id)));
+      // Enrich posts with user data
+      if (postsData && postsData.length > 0) {
+        const userIds = Array.from(new Set(postsData.map((post: StudyBuddyPost) => post.user_id)));
         
-        // Fetch all users in a single query
         const { data: usersData } = await supabase
           .from("users")
           .select("id, name, avatar")
           .in("id", userIds);
           
-        // Create a lookup map
         const userMap = (usersData || []).reduce((acc: Record<string, { id: string; name: string; avatar: string }>, user: { id: string; name: string; avatar: string }) => {
           acc[user.id] = user;
           return acc;
         }, {});
         
-        // Get all school IDs
-        const schoolIds = Array.from(new Set(data.filter((p: StudyBuddyPost) => p.school_id).map((p: StudyBuddyPost) => p.school_id)));
-        
-        // Fetch all schools in a single query
-        const { data: schoolsData } = await supabase
-          .from("schools")
-          .select("id, name")
-          .in("id", schoolIds);
-          
-        // Create a lookup map
-        const schoolMap = (schoolsData || []).reduce((acc: Record<string, { id: number; name: string }>, school: { id: number; name: string }) => {
-          acc[school.id] = school;
-          return acc;
-        }, {});
-        
-        // Enrich posts with user and school data
-        const enrichedPosts = data.map((post: StudyBuddyPost) => {
+        const enrichedPosts = postsData.map((post: StudyBuddyPost) => {
           const user = userMap[post.user_id];
-          const school = post.school_id ? schoolMap[post.school_id] : null;
           
           return {
             ...post,
             userName: user?.name || "User",
             userAvatar: user?.avatar || "/mascot_purple.svg",
-            userSchoolName: school?.name || "",
+            userSchoolName: "" // Empty string since we don't have school data
           };
         });
         
         setAllPostsRaw(enrichedPosts);
+        setTotalPosts(count || 0);
       } else {
         setAllPostsRaw([]);
+        setTotalPosts(0);
       }
     } catch (error) {
       console.error("Error in loadAllPosts:", error);
+      turkishToast.error(warningMessages.ERROR_LOADING_POSTS);
     } finally {
       setLoadingPosts(false);
     }
-  }, [currentUser, filterPurpose, supabase]);
+  }, [currentUser, filterPurpose, currentPage, supabase]);
 
-  // Load posts when tab changes or filters change
-  useEffect(() => {
-    if (activeTab === "allPosts" && currentUser) {
-      loadAllPosts();
-    }
-  }, [activeTab, currentUser, filterPurpose, loadAllPosts]);
-
-  // Memoize filtered posts to avoid recalculation on every render
-  const displayedPosts = useMemo(() => {
-    const startIdx = currentPage * POSTS_PER_PAGE;
-    const endIdx = startIdx + POSTS_PER_PAGE;
-    
-    // Filter by school if search term is provided
-    let filtered = allPostsRaw;
-    if (schoolSearchTerm) {
-      filtered = allPostsRaw.filter(post => 
-        post.userSchoolName?.toLowerCase().includes(schoolSearchTerm.toLowerCase())
-      );
-    }
-    
-    return filtered.slice(startIdx, endIdx);
-  }, [allPostsRaw, currentPage, schoolSearchTerm]);
-
-  // Calculate total pages once
-  const totalPages = useMemo(() => {
-    let filtered = allPostsRaw;
-    if (schoolSearchTerm) {
-      filtered = allPostsRaw.filter(post => 
-        post.userSchoolName?.toLowerCase().includes(schoolSearchTerm.toLowerCase())
-      );
-    }
-    return Math.max(1, Math.ceil(filtered.length / POSTS_PER_PAGE));
-  }, [allPostsRaw, schoolSearchTerm]);
-
-  // Pagination handlers
-  const goToNextPage = useCallback(() => {
-    if (currentPage < totalPages - 1) {
-      setCurrentPage(prev => prev + 1);
-    }
-  }, [currentPage, totalPages]);
-
-  const goToPrevPage = useCallback(() => {
-    if (currentPage > 0) {
-      setCurrentPage(prev => prev - 1);
-    }
-  }, [currentPage]);
-
-  // 4) Create new post
-  async function handleCreatePost() {
-    setCreationError("");
-
-    if (!postPurpose) {
-      setCreationError(warningMessages.EMPTY_PURPOSE);
-      return;
-    }
-    const trimmedReason = postReason.trim();
-    if (!trimmedReason) {
-      setCreationError(warningMessages.EMPTY_REASON);
-      return;
-    }
-    if (trimmedReason.length > POST_LIMITS.MAX_REASON_LENGTH) {
-      setCreationError(warningMessages.REASON_TOO_LONG);
-      return;
-    }
-    if (!currentUser) return;
-
-    // Validate against spam and rate limits
-    const isValid = await validatePostSpam();
-    if (!isValid) return;
-
-    // Update post timing tracking
-    setLastPostTime(Date.now());
-
-    const { error } = await supabase.from("study_buddy_posts").insert([
-      {
-        user_id: currentUser.id,
-        purpose: postPurpose,
-        reason: trimmedReason,
-        created_at: new Date().toISOString(),
-      },
-    ]);
-
-    if (error) {
-      console.error("Error creating post:", error);
-    } else {
-      setPostPurpose("");
-      setPostReason("");
-      setShowNewPostForm(false);
-      turkishToast.success("Gönderi başarıyla oluşturuldu");
-      loadAllPosts();
-    }
-  }
-
-  // 5) Open (or create) chat
-  async function handleOpenChat(post: StudyBuddyPost) {
-    if (!currentUser || post.user_id === currentUser.id) return;
-    setActiveTab("chats");
-
-    const participants = [currentUser.id, post.user_id].sort();
-
-    try {
-      // Fetch all chats and filter client-side to find existing chat
-      const { data: allChats } = await supabase
-        .from("study_buddy_chats")
-        .select("*");
-      
-      const existingChat = allChats?.find((chat: StudyBuddyChat) => {
-        const chatParticipants = chat.participants.sort();
-        return chatParticipants.length === participants.length &&
-               chatParticipants.every((id, index) => id === participants[index]);
-      });
-
-      if (existingChat) {
-        // Chat exists, select it
-        const chatInState = chats.find((c) => c.id === existingChat.id);
-        if (chatInState) {
-          setSelectedChat(chatInState);
-        } else {
-          const otherUid = participants.find((id) => id !== currentUser.id);
-          if (otherUid) {
-            const { data: userData } = await supabase
-              .from("users")
-              .select("name, avatar")
-              .eq("id", otherUid)
-              .single();
-            existingChat.participantsData = {
-              [otherUid]: {
-                userName: userData?.name || "User",
-                avatarUrl: userData?.avatar || "/mascot_purple.svg",
-              },
-            };
-          }
-          setSelectedChat(existingChat);
-        }
-        return;
-      }
-
-      // No existing chat found, create a new one
-      // Validate against spam and rate limits
-      const isValid = await validateChatSpam();
-      if (!isValid) return;
-
-      // Create a new chat
-      const { data: newChat, error } = await supabase
-        .from("study_buddy_chats")
-        .insert([
-          {
-            participants: participants,
-            last_message: "",
-            last_updated: new Date().toISOString(),
-          },
-        ])
-        .select("*")
-        .single();
-
-      if (error) {
-        console.error("Error creating chat:", error);
-        showWarning(warningMessages.ERROR_CREATING_CHAT);
-        return;
-      }
-
-      // Enrich newChat with the other participant's data
-      if (newChat) {
-        const otherUid = participants.find((id) => id !== currentUser.id);
-        if (otherUid) {
-          const { data: userData } = await supabase
-            .from("users")
-            .select("name, avatar")
-            .eq("id", otherUid)
-            .single();
-          newChat.participantsData = {
-            [otherUid]: {
-              userName: userData?.name || "User",
-              avatarUrl: userData?.avatar || "/mascot_purple.svg",
-            },
-          };
-        }
-        setSelectedChat(newChat as StudyBuddyChat);
-      }
-    } catch (error) {
-      console.error("Error in handleOpenChat:", error);
-      showWarning(warningMessages.ERROR_CREATING_CHAT);
-    }
-  }
-
-  // 6) My Posts - optimized
+  // Load my posts
   const loadMyPosts = useCallback(async () => {
     if (!currentUser) return;
     
@@ -712,220 +516,462 @@ export default function StudyBuddyPage() {
   
       if (error) {
         console.error("Error loading my posts:", error);
-      } else if (data) {
-        setMyPosts(data as StudyBuddyPost[]);
+        turkishToast.error("Gönderileriniz yüklenirken bir hata oluştu.");
+        return;
       }
+
+      const enrichedPosts = await Promise.all(
+        (data || []).map(async (post: StudyBuddyPost) => {
+          let userSchoolName = "";
+          
+          if (post.school_id) {
+            const { data: schoolData } = await supabase
+              .from("schools")
+              .select("name")
+              .eq("id", post.school_id)
+              .single();
+            
+            userSchoolName = schoolData?.name || "";
+          }
+          
+          return {
+            ...post,
+            userName: currentUser.user_metadata?.name || "User",
+            userAvatar: currentUser.user_metadata?.avatar || "/mascot_purple.svg",
+            userSchoolName,
+          };
+        })
+      );
+      
+      setMyPosts(enrichedPosts);
     } catch (error) {
       console.error("Error in loadMyPosts:", error);
+      turkishToast.error("Gönderileriniz yüklenirken bir hata oluştu.");
     } finally {
       setLoadingMyPosts(false);
     }
   }, [currentUser, supabase]);
 
-  useEffect(() => {
-    if (!currentUser || activeTab !== "myPosts") return;
-    loadMyPosts();
-  }, [activeTab, currentUser, loadMyPosts]);
-
-  // 7) Real-time subscription for "study_buddy_chats"
-  useEffect(() => {
-    if (!currentUser || activeTab !== "chats") return;
-
-    console.log("Setting up chat realtime subscription for user:", currentUser.id);
-
-    const chatChannel = supabase
-      .channel(`realtime-chats-${currentUser.id}`)
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "study_buddy_chats",
-          // Remove filter - we'll filter client-side since JSON array filtering is complex in realtime
-        },
-        async (payload: { new: StudyBuddyChat; eventType: string }) => {
-          console.log("Chat realtime event:", payload);
-          // payload.new will hold the inserted/updated row
-          const changedChat = payload.new;
-
-          // Filter client-side: only process chats where current user is a participant
-          if (!changedChat.participants.includes(currentUser.id)) {
-            console.log("Ignoring chat - user not a participant");
-            return;
-          }
-
-          // Enrich with participant data (the "other" user)
-          const otherUid = changedChat.participants.find(
-            (id: string) => id !== currentUser?.id
-          );
-          if (otherUid) {
-            const { data: userData } = await supabase
-              .from("users")
-              .select("name, avatar")
-              .eq("id", otherUid)
-              .single();
-            changedChat.participantsData = {
-              [otherUid]: {
-                userName: userData?.name || "User",
-                avatarUrl: userData?.avatar || "/mascot_purple.svg",
-              },
-            };
-          }
-
-          // If this chat is newly inserted, put it at top
-          if (payload.eventType === "INSERT") {
-            setChats((prev) => [changedChat, ...prev]);
-          } else {
-            // For UPDATE, update it in place
-            setChats((prev) =>
-              prev.map((c) => (c.id === changedChat.id ? changedChat : c))
-            );
-          }
-        }
-      )
-      .subscribe((status: string) => {
-        console.log("Chat subscription status:", status);
-      });
-
-    // Also fetch existing chats once:
-    async function fetchChats() {
+  // Load chats
+  const loadChats = useCallback(async () => {
       if (!currentUser) return;
       
-      console.log("Fetching existing chats for user:", currentUser.id);
+    setLoadingChats(true);
       
       try {
-        // Fetch all chats and filter client-side
         const { data, error } = await supabase
-          .from("study_buddy_chats")
-          .select("*")
+        .from("study_buddy_chats")
+        .select("*")
           .order("last_updated", { ascending: false });
 
-        if (error) {
-          console.error("Error fetching chats:", error);
-          setLoadingChats(false);
-          return;
-        }
+      if (error) {
+        console.error("Error loading chats:", error);
+        turkishToast.error(warningMessages.ERROR_LOADING_CHATS);
+        return;
+      }
 
-        console.log("Fetched all chats:", data);
-
-        // Filter client-side for chats containing current user
-        const userChats = data?.filter((chat: StudyBuddyChat) => 
+      const userChats = (data || []).filter((chat: StudyBuddyChat) =>
           chat.participants.includes(currentUser.id)
-        ) || [];
+      );
 
-        console.log("Filtered user chats:", userChats);
-
-        if (userChats.length > 0) {
-          // Enrich each chat with participant data
-          const chatsWithData = await Promise.all(
+      // Enrich chats with participant data
+      const enrichedChats = await Promise.all(
             userChats.map(async (chat: StudyBuddyChat) => {
-              if (!currentUser) return chat;
+          const participantsData: { [key: string]: { userName: string; avatarUrl: string } } = {};
+          
+          for (const participantId of chat.participants) {
+            if (participantId !== currentUser.id) {
+          const { data: userData } = await supabase
+            .from("users")
+            .select("name, avatar")
+                .eq("id", participantId)
+            .single();
               
-              const otherUid = chat.participants.find(
-                (id) => id !== currentUser.id
-              );
-              if (otherUid) {
-                const { data: userData } = await supabase
-                  .from("users")
-                  .select("name, avatar")
-                  .eq("id", otherUid)
-                  .single();
-                chat.participantsData = {
-                  [otherUid]: {
-                    userName: userData?.name || "User",
-                    avatarUrl: userData?.avatar || "/mascot_purple.svg",
-                  },
-                };
-              }
-              return chat;
-            })
-          );
-          setChats(chatsWithData);
-        } else {
-          setChats([]);
-        }
-      } catch (error) {
-        console.error("Error in fetchChats:", error);
+              participantsData[participantId] = {
+              userName: userData?.name || "User",
+              avatarUrl: userData?.avatar || "/mascot_purple.svg",
+              };
+            }
+          }
+          
+          return {
+            ...chat,
+            participantsData,
+          };
+        })
+      );
+      
+      setChats(enrichedChats);
+    } catch (error) {
+      console.error("Error in loadChats:", error);
+      turkishToast.error(warningMessages.ERROR_LOADING_CHATS);
       } finally {
         setLoadingChats(false);
       }
-    }
-    fetchChats();
+  }, [currentUser, supabase]);
 
-    return () => {
-      console.log("Cleaning up chat subscription");
-      if (chatChannel) {
-        supabase.removeChannel(chatChannel);
-      }
-    };
-  }, [currentUser, activeTab, supabase]);
-
-  // 8) Realtime subscription for messages in the selected chat
-  useEffect(() => {
+  // Load messages for selected chat
+  const loadMessages = useCallback(async () => {
     if (!selectedChat) return;
-
-    console.log("Setting up message realtime subscription for chat:", selectedChat.id);
-
-    // Listen for new messages in that chat
-    const messageChannel = supabase
-      .channel(`realtime-messages-${selectedChat.id}`)
-      .on(
-        "postgres_changes",
-        {
-          event: "INSERT",
-          schema: "public",
-          table: "study_buddy_messages",
-          filter: `chat_id=eq.${selectedChat.id}`,
-        },
-        (payload: { new: StudyBuddyMessage }) => {
-          console.log("Message realtime event:", payload);
-          // Only add if it's not already in the messages (to avoid duplicates from optimistic updates)
-          setMessages((prev) => {
-            const exists = prev.some(msg => msg.id === payload.new.id);
-            if (exists) return prev;
-            return [...prev, payload.new];
-          });
-        }
-      )
-      .subscribe((status: string) => {
-        console.log("Message subscription status:", status);
-      });
-
-    // Load existing messages
-    const fetchMessages = async () => {
-      console.log("Fetching messages for chat:", selectedChat.id);
-      
+    
+    try {
       const { data, error } = await supabase
         .from("study_buddy_messages")
         .select("*")
         .eq("chat_id", selectedChat.id)
         .order("created_at", { ascending: true });
-
+  
       if (error) {
-        console.error("Error fetching messages:", error);
-      } else {
-        console.log("Fetched messages:", data);
-        setMessages((data as StudyBuddyMessage[]) || []);
+        console.error("Error loading messages:", error);
+        return;
       }
-    };
-    fetchMessages();
 
-    return () => {
-      console.log("Cleaning up message subscription for chat:", selectedChat.id);
-      if (messageChannel) {
-        supabase.removeChannel(messageChannel);
-      }
-    };
+      setMessages(data || []);
+    } catch (error) {
+      console.error("Error in loadMessages:", error);
+    }
   }, [selectedChat, supabase]);
 
-  // Scroll new messages into view
-  useEffect(() => {
-    if (messageEndRef.current) {
-      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+  // Implementations for placeholder functions
+  const handleCreatePost = useCallback(async () => {
+    if (!currentUser) {
+      showWarning(warningMessages.AUTHENTICATION_REQUIRED);
+      return;
     }
-  }, [messages]);
 
-  // Cooldown timer effect
+    setCreationError("");
+
+    if (!postPurpose.trim()) {
+      setCreationError(warningMessages.EMPTY_PURPOSE);
+      return;
+    }
+
+    if (!postReason.trim()) {
+      setCreationError(warningMessages.EMPTY_REASON);
+      return;
+    }
+
+    if (postReason.length > POST_LIMITS.MAX_REASON_LENGTH) {
+      setCreationError(warningMessages.REASON_TOO_LONG);
+      return;
+    }
+
+    const isValid = await validatePostSpam();
+    if (!isValid) return;
+
+    try {
+      // Create the post object with only the existing fields
+      const newPost = {
+        user_id: currentUser.id,
+        purpose: postPurpose.trim(),
+        reason: postReason.trim(),
+        created_at: new Date().toISOString()
+      };
+
+      const { data, error } = await supabase
+        .from("study_buddy_posts")
+        .insert([newPost])
+        .select();
+
+    if (error) {
+      console.error("Error creating post:", error);
+        if (error.code === "23502") { // not_null_violation
+          setCreationError("Zorunlu alanlar eksik. Lütfen tüm alanları doldurun.");
+        } else if (error.code === "23514") { // check_violation
+          setCreationError("Geçersiz değer girdiniz. Lütfen kontrol edin.");
+    } else {
+          setCreationError(warningMessages.ERROR_CREATING_POST);
+        }
+        return;
+      }
+
+      setPostPurpose("");
+      setPostReason("");
+      setShowNewPostForm(false);
+      setLastPostTime(Date.now());
+      
+      turkishToast.success("Gönderi başarıyla oluşturuldu!");
+      
+      // Reload posts
+      await loadAllPosts();
+      await loadMyPosts();
+    } catch (error) {
+      console.error("Error in handleCreatePost:", error);
+      setCreationError(warningMessages.ERROR_CREATING_POST);
+    }
+  }, [currentUser, postPurpose, postReason, validatePostSpam, showWarning, supabase, loadAllPosts, loadMyPosts]);
+
+  const handleEditPost = useCallback((post: StudyBuddyPost) => {
+    setEditingPost(post);
+    setEditPostPurpose(post.purpose);
+    setEditPostReason(post.reason);
+    setShowEditPostForm(true);
+    setCreationError("");
+  }, []);
+
+  const handleOpenChat = useCallback(async (post: StudyBuddyPost) => {
+    if (!currentUser) {
+      showWarning(warningMessages.AUTHENTICATION_REQUIRED);
+      return;
+    }
+
+    if (post.user_id === currentUser.id) {
+      showWarning(warningMessages.CANNOT_MESSAGE_YOURSELF);
+      return;
+    }
+
+    const isValid = await validateChatSpam();
+    if (!isValid) return;
+
+    try {
+      // Check if chat already exists
+      const { data: existingChats } = await supabase
+        .from("study_buddy_chats")
+        .select("*");
+      
+      const existingChat = existingChats?.find((chat: StudyBuddyChat) =>
+        chat.participants.includes(currentUser.id) &&
+        chat.participants.includes(post.user_id) &&
+        chat.participants.length === 2
+      );
+
+      if (existingChat) {
+          setSelectedChat(existingChat);
+        setActiveTab("chats");
+        return;
+      }
+
+      // Create new chat
+      const { data, error } = await supabase
+        .from("study_buddy_chats")
+        .insert({
+          participants: [currentUser.id, post.user_id],
+            last_message: "",
+            last_updated: new Date().toISOString(),
+        })
+        .select()
+        .single();
+
+      if (error) {
+        console.error("Error creating chat:", error);
+        showWarning(warningMessages.ERROR_CREATING_CHAT);
+        return;
+      }
+
+      setActiveTab("chats");
+      await loadChats();
+      
+      turkishToast.success("Sohbet başlatıldı!");
+    } catch (error) {
+      console.error("Error in handleOpenChat:", error);
+      showWarning(warningMessages.ERROR_CREATING_CHAT);
+    }
+  }, [currentUser, validateChatSpam, showWarning, supabase, loadChats]);
+
+  const handleSendMessage = useCallback(async () => {
+    if (!currentUser || !selectedChat || !newMessage.trim()) return;
+
+    const isValid = await validateMessageSpam(newMessage);
+    if (!isValid) return;
+    
+    try {
+      const messageContent = newMessage.trim();
+      const now = new Date().toISOString();
+
+      // Send the message
+      const { error: messageError } = await supabase
+        .from("study_buddy_messages")
+        .insert({
+          chat_id: selectedChat.id,
+          sender: currentUser.id,
+          content: messageContent,
+        });
+
+      if (messageError) {
+        console.error("Error sending message:", messageError);
+        showWarning(warningMessages.ERROR_SENDING_MESSAGE);
+        return;
+      }
+
+      // Update chat's last message
+      const { error: chatError } = await supabase
+        .from("study_buddy_chats")
+        .update({
+          last_message: messageContent,
+          last_updated: now,
+        })
+        .eq("id", selectedChat.id);
+
+      if (chatError) {
+        console.error("Error updating chat:", chatError);
+      }
+
+      // Update local states
+      setRecentMessages(prev => [...prev.slice(-MESSAGE_LIMITS.MAX_CONSECUTIVE_SAME), messageContent]);
+      setLastMessageTime(Date.now());
+      setNewMessage("");
+      
+      // Update local chat list without reloading
+      setChats(prevChats => {
+        const updatedChats = prevChats.map(chat => {
+          if (chat.id === selectedChat.id) {
+            return {
+              ...chat,
+              last_message: messageContent,
+              last_updated: now
+            };
+          }
+          return chat;
+        });
+        
+        // Sort chats by last_updated
+        return updatedChats.sort((a, b) => 
+          new Date(b.last_updated).getTime() - new Date(a.last_updated).getTime()
+        );
+      });
+
+      // Load new messages
+      await loadMessages();
+    } catch (error) {
+      console.error("Error in handleSendMessage:", error);
+      showWarning(warningMessages.ERROR_SENDING_MESSAGE);
+    }
+  }, [currentUser, selectedChat, newMessage, validateMessageSpam, showWarning, supabase, loadMessages]);
+
+  const handleDeletePost = useCallback(async (postId: number) => {
+    if (!currentUser) {
+      showWarning(warningMessages.AUTHENTICATION_REQUIRED);
+      return;
+    }
+    
+    try {
+      const { error } = await supabase
+        .from("study_buddy_posts")
+        .delete()
+        .eq("id", postId)
+        .eq("user_id", currentUser.id); // Extra security check
+
+        if (error) {
+        console.error("Error deleting post:", error);
+        turkishToast.error("Gönderi silinirken bir hata oluştu.");
+          return;
+        }
+
+      turkishToast.success("Gönderi başarıyla silindi!");
+        
+        // Reload posts
+      await loadAllPosts();
+      await loadMyPosts();
+      } catch (error) {
+      console.error("Error in handleDeletePost:", error);
+      turkishToast.error("Gönderi silinirken bir hata oluştu.");
+    }
+  }, [currentUser, supabase, loadAllPosts, loadMyPosts, showWarning]);
+
+  const handleSelectChat = useCallback(async (chat: StudyBuddyChat) => {
+    setSelectedChat(chat);
+    setMessages([]); // Clear messages first
+    setNewMessage("");
+
+    try {
+      const { data, error } = await supabase
+        .from("study_buddy_messages")
+        .select("*")
+        .eq("chat_id", chat.id)
+        .order("created_at", { ascending: true });
+
+      if (error) {
+        console.error("Error loading messages:", error);
+        return;
+      }
+
+      // Set messages after a brief delay to ensure the chat container is rendered
+      setTimeout(() => {
+        setMessages(data || []);
+        // Force an immediate scroll to bottom
+        messageEndRef.current?.scrollIntoView({ behavior: "auto" });
+      }, 0);
+    } catch (error) {
+      console.error("Error in handleSelectChat:", error);
+    }
+  }, [supabase]);
+
+  // Add edit post functionality
+  const handleEditSubmit = useCallback(async () => {
+    if (!currentUser || !editingPost) {
+      return;
+    }
+
+    setCreationError("");
+
+    if (!editPostPurpose.trim()) {
+      setCreationError(warningMessages.EMPTY_PURPOSE);
+      return;
+    }
+    
+    if (!editPostReason.trim()) {
+      setCreationError(warningMessages.EMPTY_REASON);
+      return;
+    }
+    
+    if (editPostReason.length > POST_LIMITS.MAX_REASON_LENGTH) {
+      setCreationError(warningMessages.REASON_TOO_LONG);
+      return;
+    }
+    
+    try {
+      const { error } = await supabase
+        .from("study_buddy_posts")
+        .update({
+          purpose: editPostPurpose.trim(),
+          reason: editPostReason.trim()
+        })
+        .eq("id", editingPost.id)
+        .eq("user_id", currentUser.id); // Security check
+      
+      if (error) {
+        console.error("Error updating post:", error);
+        setCreationError("Gönderi güncellenirken bir hata oluştu.");
+        return;
+      }
+
+        setEditingPost(null);
+        setEditPostPurpose("");
+        setEditPostReason("");
+        setShowEditPostForm(false);
+      
+      turkishToast.success("Gönderi başarıyla güncellendi!");
+        
+        // Reload posts
+      await loadAllPosts();
+      await loadMyPosts();
+    } catch (error) {
+      console.error("Error in handleEditSubmit:", error);
+      setCreationError("Gönderi güncellenirken bir hata oluştu.");
+    }
+  }, [currentUser, editingPost, editPostPurpose, editPostReason, supabase, loadAllPosts, loadMyPosts]);
+
+  // Effect to load data when user or tab changes
+  useEffect(() => {
+    if (!currentUser) return;
+
+    if (activeTab === "allPosts") {
+        loadAllPosts();
+    } else if (activeTab === "myPosts") {
+        loadMyPosts();
+    } else if (activeTab === "chats") {
+      loadChats();
+    }
+  }, [currentUser, activeTab, loadAllPosts, loadMyPosts, loadChats]);
+
+  // Effect to load messages when chat is selected
+  useEffect(() => {
+    if (selectedChat) {
+      loadMessages();
+    }
+  }, [selectedChat, loadMessages]);
+
+  // Effect for message cooldown
   useEffect(() => {
     if (messageCooldown > 0) {
       const timer = setTimeout(() => {
@@ -935,186 +981,149 @@ export default function StudyBuddyPage() {
     }
   }, [messageCooldown]);
 
-  // 9) Send message
-  async function handleSendMessage() {
-    if (!selectedChat || !newMessage.trim() || !currentUser) return;
-    
-    const trimmed = newMessage.trim();
-    
-    // Validate against spam and rate limits
-    const isValid = await validateMessageSpam(trimmed);
-    if (!isValid) return;
-
-    // Create optimistic message for immediate display
-    const optimisticMessage: StudyBuddyMessage = {
-      id: Date.now(), // Temporary ID
-      chat_id: selectedChat.id,
-      sender: currentUser.id,
-      content: trimmed,
-      created_at: new Date().toISOString(),
-    };
-
-    // Update anti-spam tracking
-    const now = Date.now();
-    setLastMessageTime(now);
-    setRecentMessages(prev => [...prev.slice(-MESSAGE_LIMITS.MAX_CONSECUTIVE_SAME), trimmed]);
-
-    // Add optimistic message immediately
-    setMessages((prev) => [...prev, optimisticMessage]);
-    setNewMessage("");
-
-    // Send to server
-    const { data, error } = await supabase.from("study_buddy_messages").insert([
-      {
-        chat_id: selectedChat.id,
-        sender: currentUser?.id || "",
-        content: trimmed,
-        created_at: new Date().toISOString(),
-      },
-    ]).select().single();
-
-    if (error) {
-      console.error("Error sending message:", error);
-      // Remove optimistic message on error
-      setMessages((prev) => prev.filter(msg => msg.id !== optimisticMessage.id));
-      setNewMessage(trimmed); // Restore message text
-      showWarning(warningMessages.ERROR_SENDING_MESSAGE);
-    } else {
-      // Replace optimistic message with real one
-      setMessages((prev) => 
-        prev.map(msg => 
-          msg.id === optimisticMessage.id ? data : msg
-        )
-      );
-      
-      // Update chat's last_message and last_updated
-      await supabase
-        .from("study_buddy_chats")
-        .update({
-          last_message: trimmed,
-          last_updated: new Date().toISOString(),
-        })
-        .eq("id", selectedChat.id);
+  // Modify the useEffect for message scrolling to be immediate
+  useEffect(() => {
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behavior: "auto" }); // Changed from "smooth" to "auto"
     }
-  }
+  }, [messages]);
 
-  // Helper function to truncate messages
-  const truncatedMessage = useCallback((message: string, maxLength = 40): string => {
-    return message.length > maxLength
-      ? message.substring(0, maxLength) + "..."
-      : message;
-  }, []);
-
-  // Handle post edit button click
-  function handleEditPost(post: StudyBuddyPost) {
-    setEditingPost(post);
-    setEditPostPurpose(post.purpose);
-    setEditPostReason(post.reason);
-    setShowEditPostForm(true);
-  }
-
-  // Save edited post
-  async function saveEditedPost() {
-    if (!currentUser || !editingPost) return;
-    
-    const trimmedReason = editPostReason.trim();
-    
-    // Validate input
-    if (!editPostPurpose) {
-      setCreationError(warningMessages.EMPTY_PURPOSE);
-      return;
-    }
-    
-    if (!trimmedReason) {
-      setCreationError(warningMessages.EMPTY_REASON);
-      return;
-    }
-    
-    if (trimmedReason.length > 300) {
-      setCreationError(warningMessages.REASON_TOO_LONG);
-      return;
-    }
-    
-    try {
-      const { error } = await supabase
-        .from("study_buddy_posts")
-        .update({
-          purpose: editPostPurpose,
-          reason: trimmedReason,
-        })
-        .eq("id", editingPost.id)
-        .eq("user_id", currentUser.id); // Security check
-      
-      if (error) {
-        console.error("Error updating post:", error);
-        setCreationError(warningMessages.ERROR_CREATING_POST);
-      } else {
-        setEditingPost(null);
-        setEditPostPurpose("");
-        setEditPostReason("");
-        setShowEditPostForm(false);
-        setCreationError("");
-        turkishToast.success("Gönderi başarıyla güncellendi");
-        
-        // Reload posts
-        loadAllPosts();
-        loadMyPosts();
-      }
-    } catch (error) {
-      console.error("Error in saveEditedPost:", error);
-      setCreationError(warningMessages.ERROR_CREATING_POST);
-    }
-  }
-
-  // 11) Render
+  // Loading states
   if (loadingUser) return <LoadingSpinner size="md" />;
-  if (!currentUser) return <div className="p-4">Lütfen giriş yapın.</div>;
+
+  if (!currentUser) {
+  return (
+      <div className="flex items-center justify-center h-64">
+        <Card className="w-full max-w-md">
+          <CardContent className="p-6 text-center">
+            <AlertCircle className="mx-auto h-12 w-12 text-amber-500 mb-4" />
+            <h3 className="text-lg font-semibold mb-2">Giriş Gerekli</h3>
+            <p className="text-muted-foreground">Bu sayfayı görüntülemek için lütfen giriş yapın.</p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
-    <>
-      <div className="h-screen flex flex-col bg-gray-50">
-        <div className="border-2 rounded-xl p-6 bg-white w-full max-w-[1200px] mx-auto flex-1 flex flex-col">
-          {/* TAB BUTTONS */}
-          <div className="flex gap-2">
-            <Button
-              variant={activeTab === "allPosts" ? "secondary" : "default"}
-              size="sm"
-              onClick={() => setActiveTab("allPosts")}
-            >
-              Bütün Gönderİler
-            </Button>
-            <Button
-              variant={activeTab === "myPosts" ? "secondary" : "default"}
-              size="sm"
-              onClick={() => setActiveTab("myPosts")}
-            >
-              Gönderİlerİm
-            </Button>
-            <Button
-              variant={activeTab === "chats" ? "secondary" : "default"}
-              size="sm"
-              onClick={() => setActiveTab("chats")}
-            >
-              Sohbetlerİm
-            </Button>
+    <div className="flex flex-row-reverse gap-[48px] px-6">
+      <StickyWrapper>
+        <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-2">
+              <Users className="h-5 w-5 text-green-600" />
+              <CardTitle className="text-green-800">Çalışma Arkadaşları</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-green-700">Toplam Gönderi</span>
+              <Badge variant="secondary" className="bg-green-100 text-green-800">
+                {totalPosts}
+              </Badge>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-green-700">Aktif Sohbet</span>
+              <Badge variant="secondary" className="bg-green-100 text-green-800">
+                {chats.length}
+              </Badge>
+            </div>
+            <Separator className="bg-green-200" />
+            <div className="text-xs text-green-600">
+              <p>• Günlük gönderi limiti: {POST_LIMITS.MAX_PER_DAY}</p>
+              <p>• Günlük mesaj limiti: {MESSAGE_LIMITS.MAX_PER_DAY}</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-blue-50 to-sky-50 border-blue-200">
+          <CardHeader className="pb-3">
+            <div className="flex items-center gap-2">
+              <BookOpen className="h-5 w-5 text-blue-600" />
+              <CardTitle className="text-blue-800">Çalışma İpuçları</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent className="text-sm text-blue-700 space-y-2">
+            <p>• Çalışma arkadaşları ile belirli hedefler koyun</p>
+            <p>• Düzenli çalışma programları oluşturun</p>
+            <p>• Birbirinizi motive edin</p>
+            <p>• Başarılarınızı paylaşın</p>
+          </CardContent>
+        </Card>
+      </StickyWrapper>
+
+      <FeedWrapper>
+        <div className="space-y-6">
+          {/* Header */}
+          <div className="text-center space-y-2">
+            <h1 className="text-3xl font-bold text-gray-900">Çalışma Arkadaşları</h1>
+            <p className="text-muted-foreground">
+              Benzer hedeflere sahip çalışma arkadaşları bul ve birlikte başarıya ulaş
+            </p>
           </div>
 
-          <div className="flex-1 overflow-hidden mt-4">
-            {/* ALL POSTS TAB */}
+          {/* Tab Navigation */}
+          <Card>
+            <CardContent className="p-0">
+              <div className="flex border-b">
+            <Button
+                  variant={activeTab === "allPosts" ? "secondary" : "ghost"}
+                  className="flex-1 rounded-none border-0 h-12"
+              onClick={() => setActiveTab("allPosts")}
+            >
+                  <Users className="mr-2 h-4 w-4" />
+                  Tüm Gönderiler
+            </Button>
+            <Button
+                  variant={activeTab === "myPosts" ? "secondary" : "ghost"}
+                  className="flex-1 rounded-none border-0 h-12"
+              onClick={() => setActiveTab("myPosts")}
+            >
+                  <Edit className="mr-2 h-4 w-4" />
+                  Gönderilerim
+            </Button>
+            <Button
+                  variant={activeTab === "chats" ? "secondary" : "ghost"}
+                  className="flex-1 rounded-none border-0 h-12"
+              onClick={() => setActiveTab("chats")}
+            >
+                  <MessageCircle className="mr-2 h-4 w-4" />
+                  Sohbetlerim
+            </Button>
+          </div>
+            </CardContent>
+          </Card>
+
+          {/* Tab Content */}
             {activeTab === "allPosts" && (
-              <div className="h-full flex flex-col">
-                {/* Filter UI */}
-                <div className="p-4 rounded-md bg-gray-100 flex flex-wrap gap-4 items-center">
-                  <div>
-                    <label className="block text-sm font-medium">
-                      Bu Neyin Hazırlığı
-                    </label>
+            <div className="space-y-6">
+              {/* Filters */}
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Filter className="h-5 w-5 text-gray-600" />
+                      <CardTitle>Filtreler</CardTitle>
+                    </div>
+                    <Button
+                      variant="primary"
+                      onClick={() => setShowNewPostForm(!showNewPostForm)}
+                    >
+                      <Plus className="mr-2 h-4 w-4" />
+                      Yeni Gönderi
+                    </Button>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Çalışma Amacı</label>
                     <select
                       value={filterPurpose}
                       onChange={(e) => setFilterPurpose(e.target.value)}
-                      className="mt-1 block rounded-md p-1 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        className="w-full rounded-xl border-2 border-gray-200 p-3 focus:border-green-500 focus:outline-none"
                     >
-                      <option value="">Hepsi</option>
+                        <option value="">Tümü</option>
                       {PURPOSE_OPTIONS.map((opt) => (
                         <option key={opt} value={opt}>
                           {opt}
@@ -1122,46 +1131,52 @@ export default function StudyBuddyPage() {
                       ))}
                     </select>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium">
-                      Okul ismi ara
-                    </label>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Okul Ara</label>
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                     <input
                       type="text"
-                      placeholder="Okul ismi..."
+                          placeholder="Okul ismi ara..."
                       value={schoolSearchTerm}
                       onChange={(e) => setSchoolSearchTerm(e.target.value)}
-                      className="mt-1 block rounded-md p-1 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                          className="w-full pl-10 rounded-xl border-2 border-gray-200 p-3 focus:border-green-500 focus:outline-none"
                     />
                   </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* New Post Form */}
+              {showNewPostForm && (
+                <Card className="border-green-200 bg-green-50">
+                  <CardHeader>
+                    <div className="flex items-center justify-between">
+                      <CardTitle className="text-green-800">Yeni Gönderi Oluştur</CardTitle>
                   <Button
-                    variant="primary"
+                        variant="ghost"
                     size="sm"
-                    className="ml-auto"
-                    onClick={() => setShowNewPostForm(!showNewPostForm)}
+                        onClick={() => setShowNewPostForm(false)}
                   >
-                    Yeni Gönderi Oluştur
+                        <X className="h-4 w-4" />
                   </Button>
                 </div>
-
-                {showNewPostForm && (
-                  <div className="border-2 rounded-md p-4 space-y-3 bg-white mt-4 mx-1">
-                    <h3 className="text-lg font-bold">Gönderi Oluştur</h3>
                     {creationError && (
-                      <div className="text-red-500 text-sm">
+                      <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg">
                         {creationError}
                       </div>
                     )}
-                    <div>
-                      <label className="block text-sm font-medium">
-                        Bu Neyin Hazırlığı
-                      </label>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Çalışma Amacı</label>
                       <select
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        className="w-full rounded-xl border-2 border-gray-200 p-3 focus:border-green-500 focus:outline-none"
                         value={postPurpose}
                         onChange={(e) => setPostPurpose(e.target.value)}
                       >
-                        <option value="">-Seç-</option>
+                        <option value="">Seçiniz</option>
                         {PURPOSE_OPTIONS.map((opt) => (
                           <option key={opt} value={opt}>
                             {opt}
@@ -1169,394 +1184,329 @@ export default function StudyBuddyPage() {
                         ))}
                       </select>
                     </div>
-                    <div>
-                      <label className="block text-sm font-medium">
-                        Açıklama
-                      </label>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Açıklama</label>
                       <textarea
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        className="w-full rounded-xl border-2 border-gray-200 p-3 focus:border-green-500 focus:outline-none min-h-[100px]"
                         value={postReason}
                         onChange={(e) => setPostReason(e.target.value)}
                         placeholder={`Neden çalışma arkadaşı arıyorsun? (max ${POST_LIMITS.MAX_REASON_LENGTH} karakter)`}
                         maxLength={POST_LIMITS.MAX_REASON_LENGTH}
                       />
-                      <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <div className="flex justify-between text-xs text-gray-500">
                         <span>{postReason.length}/{POST_LIMITS.MAX_REASON_LENGTH} karakter</span>
                         <span>Günlük limit: {POST_LIMITS.MAX_PER_DAY} gönderi</span>
                       </div>
                     </div>
-                    <Button variant="secondary" onClick={handleCreatePost}>
-                      Gönder
+                    <Button
+                      variant="primary"
+                      className="w-full"
+                      onClick={handleCreatePost}
+                      disabled={!postPurpose || !postReason}
+                    >
+                      Gönderi Oluştur
                     </Button>
-                  </div>
+                  </CardContent>
+                </Card>
                 )}
 
                 {/* Posts List */}
-                <div className="flex-1 mt-4 mx-1 border-2 rounded-md p-4 bg-white overflow-y-auto scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-200">
+              <div className="space-y-4">
                   {loadingPosts ? (
-                    <div className="flex justify-center items-center h-40">
-                      <LoadingSpinner size="sm" />
-                    </div>
-                  ) : displayedPosts.length === 0 ? (
-                    <div>Post yok (veya filtreye uyan yok).</div>
-                  ) : (
-                    displayedPosts.map((post: StudyBuddyPost) => {
-                      const createdAtDate = new Date(post.created_at);
-                      return (
-                        <div
+                  <LoadingSpinner size="lg" />
+                ) : (
+                  <>
+                    {displayedPosts.map((post) => (
+                      <PostCard
                           key={post.id}
-                          className="border-b last:border-none py-3"
-                        >
-                          <div className="text-sm text-gray-500">
-                            Oluşturulma Zamanı: {createdAtDate.toLocaleString()}
-                          </div>
-                          <div className="font-semibold">
-                            Gönderen: {post.userName}
-                          </div>
-                          {post.userSchoolName && (
-                            <div className="text-sm">
-                              Okul: {post.userSchoolName}
-                            </div>
-                          )}
-                          {post.purpose && (
-                            <div className="text-sm">
-                              Çalışma Amacı: {post.purpose}
-                            </div>
-                          )}
-                          <div className="text-sm text-gray-700">
-                            Açıklama: {post.reason}
-                          </div>
-                          {post.user_id !== currentUser!.id && (
-                            <Button
-                              variant="primary"
-                              size="sm"
-                              className="mt-2"
-                              onClick={() => handleOpenChat(post)}
-                            >
-                              Mesaj At
-                            </Button>
-                          )}
-                        </div>
-                      );
-                    })
+                        post={post}
+                        currentUser={currentUser}
+                        onChatRequest={handleOpenChat}
+                      />
+                    ))}
+                  </>
                   )}
-                </div>
+                            </div>
 
                 {/* Pagination */}
-                <div className="flex justify-between mt-4 mx-1">
+              {totalPosts > POSTS_PER_PAGE && (
+                <div className="flex flex-col items-center gap-4 mt-6">
+                  <div className="flex items-center gap-2">
+                            <Button
+                      variant="secondary"
+                              size="sm"
+                      onClick={() => setCurrentPage(0)}
+                      disabled={currentPage === 0}
+                            >
+                      İlk
+                            </Button>
                   <Button
-                    variant="primaryOutline"
+                      variant="secondary"
                     size="sm"
                     onClick={goToPrevPage}
                     disabled={currentPage === 0}
                   >
-                    Önceki Sayfa
+                      Önceki
                   </Button>
+                    <div className="flex items-center gap-1 px-4 py-2 rounded-lg bg-gray-100">
+                      <span className="text-sm font-medium">
+                        Sayfa {currentPage + 1} / {Math.ceil(totalPosts / POSTS_PER_PAGE)}
+                      </span>
+                    </div>
                   <Button
-                    variant="primaryOutline"
+                      variant="secondary"
                     size="sm"
                     onClick={goToNextPage}
-                    disabled={currentPage >= totalPages - 1}
-                  >
-                    Sonraki Sayfa
+                      disabled={currentPage >= Math.ceil(totalPosts / POSTS_PER_PAGE) - 1}
+                    >
+                      Sonraki
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => setCurrentPage(Math.ceil(totalPosts / POSTS_PER_PAGE) - 1)}
+                      disabled={currentPage >= Math.ceil(totalPosts / POSTS_PER_PAGE) - 1}
+                    >
+                      Son
                   </Button>
                 </div>
-                <div className="text-sm text-gray-700 mx-1">
-                  Sayfa {currentPage + 1} / {totalPages}
+                  <div className="text-sm text-muted-foreground">
+                    Toplam {totalPosts} gönderi • {POSTS_PER_PAGE} gönderi/sayfa
                 </div>
+                </div>
+              )}
               </div>
             )}
 
-            {/* MY POSTS TAB */}
+          {/* My Posts Tab */}
             {activeTab === "myPosts" && (
-              <div className="bg-white shadow rounded-lg p-4">
-                <h2 className="text-xl font-bold mb-4">Gönderilerim</h2>
+            <div className="space-y-6">
                 {loadingMyPosts ? (
-                  <div className="flex justify-center items-center h-40">
-                    <LoadingSpinner size="sm" />
-                  </div>
-                ) : myPosts.length === 0 ? (
-                  <div className="text-center text-gray-500 my-8">
-                    Henüz gönderi oluşturmadınız.
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {myPosts.map((post) => (
-                      <div
-                        key={post.id}
-                        className="bg-white border rounded-lg p-4 shadow"
-                      >
-                        <div className="flex justify-between items-start">
-                          <div className="flex flex-col">
-                            <span className="font-bold">{post.purpose}</span>
-                            <p className="text-gray-700 mt-2 whitespace-pre-wrap break-words">
-                              {post.reason}
-                            </p>
-                            {/* Display university name if it exists */}
-                            {post.userSchoolName && (
-                              <div className="text-gray-500 mt-2 text-sm">
-                                {post.userSchoolName}
-                              </div>
-                            )}
-                            <div className="text-gray-500 mt-2 text-sm">
-                              {new Date(post.created_at).toLocaleDateString("tr-TR")}
-                            </div>
-                          </div>
-                          
-                          {/* Edit button */}
-                          <Button 
-                            variant="secondary" 
+                <LoadingSpinner size="lg" />
+              ) : (
+                <>
+                  {/* Edit Form */}
+                  {showEditPostForm && editingPost && (
+                    <Card className="border-blue-200 bg-blue-50">
+                      <CardHeader>
+                        <div className="flex items-center justify-between">
+                          <CardTitle className="text-blue-800">Gönderi Düzenle</CardTitle>
+                          <Button
+                            variant="ghost"
                             size="sm"
-                            onClick={() => handleEditPost(post)}
+                            onClick={() => {
+                              setShowEditPostForm(false);
+                              setEditingPost(null);
+                              setCreationError("");
+                            }}
                           >
-                            Düzenle
+                            <X className="h-4 w-4" />
                           </Button>
                         </div>
-                      </div>
+                        {creationError && (
+                          <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg">
+                            {creationError}
+                              </div>
+                            )}
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium">Çalışma Amacı</label>
+                          <select
+                            className="w-full rounded-xl border-2 border-gray-200 p-3 focus:border-blue-500 focus:outline-none"
+                            value={editPostPurpose}
+                            onChange={(e) => setEditPostPurpose(e.target.value)}
+                          >
+                            <option value="">Seçiniz</option>
+                            {PURPOSE_OPTIONS.map((opt) => (
+                              <option key={opt} value={opt}>
+                                {opt}
+                              </option>
+                            ))}
+                          </select>
+                            </div>
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium">Açıklama</label>
+                          <textarea
+                            className="w-full rounded-xl border-2 border-gray-200 p-3 focus:border-blue-500 focus:outline-none min-h-[100px]"
+                            value={editPostReason}
+                            onChange={(e) => setEditPostReason(e.target.value)}
+                            placeholder={`Neden çalışma arkadaşı arıyorsun? (max ${POST_LIMITS.MAX_REASON_LENGTH} karakter)`}
+                            maxLength={POST_LIMITS.MAX_REASON_LENGTH}
+                          />
+                          <div className="flex justify-between text-xs text-gray-500">
+                            <span>{editPostReason.length}/{POST_LIMITS.MAX_REASON_LENGTH} karakter</span>
+                          </div>
+                        </div>
+                          <Button 
+                          variant="primary"
+                          className="w-full bg-blue-500 hover:bg-blue-600"
+                          onClick={handleEditSubmit}
+                          disabled={!editPostPurpose || !editPostReason}
+                        >
+                          Gönderiyi Güncelle
+                          </Button>
+                      </CardContent>
+                    </Card>
+                  )}
+
+                  {/* Posts List */}
+                  {myPosts.length === 0 ? (
+                    <Card>
+                      <CardContent className="p-6 text-center">
+                        <p className="text-muted-foreground">Henüz bir gönderi oluşturmadınız.</p>
+                      </CardContent>
+                    </Card>
+                  ) : (
+                    <div className="space-y-4">
+                      {myPosts.map((post) => (
+                        <PostCard
+                          key={post.id}
+                          post={post}
+                          currentUser={currentUser}
+                          isOwnPost={true}
+                          onEdit={() => handleEditPost(post)}
+                          onDelete={() => handleDeletePost(post.id)}
+                        />
                     ))}
                   </div>
+                  )}
+                </>
                 )}
               </div>
             )}
 
-            {/* CHATS TAB */}
+          {/* Chats Tab */}
             {activeTab === "chats" && (
-              <div className="h-full flex flex-col md:flex-row gap-4">
-                {/* Chat List */}
-                <div className="border-2 rounded-md p-4 bg-white w-full md:w-1/3 overflow-y-auto scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-200">
-                  <h2 className="text-xl font-bold mb-2">Sohbetler</h2>
-                  {loadingChats ? (
-                    <div className="flex justify-center items-center h-40">
-                      <LoadingSpinner size="sm" />
+            <div className="grid grid-cols-3 gap-6">
+              {/* Contact List - Left Side */}
+              <div className="col-span-1 space-y-4">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg">Sohbetler</CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-3">
+                    {chats.length === 0 ? (
+                      <div className="text-center py-8">
+                        <p className="text-muted-foreground">Henüz bir sohbetiniz yok.</p>
                     </div>
-                  ) : chats.length === 0 ? (
-                    <div>Hiç sohbet yok.</div>
-                  ) : (
-                    <ul className="space-y-2">
-                      {chats.map((chat) => {
-                        const otherUid = chat.participants.find(
-                          (id) => id !== currentUser!.id
-                        );
-                        const otherData =
-                          chat.participantsData && otherUid
-                            ? chat.participantsData[otherUid]
-                            : {
-                                userName: "User",
-                                avatarUrl: "/mascot_purple.svg",
-                              };
-                        const shortLastMsg = truncatedMessage(
-                          chat.last_message,
-                          12
-                        );
-                        return (
-                          <li
+                    ) : (
+                      <div className="space-y-2">
+                        {chats.map((chat) => (
+                          <ChatCard
                             key={chat.id}
-                            className="border rounded p-2 cursor-pointer hover:bg-gray-100"
-                            onClick={() => {
-                              setSelectedChat(chat);
-                              setMessages([]); // Reset messages to avoid stale data
-                            }}
-                          >
-                            <div className="flex items-center gap-2">
-                              <Image
-                                src={otherData.avatarUrl}
-                                width={32}
-                                height={32}
-                                alt="avatar"
-                                unoptimized
-                                className="w-8 h-8 rounded-full object-cover"
-                              />
-                              <div>
-                                <div className="font-semibold">
-                                  {otherData.userName}
+                            chat={chat}
+                            currentUser={currentUser}
+                            onClick={() => handleSelectChat(chat)}
+                            isSelected={selectedChat?.id === chat.id}
+                          />
+                        ))}
                                 </div>
-                                <div className="text-sm text-gray-600 truncate">
-                                  {shortLastMsg}
-                                </div>
-                              </div>
-                            </div>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  )}
+                    )}
+                  </CardContent>
+                </Card>
                 </div>
 
-                {/* Chat Messages */}
-                <div className="border-2 rounded-md p-4 bg-white flex-1 flex flex-col">
-                  {!selectedChat ? (
-                    <div className="text-gray-500">
-                      Bir sohbet seçmek için sol listeden tıklayın.
+              {/* Chat Messages - Right Side */}
+              <div className="col-span-2">
+                {selectedChat ? (
+                  <Card className="h-[calc(100vh-16rem)] flex flex-col">
+                    <CardHeader className="border-b bg-gray-50/80">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <Image
+                            src={selectedChat.participantsData?.[
+                              selectedChat.participants.find(p => p !== currentUser?.id)!
+                            ]?.avatarUrl || "/mascot_purple.svg"}
+                            width={40}
+                            height={40}
+                            alt="Avatar"
+                            className="rounded-full"
+                          />
+                          <CardTitle>
+                            {selectedChat.participantsData?.[
+                              selectedChat.participants.find(p => p !== currentUser?.id)!
+                            ]?.userName || "Kullanıcı"}
+                          </CardTitle>
                     </div>
-                  ) : (
-                    <>
-                      <div className="pb-2 mb-2 border-b">
-                        <h3 className="text-lg font-semibold">Sohbet</h3>
-                        <p className="text-sm text-gray-600">
-                          {selectedChat.participants
-                            .filter((uid) => uid !== currentUser!.id)
-                            .map((uid) => {
-                              const d =
-                                selectedChat.participantsData && uid
-                                  ? selectedChat.participantsData[uid]
-                                  : { userName: "User" };
-                              return d.userName;
-                            })
-                            .join(", ")}
-                        </p>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setSelectedChat(null)}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
                       </div>
-                      <div className="overflow-y-auto space-y-2 pr-2 scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-200 max-h-80">
-                        {messages.map((msg) => {
-                          const isMine = msg.sender === currentUser!.id;
-                          return (
-                            <div
-                              key={msg.id}
+                    </CardHeader>
+                    <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">
+                      {messages.map((message) => (
+                        <div
+                          key={message.id}
                               className={`flex ${
-                                isMine ? "justify-end" : "justify-start"
+                            message.sender === currentUser?.id ? "justify-end" : "justify-start"
                               }`}
                             >
                               <div
-                                className={`p-2 rounded mb-1 max-w-sm whitespace-pre-wrap break-words ${
-                                  isMine
-                                    ? "bg-blue-500 text-white"
-                                    : "bg-gray-200 text-gray-800"
-                                }`}
-                              >
-                                {msg.content}
+                            className={`max-w-[70%] p-3 rounded-xl ${
+                              message.sender === currentUser?.id
+                                ? "bg-green-500 text-white"
+                                : "bg-gray-100"
+                            }`}
+                          >
+                            <p className="text-sm">{message.content}</p>
+                            <span className="text-xs opacity-70">
+                              {new Date(message.created_at).toLocaleTimeString("tr-TR", {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                hour12: false
+                              })}
+                            </span>
                               </div>
                             </div>
-                          );
-                        })}
+                      ))}
                         <div ref={messageEndRef} />
-                      </div>
-                      <div className="mt-2">
-                        <div className="flex items-center gap-2">
+                    </CardContent>
+                    <div className="border-t bg-gray-50/80 p-4">
+                      <div className="flex gap-2">
                           <input
-                            className="flex-1 border rounded-md p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                            placeholder={messageCooldown > 0 ? `Bekleyin... ${messageCooldown}s` : "Mesaj yazın..."}
+                          type="text"
                             value={newMessage}
                             onChange={(e) => setNewMessage(e.target.value)}
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter" && messageCooldown === 0) {
-                                e.preventDefault();
-                                handleSendMessage();
-                              }
-                            }}
-                            disabled={messageCooldown > 0}
+                          placeholder="Mesajınızı yazın..."
+                          className="flex-1 rounded-xl border-2 border-gray-200 p-3 focus:border-green-500 focus:outline-none"
                             maxLength={MESSAGE_LIMITS.MAX_LENGTH}
+                          onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
                           />
                           <Button
                             variant="primary"
-                            size="sm"
                             onClick={handleSendMessage}
-                            disabled={messageCooldown > 0 || !newMessage.trim()}
+                          disabled={!newMessage.trim()}
                           >
-                            {messageCooldown > 0 ? `${messageCooldown}s` : "Gönder"}
+                          <Send className="h-4 w-4" />
                           </Button>
                         </div>
-                        <div className="flex justify-between text-xs text-gray-500 mt-1">
+                      <div className="flex justify-between mt-2 text-xs text-muted-foreground">
                           <span>{newMessage.length}/{MESSAGE_LIMITS.MAX_LENGTH} karakter</span>
                           <span>Günlük limit: {MESSAGE_LIMITS.MAX_PER_DAY} mesaj</span>
                         </div>
                       </div>
-                    </>
-                  )}
+                  </Card>
+                ) : (
+                  <Card className="h-[calc(100vh-16rem)] flex items-center justify-center">
+                    <div className="text-center">
+                      <MessageCircle className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+                      <h3 className="font-semibold mb-2">Sohbet Seç</h3>
+                      <p className="text-muted-foreground">
+                        Soldan bir sohbet seçerek mesajlaşmaya başla
+                      </p>
                 </div>
-              </div>
+                  </Card>
             )}
           </div>
-        </div>
-        <div className="pb-12"></div>
-      </div>
-
-      {/* Edit Post Modal */}
-      {showEditPostForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-40 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
-            <h3 className="text-xl font-bold mb-4">Gönderi Düzenle</h3>
-            
-            {creationError && (
-              <div className="mb-4 p-2 bg-red-100 text-red-700 rounded">
-                {creationError}
               </div>
             )}
-            
-            <div className="mb-4">
-              <label className="block mb-2 font-medium">Amaç</label>
-              <select
-                className="w-full p-2 border rounded"
-                value={editPostPurpose}
-                onChange={(e) => setEditPostPurpose(e.target.value)}
-              >
-                <option value="">Seçiniz</option>
-                {PURPOSE_OPTIONS.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
-                  </option>
-                ))}
-              </select>
             </div>
-            
-            <div className="mb-4">
-              <label className="block mb-2 font-medium">
-                Açıklama (max 300 karakter)
-              </label>
-              <textarea
-                className="w-full p-2 border rounded min-h-[100px]"
-                placeholder="Açıklamanızı yazın"
-                value={editPostReason}
-                onChange={(e) => setEditPostReason(e.target.value)}
-              />
-              <div className="text-right text-sm text-gray-500">
-                {editPostReason.length}/300
+      </FeedWrapper>
               </div>
-            </div>
-            
-            <div className="flex justify-end space-x-2">
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  setShowEditPostForm(false);
-                  setEditingPost(null);
-                  setCreationError("");
-                }}
-              >
-                İptal
-              </Button>
-              <Button variant="primary" onClick={saveEditedPost}>
-                Kaydet
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Improved Warning Modal with mascot_sad.svg */}
-      {warningOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg p-6 w-full max-w-md">
-            <div className="flex flex-col items-center mb-4">
-              <Image
-                src="/mascot_sad.svg"
-                alt="Sad Mascot"
-                width={80}
-                height={80}
-                unoptimized
-                className="w-20 h-20 mb-4" 
-              />
-              <h3 className="text-lg font-bold text-center">Uyarı</h3>
-            </div>
-            
-            <p className="text-center mb-6">{warningMessage}</p>
-            
-            <div className="flex justify-center">
-              <Button onClick={() => setWarningOpen(false)}>
-                Tamam
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
   );
 }

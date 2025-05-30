@@ -15,9 +15,25 @@ const nextConfig = {
       'api.dicebear.com',
       'sukull.com',
       'avataaars.io',
+      // Google profile images
+      'lh3.googleusercontent.com',
+      'lh4.googleusercontent.com',
+      'lh5.googleusercontent.com',
+      'lh6.googleusercontent.com',
+      // Additional Google domains that might be used
+      'googleusercontent.com',
     ],
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 60,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'avataaars.io',
+        pathname: '/**',
+      }
+    ],
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   // Enable SWC compiler for more efficient builds
   compiler: {

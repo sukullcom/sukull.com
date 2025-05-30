@@ -1,7 +1,5 @@
 import Image from "next/image";
 import { LoginForm } from "./login-form";
-import { OAuthDebug } from "@/components/auth/oauth-debug";
-import { Suspense } from "react";
 
 // Add search params type for error handling
 interface LoginPageProps {
@@ -41,15 +39,6 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
           <LoginForm />
         </div>
       </div>
-
-      {/* Debug section - remove this after testing */}
-      {process.env.NODE_ENV === 'development' && (
-        <Suspense fallback={<div>Loading debug tools...</div>}>
-          <div className="w-full max-w-4xl">
-            <OAuthDebug />
-          </div>
-        </Suspense>
-      )}
     </div>
   );
 }
