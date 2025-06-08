@@ -199,17 +199,7 @@ export async function updateDailyStreak() {
     // Check if daily target has been met
     const metDailyTarget = pointsEarnedToday >= dailyTarget;
     
-    if (!metDailyTarget) {
-      // Target not met yet, just update the check time
-      await db.update(userProgress)
-        .set({
-          lastStreakCheck: now,
-        })
-        .where(eq(userProgress.userId, userId));
-      return false;
-    }
-    
-    // Target met! Check if we already have a record for today
+    // Always create or update today's record
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
     
@@ -222,13 +212,39 @@ export async function updateDailyStreak() {
     });
     
     if (existingStreak) {
-      // Update existing record if target is now met and wasn't before
-      if (!existingStreak.achieved) {
+      // Update existing record with current achievement status
+      if (existingStreak.achieved !== metDailyTarget) {
         await db.update(userDailyStreak)
-          .set({ achieved: true })
+          .set({ achieved: metDailyTarget })
           .where(eq(userDailyStreak.id, existingStreak.id));
         
-        // Increment streak counter
+        console.log(`Updated daily record for user ${userId}: ${pointsEarnedToday}/${dailyTarget} points - achieved: ${metDailyTarget}`);
+        
+        // If goal was just achieved (and wasn't before), increment streak
+        if (metDailyTarget && !existingStreak.achieved) {
+          await db.update(userProgress)
+            .set({
+              istikrar: progress.istikrar + 1,
+              lastStreakCheck: now,
+            })
+            .where(eq(userProgress.userId, userId));
+          
+          console.log(`Streak increased for user ${userId}: ${progress.istikrar + 1} days`);
+          return true;
+        }
+      }
+    } else {
+      // Create new record for today
+      await db.insert(userDailyStreak).values({
+        userId,
+        date: today,
+        achieved: metDailyTarget
+      });
+      
+      console.log(`Created daily record for user ${userId}: ${pointsEarnedToday}/${dailyTarget} points - achieved: ${metDailyTarget}`);
+      
+      // If goal was achieved, increment streak
+      if (metDailyTarget) {
         await db.update(userProgress)
           .set({
             istikrar: progress.istikrar + 1,
@@ -236,28 +252,17 @@ export async function updateDailyStreak() {
           })
           .where(eq(userProgress.userId, userId));
         
-        console.log(`Streak increased for user ${userId}: ${progress.istikrar + 1} days`);
+        console.log(`Daily goal achieved for user ${userId}. Streak: ${progress.istikrar + 1} days`);
         return true;
       }
-    } else {
-      // Create new record for today
-      await db.insert(userDailyStreak).values({
-        userId,
-        date: today,
-        achieved: true
-      });
-      
-      // Increment streak counter
-      await db.update(userProgress)
-        .set({
-          istikrar: progress.istikrar + 1,
-          lastStreakCheck: now,
-        })
-        .where(eq(userProgress.userId, userId));
-      
-      console.log(`Daily goal achieved for user ${userId}. Streak: ${progress.istikrar + 1} days`);
-      return true;
     }
+    
+    // Update last check time regardless
+    await db.update(userProgress)
+      .set({
+        lastStreakCheck: now,
+      })
+      .where(eq(userProgress.userId, userId));
     
     return false;
   } catch (error) {
@@ -495,5 +500,91 @@ export async function initializeUserStreak(userId: string) {
   } catch (error) {
     console.error("Error initializing user streak:", error);
     return false;
+  }
+}
+
+/**
+ * Test function to verify streak record creation and star display logic
+ * This function can be called to ensure everything is working correctly
+ */
+export async function verifyStreakSystem() {
+  try {
+    const user = await getServerUser();
+    if (!user) {
+      console.log("❌ No authenticated user found");
+      return;
+    }
+    
+    const userId = user.id;
+    
+    // Get user progress
+    const progress = await db.query.userProgress.findFirst({
+      where: eq(userProgress.userId, userId),
+    });
+    
+    if (!progress) {
+      console.log("❌ No user progress found");
+      return;
+    }
+    
+    // Get today's record
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    const todayRecord = await db.query.userDailyStreak.findFirst({
+      where: and(
+        eq(userDailyStreak.userId, userId),
+        gte(userDailyStreak.date, today),
+        lt(userDailyStreak.date, tomorrow)
+      ),
+    });
+    
+    // Calculate today's progress
+    const baselinePoints = progress.previousTotalPoints || 0;
+    const pointsEarnedToday = Math.max(0, progress.points - baselinePoints);
+    const dailyTarget = progress.dailyTarget || 50;
+    const goalAchieved = pointsEarnedToday >= dailyTarget;
+    
+    console.log("🔍 Streak System Verification:");
+    console.log(`   User ID: ${userId}`);
+    console.log(`   Current Streak: ${progress.istikrar} days`);
+    console.log(`   Daily Target: ${dailyTarget} points`);
+    console.log(`   Points Today: ${pointsEarnedToday} points`);
+    console.log(`   Goal Achieved: ${goalAchieved ? '✅' : '❌'}`);
+    console.log(`   Expected Star: ${goalAchieved ? 'istikrar.svg (gold)' : 'istikrarsiz.svg (gray)'}`);
+    
+    if (todayRecord) {
+      console.log(`   Database Record: achieved=${todayRecord.achieved}`);
+      console.log(`   Record Matches Goal: ${todayRecord.achieved === goalAchieved ? '✅' : '❌'}`);
+      
+      if (todayRecord.achieved !== goalAchieved) {
+        console.log(`   ⚠️  Database record doesn't match current progress!`);
+        console.log(`   📝 Updating record...`);
+        
+        await db.update(userDailyStreak)
+          .set({ achieved: goalAchieved })
+          .where(eq(userDailyStreak.id, todayRecord.id));
+        
+        console.log(`   ✅ Record updated successfully`);
+      }
+    } else {
+      console.log(`   ⚠️  No database record found for today`);
+      console.log(`   📝 Creating record...`);
+      
+      await db.insert(userDailyStreak).values({
+        userId,
+        date: today,
+        achieved: goalAchieved
+      });
+      
+      console.log(`   ✅ Record created successfully`);
+    }
+    
+    console.log("✅ Streak system verification complete");
+    
+  } catch (error) {
+    console.error("❌ Error in streak system verification:", error);
   }
 }
