@@ -6,7 +6,7 @@ import { challengeProgress, challenges, schools, userProgress } from "@/db/schem
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { getServerUser } from "@/lib/auth";
-import { updateDailyStreak } from "@/actions/daily-streak";
+import { updateDailyStreak, checkStreakContinuity } from "./daily-streak";
 
 export const upsertChallengeProgress = async (challengeId: number) => {
   const user = await getServerUser();
@@ -46,6 +46,9 @@ export const upsertChallengeProgress = async (challengeId: number) => {
       .set({ completed: true })
       .where(eq(challengeProgress.id, existingChallengeProgress.id));
 
+    // Check streak continuity and initialize if needed
+    await checkStreakContinuity(userId);
+
     // Initialize streak tracking if needed
     if (currentUserProgress.previousTotalPoints === null || currentUserProgress.previousTotalPoints === undefined) {
       await db.update(userProgress)
@@ -73,6 +76,9 @@ export const upsertChallengeProgress = async (challengeId: number) => {
     revalidatePath("/leaderboard");
     return;
   }
+
+  // Check streak continuity and initialize if needed
+  await checkStreakContinuity(userId);
 
   // Initialize streak tracking if needed
   if (currentUserProgress.previousTotalPoints === null || currentUserProgress.previousTotalPoints === undefined) {
@@ -129,9 +135,12 @@ export async function addPointsToUser(pointsToAdd: number) {
   }
   const userId = user.id;
 
+  // Check streak continuity first
+  await checkStreakContinuity(userId);
+
   const currentUserProgress = await db.query.userProgress.findFirst({
     where: eq(userProgress.userId, userId),
-    columns: { points: true, schoolId: true },
+    columns: { points: true, schoolId: true, previousTotalPoints: true },
   });
   if (!currentUserProgress) {
     throw new Error("User progress not found");

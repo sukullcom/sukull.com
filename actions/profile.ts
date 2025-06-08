@@ -5,7 +5,7 @@ import db from "@/db/drizzle";
 import { userProgress, users, schools } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { getServerUser } from "@/lib/auth";
-import { updateDailyStreak } from "./daily-streak";
+import { updateDailyStreak, checkStreakContinuity } from "./daily-streak";
 
 /**
  * Fetch profile data (user_progress) for the currently authenticated user.
@@ -16,6 +16,9 @@ export async function getProfileDataOnServer() {
   const user = await getServerUser();
   if (!user) throw new Error("Unauthorized");
   const userId = user.id;
+
+  // Check streak continuity first
+  await checkStreakContinuity(userId);
 
   // Get current progress to check if streak tracking is initialized
   const progress = await db.query.userProgress.findFirst({
@@ -32,7 +35,7 @@ export async function getProfileDataOnServer() {
       .where(eq(userProgress.userId, userId));
   }
 
-  // Update daily streak before fetching profile data
+  // Update daily streak after checking continuity
   await updateDailyStreak();
 
   const row = await db.query.userProgress.findFirst({
@@ -148,14 +151,17 @@ export async function updateProfileAction(
  */
 export async function getUserProfile() {
   try {
-    // Update daily streak before fetching profile data
-    // This ensures the streak is up-to-date when shown to the user
-    await updateDailyStreak();
-    
     const user = await getServerUser();
     if (!user) return null;
     
     const userId = user.id;
+    
+    // Check streak continuity first
+    await checkStreakContinuity(userId);
+    
+    // Update daily streak after checking continuity
+    // This ensures the streak is up-to-date when shown to the user
+    await updateDailyStreak();
     
     // Get user progress
     const progress = await db.query.userProgress.findFirst({

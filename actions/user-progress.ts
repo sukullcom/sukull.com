@@ -210,6 +210,12 @@ export async function addUserPoints(points: number) {
     
     const userId = user.id;
     
+    // Import the streak continuity check
+    const { checkStreakContinuity } = await import("./daily-streak");
+    
+    // Check streak continuity first
+    await checkStreakContinuity(userId);
+    
     // Get current user progress
     const progress = await db.query.userProgress.findFirst({
       where: eq(userProgress.userId, userId),

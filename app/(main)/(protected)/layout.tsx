@@ -7,6 +7,7 @@ import { StickyWrapper } from "@/components/sticky-wrapper";
 import { UserProgress } from "@/components/user-progress";
 import { Quests } from "@/components/quests";
 import { DailyProgress } from "@/components/daily-progress";
+import { checkStreakContinuity } from "@/actions/daily-streak";
 
 export default async function ProtectedLayout({
   children,
@@ -26,7 +27,16 @@ export default async function ProtectedLayout({
     redirect("/courses");
   }
 
-  // 3) Render a single layout with your “sidebar” or “sticky” progress
+  // 3) Check streak continuity for the user whenever they access the protected area
+  // This ensures streaks are reset if they missed daily goals
+  try {
+    await checkStreakContinuity(user.id);
+  } catch (error) {
+    console.error("Error checking streak continuity in layout:", error);
+    // Continue with normal flow even if streak check fails
+  }
+
+  // 4) Render a single layout with your "sidebar" or "sticky" progress
   return (
     <div className="flex flex-row-reverse">
       <StickyWrapper>
