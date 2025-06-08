@@ -78,8 +78,8 @@ const POSTS_PER_PAGE = 10;
 const THIRTY_DAYS_IN_MS = 30 * 24 * 60 * 60 * 1000;
 
 // Cache for schools data to avoid repeated fetches
-let schoolsCache: SchoolItem[] | null = null;
-let schoolsCacheTimestamp = 0;
+const schoolsCache: SchoolItem[] | null = null;
+const schoolsCacheTimestamp = 0;
 const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 // Anti-spam and resource protection constants
@@ -266,6 +266,7 @@ export default function StudyBuddyPage() {
 
     const now = Date.now();
     const trimmed = message.trim();
+    
 
     // Check message length
     if (trimmed.length > MESSAGE_LIMITS.MAX_LENGTH) {

@@ -23,12 +23,19 @@ function EditorPanel() {
     theme,
     fontSize,
     editor,
+    isHydrated,
+    hydrate,
     setFontSize,
     setEditor,
   } = useCodeEditorStore();
 
+  // Hydrate the store after component mounts
   useEffect(() => {
-    if (!editor) return;
+    hydrate();
+  }, [hydrate]);
+
+  useEffect(() => {
+    if (!editor || !isHydrated) return;
 
     if (snippetId) {
       (async () => {
@@ -46,34 +53,34 @@ function EditorPanel() {
           console.error("Error loading snippet:", err);
         }
       })();
-    } else {
-      const savedCode = localStorage.getItem(`editor-code-${language}`);
-      const newCode = savedCode || LANGUAGE_CONFIG[language].defaultCode;
-      editor.setValue(newCode);
     }
-  }, [editor, snippetId, language]);
-
-  useEffect(() => {
-    const savedFontSize = localStorage.getItem("editor-font-size");
-    if (savedFontSize) setFontSize(parseInt(savedFontSize));
-  }, [setFontSize]);
+  }, [editor, snippetId, isHydrated]);
 
   const handleRefresh = () => {
     const defaultCode = LANGUAGE_CONFIG[language].defaultCode;
     if (editor) editor.setValue(defaultCode);
-    localStorage.removeItem(`editor-code-${language}`);
+    if (isHydrated && typeof window !== "undefined") {
+      try {
+        localStorage.removeItem(`editor-code-${language}`);
+      } catch (error) {
+        console.warn("Failed to remove code from localStorage:", error);
+      }
+    }
   };
 
   const handleEditorChange = (value: string | undefined) => {
-    if (!snippetId && value) {
-      localStorage.setItem(`editor-code-${language}`, value);
+    if (!snippetId && value && isHydrated && typeof window !== "undefined") {
+      try {
+        localStorage.setItem(`editor-code-${language}`, value);
+      } catch (error) {
+        console.warn("Failed to save code to localStorage:", error);
+      }
     }
   };
 
   const handleFontSizeChange = (newSize: number) => {
     const size = Math.min(Math.max(newSize, 12), 24);
     setFontSize(size);
-    localStorage.setItem("editor-font-size", size.toString());
   };
 
   const openShareDialog = () => {
@@ -139,12 +146,17 @@ function EditorPanel() {
           {/* Left */}
           <div className="flex items-center gap-3">
             <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#1e1e2e] ring-1 ring-white/5">
-              <Image
-                src={"/language_logos/" + language + ".png"}
-                alt="Logo"
-                width={24}
-                height={24}
-              />
+              {isHydrated ? (
+                <Image
+                  src={"/language_logos/" + language + ".png"}
+                  alt="Logo"
+                  width={24}
+                  height={24}
+                  className="w-6 h-6 object-contain"
+                />
+              ) : (
+                <div className="w-6 h-6 bg-gray-700 rounded animate-pulse" />
+              )}
             </div>
             <div>
               <h2 className="text-sm font-medium text-white">Kod Editörü</h2>

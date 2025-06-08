@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   BookOpen,
@@ -10,8 +10,10 @@ import {
   Search as SearchIcon,
   Tag,
   X,
+  ChevronDown,
+  Loader2,
 } from "lucide-react";
-import SnippetCard from "@/components/snippets-card"; // Aşağıda corners rounded yapacağız
+import SnippetCard from "@/components/snippets-card";
 import Image from "next/image";
 
 type Snippet = {
@@ -24,9 +26,21 @@ type Snippet = {
   createdAt: string;
 };
 
+type PaginationInfo = {
+  page: number;
+  limit: number;
+  hasMore: boolean;
+};
+
 export default function SnippetsPage() {
-  const [snippets, setSnippets] = useState<Snippet[] | null>(null);
+  const [snippets, setSnippets] = useState<Snippet[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [pagination, setPagination] = useState<PaginationInfo>({
+    page: 1,
+    limit: 20,
+    hasMore: true,
+  });
 
   // search + language filter
   const [searchQuery, setSearchQuery] = useState("");
@@ -35,47 +49,80 @@ export default function SnippetsPage() {
   // grid or list view
   const [view, setView] = useState<"grid" | "list">("grid");
 
-  // 1) Fetch snippets
+  // Debounced search
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   useEffect(() => {
-    let isCancelled = false;
-
-    async function loadSnippets() {
-      setLoading(true);
-      try {
-        const params = new URLSearchParams();
-        if (searchQuery.trim() !== "") {
-          params.set("search", searchQuery.trim());
-        }
-        const res = await fetch(`/api/snippets?${params.toString()}`);
-        const data = await res.json();
-        if (!isCancelled) {
-          setSnippets(data);
-        }
-      } catch (error) {
-        console.error("Error fetching snippets:", error);
-        if (!isCancelled) {
-          setSnippets([]);
-        }
-      } finally {
-        if (!isCancelled) {
-          setLoading(false);
-        }
-      }
-    }
-
-    loadSnippets();
-    return () => {
-      isCancelled = true;
-    };
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+    }, 300);
+    return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  // 2) languages
-  const languages = snippets
-    ? Array.from(new Set(snippets.map((s) => s.language)))
-    : [];
+  // Load snippets function
+  const loadSnippets = useCallback(async (
+    page: number = 1, 
+    search?: string, 
+    language?: string,
+    append: boolean = false
+  ) => {
+    if (page === 1) {
+      setLoading(true);
+    } else {
+      setLoadingMore(true);
+    }
+
+    try {
+      const params = new URLSearchParams({
+        page: page.toString(),
+        limit: pagination.limit.toString(),
+      });
+      
+      if (search?.trim()) {
+        params.set("search", search.trim());
+      }
+      if (language?.trim()) {
+        params.set("language", language.trim());
+      }
+
+      const res = await fetch(`/api/snippets?${params.toString()}`);
+      const data = await res.json();
+      
+      if (data.snippets) {
+        if (append && page > 1) {
+          setSnippets(prev => [...prev, ...data.snippets]);
+        } else {
+          setSnippets(data.snippets);
+        }
+        setPagination(data.pagination);
+      }
+    } catch (error) {
+      console.error("Error fetching snippets:", error);
+      if (!append) {
+        setSnippets([]);
+      }
+    } finally {
+      setLoading(false);
+      setLoadingMore(false);
+    }
+  }, [pagination.limit]);
+
+  // Initial load and search changes
+  useEffect(() => {
+    loadSnippets(1, debouncedSearch, selectedLanguage, false);
+  }, [debouncedSearch, selectedLanguage, loadSnippets]);
+
+  // Load more function
+  const loadMore = () => {
+    if (pagination.hasMore && !loadingMore) {
+      loadSnippets(pagination.page + 1, debouncedSearch, selectedLanguage, true);
+    }
+  };
+
+  // Get unique languages from current snippets
+  const languages = Array.from(new Set(snippets.map((s) => s.language)));
   const popularLanguages = languages.slice(0, 5);
 
-  const filteredSnippets = (snippets || []).filter((snippet) => {
+  const filteredSnippets = snippets.filter((snippet) => {
     if (selectedLanguage && snippet.language !== selectedLanguage) {
       return false;
     }
@@ -212,23 +259,59 @@ export default function SnippetsPage() {
         </div>
 
         {/* Snippets Display */}
-        <motion.div
-          className={`grid gap-6 ${
-            view === "grid"
-              ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
-              : "grid-cols-1 max-w-3xl mx-auto"
-          }`}
-          layout
-        >
-          <AnimatePresence mode="popLayout">
-            {filteredSnippets.map((snippet) => (
-              <SnippetCard key={snippet.id} snippet={snippet} />
+        {loading && snippets.length === 0 ? (
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="p-6 bg-[#1e1e2e] rounded-xl border border-gray-800 animate-pulse">
+                <div className="h-4 bg-gray-700 w-1/2 mb-4 rounded"></div>
+                <div className="h-3 bg-gray-700 w-1/3 mb-2 rounded"></div>
+                <div className="h-3 bg-gray-700 w-full mb-2 rounded"></div>
+                <div className="h-3 bg-gray-700 w-2/3 rounded"></div>
+              </div>
             ))}
-          </AnimatePresence>
-        </motion.div>
+          </div>
+        ) : filteredSnippets.length > 0 ? (
+          <>
+            <motion.div
+              className={`grid gap-6 ${
+                view === "grid"
+                  ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
+                  : "grid-cols-1 max-w-3xl mx-auto"
+              }`}
+              layout
+            >
+              <AnimatePresence mode="popLayout">
+                {filteredSnippets.map((snippet) => (
+                  <SnippetCard key={snippet.id} snippet={snippet} />
+                ))}
+              </AnimatePresence>
+            </motion.div>
 
-        {/* Empty state */}
-        {filteredSnippets.length === 0 && (
+            {/* Load More Button */}
+            {pagination.hasMore && (
+              <div className="flex justify-center mt-8">
+                <button
+                  onClick={loadMore}
+                  disabled={loadingMore}
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 
+                    disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
+                >
+                  {loadingMore ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Loading...
+                    </>
+                  ) : (
+                    <>
+                      <ChevronDown className="w-4 h-4" />
+                      Load More
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
+          </>
+        ) : (
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}

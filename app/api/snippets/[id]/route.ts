@@ -1,12 +1,10 @@
 // app/api/snippets/[id]/route.ts
 
 import { NextResponse } from "next/server";
-import { eq } from "drizzle-orm";
-import db from "@/db/drizzle";
-import { snippets } from "@/db/schema";
+import { getSnippetById } from "@/db/queries";
 import { getServerUser } from "@/lib/auth";
 
-// Return a single snippet by ID
+// Return a single snippet by ID - OPTIMIZED
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
@@ -19,16 +17,11 @@ export async function GET(
     }
 
     const snippetId = parseInt(params.id, 10);
-    if (Number.isNaN(snippetId)) {
+    if (Number.isNaN(snippetId) || snippetId <= 0) {
       return NextResponse.json({ error: "Invalid snippet ID" }, { status: 400 });
     }
 
-    const [snippet] = await db
-      .select()
-      .from(snippets)
-      .where(eq(snippets.id, snippetId))
-      .limit(1);
-
+    const snippet = await getSnippetById(snippetId);
     if (!snippet) {
       return NextResponse.json({ error: "Snippet not found" }, { status: 404 });
     }

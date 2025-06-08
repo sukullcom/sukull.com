@@ -19,10 +19,10 @@ interface PostCardProps {
   currentUser: {
     id: string;
     email?: string;
-    user_metadata?: Record<string, any>;
+    user_metadata?: Record<string, unknown>;
   } | null;
   isOwnPost?: boolean;
-  onChatRequest?: (post: any) => void;
+  onChatRequest?: (post: PostCardProps['post']) => void;
   onEdit?: () => void;
   onDelete?: () => void;
 }

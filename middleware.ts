@@ -18,7 +18,7 @@ export async function middleware(req: NextRequest) {
   // Add CSP header for additional security
   response.headers.set(
     'Content-Security-Policy',
-    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self' data:; connect-src 'self' https://api.supabase.io https://*.supabase.co wss://*.supabase.co https://www.googleapis.com; media-src 'self' blob:;"
+    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googleapis.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https: blob:; font-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' https://api.supabase.io https://*.supabase.co wss://*.supabase.co https://www.googleapis.com https://emkc.org; media-src 'self' blob:; worker-src 'self' blob: https://cdn.jsdelivr.net;"
   );
   
   // Add cache control headers based on route

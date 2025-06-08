@@ -16,10 +16,27 @@ export async function GET(req: Request) {
 
   const { searchParams } = new URL(req.url);
   const search = searchParams.get("search") || undefined;
+  const language = searchParams.get("language") || undefined;
+  const page = parseInt(searchParams.get("page") || "1", 10);
+  const limit = parseInt(searchParams.get("limit") || "20", 10);
+  const offset = (page - 1) * limit;
 
   try {
-    const snippets = await getAllSnippets({ search });
-    return NextResponse.json(snippets);
+    const snippets = await getAllSnippets({ 
+      search, 
+      language, 
+      limit: Math.min(limit, 50), // Max 50 per request
+      offset 
+    });
+    
+    return NextResponse.json({
+      snippets,
+      pagination: {
+        page,
+        limit,
+        hasMore: snippets.length === limit, // Simple check if there might be more
+      }
+    });
   } catch (error) {
     console.error("Error in GET /api/snippets:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
@@ -35,6 +52,7 @@ export async function POST(req: Request) {
 
     const userId = user.id;
 
+    // Validate user exists and has enough points
     const userP = await db.query.userProgress.findFirst({
       where: eq(userProgress.userId, userId),
       columns: {
@@ -58,6 +76,7 @@ export async function POST(req: Request) {
       );
     }
 
+    // Check snippet limit
     const count = await getUserSnippetCount(userId);
     if (count >= 3) {
       return NextResponse.json(
@@ -69,9 +88,32 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { title, description, code, language } = body;
 
-    if (!title || !description || !code || !language) {
+    // Enhanced input validation
+    if (!title?.trim() || !description?.trim() || !code?.trim() || !language?.trim()) {
       return NextResponse.json(
-        { error: "Missing fields for snippet." },
+        { error: "All fields (title, description, code, language) are required." },
+        { status: 400 }
+      );
+    }
+
+    // Length validation
+    if (title.trim().length > 100) {
+      return NextResponse.json(
+        { error: "Title must be 100 characters or less." },
+        { status: 400 }
+      );
+    }
+
+    if (description.trim().length > 500) {
+      return NextResponse.json(
+        { error: "Description must be 500 characters or less." },
+        { status: 400 }
+      );
+    }
+
+    if (code.trim().length > 10000) {
+      return NextResponse.json(
+        { error: "Code must be 10,000 characters or less." },
         { status: 400 }
       );
     }
@@ -79,10 +121,10 @@ export async function POST(req: Request) {
     await createSnippet({
       userId,
       userName: userP.userName || "Anonymous",
-      code,
-      title,
-      description,
-      language,
+      code: code.trim(),
+      title: title.trim(),
+      description: description.trim(),
+      language: language.trim(),
     });
 
     return NextResponse.json({ success: true });

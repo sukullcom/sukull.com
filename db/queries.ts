@@ -1,6 +1,6 @@
 import { cache } from "react";
 import db from "@/db/drizzle";
-import { and, avg, desc, eq, ilike, or, sql, asc, not } from "drizzle-orm";
+import { and, avg, desc, eq, ilike, or, sql, asc, not, count } from "drizzle-orm";
 import {
   challengeProgress,
   courses,
@@ -600,19 +600,34 @@ export const createSnippet = async (data: {
   await db.insert(snippets).values(data);
 };
 
-// GET user snippet count (to limit sharing to 3)
+// GET user snippet count (to limit sharing to 3) - OPTIMIZED
 export const getUserSnippetCount = cache(async (userId: string) => {
+  if (!userId?.trim()) return 0;
+  
   const [result] = await db
     .select({
-      count: sql<number>`count(*)`.mapWith(Number),
+      count: count(snippets.id),
     })
     .from(snippets)
-    .where(eq(snippets.userId, userId));
+    .where(eq(snippets.userId, userId.trim()));
 
   return result?.count ?? 0;
 });
 
-// GET all snippets (with optional search filtering)
+// GET snippet by ID with proper error handling - OPTIMIZED
+export const getSnippetById = cache(async (id: number) => {
+  if (!id || id <= 0) return null;
+  
+  const [snippet] = await db
+    .select()
+    .from(snippets)
+    .where(eq(snippets.id, id))
+    .limit(1);
+
+  return snippet || null;
+});
+
+// GET all snippets (with optional search filtering) - OPTIMIZED
 export const getAllSnippets = cache(
   async ({
     search,
@@ -624,25 +639,37 @@ export const getAllSnippets = cache(
     language?: string;
     limit?: number;
     offset?: number;
-  }) => {
-    return db
-      .select()
-      .from(snippets)
-      .$dynamic() // Enable dynamic query building
-      .where((qb) => {
-        if (search) {
-          return or(
-            ilike(snippets.language, `%${search}%`),
-            ilike(snippets.title, `%${search}%`),
-            ilike(snippets.userName, `%${search}%`)
-          );
-        }
-        return undefined; // No condition if no search
-      })
-      .where((qb) => (language ? eq(snippets.language, language) : undefined))
-      .orderBy(sql`created_at DESC`)
-      .limit(limit)
-      .offset(offset);
+  } = {}) => {
+    let query = db.select().from(snippets);
+
+    // Build where conditions
+    const conditions = [];
+    
+    if (search && search.trim()) {
+      const searchTerm = search.trim();
+      conditions.push(
+        or(
+          ilike(snippets.language, `%${searchTerm}%`),
+          ilike(snippets.title, `%${searchTerm}%`),
+          ilike(snippets.userName, `%${searchTerm}%`)
+        )
+      );
+    }
+    
+    if (language && language.trim()) {
+      conditions.push(eq(snippets.language, language.trim()));
+    }
+
+    // Apply where conditions if any exist
+    if (conditions.length > 0) {
+      query = query.where(and(...conditions));
+    }
+
+    // Apply ordering, limit, and offset
+    return query
+      .orderBy(desc(snippets.createdAt))
+      .limit(Math.min(limit, 50)) // Prevent excessive limits
+      .offset(Math.max(offset, 0)); // Prevent negative offsets
   }
 );
 

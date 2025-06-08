@@ -4,16 +4,19 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { ChevronDownIcon, Lock, Sparkles } from "lucide-react";
-import useMounted from "@/app/hooks/use-has-mounted";
 import { LANGUAGE_CONFIG } from "../constants";
 
 function LanguageSelector({ hasAccess }: { hasAccess: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
-  const mounted = useMounted();
 
-  const { language, setLanguage } = useCodeEditorStore();
+  const { language, setLanguage, isHydrated, hydrate } = useCodeEditorStore();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const currentLanguageObj = LANGUAGE_CONFIG[language];
+
+  useEffect(() => {
+    // Hydrate the store after component mounts
+    hydrate();
+  }, [hydrate]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -33,7 +36,21 @@ function LanguageSelector({ hasAccess }: { hasAccess: boolean }) {
     setIsOpen(false);
   };
 
-  if (!mounted) return null;
+  // Prevent hydration mismatch by not rendering until hydrated
+  if (!isHydrated) {
+    return (
+      <div className="relative">
+        <div className="group relative flex items-center gap-3 px-4 py-2.5 bg-[#1e1e2e]/80 
+          rounded-lg border border-gray-800/50 w-[160px] h-[44px]">
+          <div className="size-6 rounded-md bg-gray-800/50 p-0.5">
+            <div className="w-full h-full bg-gray-700 rounded animate-pulse" />
+          </div>
+          <div className="flex-1 h-4 bg-gray-700 rounded animate-pulse" />
+          <ChevronDownIcon className="size-4 text-gray-400" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative" ref={dropdownRef}>

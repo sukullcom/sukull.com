@@ -5,7 +5,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CircleOff, Cloud, Github, Laptop, Moon, Palette, Sun } from "lucide-react";
 import { THEMES } from "../constants";
-import useMounted from "@/app/hooks/use-has-mounted";
 
 const THEME_ICONS: Record<string, React.ReactNode> = {
   "vs-dark": <Moon className="size-4" />,
@@ -17,10 +16,14 @@ const THEME_ICONS: Record<string, React.ReactNode> = {
 
 function ThemeSelector() {
   const [isOpen, setIsOpen] = useState(false);
-  const mounted = useMounted();
-  const { theme, setTheme } = useCodeEditorStore();
+  const { theme, setTheme, isHydrated, hydrate } = useCodeEditorStore();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const currentTheme = THEMES.find((t) => t.id === theme);
+
+  useEffect(() => {
+    // Hydrate the store after component mounts
+    hydrate();
+  }, [hydrate]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -33,7 +36,19 @@ function ThemeSelector() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  if (!mounted) return null;
+  // Prevent hydration mismatch by not rendering until hydrated
+  if (!isHydrated) {
+    return (
+      <div className="relative">
+        <div className="w-48 group relative flex items-center gap-2 px-4 py-2.5 bg-[#1e1e2e]/80 
+          rounded-lg border border-gray-800/50 h-[44px]">
+          <Palette className="w-4 h-4 text-gray-400" />
+          <div className="flex-1 h-4 bg-gray-700 rounded animate-pulse" />
+          <div className="w-4 h-4 rounded-full bg-gray-700 animate-pulse" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -129,5 +144,6 @@ function ThemeSelector() {
       </AnimatePresence>
     </div>
   );
+}
 
-}export default ThemeSelector;
+export default ThemeSelector;
