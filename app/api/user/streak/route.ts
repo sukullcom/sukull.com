@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
 import db from "@/db/drizzle";
 import { userProgress } from "@/db/schema";
@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 import { checkStreakContinuity, updateDailyStreak } from "@/actions/daily-streak";
 import { hasAchievedMilestone } from "@/utils/streak-requirements";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const user = await getServerUser();
     if (!user) {

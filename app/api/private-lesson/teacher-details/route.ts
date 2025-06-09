@@ -71,7 +71,7 @@ export async function PATCH(request: Request) {
     }
     
     // Parse the request body
-    const data = await request.json();
+    const data: { bio?: string; field?: string; priceRange?: string } = await request.json();
     
     // Update bio (saved as description in the users table)
     if (data.bio !== undefined) {
@@ -90,7 +90,7 @@ export async function PATCH(request: Request) {
       
       if (existingApplication) {
         // Update existing record
-        const updateData: any = { updatedAt: new Date() };
+        const updateData: Partial<{ description: string; updatedAt: Date }> = { updatedAt: new Date() };
         if (data.field !== undefined) updateData.field = data.field;
         if (data.priceRange !== undefined) updateData.priceRange = data.priceRange;
         

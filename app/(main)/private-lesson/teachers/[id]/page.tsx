@@ -19,6 +19,30 @@ interface Teacher {
   priceRange?: string;
 }
 
+interface AvailabilityData {
+  id: number;
+  teacherId: string;
+  startTime: string;
+  endTime: string;
+  dayOfWeek: number;
+  weekStartDate: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface BookedSlotData {
+  id: number;
+  studentId: string;
+  teacherId: string;
+  startTime: string;
+  endTime: string;
+  status: string;
+  meetLink?: string | null;
+  notes?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
 interface TimeSlot {
   startTime: Date;
   endTime: Date;
@@ -84,7 +108,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
         
         // Convert availability data and mark booked slots instead of filtering them out
         const processedAvailability = availabilityData
-          .map((slot: any) => {
+          .map((slot: AvailabilityData) => {
             const timeSlot: TimeSlot = {
               ...slot,
               startTime: new Date(slot.startTime),
@@ -93,7 +117,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
             };
             
             // Check if this slot is booked
-            const isBooked = bookedSlotsData.some((bookedSlot: any) => {
+            const isBooked = bookedSlotsData.some((bookedSlot: BookedSlotData) => {
               const bookedStart = new Date(bookedSlot.startTime);
               const bookedEnd = new Date(bookedSlot.endTime);
               return timeSlot.startTime.getTime() === bookedStart.getTime() &&
@@ -186,8 +210,8 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
       const dayA = parseInt(a);
       const dayB = parseInt(b);
       
-      let adjustedA = dayA >= currentDay ? dayA - currentDay : dayA + 7 - currentDay;
-      let adjustedB = dayB >= currentDay ? dayB - currentDay : dayB + 7 - currentDay;
+      const adjustedA = dayA >= currentDay ? dayA - currentDay : dayA + 7 - currentDay;
+      const adjustedB = dayB >= currentDay ? dayB - currentDay : dayB + 7 - currentDay;
       
       return adjustedA - adjustedB;
     });

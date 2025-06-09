@@ -19,10 +19,16 @@ export default async function TeacherAvailabilityPage() {
     redirect('/private-lesson');
   }
   
-  // Use today's date as the week start date
-  const weekStartDate = new Date();
-  // Reset time to beginning of day
-  weekStartDate.setHours(0, 0, 0, 0);
+  // Get the start of the current week (Monday)
+  const today = new Date();
+  const dayOfWeek = today.getDay();
+  const startOfWeek = new Date(today);
+  startOfWeek.setDate(today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1)); // Adjust to get Monday
+  startOfWeek.setHours(0, 0, 0, 0);
+
+  // Calculate the next Friday's date for display purposes
+  const nextFriday = new Date(startOfWeek);
+  nextFriday.setDate(startOfWeek.getDate() + 4); // Friday is 4 days after Monday
   
   // Get current availability
   const availability = await getCurrentTeacherAvailability(user.id);
@@ -37,18 +43,6 @@ export default async function TeacherAvailabilityPage() {
     updatedAt: slot.updatedAt.toISOString()
   }));
   
-  // Calculate next Friday for the info message
-  const now = new Date();
-  const daysUntilNextFriday = (5 - now.getDay() + 7) % 7 || 7;
-  const nextFriday = new Date(now);
-  nextFriday.setDate(now.getDate() + daysUntilNextFriday);
-  
-  const nextFridayFormatted = nextFriday.toLocaleDateString('tr-TR', {
-    day: 'numeric',
-    month: 'long',
-    weekday: 'long'
-  });
-  
   return (
     <div className="container mx-auto py-8">
       <h1 className="text-2xl font-bold mb-6">Müsait Olduğunuz Zamanları Belirleyin</h1>
@@ -57,7 +51,7 @@ export default async function TeacherAvailabilityPage() {
       </p>
       
       <AvailabilityPageClient 
-        weekStartDate={weekStartDate.toISOString()} 
+        weekStartDate={startOfWeek.toISOString()} 
         initialAvailability={serializedAvailability} 
       />
     </div>

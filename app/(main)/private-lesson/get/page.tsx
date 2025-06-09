@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -9,24 +10,16 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectItem, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { FeedWrapper } from "@/components/feed-wrapper";
-import { StickyWrapper } from "@/components/sticky-wrapper";
-import { toast } from "sonner";
 import Image from "next/image";
 import { 
-  BookOpen, 
-  User, 
-  Mail, 
-  Phone, 
-  DollarSign,
-  FileText,
   ArrowRight,
-  Info,
-  Sparkles,
-  GraduationCap,
-  Target,
-  Heart,
-  TrendingUp,
-  MessageSquare
+  BookOpen,
+  User,
+  Phone,
+  Mail,
+  DollarSign,
+  MessageSquare,
+  Info
 } from "lucide-react";
 
 export default function GetLessonPage() {

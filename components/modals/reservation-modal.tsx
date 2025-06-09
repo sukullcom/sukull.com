@@ -1,9 +1,7 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-
 import {
   Dialog,
   DialogContent,
@@ -12,10 +10,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
 interface ReservationModalProps {
   isOpen: boolean;
@@ -51,12 +48,6 @@ export const ReservationModal = ({
   isLoading 
 }: ReservationModalProps) => {
   const [notes, setNotes] = useState("");
-
-  useEffect(() => {
-    if (!isOpen) {
-      setNotes("");
-    }
-  }, [isOpen]);
 
   const handleConfirm = () => {
     onConfirm(notes);

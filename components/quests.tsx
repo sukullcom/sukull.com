@@ -1,17 +1,18 @@
-import Image from "next/image";
-import { Progress } from "@/components/ui/progress";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { Target, Users, Code, Shield, Info, CheckCircle, Lock } from "lucide-react";
+import { Progress } from "./ui/progress";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { Target, Users, Code, Shield, CheckCircle, Lock, Info } from 'lucide-react';
 import { getAllStreakRules } from "@/utils/streak-requirements";
 
-type Props = {
-  currentStreak?: number;
-  points?: number;
+type QuestsProps = {
+  currentStreak: number;
+  achievements: {
+    profileEditingUnlocked?: boolean;
+    studyBuddyUnlocked?: boolean;
+    codeShareUnlocked?: boolean;
+  };
 };
 
-export const Quests = ({ currentStreak = 0, points }: Props) => {
+export const Quests = ({ currentStreak }: QuestsProps) => {
   const rules = getAllStreakRules();
 
   const getIcon = (feature: string) => {
@@ -193,4 +194,4 @@ export const Quests = ({ currentStreak = 0, points }: Props) => {
       </Card>
     </div>
   );
-};
+}; 

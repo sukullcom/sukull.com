@@ -1,4 +1,3 @@
-// app/(main)/(protected)/profile/profile-page-client.tsx
 "use client";
 
 import { useState, useTransition, useCallback, useMemo } from "react";
@@ -14,7 +13,6 @@ import StreakCalendarAdvanced from "@/components/streak-calendar";
 import { 
   checkStreakRequirement, 
   getStreakRequirementMessage,
-  UserAchievements 
 } from "@/utils/streak-requirements";
 
 export default function ProfilePageClient({
@@ -206,4 +204,4 @@ export default function ProfilePageClient({
       </div>
     </div>
   );
-}
+} 

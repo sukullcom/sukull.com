@@ -2,30 +2,23 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectItem, SelectValue } from "@/components/ui/select";
 import { FeedWrapper } from "@/components/feed-wrapper";
-import { StickyWrapper } from "@/components/sticky-wrapper";
-import { toast } from "sonner";
 import Image from "next/image";
 import { 
-  GraduationCap, 
-  User, 
-  Mail, 
-  Phone, 
-  DollarSign,
-  BookOpen,
-  CheckCircle2,
   ArrowRight,
+  BookOpen,
+  User,
+  Phone,
+  Mail,
+  DollarSign,
   Info,
-  Sparkles,
-  Clock,
-  Users,
-  Target,
-  Award
+  GraduationCap
 } from "lucide-react";
 
 export default function GiveLessonPage() {

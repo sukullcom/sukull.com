@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import TimeSlotGrid from '@/app/components/teacher-availability/TimeSlotGrid';
-import { format } from 'date-fns';
-import { tr } from 'date-fns/locale';
 import { toast } from 'sonner';
 
 type AvailabilityPageClientProps = {
