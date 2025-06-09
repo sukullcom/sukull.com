@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { format, addMinutes, isAfter } from 'date-fns';
 import { tr } from 'date-fns/locale';
 import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
 
 // Add this interface with a different name
 interface SavedTimeSlot {
@@ -110,7 +111,7 @@ export default function TimeSlotGrid({
 }: TimeSlotGridProps) {
   const [days, setDays] = useState(generateTimeSlots(weekStartDate));
   const [selectedSlots, setSelectedSlots] = useState<SavedTimeSlot[]>(initialSelectedSlots);
-  const [isEditing, setIsEditing] = useState(!readOnly);
+  const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   
   // State for drag selection
@@ -433,7 +434,17 @@ export default function TimeSlotGrid({
         setIsEditing(false);
       } else {
         const data = await response.json();
-        toast.error(`Hata: ${data.message || 'Bilinmeyen bir hata oluştu.'}`);
+        if (response.status === 400 && data.message.includes("profil bilgilerinizi tamamlayın")) {
+          toast.error(data.message, {
+            duration: 5000, // Show for 5 seconds
+            action: {
+              label: "Profil Sayfası",
+              onClick: () => window.location.href = "/private-lesson/teacher-dashboard"
+            }
+          });
+        } else {
+          toast.error(`Hata: ${data.message || 'Bilinmeyen bir hata oluştu.'}`);
+        }
       }
     } catch (error) {
       toast.error('Bir hata oluştu.');
@@ -500,17 +511,18 @@ export default function TimeSlotGrid({
   };
   
   return (
-    <div className="bg-white shadow rounded-lg p-6 border">
-      <div className="mb-6 flex justify-between items-center">
-        <h2 className="text-xl font-bold text-gray-800">Müsait Olduğunuz Zamanlar</h2>
+    <div className="bg-white shadow rounded-lg p-4 border">
+      <div className="mb-4 flex justify-between items-center">
+        <h2 className="text-lg font-bold text-gray-800">Müsait Olduğunuz Zamanlar</h2>
         <div>
           {!readOnly && (
             isEditing ? (
               <div className="space-x-2">
-                <button
+                <Button
                   onClick={handleSave}
                   disabled={isSaving}
-                  className={`${isSaving ? 'bg-gray-400' : 'bg-primary'} text-white px-4 py-2 rounded-md flex items-center transition-colors`}
+                  variant="primary"
+                  className="flex items-center"
                 >
                   {isSaving ? (
                     <>
@@ -518,8 +530,8 @@ export default function TimeSlotGrid({
                       Kaydediliyor...
                     </>
                   ) : 'Kaydet'}
-                </button>
-                <button
+                </Button>
+                <Button
                   onClick={() => {
                     // Reset to initial state
                     updateDaysWithSelectedSlots(initialSelectedSlots);
@@ -527,25 +539,26 @@ export default function TimeSlotGrid({
                     setIsEditing(false);
                   }}
                   disabled={isSaving}
-                  className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md transition-colors"
+                  variant="ghost"
+                  className="transition-colors"
                 >
                   İptal
-                </button>
+                </Button>
               </div>
             ) : (
-              <button
+              <Button
                 onClick={() => setIsEditing(true)}
-                className="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-md transition-colors"
+                variant="primary"
               >
                 Düzenle
-              </button>
+              </Button>
             )
           )}
         </div>
       </div>
       
       {isEditing && !readOnly && (
-        <div className="mb-4 p-3 bg-blue-50 rounded-md text-sm">
+        <div className="mb-3 p-2 bg-blue-50 rounded-md text-xs">
           <p className="font-medium text-blue-800">
             <span className="mr-2">💡</span>
             İpucu: Fare ile sürükleyerek birden fazla zaman dilimini aynı anda seçebilirsiniz. 
@@ -574,20 +587,20 @@ export default function TimeSlotGrid({
           return (
             <div 
               key={day.dayNumber} 
-              className={`text-center p-2 
+              className={`text-center p-1.5 
                 ${isToday ? 'bg-blue-50 text-blue-700 font-bold border-b-2 border-blue-500' : 'bg-gray-100'} 
                 ${isBeyondAvailabilityPeriod ? 'opacity-50' : ''}
                 sticky top-0 z-10`}
             >
-              <div className="font-bold flex items-center justify-center">
+              <div className="font-bold flex items-center justify-center text-sm">
                 {isToday && (
-                  <span className="inline-block mr-1 px-1.5 py-0.5 text-xs bg-blue-100 text-blue-800 rounded-full">
+                  <span className="inline-block mr-1 px-1 py-0.5 text-xs bg-blue-100 text-blue-800 rounded-full">
                     Bugün
                   </span>
                 )}
                 {format(day.date, 'EEEE', { locale: tr })}
               </div>
-              <div className="text-sm">
+              <div className="text-xs">
                 {format(day.date, 'd MMMM', { locale: tr })}
               </div>
             </div>
@@ -627,7 +640,7 @@ export default function TimeSlotGrid({
                   }}
                   onMouseMove={() => handleMouseMove(rowIndex, colIndex)}
                   className={`
-                    text-center p-2 border text-sm
+                    text-center p-1 border text-xs
                     ${slot.selected ? 'bg-green-500 text-white font-medium' : 'bg-white'}
                     ${isBeingSelected && !slot.selected ? 'bg-green-300 text-white' : ''}
                     ${isBeingDeselected && slot.selected ? 'bg-green-200' : ''}
@@ -646,13 +659,6 @@ export default function TimeSlotGrid({
         ))}
       </div>
       
-      <div className="mt-6 text-center text-sm text-gray-500">
-        <p>Not: Zamanlar 30 dakikalık aralıklarla gösterilmektedir. Yeşil ile işaretlenen zamanlar müsait olduğunuz zamanlardır.</p>
-        <p className="mt-2">
-          <span className="font-medium text-green-600">💡 İpucu:</span> Birden fazla zaman dilimi seçmek için fare ile sürükleyip seçebilirsiniz.
-        </p>
-        <p className="mt-2 text-primary font-medium">Sadece bugünden başlayarak önümüzdeki 7 gün içindeki saatleri seçebilirsiniz.</p>
-      </div>
     </div>
   );
 } 

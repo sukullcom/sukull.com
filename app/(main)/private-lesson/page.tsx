@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { FeedWrapper } from "@/components/feed-wrapper";
-import { StickyWrapper } from "@/components/sticky-wrapper";
 import { Badge } from "@/components/ui/badge";
 import db from "@/db/drizzle";
 import { users } from "@/db/schema";
@@ -132,8 +131,7 @@ export default async function PrivateLessonPage() {
               </ul>
               <Button 
                 asChild
-                variant="default"
-                className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold"
+                variant="secondary"
                 size="lg"
               >
                 <a href="/private-lesson/give">
@@ -181,8 +179,7 @@ export default async function PrivateLessonPage() {
               </ul>
               <Button 
                 asChild
-                variant="default"
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold"
+                variant="primary"
                 size="lg"
               >
                 <a href="/private-lesson/get">
@@ -233,63 +230,7 @@ export default async function PrivateLessonPage() {
         </Card>
       </FeedWrapper>
 
-      <StickyWrapper>
-        {/* Statistics Card */}
-        <Card className="shadow-lg mb-4">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Trophy className="w-5 h-5 text-yellow-500" />
-              Platform İstatistikleri
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Toplam Öğretmen</span>
-              <span className="font-bold text-green-600">1,234</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Aktif Öğrenci</span>
-              <span className="font-bold text-blue-600">5,678</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Tamamlanan Ders</span>
-              <span className="font-bold text-purple-600">12,345</span>
-            </div>
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Ortalama Puan</span>
-              <span className="font-bold text-orange-600">4.9/5</span>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Quick Tips Card */}
-        <Card className="shadow-lg">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-yellow-500" />
-              Hızlı İpuçları
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="text-sm text-gray-600">
-              <p className="font-semibold text-gray-800 mb-1">Öğretmenler için:</p>
-              <ul className="list-disc list-inside space-y-1">
-                <li>Profilinizi detaylı doldurun</li>
-                <li>Uygun fiyatlandırma yapın</li>
-                <li>Düzenli geri bildirim alın</li>
-              </ul>
-            </div>
-            <div className="text-sm text-gray-600">
-              <p className="font-semibold text-gray-800 mb-1">Öğrenciler için:</p>
-              <ul className="list-disc list-inside space-y-1">
-                <li>Hedeflerinizi net belirtin</li>
-                <li>Düzenli ders programı oluşturun</li>
-                <li>Öğretmenle iletişimde kalın</li>
-              </ul>
-            </div>
-          </CardContent>
-        </Card>
-      </StickyWrapper>
+      
     </div>
   );
 }

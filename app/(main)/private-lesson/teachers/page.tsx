@@ -86,7 +86,7 @@ export default function TeachersPage() {
             <Card key={teacher.id} className="hover:shadow-lg transition-shadow border">
               <CardHeader>
                 <div className="flex justify-center mb-4">
-                  <div className="relative w-24 h-24 rounded-full overflow-hidden bg-gray-200 border-4 border-primary/20">
+                  <div className="relative w-24 h-24 rounded-full overflow-hidden border-primary/20">
                     <Image
                       src={teacher.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(teacher.name)}`}
                       alt={teacher.name}
@@ -117,7 +117,8 @@ export default function TeachersPage() {
               </CardContent>
               <CardFooter>
                 <Button 
-                  className="w-full bg-primary hover:bg-primary/90" 
+                  variant="primary"
+                  className="w-full" 
                   onClick={() => router.push(`/private-lesson/teachers/${teacher.id}`)}
                 >
                   Programa Bak

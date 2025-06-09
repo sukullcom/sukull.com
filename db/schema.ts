@@ -182,6 +182,11 @@ export const userProgress = pgTable("user_progress", {
   dailyTarget: integer("daily_target").notNull().default(50), // Kullanıcının belirlediği günlük hedeflenen puan
   lastStreakCheck: timestamp("last_streak_check"), // En son streak kontrol tarihi
   previousTotalPoints: integer("previous_total_points").default(0), // Son kontrol anındaki toplam puan
+  
+  // One-time achievement unlocks - once achieved, permanently unlocked
+  profileEditingUnlocked: boolean("profile_editing_unlocked").default(false).notNull(), // 30 days achievement
+  studyBuddyUnlocked: boolean("study_buddy_unlocked").default(false).notNull(), // 15 days achievement  
+  codeShareUnlocked: boolean("code_share_unlocked").default(false).notNull(), // 30 days achievement
 });
 
 

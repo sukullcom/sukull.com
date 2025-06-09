@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 import { getCurrentTeacherAvailability, getWeekStartDate, upsertTeacherAvailability, isTeacher } from "@/db/queries";
 import { getServerUser } from "@/lib/auth";
+import db from "@/db/drizzle";
+import { teacherApplications } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 // GET current teacher's availability for the current week
 export async function GET() {
@@ -39,6 +42,21 @@ export async function POST(req: Request) {
     const userIsTeacher = await isTeacher(user.id);
     if (!userIsTeacher) {
       return NextResponse.json({ message: "Only teachers can update availability" }, { status: 403 });
+    }
+    
+    // Check if teacher has filled their profile information
+    const teacherProfile = await db.query.teacherApplications.findFirst({
+      where: eq(teacherApplications.userId, user.id),
+      columns: {
+        field: true,
+        priceRange: true,
+      }
+    });
+    
+    if (!teacherProfile || !teacherProfile.field || teacherProfile.field === "Belirtilmemiş" || !teacherProfile.priceRange) {
+      return NextResponse.json({ 
+        message: "Lütfen önce profil bilgilerinizi tamamlayın. Uzmanlık alanınızı ve fiyat aralığınızı belirtmelisiniz." 
+      }, { status: 400 });
     }
     
     const body = await req.json();

@@ -5,8 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { ReservationModal } from "@/components/modals/reservation-modal";
 import { toast } from "sonner";
 
 interface Teacher {
@@ -21,31 +20,27 @@ interface Teacher {
 }
 
 interface TimeSlot {
-  id: number;
-  teacherId: string;
-  startTime: string;
-  endTime: string;
+  startTime: Date;
+  endTime: Date;
   dayOfWeek: number;
-  weekStartDate: string;
   isBooked?: boolean;
-  isPast?: boolean;
 }
 
-interface BookedSlot {
-  startTime: string;
-  endTime: string;
-  status: string;
+interface SelectedSlot {
+  dayOfWeek: number;
+  startTime: Date;
+  endTime: Date;
 }
 
 export default function TeacherDetailPage({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [teacher, setTeacher] = useState<Teacher | null>(null);
   const [availability, setAvailability] = useState<TimeSlot[]>([]);
-  const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
-  const [notes, setNotes] = useState("");
+  const [selectedSlot, setSelectedSlot] = useState<SelectedSlot | null>(null);
   const [loading, setLoading] = useState(true);
   const [booking, setBooking] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showReservationModal, setShowReservationModal] = useState(false);
 
   useEffect(() => {
     const fetchTeacherDetails = async () => {
@@ -87,54 +82,33 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
         // Get booked slots data - ensure it's always an array
         const bookedSlotsData = Array.isArray(data.bookedSlots) ? data.bookedSlots : [];
         
-        // Get current date and time
-        const now = new Date();
-        
-        // Map availability and mark slots that are already booked or in the past
-        const availabilityWithStatus = availabilityData.map((slot: TimeSlot) => {
-          const slotStartTime = new Date(slot.startTime);
-          const slotEndTime = new Date(slot.endTime);
-          
-          // Improve comparison between availability slots and booked slots
-          // Check if any booked slot overlaps with this availability slot
-          const isBooked = bookedSlotsData.some((bookedSlot: BookedSlot) => {
-            const bookedStartTime = new Date(bookedSlot.startTime);
-            const bookedEndTime = new Date(bookedSlot.endTime);
+        // Convert availability data and mark booked slots instead of filtering them out
+        const processedAvailability = availabilityData
+          .map((slot: any) => {
+            const timeSlot: TimeSlot = {
+              ...slot,
+              startTime: new Date(slot.startTime),
+              endTime: new Date(slot.endTime),
+              isBooked: false
+            };
             
-            // Compare the hours and minutes, ignoring seconds and milliseconds
-            const sameStartHour = slotStartTime.getHours() === bookedStartTime.getHours();
-            const sameStartMinute = slotStartTime.getMinutes() === bookedStartTime.getMinutes();
-            const sameEndHour = slotEndTime.getHours() === bookedEndTime.getHours();
-            const sameEndMinute = slotEndTime.getMinutes() === bookedEndTime.getMinutes();
+            // Check if this slot is booked
+            const isBooked = bookedSlotsData.some((bookedSlot: any) => {
+              const bookedStart = new Date(bookedSlot.startTime);
+              const bookedEnd = new Date(bookedSlot.endTime);
+              return timeSlot.startTime.getTime() === bookedStart.getTime() &&
+                     timeSlot.endTime.getTime() === bookedEnd.getTime();
+            });
             
-            // Compare day, month, and year
-            const sameStartDay = slotStartTime.getDate() === bookedStartTime.getDate();
-            const sameStartMonth = slotStartTime.getMonth() === bookedStartTime.getMonth();
-            const sameStartYear = slotStartTime.getFullYear() === bookedStartTime.getFullYear();
-            
-            // If all time components match, it's the same slot
-            const timeMatches = sameStartHour && sameStartMinute && sameEndHour && sameEndMinute && 
-                                sameStartDay && sameStartMonth && sameStartYear;
-            
-            return timeMatches;
+            timeSlot.isBooked = isBooked;
+            return timeSlot;
           });
-          
-          // Check if this slot is in the past
-          const isPast = slotStartTime < now;
-          
-          return {
-            ...slot,
-            isBooked,
-            isPast
-          };
-        });
         
-        setAvailability(availabilityWithStatus);
-        
+        setAvailability(processedAvailability);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching teacher details:", error);
-        setError("Failed to load teacher details. Please try again later.");
+        setError("An error occurred while loading teacher details");
         setLoading(false);
       }
     };
@@ -142,14 +116,24 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
     fetchTeacherDetails();
   }, [params.id, router]);
 
-  const handleBookLesson = async () => {
-    if (!selectedSlot) {
-      toast.error("Please select a time slot first");
+  const handleSlotSelect = (slot: TimeSlot) => {
+    // Don't allow selection of booked slots - no toast error, just ignore
+    if (slot.isBooked) {
       return;
     }
+    
+    setSelectedSlot({
+      dayOfWeek: slot.dayOfWeek,
+      startTime: slot.startTime,
+      endTime: slot.endTime,
+    });
+    setShowReservationModal(true);
+  };
 
+  const handleBookLesson = async (notes: string) => {
+    if (!selectedSlot || !teacher) return;
+    
     setBooking(true);
-
     try {
       const response = await fetch("/api/private-lesson/book-lesson", {
         method: "POST",
@@ -157,60 +141,56 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          teacherId: teacher?.id,
-          startTime: selectedSlot.startTime,
-          endTime: selectedSlot.endTime,
-          notes: notes.trim() || undefined,
+          teacherId: teacher.id,
+          startTime: selectedSlot.startTime.toISOString(),
+          endTime: selectedSlot.endTime.toISOString(),
+          notes: notes || undefined,
         }),
       });
 
-      if (!response.ok) {
+      if (response.ok) {
+        toast.success("Ders başarıyla rezerve edildi!");
+        setShowReservationModal(false);
+        setSelectedSlot(null);
+        
+        // Refresh availability to reflect the new booking
+        window.location.reload();
+      } else {
         const errorData = await response.json();
         throw new Error(errorData.message || "Failed to book lesson");
       }
-
-      toast.success("Ders başarıyla rezerve edildi!");
-      
-      // Redirect to bookings page
-      router.push("/private-lesson/my-bookings");
     } catch (error) {
       console.error("Error booking lesson:", error);
-      toast.error(error instanceof Error ? error.message : "Ders rezerve edilemedi. Lütfen tekrar deneyin.");
+      toast.error(error instanceof Error ? error.message : "Ders rezerve edilirken bir hata oluştu");
     } finally {
       setBooking(false);
     }
   };
 
-  // Format day names
-  const getDayName = (dayOfWeek: number) => {
+  // Rest of the component remains the same...
+  const getDayName = (dayOfWeek: number): string => {
     const days = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
-    return days[dayOfWeek];
+    return days[dayOfWeek] || "Bilinmeyen";
   };
 
-  // Format time slots
-  const formatTime = (timeString: string) => {
-    const date = new Date(timeString);
-    return date.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+  const formatTime = (date: Date): string => {
+    return date.toLocaleTimeString("tr-TR", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
   };
 
-  // Function to sort days starting from current day
-  const sortDaysByCurrentDay = (days: string[]) => {
+  const sortDaysByCurrentDay = (dayNumbers: string[]): string[] => {
     const currentDay = new Date().getDay();
-    const sorted = [...days];
-    
-    // Sort by distance from current day
-    sorted.sort((a, b) => {
+    return dayNumbers.sort((a, b) => {
       const dayA = parseInt(a);
       const dayB = parseInt(b);
       
-      // Calculate distance from current day (wrapping around the week)
-      const distA = (dayA - currentDay + 7) % 7;
-      const distB = (dayB - currentDay + 7) % 7;
+      let adjustedA = dayA >= currentDay ? dayA - currentDay : dayA + 7 - currentDay;
+      let adjustedB = dayB >= currentDay ? dayB - currentDay : dayB + 7 - currentDay;
       
-      return distA - distB;
+      return adjustedA - adjustedB;
     });
-    
-    return sorted;
   };
 
   if (loading) {
@@ -221,28 +201,14 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
     );
   }
 
-  if (error) {
+  if (error || !teacher) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-red-600 mb-4">Error</h1>
-          <p className="text-gray-700 mb-6">{error}</p>
+          <p className="text-gray-700 mb-6">{error || "Teacher not found"}</p>
           <Button onClick={() => router.push("/private-lesson/teachers")}>
-            Öğretmenlere Dön
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
-  if (!teacher) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Öğretmen Bulunamadı</h1>
-          <p className="text-gray-700 mb-6">İstenen öğretmen bulunamadı.</p>
-          <Button onClick={() => router.push("/private-lesson/teachers")}>
-            Öğretmenlere Dön
+            Go Back to Teachers
           </Button>
         </div>
       </div>
@@ -250,7 +216,8 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
   }
 
   // Group availability by day
-  const availabilityByDay: Record<number, TimeSlot[]> = {};
+  const availabilityByDay: { [key: number]: TimeSlot[] } = {};
+  
   availability.forEach(slot => {
     if (!availabilityByDay[slot.dayOfWeek]) {
       availabilityByDay[slot.dayOfWeek] = [];
@@ -270,7 +237,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
         <Card className="md:col-span-1 bg-white shadow-md hover:shadow-lg transition-shadow">
           <CardHeader className="pb-2">
             <div className="flex justify-center mb-4">
-              <div className="relative w-36 h-36 rounded-full overflow-hidden bg-gray-200 border-4 border-primary/20">
+              <div className="relative w-36 h-36 rounded-full overflow-hidden border-primary/20">
                 <Image
                   src={teacher.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(teacher.name)}`}
                   alt={teacher.name}
@@ -289,7 +256,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
           </CardHeader>
           <CardContent className="pt-4">
             <div className="space-y-4">
-              <div className="p-4 bg-gray-50 rounded-lg">
+              <div className="p-4 rounded-lg">
                 <h3 className="font-medium text-lg mb-2 text-gray-800">Biyografi</h3>
                 <p className="text-gray-700 leading-relaxed">
                   {teacher.bio || "Bu öğretmen henüz kendisi hakkında bilgi paylaşmamış."}
@@ -309,65 +276,58 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
 
         {/* Availability and booking */}
         <div className="md:col-span-2 space-y-6">
-          <Card className="bg-white shadow-md">
-            <CardHeader className="pb-2 border-b">
-              <CardTitle className="text-xl">Müsait Zaman Dilimleri</CardTitle>
-              <CardDescription>30 dakikalık bir ders için uygun bir zaman seçin</CardDescription>
-            </CardHeader>
-            <CardContent className="pt-6">
-              {Object.keys(availabilityByDay).length === 0 ? (
-                <div className="text-center py-8 bg-gray-50 rounded-lg">
-                  <p className="text-gray-600">Bu hafta için müsait zaman dilimi bulunamadı.</p>
+          <Card>
+            <CardHeader>
+              <CardTitle>Müsait Zamanlar</CardTitle>
+              <CardDescription>
+                Aşağıdaki zamanlardan birini seçerek ders rezerve edebilirsiniz
+              </CardDescription>
+              {/* Legend */}
+              <div className="flex items-center gap-4 text-sm mt-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-green-200 bg-white rounded"></div>
+                  <span className="text-gray-600">Müsait</span>
                 </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-gray-200 border border-gray-300 rounded"></div>
+                  <span className="text-gray-600">Dolu</span>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {availability.length === 0 ? (
+                <p className="text-center py-8 text-gray-500">
+                  Bu öğretmenin şu an müsait zamanı bulunmuyor.
+                </p>
               ) : (
-                <div className="space-y-6">
-                  {sortedDays.map(dayNumber => {
-                    const slots = availabilityByDay[parseInt(dayNumber)];
-                    const isToday = new Date().getDay() === parseInt(dayNumber);
+                <div className="space-y-4">
+                  {sortedDays.map((dayStr) => {
+                    const dayNumber = parseInt(dayStr);
+                    const daySlots = availabilityByDay[dayNumber] || [];
                     
                     return (
-                      <div key={dayNumber} className={`border rounded-md p-4 ${isToday ? 'bg-blue-50 border-blue-200' : ''}`}>
-                        <h3 className={`font-medium mb-3 flex items-center ${isToday ? 'text-blue-700' : ''}`}>
-                          {isToday && (
-                            <span className="inline-block mr-2 px-2 py-0.5 text-xs bg-blue-100 text-blue-800 rounded-full">
-                              Bugün
-                            </span>
-                          )}
-                          {getDayName(parseInt(dayNumber))}
+                      <div key={dayNumber} className="border rounded-lg p-4">
+                        <h3 className="font-semibold text-lg mb-3 text-gray-800">
+                          {getDayName(dayNumber)}
                         </h3>
-                        <div className="flex flex-wrap gap-2">
-                          {slots.map(slot => {
-                            // Helper function to check if slots are the same
-                            const isSelectedSlot = selectedSlot && 
-                              slot.startTime === selectedSlot.startTime && 
-                              slot.endTime === selectedSlot.endTime;
-                            
-                            return (
-                              <Button
-                                key={`${slot.startTime}-${slot.endTime}`}
-                                variant={isSelectedSlot ? "default" : "secondary"}
-                                size="sm"
-                                onClick={() => {
-                                  if (!slot.isBooked && !slot.isPast) {
-                                    setSelectedSlot(slot);
-                                  } else if (slot.isBooked) {
-                                    toast.error("Bu zaman dilimi zaten rezerve edilmiş");
-                                  }
-                                }}
-                                disabled={slot.isBooked || slot.isPast}
-                                className={`
-                                  ${slot.isBooked ? "opacity-70 bg-red-50 text-red-700 border-red-200" : ""}
-                                  ${slot.isPast ? "opacity-50 bg-gray-100 text-gray-500" : ""}
-                                  ${isSelectedSlot ? "border-primary bg-primary/10 text-primary" : ""}
-                                  transition-all
-                                `}
-                              >
-                                {formatTime(slot.startTime)} - {formatTime(slot.endTime)}
-                                {slot.isBooked && " (Dolu)"}
-                                {slot.isPast && " (Geçmiş)"}
-                              </Button>
-                            );
-                          })}
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                          {daySlots.map((slot, index) => (
+                            <Button
+                              key={index}
+                              variant={slot.isBooked ? "default" : "secondaryOutline"}
+                              size="sm"
+                              onClick={() => handleSlotSelect(slot)}
+                              disabled={slot.isBooked}
+                              className={`text-sm py-2 transition-all ${
+                                slot.isBooked 
+                                  ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200 opacity-60 hover:bg-gray-100 hover:text-gray-400" 
+                                  : "hover:bg-green-50 border-green-200 text-green-700 hover:border-green-300 cursor-pointer"
+                              }`}
+                            >
+                              {formatTime(slot.startTime)}
+                              {slot.isBooked}
+                            </Button>
+                          ))}
                         </div>
                       </div>
                     );
@@ -376,46 +336,21 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
               )}
             </CardContent>
           </Card>
-
-          {selectedSlot && (
-            <Card className="bg-white shadow-md border-t-4 border-primary">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-xl">Ders Rezervasyonu</CardTitle>
-                <CardDescription>
-                  {teacher.name} ile {getDayName(selectedSlot.dayOfWeek)} günü saat {formatTime(selectedSlot.startTime)} için bir ders rezerve ediyorsunuz
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-4">
-                <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="notes">Notlar (İsteğe bağlı)</Label>
-                    <Textarea
-                      id="notes"
-                      placeholder="Görüşmek istediğiniz konuları veya özel notlarınızı buraya ekleyebilirsiniz"
-                      value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
-                      className="mt-1 resize-none"
-                      rows={4}
-                    />
-                  </div>
-                  <Button
-                    className="w-full bg-primary hover:bg-primary/90"
-                    onClick={handleBookLesson}
-                    disabled={booking}
-                  >
-                    {booking ? (
-                      <div className="flex items-center justify-center">
-                        <span className="h-4 w-4 mr-2 border-2 border-white border-t-transparent animate-spin rounded-full"></span>
-                        Rezervasyon yapılıyor...
-                      </div>
-                    ) : "Dersi Rezerve Et"}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          )}
         </div>
       </div>
+
+      {/* Reservation Modal */}
+      <ReservationModal
+        isOpen={showReservationModal}
+        onClose={() => {
+          setShowReservationModal(false);
+          setSelectedSlot(null);
+        }}
+        onConfirm={handleBookLesson}
+        teacherName={teacher.name}
+        selectedSlot={selectedSlot}
+        isLoading={booking}
+      />
     </div>
   );
 } 

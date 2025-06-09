@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Clock, Edit, Trash } from "lucide-react";
 import Image from "next/image";
+import { normalizeAvatarUrl } from "@/utils/avatar";
 
 interface PostCardProps {
   post: {
@@ -37,7 +38,7 @@ export function PostCard({ post, currentUser, isOwnPost, onChatRequest, onEdit, 
         <div className="flex items-start gap-4">
           {/* User Avatar */}
           <Image
-            src={post.userAvatar || "/mascot_purple.svg"}
+            src={normalizeAvatarUrl(post.userAvatar)}
             width={48}
             height={48}
             alt="Avatar"

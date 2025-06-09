@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectItem, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { FeedWrapper } from "@/components/feed-wrapper";
 import { StickyWrapper } from "@/components/sticky-wrapper";
@@ -226,19 +226,15 @@ export default function GetLessonPage() {
                   Ders Alanı <span className="text-red-500">*</span>
                 </Label>
                 <Select value={formData.field} onValueChange={(value) => handleSelectChange("field", value)}>
-                  <SelectTrigger id="field" className="w-full">
-                    <SelectValue placeholder="Hangi alanda özel ders almak istiyorsunuz?" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Matematik">Matematik</SelectItem>
-                    <SelectItem value="Fizik">Fizik</SelectItem>
-                    <SelectItem value="Kimya">Kimya</SelectItem>
-                    <SelectItem value="Biyoloji">Biyoloji</SelectItem>
-                    <SelectItem value="İngilizce">İngilizce</SelectItem>
-                    <SelectItem value="Türkçe">Türkçe</SelectItem>
-                    <SelectItem value="Tarih">Tarih</SelectItem>
-                    <SelectItem value="Coğrafya">Coğrafya</SelectItem>
-                  </SelectContent>
+                  <SelectValue placeholder="Hangi alanda özel ders almak istiyorsunuz?" />
+                  <SelectItem value="Matematik">Matematik</SelectItem>
+                  <SelectItem value="Fizik">Fizik</SelectItem>
+                  <SelectItem value="Kimya">Kimya</SelectItem>
+                  <SelectItem value="Biyoloji">Biyoloji</SelectItem>
+                  <SelectItem value="İngilizce">İngilizce</SelectItem>
+                  <SelectItem value="Türkçe">Türkçe</SelectItem>
+                  <SelectItem value="Tarih">Tarih</SelectItem>
+                  <SelectItem value="Coğrafya">Coğrafya</SelectItem>
                 </Select>
               </div>
 
@@ -249,15 +245,11 @@ export default function GetLessonPage() {
                   Bütçe Aralığı <span className="text-red-500">*</span>
                 </Label>
                 <Select value={formData.priceRange} onValueChange={(value) => handleSelectChange("priceRange", value)}>
-                  <SelectTrigger id="priceRange" className="w-full">
-                    <SelectValue placeholder="Talep ettiğiniz fiyat aralığını seçin" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="0-100 TL">0-100 TL / Saat</SelectItem>
-                    <SelectItem value="100-200 TL">100-200 TL / Saat</SelectItem>
-                    <SelectItem value="200-300 TL">200-300 TL / Saat</SelectItem>
-                    <SelectItem value="300+ TL">300+ TL / Saat</SelectItem>
-                  </SelectContent>
+                  <SelectValue placeholder="Talep ettiğiniz fiyat aralığını seçin" />
+                  <SelectItem value="0-100 TL">0-100 TL / Saat</SelectItem>
+                  <SelectItem value="100-200 TL">100-200 TL / Saat</SelectItem>
+                  <SelectItem value="200-300 TL">200-300 TL / Saat</SelectItem>
+                  <SelectItem value="300+ TL">300+ TL / Saat</SelectItem>
                 </Select>
               </div>
 
@@ -294,9 +286,10 @@ export default function GetLessonPage() {
 
               {/* Submit Button */}
               <Button 
+                variant="secondary"
                 type="submit" 
                 size="lg" 
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold transition-all duration-200 hover:scale-[1.02]"
+                className="w-full transition-all duration-200 hover:scale-[1.02]"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
@@ -315,84 +308,6 @@ export default function GetLessonPage() {
           </CardContent>
         </Card>
       </FeedWrapper>
-
-      <StickyWrapper>
-        {/* Benefits Card */}
-        <Card className="shadow-lg mb-4">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-yellow-500" />
-              Özel Ders Avantajları
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex gap-3">
-              <Target className="w-5 h-5 text-blue-500 mt-0.5" />
-              <div>
-                <p className="font-semibold text-sm">Kişiselleştirilmiş Eğitim</p>
-                <p className="text-xs text-gray-600">Size özel ders planı</p>
-              </div>
-            </div>
-            <div className="flex gap-3">
-              <TrendingUp className="w-5 h-5 text-blue-500 mt-0.5" />
-              <div>
-                <p className="font-semibold text-sm">Hızlı İlerleme</p>
-                <p className="text-xs text-gray-600">Birebir odaklanma ile</p>
-              </div>
-            </div>
-            <div className="flex gap-3">
-              <Heart className="w-5 h-5 text-blue-500 mt-0.5" />
-              <div>
-                <p className="font-semibold text-sm">Motivasyon Desteği</p>
-                <p className="text-xs text-gray-600">Sürekli geri bildirim</p>
-              </div>
-            </div>
-            <div className="flex gap-3">
-              <GraduationCap className="w-5 h-5 text-blue-500 mt-0.5" />
-              <div>
-                <p className="font-semibold text-sm">Uzman Öğretmenler</p>
-                <p className="text-xs text-gray-600">Alanında deneyimli</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* What's Next Card */}
-        <Card className="shadow-lg">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <FileText className="w-5 h-5 text-green-500" />
-              Başvuru Sonrası
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="flex items-start gap-2">
-              <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
-                <span className="text-xs font-semibold text-green-600">1</span>
-              </div>
-              <p className="text-sm text-gray-600">Başvurunuz sistem tarafından incelenir</p>
-            </div>
-            <div className="flex items-start gap-2">
-              <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
-                <span className="text-xs font-semibold text-green-600">2</span>
-              </div>
-              <p className="text-sm text-gray-600">Size uygun öğretmenler belirlenir</p>
-            </div>
-            <div className="flex items-start gap-2">
-              <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
-                <span className="text-xs font-semibold text-green-600">3</span>
-              </div>
-              <p className="text-sm text-gray-600">E-posta ile bilgilendirilirsiniz</p>
-            </div>
-            <div className="flex items-start gap-2">
-              <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
-                <span className="text-xs font-semibold text-green-600">4</span>
-              </div>
-              <p className="text-sm text-gray-600">Öğretmen seçimi yapabilirsiniz</p>
-            </div>
-          </CardContent>
-        </Card>
-      </StickyWrapper>
     </div>
   );
 }

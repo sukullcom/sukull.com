@@ -19,6 +19,7 @@ import {
   userRoleEnum
 } from "@/db/schema";
 import { getServerUser } from "@/lib/auth";
+import { normalizeAvatarUrl } from "@/utils/avatar";
 
 
 export const getUserProgress = cache(async () => {
@@ -35,7 +36,13 @@ export const getUserProgress = cache(async () => {
     },
   });
 
-  return data;
+  if (!data) return null;
+
+  // Normalize avatar URL to ensure it works with Next.js Image component
+  return {
+    ...data,
+    userImageSrc: normalizeAvatarUrl(data.userImageSrc)
+  };
 });
 
 export const getUnits = cache(async () => {
@@ -93,7 +100,13 @@ export const getUnits = cache(async () => {
 export const getCourses = cache(async () => {
   const data = await db.query.courses.findMany();
 
-  return data;
+  // Normalize image URLs to ensure they work with Next.js Image component
+  const normalizedData = data.map(course => ({
+    ...course,
+    imageSrc: normalizeAvatarUrl(course.imageSrc)
+  }));
+
+  return normalizedData;
 });
 
 export const getCourseById = cache(async (courseId: number) => {
@@ -111,7 +124,13 @@ export const getCourseById = cache(async (courseId: number) => {
     },
   });
 
-  return data;
+  if (!data) return null;
+
+  // Normalize image URL to ensure it works with Next.js Image component
+  return {
+    ...data,
+    imageSrc: normalizeAvatarUrl(data.imageSrc)
+  };
 });
 
 export const getCourseProgress = cache(async () => {
@@ -253,7 +272,13 @@ export const getTopTenUsers = cache(async () => {
     }
   })
 
-  return data
+  // Normalize avatar URLs to ensure they work with Next.js Image component
+  const normalizedData = data.map(user => ({
+    ...user,
+    userImageSrc: normalizeAvatarUrl(user.userImageSrc)
+  }));
+
+  return normalizedData
 })
 
 
@@ -653,8 +678,8 @@ export const getAllSnippets = cache(
           ilike(snippets.title, `%${searchTerm}%`),
           ilike(snippets.userName, `%${searchTerm}%`)
         )
-      );
-    }
+          );
+        }
     
     if (language && language.trim()) {
       conditions.push(eq(snippets.language, language.trim()));

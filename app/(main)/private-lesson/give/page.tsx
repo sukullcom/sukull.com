@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectItem, SelectValue } from "@/components/ui/select";
 import { FeedWrapper } from "@/components/feed-wrapper";
 import { StickyWrapper } from "@/components/sticky-wrapper";
 import { toast } from "sonner";
@@ -156,15 +156,11 @@ export default function GiveLessonPage() {
                   Ders Alanı <span className="text-red-500">*</span>
                 </Label>
                 <Select value={field} onValueChange={handleChangeField}>
-                  <SelectTrigger id="field" className="w-full">
-                    <SelectValue placeholder="Hangi alanda ders vermek istiyorsunuz?" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="English">İngilizce</SelectItem>
-                    <SelectItem value="Mathematics">Matematik</SelectItem>
-                    <SelectItem value="Physics">Fizik</SelectItem>
-                    <SelectItem value="Chess">Satranç</SelectItem>
-                  </SelectContent>
+                  <SelectValue placeholder="Hangi alanda ders vermek istiyorsunuz?" />
+                  <SelectItem value="English">İngilizce</SelectItem>
+                  <SelectItem value="Mathematics">Matematik</SelectItem>
+                  <SelectItem value="Physics">Fizik</SelectItem>
+                  <SelectItem value="Chess">Satranç</SelectItem>
                 </Select>
               </div>
 
@@ -249,15 +245,11 @@ export default function GiveLessonPage() {
                   Ücret Aralığı <span className="text-red-500">*</span>
                 </Label>
                 <Select value={formData.priceRange} onValueChange={handlePriceRangeChange}>
-                  <SelectTrigger id="priceRange" className="w-full">
-                    <SelectValue placeholder="Ders ücreti aralığınızı seçin" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="0-100 TL">0-100 TL / Saat</SelectItem>
-                    <SelectItem value="100-200 TL">100-200 TL / Saat</SelectItem>
-                    <SelectItem value="200-300 TL">200-300 TL / Saat</SelectItem>
-                    <SelectItem value="300+ TL">300+ TL / Saat</SelectItem>
-                  </SelectContent>
+                  <SelectValue placeholder="Ders ücreti aralığınızı seçin" />
+                  <SelectItem value="0-100 TL">0-100 TL / Saat</SelectItem>
+                  <SelectItem value="100-200 TL">100-200 TL / Saat</SelectItem>
+                  <SelectItem value="200-300 TL">200-300 TL / Saat</SelectItem>
+                  <SelectItem value="300+ TL">300+ TL / Saat</SelectItem>
                 </Select>
               </div>
 
@@ -275,9 +267,10 @@ export default function GiveLessonPage() {
 
               {/* Submit Button */}
               <Button 
+                variant="primary"
                 type="submit" 
                 size="lg" 
-                className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold transition-all duration-200 hover:scale-[1.02]"
+                className="w-full transition-all duration-200 hover:scale-[1.02]"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
@@ -296,76 +289,6 @@ export default function GiveLessonPage() {
           </CardContent>
         </Card>
       </FeedWrapper>
-
-      <StickyWrapper>
-        {/* Benefits Card */}
-        <Card className="shadow-lg mb-4">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-yellow-500" />
-              Öğretmen Olmanın Avantajları
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex gap-3">
-              <Clock className="w-5 h-5 text-green-500 mt-0.5" />
-              <div>
-                <p className="font-semibold text-sm">Esnek Çalışma Saatleri</p>
-                <p className="text-xs text-gray-600">Kendi programınızı belirleyin</p>
-              </div>
-            </div>
-            <div className="flex gap-3">
-              <DollarSign className="w-5 h-5 text-green-500 mt-0.5" />
-              <div>
-                <p className="font-semibold text-sm">Ek Gelir İmkanı</p>
-                <p className="text-xs text-gray-600">Bilginizi değere dönüştürün</p>
-              </div>
-            </div>
-            <div className="flex gap-3">
-              <Users className="w-5 h-5 text-green-500 mt-0.5" />
-              <div>
-                <p className="font-semibold text-sm">Öğrenci Ağı</p>
-                <p className="text-xs text-gray-600">Binlerce öğrenciye ulaşın</p>
-              </div>
-            </div>
-            <div className="flex gap-3">
-              <Award className="w-5 h-5 text-green-500 mt-0.5" />
-              <div>
-                <p className="font-semibold text-sm">Kariyer Gelişimi</p>
-                <p className="text-xs text-gray-600">Öğretmenlik deneyimi kazanın</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Requirements Card */}
-        <Card className="shadow-lg">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Target className="w-5 h-5 text-blue-500" />
-              Başvuru Gereksinimleri
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5" />
-              <p className="text-sm text-gray-600">Alanında yeterli bilgi ve deneyim</p>
-            </div>
-            <div className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5" />
-              <p className="text-sm text-gray-600">Düzenli ders verebilme imkanı</p>
-            </div>
-            <div className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5" />
-              <p className="text-sm text-gray-600">İyi iletişim becerileri</p>
-            </div>
-            <div className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5" />
-              <p className="text-sm text-gray-600">Sabır ve öğretme isteği</p>
-            </div>
-          </CardContent>
-        </Card>
-      </StickyWrapper>
     </div>
   );
 }

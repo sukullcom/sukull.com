@@ -27,6 +27,8 @@ export default function SnippetCard({ snippet }: { snippet: Snippet }) {
         <Image
           src={`/language_logos/${snippet.language}.png`}
           alt={snippet.language}
+          width={24}
+          height={24}
           className="w-6 h-6 object-contain"
         />
       </div>

@@ -34,10 +34,10 @@ const Select = React.forwardRef<
 })
 Select.displayName = "Select"
 
-// Create placeholder components for compatibility
-const SelectContent = ({ children }: React.HTMLAttributes<HTMLDivElement>) => (
-  <>{children}</>
-)
+// Simplified components that work with native select
+const SelectContent = ({ children }: { children: React.ReactNode }) => {
+  return <>{children}</>
+}
 
 const SelectItem = React.forwardRef<
   HTMLOptionElement,
@@ -54,12 +54,12 @@ const SelectItem = React.forwardRef<
 SelectItem.displayName = "SelectItem"
 
 const SelectTrigger = React.forwardRef<
-  HTMLSelectElement,
-  React.SelectHTMLAttributes<HTMLSelectElement>
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
 >(({ className, children, ...props }, ref) => (
-  <Select ref={ref} className={className} {...props}>
+  <div ref={ref} className={className} {...props}>
     {children}
-  </Select>
+  </div>
 ))
 SelectTrigger.displayName = "SelectTrigger"
 

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { InfinityIcon } from "lucide-react"; // import Fire icon for streak
 import { courses } from "@/db/schema";
+import { normalizeAvatarUrl } from "@/utils/avatar";
 
 type Props = {
   activeCourse: typeof courses.$inferSelect;
@@ -25,7 +26,7 @@ export const UserProgress = ({
       <Link prefetch={false} href="/courses">
         <Button variant="ghost" className="p-2">
           <Image
-            src={activeCourse.imageSrc}
+            src={normalizeAvatarUrl(activeCourse.imageSrc)}
             alt={activeCourse.title}
             className="rounded-md border"
             width={32}

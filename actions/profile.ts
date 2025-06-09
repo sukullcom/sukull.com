@@ -6,6 +6,7 @@ import { userProgress, users, schools } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { getServerUser } from "@/lib/auth";
 import { updateDailyStreak, checkStreakContinuity } from "./daily-streak";
+import { normalizeAvatarUrl } from '@/utils/avatar';
 
 /**
  * Fetch profile data (user_progress) for the currently authenticated user.
@@ -47,6 +48,9 @@ export async function getProfileDataOnServer() {
       schoolId: true,
       istikrar: true,
       dailyTarget: true,
+      profileEditingUnlocked: true,
+      studyBuddyUnlocked: true,
+      codeShareUnlocked: true,
     },
   });
 
@@ -110,7 +114,7 @@ export async function updateProfileAction(
       .update(userProgress)
       .set({
         userName: newName || "Anonymous",
-        userImageSrc: newImage || "/mascot_purple.svg",
+        userImageSrc: normalizeAvatarUrl(newImage),
         schoolId,
         dailyTarget: newDailyTarget,
       profileLocked: false, // Always set to false to ensure profile is never locked
@@ -126,7 +130,7 @@ export async function updateProfileAction(
       .update(users)
       .set({
         name: newName || "User",
-        avatar: newImage || "/mascot_purple.svg",
+        avatar: normalizeAvatarUrl(newImage),
         updated_at: new Date(),
       })
       .where(eq(users.id, userId));
@@ -135,7 +139,7 @@ export async function updateProfileAction(
       id: userId,
       email: user.email ?? "",
       name: newName || "User",
-      avatar: newImage || "/mascot_purple.svg",
+      avatar: normalizeAvatarUrl(newImage),
       provider: "email",
       created_at: new Date(),
       updated_at: new Date(),
@@ -181,7 +185,7 @@ export async function getUserProfile() {
     };
     
     // Calculate user registration date (for streak calendar)
-    const createDate = user.createdAt || new Date();
+    const createDate = user.created_at || new Date();
     const startDate = new Date(createDate).toISOString();
     
     return {

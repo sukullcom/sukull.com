@@ -49,10 +49,10 @@ export const useCodeEditorStore = create<CodeEditorStore>((set, get) => ({
   editor: null,
   monaco: null,
   isHydrated: false,
-  output: "",
-  isRunning: false,
-  error: null,
-  executionResult: null,
+    output: "",
+    isRunning: false,
+    error: null,
+    executionResult: null,
 
   setLanguage: (language: string) => {
     // Save current language code before switching
@@ -73,24 +73,24 @@ export const useCodeEditorStore = create<CodeEditorStore>((set, get) => ({
         console.warn("Failed to save language to localStorage:", error);
       }
     }
-  },
+    },
 
-  setTheme: (theme: string) => {
+    setTheme: (theme: string) => {
     set({ theme });
     if (typeof window !== "undefined") {
       try {
-        localStorage.setItem("editor-theme", theme);
+      localStorage.setItem("editor-theme", theme);
       } catch (error) {
         console.warn("Failed to save theme to localStorage:", error);
       }
     }
-  },
+    },
 
-  setFontSize: (fontSize: number) => {
+    setFontSize: (fontSize: number) => {
     set({ fontSize });
     if (typeof window !== "undefined") {
       try {
-        localStorage.setItem("editor-font-size", fontSize.toString());
+      localStorage.setItem("editor-font-size", fontSize.toString());
       } catch (error) {
         console.warn("Failed to save font size to localStorage:", error);
       }
@@ -120,94 +120,94 @@ export const useCodeEditorStore = create<CodeEditorStore>((set, get) => ({
 
   setHydrated: (hydrated: boolean) => {
     set({ isHydrated: hydrated });
-  },
+    },
 
   getCode: () => get().editor?.getModel()?.getValue() || "",
 
-  runCode: async () => {
-    const { language, getCode } = get();
-    const code = getCode();
+    runCode: async () => {
+      const { language, getCode } = get();
+      const code = getCode();
 
-    if (!code) {
-      set({ error: "Please enter some code" });
-      return;
-    }
-
-    set({ isRunning: true, error: null, output: "" });
-
-    try {
-      const runtime = LANGUAGE_CONFIG[language].pistonRuntime;
-      const response = await fetch("https://emkc.org/api/v2/piston/execute", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          language: runtime.language,
-          version: runtime.version,
-          files: [{ content: code }],
-        }),
-      });
-
-      const data = await response.json();
-
-      console.log("data back from piston:", data);
-
-      // handle API-level erros
-      if (data.message) {
-        set({ error: data.message, executionResult: { code, output: "", error: data.message } });
+      if (!code) {
+        set({ error: "Please enter some code" });
         return;
       }
 
-      // handle compilation errors
-      if (data.compile && data.compile.code !== 0) {
-        const error = data.compile.stderr || data.compile.output;
-        set({
-          error,
-          executionResult: {
-            code,
-            output: "",
-            error,
+      set({ isRunning: true, error: null, output: "" });
+
+      try {
+        const runtime = LANGUAGE_CONFIG[language].pistonRuntime;
+        const response = await fetch("https://emkc.org/api/v2/piston/execute", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
           },
+          body: JSON.stringify({
+            language: runtime.language,
+            version: runtime.version,
+            files: [{ content: code }],
+          }),
         });
-        return;
-      }
 
-      if (data.run && data.run.code !== 0) {
-        const error = data.run.stderr || data.run.output;
-        set({
-          error,
-          executionResult: {
-            code,
-            output: "",
+        const data = await response.json();
+
+        console.log("data back from piston:", data);
+
+        // handle API-level erros
+        if (data.message) {
+          set({ error: data.message, executionResult: { code, output: "", error: data.message } });
+          return;
+        }
+
+        // handle compilation errors
+        if (data.compile && data.compile.code !== 0) {
+          const error = data.compile.stderr || data.compile.output;
+          set({
             error,
-          },
-        });
-        return;
-      }
+            executionResult: {
+              code,
+              output: "",
+              error,
+            },
+          });
+          return;
+        }
 
-      // if we get here, execution was successful
-      const output = data.run.output;
+        if (data.run && data.run.code !== 0) {
+          const error = data.run.stderr || data.run.output;
+          set({
+            error,
+            executionResult: {
+              code,
+              output: "",
+              error,
+            },
+          });
+          return;
+        }
 
-      set({
-        output: output.trim(),
-        error: null,
-        executionResult: {
-          code,
+        // if we get here, execution was successful
+        const output = data.run.output;
+
+        set({
           output: output.trim(),
           error: null,
-        },
-      });
-    } catch (error) {
-      console.log("Error running code:", error);
-      set({
-        error: "Error running code",
-        executionResult: { code, output: "", error: "Error running code" },
-      });
-    } finally {
-      set({ isRunning: false });
-    }
-  },
+          executionResult: {
+            code,
+            output: output.trim(),
+            error: null,
+          },
+        });
+      } catch (error) {
+        console.log("Error running code:", error);
+        set({
+          error: "Error running code",
+          executionResult: { code, output: "", error: "Error running code" },
+        });
+      } finally {
+        set({ isRunning: false });
+      }
+    },
 
   hydrate: () => {
     const currentState = get();

@@ -1,6 +1,7 @@
 // utils/users.ts
 import { createClient } from '@/utils/supabase/client'
 import type { User } from '@supabase/supabase-js'
+import { normalizeAvatarUrl } from '@/utils/avatar'
 
 const supabase = createClient()
 
@@ -77,17 +78,19 @@ export const users = {
                  'User';
           
           // Google can provide avatar in different places
-          avatar = authUser.user_metadata?.avatar_url || 
-                   authUser.user_metadata?.picture ||
-                   '';
+          const rawAvatar = authUser.user_metadata?.avatar_url || 
+                           authUser.user_metadata?.picture ||
+                           '';
+          avatar = normalizeAvatarUrl(rawAvatar);
           
           console.log('Extracted Google name:', name);
-          console.log('Extracted Google avatar:', avatar);
+          console.log('Extracted Google avatar (raw):', rawAvatar);
+          console.log('Normalized Google avatar:', avatar);
         } else {
           name = authUser.user_metadata?.full_name ||
                  authUser.email?.split('@')[0] ||
                  'User';
-          avatar = authUser.user_metadata?.avatar_url || '';
+          avatar = normalizeAvatarUrl(authUser.user_metadata?.avatar_url);
         }
       }
       

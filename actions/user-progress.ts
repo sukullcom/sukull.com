@@ -11,6 +11,7 @@ import { redirect } from 'next/navigation';
 import { getServerUser } from '@/lib/auth';
 import { users } from '@/utils/users';
 import { updateDailyStreak } from "./daily-streak";
+import { normalizeAvatarUrl } from '@/utils/avatar';
 
 export const updateTotalPointsForSchools = async () => {
   try {
@@ -84,7 +85,7 @@ export const upsertUserSchool = async (schoolId: number) => {
     // Create new user progress
     const profile = await users.getUser(userId).catch(() => null);
     const userName = profile?.name || user.user_metadata?.full_name || 'User';
-    const userImageSrc = user.user_metadata?.avatar_url || '/mascot_purple.svg';
+    const userImageSrc = normalizeAvatarUrl(user.user_metadata?.avatar_url);
     
     await db.insert(userProgress)
       .values({ userId, schoolId, userName, userImageSrc });
@@ -130,7 +131,7 @@ export const upsertUserProgress = async (courseId: number) => {
   const profile = await users.getUser(userId).catch(() => null);
   const providedName = profile?.name || user.user_metadata?.full_name || 'User';
   const existing = await getUserProgress();
-  const userImageSrc = existing?.userImageSrc || user.user_metadata?.avatar_url || '/mascot_purple.svg';
+  const userImageSrc = normalizeAvatarUrl(existing?.userImageSrc || user.user_metadata?.avatar_url);
 
   if (existing) {
     await db

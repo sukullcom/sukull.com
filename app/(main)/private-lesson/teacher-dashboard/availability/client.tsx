@@ -73,15 +73,9 @@ export default function AvailabilityPageClient({
     <div>
       <div className="bg-white shadow rounded-lg p-4 mb-6">
         <h2 className="text-xl font-bold mb-2">Uygunluk Takvimi</h2>
-        <p className="text-gray-600 mb-2">
-          Aşağıdan müsait olduğunuz zamanları seçebilirsiniz. Takvim bugünden başlayıp 
-          önümüzdeki {format(nextFriday, 'EEEE', { locale: tr })} gününe kadar olan günleri göstermektedir.
-        </p>
         <ul className="list-disc ml-5 text-sm text-gray-600">
           <li>Yeşil kutucuklar seçtiğiniz müsait zamanları gösterir</li>
           <li>Geçmiş zamanlar otomatik olarak devre dışı bırakılır</li>
-          <li>Sol taraftaki ilk sütun her zaman bugünün tarihidir</li>
-          <li>Takvim soldan sağa doğru ilerleyen 7 günü gösterir</li>
           <li>Zamanlar 30 dakikalık dilimler halinde gösterilmektedir</li>
         </ul>
       </div>
@@ -94,8 +88,7 @@ export default function AvailabilityPageClient({
       <div className="mt-6 bg-yellow-50 p-4 rounded-md border border-yellow-200">
         <h3 className="font-bold text-yellow-800 mb-2">Önemli Hatırlatma</h3>
         <p className="text-yellow-700">
-          Bir öğrenci, müsait olduğunuzu belirttiğiniz bir zaman için ders rezervasyonu yaptığında, 
-          size bir bildirim gönderilecektir. Ayrıca, öğrenciler ders başlama süresinden 24 saat öncesine kadar 
+          Öğrenciler ders başlama süresinden 24 saat öncesine kadar 
           ders iptali yapabilirler.
         </p>
       </div>

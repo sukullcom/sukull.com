@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
+import { normalizeAvatarUrl } from "@/utils/avatar";
 
 interface ChatCardProps {
   chat: {
@@ -64,7 +65,7 @@ export function ChatCard({ chat, currentUser, onClick, isSelected }: ChatCardPro
       <CardContent className="p-4">
         <div className="flex items-center gap-3">
           <Image
-            src={otherParticipantData?.avatarUrl || "/mascot_purple.svg"}
+            src={normalizeAvatarUrl(otherParticipantData?.avatarUrl)}
             width={40}
             height={40}
             alt="Avatar"

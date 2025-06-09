@@ -51,7 +51,10 @@ export default async function ProtectedLayout({
         ) : null}
 
         <DailyProgress />
-        <Quests points={userProgress.points} />
+        <Quests 
+          points={userProgress.points} 
+          currentStreak={userProgress.istikrar} 
+        />
       </StickyWrapper>
 
       {/* The main content from each nested page */}

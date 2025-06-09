@@ -71,7 +71,7 @@ export default function SnippetsPage() {
       setLoadingMore(true);
     }
 
-    try {
+      try {
       const params = new URLSearchParams({
         page: page.toString(),
         limit: pagination.limit.toString(),
@@ -82,10 +82,10 @@ export default function SnippetsPage() {
       }
       if (language?.trim()) {
         params.set("language", language.trim());
-      }
+        }
 
-      const res = await fetch(`/api/snippets?${params.toString()}`);
-      const data = await res.json();
+        const res = await fetch(`/api/snippets?${params.toString()}`);
+        const data = await res.json();
       
       if (data.snippets) {
         if (append && page > 1) {
@@ -94,16 +94,16 @@ export default function SnippetsPage() {
           setSnippets(data.snippets);
         }
         setPagination(data.pagination);
-      }
-    } catch (error) {
-      console.error("Error fetching snippets:", error);
+        }
+      } catch (error) {
+        console.error("Error fetching snippets:", error);
       if (!append) {
-        setSnippets([]);
-      }
-    } finally {
-      setLoading(false);
+          setSnippets([]);
+        }
+      } finally {
+          setLoading(false);
       setLoadingMore(false);
-    }
+      }
   }, [pagination.limit]);
 
   // Initial load and search changes
@@ -209,6 +209,8 @@ export default function SnippetsPage() {
                   <Image
                     src={`/language_logos/${lang}.png`}
                     alt={lang}
+                    width={16}
+                    height={16}
                     className="w-4 h-4 object-contain"
                   />
                   <span className="text-xs sm:text-sm">{lang}</span>
@@ -272,20 +274,20 @@ export default function SnippetsPage() {
           </div>
         ) : filteredSnippets.length > 0 ? (
           <>
-            <motion.div
-              className={`grid gap-6 ${
-                view === "grid"
-                  ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
-                  : "grid-cols-1 max-w-3xl mx-auto"
-              }`}
-              layout
-            >
-              <AnimatePresence mode="popLayout">
-                {filteredSnippets.map((snippet) => (
-                  <SnippetCard key={snippet.id} snippet={snippet} />
-                ))}
-              </AnimatePresence>
-            </motion.div>
+        <motion.div
+          className={`grid gap-6 ${
+            view === "grid"
+              ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
+              : "grid-cols-1 max-w-3xl mx-auto"
+          }`}
+          layout
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredSnippets.map((snippet) => (
+              <SnippetCard key={snippet.id} snippet={snippet} />
+            ))}
+          </AnimatePresence>
+        </motion.div>
 
             {/* Load More Button */}
             {pagination.hasMore && (

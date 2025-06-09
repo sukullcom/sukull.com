@@ -64,12 +64,16 @@ export const ProfileSchoolSelector = ({
     onSelect(schoolId);
   }, [onSelect]);
 
+  const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  }, []);
+
   // Calculate if we should show the empty message
   const showEmptyMessage = selectedType && filteredSchools.length === 0;
 
   return (
-    <div className="rounded-lg border border-gray-200 p-4 bg-gray-50 shadow-sm">
-      <h2 className="text-lg font-semibold text-neutral-800 mb-4">
+    <div className="rounded-lg border border-gray-200 p-4 shadow-sm bg-gray-50">
+      <h2 className="text-lg font-semibold mb-4 text-neutral-800">
         Okulunu Seç
       </h2>
 
@@ -91,7 +95,7 @@ export const ProfileSchoolSelector = ({
         <input
           type="text"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={handleSearchChange}
           placeholder="Okul ismine göre ara..."
           className="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500"
         />
@@ -99,9 +103,7 @@ export const ProfileSchoolSelector = ({
 
       {/* School List with Custom Scrollbar */}
       {selectedType && (
-        <div className="max-h-64 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-2 pr-2
-          scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-200"
-        >
+        <div className="max-h-64 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-2 pr-2 scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-200">
           {showEmptyMessage ? (
             <div className="col-span-2 text-center p-4 text-gray-500">
               Aramanızla eşleşen okul bulunamadı
@@ -111,7 +113,7 @@ export const ProfileSchoolSelector = ({
               <div
                 key={school.id}
                 onClick={() => handleSchoolClick(school.id)}
-                className={`border p-2 rounded-lg cursor-pointer text-center ${
+                className={`border p-2 rounded-lg text-center cursor-pointer ${
                   selectedSchoolId === school.id
                     ? "bg-green-50 border-green-600"
                     : "hover:bg-gray-100"
@@ -134,7 +136,7 @@ export const ProfileSchoolSelector = ({
       
       {/* School count info */}
       {selectedType && filteredSchools.length > 0 && (
-        <div className="mt-2 text-xs text-gray-500 text-right">
+        <div className="mt-2 text-xs text-right text-gray-500">
           {filteredSchools.length} okul gösteriliyor
         </div>
       )}

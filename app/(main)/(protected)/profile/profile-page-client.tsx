@@ -9,7 +9,13 @@ import { ProfileSchoolSelector } from "./profile-school-selector";
 import { AvatarGenerator } from "random-avatar-generator";
 import Image from "next/image";
 import { School } from "@/app/types";
+import { normalizeAvatarUrl } from "@/utils/avatar";
 import StreakCalendarAdvanced from "@/components/streak-calendar";
+import { 
+  checkStreakRequirement, 
+  getStreakRequirementMessage,
+  UserAchievements 
+} from "@/utils/streak-requirements";
 
 export default function ProfilePageClient({
   profile,
@@ -22,15 +28,25 @@ export default function ProfilePageClient({
     istikrar: number;
     dailyTarget: number;
     startDate: string; // The date the user started streak tracking
+    profileEditingUnlocked?: boolean;
+    studyBuddyUnlocked?: boolean;
+    codeShareUnlocked?: boolean;
   };
   allSchools: School[];
 }) {
   const [username, setUsername] = useState(profile.userName || "Anonymous");
-  const [avatarUrl, setAvatarUrl] = useState(profile.userImageSrc || "/mascot_purple.svg");
+  const [avatarUrl, setAvatarUrl] = useState(normalizeAvatarUrl(profile.userImageSrc));
   const [dailyTarget, setDailyTarget] = useState(profile.dailyTarget || 50);
   const [selectedSchoolId, setSelectedSchoolId] = useState(profile.schoolId ?? null);
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  
+  // Check if user meets profile editing requirements
+  const canEditProfile = checkStreakRequirement(profile.istikrar, "PROFILE_EDITING", {
+    profileEditingUnlocked: profile.profileEditingUnlocked,
+    studyBuddyUnlocked: profile.studyBuddyUnlocked,
+    codeShareUnlocked: profile.codeShareUnlocked,
+  });
   
   // Memoize the avatar generator to avoid recreating it on each render
   const generator = useMemo(() => new AvatarGenerator(), []);
@@ -55,6 +71,11 @@ export default function ProfilePageClient({
 
   // Use useCallback for the save handler
   const handleSave = useCallback(() => {
+    if (!canEditProfile) {
+      toast.error(getStreakRequirementMessage("PROFILE_EDITING"));
+      return;
+    }
+
     setError(null);
     
     if (!username.trim()) {
@@ -78,7 +99,7 @@ export default function ProfilePageClient({
           toast.error(err.message || "Profil güncellenirken hata oluştu.");
         });
     });
-  }, [username, avatarUrl, selectedSchoolId, dailyTarget]);
+  }, [username, avatarUrl, selectedSchoolId, dailyTarget, canEditProfile]);
 
   // Memoize the daily target options to avoid recreating on every render
   const dailyTargetOptions = useMemo(() => [
@@ -96,83 +117,92 @@ export default function ProfilePageClient({
   const isExternalAvatar = avatarUrl.startsWith('http');
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 py-12 px-4">
-      <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-white w-full max-w-md">
-        <h1 className="text-2xl font-bold text-center text-gray-800">Profil Ayarları</h1>
-        {error && (
-          <p className="text-sm text-red-600 text-center">
-            {error}
-          </p>
-        )}
-        <div className="flex flex-col items-center space-y-4">
-          <div className="w-32 h-32 overflow-hidden rounded-full border-2 border-gray-300 relative">
-            <Image 
-              src={avatarUrl} 
-              alt="Avatar" 
-              fill
-              sizes="(max-width: 640px) 100vw, 128px"
-              className="object-cover"
-              priority
-              unoptimized={isExternalAvatar}
-              onError={() => {
-                console.error("Failed to load avatar image");
-                setAvatarUrl("/mascot_purple.svg");
-                toast.error("Avatar yüklenemedi, varsayılan avatar kullanılıyor");
-              }}
+    <div className="min-h-screen bg-gray-50 py-8 px-4">
+      <div className="max-w-2xl mx-auto">
+        <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-white">
+          <h1 className="text-2xl font-bold text-center text-gray-800">Profil Ayarları</h1>
+          
+          {error && (
+            <p className="text-sm text-red-600 text-center">
+              {error}
+            </p>
+          )}
+          
+          <div className="flex flex-col items-center space-y-4">
+            <div className="w-32 h-32 overflow-hidden rounded-full relative">
+              <Image 
+                src={avatarUrl} 
+                alt="Avatar" 
+                fill
+                sizes="(max-width: 640px) 100vw, 128px"
+                className="object-cover"
+                priority
+                unoptimized={isExternalAvatar}
+                onError={() => {
+                  console.error("Failed to load avatar image");
+                  setAvatarUrl(normalizeAvatarUrl(null));
+                  toast.error("Avatar yüklenemedi, varsayılan avatar kullanılıyor");
+                }}
+              />
+            </div>
+            <Button
+              variant="secondary"
+              size="lg"
+              onClick={handleRandomAvatar}
+              disabled={pending}
+            >
+              Rastgele Avatar Oluştur
+            </Button>
+          </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Kullanıcı Adı</label>
+            <input
+              className="mt-1 block w-full rounded-md border border-gray-200 shadow-sm p-3 focus:border-blue-500 focus:ring-blue-500"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              maxLength={30}
             />
           </div>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Günlük Hedeflenen Puan</label>
+            <select
+              className="mt-1 block w-full rounded-md border border-gray-200 shadow-sm p-3 focus:border-blue-500 focus:ring-blue-500"
+              value={dailyTarget}
+              onChange={(e) => setDailyTarget(parseInt(e.target.value))}
+            >
+              {dailyTargetOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          
+          <div>
+            <ProfileSchoolSelector
+              schools={allSchools}
+              initialSchoolId={selectedSchoolId}
+              onSelect={(schoolId) => setSelectedSchoolId(schoolId)}
+            />
+          </div>
+          
+          <div className="mt-4">
+            <h2 className="text-sm font-semibold text-gray-700">Aylık İstikrar Takvimi</h2>
+            <StreakCalendarAdvanced startDate={profile.startDate} />
+          </div>
+          
           <Button
-            variant="secondary"
+            variant="primary"
             size="lg"
-            onClick={handleRandomAvatar}
-            disabled={pending}
+            className="w-full"
+            onClick={handleSave}
+            disabled={pending || !username.trim()}
           >
-            Rastgele Avatar Oluştur
+            {pending ? "Kaydediliyor..." : "Kaydet"}
           </Button>
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Kullanıcı Adı</label>
-          <input
-            className="mt-1 block w-full rounded-md border border-gray-200 shadow-sm p-3 focus:border-blue-500 focus:ring-blue-500"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            maxLength={30} // Limit username length
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Günlük Hedeflenen Puan</label>
-          <select
-            className="mt-1 block w-full rounded-md border border-gray-200 shadow-sm p-3 focus:border-blue-500 focus:ring-blue-500"
-            value={dailyTarget}
-            onChange={(e) => setDailyTarget(parseInt(e.target.value))}
-          >
-            {dailyTargetOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <ProfileSchoolSelector
-            schools={allSchools}
-            initialSchoolId={selectedSchoolId}
-            onSelect={(schoolId) => setSelectedSchoolId(schoolId)}
-          />
-        </div>
-        <div className="mt-4">
-          <h2 className="text-sm font-semibold text-gray-700">Aylık İstikrar Takvimi</h2>
-          <StreakCalendarAdvanced startDate={profile.startDate} />
-        </div>
-        <Button
-          variant="primary"
-          size="lg"
-          className="w-full"
-          onClick={handleSave}
-          disabled={pending || !username.trim()}
-        >
-          {pending ? "Kaydediliyor..." : "Kaydet"}
-        </Button>
       </div>
     </div>
   );

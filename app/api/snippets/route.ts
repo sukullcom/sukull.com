@@ -6,6 +6,7 @@ import db from "@/db/drizzle";
 import { eq } from "drizzle-orm";
 import { userProgress } from "@/db/schema";
 import { getServerUser } from "@/lib/auth";
+import { checkStreakRequirement, getStreakRequirementMessage } from "@/utils/streak-requirements";
 
 export async function GET(req: Request) {
   // Add authentication check
@@ -52,13 +53,14 @@ export async function POST(req: Request) {
 
     const userId = user.id;
 
-    // Validate user exists and has enough points
+    // Validate user exists and has enough streak
     const userP = await db.query.userProgress.findFirst({
       where: eq(userProgress.userId, userId),
       columns: {
         userId: true,
         userName: true,
-        points: true,
+        istikrar: true,
+        codeShareUnlocked: true,
       },
     });
 
@@ -69,9 +71,11 @@ export async function POST(req: Request) {
       );
     }
 
-    if (userP.points < 5000) {
+    if (!checkStreakRequirement(userP.istikrar, "CODE_SNIPPET_SHARING", {
+      codeShareUnlocked: userP.codeShareUnlocked
+    })) {
       return NextResponse.json(
-        { error: "You need to have 5000 points to share a snippet." },
+        { error: getStreakRequirementMessage("CODE_SNIPPET_SHARING") },
         { status: 403 }
       );
     }

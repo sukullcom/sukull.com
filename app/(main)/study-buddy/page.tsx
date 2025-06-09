@@ -13,6 +13,12 @@ import { LoadingSpinner } from "@/components/loading-spinner";
 import { PostCard } from "@/components/study-buddy/post-card";
 import { ChatCard } from "@/components/study-buddy/chat-card";
 import Image from "next/image";
+import { normalizeAvatarUrl } from "@/utils/avatar";
+import { 
+  checkStreakRequirement, 
+  getStreakRequirementMessage,
+  UserAchievements 
+} from "@/utils/streak-requirements";
 import { 
   Users, 
   MessageCircle, 
@@ -39,6 +45,7 @@ interface StudyBuddyPost {
   purpose: string;
   reason: string;
   created_at: string;
+  school_id?: number;
   userName?: string;
   userAvatar?: string;
   userSchoolName?: string;
@@ -139,6 +146,12 @@ export default function StudyBuddyPage() {
     user_metadata?: UserMetadata;
   } | null>(null);
   const [loadingUser, setLoadingUser] = useState<boolean>(true);
+  const [userStreak, setUserStreak] = useState<number>(0);
+  const [userAchievements, setUserAchievements] = useState<UserAchievements>({
+    profileEditingUnlocked: false,
+    studyBuddyUnlocked: false,
+    codeShareUnlocked: false,
+  });
 
   // Tabs
   const [activeTab, setActiveTab] = useState<"allPosts" | "myPosts" | "chats">("allPosts");
@@ -211,12 +224,58 @@ export default function StudyBuddyPage() {
     turkishToast.warning(msg);
   }, []);
 
+  // Helper function to fetch user streak data
+  const fetchUserStreak = useCallback(async () => {
+    try {
+      const response = await fetch("/api/user/streak");
+      const data = await response.json();
+      console.log("Study Buddy - User streak data:", data);
+      
+      if (response.ok && data.streak !== undefined) {
+        setUserStreak(data.streak);
+        console.log("Study Buddy - User streak set to:", data.streak);
+        
+        // Update achievements data
+        if (data.achievements) {
+          setUserAchievements(data.achievements);
+          console.log("Study Buddy - User achievements:", data.achievements);
+        }
+        
+        return data.streak;
+      } else {
+        console.log("Study Buddy - No streak data found, setting streak to 0");
+        setUserStreak(0);
+        setUserAchievements({
+          profileEditingUnlocked: false,
+          studyBuddyUnlocked: false,
+          codeShareUnlocked: false,
+        });
+        return 0;
+      }
+    } catch (error) {
+      console.error("Study Buddy - Error fetching user streak:", error);
+      setUserStreak(0);
+      setUserAchievements({
+        profileEditingUnlocked: false,
+        studyBuddyUnlocked: false,
+        codeShareUnlocked: false,
+      });
+      return 0;
+    }
+  }, []);
+
   // Auth effect
   useEffect(() => {
     const loadSession = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession();
         setCurrentUser(session?.user || null);
+        
+        // If user is logged in, get their progress/streak data using server action
+        if (session?.user) {
+          await fetchUserStreak();
+        }
+        
         setLoadingUser(false);
       } catch (error) {
         console.error("Error loading session:", error);
@@ -226,13 +285,20 @@ export default function StudyBuddyPage() {
     loadSession();
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event: string, session: { user: { id: string; email?: string; user_metadata?: UserMetadata } } | null) => {
+      async (_event: string, session: { user: { id: string; email?: string; user_metadata?: UserMetadata } } | null) => {
         setCurrentUser(session?.user || null);
+        
+        // Also update streak when auth state changes using server action
+        if (session?.user) {
+          await fetchUserStreak();
+        } else {
+          setUserStreak(0);
+        }
       }
     );
     
     return () => subscription?.unsubscribe();
-  }, [supabase]);
+  }, [supabase, fetchUserStreak]);
 
   // Helper functions for filtering and pagination
   const filteredPosts = useMemo(() => {
@@ -483,7 +549,7 @@ export default function StudyBuddyPage() {
           return {
             ...post,
             userName: user?.name || "User",
-            userAvatar: user?.avatar || "/mascot_purple.svg",
+            userAvatar: normalizeAvatarUrl(user?.avatar),
             userSchoolName: "" // Empty string since we don't have school data
           };
         });
@@ -538,7 +604,7 @@ export default function StudyBuddyPage() {
           return {
             ...post,
             userName: currentUser.user_metadata?.name || "User",
-            userAvatar: currentUser.user_metadata?.avatar || "/mascot_purple.svg",
+            userAvatar: normalizeAvatarUrl(currentUser.user_metadata?.avatar),
             userSchoolName,
           };
         })
@@ -590,7 +656,7 @@ export default function StudyBuddyPage() {
               
               participantsData[participantId] = {
               userName: userData?.name || "User",
-              avatarUrl: userData?.avatar || "/mascot_purple.svg",
+              avatarUrl: normalizeAvatarUrl(userData?.avatar),
               };
             }
           }
@@ -637,6 +703,21 @@ export default function StudyBuddyPage() {
   const handleCreatePost = useCallback(async () => {
     if (!currentUser) {
       showWarning(warningMessages.AUTHENTICATION_REQUIRED);
+      return;
+    }
+
+    // Check streak requirement for study buddy features
+    console.log("Study Buddy - handleCreatePost - Checking streak requirement:", { 
+      userStreak, 
+      userAchievements,
+      required: 15, 
+      checkResult: checkStreakRequirement(userStreak, "STUDY_BUDDY_FEATURES", userAchievements) 
+    });
+    
+    if (!checkStreakRequirement(userStreak, "STUDY_BUDDY_FEATURES", userAchievements)) {
+      const message = getStreakRequirementMessage("STUDY_BUDDY_FEATURES");
+      console.log("Study Buddy - handleCreatePost - Streak requirement failed:", message);
+      turkishToast.error(message);
       return;
     }
 
@@ -700,7 +781,7 @@ export default function StudyBuddyPage() {
       console.error("Error in handleCreatePost:", error);
       setCreationError(warningMessages.ERROR_CREATING_POST);
     }
-  }, [currentUser, postPurpose, postReason, validatePostSpam, showWarning, supabase, loadAllPosts, loadMyPosts]);
+  }, [currentUser, postPurpose, postReason, validatePostSpam, showWarning, supabase, loadAllPosts, loadMyPosts, userStreak, userAchievements]);
 
   const handleEditPost = useCallback((post: StudyBuddyPost) => {
     setEditingPost(post);
@@ -718,6 +799,21 @@ export default function StudyBuddyPage() {
 
     if (post.user_id === currentUser.id) {
       showWarning(warningMessages.CANNOT_MESSAGE_YOURSELF);
+      return;
+    }
+
+    // Check streak requirement for study buddy features
+    console.log("Study Buddy - handleOpenChat - Checking streak requirement:", { 
+      userStreak, 
+      userAchievements,
+      required: 15, 
+      checkResult: checkStreakRequirement(userStreak, "STUDY_BUDDY_FEATURES", userAchievements) 
+    });
+    
+    if (!checkStreakRequirement(userStreak, "STUDY_BUDDY_FEATURES", userAchievements)) {
+      const message = getStreakRequirementMessage("STUDY_BUDDY_FEATURES");
+      console.log("Study Buddy - handleOpenChat - Streak requirement failed:", message);
+      turkishToast.error(message);
       return;
     }
 
@@ -767,10 +863,25 @@ export default function StudyBuddyPage() {
       console.error("Error in handleOpenChat:", error);
       showWarning(warningMessages.ERROR_CREATING_CHAT);
     }
-  }, [currentUser, validateChatSpam, showWarning, supabase, loadChats]);
+  }, [currentUser, validateChatSpam, showWarning, supabase, loadChats, userStreak, userAchievements]);
 
   const handleSendMessage = useCallback(async () => {
     if (!currentUser || !selectedChat || !newMessage.trim()) return;
+
+    // Check streak requirement for study buddy features
+    console.log("Study Buddy - handleSendMessage - Checking streak requirement:", { 
+      userStreak, 
+      userAchievements,
+      required: 15, 
+      checkResult: checkStreakRequirement(userStreak, "STUDY_BUDDY_FEATURES", userAchievements) 
+    });
+    
+    if (!checkStreakRequirement(userStreak, "STUDY_BUDDY_FEATURES", userAchievements)) {
+      const message = getStreakRequirementMessage("STUDY_BUDDY_FEATURES");
+      console.log("Study Buddy - handleSendMessage - Streak requirement failed:", message);
+      turkishToast.error(message);
+      return;
+    }
 
     const isValid = await validateMessageSpam(newMessage);
     if (!isValid) return;
@@ -791,8 +902,8 @@ export default function StudyBuddyPage() {
       if (messageError) {
         console.error("Error sending message:", messageError);
         showWarning(warningMessages.ERROR_SENDING_MESSAGE);
-        return;
-      }
+            return;
+          }
 
       // Update chat's last message
       const { error: chatError } = await supabase
@@ -837,7 +948,7 @@ export default function StudyBuddyPage() {
       console.error("Error in handleSendMessage:", error);
       showWarning(warningMessages.ERROR_SENDING_MESSAGE);
     }
-  }, [currentUser, selectedChat, newMessage, validateMessageSpam, showWarning, supabase, loadMessages]);
+  }, [currentUser, selectedChat, newMessage, validateMessageSpam, showWarning, supabase, loadMessages, userStreak, userAchievements]);
 
   const handleDeletePost = useCallback(async (postId: number) => {
     if (!currentUser) {
@@ -1416,9 +1527,9 @@ export default function StudyBuddyPage() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           <Image
-                            src={selectedChat.participantsData?.[
+                            src={normalizeAvatarUrl(selectedChat.participantsData?.[
                               selectedChat.participants.find(p => p !== currentUser?.id)!
-                            ]?.avatarUrl || "/mascot_purple.svg"}
+                            ]?.avatarUrl)}
                             width={40}
                             height={40}
                             alt="Avatar"

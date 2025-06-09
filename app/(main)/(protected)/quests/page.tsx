@@ -19,7 +19,7 @@ const QuestsPage = async () => {
         <div className="w-full flex flex-col items-center">
           <Image src="/mascot_orange.svg" alt="Quests" height={120} width={120} />
           <div className="my-10">
-            <Quests points={userProgress.points} />
+            <Quests currentStreak={userProgress.istikrar} />
           </div>
         </div>
       </FeedWrapper>
