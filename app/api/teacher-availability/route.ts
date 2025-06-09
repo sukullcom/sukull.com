@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getCurrentTeacherAvailability, getWeekStartDate, upsertTeacherAvailability, isTeacher } from "@/db/queries";
 import { getServerUser } from "@/lib/auth";
 import db from "@/db/drizzle";
-import { teacherApplications } from "@/db/schema";
+import { teacherApplications, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 // GET current teacher's availability for the current week
@@ -44,18 +44,50 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Only teachers can update availability" }, { status: 403 });
     }
     
-    // Check if teacher has filled their profile information
-    const teacherProfile = await db.query.teacherApplications.findFirst({
-      where: eq(teacherApplications.userId, user.id),
-      columns: {
-        field: true,
-        priceRange: true,
-      }
-    });
+    // Check if teacher has completed their profile information
+    const [teacherProfile, userProfile] = await Promise.all([
+      db.query.teacherApplications.findFirst({
+        where: eq(teacherApplications.userId, user.id),
+        columns: {
+          field: true,
+          priceRange: true,
+        }
+      }),
+      db.query.users.findFirst({
+        where: eq(users.id, user.id),
+        columns: {
+          meetLink: true,
+          description: true,
+        }
+      })
+    ]);
     
-    if (!teacherProfile || !teacherProfile.field || teacherProfile.field === "Belirtilmemiş" || !teacherProfile.priceRange) {
+    const missingInfo = [];
+    
+    // Check teacher application fields
+    if (!teacherProfile?.field || teacherProfile.field === "Belirtilmemiş") {
+      missingInfo.push("Uzmanlık Alanı");
+    }
+    
+    if (!teacherProfile?.priceRange) {
+      missingInfo.push("Fiyat Aralığı");
+    }
+    
+    // Check user profile fields
+    if (!userProfile?.meetLink || userProfile.meetLink.trim() === "") {
+      missingInfo.push("Google Meet Linki");
+    }
+    
+    if (!userProfile?.description || userProfile.description.trim() === "") {
+      missingInfo.push("Biyografi");
+    }
+    
+    if (missingInfo.length > 0) {
+      const missingText = missingInfo.join(", ");
       return NextResponse.json({ 
-        message: "Lütfen önce profil bilgilerinizi tamamlayın. Uzmanlık alanınızı ve fiyat aralığınızı belirtmelisiniz." 
+        message: `Müsaitlik bilgilerinizi düzenleyebilmek için önce profil bilgilerinizi tamamlamanız gerekmektedir.\n\nEksik bilgiler: ${missingText}\n\nLütfen "Özel Ders Ver" > "Öğretmen Paneli" sayfasından profil bilgilerinizi tamamlayın.`,
+        missingFields: missingInfo,
+        redirectTo: "/private-lesson/teacher-dashboard"
       }, { status: 400 });
     }
     

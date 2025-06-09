@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import {
   Dialog,
@@ -11,13 +10,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 
 interface ReservationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: (notes: string) => void;
+  onConfirm: () => void;
   teacherName: string;
   selectedSlot: {
     dayOfWeek: number;
@@ -47,10 +44,8 @@ export const ReservationModal = ({
   selectedSlot, 
   isLoading 
 }: ReservationModalProps) => {
-  const [notes, setNotes] = useState("");
-
   const handleConfirm = () => {
-    onConfirm(notes);
+    onConfirm();
   };
 
   if (!selectedSlot) return null;
@@ -66,23 +61,9 @@ export const ReservationModal = ({
             Ders Rezervasyonu
           </DialogTitle>
           <DialogDescription className="text-center text-base">
-            {teacherName} ile {getDayName(selectedSlot.dayOfWeek)} günü saat {formatTime(selectedSlot.startTime)} için bir ders rezerve ediyorsunuz
+            {teacherName} ile {getDayName(selectedSlot.dayOfWeek)} günü saat {formatTime(selectedSlot.startTime)} için bir ders rezerve etmek istediğinizden emin misiniz?
           </DialogDescription>
         </DialogHeader>
-        
-        <div className="space-y-4">
-          <div>
-            <Label htmlFor="notes">Notlar (İsteğe bağlı)</Label>
-            <Textarea
-              id="notes"
-              placeholder="Görüşmek istediğiniz konuları veya özel notlarınızı buraya ekleyebilirsiniz"
-              value={notes}
-              onChange={(e) => setNotes(e.target.value)}
-              className="mt-1 resize-none"
-              rows={4}
-            />
-          </div>
-        </div>
 
         <DialogFooter className="mb-4">
           <div className="flex flex-col gap-y-4 w-full">

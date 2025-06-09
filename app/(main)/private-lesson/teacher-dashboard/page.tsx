@@ -232,7 +232,7 @@ export default function TeacherDashboardPage() {
               <Button 
                 onClick={saveProfileInfo} 
                 disabled={savingProfile || !editingField || !editingPriceRange}
-                variant="secondary"
+                variant="primary"
                 className="w-full"
               >
                 {savingProfile ? (

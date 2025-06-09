@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { CancelLessonModal } from "@/components/modals/cancel-lesson-modal";
+import { toast } from "sonner";
 
 interface Booking {
   id: number;
@@ -75,7 +77,20 @@ export default function MyBookingsPage() {
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState<'upcoming' | 'completed'>('upcoming');
-  const lessonsPerPage = 5;
+  const [cancelModal, setCancelModal] = useState<{
+    isOpen: boolean;
+    bookingId: number | null;
+    teacherName: string;
+    lessonTime: string;
+    isLoading: boolean;
+  }>({
+    isOpen: false,
+    bookingId: null,
+    teacherName: '',
+    lessonTime: '',
+    isLoading: false
+  });
+  const lessonsPerPage = 10;
 
   useEffect(() => {
     // Reset page when changing tabs
@@ -149,12 +164,25 @@ export default function MyBookingsPage() {
 
   // Handle lesson cancellation
   const handleCancelLesson = async (bookingId: number) => {
-    if (!confirm("Bu dersi iptal etmek istediğinizden emin misiniz? Bu işlem geri alınamaz.")) {
-      return;
-    }
+    const booking = bookings.find(b => b.id === bookingId);
+    if (!booking) return;
+
+    setCancelModal({
+      isOpen: true,
+      bookingId,
+      teacherName: booking.teacher?.name || 'Öğretmen',
+      lessonTime: formatDate(booking.startTime) + ' ' + formatTimeRange(booking.startTime),
+      isLoading: false
+    });
+  };
+
+  const confirmCancelLesson = async () => {
+    if (!cancelModal.bookingId) return;
+
+    setCancelModal(prev => ({ ...prev, isLoading: true }));
     
     try {
-      const response = await fetch(`/api/private-lesson/cancel-lesson/${bookingId}`, {
+      const response = await fetch(`/api/private-lesson/cancel-lesson/${cancelModal.bookingId}`, {
         method: "POST",
       });
       
@@ -164,15 +192,35 @@ export default function MyBookingsPage() {
       
       // Update local state
       setBookings(prev => prev.map(booking => 
-        booking.id === bookingId ? { ...booking, status: 'cancelled' } : booking
+        booking.id === cancelModal.bookingId ? { ...booking, status: 'cancelled' } : booking
       ));
       
-      // Show success message
-      alert("Ders başarıyla iptal edildi.");
+      // Close modal and show success
+      setCancelModal({
+        isOpen: false,
+        bookingId: null,
+        teacherName: '',
+        lessonTime: '',
+        isLoading: false
+      });
+      
+      // Show success toast instead of alert
+      toast.success('Ders başarıyla iptal edildi');
     } catch (error) {
       console.error("Error cancelling lesson:", error);
-      alert("Ders iptal edilemedi. Lütfen daha sonra tekrar deneyin.");
+      setCancelModal(prev => ({ ...prev, isLoading: false }));
+      toast.error('Ders iptal edilemedi. Lütfen daha sonra tekrar deneyin');
     }
+  };
+
+  const closeCancelModal = () => {
+    setCancelModal({
+      isOpen: false,
+      bookingId: null,
+      teacherName: '',
+      lessonTime: '',
+      isLoading: false
+    });
   };
 
   // Format date
@@ -440,7 +488,7 @@ export default function MyBookingsPage() {
         <div className="text-center py-12 border rounded-lg bg-gray-50">
           <h2 className="text-xl font-semibold mb-4">Henüz Ders Kaydınız Yok</h2>
           <p className="text-gray-600 mb-6">Şu an için rezerve edilmiş ders bulunmuyor.</p>
-          <Button variant="primary" onClick={() => router.push("/private-lesson/book")}>
+          <Button variant="primary" onClick={() => router.push("/private-lesson/teachers")}>
             Ders Rezerve Et
           </Button>
         </div>
@@ -473,7 +521,7 @@ export default function MyBookingsPage() {
                   : 'Henüz tamamlanmış ders bulunmuyor.'}
               </p>
               {activeTab === 'upcoming' && (
-                <Button variant="primary" onClick={() => router.push("/private-lesson/book")}>
+                <Button variant="primary" onClick={() => router.push("/private-lesson/teachers")}>
                   Ders Rezerve Et
                 </Button>
               )}
@@ -561,6 +609,15 @@ export default function MyBookingsPage() {
           )}
         </>
       )}
+
+      <CancelLessonModal
+        isOpen={cancelModal.isOpen}
+        onClose={closeCancelModal}
+        onConfirm={confirmCancelLesson}
+        teacherName={cancelModal.teacherName}
+        lessonTime={cancelModal.lessonTime}
+        isLoading={cancelModal.isLoading}
+      />
     </div>
   );
 } 

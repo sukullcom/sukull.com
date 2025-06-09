@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { MessageCircle, Clock, Edit, Trash } from "lucide-react";
 import Image from "next/image";
 import { normalizeAvatarUrl } from "@/utils/avatar";
+import { formatTimeAgo } from "@/utils/time-format";
 
 interface PostCardProps {
   post: {
@@ -29,9 +30,6 @@ interface PostCardProps {
 }
 
 export function PostCard({ post, currentUser, isOwnPost, onChatRequest, onEdit, onDelete }: PostCardProps) {
-  const createdAtDate = new Date(post.created_at);
-  const timeAgo = Math.floor((Date.now() - createdAtDate.getTime()) / (1000 * 60 * 60));
-
   return (
     <Card>
       <CardContent className="p-6">
@@ -59,7 +57,7 @@ export function PostCard({ post, currentUser, isOwnPost, onChatRequest, onEdit, 
               </div>
               <div className="flex items-center gap-1 text-sm text-muted-foreground">
                 <Clock className="h-4 w-4" />
-                {timeAgo < 1 ? "Az önce" : `${timeAgo} saat önce`}
+                {formatTimeAgo(post.created_at)}
               </div>
             </div>
 

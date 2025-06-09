@@ -154,7 +154,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
     setShowReservationModal(true);
   };
 
-  const handleBookLesson = async (notes: string) => {
+  const handleBookLesson = async () => {
     if (!selectedSlot || !teacher) return;
     
     setBooking(true);
@@ -168,7 +168,6 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
           teacherId: teacher.id,
           startTime: selectedSlot.startTime.toISOString(),
           endTime: selectedSlot.endTime.toISOString(),
-          notes: notes || undefined,
         }),
       });
 

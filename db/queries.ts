@@ -502,12 +502,18 @@ export async function getTeacherApplicationByUserId(userId: string) {
 
 // Approve teacher application
 export async function approveTeacherApplication(id: number) {
+  console.log(`[DB] Approving teacher application ${id}`);
+  
   const application = await getTeacherApplicationById(id);
   if (!application) {
+    console.log(`[DB] Application ${id} not found`);
     throw new Error("Application not found");
   }
 
+  console.log(`[DB] Found application for user ${application.userId}`);
+
   // Update the application status
+  console.log(`[DB] Updating application ${id} status to approved`);
   await db.update(teacherApplications)
     .set({ 
       status: "approved",
@@ -515,11 +521,22 @@ export async function approveTeacherApplication(id: number) {
     })
     .where(eq(teacherApplications.id, id));
 
+  console.log(`[DB] Application status updated, now updating user role for ${application.userId}`);
+  
   // Update the user's role to teacher
-  await db.update(users)
+  const roleUpdateResult = await db.update(users)
     .set({ role: "teacher" })
-    .where(eq(users.id, application.userId));
+    .where(eq(users.id, application.userId))
+    .returning({ id: users.id, role: users.role });
 
+  console.log(`[DB] User role update result:`, roleUpdateResult);
+
+  if (roleUpdateResult.length === 0) {
+    console.error(`[DB] No user found with ID ${application.userId} for role update`);
+    throw new Error(`User not found for role update: ${application.userId}`);
+  }
+
+  console.log(`[DB] Successfully updated user ${application.userId} to teacher role`);
   return { success: true };
 }
 
@@ -829,8 +846,7 @@ export async function bookLesson(
   studentId: string, 
   teacherId: string, 
   startTime: Date, 
-  endTime: Date,
-  notes?: string
+  endTime: Date
 ) {
   // Check if the time slot is available
   const existingBooking = await db.query.lessonBookings.findFirst({
@@ -874,7 +890,6 @@ export async function bookLesson(
       teacherId,
       startTime,
       endTime,
-      notes,
       meetLink: teacher?.meetLink, // Include the teacher's Google Meet link
     })
     .returning();
@@ -982,16 +997,22 @@ export async function getAllStudentApplications() {
 
 // Approve a student application
 export async function approveStudentApplication(applicationId: number) {
+  console.log(`[DB] Approving student application ${applicationId}`);
+  
   // First, get the application to find the userId
   const application = await db.query.privateLessonApplications.findFirst({
     where: eq(privateLessonApplications.id, applicationId),
   });
   
   if (!application) {
+    console.log(`[DB] Student application ${applicationId} not found`);
     throw new Error("Application not found");
   }
+
+  console.log(`[DB] Found student application for user ${application.userId}`);
   
   // Update the application status
+  console.log(`[DB] Updating student application ${applicationId} status to approved`);
   await db
     .update(privateLessonApplications)
     .set({
@@ -1002,11 +1023,23 @@ export async function approveStudentApplication(applicationId: number) {
     
   // If userId exists, update the user's role to "student"
   if (application.userId) {
-    await db.update(users)
-      .set({ role: "student" })
-      .where(eq(users.id, application.userId));
+    console.log(`[DB] Updating user ${application.userId} role to student`);
     
-    console.log(`User ${application.userId} role updated to 'student'`);
+    const roleUpdateResult = await db.update(users)
+      .set({ role: "student" })
+      .where(eq(users.id, application.userId))
+      .returning({ id: users.id, role: users.role });
+
+    console.log(`[DB] Student role update result:`, roleUpdateResult);
+
+    if (roleUpdateResult.length === 0) {
+      console.error(`[DB] No user found with ID ${application.userId} for student role update`);
+      throw new Error(`User not found for role update: ${application.userId}`);
+    }
+    
+    console.log(`[DB] Successfully updated user ${application.userId} to student role`);
+  } else {
+    console.warn(`[DB] Student application ${applicationId} has no userId, skipping role update`);
   }
 }
 

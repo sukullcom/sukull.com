@@ -16,7 +16,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Only approved students can book lessons" }, { status: 403 });
     }
     
-    const { teacherId, startTime, endTime, notes } = await request.json();
+    const { teacherId, startTime, endTime } = await request.json();
     
     if (!teacherId || !startTime || !endTime) {
       return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
@@ -38,8 +38,7 @@ export async function POST(request: Request) {
       user.id,
       teacherId,
       parsedStartTime,
-      parsedEndTime,
-      notes
+      parsedEndTime
     );
     
     return NextResponse.json({ booking });

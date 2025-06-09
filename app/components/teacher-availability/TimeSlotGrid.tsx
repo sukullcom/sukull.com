@@ -434,11 +434,13 @@ export default function TimeSlotGrid({
         setIsEditing(false);
       } else {
         const data = await response.json();
-        if (response.status === 400 && data.message.includes("profil bilgilerinizi tamamlayın")) {
-          toast.error(data.message, {
-            duration: 5000, // Show for 5 seconds
+        if (response.status === 400 && (data.message.includes("profil bilgilerinizi tamamlayın") || data.missingFields)) {
+          // Enhanced error handling for incomplete profile
+          toast.error("Profil bilgilerinizi tamamlamanız gerekiyor", {
+            duration: 8000, // Show for 8 seconds
+            description: data.message,
             action: {
-              label: "Profil Sayfası",
+              label: "Profil Sayfasına Git",
               onClick: () => window.location.href = "/private-lesson/teacher-dashboard"
             }
           });
@@ -547,8 +549,31 @@ export default function TimeSlotGrid({
               </div>
             ) : (
               <Button
-                onClick={() => setIsEditing(true)}
                 variant="primary"
+                onClick={async () => {
+                  // Check profile completion before allowing edit
+                  try {
+                    const response = await fetch('/api/teacher-availability/check-profile');
+                    if (!response.ok) {
+                      const data = await response.json();
+                      if (response.status === 400 && (data.message.includes("profil bilgilerinizi tamamlayın") || data.missingFields)) {
+                        toast.error("Profil bilgilerinizi tamamlamanız gerekiyor", {
+                          duration: 8000,
+                          description: data.message,
+                          action: {
+                            label: "Profil Sayfasına Git",
+                            onClick: () => window.location.href = "/private-lesson/teacher-dashboard"
+                          }
+                        });
+                        return;
+                      }
+                    }
+                    setIsEditing(true);
+                  } catch (error) {
+                    console.error('Error checking profile:', error);
+                    setIsEditing(true); // Allow editing on error
+                  }
+                }}
               >
                 Düzenle
               </Button>
