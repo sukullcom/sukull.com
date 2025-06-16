@@ -48,7 +48,8 @@ const paymentLogsSchema = {
 
 // Middleware
 app.use(cors({
-  origin: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
+  origin: process.env.NEXT_PUBLIC_APP_URL || 
+    (process.env.NODE_ENV === 'production' ? 'https://sukull.com' : 'http://localhost:3000'),
   credentials: true
 }));
 app.use(express.json());
@@ -320,9 +321,10 @@ app.use((error, req, res, next) => {
 
 // Start server
 app.listen(PORT, () => {
+  const baseUrl = process.env.NODE_ENV === 'production' ? 'https://sukull.com' : 'http://localhost';
   console.log(`🚀 Payment server running on port ${PORT}`);
-  console.log(`🏥 Health check: http://localhost:${PORT}/health`);
-  console.log(`💳 Payment endpoint: http://localhost:${PORT}/api/payment/create`);
+  console.log(`🏥 Health check: ${baseUrl}:${PORT}/health`);
+  console.log(`💳 Payment endpoint: ${baseUrl}:${PORT}/api/payment/create`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🔒 Iyzico: ${process.env.IYZICO_BASE_URL || 'sandbox'}`);
 });

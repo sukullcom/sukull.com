@@ -108,8 +108,9 @@ export default function CreditPurchase() {
         return
       }
 
-      // Use environment variable for payment server URL, fallback to localhost for development
-      const paymentServerUrl = process.env.NEXT_PUBLIC_PAYMENT_SERVER_URL || 'http://localhost:3001'
+      // Use environment variable for payment server URL, fallback based on environment
+      const paymentServerUrl = process.env.NEXT_PUBLIC_PAYMENT_SERVER_URL || 
+        (process.env.NODE_ENV === 'production' ? 'https://sukull.com:3001' : 'http://localhost:3001')
       
       // Call the payment server
       const response = await fetch(`${paymentServerUrl}/api/payment/create`, {
