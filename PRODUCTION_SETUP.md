@@ -1,69 +1,185 @@
 # Production Setup for sukull.com
 
-## ✅ SOLUTION IMPLEMENTED
+## Architecture Overview
 
-The payment system has been converted to use Vercel API routes instead of a separate payment server. This means:
+- **Frontend (Next.js)**: Deployed on Vercel at `https://sukull.com`
+- **Payment Server**: Deployed on Railway at `https://your-app-name.railway.app`
 
-- ✅ No separate server deployment needed
-- ✅ Everything runs on the same domain (sukull.com)
-- ✅ No port 3001 issues
-- ✅ Simplified deployment
+## Step 1: Deploy Payment Server to Railway
 
-## Environment Variables for Vercel
+1. **Create a new Railway project**:
+   - Go to [railway.app](https://railway.app)
+   - Create a new project
+   - Connect your GitHub repository
+
+2. **Configure Railway deployment**:
+   - Railway will automatically detect the `railway.json` configuration
+   - Set the start command to: `npm run payment-server:prod`
+
+3. **Set Railway environment variables**:
+   ```bash
+   NODE_ENV=production
+   PAYMENT_SERVER_PORT=3001
+   DATABASE_URL=your_production_database_url
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+   
+   # Iyzico Configuration
+   IYZICO_API_KEY=your_production_api_key
+   IYZICO_SECRET_KEY=your_production_secret_key
+   IYZICO_BASE_URL=https://api.iyzipay.com  # Remove 'sandbox-' for production
+   ```
+
+4. **Get your Railway URL**:
+   - After deployment, Railway will give you a URL like: `https://your-app-name.railway.app`
+   - Copy this URL for the next step
+
+## Step 2: Configure Vercel Environment Variables
 
 Set these environment variables in your Vercel dashboard:
 
 ```bash
+# App URL
+NEXT_PUBLIC_APP_URL=https://sukull.com
+
+# Payment Server URL (use your Railway URL)
+NEXT_PUBLIC_PAYMENT_SERVER_URL=https://your-app-name.railway.app
+
 # Node Environment
 NODE_ENV=production
 
-# Database
-DATABASE_URL=your_production_database_url
+# Your existing Supabase and other variables...
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+# ... other variables
+```
 
-# Supabase
+## Step 3: Update Code with Your Railway URL
+
+Replace `https://your-railway-app.railway.app` in the following files with your actual Railway URL:
+
+1. **components/credit-purchase.tsx** (line 112)
+2. Update the fallback URL to your actual Railway deployment URL
+
+## Alternative: Deploy Payment Server to Your Own VPS
+
+If you prefer to host the payment server on your own server:
+
+1. **Set up your server**:
+   ```bash
+   # Install Node.js and PM2
+   curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+   sudo apt-get install -y nodejs
+   sudo npm install -g pm2
+   
+   # Clone your repository
+   git clone your-repo-url
+   cd your-project
+   npm install
+   ```
+
+2. **Configure environment variables**:
+   ```bash
+   # Create .env file
+   NODE_ENV=production
+   PAYMENT_SERVER_PORT=3001
+   # ... other variables
+   ```
+
+3. **Start with PM2**:
+   ```bash
+   pm2 start payment-server.js --name "payment-server"
+   pm2 startup
+   pm2 save
+   ```
+
+4. **Configure Nginx reverse proxy**:
+   ```nginx
+   server {
+       listen 443 ssl;
+       server_name sukull.com;
+       
+       location /api/payment/ {
+           proxy_pass http://localhost:3001;
+           proxy_set_header Host $host;
+           proxy_set_header X-Real-IP $remote_addr;
+       }
+   }
+   ```
+
+## Changes Made for Production
+
+1. **Railway Configuration**: Added `railway.json` for easy deployment
+2. **CORS Configuration**: Updated to allow requests from `https://sukull.com`
+3. **CSP Headers**: Updated to allow connections to `https://*.railway.app`
+4. **Payment Server URL**: Uses Railway URL in production
+5. **Separate Deployment**: Frontend on Vercel, Payment server on Railway
+
+## Testing
+
+1. **Health Check**: Visit `https://your-railway-app.railway.app/health`
+2. **Payment Flow**: Test the complete payment process on sukull.com
+
+## Troubleshooting
+
+- **Connection Timeout**: Ensure Railway app is running and accessible
+- **CORS Errors**: Check that Railway environment variables are set correctly
+- **Payment Failures**: Check Railway logs for Iyzico API errors
+
+## Environment Variables for Production
+
+When deploying to sukull.com, make sure to set these environment variables:
+
+### Required Environment Variables
+
+```bash
+# App URL
+NEXT_PUBLIC_APP_URL=https://sukull.com
+
+# Payment Server URL
+NEXT_PUBLIC_PAYMENT_SERVER_URL=https://sukull.com:3001
+
+# Node Environment
+NODE_ENV=production
+
+# Payment Server Port (if different from default 3001)
+PAYMENT_SERVER_PORT=3001
+```
+
+### Optional Environment Variables
+
+If you want to override the automatic domain detection, you can set:
+
+```bash
+# Supabase URLs (if different from your current setup)
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 
-# Iyzico Configuration
+# Database URL (if different)
+DATABASE_URL=your_production_database_url
+
+# Iyzico Configuration (for production payments)
 IYZICO_API_KEY=your_production_api_key
 IYZICO_SECRET_KEY=your_production_secret_key
 IYZICO_BASE_URL=https://api.iyzipay.com  # Remove 'sandbox-' for production
 ```
 
-## Testing the Payment System
+## Running in Production
 
-1. **Health Check**: Visit `https://sukull.com/api/payment/health`
-   - Should return JSON with success: true
+The same command works for both development and production:
 
-2. **Payment Test**: Try making a payment on your site
-   - Uses the same test card: 5890 0400 0000 0016
-
-## What Changed
-
-1. **Payment Server → API Route**: Moved from `payment-server.js` to `app/api/payment/create/route.ts`
-2. **URL Updated**: Changed from `https://sukull.com:3001/api/payment/create` to `/api/payment/create`
-3. **No Separate Deployment**: Everything runs on Vercel now
-4. **Simplified CSP**: Removed port 3001 references
-
-## Files Modified
-
-- ✅ `app/api/payment/create/route.ts` - New payment API route
-- ✅ `app/api/payment/health/route.ts` - Health check endpoint
-- ✅ `components/credit-purchase.tsx` - Updated to use API route
-- ✅ `middleware.ts` - Removed port 3001 from CSP
-
-## Old Files (No Longer Needed)
-
-- `payment-server.js` - Can be deleted (kept for reference)
-- Package.json scripts `payment-server` and `dev:full` - No longer needed
-
-## Deployment
-
-Just deploy to Vercel as normal:
 ```bash
-git add .
-git commit -m "Convert payment server to API route"
-git push
+npm run dev:full
 ```
 
-Vercel will automatically deploy and the payment system will work! 🎉
+The system will automatically detect the environment and use the appropriate configurations:
+
+- **Development**: Uses `http://localhost:3000` and `http://localhost:3001`
+- **Production**: Uses `https://sukull.com` and `https://sukull.com:3001`
+
+## SSL/HTTPS Considerations
+
+Make sure your server supports HTTPS on port 3001 for the payment server, or configure a reverse proxy to handle SSL termination.
+
+## Firewall/Security
+
+Ensure port 3001 is open and accessible from your main domain for the payment server to work properly. 

@@ -488,84 +488,84 @@ export default function StudyBuddyPage() {
       let hasOldPosts = true;
       
       while (hasOldPosts) {
-        const from = currentPage * POSTS_PER_PAGE;
-        const to = from + POSTS_PER_PAGE - 1;
+      const from = currentPage * POSTS_PER_PAGE;
+      const to = from + POSTS_PER_PAGE - 1;
 
-        let query = supabase
-          .from("study_buddy_posts")
-          .select("*", { count: "exact" })
-          .order("created_at", { ascending: false })
-          .range(from, to);
-        
-        if (filterPurpose) {
-          query = query.eq("purpose", filterPurpose);
+      let query = supabase
+        .from("study_buddy_posts")
+        .select("*", { count: "exact" })
+        .order("created_at", { ascending: false })
+        .range(from, to);
+      
+      if (filterPurpose) {
+        query = query.eq("purpose", filterPurpose);
+      }
+      
+      const { data: postsData, error: postsError, count } = await query;
+      
+      if (postsError) {
+        console.error("Error loading posts:", postsError);
+        turkishToast.error(warningMessages.ERROR_LOADING_POSTS);
+        return;
+      }
+
+      // Check for posts older than 30 days and delete them
+      const thirtyDaysAgo = new Date(Date.now() - THIRTY_DAYS_IN_MS).toISOString();
+      const oldPosts = postsData.filter(
+        (post: StudyBuddyPost) => post.created_at < thirtyDaysAgo && post.user_id === currentUser.id
+      );
+      
+      if (oldPosts.length > 0) {
+        for (const post of oldPosts) {
+          await supabase
+            .from("study_buddy_posts")
+            .delete()
+            .eq("id", post.id);
         }
         
-        const { data: postsData, error: postsError, count } = await query;
-        
-        if (postsError) {
-          console.error("Error loading posts:", postsError);
-          turkishToast.error(warningMessages.ERROR_LOADING_POSTS);
-          return;
+        if (oldPosts.length === 1) {
+          turkishToast.info("1 adet eski gönderiniz otomatik olarak silindi (30 gün limiti)");
+        } else {
+          turkishToast.info(`${oldPosts.length} adet eski gönderiniz otomatik olarak silindi (30 gün limiti)`);
         }
-
-        // Check for posts older than 30 days and delete them
-        const thirtyDaysAgo = new Date(Date.now() - THIRTY_DAYS_IN_MS).toISOString();
-        const oldPosts = postsData.filter(
-          (post: StudyBuddyPost) => post.created_at < thirtyDaysAgo && post.user_id === currentUser.id
-        );
         
-        if (oldPosts.length > 0) {
-          for (const post of oldPosts) {
-            await supabase
-              .from("study_buddy_posts")
-              .delete()
-              .eq("id", post.id);
-          }
-          
-          if (oldPosts.length === 1) {
-            turkishToast.info("1 adet eski gönderiniz otomatik olarak silindi (30 gün limiti)");
-          } else {
-            turkishToast.info(`${oldPosts.length} adet eski gönderiniz otomatik olarak silindi (30 gün limiti)`);
-          }
-          
           // Continue the loop to check for more old posts
           continue;
-        }
+      }
         
         // No old posts found, process the current data
         hasOldPosts = false;
+      
+      // Enrich posts with user data
+      if (postsData && postsData.length > 0) {
+        const userIds = Array.from(new Set(postsData.map((post: StudyBuddyPost) => post.user_id)));
         
-        // Enrich posts with user data
-        if (postsData && postsData.length > 0) {
-          const userIds = Array.from(new Set(postsData.map((post: StudyBuddyPost) => post.user_id)));
+        const { data: usersData } = await supabase
+          .from("users")
+          .select("id, name, avatar")
+          .in("id", userIds);
           
-          const { data: usersData } = await supabase
-            .from("users")
-            .select("id, name, avatar")
-            .in("id", userIds);
-            
-          const userMap = (usersData || []).reduce((acc: Record<string, { id: string; name: string; avatar: string }>, user: { id: string; name: string; avatar: string }) => {
-            acc[user.id] = user;
-            return acc;
-          }, {});
+        const userMap = (usersData || []).reduce((acc: Record<string, { id: string; name: string; avatar: string }>, user: { id: string; name: string; avatar: string }) => {
+          acc[user.id] = user;
+          return acc;
+        }, {});
+        
+        const enrichedPosts = postsData.map((post: StudyBuddyPost) => {
+          const user = userMap[post.user_id];
           
-          const enrichedPosts = postsData.map((post: StudyBuddyPost) => {
-            const user = userMap[post.user_id];
-            
-            return {
-              ...post,
-              userName: user?.name || "User",
-              userAvatar: normalizeAvatarUrl(user?.avatar),
-              userSchoolName: "" // Empty string since we don't have school data
-            };
-          });
-          
-          setAllPostsRaw(enrichedPosts);
-          setTotalPosts(count || 0);
-        } else {
-          setAllPostsRaw([]);
-          setTotalPosts(0);
+          return {
+            ...post,
+            userName: user?.name || "User",
+            userAvatar: normalizeAvatarUrl(user?.avatar),
+            userSchoolName: "" // Empty string since we don't have school data
+          };
+        });
+        
+        setAllPostsRaw(enrichedPosts);
+        setTotalPosts(count || 0);
+      } else {
+        setAllPostsRaw([]);
+        setTotalPosts(0);
         }
       }
     } catch (error) {

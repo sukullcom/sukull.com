@@ -108,11 +108,12 @@ export default function CreditPurchase() {
         return
       }
 
-      // Use Vercel API route instead of separate payment server
-      const paymentServerUrl = '/api/payment/create'
+      // Use environment variable for payment server URL, fallback based on environment
+      const paymentServerUrl = process.env.NEXT_PUBLIC_PAYMENT_SERVER_URL || 
+        (process.env.NODE_ENV === 'production' ? 'https://your-railway-app.railway.app' : 'http://localhost:3001')
       
       // Call the payment server
-      const response = await fetch(`${paymentServerUrl}`, {
+      const response = await fetch(`${paymentServerUrl}/api/payment/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
