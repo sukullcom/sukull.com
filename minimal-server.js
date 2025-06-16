@@ -7,33 +7,34 @@ const PORT = process.env.PORT || 3001;
 
 console.log('🚀 Starting minimal payment server...');
 console.log('📊 Environment:', process.env.NODE_ENV || 'development');
-console.log('🔌 Port:', PORT);
+console.log('�� Port:', PORT);
 
-// CORS middleware
-app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    
-    const allowedOrigins = [
-      'https://sukull.com',
-      'https://www.sukull.com',
-      'http://localhost:3000'
-    ];
-    
-    console.log('CORS check - Origin:', origin, 'Allowed:', allowedOrigins);
-    
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      console.log('CORS blocked origin:', origin);
-      return callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
+// More explicit CORS configuration
+const corsOptions = {
+  origin: ['https://sukull.com', 'https://www.sukull.com', 'http://localhost:3000'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
-}));
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  credentials: true,
+  optionsSuccessStatus: 200 // Some legacy browsers choke on 204
+};
+
+app.use(cors(corsOptions));
+
+// Additional CORS headers middleware
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || 'https://sukull.com');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    console.log('Preflight request from:', req.headers.origin);
+    return res.sendStatus(200);
+  }
+  
+  next();
+});
 
 app.use(express.json());
 
@@ -54,16 +55,6 @@ app.get('/health', (req, res) => {
 // Ping endpoint
 app.get('/ping', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
-});
-
-// Handle preflight requests
-app.options('/api/payment/create', (req, res) => {
-  console.log('Preflight request received for /api/payment/create');
-  res.header('Access-Control-Allow-Origin', req.headers.origin);
-  res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.sendStatus(200);
 });
 
 // Mock payment endpoint for testing

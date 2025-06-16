@@ -6,6 +6,7 @@
     "dev": "next dev",
     "payment-server": "node payment-server.js",
     "payment-server:prod": "NODE_ENV=production node payment-server.js",
+    "minimal-server": "node minimal-server.js",
     "dev:full": "concurrently \"npm run dev\" \"npm run payment-server\"",
     "build": "npm run lint:fix && next build",
     "start": "next start",
