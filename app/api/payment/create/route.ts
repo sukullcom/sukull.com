@@ -1,8 +1,82 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
+import { Pool } from 'pg';
 
-const Iyzipay = require('iyzipay');
-const { Pool } = require('pg');
+// Define interfaces for type safety
+interface IyzipayPaymentResult {
+  status: string;
+  paymentId?: string;
+  errorCode?: string;
+  errorMessage?: string;
+}
+
+interface IyzipayError {
+  message: string;
+  code?: string;
+}
+
+interface PaymentRequestData {
+  locale: string;
+  conversationId: string;
+  price: string;
+  paidPrice: string;
+  currency: string;
+  installment: string;
+  basketId: string;
+  paymentChannel: string;
+  paymentGroup: string;
+  paymentCard: {
+    cardHolderName: string;
+    cardNumber: string;
+    expireMonth: string;
+    expireYear: string;
+    cvc: string;
+    registerCard: string;
+  };
+  buyer: {
+    id: string;
+    name: string;
+    surname: string;
+    gsmNumber: string;
+    email: string;
+    identityNumber: string;
+    lastLoginDate: string;
+    registrationDate: string;
+    registrationAddress: string;
+    ip: string;
+    city: string;
+    country: string;
+    zipCode: string;
+  };
+  shippingAddress: {
+    contactName: string;
+    city: string;
+    country: string;
+    address: string;
+    zipCode: string;
+  };
+  billingAddress: {
+    contactName: string;
+    city: string;
+    country: string;
+    address: string;
+    zipCode: string;
+  };
+  basketItems: Array<{
+    id: string;
+    name: string;
+    category1: string;
+    category2: string;
+    itemType: string;
+    price: string;
+  }>;
+}
+
+interface IyzipayInstance {
+  payment: {
+    create: (data: PaymentRequestData, callback: (err: IyzipayError | null, result: IyzipayPaymentResult) => void) => void;
+  };
+}
 
 // Initialize database connection
 const pool = new Pool({
@@ -15,12 +89,25 @@ const pool = new Pool({
     : false
 });
 
-// Initialize Iyzico
-const iyzipay = new Iyzipay({
-  apiKey: process.env.IYZICO_API_KEY || 'sandbox-qaeSUyqS2RrU6OvZcbtkd9BrIydQa8st',
-  secretKey: process.env.IYZICO_SECRET_KEY || 'sandbox-X3n0IAtXd8Nce2uP6zxVyUoPUD9CsWoM',
-  uri: process.env.IYZICO_BASE_URL || 'https://sandbox-api.iyzipay.com',
-});
+// Initialize Iyzico dynamically to avoid build issues
+let iyzipay: IyzipayInstance | null = null;
+
+async function getIyzipay(): Promise<IyzipayInstance> {
+  if (!iyzipay) {
+    try {
+      const Iyzipay = (await import('iyzipay')).default;
+      iyzipay = new Iyzipay({
+        apiKey: process.env.IYZICO_API_KEY || 'sandbox-qaeSUyqS2RrU6OvZcbtkd9BrIydQa8st',
+        secretKey: process.env.IYZICO_SECRET_KEY || 'sandbox-X3n0IAtXd8Nce2uP6zxVyUoPUD9CsWoM',
+        uri: process.env.IYZICO_BASE_URL || 'https://sandbox-api.iyzipay.com',
+      });
+    } catch (error) {
+      console.error('Failed to initialize Iyzipay:', error);
+      throw new Error('Payment system initialization failed');
+    }
+  }
+  return iyzipay;
+}
 
 export async function POST(request: NextRequest) {
   console.log('=== PAYMENT API ROUTE HIT ===');
@@ -59,6 +146,9 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
+    // Get Iyzipay instance
+    const iyzipayInstance = await getIyzipay();
+
     // Generate unique IDs
     const conversationId = `conv_${user.id}_${Date.now()}`;
     const basketId = `basket_${user.id}_${Date.now()}`;
@@ -69,11 +159,11 @@ export async function POST(request: NextRequest) {
       conversationId: conversationId,
       price: totalPrice.toString(),
       paidPrice: totalPrice.toString(),
-      currency: Iyzipay.CURRENCY.TRY,
+      currency: 'TRY',
       installment: '1',
       basketId: basketId,
-      paymentChannel: Iyzipay.PAYMENT_CHANNEL.WEB,
-      paymentGroup: Iyzipay.PAYMENT_GROUP.PRODUCT,
+      paymentChannel: 'WEB',
+      paymentGroup: 'PRODUCT',
       paymentCard: {
         cardHolderName: paymentCard.cardHolderName,
         cardNumber: paymentCard.cardNumber,
@@ -124,8 +214,8 @@ export async function POST(request: NextRequest) {
     };
 
     // Process payment with Iyzico
-    const paymentResult = await new Promise((resolve, reject) => {
-      iyzipay.payment.create(request_data, (err: any, result: any) => {
+    const paymentResult = await new Promise<IyzipayPaymentResult>((resolve, reject) => {
+      iyzipayInstance.payment.create(request_data, (err: IyzipayError | null, result: IyzipayPaymentResult) => {
         if (err) {
           console.error('Iyzico payment error:', err);
           reject(err);
@@ -146,22 +236,22 @@ export async function POST(request: NextRequest) {
          VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`,
         [
           user.id,
-          (paymentResult as any).paymentId || conversationId,
+          paymentResult.paymentId || conversationId,
           JSON.stringify(request_data),
           JSON.stringify(paymentResult),
-          (paymentResult as any).status || 'failed',
-          (paymentResult as any).errorCode || null,
-          (paymentResult as any).errorMessage || null
+          paymentResult.status || 'failed',
+          paymentResult.errorCode || null,
+          paymentResult.errorMessage || null
         ]
       );
 
       // Check if payment was successful
-      if ((paymentResult as any).status === 'success') {
+      if (paymentResult.status === 'success') {
         // Record successful transaction
         await client.query(
           `INSERT INTO credit_transactions (user_id, payment_id, credits_amount, total_price, currency, status, created_at) 
            VALUES ($1, $2, $3, $4, $5, $6, NOW())`,
-          [user.id, (paymentResult as any).paymentId, creditsAmount, totalPrice.toString(), 'TRY', 'success']
+          [user.id, paymentResult.paymentId, creditsAmount, totalPrice.toString(), 'TRY', 'success']
         );
 
         // Update user credits
@@ -194,7 +284,7 @@ export async function POST(request: NextRequest) {
           success: true,
           message: `Ödeme başarılı! ${creditsAmount} kredi hesabınıza eklendi.`,
           data: {
-            paymentId: (paymentResult as any).paymentId,
+            paymentId: paymentResult.paymentId,
             creditsAdded: creditsAmount,
           }
         });
@@ -203,13 +293,13 @@ export async function POST(request: NextRequest) {
         await client.query(
           `INSERT INTO credit_transactions (user_id, payment_id, credits_amount, total_price, currency, status, created_at) 
            VALUES ($1, $2, $3, $4, $5, $6, NOW())`,
-          [user.id, (paymentResult as any).paymentId || conversationId, creditsAmount, totalPrice.toString(), 'TRY', 'failed']
+          [user.id, paymentResult.paymentId || conversationId, creditsAmount, totalPrice.toString(), 'TRY', 'failed']
         );
 
         return NextResponse.json({
           success: false,
-          message: (paymentResult as any).errorMessage || 'Ödeme başarısız',
-          errorCode: (paymentResult as any).errorCode,
+          message: paymentResult.errorMessage || 'Ödeme başarısız',
+          errorCode: paymentResult.errorCode,
         }, { status: 400 });
       }
     } finally {
