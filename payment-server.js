@@ -54,46 +54,30 @@ const paymentLogsSchema = {
 
 // Middleware
 app.use(cors({
-  origin: [
-    'https://sukull.com',
-    'https://www.sukull.com',
-    'http://localhost:3000',
-    'http://localhost:3001'
-  ],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      'https://sukull.com',
+      'https://www.sukull.com',
+      'http://localhost:3000',
+      process.env.NEXT_PUBLIC_APP_URL
+    ].filter(Boolean);
+    
+    console.log('CORS check - Origin:', origin, 'Allowed:', allowedOrigins);
+    
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      console.log('CORS blocked origin:', origin);
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-  optionsSuccessStatus: 200
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
-
-// Add explicit CORS headers middleware
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  const allowedOrigins = [
-    'https://sukull.com',
-    'https://www.sukull.com',
-    'http://localhost:3000',
-    'http://localhost:3001'
-  ];
-  
-  if (allowedOrigins.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-  
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-  
-  console.log(`CORS: ${req.method} ${req.path} from ${origin || 'no-origin'}`);
-  
-  if (req.method === 'OPTIONS') {
-    console.log('Handling preflight request');
-    return res.sendStatus(200);
-  }
-  
-  next();
-});
-
 app.use(express.json());
 
 // Initialize Supabase client for authentication
@@ -126,8 +110,18 @@ try {
         : false
     });
     console.log('✅ Database pool initialized');
+    
+    // Test database connection
+    pool.connect()
+      .then(client => {
+        console.log('✅ Database connection test successful');
+        client.release();
+      })
+      .catch(err => {
+        console.error('⚠️ Database connection test failed:', err.message);
+      });
   } else {
-    console.log('⚠️ DATABASE_URL not set');
+    console.log('⚠️ DATABASE_URL not set - database features disabled');
   }
 } catch (error) {
   console.error('❌ Database initialization error:', error.message);
@@ -198,6 +192,21 @@ app.get('/health', (req, res) => {
   
   console.log('Health check requested:', health);
   res.json(health);
+});
+
+// Basic ping endpoint for Railway
+app.get('/ping', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+// Handle preflight requests for payment endpoint
+app.options('/api/payment/create', (req, res) => {
+  console.log('Preflight request received for /api/payment/create');
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.sendStatus(200);
 });
 
 // Create payment endpoint
@@ -401,8 +410,26 @@ app.use((error, req, res, next) => {
   });
 });
 
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+  // Don't exit in production, just log the error
+  if (process.env.NODE_ENV !== 'production') {
+    process.exit(1);
+  }
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+  // Don't exit in production, just log the error
+  if (process.env.NODE_ENV !== 'production') {
+    process.exit(1);
+  }
+});
+
 // Start server
-const server = app.listen(PORT, '0.0.0.0', () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Payment server running on port ${PORT}`);
   console.log(`🏥 Health check: http://0.0.0.0:${PORT}/health`);
   console.log(`💳 Payment endpoint: http://0.0.0.0:${PORT}/api/payment/create`);
@@ -414,39 +441,5 @@ const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`   - Iyzico: ${iyzipay ? '✅' : '❌'}`);
 }).on('error', (err) => {
   console.error('❌ Server startup error:', err);
-  process.exit(1);
-});
-
-// Graceful shutdown
-process.on('SIGTERM', () => {
-  console.log('SIGTERM received, shutting down gracefully');
-  server.close(() => {
-    console.log('Process terminated');
-    if (pool) {
-      pool.end();
-    }
-    process.exit(0);
-  });
-});
-
-process.on('SIGINT', () => {
-  console.log('SIGINT received, shutting down gracefully');
-  server.close(() => {
-    console.log('Process terminated');
-    if (pool) {
-      pool.end();
-    }
-    process.exit(0);
-  });
-});
-
-// Handle uncaught exceptions
-process.on('uncaughtException', (err) => {
-  console.error('Uncaught Exception:', err);
-  process.exit(1);
-});
-
-process.on('unhandledRejection', (reason, promise) => {
-  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
   process.exit(1);
 });
