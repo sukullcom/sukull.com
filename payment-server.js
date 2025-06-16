@@ -48,9 +48,29 @@ const paymentLogsSchema = {
 
 // Middleware
 app.use(cors({
-  origin: process.env.NEXT_PUBLIC_APP_URL || 
-    (process.env.NODE_ENV === 'production' ? 'https://sukull.com' : 'http://localhost:3000'),
-  credentials: true
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      'https://sukull.com',
+      'https://www.sukull.com',
+      'http://localhost:3000',
+      process.env.NEXT_PUBLIC_APP_URL
+    ].filter(Boolean);
+    
+    console.log('CORS check - Origin:', origin, 'Allowed:', allowedOrigins);
+    
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      console.log('CORS blocked origin:', origin);
+      return callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 app.use(express.json());
 
@@ -123,6 +143,16 @@ app.get('/health', (req, res) => {
       environment: process.env.IYZICO_BASE_URL || 'sandbox'
     }
   });
+});
+
+// Handle preflight requests for payment endpoint
+app.options('/api/payment/create', (req, res) => {
+  console.log('Preflight request received for /api/payment/create');
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.sendStatus(200);
 });
 
 // Create payment endpoint
