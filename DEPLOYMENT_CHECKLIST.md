@@ -9,22 +9,34 @@
 ### Phase 1: Deploy Payment Server to Railway
 - [ ] 1. Go to [railway.app](https://railway.app) and create account
 - [ ] 2. Create new project from GitHub repo
-- [ ] 3. Set environment variables in Railway:
-  - [ ] `NODE_ENV=production`
-  - [ ] `DATABASE_URL=your_db_url`
-  - [ ] `NEXT_PUBLIC_SUPABASE_URL=your_supabase_url`
-  - [ ] `SUPABASE_SERVICE_ROLE_KEY=your_service_key`
-  - [ ] `IYZICO_API_KEY=your_api_key`
-  - [ ] `IYZICO_SECRET_KEY=your_secret_key`
-  - [ ] `IYZICO_BASE_URL=https://api.iyzipay.com`
-  - [ ] `NEXT_PUBLIC_APP_URL=https://sukull.com` (Important for CORS!)
+- [ ] 3. **CRITICAL**: Set these environment variables in Railway:
+  ```bash
+  # Required for server startup
+  NODE_ENV=production
+  PORT=3001
+  
+  # Database connection (use your existing production DB)
+  DATABASE_URL=your_production_database_url
+  
+  # Supabase (same as your Vercel setup)
+  NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+  SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+  
+  # Iyzico (for production payments)
+  IYZICO_API_KEY=your_production_api_key
+  IYZICO_SECRET_KEY=your_production_secret_key
+  IYZICO_BASE_URL=https://api.iyzipay.com
+  
+  # CORS configuration (CRITICAL!)
+  NEXT_PUBLIC_APP_URL=https://sukull.com
+  ```
 - [ ] 4. Wait for deployment to complete
 - [ ] 5. Copy Railway URL (should be: `https://sukullcom-production.up.railway.app`)
 - [ ] 6. Test health check: Visit `https://sukullcom-production.up.railway.app/health`
 
 ### Phase 2: Update Code with Railway URL
 - [ ] 7. ✅ Code updated with Railway URL: `https://sukullcom-production.up.railway.app`
-- [ ] 8. Commit and push changes to GitHub
+- [ ] 8. ✅ Push changes to GitHub (Railway will auto-redeploy)
 
 ### Phase 3: Update Vercel Environment Variables
 - [ ] 9. Go to Vercel Dashboard → Your Project → Settings → Environment Variables
@@ -36,17 +48,53 @@
 - [ ] 13. Try to make a test payment
 - [ ] 14. Check Railway logs if there are issues
 
-## ⚠️ Current Issues Fixed
-- ✅ Fixed double slash in URL (`//api/payment/create` → `/api/payment/create`)
-- ✅ Updated CORS configuration to explicitly allow sukull.com
-- ✅ Added preflight request handler for OPTIONS requests
+## ⚠️ Railway Health Check Issues Fixed
+- ✅ Server now binds to `0.0.0.0` (required for Railway)
+- ✅ Uses `process.env.PORT` (Railway sets this automatically)
+- ✅ Better error handling for missing environment variables
+- ✅ Health check works even if some services are unavailable
+- ✅ Increased health check timeout to 300 seconds
+
+## 🚨 If Railway Health Check Still Fails
+
+### Check Railway Logs:
+1. Go to Railway Dashboard → Your Project → Deployments
+2. Click on the latest deployment
+3. Check the **Build Logs** and **Deploy Logs**
+4. Look for these success messages:
+   ```
+   🚀 Payment server running on port 3001
+   ✅ Supabase client initialized
+   ✅ Database pool initialized
+   ```
+
+### Common Issues:
+1. **Missing DATABASE_URL**: Server won't start without database connection
+2. **Missing Supabase credentials**: Authentication will fail
+3. **Port binding**: Make sure `PORT` environment variable is set
+4. **Build failures**: Check if all dependencies are installed
+
+### Test Health Endpoint:
+The health endpoint should return:
+```json
+{
+  "success": true,
+  "message": "Payment server is running",
+  "services": {
+    "supabase": true,
+    "database": true,
+    "iyzico": true
+  },
+  "environment": "production"
+}
+```
 
 ## Quick Commands
 
 ```bash
-# After updating Railway URL in code:
+# After updating Railway fixes:
 git add .
-git commit -m "Fix CORS and URL issues for Railway deployment"
+git commit -m "Fix Railway deployment issues"
 git push origin main
 ```
 
@@ -54,20 +102,6 @@ git push origin main
 - **Frontend**: https://sukull.com
 - **Payment Server**: https://sukullcom-production.up.railway.app
 - **Health Check**: https://sukullcom-production.up.railway.app/health
-
-## Troubleshooting CORS Issues
-If you still get CORS errors:
-
-1. **Check Railway Environment Variables**:
-   - Make sure `NEXT_PUBLIC_APP_URL=https://sukull.com` is set in Railway
-   
-2. **Check Railway Logs**:
-   - Look for "CORS check" messages in Railway logs
-   - Should show: `CORS check - Origin: https://sukull.com Allowed: [...]`
-
-3. **Test Health Endpoint**:
-   - Visit: https://sukullcom-production.up.railway.app/health
-   - Should return JSON with server status
 
 ## What You DON'T Need to Do
 - ❌ Don't deploy the entire app to Railway
