@@ -10,7 +10,13 @@ const { eq } = require('drizzle-orm');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PAYMENT_SERVER_PORT || 3001;
+const PORT = process.env.PORT || process.env.PAYMENT_SERVER_PORT || 3001;
+
+console.log('🚀 Starting payment server...');
+console.log('📊 Environment:', process.env.NODE_ENV || 'development');
+console.log('🔌 Port:', PORT);
+console.log('🌐 Database URL:', process.env.DATABASE_URL ? 'Set' : 'Not set');
+console.log('🔑 Supabase URL:', process.env.NEXT_PUBLIC_SUPABASE_URL ? 'Set' : 'Not set');
 
 // Define schema inline since CommonJS import from TypeScript is complex
 const userCreditsSchema = {
@@ -75,21 +81,41 @@ app.use(cors({
 app.use(express.json());
 
 // Initialize Supabase client for authentication
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
+let supabase;
+try {
+  if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_ROLE_KEY
+    );
+    console.log('✅ Supabase client initialized');
+  } else {
+    console.log('⚠️ Supabase credentials missing');
+  }
+} catch (error) {
+  console.error('❌ Supabase initialization error:', error.message);
+}
 
 // Initialize database connection
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.NODE_ENV === 'production' 
-    ? {
-        rejectUnauthorized: false,
-        ca: process.env.CA_CERT
-      }
-    : false
-});
+let pool;
+try {
+  if (process.env.DATABASE_URL) {
+    pool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+      ssl: process.env.NODE_ENV === 'production' 
+        ? {
+            rejectUnauthorized: false,
+            ca: process.env.CA_CERT
+          }
+        : false
+    });
+    console.log('✅ Database pool initialized');
+  } else {
+    console.log('⚠️ DATABASE_URL not set');
+  }
+} catch (error) {
+  console.error('❌ Database initialization error:', error.message);
+}
 
 // Initialize Iyzico
 const iyzipay = new Iyzipay({
@@ -101,6 +127,13 @@ const iyzipay = new Iyzipay({
 // Authentication middleware
 const authenticateUser = async (req, res, next) => {
   try {
+    if (!supabase) {
+      return res.status(500).json({ 
+        success: false, 
+        message: 'Authentication service not available' 
+      });
+    }
+
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
       return res.status(401).json({ 
@@ -134,15 +167,21 @@ const authenticateUser = async (req, res, next) => {
 
 // Health check endpoint
 app.get('/health', (req, res) => {
-  res.json({ 
+  const health = {
     success: true, 
     message: 'Payment server is running',
     timestamp: new Date().toISOString(),
-    iyzico: {
-      configured: !!iyzipay,
-      environment: process.env.IYZICO_BASE_URL || 'sandbox'
-    }
-  });
+    services: {
+      supabase: !!supabase,
+      database: !!pool,
+      iyzico: !!iyzipay
+    },
+    environment: process.env.NODE_ENV || 'development',
+    port: PORT
+  };
+  
+  console.log('Health check requested:', health);
+  res.json(health);
 });
 
 // Handle preflight requests for payment endpoint
@@ -160,6 +199,13 @@ app.post('/api/payment/create', authenticateUser, async (req, res) => {
   console.log('=== PAYMENT SERVER CREATE ROUTE HIT ===');
   
   try {
+    if (!pool) {
+      return res.status(500).json({
+        success: false,
+        message: 'Database service not available'
+      });
+    }
+
     const user = req.user;
     const { creditsAmount, totalPrice, paymentCard, billingAddress } = req.body;
 
@@ -350,11 +396,17 @@ app.use((error, req, res, next) => {
 });
 
 // Start server
-app.listen(PORT, () => {
-  const baseUrl = process.env.NODE_ENV === 'production' ? 'https://sukull.com' : 'http://localhost';
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Payment server running on port ${PORT}`);
-  console.log(`🏥 Health check: ${baseUrl}:${PORT}/health`);
-  console.log(`💳 Payment endpoint: ${baseUrl}:${PORT}/api/payment/create`);
+  console.log(`🏥 Health check: http://0.0.0.0:${PORT}/health`);
+  console.log(`💳 Payment endpoint: http://0.0.0.0:${PORT}/api/payment/create`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🔒 Iyzico: ${process.env.IYZICO_BASE_URL || 'sandbox'}`);
+  console.log(`📊 Services status:`);
+  console.log(`   - Supabase: ${supabase ? '✅' : '❌'}`);
+  console.log(`   - Database: ${pool ? '✅' : '❌'}`);
+  console.log(`   - Iyzico: ${iyzipay ? '✅' : '❌'}`);
+}).on('error', (err) => {
+  console.error('❌ Server startup error:', err);
+  process.exit(1);
 });
