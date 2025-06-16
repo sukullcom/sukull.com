@@ -1,68 +1,69 @@
 # Production Setup for sukull.com
 
-## Environment Variables for Production
+## ✅ SOLUTION IMPLEMENTED
 
-When deploying to sukull.com, make sure to set these environment variables:
+The payment system has been converted to use Vercel API routes instead of a separate payment server. This means:
 
-### Required Environment Variables
+- ✅ No separate server deployment needed
+- ✅ Everything runs on the same domain (sukull.com)
+- ✅ No port 3001 issues
+- ✅ Simplified deployment
+
+## Environment Variables for Vercel
+
+Set these environment variables in your Vercel dashboard:
 
 ```bash
-# App URL
-NEXT_PUBLIC_APP_URL=https://sukull.com
-
-# Payment Server URL
-NEXT_PUBLIC_PAYMENT_SERVER_URL=https://sukull.com:3001
-
 # Node Environment
 NODE_ENV=production
 
-# Payment Server Port (if different from default 3001)
-PAYMENT_SERVER_PORT=3001
-```
+# Database
+DATABASE_URL=your_production_database_url
 
-### Optional Environment Variables
-
-If you want to override the automatic domain detection, you can set:
-
-```bash
-# Supabase URLs (if different from your current setup)
+# Supabase
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 
-# Database URL (if different)
-DATABASE_URL=your_production_database_url
-
-# Iyzico Configuration (for production payments)
+# Iyzico Configuration
 IYZICO_API_KEY=your_production_api_key
 IYZICO_SECRET_KEY=your_production_secret_key
 IYZICO_BASE_URL=https://api.iyzipay.com  # Remove 'sandbox-' for production
 ```
 
-## Changes Made for Production
+## Testing the Payment System
 
-1. **CORS Configuration**: Updated to allow requests from `https://sukull.com`
-2. **CSP Headers**: Updated to allow connections to `https://sukull.com:3001`
-3. **Payment Server URL**: Automatically detects environment and uses appropriate URL
-4. **Image Domains**: Added sukull.com to allowed image domains
-5. **Server Logs**: Updated to show correct URLs based on environment
+1. **Health Check**: Visit `https://sukull.com/api/payment/health`
+   - Should return JSON with success: true
 
-## Running in Production
+2. **Payment Test**: Try making a payment on your site
+   - Uses the same test card: 5890 0400 0000 0016
 
-The same command works for both development and production:
+## What Changed
 
+1. **Payment Server → API Route**: Moved from `payment-server.js` to `app/api/payment/create/route.ts`
+2. **URL Updated**: Changed from `https://sukull.com:3001/api/payment/create` to `/api/payment/create`
+3. **No Separate Deployment**: Everything runs on Vercel now
+4. **Simplified CSP**: Removed port 3001 references
+
+## Files Modified
+
+- ✅ `app/api/payment/create/route.ts` - New payment API route
+- ✅ `app/api/payment/health/route.ts` - Health check endpoint
+- ✅ `components/credit-purchase.tsx` - Updated to use API route
+- ✅ `middleware.ts` - Removed port 3001 from CSP
+
+## Old Files (No Longer Needed)
+
+- `payment-server.js` - Can be deleted (kept for reference)
+- Package.json scripts `payment-server` and `dev:full` - No longer needed
+
+## Deployment
+
+Just deploy to Vercel as normal:
 ```bash
-npm run dev:full
+git add .
+git commit -m "Convert payment server to API route"
+git push
 ```
 
-The system will automatically detect the environment and use the appropriate configurations:
-
-- **Development**: Uses `http://localhost:3000` and `http://localhost:3001`
-- **Production**: Uses `https://sukull.com` and `https://sukull.com:3001`
-
-## SSL/HTTPS Considerations
-
-Make sure your server supports HTTPS on port 3001 for the payment server, or configure a reverse proxy to handle SSL termination.
-
-## Firewall/Security
-
-Ensure port 3001 is open and accessible from your main domain for the payment server to work properly. 
+Vercel will automatically deploy and the payment system will work! 🎉

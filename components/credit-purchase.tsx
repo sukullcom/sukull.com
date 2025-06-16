@@ -108,12 +108,11 @@ export default function CreditPurchase() {
         return
       }
 
-      // Use environment variable for payment server URL, fallback based on environment
-      const paymentServerUrl = process.env.NEXT_PUBLIC_PAYMENT_SERVER_URL || 
-        (process.env.NODE_ENV === 'production' ? 'https://sukull.com:3001' : 'http://localhost:3001')
+      // Use Vercel API route instead of separate payment server
+      const paymentServerUrl = '/api/payment/create'
       
       // Call the payment server
-      const response = await fetch(`${paymentServerUrl}/api/payment/create`, {
+      const response = await fetch(`${paymentServerUrl}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
