@@ -15,6 +15,7 @@ import { Button } from "./ui/button";
 import { createClient } from "@/utils/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { useSecureLogout } from "@/hooks/use-secure-logout";
+import { CreditCard } from "lucide-react";
 
 type Props = {
   className?: string;
@@ -42,7 +43,7 @@ export const Sidebar = ({ className }: Props) => {
   return (
     <div
       className={cn(
-        `flex h-full lg:w-[256px] lg:fixed left-0 top-0 px-4 border-r-2 flex-col bg-white`,
+        `flex h-full w-full lg:w-[256px] lg:sticky lg:top-0 px-4 border-r-2 flex-col bg-white lg:h-screen`,
         className
       )}
     >
@@ -59,7 +60,7 @@ export const Sidebar = ({ className }: Props) => {
           </h1>
         </div>
       </Link>
-      <div className="flex flex-col gap-y-2 flex-1">
+      <div className="flex flex-col gap-y-2 flex-1 overflow-y-auto">
         <SidebarItem label="Çalışma Masası" href="/learn" iconSrc={learnIcon} />
         <SidebarItem
           label="Özel Ders"
@@ -74,15 +75,20 @@ export const Sidebar = ({ className }: Props) => {
         />
         <SidebarItem label="Laboratuvarlar" href="/lab" iconSrc={labIcon} />
         <SidebarItem label="Çantam" href="/shop" iconSrc={shopIcon} />
+        <Link prefetch={false} href="/credits" 
+          className="flex items-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 h-[52px] rounded-lg hover:text-slate-600 transition-all hover:bg-slate-100">
+          <CreditCard className="w-[32px] h-[32px]" />
+          <span>Krediler</span>
+        </Link>
         <SidebarItem label="Çalışma Arkadaşı" href="/study-buddy" iconSrc="/study_buddy.svg" />
         <SidebarItem label="Profİl" href="/profile" iconSrc="/mascot_normal.svg" />
       </div>
-      <div className="p-4">
+      <div className="p-4 mt-auto">
         <Button
           onClick={handleLogout}
           disabled={isLoggingOut}
           variant="secondary"
-          className="justify-start h-[52px] flex items-center"
+          className="justify-start h-[52px] flex items-center w-full"
         >
           <Image
             src="/exit.svg"

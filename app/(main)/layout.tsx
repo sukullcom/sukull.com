@@ -8,13 +8,15 @@ export default function MainLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <MobileHeader />
-      <Sidebar className="hidden lg:flex" />
+      <div className="flex h-screen">
+        <Sidebar className="hidden lg:flex" />
+        <main className="flex-1 h-full pt-[50px] lg:pt-0 pb-[64px] overflow-y-auto">
+          <div className="max-w-[1256px] mx-auto pt-6 h-full">
+            {children}
+          </div>
+        </main>
+      </div>
       <BottomNavigator className="lg:hidden" />
-      <main className="lg:pl-[256px] h-full pt-[50px] lg:pt-0 pb-[64px]">
-        <div className="max-w-[1256px] mx-auto pt-6 h-full">
-          {children}
-        </div>
-      </main>
     </>
   );
 }

@@ -16,7 +16,9 @@ import {
   users,
   teacherAvailability,
   lessonBookings,
-  userRoleEnum
+  userRoleEnum,
+  userCredits,
+  creditTransactions
 } from "@/db/schema";
 import { getServerUser } from "@/lib/auth";
 import { normalizeAvatarUrl } from "@/utils/avatar";
@@ -848,6 +850,12 @@ export async function bookLesson(
   startTime: Date, 
   endTime: Date
 ) {
+  // Check if student has available credits
+  const hasCredits = await hasAvailableCredits(studentId, 1);
+  if (!hasCredits) {
+    throw new Error("Insufficient credits. Please purchase credits to book a lesson.");
+  }
+
   // Check if the time slot is available
   const existingBooking = await db.query.lessonBookings.findFirst({
     where: and(
@@ -882,6 +890,9 @@ export async function bookLesson(
       meetLink: true
     }
   });
+  
+  // Use one credit for the booking
+  await useCredit(studentId);
   
   // Create the booking
   return db.insert(lessonBookings)
@@ -1083,4 +1094,52 @@ export async function getTeacherAvailabilityForCurrentWeek(teacherId: string) {
     return [];
   }
 }
+
+// Credit System Functions
+
+// Get user's credits
+export const getUserCredits = cache(async (userId: string) => {
+  const credits = await db.query.userCredits.findFirst({
+    where: eq(userCredits.userId, userId),
+  });
+
+  return credits || {
+    totalCredits: 0,
+    usedCredits: 0,
+    availableCredits: 0
+  };
+});
+
+// Update user credits after lesson booking
+export const useCredit = async (userId: string) => {
+  const credits = await db.query.userCredits.findFirst({
+    where: eq(userCredits.userId, userId),
+  });
+
+  if (!credits || credits.availableCredits <= 0) {
+    throw new Error("Insufficient credits");
+  }
+
+  await db.update(userCredits)
+    .set({
+      usedCredits: credits.usedCredits + 1,
+      availableCredits: credits.availableCredits - 1,
+      updatedAt: new Date(),
+    })
+    .where(eq(userCredits.userId, userId));
+};
+
+// Get user's credit transaction history
+export const getUserCreditTransactions = cache(async (userId: string) => {
+  return await db.query.creditTransactions.findMany({
+    where: eq(creditTransactions.userId, userId),
+    orderBy: desc(creditTransactions.createdAt),
+  });
+});
+
+// Check if user has enough credits for booking
+export const hasAvailableCredits = async (userId: string, requiredCredits: number = 1) => {
+  const credits = await getUserCredits(userId);
+  return credits.availableCredits >= requiredCredits;
+};
 

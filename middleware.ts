@@ -15,10 +15,10 @@ export async function middleware(req: NextRequest) {
   response.headers.set('X-XSS-Protection', '1; mode=block');
   response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
   
-  // Add CSP header for additional security
+  // Add CSP header for additional security - include localhost:3001 for payment server
   response.headers.set(
     'Content-Security-Policy',
-    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googleapis.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https: blob:; font-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' https://api.supabase.io https://*.supabase.co wss://*.supabase.co https://www.googleapis.com https://emkc.org; media-src 'self' blob:; worker-src 'self' blob: https://cdn.jsdelivr.net;"
+    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googleapis.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https: blob:; font-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' http://localhost:3001 https://api.supabase.io https://*.supabase.co wss://*.supabase.co https://www.googleapis.com https://emkc.org; media-src 'self' blob:; worker-src 'self' blob: https://cdn.jsdelivr.net;"
   );
   
   // Add cache control headers based on route
@@ -81,6 +81,11 @@ export async function middleware(req: NextRequest) {
                    pathname.endsWith('.jpeg') ||
                    pathname.startsWith('/api/auth/'); // Allow auth API routes
                    
+  // For API routes (except auth routes), let them handle their own authentication
+  if (pathname.startsWith('/api/') && !pathname.startsWith('/api/auth/')) {
+    return response;
+  }
+  
   if (!session && !isPublic) {
     // Not logged in => redirect to login
     const url = req.nextUrl.clone()

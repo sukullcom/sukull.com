@@ -423,3 +423,62 @@ export const lessonBookingsRelations = relations(lessonBookings, ({ one }) => ({
     relationName: "teacher_bookings",
   }),
 }));
+
+// Credit System Tables
+
+// User Credits - stores total available credits per user
+export const userCredits = pgTable("user_credits", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  totalCredits: integer("total_credits").notNull().default(0),
+  usedCredits: integer("used_credits").notNull().default(0),
+  availableCredits: integer("available_credits").notNull().default(0),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const userCreditsRelations = relations(userCredits, ({ one }) => ({
+  user: one(users, {
+    fields: [userCredits.userId],
+    references: [users.id],
+  }),
+}));
+
+// Credit Transactions - transaction log per credit purchase
+export const creditTransactions = pgTable("credit_transactions", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  paymentId: text("payment_id").notNull(), // Iyzico payment ID
+  creditsAmount: integer("credits_amount").notNull(),
+  totalPrice: text("total_price").notNull(), // Store as string to preserve decimal precision
+  currency: text("currency").notNull().default("TRY"),
+  status: text("status").notNull().default("pending"), // pending, success, failed
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const creditTransactionsRelations = relations(creditTransactions, ({ one }) => ({
+  user: one(users, {
+    fields: [creditTransactions.userId],
+    references: [users.id],
+  }),
+}));
+
+// Payment Logs - stores raw Iyzico responses for debugging/auditing
+export const paymentLogs = pgTable("payment_logs", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  paymentId: text("payment_id").notNull(),
+  requestData: jsonb("request_data").notNull(),
+  responseData: jsonb("response_data").notNull(),
+  status: text("status").notNull(),
+  errorCode: text("error_code"),
+  errorMessage: text("error_message"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const paymentLogsRelations = relations(paymentLogs, ({ one }) => ({
+  user: one(users, {
+    fields: [paymentLogs.userId],
+    references: [users.id],
+  }),
+}));
