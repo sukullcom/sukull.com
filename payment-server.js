@@ -199,6 +199,20 @@ app.get('/ping', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Sukull Payment Server',
+    status: 'running',
+    endpoints: {
+      health: '/health',
+      ping: '/ping',
+      payment: '/api/payment/create'
+    },
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Handle preflight requests for payment endpoint
 app.options('/api/payment/create', (req, res) => {
   console.log('Preflight request received for /api/payment/create');
