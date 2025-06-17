@@ -46,14 +46,18 @@ export default async function ProtectedLayout({
             hearts={userProgress.hearts}
             points={userProgress.points}
             istikrar={userProgress.istikrar}
-            hasActiveSubscription={false}
+            hasInfiniteHearts={userProgress.hasInfiniteHearts || false}
           />
         ) : null}
 
         <DailyProgress />
         <Quests 
-          points={userProgress.points} 
-          currentStreak={userProgress.istikrar} 
+          currentStreak={userProgress.istikrar}
+          achievements={{
+            profileEditingUnlocked: userProgress.profileEditingUnlocked || false,
+            studyBuddyUnlocked: userProgress.studyBuddyUnlocked || false,
+            codeShareUnlocked: userProgress.codeShareUnlocked || false,
+          }}
         />
       </StickyWrapper>
 

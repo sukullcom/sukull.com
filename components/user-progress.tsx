@@ -11,7 +11,7 @@ type Props = {
   hearts: number;
   points: number;
   istikrar: number; // new prop for streak
-  hasActiveSubscription: boolean;
+  hasInfiniteHearts: boolean;
 };
 
 export const UserProgress = ({
@@ -19,7 +19,7 @@ export const UserProgress = ({
   points,
   hearts,
   istikrar,
-  hasActiveSubscription,
+  hasInfiniteHearts,
 }: Props) => {
   return (
     <div className="flex items-center justify-center gap-x-1 w-full">
@@ -55,7 +55,7 @@ export const UserProgress = ({
             alt="Hearts"
             className="mr-2"
           />
-          {hasActiveSubscription ? (
+          {hasInfiniteHearts ? (
             <InfinityIcon className="h-4 w-4 stroke-[3]" />
           ) : (
             hearts

@@ -1,13 +1,20 @@
 import { FeedWrapper } from "@/components/feed-wrapper";
-import { getUserProgress } from "@/db/queries";
+import { getUserProgress, checkSubscriptionStatus } from "@/db/queries";
+import { getServerUser } from "@/lib/auth";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { Items } from "./items";
 
 const ShopPage = async () => {
-  const userProgressData = getUserProgress();
+  const user = await getServerUser();
+  if (!user) {
+    redirect("/login");
+  }
 
-  const [userProgress] = await Promise.all([userProgressData]);
+  const userProgressData = getUserProgress();
+  const hasInfiniteHearts = checkSubscriptionStatus(user.id);
+
+  const [userProgress, hasActiveSubscription] = await Promise.all([userProgressData, hasInfiniteHearts]);
 
   if (!userProgress || !userProgress.activeCourse) {
     redirect("/courses");
@@ -27,7 +34,9 @@ const ShopPage = async () => {
           <Items
             hearts={userProgress.hearts}
             points={userProgress.points}
-            hasActiveSubscription={false} // TODO: Add subscription
+            hasActiveSubscription={hasActiveSubscription}
+            hasInfiniteHearts={userProgress.hasInfiniteHearts}
+            subscriptionExpiresAt={userProgress.subscriptionExpiresAt}
           />
         </div>
       </FeedWrapper>

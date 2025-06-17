@@ -187,8 +187,11 @@ export const userProgress = pgTable("user_progress", {
   profileEditingUnlocked: boolean("profile_editing_unlocked").default(false).notNull(), // 30 days achievement
   studyBuddyUnlocked: boolean("study_buddy_unlocked").default(false).notNull(), // 15 days achievement  
   codeShareUnlocked: boolean("code_share_unlocked").default(false).notNull(), // 30 days achievement
-});
 
+  // Premium subscription fields
+  hasInfiniteHearts: boolean("has_infinite_hearts").default(false).notNull(), // Whether user has active infinite hearts subscription
+  subscriptionExpiresAt: timestamp("subscription_expires_at"), // When the current subscription expires
+});
 
 export const userProgressRelations = relations(userProgress, ({ one }) => ({
   activeCourse: one(courses, {
@@ -479,6 +482,28 @@ export const paymentLogs = pgTable("payment_logs", {
 export const paymentLogsRelations = relations(paymentLogs, ({ one }) => ({
   user: one(users, {
     fields: [paymentLogs.userId],
+    references: [users.id],
+  }),
+}));
+
+// User Subscriptions - tracks monthly subscription payments
+export const userSubscriptions = pgTable("user_subscriptions", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  subscriptionType: text("subscription_type").notNull().default("infinite_hearts"), // Type of subscription
+  status: text("status").notNull().default("active"), // active, expired, cancelled
+  startDate: timestamp("start_date").notNull(),
+  endDate: timestamp("end_date").notNull(),
+  paymentId: text("payment_id"), // Iyzico payment ID for this month
+  amount: text("amount").notNull().default("100"), // Monthly amount (100 TL)
+  currency: text("currency").notNull().default("TRY"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const userSubscriptionsRelations = relations(userSubscriptions, ({ one }) => ({
+  user: one(users, {
+    fields: [userSubscriptions.userId],
     references: [users.id],
   }),
 }));

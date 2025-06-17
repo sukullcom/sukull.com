@@ -19,7 +19,7 @@ export const MobileHeader = async () => {
         hearts={userProgress.hearts}
         points={userProgress.points}
         istikrar={userProgress.istikrar}
-        hasActiveSubscription={false}
+        hasInfiniteHearts={userProgress.hasInfiniteHearts || false}
       />
 
     </nav>

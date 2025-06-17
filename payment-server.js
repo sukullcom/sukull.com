@@ -414,6 +414,168 @@ app.post('/api/payment/create', authenticateUser, async (req, res) => {
   }
 });
 
+// Subscription payment endpoint
+app.post('/api/payment/subscribe', authenticateUser, async (req, res) => {
+  console.log('📱 Subscription payment request received');
+  
+  try {
+    const { paymentCard, billingAddress } = req.body;
+    const user = req.user;
+
+    if (!paymentCard || !billingAddress) {
+      return res.status(400).json({
+        success: false,
+        message: 'Eksik ödeme bilgileri',
+      });
+    }
+
+    // Subscription details
+    const subscriptionAmount = 100; // 100 TL per month
+    const conversationId = `sub_${Date.now()}_${user.id}`;
+    const basketId = `basket_${conversationId}`;
+
+    const request_data = {
+      locale: Iyzipay.LOCALE.TR,
+      conversationId: conversationId,
+      price: subscriptionAmount.toString(),
+      paidPrice: subscriptionAmount.toString(),
+      currency: Iyzipay.CURRENCY.TRY,
+      installment: '1',
+      basketId: basketId,
+      paymentChannel: Iyzipay.PAYMENT_CHANNEL.WEB,
+      paymentGroup: Iyzipay.PAYMENT_GROUP.SUBSCRIPTION,
+      paymentCard: {
+        cardHolderName: paymentCard.cardHolderName,
+        cardNumber: paymentCard.cardNumber,
+        expireMonth: paymentCard.expireMonth,
+        expireYear: paymentCard.expireYear,
+        cvc: paymentCard.cvc,
+        registerCard: '0'
+      },
+      buyer: {
+        id: user.id,
+        name: billingAddress.contactName.split(' ')[0] || 'Unknown',
+        surname: billingAddress.contactName.split(' ').slice(1).join(' ') || 'User',
+        gsmNumber: billingAddress.phone || '+905350000000',
+        email: user.email || 'user@example.com',
+        identityNumber: '74300864791', // Test identity number
+        lastLoginDate: new Date().toISOString().slice(0, 19).replace('T', ' '),
+        registrationDate: new Date().toISOString().slice(0, 19).replace('T', ' '),
+        registrationAddress: billingAddress.address,
+        ip: req.ip || '85.34.78.112',
+        city: billingAddress.city,
+        country: billingAddress.country || 'Turkey',
+        zipCode: billingAddress.zipCode || '34000'
+      },
+      shippingAddress: {
+        contactName: billingAddress.contactName,
+        city: billingAddress.city,
+        country: billingAddress.country || 'Turkey',
+        address: billingAddress.address,
+        zipCode: billingAddress.zipCode || '34000'
+      },
+      billingAddress: {
+        contactName: billingAddress.contactName,
+        city: billingAddress.city,
+        country: billingAddress.country || 'Turkey',
+        address: billingAddress.address,
+        zipCode: billingAddress.zipCode || '34000'
+      },
+      basketItems: [
+        {
+          id: 'infinite_hearts_subscription',
+          name: 'Sonsuz Can - Aylık Abonelik',
+          category1: 'Subscription',
+          category2: 'Premium',
+          itemType: 'VIRTUAL',
+          price: subscriptionAmount.toString()
+        }
+      ]
+    };
+
+    // Process payment with Iyzico
+    const paymentResult = await new Promise((resolve, reject) => {
+      iyzipay.payment.create(request_data, (err, result) => {
+        if (err) {
+          console.error('Iyzico subscription payment error:', err);
+          reject(err);
+        } else {
+          console.log('Iyzico subscription payment result:', result);
+          resolve(result);
+        }
+      });
+    });
+
+    const client = await pool.connect();
+    
+    try {
+      // Log the payment attempt
+      await client.query(
+        `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, error_code, error_message, created_at) 
+         VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`,
+        [
+          user.id,
+          paymentResult.paymentId || conversationId,
+          JSON.stringify(request_data),
+          JSON.stringify(paymentResult),
+          paymentResult.status || 'failed',
+          paymentResult.errorCode || null,
+          paymentResult.errorMessage || null
+        ]
+      );
+
+      // Check if payment was successful
+      if (paymentResult.status === 'success') {
+        const now = new Date();
+        const endDate = new Date(now);
+        endDate.setMonth(endDate.getMonth() + 1); // Add 1 month
+
+        // Create subscription record
+        await client.query(
+          `INSERT INTO user_subscriptions (user_id, subscription_type, status, start_date, end_date, payment_id, amount, currency, created_at, updated_at) 
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())`,
+          [user.id, 'infinite_hearts', 'active', now, endDate, paymentResult.paymentId, subscriptionAmount.toString(), 'TRY']
+        );
+
+        // Update user progress with infinite hearts
+        await client.query(
+          `UPDATE user_progress 
+           SET has_infinite_hearts = true, subscription_expires_at = $1 
+           WHERE user_id = $2`,
+          [endDate, user.id]
+        );
+
+        res.json({
+          success: true,
+          message: 'Sonsuz can aboneliği başarıyla aktifleştirildi! Artık sınırsız kalp kullanabilirsiniz.',
+          data: {
+            paymentId: paymentResult.paymentId,
+            subscriptionType: 'infinite_hearts',
+            expiresAt: endDate.toISOString(),
+          }
+        });
+      } else {
+        res.status(400).json({
+          success: false,
+          message: paymentResult.errorMessage || 'Abonelik ödemesi başarısız',
+          errorCode: paymentResult.errorCode,
+        });
+      }
+    } finally {
+      client.release();
+    }
+
+  } catch (error) {
+    console.error('Subscription payment error:', error);
+    
+    res.status(500).json({
+      success: false,
+      message: 'Abonelik işlemi sırasında hata oluştu',
+      error: error.message || 'Unknown error'
+    });
+  }
+});
+
 // Error handling middleware
 app.use((error, req, res, next) => {
   console.error('Server error:', error);
@@ -447,6 +609,7 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Payment server running on port ${PORT}`);
   console.log(`🏥 Health check: http://0.0.0.0:${PORT}/health`);
   console.log(`💳 Payment endpoint: http://0.0.0.0:${PORT}/api/payment/create`);
+  console.log(`♾️  Subscription endpoint: http://0.0.0.0:${PORT}/api/payment/subscribe`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🔒 Iyzico: ${process.env.IYZICO_BASE_URL || 'sandbox'}`);
   console.log(`📊 Services status:`);

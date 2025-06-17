@@ -19,7 +19,14 @@ const QuestsPage = async () => {
         <div className="w-full flex flex-col items-center">
           <Image src="/mascot_orange.svg" alt="Quests" height={120} width={120} />
           <div className="my-10">
-            <Quests currentStreak={userProgress.istikrar} />
+            <Quests 
+              currentStreak={userProgress.istikrar}
+              achievements={{
+                profileEditingUnlocked: userProgress.profileEditingUnlocked || false,
+                studyBuddyUnlocked: userProgress.studyBuddyUnlocked || false,
+                codeShareUnlocked: userProgress.codeShareUnlocked || false,
+              }}
+            />
           </div>
         </div>
       </FeedWrapper>

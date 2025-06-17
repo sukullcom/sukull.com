@@ -56,10 +56,15 @@ export const CancelLessonModal = ({
                 <span className="font-medium">{lessonTime}</span> tarihindeki dersinizi iptal etmek istediğinizden emin misiniz?
                 <br />
                 <br />
-                Bu işlem geri alınamaz.
+                <span className="text-green-600 font-medium">Ders iptal edildiğinde krediniz hesabınıza iade edilecektir.</span>
               </>
             ) : (
-              "Bu dersi iptal etmek istediğinizden emin misiniz? Bu işlem geri alınamaz."
+              <>
+                Bu dersi iptal etmek istediğinizden emin misiniz?
+                <br />
+                <br />
+                <span className="text-green-600 font-medium">Ders iptal edildiğinde krediniz hesabınıza iade edilecektir.</span>
+              </>
             )}
           </DialogDescription>
         </DialogHeader>

@@ -18,7 +18,8 @@ import {
   lessonBookings,
   userRoleEnum,
   userCredits,
-  creditTransactions
+  creditTransactions,
+  userSubscriptions
 } from "@/db/schema";
 import { getServerUser } from "@/lib/auth";
 import { normalizeAvatarUrl } from "@/utils/avatar";
@@ -30,6 +31,9 @@ export const getUserProgress = cache(async () => {
     return null;
   }
   const userId = user.id;
+
+  // Check subscription status before returning user progress
+  await checkSubscriptionStatus(userId);
 
   const data = await db.query.userProgress.findFirst({
     where: eq(userProgress.userId, userId),
@@ -1129,6 +1133,28 @@ export const useCredit = async (userId: string) => {
     .where(eq(userCredits.userId, userId));
 };
 
+// Refund user credits when lesson is cancelled
+export const refundCredit = async (userId: string) => {
+  const credits = await db.query.userCredits.findFirst({
+    where: eq(userCredits.userId, userId),
+  });
+
+  if (!credits) {
+    throw new Error("User credits not found");
+  }
+
+  // Ensure we don't go below 0 used credits
+  const newUsedCredits = Math.max(0, credits.usedCredits - 1);
+  
+  await db.update(userCredits)
+    .set({
+      usedCredits: newUsedCredits,
+      availableCredits: credits.availableCredits + 1,
+      updatedAt: new Date(),
+    })
+    .where(eq(userCredits.userId, userId));
+};
+
 // Get user's credit transaction history
 export const getUserCreditTransactions = cache(async (userId: string) => {
   return await db.query.creditTransactions.findMany({
@@ -1142,4 +1168,96 @@ export const hasAvailableCredits = async (userId: string, requiredCredits: numbe
   const credits = await getUserCredits(userId);
   return credits.availableCredits >= requiredCredits;
 };
+
+// Subscription System Functions
+
+// Check and update subscription status
+export const checkSubscriptionStatus = async (userId: string) => {
+  const now = new Date();
+  
+  // Get current user progress
+  const progress = await db.query.userProgress.findFirst({
+    where: eq(userProgress.userId, userId),
+  });
+
+  if (!progress) return false;
+
+  // If user has infinite hearts but subscription has expired
+  if (progress.hasInfiniteHearts && progress.subscriptionExpiresAt && progress.subscriptionExpiresAt < now) {
+    // Remove infinite hearts and reset subscription
+    await db.update(userProgress)
+      .set({
+        hasInfiniteHearts: false,
+        subscriptionExpiresAt: null,
+      })
+      .where(eq(userProgress.userId, userId));
+
+    // Update expired subscription status
+    await db.update(userSubscriptions)
+      .set({
+        status: 'expired',
+        updatedAt: new Date(),
+      })
+      .where(and(
+        eq(userSubscriptions.userId, userId),
+        eq(userSubscriptions.status, 'active')
+      ));
+
+    return false;
+  }
+
+  return progress.hasInfiniteHearts || false;
+};
+
+// Get user's active subscription
+export const getUserSubscription = cache(async (userId: string) => {
+  const subscription = await db.query.userSubscriptions.findFirst({
+    where: and(
+      eq(userSubscriptions.userId, userId),
+      eq(userSubscriptions.status, 'active')
+    ),
+    orderBy: desc(userSubscriptions.createdAt),
+  });
+
+  return subscription;
+});
+
+// Create a new subscription
+export const createSubscription = async (userId: string, paymentId: string) => {
+  const now = new Date();
+  const endDate = new Date(now);
+  endDate.setMonth(endDate.getMonth() + 1); // Add 1 month
+
+  // Insert new subscription record
+  const subscription = await db.insert(userSubscriptions)
+    .values({
+      userId,
+      subscriptionType: 'infinite_hearts',
+      status: 'active',
+      startDate: now,
+      endDate,
+      paymentId,
+      amount: '100',
+      currency: 'TRY',
+    })
+    .returning();
+
+  // Update user progress with infinite hearts
+  await db.update(userProgress)
+    .set({
+      hasInfiniteHearts: true,
+      subscriptionExpiresAt: endDate,
+    })
+    .where(eq(userProgress.userId, userId));
+
+  return subscription[0];
+};
+
+// Get subscription history for a user
+export const getUserSubscriptionHistory = cache(async (userId: string) => {
+  return await db.query.userSubscriptions.findMany({
+    where: eq(userSubscriptions.userId, userId),
+    orderBy: desc(userSubscriptions.createdAt),
+  });
+});
 

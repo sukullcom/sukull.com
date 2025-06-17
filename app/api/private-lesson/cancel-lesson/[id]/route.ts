@@ -3,6 +3,7 @@ import { getServerUser } from "@/lib/auth";
 import db from "@/db/drizzle";
 import { lessonBookings } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
+import { refundCredit } from "@/db/queries";
 
 export async function POST(
   request: Request,
@@ -56,7 +57,10 @@ export async function POST(
       .set({ status: 'cancelled' })
       .where(eq(lessonBookings.id, bookingId));
     
-    return NextResponse.json({ message: "Lesson cancelled successfully" });
+    // Refund the credit to the student
+    await refundCredit(user.id);
+    
+    return NextResponse.json({ message: "Lesson cancelled successfully and credit refunded" });
   } catch (error) {
     console.error("Error cancelling lesson:", error);
     

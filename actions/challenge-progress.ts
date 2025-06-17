@@ -1,7 +1,7 @@
 "use server";
 
 import db from "@/db/drizzle";
-import { getUserProgress } from "@/db/queries";
+import { getUserProgress, checkSubscriptionStatus } from "@/db/queries";
 import { challengeProgress, challenges, schools, userProgress } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
@@ -36,7 +36,12 @@ export const upsertChallengeProgress = async (challengeId: number) => {
   });
 
   const isPractice = !!existingChallengeProgress;
-  if (currentUserProgress.hearts === 0 && !isPractice) {
+  
+  // Check if user has infinite hearts subscription
+  const hasInfiniteHearts = await checkSubscriptionStatus(userId);
+  
+  // Only check hearts if user doesn't have infinite hearts and it's not practice
+  if (!hasInfiniteHearts && currentUserProgress.hearts === 0 && !isPractice) {
     return { error: "hearts" };
   }
 
@@ -62,7 +67,6 @@ export const upsertChallengeProgress = async (challengeId: number) => {
     await db
       .update(userProgress)
       .set({
-        hearts: Math.min(currentUserProgress.hearts + 1, 5),
         points: currentUserProgress.points + 20,
       })
       .where(eq(userProgress.userId, userId));
@@ -200,6 +204,15 @@ export const reduceHearts = async (challengeId: number) => {
   });
   const isPractice = !!existingCP;
   if (isPractice) return { error: "practice" };
+  
+  // Check if user has infinite hearts subscription
+  const hasInfiniteHearts = await checkSubscriptionStatus(userId);
+  
+  // If user has infinite hearts, don't reduce hearts or points
+  if (hasInfiniteHearts) {
+    return; // No error, just continue without reducing hearts
+  }
+  
   if (currentUserProgress.hearts === 0) return { error: "hearts" };
 
   await db

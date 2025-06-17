@@ -205,7 +205,7 @@ export default function MyBookingsPage() {
       });
       
       // Show success toast instead of alert
-      toast.success('Ders başarıyla iptal edildi');
+      toast.success('Ders başarıyla iptal edildi ve krediniz iade edildi');
     } catch (error) {
       console.error("Error cancelling lesson:", error);
       setCancelModal(prev => ({ ...prev, isLoading: false }));

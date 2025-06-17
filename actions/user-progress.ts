@@ -3,7 +3,7 @@
 
 import { POINTS_TO_REFILL } from '@/constants';
 import db from '@/db/drizzle';
-import { getCourseById, getUserProgress } from '@/db/queries';
+import { getCourseById, getUserProgress, checkSubscriptionStatus } from '@/db/queries';
 import { challengeProgress, challenges, schools, userProgress, userDailyStreak } from '@/db/schema';
 import { and, eq, gt, sql, isNotNull } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
@@ -163,6 +163,15 @@ export const reduceHearts = async (challengeId: number) => {
   });
   const isPractice = !!existingCP;
   if (isPractice) return { error: 'practice' };
+  
+  // Check if user has infinite hearts subscription
+  const hasInfiniteHearts = await checkSubscriptionStatus(userId);
+  
+  // If user has infinite hearts, don't reduce hearts or points
+  if (hasInfiniteHearts) {
+    return; // No error, just continue without reducing hearts
+  }
+  
   if (currentUserProgress.hearts === 0) return { error: 'hearts' };
 
   await db
