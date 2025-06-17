@@ -28,6 +28,7 @@ export default function GiveLessonPage() {
     teacherSurname: "",
     teacherPhoneNumber: "",
     teacherEmail: "",
+    priceRange: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -41,6 +42,10 @@ export default function GiveLessonPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handlePriceRangeChange = (value: string) => {
+    setFormData({ ...formData, priceRange: value });
+  };
+
 
 
   const handleSubmitForm = async (e: React.FormEvent) => {
@@ -48,6 +53,10 @@ export default function GiveLessonPage() {
     
     if (!field) {
       return toast.error("Lütfen bir alan seçiniz.");
+    }
+    
+    if (!formData.priceRange) {
+      return toast.error("Lütfen bir ücret aralığı seçiniz.");
     }
     
     setIsSubmitting(true);
@@ -80,9 +89,9 @@ export default function GiveLessonPage() {
 
   // Calculate form completion percentage
   const completionPercentage = () => {
-    const fields = [field, formData.teacherName, formData.teacherSurname, formData.teacherPhoneNumber, formData.teacherEmail];
+    const fields = [field, formData.teacherName, formData.teacherSurname, formData.teacherPhoneNumber, formData.teacherEmail, formData.priceRange];
     const completed = fields.filter(f => f !== "").length;
-    return Math.round((completed / 5) * 100);
+    return Math.round((completed / 6) * 100);
   };
 
   return (

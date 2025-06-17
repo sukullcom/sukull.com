@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -43,13 +43,12 @@ const FIELD_OPTIONS = [
 
 export default function TeachersPage() {
   const router = useRouter();
-  const [teachers, setTeachers] = useState<Teacher[]>([]);
   const [filteredTeachers, setFilteredTeachers] = useState<Teacher[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedField, setSelectedField] = useState("all");
+  const [selectedField, setSelectedField] = useState<string>("all");
 
-  const fetchTeachers = async (field: string = "all") => {
+  const fetchTeachers = useCallback(async (field: string = "all") => {
     try {
       setLoading(true);
       const url = field === "all" 
@@ -68,7 +67,6 @@ export default function TeachersPage() {
       }
       
       const data = await response.json();
-      setTeachers(data.teachers);
       setFilteredTeachers(data.teachers);
       setLoading(false);
     } catch (error) {
@@ -76,11 +74,11 @@ export default function TeachersPage() {
       setError("Failed to load teachers. Please try again later.");
       setLoading(false);
     }
-  };
+  }, [router]);
 
   useEffect(() => {
     fetchTeachers(selectedField);
-  }, [router, selectedField]);
+  }, [selectedField, fetchTeachers]);
 
   const handleFieldChange = (field: string) => {
     setSelectedField(field);

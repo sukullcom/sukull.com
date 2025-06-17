@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { CheckCircle, XCircle, Mail, Phone, User, BookOpen, DollarSign } from "lucide-react";
+import { Check, X, User, BookOpen, Mail, Phone } from "lucide-react";
 
 type TeacherApplication = {
   id: number;
@@ -165,7 +165,7 @@ export default function TeacherApplicationsPage() {
                       variant="secondary"
                       size="sm"
                     >
-                      <CheckCircle className="h-4 w-4 mr-2" />
+                      <Check className="h-4 w-4 mr-2" />
                       Onayla
                     </Button>
                     <Button
@@ -174,7 +174,7 @@ export default function TeacherApplicationsPage() {
                       variant="danger"
                       size="sm"
                     >
-                      <XCircle className="h-4 w-4 mr-2" />
+                      <X className="h-4 w-4 mr-2" />
                       Reddet
                     </Button>
                   </div>

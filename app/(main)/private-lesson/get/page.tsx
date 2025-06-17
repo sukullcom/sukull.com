@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectItem, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectItem, SelectValue } from "@/components/ui/select";
 import { FeedWrapper } from "@/components/feed-wrapper";
 import Image from "next/image";
 import { 
@@ -17,7 +17,6 @@ import {
   User,
   Phone,
   Mail,
-  DollarSign,
   MessageSquare,
   Info
 } from "lucide-react";
@@ -228,8 +227,6 @@ export default function GetLessonPage() {
                   <SelectItem value="Coğrafya">Coğrafya</SelectItem>
                 </Select>
               </div>
-
-
 
               {/* Additional Information */}
               <div className="space-y-2">

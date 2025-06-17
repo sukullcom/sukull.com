@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import db from "@/db/drizzle";
 import { lessonBookings } from "@/db/schema";
-import { eq, lt, and, not } from "drizzle-orm";
+import { eq, lt, and } from "drizzle-orm";
 
 export async function POST() {
   try {
     const now = new Date();
     let totalUpdated = 0;
-    let results = [];
+    const results = [];
 
     // 1. First, find all pending bookings where the start time has arrived and confirm them
     const pendingBookings = await db.query.lessonBookings.findMany({

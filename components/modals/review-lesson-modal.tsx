@@ -6,6 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 
+interface ReviewData {
+  id: number;
+  rating: number;
+  comment: string | null;
+  createdAt: string;
+}
+
 interface ReviewLessonModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -13,7 +20,7 @@ interface ReviewLessonModalProps {
   teacherId: string;
   teacherName: string;
   lessonDate: string;
-  onReviewSubmitted: (review: any) => void;
+  onReviewSubmitted: (review: ReviewData) => void;
 }
 
 export const ReviewLessonModal = ({

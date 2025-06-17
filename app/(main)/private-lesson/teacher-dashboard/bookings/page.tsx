@@ -143,22 +143,6 @@ export default function TeacherBookingsPage() {
     }
   };
 
-  // Get human-readable status label
-  const getStatusLabel = (status: string) => {
-    switch (status) {
-      case 'pending':
-        return 'Beklemede';
-      case 'confirmed':
-        return 'Onaylandı';
-      case 'completed':
-        return 'Tamamlandı';
-      case 'cancelled':
-        return 'İptal Edildi';
-      default:
-        return status;
-    }
-  };
-
   // Separate bookings into upcoming and completed
   const upcomingBookings = bookings
     .filter(booking => !isLessonPast(booking.endTime) && booking.status !== 'cancelled')

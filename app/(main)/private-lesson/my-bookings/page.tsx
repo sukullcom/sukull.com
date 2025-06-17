@@ -36,6 +36,13 @@ interface Booking {
   } | null;
 }
 
+interface ReviewData {
+  id: number;
+  rating: number;
+  comment: string | null;
+  createdAt: string;
+}
+
 // Countdown timer hook - moved outside of component to avoid conditional calling
 const useCountdown = (targetDate: Date) => {
   const [countdown, setCountdown] = useState({
@@ -270,7 +277,7 @@ export default function MyBookingsPage() {
     });
   };
 
-  const handleReviewSubmitted = (review: any) => {
+  const handleReviewSubmitted = (review: ReviewData) => {
     // Update the booking with the new review
     setBookings(prev => prev.map(booking => 
       booking.id === reviewModal.bookingId 
@@ -351,20 +358,7 @@ export default function MyBookingsPage() {
     }
   };
 
-  // Get status label - keeping this shorter
-  const getStatusLabel = (status: string) => {
-    switch (status) {
-      case 'pending':
-      case 'confirmed':
-        return 'Planlandı';
-      case 'completed':
-        return 'Tamamlandı';
-      case 'cancelled':
-        return 'İptal Edildi';
-      default:
-        return status;
-    }
-  };
+
 
   // Render stars for reviews
   const renderStars = (rating: number) => {
@@ -664,7 +658,7 @@ export default function MyBookingsPage() {
                             </div>
                             {booking.review.comment && (
                               <p className="text-sm text-gray-600 mt-1">
-                                "{booking.review.comment}"
+                                &ldquo;{booking.review.comment}&rdquo;
                               </p>
                             )}
                             <p className="text-xs text-gray-500 mt-2">

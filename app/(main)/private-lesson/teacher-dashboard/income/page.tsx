@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Star, TrendingUp, Calendar, Users, DollarSign } from "lucide-react";
 import { toast } from "sonner";
 import { useLessonStatusUpdater } from "@/hooks/use-lesson-status-updater";
@@ -277,7 +276,7 @@ export default function TeacherIncomePage() {
                       </div>
                     </div>
                     {review.comment && (
-                      <p className="text-sm text-gray-600 mb-2">"{review.comment}"</p>
+                      <p className="text-sm text-gray-600 mb-2">&ldquo;{review.comment}&rdquo;</p>
                     )}
                     <div className="text-xs text-gray-500">
                       {formatDate(review.createdAt)} - {formatTime(review.booking.startTime)}
