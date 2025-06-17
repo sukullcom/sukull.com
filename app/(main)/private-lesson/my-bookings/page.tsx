@@ -5,7 +5,10 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { CancelLessonModal } from "@/components/modals/cancel-lesson-modal";
+import { ReviewLessonModal } from "@/components/modals/review-lesson-modal";
+import { Star } from "lucide-react";
 import { toast } from "sonner";
+import UserCreditsDisplay from "@/components/user-credits-display";
 
 interface Booking {
   id: number;
@@ -24,7 +27,13 @@ interface Booking {
     email: string;
     avatar?: string;
     meetLink?: string;
-  }
+  };
+  review?: {
+    id: number;
+    rating: number;
+    comment: string | null;
+    createdAt: string;
+  } | null;
 }
 
 // Countdown timer hook - moved outside of component to avoid conditional calling
@@ -89,6 +98,20 @@ export default function MyBookingsPage() {
     teacherName: '',
     lessonTime: '',
     isLoading: false
+  });
+
+  const [reviewModal, setReviewModal] = useState<{
+    isOpen: boolean;
+    bookingId: number | null;
+    teacherId: string;
+    teacherName: string;
+    lessonDate: string;
+  }>({
+    isOpen: false,
+    bookingId: null,
+    teacherId: '',
+    teacherName: '',
+    lessonDate: '',
   });
   const lessonsPerPage = 10;
 
@@ -223,6 +246,39 @@ export default function MyBookingsPage() {
     });
   };
 
+  // Handle review lesson
+  const handleReviewLesson = async (bookingId: number) => {
+    const booking = bookings.find(b => b.id === bookingId);
+    if (!booking) return;
+
+    setReviewModal({
+      isOpen: true,
+      bookingId,
+      teacherId: booking.teacherId,
+      teacherName: booking.teacher?.name || 'Öğretmen',
+      lessonDate: formatDate(booking.startTime),
+    });
+  };
+
+  const closeReviewModal = () => {
+    setReviewModal({
+      isOpen: false,
+      bookingId: null,
+      teacherId: '',
+      teacherName: '',
+      lessonDate: '',
+    });
+  };
+
+  const handleReviewSubmitted = (review: any) => {
+    // Update the booking with the new review
+    setBookings(prev => prev.map(booking => 
+      booking.id === reviewModal.bookingId 
+        ? { ...booking, review } 
+        : booking
+    ));
+  };
+
   // Format date
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -308,6 +364,20 @@ export default function MyBookingsPage() {
       default:
         return status;
     }
+  };
+
+  // Render stars for reviews
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <Star
+        key={i}
+        className={`h-4 w-4 ${
+          i < rating
+            ? "fill-yellow-400 text-yellow-400"
+            : "text-gray-300"
+        }`}
+      />
+    ));
   };
 
   // Create a new component for the upcoming lesson button with countdown
@@ -425,7 +495,7 @@ export default function MyBookingsPage() {
     .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime()); // Chronological order
 
   const completedBookings = bookings
-    .filter(booking => isLessonPast(booking.endTime) || booking.status === 'completed' || booking.status === 'cancelled')
+    .filter(booking => (isLessonPast(booking.endTime) || booking.status === 'completed') && booking.status !== 'cancelled')
     .sort((a, b) => new Date(b.startTime).getTime() - new Date(a.startTime).getTime()); // Most recent first
 
   // Get current lessons based on active tab and pagination
@@ -480,6 +550,9 @@ export default function MyBookingsPage() {
 
   return (
     <div className="container mx-auto py-10 px-4">
+      {/* User Credits Display */}
+      <UserCreditsDisplay className="mb-6" />
+      
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Derslerim</h1>
       </div>
@@ -570,11 +643,46 @@ export default function MyBookingsPage() {
                     )}
                   </CardContent>
                   {activeTab === 'completed' && (
-                    <CardFooter className="py-3 px-5 bg-gray-50 border-t border-gray-100">
-                      <div className="text-xs text-gray-500 flex items-center">
-                        {getStatusIndicator(booking.status)}
-                        {booking.status === 'completed' ? "Ders tamamlandı" : 
-                         booking.status === 'cancelled' ? "Ders iptal edildi" : getStatusLabel(booking.status)}
+                    <CardFooter className="py-4 px-5 bg-gray-50 border-t border-gray-100">
+                      <div className="w-full space-y-3">
+                        <div className="text-xs text-gray-500 flex items-center">
+                          {getStatusIndicator(booking.status)}
+                          Ders tamamlandı
+                        </div>
+                        
+                        {booking.review ? (
+                          // Show existing review
+                          <div className="bg-white p-3 rounded border">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-sm font-medium text-gray-700">Değerlendirmeniz</span>
+                              <div className="flex items-center gap-1">
+                                {renderStars(booking.review.rating)}
+                                <span className="text-sm text-gray-600 ml-1">
+                                  ({booking.review.rating}/5)
+                                </span>
+                              </div>
+                            </div>
+                            {booking.review.comment && (
+                              <p className="text-sm text-gray-600 mt-1">
+                                "{booking.review.comment}"
+                              </p>
+                            )}
+                            <p className="text-xs text-gray-500 mt-2">
+                              {new Date(booking.review.createdAt).toLocaleDateString('tr-TR')}
+                            </p>
+                          </div>
+                        ) : (
+                          // Show review button for lessons without reviews
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handleReviewLesson(booking.id)}
+                            className="w-full"
+                          >
+                            <Star className="h-4 w-4 mr-2" />
+                            Dersi Değerlendir
+                          </Button>
+                        )}
                       </div>
                     </CardFooter>
                   )}
@@ -617,6 +725,16 @@ export default function MyBookingsPage() {
         teacherName={cancelModal.teacherName}
         lessonTime={cancelModal.lessonTime}
         isLoading={cancelModal.isLoading}
+      />
+
+      <ReviewLessonModal
+        isOpen={reviewModal.isOpen}
+        onClose={closeReviewModal}
+        bookingId={reviewModal.bookingId || 0}
+        teacherId={reviewModal.teacherId}
+        teacherName={reviewModal.teacherName}
+        lessonDate={reviewModal.lessonDate}
+        onReviewSubmitted={handleReviewSubmitted}
       />
     </div>
   );

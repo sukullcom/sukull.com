@@ -29,7 +29,7 @@ export async function GET() {
       return NextResponse.json({ message: "User details not found" }, { status: 404 });
     }
     
-    // Get teacher application information (for field and price range)
+    // Get teacher application information (for field)
     const teacherApplication = await db.query.teacherApplications.findFirst({
       where: eq(teacherApplications.userId, user.id),
     });
@@ -43,7 +43,6 @@ export async function GET() {
       bio: userDetails.description,
       meetLink: userDetails.meetLink,
       field: teacherApplication?.field || "",
-      priceRange: teacherApplication?.priceRange || "",
     };
     
     return NextResponse.json(teacherProfile);
@@ -71,7 +70,7 @@ export async function PATCH(request: Request) {
     }
     
     // Parse the request body
-    const data: { bio?: string; field?: string; priceRange?: string } = await request.json();
+    const data: { bio?: string; field?: string } = await request.json();
     
     // Update bio (saved as description in the users table)
     if (data.bio !== undefined) {
@@ -81,8 +80,8 @@ export async function PATCH(request: Request) {
         .where(eq(users.id, user.id));
     }
     
-    // Update field and price range (saved in teacherApplications table)
-    if (data.field !== undefined || data.priceRange !== undefined) {
+    // Update field (saved in teacherApplications table)
+    if (data.field !== undefined) {
       // First, check if teacher application record exists
       const existingApplication = await db.query.teacherApplications.findFirst({
         where: eq(teacherApplications.userId, user.id),
@@ -90,20 +89,18 @@ export async function PATCH(request: Request) {
       
       if (existingApplication) {
         // Update existing record
-        const updateData: Partial<{ description: string; updatedAt: Date }> = { updatedAt: new Date() };
-        if (data.field !== undefined) updateData.field = data.field;
-        if (data.priceRange !== undefined) updateData.priceRange = data.priceRange;
-        
         await db
           .update(teacherApplications)
-          .set(updateData)
+          .set({ 
+            field: data.field,
+            updatedAt: new Date()
+          })
           .where(eq(teacherApplications.userId, user.id));
       } else {
         // Create new record if it doesn't exist (fallback)
         await db.insert(teacherApplications).values({
           userId: user.id,
           field: data.field || "",
-          priceRange: data.priceRange || "",
           status: "approved", // Since user is already a teacher
           createdAt: new Date(),
           updatedAt: new Date(),

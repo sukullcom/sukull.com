@@ -85,9 +85,9 @@ let supabase;
 try {
   if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
     supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY
-    );
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
     console.log('✅ Supabase client initialized');
   } else {
     console.log('⚠️ Supabase credentials missing');
@@ -101,14 +101,14 @@ let pool;
 try {
   if (process.env.DATABASE_URL) {
     pool = new Pool({
-      connectionString: process.env.DATABASE_URL,
-      ssl: process.env.NODE_ENV === 'production' 
-        ? {
-            rejectUnauthorized: false,
-            ca: process.env.CA_CERT
-          }
-        : false
-    });
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV === 'production' 
+    ? {
+        rejectUnauthorized: false,
+        ca: process.env.CA_CERT
+      }
+    : false
+});
     console.log('✅ Database pool initialized');
     
     // Test database connection

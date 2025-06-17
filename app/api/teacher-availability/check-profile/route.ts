@@ -26,7 +26,6 @@ export async function GET() {
         where: eq(teacherApplications.userId, user.id),
         columns: {
           field: true,
-          priceRange: true,
         }
       }),
       db.query.users.findFirst({
@@ -43,10 +42,6 @@ export async function GET() {
     // Check teacher application fields
     if (!teacherProfile?.field || teacherProfile.field === "Belirtilmemiş") {
       missingInfo.push("Uzmanlık Alanı");
-    }
-    
-    if (!teacherProfile?.priceRange) {
-      missingInfo.push("Fiyat Aralığı");
     }
     
     // Check user profile fields

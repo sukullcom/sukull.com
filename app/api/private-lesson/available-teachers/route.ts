@@ -1,10 +1,8 @@
 import { NextResponse } from "next/server";
-import { users } from "@/db/schema";
-import db from "@/db/drizzle";
-import { eq } from "drizzle-orm";
 import { getServerUser } from "@/lib/auth";
+import { getTeachersWithRatings } from "@/db/queries";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     // Add authentication check
     const user = await getServerUser();
@@ -12,18 +10,17 @@ export async function GET() {
       return NextResponse.json({ error: "Authentication required" }, { status: 401 });
     }
 
-    // Get all users with teacher role
-    const teachers = await db.query.users.findMany({
-      where: eq(users.role, "teacher"),
-      columns: {
-        id: true,
-        name: true,
-        email: true,
-        avatar: true,
-        description: true,
-        meetLink: true,
-      },
-    });
+    // Get URL parameters for filtering
+    const { searchParams } = new URL(request.url);
+    const fieldFilter = searchParams.get('field');
+
+    // Get all teachers with ratings
+    let teachers = await getTeachersWithRatings();
+    
+    // Apply field filter if provided
+    if (fieldFilter && fieldFilter !== 'all') {
+      teachers = teachers.filter(teacher => teacher.field === fieldFilter);
+    }
     
     // Return the list of teachers
     return NextResponse.json({ 

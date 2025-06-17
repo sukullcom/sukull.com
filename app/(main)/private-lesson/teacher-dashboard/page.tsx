@@ -16,7 +16,6 @@ type TeacherProfile = {
   avatar?: string;
   bio?: string;
   field?: string;
-  priceRange?: string;
 };
 
 const FIELD_OPTIONS = [
@@ -38,24 +37,17 @@ const FIELD_OPTIONS = [
   "Diğer"
 ];
 
-const PRICE_RANGES = [
-  "₺50-100/saat",
-  "₺100-150/saat", 
-  "₺150-200/saat",
-  "₺200-250/saat",
-  "₺250-300/saat",
-  "₺300+/saat"
-];
+
 
 export default function TeacherDashboardPage() {
   const router = useRouter();
   const [profile, setProfile] = useState<TeacherProfile | null>(null);
   const [bio, setBio] = useState("");
   const [editingField, setEditingField] = useState("");
-  const [editingPriceRange, setEditingPriceRange] = useState("");
+
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [savingProfile, setSavingProfile] = useState(false);
+
   const [isTeacher, setIsTeacher] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -73,7 +65,6 @@ export default function TeacherDashboardPage() {
           setProfile(data);
           setBio(data.bio || "");
           setEditingField(data.field || "");
-          setEditingPriceRange(data.priceRange || "");
           setIsTeacher(true);
         } else if (response.status === 403) {
           // User is not a teacher
@@ -100,7 +91,12 @@ export default function TeacherDashboardPage() {
     }
   }, [loading, isTeacher, router]);
 
-  const saveBio = async () => {
+  const saveProfile = async () => {
+    if (!editingField) {
+      toast.error("Lütfen uzmanlık alanınızı seçin");
+      return;
+    }
+
     setSaving(true);
     try {
       const response = await fetch("/api/private-lesson/teacher-details", {
@@ -108,63 +104,30 @@ export default function TeacherDashboardPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ bio }),
-      });
-
-      if (response.ok) {
-        toast.success("Biyografi başarıyla kaydedildi!");
-        // Update the profile state
-        if (profile) {
-          setProfile({ ...profile, bio });
-        }
-      } else {
-        toast.error("Biyografi kaydedilemedi");
-      }
-    } catch (error) {
-      console.error("Error saving bio:", error);
-      toast.error("Bir hata oluştu");
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const saveProfileInfo = async () => {
-    if (!editingField || !editingPriceRange) {
-      toast.error("Lütfen tüm alanları doldurun");
-      return;
-    }
-
-    setSavingProfile(true);
-    try {
-      const response = await fetch("/api/private-lesson/teacher-details", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({ 
-          field: editingField,
-          priceRange: editingPriceRange
+          bio,
+          field: editingField
         }),
       });
 
       if (response.ok) {
-        toast.success("Profil bilgileri başarıyla kaydedildi!");
+        toast.success("Profil başarıyla kaydedildi!");
         // Update the profile state
         if (profile) {
           setProfile({ 
             ...profile, 
-            field: editingField,
-            priceRange: editingPriceRange
+            bio,
+            field: editingField
           });
         }
       } else {
-        toast.error("Profil bilgileri kaydedilemedi");
+        toast.error("Profil kaydedilemedi");
       }
     } catch (error) {
-      console.error("Error saving profile info:", error);
+      console.error("Error saving profile:", error);
       toast.error("Bir hata oluştu");
     } finally {
-      setSavingProfile(false);
+      setSaving(false);
     }
   };
 
@@ -197,9 +160,9 @@ export default function TeacherDashboardPage() {
             )}
           </div>
           
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Left Column - Profile Info */}
-            <div className="space-y-4">
+          <div className="space-y-6">
+            {/* Profile Fields */}
+            <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Ad Soyad</label>
                 <Input value={profile?.name || ""} disabled />
@@ -216,62 +179,37 @@ export default function TeacherDashboardPage() {
                   ))}
                 </Select>
               </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Fiyat Aralığı</label>
-                <Select value={editingPriceRange} onValueChange={setEditingPriceRange}>
-                  <SelectValue placeholder="Fiyat aralığınızı seçin" />
-                  {PRICE_RANGES.map((range) => (
-                    <SelectItem key={range} value={range}>
-                      {range}
-                    </SelectItem>
-                  ))}
-                </Select>
-              </div>
-
-              <Button 
-                onClick={saveProfileInfo} 
-                disabled={savingProfile || !editingField || !editingPriceRange}
-                variant="primary"
-                className="w-full"
-              >
-                {savingProfile ? (
-                  <>
-                    <span className="h-4 w-4 mr-2 border-2 border-white border-t-transparent animate-spin rounded-full"></span>
-                    Kaydediliyor...
-                  </>
-                ) : "Profil Bilgilerini Kaydet"}
-              </Button>
             </div>
             
-            {/* Right Column - Bio */}
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Biyografi</label>
-                <p className="text-gray-600 text-sm mb-2">
-                  Öğrencilerin sizi daha iyi tanıması için kendinizi tanıtan bir biyografi yazın.
-                </p>
-                <Textarea 
-                  value={bio} 
-                  onChange={(e) => setBio(e.target.value)}
-                  className="min-h-[120px]"
-                  placeholder="Kendinizi tanıtın, eğitim ve öğretim deneyimlerinizden bahsedin..."
-                />
-                <Button 
-                  onClick={saveBio} 
-                  disabled={saving}
-                  variant="primary"
-                  className="mt-3 w-full"
-                >
-                  {saving ? (
-                    <>
-                      <span className="h-4 w-4 mr-2 border-2 border-white border-t-transparent animate-spin rounded-full"></span>
-                      Kaydediliyor...
-                    </>
-                  ) : "Biyografiyi Kaydet"}
-                </Button>
-              </div>
+            {/* Biography Section */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Biyografi</label>
+              <p className="text-gray-600 text-sm mb-2">
+                Öğrencilerin sizi daha iyi tanıması için kendinizi tanıtan bir biyografi yazın.
+              </p>
+              <Textarea 
+                value={bio} 
+                onChange={(e) => setBio(e.target.value)}
+                className="min-h-[120px]"
+                placeholder="Kendinizi tanıtın, eğitim ve öğretim deneyimlerinizden bahsedin..."
+              />
             </div>
+            
+            {/* Single Save Button */}
+            <Button 
+              onClick={saveProfile} 
+              disabled={saving || !editingField}
+              variant="primary"
+              className="w-full"
+              size="lg"
+            >
+              {saving ? (
+                <>
+                  <span className="h-4 w-4 mr-2 border-2 border-white border-t-transparent animate-spin rounded-full"></span>
+                  Kaydediliyor...
+                </>
+              ) : "Profili Kaydet"}
+            </Button>
           </div>
         </div>
         

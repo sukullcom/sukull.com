@@ -27,6 +27,7 @@ type Props = {
     challengeOptions: (typeof challengeOptions.$inferSelect)[];
   })[];
   userSubscription: unknown; // TODO: Replace with subscription DB type
+  hasInfiniteHearts?: boolean;
 };
 
 export const Quiz = ({
@@ -35,6 +36,7 @@ export const Quiz = ({
   initialPoints,
   initialLessonId,
   initialLessonChallenges,
+  hasInfiniteHearts = false,
 }: Props) => {
   // *******************************
   // 1) Audio Elements
@@ -144,7 +146,7 @@ export const Quiz = ({
           </h1>
           <div className="flex items-center gap-x-4 w-full">
             <ResultCard variant="points" value={points} />
-            <ResultCard variant="hearts" value={hearts} />
+            <ResultCard variant="hearts" value={hearts} hasInfiniteHearts={hasInfiniteHearts} />
           </div>
         </div>
         <Footer
@@ -247,7 +249,7 @@ export const Quiz = ({
       {correctAudioEl}
       {incorrectAudioEl}
 
-      <Header hearts={hearts} percentage={percentage} />
+      <Header hearts={hearts} percentage={percentage} hasInfiniteHearts={hasInfiniteHearts} />
 
       <div className="flex-1">
         <div className="h-full flex items-center justify-center">

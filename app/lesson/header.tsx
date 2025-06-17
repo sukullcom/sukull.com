@@ -1,14 +1,15 @@
 import { Progress } from "@/components/ui/progress";
 import { useExitModal } from "@/store/use-exit-modal";
-import { X } from "lucide-react";
+import { X, InfinityIcon } from "lucide-react";
 import Image from "next/image";
 
 type Props = {
   hearts: number;
   percentage: number;
+  hasInfiniteHearts?: boolean;
 };
 
-export const Header = ({ hearts, percentage }: Props) => {
+export const Header = ({ hearts, percentage, hasInfiniteHearts = false }: Props) => {
   const { open } = useExitModal();
 
   return (
@@ -20,7 +21,11 @@ export const Header = ({ hearts, percentage }: Props) => {
       <Progress value={percentage} />
       <div className="text-rose-500 flex items-center font-bold">
         <Image src="/heart.svg" height={28} width={28} alt="Heart" className="mr-2" />
-        {hearts}
+        {hasInfiniteHearts ? (
+          <InfinityIcon className="h-6 w-6 stroke-[3]" />
+        ) : (
+          hearts
+        )}
       </div>
     </header>
   );

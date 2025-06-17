@@ -73,12 +73,11 @@ export async function GET(
       }
     });
     
-    // Get teacher application details for field and price range
+    // Get teacher application details for field
     const teacherApplication = await db.query.teacherApplications.findFirst({
       where: eq(teacherApplications.userId, teacherId),
       columns: {
         field: true,
-        priceRange: true,
       }
     });
     
@@ -88,14 +87,18 @@ export async function GET(
       bio: teacher.description,
       avatar: teacherProfile?.userImageSrc || teacher.avatar,
       field: teacherApplication?.field || "",
-      priceRange: teacherApplication?.priceRange || "",
     };
     
     // Get availability for the current week
     let availability: AvailabilitySlot[] = [];
     try {
       const availabilityData = await getTeacherAvailabilityForCurrentWeek(teacherId);
-      availability = availabilityData as AvailabilitySlot[];
+      const now = new Date();
+      
+      // Filter out past time slots
+      availability = (availabilityData as AvailabilitySlot[]).filter(slot => {
+        return slot.startTime > now;
+      });
     } catch (availabilityError) {
       console.error("Error fetching availability:", availabilityError);
       // Continue without availability data

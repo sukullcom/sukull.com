@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import CreditPurchase from "@/components/credit-purchase";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Kredi Satın Al | Sukull",
@@ -7,7 +7,8 @@ export const metadata: Metadata = {
 };
 
 const CreditsPage = () => {
-  return <CreditPurchase />;
+  // Redirect to the new private lesson credits page
+  redirect("/private-lesson/credits");
 };
 
 export default CreditsPage; 

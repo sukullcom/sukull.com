@@ -29,7 +29,6 @@ export default function GetLessonPage() {
     studentPhoneNumber: "",
     studentEmail: "",
     field: "",
-    priceRange: "",
     studentNeeds: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -77,11 +76,10 @@ export default function GetLessonPage() {
       formData.studentSurname,
       formData.studentPhoneNumber,
       formData.studentEmail,
-      formData.field,
-      formData.priceRange
+      formData.field
     ];
     const completed = requiredFields.filter(f => f !== "").length;
-    return Math.round((completed / 6) * 100);
+    return Math.round((completed / 5) * 100);
   };
 
   return (
@@ -231,20 +229,7 @@ export default function GetLessonPage() {
                 </Select>
               </div>
 
-              {/* Price Range */}
-              <div className="space-y-2">
-                <Label htmlFor="priceRange" className="flex items-center gap-2">
-                  <DollarSign className="w-4 h-4" />
-                  Bütçe Aralığı <span className="text-red-500">*</span>
-                </Label>
-                <Select value={formData.priceRange} onValueChange={(value) => handleSelectChange("priceRange", value)}>
-                  <SelectValue placeholder="Talep ettiğiniz fiyat aralığını seçin" />
-                  <SelectItem value="0-100 TL">0-100 TL / Saat</SelectItem>
-                  <SelectItem value="100-200 TL">100-200 TL / Saat</SelectItem>
-                  <SelectItem value="200-300 TL">200-300 TL / Saat</SelectItem>
-                  <SelectItem value="300+ TL">300+ TL / Saat</SelectItem>
-                </Select>
-              </div>
+
 
               {/* Additional Information */}
               <div className="space-y-2">

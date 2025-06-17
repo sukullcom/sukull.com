@@ -9,7 +9,9 @@ import {
   Clock, 
   User,
   Users,
-  Loader2
+  Loader2,
+  DollarSign,
+  CreditCard
 } from "lucide-react";
 
 type UserStatus = {
@@ -87,6 +89,12 @@ export default function PrivateLessonHeader() {
       description: "Müsaitlik takvimini düzenle"
     },
     {
+      name: "Gelir Takibi",
+      path: "/private-lesson/teacher-dashboard/income",
+      icon: <DollarSign className="w-4 h-4" />,
+      description: "Gelir ve değerlendirmeleri görüntüle"
+    },
+    {
       name: "Profil",
       path: "/private-lesson/teacher-dashboard",
       icon: <User className="w-4 h-4" />,
@@ -107,6 +115,12 @@ export default function PrivateLessonHeader() {
       path: "/private-lesson/teachers",
       icon: <Users className="w-4 h-4" />,
       description: "Öğretmen ara ve rezervasyon yap"
+    },
+    {
+      name: "Krediler",
+      path: "/private-lesson/credits",
+      icon: <CreditCard className="w-4 h-4" />,
+      description: "Ders kredisi satın al"
     }
   ];
 

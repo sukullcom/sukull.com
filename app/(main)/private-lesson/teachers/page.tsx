@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Star, Filter } from "lucide-react";
+import UserCreditsDisplay from "@/components/user-credits-display";
 
 interface Teacher {
   id: string;
@@ -14,41 +17,87 @@ interface Teacher {
   meetLink?: string;
   avatar?: string;
   field?: string;
-  priceRange?: string;
+  averageRating?: number;
+  totalReviews?: number;
 }
+
+const FIELD_OPTIONS = [
+  { value: "all", label: "Tüm Alanlar" },
+  { value: "Matematik", label: "Matematik" },
+  { value: "Fizik", label: "Fizik" },
+  { value: "Kimya", label: "Kimya" },
+  { value: "Biyoloji", label: "Biyoloji" },
+  { value: "Tarih", label: "Tarih" },
+  { value: "Coğrafya", label: "Coğrafya" },
+  { value: "Edebiyat", label: "Edebiyat" },
+  { value: "İngilizce", label: "İngilizce" },
+  { value: "Almanca", label: "Almanca" },
+  { value: "Fransızca", label: "Fransızca" },
+  { value: "Felsefe", label: "Felsefe" },
+  { value: "Müzik", label: "Müzik" },
+  { value: "Resim", label: "Resim" },
+  { value: "Bilgisayar Bilimleri", label: "Bilgisayar Bilimleri" },
+  { value: "Ekonomi", label: "Ekonomi" },
+  { value: "Diğer", label: "Diğer" },
+];
 
 export default function TeachersPage() {
   const router = useRouter();
   const [teachers, setTeachers] = useState<Teacher[]>([]);
+  const [filteredTeachers, setFilteredTeachers] = useState<Teacher[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedField, setSelectedField] = useState("all");
+
+  const fetchTeachers = async (field: string = "all") => {
+    try {
+      setLoading(true);
+      const url = field === "all" 
+        ? "/api/private-lesson/available-teachers"
+        : `/api/private-lesson/available-teachers?field=${encodeURIComponent(field)}`;
+      
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        if (response.status === 403) {
+          // Not an approved student, redirect to main page
+          router.push("/private-lesson");
+          return;
+        }
+        throw new Error("Failed to fetch teachers");
+      }
+      
+      const data = await response.json();
+      setTeachers(data.teachers);
+      setFilteredTeachers(data.teachers);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching teachers:", error);
+      setError("Failed to load teachers. Please try again later.");
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchTeachers = async () => {
-      try {
-        const response = await fetch("/api/private-lesson/available-teachers");
-        
-        if (!response.ok) {
-          if (response.status === 403) {
-            // Not an approved student, redirect to main page
-            router.push("/private-lesson");
-            return;
-          }
-          throw new Error("Failed to fetch teachers");
-        }
-        
-        const data = await response.json();
-        setTeachers(data.teachers);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching teachers:", error);
-        setError("Failed to load teachers. Please try again later.");
-        setLoading(false);
-      }
-    };
+    fetchTeachers(selectedField);
+  }, [router, selectedField]);
 
-    fetchTeachers();
-  }, [router]);
+  const handleFieldChange = (field: string) => {
+    setSelectedField(field);
+  };
+
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <Star
+        key={i}
+        className={`h-4 w-4 ${
+          i < rating
+            ? "fill-yellow-400 text-yellow-400"
+            : "text-gray-300"
+        }`}
+      />
+    ));
+  };
 
   if (loading) {
     return (
@@ -74,15 +123,41 @@ export default function TeachersPage() {
 
   return (
     <div className="container mx-auto py-10 px-4">
-      <h1 className="text-3xl font-bold mb-8">Öğretmenler</h1>
+      {/* User Credits Display */}
+      <UserCreditsDisplay className="mb-6" />
+      
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+        <h1 className="text-3xl font-bold">Öğretmenler</h1>
+        
+        {/* Field Filter */}
+        <div className="flex items-center gap-4">
+          <Filter className="h-5 w-5 text-gray-600" />
+          <Select value={selectedField} onValueChange={handleFieldChange}>
+            <SelectTrigger className="w-[200px]">
+              <SelectValue placeholder="Alan Seçin" />
+            </SelectTrigger>
+            <SelectContent>
+              {FIELD_OPTIONS.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
 
-      {teachers.length === 0 ? (
+      {filteredTeachers.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-xl text-gray-600">No teachers are available at the moment.</p>
+          <p className="text-xl text-gray-600">
+            {selectedField === "all" 
+              ? "Şu anda müsait öğretmen bulunmuyor." 
+              : "Bu alanda öğretmen bulunmuyor."}
+          </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {teachers.map((teacher) => (
+          {filteredTeachers.map((teacher) => (
             <Card key={teacher.id} className="hover:shadow-lg transition-shadow border">
               <CardHeader>
                 <div className="flex justify-center mb-4">
@@ -102,18 +177,22 @@ export default function TeachersPage() {
                     {teacher.field}
                   </CardDescription>
                 )}
+                {/* Rating Display */}
+                {teacher.averageRating && teacher.averageRating > 0 && (
+                  <div className="flex items-center justify-center gap-2 mt-2">
+                    <div className="flex">
+                      {renderStars(Math.round(teacher.averageRating))}
+                    </div>
+                    <span className="text-sm text-gray-600">
+                      {teacher.averageRating.toFixed(1)} ({teacher.totalReviews} değerlendirme)
+                    </span>
+                  </div>
+                )}
               </CardHeader>
               <CardContent>
                 <p className="text-gray-700 line-clamp-3 text-center">
                   {teacher.bio || "No bio available"}
                 </p>
-                {teacher.priceRange && (
-                  <div className="flex justify-center mt-4">
-                    <span className="px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm">
-                      {teacher.priceRange}
-                    </span>
-                  </div>
-                )}
               </CardContent>
               <CardFooter>
                 <Button 

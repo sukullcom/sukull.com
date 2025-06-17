@@ -14,7 +14,6 @@ type TeacherApplication = {
   teacherEmail: string;
   teacherPhoneNumber: string;
   field: string;
-  priceRange: string;
   quizResult: number;
   passed: boolean;
   status: "pending" | "approved" | "rejected";
@@ -142,10 +141,6 @@ export default function TeacherApplicationsPage() {
                     <div className="flex items-center gap-2">
                       <BookOpen className="h-4 w-4 text-gray-500" />
                       <span className="text-sm">{application.field}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <DollarSign className="h-4 w-4 text-gray-500" />
-                      <span className="text-sm">{application.priceRange}</span>
                     </div>
                   </div>
                 </div>

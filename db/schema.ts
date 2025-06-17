@@ -205,7 +205,6 @@ export const userProgressRelations = relations(userProgress, ({ one }) => ({
 }));
 
 // Private Lesson Applications (Öğrenci Başvuruları)
-// (priceRange is required)
 export const privateLessonApplications = pgTable("private_lesson_applications", {
   id: serial("id").primaryKey(),
   studentName: text("student_name").notNull(),
@@ -213,7 +212,6 @@ export const privateLessonApplications = pgTable("private_lesson_applications", 
   studentPhoneNumber: text("student_phone_number").notNull(),
   studentEmail: text("student_email").notNull(),
   field: text("field").notNull(),
-  priceRange: text("price_range").notNull(),
   studentNeeds: text("student_needs"),
   userId: text("user_id"),
   status: text("status").default("pending"),
@@ -224,7 +222,6 @@ export const privateLessonApplications = pgTable("private_lesson_applications", 
 export const privateLessonApplicationsRelations = relations(privateLessonApplications, ({}) => ({}));
 
 // Teacher Applications (Öğretmen Başvuruları)
-// (priceRange is required and classification is stored as well)
 export const applicationStatusEnum = pgEnum("status", ["pending", "approved", "rejected"]);
 
 export const teacherApplications = pgTable("teacher_applications", {
@@ -240,7 +237,6 @@ export const teacherApplications = pgTable("teacher_applications", {
   teacherSurname: text("teacher_surname"),
   teacherPhoneNumber: text("teacher_phone_number"),
   teacherEmail: text("teacher_email"),
-  priceRange: text("price_range").notNull(),
   classification: text("classification"),
   status: applicationStatusEnum("status").default("pending").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -424,6 +420,39 @@ export const lessonBookingsRelations = relations(lessonBookings, ({ one }) => ({
     fields: [lessonBookings.teacherId],
     references: [users.id],
     relationName: "teacher_bookings",
+  }),
+  review: one(lessonReviews, {
+    fields: [lessonBookings.id],
+    references: [lessonReviews.bookingId],
+  }),
+}));
+
+// Lesson Reviews
+export const lessonReviews = pgTable("lesson_reviews", {
+  id: serial("id").primaryKey(),
+  bookingId: integer("booking_id").notNull().references(() => lessonBookings.id, { onDelete: "cascade" }),
+  studentId: text("student_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  teacherId: text("teacher_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  rating: integer("rating").notNull(), // 1-5 stars
+  comment: text("comment"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const lessonReviewsRelations = relations(lessonReviews, ({ one }) => ({
+  booking: one(lessonBookings, {
+    fields: [lessonReviews.bookingId],
+    references: [lessonBookings.id],
+  }),
+  student: one(users, {
+    fields: [lessonReviews.studentId],
+    references: [users.id],
+    relationName: "student_reviews",
+  }),
+  teacher: one(users, {
+    fields: [lessonReviews.teacherId],
+    references: [users.id],
+    relationName: "teacher_reviews",
   }),
 }));
 

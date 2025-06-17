@@ -15,7 +15,7 @@ import { Button } from "./ui/button";
 import { createClient } from "@/utils/supabase/client";
 import { User } from "@supabase/supabase-js";
 import { useSecureLogout } from "@/hooks/use-secure-logout";
-import { CreditCard } from "lucide-react";
+
 
 type Props = {
   className?: string;
@@ -75,11 +75,6 @@ export const Sidebar = ({ className }: Props) => {
         />
         <SidebarItem label="Laboratuvarlar" href="/lab" iconSrc={labIcon} />
         <SidebarItem label="Çantam" href="/shop" iconSrc={shopIcon} />
-        <Link prefetch={false} href="/credits" 
-          className="flex items-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 h-[52px] rounded-lg hover:text-slate-600 transition-all hover:bg-slate-100">
-          <CreditCard className="w-[32px] h-[32px]" />
-          <span>Krediler</span>
-        </Link>
         <SidebarItem label="Çalışma Arkadaşı" href="/study-buddy" iconSrc="/study_buddy.svg" />
         <SidebarItem label="Profİl" href="/profile" iconSrc="/mascot_normal.svg" />
       </div>

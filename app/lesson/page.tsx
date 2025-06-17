@@ -27,6 +27,7 @@ const LessonPage = async () => {
       initialPoints={userProgress.points}
       initialPercentage={initialPercentage}
       userSubscription={null}
+      hasInfiniteHearts={userProgress.hasInfiniteHearts || false}
     />
   );
 };

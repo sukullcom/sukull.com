@@ -28,7 +28,6 @@ export default function GiveLessonPage() {
     teacherSurname: "",
     teacherPhoneNumber: "",
     teacherEmail: "",
-    priceRange: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -42,9 +41,7 @@ export default function GiveLessonPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handlePriceRangeChange = (value: string) => {
-    setFormData({ ...formData, priceRange: value });
-  };
+
 
   const handleSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,9 +80,9 @@ export default function GiveLessonPage() {
 
   // Calculate form completion percentage
   const completionPercentage = () => {
-    const fields = [field, formData.teacherName, formData.teacherSurname, formData.teacherPhoneNumber, formData.teacherEmail, formData.priceRange];
+    const fields = [field, formData.teacherName, formData.teacherSurname, formData.teacherPhoneNumber, formData.teacherEmail];
     const completed = fields.filter(f => f !== "").length;
-    return Math.round((completed / 6) * 100);
+    return Math.round((completed / 5) * 100);
   };
 
   return (

@@ -131,7 +131,6 @@ export interface TeacherApplication {
   teacherSurname?: string;
   teacherPhoneNumber?: string;
   teacherEmail?: string;
-  priceRange: string;
   classification?: string;
   status: string;
   createdAt: string;
@@ -146,7 +145,6 @@ export interface StudentApplication {
   studentPhoneNumber: string;
   studentEmail: string;
   field: string;
-  priceRange: string;
   studentNeeds?: string;
   userId?: string;
   status: string;

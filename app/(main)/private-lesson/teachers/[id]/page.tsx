@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ReservationModal } from "@/components/modals/reservation-modal";
 import { toast } from "sonner";
+import UserCreditsDisplay from "@/components/user-credits-display";
 
 interface Teacher {
   id: string;
@@ -16,7 +17,6 @@ interface Teacher {
   meetLink?: string;
   avatar?: string;
   field?: string;
-  priceRange?: string;
 }
 
 interface AvailabilityData {
@@ -255,6 +255,9 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
     <div className="container mx-auto py-10 px-4 max-w-5xl">
       <h1 className="text-3xl font-bold mb-8">{teacher.name}</h1>
 
+      {/* User Credits Display */}
+      <UserCreditsDisplay className="mb-6" />
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Teacher profile */}
         <Card className="md:col-span-1 bg-white shadow-md hover:shadow-lg transition-shadow">
@@ -285,14 +288,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
                   {teacher.bio || "Bu öğretmen henüz kendisi hakkında bilgi paylaşmamış."}
                 </p>
               </div>
-              
-              {teacher.priceRange && (
-                <div className="flex items-center justify-center mt-4">
-                  <div className="px-4 py-2 bg-green-50 text-green-700 rounded-full text-sm font-medium">
-                    Fiyat Aralığı: {teacher.priceRange}
-                  </div>
-                </div>
-              )}
+
             </div>
           </CardContent>
         </Card>

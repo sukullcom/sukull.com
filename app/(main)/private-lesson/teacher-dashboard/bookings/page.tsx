@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { useLessonStatusUpdater } from "@/hooks/use-lesson-status-updater";
 
 interface Booking {
   id: number;
@@ -28,35 +29,52 @@ export default function TeacherBookingsPage() {
   const [activeTab, setActiveTab] = useState<'upcoming' | 'completed'>('upcoming');
   const [teacherMeetLink, setTeacherMeetLink] = useState<string | null>(null);
   const lessonsPerPage = 5;
+  
+  // Use the lesson status updater hook to automatically update completed lessons
+  useLessonStatusUpdater();
 
   useEffect(() => {
     // Reset page when changing tabs
     setCurrentPage(1);
   }, [activeTab]);
 
+  // Listen for lesson status updates
   useEffect(() => {
-    const fetchBookings = async () => {
-      try {
-        const response = await fetch("/api/private-lesson/teacher-bookings");
-        
-        if (!response.ok) {
-          throw new Error("Failed to fetch bookings");
-        }
-        
-        const data = await response.json();
-        
-        // Extract bookings array from the response
-        const bookingsArray = data.bookings || [];
-        setBookings(bookingsArray);
-        setTeacherMeetLink(data.teacherMeetLink);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching bookings:", error);
-        setError("Failed to load bookings. Please try again later.");
-        setLoading(false);
-      }
+    const handleLessonStatusUpdate = () => {
+      console.log('Lesson status updated, refreshing bookings...');
+      fetchBookings();
     };
 
+    window.addEventListener('lessonStatusUpdated', handleLessonStatusUpdate);
+    
+    return () => {
+      window.removeEventListener('lessonStatusUpdated', handleLessonStatusUpdate);
+    };
+  }, []);
+
+  const fetchBookings = async () => {
+    try {
+      const response = await fetch("/api/private-lesson/teacher-bookings");
+      
+      if (!response.ok) {
+        throw new Error("Failed to fetch bookings");
+      }
+      
+      const data = await response.json();
+      
+      // Extract bookings array from the response
+      const bookingsArray = data.bookings || [];
+      setBookings(bookingsArray);
+      setTeacherMeetLink(data.teacherMeetLink);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching bookings:", error);
+      setError("Failed to load bookings. Please try again later.");
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchBookings();
   }, []);
 
@@ -147,7 +165,7 @@ export default function TeacherBookingsPage() {
     .sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime()); // Chronological order
 
   const completedBookings = bookings
-    .filter(booking => isLessonPast(booking.endTime) || booking.status === 'completed' || booking.status === 'cancelled')
+    .filter(booking => (isLessonPast(booking.endTime) || booking.status === 'completed') && booking.status !== 'cancelled')
     .sort((a, b) => new Date(b.startTime).getTime() - new Date(a.startTime).getTime()); // Most recent first
 
   // Get current lessons based on active tab and pagination
@@ -297,8 +315,7 @@ export default function TeacherBookingsPage() {
                     <CardFooter className="py-3 px-5 bg-gray-50 border-t border-gray-100">
                       <div className="text-xs text-gray-500 flex items-center">
                         {getStatusIndicator(booking.status)}
-                        {booking.status === 'completed' ? "Ders tamamlandı" : 
-                         booking.status === 'cancelled' ? "Ders iptal edildi" : getStatusLabel(booking.status)}
+                        Ders tamamlandı
                       </div>
                     </CardFooter>
                   )}

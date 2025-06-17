@@ -34,6 +34,7 @@ const LessonIdPage = async ({ params }: Props) => {
       initialPoints={userProgress.points}
       initialPercentage={initialPercentage}
       userSubscription={null} // TODO: Add user subscription
+      hasInfiniteHearts={userProgress.hasInfiniteHearts || false}
     />
   );
 };

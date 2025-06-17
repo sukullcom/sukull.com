@@ -16,6 +16,7 @@ import {
   users,
   teacherAvailability,
   lessonBookings,
+  lessonReviews,
   userRoleEnum,
   userCredits,
   creditTransactions,
@@ -454,7 +455,6 @@ export const saveStudentApplication = async (applicationData: {
   studentPhoneNumber: string;
   studentEmail: string;
   field: string;
-  priceRange: string;
   studentNeeds?: string;
 }) => {
   const data = await db
@@ -473,7 +473,6 @@ export async function saveTeacherApplication(applicationData: {
   teacherSurname?: string;
   teacherPhoneNumber?: string;
   teacherEmail?: string;
-  priceRange: string;
 }) {
   // Ensure quiz-related fields are set properly regardless of what was passed
   const updatedData = {
@@ -924,6 +923,14 @@ export async function getStudentBookings(studentId: string) {
           avatar: true,
           meetLink: true,
         }
+      },
+      review: {
+        columns: {
+          id: true,
+          rating: true,
+          comment: true,
+          createdAt: true,
+        }
       }
     },
   });
@@ -1258,6 +1265,194 @@ export const getUserSubscriptionHistory = cache(async (userId: string) => {
   return await db.query.userSubscriptions.findMany({
     where: eq(userSubscriptions.userId, userId),
     orderBy: desc(userSubscriptions.createdAt),
+  });
+});
+
+// Teacher Income and Review Functions
+
+// Get teacher income summary (completed lessons only, excluding cancelled)
+export const getTeacherIncome = cache(async (teacherId: string) => {
+  // First get all completed bookings for this teacher
+  const completedBookings = await db.query.lessonBookings.findMany({
+    where: and(
+      eq(lessonBookings.teacherId, teacherId),
+      eq(lessonBookings.status, "completed")
+    ),
+    with: {
+      student: {
+        columns: {
+          name: true,
+          email: true,
+        }
+      }
+    },
+    orderBy: desc(lessonBookings.startTime),
+  });
+
+  // Each completed lesson = 1 credit = income
+  // Assuming 1 credit = 25 TL (adjust as needed)
+  const pricePerLesson = 25;
+  const totalLessons = completedBookings.length;
+  const totalIncome = totalLessons * pricePerLesson;
+
+  // Group by month for detailed breakdown
+  const monthlyIncome = completedBookings.reduce((acc, booking) => {
+    const month = booking.startTime.toISOString().slice(0, 7); // YYYY-MM format
+    if (!acc[month]) {
+      acc[month] = { lessons: 0, income: 0 };
+    }
+    acc[month].lessons += 1;
+    acc[month].income += pricePerLesson;
+    return acc;
+  }, {} as Record<string, { lessons: number; income: number }>);
+
+  return {
+    totalLessons,
+    totalIncome,
+    monthlyIncome,
+    recentBookings: completedBookings.slice(0, 10), // Last 10 bookings
+  };
+});
+
+// Get teacher reviews and average rating
+export const getTeacherReviews = cache(async (teacherId: string) => {
+  const reviews = await db.query.lessonReviews.findMany({
+    where: eq(lessonReviews.teacherId, teacherId),
+    with: {
+      student: {
+        columns: {
+          name: true,
+        }
+      },
+      booking: {
+        columns: {
+          startTime: true,
+        }
+      }
+    },
+    orderBy: desc(lessonReviews.createdAt),
+  });
+
+  if (reviews.length === 0) {
+    return {
+      averageRating: 0,
+      totalReviews: 0,
+      reviews: [],
+    };
+  }
+
+  const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+  const averageRating = Math.round((totalRating / reviews.length) * 10) / 10; // Round to 1 decimal
+
+  return {
+    averageRating,
+    totalReviews: reviews.length,
+    reviews,
+  };
+});
+
+// Submit a review for a completed lesson
+export const submitLessonReview = async (
+  bookingId: number,
+  studentId: string,
+  teacherId: string,
+  rating: number,
+  comment?: string
+) => {
+  // Verify the booking exists and is completed
+  const booking = await db.query.lessonBookings.findFirst({
+    where: and(
+      eq(lessonBookings.id, bookingId),
+      eq(lessonBookings.studentId, studentId),
+      eq(lessonBookings.teacherId, teacherId),
+      eq(lessonBookings.status, "completed")
+    ),
+  });
+
+  if (!booking) {
+    throw new Error("Booking not found or not completed");
+  }
+
+  // Check if review already exists
+  const existingReview = await db.query.lessonReviews.findFirst({
+    where: eq(lessonReviews.bookingId, bookingId),
+  });
+
+  if (existingReview) {
+    throw new Error("Review already exists for this booking");
+  }
+
+  // Create the review
+  return await db.insert(lessonReviews).values({
+    bookingId,
+    studentId,
+    teacherId,
+    rating,
+    comment: comment || null,
+  }).returning();
+};
+
+// Get teacher info with average rating for listing
+export const getTeachersWithRatings = cache(async () => {
+  // Get all teachers
+  const teachers = await db.query.users.findMany({
+    where: eq(users.role, "teacher"),
+    columns: {
+      id: true,
+      name: true,
+      email: true,
+      avatar: true,
+      description: true,
+      meetLink: true,
+    },
+  });
+
+  // Get teacher applications for field info
+  const teacherApplications = await db.query.teacherApplications.findMany({
+    columns: {
+      userId: true,
+      field: true,
+    },
+  });
+
+  const applicationMap = teacherApplications.reduce((acc, app) => {
+    acc[app.userId] = app;
+    return acc;
+  }, {} as Record<string, typeof teacherApplications[0]>);
+
+  // Get reviews for all teachers
+  const allReviews = await db.query.lessonReviews.findMany({
+    columns: {
+      teacherId: true,
+      rating: true,
+    },
+  });
+
+  // Calculate average ratings
+  const ratingMap = allReviews.reduce((acc, review) => {
+    if (!acc[review.teacherId]) {
+      acc[review.teacherId] = { total: 0, count: 0 };
+    }
+    acc[review.teacherId].total += review.rating;
+    acc[review.teacherId].count += 1;
+    return acc;
+  }, {} as Record<string, { total: number; count: number }>);
+
+  // Combine teacher data with ratings and applications
+  return teachers.map(teacher => {
+    const application = applicationMap[teacher.id];
+    const ratingData = ratingMap[teacher.id];
+    const averageRating = ratingData 
+      ? Math.round((ratingData.total / ratingData.count) * 10) / 10 
+      : 0;
+
+    return {
+      ...teacher,
+      bio: teacher.description,
+      field: application?.field || "",
+      averageRating,
+      totalReviews: ratingData?.count || 0,
+    };
   });
 });
 
