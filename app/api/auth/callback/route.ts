@@ -12,14 +12,14 @@ export async function GET(request: Request) {
     const code = requestUrl.searchParams.get('code');
     const error = requestUrl.searchParams.get('error');
     
-    console.log('OAuth callback received:', {
+    console.log('OAuth/Email verification callback received:', {
       url: request.url,
       hasCode: !!code,
       error: error || 'none'
     });
 
     if (error) {
-      console.error('OAuth error received:', error);
+      console.error('OAuth/verification error received:', error);
       const errorUrl = new URL('/auth-error', requestUrl.origin);
       errorUrl.searchParams.set('error', error);
       return NextResponse.redirect(errorUrl);
@@ -47,15 +47,19 @@ export async function GET(request: Request) {
     }
 
     console.log('Session created successfully for user:', data.user?.id);
+    console.log('User email confirmed:', data.user?.email_confirmed_at ? 'Yes' : 'No');
 
-    // Capture user details after successful OAuth
+    // Capture user details after successful OAuth or email verification
     if (data.user) {
       try {
         console.log('Capturing user details for:', data.user.email);
         console.log('Auth provider:', data.user.app_metadata?.provider);
         console.log('User metadata:', JSON.stringify(data.user.user_metadata, null, 2));
         
-        await users.captureUserDetails(data.user);
+        // Extract username from metadata if available (from email signup)
+        const usernameFromMetadata = data.user.user_metadata?.username;
+        
+        await users.captureUserDetails(data.user, usernameFromMetadata);
         console.log('User details captured successfully');
       } catch (err) {
         console.error('Error capturing user details:', err);
@@ -63,8 +67,14 @@ export async function GET(request: Request) {
       }
     }
 
-    // Default redirect to courses page
-    const redirectTo = '/courses';
+    // Determine redirect location based on the type of authentication
+    let redirectTo = '/courses';
+    
+    // If this was an email verification (not OAuth), redirect to login with success message
+    if (data.user?.email_confirmed_at && data.user.app_metadata?.provider === 'email') {
+      redirectTo = '/login?verified=true';
+    }
+    
     const redirectUrl = new URL(redirectTo, requestUrl.origin);
     console.log('Redirecting to:', redirectUrl.toString());
     

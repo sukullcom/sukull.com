@@ -17,6 +17,7 @@ interface Teacher {
   meetLink?: string;
   avatar?: string;
   field?: string;
+  fields?: string[];
   averageRating?: number;
   totalReviews?: number;
 }
@@ -38,7 +39,6 @@ const FIELD_OPTIONS = [
   { value: "Resim", label: "Resim" },
   { value: "Bilgisayar Bilimleri", label: "Bilgisayar Bilimleri" },
   { value: "Ekonomi", label: "Ekonomi" },
-  { value: "Diğer", label: "Diğer" },
 ];
 
 export default function TeachersPage() {
@@ -171,9 +171,29 @@ export default function TeachersPage() {
                 </div>
                 <CardTitle className="text-center text-xl">{teacher.name}</CardTitle>
                 {teacher.field && (
-                  <CardDescription className="text-center font-medium text-primary mt-1">
-                    {teacher.field}
-                  </CardDescription>
+                  <div className="text-center mt-2">
+                    {teacher.fields && teacher.fields.length > 1 ? (
+                      <div className="flex flex-wrap gap-1 justify-center">
+                        {teacher.fields.slice(0, 3).map((field, index) => (
+                          <span
+                            key={index}
+                            className="inline-block px-2 py-1 text-xs bg-primary/10 text-primary rounded-full"
+                          >
+                            {field}
+                          </span>
+                        ))}
+                        {teacher.fields.length > 3 && (
+                          <span className="inline-block px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full">
+                            +{teacher.fields.length - 3} daha
+                          </span>
+                        )}
+                      </div>
+                    ) : (
+                      <CardDescription className="font-medium text-primary">
+                        {teacher.field}
+                      </CardDescription>
+                    )}
+                  </div>
                 )}
                 {/* Rating Display */}
                 {teacher.averageRating && teacher.averageRating > 0 && (

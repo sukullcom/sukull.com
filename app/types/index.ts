@@ -137,6 +137,24 @@ export interface TeacherApplication {
   updatedAt: string;
 }
 
+// Teacher fields types
+export interface TeacherField {
+  id: number;
+  teacherId: string;
+  subject: string;
+  grade: string;
+  displayName: string;
+  isActive: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface FieldOption {
+  subject: string;
+  grade: string;
+  displayName: string;
+}
+
 // Student application types
 export interface StudentApplication {
   id: number;

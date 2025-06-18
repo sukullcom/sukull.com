@@ -30,23 +30,50 @@ export const auth = {
       throw checkErr
     }
 
-    // 2) Attempt to create a Supabase auth user
+    // 2) Attempt to create a Supabase auth user with email confirmation enabled
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         emailRedirectTo: `${location.origin}/callback`,
+        // Ensure email confirmation is required
+        data: {
+          username: username, // Store username in metadata
+        }
       },
     })
-    if (error) throw error
-    if (!data.user) throw new Error('Failed to create user account.')
-
-    // 3) Capture user details in 'users' table
-    try {
-      await users.captureUserDetails(data.user, username)
-    } catch (profileError) {
-      console.error('Could not capture user details:', profileError)
+    
+    if (error) {
+      console.error('Signup error:', error);
+      throw error;
     }
+    
+    if (!data.user) {
+      throw new Error('Failed to create user account.');
+    }
+
+    // Log for debugging
+    console.log('User signed up:', {
+      id: data.user.id,
+      email: data.user.email,
+      emailConfirmed: data.user.email_confirmed_at,
+      needsConfirmation: !data.user.email_confirmed_at
+    });
+
+    // 3) Only capture user details if this is not an email confirmation signup
+    // (email confirmation signups will be handled by the callback route)
+    if (data.user.email_confirmed_at) {
+      // User is immediately confirmed (happens in some configurations)
+      try {
+        await users.captureUserDetails(data.user, username)
+      } catch (profileError) {
+        console.error('Could not capture user details:', profileError)
+      }
+    } else {
+      // User needs to confirm email first
+      console.log('Email confirmation required for user:', data.user.email);
+    }
+    
     return data
   },
 
@@ -184,5 +211,40 @@ export const auth = {
     const { data, error } = await supabase.auth.updateUser({ password: newPassword })
     if (error) throw error
     return data
+  },
+
+  async resendVerificationEmail(email: string) {
+    // Check if user exists and is an email provider user
+    const { data: userData, error } = await supabase
+      .from('users')
+      .select('provider')
+      .eq('email', email)
+      .single()
+
+    if (!userData || userData.provider !== 'email') {
+      return { 
+        success: true, 
+        message: 'If an account exists and needs verification, a verification email will be sent.' 
+      }
+    }
+
+    // Resend verification email
+    const { error: resendError } = await supabase.auth.resend({
+      type: 'signup',
+      email: email,
+      options: {
+        emailRedirectTo: `${location.origin}/callback`,
+      }
+    })
+
+    if (resendError) {
+      console.error('Resend verification error:', resendError);
+      throw resendError;
+    }
+
+    return {
+      success: true,
+      message: 'Verification email sent. Please check your inbox and spam folder.',
+    }
   },
 }

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { approveTeacherApplication, rejectTeacherApplication } from "@/db/queries";
+import { approveTeacherApplication, approveTeacherApplicationWithFields, rejectTeacherApplication } from "@/db/queries";
 import { isAdmin } from "@/lib/admin";
 
 export async function PATCH(
@@ -18,9 +18,10 @@ export async function PATCH(
     }
 
     const { id } = params;
-    const { action } = await request.json();
+    const { action, selectedFields } = await request.json();
     
     console.log(`[Teacher Application] Action: ${action} for application ID: ${id}`);
+    console.log(`[Teacher Application] Selected fields:`, selectedFields);
     
     if (!id || isNaN(parseInt(id))) {
       console.log(`[Teacher Application] Invalid ID: ${id}`);
@@ -32,7 +33,16 @@ export async function PATCH(
     if (action === "approve") {
       console.log(`[Teacher Application] Approving application ${applicationId}`);
       try {
-        const result = await approveTeacherApplication(applicationId);
+        let result;
+        
+        // Use new field-based approval if fields are provided
+        if (selectedFields && selectedFields.length > 0) {
+          result = await approveTeacherApplicationWithFields(applicationId, selectedFields);
+        } else {
+          // Fallback to legacy approval
+          result = await approveTeacherApplication(applicationId);
+        }
+        
         console.log(`[Teacher Application] Approval successful:`, result);
         return NextResponse.json({ message: "Application approved successfully." }, { status: 200 });
       } catch (error) {

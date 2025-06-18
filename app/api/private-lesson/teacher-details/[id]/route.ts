@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
-import { getTeacherAvailabilityForCurrentWeek } from "@/db/queries";
+import { getTeacherAvailabilityForCurrentWeek, getTeacherFields } from "@/db/queries";
 import { and, eq, gte, lte, not } from "drizzle-orm";
 import db from "@/db/drizzle";
 import { lessonBookings, users, userProgress, teacherApplications } from "@/db/schema";
@@ -81,12 +81,28 @@ export async function GET(
       }
     });
     
+    // Get teacher fields from the new system
+    const teacherFieldsData = await getTeacherFields(teacherId);
+    
+    // Determine field display - use new system if available, fallback to legacy
+    let fieldDisplay = "";
+    let fields: string[] = [];
+    
+    if (teacherFieldsData && teacherFieldsData.length > 0) {
+      fields = teacherFieldsData.map(f => f.displayName);
+      fieldDisplay = fields.join(", ");
+    } else if (teacherApplication?.field) {
+      fieldDisplay = teacherApplication.field;
+      fields = [teacherApplication.field];
+    }
+    
     // Combine all teacher details
     const teacherWithDetails = {
       ...teacher,
       bio: teacher.description,
       avatar: teacherProfile?.userImageSrc || teacher.avatar,
-      field: teacherApplication?.field || "",
+      field: fieldDisplay,
+      fields: fields, // Array of all fields
     };
     
     // Get availability for the current week

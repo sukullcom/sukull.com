@@ -19,7 +19,12 @@ export async function GET(request: Request) {
     
     // Apply field filter if provided
     if (fieldFilter && fieldFilter !== 'all') {
-      teachers = teachers.filter(teacher => teacher.field === fieldFilter);
+      teachers = teachers.filter(teacher => {
+        // Check if the teacher has this field in their fields array
+        return teacher.fields && teacher.fields.some(field => 
+          field.toLowerCase().includes(fieldFilter.toLowerCase())
+        );
+      });
     }
     
     // Return the list of teachers

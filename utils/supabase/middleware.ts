@@ -8,6 +8,7 @@ const publicPaths = [
   '/login',
   '/create-account',
   '/forgot-password',
+  '/resend-verification',
   '/callback',
   '/api/auth/callback',
   '/reset-password',

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ReservationModal } from "@/components/modals/reservation-modal";
+import { Star } from "lucide-react";
 import { toast } from "sonner";
 import UserCreditsDisplay from "@/components/user-credits-display";
 
@@ -17,6 +18,9 @@ interface Teacher {
   meetLink?: string;
   avatar?: string;
   field?: string;
+  fields?: string[];
+  averageRating?: number;
+  totalReviews?: number;
 }
 
 interface AvailabilityData {
@@ -56,6 +60,16 @@ interface SelectedSlot {
   endTime: Date;
 }
 
+interface Review {
+  id: number;
+  rating: number;
+  comment: string | null;
+  createdAt: string;
+  student: {
+    name: string;
+  };
+}
+
 export default function TeacherDetailPage({ params }: { params: { id: string } }) {
   const router = useRouter();
   const [teacher, setTeacher] = useState<Teacher | null>(null);
@@ -65,12 +79,14 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
   const [booking, setBooking] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showReservationModal, setShowReservationModal] = useState(false);
+  const [reviews, setReviews] = useState<Review[]>([]);
 
   useEffect(() => {
     const fetchTeacherDetails = async () => {
       try {
         setLoading(true);
         
+        // Fetch teacher details and availability
         const response = await fetch(`/api/private-lesson/teacher-details/${params.id}`);
         
         if (!response.ok) {
@@ -129,6 +145,27 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
           });
         
         setAvailability(processedAvailability);
+        
+        // Fetch teacher reviews
+        try {
+          const reviewsResponse = await fetch(`/api/private-lesson/teacher-details/${params.id}/reviews`);
+          if (reviewsResponse.ok) {
+            const reviewsData = await reviewsResponse.json();
+            setReviews(reviewsData.reviews || []);
+            // Update teacher with review stats if available
+            if (reviewsData.averageRating !== undefined) {
+              setTeacher(prev => prev ? {
+                ...prev,
+                averageRating: reviewsData.averageRating,
+                totalReviews: reviewsData.totalReviews
+              } : prev);
+            }
+          }
+        } catch (reviewError) {
+          console.error("Error fetching reviews:", reviewError);
+          // Continue without reviews
+        }
+        
         setLoading(false);
       } catch (error) {
         console.error("Error fetching teacher details:", error);
@@ -216,6 +253,27 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
     });
   };
 
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <Star
+        key={i}
+        className={`h-4 w-4 ${
+          i < rating
+            ? "fill-yellow-400 text-yellow-400"
+            : "text-gray-300"
+        }`}
+      />
+    ));
+  };
+
+  const formatReviewDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("tr-TR", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -274,10 +332,35 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
               </div>
             </div>
             <CardTitle className="text-center text-2xl">{teacher.name}</CardTitle>
-            {teacher.field && (
+            
+            {/* Display fields as badges */}
+            {(teacher.fields && teacher.fields.length > 0) ? (
+              <div className="flex flex-wrap gap-1 justify-center mt-3">
+                {teacher.fields.map((field, index) => (
+                  <span
+                    key={index}
+                    className="inline-block px-3 py-1 text-sm bg-primary/10 text-primary rounded-full font-medium"
+                  >
+                    {field}
+                  </span>
+                ))}
+              </div>
+            ) : teacher.field ? (
               <CardDescription className="text-center font-medium text-primary text-base mt-1">
                 {teacher.field}
               </CardDescription>
+            ) : null}
+            
+            {/* Rating Display */}
+            {teacher.averageRating && teacher.averageRating > 0 && (
+              <div className="flex items-center justify-center gap-2 mt-3">
+                <div className="flex">
+                  {renderStars(Math.round(teacher.averageRating))}
+                </div>
+                <span className="text-sm text-gray-600">
+                  {teacher.averageRating.toFixed(1)} ({teacher.totalReviews} değerlendirme)
+                </span>
+              </div>
             )}
           </CardHeader>
           <CardContent className="pt-4">
@@ -289,6 +372,40 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
                 </p>
               </div>
 
+              {/* Reviews Section */}
+              <div className="p-4 rounded-lg border-t">
+                <h3 className="font-medium text-lg mb-3 text-gray-800">Değerlendirmeler</h3>
+                {reviews.length > 0 ? (
+                  <div className="space-y-3 max-h-60 overflow-y-auto">
+                    {reviews.slice(0, 5).map((review: Review, index: number) => (
+                      <div key={index} className="p-3 bg-gray-50 rounded-lg">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-medium text-sm">{review.student?.name || "Anonim"}</span>
+                          <div className="flex">
+                            {renderStars(review.rating)}
+                          </div>
+                        </div>
+                        {review.comment && (
+                          <p className="text-sm text-gray-600 mb-1">&ldquo;{review.comment}&rdquo;</p>
+                        )}
+                        <p className="text-xs text-gray-500">
+                          {formatReviewDate(review.createdAt)}
+                        </p>
+                      </div>
+                    ))}
+                    {reviews.length > 5 && (
+                      <p className="text-center text-sm text-gray-500 mt-2">
+                        ve {reviews.length - 5} değerlendirme daha...
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <div className="text-center py-8 text-gray-500">
+                    <p className="text-lg">Henüz Değerlendirme Yok</p>
+                    <p className="text-sm mt-1">Bu öğretmen henüz hiç değerlendirme almamış.</p>
+                  </div>
+                )}
+              </div>
             </div>
           </CardContent>
         </Card>

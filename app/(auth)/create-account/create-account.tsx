@@ -35,7 +35,7 @@ export function CreateAccountForm() {
     try {
       setIsLoading(true);
       await auth.signUp(username, email, password);
-      toast.success("Please check your email to verify your account.");
+      toast.success("Kayıt işlemi başarılı! E-postanıza doğrulama linki gönderildi. Lütfen e-postanızı kontrol edin ve spam klasörünü de kontrol etmeyi unutmayın.");
       router.push("/login");
     } catch (error) {
       const { message } = getAuthError(error);

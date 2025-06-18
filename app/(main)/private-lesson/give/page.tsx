@@ -16,7 +16,6 @@ import {
   User,
   Phone,
   Mail,
-  DollarSign,
   Info,
   GraduationCap
 } from "lucide-react";
@@ -28,7 +27,6 @@ export default function GiveLessonPage() {
     teacherSurname: "",
     teacherPhoneNumber: "",
     teacherEmail: "",
-    priceRange: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -42,21 +40,11 @@ export default function GiveLessonPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handlePriceRangeChange = (value: string) => {
-    setFormData({ ...formData, priceRange: value });
-  };
-
-
-
   const handleSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!field) {
       return toast.error("Lütfen bir alan seçiniz.");
-    }
-    
-    if (!formData.priceRange) {
-      return toast.error("Lütfen bir ücret aralığı seçiniz.");
     }
     
     setIsSubmitting(true);
@@ -67,6 +55,7 @@ export default function GiveLessonPage() {
       // Setting these values as not needed but maintaining DB compatibility
       quizResult: 0,
       passed: true,
+      priceRange: "0-100 TL", // Default value for DB compatibility
     };
 
     try {
@@ -89,9 +78,9 @@ export default function GiveLessonPage() {
 
   // Calculate form completion percentage
   const completionPercentage = () => {
-    const fields = [field, formData.teacherName, formData.teacherSurname, formData.teacherPhoneNumber, formData.teacherEmail, formData.priceRange];
+    const fields = [field, formData.teacherName, formData.teacherSurname, formData.teacherPhoneNumber, formData.teacherEmail];
     const completed = fields.filter(f => f !== "").length;
-    return Math.round((completed / 6) * 100);
+    return Math.round((completed / 5) * 100);
   };
 
   return (
@@ -235,21 +224,6 @@ export default function GiveLessonPage() {
                     className="transition-all duration-200 focus:scale-[1.02]"
                   />
                 </div>
-              </div>
-
-              {/* Price Range */}
-              <div className="space-y-2">
-                <Label htmlFor="priceRange" className="flex items-center gap-2">
-                  <DollarSign className="w-4 h-4" />
-                  Ücret Aralığı <span className="text-red-500">*</span>
-                </Label>
-                <Select value={formData.priceRange} onValueChange={handlePriceRangeChange}>
-                  <SelectValue placeholder="Ders ücreti aralığınızı seçin" />
-                  <SelectItem value="0-100 TL">0-100 TL / Saat</SelectItem>
-                  <SelectItem value="100-200 TL">100-200 TL / Saat</SelectItem>
-                  <SelectItem value="200-300 TL">200-300 TL / Saat</SelectItem>
-                  <SelectItem value="300+ TL">300+ TL / Saat</SelectItem>
-                </Select>
               </div>
 
               {/* Info Alert */}

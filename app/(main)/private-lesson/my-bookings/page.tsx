@@ -15,6 +15,7 @@ interface Booking {
   studentId: string;
   teacherId: string;
   field: string;
+  fields?: string[];
   startTime: string;
   endTime: string;
   status: string;
@@ -605,7 +606,7 @@ export default function MyBookingsPage() {
                           {booking.teacher?.name || "Öğretmen"}
                         </CardTitle>
                         <div className="mt-1 text-sm font-medium text-primary">
-                          {booking.field}
+                          {booking.fields?.join(', ') || booking.field}
                         </div>
                       </div>
                       <div className="text-sm font-medium px-3 py-1 rounded-full bg-primary/10 text-primary">

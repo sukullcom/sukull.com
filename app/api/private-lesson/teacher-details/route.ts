@@ -3,7 +3,7 @@ import { getServerUser } from "@/lib/auth";
 import db from "@/db/drizzle";
 import { users, teacherApplications } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { isTeacher } from "@/db/queries";
+import { isTeacher, getTeacherFields } from "@/db/queries";
 
 export async function GET() {
   try {
@@ -34,6 +34,21 @@ export async function GET() {
       where: eq(teacherApplications.userId, user.id),
     });
     
+    // Get teacher fields from the new system
+    const teacherFieldsData = await getTeacherFields(user.id);
+    
+    // Determine field display - use new system if available, fallback to legacy
+    let fieldDisplay = "";
+    let fields: string[] = [];
+    
+    if (teacherFieldsData && teacherFieldsData.length > 0) {
+      fields = teacherFieldsData.map(f => f.displayName);
+      fieldDisplay = fields.join(", ");
+    } else if (teacherApplication?.field) {
+      fieldDisplay = teacherApplication.field;
+      fields = [teacherApplication.field];
+    }
+    
     // Combine data from both sources
     const teacherProfile = {
       id: userDetails.id,
@@ -42,7 +57,8 @@ export async function GET() {
       avatar: userDetails.avatar,
       bio: userDetails.description,
       meetLink: userDetails.meetLink,
-      field: teacherApplication?.field || "",
+      field: fieldDisplay,
+      fields: fields, // Array of all fields
     };
     
     return NextResponse.json(teacherProfile);
@@ -70,7 +86,7 @@ export async function PATCH(request: Request) {
     }
     
     // Parse the request body
-    const data: { bio?: string; field?: string } = await request.json();
+    const data: { bio?: string } = await request.json();
     
     // Update bio (saved as description in the users table)
     if (data.bio !== undefined) {
@@ -78,34 +94,6 @@ export async function PATCH(request: Request) {
         .update(users)
         .set({ description: data.bio })
         .where(eq(users.id, user.id));
-    }
-    
-    // Update field (saved in teacherApplications table)
-    if (data.field !== undefined) {
-      // First, check if teacher application record exists
-      const existingApplication = await db.query.teacherApplications.findFirst({
-        where: eq(teacherApplications.userId, user.id),
-      });
-      
-      if (existingApplication) {
-        // Update existing record
-        await db
-          .update(teacherApplications)
-          .set({ 
-            field: data.field,
-            updatedAt: new Date()
-          })
-          .where(eq(teacherApplications.userId, user.id));
-      } else {
-        // Create new record if it doesn't exist (fallback)
-        await db.insert(teacherApplications).values({
-          userId: user.id,
-          field: data.field || "",
-          status: "approved", // Since user is already a teacher
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        });
-      }
     }
     
     return NextResponse.json({ 

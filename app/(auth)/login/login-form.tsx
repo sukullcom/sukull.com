@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
 
@@ -17,6 +17,19 @@ export function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Check for email verification success
+  useEffect(() => {
+    const verified = searchParams.get('verified');
+    if (verified === 'true') {
+      toast.success("E-postanız başarıyla doğrulandı! Artık giriş yapabilirsiniz.");
+      // Clean up the URL
+      const newUrl = new URL(window.location.href);
+      newUrl.searchParams.delete('verified');
+      window.history.replaceState({}, '', newUrl.toString());
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,6 +91,18 @@ export function LoginForm() {
           Şifremi Unuttum
         </Link>
       </p>
+      
+      <p className="text-center text-sm mt-3">
+        E-posta doğrulama linki almadınız mı?{" "}
+        <Link
+          prefetch={false}
+          href="/resend-verification"
+          className="text-green-500 font-semibold underline hover:text-green-500"
+        >
+          Yeniden Gönder
+        </Link>
+      </p>
+      
       <p className="text-center text-sm mt-3">
         Hesabın yok mu?{" "}
         <Link

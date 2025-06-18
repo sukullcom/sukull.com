@@ -456,6 +456,25 @@ export const lessonReviewsRelations = relations(lessonReviews, ({ one }) => ({
   }),
 }));
 
+// Teacher Fields - Support multiple fields with grades for each teacher
+export const teacherFields = pgTable("teacher_fields", {
+  id: serial("id").primaryKey(),
+  teacherId: text("teacher_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  subject: text("subject").notNull(), // e.g., "Matematik", "Fizik", etc.
+  grade: text("grade").notNull(), // e.g., "5.sınıf", "6.sınıf", "7.sınıf", etc.
+  displayName: text("display_name").notNull(), // e.g., "Matematik 8.sınıf"
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
+export const teacherFieldsRelations = relations(teacherFields, ({ one }) => ({
+  teacher: one(users, {
+    fields: [teacherFields.teacherId],
+    references: [users.id],
+  }),
+}));
+
 // Credit System Tables
 
 // User Credits - stores total available credits per user

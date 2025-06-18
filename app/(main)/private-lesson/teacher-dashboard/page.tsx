@@ -6,7 +6,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import GoogleMeetLinkManager from "./meet-link";
-import { Select, SelectItem, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 
 type TeacherProfile = {
@@ -16,34 +15,13 @@ type TeacherProfile = {
   avatar?: string;
   bio?: string;
   field?: string;
+  fields?: string[];
 };
-
-const FIELD_OPTIONS = [
-  "Matematik",
-  "Fizik", 
-  "Kimya",
-  "Biyoloji",
-  "Tarih",
-  "Coğrafya",
-  "Edebiyat",
-  "İngilizce",
-  "Almanca",
-  "Fransızca",
-  "Felsefe",
-  "Müzik",
-  "Resim",
-  "Bilgisayar Bilimleri",
-  "Ekonomi",
-  "Diğer"
-];
-
-
 
 export default function TeacherDashboardPage() {
   const router = useRouter();
   const [profile, setProfile] = useState<TeacherProfile | null>(null);
   const [bio, setBio] = useState("");
-  const [editingField, setEditingField] = useState("");
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -64,7 +42,6 @@ export default function TeacherDashboardPage() {
           const data = await response.json();
           setProfile(data);
           setBio(data.bio || "");
-          setEditingField(data.field || "");
           setIsTeacher(true);
         } else if (response.status === 403) {
           // User is not a teacher
@@ -92,11 +69,6 @@ export default function TeacherDashboardPage() {
   }, [loading, isTeacher, router]);
 
   const saveProfile = async () => {
-    if (!editingField) {
-      toast.error("Lütfen uzmanlık alanınızı seçin");
-      return;
-    }
-
     setSaving(true);
     try {
       const response = await fetch("/api/private-lesson/teacher-details", {
@@ -105,8 +77,7 @@ export default function TeacherDashboardPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ 
-          bio,
-          field: editingField
+          bio
         }),
       });
 
@@ -116,8 +87,7 @@ export default function TeacherDashboardPage() {
         if (profile) {
           setProfile({ 
             ...profile, 
-            bio,
-            field: editingField
+            bio
           });
         }
       } else {
@@ -153,34 +123,46 @@ export default function TeacherDashboardPage() {
         <div className="bg-white rounded-xl shadow-sm border p-6">
           <div className="mb-6">
             <h2 className="text-xl font-semibold">{profile?.name}</h2>
-            {profile?.field && profile.field !== "Belirtilmemiş" ? (
-              <p className="text-primary mt-1 font-medium">{profile.field}</p>
-            ) : (
-              <p className="text-gray-500 mt-1 text-sm">Uzmanlık alanı belirtilmemiş</p>
-            )}
+            
+            {/* Display admin-assigned fields */}
+            <div className="mt-3">
+              <label className="block text-sm font-medium text-gray-700 mb-2">Uzmanlık Alanları (Admin Tarafından Atandı)</label>
+              {(profile?.fields && profile.fields.length > 0) ? (
+                <div className="flex flex-wrap gap-2">
+                  {profile.fields.map((field, index) => (
+                    <span
+                      key={index}
+                      className="inline-block px-3 py-1 text-sm bg-primary/10 text-primary rounded-full font-medium"
+                    >
+                      {field}
+                    </span>
+                  ))}
+                </div>
+              ) : profile?.field ? (
+                <span className="inline-block px-3 py-1 text-sm bg-primary/10 text-primary rounded-full font-medium">
+                  {profile.field}
+                </span>
+              ) : (
+                <p className="text-gray-500 text-sm italic">Henüz uzmanlık alanı atanmamış. Lütfen admin ile iletişime geçin.</p>
+              )}
+            </div>
+            
+            {/* Basic profile info */}
+            <div className="mt-4 pt-4 border-t">
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Ad Soyad</label>
+                  <Input value={profile?.name || ""} disabled className="bg-gray-50" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">E-posta</label>
+                  <Input value={profile?.email || ""} disabled className="bg-gray-50" />
+                </div>
+              </div>
+            </div>
           </div>
           
           <div className="space-y-6">
-            {/* Profile Fields */}
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Ad Soyad</label>
-                <Input value={profile?.name || ""} disabled />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Uzmanlık Alanı</label>
-                <Select value={editingField} onValueChange={setEditingField}>
-                  <SelectValue placeholder="Uzmanlık alanınızı seçin" />
-                  {FIELD_OPTIONS.map((field) => (
-                    <SelectItem key={field} value={field}>
-                      {field}
-                    </SelectItem>
-                  ))}
-                </Select>
-              </div>
-            </div>
-            
             {/* Biography Section */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Biyografi</label>
@@ -198,7 +180,7 @@ export default function TeacherDashboardPage() {
             {/* Single Save Button */}
             <Button 
               onClick={saveProfile} 
-              disabled={saving || !editingField}
+              disabled={saving}
               variant="primary"
               className="w-full"
               size="lg"

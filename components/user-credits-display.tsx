@@ -70,9 +70,6 @@ export default function UserCreditsDisplay({
               <div className="text-2xl font-bold text-blue-600">
                 {loading ? '...' : credits.availableCredits}
               </div>
-              <p className="text-xs text-gray-500">
-                Toplam: {credits.totalCredits}
-              </p>
             </div>
             
             {showPurchaseButton && (
@@ -80,7 +77,7 @@ export default function UserCreditsDisplay({
                 onClick={handlePurchaseCredits}
                 size="sm"
                 className="flex items-center gap-2"
-                variant={credits.availableCredits === 0 ? "default" : "outline"}
+                variant={credits.availableCredits === 0 ? "default" : "primaryOutline"}
               >
                 <Plus className="h-4 w-4" />
                 <span className="hidden sm:inline">Kredi Al</span>

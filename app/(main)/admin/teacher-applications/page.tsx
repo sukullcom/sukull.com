@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { Check, X, User, BookOpen, Mail, Phone } from "lucide-react";
+import { Check, X, User, BookOpen, Mail, Phone, Settings } from "lucide-react";
+import { FieldSelector } from "./components/field-selector";
 
 type TeacherApplication = {
   id: number;
@@ -24,6 +25,15 @@ export default function TeacherApplicationsPage() {
   const [applications, setApplications] = useState<TeacherApplication[]>([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState<number | null>(null);
+  const [fieldSelector, setFieldSelector] = useState<{
+    isOpen: boolean;
+    applicationId: number | null;
+    teacherName: string;
+  }>({
+    isOpen: false,
+    applicationId: null,
+    teacherName: "",
+  });
 
   useEffect(() => {
     fetchApplications();
@@ -74,6 +84,22 @@ export default function TeacherApplicationsPage() {
     } finally {
       setUpdating(null);
     }
+  };
+
+  const openFieldSelector = (applicationId: number, teacherName: string) => {
+    setFieldSelector({
+      isOpen: true,
+      applicationId,
+      teacherName,
+    });
+  };
+
+  const closeFieldSelector = () => {
+    setFieldSelector({
+      isOpen: false,
+      applicationId: null,
+      teacherName: "",
+    });
   };
 
   const getStatusBadge = (status: string) => {
@@ -160,13 +186,22 @@ export default function TeacherApplicationsPage() {
                 {application.status === "pending" && (
                   <div className="flex gap-2 pt-4 border-t">
                     <Button
-                      onClick={() => updateApplicationStatus(application.id, "approved")}
+                      onClick={() => openFieldSelector(application.id, `${application.teacherName} ${application.teacherSurname}`)}
                       disabled={updating === application.id}
                       variant="secondary"
                       size="sm"
                     >
+                      <Settings className="h-4 w-4 mr-2" />
+                      Alan Seç & Onayla
+                    </Button>
+                    <Button
+                      onClick={() => updateApplicationStatus(application.id, "approved")}
+                      disabled={updating === application.id}
+                      variant="outline"
+                      size="sm"
+                    >
                       <Check className="h-4 w-4 mr-2" />
-                      Onayla
+                      Hızlı Onayla
                     </Button>
                     <Button
                       onClick={() => updateApplicationStatus(application.id, "rejected")}
@@ -190,6 +225,15 @@ export default function TeacherApplicationsPage() {
           )}
         </div>
       )}
+
+      {/* Field Selector Modal */}
+      <FieldSelector
+        isOpen={fieldSelector.isOpen}
+        onClose={closeFieldSelector}
+        applicationId={fieldSelector.applicationId || 0}
+        teacherName={fieldSelector.teacherName}
+        onFieldsChange={() => {}} // This is handled inside the component
+      />
     </div>
   );
 } 

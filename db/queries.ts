@@ -20,7 +20,8 @@ import {
   userRoleEnum,
   userCredits,
   creditTransactions,
-  userSubscriptions
+  userSubscriptions,
+  teacherFields
 } from "@/db/schema";
 import { getServerUser } from "@/lib/auth";
 import { normalizeAvatarUrl } from "@/utils/avatar";
@@ -545,6 +546,126 @@ export async function approveTeacherApplication(id: number) {
   return { success: true };
 }
 
+// Approve teacher application with fields
+export async function approveTeacherApplicationWithFields(id: number, selectedFields: Array<{subject: string, grade: string, displayName: string}>) {
+  console.log(`[DB] Approving teacher application ${id} with fields:`, selectedFields);
+  
+  const application = await getTeacherApplicationById(id);
+  if (!application) {
+    console.log(`[DB] Application ${id} not found`);
+    throw new Error("Application not found");
+  }
+
+  console.log(`[DB] Found application for user ${application.userId}`);
+
+  // Update the application status
+  console.log(`[DB] Updating application ${id} status to approved`);
+  await db.update(teacherApplications)
+    .set({ 
+      status: "approved",
+      updatedAt: new Date()
+    })
+    .where(eq(teacherApplications.id, id));
+
+  console.log(`[DB] Application status updated, now updating user role for ${application.userId}`);
+  
+  // Update the user's role to teacher
+  const roleUpdateResult = await db.update(users)
+    .set({ role: "teacher" })
+    .where(eq(users.id, application.userId))
+    .returning({ id: users.id, role: users.role });
+
+  console.log(`[DB] User role update result:`, roleUpdateResult);
+
+  if (roleUpdateResult.length === 0) {
+    console.error(`[DB] No user found with ID ${application.userId} for role update`);
+    throw new Error(`User not found for role update: ${application.userId}`);
+  }
+
+  // Add teacher fields
+  if (selectedFields && selectedFields.length > 0) {
+    console.log(`[DB] Adding teacher fields for user ${application.userId}`);
+    
+    // First, deactivate any existing fields for this teacher
+    await db.update(teacherFields)
+      .set({ isActive: false, updatedAt: new Date() })
+      .where(eq(teacherFields.teacherId, application.userId));
+    
+    // Then add the new fields
+    const fieldsToInsert = selectedFields.map(field => ({
+      teacherId: application.userId,
+      subject: field.subject,
+      grade: field.grade,
+      displayName: field.displayName,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }));
+    
+    await db.insert(teacherFields).values(fieldsToInsert);
+    console.log(`[DB] Successfully added ${fieldsToInsert.length} fields for teacher ${application.userId}`);
+  }
+
+  console.log(`[DB] Successfully updated user ${application.userId} to teacher role`);
+  return { success: true };
+}
+
+// Get teacher fields
+export async function getTeacherFields(teacherId: string) {
+  return await db.query.teacherFields.findMany({
+    where: and(
+      eq(teacherFields.teacherId, teacherId),
+      eq(teacherFields.isActive, true)
+    ),
+    orderBy: [teacherFields.subject, teacherFields.grade]
+  });
+}
+
+// Add or update teacher fields
+export async function updateTeacherFields(teacherId: string, fields: Array<{subject: string, grade: string, displayName: string}>) {
+  console.log(`[DB] Updating teacher fields for ${teacherId}:`, fields);
+  
+  // First, deactivate existing fields
+  await db.update(teacherFields)
+    .set({ isActive: false, updatedAt: new Date() })
+    .where(eq(teacherFields.teacherId, teacherId));
+  
+  // Then add the new fields
+  if (fields && fields.length > 0) {
+    const fieldsToInsert = fields.map(field => ({
+      teacherId,
+      subject: field.subject,
+      grade: field.grade,
+      displayName: field.displayName,
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }));
+    
+    await db.insert(teacherFields).values(fieldsToInsert);
+    console.log(`[DB] Successfully updated ${fieldsToInsert.length} fields for teacher ${teacherId}`);
+  }
+  
+  return { success: true };
+}
+
+// Get all available subjects and grades
+export async function getAvailableFieldOptions() {
+  const subjects = [
+    "Matematik", "Fizik", "Kimya", "Biyoloji", "Tarih", "Coğrafya", 
+    "Edebiyat", "İngilizce", "Almanca", "Fransızca", "Felsefe", 
+    "Müzik", "Resim", "Bilgisayar Bilimleri", "Ekonomi"
+  ];
+  
+  const grades = [
+    "1.sınıf", "2.sınıf", "3.sınıf", "4.sınıf", "5.sınıf", "6.sınıf", 
+    "7.sınıf", "8.sınıf", "9.sınıf", "10.sınıf", "11.sınıf", "12.sınıf", 
+    "Hazırlık", "Üniversite", "Genel"
+  ];
+  
+  return { subjects, grades };
+}
+
 // Reject teacher application
 export async function rejectTeacherApplication(id: number) {
   await db.update(teacherApplications)
@@ -940,15 +1061,29 @@ export async function getStudentBookings(studentId: string) {
     console.log("Sample booking teacher data:", bookings[0].teacher);
   }
 
-  // Fetch the teacher application for each booking to get the field
+  // Fetch the teacher fields for each booking to get the field info
   const bookingsWithField = await Promise.all(
     bookings.map(async (booking) => {
+      const teacherFieldsData = await getTeacherFields(booking.teacherId);
       const teacherApplication = await getTeacherApplicationByUserId(booking.teacherId);
+      
+      // Determine field display - use new system if available, fallback to legacy
+      let fieldDisplay = "Belirtilmemiş";
+      let fields: string[] = [];
+      
+      if (teacherFieldsData && teacherFieldsData.length > 0) {
+        fields = teacherFieldsData.map(f => f.displayName);
+        fieldDisplay = fields.join(", ");
+      } else if (teacherApplication?.field) {
+        fieldDisplay = teacherApplication.field;
+        fields = [teacherApplication.field];
+      }
       
       // Make sure to preserve the teacher object when adding new attributes
       return {
         ...booking,
-        field: teacherApplication?.field || "Belirtilmemiş", // Default to "Not specified" if field is missing
+        field: fieldDisplay,
+        fields: fields, // Array of all fields
       };
     })
   );
@@ -974,9 +1109,21 @@ export async function getTeacherBookings(teacherId: string) {
     },
   });
 
-  // Get the teacher's field from their application
+  // Get the teacher's fields from the new system, fallback to legacy
+  const teacherFieldsData = await getTeacherFields(teacherId);
   const teacherApplication = await getTeacherApplicationByUserId(teacherId);
-  const field = teacherApplication?.field || "Belirtilmemiş"; // Default to "Not specified" if field is missing
+  
+  // Determine field display - use new system if available, fallback to legacy
+  let fieldDisplay = "Belirtilmemiş";
+  let fields: string[] = [];
+  
+  if (teacherFieldsData && teacherFieldsData.length > 0) {
+    fields = teacherFieldsData.map(f => f.displayName);
+    fieldDisplay = fields.join(", ");
+  } else if (teacherApplication?.field) {
+    fieldDisplay = teacherApplication.field;
+    fields = [teacherApplication.field];
+  }
 
   // Add the field to all bookings and format student info
   const bookingsWithFieldAndStudent = bookings.map((booking) => {
@@ -987,7 +1134,8 @@ export async function getTeacherBookings(teacherId: string) {
     
     return {
       ...booking,
-      field,
+      field: fieldDisplay,
+      fields: fields, // Array of all fields
       studentName,
       studentEmail,
       studentUsername
@@ -1407,7 +1555,26 @@ export const getTeachersWithRatings = cache(async () => {
     },
   });
 
-  // Get teacher applications for field info
+  // Get teacher fields for new field system
+  const teacherFieldsData = await db.query.teacherFields.findMany({
+    where: eq(teacherFields.isActive, true),
+    columns: {
+      teacherId: true,
+      subject: true,
+      grade: true,
+      displayName: true,
+    },
+  });
+
+  const fieldsMap = teacherFieldsData.reduce((acc, field) => {
+    if (!acc[field.teacherId]) {
+      acc[field.teacherId] = [];
+    }
+    acc[field.teacherId].push(field);
+    return acc;
+  }, {} as Record<string, typeof teacherFieldsData>);
+
+  // Fallback: Get teacher applications for legacy field info (for teachers without new field data)
   const teacherApplications = await db.query.teacherApplications.findMany({
     columns: {
       userId: true,
@@ -1438,18 +1605,32 @@ export const getTeachersWithRatings = cache(async () => {
     return acc;
   }, {} as Record<string, { total: number; count: number }>);
 
-  // Combine teacher data with ratings and applications
+  // Combine teacher data with ratings and fields
   return teachers.map(teacher => {
+    const teacherFieldsForUser = fieldsMap[teacher.id] || [];
     const application = applicationMap[teacher.id];
     const ratingData = ratingMap[teacher.id];
     const averageRating = ratingData 
       ? Math.round((ratingData.total / ratingData.count) * 10) / 10 
       : 0;
 
+    // Determine field display - use new system if available, fallback to legacy
+    let fieldDisplay = "";
+    let fields: string[] = [];
+    
+    if (teacherFieldsForUser.length > 0) {
+      fields = teacherFieldsForUser.map(f => f.displayName);
+      fieldDisplay = fields.join(", ");
+    } else if (application?.field) {
+      fieldDisplay = application.field;
+      fields = [application.field];
+    }
+
     return {
       ...teacher,
       bio: teacher.description,
-      field: application?.field || "",
+      field: fieldDisplay,
+      fields: fields, // Array of all fields for filtering
       averageRating,
       totalReviews: ratingData?.count || 0,
     };

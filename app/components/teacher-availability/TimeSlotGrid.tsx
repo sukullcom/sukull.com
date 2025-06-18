@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { format, addMinutes, isAfter } from 'date-fns';
-import { tr } from 'date-fns/locale';
-import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
+import React, { useState, useEffect, useCallback } from "react";
+import { format } from "date-fns";
+import { tr } from "date-fns/locale";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 // Add this interface with a different name
 interface SavedTimeSlot {
@@ -23,28 +23,23 @@ interface GridSlot {
 }
 
 // Helper to generate all time slots for a week
-const generateTimeSlots = (initialDate: Date) => {
+const generateTimeSlots = () => {
   const days = [];
-  const now = new Date(initialDate);
+  // Use current date and time instead of the passed initialDate for proper "today" calculation
+  const now = new Date(); // Always use current date/time
   const currentHour = now.getHours();
   const currentMinute = now.getMinutes();
 
   // Calculate the end date for availability (7 days from now at 23:59)
-  const endOfAvailabilityPeriod = new Date();
-  // Set end date to 7 days from now instead of next Friday
+  const endOfAvailabilityPeriod = new Date(now);
   endOfAvailabilityPeriod.setDate(now.getDate() + 6); // +6 because today is already day 1
   endOfAvailabilityPeriod.setHours(23, 59, 59, 999);
 
-  // Start from the current day and wrap around to complete 7 days
+  // Start from the current day (today) and add the next 6 days
   for (let i = 0; i < 7; i++) {
-    // Calculate the day offset based on current day
-    // We start from today (i=0) and add days sequentially
-    // This ensure the leftmost column is always today
-    const dayOffset = i;
-    
     // Create a new date starting from today
     const date = new Date(now);
-    date.setDate(date.getDate() + dayOffset);
+    date.setDate(date.getDate() + i); // i=0 is today, i=1 is tomorrow, etc.
     date.setHours(0, 0, 0, 0); // Reset time part to start of day
     
     const dayNumber = date.getDay(); // 0 = Sunday, 1 = Monday, etc.
@@ -65,21 +60,21 @@ const generateTimeSlots = (initialDate: Date) => {
         
         const endTime = addMinutes(startTime, 30);
         
-        // Check if this time slot is in the past or beyond availability period
+        // Check if this time slot is in the past
         // Only mark as past if the slot is from today and the time is in the past
-        // or if the date is beyond our availability period
+        // or if the entire date is in the past (which shouldn't happen with our logic)
         const isPast = isToday ? 
           (hour < currentHour || (hour === currentHour && minute < currentMinute)) : 
-          isAfter(now, startTime) || isBeyondAvailabilityPeriod;
+          startTime < now;
         
         slots.push({
           startTime,
           endTime,
           dayOfWeek: dayNumber,
-          disabled: isPast,
+          disabled: isPast || isBeyondAvailabilityPeriod,
           selected: false, // Default to not selected
           row: rowIndex,
-          col: i, // Column is the day index
+          col: i, // Column is the day index (0=today, 1=tomorrow, etc.)
         });
         
         rowIndex++;
@@ -96,20 +91,18 @@ const generateTimeSlots = (initialDate: Date) => {
   return days;
 };
 
-type TimeSlotGridProps = {
-  weekStartDate: Date;
+interface TimeSlotGridProps {
   initialSelectedSlots?: SavedTimeSlot[];
   readOnly?: boolean;
   onSlotsChange?: (slots: SavedTimeSlot[]) => void;
-};
+}
 
 export default function TimeSlotGrid({ 
-  weekStartDate, 
   initialSelectedSlots = [], 
   readOnly = false,
   onSlotsChange 
 }: TimeSlotGridProps) {
-  const [days, setDays] = useState(generateTimeSlots(weekStartDate));
+  const [days, setDays] = useState(generateTimeSlots());
   const [selectedSlots, setSelectedSlots] = useState<SavedTimeSlot[]>(initialSelectedSlots);
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -121,7 +114,7 @@ export default function TimeSlotGrid({
   const [dragSelectionMode, setDragSelectionMode] = useState<'select' | 'deselect' | null>(null);
   
   // Ref to track all grid slots for easier drag operations
-  const gridSlotsRef = useRef<GridSlot[][]>([]);
+  const gridSlotsRef = React.useRef<GridSlot[][]>([]);
   
   // Function to update the days with selected slots - memoized with useCallback
   const updateDaysWithSelectedSlots = useCallback((slots: SavedTimeSlot[]) => {

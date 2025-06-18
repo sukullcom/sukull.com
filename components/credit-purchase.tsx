@@ -193,7 +193,6 @@ export default function CreditPurchase() {
                   {userCredits.availableCredits}
                 </div>
               )}
-              <p className="text-sm text-gray-500">Toplam: {userCredits.totalCredits}</p>
             </div>
           </div>
         </CardContent>
