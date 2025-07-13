@@ -461,9 +461,12 @@ export async function applyDailyStreakBonuses() {
     console.log(`Daily streak bonuses completed. Applied bonuses to ${bonusesApplied} users.`);
     return { success: true, bonusesApplied };
     
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error applying daily streak bonuses:", error);
-    return { success: false, error: error.message };
+    if (error instanceof Error) {
+      return { success: false, error: error.message };
+    }
+    return { success: false, error: "An unknown error occurred" };
   }
 }
 

@@ -134,45 +134,61 @@ export function withValidation<T>(
 // Rate limiting middleware (basic implementation)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 
+function createRateLimitWrapper(maxRequests: number, windowMs: number) {
+  return async (request: NextRequest) => {
+    const clientIP = request.headers.get('x-forwarded-for') || 
+                    request.headers.get('x-real-ip') || 
+                    'unknown';
+    
+    const now = Date.now();
+    const windowStart = now - windowMs;
+    
+    // Clean old entries
+    const entries = Array.from(rateLimitMap.entries());
+    for (const [key, data] of entries) {
+      if (data.resetTime < windowStart) {
+        rateLimitMap.delete(key);
+      }
+    }
+    
+    // Check current rate limit
+    const current = rateLimitMap.get(clientIP) || { count: 0, resetTime: now + windowMs };
+    
+    if (current.count >= maxRequests && current.resetTime > now) {
+      return NextResponse.json(
+        { error: "Rate limit exceeded" }, 
+        { status: 429 }
+      );
+    }
+    
+    // Update rate limit
+    current.count++;
+    if (current.resetTime <= now) {
+      current.resetTime = now + windowMs;
+      current.count = 1;
+    }
+    rateLimitMap.set(clientIP, current);
+    
+    return null; // Continue processing
+  };
+}
+
 export function withRateLimit(maxRequests: number = 100, windowMs: number = 60 * 1000) {
-  return (handler: AuthenticatedHandler | PublicHandler) => {
-    return async (request: NextRequest, userOrParams?: unknown, params?: unknown) => {
-      const clientIP = request.headers.get('x-forwarded-for') || 
-                      request.headers.get('x-real-ip') || 
-                      'unknown';
-      
-      const now = Date.now();
-      const windowStart = now - windowMs;
-      
-      // Clean old entries
-      const entries = Array.from(rateLimitMap.entries());
-      for (const [key, data] of entries) {
-        if (data.resetTime < windowStart) {
-          rateLimitMap.delete(key);
-        }
-      }
-      
-      // Check current rate limit
-      const current = rateLimitMap.get(clientIP) || { count: 0, resetTime: now + windowMs };
-      
-      if (current.count >= maxRequests && current.resetTime > now) {
-        return NextResponse.json(
-          { error: "Rate limit exceeded" }, 
-          { status: 429 }
-        );
-      }
-      
-      // Update rate limit
-      current.count++;
-      if (current.resetTime <= now) {
-        current.resetTime = now + windowMs;
-        current.count = 1;
-      }
-      rateLimitMap.set(clientIP, current);
-      
-      // Call the handler
-      return handler(request, userOrParams, params);
-    };
+  return {
+    auth: (handler: AuthenticatedHandler) => {
+      return async (request: NextRequest, user: AuthenticatedUser, params?: RouteParams) => {
+        const rateLimitResult = await createRateLimitWrapper(maxRequests, windowMs)(request);
+        if (rateLimitResult) return rateLimitResult;
+        return handler(request, user, params);
+      };
+    },
+    public: (handler: PublicHandler) => {
+      return async (request: NextRequest, params?: RouteParams) => {
+        const rateLimitResult = await createRateLimitWrapper(maxRequests, windowMs)(request);
+        if (rateLimitResult) return rateLimitResult;
+        return handler(request, params);
+      };
+    }
   };
 }
 
@@ -181,7 +197,7 @@ export const secureApi = {
   // Public endpoint with rate limiting
   public: (handler: PublicHandler, rateLimit?: { max: number; window: number }) => {
     if (rateLimit) {
-      return withRateLimit(rateLimit.max, rateLimit.window)(handler);
+      return withRateLimit(rateLimit.max, rateLimit.window).public(handler);
     }
     return handler;
   },
@@ -200,7 +216,11 @@ export const secureApi = {
   
   // Authenticated with rate limiting
   authWithLimit: (handler: AuthenticatedHandler, maxRequests = 50) => 
-    withRateLimit(maxRequests)(withAuth(handler)),
+    withAuth(async (request: NextRequest, user: AuthenticatedUser, params?: RouteParams) => {
+      const rateLimitResult = await createRateLimitWrapper(maxRequests, 60 * 1000)(request);
+      if (rateLimitResult) return rateLimitResult;
+      return handler(request, user, params);
+    }),
 };
 
 // Error response helpers

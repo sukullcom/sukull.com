@@ -245,7 +245,7 @@ export async function addPointsToUser(pointsToAdd: number) {
     
   } catch (error) {
     console.error("❌ Error in addPointsToUser:", error);
-    console.error("❌ Error stack:", error.stack);
+    console.error("❌ Error stack:", error instanceof Error ? error.stack : "No stack available");
     throw error;
   }
 }
