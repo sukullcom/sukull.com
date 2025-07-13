@@ -21,17 +21,18 @@ const gamesData: GameData[] = [
     name: "SubScribe",
     imageSrc: "/subscribe.svg",
   },
-  {
-    id: "piano",
-    name: "Piano",
-    imageSrc: "/piano.svg",
-  },
+  // Temporarily disabled - piano game functionality
+  // {
+  //   id: "piano",
+  //   name: "Piano",
+  //   imageSrc: "/piano.svg",
+  // },
 ];
 
 const GamesPage = async () => {
   const userProgress = await getUserProgress();
   if (!userProgress || !userProgress.activeCourse) {
-    redirect("/courses");
+    redirect("/courses?message=select-course");
     return null;
   }
 

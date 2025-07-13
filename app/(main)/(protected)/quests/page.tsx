@@ -9,7 +9,7 @@ const QuestsPage = async () => {
   const [userProgress] = await Promise.all([userProgressData]);
 
   if (!userProgress || !userProgress.activeCourse) {
-    redirect("/courses");
+    redirect("/courses?message=select-course");
   }
 
   return (

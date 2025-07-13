@@ -33,7 +33,6 @@ export default function TestFieldsPage() {
       if (response.ok) {
         const data = await response.json();
         setTeachers(data.teachers);
-        console.log("Teachers:", data.teachers);
       }
     } catch (error) {
       console.error("Error fetching teachers:", error);
@@ -47,7 +46,6 @@ export default function TestFieldsPage() {
     try {
       const response = await fetch('/api/admin/field-options');
       const data = await response.json();
-      console.log('Field options:', data);
       setFieldOptions(data || []);
     } catch (error) {
       console.error('Error testing field options:', error);
@@ -64,7 +62,6 @@ export default function TestFieldsPage() {
         method: "POST",
       });
       const data = await response.json();
-      console.log("Migration result:", data);
       alert(JSON.stringify(data, null, 2));
     } catch (error) {
       console.error("Error running migration:", error);

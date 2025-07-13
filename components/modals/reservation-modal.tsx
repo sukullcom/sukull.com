@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import {
@@ -55,7 +55,7 @@ export const ReservationModal = ({
       <DialogContent className="max-w-md bg-white">
         <DialogHeader>
           <div className="flex items-center w-full justify-center mb-5">
-            <Image src="/mascot_happy.svg" alt="Mascot" height={80} width={80} />
+            <Image src="/mascot_red.svg" alt="Mascot" height={80} width={80} />
           </div>
           <DialogTitle className="text-center font-bold text-2xl">
             Ders Rezervasyonu
@@ -95,4 +95,4 @@ export const ReservationModal = ({
       </DialogContent>
     </Dialog>
   );
-}; 
+};

@@ -9,7 +9,6 @@ import { Footer } from "./footer";
 import { upsertChallengeProgress } from "@/actions/challenge-progress";
 import { toast } from "sonner";
 import { reduceHearts } from "@/actions/user-progress";
-import { useAudio, useWindowSize, useMount } from "react-use";
 import Image from "next/image";
 import { ResultCard } from "./result-card";
 import { useRouter } from "next/navigation";
@@ -28,6 +27,44 @@ type Props = {
   })[];
   userSubscription: unknown; // TODO: Replace with subscription DB type
   hasInfiniteHearts?: boolean;
+};
+
+// Safe alternatives to react-use hooks
+const useAudio = (config: { src: string; autoPlay: boolean }) => {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  
+  useEffect(() => {
+    audioRef.current = new Audio(config.src);
+    audioRef.current.autoplay = config.autoPlay;
+  }, [config.src, config.autoPlay]);
+  
+  const controls = {
+    play: () => audioRef.current?.play().catch(console.error)
+  };
+  
+  return [null, null, controls] as const;
+};
+
+const useWindowSize = () => {
+  const [size, setSize] = useState({ width: 0, height: 0 });
+  
+  useEffect(() => {
+    const updateSize = () => {
+      setSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+    
+    updateSize();
+    window.addEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
+  
+  return size;
+};
+
+const useMount = (callback: () => void) => {
+  useEffect(() => {
+    callback();
+  }, []);
 };
 
 export const Quiz = ({
@@ -161,9 +198,33 @@ export const Quiz = ({
   // *******************************
   // 6) Normal case: we have an active challenge
   // *******************************
-  const { challengeOptions = [], type } = challenge;
+  const { challengeOptions = [], type, timeLimit } = challenge;
   const title =
     type === "ASSIST" ? "Select the correct meaning" : challenge.question;
+
+  // Handle timer expiration
+  const handleTimeUp = () => {
+    if (status === "none") {
+      // Time expired - treat as wrong answer
+      startTransition(() => {
+        reduceHearts(challenge.id)
+          .then((response) => {
+            if (response?.error === "hearts") {
+              openHeartsModal();
+              return;
+            }
+
+            incorrectControls.play();
+            setStatus("wrong");
+            if (!response?.error) {
+              setHearts((prev) => Math.max(prev - 1, 0));
+              setPoints((prev) => prev - 10);
+            }
+          })
+          .catch(() => toast.error("Bir şeyler yanlış gitti. Lütfen tekrar deneyin."));
+      });
+    }
+  };
 
   // onNext: move to next challenge
   const onNext = () => {
@@ -174,14 +235,15 @@ export const Quiz = ({
 
   // onContinue: handle answer checking
   const onContinue = () => {
-    if (!selectedOption) return;
-
     // If already in 'wrong' or 'correct' state => Next step
     if (status === "wrong") {
       setStatus("none");
       setSelectedOption(undefined);
       return;
     }
+    
+    // For normal answer checking, we need a selected option
+    if (!selectedOption) return;
     if (status === "correct") {
       onNext();
       return;
@@ -205,15 +267,14 @@ export const Quiz = ({
             setPercentage((prev) => prev + 100 / challenges.length);
 
             if (initialPercentage === 100) {
-              setHearts((prev) => Math.min(prev + 1, 5));
+              // Practice mode: only award points, no hearts
               setPoints((prev) => prev + 20);
             } else {
+              // First time: award points only
               setPoints((prev) => prev + 10);
             }
           })
-          .catch(() =>
-            toast.error("Something went wrong. Please try again.")
-          );
+          .catch(() => toast.error("Bir şeyler yanlış gitti. Lütfen tekrar deneyin."));
       });
     } else {
       // Answer is wrong
@@ -232,9 +293,7 @@ export const Quiz = ({
               setPoints((prev) => prev - 10);
             }
           })
-          .catch(() =>
-            toast.error("Something went wrong. Please try again.")
-          );
+          .catch(() => toast.error("Bir şeyler yanlış gitti. Lütfen tekrar deneyin."));
       });
     }
   };
@@ -262,6 +321,7 @@ export const Quiz = ({
                 <QuestionBubble question={challenge.question} />
               )}
               <Challenge
+                key={`challenge-${activeIndex}-${challenge.id}`}
                 options={challengeOptions}
                 onSelect={(id) => {
                   if (status === "none") {
@@ -272,13 +332,16 @@ export const Quiz = ({
                 selectedOption={selectedOption}
                 disabled={pending}
                 type={type}
+                question={challenge.question}
+                timeLimit={timeLimit || undefined}
+                onTimeUp={handleTimeUp}
               />
             </div>
           </div>
         </div>
       </div>
       <Footer
-        disabled={pending || !selectedOption}
+        disabled={pending || (!selectedOption && status === "none")}
         status={status}
         onCheck={onContinue}
         lessonId={lessonId}

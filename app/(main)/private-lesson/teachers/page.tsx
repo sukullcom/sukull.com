@@ -1,12 +1,13 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectItem, SelectValue } from "@/components/ui/select";
 import { Star, Filter } from "lucide-react";
+import { LoadingSpinner } from "@/components/loading-spinner";
 import UserCreditsDisplay from "@/components/user-credits-display";
 
 interface Teacher {
@@ -23,19 +24,19 @@ interface Teacher {
 }
 
 const FIELD_OPTIONS = [
-  { value: "all", label: "Tüm Alanlar" },
+  { value: "all", label: "TÃ¼m Alanlar" },
   { value: "Matematik", label: "Matematik" },
   { value: "Fizik", label: "Fizik" },
   { value: "Kimya", label: "Kimya" },
   { value: "Biyoloji", label: "Biyoloji" },
   { value: "Tarih", label: "Tarih" },
-  { value: "Coğrafya", label: "Coğrafya" },
+  { value: "CoÄŸrafya", label: "CoÄŸrafya" },
   { value: "Edebiyat", label: "Edebiyat" },
-  { value: "İngilizce", label: "İngilizce" },
+  { value: "Ä°ngilizce", label: "Ä°ngilizce" },
   { value: "Almanca", label: "Almanca" },
-  { value: "Fransızca", label: "Fransızca" },
+  { value: "FransÄ±zca", label: "FransÄ±zca" },
   { value: "Felsefe", label: "Felsefe" },
-  { value: "Müzik", label: "Müzik" },
+  { value: "MÃ¼zik", label: "MÃ¼zik" },
   { value: "Resim", label: "Resim" },
   { value: "Bilgisayar Bilimleri", label: "Bilgisayar Bilimleri" },
   { value: "Ekonomi", label: "Ekonomi" },
@@ -47,6 +48,11 @@ export default function TeachersPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedField, setSelectedField] = useState<string>("all");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const fetchTeachers = useCallback(async (field: string = "all") => {
     try {
@@ -77,8 +83,10 @@ export default function TeachersPage() {
   }, [router]);
 
   useEffect(() => {
-    fetchTeachers(selectedField);
-  }, [selectedField, fetchTeachers]);
+    if (mounted) {
+      fetchTeachers(selectedField);
+    }
+  }, [selectedField, fetchTeachers, mounted]);
 
   const handleFieldChange = (field: string) => {
     setSelectedField(field);
@@ -97,10 +105,10 @@ export default function TeachersPage() {
     ));
   };
 
-  if (loading) {
+  if (!mounted || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <span className="loading loading-spinner loading-lg"></span>
+      <div className="min-h-screen">
+        <LoadingSpinner size="lg" />
       </div>
     );
   }
@@ -125,22 +133,22 @@ export default function TeachersPage() {
       <UserCreditsDisplay className="mb-6" />
       
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-        <h1 className="text-3xl font-bold">Öğretmenler</h1>
+        <h1 className="text-3xl font-bold">Ã–ÄŸretmenler</h1>
         
         {/* Field Filter */}
         <div className="flex items-center gap-4">
           <Filter className="h-5 w-5 text-gray-600" />
-          <Select value={selectedField} onValueChange={handleFieldChange}>
-            <SelectTrigger className="w-[200px]">
-              <SelectValue placeholder="Alan Seçin" />
-            </SelectTrigger>
-            <SelectContent>
-              {FIELD_OPTIONS.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
+          <Select 
+            value={selectedField} 
+            onValueChange={handleFieldChange}
+            className="w-[200px]"
+          >
+            <SelectValue placeholder="Alan SeÃ§in" />
+            {FIELD_OPTIONS.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
           </Select>
         </div>
       </div>
@@ -149,15 +157,15 @@ export default function TeachersPage() {
         <div className="text-center py-12">
           <p className="text-xl text-gray-600">
             {selectedField === "all" 
-              ? "Şu anda müsait öğretmen bulunmuyor." 
-              : "Bu alanda öğretmen bulunmuyor."}
+              ? "Åu anda mÃ¼sait Ã¶ÄŸretmen bulunmuyor." 
+              : "Bu alanda Ã¶ÄŸretmen bulunmuyor."}
           </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredTeachers.map((teacher) => (
-            <Card key={teacher.id} className="hover:shadow-lg transition-shadow border">
-              <CardHeader>
+            <Card key={teacher.id} className="hover:shadow-lg transition-shadow border flex flex-col h-full">
+              <CardHeader className="flex-shrink-0">
                 <div className="flex justify-center mb-4">
                   <div className="relative w-24 h-24 rounded-full overflow-hidden border-primary/20">
                     <Image
@@ -172,9 +180,9 @@ export default function TeachersPage() {
                 <CardTitle className="text-center text-xl">{teacher.name}</CardTitle>
                 {teacher.field && (
                   <div className="text-center mt-2">
-                    {teacher.fields && teacher.fields.length > 1 ? (
+                    {teacher.fields && teacher.fields.length > 0 ? (
                       <div className="flex flex-wrap gap-1 justify-center">
-                        {teacher.fields.slice(0, 3).map((field, index) => (
+                        {teacher.fields.map((field, index) => (
                           <span
                             key={index}
                             className="inline-block px-2 py-1 text-xs bg-primary/10 text-primary rounded-full"
@@ -182,11 +190,6 @@ export default function TeachersPage() {
                             {field}
                           </span>
                         ))}
-                        {teacher.fields.length > 3 && (
-                          <span className="inline-block px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded-full">
-                            +{teacher.fields.length - 3} daha
-                          </span>
-                        )}
                       </div>
                     ) : (
                       <CardDescription className="font-medium text-primary">
@@ -196,23 +199,27 @@ export default function TeachersPage() {
                   </div>
                 )}
                 {/* Rating Display */}
-                {teacher.averageRating && teacher.averageRating > 0 && (
+                {teacher.averageRating && teacher.averageRating > 0 && teacher.totalReviews && teacher.totalReviews > 0 ? (
                   <div className="flex items-center justify-center gap-2 mt-2">
                     <div className="flex">
                       {renderStars(Math.round(teacher.averageRating))}
                     </div>
                     <span className="text-sm text-gray-600">
-                      {teacher.averageRating.toFixed(1)} ({teacher.totalReviews} değerlendirme)
+                      {teacher.averageRating.toFixed(1)} ({teacher.totalReviews} deÄŸerlendirme)
                     </span>
+                  </div>
+                ) : (
+                  <div className="text-center mt-2">
+                    <span className="text-sm text-gray-500">HenÃ¼z DeÄŸerlendirme Yok</span>
                   </div>
                 )}
               </CardHeader>
-              <CardContent>
+              <CardContent className="flex-grow">
                 <p className="text-gray-700 line-clamp-3 text-center">
                   {teacher.bio || "No bio available"}
                 </p>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="mt-auto">
                 <Button 
                   variant="primary"
                   className="w-full" 
@@ -228,3 +235,4 @@ export default function TeachersPage() {
     </div>
   );
 } 
+

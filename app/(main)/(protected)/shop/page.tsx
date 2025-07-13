@@ -17,7 +17,7 @@ const ShopPage = async () => {
   const [userProgress, hasActiveSubscription] = await Promise.all([userProgressData, hasInfiniteHearts]);
 
   if (!userProgress || !userProgress.activeCourse) {
-    redirect("/courses");
+    redirect("/courses?message=select-course");
   }
 
   return (

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { getUserDailyStreakForMonth } from "@/actions/daily-streak";
 import { addMonths, endOfMonth, getDay, startOfMonth, format } from "date-fns";
 import { Button } from "./ui/button";
+import { LoadingSpinner } from "./loading-spinner";
 import Image from "next/image";
 
 interface DailyRecord {
@@ -37,9 +38,6 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
         // Extract date part only for accurate comparison
         const dateObj = new Date(rec.date);
         const dateStr = dateObj.toISOString().split('T')[0];
-        
-        // Debug date conversion
-        console.log(`Record: ${rec.id}, Date: ${dateStr}, Achieved: ${rec.achieved}`);
         
         return {
           ...rec,
@@ -120,11 +118,6 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
     
     if (record) {
       achieved = record.achieved;
-      // Debug matching
-      console.log(`Day ${cell.day}: Cell date ${cell.date}, Record found - achieved: ${achieved}`);
-    } else {
-      // Debug no match
-      console.log(`Day ${cell.day}: Cell date ${cell.date}, No record found`);
     }
     
     // If the selected month is the current month and this day is in the future, force achieved = false.
@@ -171,7 +164,7 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
         ))}
       </div>
       {loading ? (
-        <p>Loading...</p>
+        <LoadingSpinner size="sm" />
       ) : (
         <div className="grid grid-cols-7 gap-1">
           {cells.map((cell, idx) => renderCell(cell, idx))}

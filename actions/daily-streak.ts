@@ -3,8 +3,9 @@
 
 import db from "@/db/drizzle";
 import { userProgress, userDailyStreak } from "@/db/schema";
-import { eq, and, gte, lt, desc, asc } from "drizzle-orm";
+import { eq, and, gte, lt, desc, asc, gt, isNotNull, sql } from "drizzle-orm";
 import { getServerUser } from "@/lib/auth";
+import { calculateStreakBonus } from "@/constants";
 
 /**
  * Check if a user's streak should be reset due to missed days
@@ -401,72 +402,124 @@ export async function getUserDailyStreakForMonth(month: number, year: number) {
 }
 
 /**
- * Gets current daily progress for a user
+ * Apply streak bonuses to users who have active streaks
+ * This should be called at the end of each day via cron job
+ */
+export async function applyDailyStreakBonuses() {
+  try {
+    console.log('Starting daily streak bonus application...');
+    
+    // Get all users with active streaks
+    const usersWithStreaks = await db.query.userProgress.findMany({
+      where: and(
+        gt(userProgress.istikrar, 0),
+        isNotNull(userProgress.lastStreakCheck)
+      ),
+      columns: {
+        userId: true,
+        istikrar: true,
+        points: true,
+      }
+    });
+    
+    console.log(`Found ${usersWithStreaks.length} users with active streaks`);
+    
+    let bonusesApplied = 0;
+    
+    for (const user of usersWithStreaks) {
+      const streakBonus = calculateStreakBonus(user.istikrar);
+      
+      if (streakBonus > 0) {
+        // Apply streak bonus
+        await db.update(userProgress)
+          .set({
+            points: user.points + streakBonus,
+          })
+          .where(eq(userProgress.userId, user.userId));
+        
+        console.log(`Applied ${streakBonus} streak bonus to user ${user.userId} (${user.istikrar} day streak)`);
+        bonusesApplied++;
+      }
+    }
+    
+    // Update school totals after applying bonuses
+    const result = await db.execute(sql`
+      WITH school_points AS (
+        SELECT 
+          school_id,
+          SUM(points::int) as total_points
+        FROM user_progress 
+        WHERE school_id IS NOT NULL
+        GROUP BY school_id
+      )
+      UPDATE schools 
+      SET total_points = COALESCE(sp.total_points, 0)
+      FROM school_points sp
+      WHERE schools.id = sp.school_id;
+    `);
+    
+    console.log(`Daily streak bonuses completed. Applied bonuses to ${bonusesApplied} users.`);
+    return { success: true, bonusesApplied };
+    
+  } catch (error) {
+    console.error("Error applying daily streak bonuses:", error);
+    return { success: false, error: error.message };
+  }
+}
+
+/**
+ * Get comprehensive daily progress information for the current user
  */
 export async function getCurrentDayProgress() {
   try {
     const user = await getServerUser();
-    if (!user) return null;
+    if (!user) throw new Error("User not authenticated");
     
     const userId = user.id;
     
-    // Check streak continuity first
-    await checkStreakContinuity(userId);
-    
-    // Get user's progress data
+    // Get user progress
     const progress = await db.query.userProgress.findFirst({
       where: eq(userProgress.userId, userId),
     });
     
-    if (!progress) return null;
+    if (!progress) {
+      throw new Error("User progress not found");
+    }
     
-    // Get current date
+    // Calculate today's points earned
     const now = new Date();
     const today = new Date(now);
     today.setHours(0, 0, 0, 0);
     
-    // Initialize baseline if needed
-    let baselinePoints = progress.previousTotalPoints;
+    const lastCheck = progress.lastStreakCheck ? new Date(progress.lastStreakCheck) : null;
+    const lastCheckDay = lastCheck ? new Date(lastCheck) : today;
+    lastCheckDay.setHours(0, 0, 0, 0);
     
-    if (baselinePoints === null || baselinePoints === undefined) {
-      baselinePoints = progress.points;
-      
-      await db.update(userProgress)
-        .set({
-          previousTotalPoints: baselinePoints,
-          lastStreakCheck: now,
-        })
-        .where(eq(userProgress.userId, userId));
-    } else {
-      // Check if it's a new day and reset baseline if needed
-      const lastCheck = progress.lastStreakCheck ? new Date(progress.lastStreakCheck) : null;
-      const lastCheckDay = lastCheck ? new Date(lastCheck) : new Date();
-      lastCheckDay.setHours(0, 0, 0, 0);
-      
-      if (lastCheckDay.getTime() < today.getTime()) {
-        baselinePoints = progress.points;
-        await db.update(userProgress)
-          .set({
-            previousTotalPoints: baselinePoints,
-            lastStreakCheck: now,
-          })
-          .where(eq(userProgress.userId, userId));
-      }
+    let pointsEarnedToday = 0;
+    if (lastCheckDay.getTime() === today.getTime()) {
+      // Same day - calculate difference from baseline
+      pointsEarnedToday = Math.max(0, progress.points - (progress.previousTotalPoints || 0));
     }
     
-    // Calculate points earned today
-    const pointsEarnedToday = Math.max(0, progress.points - (baselinePoints || 0));
     const dailyTarget = progress.dailyTarget || 50;
+    const achieved = pointsEarnedToday >= dailyTarget;
+    const progressPercentage = Math.min((pointsEarnedToday / dailyTarget) * 100, 100);
+    
+    // Calculate potential streak bonus for tomorrow
+    const currentStreak = progress.istikrar || 0;
+    const potentialStreakBonus = calculateStreakBonus(currentStreak + (achieved ? 1 : 0));
     
     return {
       pointsEarnedToday,
       dailyTarget,
-      achieved: pointsEarnedToday >= dailyTarget,
-      currentStreak: progress.istikrar,
-      progressPercentage: Math.min((pointsEarnedToday / dailyTarget) * 100, 100)
+      achieved,
+      currentStreak,
+      progressPercentage,
+      potentialStreakBonus,
+      totalPoints: progress.points,
     };
   } catch (error) {
-    console.error("Error getting current day progress:", error);
+    console.error("Error getting daily progress:", error);
     return null;
   }
 }

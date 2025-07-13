@@ -7,6 +7,8 @@ import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { SCORING_SYSTEM } from "@/constants";
+import { LoadingSpinner } from "@/components/loading-spinner";
 
 const videos = [
   {
@@ -215,15 +217,25 @@ const HangmanGame = ({
       );
 
     if (isWordGuessed) {
-      await addPointsToUser(2); // Add points for correctly guessed word
-      setTotalPoints((prev) => prev + 2);
+      // Correct word completion
+      const wordPoints = SCORING_SYSTEM.GAMES.LAB.HUMAN_BODY.CORRECT_WORD;
+      await addPointsToUser(wordPoints);
+      setTotalPoints((prev) => prev + wordPoints);
     } else if (remainingAttempts === 0) {
-      await addPointsToUser(-2); // Subtract points for failing to guess
-      setTotalPoints((prev) => prev - 2);
+      // Failed to guess the word
+      const penalty = SCORING_SYSTEM.GAMES.LAB.HUMAN_BODY.FAILED_WORD;
+      await addPointsToUser(penalty);
+      setTotalPoints((prev) => Math.max(0, prev + penalty)); // Don't go below 0
     }
 
     if (currentWordIndex + 1 === words.length) {
-      setGameFinished(true); // End the game
+      // Game completed - add completion bonus if needed
+      if (isWordGuessed) {
+        const completionBonus = SCORING_SYSTEM.GAMES.LAB.HUMAN_BODY.COMPLETION_BONUS;
+        await addPointsToUser(completionBonus);
+        setTotalPoints((prev) => prev + completionBonus);
+      }
+      setGameFinished(true);
     } else {
       setGuessedLetters([]);
       setRemainingAttempts(6);

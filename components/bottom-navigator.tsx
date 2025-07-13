@@ -61,7 +61,8 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
   // Dropdown items for Games, Lab, and Shop
   const dropdownItems = [
     { label: "Oyunlar", href: "/games", iconSrc: "/games.svg" },
-    { label: "Laboratuvar", href: "/lab", iconSrc: "/lab.svg" },
+    // Temporarily disabled - lab functionality
+    // { label: "Laboratuvar", href: "/lab", iconSrc: "/lab.svg" },
     { label: "Mağaza", href: "/shop", iconSrc: "/bag.svg" },
     { label: "Hedefler", href: "/quests", iconSrc: "/quests.svg" },
   ];

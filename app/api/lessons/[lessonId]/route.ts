@@ -1,56 +1,38 @@
-import db from "@/db/drizzle";
-import { lessons } from "@/db/schema";
-import { isAdmin } from "@/lib/admin";
-import { eq } from "drizzle-orm";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async (
-  req: Request,
+// ✅ BACKWARD COMPATIBILITY: Redirect to consolidated lessons API
+export async function GET(
+  request: Request,
   { params }: { params: { lessonId: number } }
-) => {
-  if (!(await isAdmin())) {
-    return new NextResponse("Unauthorized", { status: 403 });
-  }
+) {
+  const url = new URL(request.url);
+  const redirectUrl = new URL('/api/lessons', url.origin);
+  redirectUrl.searchParams.set('action', 'get');
+  redirectUrl.searchParams.set('id', params.lessonId.toString());
+  
+  return NextResponse.redirect(redirectUrl, { status: 307 });
+}
 
-  const data = await db.query.lessons.findFirst({
-    where: eq(lessons.id, params.lessonId),
-  })
-
-  return NextResponse.json(data);
-};
-
-export const PUT = async (
-  req: Request,
+export async function PUT(
+  request: Request,
   { params }: { params: { lessonId: number } }
-) => {
-  if (!(await isAdmin())) {
-    return new NextResponse("Unauthorized", { status: 403 });
-  }
+) {
+  const url = new URL(request.url);
+  const redirectUrl = new URL('/api/lessons', url.origin);
+  redirectUrl.searchParams.set('action', 'update-lesson');
+  redirectUrl.searchParams.set('id', params.lessonId.toString());
+  
+  return NextResponse.redirect(redirectUrl, { status: 307 });
+}
 
-  const body = await req.json();
-  const data = await db
-    .update(lessons)
-    .set({
-      ...body,
-    })
-    .where(eq(lessons.id, params.lessonId))
-    .returning();
-
-  return NextResponse.json(data[0]);
-};
-
-export const DELETE = async (
-  req: Request,
+export async function DELETE(
+  request: Request,
   { params }: { params: { lessonId: number } }
-) => {
-  if (!(await isAdmin())) {
-    return new NextResponse("Unauthorized", { status: 403 });
-  }
-
-  const data = await db
-    .delete(lessons)
-    .where(eq(lessons.id, params.lessonId))
-    .returning();
-
-  return NextResponse.json(data[0]);
-};
+) {
+  const url = new URL(request.url);
+  const redirectUrl = new URL('/api/lessons', url.origin);
+  redirectUrl.searchParams.set('action', 'delete-lesson');
+  redirectUrl.searchParams.set('id', params.lessonId.toString());
+  
+  return NextResponse.redirect(redirectUrl, { status: 307 });
+}

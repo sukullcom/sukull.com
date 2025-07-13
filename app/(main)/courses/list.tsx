@@ -2,8 +2,8 @@
 
 import { courses, userProgress } from "@/db/schema";
 import { Card } from "./card";
-import { useRouter } from "next/navigation";
-import { useTransition, useCallback, memo } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useTransition, useCallback, memo, useEffect, useRef } from "react";
 import { upsertUserProgress } from "@/actions/user-progress";
 import { toast } from "sonner";
 
@@ -17,7 +17,23 @@ const MemoizedCard = memo(Card);
 
 export const List = ({courses, activeCourseId}: Props) => {
     const router = useRouter();
+    const searchParams = useSearchParams();
     const [pending, startTransition] = useTransition();
+    const toastShownRef = useRef(false);
+
+    // Show toast message when user is redirected from protected routes
+    useEffect(() => {
+        const message = searchParams.get('message');
+        if (message === 'select-course' && !toastShownRef.current) {
+            toast.info("🎯 Öğrenmeye başlamak için önce bir ders seçmelisiniz!");
+            toastShownRef.current = true;
+            
+            // Clean up the URL
+            const newUrl = new URL(window.location.href);
+            newUrl.searchParams.delete('message');
+            window.history.replaceState({}, '', newUrl.toString());
+        }
+    }, [searchParams]);
 
     // Memoize the onClick handler to prevent recreation on each render
     const onClick = useCallback((id: number) => {
@@ -60,4 +76,4 @@ export const List = ({courses, activeCourseId}: Props) => {
             )}
         </div>
     );
-}
+};

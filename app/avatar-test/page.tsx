@@ -10,16 +10,8 @@ export default function AvatarTestPage() {
   const [error, setError] = useState<string | null>(null);
   
   const generateAvatar = () => {
-    try {
-      const generator = new AvatarGenerator();
-      const newAvatarUrl = generator.generateRandomAvatar();
-      console.log("Generated avatar URL:", newAvatarUrl);
-      setAvatarUrl(newAvatarUrl);
-      setError(null);
-    } catch (err) {
-      console.error("Error generating avatar:", err);
-      setError("Avatar oluşturulurken bir hata oluştu.");
-    }
+    const newAvatarUrl = `https://api.dicebear.com/9.x/bottts/svg?seed=${Date.now()}`;
+    setAvatarUrl(newAvatarUrl);
   };
   
   return (

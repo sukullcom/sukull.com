@@ -26,7 +26,7 @@ const LearnPage = async () => {
     ]);
 
   if (!userProgress || !userProgress.activeCourse) {
-    redirect("/courses");
+    redirect("/courses?message=select-course");
   }
 
   if (!courseProgress) {

@@ -23,8 +23,8 @@ export default async function ProtectedLayout({
   // 2) Load user progress. (If you want to allow partial usage, skip the redirect.)
   const userProgress = await getUserProgress();
   if (!userProgress || !userProgress.activeCourse) {
-    // Optionally redirect if no progress row yet, or do nothing
-    redirect("/courses");
+    // Redirect to courses page with a toast message
+    redirect("/courses?message=select-course");
   }
 
   // 3) Check streak continuity for the user whenever they access the protected area
@@ -32,7 +32,6 @@ export default async function ProtectedLayout({
   try {
     await checkStreakContinuity(user.id);
   } catch (error) {
-    console.error("Error checking streak continuity in layout:", error);
     // Continue with normal flow even if streak check fails
   }
 

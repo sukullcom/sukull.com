@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Confetti from "react-confetti";
 import { Button } from "@/components/ui/button";
 import { addPointsToUser } from "@/actions/challenge-progress";
 import { useAudio } from "react-use";
 import { useRouter } from "next/navigation";
+import { SCORING_SYSTEM } from "@/constants";
 
 const steps = [
   {
@@ -70,13 +71,10 @@ const FoodSimulationPage = () => {
   });
 
   const handleCardClick = async (cardId: string, isImage: boolean) => {
-    if (matchedCards.includes(cardId)) return;
+    if (gameFinished) return;
 
-    if (isImage !== waitingForDescription) return;
-
-    if (!selectedCard) {
+    if (selectedCard === null) {
       setSelectedCard(cardId);
-      setHighlightedCard(cardId);
       setWaitingForDescription(!waitingForDescription);
     } else {
       const firstCard = steps.find(
@@ -88,15 +86,28 @@ const FoodSimulationPage = () => {
       );
 
       if (firstCard && secondCard && firstCard.title === secondCard.title) {
+        // Correct match
+        const matchPoints = SCORING_SYSTEM.GAMES.LAB.JOURNEY_OF_FOOD.CORRECT_MATCH;
         setMatchedCards((prev) => [...prev, firstCard.title]);
-        setTotalPoints((prev) => prev + 1);
-        await addPointsToUser(1);
+        setTotalPoints((prev) => prev + matchPoints);
+        await addPointsToUser(matchPoints);
         correctAudioRef.current?.play();
         setHighlightedCard(null);
+        
+        // Check if game completed
+        if (matchedCards.length + 1 === steps.length) {
+          // All matches completed - add completion bonus
+          const completionBonus = SCORING_SYSTEM.GAMES.LAB.JOURNEY_OF_FOOD.COMPLETION_BONUS;
+          setTotalPoints((prev) => prev + completionBonus);
+          await addPointsToUser(completionBonus);
+          setGameFinished(true);
+        }
       } else {
+        // Incorrect match
+        const penalty = SCORING_SYSTEM.GAMES.LAB.JOURNEY_OF_FOOD.INCORRECT_PENALTY;
         setHighlightedCard(cardId);
-        setTotalPoints((prev) => prev - 1);
-        await addPointsToUser(-1);
+        setTotalPoints((prev) => Math.max(0, prev + penalty)); // Don't go below 0
+        await addPointsToUser(penalty);
         incorrectAudioRef.current?.play();
         setTimeout(() => {
           setHighlightedCard(null);
@@ -105,10 +116,6 @@ const FoodSimulationPage = () => {
 
       setSelectedCard(null);
       setWaitingForDescription(true);
-
-      if (matchedCards.length + 1 === steps.length) {
-        setGameFinished(true);
-      }
     }
   };
 

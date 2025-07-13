@@ -73,7 +73,8 @@ export const Sidebar = ({ className }: Props) => {
           href="/leaderboard"
           iconSrc={leaderboardIcon}
         />
-        <SidebarItem label="Laboratuvarlar" href="/lab" iconSrc={labIcon} />
+        {/* Temporarily disabled - lab functionality */}
+        {/* <SidebarItem label="Laboratuvarlar" href="/lab" iconSrc={labIcon} /> */}
         <SidebarItem label="Çantam" href="/shop" iconSrc={shopIcon} />
         <SidebarItem label="Çalışma Arkadaşı" href="/study-buddy" iconSrc="/study_buddy.svg" />
         <SidebarItem label="Profİl" href="/profile" iconSrc="/mascot_normal.svg" />

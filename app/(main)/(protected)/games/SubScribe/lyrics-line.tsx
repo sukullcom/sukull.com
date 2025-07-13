@@ -61,10 +61,29 @@ export default function LyricLine({ line, onWordComplete }: LyricLineProps) {
     });
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+    // Prevent form submission on Enter key
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      e.stopPropagation();
+      // Optionally move to next input or check word
+      const correctWord = line.words[index].word.trim();
+      const userWord = userInputs[index].trim();
+      if (userWord.length === correctWord.replace(/[^a-zA-Z]/g, '').length) {
+        checkWord(index);
+      }
+    }
+  };
+
   const checkWord = (index: number) => {
     const correctWord = line.words[index].word.trim().toLowerCase();
     const userWord = userInputs[index].trim().toLowerCase();
-    const isComplete = correctWord === userWord;
+    
+    // Remove punctuation from correct word for comparison
+    const cleanCorrectWord = correctWord.replace(/[^a-zA-Z]/g, '');
+    const cleanUserWord = userWord.replace(/[^a-zA-Z]/g, '');
+    
+    const isComplete = cleanCorrectWord === cleanUserWord;
 
     if (isComplete) {
       onWordComplete(true);
@@ -120,19 +139,22 @@ export default function LyricLine({ line, onWordComplete }: LyricLineProps) {
     <div className="lyric-line" style={{ marginBottom: "10px" }}>
       {line.words.map((w, i) => {
         const decodedWord = decode(w.word);
+        const cleanWord = decodedWord.replace(/[^a-zA-Z]/g, '');
+        
         if (w.missing) {
           return (
             <input
-              key={i}
+              key={`missing-${i}-${decodedWord}`}
               type="text"
-              maxLength={decodedWord.length}
+              maxLength={cleanWord.length}
               value={userInputs[i]}
               onChange={(e) => handleInputChange(i, e.target.value)}
+              onKeyDown={(e) => handleKeyDown(e, i)}
               style={{
                 border: `2px solid ${borderColors[i]}`,
                 padding: "5px",
                 margin: "0 5px",
-                minWidth: `${decodedWord.length * 20}px`,
+                minWidth: `${Math.max(cleanWord.length * 20, 60)}px`,
                 fontFamily: "monospace",
                 fontSize: "18px",
                 outline: "none",
@@ -142,11 +164,12 @@ export default function LyricLine({ line, onWordComplete }: LyricLineProps) {
                 transition: "border-color 0.3s",
               }}
               disabled={inputDisabled[i]}
+              placeholder={cleanWord.length > 0 ? `${cleanWord.length} letters` : ""}
             />
           );
         } else {
           return (
-            <span key={i} style={{ margin: "0 5px" }}>
+            <span key={`word-${i}-${decodedWord}`} style={{ margin: "0 5px" }}>
               {decodedWord}
             </span>
           );

@@ -28,7 +28,7 @@ export const Items = ({ hearts, points, hasInfiniteHearts, subscriptionExpiresAt
     }
 
     startTransition(() => {
-      refillHearts().catch(() => toast.error("Something went wrong"))
+      refillHearts().catch(() => toast.error("Bir şeyler yanlış gitti"))
     });
   };
 
@@ -84,7 +84,7 @@ export const Items = ({ hearts, points, hasInfiniteHearts, subscriptionExpiresAt
       <div className="flex items-center w-full p-4 pt-8 gap-x-4 border-t-2">
         <div className="relative">
           <Image src="/heart.svg" alt="Heart" height={60} width={60} />
-          <InfinityIcon className="absolute -top-1 -right-1 h-6 w-6 text-purple-600 bg-white rounded-full p-1" />
+          <InfinityIcon className="absolute -top-1 -right-1 h-6 w-6 text-red-500 bg-white rounded-full p-1" />
         </div>
         <div className="flex-1">
           <p className="text-neutral-700 text-base lg:text-xl font-bold">
@@ -119,7 +119,7 @@ export const Items = ({ hearts, points, hasInfiniteHearts, subscriptionExpiresAt
 
       {/* Subscription Purchase Dialog */}
       <Dialog open={showSubscriptionDialog} onOpenChange={setShowSubscriptionDialog}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-white border border-gray-200 shadow-xl">
           <DialogHeader>
             <DialogTitle>Sonsuz Can Aboneliği</DialogTitle>
           </DialogHeader>

@@ -58,7 +58,6 @@ export default function TeacherIncomePage() {
   // Listen for lesson status updates
   useEffect(() => {
     const handleLessonStatusUpdate = () => {
-      console.log('Lesson status updated, refreshing income data...');
       // Refresh the data when lesson statuses are updated
       fetchData();
     };

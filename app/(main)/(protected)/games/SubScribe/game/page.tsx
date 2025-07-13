@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { decode } from "html-entities";
 import VideoPlayer from "@/components/video-player";
 import LyricsGame from "../lyrics-game";
+import { LoadingSpinner } from "@/components/loading-spinner";
+import { CompletionModal } from "@/components/modals/completion-modal";
 
 interface TranscriptLine {
   startTime: number;
@@ -162,7 +164,7 @@ const predefinedTranscripts: Record<string, string[]> = {
     "your guard cells, known as macrophages, intervene. They are huge",
     "cells that guard every border region of the body. Most of the time, they",
     "alone can suffocate an attack because they can devour up to 100 intruders each.",
-    "They swallow the intruder whole and trap it inside a membrane. Then the",
+    "They swallowed the intruder whole and trap it inside a membrane. Then the",
     "enemy gets broken down by enzymes and is killed. On top of that, they",
     "cause inflammation by ordering the blood vessels to release",
     "water into the battlefield so fighting becomes easier.",
@@ -239,21 +241,25 @@ const predefinedTranscripts: Record<string, string[]> = {
 function generateLyricsLines(transcript: TranscriptLine[], ratio: number): LyricLine[] {
   const totalLines = transcript.length;
 
-  let multiplier = 3;
+  let multiplier = 1.5;
   if (ratio === 0.5) {
-    multiplier = 5;
+    multiplier = 2.5;
   } else if (ratio === 0.75) {
-    multiplier = 7;
+    multiplier = 3.5;
   } else if (ratio === 1.0) {
-    multiplier = 10;
+    multiplier = 5;
   } else if (ratio === 0.25) {
-    multiplier = 3;
+    multiplier = 1.5;
   }
 
   const totalMissingWords = Math.round(totalLines * ratio * multiplier);
 
-  // Split transcript into words
-  const linesWords = transcript.map((line) => line.text.split(" "));
+  // Split transcript into words - ensure we don't create duplicates
+  const linesWords = transcript.map((line) => {
+    // Clean the text and split by whitespace, filter out empty strings
+    const cleanedText = line.text.trim();
+    return cleanedText.split(/\s+/).filter(word => word.length > 0);
+  });
 
   interface Candidate {
     lineIndex: number;
@@ -262,30 +268,41 @@ function generateLyricsLines(transcript: TranscriptLine[], ratio: number): Lyric
 
   const candidates: Candidate[] = [];
   linesWords.forEach((words, lineIndex) => {
-    words.forEach((w, wordIndex) => {
-      if (/^[a-zA-Z]+$/.test(w)) {
+    words.forEach((word, wordIndex) => {
+      // Only include words that contain only letters (no punctuation, numbers)
+      const cleanWord = word.replace(/[^a-zA-Z]/g, '');
+      if (cleanWord.length > 0 && /^[a-zA-Z]+$/.test(cleanWord)) {
         candidates.push({ lineIndex, wordIndex });
       }
     });
   });
 
-  // Shuffle candidates
+  // Shuffle candidates randomly
   candidates.sort(() => Math.random() - 0.5);
 
-  // Select required number of missing words
+  // Select required number of missing words (ensure we don't exceed available candidates)
   const chosen = candidates.slice(0, Math.min(totalMissingWords, candidates.length));
 
-  const lyricLines: LyricLine[] = transcript.map((t, i) => {
-    const words = linesWords[i].map((w) => ({ word: w, missing: false }));
+  // Create lyric lines with proper word structure
+  const lyricLines: LyricLine[] = transcript.map((transcriptLine, lineIndex) => {
+    const words = linesWords[lineIndex].map((word) => ({
+      word: word,
+      missing: false
+    }));
+    
     return {
-      startTime: t.startTime,
-      words
+      startTime: transcriptLine.startTime,
+      words: words
     };
   });
 
-  for (const c of chosen) {
-    if (lyricLines[c.lineIndex]) {
-      lyricLines[c.lineIndex].words[c.wordIndex].missing = true;
+  // Mark chosen words as missing
+  for (const candidate of chosen) {
+    const lineIndex = candidate.lineIndex;
+    const wordIndex = candidate.wordIndex;
+    
+    if (lyricLines[lineIndex] && lyricLines[lineIndex].words[wordIndex]) {
+      lyricLines[lineIndex].words[wordIndex].missing = true;
     }
   }
 
@@ -296,14 +313,17 @@ export default function GamePage() {
   const searchParams = useSearchParams();
   const videoId = searchParams.get("videoId");
   const ratio = parseFloat(searchParams.get("ratio") || "0.5");
+  const difficulty = searchParams.get("difficulty") || "Orta";
   const [transcript, setTranscript] = useState<TranscriptLine[]>([]);
   const [lyrics, setLyrics] = useState<LyricLine[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [lyricsGenerated, setLyricsGenerated] = useState(false);
 
   const generateNewLyrics = (trans: TranscriptLine[], r: number) => {
     const newLyrics = generateLyricsLines(trans, r);
     setLyrics(newLyrics);
+    setLyricsGenerated(true);
   };
 
   useEffect(() => {
@@ -327,8 +347,8 @@ export default function GamePage() {
 
       // Otherwise, fetch from API
       try {
-        let response = await fetch(`/api/youtube-transcript?videoId=${videoId}&lang=en`);
-        let data = await response.json();
+        const response = await fetch(`/api/youtube-transcript?videoId=${videoId}&lang=en`);
+        const data = await response.json();
 
         if (data.transcript) {
           const decodedTranscript = data.transcript.map((line: TranscriptLine) => ({
@@ -336,27 +356,46 @@ export default function GamePage() {
             text: decode(line.text),
           }));
           setTranscript(decodedTranscript);
-        } else if (data.error && data.error.includes("No transcript available in 'en'")) {
-          // Fallback: Fetch default transcript
-          response = await fetch(`/api/youtube-transcript?videoId=${videoId}`);
-          data = await response.json();
+          
+          // Show info about the transcript language if it's not English
+          if (data.language && data.language !== 'en' && data.language !== 'default') {
+            setError(`Transcript loaded in ${data.language} (English not available)`);
+          }
+        } else if (data.error) {
+          // Handle enhanced error responses
+          if (data.type === "YoutubeTranscriptError") {
+            setError(`Transcript not available for this video.
 
-          if (data.transcript) {
-            const decodedTranscript = data.transcript.map((line: TranscriptLine) => ({
-              startTime: line.startTime,
-              text: decode(line.text),
-            }));
-            setTranscript(decodedTranscript);
-            setError("English transcript not available. Displaying transcript in the default language.");
+${data.troubleshooting ? `Common issues:
+• Video may not have captions enabled
+• Video might be private or restricted  
+• Try checking if captions are visible on YouTube
+
+You can:
+• Choose one of the pre-selected videos below
+• Try a different YouTube video that has captions
+• Check the video directly on YouTube: https://www.youtube.com/watch?v=${videoId}` : data.error}`);
+          } else if (data.type === "NetworkError") {
+            setError(`Connection issue: ${data.originalError || data.error}
+            
+Please check your internet connection and try again.`);
           } else {
-            setError("No transcript available for this video.");
+            // Fallback for detailed error messages
+            setError(data.error || "Failed to fetch transcript.");
           }
         } else {
-          setError(data.error || "Failed to fetch transcript.");
+          setError("No transcript data received from the server.");
         }
       } catch (err) {
         console.error("Error fetching transcript:", err);
-        setError("An error occurred while fetching the transcript.");
+        setError(`Network error: Could not connect to transcript service. 
+        
+Please check your internet connection and try again.
+
+If the problem persists, try:
+• Refreshing the page
+• Using one of the pre-selected videos
+• Trying again in a few minutes`);
       } finally {
         setLoading(false);
       }
@@ -365,18 +404,23 @@ export default function GamePage() {
     fetchTranscript();
   }, [videoId]);
 
+  // Only generate lyrics once when transcript is first loaded
   useEffect(() => {
-    if (transcript.length > 0) {
+    if (transcript.length > 0 && !lyricsGenerated) {
       generateNewLyrics(transcript, ratio);
     }
-  }, [transcript, ratio]);
+  }, [transcript, ratio, lyricsGenerated]);
 
-  const handleTryAgain = () => {
-    // Re-generate new lyrics with the same transcript and ratio
-    generateNewLyrics(transcript, ratio);
-  };
-
-  if (loading) return <p>Loading...</p>;
+  if (loading) {
+    return (
+      <div className="h-screen flex flex-col items-center justify-center">
+        <LoadingSpinner size="lg" />
+        <p className="mt-4 text-muted-foreground text-center max-w-md">
+          Transcript yükleniyor ve oyun hazırlanıyor...
+        </p>
+      </div>
+    );
+  }
   if (error && !transcript.length) return <p>{error}</p>;
   if (!transcript.length) return <p>No transcript available for this video.</p>;
 
@@ -384,7 +428,8 @@ export default function GamePage() {
     <div className="game-page" style={{maxWidth: "750px", margin: "auto" }}>
       {videoId && <VideoPlayer videoId={videoId} />}
       {error && <p className="error-message">{error}</p>}
-      <LyricsGame lyrics={lyrics} onTryAgain={handleTryAgain} />
+      <LyricsGame lyrics={lyrics} difficulty={difficulty as "Kolay" | "Orta" | "Zor"} />
+      <CompletionModal />
     </div>
   );
 }

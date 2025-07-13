@@ -199,6 +199,36 @@ button:focus {
   background-color: #2c2c2c !important; /* Lighter background to match a white-themed design */
 }
 
+/* CHALLENGE STYLES */
+
+/* 3D card flip animations for MatchPairsChallenge */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Drag and drop styles */
+.dragging {
+  opacity: 0.5;
+  transform: rotate(5deg);
+}
+
+.drop-zone-active {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: rgb(59, 130, 246);
+}
+
 /* <code> blocks in problem statements or examples */
 code {
   border-radius: 5px;

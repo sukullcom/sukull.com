@@ -52,14 +52,6 @@ export const auth = {
       throw new Error('Failed to create user account.');
     }
 
-    // Log for debugging
-    console.log('User signed up:', {
-      id: data.user.id,
-      email: data.user.email,
-      emailConfirmed: data.user.email_confirmed_at,
-      needsConfirmation: !data.user.email_confirmed_at
-    });
-
     // 3) Only capture user details if this is not an email confirmation signup
     // (email confirmation signups will be handled by the callback route)
     if (data.user.email_confirmed_at) {

@@ -32,10 +32,10 @@ export const SchoolSelector = ({ schools, userProgress }: SchoolSelectorProps) =
     setSelectedSchoolId(schoolId); // Update local state immediately
     startTransition(() => {
       upsertUserSchool(schoolId)
-        .then(() => toast.success("School selection updated!"))
+        .then(() => toast.success("Okul seçimi güncellendi!"))
         .catch(() => {
           setSelectedSchoolId(userProgress?.schoolId ?? null); // Revert on error
-          toast.error("Something went wrong.");
+          toast.error("Bir şeyler yanlış gitti.");
         });
     });
   };

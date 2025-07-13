@@ -1,14 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { toast } from 'sonner';
 
 interface CacheStatusProps {
   className?: string;
-  showToast?: boolean;
 }
 
-export function CacheStatus({ className, showToast = false }: CacheStatusProps) {
+export function CacheStatus({ className }: CacheStatusProps) {
   const [cacheStatus, setCacheStatus] = useState<string>('Checking...');
   const [isFromCache, setIsFromCache] = useState<boolean | null>(null);
 
@@ -50,15 +48,8 @@ export function CacheStatus({ className, showToast = false }: CacheStatusProps) 
         
         setCacheStatus(status);
         setIsFromCache(fromCache);
-        
-        if (showToast) {
-          toast(fromCache ? 'Loaded from cache' : 'Fresh content loaded', {
-            description: status,
-            duration: 3000,
-          });
-        }
       } catch (error) {
-        console.error('Error checking cache status:', error);
+        // Silent fail in production
         setCacheStatus('Error checking cache');
         setIsFromCache(null);
       }
@@ -82,7 +73,7 @@ export function CacheStatus({ className, showToast = false }: CacheStatusProps) 
     return () => {
       window.removeEventListener('routechange', handleRouteChange);
     };
-  }, [showToast]);
+  }, []);
 
   // Only render if we have a definitive answer
   if (isFromCache === null) return null;

@@ -174,6 +174,10 @@ export interface StudentApplication {
 export interface School {
   id: number;
   name: string;
+  city: string;
+  district: string;
+  category: string;
+  kind: string | null;
   type: string;
   totalPoints: number;
 }

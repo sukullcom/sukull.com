@@ -25,14 +25,17 @@ export const users = {
     description?: string
     links?: any[]
   }) {
-    console.log('Creating new user:', { id: user.id, email: user.email, name: user.name, provider: user.provider });
-    const { data, error } = await supabase.from('users').insert([user]).single()
-    if (error) {
+    try {
+      const { data, error } = await supabase.from('users').insert([user]).single()
+      if (error) {
+        console.error('Error creating user:', error);
+        throw error;
+      }
+      return data
+    } catch (error) {
       console.error('Error creating user:', error);
       throw error;
     }
-    console.log('User created successfully');
-    return data
   },
 
   /**
@@ -45,57 +48,44 @@ export const users = {
    */
   async captureUserDetails(authUser: User, overrideUsername?: string) {
     try {
-      console.log('Capturing user details for:', authUser.id);
-      console.log('Auth user metadata:', JSON.stringify(authUser.user_metadata, null, 2));
-      console.log('Auth app metadata:', JSON.stringify(authUser.app_metadata, null, 2));
+      // Check if user already exists
+      const { data: existingUser, error: err } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', authUser.id)
+        .single();
       
-      // Check if user row exists
-      const existing = await this.getUser(authUser.id).catch((err) => {
-        console.log('User not found in database:', err.message);
-        return null;
-      });
-      
-      if (existing) {
-        console.log('User already exists in users table');
-        return existing
+      if (err && err.code !== 'PGRST116') {
+        throw err;
       }
-
-      // If no user row, create new
-      const provider = authUser.app_metadata?.provider || 'email'
-      console.log('Auth provider:', provider);
+      
+      if (existingUser) {
+        return existingUser;
+      }
+      
+      // Get provider from auth user
+      const provider = authUser.app_metadata?.provider || 'email';
       
       // Extract name based on provider
       let name = overrideUsername;
-      let avatar = '';
+      // Always use default mascot avatar for all new users
+      let avatar = '/mascot_purple.svg';
       
       if (!name) {
         if (provider === 'google') {
           // Google can provide name in different places depending on the scope
-          name = authUser.user_metadata?.full_name || 
-                 authUser.user_metadata?.name ||
-                 authUser.user_metadata?.given_name ||
-                 authUser.email?.split('@')[0] ||
-                 'User';
-          
-          // Google can provide avatar in different places
-          const rawAvatar = authUser.user_metadata?.avatar_url || 
-                           authUser.user_metadata?.picture ||
-                           '';
-          avatar = normalizeAvatarUrl(rawAvatar);
-          
-          console.log('Extracted Google name:', name);
-          console.log('Extracted Google avatar (raw):', rawAvatar);
-          console.log('Normalized Google avatar:', avatar);
+          const googleName = authUser.user_metadata?.name || authUser.user_metadata?.full_name;
+          if (googleName) {
+            name = googleName;
+          }
+          avatar = authUser.user_metadata?.avatar_url || `https://api.dicebear.com/9.x/bottts/svg?seed=${authUser.id}`;
         } else {
           name = authUser.user_metadata?.full_name ||
                  authUser.email?.split('@')[0] ||
                  'User';
-          avatar = normalizeAvatarUrl(authUser.user_metadata?.avatar_url);
+          // Always use default mascot, not provider avatar
         }
       }
-      
-      console.log('Creating new user with name:', name);
-      console.log('User avatar URL:', avatar);
       
       const email = authUser.email || ''
 

@@ -1,60 +1,28 @@
 import { NextResponse } from "next/server";
-import { getServerUser, checkUserRole } from "@/lib/auth";
+import { secureApi, ApiResponses } from "@/lib/api-middleware";
 import { getTeacherBookings } from "@/db/queries";
-import db from "@/db/drizzle";
-import { users } from "@/db/schema";
-import { eq } from "drizzle-orm";
 
-export async function GET() {
+// ✅ TEACHER BOOKINGS: Get all bookings for the current teacher
+export const GET = secureApi.auth(async (request, user) => {
   try {
-    // Get the authenticated user
-    const user = await getServerUser();
-    
-    if (!user) {
-      return NextResponse.json({ 
-        message: "Authentication required", 
-        error: "unauthorized" 
-      }, { status: 401 });
-    }
-    
-    // Check if the user is a teacher
-    const isTeacher = await checkUserRole("teacher");
-    
-    if (!isTeacher) {
-      return NextResponse.json({ 
-        message: "Teacher authorization required", 
-        error: "forbidden" 
-      }, { status: 403 });
-    }
-    
-    // Get the teacher's info to include the meet link
-    const teacherInfo = await db.query.users.findFirst({
-      where: eq(users.id, user.id),
-      columns: {
-        meetLink: true,
-        name: true,
-        email: true,
-      },
-    });
-    
-    // Get the bookings with student info
+    // Get teacher bookings with student details
     const bookings = await getTeacherBookings(user.id);
     
-    // Log the response for debugging
-    console.log(`Returning ${bookings.length} bookings to teacher ${user.id}`);
-    
-    return NextResponse.json({ 
+    // Get the teacher's meet link for quick access
+    const teacherProfile = await import("@/db/drizzle").then(({ default: db }) => 
+      db.query.users.findFirst({
+        where: (users, { eq }) => eq(users.id, user.id),
+        columns: { meetLink: true }
+      })
+    );
+
+    return ApiResponses.success({ 
       bookings,
-      teacherMeetLink: teacherInfo?.meetLink || null,
-      teacherName: teacherInfo?.name || null,
-      success: true
+      teacherMeetLink: teacherProfile?.meetLink || null,
+      count: bookings.length
     });
   } catch (error) {
-    console.error("Error getting teacher bookings:", error);
-    
-    return NextResponse.json({ 
-      message: "Failed to retrieve bookings", 
-      error: error instanceof Error ? error.message : "Unknown error"
-    }, { status: 500 });
+    console.error("Error fetching teacher bookings:", error);
+    return ApiResponses.serverError("An error occurred while fetching bookings");
   }
-} 
+}); 

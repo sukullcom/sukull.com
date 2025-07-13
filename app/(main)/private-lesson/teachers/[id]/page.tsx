@@ -8,6 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ReservationModal } from "@/components/modals/reservation-modal";
 import { Star } from "lucide-react";
 import { toast } from "sonner";
+import { LoadingSpinner } from "@/components/loading-spinner";
 import UserCreditsDisplay from "@/components/user-credits-display";
 
 interface Teacher {
@@ -77,23 +78,167 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
   const [selectedSlot, setSelectedSlot] = useState<SelectedSlot | null>(null);
   const [loading, setLoading] = useState(true);
   const [booking, setBooking] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [pendingSlots, setPendingSlots] = useState<Set<string>>(new Set());
   const [showReservationModal, setShowReservationModal] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Helper function to create unique slot identifier
+  const getSlotId = (slot: TimeSlot) => {
+    return `${slot.dayOfWeek}-${slot.startTime.getTime()}-${slot.endTime.getTime()}`;
+  };
+
+  // Function to refresh availability after booking attempt
+  const refreshAvailability = async () => {
+    try {
+      const availabilityResponse = await fetch(`/api/private-lesson/teacher-details/${params.id}`, {
+        credentials: 'include'
+      });
+      if (availabilityResponse.ok) {
+        const data = await availabilityResponse.json();
+        
+        const availabilityData = Array.isArray(data.availability) ? data.availability : [];
+        const bookedSlotsData = Array.isArray(data.bookedSlots) ? data.bookedSlots : [];
+        
+        const processedAvailability = availabilityData.map((slot: AvailabilityData) => {
+          const timeSlot: TimeSlot = {
+            startTime: new Date(slot.startTime),
+            endTime: new Date(slot.endTime),
+            dayOfWeek: slot.dayOfWeek,
+            isBooked: false
+          };
+          
+          const isBooked = bookedSlotsData.some((bookedSlot: BookedSlotData) => {
+            const bookedStart = new Date(bookedSlot.startTime);
+            const bookedEnd = new Date(bookedSlot.endTime);
+            return timeSlot.startTime.getTime() === bookedStart.getTime() &&
+                   timeSlot.endTime.getTime() === bookedEnd.getTime();
+          });
+          
+          timeSlot.isBooked = isBooked;
+          return timeSlot;
+        });
+        
+        setAvailability(processedAvailability);
+      }
+    } catch (error) {
+      console.error("Error refreshing availability:", error);
+    }
+  };
+
+  const handleSlotSelect = (slot: TimeSlot) => {
+    if (slot.isBooked) {
+      toast.error("Bu zaman dilimi zaten rezerve edilmiş. Lütfen başka bir zaman seçin.");
+      return;
+    }
+    
+    const slotId = getSlotId(slot);
+    if (pendingSlots.has(slotId)) {
+      toast.error("Bu zaman dilimi şu anda işlem görüyor. Lütfen bekleyin.");
+      return;
+    }
+    
+    setSelectedSlot({
+      dayOfWeek: slot.dayOfWeek,
+      startTime: slot.startTime,
+      endTime: slot.endTime,
+    });
+    setShowReservationModal(true);
+  };
+
+  const handleBookLesson = async () => {
+    if (!selectedSlot || !teacher) return;
+    
+    const slotId = getSlotId(selectedSlot as TimeSlot);
+    
+    // Mark slot as pending to prevent race conditions
+    setPendingSlots(prev => new Set(prev).add(slotId));
+    setBooking(true);
+    
+    try {
+      const response = await fetch("/api/private-lesson/book-lesson", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          teacherId: teacher.id,
+          startTime: selectedSlot.startTime.toISOString(),
+          endTime: selectedSlot.endTime.toISOString(),
+        }),
+      });
+
+      if (response.ok) {
+        toast.success("Ders başarıyla rezerve edildi!");
+        setShowReservationModal(false);
+        setSelectedSlot(null);
+        
+        // Refresh availability to show the booked slot
+        await refreshAvailability();
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to book lesson");
+      }
+    } catch (error) {
+      console.error("Error booking lesson:", error);
+      toast.error(error instanceof Error ? error.message : "Ders rezerve edilirken bir hata oluştu");
+      
+      // Refresh availability in case slot was booked by someone else
+      await refreshAvailability();
+    } finally {
+      setBooking(false);
+      // Remove from pending slots
+      setPendingSlots(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(slotId);
+        return newSet;
+      });
+    }
+  };
 
   useEffect(() => {
     const fetchTeacherDetails = async () => {
       try {
         setLoading(true);
         
+        // Check authentication status first
+        try {
+          const authResponse = await fetch('/api/auth/status', {
+            credentials: 'include'
+          });
+          const authData = await authResponse.json();
+          
+          if (!authData.authenticated) {
+            toast.error("Please log in to view teacher details");
+            router.push("/login");
+            return;
+          }
+        } catch (authError) {
+          console.error("Auth check failed:", authError);
+          toast.error("Authentication check failed. Please log in.");
+          router.push("/login");
+          return;
+        }
+        
         // Fetch teacher details and availability
-        const response = await fetch(`/api/private-lesson/teacher-details/${params.id}`);
+        const response = await fetch(`/api/private-lesson/teacher-details/${params.id}`, {
+          credentials: 'include'
+        });
         
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
           
           // Handle different error status codes
-          if (response.status === 403) {
+          if (response.status === 401) {
+            toast.error("Please log in to view teacher details");
+            router.push("/login");
+            return;
+          } else if (response.status === 403) {
             toast.error("Only approved students can view teacher details");
             router.push("/private-lesson");
             return;
@@ -124,7 +269,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
         
         // Convert availability data and mark booked slots instead of filtering them out
         const processedAvailability = availabilityData
-          .map((slot: AvailabilityData) => {
+          .map((slot: AvailabilityData, index: number) => {
             const timeSlot: TimeSlot = {
               ...slot,
               startTime: new Date(slot.startTime),
@@ -136,8 +281,10 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
             const isBooked = bookedSlotsData.some((bookedSlot: BookedSlotData) => {
               const bookedStart = new Date(bookedSlot.startTime);
               const bookedEnd = new Date(bookedSlot.endTime);
-              return timeSlot.startTime.getTime() === bookedStart.getTime() &&
-                     timeSlot.endTime.getTime() === bookedEnd.getTime();
+              const startMatches = timeSlot.startTime.getTime() === bookedStart.getTime();
+              const endMatches = timeSlot.endTime.getTime() === bookedEnd.getTime();
+              
+              return startMatches && endMatches;
             });
             
             timeSlot.isBooked = isBooked;
@@ -148,7 +295,9 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
         
         // Fetch teacher reviews
         try {
-          const reviewsResponse = await fetch(`/api/private-lesson/teacher-details/${params.id}/reviews`);
+          const reviewsResponse = await fetch(`/api/private-lesson/teacher-details/${params.id}/reviews`, {
+            credentials: 'include'
+          });
           if (reviewsResponse.ok) {
             const reviewsData = await reviewsResponse.json();
             setReviews(reviewsData.reviews || []);
@@ -174,60 +323,11 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
       }
     };
 
-    fetchTeacherDetails();
-  }, [params.id, router]);
-
-  const handleSlotSelect = (slot: TimeSlot) => {
-    // Don't allow selection of booked slots - no toast error, just ignore
-    if (slot.isBooked) {
-      return;
+    if (mounted) {
+      fetchTeacherDetails();
     }
-    
-    setSelectedSlot({
-      dayOfWeek: slot.dayOfWeek,
-      startTime: slot.startTime,
-      endTime: slot.endTime,
-    });
-    setShowReservationModal(true);
-  };
+  }, [params.id, router, mounted]);
 
-  const handleBookLesson = async () => {
-    if (!selectedSlot || !teacher) return;
-    
-    setBooking(true);
-    try {
-      const response = await fetch("/api/private-lesson/book-lesson", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          teacherId: teacher.id,
-          startTime: selectedSlot.startTime.toISOString(),
-          endTime: selectedSlot.endTime.toISOString(),
-        }),
-      });
-
-      if (response.ok) {
-        toast.success("Ders başarıyla rezerve edildi!");
-        setShowReservationModal(false);
-        setSelectedSlot(null);
-        
-        // Refresh availability to reflect the new booking
-        window.location.reload();
-      } else {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to book lesson");
-      }
-    } catch (error) {
-      console.error("Error booking lesson:", error);
-      toast.error(error instanceof Error ? error.message : "Ders rezerve edilirken bir hata oluştu");
-    } finally {
-      setBooking(false);
-    }
-  };
-
-  // Rest of the component remains the same...
   const getDayName = (dayOfWeek: number): string => {
     const days = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
     return days[dayOfWeek] || "Bilinmeyen";
@@ -274,10 +374,10 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
     });
   };
 
-  if (loading) {
+  if (!mounted || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <span className="loading loading-spinner loading-lg"></span>
+        <LoadingSpinner size="lg" />
       </div>
     );
   }
@@ -315,7 +415,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
 
       {/* User Credits Display */}
       <UserCreditsDisplay className="mb-6" />
-
+      
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Teacher profile */}
         <Card className="md:col-span-1 bg-white shadow-md hover:shadow-lg transition-shadow">
@@ -350,18 +450,6 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
                 {teacher.field}
               </CardDescription>
             ) : null}
-            
-            {/* Rating Display */}
-            {teacher.averageRating && teacher.averageRating > 0 && (
-              <div className="flex items-center justify-center gap-2 mt-3">
-                <div className="flex">
-                  {renderStars(Math.round(teacher.averageRating))}
-                </div>
-                <span className="text-sm text-gray-600">
-                  {teacher.averageRating.toFixed(1)} ({teacher.totalReviews} değerlendirme)
-                </span>
-              </div>
-            )}
           </CardHeader>
           <CardContent className="pt-4">
             <div className="space-y-4">
@@ -371,38 +459,51 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
                   {teacher.bio || "Bu öğretmen henüz kendisi hakkında bilgi paylaşmamış."}
                 </p>
               </div>
-
-              {/* Reviews Section */}
+              
+              {/* Reviews Section - Single location for all review information */}
               <div className="p-4 rounded-lg border-t">
                 <h3 className="font-medium text-lg mb-3 text-gray-800">Değerlendirmeler</h3>
+                
                 {reviews.length > 0 ? (
-                  <div className="space-y-3 max-h-60 overflow-y-auto">
-                    {reviews.slice(0, 5).map((review: Review, index: number) => (
-                      <div key={index} className="p-3 bg-gray-50 rounded-lg">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="font-medium text-sm">{review.student?.name || "Anonim"}</span>
-                          <div className="flex">
-                            {renderStars(review.rating)}
-                          </div>
-                        </div>
-                        {review.comment && (
-                          <p className="text-sm text-gray-600 mb-1">&ldquo;{review.comment}&rdquo;</p>
-                        )}
-                        <p className="text-xs text-gray-500">
-                          {formatReviewDate(review.createdAt)}
-                        </p>
+                  <>
+                    {/* Aggregate Rating Display - only shown when reviews exist */}
+                    <div className="flex items-center justify-center gap-2 mb-4 p-3 bg-gray-50 rounded-lg">
+                      <div className="flex">
+                        {renderStars(Math.round(teacher.averageRating || 0))}
                       </div>
-                    ))}
-                    {reviews.length > 5 && (
-                      <p className="text-center text-sm text-gray-500 mt-2">
-                        ve {reviews.length - 5} değerlendirme daha...
-                      </p>
-                    )}
-                  </div>
+                      <span className="text-sm text-gray-600 font-medium">
+                        {(teacher.averageRating || 0).toFixed(1)} / 5.0 ({teacher.totalReviews || reviews.length} değerlendirme)
+                      </span>
+                    </div>
+                    
+                    {/* Individual Reviews */}
+                    <div className="space-y-3 max-h-60 overflow-y-auto">
+                      {reviews.slice(0, 5).map((review: Review, index: number) => (
+                        <div key={index} className="p-3 bg-gray-50 rounded-lg">
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="font-medium text-sm">{review.student?.name || "Anonim"}</span>
+                            <div className="flex">
+                              {renderStars(review.rating)}
+                            </div>
+                          </div>
+                          {review.comment && (
+                            <p className="text-sm text-gray-600 mb-1">&ldquo;{review.comment}&rdquo;</p>
+                          )}
+                          <p className="text-xs text-gray-500">
+                            {formatReviewDate(review.createdAt)}
+                          </p>
+                        </div>
+                      ))}
+                      {reviews.length > 5 && (
+                        <p className="text-center text-sm text-gray-500 mt-2">
+                          ve {reviews.length - 5} değerlendirme daha...
+                        </p>
+                      )}
+                    </div>
+                  </>
                 ) : (
                   <div className="text-center py-8 text-gray-500">
                     <p className="text-lg">Henüz Değerlendirme Yok</p>
-                    <p className="text-sm mt-1">Bu öğretmen henüz hiç değerlendirme almamış.</p>
                   </div>
                 )}
               </div>
@@ -419,10 +520,14 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
                 Aşağıdaki zamanlardan birini seçerek ders rezerve edebilirsiniz
               </CardDescription>
               {/* Legend */}
-              <div className="flex items-center gap-4 text-sm mt-2">
+              <div className="flex items-center gap-6 text-sm mt-2">
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 border-2 border-green-200 bg-white rounded"></div>
                   <span className="text-gray-600">Müsait</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 bg-yellow-100 border border-yellow-200 rounded"></div>
+                  <span className="text-gray-600">Rezerve Ediliyor</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 bg-gray-200 border border-gray-300 rounded"></div>
@@ -450,18 +555,19 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
                           {daySlots.map((slot, index) => (
                             <Button
                               key={index}
-                              variant={slot.isBooked ? "default" : "secondaryOutline"}
+                              variant="primaryOutline"
                               size="sm"
                               onClick={() => handleSlotSelect(slot)}
-                              disabled={slot.isBooked}
+                              disabled={slot.isBooked || pendingSlots.has(getSlotId(slot))}
                               className={`text-sm py-2 transition-all ${
                                 slot.isBooked 
-                                  ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200 opacity-60 hover:bg-gray-100 hover:text-gray-400" 
-                                  : "hover:bg-green-50 border-green-200 text-green-700 hover:border-green-300 cursor-pointer"
+                                  ? "bg-gray-200 text-gray-500 cursor-not-allowed border-gray-300 opacity-70 hover:bg-gray-200 hover:text-gray-500 hover:border-gray-300" 
+                                  : pendingSlots.has(getSlotId(slot))
+                                  ? "bg-yellow-100 text-yellow-700 cursor-wait border-yellow-300 opacity-80 hover:bg-yellow-100"
+                                  : "bg-white text-green-700 border-green-200 hover:bg-green-50 hover:border-green-300 cursor-pointer"
                               }`}
                             >
                               {formatTime(slot.startTime)}
-                              {slot.isBooked}
                             </Button>
                           ))}
                         </div>
@@ -489,4 +595,4 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
       />
     </div>
   );
-} 
+}

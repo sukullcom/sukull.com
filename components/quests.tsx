@@ -154,7 +154,7 @@ export const Quests = ({ currentStreak }: QuestsProps) => {
               <span className="text-lg">🎮</span>
               <div>
                 <p className="font-semibold text-sm">Puan Kazan</p>
-                <p className="text-xs">Puanın kalmadığında laboratuvar veya oyunlar bölümünden yeni puanlar kazanabilirsin.</p>
+                <p className="text-xs">Puanın kalmadığında oyunlar bölümünden yeni puanlar kazanabilirsin.</p>
               </div>
             </div>
 

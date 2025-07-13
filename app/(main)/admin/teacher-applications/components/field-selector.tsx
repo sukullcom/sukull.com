@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectItem, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { X, Plus } from "lucide-react";
 import { toast } from "sonner";
@@ -153,29 +153,21 @@ export function FieldSelector({ onFieldsChange, isOpen, onClose, applicationId, 
             <h3 className="text-lg font-semibold">Yeni Alan Ekle</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Select value={currentSubject} onValueChange={setCurrentSubject}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Ders Seçin" />
-                </SelectTrigger>
-                <SelectContent>
-                  {subjects.map((subject) => (
-                    <SelectItem key={subject} value={subject}>
-                      {subject}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
+                <SelectValue placeholder="Ders Seçin" />
+                {subjects.map((subject) => (
+                  <SelectItem key={subject} value={subject}>
+                    {subject}
+                  </SelectItem>
+                ))}
               </Select>
 
               <Select value={currentGrade} onValueChange={setCurrentGrade}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Sınıf Seçin" />
-                </SelectTrigger>
-                <SelectContent>
-                  {grades.map((grade) => (
-                    <SelectItem key={grade} value={grade}>
-                      {grade}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
+                <SelectValue placeholder="Sınıf Seçin" />
+                {grades.map((grade) => (
+                  <SelectItem key={grade} value={grade}>
+                    {grade}
+                  </SelectItem>
+                ))}
               </Select>
 
               <Button 

@@ -56,7 +56,7 @@ export const UserProgress = ({
             className="mr-2"
           />
           {hasInfiniteHearts ? (
-            <InfinityIcon className="h-4 w-4 stroke-[3]" />
+            <InfinityIcon className="h-7 w-7 stroke-[3]" />
           ) : (
             hearts
           )}

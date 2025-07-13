@@ -104,19 +104,24 @@ export default async function AdminDashboardPage() {
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center text-xl">
               <BookOpen className="h-5 w-5 mr-2" />
-              Course Management
+              Course Builder
             </CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-gray-500">
-              Manage courses, lessons, and challenges.
+              Create and manage courses, units, lessons, and all challenge types.
             </p>
           </CardContent>
           <CardFooter>
             <div className="flex flex-col w-full gap-2">
+              <Button asChild className="w-full">
+                <Link href="/admin/course-builder">
+                  Open Course Builder
+                </Link>
+              </Button>
               <Button asChild variant="outline" className="w-full">
                 <Link href="/admin/courses">
-                  Manage Courses
+                  Legacy Course Manager
                 </Link>
               </Button>
             </div>

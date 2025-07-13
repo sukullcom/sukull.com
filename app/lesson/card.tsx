@@ -1,8 +1,37 @@
 import { cn } from "@/lib/utils";
 import { challenges } from "@/db/schema";
 import Image from "next/image";
-import { useCallback } from "react";
-import { useAudio, useKey } from "react-use";
+import { useCallback, useRef, useEffect } from "react";
+
+// Safe alternatives to react-use hooks
+const useAudio = (config: { src: string }) => {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  
+  useEffect(() => {
+    if (config.src) {
+      audioRef.current = new Audio(config.src);
+    }
+  }, [config.src]);
+  
+  const controls = {
+    play: () => audioRef.current?.play().catch(console.error)
+  };
+  
+  return [null, null, controls] as const;
+};
+
+const useKey = (key: string, callback: () => void) => {
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === key) {
+        callback();
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [key, callback]);
+};
 
 type Props = {
   id: number;
@@ -36,7 +65,7 @@ export const Card = ({
     onClick();
   }, [disabled, onClick, controls]);
 
-  useKey(shortcut, handleClick, {}, [handleClick]);
+  useKey(shortcut, handleClick);
 
   return (
     <div

@@ -1,4 +1,4 @@
-import { useKey } from "react-use";
+import { useEffect } from "react";
 import { CheckCircle, XCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -10,11 +10,25 @@ type Props = {
   lessonId?: number;
 };
 
+// Safe alternative to useKey hook
+const useKey = (key: string, callback: () => void) => {
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.key === key) {
+        callback();
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [key, callback]);
+};
+
 export const Footer = ({ onCheck, status, disabled, lessonId }: Props) => {
   // Kaldırdık: useMedia("(max-width: 1024px)")
   // Çünkü SSR'da className mismatch yaratıyordu
   // OnEnter => onCheck
-  useKey("Enter", onCheck, {}, [onCheck]);
+  useKey("Enter", onCheck);
 
   return (
     <footer

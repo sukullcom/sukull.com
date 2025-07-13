@@ -15,41 +15,36 @@ import { normalizeAvatarUrl } from '@/utils/avatar';
 
 export const updateTotalPointsForSchools = async () => {
   try {
-    // Get all schools with valid IDs
-    const schoolIds = await db.select({ id: schools.id })
-      .from(schools);
+    console.log('Starting optimized school points update...');
     
-    if (!schoolIds.length) return;
+    // Use a more efficient approach with a single UPDATE query using a CTE
+    const result = await db.execute(sql`
+      WITH school_points AS (
+        SELECT 
+          school_id,
+          SUM(points::int) as total_points
+        FROM user_progress 
+        WHERE school_id IS NOT NULL
+        GROUP BY school_id
+      )
+      UPDATE schools 
+      SET total_points = COALESCE(sp.total_points, 0)
+      FROM school_points sp
+      WHERE schools.id = sp.school_id;
+    `);
     
-    // Use a single query with GROUP BY to calculate totals for all schools at once
-    const schoolTotals = await db.select({
-      schoolId: userProgress.schoolId,
-      totalPoints: sql<number>`sum(${userProgress.points} :: int)`,
-    })
-    .from(userProgress)
-    .where(isNotNull(userProgress.schoolId))
-    .groupBy(userProgress.schoolId);
+    // Also reset schools with no users to 0 points
+    await db.execute(sql`
+      UPDATE schools 
+      SET total_points = 0 
+      WHERE id NOT IN (
+        SELECT DISTINCT school_id 
+        FROM user_progress 
+        WHERE school_id IS NOT NULL
+      );
+    `);
     
-    // Create a map for quick lookup
-    const pointsBySchoolId = new Map(
-      schoolTotals.map(row => [row.schoolId, row.totalPoints || 0])
-    );
-    
-    // Prepare batch updates - only one query with all schools
-    const updates = schoolIds.map(school => ({
-      id: school.id,
-      totalPoints: pointsBySchoolId.get(school.id) || 0
-    }));
-    
-    // Update all schools in a single transaction
-    await db.transaction(async (tx) => {
-      for (const update of updates) {
-        await tx.update(schools)
-          .set({ totalPoints: update.totalPoints })
-          .where(eq(schools.id, update.id));
-      }
-    });
-    
+    console.log('School points update completed successfully');
     return true;
   } catch (error) {
     console.error("Error updating school totals:", error);
@@ -85,7 +80,8 @@ export const upsertUserSchool = async (schoolId: number) => {
     // Create new user progress
     const profile = await users.getUser(userId).catch(() => null);
     const userName = profile?.name || user.user_metadata?.full_name || 'User';
-    const userImageSrc = normalizeAvatarUrl(user.user_metadata?.avatar_url);
+    // Always use default mascot avatar
+    const userImageSrc = '/mascot_purple.svg';
     
     await db.insert(userProgress)
       .values({ userId, schoolId, userName, userImageSrc });
@@ -131,7 +127,8 @@ export const upsertUserProgress = async (courseId: number) => {
   const profile = await users.getUser(userId).catch(() => null);
   const providedName = profile?.name || user.user_metadata?.full_name || 'User';
   const existing = await getUserProgress();
-  const userImageSrc = normalizeAvatarUrl(existing?.userImageSrc || user.user_metadata?.avatar_url);
+  // Use existing avatar if available, otherwise use default mascot (never from OAuth provider)
+  const userImageSrc = existing?.userImageSrc || '/mascot_purple.svg';
 
   if (existing) {
     await db
@@ -307,3 +304,39 @@ export async function resetDailyStreaks() {
     return false;
   }
 }
+
+export const reduceHeartsForSubScribe = async () => {
+  const user = await getServerUser();
+  if (!user) throw new Error('Unauthorized');
+  
+  const currentUserProgress = await getUserProgress();
+  if (!currentUserProgress) throw new Error('User progress not found');
+  
+  // Check if user has infinite hearts subscription
+  const hasInfiniteHearts = await checkSubscriptionStatus(user.id);
+  
+  // If user has infinite hearts, don't reduce hearts
+  if (hasInfiniteHearts) {
+    return { success: true, hasInfiniteHearts: true };
+  }
+  
+  if (currentUserProgress.hearts === 0) {
+    return { error: 'hearts', hearts: 0 };
+  }
+
+  const newHearts = Math.max(currentUserProgress.hearts - 1, 0);
+  
+  await db
+    .update(userProgress)
+    .set({
+      hearts: newHearts,
+    })
+    .where(eq(userProgress.userId, user.id));
+
+  revalidatePath('/games/SubScribe');
+  revalidatePath('/shop');
+  revalidatePath('/learn');
+  revalidatePath('/leaderboard');
+  
+  return { success: true, hearts: newHearts, hasInfiniteHearts: false };
+};

@@ -7,7 +7,7 @@ const SnakeGamePage = async () => {
   const userProgress = await getUserProgress();
 
   if (!userProgress || !userProgress.activeCourse) {
-    redirect("/courses");
+    redirect("/courses?message=select-course");
   }
 
   return (

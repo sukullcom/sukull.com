@@ -89,7 +89,15 @@ export const lessonsRelations = relations(lessons, ({ one, many }) => ({
 }));
 
 // Challenges
-export const challengesEnum = pgEnum("type", ["SELECT", "ASSIST"]);
+export const challengesEnum = pgEnum("type", [
+  "SELECT", 
+  "ASSIST", 
+  "DRAG_DROP", 
+  "FILL_BLANK", 
+  "MATCH_PAIRS", 
+  "SEQUENCE", 
+  "TIMER_CHALLENGE"
+]);
 
 export const challenges = pgTable("challenges", {
   id: serial("id").primaryKey(),
@@ -99,6 +107,10 @@ export const challenges = pgTable("challenges", {
   type: challengesEnum("type").notNull(),
   question: text("question").notNull(),
   order: integer("order").notNull(),
+  // Timer configuration for TIMER_CHALLENGE type
+  timeLimit: integer("time_limit"), // in seconds, null for non-timed challenges
+  // Additional metadata for complex challenge types (JSON string)
+  metadata: text("metadata"), // For storing type-specific configuration
 });
 
 export const challengesRelations = relations(challenges, ({ one, many }) => ({
@@ -120,6 +132,11 @@ export const challengeOptions = pgTable("challenge_options", {
   correct: boolean("correct").notNull(),
   imageSrc: text("image_src"),
   audioSrc: text("audio_src"),
+  // Additional fields for new challenge types
+  correctOrder: integer("correct_order"), // For SEQUENCE challenges
+  pairId: integer("pair_id"), // For MATCH_PAIRS challenges
+  isBlank: boolean("is_blank").default(false), // For FILL_BLANK challenges
+  dragData: text("drag_data"), // For DRAG_DROP challenges (JSON string)
 });
 
 export const challengeOptionsRelations = relations(challengeOptions, ({ one, many }) => ({
@@ -157,6 +174,10 @@ export const schoolTypeEnum = pgEnum("school_type", [
 export const schools = pgTable("schools", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
+  city: text("city").notNull(),
+  district: text("district").notNull(),
+  category: text("category").notNull(), // Primary School, Secondary School, High School, University
+  kind: text("kind"), // Anadolu Lisesi, İmam Hatip, etc. (can be null)
   totalPoints: integer("total_points").notNull().default(0),
   type: schoolTypeEnum("type").notNull().default("elementary_school"),
 });

@@ -32,6 +32,7 @@ import {
   AlertCircle,
   X 
 } from "lucide-react";
+import { StudyBuddySchoolSelector } from "@/components/study-buddy-school-selector";
 
 interface SchoolItem {
   id: number;
@@ -101,7 +102,7 @@ const MESSAGE_LIMITS = {
 
 const POST_LIMITS = {
   MAX_REASON_LENGTH: 300,
-  MAX_PER_DAY: 2,
+  MAX_PER_MONTH: 1,
   MIN_INTERVAL_MS: 60000,
 };
 
@@ -113,7 +114,7 @@ const CHAT_LIMITS = {
 const warningMessages = {
   MESSAGE_LIMIT: "Mesajlar en fazla 200 karakter olabilir.",
   MONTHLY_MESSAGE_LIMIT: "Aylık 100 mesaj sınırına ulaştınız.",
-  MONTHLY_POST_LIMIT: "Aylık 2 gönderi sınırına ulaştınız.",
+  MONTHLY_POST_LIMIT: "Aylık 1 gönderi sınırına ulaştınız.",
   MONTHLY_CHAT_LIMIT: "Her ay en fazla 2 farklı kişiyle sohbet başlatabilirsiniz!",
   EMPTY_PURPOSE: "Lütfen bir çalışma amacı seçin.",
   EMPTY_REASON: "Lütfen açıklama ekleyin.",
@@ -131,7 +132,7 @@ const warningMessages = {
   MESSAGE_RATE_LIMIT_DAY: "Günde en fazla 100 mesaj gönderebilirsiniz.",
   DUPLICATE_MESSAGE: "Aynı mesajı art arda çok fazla gönderiyorsunuz.",
   POST_TOO_FREQUENT: "Gönderiler arasında en az 1 dakika beklemelisiniz.",
-  POST_DAILY_LIMIT: "Günde en fazla 2 gönderi oluşturabilirsiniz.",
+  POST_MONTHLY_LIMIT: "Ayda en fazla 1 gönderi oluşturabilirsiniz.",
   TOO_MANY_ACTIVE_CHATS: "En fazla 5 aktif sohbetiniz olabilir.",
   DAILY_CHAT_LIMIT: "Günde en fazla 2 yeni sohbet başlatabilirsiniz.",
 };
@@ -150,14 +151,13 @@ export default function StudyBuddyPage() {
   const [userAchievements, setUserAchievements] = useState<UserAchievements>({
     profileEditingUnlocked: false,
     studyBuddyUnlocked: false,
-    codeShareUnlocked: false,
   });
 
   // Tabs
   const [activeTab, setActiveTab] = useState<"allPosts" | "myPosts" | "chats">("allPosts");
 
   // School filtering
-  const [allSchools, setAllSchools] = useState<SchoolItem[]>([]);
+  const [selectedSchoolId, setSelectedSchoolId] = useState<number | null>(null);
   const PURPOSE_OPTIONS = useMemo(() => [
     "YKS Sınavı",
     "TUS Sınavı",
@@ -174,7 +174,6 @@ export default function StudyBuddyPage() {
   ], []);
   
   const [filterPurpose, setFilterPurpose] = useState<string>("");
-  const [schoolSearchTerm, setSchoolSearchTerm] = useState<string>("");
 
   // Posts
   const [allPostsRaw, setAllPostsRaw] = useState<StudyBuddyPost[]>([]);
@@ -229,26 +228,21 @@ export default function StudyBuddyPage() {
     try {
       const response = await fetch("/api/user/streak");
       const data = await response.json();
-      console.log("Study Buddy - User streak data:", data);
       
       if (response.ok && data.streak !== undefined) {
         setUserStreak(data.streak);
-        console.log("Study Buddy - User streak set to:", data.streak);
         
         // Update achievements data
         if (data.achievements) {
           setUserAchievements(data.achievements);
-          console.log("Study Buddy - User achievements:", data.achievements);
         }
         
         return data.streak;
       } else {
-        console.log("Study Buddy - No streak data found, setting streak to 0");
         setUserStreak(0);
         setUserAchievements({
           profileEditingUnlocked: false,
           studyBuddyUnlocked: false,
-          codeShareUnlocked: false,
         });
         return 0;
       }
@@ -258,7 +252,6 @@ export default function StudyBuddyPage() {
       setUserAchievements({
         profileEditingUnlocked: false,
         studyBuddyUnlocked: false,
-        codeShareUnlocked: false,
       });
       return 0;
     }
@@ -308,20 +301,21 @@ export default function StudyBuddyPage() {
       filtered = filtered.filter(post => post.purpose === filterPurpose);
     }
     
-    if (schoolSearchTerm) {
-      filtered = filtered.filter(post => 
-        post.userSchoolName?.toLowerCase().includes(schoolSearchTerm.toLowerCase())
-      );
+    if (selectedSchoolId) {
+      filtered = filtered.filter(post => post.school_id === selectedSchoolId);
     }
     
     return filtered;
-  }, [allPostsRaw, filterPurpose, schoolSearchTerm]);
+  }, [allPostsRaw, filterPurpose, selectedSchoolId]);
 
   const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
   const displayedPosts = filteredPosts.slice(
     currentPage * POSTS_PER_PAGE,
     (currentPage + 1) * POSTS_PER_PAGE
   );
+  
+  // Update total posts to reflect filtered count
+  const totalFilteredPosts = filteredPosts.length;
 
   const goToNextPage = () => setCurrentPage(prev => Math.min(prev + 1, totalPages - 1));
   const goToPrevPage = () => setCurrentPage(prev => Math.max(prev - 1, 0));
@@ -417,18 +411,18 @@ export default function StudyBuddyPage() {
       return false;
     }
 
-    // Check daily post limit
-    const oneDayAgo = new Date(now - 24 * 60 * 60 * 1000).toISOString();
+    // Check monthly post limit
+    const oneMonthAgo = new Date(now - THIRTY_DAYS_IN_MS).toISOString();
     
     try {
-      const { data: dayPosts } = await supabase
+      const { data: monthPosts } = await supabase
         .from("study_buddy_posts")
         .select("id")
         .eq("user_id", currentUser.id)
-        .gt("created_at", oneDayAgo);
+        .gt("created_at", oneMonthAgo);
 
-      if (dayPosts && dayPosts.length >= POST_LIMITS.MAX_PER_DAY) {
-        showWarning(warningMessages.POST_DAILY_LIMIT);
+      if (monthPosts && monthPosts.length >= POST_LIMITS.MAX_PER_MONTH) {
+        showWarning(warningMessages.POST_MONTHLY_LIMIT);
         return false;
       }
 
@@ -612,7 +606,7 @@ export default function StudyBuddyPage() {
           return {
             ...post,
             userName: currentUser.user_metadata?.name || "User",
-            userAvatar: normalizeAvatarUrl(currentUser.user_metadata?.avatar),
+            userAvatar: '/mascot_purple.svg', // Always use default mascot avatar
             userSchoolName,
           };
         })
@@ -715,16 +709,8 @@ export default function StudyBuddyPage() {
     }
 
     // Check streak requirement for study buddy features
-    console.log("Study Buddy - handleCreatePost - Checking streak requirement:", { 
-      userStreak, 
-      userAchievements,
-      required: 15, 
-      checkResult: checkStreakRequirement(userStreak, "STUDY_BUDDY_FEATURES", userAchievements) 
-    });
-    
     if (!checkStreakRequirement(userStreak, "STUDY_BUDDY_FEATURES", userAchievements)) {
       const message = getStreakRequirementMessage("STUDY_BUDDY_FEATURES");
-      console.log("Study Buddy - handleCreatePost - Streak requirement failed:", message);
       turkishToast.error(message);
       return;
     }
@@ -811,16 +797,8 @@ export default function StudyBuddyPage() {
     }
 
     // Check streak requirement for study buddy features
-    console.log("Study Buddy - handleOpenChat - Checking streak requirement:", { 
-      userStreak, 
-      userAchievements,
-      required: 15, 
-      checkResult: checkStreakRequirement(userStreak, "STUDY_BUDDY_FEATURES", userAchievements) 
-    });
-    
     if (!checkStreakRequirement(userStreak, "STUDY_BUDDY_FEATURES", userAchievements)) {
       const message = getStreakRequirementMessage("STUDY_BUDDY_FEATURES");
-      console.log("Study Buddy - handleOpenChat - Streak requirement failed:", message);
       turkishToast.error(message);
       return;
     }
@@ -877,16 +855,8 @@ export default function StudyBuddyPage() {
     if (!currentUser || !selectedChat || !newMessage.trim()) return;
 
     // Check streak requirement for study buddy features
-    console.log("Study Buddy - handleSendMessage - Checking streak requirement:", { 
-      userStreak, 
-      userAchievements,
-      required: 15, 
-      checkResult: checkStreakRequirement(userStreak, "STUDY_BUDDY_FEATURES", userAchievements) 
-    });
-    
     if (!checkStreakRequirement(userStreak, "STUDY_BUDDY_FEATURES", userAchievements)) {
       const message = getStreakRequirementMessage("STUDY_BUDDY_FEATURES");
-      console.log("Study Buddy - handleSendMessage - Streak requirement failed:", message);
       turkishToast.error(message);
       return;
     }
@@ -1137,9 +1107,9 @@ export default function StudyBuddyPage() {
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-green-700">Toplam Gönderi</span>
+              <span className="text-sm text-green-700">Gösterilen Gönderi</span>
               <Badge variant="secondary" className="bg-green-100 text-green-800">
-                {totalPosts}
+                {totalFilteredPosts}
               </Badge>
             </div>
             <div className="flex items-center justify-between">
@@ -1150,7 +1120,7 @@ export default function StudyBuddyPage() {
             </div>
             <Separator className="bg-green-200" />
             <div className="text-xs text-green-600">
-              <p>• Günlük gönderi limiti: {POST_LIMITS.MAX_PER_DAY}</p>
+              <p>• Aylık gönderi limiti: {POST_LIMITS.MAX_PER_MONTH}</p>
               <p>• Günlük mesaj limiti: {MESSAGE_LIMITS.MAX_PER_DAY}</p>
             </div>
           </CardContent>
@@ -1252,17 +1222,11 @@ export default function StudyBuddyPage() {
                     </select>
                   </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Okul Ara</label>
-                      <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                    <input
-                      type="text"
-                          placeholder="Okul ismi ara..."
-                      value={schoolSearchTerm}
-                      onChange={(e) => setSchoolSearchTerm(e.target.value)}
-                          className="w-full pl-10 rounded-xl border-2 border-gray-200 p-3 focus:border-green-500 focus:outline-none"
-                    />
-                  </div>
+                      <label className="text-sm font-medium">Okul Filtresi</label>
+                      <StudyBuddySchoolSelector
+                        onSchoolSelect={setSelectedSchoolId}
+                        selectedSchoolId={selectedSchoolId}
+                      />
                     </div>
                   </div>
                 </CardContent>
@@ -1315,7 +1279,7 @@ export default function StudyBuddyPage() {
                       />
                       <div className="flex justify-between text-xs text-gray-500">
                         <span>{postReason.length}/{POST_LIMITS.MAX_REASON_LENGTH} karakter</span>
-                        <span>Günlük limit: {POST_LIMITS.MAX_PER_DAY} gönderi</span>
+                        <span>Aylık limit: {POST_LIMITS.MAX_PER_MONTH} gönderi</span>
                       </div>
                     </div>
                     <Button
@@ -1349,7 +1313,7 @@ export default function StudyBuddyPage() {
                             </div>
 
                 {/* Pagination */}
-              {totalPosts > POSTS_PER_PAGE && (
+              {totalFilteredPosts > POSTS_PER_PAGE && (
                 <div className="flex flex-col items-center gap-4 mt-6">
                   <div className="flex items-center gap-2">
                             <Button
@@ -1370,28 +1334,28 @@ export default function StudyBuddyPage() {
                   </Button>
                     <div className="flex items-center gap-1 px-4 py-2 rounded-lg bg-gray-100">
                       <span className="text-sm font-medium">
-                        Sayfa {currentPage + 1} / {Math.ceil(totalPosts / POSTS_PER_PAGE)}
+                        Sayfa {currentPage + 1} / {Math.ceil(totalFilteredPosts / POSTS_PER_PAGE)}
                       </span>
                     </div>
                   <Button
                       variant="secondary"
                     size="sm"
                     onClick={goToNextPage}
-                      disabled={currentPage >= Math.ceil(totalPosts / POSTS_PER_PAGE) - 1}
+                      disabled={currentPage >= Math.ceil(totalFilteredPosts / POSTS_PER_PAGE) - 1}
                     >
                       Sonraki
                     </Button>
                     <Button
                       variant="secondary"
                       size="sm"
-                      onClick={() => setCurrentPage(Math.ceil(totalPosts / POSTS_PER_PAGE) - 1)}
-                      disabled={currentPage >= Math.ceil(totalPosts / POSTS_PER_PAGE) - 1}
+                      onClick={() => setCurrentPage(Math.ceil(totalFilteredPosts / POSTS_PER_PAGE) - 1)}
+                      disabled={currentPage >= Math.ceil(totalFilteredPosts / POSTS_PER_PAGE) - 1}
                     >
                       Son
                   </Button>
                 </div>
                   <div className="text-sm text-muted-foreground">
-                    Toplam {totalPosts} gönderi • {POSTS_PER_PAGE} gönderi/sayfa
+                    Toplam {totalFilteredPosts} gönderi • {POSTS_PER_PAGE} gönderi/sayfa
                 </div>
                 </div>
               )}

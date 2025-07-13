@@ -297,7 +297,11 @@ export const getSchools = cache(async () => {
     columns: {
       id: true,
       name: true,
-      type: true, // Include the type column
+      city: true,
+      district: true,
+      category: true,
+      kind: true,
+      type: true,
     },
   });
 
@@ -306,37 +310,17 @@ export const getSchools = cache(async () => {
 ////ADDED /////
 
 export const getSchoolPointsByType = cache(async (schoolType: "university" | "high_school" | "secondary_school" | "elementary_school") => {
-  // Fetch schools of the specified type
-  const schoolList = await db.query.schools.findMany({
-    where: eq(schools.type, schoolType),
-    columns: { id: true, name: true },
-  });
-
-  // Calculate total points for each school
-  const schoolPoints = await Promise.all(
-    schoolList.map(async (school) => {
-      const totalPointsResult = await db.query.userProgress.findMany({
-        where: eq(userProgress.schoolId, school.id),
-        columns: { points: true },
-      });
-
-      const totalPoints = totalPointsResult.reduce(
-        (sum, user) => sum + (user.points || 0),
-        0
-      );
-
-      return {
-        schoolId: school.id,
-        schoolName: school.name,
-        totalPoints,
-      };
+  // Use a single optimized query instead of multiple queries
+  const topSchools = await db
+    .select({
+      schoolId: schools.id,
+      schoolName: schools.name,
+      totalPoints: schools.totalPoints,
     })
-  );
-
-  // Sort the school points in descending order of totalPoints
-  schoolPoints.sort((a, b) => b.totalPoints - a.totalPoints);
-  // Limit to top 10
-  const topSchools = schoolPoints.slice(0, 10);
+    .from(schools)
+    .where(eq(schools.type, schoolType))
+    .orderBy(desc(schools.totalPoints), asc(schools.name))
+    .limit(10);
 
   return topSchools;
 });
@@ -378,13 +362,14 @@ export const getUserRank = cache(async () => {
 
   const { points, schoolId } = userProgressData;
 
-  // Calculate user's rank among all users
-  const users = await db.query.userProgress.findMany({
-    orderBy: (userProgress, { desc }) => [desc(userProgress.points)],
-    columns: { userId: true, points: true },
-  });
+  // Calculate user's rank among all users using a more efficient query
+  const userRankResult = await db.execute(sql`
+    SELECT COUNT(*) + 1 as rank
+    FROM user_progress
+    WHERE points > ${points}
+  `);
 
-  const userRank = users.findIndex((user) => user.userId === userId) + 1;
+  const userRank = Number(userRankResult[0]?.rank) || 1;
 
   if (!schoolId) {
     return {
@@ -397,14 +382,14 @@ export const getUserRank = cache(async () => {
     };
   }
 
-  // Calculate user's rank within their school
-  const schoolUsers = await db.query.userProgress.findMany({
-    where: eq(userProgress.schoolId, schoolId),
-    orderBy: (userProgress, { desc }) => [desc(userProgress.points)],
-    columns: { userId: true, points: true },
-  });
+  // Calculate user's rank within their school using an efficient query
+  const userRankInSchoolResult = await db.execute(sql`
+    SELECT COUNT(*) + 1 as rank
+    FROM user_progress
+    WHERE school_id = ${schoolId} AND points > ${points}
+  `);
 
-  const userRankInSchool = schoolUsers.findIndex((user) => user.userId === userId) + 1;
+  const userRankInSchool = Number(userRankInSchoolResult[0]?.rank) || 1;
 
   // Get the type of the user's school
   const userSchoolData = await db.query.schools.findFirst({
@@ -425,14 +410,22 @@ export const getUserRank = cache(async () => {
     };
   }
 
-  // Dynamically get all schools of the same type and calculate rank
-  const schoolsData = await db.query.schools.findMany({
-    where: eq(schools.type, schoolType),
-    orderBy: (schools, { desc }) => [desc(schools.totalPoints)],
-    columns: { id: true, totalPoints: true },
-  });
+  // Calculate school rank using an efficient query
+  const schoolRankResult = await db.execute(sql`
+    SELECT COUNT(*) + 1 as rank
+    FROM schools
+    WHERE type = ${schoolType} AND total_points > (
+      SELECT total_points FROM schools WHERE id = ${schoolId}
+    )
+  `);
 
-  const schoolRank = schoolsData.findIndex((school) => school.id === schoolId) + 1;
+  const schoolRank = Number(schoolRankResult[0]?.rank) || 1;
+  
+  // Get school points
+  const currentSchoolData = await db.query.schools.findFirst({
+    where: eq(schools.id, schoolId),
+    columns: { totalPoints: true },
+  });
 
   return {
     userRank,
@@ -440,7 +433,7 @@ export const getUserRank = cache(async () => {
     schoolRank,
     userPoints: points,
     schoolId,
-    schoolPoints: schoolsData.find((school) => school.id === schoolId)?.totalPoints || 0,
+    schoolPoints: currentSchoolData?.totalPoints || 0,
     schoolType,
   };
 });
@@ -487,9 +480,28 @@ export async function saveTeacherApplication(applicationData: {
 
 // Get all teacher applications
 export async function getAllTeacherApplications() {
-  return await db.query.teacherApplications.findMany({
+  const applications = await db.query.teacherApplications.findMany({
     orderBy: (teacherApplications, { desc }) => [desc(teacherApplications.createdAt)],
   });
+  
+  // Transform the data to match frontend expectations
+  const transformedApplications = applications.map(app => ({
+    id: app.id,
+    userId: app.userId,
+    teacherName: app.teacherName || "N/A",
+    teacherSurname: app.teacherSurname || "N/A", 
+    teacherEmail: app.teacherEmail || "N/A",
+    teacherPhoneNumber: app.teacherPhoneNumber || "N/A",
+    field: app.field,
+    quizResult: app.quizResult,
+    passed: app.passed,
+    classification: app.classification,
+    status: app.status,
+    createdAt: app.createdAt ? app.createdAt.toISOString() : new Date().toISOString(),
+    updatedAt: app.updatedAt ? app.updatedAt.toISOString() : new Date().toISOString(),
+  }));
+  
+  return transformedApplications;
 }
 
 // Get teacher application by ID
@@ -1162,7 +1174,25 @@ export async function getAllStudentApplications() {
     orderBy: (privateLessonApplications, { desc }) => [desc(privateLessonApplications.createdAt)],
   });
   
-  return applications;
+  // Transform the data to match frontend expectations
+  const transformedApplications = applications.map(app => ({
+    id: app.id,
+    studentName: app.studentName,
+    studentSurname: app.studentSurname,
+    studentEmail: app.studentEmail,
+    studentPhoneNumber: app.studentPhoneNumber,
+    subject: app.field, // Map field to subject
+    studentLevel: "Genel", // Default value since not in schema
+    lessonDuration: "60", // Default value since not in schema
+    availableHours: "Belirtilmemiş", // Default value since not in schema
+    status: app.status || "pending",
+    approved: app.approved || false,
+    userId: app.userId,
+    studentNeeds: app.studentNeeds,
+    createdAt: app.createdAt || new Date().toISOString(),
+  }));
+  
+  return transformedApplications;
 }
 
 // Approve a student application
@@ -1539,6 +1569,43 @@ export const submitLessonReview = async (
     comment: comment || null,
   }).returning();
 };
+
+// ✅ OPTIMIZED VERSION: Single query with joins instead of N+1
+export const getTeachersWithRatingsOptimized = cache(async () => {
+  const result = await db.execute(sql`
+    SELECT 
+      u.id,
+      u.name,
+      u.email,
+      u.avatar,
+      u.description as bio,
+      u.meet_link,
+      COALESCE(AVG(lr.rating), 0) as avg_rating,
+      COUNT(lr.id) as review_count,
+      STRING_AGG(DISTINCT tf.display_name, ', ') as fields_new,
+      MAX(ta.field) as field_legacy
+    FROM users u
+    LEFT JOIN lesson_reviews lr ON u.id = lr.teacher_id
+    LEFT JOIN teacher_fields tf ON u.id = tf.teacher_id AND tf.is_active = true
+    LEFT JOIN teacher_applications ta ON u.id = ta.user_id
+    WHERE u.role = 'teacher'
+    GROUP BY u.id, u.name, u.email, u.avatar, u.description, u.meet_link
+    ORDER BY avg_rating DESC, review_count DESC
+  `);
+
+  return result.map((row: any) => ({
+    id: row.id,
+    name: row.name,
+    email: row.email,
+    avatar: row.avatar,
+    bio: row.bio,
+    meetLink: row.meet_link,
+    field: row.fields_new || row.field_legacy || "",
+    fields: row.fields_new ? row.fields_new.split(', ') : (row.field_legacy ? [row.field_legacy] : []),
+    averageRating: Math.round(Number(row.avg_rating) * 10) / 10,
+    totalReviews: Number(row.review_count),
+  }));
+});
 
 // Get teacher info with average rating for listing
 export const getTeachersWithRatings = cache(async () => {

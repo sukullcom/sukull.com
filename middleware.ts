@@ -15,11 +15,26 @@ export async function middleware(req: NextRequest) {
   response.headers.set('X-XSS-Protection', '1; mode=block');
   response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
   
-  // Add CSP header for additional security - include payment server for Railway deployment
+  // Add CSP header for additional security - include payment server for Railway deployment and YouTube iframe API
   response.headers.set(
     'Content-Security-Policy',
-    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googleapis.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https: blob:; font-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' https://*.railway.app http://localhost:3001 https://api.supabase.io https://*.supabase.co wss://*.supabase.co https://www.googleapis.com https://emkc.org; media-src 'self' blob:; worker-src 'self' blob: https://cdn.jsdelivr.net;"
+    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googleapis.com https://cdn.jsdelivr.net https://www.youtube.com https://s.ytimg.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https: blob: https://*.ytimg.com https://*.ggpht.com https://*.googleusercontent.com; font-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' https://*.railway.app http://localhost:3001 https://api.supabase.io https://*.supabase.co wss://*.supabase.co https://www.googleapis.com https://emkc.org https://*.youtube.com https://googleads.g.doubleclick.net; media-src 'self' blob: https://*.googlevideo.com; worker-src 'self' blob: https://cdn.jsdelivr.net; frame-src 'self' https://www.youtube.com https://youtube.com;"
   );
+  
+  // DISABLED ROUTES - Block access to lab and piano game
+  const disabledRoutes = ['/lab', '/games/piano'];
+  const isDisabledRoute = disabledRoutes.some(route => 
+    pathname === route || pathname.startsWith(route + '/')
+  );
+  
+  if (isDisabledRoute) {
+    // Redirect to appropriate fallback page
+    if (pathname.startsWith('/lab')) {
+      return NextResponse.redirect(new URL('/games', req.url));
+    } else if (pathname.startsWith('/games/piano')) {
+      return NextResponse.redirect(new URL('/games', req.url));
+    }
+  }
   
   // Add cache control headers based on route
   if (pathname.startsWith('/courses') || 
@@ -99,7 +114,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/learn', req.url))
   }
   
-  // Additional role-based protection (basic check - detailed checks in layouts)
+  // Additional role-based protection (basic check - detailed checks in their layouts)
   if (session && adminPaths.some(path => pathname.startsWith(path))) {
     // Admin paths require additional verification in their layouts
     // This is just a basic middleware check

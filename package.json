@@ -49,17 +49,23 @@
     "db:bilgisayar-bilimleri-6": "tsx ./scripts/bilgisayar-bilimleri-7.ts",
     "db:bilgisayar-bilimleri-7": "tsx ./scripts/bilgisayar-bilimleri-7.ts",
     "db:bilgisayar-bilimleri-8": "tsx ./scripts/bilgisayar-bilimleri-8.ts",
+    "db:turkce-7": "tsx ./scripts/turkce-7.ts",
+    "db:test-challenge-types": "tsx ./scripts/test-new-challenge-types-course.ts",
+    "db:migrate-challenge-types": "tsx ./scripts/migrate-new-challenge-types.ts",
     "db:seed-all-grades": "tsx ./scripts/seed-all-grades.ts",
     "db:reset": "tsx ./scripts/reset.ts",
     "db:reset-applications": "tsx ./scripts/reset-applications.ts",
+    "db:reset-courses": "tsx ./scripts/reset-courses.ts",
     "db:sQQ": "tsx ./scripts/seedQuizQuestions.ts",
     "migrate": "tsx ./scripts/prod.ts",
-    "db:generate": "npx drizzle-kit generate"
+    "db:generate": "npx drizzle-kit generate",
+    "schools:import": "node ./scripts/import-schools.js"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.9.1",
     "@codemirror/lang-javascript": "^6.2.2",
     "@codemirror/lang-python": "github:codemirror/lang-python",
+    "@hello-pangea/dnd": "^18.0.1",
     "@monaco-editor/react": "^4.6.0",
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.2",
@@ -109,7 +115,6 @@
     "react-icons": "^5.4.0",
     "react-player": "^2.16.0",
     "react-split": "^2.0.14",
-    "react-use": "^17.5.1",
     "server-only": "^0.0.1",
     "sonner": "^1.7.4",
     "swr": "^2.2.5",
@@ -117,7 +122,7 @@
     "tailwind-scrollbar": "^3.1.0",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^11.1.0",
-    "youtube-transcript": "^1.2.1",
+    "ytdlp-nodejs": "^2.3.0",
     "zustand": "^5.0.2"
   },
   "devDependencies": {

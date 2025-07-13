@@ -42,7 +42,6 @@ export default function TeacherBookingsPage() {
   // Listen for lesson status updates
   useEffect(() => {
     const handleLessonStatusUpdate = () => {
-      console.log('Lesson status updated, refreshing bookings...');
       fetchBookings();
     };
 

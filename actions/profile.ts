@@ -94,7 +94,7 @@ export async function getAllSchoolsOnServer() {
 export async function updateProfileAction(
   newName: string,
   newImage: string,
-  schoolId: number,
+  schoolId: number | null,
   newDailyTarget: number // Günlük hedeflenen puan
 ) {
   const user = await getServerUser();

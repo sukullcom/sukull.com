@@ -19,8 +19,8 @@ export const revalidate = 300; // Revalidate this page every 5 minutes
 
 const LeaderboardPage = async () => {
   try {
-    // Only update total points once per hour (using a cache flag in DB)
-    await updateTotalPointsForSchools();
+    // Remove the heavy school points update to speed up page loading
+    // This will be handled by a background job or cron task instead
     
     // Start all data fetches in parallel for better performance
     const userProgressData = getUserProgress();
@@ -50,7 +50,7 @@ const LeaderboardPage = async () => {
     ]);
   
     if (!userProgress || !userProgress.activeCourse) {
-      redirect("/courses");
+      redirect("/courses?message=select-course");
     }
   
     return (
