@@ -1,13 +1,28 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Confetti from "react-confetti";
 import { Button } from "@/components/ui/button";
 import { addPointsToUser } from "@/actions/challenge-progress";
-import { useAudio } from "react-use";
 import { useRouter } from "next/navigation";
 import { SCORING_SYSTEM } from "@/constants";
+
+// Safe alternative to useAudio from react-use
+const useAudio = (config: { src: string; autoPlay: boolean }) => {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  
+  useEffect(() => {
+    audioRef.current = new Audio(config.src);
+    audioRef.current.autoplay = config.autoPlay;
+    
+    if (config.autoPlay) {
+      audioRef.current.play().catch(console.error);
+    }
+  }, [config.src, config.autoPlay]);
+  
+  return [null, null, null, audioRef] as const;
+};
 
 const steps = [
   {

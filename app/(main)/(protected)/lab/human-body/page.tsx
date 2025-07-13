@@ -4,10 +4,26 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { addPointsToUser } from "@/actions/challenge-progress";
 import Confetti from "react-confetti";
-import { useWindowSize } from "react-use";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { SCORING_SYSTEM } from "@/constants";
+
+// Safe alternative to useWindowSize from react-use
+const useWindowSize = () => {
+  const [size, setSize] = useState({ width: 0, height: 0 });
+  
+  useEffect(() => {
+    const updateSize = () => {
+      setSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+    
+    updateSize();
+    window.addEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
+  
+  return size;
+};
 
 const videos = [
   {
