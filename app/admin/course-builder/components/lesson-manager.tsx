@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { lessons, units } from "@/db/schema";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -40,11 +40,7 @@ export function LessonManager({ courseId, courseName }: LessonManagerProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [loadingLessons, setLoadingLessons] = useState(true);
 
-  useEffect(() => {
-    fetchData();
-  }, [courseId]);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoadingLessons(true);
     try {
       const [lessonsResult, unitsResult] = await Promise.all([
@@ -52,13 +48,13 @@ export function LessonManager({ courseId, courseName }: LessonManagerProps) {
         getUnitsForCourse(courseId)
       ]);
 
-      if (lessonsResult.success) {
+      if (lessonsResult.success && lessonsResult.lessons) {
         setLessons(lessonsResult.lessons);
       } else {
         toast.error("Dersler yüklenemedi");
       }
 
-      if (unitsResult.success) {
+      if (unitsResult.success && unitsResult.units) {
         setUnits(unitsResult.units);
         if (unitsResult.units.length > 0) {
           setNewLesson(prev => ({ ...prev, unitId: unitsResult.units[0].id }));
@@ -66,12 +62,16 @@ export function LessonManager({ courseId, courseName }: LessonManagerProps) {
       } else {
         toast.error("Üniteler yüklenemedi");
       }
-    } catch (error) {
+    } catch {
       toast.error("Veriler yüklenirken bir hata oluştu");
     } finally {
       setLoadingLessons(false);
     }
-  };
+  }, [courseId]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const handleUnitChange = (unitId: string) => {
     const selectedUnitId = parseInt(unitId);
@@ -101,10 +101,10 @@ export function LessonManager({ courseId, courseName }: LessonManagerProps) {
         order: newLesson.order
       });
       
-      if (result.success) {
+      if (result.success && result.lesson) {
         // Add unit info to the lesson for display
         const unit = units.find(u => u.id === newLesson.unitId);
-        const lessonWithUnit = { ...result.lesson, unit };
+        const lessonWithUnit: Lesson = { ...result.lesson, unit };
         setLessons([...lessons, lessonWithUnit]);
         setNewLesson({ unitId: newLesson.unitId, title: "", order: newLesson.order + 1 });
         setIsCreateOpen(false);
@@ -112,7 +112,7 @@ export function LessonManager({ courseId, courseName }: LessonManagerProps) {
       } else {
         toast.error(result.error || "Ders oluşturulamadı");
       }
-    } catch (error) {
+    } catch {
       toast.error("Ders oluşturulurken bir hata oluştu");
     } finally {
       setIsLoading(false);
@@ -144,7 +144,7 @@ export function LessonManager({ courseId, courseName }: LessonManagerProps) {
       } else {
         toast.error(result.error || "Ders güncellenemedi");
       }
-    } catch (error) {
+    } catch {
       toast.error("Ders güncellenirken bir hata oluştu");
     } finally {
       setIsLoading(false);
@@ -173,7 +173,7 @@ export function LessonManager({ courseId, courseName }: LessonManagerProps) {
       } else {
         toast.error(result.error || "Ders silinemedi");
       }
-    } catch (error) {
+    } catch {
       toast.error("Ders silinirken bir hata oluştu");
     }
   };
@@ -251,7 +251,7 @@ export function LessonManager({ courseId, courseName }: LessonManagerProps) {
                 />
               </div>
               <div className="flex justify-end space-x-2">
-                <Button variant="outline" onClick={() => setIsCreateOpen(false)}>
+                <Button variant="primaryOutline" onClick={() => setIsCreateOpen(false)}>
                   Cancel
                 </Button>
                 <Button onClick={handleCreateLesson} disabled={isLoading}>
@@ -290,7 +290,7 @@ export function LessonManager({ courseId, courseName }: LessonManagerProps) {
               />
             </div>
             <div className="flex justify-end space-x-2">
-              <Button variant="outline" onClick={() => setIsEditOpen(false)}>
+              <Button variant="primaryOutline" onClick={() => setIsEditOpen(false)}>
                 Cancel
               </Button>
               <Button onClick={handleEditLesson} disabled={isLoading}>

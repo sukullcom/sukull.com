@@ -8,7 +8,6 @@ import { useWindowSize } from "react-use";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { SCORING_SYSTEM } from "@/constants";
-import { LoadingSpinner } from "@/components/loading-spinner";
 
 const videos = [
   {

@@ -1,6 +1,5 @@
 "use client";
 
-import { challengeOptions, challenges } from "@/db/schema";
 import { cn } from "@/lib/utils";
 import { useState, useEffect, useRef } from "react";
 import { Timer, AlertCircle } from "lucide-react";
@@ -158,7 +157,7 @@ export const TimerChallenge = ({
         <div className="text-center">
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-red-500 text-white font-medium">
             <AlertCircle className="w-5 h-5 mr-2" />
-            Time's up!
+            Time&apos;s up!
           </div>
         </div>
       )}
@@ -175,15 +174,15 @@ export const TimerChallenge = ({
 };
 
 // Higher-order component to wrap any challenge with timer
-export const withTimer = <T extends object>(
+export const withTimer = <T extends Record<string, unknown>>(
   WrappedComponent: React.ComponentType<T>,
   timeLimit?: number
 ) => {
-  return (props: T & { timeLimit?: number; onTimeUp?: () => void }) => {
+  const TimerWrapper = (props: T & { timeLimit?: number; onTimeUp?: () => void }) => {
     const [timeExpired, setTimeExpired] = useState(false);
     
     const effectiveTimeLimit = props.timeLimit || timeLimit;
-    const disabled = (props as any).disabled || timeExpired;
+    const disabled = (props as Record<string, unknown>).disabled || timeExpired;
 
     if (!effectiveTimeLimit) {
       return <WrappedComponent {...props} />;
@@ -201,10 +200,14 @@ export const withTimer = <T extends object>(
         timeLimit={effectiveTimeLimit}
         onTimeUp={handleTimeUp}
         disabled={disabled}
-        status={(props as any).status || "none"}
+        status={(props as Record<string, unknown>).status as "correct" | "wrong" | "none" || "none"}
       >
         <WrappedComponent {...props} disabled={disabled} />
       </TimerChallenge>
     );
   };
+
+  TimerWrapper.displayName = `withTimer(${WrappedComponent.displayName || WrappedComponent.name})`;
+  
+  return TimerWrapper;
 }; 

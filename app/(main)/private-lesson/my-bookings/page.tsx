@@ -669,7 +669,7 @@ export default function MyBookingsPage() {
                         ) : (
                           // Show review button for lessons without reviews
                           <Button
-                            variant="outline"
+                            variant="primaryOutline"
                             size="sm"
                             onClick={() => handleReviewLesson(booking.id)}
                             className="w-full"

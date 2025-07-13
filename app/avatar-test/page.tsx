@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { AvatarGenerator } from "random-avatar-generator";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 

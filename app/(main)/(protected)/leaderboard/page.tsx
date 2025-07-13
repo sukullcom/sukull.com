@@ -1,4 +1,3 @@
-import { updateTotalPointsForSchools } from "@/actions/user-progress";
 import { FeedWrapper } from "@/components/feed-wrapper";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";

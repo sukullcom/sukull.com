@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 // ✅ BACKWARD COMPATIBILITY: Redirect to consolidated lessons API
 export async function GET(

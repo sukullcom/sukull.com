@@ -50,7 +50,7 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
       } else {
         toast.error(result.error || "Ders oluşturulamadı");
       }
-    } catch (error) {
+    } catch {
       toast.error("Ders oluşturulurken bir hata oluştu");
     } finally {
       setIsLoading(false);
@@ -78,7 +78,7 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
       } else {
         toast.error(result.error || "Ders güncellenemedi");
       }
-    } catch (error) {
+    } catch {
       toast.error("Ders güncellenirken bir hata oluştu");
     } finally {
       setIsLoading(false);
@@ -108,7 +108,7 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
       } else {
         toast.error(result.error || "Ders silinemedi");
       }
-    } catch (error) {
+    } catch {
       toast.error("Ders silinirken bir hata oluştu");
     } finally {
       setIsLoading(false);

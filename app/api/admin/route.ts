@@ -100,8 +100,8 @@ export async function POST(request: NextRequest) {
           return NextResponse.json({ message: "Application ID is required" }, { status: 400 });
         }
 
-        const result = await rejectTeacherApplication(applicationId);
-        return NextResponse.json({ message: "Teacher application rejected successfully", result });
+        await rejectTeacherApplication(applicationId);
+        return NextResponse.json({ message: "Teacher application rejected successfully" });
       }
 
       case 'approve-student': {
@@ -112,8 +112,8 @@ export async function POST(request: NextRequest) {
           return NextResponse.json({ message: "Application ID is required" }, { status: 400 });
         }
 
-        const result = await approveStudentApplication(applicationId);
-        return NextResponse.json({ message: "Student application approved successfully", result });
+        await approveStudentApplication(applicationId);
+        return NextResponse.json({ message: "Student application approved successfully" });
       }
 
       case 'reject-student': {
@@ -124,8 +124,8 @@ export async function POST(request: NextRequest) {
           return NextResponse.json({ message: "Application ID is required" }, { status: 400 });
         }
 
-        const result = await rejectStudentApplication(applicationId);
-        return NextResponse.json({ message: "Student application rejected successfully", result });
+        await rejectStudentApplication(applicationId);
+        return NextResponse.json({ message: "Student application rejected successfully" });
       }
 
       default: {
@@ -161,15 +161,14 @@ export async function PATCH(request: NextRequest) {
     const applicationId = parseInt(id);
 
     if (action === "approve") {
-      let result;
       if (selectedFields && selectedFields.length > 0) {
-        result = await approveTeacherApplicationWithFields(applicationId, selectedFields);
+        await approveTeacherApplicationWithFields(applicationId, selectedFields);
       } else {
-        result = await approveTeacherApplication(applicationId);
+        await approveTeacherApplication(applicationId);
       }
       return NextResponse.json({ message: "Application approved successfully." });
     } else if (action === "reject") {
-      const result = await rejectTeacherApplication(applicationId);
+      await rejectTeacherApplication(applicationId);
       return NextResponse.json({ message: "Application rejected successfully." });
     } else {
       return NextResponse.json({ message: "Invalid action" }, { status: 400 });

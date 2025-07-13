@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import { secureApi, ApiResponses } from "@/lib/api-middleware";
 import { getTeacherBookings } from "@/db/queries";
 

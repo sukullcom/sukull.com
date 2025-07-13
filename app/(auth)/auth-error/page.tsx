@@ -94,7 +94,7 @@ export default function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
         <Button asChild className="flex-1">
           <Link prefetch={false} href="/login">🔄 Tekrar Giriş Yap</Link>
         </Button>
-        <Button asChild variant="outline" className="flex-1">
+        <Button asChild variant="primaryOutline" className="flex-1">
           <Link prefetch={false} href="/">🏠 Ana Sayfaya Dön</Link>
         </Button>
       </div>

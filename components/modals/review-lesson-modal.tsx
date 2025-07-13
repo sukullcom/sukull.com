@@ -180,7 +180,7 @@ export const ReviewLessonModal = ({
 
         <div className="flex gap-3 p-6 border-t">
           <Button
-            variant="outline"
+            variant="primaryOutline"
             onClick={onClose}
             disabled={isSubmitting}
             className="flex-1"

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { secureApi, ApiResponses } from "@/lib/api-middleware";
 import db from "@/db/drizzle";
 import { lessons, challenges, challengeOptions } from "@/db/schema";

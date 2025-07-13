@@ -122,7 +122,7 @@ export default function StudentApplicationsPage() {
     <div className="container py-10">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Öğrenci Başvuruları</h1>
-        <Button onClick={fetchApplications} variant="outline">
+        <Button onClick={fetchApplications} variant="primaryOutline">
           Yenile
         </Button>
       </div>

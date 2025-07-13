@@ -40,7 +40,7 @@ export function CourseBuilder({ initialCourses }: CourseBuilderProps) {
               </div>
             </div>
             <Button
-              variant="outline"
+              variant="primaryOutline"
               size="sm"
               onClick={() => {
                 setSelectedCourse(null);

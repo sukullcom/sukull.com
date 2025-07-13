@@ -3,7 +3,7 @@
 import { challengeOptions, challenges } from "@/db/schema";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
-import { Card as BaseCard } from "./card";
+import Image from "next/image";
 
 type Props = {
   options: (typeof challengeOptions.$inferSelect)[];
@@ -19,7 +19,7 @@ type DragItem = {
   text: string;
   imageSrc?: string | null;
   audioSrc?: string | null;
-  dragData: any;
+  dragData: Record<string, unknown>;
 };
 
 type DropZone = {
@@ -65,8 +65,8 @@ export const DragDropChallenge = ({
               correctItemId: dragData.correctItemId,
             });
           }
-        } catch (error) {
-          console.error("Failed to parse drag data:", error);
+        } catch {
+          console.error("Failed to parse drag data");
         }
       }
     });
@@ -140,9 +140,9 @@ export const DragDropChallenge = ({
         
         try {
           // dragData is already parsed in initialization, no need to parse again
-          const dragData = placedItem.dragData;
+          const dragData = placedItem.dragData as { itemId: number };
           return dragData.itemId === zone.correctItemId;
-        } catch (error) {
+        } catch {
           return false;
         }
       });
@@ -187,7 +187,7 @@ export const DragDropChallenge = ({
           if (status !== "none" && placedItem && zone.correctItemId) {
             try {
               // dragData is already parsed in initialization
-              const dragData = placedItem.dragData;
+              const dragData = placedItem.dragData as { itemId: number };
               isCorrect = dragData.itemId === zone.correctItemId;
               isWrong = dragData.itemId !== zone.correctItemId;
             } catch {
@@ -225,10 +225,12 @@ export const DragDropChallenge = ({
                   onDragStart={(e) => handleDragStart(e, placedItem.id)}
                 >
                   {placedItem.imageSrc && (
-                    <img 
+                    <Image 
                       src={placedItem.imageSrc} 
                       alt={placedItem.text}
-                      className="w-16 h-16 object-contain mx-auto mb-2"
+                      width={64}
+                      height={64}
+                      className="object-contain mx-auto mb-2"
                     />
                   )}
                   <div className="text-center text-sm font-medium">
@@ -265,10 +267,12 @@ export const DragDropChallenge = ({
                 onDragStart={(e) => handleDragStart(e, item.id)}
               >
                 {item.imageSrc && (
-                  <img 
+                  <Image 
                     src={item.imageSrc} 
                     alt={item.text}
-                    className="w-12 h-12 object-contain mx-auto mb-2"
+                    width={48}
+                    height={48}
+                    className="object-contain mx-auto mb-2"
                   />
                 )}
                 <div className="text-center text-sm font-medium">

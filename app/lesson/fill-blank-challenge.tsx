@@ -45,7 +45,7 @@ export const FillBlankChallenge = ({
     const parts = question.split(/(\{\d+\})/);
     let itemId = 0;
 
-    parts.forEach((part, index) => {
+    parts.forEach((part) => {
       if (part.match(/\{\d+\}/)) {
         // This is a placeholder like {1}, {2}, etc.
         const placeholderMatch = part.match(/\{(\d+)\}/);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { units } from "@/db/schema";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -16,10 +16,9 @@ type Unit = typeof units.$inferSelect;
 
 interface UnitManagerProps {
   courseId: number;
-  courseName: string;
 }
 
-export function UnitManager({ courseId, courseName }: UnitManagerProps) {
+export function UnitManager({ courseId }: UnitManagerProps) {
   const [units, setUnits] = useState<Unit[]>([]);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -37,26 +36,26 @@ export function UnitManager({ courseId, courseName }: UnitManagerProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [loadingUnits, setLoadingUnits] = useState(true);
 
-  useEffect(() => {
-    fetchUnits();
-  }, [courseId]);
-
-  const fetchUnits = async () => {
+  const fetchUnits = useCallback(async () => {
     setLoadingUnits(true);
     try {
       const result = await getUnitsForCourse(courseId);
-      if (result.success) {
+      if (result.success && result.units) {
         setUnits(result.units);
         setNewUnit(prev => ({ ...prev, order: result.units.length + 1 }));
       } else {
         toast.error("Üniteler yüklenemedi");
       }
-    } catch (error) {
+    } catch {
       toast.error("Üniteler yüklenirken bir hata oluştu");
     } finally {
       setLoadingUnits(false);
     }
-  };
+  }, [courseId]);
+
+  useEffect(() => {
+    fetchUnits();
+  }, [fetchUnits]);
 
   const handleCreateUnit = async () => {
     if (!newUnit.title.trim()) {
@@ -81,7 +80,7 @@ export function UnitManager({ courseId, courseName }: UnitManagerProps) {
       } else {
         toast.error(result.error || "Ünite oluşturulamadı");
       }
-    } catch (error) {
+    } catch {
       toast.error("Ünite oluşturulurken bir hata oluştu");
     } finally {
       setIsLoading(false);
@@ -114,7 +113,7 @@ export function UnitManager({ courseId, courseName }: UnitManagerProps) {
       } else {
         toast.error(result.error || "Ünite güncellenemedi");
       }
-    } catch (error) {
+    } catch {
       toast.error("Ünite güncellenirken bir hata oluştu");
     } finally {
       setIsLoading(false);
@@ -145,7 +144,7 @@ export function UnitManager({ courseId, courseName }: UnitManagerProps) {
       } else {
         toast.error(result.error || "Ünite silinemedi");
       }
-    } catch (error) {
+    } catch {
       toast.error("Ünite silinirken bir hata oluştu");
     } finally {
       setIsLoading(false);
@@ -243,7 +242,7 @@ export function UnitManager({ courseId, courseName }: UnitManagerProps) {
                 />
               </div>
               <div className="flex justify-end space-x-2">
-                <Button variant="outline" onClick={() => setIsCreateOpen(false)}>
+                <Button variant="primaryOutline" onClick={() => setIsCreateOpen(false)}>
                   İptal
                 </Button>
                 <Button onClick={handleCreateUnit} disabled={isLoading}>
@@ -292,7 +291,7 @@ export function UnitManager({ courseId, courseName }: UnitManagerProps) {
               />
             </div>
             <div className="flex justify-end space-x-2">
-              <Button variant="outline" onClick={() => setIsEditOpen(false)}>
+              <Button variant="primaryOutline" onClick={() => setIsEditOpen(false)}>
                 İptal
               </Button>
               <Button onClick={handleEditUnit} disabled={isLoading}>

@@ -9,23 +9,24 @@ export type AuthenticatedUser = {
   email: string;
   name: string | null;
   role?: string;
-  avatar?: string;
 };
+
+export type RouteParams = Record<string, string | string[]> | undefined;
 
 export type AuthenticatedHandler = (
   request: NextRequest,
   user: AuthenticatedUser,
-  params?: any
+  params?: RouteParams
 ) => Promise<NextResponse>;
 
 export type PublicHandler = (
   request: NextRequest,
-  params?: any
+  params?: RouteParams
 ) => Promise<NextResponse>;
 
 // Core authentication middleware
 export function withAuth(handler: AuthenticatedHandler) {
-  return async (request: NextRequest, params?: any) => {
+  return async (request: NextRequest, params?: RouteParams) => {
     try {
       const user = await getServerUser();
       
@@ -39,10 +40,9 @@ export function withAuth(handler: AuthenticatedHandler) {
       // Transform user to match our type
       const authUser: AuthenticatedUser = {
         id: user.id,
-        email: user.email,
-        name: user.name || user.email, // Fallback to email if name is null
+        email: user.email || "",
+        name: user.email || "", // Use email as fallback for name
         role: user.role,
-        avatar: user.avatar,
       };
 
       return handler(request, authUser, params);
@@ -107,10 +107,10 @@ export function withTeacher(handler: AuthenticatedHandler) {
 
 // Request validation middleware
 export function withValidation<T>(
-  validator: (data: any) => data is T,
-  handler: (request: NextRequest, data: T, user?: AuthenticatedUser, params?: any) => Promise<NextResponse>
+  validator: (data: unknown) => data is T,
+  handler: (request: NextRequest, data: T, user?: AuthenticatedUser, params?: RouteParams) => Promise<NextResponse>
 ) {
-  return async (request: NextRequest, user?: AuthenticatedUser, params?: any) => {
+  return async (request: NextRequest, user?: AuthenticatedUser, params?: RouteParams) => {
     try {
       const data = await request.json();
       
@@ -122,12 +122,12 @@ export function withValidation<T>(
       }
 
       return handler(request, data, user, params);
-    } catch (error) {
-      return NextResponse.json(
-        { error: "Invalid JSON in request body" }, 
-        { status: 400 }
-      );
-    }
+          } catch {
+        return NextResponse.json(
+          { error: "Invalid JSON in request body" }, 
+          { status: 400 }
+        );
+      }
   };
 }
 
@@ -136,7 +136,7 @@ const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 
 export function withRateLimit(maxRequests: number = 100, windowMs: number = 60 * 1000) {
   return (handler: AuthenticatedHandler | PublicHandler) => {
-    return async (request: NextRequest, userOrParams?: any, params?: any) => {
+    return async (request: NextRequest, userOrParams?: unknown, params?: unknown) => {
       const clientIP = request.headers.get('x-forwarded-for') || 
                       request.headers.get('x-real-ip') || 
                       'unknown';
@@ -205,9 +205,9 @@ export const secureApi = {
 
 // Error response helpers
 export const ApiResponses = {
-  success: (data: any) => NextResponse.json(data),
+  success: (data: unknown) => NextResponse.json(data),
   
-  created: (data: any) => NextResponse.json(data, { status: 201 }),
+  created: (data: unknown) => NextResponse.json(data, { status: 201 }),
   
   badRequest: (message: string = "Bad request") => 
     NextResponse.json({ error: message }, { status: 400 }),

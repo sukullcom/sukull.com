@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+﻿import { NextRequest } from "next/server";
 import { secureApi, ApiResponses } from "@/lib/api-middleware";
 import { bookLesson, hasAvailableCredits, isApprovedStudent } from "@/db/queries";
 

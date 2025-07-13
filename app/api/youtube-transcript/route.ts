@@ -8,6 +8,20 @@ interface TranscriptLine {
   text: string;
 }
 
+interface SubtitleFormat {
+  ext: string;
+  url: string;
+}
+
+interface Json3Event {
+  segs?: { utf8?: string }[];
+  tStartMs?: number;
+}
+
+interface Json3Data {
+  events?: Json3Event[];
+}
+
 // List of common language codes to try as fallbacks
 const FALLBACK_LANGUAGES = ['en', 'es', 'fr', 'de', 'ja', 'ko', 'zh', 'pt', 'ru', 'it', 'ar', 'tr'];
 
@@ -73,7 +87,7 @@ export async function GET(req: NextRequest) {
         let subtitle = null;
 
         for (const format of formats) {
-          subtitle = langSubs.find((sub: any) => sub.ext === format);
+          subtitle = langSubs.find((sub: SubtitleFormat) => sub.ext === format);
           if (subtitle) break;
         }
 
@@ -94,13 +108,13 @@ export async function GET(req: NextRequest) {
         
         if (subtitle.ext === 'json3') {
           // Parse YouTube's json3 format
-          const data = JSON.parse(content);
+          const data = JSON.parse(content) as Json3Data;
           if (data.events) {
             transcript = data.events
-              .filter((event: any) => event.segs && event.tStartMs !== undefined)
-              .map((event: any) => ({
-                startTime: event.tStartMs / 1000, // Convert to seconds
-                text: event.segs.map((seg: any) => seg.utf8 || '').join(' ').trim()
+              .filter((event: Json3Event) => event.segs && event.tStartMs !== undefined)
+              .map((event: Json3Event) => ({
+                startTime: (event.tStartMs || 0) / 1000, // Convert to seconds
+                text: (event.segs || []).map((seg) => seg.utf8 || '').join(' ').trim()
               }))
               .filter((item: TranscriptLine) => item.text.length > 0);
           }

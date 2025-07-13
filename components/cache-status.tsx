@@ -48,7 +48,7 @@ export function CacheStatus({ className }: CacheStatusProps) {
         
         setCacheStatus(status);
         setIsFromCache(fromCache);
-      } catch (error) {
+      } catch {
         // Silent fail in production
         setCacheStatus('Error checking cache');
         setIsFromCache(null);

@@ -3,6 +3,7 @@
 import { challengeOptions, challenges } from "@/db/schema";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 type Props = {
   options: (typeof challengeOptions.$inferSelect)[];
@@ -154,7 +155,6 @@ export const MatchPairsChallenge = ({
         {cards.map((card) => {
           const isSelected = selectedCards.includes(card.id);
           const isMatched = card.isMatched;
-          const isCorrect = status !== "none" && isMatched;
 
           return (
             <div
@@ -173,10 +173,12 @@ export const MatchPairsChallenge = ({
               )}
             >
               {card.imageSrc && (
-                <img 
+                <Image 
                   src={card.imageSrc} 
                   alt={card.text}
-                  className="w-12 h-12 object-contain mb-1"
+                  width={48}
+                  height={48}
+                  className="object-contain mb-1"
                 />
               )}
               <div className="text-xs text-center font-medium text-gray-800">

@@ -1,4 +1,3 @@
-import { NextRequest, NextResponse } from "next/server";
 import { secureApi, ApiResponses } from "@/lib/api-middleware";
 import { isTeacher } from "@/db/queries";
 import db from "@/db/drizzle";

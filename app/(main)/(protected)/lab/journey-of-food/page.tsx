@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Confetti from "react-confetti";
 import { Button } from "@/components/ui/button";
@@ -70,7 +70,7 @@ const FoodSimulationPage = () => {
     autoPlay: false,
   });
 
-  const handleCardClick = async (cardId: string, isImage: boolean) => {
+  const handleCardClick = async (cardId: string) => {
     if (gameFinished) return;
 
     if (selectedCard === null) {
@@ -250,7 +250,7 @@ const FoodSimulationPage = () => {
                       ? "bg-rose-300 border-rose-500"
                       : "bg-white border-gray-300 hover:border-rose-500 hover:bg-rose-100"
                   }`}
-                  onClick={() => handleCardClick(step.animationPath, true)}
+                  onClick={() => handleCardClick(step.animationPath)}
                 >
                   <Image
                     unoptimized
@@ -274,7 +274,7 @@ const FoodSimulationPage = () => {
                       ? "bg-rose-300 border-rose-500"
                       : "bg-gray-100 border-gray-300 hover:border-rose-500 hover:bg-rose-100"
                   }`}
-                  onClick={() => handleCardClick(step.title, false)}
+                  onClick={() => handleCardClick(step.title)}
                 >
                   <p>{step.description}</p>
                 </div>

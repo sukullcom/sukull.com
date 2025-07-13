@@ -108,7 +108,8 @@ export default function SnippetsPage() {
 
   // Initial load and search changes
   useEffect(() => {
-    loadSnippets(1, debouncedSearch, selectedLanguage, false);
+    loadSnippets(1, debouncedSearch, 
+      selectedLanguage, false);
   }, [debouncedSearch, selectedLanguage, loadSnippets]);
 
   // Load more function

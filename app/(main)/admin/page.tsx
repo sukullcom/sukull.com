@@ -45,7 +45,7 @@ export default async function AdminDashboardPage() {
           </CardContent>
           <CardFooter>
             <div className="flex flex-col w-full gap-2">
-              <Button asChild variant="outline" className="w-full">
+              <Button asChild variant="primaryOutline" className="w-full">
                 <Link href="/admin/fix-student-roles">
                   Fix Student Roles
                 </Link>
@@ -68,7 +68,7 @@ export default async function AdminDashboardPage() {
           </CardContent>
           <CardFooter>
             <div className="flex flex-col w-full gap-2">
-              <Button asChild variant="outline" className="w-full">
+              <Button asChild variant="primaryOutline" className="w-full">
                 <Link href="/admin/teacher-applications">
                   View Applications
                 </Link>
@@ -91,7 +91,7 @@ export default async function AdminDashboardPage() {
           </CardContent>
           <CardFooter>
             <div className="flex flex-col w-full gap-2">
-              <Button asChild variant="outline" className="w-full">
+              <Button asChild variant="primaryOutline" className="w-full">
                 <Link href="/admin/student-applications">
                   View Applications
                 </Link>
@@ -119,7 +119,7 @@ export default async function AdminDashboardPage() {
                   Open Course Builder
                 </Link>
               </Button>
-              <Button asChild variant="outline" className="w-full">
+              <Button asChild variant="primaryOutline" className="w-full">
                 <Link href="/admin/courses">
                   Legacy Course Manager
                 </Link>

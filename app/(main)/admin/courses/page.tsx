@@ -52,11 +52,11 @@ export default async function AdminCoursesPage() {
                 <h3 className="font-semibold">İngilizce Temel</h3>
                 <p className="text-sm text-gray-500">Başlangıç seviyesi İngilizce kursu</p>
                 <div className="flex gap-2 mt-3">
-                  <Button size="sm" variant="outline">
+                  <Button size="sm" variant="primaryOutline">
                     <Settings className="h-3 w-3 mr-1" />
                     Düzenle
                   </Button>
-                  <Button size="sm" variant="outline">
+                  <Button size="sm" variant="primaryOutline">
                     <Users className="h-3 w-3 mr-1" />
                     Öğrenciler
                   </Button>
@@ -67,11 +67,11 @@ export default async function AdminCoursesPage() {
                 <h3 className="font-semibold">Matematik Temel</h3>
                 <p className="text-sm text-gray-500">Temel matematik konuları</p>
                 <div className="flex gap-2 mt-3">
-                  <Button size="sm" variant="outline">
+                  <Button size="sm" variant="primaryOutline">
                     <Settings className="h-3 w-3 mr-1" />
                     Düzenle
                   </Button>
-                  <Button size="sm" variant="outline">
+                  <Button size="sm" variant="primaryOutline">
                     <Users className="h-3 w-3 mr-1" />
                     Öğrenciler
                   </Button>

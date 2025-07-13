@@ -269,7 +269,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
         
         // Convert availability data and mark booked slots instead of filtering them out
         const processedAvailability = availabilityData
-          .map((slot: AvailabilityData, index: number) => {
+          .map((slot: AvailabilityData) => {
             const timeSlot: TimeSlot = {
               ...slot,
               startTime: new Date(slot.startTime),

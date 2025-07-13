@@ -4,6 +4,7 @@ import { challengeOptions, challenges } from "@/db/schema";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
+import Image from "next/image";
 
 type Props = {
   options: (typeof challengeOptions.$inferSelect)[];
@@ -234,10 +235,12 @@ export const SequenceChallenge = ({
                         {/* Item content */}
                         <div className="flex-1 flex items-center">
                           {item.imageSrc && (
-                            <img 
+                            <Image 
                               src={item.imageSrc} 
                               alt={item.text}
-                              className="w-12 h-12 object-contain mr-3"
+                              width={48}
+                              height={48}
+                              className="object-contain mr-3"
                             />
                           )}
                           <div className="font-medium text-gray-800">

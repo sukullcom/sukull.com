@@ -213,7 +213,7 @@ export function FieldSelector({ onFieldsChange, isOpen, onClose, applicationId, 
 
           {/* Action Buttons */}
           <div className="flex justify-end gap-2 pt-4 border-t">
-            <Button variant="outline" onClick={onClose} disabled={loading}>
+            <Button variant="primaryOutline" onClick={onClose} disabled={loading}>
               İptal
             </Button>
             <Button 

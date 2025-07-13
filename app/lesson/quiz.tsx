@@ -64,7 +64,7 @@ const useWindowSize = () => {
 const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
-  }, []);
+  }, [callback]);
 };
 
 export const Quiz = ({

@@ -31,8 +31,8 @@ export default async function ProtectedLayout({
   // This ensures streaks are reset if they missed daily goals
   try {
     await checkStreakContinuity(user.id);
-  } catch (error) {
-    // Continue with normal flow even if streak check fails
+  } catch {
+    // Ignore errors from setting avatar in localStorage
   }
 
   // 4) Render a single layout with your "sidebar" or "sticky" progress

@@ -120,7 +120,7 @@ export default function TeacherSuccessPage() {
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
               <Button
-                variant="outline"
+                variant="primaryOutline"
                 size="lg"
                 onClick={() => router.push("/")}
                 className="flex-1"

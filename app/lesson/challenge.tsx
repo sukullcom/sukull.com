@@ -5,7 +5,7 @@ import { DragDropChallenge } from "./drag-drop-challenge";
 import { FillBlankChallenge } from "./fill-blank-challenge";
 import { MatchPairsChallenge } from "./match-pairs-challenge";
 import { SequenceChallenge } from "./sequence-challenge";
-import { TimerChallenge, withTimer } from "./timer-challenge";
+import { TimerChallenge } from "./timer-challenge";
 
 type Props = {
   options: (typeof challengeOptions.$inferSelect)[];

@@ -1,22 +1,21 @@
-import { NextRequest, NextResponse } from "next/server";
 import { secureApi, ApiResponses } from "@/lib/api-middleware";
 import { batchQueries, aggregationQueries, cachedQueries } from "@/db/optimized-queries";
 import { 
-  getStudentBookings, 
-  getTeacherReviews, 
-  getTeacherIncome, 
   isTeacher,
   submitLessonReview,
   isApprovedStudent,
   refundCredit,
   getTeacherFields,
-  getTeacherApplicationByUserId,
   bookLesson,
   hasAvailableCredits
 } from "@/db/queries";
 import db from "@/db/drizzle";
 import { lessonBookings, users, teacherApplications } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
+
+// ✅ CONSOLIDATED PRIVATE LESSON API: Replaces multiple scattered endpoints
+
+// This file consolidates private lesson functionality into a single API endpoint
 
 // GET handler - supports multiple actions via query parameters
 export const GET = secureApi.auth(async (request, user) => {

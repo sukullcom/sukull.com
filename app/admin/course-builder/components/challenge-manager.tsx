@@ -36,6 +36,16 @@ type Lesson = typeof lessons.$inferSelect & {
   unit?: { id: number; title: string; };
 };
 
+type ChallengeOption = {
+  id?: number;
+  text: string;
+  correct: boolean;
+  correctOrder?: number | null;
+  pairId?: number | null;
+  isBlank?: boolean | null;
+  dragData?: string | null;
+};
+
 const CHALLENGE_TYPES = [
   { value: "SELECT", label: "Çoktan Seçmeli", icon: CheckSquare, color: "bg-blue-100 text-blue-700" },
   { value: "ASSIST", label: "Tanım Eşleştirme", icon: Target, color: "bg-green-100 text-green-700" },
@@ -74,8 +84,8 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
     timeLimit: undefined as number | undefined,
     metadata: ""
   });
-  const [challengeOptions, setChallengeOptions] = useState<any[]>([]);
-  const [editChallengeOptions, setEditChallengeOptions] = useState<any[]>([]);
+  const [challengeOptions, setChallengeOptions] = useState<ChallengeOption[]>([]);
+  const [editChallengeOptions, setEditChallengeOptions] = useState<ChallengeOption[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [loadingChallenges, setLoadingChallenges] = useState(true);
 
@@ -87,18 +97,18 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
         getLessonsForCourse(courseId)
       ]);
 
-      if (challengesResult.success) {
+      if (challengesResult.success && challengesResult.challenges) {
         setChallenges(challengesResult.challenges);
       } else {
         toast.error(challengesResult.error || "Zorluklar yüklenemedi");
       }
 
-      if (lessonsResult.success) {
+      if (lessonsResult.success && lessonsResult.lessons) {
         setLessons(lessonsResult.lessons);
       } else {
         toast.error(lessonsResult.error || "Dersler yüklenemedi");
       }
-    } catch (error) {
+    } catch {
       toast.error("Veriler yüklenirken bir hata oluştu");
     } finally {
       setLoadingChallenges(false);
@@ -204,7 +214,14 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
       
       if (challengeResult.success) {
         // Step 2: Update the challenge options
-        const optionsResult = await updateChallengeOptions(editingChallenge.id, editChallengeOptions);
+        const convertedOptions = editChallengeOptions.map(opt => ({
+          ...opt,
+          correctOrder: opt.correctOrder ?? undefined,
+          pairId: opt.pairId ?? undefined,
+          isBlank: opt.isBlank ?? undefined,
+          dragData: opt.dragData ?? undefined
+        }));
+        const optionsResult = await updateChallengeOptions(editingChallenge.id, convertedOptions);
         
         if (optionsResult.success) {
           setIsEditOpen(false);
@@ -219,7 +236,7 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
       } else {
         toast.error(challengeResult.error || "Zorluk güncellenemedi");
       }
-    } catch (error) {
+    } catch {
       toast.error("Zorluk güncellenirken bir hata oluştu");
     } finally {
       setIsLoading(false);
@@ -259,9 +276,16 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
         metadata: newChallenge.metadata,
       });
       
-      if (challengeResult.success) {
+      if (challengeResult.success && challengeResult.challenge) {
         // Step 2: Create the challenge options
-        const optionsResult = await createChallengeOptions(challengeResult.challenge.id, challengeOptions);
+        const convertedOptions = challengeOptions.map(opt => ({
+          ...opt,
+          correctOrder: opt.correctOrder ?? undefined,
+          pairId: opt.pairId ?? undefined,
+          isBlank: opt.isBlank ?? undefined,
+          dragData: opt.dragData ?? undefined
+        }));
+        const optionsResult = await createChallengeOptions(challengeResult.challenge.id, convertedOptions);
         
         if (optionsResult.success) {
           setIsCreateOpen(false);
@@ -286,7 +310,7 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
       } else {
         toast.error(challengeResult.error || "Zorluk oluşturulamadı");
       }
-    } catch (error) {
+    } catch {
       toast.error("Zorluk oluşturulurken bir hata oluştu");
     } finally {
       setIsLoading(false);
@@ -306,7 +330,7 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
       } else {
         toast.error(result.error || "Zorluk silinemedi");
       }
-    } catch (error) {
+    } catch {
       toast.error("Zorluk silinirken bir hata oluştu");
     }
   };
@@ -328,7 +352,7 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
   const initializeChallengeOptions = (type: string) => {
     switch (type) {
       case "SELECT":
-      case "ASSIST":
+      case "ASSIST": {
         setChallengeOptions([
           { text: "", correct: false },
           { text: "", correct: false },
@@ -336,7 +360,8 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
           { text: "", correct: false }
         ]);
         break;
-      case "DRAG_DROP":
+      }
+      case "DRAG_DROP": {
         setChallengeOptions([
           { text: "", correct: false, dragData: JSON.stringify({ type: "item", itemId: 1 }) },
           { text: "", correct: false, dragData: JSON.stringify({ type: "item", itemId: 2 }) },
@@ -345,14 +370,16 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
           { text: "Correct", correct: true }
         ]);
         break;
-      case "FILL_BLANK":
+      }
+      case "FILL_BLANK": {
         setChallengeOptions([
           { text: "", correct: false, isBlank: true },
           { text: "", correct: false, isBlank: true },
           { text: "Correct", correct: true }
         ]);
         break;
-      case "MATCH_PAIRS":
+      }
+      case "MATCH_PAIRS": {
         setChallengeOptions([
           { text: "", correct: false, pairId: 1 },
           { text: "", correct: false, pairId: 1 },
@@ -361,7 +388,8 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
           { text: "Correct", correct: true }
         ]);
         break;
-      case "SEQUENCE":
+      }
+      case "SEQUENCE": {
         setChallengeOptions([
           { text: "", correct: false, correctOrder: 1 },
           { text: "", correct: false, correctOrder: 2 },
@@ -369,7 +397,8 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
           { text: "Correct", correct: true }
         ]);
         break;
-      case "TIMER_CHALLENGE":
+      }
+      case "TIMER_CHALLENGE": {
         setChallengeOptions([
           { text: "", correct: false },
           { text: "", correct: false },
@@ -377,6 +406,7 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
           { text: "", correct: false }
         ]);
         break;
+      }
       default:
         setChallengeOptions([]);
     }
@@ -385,7 +415,7 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
   const initializeEditChallengeOptions = (type: string) => {
     switch (type) {
       case "SELECT":
-      case "ASSIST":
+      case "ASSIST": {
         setEditChallengeOptions([
           { text: "", correct: false },
           { text: "", correct: false },
@@ -393,7 +423,8 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
           { text: "", correct: false }
         ]);
         break;
-      case "DRAG_DROP":
+      }
+      case "DRAG_DROP": {
         setEditChallengeOptions([
           { text: "", correct: false, dragData: JSON.stringify({ type: "item", itemId: 1 }) },
           { text: "", correct: false, dragData: JSON.stringify({ type: "item", itemId: 2 }) },
@@ -402,14 +433,16 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
           { text: "Correct", correct: true }
         ]);
         break;
-      case "FILL_BLANK":
+      }
+      case "FILL_BLANK": {
         setEditChallengeOptions([
           { text: "", correct: false, isBlank: true },
           { text: "", correct: false, isBlank: true },
           { text: "Correct", correct: true }
         ]);
         break;
-      case "MATCH_PAIRS":
+      }
+      case "MATCH_PAIRS": {
         setEditChallengeOptions([
           { text: "", correct: false, pairId: 1 },
           { text: "", correct: false, pairId: 1 },
@@ -418,7 +451,8 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
           { text: "Correct", correct: true }
         ]);
         break;
-      case "SEQUENCE":
+      }
+      case "SEQUENCE": {
         setEditChallengeOptions([
           { text: "", correct: false, correctOrder: 1 },
           { text: "", correct: false, correctOrder: 2 },
@@ -426,7 +460,8 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
           { text: "Correct", correct: true }
         ]);
         break;
-      case "TIMER_CHALLENGE":
+      }
+      case "TIMER_CHALLENGE": {
         setEditChallengeOptions([
           { text: "", correct: false },
           { text: "", correct: false },
@@ -434,45 +469,52 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
           { text: "", correct: false }
         ]);
         break;
+      }
       default:
         setEditChallengeOptions([]);
     }
   };
 
-  const validateChallengeOptions = (type: string, options: any[]) => {
+  const validateChallengeOptions = (type: string, options: ChallengeOption[]) => {
     switch (type) {
       case "SELECT":
-      case "ASSIST":
+      case "ASSIST": {
         const hasCorrectAnswer = options.some(opt => opt.correct && opt.text.trim());
         const hasEnoughOptions = options.filter(opt => opt.text.trim()).length >= 2;
         
         if (!hasCorrectAnswer) return { isValid: false, message: "Lütfen bir seçeneği doğru olarak işaretleyin" };
         if (!hasEnoughOptions) return { isValid: false, message: "Lütfen en az 2 seçenek sağlayın" };
         break;
-      case "DRAG_DROP":
+      }
+      case "DRAG_DROP": {
         const items = options.filter(opt => opt.dragData && JSON.parse(opt.dragData).type === "item");
         const zones = options.filter(opt => opt.dragData && JSON.parse(opt.dragData).type === "zone");
         if (items.length < 2) return { isValid: false, message: "Lütfen en az 2 sürüklenebilir öğe sağlayın" };
         if (zones.length < 2) return { isValid: false, message: "Lütfen en az 2 bırakma alanı sağlayın" };
         break;
-      case "FILL_BLANK":
+      }
+      case "FILL_BLANK": {
         const blanks = options.filter(opt => opt.isBlank && opt.text.trim());
         if (blanks.length === 0) return { isValid: false, message: "Lütfen boşluklar için cevaplar sağlayın" };
         break;
-      case "MATCH_PAIRS":
+      }
+      case "MATCH_PAIRS": {
         const pairs = options.filter(opt => opt.pairId && opt.text.trim());
         if (pairs.length < 4) return { isValid: false, message: "Lütfen en az 2 çift (4 öğe) sağlayın" };
         break;
-      case "SEQUENCE":
+      }
+      case "SEQUENCE": {
         const sequenceItems = options.filter(opt => opt.correctOrder && opt.text.trim());
         if (sequenceItems.length < 2) return { isValid: false, message: "Lütfen en az 2 sıralama öğesi sağlayın" };
         break;
-      case "TIMER_CHALLENGE":
+      }
+      case "TIMER_CHALLENGE": {
         const timerCorrect = options.some(opt => opt.correct && opt.text.trim());
         const timerOptions = options.filter(opt => opt.text.trim()).length >= 2;
         if (!timerCorrect) return { isValid: false, message: "Lütfen bir seçeneği doğru olarak işaretleyin" };
         if (!timerOptions) return { isValid: false, message: "Lütfen en az 2 seçenek sağlayın" };
         break;
+      }
     }
     return { isValid: true };
   };
@@ -591,7 +633,7 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
                 />
                 {selectedChallengeType === "FILL_BLANK" && (
                   <p className="text-xs text-gray-500 mt-1">
-                    Boşlukları işaretlemek için {"{1}"}, {"{2}"}, vb. kullanın. Örnek: "{"{1}"} verilerini {"{2}"} için kullanılır."
+                    Boşlukları işaretlemek için &quot;{"{1}"}&quot;, &quot;{"{2}"}&quot;, vb. kullanın. Örnek: &quot;{"{1}"} verilerini {"{2}"} için kullanılır.&quot;
                   </p>
                 )}
               </div>
@@ -628,7 +670,7 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
                       <p>Sürüklenecek öğeler ve bırakma alanları oluşturun. Her öğe belirli bir alana eşlenmelidir.</p>
                     )}
                     {selectedChallengeType === "FILL_BLANK" && (
-                      <p>Soruda yer tutucu numaralar kullanın. "isBlank" olarak işaretlenmiş doğru cevaplarla seçenekler oluşturun.</p>
+                      <p>Soruda yer tutucu numaralar kullanın. &quot;isBlank&quot; olarak işaretlenmiş doğru cevaplarla seçenekler oluşturun.</p>
                     )}
                     {selectedChallengeType === "MATCH_PAIRS" && (
                       <p>Eşleşen öğe çiftleri oluşturun. Eşleşen öğeleri gruplamak için pairId kullanın.</p>
@@ -644,7 +686,7 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
               )}
 
               <div className="flex justify-end space-x-2">
-                <Button variant="outline" onClick={() => setIsCreateOpen(false)}>
+                <Button variant="primaryOutline" onClick={() => setIsCreateOpen(false)}>
                   Cancel
                 </Button>
                 <Button onClick={handleCreateChallengeWithOptions} disabled={isLoading || !selectedChallengeType}>
@@ -668,33 +710,6 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
             </div>
           </DialogContent>
         </Dialog>
-
-        {/* Challenge Options Dialog - DISABLED: Now using inline options */}
-        {/*
-        <Dialog open={isOptionsOpen} onOpenChange={setIsOptionsOpen}>
-          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>
-                Create Challenge Options - {currentChallenge && getChallengeTypeInfo(currentChallenge.type).label}
-              </DialogTitle>
-              <p className="text-sm text-gray-600">
-                {currentChallenge && currentChallenge.question}
-              </p>
-            </DialogHeader>
-            
-            {currentChallenge && (
-              <ChallengeOptionsForm
-                challengeType={currentChallenge.type}
-                options={challengeOptions}
-                setOptions={setChallengeOptions}
-                onSave={() => {}} // No direct save here, handled by parent
-                onCancel={() => setIsOptionsOpen(false)}
-                isLoading={isLoading}
-              />
-            )}
-          </DialogContent>
-        </Dialog>
-        */}
       </div>
 
       {/* No lessons warning */}
@@ -879,7 +894,7 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
                 />
                 {editChallengeType === "FILL_BLANK" && (
                   <p className="text-xs text-gray-500 mt-1">
-                    Boşlukları işaretlemek için {"{1}"}, {"{2}"}, vb. kullanın. Örnek: "{"{1}"} verilerini {"{2}"} için kullanılır."
+                    Boşlukları işaretlemek için &quot;{"{1}"}&quot;, &quot;{"{2}"}&quot;, vb. kullanın. Örnek: &quot;{"{1}"} verilerini {"{2}"} için kullanılır.&quot;
                   </p>
                 )}
               </div>
@@ -916,7 +931,7 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
                       <p>Sürüklenecek öğeler ve bırakma alanları oluşturun. Her öğe belirli bir alana eşlenmelidir.</p>
                     )}
                     {editChallengeType === "FILL_BLANK" && (
-                      <p>Soruda yer tutucu numaralar kullanın. "isBlank" olarak işaretlenmiş doğru cevaplarla seçenekler oluşturun.</p>
+                      <p>Soruda yer tutucu numaralar kullanın. &quot;isBlank&quot; olarak işaretlenmiş doğru cevaplarla seçenekler oluşturun.</p>
                     )}
                     {editChallengeType === "MATCH_PAIRS" && (
                       <p>Eşleşen öğe çiftleri oluşturun. Eşleşen öğeleri gruplamak için pairId kullanın.</p>
@@ -932,7 +947,7 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
               )}
 
               <div className="flex justify-end space-x-2">
-                <Button variant="outline" onClick={() => setIsEditOpen(false)}>
+                <Button variant="primaryOutline" onClick={() => setIsEditOpen(false)}>
                   Cancel
                 </Button>
                 <Button onClick={handleEditChallenge} disabled={isLoading || !editChallengeType}>
@@ -964,19 +979,19 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
 // Inline Challenge Options Form Component (without save/cancel buttons)
 interface ChallengeOptionsFormInlineProps {
   challengeType: string;
-  options: any[];
-  setOptions: (options: any[]) => void;
+  options: ChallengeOption[];
+  setOptions: (options: ChallengeOption[]) => void;
 }
 
 function ChallengeOptionsFormInline({ challengeType, options, setOptions }: ChallengeOptionsFormInlineProps) {
-  const updateOption = (index: number, field: string, value: any) => {
+  const updateOption = (index: number, field: string, value: unknown) => {
     const newOptions = [...options];
     newOptions[index] = { ...newOptions[index], [field]: value };
     setOptions(newOptions);
   };
 
   const addOption = () => {
-    const newOption: any = { text: "", correct: false };
+    const newOption: ChallengeOption = { text: "", correct: false };
     
     switch (challengeType) {
       case "SELECT":
@@ -984,21 +999,24 @@ function ChallengeOptionsFormInline({ challengeType, options, setOptions }: Chal
       case "TIMER_CHALLENGE":
         // correct is already set to false above
         break;
-      case "DRAG_DROP":
+      case "DRAG_DROP": {
         const itemCount = options.filter(opt => opt.dragData && JSON.parse(opt.dragData).type === "item").length;
         newOption.dragData = JSON.stringify({ type: "item", itemId: itemCount + 1 });
         break;
+      }
       case "FILL_BLANK":
         newOption.isBlank = true;
         break;
-      case "MATCH_PAIRS":
-        const maxPairId = Math.max(...options.filter(opt => opt.pairId).map(opt => opt.pairId), 0);
+      case "MATCH_PAIRS": {
+        const maxPairId = Math.max(...options.filter(opt => opt.pairId).map(opt => opt.pairId!), 0);
         newOption.pairId = maxPairId + 1;
         break;
-      case "SEQUENCE":
-        const maxOrder = Math.max(...options.filter(opt => opt.correctOrder).map(opt => opt.correctOrder), 0);
+      }
+      case "SEQUENCE": {
+        const maxOrder = Math.max(...options.filter(opt => opt.correctOrder).map(opt => opt.correctOrder!), 0);
         newOption.correctOrder = maxOrder + 1;
         break;
+      }
     }
     
     setOptions([...options, newOption]);
@@ -1018,7 +1036,7 @@ function ChallengeOptionsFormInline({ challengeType, options, setOptions }: Chal
       case "FILL_BLANK":
         return <FillBlankForm options={options} updateOption={updateOption} removeOption={removeOption} addOption={addOption} setOptions={setOptions} />;
       case "MATCH_PAIRS":
-        return <MatchPairsForm options={options} updateOption={updateOption} removeOption={removeOption} addOption={addOption} setOptions={setOptions} />;
+        return <MatchPairsForm options={options} updateOption={updateOption} setOptions={setOptions} />;
       case "SEQUENCE":
         return <SequenceForm options={options} updateOption={updateOption} removeOption={removeOption} addOption={addOption} setOptions={setOptions} />;
       case "TIMER_CHALLENGE":
@@ -1031,103 +1049,24 @@ function ChallengeOptionsFormInline({ challengeType, options, setOptions }: Chal
   return renderOptionForm();
 }
 
-// Challenge Options Form Component
-interface ChallengeOptionsFormProps {
-  challengeType: string;
-  options: any[];
-  setOptions: (options: any[]) => void;
-  onSave: () => void;
-  onCancel: () => void;
-  isLoading: boolean;
-}
-
-function ChallengeOptionsForm({ challengeType, options, setOptions, onSave, onCancel, isLoading }: ChallengeOptionsFormProps) {
-  const updateOption = (index: number, field: string, value: any) => {
-    const newOptions = [...options];
-    newOptions[index] = { ...newOptions[index], [field]: value };
-    setOptions(newOptions);
-  };
-
-  const addOption = () => {
-    const newOption: any = { text: "", correct: false };
-    
-    switch (challengeType) {
-      case "SELECT":
-      case "ASSIST":
-      case "TIMER_CHALLENGE":
-        newOption.correct = false;
-        break;
-      case "DRAG_DROP":
-        const itemCount = options.filter(opt => opt.dragData && JSON.parse(opt.dragData).type === "item").length;
-        newOption.dragData = JSON.stringify({ type: "item", itemId: itemCount + 1 });
-        break;
-      case "FILL_BLANK":
-        newOption.isBlank = true;
-        break;
-      case "MATCH_PAIRS":
-        const maxPairId = Math.max(...options.filter(opt => opt.pairId).map(opt => opt.pairId), 0);
-        newOption.pairId = maxPairId + 1;
-        break;
-      case "SEQUENCE":
-        const maxOrder = Math.max(...options.filter(opt => opt.correctOrder).map(opt => opt.correctOrder), 0);
-        newOption.correctOrder = maxOrder + 1;
-        break;
-    }
-    
-    setOptions([...options, newOption]);
-  };
-
-  const removeOption = (index: number) => {
-    setOptions(options.filter((_, i) => i !== index));
-  };
-
-  const renderOptionForm = () => {
-    switch (challengeType) {
-      case "SELECT":
-      case "ASSIST":
-        return <SelectAssistForm options={options} updateOption={updateOption} removeOption={removeOption} addOption={addOption} setOptions={setOptions} formId="modal" />;
-      case "DRAG_DROP":
-        return <DragDropForm options={options} updateOption={updateOption} removeOption={removeOption} addOption={addOption} setOptions={setOptions} />;
-      case "FILL_BLANK":
-        return <FillBlankForm options={options} updateOption={updateOption} removeOption={removeOption} addOption={addOption} setOptions={setOptions} />;
-      case "MATCH_PAIRS":
-        return <MatchPairsForm options={options} updateOption={updateOption} removeOption={removeOption} addOption={addOption} setOptions={setOptions} />;
-      case "SEQUENCE":
-        return <SequenceForm options={options} updateOption={updateOption} removeOption={removeOption} addOption={addOption} setOptions={setOptions} />;
-      case "TIMER_CHALLENGE":
-        return <TimerChallengeForm options={options} updateOption={updateOption} removeOption={removeOption} addOption={addOption} setOptions={setOptions} formId="modal" />;
-      default:
-        return <div>Unknown challenge type</div>;
-    }
-  };
-
-  return (
-    <div className="space-y-6">
-      {renderOptionForm()}
-      
-      <div className="flex justify-end space-x-2 pt-4 border-t">
-        <Button variant="outline" onClick={onCancel}>
-          Cancel
-        </Button>
-        <Button onClick={onSave} disabled={isLoading}>
-          {isLoading ? "Creating..." : "Create Options"}
-        </Button>
-      </div>
-    </div>
-  );
-}
-
 // Individual form components for each challenge type
-function SelectAssistForm({ options, updateOption, removeOption, addOption, formId, setOptions }: any) {
+function SelectAssistForm({ options, updateOption, removeOption, addOption, formId, setOptions }: {
+  options: ChallengeOption[];
+  updateOption: (index: number, field: string, value: unknown) => void;
+  removeOption: (index: number) => void;
+  addOption: () => void;
+  setOptions?: (options: ChallengeOption[]) => void;
+  formId?: string;
+}) {
   // Use formId to create unique radio button names
   const radioGroupName = `correctAnswer_${formId || 'default'}`;
   
   // Filter out the "Correct" placeholder option but keep actual options
-  const displayOptions = options.filter((opt: any) => opt.text !== "Correct");
+  const displayOptions = options.filter((opt) => opt.text !== "Correct");
   
   const handleCorrectChange = (targetIndex: number) => {
     // Create a new options array with all correct values set to false except the target
-    const newOptions = options.map((opt: any, index: number) => ({
+    const newOptions = options.map((opt, index) => ({
       ...opt,
       correct: index === targetIndex
     }));
@@ -1137,7 +1076,7 @@ function SelectAssistForm({ options, updateOption, removeOption, addOption, form
       setOptions(newOptions);
     } else {
       // Fallback: update each option individually
-      options.forEach((_: any, i: number) => updateOption(i, "correct", false));
+      options.forEach((_, i) => updateOption(i, "correct", false));
       updateOption(targetIndex, "correct", true);
     }
   };
@@ -1152,9 +1091,9 @@ function SelectAssistForm({ options, updateOption, removeOption, addOption, form
         </Button>
       </div>
       
-      {displayOptions.map((option: any, displayIndex: number) => {
+      {displayOptions.map((option, displayIndex) => {
         // Find the actual index in the original options array
-        const actualIndex = options.findIndex((opt: any) => opt === option);
+        const actualIndex = options.findIndex((opt) => opt === option);
         const isChecked = Boolean(option.correct);
         
         return (
@@ -1189,9 +1128,15 @@ function SelectAssistForm({ options, updateOption, removeOption, addOption, form
   );
 }
 
-function DragDropForm({ options, updateOption, removeOption, addOption, setOptions }: any) {
-  const items = options.filter((opt: any) => opt.dragData && JSON.parse(opt.dragData).type === "item");
-  const zones = options.filter((opt: any) => opt.dragData && JSON.parse(opt.dragData).type === "zone");
+function DragDropForm({ options, updateOption, removeOption, addOption, setOptions }: {
+  options: ChallengeOption[];
+  updateOption: (index: number, field: string, value: unknown) => void;
+  removeOption: (index: number) => void;
+  addOption: () => void;
+  setOptions: (options: ChallengeOption[]) => void;
+}) {
+  const items = options.filter((opt) => opt.dragData && JSON.parse(opt.dragData).type === "item");
+  const zones = options.filter((opt) => opt.dragData && JSON.parse(opt.dragData).type === "zone");
   
   const addZone = () => {
     const zoneCount = zones.length;
@@ -1214,9 +1159,9 @@ function DragDropForm({ options, updateOption, removeOption, addOption, setOptio
           </Button>
         </div>
         
-        {items.map((item: any, itemIndex: number) => {
-          const fullIndex = options.findIndex((opt: any) => opt === item);
-          const dragData = JSON.parse(item.dragData);
+        {items.map((item) => {
+          const fullIndex = options.findIndex((opt) => opt === item);
+          const dragData = JSON.parse(item.dragData!);
           
           return (
             <div key={fullIndex} className="flex items-center space-x-2 p-3 border rounded-lg bg-blue-50">
@@ -1244,9 +1189,9 @@ function DragDropForm({ options, updateOption, removeOption, addOption, setOptio
           </Button>
         </div>
         
-        {zones.map((zone: any, zoneIndex: number) => {
-          const fullIndex = options.findIndex((opt: any) => opt === zone);
-          const dragData = JSON.parse(zone.dragData);
+        {zones.map((zone) => {
+          const fullIndex = options.findIndex((opt) => opt === zone);
+          const dragData = JSON.parse(zone.dragData!);
           
           return (
             <div key={fullIndex} className="flex items-center space-x-2 p-3 border rounded-lg bg-green-50">
@@ -1268,8 +1213,8 @@ function DragDropForm({ options, updateOption, removeOption, addOption, setOptio
                   <SelectValue placeholder="Item" />
                 </SelectTrigger>
                 <SelectContent>
-                  {items.map((item: any) => {
-                    const itemData = JSON.parse(item.dragData);
+                  {items.map((item) => {
+                    const itemData = JSON.parse(item.dragData!);
                     return (
                       <SelectItem key={itemData.itemId} value={itemData.itemId.toString()}>
                         Item {itemData.itemId}
@@ -1289,15 +1234,21 @@ function DragDropForm({ options, updateOption, removeOption, addOption, setOptio
   );
 }
 
-function FillBlankForm({ options, updateOption, removeOption, addOption }: any) {
-  const blankOptions = options.filter((opt: any) => opt.isBlank);
+function FillBlankForm({ options, updateOption, removeOption, addOption }: {
+  options: ChallengeOption[];
+  updateOption: (index: number, field: string, value: unknown) => void;
+  removeOption: (index: number) => void;
+  addOption: () => void;
+  setOptions: (options: ChallengeOption[]) => void;
+}) {
+  const blankOptions = options.filter((opt) => opt.isBlank);
   
   return (
     <div className="space-y-4">
       <div className="bg-blue-50 p-4 rounded-lg">
         <h3 className="font-semibold mb-2">Talimatlar</h3>
         <p className="text-sm text-gray-700">
-          Soruda boşlukları işaretlemek için {"{1}"}, {"{2}"}, vb. kullanın. 
+          Soruda boşlukları işaretlemek için &quot;{"{1}"}&quot;, &quot;{"{2}"}&quot;, vb. kullanın. 
           Ardından aşağıya doğru cevapları girin.
         </p>
       </div>
@@ -1310,8 +1261,8 @@ function FillBlankForm({ options, updateOption, removeOption, addOption }: any) 
         </Button>
       </div>
       
-      {blankOptions.map((option: any, index: number) => {
-        const fullIndex = options.findIndex((opt: any) => opt === option);
+      {blankOptions.map((option, index) => {
+        const fullIndex = options.findIndex((opt) => opt === option);
         
         return (
           <div key={fullIndex} className="flex items-center space-x-2 p-3 border rounded-lg">
@@ -1332,12 +1283,16 @@ function FillBlankForm({ options, updateOption, removeOption, addOption }: any) 
   );
 }
 
-function MatchPairsForm({ options, updateOption, removeOption, addOption, setOptions }: any) {
-  const pairOptions = options.filter((opt: any) => opt.pairId);
-  const pairs = Array.from(new Set(pairOptions.map((opt: any) => opt.pairId))).sort();
+function MatchPairsForm({ options, updateOption, setOptions }: {
+  options: ChallengeOption[];
+  updateOption: (index: number, field: string, value: unknown) => void;
+  setOptions: (options: ChallengeOption[]) => void;
+}) {
+  const pairOptions = options.filter((opt) => opt.pairId);
+  const pairs = Array.from(new Set(pairOptions.map((opt) => opt.pairId))).sort((a, b) => (a || 0) - (b || 0));
   
   const addPair = () => {
-    const maxPairId = Math.max(...pairs, 0);
+    const maxPairId = Math.max(...pairs.map(p => p || 0), 0);
     const newPairId = maxPairId + 1;
     
     setOptions([
@@ -1357,15 +1312,15 @@ function MatchPairsForm({ options, updateOption, removeOption, addOption, setOpt
         </Button>
       </div>
       
-      {pairs.map((pairId: number) => {
-        const pairItems = pairOptions.filter((opt: any) => opt.pairId === pairId);
+      {pairs.map((pairId) => {
+        const pairItems = pairOptions.filter((opt) => opt.pairId === pairId);
         
         return (
           <div key={pairId} className="p-4 border rounded-lg bg-purple-50">
             <h4 className="font-medium mb-3">Pair {pairId}</h4>
             <div className="grid grid-cols-2 gap-3">
-              {pairItems.map((item: any, itemIndex: number) => {
-                const fullIndex = options.findIndex((opt: any) => opt === item);
+              {pairItems.map((item, itemIndex) => {
+                const fullIndex = options.findIndex((opt) => opt === item);
                 
                 return (
                   <div key={fullIndex} className="flex items-center space-x-2">
@@ -1381,12 +1336,12 @@ function MatchPairsForm({ options, updateOption, removeOption, addOption, setOpt
                         size="sm" 
                         onClick={() => {
                           // Remove both items in the pair
-                          const indicesToRemove = pairItems.map((item: any) => 
-                            options.findIndex((opt: any) => opt === item)
+                          const indicesToRemove = pairItems.map((item) => 
+                            options.findIndex((opt) => opt === item)
                           ).sort((a, b) => b - a);
                           
-                          let newOptions = [...options];
-                          indicesToRemove.forEach((index: number) => {
+                          const newOptions = [...options];
+                          indicesToRemove.forEach((index) => {
                             newOptions.splice(index, 1);
                           });
                           setOptions(newOptions);
@@ -1406,8 +1361,14 @@ function MatchPairsForm({ options, updateOption, removeOption, addOption, setOpt
   );
 }
 
-function SequenceForm({ options, updateOption, removeOption, addOption }: any) {
-  const sequenceOptions = options.filter((opt: any) => opt.correctOrder).sort((a: any, b: any) => a.correctOrder - b.correctOrder);
+function SequenceForm({ options, updateOption, removeOption, addOption }: {
+  options: ChallengeOption[];
+  updateOption: (index: number, field: string, value: unknown) => void;
+  removeOption: (index: number) => void;
+  addOption: () => void;
+  setOptions: (options: ChallengeOption[]) => void;
+}) {
+  const sequenceOptions = options.filter((opt) => opt.correctOrder).sort((a, b) => (a.correctOrder || 0) - (b.correctOrder || 0));
   
   return (
     <div className="space-y-4">
@@ -1419,8 +1380,8 @@ function SequenceForm({ options, updateOption, removeOption, addOption }: any) {
         </Button>
       </div>
       
-      {sequenceOptions.map((option: any, index: number) => {
-        const fullIndex = options.findIndex((opt: any) => opt === option);
+      {sequenceOptions.map((option) => {
+        const fullIndex = options.findIndex((opt) => opt === option);
         
         return (
           <div key={fullIndex} className="flex items-center space-x-2 p-3 border rounded-lg">
@@ -1441,7 +1402,14 @@ function SequenceForm({ options, updateOption, removeOption, addOption }: any) {
   );
 }
 
-function TimerChallengeForm({ options, updateOption, removeOption, addOption, setOptions, formId }: any) {
+function TimerChallengeForm({ options, updateOption, removeOption, addOption, setOptions, formId }: {
+  options: ChallengeOption[];
+  updateOption: (index: number, field: string, value: unknown) => void;
+  removeOption: (index: number) => void;
+  addOption: () => void;
+  setOptions: (options: ChallengeOption[]) => void;
+  formId?: string;
+}) {
   return (
     <div className="space-y-4">
       <div className="bg-red-50 p-4 rounded-lg">
