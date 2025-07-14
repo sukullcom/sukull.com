@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
-import { join } from 'path';
-import { existsSync, mkdirSync } from 'fs';
+import { createClient } from '@/utils/supabase/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const data = await request.formData();
-    const file: File | null = data.get('file') as unknown as File;
+    const formData = await request.formData();
+    const file: File | null = formData.get('file') as unknown as File;
 
     if (!file) {
       return NextResponse.json({ success: false, error: 'No file uploaded' }, { status: 400 });
@@ -30,30 +28,41 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
     // Create unique filename with timestamp
     const timestamp = Date.now();
     const extension = file.name.split('.').pop();
     const filename = `course_${timestamp}.${extension}`;
+    const filePath = `course-images/${filename}`;
 
-    // Ensure the upload directory exists
-    const uploadDir = join(process.cwd(), 'public', 'course_logos');
-    if (!existsSync(uploadDir)) {
-      mkdirSync(uploadDir, { recursive: true });
+    // Convert file to buffer
+    const bytes = await file.arrayBuffer();
+    const buffer = new Uint8Array(bytes);
+
+    // Upload to Supabase Storage
+    const supabase = await createClient();
+    const { error } = await supabase.storage
+      .from('course-images')
+      .upload(filePath, buffer, {
+        contentType: file.type,
+        upsert: false
+      });
+
+    if (error) {
+      console.error('Supabase upload error:', error);
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Failed to upload image to storage' 
+      }, { status: 500 });
     }
 
-    // Write the file
-    const filePath = join(uploadDir, filename);
-    await writeFile(filePath, buffer);
-
-    // Return the public URL
-    const publicUrl = `/course_logos/${filename}`;
+    // Get the public URL
+    const { data: urlData } = supabase.storage
+      .from('course-images')
+      .getPublicUrl(filePath);
 
     return NextResponse.json({ 
       success: true, 
-      imageUrl: publicUrl,
+      imageUrl: urlData.publicUrl,
       filename: filename
     });
 
