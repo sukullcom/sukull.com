@@ -33,51 +33,7 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
     imageSrc: ""
   });
   const [isLoading, setIsLoading] = useState(false);
-  /* 
-  TODO: Re-enable upload functionality once server issues are resolved
-  
-  // Uncomment these lines to restore upload functionality:
   const [uploadingImage, setUploadingImage] = useState(false);
-  
-  const handleImageUpload = async (file: File, isEdit: boolean = false) => {
-    setUploadingImage(true);
-    
-    try {
-      const formData = new FormData();
-      formData.append('image', file);
-
-      const response = await fetch('/api/upload/image-alt', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        if (isEdit) {
-          setEditCourse(prev => ({ ...prev, imageSrc: result.imageSrc }));
-          setEditPreviewImage(result.imageSrc);
-        } else {
-          setNewCourse(prev => ({ ...prev, imageSrc: result.imageSrc }));
-          setPreviewImage(result.imageSrc);
-        }
-        toast.success("Image uploaded successfully");
-      } else {
-        toast.error(result.error || "Failed to upload image");
-      }
-    } catch (error) {
-      console.error("Upload error:", error);
-      toast.error("Failed to upload image");
-    } finally {
-      setUploadingImage(false);
-    }
-  };
-  
-  // Also update the upload buttons by:
-  // 1. Change disabled={true} to disabled={uploadingImage}
-  // 2. Add back the onClick handlers
-  // 3. Change button text back to dynamic text
-  */
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [editPreviewImage, setEditPreviewImage] = useState<string | null>(null);
 
@@ -140,6 +96,42 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
     setEditPreviewImage(course.imageSrc || "/course_logos/default.svg");
     setIsEditOpen(true);
   };
+
+  const handleImageUpload = async (file: File, isEdit: boolean = false) => {
+    setUploadingImage(true);
+    
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const response = await fetch('/api/upload/image-alt', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        if (isEdit) {
+          setEditCourse(prev => ({ ...prev, imageSrc: result.imageSrc }));
+          setEditPreviewImage(result.imageSrc);
+        } else {
+          setNewCourse(prev => ({ ...prev, imageSrc: result.imageSrc }));
+          setPreviewImage(result.imageSrc);
+        }
+        toast.success("Image uploaded successfully");
+      } else {
+        toast.error(result.error || "Failed to upload image");
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+      toast.error("Failed to upload image");
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
+
 
   const resetCreateForm = () => {
     setNewCourse({ title: "", imageSrc: "/course_logos/default.svg" });
@@ -234,11 +226,22 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
                       type="button"
                       variant="outline"
                       size="sm"
-                      disabled={true}
-                      title="Upload temporarily disabled - use URL input below"
+                      disabled={uploadingImage}
+                      onClick={() => {
+                        const input = document.createElement('input');
+                        input.type = 'file';
+                        input.accept = 'image/*';
+                        input.onchange = (e) => {
+                          const file = (e.target as HTMLInputElement).files?.[0];
+                          if (file) {
+                            handleImageUpload(file, false);
+                          }
+                        };
+                        input.click();
+                      }}
                     >
                       <Upload className="w-4 h-4 mr-2" />
-                      Upload Disabled
+                      {uploadingImage ? "Uploading..." : "Upload Image"}
                     </Button>
                     
                     {/* Manual URL Input */}
@@ -316,11 +319,22 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
                     type="button"
                     variant="outline"
                     size="sm"
-                    disabled={true}
-                    title="Upload temporarily disabled - use URL input below"
+                    disabled={uploadingImage}
+                    onClick={() => {
+                      const input = document.createElement('input');
+                      input.type = 'file';
+                      input.accept = 'image/*';
+                      input.onchange = (e) => {
+                        const file = (e.target as HTMLInputElement).files?.[0];
+                        if (file) {
+                          handleImageUpload(file, true);
+                        }
+                      };
+                      input.click();
+                    }}
                   >
                     <Upload className="w-4 h-4 mr-2" />
-                    Upload Disabled
+                    {uploadingImage ? "Uploading..." : "Upload Image"}
                   </Button>
                   
                   {/* Manual URL Input */}

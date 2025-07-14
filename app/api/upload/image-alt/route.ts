@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import path from "path";
 import { randomUUID } from "crypto";
-import { existsSync, mkdirSync, promises as fsPromises } from "fs";
 
 export async function POST(request: NextRequest) {
   try {
@@ -46,6 +45,10 @@ export async function POST(request: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
+    // Use fs module differently
+    const { existsSync, mkdirSync } = await import('fs');
+    const { writeFile } = await import('fs/promises');
+    
     // Create upload directory path
     const uploadDir = path.join(process.cwd(), 'public', 'course_logos');
     const filePath = path.join(uploadDir, filename);
@@ -61,7 +64,7 @@ export async function POST(request: NextRequest) {
 
     // Write file (asynchronous)
     console.log("Writing file...");
-    await fsPromises.writeFile(filePath, buffer);
+    await writeFile(filePath, buffer);
     console.log("File written successfully");
 
     // Return the public URL path
