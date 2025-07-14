@@ -1,15 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile } from "fs/promises";
-import { join } from "path";
+import path from "path";
 import { randomUUID } from "crypto";
+import { existsSync, mkdirSync, promises as fsPromises } from "fs";
 
 export async function POST(request: NextRequest) {
   try {
-    console.log("Upload API called");
+    console.log("Alternative upload API called");
+    
     const formData = await request.formData();
-    console.log("FormData parsed");
     const file = formData.get('image') as File;
-    console.log("File extracted:", file ? `${file.name} (${file.size} bytes)` : 'No file');
     
     if (!file) {
       return NextResponse.json(
@@ -17,6 +16,8 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    console.log("File received:", file.name, file.size, file.type);
 
     // Validate file type
     const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
@@ -37,34 +38,30 @@ export async function POST(request: NextRequest) {
     }
 
     // Generate unique filename
-    const fileExtension = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+    const fileExtension = path.extname(file.name).toLowerCase() || '.jpg';
     const uniqueId = randomUUID();
-    const filename = `course-${uniqueId}.${fileExtension}`;
+    const filename = `course-${uniqueId}${fileExtension}`;
 
     // Convert file to buffer
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
     // Create upload directory path
-    const uploadDir = join(process.cwd(), 'public', 'course_logos');
-    const filePath = join(uploadDir, filename);
-    console.log("Upload directory:", uploadDir);
-    console.log("File path:", filePath);
+    const uploadDir = path.join(process.cwd(), 'public', 'course_logos');
+    const filePath = path.join(uploadDir, filename);
+    
+    console.log("Paths:", { uploadDir, filePath });
 
-    // Ensure upload directory exists
-    const { mkdir } = await import('fs/promises');
-    try {
-      console.log("Creating directory...");
-      await mkdir(uploadDir, { recursive: true });
-      console.log("Directory created successfully");
-    } catch (dirError) {
-      // Directory might already exist, which is fine
-      console.log("Directory creation failed or already exists:", dirError);
+    // Ensure upload directory exists (synchronous)
+    if (!existsSync(uploadDir)) {
+      console.log("Creating directory synchronously...");
+      mkdirSync(uploadDir, { recursive: true });
+      console.log("Directory created");
     }
 
-    // Write file to public directory
+    // Write file (asynchronous)
     console.log("Writing file...");
-    await writeFile(filePath, buffer);
+    await fsPromises.writeFile(filePath, buffer);
     console.log("File written successfully");
 
     // Return the public URL path
@@ -77,16 +74,18 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error("Error uploading image:", error);
-    console.error("Error stack:", error instanceof Error ? error.stack : String(error));
-    console.error("Process CWD:", process.cwd());
+    console.error("Alternative upload error:", error);
+    console.error("Error details:", {
+      message: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
+      cwd: process.cwd()
+    });
     
     return NextResponse.json(
       { 
         success: false, 
         error: "Failed to upload image", 
-        details: error instanceof Error ? error.message : String(error),
-        cwd: process.cwd()
+        details: error instanceof Error ? error.message : String(error)
       },
       { status: 500 }
     );
