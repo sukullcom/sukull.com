@@ -1,94 +1,67 @@
-import { NextRequest, NextResponse } from "next/server";
-import { writeFile } from "fs/promises";
-import { join } from "path";
-import { randomUUID } from "crypto";
+import { NextRequest, NextResponse } from 'next/server';
+import { writeFile } from 'fs/promises';
+import { join } from 'path';
+import { existsSync, mkdirSync } from 'fs';
 
 export async function POST(request: NextRequest) {
   try {
-    console.log("Upload API called");
-    const formData = await request.formData();
-    console.log("FormData parsed");
-    const file = formData.get('image') as File;
-    console.log("File extracted:", file ? `${file.name} (${file.size} bytes)` : 'No file');
-    
+    const data = await request.formData();
+    const file: File | null = data.get('file') as unknown as File;
+
     if (!file) {
-      return NextResponse.json(
-        { success: false, error: "No file uploaded" },
-        { status: 400 }
-      );
+      return NextResponse.json({ success: false, error: 'No file uploaded' }, { status: 400 });
     }
 
     // Validate file type
-    const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
-    if (!validTypes.includes(file.type)) {
-      return NextResponse.json(
-        { success: false, error: "Invalid file type. Please upload an image file (JPG, PNG, GIF, WebP, SVG)" },
-        { status: 400 }
-      );
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/svg+xml', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Invalid file type. Only JPEG, PNG, SVG, and WebP are allowed.' 
+      }, { status: 400 });
     }
 
-    // Validate file size (max 5MB)
+    // Validate file size (5MB max)
     const maxSize = 5 * 1024 * 1024; // 5MB
     if (file.size > maxSize) {
-      return NextResponse.json(
-        { success: false, error: "File too large. Maximum size is 5MB" },
-        { status: 400 }
-      );
+      return NextResponse.json({ 
+        success: false, 
+        error: 'File too large. Maximum size is 5MB.' 
+      }, { status: 400 });
     }
 
-    // Generate unique filename
-    const fileExtension = file.name.split('.').pop()?.toLowerCase() || 'jpg';
-    const uniqueId = randomUUID();
-    const filename = `course-${uniqueId}.${fileExtension}`;
-
-    // Convert file to buffer
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Create upload directory path
-    const uploadDir = join(process.cwd(), 'public', 'course_logos');
-    const filePath = join(uploadDir, filename);
-    console.log("Upload directory:", uploadDir);
-    console.log("File path:", filePath);
+    // Create unique filename with timestamp
+    const timestamp = Date.now();
+    const extension = file.name.split('.').pop();
+    const filename = `course_${timestamp}.${extension}`;
 
-    // Ensure upload directory exists
-    const { mkdir } = await import('fs/promises');
-    try {
-      console.log("Creating directory...");
-      await mkdir(uploadDir, { recursive: true });
-      console.log("Directory created successfully");
-    } catch (dirError) {
-      // Directory might already exist, which is fine
-      console.log("Directory creation failed or already exists:", dirError);
+    // Ensure the upload directory exists
+    const uploadDir = join(process.cwd(), 'public', 'course_logos');
+    if (!existsSync(uploadDir)) {
+      mkdirSync(uploadDir, { recursive: true });
     }
 
-    // Write file to public directory
-    console.log("Writing file...");
+    // Write the file
+    const filePath = join(uploadDir, filename);
     await writeFile(filePath, buffer);
-    console.log("File written successfully");
 
-    // Return the public URL path
+    // Return the public URL
     const publicUrl = `/course_logos/${filename}`;
 
-    return NextResponse.json({
-      success: true,
-      imageSrc: publicUrl,
+    return NextResponse.json({ 
+      success: true, 
+      imageUrl: publicUrl,
       filename: filename
     });
 
   } catch (error) {
-    console.error("Error uploading image:", error);
-    console.error("Error stack:", error instanceof Error ? error.stack : String(error));
-    console.error("Process CWD:", process.cwd());
-    
-    return NextResponse.json(
-      { 
-        success: false, 
-        error: "Failed to upload image", 
-        details: error instanceof Error ? error.message : String(error),
-        cwd: process.cwd()
-      },
-      { status: 500 }
-    );
+    console.error('Error uploading image:', error);
+    return NextResponse.json({ 
+      success: false, 
+      error: 'Failed to upload image' 
+    }, { status: 500 });
   }
 } 

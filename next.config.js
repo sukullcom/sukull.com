@@ -23,12 +23,6 @@ const nextConfig = {
         pathname: '/**',
       },
       {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '3001',
-        pathname: '/**',
-      },
-      {
         protocol: 'https',
         hostname: 'lh3.googleusercontent.com',
         port: '',
@@ -61,38 +55,6 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'avataaars.io',
-        port: '',
-        pathname: '/**',
-      },
-      // Discord CDN for image hosting
-      {
-        protocol: 'https',
-        hostname: 'cdn.discordapp.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'media.discordapp.net',
-        port: '',
-        pathname: '/**',
-      },
-      // Common image hosting services
-      {
-        protocol: 'https',
-        hostname: 'imgur.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'i.imgur.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
         port: '',
         pathname: '/**',
       },

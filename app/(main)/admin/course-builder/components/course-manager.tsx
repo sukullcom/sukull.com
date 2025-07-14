@@ -7,10 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Plus, BookOpen, Edit, Trash2, Upload, Image as ImageIcon } from "lucide-react";
+import { Plus, BookOpen, Edit, Trash2 } from "lucide-react";
 import { createCourse, deleteCourse, updateCourse } from "../actions";
 import { toast } from "sonner";
-import { SafeImage } from "@/components/ui/safe-image";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 type Course = typeof courses.$inferSelect;
 
@@ -33,9 +33,6 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
     imageSrc: ""
   });
   const [isLoading, setIsLoading] = useState(false);
-  const [uploadingImage, setUploadingImage] = useState(false);
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [editPreviewImage, setEditPreviewImage] = useState<string | null>(null);
 
   const handleCreateCourse = async () => {
     if (!newCourse.title.trim()) {
@@ -48,7 +45,8 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
       const result = await createCourse(newCourse);
       if (result.success) {
         setCourses([...courses, result.course]);
-        resetCreateForm();
+        setNewCourse({ title: "", imageSrc: "/course_logos/default.svg" });
+        setIsCreateOpen(false);
         toast.success("Ders başarıyla oluşturuldu");
       } else {
         toast.error(result.error || "Ders oluşturulamadı");
@@ -75,7 +73,8 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
             ? { ...course, ...editCourse }
             : course
         ));
-        resetEditForm();
+        setIsEditOpen(false);
+        setEditingCourse(null);
         toast.success("Ders başarıyla güncellendi");
       } else {
         toast.error(result.error || "Ders güncellenemedi");
@@ -93,56 +92,7 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
       title: course.title,
       imageSrc: course.imageSrc || "/course_logos/default.svg"
     });
-    setEditPreviewImage(course.imageSrc || "/course_logos/default.svg");
     setIsEditOpen(true);
-  };
-
-  const handleImageUpload = async (file: File, isEdit: boolean = false) => {
-    setUploadingImage(true);
-    
-    try {
-      const formData = new FormData();
-      formData.append('image', file);
-
-      const response = await fetch('/api/upload/image-alt', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const result = await response.json();
-
-      if (result.success) {
-        if (isEdit) {
-          setEditCourse(prev => ({ ...prev, imageSrc: result.imageSrc }));
-          setEditPreviewImage(result.imageSrc);
-        } else {
-          setNewCourse(prev => ({ ...prev, imageSrc: result.imageSrc }));
-          setPreviewImage(result.imageSrc);
-        }
-        toast.success("Image uploaded successfully");
-      } else {
-        toast.error(result.error || "Failed to upload image");
-      }
-    } catch (error) {
-      console.error("Upload error:", error);
-      toast.error("Failed to upload image");
-    } finally {
-      setUploadingImage(false);
-    }
-  };
-
-
-
-  const resetCreateForm = () => {
-    setNewCourse({ title: "", imageSrc: "/course_logos/default.svg" });
-    setPreviewImage(null);
-    setIsCreateOpen(false);
-  };
-
-  const resetEditForm = () => {
-    setIsEditOpen(false);
-    setEditingCourse(null);
-    setEditPreviewImage(null);
   };
 
   const handleDeleteCourse = async (courseId: number) => {
@@ -199,72 +149,16 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
                 />
               </div>
               <div>
-                <Label>Course Image</Label>
-                <div className="space-y-3">
-                  {/* Image Preview */}
-                  <div className="flex items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50">
-                    {previewImage || newCourse.imageSrc !== "/course_logos/default.svg" ? (
-                      <div className="relative w-full h-full">
-                        <SafeImage
-                          src={previewImage || newCourse.imageSrc}
-                          alt="Course preview"
-                          fill
-                          className="object-contain rounded-lg"
-                          onError={() => {
-                            console.log("Failed to load course preview image");
-                          }}
-                        />
-                      </div>
-                    ) : (
-                      <div className="text-center">
-                        <ImageIcon className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                        <p className="text-sm text-gray-500">No image selected</p>
-                      </div>
-                    )}
-                  </div>
-                  
-                  {/* File Upload */}
-                  <div className="flex items-center space-x-2">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      disabled={uploadingImage}
-                      onClick={() => {
-                        const input = document.createElement('input');
-                        input.type = 'file';
-                        input.accept = 'image/*';
-                        input.onchange = (e) => {
-                          const file = (e.target as HTMLInputElement).files?.[0];
-                          if (file) {
-                            handleImageUpload(file, false);
-                          }
-                        };
-                        input.click();
-                      }}
-                    >
-                      <Upload className="w-4 h-4 mr-2" />
-                      {uploadingImage ? "Uploading..." : "Upload Image"}
-                    </Button>
-                    
-                    {/* Manual URL Input */}
-                    <div className="flex-1">
-                      <Input
-                        placeholder="Or enter image URL"
-                        value={newCourse.imageSrc === "/course_logos/default.svg" ? "" : newCourse.imageSrc}
-                        onChange={(e) => {
-                          const value = e.target.value || "/course_logos/default.svg";
-                          setNewCourse({ ...newCourse, imageSrc: value });
-                          setPreviewImage(null);
-                        }}
-                        className="text-xs"
-                      />
-                    </div>
-                  </div>
-                </div>
+                <Label htmlFor="imageSrc">Course Image</Label>
+                <ImageUpload
+                  value={newCourse.imageSrc}
+                  onChange={(url) => setNewCourse({ ...newCourse, imageSrc: url || "/course_logos/default.svg" })}
+                  disabled={isLoading}
+                  placeholder="Upload course image"
+                />
               </div>
               <div className="flex justify-end space-x-2">
-                <Button variant="outline" onClick={resetCreateForm}>
+                <Button variant="outline" onClick={() => setIsCreateOpen(false)}>
                   Cancel
                 </Button>
                 <Button onClick={handleCreateCourse} disabled={isLoading}>
@@ -295,74 +189,18 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
               />
             </div>
             <div>
-              <Label>Course Image</Label>
-              <div className="space-y-3">
-                {/* Image Preview */}
-                <div className="flex items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50">
-                  {editPreviewImage || editCourse.imageSrc !== "/course_logos/default.svg" ? (
-                    <div className="relative w-full h-full">
-                      <SafeImage
-                        src={editPreviewImage || editCourse.imageSrc}
-                        alt="Course preview"
-                        fill
-                        className="object-contain rounded-lg"
-                        onError={() => {
-                          console.log("Failed to load edit course preview image");
-                        }}
-                      />
-                    </div>
-                  ) : (
-                    <div className="text-center">
-                      <ImageIcon className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                      <p className="text-sm text-gray-500">No image selected</p>
-                    </div>
-                  )}
-                </div>
-                
-                {/* File Upload */}
-                <div className="flex items-center space-x-2">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    disabled={uploadingImage}
-                    onClick={() => {
-                      const input = document.createElement('input');
-                      input.type = 'file';
-                      input.accept = 'image/*';
-                      input.onchange = (e) => {
-                        const file = (e.target as HTMLInputElement).files?.[0];
-                        if (file) {
-                          handleImageUpload(file, true);
-                        }
-                      };
-                      input.click();
-                    }}
-                  >
-                    <Upload className="w-4 h-4 mr-2" />
-                    {uploadingImage ? "Uploading..." : "Upload Image"}
-                  </Button>
-                  
-                  {/* Manual URL Input */}
-                  <div className="flex-1">
-                    <Input
-                      placeholder="Or enter image URL"
-                      value={editCourse.imageSrc === "/course_logos/default.svg" ? "" : editCourse.imageSrc}
-                      onChange={(e) => {
-                        const value = e.target.value || "/course_logos/default.svg";
-                        setEditCourse({ ...editCourse, imageSrc: value });
-                        setEditPreviewImage(null);
-                      }}
-                      className="text-xs"
-                    />
-                  </div>
-                </div>
-              </div>
+              <Label htmlFor="edit-imageSrc">Course Image</Label>
+              <ImageUpload
+                value={editCourse.imageSrc}
+                onChange={(url) => setEditCourse({ ...editCourse, imageSrc: url || "/course_logos/default.svg" })}
+                disabled={isLoading}
+                placeholder="Upload course image"
+              />
             </div>
-                          <div className="flex justify-end space-x-2">
-                <Button variant="outline" onClick={resetEditForm}>
-                  Cancel
-                </Button>
+            <div className="flex justify-end space-x-2">
+              <Button variant="outline" onClick={() => setIsEditOpen(false)}>
+                Cancel
+              </Button>
               <Button onClick={handleEditCourse} disabled={isLoading}>
                 {isLoading ? "Updating..." : "Update Course"}
               </Button>
@@ -408,20 +246,8 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {/* Course Image Preview */}
-                <div className="w-full h-32 rounded-lg overflow-hidden bg-gray-100 border">
-                  <SafeImage
-                    src={course.imageSrc || "/course_logos/default.svg"}
-                    alt={course.title}
-                    fill
-                    className="object-cover"
-                    onError={() => {
-                      console.log(`Failed to load course image for: ${course.title}`);
-                    }}
-                  />
-                </div>
-                <div className="text-xs text-gray-500 truncate" title={course.imageSrc}>
-                  {course.imageSrc}
+                <div className="text-sm text-gray-600">
+                  Image: {course.imageSrc}
                 </div>
                 <Button
                   onClick={() => onSelectCourse(course)}
