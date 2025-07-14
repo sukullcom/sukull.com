@@ -54,12 +54,14 @@
     "db:migrate-challenge-types": "tsx ./scripts/migrate-new-challenge-types.ts",
     "db:seed-all-grades": "tsx ./scripts/seed-all-grades.ts",
     "db:reset": "tsx ./scripts/reset.ts",
+    "db:reset:complete": "tsx ./scripts/complete-reset.ts",
     "db:reset-applications": "tsx ./scripts/reset-applications.ts",
     "db:reset-courses": "tsx ./scripts/reset-courses.ts",
     "db:sQQ": "tsx ./scripts/seedQuizQuestions.ts",
     "migrate": "tsx ./scripts/prod.ts",
     "db:generate": "npx drizzle-kit generate",
-    "schools:import": "node ./scripts/import-schools.js"
+    "schools:import": "node ./scripts/import-schools.js",
+    "schools:upload": "tsx ./scripts/upload-schools.ts"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.9.1",
@@ -86,6 +88,7 @@
     "clsx": "^2.1.1",
     "cors": "^2.8.5",
     "critters": "^0.0.23",
+    "csv-parser": "^3.2.0",
     "date-fns": "^4.1.0",
     "drizzle-orm": "^0.40.0",
     "express": "^5.1.0",
