@@ -20,7 +20,7 @@ export function ImageUpload({
   onChange,
   disabled,
   className,
-  placeholder = "Upload an image"
+  placeholder = "Resim yükleyin"
 }: ImageUploadProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [isDragOver, setIsDragOver] = useState(false);
@@ -42,13 +42,13 @@ export function ImageUpload({
 
       if (result.success) {
         onChange(result.imageUrl);
-        toast.success('Image uploaded successfully');
+        toast.success('Resim başarıyla yüklendi');
       } else {
-        toast.error(result.error || 'Failed to upload image');
+        toast.error(result.error || 'Resim yüklenemedi');
       }
     } catch (error) {
       console.error('Upload error:', error);
-      toast.error('Failed to upload image');
+      toast.error('Resim yüklenemedi');
     } finally {
       setIsUploading(false);
     }
@@ -128,7 +128,7 @@ export function ImageUpload({
             </div>
             <Button
               type="button"
-              variant="destructive"
+              variant="danger"
               size="sm"
               className="absolute -top-2 -right-2 h-8 w-8 rounded-full p-0"
               onClick={handleRemove}
@@ -151,10 +151,10 @@ export function ImageUpload({
                     {placeholder}
                   </p>
                   <p className="text-xs text-gray-500">
-                    Drag & drop or click to select
+                    Sürükleyip bırakın veya seçmek için tıklayın
                   </p>
                   <p className="text-xs text-gray-400 mt-1">
-                    JPEG, PNG, SVG, WebP (max 5MB)
+                    JPEG, PNG, SVG, WebP (maksimum 5MB)
                   </p>
                 </div>
               </div>
@@ -166,7 +166,7 @@ export function ImageUpload({
           <div className="absolute inset-0 bg-white/80 flex items-center justify-center rounded-lg">
             <div className="flex flex-col items-center space-y-2">
               <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
-              <p className="text-sm text-gray-600">Uploading...</p>
+              <p className="text-sm text-gray-600">Yükleniyor...</p>
             </div>
           </div>
         )}

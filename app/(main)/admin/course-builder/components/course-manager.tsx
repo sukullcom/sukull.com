@@ -26,7 +26,7 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
   const [editingCourse, setEditingCourse] = useState<Course | null>(null);
   const [newCourse, setNewCourse] = useState({
     title: "",
-    imageSrc: "/course_logos/default.svg"
+    imageSrc: "/mascot_purple.svg"
   });
   const [editCourse, setEditCourse] = useState({
     title: "",
@@ -45,7 +45,7 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
       const result = await createCourse(newCourse);
       if (result.success) {
         setCourses([...courses, result.course]);
-        setNewCourse({ title: "", imageSrc: "/course_logos/default.svg" });
+        setNewCourse({ title: "", imageSrc: "/mascot_purple.svg" });
         setIsCreateOpen(false);
         toast.success("Ders başarıyla oluşturuldu");
       } else {
@@ -90,7 +90,7 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
     setEditingCourse(course);
     setEditCourse({
       title: course.title,
-      imageSrc: course.imageSrc || "/course_logos/default.svg"
+      imageSrc: course.imageSrc || "/mascot_purple.svg"
     });
     setIsEditOpen(true);
   };
@@ -122,47 +122,47 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-gray-900">Courses</h2>
-          <p className="text-gray-600">Manage your courses</p>
+          <p className="text-gray-600">Kurslarınızı yönetin</p>
         </div>
         
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
           <DialogTrigger asChild>
             <Button>
               <Plus className="w-4 h-4 mr-2" />
-              Create Course
+              Kurs Oluştur
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle>Create New Course</DialogTitle>
-              <p className="text-sm text-gray-600">Fill in the details to create a new course</p>
+              <DialogTitle>Yeni Kurs Oluştur</DialogTitle>
+              <p className="text-sm text-gray-600">Yeni bir kurs oluşturmak için detayları doldurun</p>
             </DialogHeader>
             
             <div className="space-y-4">
               <div>
-                <Label htmlFor="title">Course Title</Label>
+                <Label htmlFor="title">Kurs Başlığı</Label>
                 <Input
                   id="title"
                   value={newCourse.title}
                   onChange={(e) => setNewCourse({ ...newCourse, title: e.target.value })}
-                  placeholder="Enter course title"
+                  placeholder="Kurs başlığını girin"
                 />
               </div>
               <div>
-                <Label htmlFor="imageSrc">Course Image</Label>
+                <Label htmlFor="imageSrc">Kurs Resmi</Label>
                 <ImageUpload
                   value={newCourse.imageSrc}
-                  onChange={(url) => setNewCourse({ ...newCourse, imageSrc: url || "/course_logos/default.svg" })}
+                  onChange={(url) => setNewCourse({ ...newCourse, imageSrc: url || "/mascot_purple.svg" })}
                   disabled={isLoading}
-                  placeholder="Upload course image"
+                  placeholder="Kurs resmi yükleyin"
                 />
               </div>
               <div className="flex justify-end space-x-2">
-                <Button variant="outline" onClick={() => setIsCreateOpen(false)}>
-                  Cancel
+                <Button variant="primaryOutline" onClick={() => setIsCreateOpen(false)}>
+                  İptal
                 </Button>
                 <Button onClick={handleCreateCourse} disabled={isLoading}>
-                  {isLoading ? "Creating..." : "Create Course"}
+                  {isLoading ? "Oluşturuluyor..." : "Kurs Oluştur"}
                 </Button>
               </div>
             </div>
@@ -174,35 +174,35 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Edit Course</DialogTitle>
-            <p className="text-sm text-gray-600">Update the course details</p>
+            <DialogTitle>Kursu Düzenle</DialogTitle>
+            <p className="text-sm text-gray-600">Kurs detaylarını güncelleyin</p>
           </DialogHeader>
           
           <div className="space-y-4">
             <div>
-              <Label htmlFor="edit-title">Course Title</Label>
+              <Label htmlFor="edit-title">Kurs Başlığı</Label>
               <Input
                 id="edit-title"
                 value={editCourse.title}
                 onChange={(e) => setEditCourse({ ...editCourse, title: e.target.value })}
-                placeholder="Enter course title"
+                placeholder="Kurs başlığını girin"
               />
             </div>
             <div>
-              <Label htmlFor="edit-imageSrc">Course Image</Label>
+              <Label htmlFor="edit-imageSrc">Kurs Resmi</Label>
               <ImageUpload
                 value={editCourse.imageSrc}
-                onChange={(url) => setEditCourse({ ...editCourse, imageSrc: url || "/course_logos/default.svg" })}
+                onChange={(url) => setEditCourse({ ...editCourse, imageSrc: url || "/mascot_purple.svg" })}
                 disabled={isLoading}
-                placeholder="Upload course image"
+                placeholder="Kurs resmi yükleyin"
               />
             </div>
             <div className="flex justify-end space-x-2">
-              <Button variant="outline" onClick={() => setIsEditOpen(false)}>
-                Cancel
+              <Button variant="primaryOutline" onClick={() => setIsEditOpen(false)}>
+                İptal
               </Button>
               <Button onClick={handleEditCourse} disabled={isLoading}>
-                {isLoading ? "Updating..." : "Update Course"}
+                {isLoading ? "Güncelleniyor..." : "Kursu Güncelle"}
               </Button>
             </div>
           </div>
@@ -254,7 +254,7 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
                   className="w-full"
                 >
                   <Edit className="w-4 h-4 mr-2" />
-                  Manage Course
+                  Kursu Yönet
                 </Button>
               </div>
             </CardContent>
@@ -264,11 +264,11 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
         {courses.length === 0 && (
           <div className="col-span-full text-center py-12 bg-gray-50 rounded-lg border border-gray-200">
             <BookOpen className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No courses yet</h3>
-            <p className="text-gray-600 mb-4">Create your first course to get started</p>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">Henüz kurs yok</h3>
+            <p className="text-gray-600 mb-4">Başlamak için ilk kursunuzu oluşturun</p>
             <Button onClick={() => setIsCreateOpen(true)}>
               <Plus className="w-4 h-4 mr-2" />
-              Create Your First Course
+              İlk Kursunuzu Oluşturun
             </Button>
           </div>
         )}
