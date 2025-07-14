@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     const timestamp = Date.now();
     const extension = file.name.split('.').pop();
     const filename = `course_${timestamp}.${extension}`;
-    const filePath = `course-images/${filename}`;
+    const filePath = filename; // Just the filename, since we're already in the course-images bucket
 
     // Convert file to buffer
     const bytes = await file.arrayBuffer();
