@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Plus, BookOpen, Edit, Trash2, Upload, Image as ImageIcon } from "lucide-react";
 import { createCourse, deleteCourse, updateCourse } from "../actions";
 import { toast } from "sonner";
-import Image from "next/image";
+import { SafeImage } from "@/components/ui/safe-image";
 
 type Course = typeof courses.$inferSelect;
 
@@ -205,11 +205,14 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
                   <div className="flex items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50">
                     {previewImage || newCourse.imageSrc !== "/course_logos/default.svg" ? (
                       <div className="relative w-full h-full">
-                        <Image
+                        <SafeImage
                           src={previewImage || newCourse.imageSrc}
                           alt="Course preview"
                           fill
                           className="object-contain rounded-lg"
+                          onError={() => {
+                            console.log("Failed to load course preview image");
+                          }}
                         />
                       </div>
                     ) : (
@@ -298,11 +301,14 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
                 <div className="flex items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50">
                   {editPreviewImage || editCourse.imageSrc !== "/course_logos/default.svg" ? (
                     <div className="relative w-full h-full">
-                      <Image
+                      <SafeImage
                         src={editPreviewImage || editCourse.imageSrc}
                         alt="Course preview"
                         fill
                         className="object-contain rounded-lg"
+                        onError={() => {
+                          console.log("Failed to load edit course preview image");
+                        }}
                       />
                     </div>
                   ) : (
@@ -402,8 +408,20 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                <div className="text-sm text-gray-600">
-                  Image: {course.imageSrc}
+                {/* Course Image Preview */}
+                <div className="w-full h-32 rounded-lg overflow-hidden bg-gray-100 border">
+                  <SafeImage
+                    src={course.imageSrc || "/course_logos/default.svg"}
+                    alt={course.title}
+                    fill
+                    className="object-cover"
+                    onError={() => {
+                      console.log(`Failed to load course image for: ${course.title}`);
+                    }}
+                  />
+                </div>
+                <div className="text-xs text-gray-500 truncate" title={course.imageSrc}>
+                  {course.imageSrc}
                 </div>
                 <Button
                   onClick={() => onSelectCourse(course)}
