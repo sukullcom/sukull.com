@@ -66,7 +66,7 @@ export const batchQueries = {
         where: inArray(schools.id, schoolIds),
         columns: { id: true, name: true, type: true, city: true, district: true }
       })
-        ]);
+    ]);
     return { users: usersResult, schools: schoolsResult };
   },
 
