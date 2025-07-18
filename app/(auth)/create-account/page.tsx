@@ -6,8 +6,8 @@ export default function CreateAccountPage() {
     // Outer container
     <div className="max-w-[988px] mx-auto flex-1 flex flex-col lg:flex-row items-center justify-center p-4 gap-2">
       {/* ----- Left side image */}
-      <div className="relative w-[240px] h-[240px] lg:w-[424px] lg:h-[424px] mb-8 lg:mb-0">
-        <Image src="/hero.svg" fill alt="Hero" />
+      <div className="relative aspect-square max-h-[200px] w-full">
+        <Image src="/hero.svg" fill alt="Hero" sizes="100vw" />
       </div>
 
       {/* ----- Right side form container */}

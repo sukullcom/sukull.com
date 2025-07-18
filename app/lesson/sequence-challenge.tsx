@@ -13,6 +13,7 @@ type Props = {
   selectedOption?: number;
   disabled?: boolean;
   type: (typeof challenges.$inferSelect)["type"];
+  questionImageSrc?: string | null | undefined; // Add question image support
 };
 
 type SequenceItem = {
@@ -30,6 +31,7 @@ export const SequenceChallenge = ({
   status,
   selectedOption,
   disabled,
+  questionImageSrc, // Add questionImageSrc prop
 }: Props) => {
   const [items, setItems] = useState<SequenceItem[]>([]);
   const [orderedItems, setOrderedItems] = useState<SequenceItem[]>([]);
@@ -162,18 +164,38 @@ export const SequenceChallenge = ({
     checkSequenceAndSelect(updatedItems);
   };
 
-  return (
-    <div className="space-y-6">
-      <div className="text-center">
-        <h3 className="text-lg font-medium text-gray-700 mb-2">
-          Put the items in the correct order
-        </h3>
-        <p className="text-sm text-gray-600">
-          Drag and drop or use buttons to reorder the items
-        </p>
+  // Function to render question image if it exists
+  const renderQuestionImage = () => {
+    if (!questionImageSrc) return null;
+    
+    return (
+      <div className="mb-4 flex justify-center">
+        <div className="relative max-w-sm w-full aspect-square">
+          <Image
+            src={questionImageSrc}
+            alt="Challenge question image"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-contain rounded-lg"
+          />
+        </div>
       </div>
+    );
+  };
 
-      <DragDropContext onDragEnd={handleDragEnd}>
+  return (
+    <DragDropContext onDragEnd={handleDragEnd}>
+      <div className="space-y-6">
+        {renderQuestionImage()}
+        <div className="text-center">
+          <h3 className="text-lg font-medium text-gray-700 mb-2">
+            Put the items in the correct order
+          </h3>
+          <p className="text-sm text-gray-600">
+            Drag and drop or use buttons to reorder the items
+          </p>
+        </div>
+
         <Droppable droppableId="sequence">
           {(provided) => (
             <div
@@ -235,17 +257,21 @@ export const SequenceChallenge = ({
                         {/* Item content */}
                         <div className="flex-1 flex items-center">
                           {item.imageSrc && (
-                            <Image 
-                              src={item.imageSrc} 
-                              alt={item.text}
-                              width={48}
-                              height={48}
-                              className="object-contain mr-3"
-                            />
+                            <div className="relative w-20 h-20 mr-3 flex-shrink-0">
+                              <Image 
+                                src={item.imageSrc} 
+                                alt={item.text || "Sequence item"}
+                                fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                className="object-contain"
+                              />
+                            </div>
                           )}
-                          <div className="font-medium text-gray-800">
-                            {item.text}
-                          </div>
+                          {item.text && (
+                            <div className="font-medium text-gray-800">
+                              {item.text}
+                            </div>
+                          )}
                         </div>
 
                         {/* Move buttons (fallback for non-drag devices) */}
@@ -282,7 +308,7 @@ export const SequenceChallenge = ({
             </div>
           )}
         </Droppable>
-      </DragDropContext>
-    </div>
+      </div>
+    </DragDropContext>
   );
 }; 

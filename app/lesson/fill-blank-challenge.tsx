@@ -3,6 +3,7 @@
 import { challengeOptions, challenges } from "@/db/schema";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
+import Image from "next/image"; // Add Image import
 
 type Props = {
   options: (typeof challengeOptions.$inferSelect)[];
@@ -12,6 +13,7 @@ type Props = {
   disabled?: boolean;
   type: (typeof challenges.$inferSelect)["type"];
   question: string;
+  questionImageSrc?: string | null | undefined; // Add question image support
 };
 
 type BlankItem = {
@@ -30,6 +32,7 @@ export const FillBlankChallenge = ({
   selectedOption,
   disabled,
   question,
+  questionImageSrc, // Add questionImageSrc prop
 }: Props) => {
   const [blankItems, setBlankItems] = useState<BlankItem[]>([]);
   const [userAnswers, setUserAnswers] = useState<Record<number, string>>({});
@@ -169,8 +172,28 @@ export const FillBlankChallenge = ({
     );
   };
 
+  // Function to render question image if it exists
+  const renderQuestionImage = () => {
+    if (!questionImageSrc) return null;
+    
+    return (
+      <div className="mb-4 flex justify-center">
+        <div className="relative max-w-sm w-full aspect-square">
+          <Image
+            src={questionImageSrc}
+            alt="Challenge question image"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-contain rounded-lg"
+          />
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="space-y-6">
+      {renderQuestionImage()}
       {/* Fill in the blanks */}
       <div className="text-lg leading-relaxed p-6 bg-gray-50 rounded-lg border">
         <div className="flex flex-wrap items-center gap-1">

@@ -211,6 +211,16 @@ export const getLesson = cache(async (id?: number) => {
     with: {
       challenges: {
         orderBy: (challenges, { asc }) => [asc(challenges.order)],
+        columns: {
+          id: true,
+          lessonId: true,
+          type: true,
+          question: true,
+          questionImageSrc: true, // Explicitly include questionImageSrc
+          order: true,
+          timeLimit: true,
+          metadata: true,
+        },
         with: {
           challengeOptions: true,
           challengeProgress: {
@@ -369,7 +379,7 @@ export const getUserRank = cache(async () => {
     WHERE points > ${points}
   `);
 
-  const userRank = Number(userRankResult[0]?.rank) || 1;
+  const userRank = Number((userRankResult as unknown as any[])[0]?.rank) || 1;
 
   if (!schoolId) {
     return {
@@ -389,7 +399,7 @@ export const getUserRank = cache(async () => {
     WHERE school_id = ${schoolId} AND points > ${points}
   `);
 
-  const userRankInSchool = Number(userRankInSchoolResult[0]?.rank) || 1;
+  const userRankInSchool = Number((userRankInSchoolResult as unknown as any[])[0]?.rank) || 1;
 
   // Get the type of the user's school
   const userSchoolData = await db.query.schools.findFirst({
@@ -419,7 +429,7 @@ export const getUserRank = cache(async () => {
     )
   `);
 
-  const schoolRank = Number(schoolRankResult[0]?.rank) || 1;
+  const schoolRank = Number((schoolRankResult as unknown as any[])[0]?.rank) || 1;
   
   // Get school points
   const currentSchoolData = await db.query.schools.findFirst({
@@ -820,8 +830,6 @@ export const getAllSnippets = cache(
     limit?: number;
     offset?: number;
   } = {}) => {
-    let query = db.select().from(snippets);
-
     // Build where conditions
     const conditions = [];
     
@@ -840,9 +848,11 @@ export const getAllSnippets = cache(
       conditions.push(eq(snippets.language, language.trim()));
     }
 
-    // Apply where conditions if any exist
+    // Build query with optional where conditions
+    let query = db.select().from(snippets);
+    
     if (conditions.length > 0) {
-      query = query.where(and(...conditions));
+      query = query.where(and(...conditions)) as any;
     }
 
     // Apply ordering, limit, and offset
@@ -1593,7 +1603,7 @@ export const getTeachersWithRatingsOptimized = cache(async () => {
     ORDER BY avg_rating DESC, review_count DESC
   `);
 
-  return result.map((row: any) => ({
+  return (result as unknown as any[]).map((row: any) => ({
     id: row.id,
     name: row.name,
     email: row.email,

@@ -20,25 +20,11 @@ const useAudio = (config: { src: string }) => {
   return [null, null, controls] as const;
 };
 
-const useKey = (key: string, callback: () => void) => {
-  useEffect(() => {
-    const handleKeyPress = (event: KeyboardEvent) => {
-      if (event.key === key) {
-        callback();
-      }
-    };
-    
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [key, callback]);
-};
-
 type Props = {
   id: number;
   imageSrc: string | null;
   audioSrc: string | null;
   text: string;
-  shortcut: string;
   selected?: boolean;
   onClick: () => void;
   disabled?: boolean;
@@ -50,7 +36,6 @@ export const Card = ({
   imageSrc,
   audioSrc,
   text,
-  shortcut,
   selected,
   onClick,
   status,
@@ -64,8 +49,6 @@ export const Card = ({
     controls.play();
     onClick();
   }, [disabled, onClick, controls]);
-
-  useKey(shortcut, handleClick);
 
   return (
     <div
@@ -81,20 +64,24 @@ export const Card = ({
     >
       {audio}
       {imageSrc && (
-        <div className="relative aspect-square mb-4 max-h-[80px] lg:max-h-[150px] w-full">
-          <Image src={imageSrc} fill alt={text} />
+        <div className="relative aspect-square mb-4 max-h-[140px] lg:max-h-[250px] w-full">
+          <Image 
+            src={imageSrc} 
+            fill 
+            alt={text} 
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
         </div>
       )}
       <div
         className={cn(
-          "flex items-center justify-between",
+          "flex items-center justify-center",
           type === "ASSIST" && "flex-row-reverse"
         )}
       >
-        {type === "ASSIST" && <div />}
         <p
           className={cn(
-            "text-neutral-600 text-sm lg:text-base",
+            "text-neutral-600 text-sm lg:text-base text-center",
             selected && "text-sky-500",
             selected && status === "correct" && "text-green-500",
             selected && status === "wrong" && "text-rose-500"
@@ -102,16 +89,6 @@ export const Card = ({
         >
           {text}
         </p>
-        <div
-          className={cn(
-            "lg:w-[30px] lg:h-[30px] w-[20px] h-[20px] border-2 flex items-center justify-center rounded-lg text-neutral-400 lg:text-[15px] text-xs font-semibold",
-            selected && "border-sky-300 text-sky-500",
-            selected && status === "correct" && "border-green-500 text-green-500",
-            selected && status === "wrong" && "border-rose-500 text-rose-500"
-          )}
-        >
-          {shortcut}
-        </div>
       </div>
     </div>
   );

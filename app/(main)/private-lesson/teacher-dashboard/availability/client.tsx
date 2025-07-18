@@ -5,7 +5,6 @@ import TimeSlotGrid from '@/app/components/teacher-availability/TimeSlotGrid';
 import { toast } from 'sonner';
 
 type AvailabilityPageClientProps = {
-  weekStartDate: string; // Now accepting ISO string instead of Date
   initialAvailability: Array<{
     id: number;
     teacherId: string;
@@ -19,11 +18,8 @@ type AvailabilityPageClientProps = {
 };
 
 export default function AvailabilityPageClient({ 
-  weekStartDate, 
   initialAvailability 
 }: AvailabilityPageClientProps) {
-  // Parse the ISO string to Date objects
-  const weekStartDateObj = new Date(weekStartDate);
   
   // Convert the string dates to the format expected by TimeSlotGrid (with string dates, not Date objects)
   const [formattedAvailability, setFormattedAvailability] = useState(initialAvailability.map(slot => ({
@@ -139,7 +135,6 @@ export default function AvailabilityPageClient({
       </div>
       
       <TimeSlotGrid 
-        weekStartDate={weekStartDateObj} 
         initialSelectedSlots={formattedAvailability} 
       />
       

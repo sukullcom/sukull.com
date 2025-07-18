@@ -333,6 +333,7 @@ export const Quiz = ({
                 disabled={pending}
                 type={type}
                 question={challenge.question}
+                questionImageSrc={challenge.questionImageSrc}
                 timeLimit={timeLimit || undefined}
                 onTimeUp={handleTimeUp}
               />

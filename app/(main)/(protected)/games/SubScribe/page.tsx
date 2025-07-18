@@ -13,7 +13,7 @@ import { InfinityIcon } from "lucide-react";
 interface UserProgress {
   hearts: number;
   points: number;
-  hasInfiniteHearts: boolean;
+  hasInfiniteHearts: boolean | null;
 }
 
 function getVideoIdFromUrl(url: string): string | null {
@@ -159,7 +159,7 @@ export default function VideoSelectionPage() {
           
           // Update local state
           if (heartResult.success && !heartResult.hasInfiniteHearts) {
-            setUserProgress((prev: UserProgress | null) => prev ? {...prev, hearts: heartResult.hearts} : null);
+            setUserProgress((prev: UserProgress | null) => prev ? {...prev, hearts: heartResult.hearts ?? prev.hearts} : null);
           }
           
           // Success! Video has transcript and heart deducted
@@ -289,22 +289,31 @@ Lütfen:
         </p>
       </div>
       
-      <input
-        type="text"
-        placeholder="YouTube Video URL (örn: https://www.youtube.com/watch?v=...)"
-        value={videoUrl}
-        onChange={(e) => setVideoUrl(e.target.value)}
-        style={{ width: "100%", padding: "10px", marginBottom: "20px" }}
-        disabled={isLoading || (userProgress && !userProgress.hasInfiniteHearts && userProgress.hearts === 0)}
-      />
-      <Button 
-        variant="primary" 
-        onClick={handleSelectUrl} 
-        disabled={isLoading || (userProgress && !userProgress.hasInfiniteHearts && userProgress.hearts === 0)}
-        className={userProgress && !userProgress.hasInfiniteHearts && userProgress.hearts === 0 ? "opacity-50 cursor-not-allowed" : ""}
-      >
-        {userProgress && !userProgress.hasInfiniteHearts && userProgress.hearts === 0 ? "Kalp Gerekli" : "Oyuna Başla (-1 ❤️)"}
-      </Button>
+      {(() => {
+        const needsHeart = Boolean(userProgress && !userProgress.hasInfiniteHearts && userProgress.hearts === 0);
+        const isDisabled = isLoading || needsHeart;
+        
+        return (
+          <>
+            <input
+              type="text"
+              placeholder="YouTube Video URL (örn: https://www.youtube.com/watch?v=...)"
+              value={videoUrl}
+              onChange={(e) => setVideoUrl(e.target.value)}
+              style={{ width: "100%", padding: "10px", marginBottom: "20px" }}
+              disabled={isDisabled}
+            />
+            <Button 
+              variant="primary" 
+              onClick={handleSelectUrl} 
+              disabled={isDisabled}
+              className={needsHeart ? "opacity-50 cursor-not-allowed" : ""}
+            >
+              {needsHeart ? "Kalp Gerekli" : "Oyuna Başla (-1 ❤️)"}
+            </Button>
+          </>
+        );
+      })()}
 
       <hr style={{ margin: "40px 0" }} />
 

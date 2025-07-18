@@ -51,7 +51,6 @@ export default async function TeacherAvailabilityPage() {
       </p>
       
       <AvailabilityPageClient 
-        weekStartDate={startOfWeek.toISOString()} 
         initialAvailability={serializedAvailability} 
       />
     </div>

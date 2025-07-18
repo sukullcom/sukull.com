@@ -10,9 +10,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
+import { ImageUpload } from "@/components/ui/image-upload";
+import Image from "next/image";
 import { 
   Plus, Settings, Trash2, Target, Clock, 
-  Move, Type, Shuffle, MousePointer, CheckSquare, Edit
+  Move, Type, Shuffle, MousePointer, CheckSquare, Edit, ImageIcon
 } from "lucide-react";
 import { 
   createChallenge, 
@@ -38,12 +40,14 @@ type Lesson = typeof lessons.$inferSelect & {
 
 type ChallengeOption = {
   id?: number;
-  text: string;
+  text?: string; // Make text optional since images can replace text
   correct: boolean;
   correctOrder?: number | null;
   pairId?: number | null;
   isBlank?: boolean | null;
   dragData?: string | null;
+  imageSrc?: string | null; // Add image support for options
+  audioSrc?: string | null; // Add audio support for options
 };
 
 const CHALLENGE_TYPES = [
@@ -59,9 +63,10 @@ const CHALLENGE_TYPES = [
 interface ChallengeManagerProps {
   courseId: number;
   courseName: string;
+  onChallengeCreated?: () => void; // Add callback prop
 }
 
-export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps) {
+export function ChallengeManager({ courseId, courseName, onChallengeCreated }: ChallengeManagerProps) {
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -75,14 +80,16 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
     question: "",
     order: 1,
     timeLimit: undefined as number | undefined,
-    metadata: ""
+    metadata: "",
+    questionImageSrc: "" // Fixed property name
   });
   const [editChallenge, setEditChallenge] = useState({
     type: "",
     question: "",
     order: 1,
     timeLimit: undefined as number | undefined,
-    metadata: ""
+    metadata: "",
+    questionImageSrc: "" // Fixed property name
   });
   const [challengeOptions, setChallengeOptions] = useState<ChallengeOption[]>([]);
   const [editChallengeOptions, setEditChallengeOptions] = useState<ChallengeOption[]>([]);
@@ -162,7 +169,8 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
       question: challenge.question,
       order: challenge.order,
       timeLimit: challenge.timeLimit || undefined,
-      metadata: challenge.metadata || ""
+      metadata: challenge.metadata || "",
+      questionImageSrc: challenge.questionImageSrc || "" // Fixed property name
     });
     setEditChallengeType(challenge.type);
     
@@ -210,12 +218,17 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
         order: editChallenge.order,
         timeLimit: editChallenge.timeLimit,
         metadata: editChallenge.metadata,
+        questionImageSrc: editChallenge.questionImageSrc // Fixed property name
       });
       
       if (challengeResult.success) {
         // Step 2: Update the challenge options
         const convertedOptions = editChallengeOptions.map(opt => ({
-          ...opt,
+          id: opt.id,
+          text: opt.text,
+          correct: opt.correct,
+          imageSrc: opt.imageSrc || undefined, // Convert null to undefined
+          audioSrc: opt.audioSrc || undefined, // Add audioSrc field
           correctOrder: opt.correctOrder ?? undefined,
           pairId: opt.pairId ?? undefined,
           isBlank: opt.isBlank ?? undefined,
@@ -230,6 +243,9 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
           await loadData();
           
           toast.success("Zorluk başarıyla güncellendi!");
+          if (onChallengeCreated) {
+            onChallengeCreated();
+          }
         } else {
           toast.error(optionsResult.error || "Zorluk güncellendi ancak seçenekler güncellenemedi");
         }
@@ -274,12 +290,16 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
         order: newChallenge.order,
         timeLimit: newChallenge.timeLimit,
         metadata: newChallenge.metadata,
+        questionImageSrc: newChallenge.questionImageSrc // Fixed property name
       });
       
       if (challengeResult.success && challengeResult.challenge) {
         // Step 2: Create the challenge options
         const convertedOptions = challengeOptions.map(opt => ({
-          ...opt,
+          text: opt.text,
+          correct: opt.correct,
+          imageSrc: opt.imageSrc || undefined, // Convert null to undefined
+          audioSrc: opt.audioSrc || undefined, // Add audioSrc field
           correctOrder: opt.correctOrder ?? undefined,
           pairId: opt.pairId ?? undefined,
           isBlank: opt.isBlank ?? undefined,
@@ -299,11 +319,15 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
             question: "",
             order: challenges.filter(c => c.lesson?.id === newChallenge.lessonId).length + 2,
             timeLimit: undefined,
-            metadata: ""
+            metadata: "",
+            questionImageSrc: "" // Fixed property name
           });
           setSelectedChallengeType("");
           
           toast.success("Zorluk tüm seçenekleriyle birlikte başarıyla oluşturuldu!");
+          if (onChallengeCreated) {
+            onChallengeCreated();
+          }
         } else {
           toast.error(optionsResult.error || "Zorluk oluşturuldu ancak seçenekler eklenemedi");
         }
@@ -327,6 +351,9 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
       if (result.success) {
         await loadData();
         toast.success("Zorluk başarıyla silindi");
+        if (onChallengeCreated) {
+          onChallengeCreated();
+        }
       } else {
         toast.error(result.error || "Zorluk silinemedi");
       }
@@ -354,56 +381,56 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
       case "SELECT":
       case "ASSIST": {
         setChallengeOptions([
-          { text: "", correct: false },
-          { text: "", correct: false },
-          { text: "", correct: false },
-          { text: "", correct: false }
+          { text: "", correct: false, imageSrc: "", audioSrc: "" },
+          { text: "", correct: false, imageSrc: "", audioSrc: "" },
+          { text: "", correct: false, imageSrc: "", audioSrc: "" },
+          { text: "", correct: false, imageSrc: "", audioSrc: "" }
         ]);
         break;
       }
       case "DRAG_DROP": {
         setChallengeOptions([
-          { text: "", correct: false, dragData: JSON.stringify({ type: "item", itemId: 1 }) },
-          { text: "", correct: false, dragData: JSON.stringify({ type: "item", itemId: 2 }) },
-          { text: "", correct: false, dragData: JSON.stringify({ type: "zone", zoneId: "zone1", correctItemId: 1 }) },
-          { text: "", correct: false, dragData: JSON.stringify({ type: "zone", zoneId: "zone2", correctItemId: 2 }) },
-          { text: "Correct", correct: true }
+          { text: "", correct: false, imageSrc: "", audioSrc: "", dragData: JSON.stringify({ type: "item", itemId: 1 }) },
+          { text: "", correct: false, imageSrc: "", audioSrc: "", dragData: JSON.stringify({ type: "item", itemId: 2 }) },
+          { text: "", correct: false, imageSrc: "", audioSrc: "", dragData: JSON.stringify({ type: "zone", zoneId: "zone1", correctItemId: 1 }) },
+          { text: "", correct: false, imageSrc: "", audioSrc: "", dragData: JSON.stringify({ type: "zone", zoneId: "zone2", correctItemId: 2 }) },
+          { text: "Correct", correct: true, imageSrc: "", audioSrc: "" }
         ]);
         break;
       }
       case "FILL_BLANK": {
         setChallengeOptions([
-          { text: "", correct: false, isBlank: true },
-          { text: "", correct: false, isBlank: true },
-          { text: "Correct", correct: true }
+          { text: "", correct: false, imageSrc: "", audioSrc: "", isBlank: true },
+          { text: "", correct: false, imageSrc: "", audioSrc: "", isBlank: true },
+          { text: "Correct", correct: true, imageSrc: "", audioSrc: "" }
         ]);
         break;
       }
       case "MATCH_PAIRS": {
         setChallengeOptions([
-          { text: "", correct: false, pairId: 1 },
-          { text: "", correct: false, pairId: 1 },
-          { text: "", correct: false, pairId: 2 },
-          { text: "", correct: false, pairId: 2 },
-          { text: "Correct", correct: true }
+          { text: "", correct: false, imageSrc: "", audioSrc: "", pairId: 1 },
+          { text: "", correct: false, imageSrc: "", audioSrc: "", pairId: 1 },
+          { text: "", correct: false, imageSrc: "", audioSrc: "", pairId: 2 },
+          { text: "", correct: false, imageSrc: "", audioSrc: "", pairId: 2 },
+          { text: "Correct", correct: true, imageSrc: "", audioSrc: "" }
         ]);
         break;
       }
       case "SEQUENCE": {
         setChallengeOptions([
-          { text: "", correct: false, correctOrder: 1 },
-          { text: "", correct: false, correctOrder: 2 },
-          { text: "", correct: false, correctOrder: 3 },
-          { text: "Correct", correct: true }
+          { text: "", correct: false, imageSrc: "", audioSrc: "", correctOrder: 1 },
+          { text: "", correct: false, imageSrc: "", audioSrc: "", correctOrder: 2 },
+          { text: "", correct: false, imageSrc: "", audioSrc: "", correctOrder: 3 },
+          { text: "Correct", correct: true, imageSrc: "", audioSrc: "" }
         ]);
         break;
       }
       case "TIMER_CHALLENGE": {
         setChallengeOptions([
-          { text: "", correct: false },
-          { text: "", correct: false },
-          { text: "", correct: false },
-          { text: "", correct: false }
+          { text: "", correct: false, imageSrc: "", audioSrc: "" },
+          { text: "", correct: false, imageSrc: "", audioSrc: "" },
+          { text: "", correct: false, imageSrc: "", audioSrc: "" },
+          { text: "", correct: false, imageSrc: "", audioSrc: "" }
         ]);
         break;
       }
@@ -417,56 +444,56 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
       case "SELECT":
       case "ASSIST": {
         setEditChallengeOptions([
-          { text: "", correct: false },
-          { text: "", correct: false },
-          { text: "", correct: false },
-          { text: "", correct: false }
+          { text: "", correct: false, imageSrc: "", audioSrc: "" },
+          { text: "", correct: false, imageSrc: "", audioSrc: "" },
+          { text: "", correct: false, imageSrc: "", audioSrc: "" },
+          { text: "", correct: false, imageSrc: "", audioSrc: "" }
         ]);
         break;
       }
       case "DRAG_DROP": {
         setEditChallengeOptions([
-          { text: "", correct: false, dragData: JSON.stringify({ type: "item", itemId: 1 }) },
-          { text: "", correct: false, dragData: JSON.stringify({ type: "item", itemId: 2 }) },
-          { text: "", correct: false, dragData: JSON.stringify({ type: "zone", zoneId: "zone1", correctItemId: 1 }) },
-          { text: "", correct: false, dragData: JSON.stringify({ type: "zone", zoneId: "zone2", correctItemId: 2 }) },
-          { text: "Correct", correct: true }
+          { text: "", correct: false, imageSrc: "", audioSrc: "", dragData: JSON.stringify({ type: "item", itemId: 1 }) },
+          { text: "", correct: false, imageSrc: "", audioSrc: "", dragData: JSON.stringify({ type: "item", itemId: 2 }) },
+          { text: "", correct: false, imageSrc: "", audioSrc: "", dragData: JSON.stringify({ type: "zone", zoneId: "zone1", correctItemId: 1 }) },
+          { text: "", correct: false, imageSrc: "", audioSrc: "", dragData: JSON.stringify({ type: "zone", zoneId: "zone2", correctItemId: 2 }) },
+          { text: "Correct", correct: true, imageSrc: "", audioSrc: "" }
         ]);
         break;
       }
       case "FILL_BLANK": {
         setEditChallengeOptions([
-          { text: "", correct: false, isBlank: true },
-          { text: "", correct: false, isBlank: true },
-          { text: "Correct", correct: true }
+          { text: "", correct: false, imageSrc: "", audioSrc: "", isBlank: true },
+          { text: "", correct: false, imageSrc: "", audioSrc: "", isBlank: true },
+          { text: "Correct", correct: true, imageSrc: "", audioSrc: "" }
         ]);
         break;
       }
       case "MATCH_PAIRS": {
         setEditChallengeOptions([
-          { text: "", correct: false, pairId: 1 },
-          { text: "", correct: false, pairId: 1 },
-          { text: "", correct: false, pairId: 2 },
-          { text: "", correct: false, pairId: 2 },
-          { text: "Correct", correct: true }
+          { text: "", correct: false, imageSrc: "", audioSrc: "", pairId: 1 },
+          { text: "", correct: false, imageSrc: "", audioSrc: "", pairId: 1 },
+          { text: "", correct: false, imageSrc: "", audioSrc: "", pairId: 2 },
+          { text: "", correct: false, imageSrc: "", audioSrc: "", pairId: 2 },
+          { text: "Correct", correct: true, imageSrc: "", audioSrc: "" }
         ]);
         break;
       }
       case "SEQUENCE": {
         setEditChallengeOptions([
-          { text: "", correct: false, correctOrder: 1 },
-          { text: "", correct: false, correctOrder: 2 },
-          { text: "", correct: false, correctOrder: 3 },
-          { text: "Correct", correct: true }
+          { text: "", correct: false, imageSrc: "", audioSrc: "", correctOrder: 1 },
+          { text: "", correct: false, imageSrc: "", audioSrc: "", correctOrder: 2 },
+          { text: "", correct: false, imageSrc: "", audioSrc: "", correctOrder: 3 },
+          { text: "Correct", correct: true, imageSrc: "", audioSrc: "" }
         ]);
         break;
       }
       case "TIMER_CHALLENGE": {
         setEditChallengeOptions([
-          { text: "", correct: false },
-          { text: "", correct: false },
-          { text: "", correct: false },
-          { text: "", correct: false }
+          { text: "", correct: false, imageSrc: "", audioSrc: "" },
+          { text: "", correct: false, imageSrc: "", audioSrc: "" },
+          { text: "", correct: false, imageSrc: "", audioSrc: "" },
+          { text: "", correct: false, imageSrc: "", audioSrc: "" }
         ]);
         break;
       }
@@ -479,8 +506,8 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
     switch (type) {
       case "SELECT":
       case "ASSIST": {
-        const hasCorrectAnswer = options.some(opt => opt.correct && opt.text.trim());
-        const hasEnoughOptions = options.filter(opt => opt.text.trim()).length >= 2;
+        const hasCorrectAnswer = options.some(opt => opt.correct && opt.text?.trim());
+        const hasEnoughOptions = options.filter(opt => opt.text?.trim()).length >= 2;
         
         if (!hasCorrectAnswer) return { isValid: false, message: "Lütfen bir seçeneği doğru olarak işaretleyin" };
         if (!hasEnoughOptions) return { isValid: false, message: "Lütfen en az 2 seçenek sağlayın" };
@@ -489,28 +516,33 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
       case "DRAG_DROP": {
         const items = options.filter(opt => opt.dragData && JSON.parse(opt.dragData).type === "item");
         const zones = options.filter(opt => opt.dragData && JSON.parse(opt.dragData).type === "zone");
-        if (items.length < 2) return { isValid: false, message: "Lütfen en az 2 sürüklenebilir öğe sağlayın" };
+        
+        // Check if items have either text or image
+        const validItems = items.filter(item => item.text?.trim() || item.imageSrc?.trim());
+        if (validItems.length < 2) return { isValid: false, message: "Lütfen en az 2 sürüklenebilir öğe sağlayın (metin veya resim)" };
         if (zones.length < 2) return { isValid: false, message: "Lütfen en az 2 bırakma alanı sağlayın" };
         break;
       }
       case "FILL_BLANK": {
-        const blanks = options.filter(opt => opt.isBlank && opt.text.trim());
+        const blanks = options.filter(opt => opt.isBlank && opt.text?.trim());
         if (blanks.length === 0) return { isValid: false, message: "Lütfen boşluklar için cevaplar sağlayın" };
         break;
       }
       case "MATCH_PAIRS": {
-        const pairs = options.filter(opt => opt.pairId && opt.text.trim());
-        if (pairs.length < 4) return { isValid: false, message: "Lütfen en az 2 çift (4 öğe) sağlayın" };
+        // Check if pairs have either text or image
+        const pairs = options.filter(opt => opt.pairId && (opt.text?.trim() || opt.imageSrc?.trim()));
+        if (pairs.length < 4) return { isValid: false, message: "Lütfen en az 2 çift (4 öğe) sağlayın (metin veya resim)" };
         break;
       }
       case "SEQUENCE": {
-        const sequenceItems = options.filter(opt => opt.correctOrder && opt.text.trim());
-        if (sequenceItems.length < 2) return { isValid: false, message: "Lütfen en az 2 sıralama öğesi sağlayın" };
+        // Check if sequence items have either text or image
+        const sequenceItems = options.filter(opt => opt.correctOrder && (opt.text?.trim() || opt.imageSrc?.trim()));
+        if (sequenceItems.length < 2) return { isValid: false, message: "Lütfen en az 2 sıralama öğesi sağlayın (metin veya resim)" };
         break;
       }
       case "TIMER_CHALLENGE": {
-        const timerCorrect = options.some(opt => opt.correct && opt.text.trim());
-        const timerOptions = options.filter(opt => opt.text.trim()).length >= 2;
+        const timerCorrect = options.some(opt => opt.correct && opt.text?.trim());
+        const timerOptions = options.filter(opt => opt.text?.trim()).length >= 2;
         if (!timerCorrect) return { isValid: false, message: "Lütfen bir seçeneği doğru olarak işaretleyin" };
         if (!timerOptions) return { isValid: false, message: "Lütfen en az 2 seçenek sağlayın" };
         break;
@@ -549,7 +581,12 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
           <DialogTrigger asChild>
             <Button 
               disabled={lessons.length === 0} 
-              onClick={() => setIsCreateOpen(true)}
+              onClick={() => {
+                setIsCreateOpen(true);
+                if (onChallengeCreated) {
+                  onChallengeCreated();
+                }
+              }}
             >
               <Plus className="w-4 h-4 mr-2" />
               Create Challenge
@@ -621,21 +658,32 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
                 </div>
               </div>
 
-              {/* Question */}
-              <div>
-                <Label htmlFor="question">Soru Metni</Label>
-                <Textarea
-                  id="question"
-                  value={newChallenge.question}
-                  onChange={(e) => setNewChallenge({ ...newChallenge, question: e.target.value })}
-                  placeholder="Zorluk sorusunu girin..."
-                  rows={3}
-                />
-                {selectedChallengeType === "FILL_BLANK" && (
-                  <p className="text-xs text-gray-500 mt-1">
-                    Boşlukları işaretlemek için &quot;{"{1}"}&quot;, &quot;{"{2}"}&quot;, vb. kullanın. Örnek: &quot;{"{1}"} verilerini {"{2}"} için kullanılır.&quot;
-                  </p>
-                )}
+              {/* Question Section with Image Upload */}
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="question">Soru Metni</Label>
+                  <Textarea
+                    id="question"
+                    value={newChallenge.question}
+                    onChange={(e) => setNewChallenge({ ...newChallenge, question: e.target.value })}
+                    placeholder="Zorluk sorusunu girin..."
+                    rows={3}
+                  />
+                  {selectedChallengeType === "FILL_BLANK" && (
+                    <p className="text-xs text-gray-500 mt-1">
+                      Boşlukları işaretlemek için &quot;{"{1}"}&quot;, &quot;{"{2}"}&quot;, vb. kullanın. Örnek: &quot;{"{1}"} verilerini {"{2}"} için kullanılır.&quot;
+                    </p>
+                  )}
+                </div>
+                
+                <div>
+                  <Label htmlFor="questionImageSrc">Soru Resmi (İsteğe Bağlı)</Label>
+                  <ImageUpload
+                    value={newChallenge.questionImageSrc}
+                    onChange={(url) => setNewChallenge({ ...newChallenge, questionImageSrc: url })}
+                    placeholder="Soru için resim yükleyin"
+                  />
+                </div>
               </div>
 
               {/* Time Limit (for timer challenges) */}
@@ -758,11 +806,73 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
                                 {challenge.timeLimit}s
                               </Badge>
                             )}
+                            {challenge.questionImageSrc && (
+                              <Badge className="bg-purple-100 text-purple-700 text-xs">
+                                <ImageIcon className="w-3 h-3 mr-1" />
+                                Soru Resmi
+                              </Badge>
+                            )}
+                            {(() => {
+                              const optionsWithImages = challenge.challengeOptions?.filter(opt => opt.imageSrc)?.length || 0;
+                              return optionsWithImages > 0 ? (
+                                <Badge className="bg-blue-100 text-blue-700 text-xs">
+                                  <ImageIcon className="w-3 h-3 mr-1" />
+                                  {optionsWithImages} Seçenek Resmi
+                                </Badge>
+                              ) : null;
+                            })()}
                           </div>
                           <p className="text-sm text-gray-500">
                             Order: {challenge.order} • ID: {challenge.id} • 
                             Options: {challenge.challengeOptions?.length || 0}
                           </p>
+                          
+                          {/* Image Previews */}
+                          <div className="mt-2 flex items-center space-x-3">
+                            {/* Question Image Preview */}
+                            {challenge.questionImageSrc && (
+                              <div className="flex items-center space-x-1">
+                                <span className="text-xs text-gray-500">Soru:</span>
+                                <div className="relative w-8 h-8">
+                                  <Image
+                                    src={challenge.questionImageSrc}
+                                    alt="Question image"
+                                    fill
+                                    sizes="32px"
+                                    className="object-contain rounded border"
+                                  />
+                                </div>
+                              </div>
+                            )}
+                            
+                            {/* Option Images Preview */}
+                            {(() => {
+                              const optionsWithImages = challenge.challengeOptions?.filter(opt => opt.imageSrc) || [];
+                              return optionsWithImages.length > 0 ? (
+                                <div className="flex items-center space-x-1">
+                                  <span className="text-xs text-gray-500">Seçenekler:</span>
+                                  <div className="flex space-x-1">
+                                    {optionsWithImages.slice(0, 3).map((option, index) => (
+                                      <div key={index} className="relative w-8 h-8">
+                                        <Image
+                                          src={option.imageSrc!}
+                                          alt={`Option ${index + 1}`}
+                                          fill
+                                          sizes="32px"
+                                          className="object-contain rounded border"
+                                        />
+                                      </div>
+                                    ))}
+                                    {optionsWithImages.length > 3 && (
+                                      <div className="w-8 h-8 bg-gray-100 rounded border flex items-center justify-center text-xs text-gray-500">
+                                        +{optionsWithImages.length - 3}
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              ) : null;
+                            })()}
+                          </div>
                         </div>
                       </div>
                       
@@ -806,7 +916,12 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
           <Settings className="w-12 h-12 text-gray-400 mx-auto mb-4" />
           <h3 className="text-lg font-medium text-gray-900 mb-2">No challenges yet</h3>
           <p className="text-gray-600 mb-4">Create your first challenge to get started</p>
-          <Button onClick={() => setIsCreateOpen(true)}>
+          <Button onClick={() => {
+            setIsCreateOpen(true);
+            if (onChallengeCreated) {
+              onChallengeCreated();
+            }
+          }}>
             <Plus className="w-4 h-4 mr-2" />
             Create Challenge
           </Button>
@@ -882,21 +997,32 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
                 </div>
               </div>
 
-              {/* Question */}
-              <div>
-                <Label htmlFor="question">Soru Metni</Label>
-                <Textarea
-                  id="question"
-                  value={editChallenge.question}
-                  onChange={(e) => setEditChallenge({ ...editChallenge, question: e.target.value })}
-                  placeholder="Zorluk sorusunu girin..."
-                  rows={3}
-                />
-                {editChallengeType === "FILL_BLANK" && (
-                  <p className="text-xs text-gray-500 mt-1">
-                    Boşlukları işaretlemek için &quot;{"{1}"}&quot;, &quot;{"{2}"}&quot;, vb. kullanın. Örnek: &quot;{"{1}"} verilerini {"{2}"} için kullanılır.&quot;
-                  </p>
-                )}
+              {/* Question Section with Image Upload */}
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="question">Soru Metni</Label>
+                  <Textarea
+                    id="question"
+                    value={editChallenge.question}
+                    onChange={(e) => setEditChallenge({ ...editChallenge, question: e.target.value })}
+                    placeholder="Zorluk sorusunu girin..."
+                    rows={3}
+                  />
+                  {editChallengeType === "FILL_BLANK" && (
+                    <p className="text-xs text-gray-500 mt-1">
+                      Boşlukları işaretlemek için &quot;{"{1}"}&quot;, &quot;{"{2}"}&quot;, vb. kullanın. Örnek: &quot;{"{1}"} verilerini {"{2}"} için kullanılır.&quot;
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <Label htmlFor="questionImageSrc">Soru Resmi (İsteğe Bağlı)</Label>
+                  <ImageUpload
+                    value={editChallenge.questionImageSrc}
+                    onChange={(url) => setEditChallenge({ ...editChallenge, questionImageSrc: url })}
+                    placeholder="Soru için resim yükleyin"
+                  />
+                </div>
               </div>
 
               {/* Time Limit (for timer challenges) */}
@@ -947,7 +1073,7 @@ export function ChallengeManager({ courseId, courseName }: ChallengeManagerProps
               )}
 
               <div className="flex justify-end space-x-2">
-                <Button variant="primaryOutline" onClick={() => setIsEditOpen(false)}>
+                <Button variant="primary" onClick={() => setIsEditOpen(false)}>
                   Cancel
                 </Button>
                 <Button onClick={handleEditChallenge} disabled={isLoading || !editChallengeType}>
@@ -991,7 +1117,7 @@ function ChallengeOptionsFormInline({ challengeType, options, setOptions }: Chal
   };
 
   const addOption = () => {
-    const newOption: ChallengeOption = { text: "", correct: false };
+    const newOption: ChallengeOption = { text: "", correct: false, imageSrc: "", audioSrc: "" };
     
     switch (challengeType) {
       case "SELECT":
@@ -1097,30 +1223,41 @@ function SelectAssistForm({ options, updateOption, removeOption, addOption, form
         const isChecked = Boolean(option.correct);
         
         return (
-          <div key={`option-${actualIndex}-${displayIndex}`} className="flex items-center space-x-2 p-3 border rounded-lg">
-            <Input
-              placeholder="Option text"
-              value={option.text || ""}
-              onChange={(e) => updateOption(actualIndex, "text", e.target.value)}
-              className="flex-1"
-            />
-            <label className="flex items-center space-x-2 cursor-pointer">
-              <input
-                type="radio"
-                name={radioGroupName}
-                checked={isChecked}
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    handleCorrectChange(actualIndex);
-                  }
-                }}
-                className="w-4 h-4"
+          <div key={`option-${actualIndex}-${displayIndex}`} className="space-y-3 p-3 border rounded-lg">
+            <div className="flex items-center space-x-2">
+              <Input
+                placeholder="Option text"
+                value={option.text || ""}
+                onChange={(e) => updateOption(actualIndex, "text", e.target.value)}
+                className="flex-1"
               />
-              <span className="text-sm">Correct</span>
-            </label>
-            <Button variant="ghost" size="sm" onClick={() => removeOption(actualIndex)}>
-              <Trash2 className="w-4 h-4" />
-            </Button>
+              <label className="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name={radioGroupName}
+                  checked={isChecked}
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      handleCorrectChange(actualIndex);
+                    }
+                  }}
+                  className="w-4 h-4"
+                />
+                <span className="text-sm">Correct</span>
+              </label>
+              <Button variant="ghost" size="sm" onClick={() => removeOption(actualIndex)}>
+                <Trash2 className="w-4 h-4" />
+              </Button>
+            </div>
+            <div>
+              <Label className="text-xs text-gray-600">Option Image (İsteğe Bağlı)</Label>
+              <ImageUpload
+                value={option.imageSrc || ""}
+                onChange={(url) => updateOption(actualIndex, "imageSrc", url)}
+                placeholder="Seçenek için resim yükleyin"
+                className="mt-1"
+              />
+            </div>
           </div>
         );
       })}
@@ -1164,17 +1301,28 @@ function DragDropForm({ options, updateOption, removeOption, addOption, setOptio
           const dragData = JSON.parse(item.dragData!);
           
           return (
-            <div key={fullIndex} className="flex items-center space-x-2 p-3 border rounded-lg bg-blue-50">
-              <span className="text-sm font-medium w-16">Item {dragData.itemId}:</span>
-              <Input
-                placeholder="Item text to drag"
-                value={item.text}
-                onChange={(e) => updateOption(fullIndex, "text", e.target.value)}
-                className="flex-1"
-              />
-              <Button variant="ghost" size="sm" onClick={() => removeOption(fullIndex)}>
-                <Trash2 className="w-4 h-4" />
-              </Button>
+            <div key={fullIndex} className="space-y-3 p-3 border rounded-lg bg-blue-50">
+              <div className="flex items-center space-x-2">
+                <span className="text-sm font-medium w-16">Item {dragData.itemId}:</span>
+                <Input
+                  placeholder="Item text (optional if image provided)"
+                  value={item.text}
+                  onChange={(e) => updateOption(fullIndex, "text", e.target.value)}
+                  className="flex-1"
+                />
+                <Button variant="ghost" size="sm" onClick={() => removeOption(fullIndex)}>
+                  <Trash2 className="w-4 h-4" />
+                </Button>
+              </div>
+              <div>
+                <Label className="text-xs text-gray-600">Item Image (İsteğe Bağlı)</Label>
+                <ImageUpload
+                  value={item.imageSrc || ""}
+                  onChange={(url) => updateOption(fullIndex, "imageSrc", url)}
+                  placeholder="Sürüklenebilir öğe için resim yükleyin"
+                  className="mt-1"
+                />
+              </div>
             </div>
           );
         })}
@@ -1297,8 +1445,8 @@ function MatchPairsForm({ options, updateOption, setOptions }: {
     
     setOptions([
       ...options,
-      { text: "", correct: false, pairId: newPairId },
-      { text: "", correct: false, pairId: newPairId }
+      { text: "", correct: false, imageSrc: "", audioSrc: "", pairId: newPairId },
+      { text: "", correct: false, imageSrc: "", audioSrc: "", pairId: newPairId }
     ]);
   };
 
@@ -1323,33 +1471,44 @@ function MatchPairsForm({ options, updateOption, setOptions }: {
                 const fullIndex = options.findIndex((opt) => opt === item);
                 
                 return (
-                  <div key={fullIndex} className="flex items-center space-x-2">
-                    <Input
-                      placeholder={`Item ${itemIndex + 1}`}
-                      value={item.text}
-                      onChange={(e) => updateOption(fullIndex, "text", e.target.value)}
-                      className="flex-1"
-                    />
-                    {itemIndex === 0 && (
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        onClick={() => {
-                          // Remove both items in the pair
-                          const indicesToRemove = pairItems.map((item) => 
-                            options.findIndex((opt) => opt === item)
-                          ).sort((a, b) => b - a);
-                          
-                          const newOptions = [...options];
-                          indicesToRemove.forEach((index) => {
-                            newOptions.splice(index, 1);
-                          });
-                          setOptions(newOptions);
-                        }}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    )}
+                  <div key={fullIndex} className="space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <Input
+                        placeholder={`Item ${itemIndex + 1} (text optional if image provided)`}
+                        value={item.text}
+                        onChange={(e) => updateOption(fullIndex, "text", e.target.value)}
+                        className="flex-1"
+                      />
+                      {itemIndex === 0 && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={() => {
+                            // Remove both items in the pair
+                            const indicesToRemove = pairItems.map((item) => 
+                              options.findIndex((opt) => opt === item)
+                            ).sort((a, b) => b - a);
+                            
+                            const newOptions = [...options];
+                            indicesToRemove.forEach((index) => {
+                              newOptions.splice(index, 1);
+                            });
+                            setOptions(newOptions);
+                          }}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      )}
+                    </div>
+                    <div>
+                      <Label className="text-xs text-gray-600">Item Image (İsteğe Bağlı)</Label>
+                      <ImageUpload
+                        value={item.imageSrc || ""}
+                        onChange={(url) => updateOption(fullIndex, "imageSrc", url)}
+                        placeholder="Eşleştirme öğesi için resim yükleyin"
+                        className="mt-1"
+                      />
+                    </div>
                   </div>
                 );
               })}
@@ -1384,17 +1543,28 @@ function SequenceForm({ options, updateOption, removeOption, addOption }: {
         const fullIndex = options.findIndex((opt) => opt === option);
         
         return (
-          <div key={fullIndex} className="flex items-center space-x-2 p-3 border rounded-lg">
-            <span className="text-sm font-medium w-16">Adım {option.correctOrder}:</span>
-            <Input
-              placeholder="Sıralama öğesi açıklaması"
-              value={option.text}
-              onChange={(e) => updateOption(fullIndex, "text", e.target.value)}
-              className="flex-1"
-            />
-            <Button variant="ghost" size="sm" onClick={() => removeOption(fullIndex)}>
-              <Trash2 className="w-4 h-4" />
-            </Button>
+          <div key={fullIndex} className="space-y-3 p-3 border rounded-lg">
+            <div className="flex items-center space-x-2">
+              <span className="text-sm font-medium w-16">Adım {option.correctOrder}:</span>
+              <Input
+                placeholder="Item description (optional if image provided)"
+                value={option.text}
+                onChange={(e) => updateOption(fullIndex, "text", e.target.value)}
+                className="flex-1"
+              />
+              <Button variant="ghost" size="sm" onClick={() => removeOption(fullIndex)}>
+                <Trash2 className="w-4 h-4" />
+              </Button>
+            </div>
+            <div>
+              <Label className="text-xs text-gray-600">Sequence Item Image (İsteğe Bağlı)</Label>
+              <ImageUpload
+                value={option.imageSrc || ""}
+                onChange={(url) => updateOption(fullIndex, "imageSrc", url)}
+                placeholder="Sıralama öğesi için resim yükleyin"
+                className="mt-1"
+              />
+            </div>
           </div>
         );
       })}

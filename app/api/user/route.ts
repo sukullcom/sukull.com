@@ -50,10 +50,10 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({
           id: user.id,
           email: user.email,
-          name: user.name,
-          avatar: user.avatar,
-          role: user.role,
-          createdAt: user.createdAt,
+          name: user.user_metadata?.name || user.email?.split('@')[0] || 'User',
+          avatar: user.user_metadata?.avatar_url || null,
+          role: user.user_metadata?.role || 'student',
+          createdAt: user.created_at,
         });
       }
 
@@ -69,9 +69,9 @@ export async function GET(request: NextRequest) {
           profile: {
             id: user.id,
             email: user.email,
-            name: user.name,
-            avatar: user.avatar,
-            role: user.role,
+            name: user.user_metadata?.name || user.email?.split('@')[0] || 'User',
+            avatar: user.user_metadata?.avatar_url || null,
+            role: user.user_metadata?.role || 'student',
           },
           credits: credits,
           progress: progress ? {

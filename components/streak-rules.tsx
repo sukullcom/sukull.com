@@ -59,7 +59,7 @@ export function StreakRules({
               <p className="text-xs text-orange-600">Günlük hedefini tamamladığın gün sayısı</p>
             </div>
           </div>
-          <Badge variant="primaryOutline" className="bg-orange-200 text-orange-800 font-bold">
+          <Badge variant="outline" className="bg-orange-200 text-orange-800 font-bold">
             {currentStreak} gün
           </Badge>
         </div>

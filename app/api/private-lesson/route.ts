@@ -1,4 +1,5 @@
 import { secureApi, ApiResponses } from "@/lib/api-middleware";
+import { NextResponse } from "next/server";
 import { batchQueries, aggregationQueries, cachedQueries } from "@/db/optimized-queries";
 import { 
   isTeacher,
@@ -7,7 +8,8 @@ import {
   refundCredit,
   getTeacherFields,
   bookLesson,
-  hasAvailableCredits
+  hasAvailableCredits,
+  getTeacherReviews
 } from "@/db/queries";
 import db from "@/db/drizzle";
 import { lessonBookings, users, teacherApplications } from "@/db/schema";
@@ -114,7 +116,7 @@ export const GET = secureApi.auth(async (request, user) => {
           meetLink: userDetails.meetLink,
           field: fieldDisplay,
           fields: fields,
-          createdAt: userDetails.createdAt,
+          createdAt: userDetails.created_at,
         });
       }
 
@@ -128,13 +130,13 @@ export const GET = secureApi.auth(async (request, user) => {
         
         if (subject || grade) {
           filteredTeachers = teachers.filter(teacher => {
-            if (subject && !teacher.fields.some(field => 
+            if (subject && !teacher.fields.some((field: string) => 
               field.toLowerCase().includes(subject.toLowerCase())
             )) {
               return false;
             }
             
-            if (grade && !teacher.fields.some(field => 
+            if (grade && !teacher.fields.some((field: string) => 
               field.toLowerCase().includes(grade.toLowerCase())
             )) {
               return false;
@@ -294,7 +296,7 @@ export const POST = secureApi.auth(async (request, user) => {
               return ApiResponses.badRequest(error.message);
             }
             if (error.message.includes("already booked") || error.message.includes("not available")) {
-              return ApiResponses.conflict(error.message);
+              return NextResponse.json({ error: error.message }, { status: 409 });
             }
           }
           throw error;

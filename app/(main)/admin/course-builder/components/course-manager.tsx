@@ -43,7 +43,7 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
     setIsLoading(true);
     try {
       const result = await createCourse(newCourse);
-      if (result.success) {
+      if (result.success && result.course) {
         setCourses([...courses, result.course]);
         setNewCourse({ title: "", imageSrc: "/mascot_purple.svg" });
         setIsCreateOpen(false);

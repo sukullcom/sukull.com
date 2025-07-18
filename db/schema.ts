@@ -106,6 +106,7 @@ export const challenges = pgTable("challenges", {
     .notNull(),
   type: challengesEnum("type").notNull(),
   question: text("question").notNull(),
+  questionImageSrc: text("question_image_src"), // Add image support for questions
   order: integer("order").notNull(),
   // Timer configuration for TIMER_CHALLENGE type
   timeLimit: integer("time_limit"), // in seconds, null for non-timed challenges

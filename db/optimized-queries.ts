@@ -40,7 +40,7 @@ export const getTeachersWithRatingsOptimized = cache(async () => {
     ORDER BY avg_rating DESC, review_count DESC
   `);
 
-  return result.map((row: any) => ({
+  return (result as unknown as any[]).map((row: any) => ({
     id: row.id,
     name: row.name,
     email: row.email,
@@ -57,7 +57,7 @@ export const getTeachersWithRatingsOptimized = cache(async () => {
 // ✅ BATCH QUERIES: Fetch multiple entities at once
 export const batchQueries = {
   async getUsersAndSchools(userIds: string[], schoolIds: number[]) {
-    const [users, schools] = await Promise.all([
+    const [usersResult, schoolsResult] = await Promise.all([
       db.query.users.findMany({ 
         where: inArray(users.id, userIds),
         columns: { id: true, name: true, avatar: true, email: true }
@@ -66,8 +66,8 @@ export const batchQueries = {
         where: inArray(schools.id, schoolIds),
         columns: { id: true, name: true, type: true, city: true, district: true }
       })
-    ]);
-    return { users, schools };
+        ]);
+    return { users: usersResult, schools: schoolsResult };
   },
 
   async getStudentBookingsWithTeacherData(studentId: string) {
@@ -138,18 +138,19 @@ export const batchQueries = {
       ORDER BY u.order ASC, l.order ASC
     `);
 
-    if (result.length === 0) return null;
+    const resultArray = result as unknown as any[];
+    if (resultArray.length === 0) return null;
 
     const course = {
-      id: result[0].course_id,
-      title: result[0].course_title,
-      imageSrc: result[0].course_image,
+      id: resultArray[0].course_id,
+      title: resultArray[0].course_title,
+      imageSrc: resultArray[0].course_image,
       units: [] as any[]
     };
 
     const unitsMap = new Map();
     
-    result.forEach((row: any) => {
+    resultArray.forEach((row: any) => {
       if (row.unit_id && !unitsMap.has(row.unit_id)) {
         unitsMap.set(row.unit_id, {
           id: row.unit_id,
@@ -236,7 +237,8 @@ export const selectiveQueries = {
     query = sql`${query} ORDER BY s.created_at DESC LIMIT $${queryParams.length + 1} OFFSET $${queryParams.length + 2}`;
     queryParams.push(Math.min(limit, 50), Math.max(offset, 0));
     
-    return db.execute(sql`${query}`, queryParams);
+    // Note: This function needs refactoring for proper Drizzle query building
+    return db.execute(query as any);
   },
 
   async getSchoolLeaderboardOptimized(type?: string, city?: string, limit = 50) {
@@ -275,14 +277,15 @@ export const selectiveQueries = {
                 LIMIT $${queryParams.length + 1}`;
     queryParams.push(Math.min(limit, 100));
     
-    return db.execute(sql`${query}`, queryParams);
+    // Note: This function needs refactoring for proper Drizzle query building
+    return db.execute(query as any);
   }
 };
 
 // ✅ AGGREGATION QUERIES: Use database for calculations
 export const aggregationQueries = {
   async getUserStats(userId: string) {
-    const [result] = await db.execute(sql`
+    const queryResult = await db.execute(sql`
       SELECT 
         up.points,
         up.hearts,
@@ -307,11 +310,11 @@ export const aggregationQueries = {
       GROUP BY up.user_id, up.points, up.hearts, up.school_id
     `);
 
-    return result;
+    return (queryResult as unknown as any[])[0];
   },
 
   async getTeacherStatsOptimized(teacherId: string) {
-    const [result] = await db.execute(sql`
+    const queryResult = await db.execute(sql`
       SELECT 
         COUNT(DISTINCT lb.id) as total_lessons,
         COUNT(DISTINCT CASE WHEN lb.status = 'completed' THEN lb.id END) as completed_lessons,
@@ -323,6 +326,7 @@ export const aggregationQueries = {
       WHERE lb.teacher_id = ${teacherId}
     `);
 
+    const result = (queryResult as unknown as any[])[0];
     return {
       totalLessons: Number(result.total_lessons),
       completedLessons: Number(result.completed_lessons),
@@ -337,7 +341,7 @@ export const aggregationQueries = {
 export class QueryCache {
   private static memoryCache = new Map<string, { data: any; expiry: number }>();
   
-  private static readonly TTL = {
+  public static readonly TTL = {
     SHORT: 60 * 1000,      // 1 minute
     MEDIUM: 5 * 60 * 1000, // 5 minutes  
     LONG: 30 * 60 * 1000,  // 30 minutes
@@ -370,7 +374,7 @@ export class QueryCache {
 
   static cleanup() {
     const now = Date.now();
-    for (const [key, value] of QueryCache.memoryCache.entries()) {
+    for (const [key, value] of Array.from(QueryCache.memoryCache.entries())) {
       if (value.expiry <= now) {
         QueryCache.memoryCache.delete(key);
       }
@@ -382,7 +386,7 @@ export class QueryCache {
   }
 
   static invalidate(keyPattern: string) {
-    for (const key of QueryCache.memoryCache.keys()) {
+    for (const key of Array.from(QueryCache.memoryCache.keys())) {
       if (key.includes(keyPattern)) {
         QueryCache.memoryCache.delete(key);
       }

@@ -106,7 +106,7 @@ export async function fetchUserById(userId: string) {
  */
 export async function fetchUsersByIds(userIds: string[]) {
   // Deduplicate IDs
-  const uniqueIds = [...new Set(userIds)];
+  const uniqueIds = Array.from(new Set(userIds));
   
   // Check cache first
   const cachedUsers: Record<string, any> = {};
@@ -141,7 +141,7 @@ export async function fetchUsersByIds(userIds: string[]) {
     );
     
     // Cache individual users and add to result
-    if (result) {
+    if (result && Array.isArray(result)) {
       for (const user of result) {
         usersCache.set(user.id, user, CACHE_TTL.MEDIUM);
         fetchedUsers[user.id] = user;
@@ -160,7 +160,7 @@ export async function fetchUsersByIds(userIds: string[]) {
  */
 export async function fetchSchoolsByIds(schoolIds: number[]) {
   // Deduplicate IDs
-  const uniqueIds = [...new Set(schoolIds)];
+  const uniqueIds = Array.from(new Set(schoolIds));
   
   // Check cache first
   const cachedSchools: Record<number, any> = {};
@@ -195,7 +195,7 @@ export async function fetchSchoolsByIds(schoolIds: number[]) {
     );
     
     // Cache individual schools and add to result
-    if (result) {
+    if (result && Array.isArray(result)) {
       for (const school of result) {
         schoolsCache.set(school.id.toString(), school, CACHE_TTL.LONG);
         fetchedSchools[school.id] = school;

@@ -73,4 +73,53 @@ export async function POST(request: NextRequest) {
       error: 'Failed to upload image' 
     }, { status: 500 });
   }
+}
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const imageUrl = searchParams.get('imageUrl');
+
+    if (!imageUrl) {
+      return NextResponse.json({ success: false, error: 'No image URL provided' }, { status: 400 });
+    }
+
+    // Extract filename from the URL
+    // URLs typically look like: https://[project-ref].supabase.co/storage/v1/object/public/course-images/course_1234567890.jpg
+    const urlParts = imageUrl.split('/');
+    const filename = urlParts[urlParts.length - 1];
+
+    if (!filename || !filename.startsWith('course_')) {
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Invalid image URL format' 
+      }, { status: 400 });
+    }
+
+    // Delete from Supabase Storage
+    const supabase = await createClient();
+    const { error } = await supabase.storage
+      .from('course-images')
+      .remove([filename]);
+
+    if (error) {
+      console.error('Supabase delete error:', error);
+      return NextResponse.json({ 
+        success: false, 
+        error: 'Failed to delete image from storage' 
+      }, { status: 500 });
+    }
+
+    return NextResponse.json({ 
+      success: true, 
+      message: 'Image deleted successfully'
+    });
+
+  } catch (error) {
+    console.error('Error deleting image:', error);
+    return NextResponse.json({ 
+      success: false, 
+      error: 'Failed to delete image' 
+    }, { status: 500 });
+  }
 } 

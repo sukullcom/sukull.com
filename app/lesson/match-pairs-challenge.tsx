@@ -12,6 +12,7 @@ type Props = {
   selectedOption?: number;
   disabled?: boolean;
   type: (typeof challenges.$inferSelect)["type"];
+  questionImageSrc?: string | null | undefined; // Add question image support
 };
 
 type PairCard = {
@@ -30,6 +31,7 @@ export const MatchPairsChallenge = ({
   status,
   selectedOption,
   disabled,
+  questionImageSrc, // Add questionImageSrc prop
 }: Props) => {
   const [cards, setCards] = useState<PairCard[]>([]);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
@@ -140,8 +142,28 @@ export const MatchPairsChallenge = ({
     return "grid-cols-4";
   };
 
+  // Function to render question image if it exists
+  const renderQuestionImage = () => {
+    if (!questionImageSrc) return null;
+    
+    return (
+      <div className="mb-4 flex justify-center">
+        <div className="relative max-w-sm w-full aspect-square">
+          <Image
+            src={questionImageSrc}
+            alt="Challenge question image"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-contain rounded-lg"
+          />
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="space-y-6">
+      {renderQuestionImage()}
       <div className="text-center">
         <h3 className="text-lg font-medium text-gray-700 mb-2">
           Find the matching pairs
@@ -173,17 +195,21 @@ export const MatchPairsChallenge = ({
               )}
             >
               {card.imageSrc && (
-                <Image 
-                  src={card.imageSrc} 
-                  alt={card.text}
-                  width={48}
-                  height={48}
-                  className="object-contain mb-1"
-                />
+                <div className="relative w-full h-24 mb-2">
+                  <Image 
+                    src={card.imageSrc} 
+                    alt={card.text || "Match pair item"}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-contain"
+                  />
+                </div>
               )}
-              <div className="text-xs text-center font-medium text-gray-800">
-                {card.text}
-              </div>
+              {card.text && (
+                <div className="text-xs text-center font-medium text-gray-800">
+                  {card.text}
+                </div>
+              )}
             </div>
           );
         })}

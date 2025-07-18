@@ -12,6 +12,7 @@ type Props = {
   selectedOption?: number;
   disabled?: boolean;
   type: (typeof challenges.$inferSelect)["type"];
+  questionImageSrc?: string | null | undefined; // Add question image support
 };
 
 type DragItem = {
@@ -35,6 +36,7 @@ export const DragDropChallenge = ({
   status,
   selectedOption,
   disabled,
+  questionImageSrc, // Add questionImageSrc prop
 }: Props) => {
   const [dragItems, setDragItems] = useState<DragItem[]>([]);
   const [dropZones, setDropZones] = useState<DropZone[]>([]);
@@ -173,8 +175,28 @@ export const DragDropChallenge = ({
     return dropZones.some(zone => zone.currentItemId === itemId);
   };
 
+  // Function to render question image if it exists
+  const renderQuestionImage = () => {
+    if (!questionImageSrc) return null;
+    
+    return (
+      <div className="mb-4 flex justify-center">
+        <div className="relative max-w-sm w-full aspect-square">
+          <Image
+            src={questionImageSrc}
+            alt="Challenge question image"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-contain rounded-lg"
+          />
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="space-y-6">
+      {renderQuestionImage()}
       {/* Drop Zones */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {dropZones.map((zone) => {
@@ -225,17 +247,21 @@ export const DragDropChallenge = ({
                   onDragStart={(e) => handleDragStart(e, placedItem.id)}
                 >
                   {placedItem.imageSrc && (
-                    <Image 
-                      src={placedItem.imageSrc} 
-                      alt={placedItem.text}
-                      width={64}
-                      height={64}
-                      className="object-contain mx-auto mb-2"
-                    />
+                    <div className="relative w-28 h-28 mx-auto mb-2">
+                      <Image 
+                        src={placedItem.imageSrc} 
+                        alt={placedItem.text || "Drag drop item"}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-contain"
+                      />
+                    </div>
                   )}
-                  <div className="text-center text-sm font-medium">
-                    {placedItem.text}
-                  </div>
+                  {placedItem.text && (
+                    <div className="text-center text-sm font-medium">
+                      {placedItem.text}
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="text-gray-400 text-sm text-center">
@@ -267,17 +293,21 @@ export const DragDropChallenge = ({
                 onDragStart={(e) => handleDragStart(e, item.id)}
               >
                 {item.imageSrc && (
-                  <Image 
-                    src={item.imageSrc} 
-                    alt={item.text}
-                    width={48}
-                    height={48}
-                    className="object-contain mx-auto mb-2"
-                  />
+                  <div className="relative w-20 h-20 mx-auto mb-2">
+                    <Image 
+                      src={item.imageSrc} 
+                      alt={item.text || "Drag drop item"}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-contain"
+                    />
+                  </div>
                 )}
-                <div className="text-center text-sm font-medium">
-                  {item.text}
-                </div>
+                {item.text && (
+                  <div className="text-center text-sm font-medium">
+                    {item.text}
+                  </div>
+                )}
               </div>
             ))}
         </div>

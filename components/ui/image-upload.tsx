@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { toast } from "sonner";
+import { deleteImageFromStorage } from "@/utils/image-cleanup";
 
 interface ImageUploadProps {
   value?: string;
@@ -30,6 +31,14 @@ export function ImageUpload({
     setIsUploading(true);
     
     try {
+      // If there's an existing image, delete it first
+      if (value) {
+        const deleteSuccess = await deleteImageFromStorage(value);
+        if (!deleteSuccess) {
+          console.warn('Failed to delete old image, continuing with upload');
+        }
+      }
+
       const formData = new FormData();
       formData.append('file', file);
 
@@ -52,7 +61,7 @@ export function ImageUpload({
     } finally {
       setIsUploading(false);
     }
-  }, [onChange]);
+  }, [onChange, value]);
 
   const handleFileSelect = useCallback((files: FileList | null) => {
     if (!files || files.length === 0) return;
@@ -87,9 +96,35 @@ export function ImageUpload({
     fileInputRef.current?.click();
   };
 
-  const handleRemove = (e: React.MouseEvent) => {
+  const handleRemove = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    onChange('');
+    
+    if (!value) {
+      onChange('');
+      return;
+    }
+
+    setIsUploading(true);
+    
+    try {
+      const deleteSuccess = await deleteImageFromStorage(value);
+      
+      if (deleteSuccess) {
+        onChange('');
+        toast.success('Resim başarıyla silindi');
+      } else {
+        // Still clear the URL from the form even if deletion failed
+        onChange('');
+        toast.warning('Resim formdan kaldırıldı, ancak depolamadan silinirken hata oluştu');
+      }
+    } catch (error) {
+      console.error('Delete request error:', error);
+      // Still clear the URL from the form even if deletion failed
+      onChange('');
+      toast.warning('Resim formdan kaldırıldı, ancak depolamadan silinirken hata oluştu');
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (

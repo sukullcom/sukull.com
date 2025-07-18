@@ -22,14 +22,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId }) => {
         style={{ position: "absolute", top: 0, left: 0 }}
         controls
         config={{
-          youtube: {
-            playerVars: {
-              origin: typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000',
-              enablejsapi: 1,
-              modestbranding: 1,
-              rel: 0,
-              showinfo: 0,
-            },
+          playerVars: {
+            origin: typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000',
+            enablejsapi: 1,
+            modestbranding: 1,
+            rel: 0,
+            showinfo: 0,
           },
         }}
         onError={(error) => {

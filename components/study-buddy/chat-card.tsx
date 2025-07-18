@@ -65,7 +65,7 @@ export function ChatCard({ chat, currentUser, onClick, isSelected }: ChatCardPro
       <CardContent className="p-4">
         <div className="flex items-center gap-3">
           <Image
-            src={normalizeAvatarUrl(otherParticipantData?.avatarUrl)}
+            src={normalizeAvatarUrl(typeof otherParticipantData === 'object' ? otherParticipantData?.avatarUrl : '')}
             width={40}
             height={40}
             alt="Avatar"
@@ -73,7 +73,7 @@ export function ChatCard({ chat, currentUser, onClick, isSelected }: ChatCardPro
           />
           <div className="flex-1 min-w-0">
             <h4 className="font-medium text-gray-900 truncate">
-              {otherParticipantData?.userName || "Kullanıcı"}
+              {typeof otherParticipantData === 'object' && otherParticipantData?.userName || "Kullanıcı"}
             </h4>
             {chat.last_message && (
               <p className="text-sm text-muted-foreground truncate">

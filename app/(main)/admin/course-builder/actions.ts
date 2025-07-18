@@ -177,6 +177,7 @@ export async function createChallenge(data: {
   order: number;
   timeLimit?: number;
   metadata?: string;
+  questionImageSrc?: string;
 }) {
   try {
     const [challenge] = await db
@@ -185,6 +186,7 @@ export async function createChallenge(data: {
         lessonId: data.lessonId,
         type: data.type as "SELECT" | "ASSIST" | "DRAG_DROP" | "FILL_BLANK" | "MATCH_PAIRS" | "SEQUENCE" | "TIMER_CHALLENGE",
         question: data.question,
+        questionImageSrc: data.questionImageSrc,
         order: data.order,
         timeLimit: data.timeLimit,
         metadata: data.metadata,
@@ -206,6 +208,7 @@ export async function updateChallenge(challengeId: number, data: {
   order: number;
   timeLimit?: number;
   metadata?: string;
+  questionImageSrc?: string;
 }) {
   try {
     const [challenge] = await db
@@ -213,6 +216,7 @@ export async function updateChallenge(challengeId: number, data: {
       .set({
         type: data.type as "SELECT" | "ASSIST" | "DRAG_DROP" | "FILL_BLANK" | "MATCH_PAIRS" | "SEQUENCE" | "TIMER_CHALLENGE",
         question: data.question,
+        questionImageSrc: data.questionImageSrc,
         order: data.order,
         timeLimit: data.timeLimit,
         metadata: data.metadata,
@@ -244,7 +248,7 @@ export async function deleteChallenge(challengeId: number) {
 export async function createChallengeOptions(
   challengeId: number,
   options: Array<{
-    text: string;
+    text?: string; // Make text optional
     correct: boolean;
     imageSrc?: string;
     audioSrc?: string;
@@ -278,7 +282,7 @@ export async function updateChallengeOptions(
   challengeId: number,
   options: Array<{
     id?: number;
-    text: string;
+    text?: string; // Make text optional
     correct: boolean;
     imageSrc?: string;
     audioSrc?: string;

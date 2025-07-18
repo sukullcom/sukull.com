@@ -22,6 +22,20 @@ export function CourseBuilder({ initialCourses }: CourseBuilderProps) {
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [activeTab, setActiveTab] = useState("courses");
 
+  // Function to handle course selection and remember the last tab
+  const handleCourseSelection = (course: Course) => {
+    setSelectedCourse(course);
+    // If this is a new course selection, start with units, otherwise keep current tab
+    if (!selectedCourse || selectedCourse.id !== course.id) {
+      setActiveTab("units");
+    }
+  };
+
+  // Function to ensure we stay on challenges tab after operations
+  const ensureChallengesTab = () => {
+    setActiveTab("challenges");
+  };
+
   return (
     <div className="space-y-6">
       {/* Course Selection */}
@@ -89,10 +103,7 @@ export function CourseBuilder({ initialCourses }: CourseBuilderProps) {
         <TabsContent value="courses" className="mt-6">
           <CourseManager
             courses={initialCourses}
-            onSelectCourse={(course) => {
-              setSelectedCourse(course);
-              setActiveTab("units");
-            }}
+            onSelectCourse={handleCourseSelection}
           />
         </TabsContent>
 
@@ -100,7 +111,6 @@ export function CourseBuilder({ initialCourses }: CourseBuilderProps) {
           {selectedCourse && (
             <UnitManager
               courseId={selectedCourse.id}
-              courseName={selectedCourse.title}
             />
           )}
         </TabsContent>
@@ -119,6 +129,7 @@ export function CourseBuilder({ initialCourses }: CourseBuilderProps) {
             <ChallengeManager
               courseId={selectedCourse.id}
               courseName={selectedCourse.title}
+              onChallengeCreated={ensureChallengesTab}
             />
           )}
         </TabsContent>

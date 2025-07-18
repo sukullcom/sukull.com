@@ -109,13 +109,13 @@ export default function SnippetsPage() {
   // Initial load and search changes
   useEffect(() => {
     loadSnippets(1, debouncedSearch, 
-      selectedLanguage, false);
+      selectedLanguage ?? undefined, false);
   }, [debouncedSearch, selectedLanguage, loadSnippets]);
 
   // Load more function
   const loadMore = () => {
     if (pagination.hasMore && !loadingMore) {
-      loadSnippets(pagination.page + 1, debouncedSearch, selectedLanguage, true);
+      loadSnippets(pagination.page + 1, debouncedSearch, selectedLanguage ?? undefined, true);
     }
   };
 
