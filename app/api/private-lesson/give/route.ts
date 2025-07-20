@@ -23,8 +23,7 @@ export async function POST(request: NextRequest) {
       teacherEmail,
       field,
       quizResult = 0,
-      passed = true,
-      priceRange = "0-100 TL"
+      passed = true
     } = body;
 
     // Validate required fields
