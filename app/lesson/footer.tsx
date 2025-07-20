@@ -8,6 +8,7 @@ type Props = {
   status: "correct" | "wrong" | "none" | "completed";
   disabled?: boolean;
   lessonId?: number;
+  explanation?: string | null; // Add explanation prop
 };
 
 // Safe alternative to useKey hook
@@ -24,7 +25,7 @@ const useKey = (key: string, callback: () => void) => {
   }, [key, callback]);
 };
 
-export const Footer = ({ onCheck, status, disabled, lessonId }: Props) => {
+export const Footer = ({ onCheck, status, disabled, lessonId, explanation }: Props) => {
   // Kaldırdık: useMedia("(max-width: 1024px)")
   // Çünkü SSR'da className mismatch yaratıyordu
   // OnEnter => onCheck
@@ -48,7 +49,14 @@ export const Footer = ({ onCheck, status, disabled, lessonId }: Props) => {
         {status === "wrong" && (
           <div className="text-rose-500 font-bold text-base lg:text-2xl flex items-center">
             <XCircle className="h-6 w-6 lg:h-10 lg:w-10 mr-4" />
-            Try again.
+            {explanation ? (
+              <div className="flex flex-col">
+                <span className="text-sm font-medium text-rose-600 mb-1">Açıklama:</span>
+                <span className="text-sm lg:text-base font-normal leading-relaxed">{explanation}</span>
+              </div>
+            ) : (
+              "Try again."
+            )}
           </div>
         )}
         {status === "completed" && (

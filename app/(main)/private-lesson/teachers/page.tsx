@@ -24,19 +24,19 @@ interface Teacher {
 }
 
 const FIELD_OPTIONS = [
-  { value: "all", label: "TÃ¼m Alanlar" },
+  { value: "all", label: "Bütün Alanlar" },
   { value: "Matematik", label: "Matematik" },
   { value: "Fizik", label: "Fizik" },
   { value: "Kimya", label: "Kimya" },
   { value: "Biyoloji", label: "Biyoloji" },
   { value: "Tarih", label: "Tarih" },
-  { value: "CoÄŸrafya", label: "CoÄŸrafya" },
+  { value: "Coğrafya", label: "Coğrafya" },
   { value: "Edebiyat", label: "Edebiyat" },
-  { value: "Ä°ngilizce", label: "Ä°ngilizce" },
+  { value: "İngilizce", label: "İngilizce" },
   { value: "Almanca", label: "Almanca" },
-  { value: "FransÄ±zca", label: "FransÄ±zca" },
+  { value: "Fransızca", label: "Fransızca" },
   { value: "Felsefe", label: "Felsefe" },
-  { value: "MÃ¼zik", label: "MÃ¼zik" },
+  { value: "Müzik", label: "Müzik" },
   { value: "Resim", label: "Resim" },
   { value: "Bilgisayar Bilimleri", label: "Bilgisayar Bilimleri" },
   { value: "Ekonomi", label: "Ekonomi" },
@@ -133,7 +133,7 @@ export default function TeachersPage() {
       <UserCreditsDisplay className="mb-6" />
       
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-        <h1 className="text-3xl font-bold">Ã–ÄŸretmenler</h1>
+        <h1 className="text-3xl font-bold">Öğretmenler</h1>
         
         {/* Field Filter */}
         <div className="flex items-center gap-4">
@@ -143,7 +143,7 @@ export default function TeachersPage() {
             onValueChange={handleFieldChange}
             className="w-[200px]"
           >
-            <SelectValue placeholder="Alan SeÃ§in" />
+            <SelectValue placeholder="Alan Seçin" />
             {FIELD_OPTIONS.map((option) => (
               <SelectItem key={option.value} value={option.value}>
                 {option.label}
@@ -157,8 +157,8 @@ export default function TeachersPage() {
         <div className="text-center py-12">
           <p className="text-xl text-gray-600">
             {selectedField === "all" 
-              ? "Åu anda mÃ¼sait Ã¶ÄŸretmen bulunmuyor." 
-              : "Bu alanda Ã¶ÄŸretmen bulunmuyor."}
+              ? "Şu anda müsait öğretmen bulunmuyor." 
+              : "Bu alanda öğretmen bulunmuyor."}
           </p>
         </div>
       ) : (

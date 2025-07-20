@@ -216,6 +216,7 @@ export const getLesson = cache(async (id?: number) => {
           lessonId: true,
           type: true,
           question: true,
+          explanation: true, // Include explanation field
           questionImageSrc: true, // Explicitly include questionImageSrc
           order: true,
           timeLimit: true,

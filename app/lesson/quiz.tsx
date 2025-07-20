@@ -346,6 +346,7 @@ export const Quiz = ({
         status={status}
         onCheck={onContinue}
         lessonId={lessonId}
+        explanation={challenge.explanation}
       />
     </>
   );

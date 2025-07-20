@@ -174,6 +174,7 @@ export async function createChallenge(data: {
   lessonId: number;
   type: string;
   question: string;
+  explanation?: string;
   order: number;
   timeLimit?: number;
   metadata?: string;
@@ -186,6 +187,7 @@ export async function createChallenge(data: {
         lessonId: data.lessonId,
         type: data.type as "SELECT" | "ASSIST" | "DRAG_DROP" | "FILL_BLANK" | "MATCH_PAIRS" | "SEQUENCE" | "TIMER_CHALLENGE",
         question: data.question,
+        explanation: data.explanation,
         questionImageSrc: data.questionImageSrc,
         order: data.order,
         timeLimit: data.timeLimit,
@@ -205,6 +207,7 @@ export async function createChallenge(data: {
 export async function updateChallenge(challengeId: number, data: {
   type: string;
   question: string;
+  explanation?: string;
   order: number;
   timeLimit?: number;
   metadata?: string;
@@ -216,6 +219,7 @@ export async function updateChallenge(challengeId: number, data: {
       .set({
         type: data.type as "SELECT" | "ASSIST" | "DRAG_DROP" | "FILL_BLANK" | "MATCH_PAIRS" | "SEQUENCE" | "TIMER_CHALLENGE",
         question: data.question,
+        explanation: data.explanation,
         questionImageSrc: data.questionImageSrc,
         order: data.order,
         timeLimit: data.timeLimit,

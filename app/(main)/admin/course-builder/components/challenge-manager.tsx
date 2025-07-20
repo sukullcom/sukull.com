@@ -78,6 +78,7 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
     lessonId: 0,
     type: "",
     question: "",
+    explanation: "", // Add explanation field
     order: 1,
     timeLimit: undefined as number | undefined,
     metadata: "",
@@ -86,6 +87,7 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
   const [editChallenge, setEditChallenge] = useState({
     type: "",
     question: "",
+    explanation: "", // Add explanation field
     order: 1,
     timeLimit: undefined as number | undefined,
     metadata: "",
@@ -167,6 +169,7 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
     setEditChallenge({
       type: challenge.type,
       question: challenge.question,
+      explanation: challenge.explanation || "", // Add explanation field
       order: challenge.order,
       timeLimit: challenge.timeLimit || undefined,
       metadata: challenge.metadata || "",
@@ -215,6 +218,7 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
       const challengeResult = await updateChallenge(editingChallenge.id, {
         type: editChallenge.type,
         question: editChallenge.question,
+        explanation: editChallenge.explanation,
         order: editChallenge.order,
         timeLimit: editChallenge.timeLimit,
         metadata: editChallenge.metadata,
@@ -287,6 +291,7 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
         lessonId: newChallenge.lessonId,
         type: newChallenge.type,
         question: newChallenge.question,
+        explanation: newChallenge.explanation,
         order: newChallenge.order,
         timeLimit: newChallenge.timeLimit,
         metadata: newChallenge.metadata,
@@ -317,6 +322,7 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
             lessonId: newChallenge.lessonId,
             type: "",
             question: "",
+            explanation: "",
             order: challenges.filter(c => c.lesson?.id === newChallenge.lessonId).length + 2,
             timeLimit: undefined,
             metadata: "",
@@ -677,6 +683,20 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                 </div>
                 
                 <div>
+                  <Label htmlFor="explanation">Açıklama (İsteğe Bağlı)</Label>
+                  <Textarea
+                    id="explanation"
+                    value={newChallenge.explanation}
+                    onChange={(e) => setNewChallenge({ ...newChallenge, explanation: e.target.value })}
+                    placeholder="Yanlış cevap verildiğinde gösterilecek açıklama..."
+                    rows={2}
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Bu açıklama, kullanıcı soruyu yanlış yanıtladığında gösterilecektir.
+                  </p>
+                </div>
+                
+                <div>
                   <Label htmlFor="questionImageSrc">Soru Resmi (İsteğe Bağlı)</Label>
                   <ImageUpload
                     value={newChallenge.questionImageSrc}
@@ -1013,6 +1033,20 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                       Boşlukları işaretlemek için &quot;{"{1}"}&quot;, &quot;{"{2}"}&quot;, vb. kullanın. Örnek: &quot;{"{1}"} verilerini {"{2}"} için kullanılır.&quot;
                     </p>
                   )}
+                </div>
+
+                <div>
+                  <Label htmlFor="explanation">Açıklama (İsteğe Bağlı)</Label>
+                  <Textarea
+                    id="explanation"
+                    value={editChallenge.explanation}
+                    onChange={(e) => setEditChallenge({ ...editChallenge, explanation: e.target.value })}
+                    placeholder="Yanlış cevap verildiğinde gösterilecek açıklama..."
+                    rows={2}
+                  />
+                  <p className="text-xs text-gray-500 mt-1">
+                    Bu açıklama, kullanıcı soruyu yanlış yanıtladığında gösterilecektir.
+                  </p>
                 </div>
 
                 <div>

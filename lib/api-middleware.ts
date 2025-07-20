@@ -123,11 +123,11 @@ export function withValidation<T>(
 
       return handler(request, data, user, params);
           } catch {
-        return NextResponse.json(
-          { error: "Invalid JSON in request body" }, 
-          { status: 400 }
-        );
-      }
+      return NextResponse.json(
+        { error: "Invalid JSON in request body" }, 
+        { status: 400 }
+      );
+    }
   };
 }
 
@@ -136,39 +136,39 @@ const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 
 function createRateLimitWrapper(maxRequests: number, windowMs: number) {
   return async (request: NextRequest) => {
-    const clientIP = request.headers.get('x-forwarded-for') || 
-                    request.headers.get('x-real-ip') || 
-                    'unknown';
-    
-    const now = Date.now();
-    const windowStart = now - windowMs;
-    
-    // Clean old entries
-    const entries = Array.from(rateLimitMap.entries());
-    for (const [key, data] of entries) {
-      if (data.resetTime < windowStart) {
-        rateLimitMap.delete(key);
+      const clientIP = request.headers.get('x-forwarded-for') || 
+                      request.headers.get('x-real-ip') || 
+                      'unknown';
+      
+      const now = Date.now();
+      const windowStart = now - windowMs;
+      
+      // Clean old entries
+      const entries = Array.from(rateLimitMap.entries());
+      for (const [key, data] of entries) {
+        if (data.resetTime < windowStart) {
+          rateLimitMap.delete(key);
+        }
       }
-    }
-    
-    // Check current rate limit
-    const current = rateLimitMap.get(clientIP) || { count: 0, resetTime: now + windowMs };
-    
-    if (current.count >= maxRequests && current.resetTime > now) {
-      return NextResponse.json(
-        { error: "Rate limit exceeded" }, 
-        { status: 429 }
-      );
-    }
-    
-    // Update rate limit
-    current.count++;
-    if (current.resetTime <= now) {
-      current.resetTime = now + windowMs;
-      current.count = 1;
-    }
-    rateLimitMap.set(clientIP, current);
-    
+      
+      // Check current rate limit
+      const current = rateLimitMap.get(clientIP) || { count: 0, resetTime: now + windowMs };
+      
+      if (current.count >= maxRequests && current.resetTime > now) {
+        return NextResponse.json(
+          { error: "Rate limit exceeded" }, 
+          { status: 429 }
+        );
+      }
+      
+      // Update rate limit
+      current.count++;
+      if (current.resetTime <= now) {
+        current.resetTime = now + windowMs;
+        current.count = 1;
+      }
+      rateLimitMap.set(clientIP, current);
+      
     return null; // Continue processing
   };
 }
@@ -187,7 +187,7 @@ export function withRateLimit(maxRequests: number = 100, windowMs: number = 60 *
         const rateLimitResult = await createRateLimitWrapper(maxRequests, windowMs)(request);
         if (rateLimitResult) return rateLimitResult;
         return handler(request, params);
-      };
+    };
     }
   };
 }
