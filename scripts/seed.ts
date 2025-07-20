@@ -770,7 +770,6 @@ const main = async () => {
                 teacherSurname: "Yılmaz",
                 teacherPhoneNumber: "+905551234567",
                 teacherEmail: "ahmet.yilmaz@example.com",
-                priceRange: "200-300 TL/saat",
                 classification: "Ortaokul Matematik",
                 status: "pending",
                 createdAt: new Date(),
@@ -786,7 +785,6 @@ const main = async () => {
                 studentPhoneNumber: "+905559876543",
                 studentEmail: "ayse.ozturk@example.com",
                 field: "fizik",
-                priceRange: "150-250 TL/saat",
                 studentNeeds: "Lise fizik derslerinde zorlanıyorum, özellikle mekanik konularında yardıma ihtiyacım var.",
             },
         ])

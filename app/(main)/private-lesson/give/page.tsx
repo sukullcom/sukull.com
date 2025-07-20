@@ -55,7 +55,6 @@ export default function GiveLessonPage() {
       // Setting these values as not needed but maintaining DB compatibility
       quizResult: 0,
       passed: true,
-      priceRange: "0-100 TL", // Default value for DB compatibility
     };
 
     try {
