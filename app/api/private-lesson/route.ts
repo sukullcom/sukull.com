@@ -178,11 +178,11 @@ export const POST = secureApi.auth(async (request, user) => {
         
         // Validate input
         if (!bookingId || !teacherId || !rating) {
-          return ApiResponses.badRequest("Missing required fields");
+          return ApiResponses.badRequest("Gerekli alanlar eksik");
         }
         
         if (rating < 1 || rating > 5) {
-          return ApiResponses.badRequest("Rating must be between 1 and 5");
+          return ApiResponses.badRequest("Değerlendirme 1 ile 5 arasında olmalıdır");
         }
         
         // Submit the review
@@ -233,7 +233,7 @@ export const POST = secureApi.auth(async (request, user) => {
         const hoursDiff = timeDiff / (1000 * 60 * 60);
         
         if (hoursDiff < 24) {
-          return ApiResponses.badRequest("Lessons can only be cancelled at least 24 hours before the start time");
+          return ApiResponses.badRequest("Dersler en az 24 saat önce iptal edilebilir");
         }
         
         // Update the booking status to cancelled
@@ -244,14 +244,14 @@ export const POST = secureApi.auth(async (request, user) => {
         // Refund the credit to the student
         await refundCredit(user.id);
         
-        return ApiResponses.success({ message: "Lesson cancelled successfully and credit refunded" });
+        return ApiResponses.success({ message: "Ders iptal edildi ve kredi iade edildi" });
       }
 
       case 'book-lesson': {
         // Check if user is an approved student
         const isStudent = await isApprovedStudent(user.id);
         if (!isStudent) {
-          return ApiResponses.forbidden("Only approved students can book lessons");
+          return ApiResponses.forbidden("Sadece onaylanmış öğrenciler ders rezervasyonu yapabilir");
         }
         
         const { teacherId, startTime, endTime } = await request.json();
@@ -280,7 +280,7 @@ export const POST = secureApi.auth(async (request, user) => {
         // Check if user has sufficient credits
         const hasCredits = await hasAvailableCredits(user.id, 1);
         if (!hasCredits) {
-          return ApiResponses.badRequest("Insufficient credits. Please purchase credits to book a lesson.");
+          return ApiResponses.badRequest("Krediniz yetersiz. Lütfen ders rezervasyonu yapmak için kredi satın alın.");
         }
         
         try {
@@ -288,15 +288,15 @@ export const POST = secureApi.auth(async (request, user) => {
           const booking = await bookLesson(user.id, teacherId, startDate, endDate);
           
           return ApiResponses.created({ 
-            message: "Lesson booked successfully",
+            message: "Ders rezervasyonu başarıyla tamamlandı",
             booking: booking[0]
           });
         } catch (error) {
           if (error instanceof Error) {
-            if (error.message.includes("Insufficient credits")) {
+            if (error.message.includes("Yetersiz kredi")) {
               return ApiResponses.badRequest(error.message);
             }
-            if (error.message.includes("already booked") || error.message.includes("not available")) {
+            if (error.message.includes("rezerve edilmiş") || error.message.includes("müsait değil")) {
               return NextResponse.json({ error: error.message }, { status: 409 });
             }
           }

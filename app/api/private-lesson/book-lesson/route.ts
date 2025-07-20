@@ -26,17 +26,17 @@ export const POST = secureApi.auth(async (request: NextRequest, user) => {
     }
     
     if (startDate >= endDate) {
-      return ApiResponses.badRequest("Start time must be before end time");
+      return ApiResponses.badRequest("Başlangıç zamanı bitiş zamanından önce olmalıdır");
     }
     
     if (startDate <= new Date()) {
-      return ApiResponses.badRequest("Cannot book lessons in the past");
+      return ApiResponses.badRequest("Geçmişte ders rezervasyonu yapamazsınız");
     }
     
     // Check if user has sufficient credits
     const hasCredits = await hasAvailableCredits(user.id, 1);
     if (!hasCredits) {
-      return ApiResponses.badRequest("Insufficient credits. Please purchase credits to book a lesson.");
+      return ApiResponses.badRequest("Krediniz yetersiz. Lütfen ders rezervasyonu yapmak için kredi satın alın.");
     }
     
     // Book the lesson (this function handles credit deduction and validation)

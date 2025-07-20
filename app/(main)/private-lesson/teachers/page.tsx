@@ -205,20 +205,15 @@ export default function TeachersPage() {
                       {renderStars(Math.round(teacher.averageRating))}
                     </div>
                     <span className="text-sm text-gray-600">
-                      {teacher.averageRating.toFixed(1)} ({teacher.totalReviews} deÄŸerlendirme)
+                      {teacher.averageRating.toFixed(1)} ({teacher.totalReviews} değerlendirme)
                     </span>
                   </div>
                 ) : (
                   <div className="text-center mt-2">
-                    <span className="text-sm text-gray-500">HenÃ¼z DeÄŸerlendirme Yok</span>
+                    <span className="text-sm text-gray-500">Henüz Değerlendirme Yok</span>
                   </div>
                 )}
               </CardHeader>
-              <CardContent className="flex-grow">
-                <p className="text-gray-700 line-clamp-3 text-center">
-                  {teacher.bio || "No bio available"}
-                </p>
-              </CardContent>
               <CardFooter className="mt-auto">
                 <Button 
                   variant="primary"

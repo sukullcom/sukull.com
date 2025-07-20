@@ -1000,7 +1000,7 @@ export async function bookLesson(
   // Check if student has available credits
   const hasCredits = await hasAvailableCredits(studentId, 1);
   if (!hasCredits) {
-    throw new Error("Insufficient credits. Please purchase credits to book a lesson.");
+    throw new Error("Krediniz yetersiz. Lütfen ders rezervasyonu yapmak için kredi satın alın.");
   }
 
   // Check if the time slot is available
@@ -1014,7 +1014,7 @@ export async function bookLesson(
   });
   
   if (existingBooking) {
-    throw new Error("This time slot is already booked");
+    throw new Error("Bu zaman dilimi rezerve edilmiş.");
   }
   
   // Check if the slot is in the teacher's availability

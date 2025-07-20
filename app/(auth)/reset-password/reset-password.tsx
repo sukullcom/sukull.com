@@ -25,7 +25,7 @@ export function ResetPasswordForm() {
       const { data: { session } } = await supabase.auth.getSession();
       
       if (!session) {
-        toast.error("Invalid or expired reset link. Please request a new password reset.");
+        toast.error("Geçersiz veya süresi dolmuş sıfırlama bağlantısı. Lütfen yeni bir şifre sıfırlama talebinde bulunun.");
         router.push("/forgot-password");
         return;
       }
@@ -40,28 +40,28 @@ export function ResetPasswordForm() {
     e.preventDefault();
     
     if (!isValidSession) {
-      toast.error("Invalid session. Please request a new password reset.");
+      toast.error("Geçersiz oturum. Lütfen yeni bir şifre sıfırlama talebinde bulunun.");
       return;
     }
     
     if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
+      toast.error("Şifreler eşleşmiyor");
       return;
     }
 
-    if (password.length < 6) {
-      toast.error("Password must be at least 6 characters long");
+    if (password.length < 8) {
+      toast.error("Şifre en az 8 karakter olmalıdır");
       return;
     }
 
     try {
       setIsLoading(true);
       await auth.resetPassword(password);
-      toast.success("Your password has been reset successfully.");
+      toast.success("Şifreniz başarıyla sıfırlandı.");
       router.push("/login");
     } catch (error) {
       const authError = error as AuthError;
-      toast.error(authError.message || "Failed to reset password. Please try again.");
+      toast.error(authError.message || "Şifre sıfırlama hatası. Lütfen tekrar deneyiniz.");
     } finally {
       setIsLoading(false);
     }
@@ -71,7 +71,7 @@ export function ResetPasswordForm() {
     return (
       <div className="flex items-center justify-center">
         <Icons.spinner className="h-6 w-6 animate-spin" />
-        <span className="ml-2">Validating reset link...</span>
+        <span className="ml-2">Sıfırlama bağlantısı doğrulanıyor...</span>
       </div>
     );
   }

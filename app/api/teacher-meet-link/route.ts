@@ -41,7 +41,7 @@ export const POST = secureApi.auth(async (request, user) => {
 
     // Validate meet link format (basic validation)
     if (meetLink && !meetLink.includes('meet.google.com')) {
-      return ApiResponses.badRequest("Please provide a valid Google Meet link");
+      return ApiResponses.badRequest("Lütfen geçerli bir Google Meet bağlantısı giriniz");
     }
 
     // Update the meet link
@@ -53,11 +53,11 @@ export const POST = secureApi.auth(async (request, user) => {
       .where(eq(users.id, user.id));
 
     return ApiResponses.success({
-      message: "Meet link updated successfully",
+      message: "Google Meet bağlantısı başarıyla güncellendi",
       meetLink: meetLink || ""
     });
   } catch (error) {
-    console.error("Error updating meet link:", error);
-    return ApiResponses.serverError("An error occurred while updating meet link");
+    console.error("Google Meet bağlantısı güncellenirken bir hata oluştu:", error);
+    return ApiResponses.serverError("Google Meet bağlantısı güncellenirken bir hata oluştu");
   }
 }); 

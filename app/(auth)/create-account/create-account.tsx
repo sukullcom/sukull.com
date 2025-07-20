@@ -24,11 +24,11 @@ export function CreateAccountForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      toast.error("Passwords do not match");
+      toast.error("Şifreler eşleşmiyor");
       return;
     }
     if (!username.trim()) {
-      toast.error("Please enter a username");
+      toast.error("Lütfen bir kullanıcı adı giriniz");
       return;
     }
 

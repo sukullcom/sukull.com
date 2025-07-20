@@ -235,20 +235,20 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
           
           // Handle different error status codes
           if (response.status === 401) {
-            toast.error("Please log in to view teacher details");
+            toast.error("Öğretmen detaylarını görüntülemek için lütfen giriş yapınız");
             router.push("/login");
             return;
           } else if (response.status === 403) {
-            toast.error("Only approved students can view teacher details");
+            toast.error("Sadece onaylanmış öğrenciler öğretmen detaylarını görüntüleyebilir");
             router.push("/private-lesson");
             return;
           } else if (response.status === 404) {
-            setError("Teacher not found");
+            setError("Öğretmen bulunamadı");
           } else {
             const errorMessage = errorData.error || errorData.message || response.statusText;
-            setError(`Failed to fetch teacher details: ${errorMessage}`);
+            setError(`Öğretmen detayları alınamadı: ${errorMessage}`);
           }
-          throw new Error(`Failed to fetch teacher details: ${response.statusText}`);
+          throw new Error(`Öğretmen detayları alınamadı: ${response.statusText}`);
         }
         
         const data = await response.json();

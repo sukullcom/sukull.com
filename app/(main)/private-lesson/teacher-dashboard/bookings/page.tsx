@@ -22,6 +22,28 @@ interface Booking {
   studentUsername: string;
 }
 
+// Helper function to extract simplified field names
+const getSimplifiedField = (fields?: string[], fallbackField?: string): string => {
+  if (fields && fields.length > 0) {
+    // Extract unique subject names from fields array
+    const subjects = fields.map(field => {
+      // Remove grade information (like "5.sınıf", "6.sınıf", etc.)
+      return field.replace(/\s*\d+\.?\s*(sınıf|Sınıf)/g, '').trim();
+    });
+    
+    // Get unique subjects
+    const uniqueSubjects = Array.from(new Set(subjects));
+    return uniqueSubjects.join(', ');
+  }
+  
+  // Fallback to single field, also cleaned
+  if (fallbackField) {
+    return fallbackField.replace(/\s*\d+\.?\s*(sınıf|Sınıf)/g, '').trim();
+  }
+  
+  return "Belirtilmemiş";
+};
+
 export default function TeacherBookingsPage() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
@@ -243,7 +265,7 @@ export default function TeacherBookingsPage() {
                           {booking.studentName || "Öğrenci"}
                         </CardTitle>
                         <div className="mt-1 text-sm font-medium text-primary">
-                          {booking.fields?.join(', ') || booking.field}
+                          {getSimplifiedField(booking.fields, booking.field)}
                         </div>
                       </div>
                       <div className="text-sm font-medium px-3 py-1 rounded-full bg-primary/10 text-primary">

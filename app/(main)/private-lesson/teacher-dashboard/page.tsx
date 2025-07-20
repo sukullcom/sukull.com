@@ -18,6 +18,28 @@ type TeacherProfile = {
   fields?: string[];
 };
 
+// Helper function to extract simplified field names
+const getSimplifiedField = (fields?: string[], fallbackField?: string): string => {
+  if (fields && fields.length > 0) {
+    // Extract unique subject names from fields array
+    const subjects = fields.map(field => {
+      // Remove grade information (like "5.sınıf", "6.sınıf", etc.)
+      return field.replace(/\s*\d+\.?\s*(sınıf|Sınıf)/g, '').trim();
+    });
+    
+    // Get unique subjects
+    const uniqueSubjects = Array.from(new Set(subjects));
+    return uniqueSubjects.join(', ');
+  }
+  
+  // Fallback to single field, also cleaned
+  if (fallbackField) {
+    return fallbackField.replace(/\s*\d+\.?\s*(sınıf|Sınıf)/g, '').trim();
+  }
+  
+  return "Belirtilmemiş";
+};
+
 export default function TeacherDashboardPage() {
   const router = useRouter();
   const [profile, setProfile] = useState<TeacherProfile | null>(null);
@@ -127,20 +149,9 @@ export default function TeacherDashboardPage() {
             {/* Display admin-assigned fields */}
             <div className="mt-3">
               <label className="block text-sm font-medium text-gray-700 mb-2">Uzmanlık Alanları (Admin Tarafından Atandı)</label>
-              {(profile?.fields && profile.fields.length > 0) ? (
-                <div className="flex flex-wrap gap-2">
-                  {profile.fields.map((field, index) => (
-                    <span
-                      key={index}
-                      className="inline-block px-3 py-1 text-sm bg-primary/10 text-primary rounded-full font-medium"
-                    >
-                      {field}
-                    </span>
-                  ))}
-                </div>
-              ) : profile?.field ? (
+              {(profile?.fields && profile.fields.length > 0) || profile?.field ? (
                 <span className="inline-block px-3 py-1 text-sm bg-primary/10 text-primary rounded-full font-medium">
-                  {profile.field}
+                  {getSimplifiedField(profile?.fields, profile?.field)}
                 </span>
               ) : (
                 <p className="text-gray-500 text-sm italic">Henüz uzmanlık alanı atanmamış. Lütfen admin ile iletişime geçin.</p>
