@@ -64,7 +64,7 @@ export default function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
             <br />
             {error_code && <span>Hata Kodu: {error_code}<br /></span>}
             {errorMessage && <span>Mesaj: {errorMessage}<br /></span>}
-            {error_description && <span>Açıklama: {decodeURIComponent(error_description)}</span>}
+            {error_description && <span>İpucu: {decodeURIComponent(error_description)}</span>}
           </div>
         )}
       </div>

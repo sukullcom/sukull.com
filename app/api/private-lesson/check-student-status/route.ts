@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
+import { isApprovedStudent } from "@/db/queries";
 
 export async function GET() {
   try {
@@ -9,11 +10,12 @@ export async function GET() {
       return NextResponse.json({ student: false, error: "Authentication required" }, { status: 401 });
     }
 
-    // For now, all authenticated users can be students
-    // You can add more complex logic here if needed (e.g., check for student role)
+    // Check if user is an approved student
+    const isStudent = await isApprovedStudent(user.id);
+    
     return NextResponse.json({ 
-      student: true,
-      studentId: user.id 
+      student: isStudent,
+      studentId: isStudent ? user.id : null 
     });
   } catch (error) {
     console.error("Error checking student status:", error);

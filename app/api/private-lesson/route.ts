@@ -35,10 +35,11 @@ export const GET = secureApi.auth(async (request, user) => {
       }
 
       case 'check-student-status': {
-        // All authenticated users can be students
+        // Check if user is an approved student
+        const isStudent = await isApprovedStudent(user.id);
         return ApiResponses.success({ 
-          student: true,
-          studentId: user.id 
+          student: isStudent,
+          studentId: isStudent ? user.id : null 
         });
       }
 

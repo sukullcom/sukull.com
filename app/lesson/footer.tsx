@@ -43,7 +43,7 @@ export const Footer = ({ onCheck, status, disabled, lessonId, explanation }: Pro
         {status === "correct" && (
           <div className="text-green-500 font-bold text-base lg:text-2xl flex items-center">
             <CheckCircle className="h-6 w-6 lg:h-10 lg:w-10 mr-4" />
-            Nicely done!
+            Doğru cevap!
           </div>
         )}
         {status === "wrong" && (
@@ -51,11 +51,11 @@ export const Footer = ({ onCheck, status, disabled, lessonId, explanation }: Pro
             <XCircle className="h-6 w-6 lg:h-10 lg:w-10 mr-4" />
             {explanation ? (
               <div className="flex flex-col">
-                <span className="text-sm font-medium text-rose-600 mb-1">Açıklama:</span>
+                <span className="text-sm font-medium text-rose-600 mb-1">İpucu:</span>
                 <span className="text-sm lg:text-base font-normal leading-relaxed">{explanation}</span>
               </div>
             ) : (
-              "Try again."
+              "Yeniden dene."
             )}
           </div>
         )}
