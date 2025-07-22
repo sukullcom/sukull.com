@@ -249,18 +249,18 @@ export const DragDropChallenge = ({
                   {placedItem.imageSrc && (
                     <div className="relative w-36 h-36 mx-auto mb-3">
                       <Image 
-                        src={placedItem.imageSrc} 
+                      src={placedItem.imageSrc} 
                         alt={placedItem.text || "Drag drop item"}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-contain"
-                      />
+                    />
                     </div>
                   )}
                   {placedItem.text && (
                     <div className="text-center text-base font-medium">
-                      {placedItem.text}
-                    </div>
+                    {placedItem.text}
+                  </div>
                   )}
                 </div>
               ) : (
@@ -295,18 +295,18 @@ export const DragDropChallenge = ({
                 {item.imageSrc && (
                   <div className="relative w-28 h-28 mx-auto mb-3">
                     <Image 
-                      src={item.imageSrc} 
+                    src={item.imageSrc} 
                       alt={item.text || "Drag drop item"}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="object-contain"
-                    />
+                  />
                   </div>
                 )}
                 {item.text && (
                   <div className="text-center text-base font-medium">
-                    {item.text}
-                  </div>
+                  {item.text}
+                </div>
                 )}
               </div>
             ))}

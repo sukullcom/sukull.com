@@ -1,7 +1,7 @@
 "use client";
 
 import { challengeOptions, challenges } from "@/db/schema";
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition, useMemo } from "react";
 import { Header } from "./header";
 import { QuestionBubble } from "./question-bubble";
 import { Challenge } from "./challenge";
@@ -38,9 +38,9 @@ const useAudio = (config: { src: string; autoPlay: boolean }) => {
     audioRef.current.autoplay = config.autoPlay;
   }, [config.src, config.autoPlay]);
   
-  const controls = {
+  const controls = useMemo(() => ({
     play: () => audioRef.current?.play().catch(console.error)
-  };
+  }), []);
   
   return [null, null, controls] as const;
 };
@@ -64,7 +64,7 @@ const useWindowSize = () => {
 const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
-  }, [callback]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 };
 
 export const Quiz = ({

@@ -137,8 +137,8 @@ export const TimerChallenge = ({
               <span className="text-sm font-medium">Süre doldu!</span>
             </div>
           )}
-        </div>
-        
+      </div>
+
         {/* Timer Progress Bar */}
         <div className="w-full bg-gray-200 rounded-full h-3 mb-4">
           <div 
@@ -155,10 +155,10 @@ export const TimerChallenge = ({
         {hasExpired && (
           <div className="text-center text-gray-600 text-sm mb-4">
             Süre sona erdi. Cevabını gözden geçir ve devam et.
-          </div>
-        )}
-      </div>
-      
+        </div>
+      )}
+        </div>
+
       {/* Challenge Content */}
       <div className={cn(
         "transition-opacity duration-300",
