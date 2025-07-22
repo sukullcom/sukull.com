@@ -203,9 +203,9 @@ export const FillBlankChallenge = ({
 
       {/* Instructions */}
       <div className="text-sm text-gray-600 text-center space-y-2">
-        <p>Fill in the blanks with the correct words or values</p>
+        <p>Boşlukları doğru kelimeler veya değerlerle doldur</p>
         <p className="text-xs text-gray-500">
-          Type your answers in order: {blankItems.filter(item => item.isBlank).map(item => `{${item.placeholderNumber}}`).join(', ')}
+          Cevaplarını sırayla yaz: {blankItems.filter(item => item.isBlank).map(item => `{${item.placeholderNumber}}`).join(', ')}
         </p>
       </div>
 

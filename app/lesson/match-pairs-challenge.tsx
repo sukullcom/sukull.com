@@ -166,14 +166,14 @@ export const MatchPairsChallenge = ({
       {renderQuestionImage()}
       <div className="text-center">
         <h3 className="text-lg font-medium text-gray-700 mb-2">
-          Find the matching pairs
+          Eşleşen çiftleri bul
         </h3>
         <p className="text-sm text-gray-600">
-          Click on two cards to match them. Wrong matches will cost hearts!
+          Eşleştirmek için iki karta tıkla. Yanlış eşleştirmeler kalp kaybettirir!
         </p>
       </div>
 
-      <div className={cn("grid gap-3 max-w-2xl mx-auto", getGridCols())}>
+      <div className={cn("grid gap-4 max-w-4xl mx-auto", getGridCols())}>
         {cards.map((card) => {
           const isSelected = selectedCards.includes(card.id);
           const isMatched = card.isMatched;
@@ -184,7 +184,7 @@ export const MatchPairsChallenge = ({
               onClick={() => handleCardClick(card.id)}
               className={cn(
                 "aspect-square cursor-pointer transition-all duration-300",
-                "rounded-lg border-2 p-2",
+                "rounded-lg border-2 p-4",
                 "flex flex-col items-center justify-center",
                 "bg-white shadow-md hover:shadow-lg",
                 !disabled && !isMatched && "hover:scale-105",
@@ -195,7 +195,7 @@ export const MatchPairsChallenge = ({
               )}
             >
               {card.imageSrc && (
-                <div className="relative w-full h-24 mb-2">
+                <div className="relative w-full h-32 mb-3">
                   <Image 
                     src={card.imageSrc} 
                     alt={card.text || "Match pair item"}
@@ -206,7 +206,7 @@ export const MatchPairsChallenge = ({
                 </div>
               )}
               {card.text && (
-                <div className="text-xs text-center font-medium text-gray-800">
+                <div className="text-sm text-center font-medium text-gray-800">
                   {card.text}
                 </div>
               )}
@@ -218,7 +218,7 @@ export const MatchPairsChallenge = ({
       {/* Progress indicator */}
       <div className="text-center">
         <div className="text-sm text-gray-600">
-          Matched: {matchedPairs.length} / {new Set(cards.map(c => c.pairId)).size} pairs
+          Eşleşen: {matchedPairs.length} / {new Set(cards.map(c => c.pairId)).size} çift
         </div>
       </div>
     </div>

@@ -198,7 +198,7 @@ export const DragDropChallenge = ({
     <div className="space-y-6">
       {renderQuestionImage()}
       {/* Drop Zones */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {dropZones.map((zone) => {
           const placedItem = getItemInZone(zone.id);
           
@@ -221,7 +221,7 @@ export const DragDropChallenge = ({
             <div
               key={zone.id}
               className={cn(
-                "min-h-[120px] border-2 border-dashed rounded-xl p-4 transition-all",
+                "min-h-[180px] border-2 border-dashed rounded-xl p-6 transition-all",
                 "flex flex-col items-center justify-center",
                 draggedItem && "border-blue-300 bg-blue-50",
                 isCorrect && "border-green-300 bg-green-100",
@@ -231,14 +231,14 @@ export const DragDropChallenge = ({
               onDragOver={handleDragOver}
               onDrop={(e) => handleDrop(e, zone.id)}
             >
-              <div className="text-sm font-medium text-gray-600 mb-2">
+              <div className="text-base font-medium text-gray-600 mb-3">
                 {zone.label}
               </div>
               
               {placedItem ? (
                 <div
                   className={cn(
-                    "p-3 rounded-lg border-2 cursor-move",
+                    "p-4 rounded-lg border-2 cursor-move",
                     isCorrect && "border-green-300 bg-green-50",
                     isWrong && "border-rose-300 bg-rose-50",
                     status === "none" && "border-blue-300 bg-blue-50"
@@ -247,7 +247,7 @@ export const DragDropChallenge = ({
                   onDragStart={(e) => handleDragStart(e, placedItem.id)}
                 >
                   {placedItem.imageSrc && (
-                    <div className="relative w-28 h-28 mx-auto mb-2">
+                    <div className="relative w-36 h-36 mx-auto mb-3">
                       <Image 
                         src={placedItem.imageSrc} 
                         alt={placedItem.text || "Drag drop item"}
@@ -258,14 +258,14 @@ export const DragDropChallenge = ({
                     </div>
                   )}
                   {placedItem.text && (
-                    <div className="text-center text-sm font-medium">
+                    <div className="text-center text-base font-medium">
                       {placedItem.text}
                     </div>
                   )}
                 </div>
               ) : (
-                <div className="text-gray-400 text-sm text-center">
-                  Drop item here
+                <div className="text-gray-400 text-base text-center">
+                  Öğeyi buraya bırak
                 </div>
               )}
             </div>
@@ -274,16 +274,16 @@ export const DragDropChallenge = ({
       </div>
 
       {/* Draggable Items */}
-      <div className="space-y-2">
-        <h3 className="text-sm font-medium text-gray-700">Drag items to correct positions:</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div className="space-y-3">
+        <h3 className="text-base font-medium text-gray-700">Öğeleri doğru konumlara sürükle:</h3>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {dragItems
             .filter(item => !isItemPlaced(item.id))
             .map((item) => (
               <div
                 key={item.id}
                 className={cn(
-                  "p-3 rounded-lg border-2 cursor-move transition-all",
+                  "p-4 rounded-lg border-2 cursor-move transition-all",
                   "hover:shadow-md active:scale-95",
                   "border-gray-300 bg-white",
                   draggedItem === item.id && "opacity-50",
@@ -293,7 +293,7 @@ export const DragDropChallenge = ({
                 onDragStart={(e) => handleDragStart(e, item.id)}
               >
                 {item.imageSrc && (
-                  <div className="relative w-20 h-20 mx-auto mb-2">
+                  <div className="relative w-28 h-28 mx-auto mb-3">
                     <Image 
                       src={item.imageSrc} 
                       alt={item.text || "Drag drop item"}
@@ -304,7 +304,7 @@ export const DragDropChallenge = ({
                   </div>
                 )}
                 {item.text && (
-                  <div className="text-center text-sm font-medium">
+                  <div className="text-center text-base font-medium">
                     {item.text}
                   </div>
                 )}

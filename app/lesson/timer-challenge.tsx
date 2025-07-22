@@ -134,7 +134,7 @@ export const TimerChallenge = ({
           {hasExpired && (
             <div className="flex items-center space-x-1 text-red-500">
               <AlertCircle className="w-4 h-4" />
-              <span className="text-sm font-medium">Time&apos;s up!</span>
+              <span className="text-sm font-medium">Süre doldu!</span>
             </div>
           )}
         </div>
@@ -154,7 +154,7 @@ export const TimerChallenge = ({
         
         {hasExpired && (
           <div className="text-center text-gray-600 text-sm mb-4">
-            The timer has expired. Review your answer and continue.
+            Süre sona erdi. Cevabını gözden geçir ve devam et.
           </div>
         )}
       </div>

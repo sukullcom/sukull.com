@@ -189,10 +189,10 @@ export const SequenceChallenge = ({
         {renderQuestionImage()}
         <div className="text-center">
           <h3 className="text-lg font-medium text-gray-700 mb-2">
-            Put the items in the correct order
+            Öğeleri doğru sıraya koy
           </h3>
           <p className="text-sm text-gray-600">
-            Drag and drop or use buttons to reorder the items
+            Sıraya koymak için sürükle-bırak veya butonları kullan
           </p>
         </div>
 
@@ -201,7 +201,7 @@ export const SequenceChallenge = ({
             <div
               {...provided.droppableProps}
               ref={provided.innerRef}
-              className="space-y-3"
+              className="space-y-4"
             >
               {orderedItems.map((item, index) => {
                 const itemStatus = getItemStatus(item, index);
@@ -218,7 +218,7 @@ export const SequenceChallenge = ({
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         className={cn(
-                          "flex items-center p-4 rounded-lg border-2 transition-all",
+                          "flex items-center p-6 rounded-lg border-2 transition-all",
                           "bg-white shadow-sm",
                           snapshot.isDragging && "shadow-lg rotate-1",
                           itemStatus === "correct" && "border-green-300 bg-green-50",
@@ -231,7 +231,7 @@ export const SequenceChallenge = ({
                         <div
                           {...provided.dragHandleProps}
                           className={cn(
-                            "mr-3 cursor-grab active:cursor-grabbing",
+                            "mr-4 cursor-grab active:cursor-grabbing",
                             "flex flex-col space-y-1",
                             disabled && "cursor-not-allowed"
                           )}
@@ -242,10 +242,10 @@ export const SequenceChallenge = ({
                         </div>
 
                         {/* Position indicator */}
-                        <div className="mr-3 flex-shrink-0">
+                        <div className="mr-4 flex-shrink-0">
                           <div className={cn(
-                            "w-8 h-8 rounded-full flex items-center justify-center",
-                            "text-sm font-bold",
+                            "w-10 h-10 rounded-full flex items-center justify-center",
+                            "text-base font-bold",
                             itemStatus === "correct" && "bg-green-100 text-green-700",
                             itemStatus === "wrong" && "bg-rose-100 text-rose-700",
                             itemStatus === "none" && "bg-gray-100 text-gray-700"
@@ -257,7 +257,7 @@ export const SequenceChallenge = ({
                         {/* Item content */}
                         <div className="flex-1 flex items-center">
                           {item.imageSrc && (
-                            <div className="relative w-20 h-20 mr-3 flex-shrink-0">
+                            <div className="relative w-28 h-28 mr-4 flex-shrink-0">
                               <Image 
                                 src={item.imageSrc} 
                                 alt={item.text || "Sequence item"}
@@ -268,19 +268,19 @@ export const SequenceChallenge = ({
                             </div>
                           )}
                           {item.text && (
-                            <div className="font-medium text-gray-800">
+                            <div className="font-medium text-gray-800 text-base">
                               {item.text}
                             </div>
                           )}
                         </div>
 
                         {/* Move buttons (fallback for non-drag devices) */}
-                        <div className="flex flex-col space-y-1 ml-3">
+                        <div className="flex flex-col space-y-1 ml-4">
                           <button
                             onClick={() => handleMoveUp(index)}
                             disabled={disabled || index === 0}
                             className={cn(
-                              "w-6 h-6 rounded border text-xs font-bold",
+                              "w-8 h-8 rounded border text-sm font-bold",
                               "hover:bg-gray-100 disabled:opacity-30",
                               "disabled:cursor-not-allowed"
                             )}
@@ -291,7 +291,7 @@ export const SequenceChallenge = ({
                             onClick={() => handleMoveDown(index)}
                             disabled={disabled || index === orderedItems.length - 1}
                             className={cn(
-                              "w-6 h-6 rounded border text-xs font-bold",
+                              "w-8 h-8 rounded border text-sm font-bold",
                               "hover:bg-gray-100 disabled:opacity-30",
                               "disabled:cursor-not-allowed"
                             )}
