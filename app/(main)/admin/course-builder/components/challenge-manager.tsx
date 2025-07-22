@@ -13,13 +13,13 @@ import { Badge } from "@/components/ui/badge";
 import { ImageUpload } from "@/components/ui/image-upload";
 import Image from "next/image";
 import { 
-  Plus, Settings, Trash2, Target, Clock, 
+  Plus, Trash2, Target, Clock, 
   Move, Type, Shuffle, MousePointer, CheckSquare, Edit, ImageIcon
 } from "lucide-react";
 import { 
   createChallenge, 
   deleteChallenge, 
-  getChallengesForCourse, 
+  getChallengesForLesson,
   getLessonsForCourse,
   createChallengeOptions,
   updateChallenge,
@@ -69,6 +69,7 @@ interface ChallengeManagerProps {
 export function ChallengeManager({ courseId, courseName, onChallengeCreated }: ChallengeManagerProps) {
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [lessons, setLessons] = useState<Lesson[]>([]);
+  const [selectedLessonId, setSelectedLessonId] = useState<number | null>(null); // 🚀 NEW: Lesson selection state
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [editingChallenge, setEditingChallenge] = useState<Challenge | null>(null);
@@ -98,49 +99,75 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
   const [isLoading, setIsLoading] = useState(false);
   const [loadingChallenges, setLoadingChallenges] = useState(true);
 
-  const loadData = useCallback(async () => {
+  // 🚀 NEW: Load lessons only (performance optimized)
+  const loadLessons = useCallback(async () => {
     setLoadingChallenges(true);
     try {
-      const [challengesResult, lessonsResult] = await Promise.all([
-        getChallengesForCourse(courseId),
-        getLessonsForCourse(courseId)
-      ]);
+      const lessonsResult = await getLessonsForCourse(courseId);
+
+      if (lessonsResult.success && lessonsResult.lessons) {
+        setLessons(lessonsResult.lessons);
+        // Auto-select first lesson if available
+        if (lessonsResult.lessons.length > 0 && !selectedLessonId) {
+          setSelectedLessonId(lessonsResult.lessons[0].id);
+        }
+      } else {
+        toast.error(lessonsResult.error || "Dersler yüklenemedi");
+      }
+    } catch {
+      toast.error("Dersler yüklenirken bir hata oluştu");
+    } finally {
+      setLoadingChallenges(false);
+    }
+  }, [courseId, selectedLessonId]);
+
+  // 🚀 NEW: Load challenges for selected lesson only (performance optimized)
+  const loadChallengesForLesson = useCallback(async (lessonId: number) => {
+    setLoadingChallenges(true);
+    try {
+      const challengesResult = await getChallengesForLesson(lessonId);
 
       if (challengesResult.success && challengesResult.challenges) {
         setChallenges(challengesResult.challenges);
       } else {
         toast.error(challengesResult.error || "Zorluklar yüklenemedi");
-      }
-
-      if (lessonsResult.success && lessonsResult.lessons) {
-        setLessons(lessonsResult.lessons);
-      } else {
-        toast.error(lessonsResult.error || "Dersler yüklenemedi");
+        setChallenges([]);
       }
     } catch {
-      toast.error("Veriler yüklenirken bir hata oluştu");
+      toast.error("Zorluklar yüklenirken bir hata oluştu");
+      setChallenges([]);
     } finally {
       setLoadingChallenges(false);
     }
-  }, [courseId]);
+  }, []);
 
-  // Load challenges and lessons when component mounts
+  // 🚀 NEW: Load lessons when component mounts
   useEffect(() => {
-    loadData();
-  }, [loadData]);
+    loadLessons();
+  }, [loadLessons]);
+
+  // 🚀 NEW: Load challenges when lesson is selected
+  useEffect(() => {
+    if (selectedLessonId) {
+      loadChallengesForLesson(selectedLessonId);
+    } else {
+      setChallenges([]); // Clear challenges if no lesson selected
+    }
+  }, [selectedLessonId, loadChallengesForLesson]);
 
   // Initialize lesson selection when lessons are loaded
   useEffect(() => {
-    if (lessons.length > 0 && newChallenge.lessonId === 0) {
-      const firstLesson = lessons[0];
-      const challengesInLesson = challenges.filter(c => c.lesson?.id === firstLesson.id);
-      setNewChallenge(prev => ({
-        ...prev,
-        lessonId: firstLesson.id,
-        order: challengesInLesson.length + 1
-      }));
+    if (lessons.length > 0 && newChallenge.lessonId === 0 && selectedLessonId) {
+      const selectedLesson = lessons.find(l => l.id === selectedLessonId);
+      if (selectedLesson) {
+        setNewChallenge(prev => ({
+          ...prev,
+          lessonId: selectedLesson.id,
+          order: challenges.length + 1
+        }));
+      }
     }
-  }, [lessons, challenges, newChallenge.lessonId]);
+  }, [lessons, challenges, newChallenge.lessonId, selectedLessonId]);
 
   const handleTypeChange = (type: string) => {
     setSelectedChallengeType(type);
@@ -244,7 +271,10 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
           setIsEditOpen(false);
           setEditingChallenge(null);
           setEditChallengeOptions([]);
-          await loadData();
+          // 🚀 Reload challenges for selected lesson only
+          if (selectedLessonId) {
+            await loadChallengesForLesson(selectedLessonId);
+          }
           
           toast.success("Zorluk başarıyla güncellendi!");
           if (onChallengeCreated) {
@@ -315,7 +345,10 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
         if (optionsResult.success) {
           setIsCreateOpen(false);
           setChallengeOptions([]);
-          await loadData();
+          // 🚀 Reload challenges for selected lesson only
+          if (selectedLessonId) {
+            await loadChallengesForLesson(selectedLessonId);
+          }
           
           // Reset form
           setNewChallenge({ 
@@ -355,7 +388,10 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
     try {
       const result = await deleteChallenge(challengeId);
       if (result.success) {
-        await loadData();
+        // 🚀 Reload challenges for selected lesson only
+        if (selectedLessonId) {
+          await loadChallengesForLesson(selectedLessonId);
+        }
         toast.success("Zorluk başarıyla silindi");
         if (onChallengeCreated) {
           onChallengeCreated();
@@ -568,11 +604,7 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
     );
   }
 
-  // Group challenges by lesson
-  const challengesByLesson = lessons.map(lesson => ({
-    lesson,
-    challenges: challenges.filter(challenge => challenge.lesson?.id === lesson.id)
-  }));
+  // 🚀 REMOVED: Old grouped approach - now using lesson-based filtering for performance
 
   return (
     <div className="space-y-6">
@@ -790,19 +822,61 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
         </div>
       )}
 
-      {/* Challenges grouped by lesson */}
-      {challengesByLesson.map(({ lesson, challenges: lessonChallenges }) => (
-        <div key={lesson.id} className="space-y-4">
+      {/* 🚀 NEW: Lesson Selector for Performance Optimization */}
+      {lessons.length > 0 && (
+        <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+          <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
+              <Target className="w-5 h-5 text-blue-600" />
+              <h3 className="text-lg font-medium text-blue-900">Select Lesson to View Challenges</h3>
+            </div>
+            <div className="flex-1 max-w-md">
+              <Select 
+                value={selectedLessonId?.toString() || ""} 
+                onValueChange={(value) => setSelectedLessonId(parseInt(value))}
+              >
+                <SelectTrigger className="bg-white">
+                  <SelectValue placeholder="Choose a lesson to view its challenges" />
+                </SelectTrigger>
+                <SelectContent>
+                  {lessons.map((lesson) => (
+                    <SelectItem key={lesson.id} value={lesson.id.toString()}>
+                      <div className="flex items-center space-x-2">
+                        <span className="font-medium">{lesson.unit?.title}</span>
+                        <span className="text-gray-500">-</span>
+                        <span>{lesson.title}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            {selectedLessonId && (
+              <div className="text-sm text-blue-700 flex items-center space-x-1">
+                <span>📊 Viewing</span>
+                <span className="font-medium">{challenges.length}</span>
+                <span>challenges</span>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Challenges for selected lesson */}
+      {selectedLessonId && challenges.length > 0 && (
+        <div className="space-y-4">
           <div className="bg-gray-50 rounded-lg p-4 border">
             <h3 className="text-lg font-semibold text-gray-900 flex items-center">
               <Target className="w-5 h-5 mr-2 text-purple-600" />
-              {lesson.unit?.title} - {lesson.title}
+              {lessons.find(l => l.id === selectedLessonId)?.unit?.title} - {lessons.find(l => l.id === selectedLessonId)?.title}
             </h3>
-            <p className="text-sm text-gray-600">Lesson ID: {lesson.id}</p>
+            <p className="text-sm text-gray-600">
+              Lesson ID: {selectedLessonId} • {challenges.length} challenges
+            </p>
           </div>
 
           <div className="grid gap-4 ml-6">
-            {lessonChallenges.map((challenge) => {
+            {challenges.map((challenge) => {
               const typeInfo = getChallengeTypeInfo(challenge.type);
               const Icon = typeInfo.icon;
               
@@ -848,51 +922,47 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                           </p>
                           
                           {/* Image Previews */}
-                          <div className="mt-2 flex items-center space-x-3">
-                            {/* Question Image Preview */}
-                            {challenge.questionImageSrc && (
-                              <div className="flex items-center space-x-1">
-                                <span className="text-xs text-gray-500">Soru:</span>
-                                <div className="relative w-8 h-8">
-                                  <Image
-                                    src={challenge.questionImageSrc}
-                                    alt="Question image"
-                                    fill
-                                    sizes="32px"
-                                    className="object-contain rounded border"
-                                  />
-                                </div>
+                          {challenge.questionImageSrc && (
+                            <div className="mt-2">
+                              <p className="text-xs text-gray-500 mb-1">Question Image:</p>
+                              <div className="relative w-20 h-20 rounded border overflow-hidden">
+                                <Image
+                                  src={challenge.questionImageSrc}
+                                  alt="Question"
+                                  fill
+                                  className="object-cover"
+                                />
                               </div>
-                            )}
-                            
-                            {/* Option Images Preview */}
-                            {(() => {
-                              const optionsWithImages = challenge.challengeOptions?.filter(opt => opt.imageSrc) || [];
-                              return optionsWithImages.length > 0 ? (
-                                <div className="flex items-center space-x-1">
-                                  <span className="text-xs text-gray-500">Seçenekler:</span>
-                                  <div className="flex space-x-1">
-                                    {optionsWithImages.slice(0, 3).map((option, index) => (
-                                      <div key={index} className="relative w-8 h-8">
-                                        <Image
-                                          src={option.imageSrc!}
-                                          alt={`Option ${index + 1}`}
-                                          fill
-                                          sizes="32px"
-                                          className="object-contain rounded border"
-                                        />
-                                      </div>
-                                    ))}
-                                    {optionsWithImages.length > 3 && (
-                                      <div className="w-8 h-8 bg-gray-100 rounded border flex items-center justify-center text-xs text-gray-500">
-                                        +{optionsWithImages.length - 3}
-                                      </div>
-                                    )}
+                            </div>
+                          )}
+                          
+                          {/* Option Image Previews */}
+                          {challenge.challengeOptions && challenge.challengeOptions.some(opt => opt.imageSrc) && (
+                            <div className="mt-2">
+                              <p className="text-xs text-gray-500 mb-1">Option Images:</p>
+                              <div className="flex flex-wrap gap-2">
+                                {challenge.challengeOptions
+                                  .filter(opt => opt.imageSrc)
+                                  .slice(0, 4) // Show max 4 previews
+                                  .map((option, idx) => (
+                                    <div key={idx} className="relative w-16 h-16 rounded border overflow-hidden">
+                                      <Image
+                                        src={option.imageSrc!}
+                                        alt={`Option ${idx + 1}`}
+                                        fill
+                                        className="object-cover"
+                                      />
+                                    </div>
+                                  ))
+                                }
+                                {challenge.challengeOptions.filter(opt => opt.imageSrc).length > 4 && (
+                                  <div className="w-16 h-16 border rounded flex items-center justify-center bg-gray-100 text-xs text-gray-500">
+                                    +{challenge.challengeOptions.filter(opt => opt.imageSrc).length - 4} more
                                   </div>
-                                </div>
-                              ) : null;
-                            })()}
-                          </div>
+                                )}
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                       
@@ -901,7 +971,6 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                           variant="ghost"
                           size="sm"
                           onClick={() => openEditDialog(challenge)}
-                          className="text-blue-600 hover:text-blue-700"
                         >
                           <Edit className="w-4 h-4" />
                         </Button>
@@ -909,7 +978,6 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                           variant="ghost"
                           size="sm"
                           onClick={() => handleDeleteChallenge(challenge.id)}
-                          className="text-red-600 hover:text-red-700 hover:bg-red-50"
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
@@ -919,31 +987,19 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                 </Card>
               );
             })}
-
-            {lessonChallenges.length === 0 && (
-              <div className="text-center py-8 text-gray-500">
-                <Settings className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                <p className="text-sm">No challenges in this lesson yet</p>
-              </div>
-            )}
           </div>
         </div>
-      ))}
+      )}
 
-      {/* No challenges at all */}
-      {challenges.length === 0 && lessons.length > 0 && (
-        <div className="text-center py-12">
-          <Settings className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No challenges yet</h3>
-          <p className="text-gray-600 mb-4">Create your first challenge to get started</p>
-          <Button onClick={() => {
-            setIsCreateOpen(true);
-            if (onChallengeCreated) {
-              onChallengeCreated();
-            }
-          }}>
+      {/* No challenges message when lesson is selected but has no challenges */}
+      {selectedLessonId && challenges.length === 0 && !loadingChallenges && (
+        <div className="text-center py-12 bg-gray-50 rounded-lg border border-gray-200">
+          <Target className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+          <h3 className="text-lg font-medium text-gray-700 mb-2">No challenges in this lesson</h3>
+          <p className="text-gray-500 mb-4">This lesson doesn&apos;t have any challenges yet</p>
+          <Button onClick={() => setIsCreateOpen(true)}>
             <Plus className="w-4 h-4 mr-2" />
-            Create Challenge
+            Create First Challenge
           </Button>
         </div>
       )}

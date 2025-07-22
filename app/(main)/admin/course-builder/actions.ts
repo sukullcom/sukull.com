@@ -386,7 +386,7 @@ export async function getLessonsForCourse(courseId: number) {
   }
 }
 
-// Get Challenges for Course
+// Get Challenges for Course (kept for compatibility, but will be replaced by lesson-based loading)
 export async function getChallengesForCourse(courseId: number) {
   try {
     // First get lesson IDs for this course
@@ -419,6 +419,30 @@ export async function getChallengesForCourse(courseId: number) {
     return { success: true, challenges: courseChallenges };
   } catch (error) {
     console.error("Error fetching challenges for course", courseId, ":", error);
+    console.error("Error details:", error instanceof Error ? error.message : String(error));
+    return { success: false, error: `Failed to fetch challenges: ${error instanceof Error ? error.message : String(error)}` };
+  }
+}
+
+// 🚀 NEW: Get Challenges for Specific Lesson (Performance Optimized)
+export async function getChallengesForLesson(lessonId: number) {
+  try {
+    const lessonChallenges = await db.query.challenges.findMany({
+      where: (challenges, { eq }) => eq(challenges.lessonId, lessonId),
+      with: {
+        lesson: {
+          with: {
+            unit: true,
+          },
+        },
+        challengeOptions: true,
+      },
+      orderBy: (challenges, { asc }) => [asc(challenges.order)],
+    });
+
+    return { success: true, challenges: lessonChallenges };
+  } catch (error) {
+    console.error("Error fetching challenges for lesson", lessonId, ":", error);
     console.error("Error details:", error instanceof Error ? error.message : String(error));
     return { success: false, error: `Failed to fetch challenges: ${error instanceof Error ? error.message : String(error)}` };
   }
