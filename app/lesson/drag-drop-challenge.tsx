@@ -258,9 +258,11 @@ export const DragDropChallenge = ({
                     />
                     </div>
                   )}
-                  {placedItem.text && (
+                  {placedItem.text && placedItem.text.trim() && (
                     <div className="text-center text-base font-medium">
-                    <MathRenderer>{placedItem.text}</MathRenderer>
+                      <MathRenderer className="text-gray-800 text-base text-center">
+                        {placedItem.text}
+                      </MathRenderer>
                   </div>
                   )}
                 </div>
@@ -304,9 +306,11 @@ export const DragDropChallenge = ({
                   />
                   </div>
                 )}
-                {item.text && (
+                {item.text && item.text.trim() && (
                   <div className="text-center text-base font-medium">
-                  <MathRenderer>{item.text}</MathRenderer>
+                    <MathRenderer className="text-gray-800 text-base text-center">
+                      {item.text}
+                    </MathRenderer>
                 </div>
                 )}
               </div>
