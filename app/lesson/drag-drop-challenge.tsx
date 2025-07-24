@@ -233,7 +233,7 @@ export const DragDropChallenge = ({
               onDrop={(e) => handleDrop(e, zone.id)}
             >
               <div className="text-base font-medium text-gray-600 mb-3">
-                {zone.label}
+                <MathRenderer>{zone.label}</MathRenderer>
               </div>
               
               {placedItem ? (
