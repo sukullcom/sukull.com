@@ -87,6 +87,7 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
     questionImageSrc: "" // Fixed property name
   });
   const [editChallenge, setEditChallenge] = useState({
+    lessonId: 0, // 🚀 NEW: Add lessonId to edit state
     type: "",
     question: "",
     explanation: "", // Add explanation field
@@ -195,6 +196,7 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
   const openEditDialog = (challenge: Challenge) => {
     setEditingChallenge(challenge);
     setEditChallenge({
+      lessonId: challenge.lessonId, // 🚀 NEW: Include lessonId in edit state
       type: challenge.type,
       question: challenge.question,
       explanation: challenge.explanation || "", // Add explanation field
@@ -244,6 +246,7 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
     try {
       // Step 1: Update the challenge
       const challengeResult = await updateChallenge(editingChallenge.id, {
+        lessonId: editChallenge.lessonId, // 🚀 NEW: Include lessonId in update
         type: editChallenge.type,
         question: editChallenge.question,
         explanation: editChallenge.explanation,
@@ -412,6 +415,15 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
       ...newChallenge, 
       lessonId: selectedLessonId,
       order: challengesInLesson.length + 1 
+    });
+  };
+
+  // 🚀 NEW: Handle lesson change for editing challenges
+  const handleEditLessonChange = (lessonId: string) => {
+    const selectedLessonId = parseInt(lessonId);
+    setEditChallenge({ 
+      ...editChallenge, 
+      lessonId: selectedLessonId
     });
   };
 
@@ -851,11 +863,7 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                 <SelectContent>
                   {lessons.map((lesson) => (
                     <SelectItem key={lesson.id} value={lesson.id.toString()}>
-                      <div className="flex items-center space-x-2">
-                        <span className="font-medium">{lesson.unit?.title}</span>
-                        <span className="text-gray-500">-</span>
-                        <span>{lesson.title}</span>
-                      </div>
+                      {lesson.unit?.title} - {lesson.title}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -1028,7 +1036,7 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="lesson">Lesson</Label>
-                  <Select value={editingChallenge.lesson?.id.toString()} onValueChange={handleLessonChange}>
+                  <Select value={editChallenge.lessonId.toString()} onValueChange={handleEditLessonChange}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a lesson" />
                     </SelectTrigger>
@@ -1046,7 +1054,7 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                   <Input
                     id="order"
                     type="number"
-                    value={editingChallenge.order}
+                    value={editChallenge.order}
                     onChange={(e) => setEditChallenge({ ...editChallenge, order: parseInt(e.target.value) || 1 })}
                     min={1}
                   />

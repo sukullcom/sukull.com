@@ -205,6 +205,7 @@ export async function createChallenge(data: {
 }
 
 export async function updateChallenge(challengeId: number, data: {
+  lessonId?: number; // 🚀 NEW: Add lessonId support
   type: string;
   question: string;
   explanation?: string;
@@ -217,6 +218,7 @@ export async function updateChallenge(challengeId: number, data: {
     const [challenge] = await db
       .update(challenges)
       .set({
+        ...(data.lessonId && { lessonId: data.lessonId }), // 🚀 NEW: Include lessonId if provided
         type: data.type as "SELECT" | "ASSIST" | "DRAG_DROP" | "FILL_BLANK" | "MATCH_PAIRS" | "SEQUENCE" | "TIMER_CHALLENGE",
         question: data.question,
         explanation: data.explanation,

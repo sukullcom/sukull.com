@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Book, Trash2, Edit } from "lucide-react";
+import { Plus, Book, Trash2, Edit, GripVertical, ArrowUp, ArrowDown } from "lucide-react";
 import { createLesson, deleteLesson, getLessonsForCourse, getUnitsForCourse, updateLesson } from "../actions";
 import { toast } from "sonner";
 
@@ -178,6 +178,30 @@ export function LessonManager({ courseId, courseName }: LessonManagerProps) {
     }
   };
 
+  // 🚀 NEW: Quick order change functions
+  const handleQuickOrderChange = async (lesson: Lesson, newOrder: number) => {
+    if (newOrder < 1) return;
+    
+    setIsLoading(true);
+    try {
+      const result = await updateLesson(lesson.id, {
+        title: lesson.title,
+        order: newOrder
+      });
+      
+      if (result.success) {
+        await fetchData(); // Refresh to show updated order
+        toast.success("Ders sırası güncellendi");
+      } else {
+        toast.error(result.error || "Sıra güncellenemedi");
+      }
+    } catch {
+      toast.error("Sıra güncellenirken bir hata oluştu");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   if (loadingLessons) {
     return (
       <div className="flex items-center justify-center py-12">
@@ -197,11 +221,22 @@ export function LessonManager({ courseId, courseName }: LessonManagerProps) {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {/* 🚀 ENHANCED: Header with editing guidance */}
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-gray-900">Lessons</h2>
           <p className="text-gray-600">Manage lessons for {courseName}</p>
+          <div className="mt-2 flex items-center space-x-4 text-sm">
+            <span className="flex items-center space-x-1 text-green-600">
+              <Edit className="w-4 h-4" />
+              <span>Lessons are fully editable</span>
+            </span>
+            <span className="flex items-center space-x-1 text-blue-600">
+              <ArrowUp className="w-3 h-3" />
+              <ArrowDown className="w-3 h-3" />
+              <span>Quick reordering</span>
+            </span>
+          </div>
         </div>
         
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
@@ -263,38 +298,74 @@ export function LessonManager({ courseId, courseName }: LessonManagerProps) {
         </Dialog>
       </div>
 
-      {/* Edit Lesson Dialog */}
+      {/* 🚀 ENHANCED: Edit Lesson Dialog with better UX */}
       <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle>Edit Lesson</DialogTitle>
+            <DialogTitle className="flex items-center space-x-2">
+              <Edit className="w-5 h-5 text-blue-600" />
+              <span>Edit Lesson</span>
+            </DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
+            {editingLesson && (
+              <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                <p className="text-sm text-blue-700">
+                  <span className="font-medium">Editing:</span> {editingLesson.title}
+                </p>
+                <p className="text-xs text-blue-600">
+                  Current order: #{editingLesson.order} • ID: {editingLesson.id}
+                </p>
+              </div>
+            )}
+            
             <div>
-              <Label htmlFor="edit-title">Lesson Title</Label>
+              <Label htmlFor="edit-title">Lesson Title *</Label>
               <Input
                 id="edit-title"
                 value={editLesson.title}
                 onChange={(e) => setEditLesson({ ...editLesson, title: e.target.value })}
                 placeholder="Enter lesson title"
+                className="mt-1"
               />
             </div>
+            
             <div>
-              <Label htmlFor="edit-order">Order</Label>
+              <Label htmlFor="edit-order">Lesson Order *</Label>
               <Input
                 id="edit-order"
                 type="number"
                 value={editLesson.order}
                 onChange={(e) => setEditLesson({ ...editLesson, order: parseInt(e.target.value) || 1 })}
                 min={1}
+                className="mt-1"
               />
+              <p className="text-xs text-gray-500 mt-1">
+                💡 Lower numbers appear first. Use arrows on lesson cards for quick reordering.
+              </p>
             </div>
-            <div className="flex justify-end space-x-2">
-              <Button variant="primaryOutline" onClick={() => setIsEditOpen(false)}>
+            
+            <div className="flex justify-end space-x-2 pt-2">
+              <Button 
+                variant="outline" 
+                onClick={() => setIsEditOpen(false)}
+                disabled={isLoading}
+              >
                 Cancel
               </Button>
-              <Button onClick={handleEditLesson} disabled={isLoading}>
-                {isLoading ? "Updating..." : "Update Lesson"}
+              <Button 
+                onClick={handleEditLesson} 
+                disabled={isLoading || !editLesson.title.trim()}
+                className="bg-blue-600 hover:bg-blue-700"
+              >
+                {isLoading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Updating...
+                  </>
+                ) : (
+                  "Update Lesson"
+                )}
               </Button>
             </div>
           </div>
@@ -325,29 +396,74 @@ export function LessonManager({ courseId, courseName }: LessonManagerProps) {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ml-11">
-              {unitLessons.map((lesson) => (
-                <Card key={lesson.id} className="hover:shadow-lg transition-shadow">
+            {/* 🚀 ENHANCED: Improved lesson cards with better editing visibility */}
+            <div className="space-y-3 ml-11">
+              {unitLessons
+                .sort((a, b) => a.order - b.order) // Ensure lessons are sorted by order
+                .map((lesson) => (
+                <Card key={lesson.id} className="hover:shadow-lg transition-shadow border-l-4 border-l-purple-400">
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
-                      <div>
-                        <CardTitle className="text-base">{lesson.title}</CardTitle>
-                        <p className="text-sm text-gray-500">Order: {lesson.order} | ID: {lesson.id}</p>
+                      <div className="flex items-center space-x-3 flex-1">
+                        <div className="flex items-center space-x-1">
+                          <GripVertical className="w-4 h-4 text-gray-400" />
+                          <span className="text-sm font-bold text-purple-600 bg-purple-100 px-2 py-1 rounded">
+                            #{lesson.order}
+                          </span>
+                        </div>
+                        <div className="flex-1">
+                          <CardTitle className="text-base text-gray-900">{lesson.title}</CardTitle>
+                          <p className="text-sm text-gray-500">
+                            Lesson ID: {lesson.id} • 
+                            <span className="text-green-600 font-medium"> Editable</span>
+                          </p>
+                        </div>
                       </div>
-                      <div className="flex space-x-1">
+                      
+                      {/* 🚀 NEW: Enhanced action buttons with quick order controls */}
+                      <div className="flex items-center space-x-1">
+                        {/* Quick order controls */}
+                        <div className="flex flex-col">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleQuickOrderChange(lesson, lesson.order - 1)}
+                            disabled={lesson.order === 1 || isLoading}
+                            className="h-6 w-6 p-0 text-gray-500 hover:text-gray-700"
+                            title="Move up"
+                          >
+                            <ArrowUp className="w-3 h-3" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleQuickOrderChange(lesson, lesson.order + 1)}
+                            disabled={isLoading}
+                            className="h-6 w-6 p-0 text-gray-500 hover:text-gray-700"
+                            title="Move down"
+                          >
+                            <ArrowDown className="w-3 h-3" />
+                          </Button>
+                        </div>
+                        
+                        {/* Edit button - more prominent */}
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => openEditDialog(lesson)}
-                          className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                          className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 border border-blue-200"
+                          title="Edit lesson title and order"
                         >
                           <Edit className="w-4 h-4" />
                         </Button>
+                        
+                        {/* Delete button */}
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => handleDeleteLesson(lesson.id)}
                           className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                          title="Delete lesson"
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>

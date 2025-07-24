@@ -1,6 +1,5 @@
 import { getCourses } from "@/db/queries";
 import { CourseBuilder } from "./course-builder";
-import { MathTest } from "@/components/ui/math-test";
 
 export default async function CourseBuilderPage() {
   const courses = await getCourses();
@@ -13,11 +12,6 @@ export default async function CourseBuilderPage() {
           <p className="text-gray-600 mt-2">
             Create and manage courses, units, lessons, and challenges
           </p>
-        </div>
-
-        {/* Temporary: Math rendering test */}
-        <div className="mb-6">
-          <MathTest />
         </div>
 
         <CourseBuilder initialCourses={courses} />
