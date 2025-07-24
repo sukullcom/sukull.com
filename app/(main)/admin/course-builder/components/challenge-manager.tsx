@@ -26,6 +26,7 @@ import {
   updateChallengeOptions
 } from "../actions";
 import { toast } from "sonner";
+import { MathRenderer } from "@/components/ui/math-renderer";
 
 type Challenge = typeof challenges.$inferSelect & {
   lesson?: typeof lessons.$inferSelect & {
@@ -548,11 +549,12 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
     switch (type) {
       case "SELECT":
       case "ASSIST": {
-        const hasCorrectAnswer = options.some(opt => opt.correct && opt.text?.trim());
-        const hasEnoughOptions = options.filter(opt => opt.text?.trim()).length >= 2;
+        // 🚀 UPDATED: Allow image-only options (text OR image required)
+        const hasCorrectAnswer = options.some(opt => opt.correct && (opt.text?.trim() || opt.imageSrc?.trim()));
+        const hasEnoughOptions = options.filter(opt => opt.text?.trim() || opt.imageSrc?.trim()).length >= 2;
         
-        if (!hasCorrectAnswer) return { isValid: false, message: "Lütfen bir seçeneği doğru olarak işaretleyin" };
-        if (!hasEnoughOptions) return { isValid: false, message: "Lütfen en az 2 seçenek sağlayın" };
+        if (!hasCorrectAnswer) return { isValid: false, message: "Lütfen bir seçeneği doğru olarak işaretleyin (metin veya resim)" };
+        if (!hasEnoughOptions) return { isValid: false, message: "Lütfen en az 2 seçenek sağlayın (metin veya resim)" };
         break;
       }
       case "DRAG_DROP": {
@@ -583,10 +585,11 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
         break;
       }
       case "TIMER_CHALLENGE": {
-        const timerCorrect = options.some(opt => opt.correct && opt.text?.trim());
-        const timerOptions = options.filter(opt => opt.text?.trim()).length >= 2;
-        if (!timerCorrect) return { isValid: false, message: "Lütfen bir seçeneği doğru olarak işaretleyin" };
-        if (!timerOptions) return { isValid: false, message: "Lütfen en az 2 seçenek sağlayın" };
+        // 🚀 UPDATED: Allow image-only options (text OR image required)
+        const timerCorrect = options.some(opt => opt.correct && (opt.text?.trim() || opt.imageSrc?.trim()));
+        const timerOptions = options.filter(opt => opt.text?.trim() || opt.imageSrc?.trim()).length >= 2;
+        if (!timerCorrect) return { isValid: false, message: "Lütfen bir seçeneği doğru olarak işaretleyin (metin veya resim)" };
+        if (!timerOptions) return { isValid: false, message: "Lütfen en az 2 seçenek sağlayın (metin veya resim)" };
         break;
       }
     }
@@ -704,9 +707,16 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                     id="question"
                     value={newChallenge.question}
                     onChange={(e) => setNewChallenge({ ...newChallenge, question: e.target.value })}
-                    placeholder="Zorluk sorusunu girin..."
+                    placeholder="Zorluk sorusunu girin... (LaTeX math: $x^2 + y^2 = r^2$ or $$\frac{a}{b}$$)"
                     rows={3}
                   />
+                  {/* 🚀 NEW: Live LaTeX Preview for Question */}
+                  {newChallenge.question && newChallenge.question.trim() && (
+                    <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded">
+                      <div className="text-xs text-blue-600 mb-2 font-medium">LaTeX Preview:</div>
+                      <MathRenderer className="text-gray-800 text-base">{newChallenge.question}</MathRenderer>
+                    </div>
+                  )}
                   {selectedChallengeType === "FILL_BLANK" && (
                     <p className="text-xs text-gray-500 mt-1">
                       Boşlukları işaretlemek için &quot;{"{1}"}&quot;, &quot;{"{2}"}&quot;, vb. kullanın. Örnek: &quot;{"{1}"} verilerini {"{2}"} için kullanılır.&quot;
@@ -890,7 +900,9 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center space-x-2">
-                            <CardTitle className="text-base">{challenge.question}</CardTitle>
+                            <CardTitle className="text-base">
+                              <MathRenderer>{challenge.question}</MathRenderer>
+                            </CardTitle>
                             <Badge variant="secondary" className="text-xs">
                               {typeInfo.label}
                             </Badge>
@@ -1081,9 +1093,16 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                     id="question"
                     value={editChallenge.question}
                     onChange={(e) => setEditChallenge({ ...editChallenge, question: e.target.value })}
-                    placeholder="Zorluk sorusunu girin..."
+                    placeholder="Zorluk sorusunu girin... (LaTeX math: $x^2 + y^2 = r^2$ or $$\frac{a}{b}$$)"
                     rows={3}
                   />
+                  {/* 🚀 NEW: Live LaTeX Preview for Edit Question */}
+                  {editChallenge.question && editChallenge.question.trim() && (
+                    <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded">
+                      <div className="text-xs text-blue-600 mb-2 font-medium">LaTeX Preview:</div>
+                      <MathRenderer className="text-gray-800 text-base">{editChallenge.question}</MathRenderer>
+                    </div>
+                  )}
                   {editChallengeType === "FILL_BLANK" && (
                     <p className="text-xs text-gray-500 mt-1">
                       Boşlukları işaretlemek için &quot;{"{1}"}&quot;, &quot;{"{2}"}&quot;, vb. kullanın. Örnek: &quot;{"{1}"} verilerini {"{2}"} için kullanılır.&quot;
@@ -1314,13 +1333,24 @@ function SelectAssistForm({ options, updateOption, removeOption, addOption, form
         
         return (
           <div key={`option-${actualIndex}-${displayIndex}`} className="space-y-3 p-3 border rounded-lg">
+            <div className="space-y-2">
+              <div className="flex items-center space-x-2">
+                <Input
+                  placeholder="Option text (optional if image provided) - LaTeX: $x^2$ or $$\frac{a}{b}$$"
+                  value={option.text || ""}
+                  onChange={(e) => updateOption(actualIndex, "text", e.target.value)}
+                  className="flex-1"
+                />
+              </div>
+              {/* 🚀 NEW: Live LaTeX Preview */}
+              {option.text && option.text.trim() && (
+                <div className="p-2 bg-gray-50 border rounded text-sm">
+                  <div className="text-xs text-gray-500 mb-1">Preview:</div>
+                  <MathRenderer className="text-gray-700">{option.text}</MathRenderer>
+                </div>
+              )}
+            </div>
             <div className="flex items-center space-x-2">
-              <Input
-                placeholder="Option text"
-                value={option.text || ""}
-                onChange={(e) => updateOption(actualIndex, "text", e.target.value)}
-                className="flex-1"
-              />
               <label className="flex items-center space-x-2 cursor-pointer">
                 <input
                   type="radio"

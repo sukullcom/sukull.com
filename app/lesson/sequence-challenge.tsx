@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import { DragDropContext, Droppable, Draggable, DropResult } from "@hello-pangea/dnd";
 import Image from "next/image";
+import { MathRenderer } from "@/components/ui/math-renderer";
 
 type Props = {
   options: (typeof challengeOptions.$inferSelect)[];
@@ -269,7 +270,7 @@ export const SequenceChallenge = ({
                           )}
                           {item.text && (
                             <div className="font-medium text-gray-800 text-base">
-                              {item.text}
+                              <MathRenderer>{item.text}</MathRenderer>
                             </div>
                           )}
                         </div>

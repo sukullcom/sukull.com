@@ -4,6 +4,7 @@ import { challengeOptions, challenges } from "@/db/schema";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { MathRenderer } from "@/components/ui/math-renderer";
 
 type Props = {
   options: (typeof challengeOptions.$inferSelect)[];
@@ -259,7 +260,7 @@ export const DragDropChallenge = ({
                   )}
                   {placedItem.text && (
                     <div className="text-center text-base font-medium">
-                    {placedItem.text}
+                    <MathRenderer>{placedItem.text}</MathRenderer>
                   </div>
                   )}
                 </div>
@@ -305,7 +306,7 @@ export const DragDropChallenge = ({
                 )}
                 {item.text && (
                   <div className="text-center text-base font-medium">
-                  {item.text}
+                  <MathRenderer>{item.text}</MathRenderer>
                 </div>
                 )}
               </div>

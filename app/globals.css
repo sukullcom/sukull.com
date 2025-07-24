@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* KaTeX CSS for mathematical equations */
+@import 'katex/dist/katex.min.css';
+
 html,
 body,
 :root {

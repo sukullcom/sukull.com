@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { challenges } from "@/db/schema";
 import Image from "next/image";
 import { useCallback, useRef, useEffect } from "react";
+import { MathRenderer } from "@/components/ui/math-renderer";
 
 // Safe alternatives to react-use hooks
 const useAudio = (config: { src: string }) => {
@@ -73,23 +74,26 @@ export const Card = ({
           />
         </div>
       )}
-      <div
-        className={cn(
-          "flex items-center justify-center",
-          type === "ASSIST" && "flex-row-reverse"
-        )}
-      >
-        <p
+      {/* 🚀 UPDATED: Only render text container if text exists */}
+      {text && text.trim() && (
+        <div
           className={cn(
-            "text-neutral-600 text-sm lg:text-base text-center",
-            selected && "text-sky-500",
-            selected && status === "correct" && "text-green-500",
-            selected && status === "wrong" && "text-rose-500"
+            "flex items-center justify-center",
+            type === "ASSIST" && "flex-row-reverse"
           )}
         >
-          {text}
-        </p>
-      </div>
+          <MathRenderer
+            className={cn(
+              "text-neutral-600 text-sm lg:text-base text-center",
+              selected && "text-sky-500",
+              selected && status === "correct" && "text-green-500",
+              selected && status === "wrong" && "text-rose-500"
+            )}
+          >
+            {text}
+          </MathRenderer>
+        </div>
+      )}
     </div>
   );
 };

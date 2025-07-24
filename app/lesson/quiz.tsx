@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import Confetti from "react-confetti";
 import { useHeartsModal } from "@/store/use-hearts-modal";
 import { usePracticeModal } from "@/store/use-practice-modal";
+import { MathRenderer } from "@/components/ui/math-renderer";
 
 type Props = {
   initialPercentage: number;
@@ -200,7 +201,7 @@ export const Quiz = ({
   // *******************************
   const { challengeOptions = [], type, timeLimit } = challenge;
   const title =
-    type === "ASSIST" ? "Select the correct meaning" : challenge.question;
+    type === "ASSIST" ? "Doğru cevapladığına emin misin?" : challenge.question;
 
   // Handle timer expiration
   const handleTimeUp = () => {
@@ -314,7 +315,7 @@ export const Quiz = ({
         <div className="h-full flex items-center justify-center">
           <div className="kg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col gap-y-12">
             <h1 className="text-lg lg:text-3xl text-center lg:text-start font-bold text-neutral-700">
-              {title}
+              <MathRenderer>{title}</MathRenderer>
             </h1>
             <div>
               {type === "ASSIST" && (

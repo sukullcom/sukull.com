@@ -4,6 +4,7 @@ import { challengeOptions, challenges } from "@/db/schema";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { MathRenderer } from "@/components/ui/math-renderer";
 
 type Props = {
   options: (typeof challengeOptions.$inferSelect)[];
@@ -169,7 +170,7 @@ export const MatchPairsChallenge = ({
           Eşleşen çiftleri bul
         </h3>
         <p className="text-sm text-gray-600">
-          Eşleştirmek için iki karta tıkla. Yanlış eşleştirmeler kalp kaybettirir!
+          Eşleştirmek için iki karta tıkla.
         </p>
       </div>
 
@@ -207,7 +208,7 @@ export const MatchPairsChallenge = ({
               )}
               {card.text && (
                 <div className="text-sm text-center font-medium text-gray-800">
-                  {card.text}
+                  <MathRenderer>{card.text}</MathRenderer>
                 </div>
               )}
             </div>

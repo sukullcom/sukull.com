@@ -4,6 +4,7 @@ import { challengeOptions, challenges } from "@/db/schema";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import Image from "next/image"; // Add Image import
+import { MathRenderer } from "@/components/ui/math-renderer";
 
 type Props = {
   options: (typeof challengeOptions.$inferSelect)[];
@@ -132,7 +133,7 @@ export const FillBlankChallenge = ({
     if (!item.isBlank) {
       return (
         <span key={item.id} className="text-gray-800">
-          {item.text}
+          <MathRenderer>{item.text}</MathRenderer>
         </span>
       );
     }
