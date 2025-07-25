@@ -1,21 +1,30 @@
 // components/StreakCalendarAdvanced.tsx
 "use client";
 
-import { useEffect, useState } from "react";
-import { getUserDailyStreakForMonth } from "@/actions/daily-streak";
-import { addMonths, endOfMonth, getDay, startOfMonth, format } from "date-fns";
-import { Button } from "./ui/button";
-import { LoadingSpinner } from "./loading-spinner";
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import { getUserDailyStreakForMonth } from "@/actions/daily-streak";
+import { Button } from "@/components/ui/button";
+import { RefreshCw } from "lucide-react";
+import { addMonths, startOfMonth, endOfMonth, getDay, format } from "date-fns";
 
 interface DailyRecord {
   id: number;
-  date: string; // "YYYY-MM-DD"
+  date: string;
   achieved: boolean;
 }
 
 interface StreakCalendarAdvancedProps {
-  startDate: string; // The date (ISO string) when streak tracking began (e.g., user registration date)
+  startDate: string;
+}
+
+/**
+ * Utility function to create UTC date string in YYYY-MM-DD format
+ * This ensures consistency with database UTC dates
+ */
+function createUTCDateString(year: number, month: number, day: number): string {
+  const utcDate = new Date(Date.UTC(year, month, day));
+  return utcDate.toISOString().split('T')[0];
 }
 
 export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdvancedProps) {
@@ -29,9 +38,12 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
   const fetchRecords = async (date: Date) => {
     setLoading(true);
     try {
+      console.log("📅 CALENDAR: Fetching streak records for", format(date, "MMMM yyyy"));
       const month = date.getMonth();  // Month should be 0-11 (JS Date standard)
       const year = date.getFullYear();
       const recs = await getUserDailyStreakForMonth(month, year);
+      
+      console.log("📅 CALENDAR: Received", recs.length, "records:", recs);
       
       // Important: Properly convert Date objects to ISO strings before setting state
       const formattedRecs = recs.map(rec => {
@@ -45,9 +57,10 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
         };
       });
       
+      console.log("📅 CALENDAR: Formatted records:", formattedRecs);
       setRecords(formattedRecs);
     } catch (err) {
-      console.error("Failed to fetch daily streak records:", err);
+      console.error("📅 CALENDAR: Failed to fetch daily streak records:", err);
       setRecords([]);
     } finally {
       setLoading(false);
@@ -57,6 +70,34 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
   useEffect(() => {
     fetchRecords(selectedDate);
   }, [selectedDate]);
+
+  // 🎯 NEW: Force refresh when startDate prop changes (when user data updates)
+  useEffect(() => {
+    fetchRecords(selectedDate);
+  }, [startDate, selectedDate]);
+
+  // 🎯 NEW: Add visibility change listener to refresh data when user returns to page
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        // Page became visible again - refresh current month data
+        console.log("📅 CALENDAR: Refetching streak records due to visibility change");
+        fetchRecords(selectedDate);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [selectedDate]);
+
+  // 🎯 NEW: Add manual refresh function
+  const handleRefresh = () => {
+    console.log("📅 CALENDAR: Manual refresh triggered");
+    fetchRecords(selectedDate);
+  };
 
   // Navigation handlers
   const handlePrevMonth = () => {
@@ -91,10 +132,10 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
   for (let i = 0; i < startWeekday; i++) {
     cells.push({});
   }
-  // Fill in days of the month
+  // Fill in days of the month using UTC dates for consistency
   for (let d = 1; d <= daysInMonth; d++) {
-    const dateObj = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), d);
-    const dateStr = dateObj.toISOString().split("T")[0];
+    // ✅ FIX: Use UTC dates to match database dates
+    const dateStr = createUTCDateString(selectedDate.getFullYear(), selectedDate.getMonth(), d);
     cells.push({ day: d, date: dateStr });
   }
   // Pad remaining cells so that the grid is complete
@@ -118,15 +159,22 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
     
     if (record) {
       achieved = record.achieved;
+      console.log(`📅 CALENDAR: Date ${cell.date} found in records with achieved=${achieved}`);
+    } else {
+      console.log(`📅 CALENDAR: Date ${cell.date} NOT found in records`);
     }
+    
+    // ✅ FIX: Use UTC dates for consistent future day detection
+    const currentUTCDate = createUTCDateString(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
     
     // If the selected month is the current month and this day is in the future, force achieved = false.
     if (
       selectedDate.getFullYear() === now.getFullYear() &&
       selectedDate.getMonth() === now.getMonth() &&
-      cell.day > now.getDate()
+      cell.date > currentUTCDate
     ) {
       achieved = false;
+      console.log(`📅 CALENDAR: Date ${cell.date} is in the future (after ${currentUTCDate}), forcing achieved=false`);
     }
     
     return (
@@ -153,21 +201,40 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
         <div className="text-xl font-bold">
           {format(selectedDate, "MMMM yyyy")}
         </div>
-        <Button variant="sidebarOutline" onClick={handleNextMonth} disabled={isNextDisabled}>
-          {">"}
-        </Button>
+        <div className="flex items-center gap-2">
+          {/* 🎯 NEW: Manual refresh button */}
+          <Button
+            variant="sidebarOutline"
+            size="sm"
+            onClick={handleRefresh}
+            disabled={loading}
+            title="Takvimi yenile"
+          >
+            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+          </Button>
+          <Button variant="sidebarOutline" onClick={handleNextMonth} disabled={isNextDisabled}>
+            {">"}
+          </Button>
+        </div>
       </div>
-      {/* Weekday headers */}
+
+      {/* Weekday header */}
       <div className="grid grid-cols-7 gap-1 mb-2">
-        {weekdays.map((day, idx) => (
-          <div key={idx} className="text-center font-semibold text-sm">{day}</div>
+        {weekdays.map(day => (
+          <div key={day} className="text-center text-xs font-medium text-gray-500 py-1">
+            {day}
+          </div>
         ))}
       </div>
-      {loading ? (
-        <LoadingSpinner size="sm" />
-      ) : (
-        <div className="grid grid-cols-7 gap-1">
-          {cells.map((cell, idx) => renderCell(cell, idx))}
+
+      {/* Calendar grid */}
+      <div className="grid grid-cols-7 gap-1">
+        {cells.map((cell, index) => renderCell(cell, index))}
+      </div>
+
+      {loading && (
+        <div className="text-center mt-4 text-sm text-gray-500">
+          Yükleniyor...
         </div>
       )}
     </div>

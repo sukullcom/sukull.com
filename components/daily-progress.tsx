@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { getCurrentDayProgress } from "@/actions/daily-streak";
 import Image from "next/image";
+import { RefreshCw } from "lucide-react";
 
 interface DailyProgressData {
   pointsEarnedToday: number;
@@ -15,25 +16,63 @@ interface DailyProgressData {
 export function DailyProgress() {
   const [progressData, setProgressData] = useState<DailyProgressData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  // Memoize the load progress function
+  const loadProgress = useCallback(async (showRefreshIndicator = false) => {
+    try {
+      if (showRefreshIndicator) {
+        setIsRefreshing(true);
+      }
+      const data = await getCurrentDayProgress();
+      setProgressData(data);
+    } catch (error) {
+      console.error("Error loading daily progress:", error);
+    } finally {
+      setLoading(false);
+      if (showRefreshIndicator) {
+        setTimeout(() => setIsRefreshing(false), 500); // Show refresh indicator briefly
+      }
+    }
+  }, []);
 
   useEffect(() => {
-    const loadProgress = async () => {
-      try {
-        const data = await getCurrentDayProgress();
-        setProgressData(data);
-      } catch (error) {
-        console.error("Error loading daily progress:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
+    // Initial load
     loadProgress();
     
-    // Refresh progress every 30 seconds
-    const interval = setInterval(loadProgress, 30000);
-    return () => clearInterval(interval);
-  }, []);
+    // Refresh progress every 15 seconds (reduced from 30 for more responsiveness)
+    const interval = setInterval(() => loadProgress(), 15000);
+    
+    // Add visibility change listener to refresh when user returns to tab
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        console.log("👁️ DAILY PROGRESS: Tab became visible, refreshing data");
+        loadProgress(true);
+      }
+    };
+    
+    // Add focus event listener to refresh when window gets focus
+    const handleFocus = () => {
+      console.log("🔍 DAILY PROGRESS: Window focused, refreshing data");
+      loadProgress(true);
+    };
+    
+    // Add event listeners
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('focus', handleFocus);
+    
+    // Cleanup
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, [loadProgress]);
+
+  // Manual refresh handler
+  const handleManualRefresh = useCallback(() => {
+    loadProgress(true);
+  }, [loadProgress]);
 
   if (loading) {
     return (
@@ -68,6 +107,17 @@ export function DailyProgress() {
           <span className="text-sm font-medium">
             {currentStreak} gün
           </span>
+          {/* Manual refresh button */}
+          <button
+            onClick={handleManualRefresh}
+            disabled={isRefreshing}
+            className="ml-2 p-1 hover:bg-white/20 rounded-full transition-colors"
+            title="Yenile"
+          >
+            <RefreshCw 
+              className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`}
+            />
+          </button>
         </div>
       </div>
 

@@ -31,7 +31,7 @@ export async function getProfileDataOnServer() {
     await db.update(userProgress)
       .set({
         previousTotalPoints: progress.points,
-        lastStreakCheck: new Date(),
+        lastStreakCheck: new Date(), // Keep as local time for profile initialization
       })
       .where(eq(userProgress.userId, userId));
   }
