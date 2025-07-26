@@ -19,12 +19,21 @@ interface StreakCalendarAdvancedProps {
 }
 
 /**
- * Utility function to create UTC date string in YYYY-MM-DD format
- * This ensures consistency with database UTC dates
+ * Utility function to create UTC+3 (Turkey Time) date string in YYYY-MM-DD format
+ * This ensures consistency with database dates stored in Turkey timezone
  */
-function createUTCDateString(year: number, month: number, day: number): string {
+function createTurkeyDateString(year: number, month: number, day: number): string {
   const utcDate = new Date(Date.UTC(year, month, day));
   return utcDate.toISOString().split('T')[0];
+}
+
+/**
+ * Get current Turkey time (UTC+3)
+ */
+function getTurkeyNow(): Date {
+  const now = new Date();
+  // Add 3 hours to convert from UTC to UTC+3 (Turkey Time)
+  return new Date(now.getTime() + (3 * 60 * 60 * 1000));
 }
 
 export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdvancedProps) {
@@ -132,10 +141,10 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
   for (let i = 0; i < startWeekday; i++) {
     cells.push({});
   }
-  // Fill in days of the month using UTC dates for consistency
+  // Fill in days of the month using UTC+3 Turkey Time for consistency
   for (let d = 1; d <= daysInMonth; d++) {
-    // ✅ FIX: Use UTC dates to match database dates
-    const dateStr = createUTCDateString(selectedDate.getFullYear(), selectedDate.getMonth(), d);
+    // ✅ FIX: Use UTC+3 Turkey Time to match database dates
+    const dateStr = createTurkeyDateString(selectedDate.getFullYear(), selectedDate.getMonth(), d);
     cells.push({ day: d, date: dateStr });
   }
   // Pad remaining cells so that the grid is complete
@@ -164,17 +173,18 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
       console.log(`📅 CALENDAR: Date ${cell.date} NOT found in records`);
     }
     
-    // ✅ FIX: Use UTC dates for consistent future day detection
-    const currentUTCDate = createUTCDateString(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+    // ✅ FIX: Use UTC+3 Turkey Time for consistent future day detection
+    const turkeyNow = getTurkeyNow();
+    const currentTurkeyDate = createTurkeyDateString(turkeyNow.getUTCFullYear(), turkeyNow.getUTCMonth(), turkeyNow.getUTCDate());
     
     // If the selected month is the current month and this day is in the future, force achieved = false.
     if (
-      selectedDate.getFullYear() === now.getFullYear() &&
-      selectedDate.getMonth() === now.getMonth() &&
-      cell.date > currentUTCDate
+      selectedDate.getFullYear() === turkeyNow.getUTCFullYear() &&
+      selectedDate.getMonth() === turkeyNow.getUTCMonth() &&
+      cell.date > currentTurkeyDate
     ) {
       achieved = false;
-      console.log(`📅 CALENDAR: Date ${cell.date} is in the future (after ${currentUTCDate}), forcing achieved=false`);
+      console.log(`📅 CALENDAR: Date ${cell.date} is in the future (after ${currentTurkeyDate}) in Turkey Time, forcing achieved=false`);
     }
     
     return (

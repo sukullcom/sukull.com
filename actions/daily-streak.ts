@@ -8,28 +8,60 @@ import { getServerUser } from "@/lib/auth";
 import { calculateStreakBonus } from "@/constants";
 
 /**
- * Utility functions for consistent UTC date handling
+ * Utility functions for consistent UTC+3 (Turkey Time) date handling
+ * Turkey uses UTC+3 timezone year-round
  */
-function getUTCNow(): Date {
-  return new Date();
-}
-
-function getUTCToday(): Date {
+function getTurkeyNow(): Date {
   const now = new Date();
-  const utcToday = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
-  return utcToday;
+  // Add 3 hours to convert from UTC to UTC+3 (Turkey Time)
+  const turkeyTime = new Date(now.getTime() + (3 * 60 * 60 * 1000));
+  return turkeyTime;
 }
 
-function getUTCDateFromTimestamp(timestamp: Date | string): Date {
+function getTurkeyToday(): Date {
+  const now = getTurkeyNow();
+  // Get today's date in Turkey timezone (UTC+3)
+  const turkeyToday = new Date(Date.UTC(
+    now.getUTCFullYear(), 
+    now.getUTCMonth(), 
+    now.getUTCDate()
+  ));
+  return turkeyToday;
+}
+
+function getTurkeyDateFromTimestamp(timestamp: Date | string): Date {
   const date = new Date(timestamp);
-  return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+  // Convert to Turkey timezone and get the date component
+  const turkeyTime = new Date(date.getTime() + (3 * 60 * 60 * 1000));
+  return new Date(Date.UTC(
+    turkeyTime.getUTCFullYear(), 
+    turkeyTime.getUTCMonth(), 
+    turkeyTime.getUTCDate()
+  ));
 }
 
-function getUTCTomorrow(): Date {
-  const today = getUTCToday();
+function getTurkeyTomorrow(): Date {
+  const today = getTurkeyToday();
   const tomorrow = new Date(today);
   tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
   return tomorrow;
+}
+
+// Keep the old function names for backward compatibility but use Turkey time
+function getUTCNow(): Date {
+  return getTurkeyNow();
+}
+
+function getUTCToday(): Date {
+  return getTurkeyToday();
+}
+
+function getUTCDateFromTimestamp(timestamp: Date | string): Date {
+  return getTurkeyDateFromTimestamp(timestamp);
+}
+
+function getUTCTomorrow(): Date {
+  return getTurkeyTomorrow();
 }
 
 /**
@@ -188,7 +220,7 @@ export async function updateDailyStreak() {
     
     if (!progress) return false;
     
-    // Get current date (using UTC for consistency)
+    // Get current date (using UTC+3 Turkey Time for consistency)
     const now = getUTCNow();
     const today = getUTCToday();
     
@@ -247,7 +279,7 @@ export async function updateDailyStreak() {
           })
           .where(eq(userProgress.userId, userId));
         
-        console.log(`✅ STREAK: Updated existing record for user ${userId}: ${progress.istikrar + 1} days. Updated record for ${today.toISOString().split('T')[0]} (UTC)`);
+        console.log(`✅ STREAK: Updated existing record for user ${userId}: ${progress.istikrar + 1} days. Updated record for ${today.toISOString().split('T')[0]} (UTC+3 Turkey Time)`);
         return true;
       }
     } else {
@@ -266,7 +298,7 @@ export async function updateDailyStreak() {
         })
         .where(eq(userProgress.userId, userId));
       
-      console.log(`✅ STREAK: Daily goal achieved for user ${userId}. Streak: ${progress.istikrar + 1} days. Record created for ${today.toISOString().split('T')[0]} (UTC)`);
+      console.log(`✅ STREAK: Daily goal achieved for user ${userId}. Streak: ${progress.istikrar + 1} days. Record created for ${today.toISOString().split('T')[0]} (UTC+3 Turkey Time)`);
       return true;
     }
     
@@ -330,7 +362,7 @@ export async function checkAndResetStreaks() {
   try {
     console.log("Starting daily streak reset check...");
     
-    // Get yesterday's date using UTC
+    // Get yesterday's date using UTC+3 (Turkey Time)
     const now = getUTCNow();
     const today = getUTCToday();
     const yesterday = new Date(today);
@@ -490,7 +522,7 @@ export async function getUserDailyStreakForMonth(month: number, year: number) {
     
     const userId = user.id;
     
-    // Create date range for the month using UTC (month is 0-indexed in JS)
+    // Create date range for the month using UTC+3 Turkey Time (month is 0-indexed in JS)
     const firstDay = new Date(Date.UTC(year, month, 1));
     const lastDay = new Date(Date.UTC(year, month + 1, 1)); // First day of next month
     
@@ -603,7 +635,7 @@ export async function getCurrentDayProgress() {
       throw new Error("User progress not found");
     }
     
-    // Calculate today's points earned using UTC
+    // Calculate today's points earned using UTC+3 (Turkey Time)
     const now = getUTCNow();
     const today = getUTCToday();
     

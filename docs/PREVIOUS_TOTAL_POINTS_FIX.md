@@ -68,16 +68,17 @@ After running the reset, check:
 Ensure the daily cron job is properly configured:
 
 ```bash
-# Daily at midnight UTC
-0 0 * * * curl -X POST -H "Authorization: Bearer YOUR_CRON_SECRET" https://your-domain.com/api/cron/reset-streaks
+# Daily at midnight Turkey Time (UTC+3)
+# This runs at 21:00 UTC (which is 00:00 Turkey Time)
+0 21 * * * curl -X POST -H "Authorization: Bearer YOUR_CRON_SECRET" https://your-domain.com/api/cron/reset-streaks
 ```
 
 ## Expected Behavior After Fix
 
-1. **At Midnight**: All users' `previous_total_points` gets updated to their current `points`
+1. **At Midnight (Turkey Time UTC+3)**: All users' `previous_total_points` gets updated to their current `points`
 2. **During the Day**: Daily goal calculation uses the correct baseline
 3. **Real-time Updates**: Streak calendar and progress indicators show accurate status
-4. **Consistency**: All timezone calculations are in UTC for reliability
+4. **Consistency**: All timezone calculations are in UTC+3 (Turkey Time) for reliability
 
 ## Database Schema Impact
 
