@@ -203,23 +203,9 @@ export async function updateDailyStreak() {
       return false;
     }
     
-    // Calculate points earned today (since midnight UTC)
-    const lastCheck = progress.lastStreakCheck ? new Date(progress.lastStreakCheck) : null;
-    const lastCheckDay = lastCheck ? getUTCDateFromTimestamp(lastCheck) : getUTCToday();
-    
-    // If it's a new day since last check, reset baseline
-    let baselinePoints = progress.previousTotalPoints;
-    if (lastCheckDay.getTime() < today.getTime()) {
-      baselinePoints = progress.points;
-      await db.update(userProgress)
-        .set({
-          previousTotalPoints: baselinePoints,
-          lastStreakCheck: now,
-        })
-        .where(eq(userProgress.userId, userId));
-    }
-    
-    const pointsEarnedToday = Math.max(0, progress.points - (baselinePoints || 0));
+    // Calculate points earned today using previous_total_points as baseline
+    // Note: previous_total_points is updated daily by the cron job at midnight
+    const pointsEarnedToday = Math.max(0, progress.points - (progress.previousTotalPoints || 0));
     const dailyTarget = progress.dailyTarget || 50;
     
     // Check if daily target has been met
@@ -288,6 +274,51 @@ export async function updateDailyStreak() {
   } catch (error) {
     console.error("Error updating daily streak:", error);
     return false;
+  }
+}
+
+/**
+ * Updates previous_total_points for all users to their current points
+ * This should be called at the end of each day BEFORE checking streaks
+ * This sets the baseline for the next day's daily goal calculation
+ */
+export async function updatePreviousTotalPointsForAllUsers() {
+  try {
+    console.log("Starting previous_total_points update for all users...");
+    
+    const now = getUTCNow();
+    
+    // Get all users who have user progress
+    const allUsers = await db.query.userProgress.findMany({
+      columns: {
+        userId: true,
+        points: true,
+        previousTotalPoints: true,
+      }
+    });
+    
+    console.log(`Updating previous_total_points for ${allUsers.length} users`);
+    
+    let updatedCount = 0;
+    
+    // Update previous_total_points to current points for all users
+    for (const user of allUsers) {
+      await db.update(userProgress)
+        .set({
+          previousTotalPoints: user.points,
+          lastStreakCheck: now,
+        })
+        .where(eq(userProgress.userId, user.userId));
+      
+      console.log(`Updated user ${user.userId}: previous_total_points set to ${user.points}`);
+      updatedCount++;
+    }
+    
+    console.log(`✅ Updated previous_total_points for ${updatedCount} users`);
+    return { success: true, updatedCount };
+  } catch (error) {
+    console.error("❌ Error updating previous_total_points:", error);
+    return { success: false, error: error instanceof Error ? error.message : "Unknown error" };
   }
 }
 
@@ -363,10 +394,72 @@ export async function checkAndResetStreaks() {
     }
     
     console.log(`Daily streak reset check completed. Reset ${resetsCount} streaks.`);
-    return true;
+    return { success: true, resetsCount };
   } catch (error) {
     console.error("Error in daily streak reset:", error);
-    return false;
+    return { success: false, error: error instanceof Error ? error.message : "Unknown error" };
+  }
+}
+
+/**
+ * Complete daily reset process - updates previous_total_points for all users
+ * then checks and resets streaks for users who missed their goals
+ * This is the main function that should be called by the daily cron job
+ */
+export async function performDailyReset() {
+  try {
+    console.log("🚀 Starting complete daily reset process...");
+    const startTime = Date.now();
+    
+    // Step 1: Update previous_total_points for all users (sets baseline for next day)
+    console.log("📊 Step 1: Updating previous_total_points for all users...");
+    const updateResult = await updatePreviousTotalPointsForAllUsers();
+    
+    if (!updateResult.success) {
+      console.error("❌ Failed to update previous_total_points:", updateResult.error);
+      return { 
+        success: false, 
+        error: "Failed to update previous_total_points", 
+        details: updateResult.error 
+      };
+    }
+    
+    console.log(`✅ Step 1 complete: Updated ${updateResult.updatedCount} users`);
+    
+    // Step 2: Check and reset streaks for users who missed their goals
+    console.log("🎯 Step 2: Checking and resetting streaks...");
+    const resetResult = await checkAndResetStreaks();
+    
+    if (!resetResult.success) {
+      console.error("❌ Failed to reset streaks:", resetResult.error);
+      return { 
+        success: false, 
+        error: "Failed to reset streaks", 
+        details: resetResult.error 
+      };
+    }
+    
+    console.log(`✅ Step 2 complete: Reset ${resetResult.resetsCount} streaks`);
+    
+    const duration = Date.now() - startTime;
+    console.log(`🎉 Daily reset process completed successfully in ${duration}ms`);
+    
+    return {
+      success: true,
+      summary: {
+        usersUpdated: updateResult.updatedCount,
+        streaksReset: resetResult.resetsCount,
+        durationMs: duration
+      }
+    };
+    
+  } catch (error) {
+    console.error("❌ Error in daily reset process:", error);
+    return { 
+      success: false, 
+      error: "Daily reset process failed", 
+      details: error instanceof Error ? error.message : "Unknown error" 
+    };
   }
 }
 

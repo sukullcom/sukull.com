@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { checkAndResetStreaks } from "@/actions/daily-streak";
+import { performDailyReset } from "@/actions/daily-streak";
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,30 +14,33 @@ export async function POST(request: NextRequest) {
     }
 
     const startTime = new Date();
-    console.log("Daily streak reset job started at:", startTime.toISOString());
+    console.log("Daily reset job started at:", startTime.toISOString());
     
-    const result = await checkAndResetStreaks();
+    const result = await performDailyReset();
     
     const endTime = new Date();
     const duration = endTime.getTime() - startTime.getTime();
     
-    if (result) {
-      console.log(`Daily streak reset job completed successfully in ${duration}ms`);
+    if (result.success) {
+      console.log(`Daily reset job completed successfully in ${duration}ms`);
       return NextResponse.json(
         { 
           success: true, 
-          message: "Daily streak reset completed successfully",
+          message: "Daily reset completed successfully",
           timestamp: endTime.toISOString(),
-          duration: `${duration}ms`
+          duration: `${duration}ms`,
+          summary: result.summary
         },
         { status: 200 }
       );
     } else {
-      console.error("Daily streak reset job failed");
+      console.error("Daily reset job failed:", result.error);
       return NextResponse.json(
         { 
           success: false, 
-          message: "Daily streak reset failed",
+          message: "Daily reset failed",
+          error: result.error,
+          details: result.details,
           timestamp: endTime.toISOString(),
           duration: `${duration}ms`
         },
