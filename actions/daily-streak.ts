@@ -200,18 +200,113 @@ export async function checkStreakContinuity(userId: string) {
 }
 
 /**
- * Updates the daily streak for a user - this is the main function that should be called
- * whenever a user earns points to check if they've met their daily goal
+ * Checks if a daily reset is needed and automatically performs it
+ * This runs whenever users interact with the streak system
+ * Ensures previous_total_points is updated even without external cron jobs
+ */
+export async function checkAndPerformDailyResetIfNeeded() {
+  try {
+    console.log("🔍 Checking if daily reset is needed...");
+    
+    const turkeyNow = getTurkeyNow();
+    const turkeyToday = getTurkeyToday();
+    const todayDateString = turkeyToday.toISOString().split('T')[0];
+    
+    // NEW LOGIC: Check if any user has outdated previous_total_points
+    // This indicates we need a daily reset because points were earned but baselines weren't updated
+    const usersWithOutdatedBaselines = await db.query.userProgress.findMany({
+      columns: {
+        userId: true,
+        points: true,
+        previousTotalPoints: true,
+        lastStreakCheck: true,
+      },
+      where: sql`points != COALESCE(previous_total_points, 0)`, // Find users where points differ from baseline
+    });
+    
+    console.log(`📊 Found ${usersWithOutdatedBaselines.length} users with outdated baselines`);
+    
+    // If we have users with outdated baselines, check if any of them have old lastStreakCheck dates
+    if (usersWithOutdatedBaselines.length > 0) {
+      let needsReset = false;
+      
+      // Check if ANY user has a lastStreakCheck from before today
+      for (const user of usersWithOutdatedBaselines) {
+        if (!user.lastStreakCheck) {
+          needsReset = true; // User never had streak check
+          break;
+        }
+        
+        const userCheckDate = getTurkeyDateFromTimestamp(user.lastStreakCheck);
+        const userCheckDateString = userCheckDate.toISOString().split('T')[0];
+        
+        console.log(`👤 User ${user.userId}: points=${user.points}, baseline=${user.previousTotalPoints}, lastCheck=${userCheckDateString}`);
+        
+        // If user's last check was before today, we need reset
+        if (userCheckDateString < todayDateString) {
+          console.log(`⏰ User ${user.userId} has old lastStreakCheck (${userCheckDateString} < ${todayDateString})`);
+          needsReset = true;
+          break;
+        }
+      }
+      
+      if (needsReset) {
+        console.log("🚀 New day detected! Users have outdated baselines and old streak checks - performing automatic daily reset...");
+        await performDailyReset();
+        return true;
+      } else {
+        console.log("📊 Users have outdated baselines but all checks are from today - users earned points after today's reset");
+        return false;
+      }
+    }
+    
+    // Alternative check: Look for users who might need reset based on time since last reset
+    const anyUser = await db.query.userProgress.findFirst({
+      columns: {
+        lastStreakCheck: true,
+      },
+      orderBy: [desc(userProgress.lastStreakCheck)],
+    });
+    
+    if (!anyUser?.lastStreakCheck) {
+      console.log("📊 No previous streak check found, performing initial reset...");
+      await performDailyReset();
+      return true;
+    }
+    
+    const lastCheckTurkeyDate = getTurkeyDateFromTimestamp(anyUser.lastStreakCheck);
+    const lastCheckDateString = lastCheckTurkeyDate.toISOString().split('T')[0];
+    
+    console.log(`📅 Most recent check: ${lastCheckDateString}, Today: ${todayDateString} (UTC+3 Turkey Time)`);
+    
+    // If the most recent check was before today, reset is needed
+    if (lastCheckDateString < todayDateString) {
+      console.log("⏰ Most recent check is from previous day - performing automatic daily reset...");
+      await performDailyReset();
+      return true;
+    }
+    
+    console.log("✅ Daily reset not needed - already completed today");
+    return false;
+  } catch (error) {
+    console.error("Error checking for daily reset:", error);
+    return false;
+  }
+}
+
+/**
+ * Updates the daily streak for a user - Enhanced with automatic daily reset
+ * This is the main function that should be called whenever a user earns points
  */
 export async function updateDailyStreak() {
   try {
+    // FIRST: Check if we need to perform daily reset (new day detection)
+    await checkAndPerformDailyResetIfNeeded();
+    
     const user = await getServerUser();
     if (!user) return false;
     
     const userId = user.id;
-    
-    // First, check if streak should be reset due to missed days
-    await checkStreakContinuity(userId);
     
     // Get fresh user's progress data after potential reset
     const progress = await db.query.userProgress.findFirst({
@@ -224,52 +319,40 @@ export async function updateDailyStreak() {
     const now = getUTCNow();
     const today = getUTCToday();
     
-    // Initialize baseline if needed
-    if (progress.previousTotalPoints === null || progress.previousTotalPoints === undefined) {
-      await db.update(userProgress)
-        .set({
-          previousTotalPoints: progress.points,
-          lastStreakCheck: now,
-        })
-        .where(eq(userProgress.userId, userId));
-      return false;
-    }
-    
-    // Calculate points earned today using previous_total_points as baseline
-    // Note: previous_total_points is updated daily by the cron job at midnight
+    // Calculate daily goal achievement using current baseline
     const pointsEarnedToday = Math.max(0, progress.points - (progress.previousTotalPoints || 0));
     const dailyTarget = progress.dailyTarget || 50;
+    const goalAchieved = pointsEarnedToday >= dailyTarget;
     
-    // Check if daily target has been met
-    const metDailyTarget = pointsEarnedToday >= dailyTarget;
+    console.log(`📊 STREAK CHECK for user ${userId}:`);
+    console.log(`   Current points: ${progress.points}`);
+    console.log(`   Previous total: ${progress.previousTotalPoints || 0}`);
+    console.log(`   Points earned today: ${pointsEarnedToday}`);
+    console.log(`   Daily target: ${dailyTarget}`);
+    console.log(`   Goal achieved: ${goalAchieved}`);
     
-    if (!metDailyTarget) {
-      // Target not met yet, just update the check time
-      await db.update(userProgress)
-        .set({
-          lastStreakCheck: now,
-        })
-        .where(eq(userProgress.userId, userId));
+    if (!goalAchieved) {
+      console.log(`❌ Daily goal not achieved yet (${pointsEarnedToday}/${dailyTarget} points)`);
       return false;
     }
     
-    // Target met! Check if we already have a record for today
-    const tomorrow = getUTCTomorrow();
-    
-    const existingStreak = await db.query.userDailyStreak.findFirst({
+    // Check if we already have a record for today
+    const existingRecord = await db.query.userDailyStreak.findFirst({
       where: and(
         eq(userDailyStreak.userId, userId),
-        gte(userDailyStreak.date, today),
-        lt(userDailyStreak.date, tomorrow)
+        eq(userDailyStreak.date, today)
       ),
     });
     
-    if (existingStreak) {
-      // Update existing record if target is now met and wasn't before
-      if (!existingStreak.achieved) {
+    if (existingRecord) {
+      if (!existingRecord.achieved) {
+        // Update existing record to achieved
         await db.update(userDailyStreak)
           .set({ achieved: true })
-          .where(eq(userDailyStreak.id, existingStreak.id));
+          .where(and(
+            eq(userDailyStreak.userId, userId),
+            eq(userDailyStreak.date, today)
+          ));
         
         // Increment streak counter
         await db.update(userProgress)

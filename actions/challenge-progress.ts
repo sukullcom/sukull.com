@@ -151,7 +151,12 @@ export async function addPointsToUser(pointsToAdd: number) {
   const userId = user.id;
     console.log(`👤 Processing points for user: ${userId}`);
 
-  // Check streak continuity first
+  // FIRST: Check if daily reset is needed (automatic new day detection)
+  const { checkAndPerformDailyResetIfNeeded } = await import("./daily-streak");
+  await checkAndPerformDailyResetIfNeeded();
+
+  // Check streak continuity
+  const { checkStreakContinuity } = await import("./daily-streak");
   await checkStreakContinuity(userId);
 
   const currentUserProgress = await db.query.userProgress.findFirst({

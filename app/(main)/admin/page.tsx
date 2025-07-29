@@ -119,11 +119,6 @@ export default async function AdminDashboardPage() {
                   Open Course Builder
                 </Link>
               </Button>
-              <Button asChild variant="primaryOutline" className="w-full">
-                <Link href="/admin/courses">
-                  Legacy Course Manager
-                </Link>
-              </Button>
             </div>
           </CardFooter>
         </Card>

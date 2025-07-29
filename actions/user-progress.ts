@@ -217,10 +217,11 @@ export async function addUserPoints(points: number) {
     
     const userId = user.id;
     
-    // Import the streak continuity check
-    const { checkStreakContinuity } = await import("./daily-streak");
+    // FIRST: Check if daily reset is needed (automatic new day detection)
+    const { checkAndPerformDailyResetIfNeeded, checkStreakContinuity } = await import("./daily-streak");
+    await checkAndPerformDailyResetIfNeeded();
     
-    // Check streak continuity first
+    // Check streak continuity
     await checkStreakContinuity(userId);
     
     // Get current user progress
