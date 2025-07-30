@@ -645,11 +645,11 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
               Create Challenge
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-4xl max-h-[85vh]" data-dialog="challenge-creation">
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto" data-dialog="challenge-creation">
             <DialogHeader>
               <DialogTitle>Create New Challenge</DialogTitle>
             </DialogHeader>
-            <div className="space-y-6 overflow-y-auto max-h-[calc(85vh-8rem)] pr-2">
+            <div className="space-y-6">
               {/* Basic Info */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -807,6 +807,15 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                 </div>
               )}
 
+              <div className="flex justify-end space-x-2">
+                <Button variant="primaryOutline" onClick={() => setIsCreateOpen(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={handleCreateChallengeWithOptions} disabled={isLoading || !selectedChallengeType}>
+                  {isLoading ? "Creating..." : "Create Challenge"}
+                </Button>
+              </div>
+
               {/* Challenge Options Section - shown when type is selected */}
               {selectedChallengeType && challengeOptions.length > 0 && (
                 <div className="mt-6 pt-6 border-t border-gray-200">
@@ -820,16 +829,6 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                   />
                 </div>
               )}
-            </div>
-            
-            {/* Fixed Footer with Buttons */}
-            <div className="flex justify-end space-x-2 pt-4 border-t bg-white">
-              <Button variant="primaryOutline" onClick={() => setIsCreateOpen(false)}>
-                Cancel
-              </Button>
-              <Button onClick={handleCreateChallengeWithOptions} disabled={isLoading || !selectedChallengeType}>
-                {isLoading ? "Creating..." : "Create Challenge"}
-              </Button>
             </div>
           </DialogContent>
         </Dialog>
@@ -1028,11 +1027,11 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
       {/* Edit Challenge Dialog */}
       {editingChallenge && (
         <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-          <DialogContent className="max-w-4xl max-h-[85vh]">
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Edit Challenge</DialogTitle>
             </DialogHeader>
-            <div className="space-y-6 overflow-y-auto max-h-[calc(85vh-8rem)] pr-2">
+            <div className="space-y-6">
               {/* Basic Info */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -1190,6 +1189,15 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                 </div>
               )}
 
+              <div className="flex justify-end space-x-2">
+                <Button variant="primary" onClick={() => setIsEditOpen(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={handleEditChallenge} disabled={isLoading || !editChallengeType}>
+                  {isLoading ? "Saving..." : "Save Challenge"}
+                </Button>
+              </div>
+
               {/* Challenge Options Section - shown when type is selected */}
               {editChallengeType && editChallengeOptions.length > 0 && (
                 <div className="mt-6 pt-6 border-t border-gray-200">
@@ -1203,16 +1211,6 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                   />
                 </div>
               )}
-            </div>
-            
-            {/* Fixed Footer with Buttons */}
-            <div className="flex justify-end space-x-2 pt-4 border-t bg-white">
-              <Button variant="primary" onClick={() => setIsEditOpen(false)}>
-                Cancel
-              </Button>
-              <Button onClick={handleEditChallenge} disabled={isLoading || !editChallengeType}>
-                {isLoading ? "Saving..." : "Save Challenge"}
-              </Button>
             </div>
           </DialogContent>
         </Dialog>
