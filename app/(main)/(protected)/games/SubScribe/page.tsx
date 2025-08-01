@@ -67,6 +67,7 @@ export default function VideoSelectionPage() {
           },
         });
         
+        
         if (response.status === 401) {
           // Authentication expired, redirect to login
           window.location.href = '/login';
