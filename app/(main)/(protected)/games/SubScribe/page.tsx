@@ -156,7 +156,7 @@ export default function VideoSelectionPage() {
       // Quick transcript availability check
       setLoadingMessage("Transcript kontrol ediliyor...");
       
-      const paymentServerUrl = process.env.NEXT_PUBLIC_PAYMENT_SERVER_URL || 'https://sukullcom-production.up.railway.app';
+      const paymentServerUrl = (process.env.NEXT_PUBLIC_PAYMENT_SERVER_URL || 'https://sukullcom-production.up.railway.app').replace(/\/$/, '');
       
       // Try Railway server first, then fallback to local/vercel API
       let transcriptResponse;
