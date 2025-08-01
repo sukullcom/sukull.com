@@ -19,7 +19,7 @@ interface UserProgress {
 function getVideoIdFromUrl(url: string): string | null {
   try {
     const parsedUrl = new URL(url);
-    // Handle both standard and short YouTube URLs
+    // Handle both standard and short YouTube  URLs
     if (parsedUrl.hostname === "youtu.be") {
       return parsedUrl.pathname.slice(1);
     }

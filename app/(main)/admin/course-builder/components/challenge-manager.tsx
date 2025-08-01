@@ -834,7 +834,7 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
         </Dialog>
       </div>
 
-      {/* No lessons warning */}
+      {/* No lessons warning  */}
       {lessons.length === 0 && (
         <div className="text-center py-12 bg-yellow-50 rounded-lg border border-yellow-200">
           <Target className="w-12 h-12 text-yellow-600 mx-auto mb-4" />

@@ -23,7 +23,7 @@ interface LyricLine {
   words: LyricWord[];
 }
 
-// Predefined transcripts mapped by videoId.
+// Predefined transcripts mapped by videoId
 const predefinedTranscripts: Record<string, string[]> = {
   "0HMjTxKRbaI": [
     "We're increasingly facing burnout. How is it possible to do work that you're",

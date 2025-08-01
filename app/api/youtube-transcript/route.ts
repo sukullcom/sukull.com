@@ -137,6 +137,7 @@ export async function GET(req: NextRequest) {
           let currentTime = null;
           let currentText = '';
           
+          
           for (const line of lines) {
             const timeMatch = line.match(/^(\d{2}:\d{2}:\d{2}\.\d{3}) --> (\d{2}:\d{2}:\d{2}\.\d{3})/);
             if (timeMatch) {
