@@ -347,7 +347,8 @@ export default function GamePage() {
 
       // Otherwise, fetch from API
       try {
-        const response = await fetch(`/api/youtube-transcript?videoId=${videoId}&lang=en`, {
+        const paymentServerUrl = process.env.NEXT_PUBLIC_PAYMENT_SERVER_URL || 'https://sukullcom-production.up.railway.app';
+        const response = await fetch(`${paymentServerUrl}/api/youtube-transcript?videoId=${videoId}&lang=en`, {
           credentials: 'include', // Include cookies for authentication
           headers: {
             'Content-Type': 'application/json',

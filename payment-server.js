@@ -5,6 +5,7 @@ const { createClient } = require('@supabase/supabase-js');
 const { drizzle } = require('drizzle-orm/node-postgres');
 const { Pool } = require('pg');
 const { eq } = require('drizzle-orm');
+const { YtDlp } = require("ytdlp-nodejs");
 
 // Load environment variables
 require('dotenv').config();
@@ -572,6 +573,246 @@ app.post('/api/payment/subscribe', authenticateUser, async (req, res) => {
       success: false,
       message: 'Abonelik işlemi sırasında hata oluştu',
       error: error.message || 'Unknown error'
+    });
+  }
+});
+
+// YouTube Transcript API endpoint
+app.get('/api/youtube-transcript', async (req, res) => {
+  try {
+    const { videoId, lang = 'en' } = req.query;
+    
+    if (!videoId) {
+      return res.status(400).json({ 
+        error: "Missing videoId parameter." 
+      });
+    }
+
+    console.log(`Fetching transcript for: ${videoId}, language: ${lang}`);
+
+    const ytdlp = new YtDlp();
+    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+
+    // Check if yt-dlp is available and download if needed
+    const isInstalled = await ytdlp.checkInstallationAsync();
+    if (!isInstalled) {
+      console.log("Installing yt-dlp...");
+    }
+
+    // Get video info including available subtitles
+    console.log("Fetching video information...");
+    const videoInfo = await ytdlp.getInfoAsync(videoUrl);
+    
+    if (videoInfo._type !== 'video') {
+      return res.status(400).json({
+        error: "Invalid video. Please provide a single video URL.",
+        videoId: videoId
+      });
+    }
+
+    // Check for available subtitles
+    const subtitles = videoInfo.subtitles || {};
+    const automaticCaptions = videoInfo.automatic_captions || {};
+    const FALLBACK_LANGUAGES = ['en', 'es', 'fr', 'de', 'ja', 'ko', 'zh', 'pt', 'ru', 'it', 'ar', 'tr'];
+
+    console.log("Available subtitles:", Object.keys(subtitles));
+    console.log("Available auto-captions:", Object.keys(automaticCaptions));
+
+    // Function to extract transcript from subtitle data
+    const extractTranscript = async (langCode, isAutomatic = false) => {
+      try {
+        const source = isAutomatic ? automaticCaptions : subtitles;
+        const langSubs = source[langCode];
+        
+        if (!langSubs || !Array.isArray(langSubs) || langSubs.length === 0) {
+          return null;
+        }
+
+        const formats = ['json3', 'srv1', 'vtt', 'ttml'];
+        let subtitle = null;
+
+        for (const format of formats) {
+          subtitle = langSubs.find((sub) => sub.ext === format);
+          if (subtitle) break;
+        }
+
+        if (!subtitle) subtitle = langSubs[0];
+
+        console.log(`Fetching ${langCode} ${isAutomatic ? 'auto' : 'manual'} (${subtitle.ext})`);
+
+        // Fetch the subtitle content
+        const response = await fetch(subtitle.url);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const content = await response.text();
+        
+        // Parse based on format
+        let transcript = [];
+        
+        if (subtitle.ext === 'json3') {
+          const data = JSON.parse(content);
+          if (data.events) {
+            for (const event of data.events) {
+              if (event.segs) {
+                let text = '';
+                for (const seg of event.segs) {
+                  if (seg.utf8) {
+                    text += seg.utf8;
+                  }
+                }
+                if (text.trim()) {
+                  transcript.push({
+                    startTime: event.tStartMs / 1000,
+                    duration: event.dDurationMs / 1000,
+                    text: text.trim()
+                  });
+                }
+              }
+            }
+          }
+        } else if (subtitle.ext === 'vtt') {
+          const lines = content.split('\n');
+          let currentTime = null;
+          let currentText = '';
+          
+          for (const line of lines) {
+            const timeMatch = line.match(/^(\d{2}:\d{2}:\d{2}\.\d{3}) --> (\d{2}:\d{2}:\d{2}\.\d{3})/);
+            if (timeMatch) {
+              if (currentTime && currentText.trim()) {
+                transcript.push({
+                  startTime: currentTime,
+                  text: currentText.trim()
+                });
+              }
+              // Convert time to seconds
+              const [, start] = timeMatch;
+              const [hours, minutes, seconds] = start.split(':');
+              currentTime = parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseFloat(seconds);
+              currentText = '';
+            } else if (line.trim() && !line.startsWith('WEBVTT') && !line.includes('-->')) {
+              currentText += line + ' ';
+            }
+          }
+          
+          if (currentTime && currentText.trim()) {
+            transcript.push({
+              startTime: currentTime,
+              text: currentText.trim()
+            });
+          }
+        }
+
+        return transcript.length > 0 ? transcript : null;
+      } catch (error) {
+        console.error(`Error extracting ${langCode} transcript:`, error);
+        return null;
+      }
+    };
+
+    // Try to get transcript in order of preference
+    let transcript = null;
+    let usedLanguage = null;
+    let isAutomatic = false;
+
+    // 1. Try requested language (manual first, then automatic)
+    transcript = await extractTranscript(lang, false);
+    if (transcript) {
+      usedLanguage = lang;
+      isAutomatic = false;
+    } else {
+      transcript = await extractTranscript(lang, true);
+      if (transcript) {
+        usedLanguage = lang;
+        isAutomatic = true;
+      }
+    }
+
+    // 2. Try fallback languages if requested language failed
+    if (!transcript) {
+      for (const fallbackLang of FALLBACK_LANGUAGES) {
+        if (fallbackLang === lang) continue; // Already tried
+
+        transcript = await extractTranscript(fallbackLang, false);
+        if (transcript) {
+          usedLanguage = fallbackLang;
+          isAutomatic = false;
+          break;
+        }
+
+        transcript = await extractTranscript(fallbackLang, true);
+        if (transcript) {
+          usedLanguage = fallbackLang;
+          isAutomatic = true;
+          break;
+        }
+      }
+    }
+
+    // 3. Try any available language as last resort
+    if (!transcript) {
+      const allLanguages = [...Object.keys(subtitles), ...Object.keys(automaticCaptions)];
+      for (const availableLang of allLanguages) {
+        if (FALLBACK_LANGUAGES.includes(availableLang)) continue; // Already tried
+
+        transcript = await extractTranscript(availableLang, false);
+        if (transcript) {
+          usedLanguage = availableLang;
+          isAutomatic = false;
+          break;
+        }
+
+        transcript = await extractTranscript(availableLang, true);
+        if (transcript) {
+          usedLanguage = availableLang;
+          isAutomatic = true;
+          break;
+        }
+      }
+    }
+
+    // If still no transcript found
+    if (!transcript || transcript.length === 0) {
+      const manual = Object.keys(subtitles);
+      const auto = Object.keys(automaticCaptions);
+      
+      const errorMessage = `Bu video için transcript bulunamadı.\n\nMevcut:\n- Manuel: ${manual.length ? manual.join(', ') : 'Yok'}\n- Otomatik: ${auto.length ? auto.join(', ') : 'Yok'}`;
+
+      return res.status(404).json({
+        error: errorMessage,
+        videoId: videoId,
+        availableSubtitles: manual,
+        availableAutoCaptions: auto
+      });
+    }
+
+    console.log(`Successfully processed transcript: ${transcript.length} lines, language: ${usedLanguage}${isAutomatic ? ' (automatic)' : ''}`);
+
+    res.json({
+      transcript,
+      language: usedLanguage,
+      isAutomatic,
+      totalLines: transcript.length,
+      duration: transcript.length > 0 ? transcript[transcript.length - 1].startTime : 0,
+      videoTitle: videoInfo.title || 'Unknown'
+    });
+
+  } catch (error) {
+    console.error("yt-dlp error:", error);
+
+    let message = `Hata: ${error.message}`;
+    
+    if (error.message.includes('Private video')) {
+      message = 'Bu video özel. Lütfen halka açık bir video seçin.';
+    } else if (error.message.includes('Video unavailable')) {
+      message = 'Video erişilebilir değil.';
+    }
+
+    res.status(500).json({
+      error: message,
+      type: "YtDlpError",
+      videoId: req.query.videoId
     });
   }
 });

@@ -155,7 +155,8 @@ export default function VideoSelectionPage() {
       // Quick transcript availability check
       setLoadingMessage("Transcript kontrol ediliyor...");
       
-      const transcriptResponse = await fetch(`/api/youtube-transcript?videoId=${videoId}&lang=en`, {
+      const paymentServerUrl = process.env.NEXT_PUBLIC_PAYMENT_SERVER_URL || 'https://sukullcom-production.up.railway.app';
+      const transcriptResponse = await fetch(`${paymentServerUrl}/api/youtube-transcript?videoId=${videoId}&lang=en`, {
         credentials: 'include', // Include cookies for authentication
         headers: {
           'Content-Type': 'application/json',
