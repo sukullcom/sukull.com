@@ -156,12 +156,36 @@ export default function VideoSelectionPage() {
       setLoadingMessage("Transcript kontrol ediliyor...");
       
       const paymentServerUrl = process.env.NEXT_PUBLIC_PAYMENT_SERVER_URL || 'https://sukullcom-production.up.railway.app';
-      const transcriptResponse = await fetch(`${paymentServerUrl}/api/youtube-transcript?videoId=${videoId}&lang=en`, {
-        credentials: 'include', // Include cookies for authentication
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      
+      // Try Railway server first, then fallback to local/vercel API
+      let transcriptResponse;
+      try {
+        transcriptResponse = await fetch(`${paymentServerUrl}/api/youtube-transcript?videoId=${videoId}&lang=en`, {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        
+        // If Railway server doesn't have the endpoint (404), fallback to original API
+        if (transcriptResponse.status === 404) {
+          console.log('Railway endpoint not found, trying fallback...');
+          transcriptResponse = await fetch(`/api/youtube-transcript?videoId=${videoId}&lang=en`, {
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+        }
+      } catch (error) {
+        console.log('Railway server failed, trying fallback...', error);
+        transcriptResponse = await fetch(`/api/youtube-transcript?videoId=${videoId}&lang=en`, {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+      }
       
       if (transcriptResponse.status === 401) {
         alert("Oturum süreniz dolmuş. Lütfen sayfayı yenileyin ve tekrar giriş yapın.");
