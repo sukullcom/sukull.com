@@ -168,25 +168,33 @@ export default function VideoSelectionPage() {
           },
         });
         
-        // If Railway server doesn't have the endpoint (404), fallback to original API
-        if (transcriptResponse.status === 404) {
-          console.log('Railway endpoint not found, trying fallback...');
-          transcriptResponse = await fetch(`/api/youtube-transcript?videoId=${videoId}&lang=en`, {
-            credentials: 'include',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
+                  // If Railway server doesn't have the endpoint (404), show helpful message
+          if (transcriptResponse.status === 404) {
+            console.log('Railway endpoint not found, API not yet deployed');
+            setError(`YouTube transcript API is being updated.
+
+Please try one of these pre-loaded videos instead:
+• Cal Newport - Slow Productivity: https://www.youtube.com/watch?v=0HMjTxKRbaI
+• Kurzgesagt - Immune System: https://www.youtube.com/watch?v=zQGOcOUBi6s
+• Rick Astley - Never Gonna Give You Up: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+
+These videos have built-in transcripts and will work immediately.`);
+            setLoading(false);
+            return;
+          }
+              } catch (error) {
+          console.log('Railway server failed, no fallback available in production', error);
+          setError(`YouTube transcript API is temporarily unavailable.
+
+Please try one of these pre-loaded videos instead:
+• Cal Newport - Slow Productivity: https://www.youtube.com/watch?v=0HMjTxKRbaI
+• Kurzgesagt - Immune System: https://www.youtube.com/watch?v=zQGOcOUBi6s
+• Rick Astley - Never Gonna Give You Up: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+
+These videos have built-in transcripts and will work immediately.`);
+          setLoading(false);
+          return;
         }
-      } catch (error) {
-        console.log('Railway server failed, trying fallback...', error);
-        transcriptResponse = await fetch(`/api/youtube-transcript?videoId=${videoId}&lang=en`, {
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-      }
       
       if (transcriptResponse.status === 401) {
         alert("Oturum süreniz dolmuş. Lütfen sayfayı yenileyin ve tekrar giriş yapın.");
