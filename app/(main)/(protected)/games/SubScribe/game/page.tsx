@@ -347,7 +347,23 @@ export default function GamePage() {
 
       // Otherwise, fetch from API
       try {
-        const response = await fetch(`/api/youtube-transcript?videoId=${videoId}&lang=en`);
+        const response = await fetch(`/api/youtube-transcript?videoId=${videoId}&lang=en`, {
+          credentials: 'include', // Include cookies for authentication
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        
+        if (response.status === 401) {
+          setError(`Oturum süreniz dolmuş. Lütfen sayfayı yenileyin ve tekrar giriş yapın.
+
+Sayfa otomatik olarak yenilenecek...`);
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
+          return;
+        }
+        
         const data = await response.json();
 
         if (data.transcript) {

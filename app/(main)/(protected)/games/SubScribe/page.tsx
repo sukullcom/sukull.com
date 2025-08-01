@@ -60,7 +60,19 @@ export default function VideoSelectionPage() {
   useEffect(() => {
     const fetchUserProgress = async () => {
       try {
-        const response = await fetch('/api/user/progress');
+        const response = await fetch('/api/user/progress', {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        
+        if (response.status === 401) {
+          // Authentication expired, redirect to login
+          window.location.href = '/login';
+          return;
+        }
+        
         if (response.ok) {
           const data = await response.json();
           setUserProgress(data);
@@ -143,7 +155,19 @@ export default function VideoSelectionPage() {
       // Quick transcript availability check
       setLoadingMessage("Transcript kontrol ediliyor...");
       
-      const transcriptResponse = await fetch(`/api/youtube-transcript?videoId=${videoId}&lang=en`);
+      const transcriptResponse = await fetch(`/api/youtube-transcript?videoId=${videoId}&lang=en`, {
+        credentials: 'include', // Include cookies for authentication
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      if (transcriptResponse.status === 401) {
+        alert("Oturum süreniz dolmuş. Lütfen sayfayı yenileyin ve tekrar giriş yapın.");
+        window.location.reload();
+        return;
+      }
+      
       const transcriptData = await transcriptResponse.json();
       
       if (transcriptData.transcript && transcriptData.transcript.length > 0) {
