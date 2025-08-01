@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ["nodejs_18", "python3", "python3Packages.pip"]
+
+[phases.build]
+cmds = ["npm ci"]
+
+[start]
+cmd = "npm run payment-server:prod"
