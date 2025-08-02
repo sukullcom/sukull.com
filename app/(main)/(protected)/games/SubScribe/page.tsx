@@ -156,50 +156,9 @@ export default function VideoSelectionPage() {
       // Quick transcript availability check
       setLoadingMessage("Transcript kontrol ediliyor...");
       
-      const paymentServerUrl = (process.env.NEXT_PUBLIC_PAYMENT_SERVER_URL || 'https://sukullcom-production.up.railway.app').replace(/\/$/, '');
-      
-      // Try Railway server first, then fallback to local/vercel API
-      let transcriptResponse;
-      try {
-        transcriptResponse = await fetch(`${paymentServerUrl}/api/youtube-transcript?videoId=${videoId}&lang=en`, {
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        
-                  // If Railway server doesn't have the endpoint (404), show helpful message
-          if (transcriptResponse.status === 404) {
-            console.log('Railway endpoint not found, API not yet deployed');
-            setError(`YouTube transcript API is being updated.
-
-Please try one of these pre-loaded videos instead:
-• Cal Newport - Slow Productivity: https://www.youtube.com/watch?v=0HMjTxKRbaI
-• Kurzgesagt - Immune System: https://www.youtube.com/watch?v=zQGOcOUBi6s
-• Rick Astley - Never Gonna Give You Up: https://www.youtube.com/watch?v=dQw4w9WgXcQ
-
-These videos have built-in transcripts and will work immediately.`);
-            setLoading(false);
-            return;
-          }
-              } catch (error) {
-          console.log('Railway server failed, trying Vercel fallback...', error);
-          try {
-            transcriptResponse = await fetch(`/api/youtube-transcript-simple?videoId=${videoId}&lang=en`);
-          } catch (fallbackError) {
-            console.log('All APIs failed', fallbackError);
-            setError(`YouTube transcript API is temporarily unavailable.
-
-Please try one of these pre-loaded videos instead:
-• Cal Newport - Slow Productivity: https://www.youtube.com/watch?v=0HMjTxKRbaI
-• Kurzgesagt - Immune System: https://www.youtube.com/watch?v=zQGOcOUBi6s
-• Rick Astley - Never Gonna Give You Up: https://www.youtube.com/watch?v=dQw4w9WgXcQ
-
-These videos have built-in transcripts and will work immediately.`);
-            setLoading(false);
-            return;
-          }
-        }
+      // Use YouTube Official API (most reliable solution)
+      console.log('Using YouTube Official API...');
+      const transcriptResponse = await fetch(`/api/youtube-official?videoId=${videoId}&lang=en`);
       
       if (transcriptResponse.status === 401) {
         alert("Oturum süreniz dolmuş. Lütfen sayfayı yenileyin ve tekrar giriş yapın.");
