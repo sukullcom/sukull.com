@@ -90,9 +90,9 @@ Try one of these videos with guaranteed transcripts:
     }
 
     // Step 3: Find best caption track
-    const selectedCaption = captionsData.items.find(item => 
+    const selectedCaption = captionsData.items.find((item: any) => 
       item.snippet.language === lang
-    ) || captionsData.items.find(item => 
+    ) || captionsData.items.find((item: any) => 
       item.snippet.language === 'en'
     ) || captionsData.items[0];
 
@@ -106,7 +106,7 @@ Try one of these videos with guaranteed transcripts:
     console.log(`Found ${captionsData.items.length} caption tracks for video "${videoTitle}"`);
     
     // Check if this is one of our predefined videos
-    const predefinedVideos = {
+    const predefinedVideos: Record<string, string> = {
       'BGqkY-i0ZHU': 'Cal Newport video',
       'zQGOcOUBi6s': 'Kurzgesagt video', 
       'dQw4w9WgXcQ': 'Rick Astley video',
@@ -119,7 +119,7 @@ Try one of these videos with guaranteed transcripts:
         videoId,
         videoTitle,
         captionsAvailable: captionsData.items.length,
-        availableLanguages: captionsData.items.map(item => item.snippet.language),
+        availableLanguages: captionsData.items.map((item: any) => item.snippet.language),
         suggestion: `This video (${predefinedVideos[videoId]}) has a predefined transcript available. The game will use the built-in transcript automatically.`,
         usePredefined: true
       }, { status: 200 });
@@ -136,20 +136,20 @@ Try one of these videos with guaranteed transcripts:
       videoId,
       videoTitle,
       captionsAvailable: captionsData.items.length,
-      availableLanguages: captionsData.items.map(item => item.snippet.language),
+      availableLanguages: captionsData.items.map((item: any) => item.snippet.language),
       requiresOAuth: true
     }, { status: 422 }); // 422 Unprocessable Entity
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('❌ YouTube Official API error:', error);
     console.error('Error details:', {
-      message: error.message,
-      name: error.name,
-      stack: error.stack?.substring(0, 500)
+      message: error?.message,
+      name: error?.name,
+      stack: error?.stack?.substring(0, 500)
     });
     
     return NextResponse.json({
-      error: `Failed to get transcript: ${error.message}
+      error: `Failed to get transcript: ${error?.message || 'Unknown error'}
 
 Try these guaranteed working videos:
 • Cal Newport - Slow Productivity: https://www.youtube.com/watch?v=0HMjTxKRbaI  
@@ -159,8 +159,8 @@ Try these guaranteed working videos:
       type: "YouTubeAPIError",
       debug: {
         hasApiKey: !!YOUTUBE_API_KEY,
-        errorType: error.name,
-        errorMessage: error.message
+        errorType: error?.name,
+        errorMessage: error?.message
       }
     }, { status: 500 });
   }
