@@ -16,40 +16,6 @@ interface UserProgress {
   hasInfiniteHearts: boolean | null;
 }
 
-// Helper function to check if video is predefined
-const isPredefinedVideo = (videoId: string): boolean => {
-  const predefinedVideos = ['0HMjTxKRbaI', 'zQGOcOUBi6s', 'dQw4w9WgXcQ'];
-  return predefinedVideos.includes(videoId);
-};
-
-// Helper function to get predefined transcript
-const getPredefinedTranscript = (videoId: string) => {
-  const transcripts = {
-    '0HMjTxKRbaI': [ // Cal Newport - Slow Productivity
-      { startTime: 0, text: "In today's episode, I want to talk about a concept that I call slow productivity." },
-      { startTime: 5, text: "This is an alternative philosophy for organizing knowledge work." },
-      { startTime: 10, text: "It's based on the premise that our current approach to productivity is fundamentally broken." },
-      { startTime: 15, text: "We're trying to do too many things at the same time." },
-      { startTime: 20, text: "This creates a state of constant busyness that actually reduces our effectiveness." }
-    ],
-    'zQGOcOUBi6s': [ // Kurzgesagt - Immune System  
-      { startTime: 0, text: "You wake up feeling terrible." },
-      { startTime: 3, text: "Your throat is sore, your nose is stuffed, and you feel like you've been hit by a truck." },
-      { startTime: 8, text: "You have been invaded by countless microscopic enemies." },
-      { startTime: 12, text: "But you are not defenseless." },
-      { startTime: 15, text: "You have the most powerful defense system on earth." }
-    ],
-    'dQw4w9WgXcQ': [ // Rick Astley - Never Gonna Give You Up
-      { startTime: 0, text: "We're no strangers to love" },
-      { startTime: 3, text: "You know the rules and so do I" },
-      { startTime: 6, text: "A full commitment's what I'm thinking of" },
-      { startTime: 9, text: "You wouldn't get this from any other guy" },
-      { startTime: 12, text: "I just wanna tell you how I'm feeling" }
-    ]
-  };
-  return transcripts[videoId] || [];
-};
-
 function getVideoIdFromUrl(url: string): string | null {
   try {
     const parsedUrl = new URL(url);
@@ -100,7 +66,7 @@ export default function VideoSelectionPage() {
             'Content-Type': 'application/json',
           },
         });
-         
+        
         
         if (response.status === 401) {
           // Authentication expired, redirect to login
@@ -122,23 +88,7 @@ export default function VideoSelectionPage() {
     fetchUserProgress();
   }, []);
 
-  async function getVideoDuration(videoId: string): Promise<number | null> {
-    try {
-      // Use our YouTube Official API endpoint instead of direct Google API call
-      const response = await fetch(`/api/youtube-official-duration?videoId=${videoId}`);
-      const data = await response.json();
-  
-      if (data.error || !data.duration) {
-        return null;
-      }
-  
-      return data.duration;
-    } catch (error) {
-      console.error("Error fetching video duration:", error);
-      return null;
-    }
-  }
-  
+  // Removed YouTube API usage - duration now comes from ytdlp transcript response
   
   const handleSelectUrl = async () => {
     if (!videoUrl) {
@@ -162,51 +112,16 @@ export default function VideoSelectionPage() {
     setLoadingMessage("Video kontrol ediliyor...");
 
     try {
-      // Check video duration first
-      const duration = await getVideoDuration(videoId);
-      if (duration === null) {
-        alert("Bu video süre bilgisi alınamadı. Video özel (private) veya kısıtlı olabilir. Lütfen başka bir video seçin.");
-        return;
-      }
-    
-      if (duration > 360) { // 6 minutes = 360 seconds
-        alert("Bu video süresi 6 dakikayı geçiyor. Lütfen başka bir video seçin.");
-        return;
-      }
-
-      // Quick transcript availability check
-      setLoadingMessage("Transcript kontrol ediliyor...");
+      // Fetch transcript and video info using ytdlp (includes duration)
+      setLoadingMessage("Video ve transcript kontrol ediliyor...");
       
-      // Use YouTube Transcript API (works for any public video with captions)
-      console.log('Using YouTube Transcript API...');
-      let transcriptResponse;
-      
-      try {
-        transcriptResponse = await fetch(`/api/youtube-transcript?videoId=${videoId}&lang=en`);
-      } catch (error) {
-        console.log('YouTube Transcript API failed, checking for predefined videos...', error);
-        
-        // Fallback to predefined videos if API fails
-        if (isPredefinedVideo(videoId)) {
-          transcriptResponse = { 
-            ok: true, 
-            json: () => Promise.resolve({
-              transcript: getPredefinedTranscript(videoId),
-              source: 'predefined-fallback',
-              message: 'Using built-in transcript data as fallback'
-            })
-          };
-        } else {
-          setError(`YouTube transcript API is temporarily unavailable.
-
-Please try one of these guaranteed working videos:
-• Cal Newport - Slow Productivity: https://www.youtube.com/watch?v=0HMjTxKRbaI
-• Kurzgesagt - Immune System: https://www.youtube.com/watch?v=zQGOcOUBi6s
-• Rick Astley - Never Gonna Give You Up: https://www.youtube.com/watch?v=dQw4w9WgXcQ`);
-          setLoading(false);
-          return;
-        }
-      }
+      // Use local ytdlp API for YouTube transcript processing
+      const transcriptResponse = await fetch(`/api/youtube-transcript?videoId=${videoId}&lang=en`, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       
       if (transcriptResponse.status === 401) {
         alert("Oturum süreniz dolmuş. Lütfen sayfayı yenileyin ve tekrar giriş yapın.");
@@ -215,6 +130,12 @@ Please try one of these guaranteed working videos:
       }
       
       const transcriptData = await transcriptResponse.json();
+      
+      // Check video duration from ytdlp response
+      if (transcriptData.duration && transcriptData.duration > 360) { // 6 minutes = 360 seconds
+        alert("Bu video süresi 6 dakikayı geçiyor. Lütfen 6 dakikadan kısa bir video seçin.");
+        return;
+      }
       
       if (transcriptData.transcript && transcriptData.transcript.length > 0) {
         // Reduce hearts for custom video usage

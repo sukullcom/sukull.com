@@ -1,152 +1,286 @@
+// YouTube Transcript API using ytdlp-nodejs for reliable local processing
 import { NextRequest, NextResponse } from "next/server";
+import { YtDlp } from "ytdlp-nodejs";
+import { getServerUser } from "@/lib/auth";
 
-const LAMBDA_URL = process.env.YOUTUBE_TRANSCRIPT_LAMBDA_URL;
-const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
-
-// Helper function to try YouTube Official API
-async function tryYouTubeOfficialAPI(videoId: string, lang: string) {
-  if (!YOUTUBE_API_KEY) {
-    throw new Error('YouTube API key not configured');
-  }
-
-  console.log('🎯 Trying YouTube Official API...');
-  
-  // Use relative URL for internal API calls
-  const baseUrl = process.env.NODE_ENV === 'production' 
-    ? 'https://sukull.com' 
-    : 'http://localhost:3000';
-    
-  const response = await fetch(`${baseUrl}/api/youtube-official?videoId=${videoId}&lang=${lang}`, {
-    method: 'GET',
-    signal: AbortSignal.timeout(30000) // 30 seconds
-  });
-
-  if (!response.ok) {
-    throw new Error(`YouTube Official API returned ${response.status}`);
-  }
-
-  const data = await response.json();
-  if (data.error) {
-    throw new Error(data.error);
-  }
-
-  return data;
+interface TranscriptLine {
+  startTime: number;
+  duration?: number;
+  text: string;
 }
 
-// Helper function to try AWS Lambda
-async function tryAWSLambda(videoId: string, lang: string) {
-  if (!LAMBDA_URL) {
-    throw new Error('AWS Lambda URL not configured');
-  }
-
-  console.log('🎯 Trying AWS Lambda...');
-  
-  const response = await fetch(`${LAMBDA_URL}?videoId=${videoId}&lang=${lang}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    signal: AbortSignal.timeout(65000) // 65 seconds
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
-    throw new Error(errorData.error || `Lambda returned ${response.status}`);
-  }
-
-  return await response.json();
+interface SubtitleFormat {
+  url: string;
+  ext: string;
 }
 
-// Helper function to try simple fallback
-async function trySimpleFallback(videoId: string, lang: string) {
-  console.log('🎯 Trying simple fallback...');
-  
-  const baseUrl = process.env.NODE_ENV === 'production' 
-    ? 'https://sukull.com' 
-    : 'http://localhost:3000';
-    
-  const response = await fetch(`${baseUrl}/api/youtube-simple?videoId=${videoId}&lang=${lang}`, {
-    method: 'GET',
-    signal: AbortSignal.timeout(20000) // 20 seconds
-  });
-
-  if (!response.ok) {
-    throw new Error(`Simple fallback returned ${response.status}`);
-  }
-
-  const data = await response.json();
-  if (data.error) {
-    throw new Error(data.error);
-  }
-
-  // If it's a successful fallback response with an explanatory message, return it as-is
-  return data;
+interface Json3Event {
+  tStartMs: number;
+  dDurationMs: number;
+  segs?: Array<{
+    utf8: string;
+  }>;
 }
 
-export async function GET(request: NextRequest) {
-  console.log('🚀 YouTube Transcript API (Multi-Fallback) called');
+interface Json3Data {
+  events?: Json3Event[];
+}
 
-  const searchParams = request.nextUrl.searchParams;
-  const videoId = searchParams.get('videoId');
-  const lang = searchParams.get('lang') || 'en';
+// List of common language codes to try as fallbacks
+const FALLBACK_LANGUAGES = ['en', 'es', 'fr', 'de', 'ja', 'ko', 'zh', 'pt', 'ru', 'it', 'ar', 'tr'];
 
-  console.log(`📹 VideoId: ${videoId}, Lang: ${lang}`);
+export async function GET(req: NextRequest) {
+  // Add authentication check
+  const user = await getServerUser();
+  if (!user) {
+    return NextResponse.json({ error: "Authentication required" }, { status: 401 });
+  }
+
+  const { searchParams } = new URL(req.url);
+  const videoId = searchParams.get("videoId");
+  const requestedLang = searchParams.get("lang") || "en"; // Default to English
 
   if (!videoId) {
-    console.log('❌ Missing videoId parameter');
+    return NextResponse.json(
+      { error: "Missing videoId parameter." },
+      { status: 400 }
+    );
+  }
+
+  console.log(`Fetching transcript for: ${videoId}, language: ${requestedLang}`);
+
+  const ytdlp = new YtDlp();
+  const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+
+  try {
+    // First, check if yt-dlp is available and download if needed
+    const isInstalled = await ytdlp.checkInstallationAsync();
+    if (!isInstalled) {
+      console.log("Installing yt-dlp...");
+    }
+
+    // Get video info including available subtitles
+    console.log("Fetching video information...");
+    const videoInfo = await ytdlp.getInfoAsync(videoUrl);
+    
+    if (videoInfo._type !== 'video') {
+      return NextResponse.json({
+        error: "Invalid video. Please provide a single video URL.",
+        videoId: videoId
+      }, { status: 400 });
+    }
+
+    // Check for available subtitles
+    const subtitles = videoInfo.subtitles || {};
+    const automaticCaptions = videoInfo.automatic_captions || {};
+    
+    console.log("Available subtitles:", Object.keys(subtitles));
+    console.log("Available auto-captions:", Object.keys(automaticCaptions));
+
+    // Function to extract transcript from subtitle data
+    const extractTranscript = async (lang: string, isAutomatic: boolean = false): Promise<TranscriptLine[] | null> => {
+      try {
+        const source = isAutomatic ? automaticCaptions : subtitles;
+        const langSubs = source[lang];
+        
+        if (!langSubs || !Array.isArray(langSubs) || langSubs.length === 0) {
+          return null;
+        }
+
+        const formats = ['json3', 'srv1', 'vtt', 'ttml'];
+        let subtitle = null;
+
+        for (const format of formats) {
+          subtitle = langSubs.find((sub: SubtitleFormat) => sub.ext === format);
+          if (subtitle) break;
+        }
+
+        if (!subtitle) subtitle = langSubs[0];
+
+        console.log(`Fetching ${lang} ${isAutomatic ? 'auto' : 'manual'} (${subtitle.ext})`);
+
+        // Fetch the subtitle content
+        const response = await fetch(subtitle.url);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const content = await response.text();
+        
+        // Parse based on format
+        let transcript: TranscriptLine[] = [];
+        
+        if (subtitle.ext === 'json3') {
+          const data: Json3Data = JSON.parse(content);
+          if (data.events) {
+            for (const event of data.events) {
+              if (event.segs) {
+                let text = '';
+                for (const seg of event.segs) {
+                  if (seg.utf8) {
+                    text += seg.utf8;
+                  }
+                }
+                if (text.trim()) {
+                  transcript.push({
+                    startTime: event.tStartMs / 1000,
+                    duration: event.dDurationMs / 1000,
+                    text: text.trim()
+                  });
+                }
+              }
+            }
+          }
+        } else if (subtitle.ext === 'vtt') {
+          const lines = content.split('\n');
+          let currentTime = null;
+          let currentText = '';
+          
+          
+          for (const line of lines) {
+            const timeMatch = line.match(/^(\d{2}:\d{2}:\d{2}\.\d{3}) --> (\d{2}:\d{2}:\d{2}\.\d{3})/);
+            if (timeMatch) {
+              if (currentTime && currentText.trim()) {
+                transcript.push({
+                  startTime: currentTime,
+                  text: currentText.trim()
+                });
+              }
+              // Convert time to seconds
+              const [, start] = timeMatch;
+              const [hours, minutes, seconds] = start.split(':');
+              currentTime = parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseFloat(seconds);
+              currentText = '';
+            } else if (line.trim() && !line.startsWith('WEBVTT') && !line.includes('-->')) {
+              currentText += line + ' ';
+            }
+          }
+          
+          if (currentTime && currentText.trim()) {
+            transcript.push({
+              startTime: currentTime,
+              text: currentText.trim()
+            });
+          }
+        }
+
+        return transcript.length > 0 ? transcript : null;
+      } catch (error) {
+        console.error(`Error extracting ${lang} transcript:`, error);
+        return null;
+      }
+    };
+
+    // Try to get transcript in order of preference
+    let transcript: TranscriptLine[] | null = null;
+    let usedLanguage: string | null = null;
+    let isAutomatic = false;
+
+    // 1. Try requested language (manual first, then automatic)
+    transcript = await extractTranscript(requestedLang, false);
+    if (transcript) {
+      usedLanguage = requestedLang;
+      isAutomatic = false;
+    } else {
+      transcript = await extractTranscript(requestedLang, true);
+      if (transcript) {
+        usedLanguage = requestedLang;
+        isAutomatic = true;
+      }
+    }
+
+    // 2. Try fallback languages if requested language failed
+    if (!transcript) {
+      for (const fallbackLang of FALLBACK_LANGUAGES) {
+        if (fallbackLang === requestedLang) continue; // Already tried
+
+        transcript = await extractTranscript(fallbackLang, false);
+        if (transcript) {
+          usedLanguage = fallbackLang;
+          isAutomatic = false;
+          break;
+        }
+
+        transcript = await extractTranscript(fallbackLang, true);
+        if (transcript) {
+          usedLanguage = fallbackLang;
+          isAutomatic = true;
+          break;
+        }
+      }
+    }
+
+    // 3. Try any available language as last resort
+    if (!transcript) {
+      const allLanguages = [...Object.keys(subtitles), ...Object.keys(automaticCaptions)];
+      for (const availableLang of allLanguages) {
+        if (FALLBACK_LANGUAGES.includes(availableLang)) continue; // Already tried
+
+        transcript = await extractTranscript(availableLang, false);
+        if (transcript) {
+          usedLanguage = availableLang;
+          isAutomatic = false;
+          break;
+        }
+
+        transcript = await extractTranscript(availableLang, true);
+        if (transcript) {
+          usedLanguage = availableLang;
+          isAutomatic = true;
+          break;
+        }
+      }
+    }
+
+    // If still no transcript found
+    if (!transcript || transcript.length === 0) {
+      const manual = Object.keys(subtitles);
+      const auto = Object.keys(automaticCaptions);
+      
+      const errorMessage = `Bu video için transcript bulunamadı.\n\nMevcut:\n- Manuel: ${manual.length ? manual.join(', ') : 'Yok'}\n- Otomatik: ${auto.length ? auto.join(', ') : 'Yok'}`;
+
+      return NextResponse.json({
+        error: errorMessage,
+        videoId: videoId,
+        availableSubtitles: manual,
+        availableAutoCaptions: auto
+      }, { status: 404 });
+    }
+
+    console.log(`Successfully processed transcript: ${transcript.length} lines, language: ${usedLanguage}${isAutomatic ? ' (automatic)' : ''}`);
+
     return NextResponse.json({
-      error: "Missing videoId parameter."
-    }, { status: 400 });
-  }
+      transcript,
+      language: usedLanguage,
+      isAutomatic,
+      totalLines: transcript.length,
+      duration: videoInfo.duration || (transcript.length > 0 ? transcript[transcript.length - 1].startTime : 0),
+      videoTitle: videoInfo.title || 'Unknown'
+    });
 
-  const methods = [
-    { name: 'AWS Lambda', func: () => tryAWSLambda(videoId, lang) },
-    { name: 'YouTube Official API', func: () => tryYouTubeOfficialAPI(videoId, lang) },
-    { name: 'Simple Fallback', func: () => trySimpleFallback(videoId, lang) }
-  ];
+  } catch (error: unknown) {
+    console.error("yt-dlp error:", error);
 
-  let lastError = null;
-  let attemptedMethods = [];
-
-  // Try each method in order
-  for (const method of methods) {
-    try {
-      console.log(`🔄 Attempting: ${method.name}`);
-      attemptedMethods.push(method.name);
+    if (error instanceof Error) {
+      let message = `Hata: ${error.message}`;
       
-      const result = await method.func();
-      
-      console.log(`✅ Success with ${method.name}!`);
-      
-      // Add metadata about which method succeeded
-      return NextResponse.json({
-        ...result,
-        source: method.name,
-        attemptedMethods,
-        videoId
-      });
-
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      console.log(`❌ ${method.name} failed: ${errorMessage}`);
-      lastError = { method: method.name, error: errorMessage };
-      
-      // Continue to next method
-      continue;
-    }
-  }
-
-  // All methods failed
-  console.error('❌ All transcript methods failed');
+      if (error.message.includes('Private video')) {
+        message = 'Bu video özel. Lütfen halka açık bir video seçin.';
+      } else if (error.message.includes('Video unavailable')) {
+        message = 'Video erişilebilir değil.';
+      }
 
       return NextResponse.json({
-    error: `All transcript methods failed. Last error: ${lastError?.error}`,
-    videoId,
-    type: "AllMethodsFailed",
-    debug: {
-      attemptedMethods,
-      lastError,
-      availableMethods: methods.map(m => m.name)
+        error: message,
+        type: "YtDlpError",
+        videoId: videoId
+      }, { status: 500 });
     }
+
+    return NextResponse.json({
+      error: "Bilinmeyen hata oluştu.",
+      type: "UnknownError",
+      videoId: videoId
     }, { status: 500 });
+  }
 } 

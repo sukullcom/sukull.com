@@ -347,7 +347,7 @@ export default function GamePage() {
 
       // Otherwise, fetch from API
       try {
-        // Use local YouTube Transcript API
+        // Use local ytdlp API for YouTube transcript processing
         const response = await fetch(`/api/youtube-transcript?videoId=${videoId}&lang=en`, {
           credentials: 'include',
           headers: {
@@ -367,7 +367,7 @@ Sayfa otomatik olarak yenilenecek...`);
         
         const data = await response.json();
 
-        if (data.transcript && data.transcript.length > 0) {
+        if (data.transcript) {
           const decodedTranscript = data.transcript.map((line: TranscriptLine) => ({
             startTime: line.startTime,
             text: decode(line.text),
@@ -378,12 +378,6 @@ Sayfa otomatik olarak yenilenecek...`);
           if (data.language && data.language !== 'en' && data.language !== 'default') {
             setError(`Transcript loaded in ${data.language} (English not available)`);
           }
-        } else if (data.transcript && data.transcript.length === 0 && (data.message || data.userFriendlyMessage)) {
-          // Handle the new improved API response with empty transcript but explanatory message
-          const friendlyMessage = data.userFriendlyMessage || data.message;
-          setError(`❌ Bu video için transcript bulunamadı: ${friendlyMessage}
-
-${data.suggestions ? data.suggestions.join('\n• ') : ''}`);
         } else if (data.error) {
           // Handle enhanced error responses
           if (data.type === "YoutubeTranscriptError") {

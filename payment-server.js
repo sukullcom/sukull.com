@@ -5,7 +5,7 @@ const { createClient } = require('@supabase/supabase-js');
 const { drizzle } = require('drizzle-orm/node-postgres');
 const { Pool } = require('pg');
 const { eq } = require('drizzle-orm');
-// const { YtDlp } = require("ytdlp-nodejs"); // Removed - using direct YouTube API instead
+const { YtDlp } = require("ytdlp-nodejs");
 
 // Load environment variables
 require('dotenv').config();
@@ -577,76 +577,6 @@ app.post('/api/payment/subscribe', authenticateUser, async (req, res) => {
   }
 });
 
-// Direct YouTube info fetcher without yt-dlp
-async function getYouTubeInfoDirect(videoId) {
-  try {
-    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-    console.log(`Fetching YouTube page: ${videoUrl}`);
-    
-    const response = await fetch(videoUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-      }
-    });
-    
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-    }
-    
-    const html = await response.text();
-    
-    // Extract player response data
-    const playerResponseMatch = html.match(/var ytInitialPlayerResponse = ({.*?});/);
-    if (!playerResponseMatch) {
-      throw new Error('Could not find player response in page');
-    }
-    
-    const playerResponse = JSON.parse(playerResponseMatch[1]);
-    
-    // Extract captions data
-    const captions = playerResponse?.captions?.playerCaptionsTracklistRenderer?.captionTracks || [];
-    const automaticCaptions = playerResponse?.captions?.playerCaptionsTracklistRenderer?.automaticCaptions || [];
-    
-    // Convert to format expected by existing code
-    const subtitles = {};
-    const automatic_captions = {};
-    
-    // Process manual subtitles
-    captions.forEach(caption => {
-      const langCode = caption.languageCode || 'en';
-      if (!subtitles[langCode]) subtitles[langCode] = [];
-      subtitles[langCode].push({
-        ext: 'srv1',
-        url: caption.baseUrl,
-        lang: langCode
-      });
-    });
-    
-    // Process automatic captions
-    automaticCaptions.forEach(caption => {
-      const langCode = caption.languageCode || 'en';
-      if (!automatic_captions[langCode]) automatic_captions[langCode] = [];
-      automatic_captions[langCode].push({
-        ext: 'srv1', 
-        url: caption.baseUrl,
-        lang: langCode
-      });
-    });
-    
-    return {
-      _type: 'video',
-      id: videoId,
-      title: playerResponse?.videoDetails?.title || 'Unknown',
-      subtitles: subtitles,
-      automatic_captions: automatic_captions
-    };
-    
-  } catch (error) {
-    console.error('Direct YouTube fetch error:', error);
-    throw new Error(`Failed to fetch video info: ${error.message}`);
-  }
-}
-
 // YouTube Transcript API endpoint
 app.get('/api/youtube-transcript', async (req, res) => {
   try {
@@ -660,9 +590,18 @@ app.get('/api/youtube-transcript', async (req, res) => {
 
     console.log(`Fetching transcript for: ${videoId}, language: ${lang}`);
 
-    // Direct YouTube transcript fetch without yt-dlp dependency
-    console.log("Fetching video information using direct method...");
-    const videoInfo = await getYouTubeInfoDirect(videoId);
+    const ytdlp = new YtDlp();
+    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+
+    // Check if yt-dlp is available and download if needed
+    const isInstalled = await ytdlp.checkInstallationAsync();
+    if (!isInstalled) {
+      console.log("Installing yt-dlp...");
+    }
+
+    // Get video info including available subtitles
+    console.log("Fetching video information...");
+    const videoInfo = await ytdlp.getInfoAsync(videoUrl);
     
     if (videoInfo._type !== 'video') {
       return res.status(400).json({
