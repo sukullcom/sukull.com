@@ -4,14 +4,12 @@ const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 
 export async function GET(request: NextRequest) {
   console.log('🚀 YouTube Official API called');
-  console.log('🔄 Route is being executed');
   
   const searchParams = request.nextUrl.searchParams;
   const videoId = searchParams.get('videoId');
   const lang = searchParams.get('lang') || 'en';
-  const checkDuration = searchParams.get('checkDuration') === 'true';
 
-  console.log(`📹 VideoId: ${videoId}, Lang: ${lang}, CheckDuration: ${checkDuration}`);
+  console.log(`📹 VideoId: ${videoId}, Lang: ${lang}`);
   console.log(`🔑 API Key exists: ${!!YOUTUBE_API_KEY}`);
 
   if (!videoId) {
@@ -45,14 +43,11 @@ Steps to fix:
   }
 
   try {
-    console.log(`Fetching official YouTube data for: ${videoId}, language: ${lang}`);
+    console.log(`Fetching official YouTube transcript for: ${videoId}, language: ${lang}`);
 
-    // Determine which parts to fetch based on the request
-    const parts = checkDuration ? 'snippet,contentDetails' : 'snippet';
-    
     // Step 1: Get video info and caption tracks
     const videoResponse = await fetch(
-      `https://www.googleapis.com/youtube/v3/videos?part=${parts}&id=${videoId}&key=${YOUTUBE_API_KEY}`
+      `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${YOUTUBE_API_KEY}`
     );
 
     if (!videoResponse.ok) {
@@ -69,15 +64,6 @@ Steps to fix:
     }
 
     const videoTitle = videoData.items[0].snippet.title;
-
-    // If this is just a duration check, return the video data directly
-    if (checkDuration) {
-      return NextResponse.json({
-        items: videoData.items,
-        videoTitle,
-        source: 'youtube-official-api'
-      });
-    }
 
     // Step 2: Get available captions
     const captionsResponse = await fetch(
@@ -104,9 +90,9 @@ Try one of these videos with guaranteed transcripts:
     }
 
     // Step 3: Find best caption track
-    const selectedCaption = captionsData.items.find((item: { snippet: { language: string } }) => 
+    const selectedCaption = captionsData.items.find(item => 
       item.snippet.language === lang
-    ) || captionsData.items.find((item: { snippet: { language: string } }) => 
+    ) || captionsData.items.find(item => 
       item.snippet.language === 'en'
     ) || captionsData.items[0];
 
@@ -141,20 +127,16 @@ Try one of these videos with guaranteed transcripts:
       isAutomatic: selectedCaption.snippet.trackKind === 'asr'
     });
 
-  } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    const errorName = error instanceof Error ? error.name : 'Error';
-    const errorStack = error instanceof Error ? error.stack?.substring(0, 500) : undefined;
-    
+  } catch (error) {
     console.error('❌ YouTube Official API error:', error);
     console.error('Error details:', {
-      message: errorMessage,
-      name: errorName,
-      stack: errorStack
+      message: error.message,
+      name: error.name,
+      stack: error.stack?.substring(0, 500)
     });
     
     return NextResponse.json({
-      error: `Failed to get transcript: ${errorMessage}
+      error: `Failed to get transcript: ${error.message}
 
 Try these guaranteed working videos:
 • Cal Newport - Slow Productivity: https://www.youtube.com/watch?v=0HMjTxKRbaI  
@@ -164,8 +146,8 @@ Try these guaranteed working videos:
       type: "YouTubeAPIError",
       debug: {
         hasApiKey: !!YOUTUBE_API_KEY,
-        errorType: errorName,
-        errorMessage: errorMessage
+        errorType: error.name,
+        errorMessage: error.message
       }
     }, { status: 500 });
   }

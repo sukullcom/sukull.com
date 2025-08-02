@@ -345,10 +345,39 @@ export default function GamePage() {
         return;
       }
 
-      // Otherwise, fetch from API using YouTube Official API
+      // Otherwise, fetch from API
       try {
-        console.log('Fetching transcript using YouTube Official API...');
-        const response = await fetch(`/api/youtube-official?videoId=${videoId}&lang=en`);
+        const paymentServerUrl = (process.env.NEXT_PUBLIC_PAYMENT_SERVER_URL || 'https://sukullcom-production.up.railway.app').replace(/\/$/, '');
+        
+        // Try Railway server first, then fallback to local/vercel API
+        let response;
+        try {
+          response = await fetch(`${paymentServerUrl}/api/youtube-transcript?videoId=${videoId}&lang=en`, {
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          
+          // If Railway server doesn't have the endpoint (404), fallback to original API
+          if (response.status === 404) {
+            console.log('Railway endpoint not found, trying fallback...');
+            response = await fetch(`/api/youtube-transcript?videoId=${videoId}&lang=en`, {
+              credentials: 'include',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+          }
+        } catch (error) {
+          console.log('Railway server failed, trying fallback...', error);
+          response = await fetch(`/api/youtube-transcript?videoId=${videoId}&lang=en`, {
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+        }
         
         if (response.status === 401) {
           setError(`Oturum süreniz dolmuş. Lütfen sayfayı yenileyin ve tekrar giriş yapın.
