@@ -61,10 +61,13 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(lambdaData);
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ Error calling AWS Lambda:', error);
     
-    if (error.name === 'AbortError') {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorName = error instanceof Error ? error.name : 'Unknown';
+    
+    if (errorName === 'AbortError') {
       return NextResponse.json({
         error: "Request timeout - video processing took too long",
         videoId,
@@ -73,12 +76,12 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json({
-      error: `Failed to get transcript from AWS Lambda: ${error.message}`,
+      error: `Failed to get transcript from AWS Lambda: ${errorMessage}`,
       videoId,
       type: "NetworkError",
       debug: {
-        errorMessage: error.message,
-        errorName: error.name
+        errorMessage: errorMessage,
+        errorName: errorName
       }
     }, { status: 500 });
   }

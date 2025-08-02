@@ -347,8 +347,6 @@ export default function GamePage() {
 
       // Otherwise, fetch from API
       try {
-        const paymentServerUrl = (process.env.NEXT_PUBLIC_PAYMENT_SERVER_URL || 'https://sukullcom-production.up.railway.app').replace(/\/$/, '');
-        
         // Use local YouTube Transcript API
         const response = await fetch(`/api/youtube-transcript?videoId=${videoId}&lang=en`, {
           credentials: 'include',
