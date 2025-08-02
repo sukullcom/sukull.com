@@ -190,30 +190,36 @@ export default function VideoSelectionPage() {
       // Quick transcript availability check
       setLoadingMessage("Transcript kontrol ediliyor...");
       
-      // IMMEDIATE SOLUTION: Use predefined working videos 
-      // This bypasses all API issues and works instantly
-      if (!isPredefinedVideo(videoId)) {
-        setError(`This video doesn't have a transcript available yet.
+      // Use YouTube Official API (with fallback to predefined videos)
+      console.log('Using YouTube Official API...');
+      let transcriptResponse;
+      
+      try {
+        transcriptResponse = await fetch(`/api/youtube-official?videoId=${videoId}&lang=en`);
+      } catch (error) {
+        console.log('YouTube API failed, checking for predefined videos...', error);
+        
+        // Fallback to predefined videos if API fails
+        if (isPredefinedVideo(videoId)) {
+          transcriptResponse = { 
+            ok: true, 
+            json: () => Promise.resolve({
+              transcript: getPredefinedTranscript(videoId),
+              source: 'predefined-fallback',
+              message: 'Using built-in transcript data as fallback'
+            })
+          };
+        } else {
+          setError(`YouTube transcript API is temporarily unavailable.
 
 Please try one of these guaranteed working videos:
 • Cal Newport - Slow Productivity: https://www.youtube.com/watch?v=0HMjTxKRbaI
 • Kurzgesagt - Immune System: https://www.youtube.com/watch?v=zQGOcOUBi6s
-• Rick Astley - Never Gonna Give You Up: https://www.youtube.com/watch?v=dQw4w9WgXcQ
-
-These videos work immediately without any API calls!`);
-        setLoading(false);
-        return;
+• Rick Astley - Never Gonna Give You Up: https://www.youtube.com/watch?v=dQw4w9WgXcQ`);
+          setLoading(false);
+          return;
+        }
       }
-
-      // For predefined videos, use the built-in transcript
-      const transcriptResponse = { 
-        ok: true, 
-        json: () => Promise.resolve({
-          transcript: getPredefinedTranscript(videoId),
-          source: 'predefined',
-          message: 'Using built-in transcript data'
-        })
-      };
       
       if (transcriptResponse.status === 401) {
         alert("Oturum süreniz dolmuş. Lütfen sayfayı yenileyin ve tekrar giriş yapın.");
