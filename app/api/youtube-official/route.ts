@@ -107,7 +107,8 @@ Try one of these videos with guaranteed transcripts:
     if (!selectedCaption) {
       throw new Error('No suitable caption track found');
     }
-
+    
+ 
     // Note: Caption download requires OAuth 2.0, which we can't do with just API key
     // Instead, we'll return info about available captions and suggest predefined videos
     
