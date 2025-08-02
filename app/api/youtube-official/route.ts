@@ -86,7 +86,7 @@ Try one of these videos with guaranteed transcripts:
     }
 
     // Step 3: Find best caption track
-    let selectedCaption = captionsData.items.find(item => 
+    const selectedCaption = captionsData.items.find(item => 
       item.snippet.language === lang
     ) || captionsData.items.find(item => 
       item.snippet.language === 'en'

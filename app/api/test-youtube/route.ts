@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     console.log('🧪 Testing YouTube API connection...');
     console.log(`🔑 API Key exists: ${!!YOUTUBE_API_KEY}`);
