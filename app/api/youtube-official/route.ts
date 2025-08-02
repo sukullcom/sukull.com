@@ -8,8 +8,9 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const videoId = searchParams.get('videoId');
   const lang = searchParams.get('lang') || 'en';
+  const checkDuration = searchParams.get('checkDuration') === 'true';
 
-  console.log(`📹 VideoId: ${videoId}, Lang: ${lang}`);
+  console.log(`📹 VideoId: ${videoId}, Lang: ${lang}, CheckDuration: ${checkDuration}`);
   console.log(`🔑 API Key exists: ${!!YOUTUBE_API_KEY}`);
 
   if (!videoId) {
@@ -43,11 +44,14 @@ Steps to fix:
   }
 
   try {
-    console.log(`Fetching official YouTube transcript for: ${videoId}, language: ${lang}`);
+    console.log(`Fetching official YouTube data for: ${videoId}, language: ${lang}`);
 
+    // Determine which parts to fetch based on the request
+    const parts = checkDuration ? 'snippet,contentDetails' : 'snippet';
+    
     // Step 1: Get video info and caption tracks
     const videoResponse = await fetch(
-      `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${YOUTUBE_API_KEY}`
+      `https://www.googleapis.com/youtube/v3/videos?part=${parts}&id=${videoId}&key=${YOUTUBE_API_KEY}`
     );
 
     if (!videoResponse.ok) {
@@ -64,6 +68,15 @@ Steps to fix:
     }
 
     const videoTitle = videoData.items[0].snippet.title;
+
+    // If this is just a duration check, return the video data directly
+    if (checkDuration) {
+      return NextResponse.json({
+        items: videoData.items,
+        videoTitle,
+        source: 'youtube-official-api'
+      });
+    }
 
     // Step 2: Get available captions
     const captionsResponse = await fetch(

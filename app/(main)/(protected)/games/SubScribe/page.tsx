@@ -124,10 +124,8 @@ export default function VideoSelectionPage() {
 
   async function getVideoDuration(videoId: string): Promise<number | null> {
     try {
-      const apiKey = "AIzaSyDjvTdEKS2UQo-0mi8MAptcFGRsXiGzaAU";
-      const response = await fetch(
-        `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=contentDetails&key=${apiKey}`
-      );
+      // Use our YouTube API endpoint instead of direct API call
+      const response = await fetch(`/api/youtube-official?videoId=${videoId}&lang=en&checkDuration=true`);
       const data = await response.json();
   
       if (data.items.length === 0) {
