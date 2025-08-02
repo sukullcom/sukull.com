@@ -15,7 +15,19 @@ export async function GET(request: NextRequest) {
 
   if (!YOUTUBE_API_KEY) {
     return NextResponse.json({ 
-      error: "YouTube API key not configured." 
+      error: `YouTube API key not configured. Please add YOUTUBE_API_KEY to environment variables.
+      
+For testing, try these videos with guaranteed transcripts:
+• Cal Newport - Slow Productivity: https://www.youtube.com/watch?v=0HMjTxKRbaI
+• Kurzgesagt - Immune System: https://www.youtube.com/watch?v=zQGOcOUBi6s
+• Rick Astley - Never Gonna Give You Up: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+
+Steps to fix:
+1. Go to: https://vercel.com/sukullcoms-projects/sukull-com/settings/environment-variables
+2. Add: YOUTUBE_API_KEY = [your API key]
+3. Redeploy: vercel --prod`,
+      videoId,
+      needsConfiguration: true
     }, { status: 500 });
   }
 
