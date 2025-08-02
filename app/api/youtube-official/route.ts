@@ -2,6 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 
+interface YouTubeCaptionItem {
+  id: string;
+  snippet: {
+    language: string;
+    trackKind: string;
+  };
+}
+
 export async function GET(request: NextRequest) {
   console.log('🚀 YouTube Official API called');
   
@@ -90,9 +98,9 @@ Try one of these videos with guaranteed transcripts:
     }
 
     // Step 3: Find best caption track
-    const selectedCaption = captionsData.items.find((item: any) => 
+    const selectedCaption = captionsData.items.find((item: YouTubeCaptionItem) => 
       item.snippet.language === lang
-    ) || captionsData.items.find((item: any) => 
+    ) || captionsData.items.find((item: YouTubeCaptionItem) => 
       item.snippet.language === 'en'
     ) || captionsData.items[0];
 
@@ -119,7 +127,7 @@ Try one of these videos with guaranteed transcripts:
         videoId,
         videoTitle,
         captionsAvailable: captionsData.items.length,
-        availableLanguages: captionsData.items.map((item: any) => item.snippet.language),
+        availableLanguages: captionsData.items.map((item: YouTubeCaptionItem) => item.snippet.language),
         suggestion: `This video (${predefinedVideos[videoId]}) has a predefined transcript available. The game will use the built-in transcript automatically.`,
         usePredefined: true
       }, { status: 200 });
@@ -136,20 +144,24 @@ Try one of these videos with guaranteed transcripts:
       videoId,
       videoTitle,
       captionsAvailable: captionsData.items.length,
-      availableLanguages: captionsData.items.map((item: any) => item.snippet.language),
+      availableLanguages: captionsData.items.map((item: YouTubeCaptionItem) => item.snippet.language),
       requiresOAuth: true
     }, { status: 422 }); // 422 Unprocessable Entity
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('❌ YouTube Official API error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorName = error instanceof Error ? error.name : 'Unknown';
+    const errorStack = error instanceof Error ? error.stack?.substring(0, 500) : undefined;
+    
     console.error('Error details:', {
-      message: error?.message,
-      name: error?.name,
-      stack: error?.stack?.substring(0, 500)
+      message: errorMessage,
+      name: errorName,
+      stack: errorStack
     });
     
     return NextResponse.json({
-      error: `Failed to get transcript: ${error?.message || 'Unknown error'}
+      error: `Failed to get transcript: ${errorMessage}
 
 Try these guaranteed working videos:
 • Cal Newport - Slow Productivity: https://www.youtube.com/watch?v=0HMjTxKRbaI  
@@ -159,43 +171,10 @@ Try these guaranteed working videos:
       type: "YouTubeAPIError",
       debug: {
         hasApiKey: !!YOUTUBE_API_KEY,
-        errorType: error?.name,
-        errorMessage: error?.message
+        errorType: errorName,
+        errorMessage: errorMessage
       }
     }, { status: 500 });
   }
 }
 
-// Parse YouTube's XML caption format
-function parseYouTubeXML(xmlContent: string) {
-  try {
-    // Extract text segments with timing
-    const textMatches = xmlContent.match(/<text[^>]*>(.*?)<\/text>/g) || [];
-    
-    const transcript = textMatches.map((match, index) => {
-      // Extract start time
-      const startMatch = match.match(/start="([\d.]+)"/);
-      const startTime = startMatch ? parseFloat(startMatch[1]) : index * 3;
-      
-      // Extract text content and clean it
-      const text = match
-        .replace(/<[^>]*>/g, '') // Remove HTML tags
-        .replace(/&amp;/g, '&')
-        .replace(/&lt;/g, '<')
-        .replace(/&gt;/g, '>')
-        .replace(/&quot;/g, '"')
-        .replace(/&#39;/g, "'")
-        .trim();
-      
-      return {
-        startTime,
-        text
-      };
-    }).filter(item => item.text.length > 0);
-
-    return transcript;
-  } catch (error) {
-    console.error('XML parsing error:', error);
-    return [];
-  }
-}
