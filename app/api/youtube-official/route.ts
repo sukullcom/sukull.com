@@ -34,7 +34,11 @@ Steps to fix:
 2. Add: YOUTUBE_API_KEY = [your API key]
 3. Redeploy: vercel --prod`,
       videoId,
-      needsConfiguration: true
+      needsConfiguration: true,
+      debug: {
+        allEnvKeys: Object.keys(process.env).filter(key => key.includes('YOUTUBE')),
+        nodeEnv: process.env.NODE_ENV
+      }
     }, { status: 500 });
   }
 
