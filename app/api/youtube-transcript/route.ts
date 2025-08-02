@@ -79,6 +79,7 @@ async function trySimpleFallback(videoId: string, lang: string) {
     throw new Error(data.error);
   }
 
+  // If it's a successful fallback response with an explanatory message, return it as-is
   return data;
 }
 
