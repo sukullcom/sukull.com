@@ -4,6 +4,7 @@ const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 
 export async function GET(request: NextRequest) {
   console.log('🚀 YouTube Official API called');
+  console.log('🔄 Route is being executed');
   
   const searchParams = request.nextUrl.searchParams;
   const videoId = searchParams.get('videoId');
@@ -103,9 +104,9 @@ Try one of these videos with guaranteed transcripts:
     }
 
     // Step 3: Find best caption track
-    const selectedCaption = captionsData.items.find(item => 
+    const selectedCaption = captionsData.items.find((item: any) => 
       item.snippet.language === lang
-    ) || captionsData.items.find(item => 
+    ) || captionsData.items.find((item: any) => 
       item.snippet.language === 'en'
     ) || captionsData.items[0];
 
@@ -140,7 +141,7 @@ Try one of these videos with guaranteed transcripts:
       isAutomatic: selectedCaption.snippet.trackKind === 'asr'
     });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('❌ YouTube Official API error:', error);
     console.error('Error details:', {
       message: error.message,
