@@ -104,9 +104,9 @@ Try one of these videos with guaranteed transcripts:
     }
 
     // Step 3: Find best caption track
-    const selectedCaption = captionsData.items.find((item: any) => 
+    const selectedCaption = captionsData.items.find((item: { snippet: { language: string } }) => 
       item.snippet.language === lang
-    ) || captionsData.items.find((item: any) => 
+    ) || captionsData.items.find((item: { snippet: { language: string } }) => 
       item.snippet.language === 'en'
     ) || captionsData.items[0];
 
@@ -141,16 +141,20 @@ Try one of these videos with guaranteed transcripts:
       isAutomatic: selectedCaption.snippet.trackKind === 'asr'
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorName = error instanceof Error ? error.name : 'Error';
+    const errorStack = error instanceof Error ? error.stack?.substring(0, 500) : undefined;
+    
     console.error('❌ YouTube Official API error:', error);
     console.error('Error details:', {
-      message: error.message,
-      name: error.name,
-      stack: error.stack?.substring(0, 500)
+      message: errorMessage,
+      name: errorName,
+      stack: errorStack
     });
     
     return NextResponse.json({
-      error: `Failed to get transcript: ${error.message}
+      error: `Failed to get transcript: ${errorMessage}
 
 Try these guaranteed working videos:
 • Cal Newport - Slow Productivity: https://www.youtube.com/watch?v=0HMjTxKRbaI  
@@ -160,8 +164,8 @@ Try these guaranteed working videos:
       type: "YouTubeAPIError",
       debug: {
         hasApiKey: !!YOUTUBE_API_KEY,
-        errorType: error.name,
-        errorMessage: error.message
+        errorType: errorName,
+        errorMessage: errorMessage
       }
     }, { status: 500 });
   }
