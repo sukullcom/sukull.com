@@ -3,17 +3,24 @@ import { NextRequest, NextResponse } from "next/server";
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
 
 export async function GET(request: NextRequest) {
+  console.log('🚀 YouTube Official API called');
+  
   const searchParams = request.nextUrl.searchParams;
   const videoId = searchParams.get('videoId');
   const lang = searchParams.get('lang') || 'en';
 
+  console.log(`📹 VideoId: ${videoId}, Lang: ${lang}`);
+  console.log(`🔑 API Key exists: ${!!YOUTUBE_API_KEY}`);
+
   if (!videoId) {
+    console.log('❌ Missing videoId parameter');
     return NextResponse.json({ 
       error: "Missing videoId parameter." 
     }, { status: 400 });
   }
 
   if (!YOUTUBE_API_KEY) {
+    console.log('❌ YouTube API key not configured');
     return NextResponse.json({ 
       error: `YouTube API key not configured. Please add YOUTUBE_API_KEY to environment variables.
       
@@ -117,7 +124,12 @@ Try one of these videos with guaranteed transcripts:
     });
 
   } catch (error) {
-    console.error('YouTube Official API error:', error);
+    console.error('❌ YouTube Official API error:', error);
+    console.error('Error details:', {
+      message: error.message,
+      name: error.name,
+      stack: error.stack?.substring(0, 500)
+    });
     
     return NextResponse.json({
       error: `Failed to get transcript: ${error.message}
@@ -127,7 +139,12 @@ Try these guaranteed working videos:
 • Kurzgesagt - Immune System: https://www.youtube.com/watch?v=zQGOcOUBi6s
 • Rick Astley - Never Gonna Give You Up: https://www.youtube.com/watch?v=dQw4w9WgXcQ`,
       videoId,
-      type: "YouTubeAPIError"
+      type: "YouTubeAPIError",
+      debug: {
+        hasApiKey: !!YOUTUBE_API_KEY,
+        errorType: error.name,
+        errorMessage: error.message
+      }
     }, { status: 500 });
   }
 }
