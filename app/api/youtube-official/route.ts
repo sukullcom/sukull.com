@@ -100,32 +100,45 @@ Try one of these videos with guaranteed transcripts:
       throw new Error('No suitable caption track found');
     }
 
-    // Step 4: Download the caption content
-    const captionDownloadResponse = await fetch(
-      `https://www.googleapis.com/youtube/v3/captions/${selectedCaption.id}?key=${YOUTUBE_API_KEY}&tfmt=srv1`
-    );
-
-    if (!captionDownloadResponse.ok) {
-      throw new Error(`Caption download error: ${captionDownloadResponse.status}`);
+    // Note: Caption download requires OAuth 2.0, which we can't do with just API key
+    // Instead, we'll return info about available captions and suggest predefined videos
+    
+    console.log(`Found ${captionsData.items.length} caption tracks for video "${videoTitle}"`);
+    
+    // Check if this is one of our predefined videos
+    const predefinedVideos = {
+      'BGqkY-i0ZHU': 'Cal Newport video',
+      'zQGOcOUBi6s': 'Kurzgesagt video', 
+      'dQw4w9WgXcQ': 'Rick Astley video',
+      '0HMjTxKRbaI': 'Cal Newport Slow Productivity'
+    };
+    
+    if (predefinedVideos[videoId]) {
+      return NextResponse.json({
+        error: `Captions found but download requires OAuth. Use predefined transcript instead.`,
+        videoId,
+        videoTitle,
+        captionsAvailable: captionsData.items.length,
+        availableLanguages: captionsData.items.map(item => item.snippet.language),
+        suggestion: `This video (${predefinedVideos[videoId]}) has a predefined transcript available. The game will use the built-in transcript automatically.`,
+        usePredefined: true
+      }, { status: 200 });
     }
-
-    const captionXml = await captionDownloadResponse.text();
-
-    // Step 5: Parse the XML to extract transcript
-    const transcript = parseYouTubeXML(captionXml);
-
-    if (!transcript || transcript.length === 0) {
-      throw new Error('Failed to parse caption content');
-    }
-
+    
+    // For non-predefined videos, explain the limitation
     return NextResponse.json({
-      transcript,
-      language: selectedCaption.snippet.language,
+      error: `Found ${captionsData.items.length} caption(s) but YouTube requires OAuth 2.0 for caption download, which isn't supported with API keys.
+      
+Try one of these videos with guaranteed transcripts:
+• Cal Newport - Slow Productivity: https://www.youtube.com/watch?v=0HMjTxKRbaI
+• Kurzgesagt - Immune System: https://www.youtube.com/watch?v=zQGOcOUBi6s
+• Rick Astley - Never Gonna Give You Up: https://www.youtube.com/watch?v=dQw4w9WgXcQ`,
+      videoId,
       videoTitle,
-      totalLines: transcript.length,
-      source: 'youtube-official-api',
-      isAutomatic: selectedCaption.snippet.trackKind === 'asr'
-    });
+      captionsAvailable: captionsData.items.length,
+      availableLanguages: captionsData.items.map(item => item.snippet.language),
+      requiresOAuth: true
+    }, { status: 422 }); // 422 Unprocessable Entity
 
   } catch (error) {
     console.error('❌ YouTube Official API error:', error);

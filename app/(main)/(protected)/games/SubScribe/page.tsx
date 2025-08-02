@@ -183,6 +183,41 @@ export default function VideoSelectionPage() {
       
       try {
         transcriptResponse = await fetch(`/api/youtube-official?videoId=${videoId}&lang=en`);
+        
+        // Handle the new response format
+        if (transcriptResponse.ok) {
+          const data = await transcriptResponse.json();
+          
+          // If the API suggests using predefined transcript
+          if (data.usePredefined && isPredefinedVideo(videoId)) {
+            console.log('API suggests using predefined transcript for this video');
+            transcriptResponse = { 
+              ok: true, 
+              json: () => Promise.resolve({
+                transcript: getPredefinedTranscript(videoId),
+                source: 'predefined-recommended',
+                message: 'Using built-in transcript data (recommended by API)'
+              })
+            };
+          } else if (data.requiresOAuth) {
+            // API found captions but can't download them
+            console.log('API found captions but requires OAuth, checking predefined...');
+            if (isPredefinedVideo(videoId)) {
+              transcriptResponse = { 
+                ok: true, 
+                json: () => Promise.resolve({
+                  transcript: getPredefinedTranscript(videoId),
+                  source: 'predefined-oauth-fallback',
+                  message: 'Using built-in transcript (API requires OAuth for caption download)'
+                })
+              };
+            } else {
+              setError(data.error || 'This video requires OAuth authentication for captions.');
+              setLoading(false);
+              return;
+            }
+          }
+        }
       } catch (error) {
         console.log('YouTube API failed, checking for predefined videos...', error);
         
