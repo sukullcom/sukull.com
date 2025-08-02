@@ -183,8 +183,12 @@ These videos have built-in transcripts and will work immediately.`);
             return;
           }
               } catch (error) {
-          console.log('Railway server failed, no fallback available in production', error);
-          setError(`YouTube transcript API is temporarily unavailable.
+          console.log('Railway server failed, trying Vercel fallback...', error);
+          try {
+            transcriptResponse = await fetch(`/api/youtube-transcript-simple?videoId=${videoId}&lang=en`);
+          } catch (fallbackError) {
+            console.log('All APIs failed', fallbackError);
+            setError(`YouTube transcript API is temporarily unavailable.
 
 Please try one of these pre-loaded videos instead:
 • Cal Newport - Slow Productivity: https://www.youtube.com/watch?v=0HMjTxKRbaI
@@ -192,8 +196,9 @@ Please try one of these pre-loaded videos instead:
 • Rick Astley - Never Gonna Give You Up: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 
 These videos have built-in transcripts and will work immediately.`);
-          setLoading(false);
-          return;
+            setLoading(false);
+            return;
+          }
         }
       
       if (transcriptResponse.status === 401) {
