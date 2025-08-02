@@ -347,9 +347,14 @@ export default function GamePage() {
 
       // Otherwise, fetch from API
       try {
-        // Use local ytdlp API for YouTube transcript processing
-        const response = await fetch(`/api/youtube-transcript?videoId=${videoId}&lang=en`, {
-          credentials: 'include',
+        // Use AWS Lambda for production or local API for development
+        const lambdaUrl = process.env.NEXT_PUBLIC_LAMBDA_TRANSCRIPT_URL;
+        const transcriptUrl = lambdaUrl || '/api/youtube-transcript';
+        
+        console.log('Using transcript URL:', transcriptUrl);
+        
+        const response = await fetch(`${transcriptUrl}?videoId=${videoId}&lang=en`, {
+          credentials: lambdaUrl ? 'omit' : 'include', // No credentials for Lambda
           headers: {
             'Content-Type': 'application/json',
           },

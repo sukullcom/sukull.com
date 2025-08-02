@@ -1,0 +1,26 @@
+{
+  "name": "sukull-youtube-transcript-lambda",
+  "version": "1.0.0",
+  "description": "AWS Lambda function for YouTube transcript extraction using yt-dlp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "npm run package && aws lambda update-function-code --function-name sukull-youtube-transcript --zip-file fileb://lambda-package.zip",
+    "package": "zip -r lambda-package.zip . -x \"*.zip\" \"deploy.sh\" \"README.md\""
+  },
+  "keywords": [
+    "youtube",
+    "transcript",
+    "yt-dlp", 
+    "aws",
+    "lambda"
+  ],
+  "author": "Sukull",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^2.6.7"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}

@@ -108,7 +108,7 @@ export async function GET(req: NextRequest) {
         const content = await response.text();
         
         // Parse based on format
-        let transcript: TranscriptLine[] = [];
+        const transcript: TranscriptLine[] = [];
         
         if (subtitle.ext === 'json3') {
           const data: Json3Data = JSON.parse(content);
