@@ -124,34 +124,21 @@ export default function VideoSelectionPage() {
 
   async function getVideoDuration(videoId: string): Promise<number | null> {
     try {
-      const apiKey = "AIzaSyDjvTdEKS2UQo-0mi8MAptcFGRsXiGzaAU";
-      const response = await fetch(
-        `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=contentDetails&key=${apiKey}`
-      );
+      // Use our YouTube Official API endpoint instead of direct Google API call
+      const response = await fetch(`/api/youtube-official-duration?videoId=${videoId}`);
       const data = await response.json();
   
-      if (data.items.length === 0) {
+      if (data.error || !data.duration) {
         return null;
       }
   
-      const durationISO = data.items[0].contentDetails.duration;
-      return parseDuration(durationISO);
+      return data.duration;
     } catch (error) {
       console.error("Error fetching video duration:", error);
       return null;
     }
   }
   
-  function parseDuration(durationISO: string): number {
-    const match = durationISO.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-    if (!match) return 0;
-  
-    const hours = match[1] ? parseInt(match[1]) * 3600 : 0;
-    const minutes = match[2] ? parseInt(match[2]) * 60 : 0;
-    const seconds = match[3] ? parseInt(match[3]) : 0;
-  
-    return hours + minutes + seconds;
-  }
   
   const handleSelectUrl = async () => {
     if (!videoUrl) {
