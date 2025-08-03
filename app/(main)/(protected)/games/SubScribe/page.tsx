@@ -9,6 +9,8 @@ import Image from "next/image";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { reduceHeartsForSubScribe } from "@/actions/user-progress";
 import { InfinityIcon } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 interface UserProgress {
   hearts: number;
@@ -36,6 +38,8 @@ export default function VideoSelectionPage() {
   const [loadingMessage, setLoadingMessage] = useState("");
   const [userProgress, setUserProgress] = useState<UserProgress | null>(null);
   const [progressLoading, setProgressLoading] = useState(true);
+  const [testMode, setTestMode] = useState(false); // Toggle between Lambda and Local API
+  const [debugMode, setDebugMode] = useState(false); // Show debug information
 
   // Predefined videos with thumbnails
   const predefinedVideos = [
@@ -117,16 +121,23 @@ export default function VideoSelectionPage() {
       
       // Use AWS Lambda for production or local API for development
       const lambdaUrl = process.env.NEXT_PUBLIC_LAMBDA_TRANSCRIPT_URL;
-      const transcriptUrl = lambdaUrl || '/api/youtube-transcript';
+      const useLocal = testMode || !lambdaUrl; // Use local API if test mode is on or Lambda URL not set
+      const transcriptUrl = useLocal ? '/api/youtube-transcript' : lambdaUrl;
       
       console.log('Using transcript URL:', transcriptUrl);
+      console.log('Test mode:', testMode, 'Use local:', useLocal);
       
       const transcriptResponse = await fetch(`${transcriptUrl}?videoId=${videoId}&lang=en`, {
-        credentials: lambdaUrl ? 'omit' : 'include', // No credentials for Lambda
+        credentials: useLocal ? 'include' : 'omit', // Credentials for local API only
         headers: {
           'Content-Type': 'application/json',
         },
       });
+      
+      if (debugMode) {
+        console.log('Response status:', transcriptResponse.status);
+        console.log('Response headers:', Object.fromEntries(transcriptResponse.headers.entries()));
+      }
       
       if (transcriptResponse.status === 401) {
         alert("Oturum süreniz dolmuş. Lütfen sayfayı yenileyin ve tekrar giriş yapın.");
@@ -134,7 +145,19 @@ export default function VideoSelectionPage() {
         return;
       }
       
-      const transcriptData = await transcriptResponse.json();
+      let transcriptData;
+      try {
+        transcriptData = await transcriptResponse.json();
+        if (debugMode) {
+          console.log('Transcript data received:', transcriptData);
+        }
+      } catch (jsonError) {
+        console.error('Failed to parse JSON response:', jsonError);
+        const responseText = await transcriptResponse.text();
+        console.error('Response text:', responseText);
+        alert(`Sunucudan geçersiz yanıt alındı. ${useLocal ? 'Yerel API' : 'Lambda'} hatası: ${responseText.substring(0, 200)}...`);
+        return;
+      }
       
       // Check video duration from ytdlp response
       if (transcriptData.duration && transcriptData.duration > 360) { // 6 minutes = 360 seconds
@@ -258,7 +281,30 @@ Lütfen:
         </div>
       )}
 
-      <h1 className="text-xl font-bold">SubScribe</h1>
+      <div className="flex items-center justify-between w-full">
+        <h1 className="text-xl font-bold">SubScribe</h1>
+        <div className="flex items-center gap-2">
+          <Link href="/games/SubScribe/debug">
+            <Badge variant="secondary" className="cursor-pointer hover:bg-gray-200">
+              Debug Tool
+            </Badge>
+          </Link>
+          <Button
+            variant={testMode ? "primary" : "primaryOutline"}
+            size="sm"
+            onClick={() => setTestMode(!testMode)}
+          >
+            {testMode ? "Local API" : "Lambda"}
+          </Button>
+          <Button
+            variant={debugMode ? "secondary" : "secondaryOutline"}
+            size="sm"
+            onClick={() => setDebugMode(!debugMode)}
+          >
+            Debug
+          </Button>
+        </div>
+      </div>
       <p className="py-4">En fazla 6 dk uzunluğunda istediğin bir Youtube videosunun bağlantısını girerek başla</p>
       
       <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
