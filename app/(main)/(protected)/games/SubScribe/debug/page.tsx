@@ -13,9 +13,35 @@ import {
   MOCK_TRANSCRIPT_DATA 
 } from "../test-config";
 
+interface TestResult {
+  error?: string;
+  transcript?: Array<{ startTime: number; text: string }>;
+  duration?: number;
+  title?: string;
+  videoId?: string;
+  troubleshooting?: string;
+}
+
+interface TestResults {
+  videoId?: string;
+  videoUrl?: string;
+  timestamp?: string;
+  error?: string;
+  tests?: {
+    lambda?: TestResult;
+    local?: TestResult;
+    mock?: TestResult;
+  };
+  environment?: {
+    lambdaUrl?: string;
+    userAgent?: string;
+    origin?: string;
+  };
+}
+
 export default function SubScribeDebugPage() {
   const [videoUrl, setVideoUrl] = useState("https://www.youtube.com/watch?v=sbCvQbBi2G8&t=7s");
-  const [testResults, setTestResults] = useState<any>(null);
+  const [testResults, setTestResults] = useState<TestResults | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [testType, setTestType] = useState<'lambda' | 'local' | 'both'>('both');
 
@@ -41,7 +67,7 @@ export default function SubScribeDebugPage() {
     setIsLoading(true);
     setTestResults(null);
 
-    const results: any = {
+    const results: TestResults = {
       videoId,
       videoUrl,
       timestamp: new Date().toISOString(),
@@ -51,11 +77,13 @@ export default function SubScribeDebugPage() {
     try {
       if (testType === 'lambda' || testType === 'both') {
         debugLog("Testing Lambda function...");
+        if (!results.tests) results.tests = {};
         results.tests.lambda = await testLambdaFunction(videoId);
       }
 
       if (testType === 'local' || testType === 'both') {
         debugLog("Testing local API...");
+        if (!results.tests) results.tests = {};
         results.tests.local = await testLocalApi(videoId);
       }
 
@@ -85,7 +113,7 @@ export default function SubScribeDebugPage() {
     });
   };
 
-  const getStatusBadge = (result: any) => {
+  const getStatusBadge = (result: TestResult | undefined) => {
     if (!result) return <Badge variant="secondary">Not tested</Badge>;
     if (result.error) return <Badge variant="destructive">Error</Badge>;
     if (result.transcript && result.transcript.length > 0) return <Badge variant="default">Success</Badge>;

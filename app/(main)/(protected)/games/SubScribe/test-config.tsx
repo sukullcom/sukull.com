@@ -30,7 +30,7 @@ export const MOCK_TRANSCRIPT_DATA = {
 };
 
 // Debug logger
-export const debugLog = (message: string, data?: any) => {
+export const debugLog = (message: string, data?: unknown) => {
   if (DEFAULT_TEST_CONFIG.debugMode) {
     console.log(`[SubScribe Debug] ${message}`, data || '');
   }
