@@ -124,12 +124,12 @@ export function DailyProgress() {
       <div className="mb-3">
         <div className="flex justify-between text-sm mb-1">
           <span>{pointsEarnedToday} / {dailyTarget} puan</span>
-          <span>{Math.round(progressPercentage)}%</span>
+          <span>{Math.max(0, Math.round(progressPercentage))}%</span>
         </div>
         <div className="w-full bg-white/20 rounded-full h-2">
           <div
             className="bg-white h-2 rounded-full transition-all duration-500 ease-out"
-            style={{ width: `${Math.min(progressPercentage, 100)}%` }}
+            style={{ width: `${Math.max(0, Math.min(progressPercentage, 100))}%` }}
           ></div>
         </div>
       </div>

@@ -4,8 +4,8 @@ export const POINTS_TO_REFILL = 200;
 export const SCORING_SYSTEM = {
   // Base points for different activities
   LESSON_CHALLENGE_FIRST: 10,     // First time completing a challenge
-  LESSON_CHALLENGE_PRACTICE: 20,  // Practicing completed challenges
-  LESSON_CHALLENGE_PENALTY: -10,  // Wrong answer penalty
+  LESSON_CHALLENGE_PRACTICE: 2,   // Practicing completed challenges
+  LESSON_CHALLENGE_PENALTY: -2,   // Wrong answer penalty
   
   // Game scoring with difficulty multipliers
   GAMES: {

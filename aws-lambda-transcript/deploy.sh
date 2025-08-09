@@ -89,28 +89,8 @@ fi
 
 # Create or update function URL
 echo "🌐 Setting up Function URL..."
-aws lambda create-function-url-config \
-    --function-name $FUNCTION_NAME \
-    --auth-type NONE \
-    --cors '{
-        "AllowCredentials": false,
-        "AllowHeaders": ["content-type", "authorization"],
-        "AllowMethods": ["GET", "POST", "OPTIONS"],
-        "AllowOrigins": ["*"],
-        "ExposeHeaders": [],
-        "MaxAge": 86400
-    }' 2>/dev/null || \
-aws lambda update-function-url-config \
-    --function-name $FUNCTION_NAME \
-    --auth-type NONE \
-    --cors '{
-        "AllowCredentials": false,
-        "AllowHeaders": ["content-type", "authorization"],
-        "AllowMethods": ["GET", "POST", "OPTIONS"],
-        "AllowOrigins": ["*"],
-        "ExposeHeaders": [],
-        "MaxAge": 86400
-    }'
+aws lambda create-function-url-config --function-name $FUNCTION_NAME --auth-type NONE 2>/dev/null || \
+aws lambda update-function-url-config --function-name $FUNCTION_NAME --auth-type NONE
 
 # Get function URL
 FUNCTION_URL=$(aws lambda get-function-url-config --function-name $FUNCTION_NAME --query 'FunctionUrl' --output text)

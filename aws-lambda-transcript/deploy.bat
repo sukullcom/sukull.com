@@ -70,9 +70,9 @@ if errorlevel 1 (
 
 REM Create or update function URL
 echo 🌐 Setting up Function URL...
-aws lambda create-function-url-config --function-name %FUNCTION_NAME% --auth-type NONE --cors "{\"AllowCredentials\": false, \"AllowHeaders\": [\"content-type\", \"authorization\"], \"AllowMethods\": [\"GET\", \"POST\", \"OPTIONS\"], \"AllowOrigins\": [\"*\"], \"ExposeHeaders\": [], \"MaxAge\": 86400}" >nul 2>&1
+aws lambda create-function-url-config --function-name %FUNCTION_NAME% --auth-type NONE >nul 2>&1
 if errorlevel 1 (
-    aws lambda update-function-url-config --function-name %FUNCTION_NAME% --auth-type NONE --cors "{\"AllowCredentials\": false, \"AllowHeaders\": [\"content-type\", \"authorization\"], \"AllowMethods\": [\"GET\", \"POST\", \"OPTIONS\"], \"AllowOrigins\": [\"*\"], \"ExposeHeaders\": [], \"MaxAge\": 86400}"
+    aws lambda update-function-url-config --function-name %FUNCTION_NAME% --auth-type NONE
 )
 
 REM Get function URL

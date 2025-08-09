@@ -320,7 +320,7 @@ export async function updateDailyStreak() {
     const today = getUTCToday();
     
     // Calculate daily goal achievement using current baseline
-    const pointsEarnedToday = Math.max(0, progress.points - (progress.previousTotalPoints || 0));
+    const pointsEarnedToday = (progress.points - (progress.previousTotalPoints || 0));
     const dailyTarget = progress.dailyTarget || 50;
     const goalAchieved = pointsEarnedToday >= dailyTarget;
     
@@ -725,11 +725,8 @@ export async function getCurrentDayProgress() {
     const lastCheck = progress.lastStreakCheck ? new Date(progress.lastStreakCheck) : null;
     const lastCheckDay = lastCheck ? getUTCDateFromTimestamp(lastCheck) : today;
     
-    let pointsEarnedToday = 0;
-    if (lastCheckDay.getTime() === today.getTime()) {
-      // Same day - calculate difference from baseline
-      pointsEarnedToday = Math.max(0, progress.points - (progress.previousTotalPoints || 0));
-    }
+    // Calculate difference from baseline (can be negative), regardless of lastStreakCheck timestamp
+    const pointsEarnedToday = (progress.points - (progress.previousTotalPoints || 0));
     
     const dailyTarget = progress.dailyTarget || 50;
     const achieved = pointsEarnedToday >= dailyTarget;

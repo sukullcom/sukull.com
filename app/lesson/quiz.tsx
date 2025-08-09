@@ -219,7 +219,7 @@ export const Quiz = ({
             setStatus("wrong");
             if (!response?.error) {
               setHearts((prev) => Math.max(prev - 1, 0));
-              setPoints((prev) => prev - 10);
+              setPoints((prev) => prev - 2);
             }
           })
           .catch(() => toast.error("Bir şeyler yanlış gitti. Lütfen tekrar deneyin."));
@@ -269,7 +269,7 @@ export const Quiz = ({
 
             if (initialPercentage === 100) {
               // Practice mode: only award points, no hearts
-              setPoints((prev) => prev + 20);
+              setPoints((prev) => prev + 2);
             } else {
               // First time: award points only
               setPoints((prev) => prev + 10);
@@ -291,7 +291,7 @@ export const Quiz = ({
             setStatus("wrong");
             if (!response?.error) {
               setHearts((prev) => Math.max(prev - 1, 0));
-              setPoints((prev) => prev - 10);
+              setPoints((prev) => prev - 2);
             }
           })
           .catch(() => toast.error("Bir şeyler yanlış gitti. Lütfen tekrar deneyin."));
