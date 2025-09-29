@@ -1,4 +1,4 @@
-// pages/index.tsx
+// SubScribe Game - Main Page (Predefined Videos Only)
 
 "use client";
 
@@ -7,10 +7,8 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { LoadingSpinner } from "@/components/loading-spinner";
-import { reduceHeartsForSubScribe } from "@/actions/user-progress";
 import { InfinityIcon } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
+import { PREDEFINED_VIDEOS } from "./transcript-data";
 
 interface UserProgress {
   hearts: number;
@@ -18,47 +16,21 @@ interface UserProgress {
   hasInfiniteHearts: boolean | null;
 }
 
-function getVideoIdFromUrl(url: string): string | null {
-  try {
-    const parsedUrl = new URL(url);
-    // Handle both standard and short YouTube  URLs
-    if (parsedUrl.hostname === "youtu.be") {
-      return parsedUrl.pathname.slice(1);
-    }
-    return parsedUrl.searchParams.get("v");
-  } catch {
-    return null;
-  }
-}
-
 export default function VideoSelectionPage() {
   const router = useRouter();
-  const [videoUrl, setVideoUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
   const [userProgress, setUserProgress] = useState<UserProgress | null>(null);
   const [progressLoading, setProgressLoading] = useState(true);
-  const [testMode, setTestMode] = useState(false); // Toggle between Lambda and Local API
-  const [debugMode, setDebugMode] = useState(false); // Show debug information
 
-  // Predefined videos with thumbnails
-  const predefinedVideos = [
-    {
-      title: "Slow Productivity (Cal Newport)",
-      videoId: "0HMjTxKRbaI",
-      thumbnail: "/mascot_purple.svg"
-    },
-    {
-      title: "Never Gonna Give You Up",
-      videoId: "dQw4w9WgXcQ",
-      thumbnail: "/mascot_pink.svg"
-    },
-    {
-      title: "Kurzgesagt - Immune System",
-      videoId: "zQGOcOUBi6s",
-      thumbnail: "/mascot_orange.svg"
-    },
-  ];
+  // Use predefined videos with their manual transcripts
+  const predefinedVideos = PREDEFINED_VIDEOS.map(video => ({
+    title: video.title,
+    videoId: video.videoId,
+    thumbnail: video.videoId === "0HMjTxKRbaI" ? "/mascot_purple.svg" :
+               video.videoId === "dQw4w9WgXcQ" ? "/mascot_pink.svg" :
+               "/mascot_orange.svg"
+  }));
 
   // Fetch user progress on component mount
   useEffect(() => {
