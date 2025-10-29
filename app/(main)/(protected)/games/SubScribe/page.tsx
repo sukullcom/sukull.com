@@ -1,4 +1,4 @@
-// SubScribe Game - Main Page (Predefined Videos Only)
+// pages/index.tsx
 
 "use client";
 
@@ -7,8 +7,11 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { reduceHeartsForSubScribe } from "@/actions/user-progress";
 import { InfinityIcon } from "lucide-react";
-import { PREDEFINED_VIDEOS } from "./transcript-data";
+import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
+import { getPredefinedTranscript, hasPredefinedTranscript } from "./predefined-transcripts";
 
 interface UserProgress {
   hearts: number;
@@ -16,21 +19,47 @@ interface UserProgress {
   hasInfiniteHearts: boolean | null;
 }
 
+function getVideoIdFromUrl(url: string): string | null {
+  try {
+    const parsedUrl = new URL(url);
+    // Handle both standard and short YouTube  URLs
+    if (parsedUrl.hostname === "youtu.be") {
+      return parsedUrl.pathname.slice(1);
+    }
+    return parsedUrl.searchParams.get("v");
+  } catch {
+    return null;
+  }
+}
+
 export default function VideoSelectionPage() {
   const router = useRouter();
+  const [videoUrl, setVideoUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
   const [userProgress, setUserProgress] = useState<UserProgress | null>(null);
   const [progressLoading, setProgressLoading] = useState(true);
+  const [testMode, setTestMode] = useState(false); // Toggle between Lambda and Local API
+  const [debugMode, setDebugMode] = useState(false); // Show debug information
 
-  // Use predefined videos with their manual transcripts
-  const predefinedVideos = PREDEFINED_VIDEOS.map(video => ({
-    title: video.title,
-    videoId: video.videoId,
-    thumbnail: video.videoId === "0HMjTxKRbaI" ? "/mascot_purple.svg" :
-               video.videoId === "dQw4w9WgXcQ" ? "/mascot_pink.svg" :
-               "/mascot_orange.svg"
-  }));
+  // Predefined videos with thumbnails
+  const predefinedVideos = [
+    {
+      title: "Slow Productivity (Cal Newport)",
+      videoId: "0HMjTxKRbaI",
+      thumbnail: "/mascot_purple.svg"
+    },
+    {
+      title: "Never Gonna Give You Up",
+      videoId: "dQw4w9WgXcQ",
+      thumbnail: "/mascot_pink.svg"
+    },
+    {
+      title: "Kurzgesagt - Immune System",
+      videoId: "zQGOcOUBi6s",
+      thumbnail: "/mascot_orange.svg"
+    },
+  ];
 
   // Fetch user progress on component mount
   useEffect(() => {
@@ -78,9 +107,22 @@ export default function VideoSelectionPage() {
       return;
     }
 
-    // Check hearts for custom videos
+    // Check if this video has a predefined transcript
+    if (!hasPredefinedTranscript(videoId)) {
+      alert(`❌ Bu video desteklenmiyor!
+
+Sadece aşağıdaki hazır videolar desteklenmektedir:
+• Rick Astley - Never Gonna Give You Up
+• Slow Productivity (Cal Newport)  
+• Kurzgesagt - Immune System
+
+Lütfen hazır videolardan birini seçin.`);
+      return;
+    }
+
+    // Check hearts for custom videos (even predefined ones require hearts if entered manually)
     if (userProgress && !userProgress.hasInfiniteHearts && userProgress.hearts === 0) {
-      alert("❤️ Kalbiniz kalmadı! Özel video kullanmak için kalp gerekli.\n\n✅ Hazır videoları kullanabilirsiniz (kalp harcamaz)\n💰 Mağazadan kalp satın alabilirsiniz");
+      alert("❤️ Kalbiniz kalmadı! Video oyunu için kalp gerekli.\n\n💰 Mağazadan kalp satın alabilirsiniz");
       return;
     }
 
@@ -88,108 +130,45 @@ export default function VideoSelectionPage() {
     setLoadingMessage("Video kontrol ediliyor...");
 
     try {
-      // Fetch transcript and video info using ytdlp (includes duration)
-      setLoadingMessage("Video ve transcript kontrol ediliyor...");
+      // Get predefined transcript
+      const transcriptData = getPredefinedTranscript(videoId);
       
-      // Use AWS Lambda for production or local API for development
-      const lambdaUrl = process.env.NEXT_PUBLIC_LAMBDA_TRANSCRIPT_URL;
-      const useLocal = testMode || !lambdaUrl; // Use local API if test mode is on or Lambda URL not set
-      const transcriptUrl = useLocal ? '/api/youtube-transcript' : lambdaUrl;
-      
-      console.log('Using transcript URL:', transcriptUrl);
-      console.log('Test mode:', testMode, 'Use local:', useLocal);
-      
-      const transcriptResponse = await fetch(`${transcriptUrl}?videoId=${videoId}&lang=en`, {
-        credentials: useLocal ? 'include' : 'omit', // Credentials for local API only
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      
-      if (debugMode) {
-        console.log('Response status:', transcriptResponse.status);
-        console.log('Response headers:', Object.fromEntries(transcriptResponse.headers.entries()));
-      }
-      
-      if (transcriptResponse.status === 401) {
-        alert("Oturum süreniz dolmuş. Lütfen sayfayı yenileyin ve tekrar giriş yapın.");
-        window.location.reload();
+      if (!transcriptData) {
+        alert("Bu video için transcript bulunamadı. Lütfen hazır videoları kullanın.");
         return;
       }
-      
-      let transcriptData;
-      try {
-        transcriptData = await transcriptResponse.json();
-        if (debugMode) {
-          console.log('Transcript data received:', transcriptData);
-        }
-      } catch (jsonError) {
-        console.error('Failed to parse JSON response:', jsonError);
-        const responseText = await transcriptResponse.text();
-        console.error('Response text:', responseText);
-        alert(`Sunucudan geçersiz yanıt alındı. ${useLocal ? 'Yerel API' : 'Lambda'} hatası: ${responseText.substring(0, 200)}...`);
-        return;
-      }
-      
-      // Check video duration from ytdlp response
-      if (transcriptData.duration && transcriptData.duration > 360) { // 6 minutes = 360 seconds
+
+      // Check video duration
+      if (transcriptData.duration > 360) { // 6 minutes = 360 seconds
         alert("Bu video süresi 6 dakikayı geçiyor. Lütfen 6 dakikadan kısa bir video seçin.");
         return;
       }
+
+      // Reduce hearts for video usage
+      setLoadingMessage("Kalp düşürülüyor...");
       
-      if (transcriptData.transcript && transcriptData.transcript.length > 0) {
-        // Reduce hearts for custom video usage
-        setLoadingMessage("Kalp düşürülüyor...");
-        
-        try {
-          const heartResult = await reduceHeartsForSubScribe();
-          if (heartResult.error === 'hearts') {
-            alert("❤️ Kalbiniz kalmadı! Özel video kullanmak için kalp gerekli.");
-            return;
-          }
-          
-          // Update local state
-          if (heartResult.success && !heartResult.hasInfiniteHearts) {
-            setUserProgress((prev: UserProgress | null) => prev ? {...prev, hearts: heartResult.hearts ?? prev.hearts} : null);
-          }
-          
-          // Success! Video has transcript and heart deducted
-          setLoadingMessage("Zorluk seçimi sayfasına yönlendiriliyor...");
-          router.push(`/games/SubScribe/select-difficulty?videoId=${videoId}`);
-        } catch (error) {
-          console.error("Error reducing hearts:", error);
-          alert("Kalp düşürülürken hata oluştu. Lütfen tekrar deneyin.");
+      try {
+        const heartResult = await reduceHeartsForSubScribe();
+        if (heartResult.error === 'hearts') {
+          alert("❤️ Kalbiniz kalmadı! Video oyunu için kalp gerekli.");
+          return;
         }
-      } else {
-        // No transcript available
-        const errorMsg = transcriptData.troubleshooting 
-          ? `❌ Bu video için metin çevrimi (transcript) bulunamadı.
-
-Olası nedenler:
-• Video altyazısı/caption bulunmuyor
-• Video özel (private) veya kısıtlı
-• Video çok yeni (henüz otomatik altyazı oluşturulmamış)
-
-Çözüm:
-• YouTube'da videoyu izleyerek altyazı olup olmadığını kontrol edin
-• Altyazısı olan farklı bir video deneyin  
-• Aşağıdaki hazır videoları kullanabilirsiniz`
-          : `❌ Bu video için transcript bulunamadı: ${transcriptData.error}`;
         
-        alert(errorMsg);
+        // Update local state
+        if (heartResult.success && !heartResult.hasInfiniteHearts) {
+          setUserProgress((prev: UserProgress | null) => prev ? {...prev, hearts: heartResult.hearts ?? prev.hearts} : null);
+        }
+        
+        // Success! Video has transcript and heart deducted
+        setLoadingMessage("Zorluk seçimi sayfasına yönlendiriliyor...");
+        router.push(`/games/SubScribe/select-difficulty?videoId=${videoId}`);
+      } catch (error) {
+        console.error("Error reducing hearts:", error);
+        alert("Kalp düşürülürken hata oluştu. Lütfen tekrar deneyin.");
       }
     } catch (error) {
       console.error("Error checking video:", error);
-      alert(`❌ Video kontrol edilirken hata oluştu. 
-
-Muhtemelen:
-• İnternet bağlantı sorunu
-• YouTube servisi geçici olarak erişilemez
-
-Lütfen:
-• İnternet bağlantınızı kontrol edin
-• Birkaç dakika sonra tekrar deneyin
-• Aşağıdaki hazır videoları kullanabilirsiniz`);
+      alert("Video kontrol edilirken hata oluştu. Lütfen hazır videoları kullanın.");
     } finally {
       setIsLoading(false);
       setLoadingMessage("");
@@ -255,81 +234,64 @@ Lütfen:
 
       <div className="flex items-center justify-between w-full">
         <h1 className="text-xl font-bold">SubScribe</h1>
-        <div className="flex items-center gap-2">
-          <Link href="/games/SubScribe/debug">
-            <Badge variant="secondary" className="cursor-pointer hover:bg-gray-200">
-              Debug Tool
-            </Badge>
-          </Link>
-          <Button
-            variant={testMode ? "primary" : "primaryOutline"}
-            size="sm"
-            onClick={() => setTestMode(!testMode)}
-          >
-            {testMode ? "Local API" : "Lambda"}
-          </Button>
-          <Button
-            variant={debugMode ? "secondary" : "secondaryOutline"}
-            size="sm"
-            onClick={() => setDebugMode(!debugMode)}
-          >
-            Debug
-          </Button>
-        </div>
       </div>
-      <p className="py-4">En fazla 6 dk uzunluğunda istediğin bir Youtube videosunun bağlantısını girerek başla</p>
+      <p className="py-4">Hazır videolardan birini seçerek başlayın. Her video özel olarak hazırlanmış transcript&apos;lere sahiptir!</p>
       
-      <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-        <h3 className="font-semibold text-blue-800 mb-2">📝 Video Gereksinimleri</h3>
-        <ul className="text-sm text-blue-700 space-y-1">
-          <li>• Video&apos;da altyazı/caption açık olmalı</li>
-          <li>• Video herkese açık olmalı (özel veya listede olmayan videolar olmaz)</li>
-          <li>• Maksimum süre: 6 dakika</li>
-          <li>• Eğitim veya konuşma videoları en iyi sonucu verir</li>
+      <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+        <h3 className="font-semibold text-green-800 mb-2">✅ Desteklenen Videolar</h3>
+        <ul className="text-sm text-green-700 space-y-1">
+          <li>• <strong>Rick Astley - Never Gonna Give You Up</strong> - Klasik şarkı</li>
+          <li>• <strong>Slow Productivity (Cal Newport)</strong> - Eğitim videosu</li>
+          <li>• <strong>Kurzgesagt - Immune System</strong> - Bilim videosu</li>
         </ul>
-        <p className="text-xs text-blue-600 mt-2">
-          💡 İpucu: Video eklemeden önce YouTube&apos;da izleyerek altyazı olup olmadığını kontrol edin
+        <p className="text-xs text-green-600 mt-2">
+          💡 Bu videolar yüksek kaliteli transcript&apos;lere sahip ve %100 çalışma garantisi verir
         </p>
       </div>
 
-      {/* Heart cost warning for custom videos */}
-      <div className="mb-4 p-3 bg-rose-50 border border-rose-200 rounded-lg">
-        <div className="flex items-center gap-2 text-sm text-rose-700">
-          <Image src="/heart.svg" alt="Heart" width={16} height={16} />
-          <span className="font-medium">Özel video kullanımı: -1 kalp</span>
-        </div>
-        <p className="text-xs text-rose-600 mt-1">
-          ✅ Hazır videolar tamamen ücretsiz (kalp harcamaz)
-        </p>
+      {/* Advanced options for custom videos */}
+      <div className="mb-4">
+        <details className="bg-gray-50 border border-gray-200 rounded-lg">
+          <summary className="p-3 cursor-pointer font-medium text-gray-700 hover:bg-gray-100">
+            🔧 İleri Düzey: Kendi Video URL&apos;inizi Deneyin
+          </summary>
+          <div className="p-4 border-t border-gray-200">
+            <div className="mb-3 p-3 bg-yellow-50 border border-yellow-200 rounded">
+              <p className="text-sm text-yellow-700">
+                <strong>⚠️ Dikkat:</strong> Sadece yukarıdaki 3 video desteklenmektedir. 
+                Başka videolar çalışmayacaktır.
+              </p>
+            </div>
+            
+            {(() => {
+              const needsHeart = Boolean(userProgress && !userProgress.hasInfiniteHearts && userProgress.hearts === 0);
+              const isDisabled = isLoading || needsHeart;
+              
+              return (
+                <>
+                  <input
+                    type="text"
+                    placeholder="YouTube Video URL (örn: https://www.youtube.com/watch?v=dQw4w9WgXcQ)"
+                    value={videoUrl}
+                    onChange={(e) => setVideoUrl(e.target.value)}
+                    style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
+                    disabled={isDisabled}
+                  />
+                  <Button 
+                    variant="secondary" 
+                    onClick={handleSelectUrl} 
+                    disabled={isDisabled}
+                    className={needsHeart ? "opacity-50 cursor-not-allowed" : ""}
+                    size="sm"
+                  >
+                    {needsHeart ? "Kalp Gerekli" : "Dene (-1 ❤️)"}
+                  </Button>
+                </>
+              );
+            })()}
+          </div>
+        </details>
       </div>
-      
-      {(() => {
-        const needsHeart = Boolean(userProgress && !userProgress.hasInfiniteHearts && userProgress.hearts === 0);
-        const isDisabled = isLoading || needsHeart;
-        
-        return (
-          <>
-            <input
-              type="text"
-              placeholder="YouTube Video URL (örn: https://www.youtube.com/watch?v=...)"
-              value={videoUrl}
-              onChange={(e) => setVideoUrl(e.target.value)}
-              style={{ width: "100%", padding: "10px", marginBottom: "20px" }}
-              disabled={isDisabled}
-            />
-            <Button 
-              variant="primary" 
-              onClick={handleSelectUrl} 
-              disabled={isDisabled}
-              className={needsHeart ? "opacity-50 cursor-not-allowed" : ""}
-            >
-              {needsHeart ? "Kalp Gerekli" : "Oyuna Başla (-1 ❤️)"}
-            </Button>
-          </>
-        );
-      })()}
-
-      <hr style={{ margin: "40px 0" }} />
 
       <h2 className="py-4">Hazır bir video ile başla</h2>
       <p className="text-sm text-gray-600 mb-4">
