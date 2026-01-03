@@ -190,7 +190,8 @@ export const auth = {
 
     // else proceed
     // IMPORTANT: Use callback route to properly exchange code for session
-    const resetLink = `${location.origin}/api/auth/callback?next=/reset-password`
+    // Add type=recovery to ensure password reset is detected
+    const resetLink = `${location.origin}/api/auth/callback?type=recovery&next=/reset-password`
     const res = await supabase.auth.resetPasswordForEmail(email, { redirectTo: resetLink })
     if (res.error) throw res.error
 

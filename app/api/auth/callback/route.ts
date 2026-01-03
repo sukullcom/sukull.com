@@ -48,44 +48,60 @@ export async function GET(request: Request) {
 
     console.log('Session created successfully for user:', data.user?.id);
     console.log('User email confirmed:', data.user?.email_confirmed_at ? 'Yes' : 'No');
+    console.log('Session data:', JSON.stringify(data.session, null, 2));
 
-    // Capture user details after successful OAuth or email verification
-    if (data.user) {
-      try {
-        console.log('Capturing user details for:', data.user.email);
-        console.log('Auth provider:', data.user.app_metadata?.provider);
-        console.log('User metadata:', JSON.stringify(data.user.user_metadata, null, 2));
-        
-        // Extract username from metadata if available (from email signup)
-        const usernameFromMetadata = data.user.user_metadata?.username;
-        
-        await users.captureUserDetails(data.user, usernameFromMetadata);
-        console.log('User details captured successfully');
-      } catch (err) {
-        console.error('Error capturing user details:', err);
-        // Proceed even if capturing details fails.
-      }
-    }
-
-    // Determine redirect location based on the type of authentication
-    let redirectTo = '/courses';
-    
     // Check if this is a password reset flow
     const next = requestUrl.searchParams.get('next');
     const type = requestUrl.searchParams.get('type');
     
-    if (type === 'recovery' || next === '/reset-password') {
+    // IMPORTANT: Check for password recovery FIRST before doing anything else
+    // Supabase sends type=recovery in the URL for password reset emails
+    const isPasswordRecovery = type === 'recovery' || 
+                                next === '/reset-password' ||
+                                requestUrl.href.includes('type=recovery');
+    
+    console.log('Password recovery check:', {
+      type,
+      next,
+      isPasswordRecovery,
+      fullUrl: requestUrl.href
+    });
+
+    // Determine redirect location based on the type of authentication
+    let redirectTo = '/courses';
+    
+    if (isPasswordRecovery) {
       // This is a password reset - redirect to reset password page
       redirectTo = '/reset-password';
-      console.log('Password reset flow detected');
-    } else if (data.user?.email_confirmed_at && data.user.app_metadata?.provider === 'email') {
-      // If this was an email verification (not OAuth), redirect to login with success message
-      redirectTo = '/login?verified=true';
-      console.log('Email verification flow detected');
-    } else if (next) {
-      // Use the next parameter if provided
-      redirectTo = next;
-      console.log('Using next parameter:', next);
+      console.log('🔐 Password reset flow detected - redirecting to /reset-password');
+    } else {
+      // Only capture user details if this is NOT a password reset
+      if (data.user) {
+        try {
+          console.log('Capturing user details for:', data.user.email);
+          console.log('Auth provider:', data.user.app_metadata?.provider);
+          console.log('User metadata:', JSON.stringify(data.user.user_metadata, null, 2));
+          
+          // Extract username from metadata if available (from email signup)
+          const usernameFromMetadata = data.user.user_metadata?.username;
+          
+          await users.captureUserDetails(data.user, usernameFromMetadata);
+          console.log('User details captured successfully');
+        } catch (err) {
+          console.error('Error capturing user details:', err);
+          // Proceed even if capturing details fails.
+        }
+      }
+      
+      // Check if this was an email verification (not OAuth)
+      if (data.user?.email_confirmed_at && data.user.app_metadata?.provider === 'email') {
+        redirectTo = '/login?verified=true';
+        console.log('📧 Email verification flow detected');
+      } else if (next && next !== '/reset-password') {
+        // Use the next parameter if provided (but not for reset password)
+        redirectTo = next;
+        console.log('Using next parameter:', next);
+      }
     }
     
     const redirectUrl = new URL(redirectTo, requestUrl.origin);

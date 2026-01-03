@@ -110,6 +110,12 @@ export async function middleware(req: NextRequest) {
   }
   
   if (session && publicPaths.some(path => pathname === path)) {
+    // EXCEPTION: Allow access to /reset-password even when logged in
+    // (password reset REQUIRES a session to work)
+    if (pathname === '/reset-password') {
+      return response;
+    }
+    
     // Already logged in => redirect to /learn instead of homepage to avoid redirect loop
     return NextResponse.redirect(new URL('/learn', req.url))
   }
