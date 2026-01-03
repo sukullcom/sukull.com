@@ -36,15 +36,18 @@ export function LoginForm() {
     try {
       setIsLoading(true);
       await auth.signIn(email, password);
-      router.push("/courses");
-      router.refresh();
+      
+      // Use window.location.href for a hard navigation to ensure session is picked up
+      // Get the next parameter from URL or default to /courses
+      const next = searchParams.get('next') || '/courses';
+      window.location.href = next;
     } catch (error) {
       console.error("Auth error:", error);
       const { message } = getAuthError(error);
       toast.error(message);
-    } finally {
-      setIsLoading(false);
+      setIsLoading(false); // Only set loading to false on error
     }
+    // Don't set loading to false on success - we're navigating away
   };
 
   return (
