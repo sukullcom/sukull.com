@@ -41,14 +41,20 @@ function OAuthButtons({ isLoading, onLoadingChange, redirectUrl }: Props) {
       type="button"
       disabled={loading}
       onClick={handleGoogleSignIn}
-      className="w-full"
+      className="w-full transition-opacity"
+      style={{ opacity: loading ? 0.6 : 1, cursor: loading ? 'not-allowed' : 'pointer' }}
     >
       {providerLoading ? (
-        <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+        <>
+          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          Google&apos;a yönlendiriliyor...
+        </>
       ) : (
-        <Icons.google className="mr-2 h-4 w-4" />
+        <>
+          <Icons.google className="mr-2 h-4 w-4" />
+          Google ile devam et
+        </>
       )}
-      Google ile devam et
     </Button>
   );
 }

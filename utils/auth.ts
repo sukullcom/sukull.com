@@ -157,21 +157,13 @@ export const auth = {
         // Clear any cached user data
         window.localStorage.clear();
         window.sessionStorage.clear();
-        
-        // Force a hard navigation to login to ensure complete cleanup
-        // Using location.href instead of router.push for security
-        window.location.href = '/login';
       }
       
+      // NOTE: Don't redirect here - let the calling code handle redirect
+      // This prevents double-redirect issues
       return { success: true };
     } catch (error) {
       console.error('Error during logout:', error);
-      
-      // Even if logout fails, we should still redirect for security
-      if (typeof window !== 'undefined') {
-        window.location.href = '/login?error=logout_failed';
-      }
-      
       throw error;
     }
   },

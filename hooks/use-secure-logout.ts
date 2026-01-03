@@ -57,10 +57,12 @@ export function useSecureLogout() {
         toast.success('Başarıyla çıkış yapıldı', { id: 'logout' });
       }
 
-      // The auth.signOut() method already handles the redirect via window.location.href
-      // But if we're still here, force redirect
+      // Redirect to login page with logout flag to prevent middleware loop
       if (typeof window !== 'undefined') {
-        window.location.href = redirectTo;
+        const logoutUrl = redirectTo.includes('?') 
+          ? `${redirectTo}&logout=true` 
+          : `${redirectTo}?logout=true`;
+        window.location.href = logoutUrl;
       }
 
     } catch (error) {

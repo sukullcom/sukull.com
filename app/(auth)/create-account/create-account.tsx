@@ -52,7 +52,7 @@ export function CreateAccountForm() {
         id="username"
         type="text"
         placeholder="Kullanıcı Adı"
-        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
+        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         disabled={isLoading}
@@ -62,7 +62,7 @@ export function CreateAccountForm() {
         id="email"
         type="email"
         placeholder="Email"
-        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
+        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         disabled={isLoading}
@@ -72,7 +72,7 @@ export function CreateAccountForm() {
         id="password"
         type="password"
         placeholder="Şifre"
-        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
+        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         disabled={isLoading}
@@ -82,7 +82,7 @@ export function CreateAccountForm() {
         id="confirmPassword"
         type="password"
         placeholder="Şifre Tekrar"
-        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
+        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
         disabled={isLoading}
@@ -91,13 +91,20 @@ export function CreateAccountForm() {
 
       {/* Sign up button */}
       <Button
-        className="w-full"
+        className="w-full transition-opacity"
         type="submit"
         disabled={isLoading}
         variant="secondary"
+        style={{ opacity: isLoading ? 0.6 : 1, cursor: isLoading ? 'not-allowed' : 'pointer' }}
       >
-        {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-        E-posta İle Kayıt Ol
+        {isLoading ? (
+          <>
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            Hesap oluşturuluyor...
+          </>
+        ) : (
+          'E-posta İle Kayıt Ol'
+        )}
       </Button>
 
       <p className="text-center text-sm mt-6">

@@ -75,7 +75,7 @@ export async function middleware(req: NextRequest) {
   const { data: { session } } = await supabase.auth.getSession();
   
   // Auth redirect logic
-  const publicPaths = ['/login', '/create-account', '/forgot-password', '/callback', '/reset-password', '/auth-error', '/clear-session'];
+  const publicPaths = ['/login', '/create-account', '/forgot-password', '/callback', '/reset-password', '/auth-error', '/clear-session', '/diagnose'];
   
   // Protected paths that require specific roles
   const adminPaths = ['/admin'];
@@ -119,6 +119,12 @@ export async function middleware(req: NextRequest) {
     // EXCEPTION: Allow access to /clear-session even when logged in
     // (users may want to clear session and re-login)
     if (pathname === '/clear-session') {
+      return response;
+    }
+    
+    // EXCEPTION: Allow access to /login if logout parameter is present
+    // (prevents loop during logout process)
+    if (pathname === '/login' && req.nextUrl.searchParams.get('logout') === 'true') {
       return response;
     }
     

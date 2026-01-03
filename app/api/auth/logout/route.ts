@@ -13,21 +13,22 @@ export async function POST() {
     // Create supabase server client
     const supabase = await createClient();
     
-    // Get current session to log the user info
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session?.user) {
-      console.log('Logging out user:', session.user.id);
+    // Get current user to log the user info (using getUser for security)
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      console.log('Logging out user:', user.id);
     }
     
     // Sign out from Supabase (server-side session invalidation)
+    // Ignore errors if session is already missing
     const { error } = await supabase.auth.signOut();
     
     if (error) {
-      console.error('Server logout error:', error);
-      return NextResponse.json(
-        { error: 'Failed to sign out', details: error.message },
-        { status: 500 }
-      );
+      console.log('Server logout info:', error.message);
+      // Don't fail if session is already missing - this is actually good!
+      if (error.message !== 'Auth session missing!') {
+        console.error('Unexpected server logout error:', error);
+      }
     }
     
     // Clear all auth-related cookies manually for extra security

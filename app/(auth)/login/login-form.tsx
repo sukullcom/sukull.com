@@ -8,79 +8,83 @@ import Link from "next/link";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { OAuthSignIn } from "@/components/auth/oauth-signin";
-
-import { auth } from "@/utils/auth";
-import { getAuthError } from "@/utils/auth-errors";
+import { login } from "./actions";
 
 export function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const searchParams = useSearchParams();
 
-  // Check for email verification success
+  // Check for email verification success and logout
   useEffect(() => {
     const verified = searchParams.get('verified');
+    const logout = searchParams.get('logout');
+    
     if (verified === 'true') {
       toast.success("E-postanız başarıyla doğrulandı! Artık giriş yapabilirsiniz.");
-      // Clean up the URL
+    }
+    
+    // Clean up URL parameters
+    if (verified || logout) {
       const newUrl = new URL(window.location.href);
       newUrl.searchParams.delete('verified');
+      newUrl.searchParams.delete('logout');
       window.history.replaceState({}, '', newUrl.toString());
     }
   }, [searchParams]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      setIsLoading(true);
-      await auth.signIn(email, password);
-      
-      // Use window.location.href for a hard navigation to ensure session is picked up
-      // Get the next parameter from URL or default to /courses
-      const next = searchParams.get('next') || '/courses';
-      window.location.href = next;
-    } catch (error) {
-      console.error("Auth error:", error);
-      const { message } = getAuthError(error);
-      toast.error(message);
-      setIsLoading(false); // Only set loading to false on error
+  const handleSubmit = async (formData: FormData) => {
+    setIsLoading(true);
+    
+    // Add next parameter to form data
+    const next = searchParams.get('next') || '/courses';
+    formData.append('next', next);
+    
+    const result = await login(formData);
+    
+    if (result?.error) {
+      toast.error(result.error);
+      setIsLoading(false);
     }
-    // Don't set loading to false on success - we're navigating away
+    // If no error, server action will redirect
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+    <form action={handleSubmit} className="flex flex-col space-y-4">
       <input
         id="email"
+        name="email"
         type="email"
         placeholder="Email"
-        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
         disabled={isLoading}
         required
       />
 
       <input
         id="password"
+        name="password"
         type="password"
         placeholder="Şifre"
-        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
         disabled={isLoading}
         required
       />
 
       <Button
-        className="w-full"
+        className="w-full transition-opacity"
         type="submit"
         disabled={isLoading}
         variant="secondary"
+        style={{ opacity: isLoading ? 0.6 : 1, cursor: isLoading ? 'not-allowed' : 'pointer' }}
       >
-        {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-        E-posta İle Gİrİş
+        {isLoading ? (
+          <>
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            Giriş yapılıyor...
+          </>
+        ) : (
+          'E-posta İle Gİrİş'
+        )}
       </Button>
 
       <p className="text-center text-sm mt-6">
