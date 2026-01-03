@@ -23,6 +23,10 @@ export function CreateAccountForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Prevent multiple submissions
+    if (isLoading) return;
+    
     if (password !== confirmPassword) {
       toast.error("Şifreler eşleşmiyor");
       return;
@@ -40,9 +44,9 @@ export function CreateAccountForm() {
     } catch (error) {
       const { message } = getAuthError(error);
       toast.error(message);
-    } finally {
-      setIsLoading(false);
+      setIsLoading(false); // Only reset on error
     }
+    // Don't reset isLoading on success - let the redirect happen
   };
 
   return (
@@ -91,11 +95,15 @@ export function CreateAccountForm() {
 
       {/* Sign up button */}
       <Button
-        className="w-full transition-opacity"
+        className="w-full transition-all"
         type="submit"
         disabled={isLoading}
         variant="secondary"
-        style={{ opacity: isLoading ? 0.6 : 1, cursor: isLoading ? 'not-allowed' : 'pointer' }}
+        style={{ 
+          opacity: isLoading ? 0.6 : 1, 
+          cursor: isLoading ? 'not-allowed' : 'pointer',
+          pointerEvents: isLoading ? 'none' : 'auto' // Prevent ANY clicks during loading
+        }}
       >
         {isLoading ? (
           <>

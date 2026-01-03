@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
@@ -11,8 +11,12 @@ import { OAuthSignIn } from "@/components/auth/oauth-signin";
 import { login } from "./actions";
 
 export function LoginForm() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const searchParams = useSearchParams();
+  
+  // Combined loading state - true if EITHER is true
+  const isLoading = isPending || isSubmitting;
 
   // Check for email verification success and logout
   useEffect(() => {
@@ -32,24 +36,37 @@ export function LoginForm() {
     }
   }, [searchParams]);
 
-  const handleSubmit = async (formData: FormData) => {
-    setIsLoading(true);
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     
-    // Add next parameter to form data
+    // Prevent multiple submissions
+    if (isLoading) return;
+    
+    setIsSubmitting(true);
+    
+    const formData = new FormData(e.currentTarget);
     const next = searchParams.get('next') || '/courses';
     formData.append('next', next);
     
-    const result = await login(formData);
-    
-    if (result?.error) {
-      toast.error(result.error);
-      setIsLoading(false);
-    }
-    // If no error, server action will redirect
+    startTransition(async () => {
+      try {
+        const result = await login(formData);
+        
+        if (result?.error) {
+          toast.error(result.error);
+          setIsSubmitting(false);
+        }
+        // If no error, server action will redirect
+      } catch (error) {
+        console.error('Login error:', error);
+        toast.error('Giriş yapılırken bir hata oluştu');
+        setIsSubmitting(false);
+      }
+    });
   };
 
   return (
-    <form action={handleSubmit} className="flex flex-col space-y-4">
+    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
       <input
         id="email"
         name="email"
@@ -71,11 +88,15 @@ export function LoginForm() {
       />
 
       <Button
-        className="w-full transition-opacity"
+        className="w-full transition-all"
         type="submit"
         disabled={isLoading}
         variant="secondary"
-        style={{ opacity: isLoading ? 0.6 : 1, cursor: isLoading ? 'not-allowed' : 'pointer' }}
+        style={{ 
+          opacity: isLoading ? 0.6 : 1, 
+          cursor: isLoading ? 'not-allowed' : 'pointer',
+          pointerEvents: isLoading ? 'none' : 'auto' // Prevent ANY clicks during loading
+        }}
       >
         {isLoading ? (
           <>
@@ -120,7 +141,7 @@ export function LoginForm() {
         </Link>
       </p>
 
-      <OAuthSignIn isLoading={isLoading} onLoadingChange={setIsLoading} />
+      <OAuthSignIn isLoading={isLoading} onLoadingChange={setIsSubmitting} />
     </form>
   );
 }
