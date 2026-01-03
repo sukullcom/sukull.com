@@ -70,9 +70,22 @@ export async function GET(request: Request) {
     // Determine redirect location based on the type of authentication
     let redirectTo = '/courses';
     
-    // If this was an email verification (not OAuth), redirect to login with success message
-    if (data.user?.email_confirmed_at && data.user.app_metadata?.provider === 'email') {
+    // Check if this is a password reset flow
+    const next = requestUrl.searchParams.get('next');
+    const type = requestUrl.searchParams.get('type');
+    
+    if (type === 'recovery' || next === '/reset-password') {
+      // This is a password reset - redirect to reset password page
+      redirectTo = '/reset-password';
+      console.log('Password reset flow detected');
+    } else if (data.user?.email_confirmed_at && data.user.app_metadata?.provider === 'email') {
+      // If this was an email verification (not OAuth), redirect to login with success message
       redirectTo = '/login?verified=true';
+      console.log('Email verification flow detected');
+    } else if (next) {
+      // Use the next parameter if provided
+      redirectTo = next;
+      console.log('Using next parameter:', next);
     }
     
     const redirectUrl = new URL(redirectTo, requestUrl.origin);
