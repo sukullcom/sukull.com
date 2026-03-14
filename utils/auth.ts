@@ -1,7 +1,5 @@
-// utils/auth.ts
 import { createClient } from '@/utils/supabase/client'
 import { users } from './users'
-import type { AuthError } from '@supabase/supabase-js'
 
 const supabase = createClient()
 
@@ -69,98 +67,51 @@ export const auth = {
     return data
   },
 
-  async signIn(email: string, password: string) {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
-    if (error) throw error
-    if (data.user) {
-      // ensure we have a record in 'users' table
-      await users.captureUserDetails(data.user)
-    }
-    return data
-  },
-
   async signInWithOAuth(provider: 'google', nextUrl?: string) {
-    try {
-      console.log(`Starting OAuth flow for Google...`);
-      
-      // Use the correct callback URL - this should match what's configured in Supabase
-      const redirectTo = `${location.origin}/api/auth/callback`;
-      console.log(`Redirect URL: ${redirectTo}`);
-      
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo,
-          scopes: 'email profile',
-          queryParams: {
-            access_type: 'offline',
-            prompt: 'consent',
-          },
+    const redirectTo = `${location.origin}/api/auth/callback`;
+    
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo,
+        scopes: 'email profile',
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'select_account',
         },
-      });
-      
-      if (error) {
-        console.error(`OAuth error for Google:`, error);
-        throw error;
-      }
-      
-      if (!data.url) {
-        console.error(`No URL returned from Google OAuth`);
-        throw new Error(`Failed to start Google authentication`);
-      }
-      
-      console.log(`Successfully initiated Google OAuth. Redirecting to: ${data.url}`);
-      
-      // Store the nextUrl in sessionStorage for retrieval after OAuth
-      if (nextUrl) {
-        sessionStorage.setItem('oauth_redirect_url', nextUrl);
-      }
-      
-      // Redirect to the provider's authentication page
-      window.location.href = data.url;
-      
-      return data;
-    } catch (error) {
-      console.error(`Error in signInWithOAuth for Google:`, error);
+      },
+    });
+    
+    if (error) {
       throw error;
     }
+    
+    if (!data.url) {
+      throw new Error('Google kimlik doğrulama başlatılamadı');
+    }
+    
+    if (nextUrl) {
+      sessionStorage.setItem('oauth_redirect_url', nextUrl);
+    }
+    
+    window.location.href = data.url;
+    
+    return data;
   },
 
   async signOut() {
     try {
-      console.log('Starting secure logout process...');
-      
-      // 1. Clear any OAuth redirect URLs from storage
       if (typeof window !== 'undefined') {
         sessionStorage.removeItem('oauth_redirect_url');
-        // Clear any other auth-related storage
         localStorage.removeItem('auth_redirect_url');
       }
       
-      // 2. Sign out from Supabase (this invalidates the session server-side)
-      const { error } = await supabase.auth.signOut({
-        scope: 'global' // This ensures sign out from all devices/sessions
-      });
+      const { error } = await supabase.auth.signOut({ scope: 'local' });
       
       if (error) {
-        console.error('Logout error:', error);
         throw error;
       }
       
-      console.log('Logout successful - session invalidated');
-      
-      // 3. Additional cleanup for client-side state
-      if (typeof window !== 'undefined') {
-        // Clear any cached user data
-        window.localStorage.clear();
-        window.sessionStorage.clear();
-      }
-      
-      // NOTE: Don't redirect here - let the calling code handle redirect
-      // This prevents double-redirect issues
       return { success: true };
     } catch (error) {
       console.error('Error during logout:', error);

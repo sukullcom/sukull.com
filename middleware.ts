@@ -3,139 +3,94 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/middleware'
 
 export async function middleware(req: NextRequest) {
-  // Create supabase auth middleware client
   const { supabase, response } = createClient(req);
   
   const { pathname } = req.nextUrl;
   
-  // Add comprehensive security headers
   response.headers.set('X-Frame-Options', 'DENY');
   response.headers.set('X-Content-Type-Options', 'nosniff');
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   response.headers.set('X-XSS-Protection', '1; mode=block');
   response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
   
-  // Add CSP header for additional security - include payment server for Railway deployment and YouTube iframe API
   response.headers.set(
     'Content-Security-Policy',
     "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googleapis.com https://cdn.jsdelivr.net https://www.youtube.com https://s.ytimg.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https: blob: https://*.ytimg.com https://*.ggpht.com https://*.googleusercontent.com; font-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' https://*.railway.app http://localhost:3001 https://api.supabase.io https://*.supabase.co wss://*.supabase.co https://www.googleapis.com https://emkc.org https://*.youtube.com https://googleads.g.doubleclick.net https://*.lambda-url.eu-central-1.on.aws; media-src 'self' blob: https://*.googlevideo.com; worker-src 'self' blob: https://cdn.jsdelivr.net; frame-src 'self' https://www.youtube.com https://youtube.com;"
   );
   
-  // DISABLED ROUTES - Block access to lab and piano game
   const disabledRoutes = ['/lab', '/games/piano'];
   const isDisabledRoute = disabledRoutes.some(route => 
     pathname === route || pathname.startsWith(route + '/')
   );
   
   if (isDisabledRoute) {
-    // Redirect to appropriate fallback page
-    if (pathname.startsWith('/lab')) {
-      return NextResponse.redirect(new URL('/games', req.url));
-    } else if (pathname.startsWith('/games/piano')) {
-      return NextResponse.redirect(new URL('/games', req.url));
-    }
+    return NextResponse.redirect(new URL('/games', req.url));
   }
   
-  // Add cache control headers based on route
-  if (pathname.startsWith('/courses') || 
-      pathname.startsWith('/_next/') || 
-      pathname.endsWith('.svg') || 
-      pathname.endsWith('.png') || 
-      pathname.endsWith('.jpg') || 
-      pathname.endsWith('.jpeg')) {
-    // Cache static assets aggressively
+  if (pathname.startsWith('/courses')) {
     response.headers.set('Cache-Control', 'public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800');
   } else if (pathname.startsWith('/api/')) {
-    // Don't cache API routes, especially auth-related ones
     response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
     response.headers.set('Pragma', 'no-cache');
-    
-    // Add extra security for logout endpoint
-    if (pathname === '/api/auth/logout') {
-      response.headers.set('X-Content-Type-Options', 'nosniff');
-      response.headers.set('X-Frame-Options', 'DENY');
-    }
   } else if (
     pathname.startsWith('/leaderboard') || 
-    pathname.startsWith('/shop') || 
-    pathname.startsWith('/lab') ||
+    pathname.startsWith('/shop') ||
     (pathname.startsWith('/learn') && !pathname.includes('/user/'))
   ) {
-    // Cache dynamic but less frequently updated pages
     response.headers.set('Cache-Control', 'public, max-age=60, s-maxage=120, stale-while-revalidate=300');
   } else {
-    // Default for other routes - moderate caching
     response.headers.set('Cache-Control', 'public, max-age=30, s-maxage=60, stale-while-revalidate=300');
   }
   
-  // Add a Surrogate-Control header for CDNs
   response.headers.set('Surrogate-Control', 'max-age=3600');
   
-  // Check auth state
-  const { data: { session } } = await supabase.auth.getSession();
+  // Use getUser() for secure JWT validation instead of getSession() which trusts the cookie blindly
+  const { data: { user } } = await supabase.auth.getUser();
   
-  // Auth redirect logic
-  const publicPaths = ['/login', '/create-account', '/forgot-password', '/callback', '/reset-password', '/auth-error', '/clear-session', '/diagnose'];
+  const publicPaths = [
+    '/login',
+    '/create-account',
+    '/forgot-password',
+    '/resend-verification',
+    '/callback',
+    '/reset-password',
+    '/auth-error',
+    '/clear-session',
+    '/diagnose',
+  ];
   
-  // Protected paths that require specific roles
-  const adminPaths = ['/admin'];
-  const teacherPaths = ['/private-lesson/teacher-dashboard'];
-  
-  // Root path is handled differently to avoid redirect loops
   if (pathname === '/') {
-    // For root path, if user is not authenticated, allow access to marketing page
-    // If authenticated, they will be redirected client-side to avoid redirect loops
     return response;
   }
   
   const isPublic = publicPaths.some((path) => pathname === path || pathname.startsWith(path)) || 
-                   pathname.startsWith('/_next') || 
-                   pathname.endsWith('.svg') || 
-                   pathname.endsWith('.png') || 
-                   pathname.endsWith('.jpg') || 
-                   pathname.endsWith('.jpeg') ||
-                   pathname.startsWith('/api/auth/'); // Allow auth API routes
+                   pathname.startsWith('/api/auth/');
                    
-  // For API routes (except auth routes), let them handle their own authentication
   if (pathname.startsWith('/api/') && !pathname.startsWith('/api/auth/')) {
     return response;
   }
   
-  if (!session && !isPublic) {
-    // Not logged in => redirect to login
+  if (!user && !isPublic) {
     const url = req.nextUrl.clone()
     url.pathname = '/login'
     url.searchParams.set('next', pathname)
     return NextResponse.redirect(url)
   }
   
-  if (session && publicPaths.some(path => pathname === path)) {
-    // EXCEPTION: Allow access to /reset-password even when logged in
-    // (password reset REQUIRES a session to work)
+  if (user && publicPaths.some(path => pathname === path)) {
     if (pathname === '/reset-password') {
       return response;
     }
     
-    // EXCEPTION: Allow access to /clear-session even when logged in
-    // (users may want to clear session and re-login)
     if (pathname === '/clear-session') {
       return response;
     }
     
-    // EXCEPTION: Allow access to /login if logout parameter is present
-    // (prevents loop during logout process)
     if (pathname === '/login' && req.nextUrl.searchParams.get('logout') === 'true') {
       return response;
     }
     
-    // Already logged in => redirect to /learn instead of homepage to avoid redirect loop
     return NextResponse.redirect(new URL('/learn', req.url))
-  }
-  
-  // Additional role-based protection (basic check - detailed checks in their layouts)
-  if (session && adminPaths.some(path => pathname.startsWith(path))) {
-    // Admin paths require additional verification in their layouts
-    // This is just a basic middleware check
   }
   
   return response;

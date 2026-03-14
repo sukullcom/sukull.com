@@ -7,24 +7,15 @@ import { redirect } from 'next/navigation'
 
 export async function getServerUser() {
   try {
-    console.log('Getting server user...');
-  const supabase = await createClient()
+    const supabase = await createClient()
     const { data, error } = await supabase.auth.getUser()
     
-    if (error) {
-      console.error('Error getting server user:', error);
+    if (error || !data.user) {
       return null;
     }
     
-    if (!data.user) {
-      console.log('No authenticated user found');
-      return null;
-    }
-    
-    console.log('Server user found:', data.user.id);
     return data.user;
-  } catch (error) {
-    console.error('Unexpected error in getServerUser:', error);
+  } catch {
     return null;
   }
 }
