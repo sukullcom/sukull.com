@@ -33,10 +33,9 @@ export const auth = {
       email,
       password,
       options: {
-        emailRedirectTo: `${location.origin}/callback`,
-        // Ensure email confirmation is required
+        emailRedirectTo: `${location.origin}/api/auth/callback`,
         data: {
-          username: username, // Store username in metadata
+          username: username,
         }
       },
     })
@@ -170,7 +169,7 @@ export const auth = {
       type: 'signup',
       email: email,
       options: {
-        emailRedirectTo: `${location.origin}/callback`,
+        emailRedirectTo: `${location.origin}/api/auth/callback`,
       }
     })
 
