@@ -53,6 +53,7 @@ export async function middleware(req: NextRequest) {
     '/forgot-password',
     '/resend-verification',
     '/callback',
+    '/auth/confirm',
     '/reset-password',
     '/auth-error',
     '/clear-session',
