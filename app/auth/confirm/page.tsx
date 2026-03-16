@@ -31,7 +31,7 @@ function ConfirmContent() {
         setStatus('error');
         setErrorMessage(error.message);
         setTimeout(() => {
-          router.push('/auth-error?error=' + encodeURIComponent(error.message));
+          router.push('/auth-error?error=' +encodeURIComponent(error.message));
         }, 2000);
         return;
       }
