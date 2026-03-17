@@ -66,9 +66,6 @@ interface Review {
   rating: number;
   comment: string | null;
   createdAt: string;
-  student: {
-    name: string;
-  };
 }
 
 export default function TeacherDetailPage({ params }: { params: { id: string } }) {
@@ -366,14 +363,6 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
     ));
   };
 
-  const formatReviewDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("tr-TR", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
   if (!mounted || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -460,50 +449,25 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
                 </p>
               </div>
               
-              {/* Reviews Section - Single location for all review information */}
+              {/* Reviews Section */}
               <div className="p-4 rounded-lg border-t">
                 <h3 className="font-medium text-lg mb-3 text-gray-800">Değerlendirmeler</h3>
                 
                 {reviews.length > 0 ? (
-                  <>
-                    {/* Aggregate Rating Display - only shown when reviews exist */}
-                    <div className="flex items-center justify-center gap-2 mb-4 p-3 bg-gray-50 rounded-lg">
-                      <div className="flex">
-                        {renderStars(Math.round(teacher.averageRating || 0))}
-                      </div>
-                      <span className="text-sm text-gray-600 font-medium">
-                        {(teacher.averageRating || 0).toFixed(1)} / 5.0 ({teacher.totalReviews || reviews.length} değerlendirme)
-                      </span>
+                  <div className="flex flex-col items-center gap-2 py-3">
+                    <div className="text-3xl font-bold text-gray-800">
+                      {(teacher.averageRating || 0).toFixed(1)}
                     </div>
-                    
-                    {/* Individual Reviews */}
-                    <div className="space-y-3 max-h-60 overflow-y-auto">
-                      {reviews.slice(0, 5).map((review: Review, index: number) => (
-                        <div key={index} className="p-3 bg-gray-50 rounded-lg">
-                          <div className="flex items-center justify-between mb-2">
-                            <span className="font-medium text-sm">{review.student?.name || "Anonim"}</span>
-                            <div className="flex">
-                              {renderStars(review.rating)}
-                            </div>
-                          </div>
-                          {review.comment && (
-                            <p className="text-sm text-gray-600 mb-1">&ldquo;{review.comment}&rdquo;</p>
-                          )}
-                          <p className="text-xs text-gray-500">
-                            {formatReviewDate(review.createdAt)}
-                          </p>
-                        </div>
-                      ))}
-                      {reviews.length > 5 && (
-                        <p className="text-center text-sm text-gray-500 mt-2">
-                          ve {reviews.length - 5} değerlendirme daha...
-                        </p>
-                      )}
+                    <div className="flex gap-0.5">
+                      {renderStars(Math.round(teacher.averageRating || 0))}
                     </div>
-                  </>
+                    <span className="text-sm text-gray-500">
+                      {teacher.totalReviews || reviews.length} değerlendirme
+                    </span>
+                  </div>
                 ) : (
-                  <div className="text-center py-8 text-gray-500">
-                    <p className="text-lg">Henüz Değerlendirme Yok</p>
+                  <div className="text-center py-4 text-gray-500">
+                    <p>Henüz değerlendirme yok</p>
                   </div>
                 )}
               </div>

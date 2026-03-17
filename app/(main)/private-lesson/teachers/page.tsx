@@ -200,17 +200,20 @@ export default function TeachersPage() {
                 )}
                 {/* Rating Display */}
                 {teacher.averageRating && teacher.averageRating > 0 && teacher.totalReviews && teacher.totalReviews > 0 ? (
-                  <div className="flex items-center justify-center gap-2 mt-2">
-                    <div className="flex">
+                  <div className="flex items-center justify-center gap-2 mt-3">
+                    <div className="flex gap-0.5">
                       {renderStars(Math.round(teacher.averageRating))}
                     </div>
-                    <span className="text-sm text-gray-600">
-                      {teacher.averageRating.toFixed(1)} ({teacher.totalReviews} değerlendirme)
+                    <span className="text-sm font-medium text-gray-700">
+                      {teacher.averageRating.toFixed(1)}
+                    </span>
+                    <span className="text-xs text-gray-500">
+                      ({teacher.totalReviews})
                     </span>
                   </div>
                 ) : (
-                  <div className="text-center mt-2">
-                    <span className="text-sm text-gray-500">Henüz Değerlendirme Yok</span>
+                  <div className="text-center mt-3">
+                    <span className="text-sm text-gray-400">Henüz değerlendirme yok</span>
                   </div>
                 )}
               </CardHeader>

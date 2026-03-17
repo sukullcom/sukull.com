@@ -46,7 +46,6 @@ export const getTeachersWithRatingsOptimized = cache(async () => {
     email: row.email,
     avatar: row.avatar,
     bio: row.bio,
-    meetLink: row.meet_link,
     field: row.fields_new || row.field_legacy || "",
     fields: row.fields_new ? row.fields_new.split(', ') : (row.field_legacy ? [row.field_legacy] : []),
     averageRating: Math.round(Number(row.avg_rating) * 10) / 10,
