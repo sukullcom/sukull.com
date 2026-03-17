@@ -39,9 +39,9 @@ function ConfirmContent() {
       setStatus('success');
 
       if (type === 'recovery') {
-        setTimeout(() => router.push('/reset-password'), 1500);
+        setTimeout(() => { window.location.href = '/reset-password'; }, 1500);
       } else {
-        setTimeout(() => router.push(next || '/courses'), 1500);
+        setTimeout(() => { window.location.href = next || '/courses'; }, 1500);
       }
     };
 

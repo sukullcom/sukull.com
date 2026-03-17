@@ -19,21 +19,50 @@ export function ResetPasswordForm() {
   const router = useRouter();
 
   useEffect(() => {
-    // Verify that the user has a valid session for password reset
-    const checkSession = async () => {
-      const supabase = createClient();
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session) {
+    const supabase = createClient();
+    let resolved = false;
+
+    const resolve = () => {
+      if (!resolved) {
+        resolved = true;
+        setIsValidSession(true);
+      }
+    };
+
+    const fail = () => {
+      if (!resolved) {
+        resolved = true;
         toast.error("Geçersiz veya süresi dolmuş sıfırlama bağlantısı. Lütfen yeni bir şifre sıfırlama talebinde bulunun.");
         router.push("/forgot-password");
+      }
+    };
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session) {
+        resolve();
+      }
+    });
+
+    const checkSession = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        resolve();
         return;
       }
-      
-      setIsValidSession(true);
+      setTimeout(async () => {
+        if (resolved) return;
+        const { data: { session: retrySession } } = await supabase.auth.getSession();
+        if (retrySession) {
+          resolve();
+        } else {
+          fail();
+        }
+      }, 2000);
     };
 
     checkSession();
+
+    return () => { subscription.unsubscribe(); };
   }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
