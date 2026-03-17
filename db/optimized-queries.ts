@@ -26,7 +26,6 @@ export const getTeachersWithRatingsOptimized = cache(async () => {
       u.email,
       u.avatar,
       u.description as bio,
-      u.meet_link,
       COALESCE(AVG(lr.rating), 0) as avg_rating,
       COUNT(lr.id) as review_count,
       STRING_AGG(DISTINCT tf.display_name, ', ') as fields_new,
@@ -36,11 +35,13 @@ export const getTeachersWithRatingsOptimized = cache(async () => {
     LEFT JOIN teacher_fields tf ON u.id = tf.teacher_id AND tf.is_active = true
     LEFT JOIN teacher_applications ta ON u.id = ta.user_id
     WHERE u.role = 'teacher'
-    GROUP BY u.id, u.name, u.email, u.avatar, u.description, u.meet_link
+    GROUP BY u.id, u.name, u.email, u.avatar, u.description
     ORDER BY avg_rating DESC, review_count DESC
   `);
 
-  return (result as unknown as any[]).map((row: any) => ({
+  const rows = Array.isArray(result) ? result : (result as any).rows ?? [];
+
+  return rows.map((row: any) => ({
     id: row.id,
     name: row.name,
     email: row.email,
