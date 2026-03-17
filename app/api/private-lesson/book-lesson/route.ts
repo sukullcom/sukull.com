@@ -1,4 +1,4 @@
-﻿import { NextRequest } from "next/server";
+import { NextRequest } from "next/server";
 import { secureApi, ApiResponses } from "@/lib/api-middleware";
 import { bookLesson, hasAvailableCredits, isApprovedStudent } from "@/db/queries";
 
@@ -7,22 +7,20 @@ export const POST = secureApi.auth(async (request: NextRequest, user) => {
     // Check if user is an approved student
     const isStudent = await isApprovedStudent(user.id);
     if (!isStudent) {
-      return ApiResponses.forbidden("Only approved students can book lessons");
+      return ApiResponses.forbidden("Ders rezervasyonu yapabilmek için onaylı öğrenci olmanız gerekiyor");
     }
     
     const { teacherId, startTime, endTime } = await request.json();
     
-    // Validate input
     if (!teacherId || !startTime || !endTime) {
-      return ApiResponses.badRequest("Missing required fields: teacherId, startTime, endTime");
+      return ApiResponses.badRequest("Lütfen tüm gerekli alanları doldurun");
     }
     
-    // Validate dates
     const startDate = new Date(startTime);
     const endDate = new Date(endTime);
     
     if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-      return ApiResponses.badRequest("Invalid date format");
+      return ApiResponses.badRequest("Geçersiz tarih formatı");
     }
     
     if (startDate >= endDate) {
@@ -43,7 +41,7 @@ export const POST = secureApi.auth(async (request: NextRequest, user) => {
     const booking = await bookLesson(user.id, teacherId, startDate, endDate);
     
     return ApiResponses.created({ 
-      message: "Lesson booked successfully",
+      message: "Ders başarıyla rezerve edildi",
       booking: booking[0]
     });
     
@@ -51,15 +49,10 @@ export const POST = secureApi.auth(async (request: NextRequest, user) => {
     console.error("Error booking lesson:", error);
     
     if (error instanceof Error) {
-      if (error.message.includes("Insufficient credits")) {
-        return ApiResponses.badRequest(error.message);
-      }
-      if (error.message.includes("already booked") || error.message.includes("not available")) {
-        return ApiResponses.badRequest(error.message);
-      }
+      return ApiResponses.badRequest(error.message);
     }
     
-    return ApiResponses.serverError("An error occurred while booking the lesson");
+    return ApiResponses.serverError("Ders rezervasyonu sırasında bir hata oluştu");
   }
 });
 

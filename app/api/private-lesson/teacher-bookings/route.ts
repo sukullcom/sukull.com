@@ -22,6 +22,6 @@ export const GET = secureApi.auth(async (request, user) => {
     });
   } catch (error) {
     console.error("Error fetching teacher bookings:", error);
-    return ApiResponses.serverError("An error occurred while fetching bookings");
+    return ApiResponses.serverError("Rezervasyonlar yüklenirken bir hata oluştu");
   }
 }); 

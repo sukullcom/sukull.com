@@ -990,67 +990,69 @@ export async function getTeacherDetails(teacherId: string) {
   });
 }
 
-// Book a lesson with a teacher
 export async function bookLesson(
   studentId: string, 
   teacherId: string, 
   startTime: Date, 
   endTime: Date
 ) {
-  // Check if student has available credits
-  const hasCredits = await hasAvailableCredits(studentId, 1);
-  if (!hasCredits) {
-    throw new Error("Krediniz yetersiz. Lütfen ders rezervasyonu yapmak için kredi satın alın.");
-  }
+  return await db.transaction(async (tx) => {
+    const creditResult = await tx.update(userCredits)
+      .set({
+        usedCredits: sql`${userCredits.usedCredits} + 1`,
+        availableCredits: sql`${userCredits.availableCredits} - 1`,
+        updatedAt: new Date(),
+      })
+      .where(and(
+        eq(userCredits.userId, studentId),
+        sql`${userCredits.availableCredits} >= 1`
+      ))
+      .returning();
 
-  // Check if the time slot is available
-  const existingBooking = await db.query.lessonBookings.findFirst({
-    where: and(
-      eq(lessonBookings.teacherId, teacherId),
-      eq(lessonBookings.startTime, startTime),
-      eq(lessonBookings.endTime, endTime),
-      not(eq(lessonBookings.status, "cancelled"))
-    ),
-  });
-  
-  if (existingBooking) {
-    throw new Error("Bu zaman dilimi rezerve edilmiş.");
-  }
-  
-  // Check if the slot is in the teacher's availability
-  const availability = await db.query.teacherAvailability.findFirst({
-    where: and(
-      eq(teacherAvailability.teacherId, teacherId),
-      eq(teacherAvailability.startTime, startTime),
-      eq(teacherAvailability.endTime, endTime)
-    ),
-  });
-  
-  if (!availability) {
-    throw new Error("This time slot is not available for booking");
-  }
-  
-  // Get the teacher's Google Meet link
-  const teacher = await db.query.users.findFirst({
-    where: eq(users.id, teacherId),
-    columns: {
-      meetLink: true
+    if (creditResult.length === 0) {
+      throw new Error("Krediniz yetersiz. Lütfen ders rezervasyonu yapmak için kredi satın alın.");
     }
+
+    const existingBooking = await tx.query.lessonBookings.findFirst({
+      where: and(
+        eq(lessonBookings.teacherId, teacherId),
+        eq(lessonBookings.startTime, startTime),
+        eq(lessonBookings.endTime, endTime),
+        not(eq(lessonBookings.status, "cancelled"))
+      ),
+    });
+    
+    if (existingBooking) {
+      throw new Error("Bu zaman dilimi zaten rezerve edilmiş.");
+    }
+    
+    const availability = await tx.query.teacherAvailability.findFirst({
+      where: and(
+        eq(teacherAvailability.teacherId, teacherId),
+        eq(teacherAvailability.startTime, startTime),
+        eq(teacherAvailability.endTime, endTime)
+      ),
+    });
+    
+    if (!availability) {
+      throw new Error("Bu zaman dilimi müsait değil");
+    }
+    
+    const teacher = await tx.query.users.findFirst({
+      where: eq(users.id, teacherId),
+      columns: { meetLink: true }
+    });
+    
+    return tx.insert(lessonBookings)
+      .values({
+        studentId,
+        teacherId,
+        startTime,
+        endTime,
+        meetLink: teacher?.meetLink,
+      })
+      .returning();
   });
-  
-  // Use one credit for the booking
-  await useCredit(studentId);
-  
-  // Create the booking
-  return db.insert(lessonBookings)
-    .values({
-      studentId,
-      teacherId,
-      startTime,
-      endTime,
-      meetLink: teacher?.meetLink, // Include the teacher's Google Meet link
-    })
-    .returning();
 }
 
 // Get student's bookings
@@ -1310,45 +1312,37 @@ export const getUserCredits = cache(async (userId: string) => {
   };
 });
 
-// Update user credits after lesson booking
 export const useCredit = async (userId: string) => {
-  const credits = await db.query.userCredits.findFirst({
-    where: eq(userCredits.userId, userId),
-  });
-
-  if (!credits || credits.availableCredits <= 0) {
-    throw new Error("Insufficient credits");
-  }
-
-  await db.update(userCredits)
+  const result = await db.update(userCredits)
     .set({
-      usedCredits: credits.usedCredits + 1,
-      availableCredits: credits.availableCredits - 1,
+      usedCredits: sql`${userCredits.usedCredits} + 1`,
+      availableCredits: sql`${userCredits.availableCredits} - 1`,
       updatedAt: new Date(),
     })
-    .where(eq(userCredits.userId, userId));
+    .where(and(
+      eq(userCredits.userId, userId),
+      sql`${userCredits.availableCredits} >= 1`
+    ))
+    .returning();
+
+  if (result.length === 0) {
+    throw new Error("Yetersiz kredi");
+  }
 };
 
-// Refund user credits when lesson is cancelled
 export const refundCredit = async (userId: string) => {
-  const credits = await db.query.userCredits.findFirst({
-    where: eq(userCredits.userId, userId),
-  });
-
-  if (!credits) {
-    throw new Error("User credits not found");
-  }
-
-  // Ensure we don't go below 0 used credits
-  const newUsedCredits = Math.max(0, credits.usedCredits - 1);
-  
-  await db.update(userCredits)
+  const result = await db.update(userCredits)
     .set({
-      usedCredits: newUsedCredits,
-      availableCredits: credits.availableCredits + 1,
+      usedCredits: sql`GREATEST(${userCredits.usedCredits} - 1, 0)`,
+      availableCredits: sql`${userCredits.availableCredits} + 1`,
       updatedAt: new Date(),
     })
-    .where(eq(userCredits.userId, userId));
+    .where(eq(userCredits.userId, userId))
+    .returning();
+
+  if (result.length === 0) {
+    throw new Error("Kullanıcı kredi bilgisi bulunamadı");
+  }
 };
 
 // Get user's credit transaction history
@@ -1359,10 +1353,11 @@ export const getUserCreditTransactions = cache(async (userId: string) => {
   });
 });
 
-// Check if user has enough credits for booking
 export const hasAvailableCredits = async (userId: string, requiredCredits: number = 1) => {
-  const credits = await getUserCredits(userId);
-  return credits.availableCredits >= requiredCredits;
+  const credits = await db.query.userCredits.findFirst({
+    where: eq(userCredits.userId, userId),
+  });
+  return (credits?.availableCredits ?? 0) >= requiredCredits;
 };
 
 // Subscription System Functions

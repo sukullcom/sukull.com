@@ -10,23 +10,22 @@ export async function GET(
     const user = await getServerUser();
     
     if (!user) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ message: "Giriş yapmanız gerekiyor" }, { status: 401 });
     }
     
     const teacherId = params.id;
     
     if (!teacherId) {
-      return NextResponse.json({ message: "Teacher ID is required" }, { status: 400 });
+      return NextResponse.json({ message: "Eğitmen kimliği gerekli" }, { status: 400 });
     }
     
-    // Get teacher reviews
     const reviewData = await getTeacherReviews(teacherId);
     
     return NextResponse.json(reviewData);
   } catch (error) {
     console.error("Error fetching teacher reviews:", error);
     return NextResponse.json({ 
-      message: "An error occurred while fetching reviews" 
+      message: "Değerlendirmeler yüklenirken bir hata oluştu" 
     }, { status: 500 });
   }
-} 
+}

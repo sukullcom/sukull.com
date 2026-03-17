@@ -10,7 +10,7 @@ export const GET = secureApi.auth(async (request, user) => {
     // Check if user is a teacher
     const userIsTeacher = await isTeacher(user.id);
     if (!userIsTeacher) {
-      return ApiResponses.forbidden("Only teachers can access meet link");
+      return ApiResponses.forbidden("Meet bağlantısına yalnızca eğitmenler erişebilir");
     }
 
     // Get current meet link
@@ -24,7 +24,7 @@ export const GET = secureApi.auth(async (request, user) => {
     });
   } catch (error) {
     console.error("Error fetching meet link:", error);
-    return ApiResponses.serverError("An error occurred while fetching meet link");
+    return ApiResponses.serverError("Meet bağlantısı yüklenirken bir hata oluştu");
   }
 });
 
@@ -34,7 +34,7 @@ export const POST = secureApi.auth(async (request, user) => {
     // Check if user is a teacher
     const userIsTeacher = await isTeacher(user.id);
     if (!userIsTeacher) {
-      return ApiResponses.forbidden("Only teachers can update meet link");
+      return ApiResponses.forbidden("Meet bağlantısını yalnızca eğitmenler güncelleyebilir");
     }
 
     const { meetLink } = await request.json();

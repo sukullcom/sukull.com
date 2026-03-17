@@ -7,7 +7,7 @@ export async function POST(request: NextRequest) {
   try {
     const authHeader = request.headers.get("authorization");
     if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "Yetkisiz erişim" }, { status: 401 });
     }
     const now = new Date();
     let totalUpdated = 0;
@@ -101,8 +101,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Error updating lesson statuses:", error);
     return NextResponse.json({ 
-      message: "Failed to update lesson statuses",
-      error: error instanceof Error ? error.message : "Unknown error"
+      message: "Ders durumları güncellenirken bir hata oluştu"
     }, { status: 500 });
   }
 }

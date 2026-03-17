@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
-import { getTeacherAvailabilityForCurrentWeek, getTeacherFields } from "@/db/queries";
+import { getTeacherAvailabilityForCurrentWeek, getTeacherFields, isApprovedStudent } from "@/db/queries";
 import { and, eq, gte, lte, not } from "drizzle-orm";
 import db from "@/db/drizzle";
 import { lessonBookings, users, userProgress, teacherApplications } from "@/db/schema";
@@ -37,18 +37,22 @@ export async function GET(
   try {
     // Add a protective check for invalid teacher ID
     if (!params.id) {
-      return NextResponse.json({ message: "Teacher ID is required" }, { status: 400 });
+      return NextResponse.json({ message: "Eğitmen kimliği gerekli" }, { status: 400 });
     }
     
     const user = await getServerUser();
     
     if (!user) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ message: "Giriş yapmanız gerekiyor" }, { status: 401 });
+    }
+
+    const approved = await isApprovedStudent(user.id);
+    if (!approved) {
+      return NextResponse.json({ message: "Öğretmen bilgilerini görüntülemek için onaylı öğrenci olmanız gerekiyor" }, { status: 403 });
     }
     
     const teacherId = params.id;
     
-    // Get teacher details from users table
     const teacher = await db.query.users.findFirst({
       where: eq(users.id, teacherId),
       columns: {
@@ -57,12 +61,11 @@ export async function GET(
         email: true,
         description: true,
         avatar: true,
-        meetLink: true,
       }
     });
     
     if (!teacher) {
-      return NextResponse.json({ message: "Teacher not found" }, { status: 404 });
+      return NextResponse.json({ message: "Eğitmen bulunamadı" }, { status: 404 });
     }
     
     // Get teacher profile image from userProgress
@@ -158,8 +161,7 @@ export async function GET(
   } catch (error) {
     console.error("Error getting teacher details:", error);
     return NextResponse.json({ 
-      message: "An error occurred.", 
-      error: error instanceof Error ? error.message : "Unknown error"
+      message: "Bir hata oluştu"
     }, { status: 500 });
   }
 }
@@ -172,12 +174,11 @@ export async function PATCH(
     const user = await getServerUser();
     
     if (!user) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ message: "Giriş yapmanız gerekiyor" }, { status: 401 });
     }
     
-    // Make sure the user can only update their own profile
     if (user.id !== params.id) {
-      return NextResponse.json({ message: "Forbidden: You can only update your own profile" }, { status: 403 });
+      return NextResponse.json({ message: "Yalnızca kendi profilinizi güncelleyebilirsiniz" }, { status: 403 });
     }
     
     // Parse the request body
@@ -192,14 +193,13 @@ export async function PATCH(
     }
     
     return NextResponse.json({ 
-      message: "Profile updated successfully",
+      message: "Profil başarıyla güncellendi",
       updated: true
     });
   } catch (error) {
     console.error("Error updating teacher profile:", error);
     return NextResponse.json({ 
-      message: "An error occurred while updating the profile",
-      error: error instanceof Error ? error.message : "Unknown error" 
+      message: "Profil güncellenirken bir hata oluştu"
     }, { status: 500 });
   }
 } 

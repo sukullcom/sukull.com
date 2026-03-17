@@ -13,7 +13,7 @@ import {
 } from "@/db/queries";
 import db from "@/db/drizzle";
 import { lessonBookings, users, teacherApplications } from "@/db/schema";
-import { eq, and } from "drizzle-orm";
+import { eq, and, ne } from "drizzle-orm";
 
 // ✅ CONSOLIDATED PRIVATE LESSON API: Replaces multiple scattered endpoints
 
@@ -55,7 +55,7 @@ export const GET = secureApi.auth(async (request, user) => {
       case 'teacher-reviews': {
         const userIsTeacher = await isTeacher(user.id);
         if (!userIsTeacher) {
-          return ApiResponses.forbidden("Only teachers can access review data");
+          return ApiResponses.forbidden("Değerlendirme verilerine yalnızca eğitmenler erişebilir");
         }
         
         const reviewData = await getTeacherReviews(user.id);
@@ -65,7 +65,7 @@ export const GET = secureApi.auth(async (request, user) => {
       case 'teacher-income': {
         const userIsTeacher = await isTeacher(user.id);
         if (!userIsTeacher) {
-          return ApiResponses.forbidden("Only teachers can access income data");
+          return ApiResponses.forbidden("Gelir verilerine yalnızca eğitmenler erişebilir");
         }
         
         // Use optimized aggregation query
@@ -76,7 +76,7 @@ export const GET = secureApi.auth(async (request, user) => {
       case 'teacher-details': {
         const userIsTeacher = await isTeacher(user.id);
         if (!userIsTeacher) {
-          return ApiResponses.forbidden("Forbidden: User is not a teacher");
+          return ApiResponses.forbidden("Bu alana yalnızca eğitmenler erişebilir");
         }
         
         // Get user information from users table
@@ -85,7 +85,7 @@ export const GET = secureApi.auth(async (request, user) => {
         });
         
         if (!userDetails) {
-          return ApiResponses.notFound("User details not found");
+          return ApiResponses.notFound("Kullanıcı bilgileri bulunamadı");
         }
         
         // Get teacher application information (for field)
@@ -151,12 +151,12 @@ export const GET = secureApi.auth(async (request, user) => {
       }
 
       default: {
-        return ApiResponses.badRequest("Invalid action parameter. Supported actions: check-teacher-status, check-student-status, student-bookings, teacher-reviews, teacher-income, teacher-details, available-teachers");
+        return ApiResponses.badRequest("Geçersiz işlem parametresi");
       }
     }
   } catch (error) {
     console.error(`Error in private-lesson GET ${action}:`, error);
-    return ApiResponses.serverError("An error occurred while processing the request");
+    return ApiResponses.serverError("İstek işlenirken bir hata oluştu");
   }
 });
 
@@ -171,7 +171,7 @@ export const POST = secureApi.auth(async (request, user) => {
         // Check if user is an approved student
         const isStudent = await isApprovedStudent(user.id);
         if (!isStudent) {
-          return ApiResponses.forbidden("Only approved students can submit reviews");
+          return ApiResponses.forbidden("Yalnızca onaylı öğrenciler değerlendirme yapabilir");
         }
         
         const { bookingId, teacherId, rating, comment } = await request.json();
@@ -195,7 +195,7 @@ export const POST = secureApi.auth(async (request, user) => {
         );
         
         return ApiResponses.created({ 
-          message: "Review submitted successfully",
+          message: "Değerlendirmeniz başarıyla gönderildi",
           review: review[0]
         });
       }
@@ -204,12 +204,11 @@ export const POST = secureApi.auth(async (request, user) => {
         const { bookingId } = await request.json();
         
         if (!bookingId || isNaN(parseInt(bookingId))) {
-          return ApiResponses.badRequest("Invalid booking ID");
+          return ApiResponses.badRequest("Geçersiz rezervasyon");
         }
         
         const bookingIdNum = parseInt(bookingId);
         
-        // Get the booking
         const booking = await db.query.lessonBookings.findFirst({
           where: and(
             eq(lessonBookings.id, bookingIdNum),
@@ -218,30 +217,35 @@ export const POST = secureApi.auth(async (request, user) => {
         });
         
         if (!booking) {
-          return ApiResponses.notFound("Booking not found or you don't have permission to cancel it");
+          return ApiResponses.notFound("Rezervasyon bulunamadı veya bu işlem için yetkiniz yok");
         }
         
-        // Check if booking is already cancelled or completed
         if (booking.status === 'cancelled' || booking.status === 'completed') {
-          return ApiResponses.badRequest(`Booking is already ${booking.status}`);
+          return ApiResponses.badRequest("Bu ders zaten iptal edilmiş veya tamamlanmış");
         }
         
-        // Check if the booking is more than 24 hours in the future
         const startTime = new Date(booking.startTime);
         const now = new Date();
-        const timeDiff = startTime.getTime() - now.getTime();
-        const hoursDiff = timeDiff / (1000 * 60 * 60);
+        const hoursDiff = (startTime.getTime() - now.getTime()) / (1000 * 60 * 60);
         
         if (hoursDiff < 24) {
-          return ApiResponses.badRequest("Dersler en az 24 saat önce iptal edilebilir");
+          return ApiResponses.badRequest("Dersler yalnızca başlangıç saatinden en az 24 saat önce iptal edilebilir");
         }
         
-        // Update the booking status to cancelled
-        await db.update(lessonBookings)
-          .set({ status: 'cancelled' })
-          .where(eq(lessonBookings.id, bookingIdNum));
-        
-        // Refund the credit to the student
+        const cancelled = await db.update(lessonBookings)
+          .set({ status: 'cancelled', updatedAt: new Date() })
+          .where(and(
+            eq(lessonBookings.id, bookingIdNum),
+            eq(lessonBookings.studentId, user.id),
+            ne(lessonBookings.status, 'cancelled'),
+            ne(lessonBookings.status, 'completed')
+          ))
+          .returning();
+
+        if (cancelled.length === 0) {
+          return ApiResponses.badRequest("Bu ders zaten iptal edilmiş");
+        }
+
         await refundCredit(user.id);
         
         return ApiResponses.success({ message: "Ders iptal edildi ve kredi iade edildi" });
@@ -258,23 +262,22 @@ export const POST = secureApi.auth(async (request, user) => {
         
         // Validate input
         if (!teacherId || !startTime || !endTime) {
-          return ApiResponses.badRequest("Missing required fields: teacherId, startTime, endTime");
+          return ApiResponses.badRequest("Lütfen tüm gerekli alanları doldurun");
         }
         
-        // Validate dates
         const startDate = new Date(startTime);
         const endDate = new Date(endTime);
         
         if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
-          return ApiResponses.badRequest("Invalid date format");
+          return ApiResponses.badRequest("Geçersiz tarih formatı");
         }
         
         if (startDate >= endDate) {
-          return ApiResponses.badRequest("Start time must be before end time");
+          return ApiResponses.badRequest("Başlangıç zamanı bitiş zamanından önce olmalıdır");
         }
         
         if (startDate <= new Date()) {
-          return ApiResponses.badRequest("Cannot book lessons in the past");
+          return ApiResponses.badRequest("Geçmiş tarihli ders rezervasyonu yapılamaz");
         }
         
         // Check if user has sufficient credits
@@ -305,7 +308,7 @@ export const POST = secureApi.auth(async (request, user) => {
       }
 
       default: {
-        return ApiResponses.badRequest("Invalid action parameter. Supported POST actions: submit-review, cancel-lesson, book-lesson");
+        return ApiResponses.badRequest("Geçersiz işlem parametresi");
       }
     }
   } catch (error) {
@@ -315,6 +318,6 @@ export const POST = secureApi.auth(async (request, user) => {
       return ApiResponses.badRequest(error.message);
     }
     
-    return ApiResponses.serverError("An error occurred while processing the request");
+    return ApiResponses.serverError("İstek işlenirken bir hata oluştu");
   }
 }); 

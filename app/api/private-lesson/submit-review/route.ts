@@ -7,28 +7,25 @@ export async function POST(request: Request) {
     const user = await getServerUser();
     
     if (!user) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ message: "Giriş yapmanız gerekiyor" }, { status: 401 });
     }
     
-    // Check if user is an approved student
     const isStudent = await isApprovedStudent(user.id);
     
     if (!isStudent) {
-      return NextResponse.json({ message: "Only approved students can submit reviews" }, { status: 403 });
+      return NextResponse.json({ message: "Yalnızca onaylı öğrenciler değerlendirme yapabilir" }, { status: 403 });
     }
     
     const { bookingId, teacherId, rating, comment } = await request.json();
     
-    // Validate input
     if (!bookingId || !teacherId || !rating) {
-      return NextResponse.json({ message: "Missing required fields" }, { status: 400 });
+      return NextResponse.json({ message: "Lütfen tüm gerekli alanları doldurun" }, { status: 400 });
     }
     
     if (rating < 1 || rating > 5) {
-      return NextResponse.json({ message: "Rating must be between 1 and 5" }, { status: 400 });
+      return NextResponse.json({ message: "Puan 1 ile 5 arasında olmalıdır" }, { status: 400 });
     }
     
-    // Submit the review
     const review = await submitLessonReview(
       bookingId,
       user.id,
@@ -38,7 +35,7 @@ export async function POST(request: Request) {
     );
     
     return NextResponse.json({ 
-      message: "Review submitted successfully",
+      message: "Değerlendirmeniz başarıyla gönderildi",
       review: review[0]
     });
   } catch (error) {
@@ -48,6 +45,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: error.message }, { status: 400 });
     }
     
-    return NextResponse.json({ message: "An error occurred." }, { status: 500 });
+    return NextResponse.json({ message: "Bir hata oluştu" }, { status: 500 });
   }
 } 

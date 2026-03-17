@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     const user = await getServerUser();
     if (!user) {
       return NextResponse.json(
-        { error: "Authentication required" }, 
+        { error: "Giriş yapmanız gerekiyor" }, 
         { status: 401 }
       );
     }
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
     // Validate required fields
     if (!teacherName || !teacherSurname || !teacherPhoneNumber || !teacherEmail || !field) {
       return NextResponse.json(
-        { error: "Missing required fields" },
+        { error: "Lütfen tüm gerekli alanları doldurun" },
         { status: 400 }
       );
     }
@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
 
     if (existingApplication) {
       return NextResponse.json(
-        { error: "You have already submitted a teacher application" },
+        { error: "Zaten bir eğitmen başvurunuz bulunmaktadır" },
         { status: 400 }
       );
     }
@@ -63,14 +63,14 @@ export async function POST(request: NextRequest) {
     }).returning();
 
     return NextResponse.json({
-      message: "Teacher application submitted successfully",
+      message: "Eğitmen başvurunuz başarıyla gönderildi",
       application: application[0]
     }, { status: 201 });
 
   } catch (error) {
     console.error("Error submitting teacher application:", error);
     return NextResponse.json(
-      { error: "An error occurred while submitting your application" },
+      { error: "Başvurunuz gönderilirken bir hata oluştu" },
       { status: 500 }
     );
   }

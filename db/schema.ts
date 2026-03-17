@@ -240,7 +240,9 @@ export const privateLessonApplications = pgTable("private_lesson_applications", 
   status: text("status").default("pending"),
   approved: boolean("approved").default(false),
   createdAt: timestamp("created_at").defaultNow(),
-});
+}, (table) => ({
+  userIdIdx: index("idx_student_apps_user_id").on(table.userId),
+}));
 
 export const privateLessonApplicationsRelations = relations(privateLessonApplications, ({}) => ({}));
 
@@ -406,11 +408,13 @@ export const teacherAvailability = pgTable("teacher_availability", {
   teacherId: text("teacher_id").notNull().references(() => users.id, { onDelete: "cascade" }),
   startTime: timestamp("start_time").notNull(),
   endTime: timestamp("end_time").notNull(),
-  dayOfWeek: integer("day_of_week").notNull(), // 0 for Sunday, 1 for Monday, etc.
-  weekStartDate: timestamp("week_start_date").notNull(), // Store the start date of the week this availability belongs to
+  dayOfWeek: integer("day_of_week").notNull(),
+  weekStartDate: timestamp("week_start_date").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  teacherWeekIdx: index("idx_availability_teacher_week").on(table.teacherId, table.weekStartDate),
+}));
 
 export const teacherAvailabilityRelations = relations(teacherAvailability, ({ one }) => ({
   teacher: one(users, {
@@ -426,12 +430,16 @@ export const lessonBookings = pgTable("lesson_bookings", {
   teacherId: text("teacher_id").notNull().references(() => users.id, { onDelete: "cascade" }),
   startTime: timestamp("start_time").notNull(),
   endTime: timestamp("end_time").notNull(),
-  status: text("status").notNull().default("pending"), // pending, confirmed, completed, cancelled
+  status: text("status").notNull().default("pending"),
   meetLink: text("meet_link"),
   notes: text("notes"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  teacherSlotIdx: index("idx_bookings_teacher_slot").on(table.teacherId, table.startTime, table.endTime),
+  studentIdx: index("idx_bookings_student").on(table.studentId),
+  statusIdx: index("idx_bookings_status").on(table.status),
+}));
 
 export const lessonBookingsRelations = relations(lessonBookings, ({ one }) => ({
   student: one(users, {
@@ -509,7 +517,9 @@ export const userCredits = pgTable("user_credits", {
   availableCredits: integer("available_credits").notNull().default(0),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  userIdIdx: uniqueIndex("idx_user_credits_user_id").on(table.userId),
+}));
 
 export const userCreditsRelations = relations(userCredits, ({ one }) => ({
   user: one(users, {
@@ -522,13 +532,15 @@ export const userCreditsRelations = relations(userCredits, ({ one }) => ({
 export const creditTransactions = pgTable("credit_transactions", {
   id: serial("id").primaryKey(),
   userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
-  paymentId: text("payment_id").notNull(), // Iyzico payment ID
+  paymentId: text("payment_id").notNull(),
   creditsAmount: integer("credits_amount").notNull(),
-  totalPrice: text("total_price").notNull(), // Store as string to preserve decimal precision
+  totalPrice: text("total_price").notNull(),
   currency: text("currency").notNull().default("TRY"),
-  status: text("status").notNull().default("pending"), // pending, success, failed
+  status: text("status").notNull().default("pending"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  userIdIdx: index("idx_credit_tx_user_id").on(table.userId),
+}));
 
 export const creditTransactionsRelations = relations(creditTransactions, ({ one }) => ({
   user: one(users, {
@@ -561,16 +573,18 @@ export const paymentLogsRelations = relations(paymentLogs, ({ one }) => ({
 export const userSubscriptions = pgTable("user_subscriptions", {
   id: serial("id").primaryKey(),
   userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
-  subscriptionType: text("subscription_type").notNull().default("infinite_hearts"), // Type of subscription
-  status: text("status").notNull().default("active"), // active, expired, cancelled
+  subscriptionType: text("subscription_type").notNull().default("infinite_hearts"),
+  status: text("status").notNull().default("active"),
   startDate: timestamp("start_date").notNull(),
   endDate: timestamp("end_date").notNull(),
-  paymentId: text("payment_id"), // Iyzico payment ID for this month
-  amount: text("amount").notNull().default("100"), // Monthly amount (100 TL)
+  paymentId: text("payment_id"),
+  amount: text("amount").notNull().default("100"),
   currency: text("currency").notNull().default("TRY"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  userStatusIdx: index("idx_subscriptions_user_status").on(table.userId, table.status),
+}));
 
 export const userSubscriptionsRelations = relations(userSubscriptions, ({ one }) => ({
   user: one(users, {

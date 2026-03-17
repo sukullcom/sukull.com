@@ -10,34 +10,29 @@ export async function GET() {
     const user = await getServerUser();
     
     if (!user) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ message: "Giriş yapmanız gerekiyor" }, { status: 401 });
     }
     
-    // Check if user is a teacher
     const userIsTeacher = await isTeacher(user.id);
     
     if (!userIsTeacher) {
-      return NextResponse.json({ message: "Forbidden: User is not a teacher" }, { status: 403 });
+      return NextResponse.json({ message: "Bu alana yalnızca eğitmenler erişebilir" }, { status: 403 });
     }
     
-    // Get user information from users table
     const userDetails = await db.query.users.findFirst({
       where: eq(users.id, user.id),
     });
     
     if (!userDetails) {
-      return NextResponse.json({ message: "User details not found" }, { status: 404 });
+      return NextResponse.json({ message: "Kullanıcı bilgileri bulunamadı" }, { status: 404 });
     }
     
-    // Get teacher application information (for field)
     const teacherApplication = await db.query.teacherApplications.findFirst({
       where: eq(teacherApplications.userId, user.id),
     });
     
-    // Get teacher fields from the new system
     const teacherFieldsData = await getTeacherFields(user.id);
     
-    // Determine field display - use new system if available, fallback to legacy
     let fieldDisplay = "";
     let fields: string[] = [];
     
@@ -49,7 +44,6 @@ export async function GET() {
       fields = [teacherApplication.field];
     }
     
-    // Combine data from both sources
     const teacherProfile = {
       id: userDetails.id,
       name: userDetails.name,
@@ -58,14 +52,14 @@ export async function GET() {
       bio: userDetails.description,
       meetLink: userDetails.meetLink,
       field: fieldDisplay,
-      fields: fields, // Array of all fields
+      fields: fields,
     };
     
     return NextResponse.json(teacherProfile);
   } catch (error) {
     console.error("Error getting teacher profile:", error);
     return NextResponse.json({ 
-      message: "An error occurred while fetching teacher profile"
+      message: "Eğitmen profili yüklenirken bir hata oluştu"
     }, { status: 500 });
   }
 }
@@ -75,20 +69,17 @@ export async function PATCH(request: Request) {
     const user = await getServerUser();
     
     if (!user) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ message: "Giriş yapmanız gerekiyor" }, { status: 401 });
     }
     
-    // Check if user is a teacher
     const userIsTeacher = await isTeacher(user.id);
     
     if (!userIsTeacher) {
-      return NextResponse.json({ message: "Forbidden: User is not a teacher" }, { status: 403 });
+      return NextResponse.json({ message: "Bu alana yalnızca eğitmenler erişebilir" }, { status: 403 });
     }
     
-    // Parse the request body
     const data: { bio?: string } = await request.json();
     
-    // Update bio (saved as description in the users table)
     if (data.bio !== undefined) {
       await db
         .update(users)
@@ -97,14 +88,13 @@ export async function PATCH(request: Request) {
     }
     
     return NextResponse.json({ 
-      message: "Profile updated successfully",
+      message: "Profil başarıyla güncellendi",
       updated: true
     });
   } catch (error) {
     console.error("Error updating teacher profile:", error);
     return NextResponse.json({ 
-      message: "An error occurred while updating the profile",
-      error: error instanceof Error ? error.message : "Unknown error" 
+      message: "Profil güncellenirken bir hata oluştu"
     }, { status: 500 });
   }
-} 
+}

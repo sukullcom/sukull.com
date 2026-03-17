@@ -5,22 +5,19 @@ import db from "@/db/drizzle";
 import { teacherApplications, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
-// GET check if teacher profile is complete
 export async function GET() {
   try {
     const user = await getServerUser();
     
     if (!user) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ message: "Giriş yapmanız gerekiyor" }, { status: 401 });
     }
     
-    // Check if the user is a teacher using the isTeacher function
     const userIsTeacher = await isTeacher(user.id);
     if (!userIsTeacher) {
-      return NextResponse.json({ message: "Only teachers can check profile" }, { status: 403 });
+      return NextResponse.json({ message: "Bu alana yalnızca eğitmenler erişebilir" }, { status: 403 });
     }
     
-    // Check if teacher has completed their profile information
     const [teacherProfile, userProfile] = await Promise.all([
       db.query.teacherApplications.findFirst({
         where: eq(teacherApplications.userId, user.id),
@@ -39,12 +36,10 @@ export async function GET() {
     
     const missingInfo = [];
     
-    // Check teacher application fields
     if (!teacherProfile?.field || teacherProfile.field === "Belirtilmemiş") {
       missingInfo.push("Uzmanlık Alanı");
     }
     
-    // Check user profile fields
     if (!userProfile?.meetLink || userProfile.meetLink.trim() === "") {
       missingInfo.push("Google Meet Linki");
     }
@@ -64,11 +59,11 @@ export async function GET() {
     }
     
     return NextResponse.json({ 
-      message: "Profile is complete",
+      message: "Profil tamamlanmış",
       isComplete: true
     });
   } catch (error) {
     console.error("Error checking teacher profile:", error);
-    return NextResponse.json({ message: "An error occurred." }, { status: 500 });
+    return NextResponse.json({ message: "Bir hata oluştu" }, { status: 500 });
   }
-} 
+}

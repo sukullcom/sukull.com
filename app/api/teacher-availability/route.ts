@@ -5,19 +5,17 @@ import db from "@/db/drizzle";
 import { teacherApplications, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
-// GET current teacher's availability for the current week
 export async function GET() {
   try {
     const user = await getServerUser();
     
     if (!user) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ message: "Giriş yapmanız gerekiyor" }, { status: 401 });
     }
     
-    // Check if the user is a teacher using the isTeacher function
     const userIsTeacher = await isTeacher(user.id);
     if (!userIsTeacher) {
-      return NextResponse.json({ message: "Only teachers can access availability" }, { status: 403 });
+      return NextResponse.json({ message: "Müsaitlik bilgilerine yalnızca eğitmenler erişebilir" }, { status: 403 });
     }
     
     const availability = await getCurrentTeacherAvailability(user.id);
@@ -25,26 +23,23 @@ export async function GET() {
     return NextResponse.json({ availability });
   } catch (error) {
     console.error("Error fetching teacher availability:", error);
-    return NextResponse.json({ message: "An error occurred." }, { status: 500 });
+    return NextResponse.json({ message: "Bir hata oluştu" }, { status: 500 });
   }
 }
 
-// POST update current teacher's availability for the current week
 export async function POST(req: Request) {
   try {
     const user = await getServerUser();
     
     if (!user) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ message: "Giriş yapmanız gerekiyor" }, { status: 401 });
     }
     
-    // Check if the user is a teacher using the isTeacher function
     const userIsTeacher = await isTeacher(user.id);
     if (!userIsTeacher) {
-      return NextResponse.json({ message: "Only teachers can update availability" }, { status: 403 });
+      return NextResponse.json({ message: "Müsaitlik bilgilerini yalnızca eğitmenler güncelleyebilir" }, { status: 403 });
     }
     
-    // Check if teacher has completed their profile information
     const [teacherProfile, userProfile] = await Promise.all([
       db.query.teacherApplications.findFirst({
         where: eq(teacherApplications.userId, user.id),
@@ -63,12 +58,10 @@ export async function POST(req: Request) {
     
     const missingInfo = [];
     
-    // Check teacher application fields
     if (!teacherProfile?.field || teacherProfile.field === "Belirtilmemiş") {
       missingInfo.push("Uzmanlık Alanı");
     }
     
-    // Check user profile fields
     if (!userProfile?.meetLink || userProfile.meetLink.trim() === "") {
       missingInfo.push("Google Meet Linki");
     }
@@ -90,16 +83,13 @@ export async function POST(req: Request) {
     const { slots } = body;
     
     if (!Array.isArray(slots)) {
-      return NextResponse.json({ message: "Invalid slots format" }, { status: 400 });
+      return NextResponse.json({ message: "Geçersiz zaman dilimi formatı" }, { status: 400 });
     }
     
-    // Validate the time slots
     const now = new Date();
     const weekStartDate = getWeekStartDate(now);
     
-    // Process each slot - convert string dates to Date objects
     const processedSlots = slots.map(slot => {
-      // Handle case where dates might be Date objects or ISO strings
       const startTime = typeof slot.startTime === 'string' 
         ? new Date(slot.startTime) 
         : slot.startTime;
@@ -115,55 +105,48 @@ export async function POST(req: Request) {
       };
     });
     
-    // Filter out invalid slots and separate past slots
     const futureSlots = [];
     const pastSlots = [];
     
     for (const slot of processedSlots) {
       const { startTime, endTime } = slot;
       
-      // Check if the time is valid (30 minute intervals)
       if (
         startTime.getMinutes() % 30 !== 0 ||
         endTime.getMinutes() % 30 !== 0 ||
         endTime.getTime() - startTime.getTime() !== 30 * 60 * 1000
       ) {
         return NextResponse.json({ 
-          message: "Invalid time slot. All slots must be 30-minute intervals." 
+          message: "Geçersiz zaman dilimi. Tüm slotlar 30 dakikalık aralıklarla olmalıdır." 
         }, { status: 400 });
       }
       
-      // Check if the slot is in the past
       if (startTime < now) {
-        // Add to past slots instead of rejecting the request
         pastSlots.push(slot);
       } else {
-        // Only include future slots for saving
         futureSlots.push(slot);
       }
     }
     
-    // Warn if some slots were filtered out
     const hasFilteredSlots = pastSlots.length > 0;
     
-    // Save the availability (only future slots)
     try {
       const savedSlots = await upsertTeacherAvailability(user.id, weekStartDate, futureSlots);
       
       return NextResponse.json({ 
         message: hasFilteredSlots 
-          ? "Availability updated successfully. Some past time slots were automatically removed." 
-          : "Availability updated successfully", 
+          ? "Müsaitlik bilgileri güncellendi. Geçmiş zaman dilimleri otomatik olarak kaldırıldı." 
+          : "Müsaitlik bilgileri başarıyla güncellendi", 
         availability: savedSlots,
         filtered: hasFilteredSlots,
         filteredCount: pastSlots.length
       });
     } catch (error) {
       console.error("Database error saving teacher availability:", error);
-      return NextResponse.json({ message: "Error saving availability in database" }, { status: 500 });
+      return NextResponse.json({ message: "Müsaitlik bilgileri kaydedilirken bir hata oluştu" }, { status: 500 });
     }
   } catch (error) {
     console.error("Error updating teacher availability:", error);
-    return NextResponse.json({ message: "An error occurred." }, { status: 500 });
+    return NextResponse.json({ message: "Bir hata oluştu" }, { status: 500 });
   }
-} 
+}
