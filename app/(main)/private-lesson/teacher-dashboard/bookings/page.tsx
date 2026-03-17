@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLessonStatusUpdater } from "@/hooks/use-lesson-status-updater";
+import { LoadingSpinner } from "@/components/loading-spinner";
 
 interface Booking {
   id: number;
@@ -91,7 +92,7 @@ export default function TeacherBookingsPage() {
       setLoading(false);
     } catch (error) {
       console.error("Error fetching bookings:", error);
-      setError("Failed to load bookings. Please try again later.");
+      setError("Dersleriniz yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.");
       setLoading(false);
     }
   };
@@ -196,8 +197,8 @@ export default function TeacherBookingsPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <span className="loading loading-spinner loading-lg"></span>
+      <div className="min-h-screen">
+        <LoadingSpinner size="lg" />
       </div>
     );
   }

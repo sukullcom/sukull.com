@@ -254,7 +254,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
         const data = await response.json();
         
         if (!data.teacher) {
-          setError("Invalid teacher data received");
+          setError("Geçersiz öğretmen bilgisi");
           setLoading(false);
           return;
         }
@@ -318,7 +318,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
         setLoading(false);
       } catch (error) {
         console.error("Error fetching teacher details:", error);
-        setError("An error occurred while loading teacher details");
+        setError("Öğretmen bilgileri yüklenirken bir hata oluştu");
         setLoading(false);
       }
     };
@@ -386,10 +386,10 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Error</h1>
-          <p className="text-gray-700 mb-6">{error || "Teacher not found"}</p>
+          <h1 className="text-2xl font-bold text-red-600 mb-4">Hata</h1>
+          <p className="text-gray-700 mb-6">{error || "Öğretmen bulunamadı"}</p>
           <Button onClick={() => router.push("/private-lesson/teachers")}>
-            Go Back to Teachers
+            Öğretmenlere Dön
           </Button>
         </div>
       </div>

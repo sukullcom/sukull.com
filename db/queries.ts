@@ -1543,30 +1543,41 @@ export const submitLessonReview = async (
   rating: number,
   comment?: string
 ) => {
-  // Verify the booking exists and is completed
   const booking = await db.query.lessonBookings.findFirst({
     where: and(
       eq(lessonBookings.id, bookingId),
       eq(lessonBookings.studentId, studentId),
       eq(lessonBookings.teacherId, teacherId),
-      eq(lessonBookings.status, "completed")
     ),
   });
 
   if (!booking) {
-    throw new Error("Booking not found or not completed");
+    throw new Error("Rezervasyon bulunamadı");
   }
 
-  // Check if review already exists
+  if (booking.status === "cancelled") {
+    throw new Error("İptal edilmiş dersler değerlendirilemez");
+  }
+
+  const now = new Date();
+  if (new Date(booking.endTime) > now) {
+    throw new Error("Ders henüz tamamlanmadı. Yalnızca biten dersler değerlendirilebilir.");
+  }
+
+  if (booking.status !== "completed") {
+    await db.update(lessonBookings)
+      .set({ status: "completed", updatedAt: now })
+      .where(eq(lessonBookings.id, bookingId));
+  }
+
   const existingReview = await db.query.lessonReviews.findFirst({
     where: eq(lessonReviews.bookingId, bookingId),
   });
 
   if (existingReview) {
-    throw new Error("Review already exists for this booking");
+    throw new Error("Bu ders için zaten bir değerlendirme yapılmış");
   }
 
-  // Create the review
   return await db.insert(lessonReviews).values({
     bookingId,
     studentId,

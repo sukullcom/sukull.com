@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Star, TrendingUp, Calendar, Users, DollarSign } from "lucide-react";
 import { toast } from "sonner";
 import { useLessonStatusUpdater } from "@/hooks/use-lesson-status-updater";
+import { LoadingSpinner } from "@/components/loading-spinner";
 
 interface MonthlyIncomeData {
   lessons: number;
@@ -129,8 +130,8 @@ export default function TeacherIncomePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <span className="loading loading-spinner loading-lg"></span>
+      <div className="min-h-screen">
+        <LoadingSpinner size="lg" />
       </div>
     );
   }

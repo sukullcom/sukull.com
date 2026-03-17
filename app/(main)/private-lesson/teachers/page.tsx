@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
@@ -77,7 +77,7 @@ export default function TeachersPage() {
       setLoading(false);
     } catch (error) {
       console.error("Error fetching teachers:", error);
-      setError("Failed to load teachers. Please try again later.");
+      setError("Öğretmenler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.");
       setLoading(false);
     }
   }, [router]);
@@ -117,10 +117,10 @@ export default function TeachersPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Error</h1>
+          <h1 className="text-2xl font-bold text-red-600 mb-4">Hata</h1>
           <p className="text-gray-700 mb-6">{error}</p>
           <Button onClick={() => router.push("/private-lesson")}>
-            Go Back
+            Geri Dön
           </Button>
         </div>
       </div>

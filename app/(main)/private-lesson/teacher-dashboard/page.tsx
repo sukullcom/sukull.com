@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import GoogleMeetLinkManager from "./meet-link";
 import { toast } from "sonner";
+import { LoadingSpinner } from "@/components/loading-spinner";
 
 type TeacherProfile = {
   id: string;
@@ -125,8 +126,8 @@ export default function TeacherDashboardPage() {
 
   if (!mounted || loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <span className="loading loading-spinner loading-lg"></span>
+      <div className="min-h-screen">
+        <LoadingSpinner size="lg" />
       </div>
     );
   }

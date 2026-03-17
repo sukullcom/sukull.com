@@ -9,6 +9,7 @@ import { ReviewLessonModal } from "@/components/modals/review-lesson-modal";
 import { Star } from "lucide-react";
 import { toast } from "sonner";
 import UserCreditsDisplay from "@/components/user-credits-display";
+import { LoadingSpinner } from "@/components/loading-spinner";
 
 interface Booking {
   id: number;
@@ -69,6 +70,7 @@ const getSimplifiedField = (fields?: string[], fallbackField?: string): string =
 // Countdown timer hook - moved outside of component to avoid conditional calling
 const useCountdown = (targetDate: Date) => {
   const [countdown, setCountdown] = useState({
+    hours: 0,
     minutes: 0,
     seconds: 0,
   });
@@ -80,14 +82,15 @@ const useCountdown = (targetDate: Date) => {
       
       if (difference <= 0) {
         clearInterval(intervalId);
-        setCountdown({ minutes: 0, seconds: 0 });
+        setCountdown({ hours: 0, minutes: 0, seconds: 0 });
         return;
       }
       
-      const minutes = Math.floor((difference / 1000 / 60) % 60);
+      const hours = Math.floor(difference / (1000 * 60 * 60));
+      const minutes = Math.floor((difference / (1000 * 60)) % 60);
       const seconds = Math.floor((difference / 1000) % 60);
       
-      setCountdown({ minutes, seconds });
+      setCountdown({ hours, minutes, seconds });
     }, 1000);
     
     return () => clearInterval(intervalId);
@@ -100,10 +103,14 @@ const useCountdown = (targetDate: Date) => {
 function LessonCountdown({ lessonStart }: { lessonStart: Date }) {
   const countdown = useCountdown(lessonStart);
   
+  const timeText = countdown.hours > 0
+    ? `${countdown.hours} saat ${String(countdown.minutes).padStart(2, '0')} dk`
+    : `${String(countdown.minutes).padStart(2, '0')}:${String(countdown.seconds).padStart(2, '0')}`;
+  
   return (
     <div className="text-center mb-2">
       <p className="text-sm text-primary font-medium">
-        Derse başlamasına: {String(countdown.minutes).padStart(2, '0')}
+        Derse başlamasına: {timeText}
       </p>
     </div>
   );
@@ -167,7 +174,7 @@ export default function MyBookingsPage() {
         // Make sure each booking has a teacher object
         const bookingsWithTeacher = bookingsArray.map((booking: Booking) => {
           if (!booking.teacher) {
-            booking.teacher = { name: "Unknown Teacher", id: "", email: "" };
+            booking.teacher = { name: "Öğretmen", id: "", email: "" };
           }
           return booking;
         });
@@ -176,7 +183,7 @@ export default function MyBookingsPage() {
         setLoading(false);
       } catch (error) {
         console.error("Error fetching bookings:", error);
-        setError("Failed to load bookings. Please try again later.");
+        setError("Dersleriniz yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.");
         setLoading(false);
       }
     };
@@ -366,18 +373,18 @@ export default function MyBookingsPage() {
     return `${formattedStartTime}-${formattedEndTime}`;
   };
 
-  // Improved status display with simpler indicators
   const getStatusIndicator = (status: string) => {
     switch (status) {
       case 'pending':
+        return <span className="inline-block w-2 h-2 bg-yellow-400 rounded-full mr-2" />;
       case 'confirmed':
-        return <span className="w-2 h-2 bg-primary rounded-full inline-block mr-2"></span>;
+        return <span className="inline-block w-2 h-2 bg-green-400 rounded-full mr-2" />;
       case 'completed':
-        return <span className="w-2 h-2 bg-blue-500 rounded-full inline-block mr-2"></span>;
+        return <span className="inline-block w-2 h-2 bg-blue-400 rounded-full mr-2" />;
       case 'cancelled':
-        return <span className="w-2 h-2 bg-red-500 rounded-full inline-block mr-2"></span>;
+        return <span className="inline-block w-2 h-2 bg-red-400 rounded-full mr-2" />;
       default:
-        return <span className="w-2 h-2 bg-gray-400 rounded-full inline-block mr-2"></span>;
+        return <span className="inline-block w-2 h-2 bg-gray-400 rounded-full mr-2" />;
     }
   };
 
@@ -491,7 +498,7 @@ export default function MyBookingsPage() {
             </Button>
             <div className="text-xs text-gray-500 text-center">
               {minutesUntilActive > 0 
-                ? `Derse katılma butonu ${minutesUntilActive} dakika içinde aktif olacak` 
+                ? `Derse katılma butonu ${minutesUntilActive >= 60 ? `${Math.floor(minutesUntilActive / 60)} saat ${minutesUntilActive % 60} dakika` : `${minutesUntilActive} dakika`} içinde aktif olacak` 
                 : 'Derse katılma butonu çok yakında aktif olacak'}
             </div>
             <div className="text-xs text-red-500 text-center">
@@ -537,8 +544,8 @@ export default function MyBookingsPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <span className="loading loading-spinner loading-lg"></span>
+      <div className="min-h-screen">
+        <LoadingSpinner size="lg" />
       </div>
     );
   }
