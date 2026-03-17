@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { isAdmin } from "@/lib/admin";
 import db from "@/db/drizzle";
 import { users, privateLessonApplications } from "@/db/schema";
-import { eq, and, ne } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 
 export async function POST() {
   try {
