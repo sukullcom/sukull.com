@@ -217,9 +217,8 @@ app.get('/', (req, res) => {
   });
 });
 
-// Handle preflight requests for payment endpoint
-app.options('/api/payment/create', (req, res) => {
-  console.log('Preflight request received for /api/payment/create');
+// Handle preflight requests for all payment endpoints
+app.options('/api/payment/*', (req, res) => {
   res.header('Access-Control-Allow-Origin', req.headers.origin);
   res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
