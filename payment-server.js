@@ -129,14 +129,20 @@ try {
 }
 
 // Initialize Iyzico
-if (!process.env.IYZICO_API_KEY || !process.env.IYZICO_SECRET_KEY) {
-  console.error('❌ IYZICO_API_KEY and IYZICO_SECRET_KEY must be set in environment variables');
+let iyzipay;
+try {
+  if (!process.env.IYZICO_API_KEY || !process.env.IYZICO_SECRET_KEY) {
+    console.error('⚠️ IYZICO_API_KEY and IYZICO_SECRET_KEY not set - payments will not work');
+  }
+  iyzipay = new Iyzipay({
+    apiKey: process.env.IYZICO_API_KEY || '',
+    secretKey: process.env.IYZICO_SECRET_KEY || '',
+    uri: process.env.IYZICO_BASE_URL || 'https://sandbox-api.iyzipay.com',
+  });
+  console.log('✅ Iyzico initialized');
+} catch (error) {
+  console.error('❌ Iyzico initialization error:', error.message);
 }
-const iyzipay = new Iyzipay({
-  apiKey: process.env.IYZICO_API_KEY,
-  secretKey: process.env.IYZICO_SECRET_KEY,
-  uri: process.env.IYZICO_BASE_URL || 'https://sandbox-api.iyzipay.com',
-});
 
 // Authentication middleware
 const authenticateUser = async (req, res, next) => {
@@ -228,13 +234,11 @@ app.options('/api/payment/*', (req, res) => {
 
 // Create payment endpoint
 app.post('/api/payment/create', authenticateUser, async (req, res) => {
-  console.log('=== PAYMENT SERVER CREATE ROUTE HIT ===');
-  
   try {
-    if (!pool) {
+    if (!pool || !iyzipay) {
       return res.status(500).json({
         success: false,
-        message: 'Database service not available'
+        message: 'Payment service not available'
       });
     }
 
@@ -421,9 +425,14 @@ app.post('/api/payment/create', authenticateUser, async (req, res) => {
 
 // Subscription payment endpoint
 app.post('/api/payment/subscribe', authenticateUser, async (req, res) => {
-  console.log('📱 Subscription payment request received');
-  
   try {
+    if (!pool || !iyzipay) {
+      return res.status(500).json({
+        success: false,
+        message: 'Payment service not available'
+      });
+    }
+
     const { paymentCard, billingAddress } = req.body;
     const user = req.user;
 
