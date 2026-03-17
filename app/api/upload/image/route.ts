@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
+import { isAdmin } from '@/lib/admin';
 
 export async function POST(request: NextRequest) {
   try {
+    const admin = await isAdmin();
+    if (!admin) {
+      return NextResponse.json({ success: false, error: 'Admin access required' }, { status: 403 });
+    }
+
     const formData = await request.formData();
     const file: File | null = formData.get('file') as unknown as File;
 
@@ -77,6 +83,11 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
+    const admin = await isAdmin();
+    if (!admin) {
+      return NextResponse.json({ success: false, error: 'Admin access required' }, { status: 403 });
+    }
+
     const { searchParams } = new URL(request.url);
     const imageUrl = searchParams.get('imageUrl');
 

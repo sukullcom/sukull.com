@@ -1,10 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import db from "@/db/drizzle";
 import { lessonBookings } from "@/db/schema";
 import { eq, lt, and } from "drizzle-orm";
 
-export async function POST() {
+export async function POST(request: NextRequest) {
   try {
+    const authHeader = request.headers.get("authorization");
+    if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const now = new Date();
     let totalUpdated = 0;
     const results = [];
@@ -103,7 +107,6 @@ export async function POST() {
   }
 }
 
-// Allow GET requests as well for easier testing
-export async function GET() {
-  return POST();
+export async function GET(request: NextRequest) {
+  return POST(request);
 } 
