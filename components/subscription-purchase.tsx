@@ -145,7 +145,7 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
                   <li>• Sınırsız kalp kullanımı</li>
                   <li>• Yanlış cevapta kalp kaybı yok</li>
                   <li>• Kesintisiz öğrenme deneyimi</li>
-                  <li>• Aylık otomatik yenileme</li>
+                  <li>• 30 gün geçerli</li>
                 </ul>
               </div>
               <div className="text-right">
@@ -313,9 +313,7 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
         </div>
         
         <p className="text-xs text-gray-500 text-center mt-4">
-          Bu bir test ödeme sistemidir. Gerçek kart bilgileri kullanmayın.
-          <br />
-          Test kartı: 5890040000000016, Son kullanma: 12/25, CVC: 123
+          Ödemeniz güvenli bir şekilde iyzico altyapısı ile işlenmektedir.
         </p>
       </div>
     </div>

@@ -277,7 +277,7 @@ export default function CreditPurchase() {
                   onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
                   maxLength={19}
                 />
-                <p className="text-xs text-gray-500 mt-1">Test kartı: 5890 0400 0000 0016</p>
+                
               </div>
               
               <div className="grid grid-cols-3 gap-4">
@@ -396,7 +396,7 @@ export default function CreditPurchase() {
           </Button>
           
           <p className="text-xs text-gray-500 text-center mt-4">
-            Bu bir test ödeme sistemidir. Gerçek kart bilgileri kullanmayın.
+            Ödemeniz güvenli bir şekilde iyzico altyapısı ile işlenmektedir.
           </p>
         </div>
       </div>

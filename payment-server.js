@@ -129,9 +129,12 @@ try {
 }
 
 // Initialize Iyzico
+if (!process.env.IYZICO_API_KEY || !process.env.IYZICO_SECRET_KEY) {
+  console.error('❌ IYZICO_API_KEY and IYZICO_SECRET_KEY must be set in environment variables');
+}
 const iyzipay = new Iyzipay({
-  apiKey: process.env.IYZICO_API_KEY || 'sandbox-qaeSUyqS2RrU6OvZcbtkd9BrIydQa8st',
-  secretKey: process.env.IYZICO_SECRET_KEY || 'sandbox-X3n0IAtXd8Nce2uP6zxVyUoPUD9CsWoM',
+  apiKey: process.env.IYZICO_API_KEY,
+  secretKey: process.env.IYZICO_SECRET_KEY,
   uri: process.env.IYZICO_BASE_URL || 'https://sandbox-api.iyzipay.com',
 });
 
@@ -324,10 +327,11 @@ app.post('/api/payment/create', authenticateUser, async (req, res) => {
       });
     });
 
-    // Simple database operations without Drizzle schemas
     const client = await pool.connect();
     
     try {
+      await client.query('BEGIN');
+
       // Log the payment attempt
       await client.query(
         `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, error_code, error_message, created_at) 
@@ -343,18 +347,15 @@ app.post('/api/payment/create', authenticateUser, async (req, res) => {
         ]
       );
 
-      // Check if payment was successful
       if (paymentResult.status === 'success') {
-        // Record successful transaction
         await client.query(
           `INSERT INTO credit_transactions (user_id, payment_id, credits_amount, total_price, currency, status, created_at) 
            VALUES ($1, $2, $3, $4, $5, $6, NOW())`,
           [user.id, paymentResult.paymentId, creditsAmount, totalPrice.toString(), 'TRY', 'success']
         );
 
-        // Update user credits
         const existingCredits = await client.query(
-          'SELECT * FROM user_credits WHERE user_id = $1',
+          'SELECT * FROM user_credits WHERE user_id = $1 FOR UPDATE',
           [user.id]
         );
         
@@ -378,6 +379,8 @@ app.post('/api/payment/create', authenticateUser, async (req, res) => {
           );
         }
 
+        await client.query('COMMIT');
+
         res.json({
           success: true,
           message: `Ödeme başarılı! ${creditsAmount} kredi hesabınıza eklendi.`,
@@ -387,19 +390,22 @@ app.post('/api/payment/create', authenticateUser, async (req, res) => {
           }
         });
       } else {
-        // Record failed transaction
         await client.query(
           `INSERT INTO credit_transactions (user_id, payment_id, credits_amount, total_price, currency, status, created_at) 
            VALUES ($1, $2, $3, $4, $5, $6, NOW())`,
           [user.id, paymentResult.paymentId || conversationId, creditsAmount, totalPrice.toString(), 'TRY', 'failed']
         );
 
+        await client.query('COMMIT');
+
         res.status(400).json({
           success: false,
           message: paymentResult.errorMessage || 'Ödeme başarısız',
-          errorCode: paymentResult.errorCode,
         });
       }
+    } catch (dbError) {
+      await client.query('ROLLBACK');
+      throw dbError;
     } finally {
       client.release();
     }
@@ -410,7 +416,6 @@ app.post('/api/payment/create', authenticateUser, async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Ödeme işlemi sırasında hata oluştu',
-      error: error.message || 'Unknown error'
     });
   }
 });
@@ -510,7 +515,8 @@ app.post('/api/payment/subscribe', authenticateUser, async (req, res) => {
     const client = await pool.connect();
     
     try {
-      // Log the payment attempt
+      await client.query('BEGIN');
+
       await client.query(
         `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, error_code, error_message, created_at) 
          VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`,
@@ -525,26 +531,25 @@ app.post('/api/payment/subscribe', authenticateUser, async (req, res) => {
         ]
       );
 
-      // Check if payment was successful
       if (paymentResult.status === 'success') {
         const now = new Date();
         const endDate = new Date(now);
-        endDate.setMonth(endDate.getMonth() + 1); // Add 1 month
+        endDate.setMonth(endDate.getMonth() + 1);
 
-        // Create subscription record
         await client.query(
           `INSERT INTO user_subscriptions (user_id, subscription_type, status, start_date, end_date, payment_id, amount, currency, created_at, updated_at) 
            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())`,
           [user.id, 'infinite_hearts', 'active', now, endDate, paymentResult.paymentId, subscriptionAmount.toString(), 'TRY']
         );
 
-        // Update user progress with infinite hearts
         await client.query(
           `UPDATE user_progress 
            SET has_infinite_hearts = true, subscription_expires_at = $1 
            WHERE user_id = $2`,
           [endDate, user.id]
         );
+
+        await client.query('COMMIT');
 
         res.json({
           success: true,
@@ -556,12 +561,16 @@ app.post('/api/payment/subscribe', authenticateUser, async (req, res) => {
           }
         });
       } else {
+        await client.query('COMMIT');
+
         res.status(400).json({
           success: false,
           message: paymentResult.errorMessage || 'Abonelik ödemesi başarısız',
-          errorCode: paymentResult.errorCode,
         });
       }
+    } catch (dbError) {
+      await client.query('ROLLBACK');
+      throw dbError;
     } finally {
       client.release();
     }
@@ -572,7 +581,6 @@ app.post('/api/payment/subscribe', authenticateUser, async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Abonelik işlemi sırasında hata oluştu',
-      error: error.message || 'Unknown error'
     });
   }
 });
