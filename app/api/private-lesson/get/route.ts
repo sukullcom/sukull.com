@@ -2,15 +2,42 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
 import db from "@/db/drizzle";
 import { privateLessonApplications } from "@/db/schema";
+import { eq, and, or, desc } from "drizzle-orm";
 
-// Student Application Submission
+export async function GET() {
+  try {
+    const user = await getServerUser();
+    if (!user) {
+      return NextResponse.json({ error: "Giriş yapmanız gerekiyor" }, { status: 401 });
+    }
+
+    const application = await db.query.privateLessonApplications.findFirst({
+      where: (apps) => eq(apps.userId, user.id),
+      orderBy: (apps) => [desc(apps.createdAt)],
+    });
+
+    if (!application) {
+      return NextResponse.json({ hasApplication: false });
+    }
+
+    return NextResponse.json({
+      hasApplication: true,
+      status: application.status,
+      field: application.field,
+      createdAt: application.createdAt,
+    });
+  } catch (error) {
+    console.error("Başvuru durumu kontrol hatası:", error);
+    return NextResponse.json({ error: "Bir hata oluştu" }, { status: 500 });
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
-    // Get the current user
     const user = await getServerUser();
     if (!user) {
       return NextResponse.json(
-        { error: "Authentication required" }, 
+        { error: "Giriş yapmanız gerekiyor" }, 
         { status: 401 }
       );
     }
@@ -25,22 +52,23 @@ export async function POST(request: NextRequest) {
       studentNeeds = ""
     } = body;
 
-    // Validate required fields
     if (!studentName || !studentSurname || !studentPhoneNumber || !studentEmail || !field) {
       return NextResponse.json(
-        { error: "Missing required fields" },
+        { error: "Lütfen tüm zorunlu alanları doldurun" },
         { status: 400 }
       );
     }
 
-    // Check if user already has a student application
     const existingApplication = await db.query.privateLessonApplications.findFirst({
-      where: (privateLessonApplications, { eq }) => eq(privateLessonApplications.userId, user.id),
+      where: (apps, { eq, or }) => and(
+        eq(apps.userId, user.id),
+        or(eq(apps.status, "pending"), eq(apps.status, "approved"))
+      ),
     });
 
     if (existingApplication) {
       return NextResponse.json(
-        { error: "You have already submitted a student application" },
+        { error: "Zaten aktif bir başvurunuz bulunmaktadır" },
         { status: 400 }
       );
     }
@@ -59,14 +87,14 @@ export async function POST(request: NextRequest) {
     }).returning();
 
     return NextResponse.json({
-      message: "Student application submitted successfully",
+      message: "Başvurunuz başarıyla gönderildi",
       application: application[0]
     }, { status: 201 });
 
   } catch (error) {
-    console.error("Error submitting student application:", error);
+    console.error("Başvuru gönderme hatası:", error);
     return NextResponse.json(
-      { error: "An error occurred while submitting your application" },
+      { error: "Başvurunuz gönderilirken bir hata oluştu. Lütfen tekrar deneyin." },
       { status: 500 }
     );
   }

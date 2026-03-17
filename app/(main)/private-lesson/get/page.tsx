@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -18,8 +18,19 @@ import {
   Phone,
   Mail,
   MessageSquare,
-  Info
+  Info,
+  Clock,
+  CheckCircle,
+  XCircle,
+  Loader2
 } from "lucide-react";
+
+type ApplicationStatus = {
+  hasApplication: boolean;
+  status?: string;
+  field?: string;
+  createdAt?: string;
+};
 
 export default function GetLessonPage() {
   const [formData, setFormData] = useState({
@@ -31,8 +42,27 @@ export default function GetLessonPage() {
     studentNeeds: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [appStatus, setAppStatus] = useState<ApplicationStatus | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const router = useRouter();
+
+  useEffect(() => {
+    const checkApplicationStatus = async () => {
+      try {
+        const res = await fetch("/api/private-lesson/get");
+        if (res.ok) {
+          const data = await res.json();
+          setAppStatus(data);
+        }
+      } catch {
+        // silently fail, show form as fallback
+      } finally {
+        setLoading(false);
+      }
+    };
+    checkApplicationStatus();
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -81,9 +111,80 @@ export default function GetLessonPage() {
     return Math.round((completed / 5) * 100);
   };
 
+  if (loading) {
+    return (
+      <div className="flex-1 mx-auto w-full flex items-center justify-center min-h-[400px]">
+        <div className="flex flex-col items-center gap-3">
+          <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+          <p className="text-gray-500">Yükleniyor...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (appStatus?.hasApplication && appStatus.status === "pending") {
+    return (
+      <div className="flex-1 mx-auto w-full flex flex-row max-w-[1200px] px-3 lg:px-0">
+        <FeedWrapper>
+          <Card className="shadow-lg border-yellow-200 bg-yellow-50">
+            <CardContent className="p-8 text-center">
+              <Clock className="w-16 h-16 text-yellow-500 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">Başvurunuz Değerlendiriliyor</h2>
+              <p className="text-gray-600 mb-4">
+                <strong>{appStatus.field}</strong> alanındaki öğrenci başvurunuz inceleniyor.
+                En kısa sürede size dönüş yapılacaktır.
+              </p>
+              <div className="bg-white rounded-lg p-4 border border-yellow-200 inline-block">
+                <p className="text-sm text-gray-500">Başvuru tarihi: {appStatus.createdAt ? new Date(appStatus.createdAt).toLocaleDateString('tr-TR') : '-'}</p>
+              </div>
+            </CardContent>
+          </Card>
+        </FeedWrapper>
+      </div>
+    );
+  }
+
+  if (appStatus?.hasApplication && appStatus.status === "approved") {
+    return (
+      <div className="flex-1 mx-auto w-full flex flex-row max-w-[1200px] px-3 lg:px-0">
+        <FeedWrapper>
+          <Card className="shadow-lg border-green-200 bg-green-50">
+            <CardContent className="p-8 text-center">
+              <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-gray-800 mb-2">Başvurunuz Onaylandı!</h2>
+              <p className="text-gray-600 mb-6">
+                Öğrenci başvurunuz onaylanmıştır. Artık öğretmen listesinden ders ayırtabilirsiniz.
+              </p>
+              <Button variant="secondary" onClick={() => router.push("/private-lesson/teachers")}>
+                Öğretmenleri Görüntüle
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </CardContent>
+          </Card>
+        </FeedWrapper>
+      </div>
+    );
+  }
+
   return (
     <div className="flex-1 mx-auto w-full flex flex-row max-w-[1200px] px-3 lg:px-0">
       <FeedWrapper>
+        {appStatus?.hasApplication && appStatus.status === "rejected" && (
+          <Card className="mb-6 shadow-lg border-red-200 bg-red-50">
+            <CardContent className="p-6">
+              <div className="flex items-start gap-3">
+                <XCircle className="w-6 h-6 text-red-500 mt-0.5" />
+                <div>
+                  <h3 className="font-semibold text-red-800">Önceki başvurunuz reddedildi</h3>
+                  <p className="text-sm text-red-600 mt-1">
+                    Bilgilerinizi güncelleyerek tekrar başvurabilirsiniz.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Hero Section */}
         <div className="mb-6">
           <Card className="bg-gradient-to-br from-blue-50 to-sky-50 border-blue-200 shadow-lg">
