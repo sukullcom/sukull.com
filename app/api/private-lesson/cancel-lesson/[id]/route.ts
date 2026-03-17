@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
 import db from "@/db/drizzle";
 import { lessonBookings } from "@/db/schema";
-import { eq, and, ne, sql } from "drizzle-orm";
+import { eq, and, ne } from "drizzle-orm";
 import { refundCredit } from "@/db/queries";
 
 export async function POST(
