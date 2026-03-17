@@ -223,14 +223,16 @@ app.get('/', (req, res) => {
   });
 });
 
-// Handle preflight requests for all payment endpoints
-app.options('/api/payment/*', (req, res) => {
+// Handle preflight requests for payment endpoints
+const handlePreflight = (req, res) => {
   res.header('Access-Control-Allow-Origin', req.headers.origin);
   res.header('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.sendStatus(200);
-});
+};
+app.options('/api/payment/create', handlePreflight);
+app.options('/api/payment/subscribe', handlePreflight);
 
 // Create payment endpoint
 app.post('/api/payment/create', authenticateUser, async (req, res) => {
