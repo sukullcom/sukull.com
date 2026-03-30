@@ -1,67 +1,41 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { createClient } from '@/utils/supabase/client';
+import { useSearchParams } from 'next/navigation';
 import { Icons } from '@/components/icons';
 import { Suspense } from 'react';
 
 function ConfirmContent() {
-  const [status, setStatus] = useState<'verifying' | 'success' | 'error'>('verifying');
+  const [status, setStatus] = useState<'redirecting' | 'error'>('redirecting');
   const [errorMessage, setErrorMessage] = useState('');
-  const router = useRouter();
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const verify = async () => {
-      const tokenHash = searchParams.get('token_hash');
-      const type = searchParams.get('type') as 'signup' | 'email' | 'recovery' | 'invite';
-      const next = searchParams.get('next');
+    const tokenHash = searchParams.get('token_hash');
+    const type = searchParams.get('type');
+    const next = searchParams.get('next');
 
-      if (!tokenHash || !type) {
-        setStatus('error');
-        setErrorMessage('Doğrulama parametreleri eksik');
-        return;
-      }
+    if (!tokenHash || !type) {
+      setStatus('error');
+      setErrorMessage('Doğrulama parametreleri eksik');
+      return;
+    }
 
-      const supabase = createClient();
-      const { error } = await supabase.auth.verifyOtp({ token_hash: tokenHash, type });
+    const callbackUrl = new URL('/api/auth/callback', window.location.origin);
+    callbackUrl.searchParams.set('token_hash', tokenHash);
+    callbackUrl.searchParams.set('type', type);
+    if (next) callbackUrl.searchParams.set('next', next);
 
-      if (error) {
-        setStatus('error');
-        setErrorMessage(error.message);
-        setTimeout(() => {
-          router.push('/auth-error?error=' +encodeURIComponent(error.message));
-        }, 2000);
-        return;
-      }
-
-      setStatus('success');
-
-      if (type === 'recovery') {
-        setTimeout(() => { window.location.href = '/reset-password'; }, 1500);
-      } else {
-        setTimeout(() => { window.location.href = next || '/courses'; }, 1500);
-      }
-    };
-
-    verify();
-  }, [searchParams, router]);
+    window.location.href = callbackUrl.toString();
+  }, [searchParams]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-135px)] gap-4 p-4 max-w-md mx-auto text-center">
-      {status === 'verifying' && (
+      {status === 'redirecting' && (
         <>
           <Icons.spinner className="h-10 w-10 animate-spin text-green-500" />
-          <h1 className="text-xl font-bold">E-posta doğrulanıyor...</h1>
-          <p className="text-gray-500">Lütfen bekleyin, hesabınız doğrulanıyor.</p>
-        </>
-      )}
-      {status === 'success' && (
-        <>
-          <div className="text-5xl">✅</div>
-          <h1 className="text-xl font-bold text-green-600">E-posta doğrulandı!</h1>
-          <p className="text-gray-500">Yönlendiriliyorsunuz...</p>
+          <h1 className="text-xl font-bold">Doğrulanıyor...</h1>
+          <p className="text-gray-500">Lütfen bekleyin, yönlendiriliyorsunuz.</p>
         </>
       )}
       {status === 'error' && (
@@ -69,7 +43,6 @@ function ConfirmContent() {
           <div className="text-5xl">❌</div>
           <h1 className="text-xl font-bold text-red-600">Doğrulama hatası</h1>
           <p className="text-gray-500">{errorMessage}</p>
-          <p className="text-sm text-gray-400">Hata sayfasına yönlendiriliyorsunuz...</p>
         </>
       )}
     </div>

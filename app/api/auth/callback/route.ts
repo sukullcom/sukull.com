@@ -9,7 +9,10 @@ export async function GET(request: Request) {
   try {
     const requestUrl = new URL(request.url);
     const code = requestUrl.searchParams.get('code');
+    const tokenHash = requestUrl.searchParams.get('token_hash');
+    const type = requestUrl.searchParams.get('type') as string | null;
     const error = requestUrl.searchParams.get('error');
+    const next = requestUrl.searchParams.get('next');
 
     if (error) {
       console.error('Auth callback error:', error);
@@ -18,25 +21,38 @@ export async function GET(request: Request) {
       return NextResponse.redirect(errorUrl);
     }
 
-    if (!code) {
-      const errorUrl = new URL('/auth-error', requestUrl.origin);
-      errorUrl.searchParams.set('error', 'No authentication code provided');
-      return NextResponse.redirect(errorUrl);
-    }
-
     const supabase = await createClient();
-    const { data, error: authError } = await supabase.auth.exchangeCodeForSession(code);
+    let authUser = null;
 
-    if (authError) {
-      console.error('Code exchange error:', authError.message);
+    if (tokenHash && type) {
+      const { data, error: verifyError } = await supabase.auth.verifyOtp({
+        token_hash: tokenHash,
+        type: type as 'signup' | 'email' | 'recovery' | 'invite',
+      });
+
+      if (verifyError) {
+        console.error('Token verification error:', verifyError.message);
+        const errorUrl = new URL('/auth-error', requestUrl.origin);
+        errorUrl.searchParams.set('error', verifyError.message);
+        return NextResponse.redirect(errorUrl);
+      }
+      authUser = data.user;
+    } else if (code) {
+      const { data, error: authError } = await supabase.auth.exchangeCodeForSession(code);
+
+      if (authError) {
+        console.error('Code exchange error:', authError.message);
+        const errorUrl = new URL('/auth-error', requestUrl.origin);
+        errorUrl.searchParams.set('error', authError.message);
+        return NextResponse.redirect(errorUrl);
+      }
+      authUser = data.user;
+    } else {
       const errorUrl = new URL('/auth-error', requestUrl.origin);
-      errorUrl.searchParams.set('error', authError.message);
+      errorUrl.searchParams.set('error', 'Doğrulama parametresi bulunamadı');
       return NextResponse.redirect(errorUrl);
     }
 
-    const next = requestUrl.searchParams.get('next');
-    const type = requestUrl.searchParams.get('type');
-    
     const isPasswordRecovery = type === 'recovery' || 
                                 next === '/reset-password' ||
                                 requestUrl.href.includes('type=recovery');
@@ -46,10 +62,10 @@ export async function GET(request: Request) {
     if (isPasswordRecovery) {
       redirectTo = '/reset-password';
     } else {
-      if (data.user) {
+      if (authUser) {
         try {
-          const usernameFromMetadata = data.user.user_metadata?.username;
-          await users.captureUserDetails(data.user, usernameFromMetadata);
+          const usernameFromMetadata = authUser.user_metadata?.username;
+          await users.captureUserDetails(authUser, usernameFromMetadata);
         } catch (err) {
           console.error('Error capturing user details:', err);
         }
@@ -72,7 +88,7 @@ export async function GET(request: Request) {
     }
     
     const errorUrl = new URL('/auth-error', origin);
-    errorUrl.searchParams.set('error', 'Failed to sign in');
+    errorUrl.searchParams.set('error', 'Kimlik doğrulama başarısız');
     return NextResponse.redirect(errorUrl);
   }
 }
