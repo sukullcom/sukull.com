@@ -32,31 +32,31 @@ interface PostCardProps {
 export function PostCard({ post, currentUser, isOwnPost, onChatRequest, onEdit, onDelete }: PostCardProps) {
   return (
     <Card>
-      <CardContent className="p-6">
-        <div className="flex items-start gap-4">
+      <CardContent className="p-4 sm:p-6">
+        <div className="flex items-start gap-3 sm:gap-4">
           {/* User Avatar */}
           <Image
             src={normalizeAvatarUrl(post.userAvatar)}
             width={48}
             height={48}
             alt="Avatar"
-            className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover flex-shrink-0"
           />
 
           {/* Post Content */}
           <div className="flex-1 min-w-0">
             {/* User Info & Time */}
-            <div className="flex items-center justify-between mb-2">
-              <div>
-                <h4 className="font-semibold text-gray-900">{post.userName}</h4>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2 gap-0.5">
+              <div className="min-w-0">
+                <h4 className="font-semibold text-gray-900 text-sm sm:text-base truncate">{post.userName}</h4>
                 {post.userSchoolName && (
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-xs sm:text-sm text-muted-foreground truncate">
                     {post.userSchoolName}
                   </p>
                 )}
               </div>
-              <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                <Clock className="h-4 w-4" />
+              <div className="flex items-center gap-1 text-xs sm:text-sm text-muted-foreground shrink-0">
+                <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 {formatTimeAgo(post.created_at)}
               </div>
             </div>
@@ -69,7 +69,7 @@ export function PostCard({ post, currentUser, isOwnPost, onChatRequest, onEdit, 
             )}
 
             {/* Post Description */}
-            <p className="text-gray-700 mb-4 leading-relaxed">
+            <p className="text-gray-700 mb-4 leading-relaxed text-sm sm:text-base break-words">
               {post.reason}
             </p>
 

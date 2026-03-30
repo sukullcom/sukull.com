@@ -37,6 +37,7 @@ interface Review {
 interface IncomeData {
   totalLessons: number;
   totalIncome: number;
+  earningsPerLesson: number;
   monthlyIncome: Record<string, MonthlyIncomeData>;
   recentBookings: StudentBooking[];
 }
@@ -154,11 +155,11 @@ export default function TeacherIncomePage() {
     .slice(0, 6); // Last 6 months
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-6xl">
-      <h1 className="text-3xl font-bold mb-8">Gelir Takibi ve Değerlendirmeler</h1>
+    <div className="container mx-auto py-6 sm:py-8 px-4 max-w-6xl">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Gelir Takibi ve Değerlendirmeler</h1>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Toplam Ders</CardTitle>
@@ -180,7 +181,7 @@ export default function TeacherIncomePage() {
           <CardContent>
             <div className="text-2xl font-bold">₺{incomeData.totalIncome}</div>
             <p className="text-xs text-muted-foreground">
-              Brüt gelir (ders başına ₺25)
+              Brüt gelir (ders başına ₺{incomeData.earningsPerLesson})
             </p>
           </CardContent>
         </Card>
@@ -191,14 +192,14 @@ export default function TeacherIncomePage() {
             <Star className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold flex items-center gap-2">
+            <div className="text-2xl font-bold">
               {reviewData.averageRating > 0 ? reviewData.averageRating.toFixed(1) : "N/A"}
-              {reviewData.averageRating > 0 && (
-                <div className="flex">
-                  {renderStars(Math.round(reviewData.averageRating))}
-                </div>
-              )}
             </div>
+            {reviewData.averageRating > 0 && (
+              <div className="flex mt-1">
+                {renderStars(Math.round(reviewData.averageRating))}
+              </div>
+            )}
             <p className="text-xs text-muted-foreground">
               {reviewData.totalReviews} değerlendirme
             </p>
@@ -305,13 +306,13 @@ export default function TeacherIncomePage() {
           <div className="space-y-3">
             {incomeData.recentBookings.length > 0 ? (
               incomeData.recentBookings.map((booking) => (
-                <div key={booking.id} className="flex items-center justify-between p-3 border rounded-lg">
-                  <div>
-                    <div className="font-medium">{booking.student.name}</div>
-                    <div className="text-sm text-gray-600">{booking.student.email}</div>
+                <div key={booking.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 border rounded-lg gap-2">
+                  <div className="min-w-0">
+                    <div className="font-medium truncate">{booking.student.name}</div>
+                    <div className="text-sm text-gray-600 truncate">{booking.student.email}</div>
                   </div>
-                  <div className="text-right">
-                    <div className="font-medium">₺25</div>
+                  <div className="sm:text-right flex-shrink-0">
+                    <div className="font-medium">₺{incomeData.earningsPerLesson}</div>
                     <div className="text-sm text-gray-600">
                       {formatDate(booking.startTime)} - {formatTime(booking.startTime)}
                     </div>

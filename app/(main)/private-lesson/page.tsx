@@ -53,31 +53,31 @@ export default async function PrivateLessonPage() {
         {/* Hero Section */}
         <div className="mb-8">
           <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 shadow-lg">
-            <CardContent className="p-8">
-              <div className="flex flex-col lg:flex-row items-center gap-8">
+            <CardContent className="p-5 sm:p-8">
+              <div className="flex flex-col lg:flex-row items-center gap-6 sm:gap-8">
                 <div className="flex-1">
-                  <h1 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
                     Özel Ders Platformu
                   </h1>
                   <p className="text-lg text-gray-600 mb-6">
                     Alanında uzman öğretmenlerle birebir özel ders alın veya bilginizi paylaşarak öğretmen olun.
                   </p>
-                  <div className="flex flex-wrap gap-4">
-                    <Badge variant="secondary" className="px-3 py-1">
-                      <Star className="w-4 h-4 mr-1" />
-                      4.9/5 Öğrenci Memnuniyeti
+                  <div className="flex flex-wrap gap-2 sm:gap-4">
+                    <Badge variant="secondary" className="px-2 sm:px-3 py-1 text-xs sm:text-sm">
+                      <Star className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                      4.9/5 Memnuniyet
                     </Badge>
-                    <Badge variant="secondary" className="px-3 py-1">
-                      <Users className="w-4 h-4 mr-1" />
-                      1000+ Aktif Öğretmen
+                    <Badge variant="secondary" className="px-2 sm:px-3 py-1 text-xs sm:text-sm">
+                      <Users className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                      1000+ Öğretmen
                     </Badge>
-                    <Badge variant="secondary" className="px-3 py-1">
-                      <Trophy className="w-4 h-4 mr-1" />
-                      10.000+ Başarılı Ders
+                    <Badge variant="secondary" className="px-2 sm:px-3 py-1 text-xs sm:text-sm">
+                      <Trophy className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                      10.000+ Ders
                     </Badge>
                   </div>
                 </div>
-                <div className="relative">
+                <div className="relative hidden sm:block">
                   <Image
                     src="/mascot_pink.svg"
                     alt="Mascot"
@@ -103,7 +103,7 @@ export default async function PrivateLessonPage() {
                 </div>
                 <ChevronRight className="w-6 h-6 text-gray-400 group-hover:text-green-600 transition-colors" />
               </div>
-              <CardTitle className="text-2xl">Öğretmen Ol</CardTitle>
+              <CardTitle className="text-xl sm:text-2xl">Öğretmen Ol</CardTitle>
               <CardDescription className="text-base">
                 Bilgi ve deneyiminizi paylaşarak öğrencilere yardımcı olun
               </CardDescription>
@@ -151,7 +151,7 @@ export default async function PrivateLessonPage() {
                 </div>
                 <ChevronRight className="w-6 h-6 text-gray-400 group-hover:text-blue-600 transition-colors" />
               </div>
-              <CardTitle className="text-2xl">Öğrenci Ol</CardTitle>
+              <CardTitle className="text-xl sm:text-2xl">Öğrenci Ol</CardTitle>
               <CardDescription className="text-base">
                 Uzman öğretmenlerden özel ders alarak başarınızı artırın
               </CardDescription>

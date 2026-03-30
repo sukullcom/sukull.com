@@ -133,7 +133,7 @@ export default function TeachersPage() {
       <UserCreditsDisplay className="mb-6" />
       
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-        <h1 className="text-3xl font-bold">Öğretmenler</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold">Öğretmenler</h1>
         
         {/* Field Filter */}
         <div className="flex items-center gap-4">

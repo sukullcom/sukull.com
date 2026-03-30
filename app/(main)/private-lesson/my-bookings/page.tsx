@@ -578,7 +578,7 @@ export default function MyBookingsPage() {
       <UserCreditsDisplay className="mb-6" />
       
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Derslerim</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold">Derslerim</h1>
       </div>
 
       {bookings.length === 0 ? (
@@ -627,10 +627,10 @@ export default function MyBookingsPage() {
             <div className="space-y-6">
               {currentLessons.map((booking) => (
                 <Card key={booking.id} className="overflow-hidden border border-gray-200 hover:shadow-md transition-shadow">
-                  <CardHeader className="pb-3 pt-4 px-5 border-b border-gray-100">
-                    <div className="flex flex-wrap justify-between items-center">
+                  <CardHeader className="pb-3 pt-4 px-4 sm:px-5 border-b border-gray-100">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                       <div>
-                        <CardTitle className="flex items-center text-lg">
+                        <CardTitle className="flex items-center text-base sm:text-lg">
                           {getStatusIndicator(booking.status)}
                           {booking.teacher?.name || "Öğretmen"}
                         </CardTitle>
@@ -638,7 +638,7 @@ export default function MyBookingsPage() {
                           {getSimplifiedField(booking.fields, booking.field)}
                         </div>
                       </div>
-                      <div className="text-sm font-medium px-3 py-1 rounded-full bg-primary/10 text-primary">
+                      <div className="text-sm font-medium px-3 py-1 rounded-full bg-primary/10 text-primary w-fit">
                         {formatTimeRange(booking.startTime)}
                       </div>
                     </div>

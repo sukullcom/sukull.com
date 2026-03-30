@@ -585,7 +585,8 @@ export default function TimeSlotGrid({
         </div>
       )}
       
-      <div className="grid grid-cols-7 gap-1 overflow-x-auto pb-2">
+      <div className="overflow-x-auto -mx-2 px-2 pb-2">
+      <div className="grid grid-cols-7 gap-1 min-w-[640px]">
         {/* Day headers */}
         {days.map(day => {
           const isToday = 
@@ -675,6 +676,7 @@ export default function TimeSlotGrid({
             })}
           </React.Fragment>
         ))}
+      </div>
       </div>
       
     </div>

@@ -134,29 +134,29 @@ export default function PrivateLessonHeader() {
   }
 
   return (
-    <div className="space-y-6 mb-6">
-      {/* Header - Study Buddy Style */}
+    <div className="space-y-4 sm:space-y-6 mb-4 sm:mb-6">
+      {/* Header */}
       <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold text-gray-900">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
           {userStatus.isTeacher ? "Öğretmen Paneli" : "Özel Ders"}
         </h1>
       </div>
 
-      {/* Tab Navigation - Study Buddy Style */}
+      {/* Tab Navigation */}
       <Card>
         <CardContent className="p-0">
-          <div className="flex border-b">
+          <div className="flex border-b overflow-x-auto scrollbar-hide">
             {navItems.map((item) => {
               const active = isActive(item.path);
               return (
                 <Button
                   key={item.path}
                   variant={active ? "secondary" : "ghost"}
-                  className="flex-1 rounded-none border-0 h-12"
+                  className="flex-1 min-w-0 rounded-none border-0 h-10 sm:h-12 px-2 sm:px-4 text-xs sm:text-sm whitespace-nowrap"
                   onClick={() => router.push(item.path)}
                 >
-                  <span className="mr-2">{item.icon}</span>
-                  {item.name}
+                  <span className="sm:mr-2 shrink-0">{item.icon}</span>
+                  <span className="truncate ml-1 sm:ml-0">{item.name}</span>
                 </Button>
               );
             })}

@@ -44,9 +44,9 @@ export default async function TeacherAvailabilityPage() {
   }));
   
   return (
-    <div className="container mx-auto py-8">
-      <h1 className="text-2xl font-bold mb-6">Müsait Olduğunuz Zamanları Belirleyin</h1>
-      <p className="mb-6 text-gray-600">
+    <div className="container mx-auto py-8 px-4">
+      <h1 className="text-2xl font-bold mb-4 sm:mb-6">Müsait Olduğunuz Zamanları Belirleyin</h1>
+      <p className="mb-6 text-sm sm:text-base text-gray-600">
         Öğrencilere özel ders vermek için müsait olduğunuz zamanları seçin. Öğrenciler bu zaman dilimlerinden birini seçerek sizinle özel ders planlayabilirler.
       </p>
       

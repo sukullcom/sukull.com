@@ -173,23 +173,23 @@ export default function CreditPurchase() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Ders Kredisi Satın Al</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Ders Kredisi Satın Al</h1>
         <p className="text-gray-600">Özel derslerinizi ayırtabilmek için kredi satın alın</p>
       </div>
 
       {/* Current Credits Display */}
-      <Card className="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900">Mevcut Kredileriniz</h3>
-              <p className="text-gray-600">Kullanılabilir ders kredisi sayınız</p>
+      <Card className="mb-6 sm:mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+        <CardContent className="p-4 sm:p-6">
+          <div className="flex items-center justify-between gap-4">
+            <div className="min-w-0">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900">Mevcut Kredileriniz</h3>
+              <p className="text-sm text-gray-600">Kullanılabilir ders kredisi</p>
             </div>
-            <div className="text-right">
+            <div className="text-right flex-shrink-0">
               {loadingCredits ? (
                 <Loader2 className="h-6 w-6 animate-spin" />
               ) : (
-                <div className="text-3xl font-bold text-blue-600">
+                <div className="text-2xl sm:text-3xl font-bold text-blue-600">
                   {userCredits.availableCredits}
                 </div>
               )}

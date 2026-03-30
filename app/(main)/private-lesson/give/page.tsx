@@ -89,12 +89,12 @@ export default function GiveLessonPage() {
         <div className="mb-6">
           <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 shadow-lg">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div className="flex-1">
-                  <h1 className="text-3xl font-bold text-gray-800 mb-2">
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
                     Öğretmen Başvurusu
                   </h1>
-                  <p className="text-gray-600">
+                  <p className="text-sm sm:text-base text-gray-600">
                     Bilgi ve deneyiminizi paylaşarak öğrencilere yardımcı olun
                   </p>
                 </div>

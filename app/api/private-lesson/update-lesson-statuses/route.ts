@@ -1,106 +1,99 @@
 import { NextRequest, NextResponse } from "next/server";
 import db from "@/db/drizzle";
 import { lessonBookings } from "@/db/schema";
-import { eq, lt, and } from "drizzle-orm";
+import { eq, lt, and, isNotNull, isNull } from "drizzle-orm";
+import { LESSON_CONFIG } from "@/lib/lesson-config";
+import { getServerUser } from "@/lib/auth";
 
 export async function POST(request: NextRequest) {
   try {
     const authHeader = request.headers.get("authorization");
-    if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-      return NextResponse.json({ error: "Yetkisiz erişim" }, { status: 401 });
+    const isCron = authHeader === `Bearer ${process.env.CRON_SECRET}`;
+
+    if (!isCron) {
+      const user = await getServerUser();
+      if (!user) {
+        return NextResponse.json({ error: "Yetkisiz erişim" }, { status: 401 });
+      }
     }
     const now = new Date();
     let totalUpdated = 0;
     const results = [];
 
-    // 1. First, find all pending bookings where the start time has arrived and confirm them
-    const pendingBookings = await db.query.lessonBookings.findMany({
-      where: and(
+    // 1. pending → confirmed: Ders başlangıç saati gelmiş
+    const confirmedResult = await db
+      .update(lessonBookings)
+      .set({ status: "confirmed", updatedAt: now })
+      .where(and(
         eq(lessonBookings.status, "pending"),
         lt(lessonBookings.startTime, now)
-      ),
-    });
+      ))
+      .returning();
 
-    if (pendingBookings.length > 0) {
-      const confirmedResult = await db
-        .update(lessonBookings)
-        .set({ 
-          status: "confirmed",
-          updatedAt: now
-        })
-        .where(and(
-          eq(lessonBookings.status, "pending"),
-          lt(lessonBookings.startTime, now)
-        ))
-        .returning();
-
+    if (confirmedResult.length > 0) {
       totalUpdated += confirmedResult.length;
-      results.push({
-        action: "confirmed",
-        count: confirmedResult.length,
-        bookings: confirmedResult.map(booking => ({
-          id: booking.id,
-          teacherId: booking.teacherId,
-          studentId: booking.studentId,
-          startTime: booking.startTime
-        }))
-      });
-
-      console.log(`Updated ${confirmedResult.length} lessons to confirmed status`);
+      results.push({ action: "confirmed", count: confirmedResult.length });
     }
 
-    // 2. Then, find all confirmed bookings where the end time has passed and complete them
-    const expiredBookings = await db.query.lessonBookings.findMany({
-      where: and(
+    // 2. confirmed → completed (öğretmen katıldı): Ders bitmiş VE öğretmen katılmış → kazanç yaz
+    const completedWithEarnings = await db
+      .update(lessonBookings)
+      .set({
+        status: "completed",
+        completedAt: now,
+        earningsAmount: LESSON_CONFIG.TEACHER_EARNINGS_PER_LESSON,
+        updatedAt: now,
+      })
+      .where(and(
         eq(lessonBookings.status, "confirmed"),
-        lt(lessonBookings.endTime, now)
-      ),
-    });
+        lt(lessonBookings.endTime, now),
+        isNotNull(lessonBookings.teacherJoinedAt)
+      ))
+      .returning();
 
-    if (expiredBookings.length > 0) {
-      const completedResult = await db
-        .update(lessonBookings)
-        .set({ 
-          status: "completed",
-          updatedAt: now
-        })
-        .where(and(
-          eq(lessonBookings.status, "confirmed"),
-          lt(lessonBookings.endTime, now)
-        ))
-        .returning();
-
-      totalUpdated += completedResult.length;
+    if (completedWithEarnings.length > 0) {
+      totalUpdated += completedWithEarnings.length;
       results.push({
-        action: "completed",
-        count: completedResult.length,
-        bookings: completedResult.map(booking => ({
-          id: booking.id,
-          teacherId: booking.teacherId,
-          studentId: booking.studentId,
-          endTime: booking.endTime
-        }))
-      });
-
-      console.log(`Updated ${completedResult.length} lessons to completed status`);
-    }
-
-    if (totalUpdated === 0) {
-      return NextResponse.json({ 
-        message: "No lessons to update",
-        updated: 0 
+        action: "completed_with_earnings",
+        count: completedWithEarnings.length,
+        earningsPerLesson: LESSON_CONFIG.TEACHER_EARNINGS_PER_LESSON,
       });
     }
 
-    return NextResponse.json({ 
-      message: `Successfully updated ${totalUpdated} lessons`,
+    // 3. confirmed → completed (öğretmen katılmadı): Ders bitmiş AMA öğretmen katılmamış → kazanç yok
+    const completedNoEarnings = await db
+      .update(lessonBookings)
+      .set({
+        status: "completed",
+        completedAt: now,
+        earningsAmount: 0,
+        updatedAt: now,
+      })
+      .where(and(
+        eq(lessonBookings.status, "confirmed"),
+        lt(lessonBookings.endTime, now),
+        isNull(lessonBookings.teacherJoinedAt)
+      ))
+      .returning();
+
+    if (completedNoEarnings.length > 0) {
+      totalUpdated += completedNoEarnings.length;
+      results.push({
+        action: "completed_no_earnings",
+        count: completedNoEarnings.length,
+      });
+    }
+
+    return NextResponse.json({
+      message: totalUpdated > 0
+        ? `${totalUpdated} ders durumu güncellendi`
+        : "Güncellenecek ders bulunamadı",
       updated: totalUpdated,
-      results: results
+      results,
     });
-
   } catch (error) {
     console.error("Error updating lesson statuses:", error);
-    return NextResponse.json({ 
+    return NextResponse.json({
       message: "Ders durumları güncellenirken bir hata oluştu"
     }, { status: 500 });
   }
@@ -108,4 +101,4 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   return POST(request);
-} 
+}

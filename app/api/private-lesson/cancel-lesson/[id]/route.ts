@@ -4,6 +4,7 @@ import db from "@/db/drizzle";
 import { lessonBookings } from "@/db/schema";
 import { eq, and, ne } from "drizzle-orm";
 import { refundCredit } from "@/db/queries";
+import { LESSON_CONFIG } from "@/lib/lesson-config";
 
 export async function POST(
   request: Request,
@@ -23,36 +24,41 @@ export async function POST(
     }
     
     const booking = await db.query.lessonBookings.findFirst({
-      where: and(
-        eq(lessonBookings.id, bookingId),
-        eq(lessonBookings.studentId, user.id)
-      ),
+      where: eq(lessonBookings.id, bookingId),
     });
     
     if (!booking) {
-      return NextResponse.json({ message: "Rezervasyon bulunamadı veya bu işlem için yetkiniz yok" }, { status: 404 });
+      return NextResponse.json({ message: "Rezervasyon bulunamadı" }, { status: 404 });
+    }
+
+    const isStudent = booking.studentId === user.id;
+    const isTeacher = booking.teacherId === user.id;
+
+    if (!isStudent && !isTeacher) {
+      return NextResponse.json({ message: "Bu işlem için yetkiniz yok" }, { status: 403 });
     }
     
     if (booking.status === 'cancelled' || booking.status === 'completed') {
       return NextResponse.json({ message: "Bu ders zaten iptal edilmiş veya tamamlanmış" }, { status: 400 });
     }
-    
-    const startTime = new Date(booking.startTime);
-    const now = new Date();
-    const hoursDiff = (startTime.getTime() - now.getTime()) / (1000 * 60 * 60);
-    
-    if (hoursDiff < 24) {
-      return NextResponse.json(
-        { message: "Dersler yalnızca başlangıç saatinden en az 24 saat önce iptal edilebilir" },
-        { status: 400 }
-      );
+
+    if (isStudent) {
+      const startTime = new Date(booking.startTime);
+      const now = new Date();
+      const hoursDiff = (startTime.getTime() - now.getTime()) / (1000 * 60 * 60);
+
+      if (hoursDiff < LESSON_CONFIG.FREE_CANCELLATION_HOURS) {
+        return NextResponse.json(
+          { message: `Dersler yalnızca başlangıç saatinden en az ${LESSON_CONFIG.FREE_CANCELLATION_HOURS} saat önce iptal edilebilir` },
+          { status: 400 }
+        );
+      }
     }
     
     const cancelled = await db.update(lessonBookings)
       .set({ status: 'cancelled', updatedAt: new Date() })
       .where(and(
         eq(lessonBookings.id, bookingId),
-        eq(lessonBookings.studentId, user.id),
         ne(lessonBookings.status, 'cancelled'),
         ne(lessonBookings.status, 'completed')
       ))
@@ -62,11 +68,15 @@ export async function POST(
       return NextResponse.json({ message: "Bu ders zaten iptal edilmiş" }, { status: 400 });
     }
 
-    await refundCredit(user.id);
+    await refundCredit(booking.studentId);
+
+    if (isTeacher) {
+      return NextResponse.json({ message: "Ders başarıyla iptal edildi. Öğrencinin kredisi iade edildi." });
+    }
     
     return NextResponse.json({ message: "Ders başarıyla iptal edildi ve krediniz iade edildi" });
   } catch (error) {
     console.error("Ders iptal hatası:", error);
     return NextResponse.json({ message: "Ders iptal edilirken bir hata oluştu" }, { status: 500 });
   }
-} 
+}

@@ -138,8 +138,8 @@ export default function TeacherDashboardPage() {
   }
 
   return (
-    <div className="container max-w-3xl mx-auto py-12 px-4">
-      <h1 className="text-3xl font-bold mb-8">Profil Yönetimi</h1>
+    <div className="container max-w-3xl mx-auto py-8 sm:py-12 px-4">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Profil Yönetimi</h1>
       
       <div className="space-y-8">
         {/* Profile Summary and Bio Combined */}

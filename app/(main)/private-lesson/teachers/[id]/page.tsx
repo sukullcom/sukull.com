@@ -400,7 +400,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
 
   return (
     <div className="container mx-auto py-10 px-4 max-w-5xl">
-      <h1 className="text-3xl font-bold mb-8">{teacher.name}</h1>
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">{teacher.name}</h1>
 
       {/* User Credits Display */}
       <UserCreditsDisplay className="mb-6" />
@@ -410,7 +410,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
         <Card className="md:col-span-1 bg-white shadow-md hover:shadow-lg transition-shadow">
           <CardHeader className="pb-2">
             <div className="flex justify-center mb-4">
-              <div className="relative w-36 h-36 rounded-full overflow-hidden border-primary/20">
+              <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-primary/20">
                 <Image
                   src={teacher.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(teacher.name)}`}
                   alt={teacher.name}
@@ -484,7 +484,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
                 Aşağıdaki zamanlardan birini seçerek ders rezerve edebilirsiniz
               </CardDescription>
               {/* Legend */}
-              <div className="flex items-center gap-6 text-sm mt-2">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-sm mt-2">
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 border-2 border-green-200 bg-white rounded"></div>
                   <span className="text-gray-600">Müsait</span>

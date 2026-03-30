@@ -130,8 +130,7 @@ export const auth = {
       return { success: true, message: 'If an account exists, a password reset link will be sent.' }
     }
 
-    const resetLink = `${location.origin}/api/auth/callback?type=recovery&next=/reset-password`
-    const res = await supabase.auth.resetPasswordForEmail(email, { redirectTo: resetLink })
+    const res = await supabase.auth.resetPasswordForEmail(email)
     if (res.error) throw res.error
 
     return {

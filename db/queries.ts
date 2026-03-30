@@ -1456,7 +1456,6 @@ export const getUserSubscriptionHistory = cache(async (userId: string) => {
 
 // Get teacher income summary (completed lessons only, excluding cancelled)
 export const getTeacherIncome = cache(async (teacherId: string) => {
-  // First get all completed bookings for this teacher
   const completedBookings = await db.query.lessonBookings.findMany({
     where: and(
       eq(lessonBookings.teacherId, teacherId),
@@ -1473,28 +1472,28 @@ export const getTeacherIncome = cache(async (teacherId: string) => {
     orderBy: desc(lessonBookings.startTime),
   });
 
-  // Each completed lesson = 1 credit = income
-  // Assuming 1 credit = 25 TL (adjust as needed)
-  const pricePerLesson = 25;
-  const totalLessons = completedBookings.length;
-  const totalIncome = totalLessons * pricePerLesson;
+  const { TEACHER_EARNINGS_PER_LESSON } = await import("@/lib/lesson-config").then(m => m.LESSON_CONFIG);
 
-  // Group by month for detailed breakdown
+  let totalIncome = 0;
   const monthlyIncome = completedBookings.reduce((acc, booking) => {
-    const month = booking.startTime.toISOString().slice(0, 7); // YYYY-MM format
+    const earnings = booking.earningsAmount ?? TEACHER_EARNINGS_PER_LESSON;
+    totalIncome += earnings;
+
+    const month = booking.startTime.toISOString().slice(0, 7);
     if (!acc[month]) {
       acc[month] = { lessons: 0, income: 0 };
     }
     acc[month].lessons += 1;
-    acc[month].income += pricePerLesson;
+    acc[month].income += booking.earningsAmount ?? TEACHER_EARNINGS_PER_LESSON;
     return acc;
   }, {} as Record<string, { lessons: number; income: number }>);
 
   return {
-    totalLessons,
+    totalLessons: completedBookings.length,
     totalIncome,
+    earningsPerLesson: TEACHER_EARNINGS_PER_LESSON,
     monthlyIncome,
-    recentBookings: completedBookings.slice(0, 10), // Last 10 bookings
+    recentBookings: completedBookings.slice(0, 10),
   };
 });
 

@@ -62,14 +62,14 @@ export function ChatCard({ chat, currentUser, onClick, isSelected }: ChatCardPro
       }`}
       onClick={onClick}
     >
-      <CardContent className="p-4">
-        <div className="flex items-center gap-3">
+      <CardContent className="p-3 sm:p-4">
+        <div className="flex items-center gap-2 sm:gap-3">
           <Image
             src={normalizeAvatarUrl(typeof otherParticipantData === 'object' ? otherParticipantData?.avatarUrl : '')}
-            width={40}
-            height={40}
+            width={36}
+            height={36}
             alt="Avatar"
-            className="rounded-full object-cover"
+            className="rounded-full object-cover w-9 h-9 sm:w-10 sm:h-10 shrink-0"
           />
           <div className="flex-1 min-w-0">
             <h4 className="font-medium text-gray-900 truncate">

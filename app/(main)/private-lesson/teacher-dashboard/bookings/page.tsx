@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLessonStatusUpdater } from "@/hooks/use-lesson-status-updater";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { toast } from "sonner";
 
 interface Booking {
   id: number;
@@ -17,6 +18,8 @@ interface Booking {
   status: string;
   meetLink?: string;
   notes?: string;
+  teacherJoinedAt?: string | null;
+  earningsAmount?: number | null;
   createdAt: string;
   studentName: string;
   studentEmail: string;
@@ -52,6 +55,8 @@ export default function TeacherBookingsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState<'upcoming' | 'completed'>('upcoming');
   const [teacherMeetLink, setTeacherMeetLink] = useState<string | null>(null);
+  const [joiningLessonId, setJoiningLessonId] = useState<number | null>(null);
+  const [cancellingLessonId, setCancellingLessonId] = useState<number | null>(null);
   const lessonsPerPage = 5;
   
   // Use the lesson status updater hook to automatically update completed lessons
@@ -74,6 +79,57 @@ export default function TeacherBookingsPage() {
       window.removeEventListener('lessonStatusUpdated', handleLessonStatusUpdate);
     };
   }, []);
+
+  const handleJoinLesson = async (booking: Booking) => {
+    setJoiningLessonId(booking.id);
+    try {
+      const res = await fetch("/api/private-lesson/teacher-join-lesson", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ bookingId: booking.id }),
+      });
+      const data = await res.json();
+
+      if (!res.ok && res.status !== 200) {
+        toast.error(data.message || "Derse katılım kaydedilemedi");
+        return;
+      }
+
+      setBookings(prev => prev.map(b =>
+        b.id === booking.id ? { ...b, teacherJoinedAt: new Date().toISOString() } : b
+      ));
+
+      const meetUrl = data.meetLink || booking.meetLink || teacherMeetLink;
+      if (meetUrl) {
+        window.open(meetUrl, "_blank");
+      }
+    } catch {
+      toast.error("Derse katılım kaydedilirken bir hata oluştu");
+    } finally {
+      setJoiningLessonId(null);
+    }
+  };
+
+  const handleCancelLesson = async (bookingId: number) => {
+    if (!confirm("Bu dersi iptal etmek istediğinize emin misiniz? Öğrencinin kredisi iade edilecektir.")) return;
+    setCancellingLessonId(bookingId);
+    try {
+      const res = await fetch(`/api/private-lesson/cancel-lesson/${bookingId}`, { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) {
+        toast.error(data.message || "Ders iptal edilemedi");
+        return;
+      }
+      setBookings(prev => prev.map(b =>
+        b.id === bookingId ? { ...b, status: "cancelled" } : b
+      ));
+      toast.success(data.message || "Ders başarıyla iptal edildi");
+    } catch {
+      toast.error("Ders iptal edilirken bir hata oluştu");
+    } finally {
+      setCancellingLessonId(null);
+    }
+  };
 
   const fetchBookings = async () => {
     try {
@@ -109,13 +165,15 @@ export default function TeacherBookingsPage() {
     return now > lessonEndTime;
   };
 
-  // Check if the lesson time has arrived (now is within start time and end time)
   const isLessonTimeActive = (startTime: string, endTime: string): boolean => {
     const lessonStartTime = new Date(startTime);
     const lessonEndTime = new Date(endTime);
     const now = new Date();
     
-    return now >= lessonStartTime && now <= lessonEndTime;
+    const twoMinutesBefore = new Date(lessonStartTime);
+    twoMinutesBefore.setMinutes(twoMinutesBefore.getMinutes() - 2);
+    
+    return now >= twoMinutesBefore && now <= lessonEndTime;
   };
 
   // Format date
@@ -217,7 +275,7 @@ export default function TeacherBookingsPage() {
   return (
     <div className="container mx-auto py-10 px-4">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Öğrenci Randevularım</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold">Öğrenci Randevularım</h1>
       </div>
 
       {bookings.length === 0 ? (
@@ -258,10 +316,10 @@ export default function TeacherBookingsPage() {
             <div className="space-y-6">
               {currentLessons.map((booking) => (
                 <Card key={booking.id} className="overflow-hidden border border-gray-200 hover:shadow-md transition-shadow">
-                  <CardHeader className="pb-3 pt-4 px-5 border-b border-gray-100">
-                    <div className="flex flex-wrap justify-between items-center">
+                  <CardHeader className="pb-3 pt-4 px-4 sm:px-5 border-b border-gray-100">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                       <div>
-                        <CardTitle className="flex items-center text-lg">
+                        <CardTitle className="flex items-center text-base sm:text-lg">
                           {getStatusIndicator(booking.status)}
                           {booking.studentName || "Öğrenci"}
                         </CardTitle>
@@ -269,7 +327,7 @@ export default function TeacherBookingsPage() {
                           {getSimplifiedField(booking.fields, booking.field)}
                         </div>
                       </div>
-                      <div className="text-sm font-medium px-3 py-1 rounded-full bg-primary/10 text-primary">
+                      <div className="text-sm font-medium px-3 py-1 rounded-full bg-primary/10 text-primary w-fit">
                         {formatTimeRange(booking.startTime)}
                       </div>
                     </div>
@@ -291,28 +349,53 @@ export default function TeacherBookingsPage() {
                     {activeTab === 'upcoming' && !isLessonPast(booking.endTime) && (
                       <div className="mt-3">
                         {isLessonTimeActive(booking.startTime, booking.endTime) ? (
-                          <Button 
-                            variant="primary"
-                            size="lg" 
-                            onClick={() => window.open(booking.meetLink || (teacherMeetLink || ''), '_blank')}
-                            className="w-full font-medium"
-                          >
-                            <span className="flex items-center justify-center">
-                              <span className="mr-2 relative flex h-3 w-3">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                          <div className="space-y-2">
+                            <Button 
+                              variant="primary"
+                              size="lg" 
+                              onClick={() => handleJoinLesson(booking)}
+                              disabled={joiningLessonId === booking.id}
+                              className="w-full font-medium"
+                            >
+                              <span className="flex items-center justify-center">
+                                {joiningLessonId === booking.id ? (
+                                  <LoadingSpinner size="sm" />
+                                ) : (
+                                  <>
+                                    <span className="mr-2 relative flex h-3 w-3">
+                                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                                      <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                                    </span>
+                                    {booking.teacherJoinedAt ? "Derse Tekrar Katıl" : "Derse Başla"}
+                                  </>
+                                )}
                               </span>
-                              Derse Başla
-                            </span>
-                          </Button>
+                            </Button>
+                            {booking.teacherJoinedAt && (
+                              <p className="text-xs text-green-600 text-center font-medium">
+                                ✓ Katılımınız kaydedildi
+                              </p>
+                            )}
+                          </div>
                         ) : (
-                          <div className="p-3 bg-gray-50 rounded-md text-center">
-                            <p className="text-sm text-gray-600">
-                              Ders zamanı gelmeden 2 dakika önce buradan derse katılabilirsiniz.
-                            </p>
-                            <p className="text-xs text-gray-500 mt-1">
-                              {formatTimeRange(booking.startTime)} saatleri arasında ders başlatma butonu aktif olacak
-                            </p>
+                          <div className="space-y-3">
+                            <div className="p-3 bg-gray-50 rounded-md text-center">
+                              <p className="text-sm text-gray-600">
+                                Ders zamanı gelmeden 2 dakika önce buradan derse katılabilirsiniz.
+                              </p>
+                              <p className="text-xs text-gray-500 mt-1">
+                                {formatTimeRange(booking.startTime)} saatleri arasında ders başlatma butonu aktif olacak
+                              </p>
+                            </div>
+                            <Button
+                              variant="danger"
+                              size="sm"
+                              onClick={() => handleCancelLesson(booking.id)}
+                              disabled={cancellingLessonId === booking.id}
+                              className="w-full"
+                            >
+                              {cancellingLessonId === booking.id ? "İptal ediliyor..." : "Dersi İptal Et"}
+                            </Button>
                           </div>
                         )}
                       </div>
@@ -320,9 +403,20 @@ export default function TeacherBookingsPage() {
                   </CardContent>
                   {activeTab === 'completed' && (
                     <CardFooter className="py-3 px-5 bg-gray-50 border-t border-gray-100">
-                      <div className="text-xs text-gray-500 flex items-center">
-                        {getStatusIndicator(booking.status)}
-                        Ders tamamlandı
+                      <div className="w-full flex items-center justify-between">
+                        <div className="text-xs text-gray-500 flex items-center">
+                          {getStatusIndicator(booking.status)}
+                          Ders tamamlandı
+                        </div>
+                        {booking.teacherJoinedAt ? (
+                          <div className="text-sm font-semibold text-green-600">
+                            +₺{booking.earningsAmount ?? 0}
+                          </div>
+                        ) : (
+                          <div className="text-xs text-red-500">
+                            Katılım kaydı yok
+                          </div>
+                        )}
                       </div>
                     </CardFooter>
                   )}

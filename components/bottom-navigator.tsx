@@ -70,7 +70,7 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
   return (
     <div
       className={cn(
-        "fixed bottom-0 left-0 right-0 flex h-[60px] items-center justify-around border-t-2 border-slate-200 bg-white px-4 lg:hidden Rz-50",
+        "fixed bottom-0 left-0 right-0 flex h-[60px] items-center justify-around border-t-2 border-slate-200 bg-white px-4 lg:hidden z-50",
         className
       )}
     >

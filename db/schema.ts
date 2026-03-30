@@ -433,6 +433,9 @@ export const lessonBookings = pgTable("lesson_bookings", {
   status: text("status").notNull().default("pending"),
   meetLink: text("meet_link"),
   notes: text("notes"),
+  teacherJoinedAt: timestamp("teacher_joined_at"),
+  completedAt: timestamp("completed_at"),
+  earningsAmount: integer("earnings_amount"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 }, (table) => ({

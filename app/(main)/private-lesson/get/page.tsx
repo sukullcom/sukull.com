@@ -127,9 +127,9 @@ export default function GetLessonPage() {
       <div className="flex-1 mx-auto w-full flex flex-row max-w-[1200px] px-3 lg:px-0">
         <FeedWrapper>
           <Card className="shadow-lg border-yellow-200 bg-yellow-50">
-            <CardContent className="p-8 text-center">
-              <Clock className="w-16 h-16 text-yellow-500 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Başvurunuz Değerlendiriliyor</h2>
+            <CardContent className="p-5 sm:p-8 text-center">
+              <Clock className="w-12 h-12 sm:w-16 sm:h-16 text-yellow-500 mx-auto mb-4" />
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Başvurunuz Değerlendiriliyor</h2>
               <p className="text-gray-600 mb-4">
                 <strong>{appStatus.field}</strong> alanındaki öğrenci başvurunuz inceleniyor.
                 En kısa sürede size dönüş yapılacaktır.
@@ -149,9 +149,9 @@ export default function GetLessonPage() {
       <div className="flex-1 mx-auto w-full flex flex-row max-w-[1200px] px-3 lg:px-0">
         <FeedWrapper>
           <Card className="shadow-lg border-green-200 bg-green-50">
-            <CardContent className="p-8 text-center">
-              <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">Başvurunuz Onaylandı!</h2>
+            <CardContent className="p-5 sm:p-8 text-center">
+              <CheckCircle className="w-12 h-12 sm:w-16 sm:h-16 text-green-500 mx-auto mb-4" />
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Başvurunuz Onaylandı!</h2>
               <p className="text-gray-600 mb-6">
                 Öğrenci başvurunuz onaylanmıştır. Artık öğretmen listesinden ders ayırtabilirsiniz.
               </p>
