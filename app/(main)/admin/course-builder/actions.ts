@@ -176,6 +176,8 @@ export async function createChallenge(data: {
   question: string;
   explanation?: string;
   order: number;
+  difficulty?: string;
+  tags?: string;
   timeLimit?: number;
   metadata?: string;
   questionImageSrc?: string;
@@ -190,6 +192,8 @@ export async function createChallenge(data: {
         explanation: data.explanation,
         questionImageSrc: data.questionImageSrc,
         order: data.order,
+        difficulty: data.difficulty as "EASY" | "MEDIUM" | "HARD" | undefined,
+        tags: data.tags || undefined,
         timeLimit: data.timeLimit,
         metadata: data.metadata,
       })
@@ -205,11 +209,13 @@ export async function createChallenge(data: {
 }
 
 export async function updateChallenge(challengeId: number, data: {
-  lessonId?: number; // 🚀 NEW: Add lessonId support
+  lessonId?: number;
   type: string;
   question: string;
   explanation?: string;
   order: number;
+  difficulty?: string;
+  tags?: string;
   timeLimit?: number;
   metadata?: string;
   questionImageSrc?: string;
@@ -218,12 +224,14 @@ export async function updateChallenge(challengeId: number, data: {
     const [challenge] = await db
       .update(challenges)
       .set({
-        ...(data.lessonId && { lessonId: data.lessonId }), // 🚀 NEW: Include lessonId if provided
+        ...(data.lessonId && { lessonId: data.lessonId }),
         type: data.type as "SELECT" | "ASSIST" | "DRAG_DROP" | "FILL_BLANK" | "MATCH_PAIRS" | "SEQUENCE" | "TIMER_CHALLENGE",
         question: data.question,
         explanation: data.explanation,
         questionImageSrc: data.questionImageSrc,
         order: data.order,
+        difficulty: data.difficulty as "EASY" | "MEDIUM" | "HARD" | undefined,
+        tags: data.tags || undefined,
         timeLimit: data.timeLimit,
         metadata: data.metadata,
       })

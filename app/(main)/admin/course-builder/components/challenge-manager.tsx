@@ -80,21 +80,25 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
     lessonId: 0,
     type: "",
     question: "",
-    explanation: "", // Add explanation field
+    explanation: "",
     order: 1,
+    difficulty: "" as string,
+    tags: "" as string,
     timeLimit: undefined as number | undefined,
     metadata: "",
-    questionImageSrc: "" // Fixed property name
+    questionImageSrc: ""
   });
   const [editChallenge, setEditChallenge] = useState({
-    lessonId: 0, // 🚀 NEW: Add lessonId to edit state
+    lessonId: 0,
     type: "",
     question: "",
-    explanation: "", // Add explanation field
+    explanation: "",
     order: 1,
+    difficulty: "" as string,
+    tags: "" as string,
     timeLimit: undefined as number | undefined,
     metadata: "",
-    questionImageSrc: "" // Fixed property name
+    questionImageSrc: ""
   });
   const [challengeOptions, setChallengeOptions] = useState<ChallengeOption[]>([]);
   const [editChallengeOptions, setEditChallengeOptions] = useState<ChallengeOption[]>([]);
@@ -196,14 +200,16 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
   const openEditDialog = (challenge: Challenge) => {
     setEditingChallenge(challenge);
     setEditChallenge({
-      lessonId: challenge.lessonId, // 🚀 NEW: Include lessonId in edit state
+      lessonId: challenge.lessonId,
       type: challenge.type,
       question: challenge.question,
-      explanation: challenge.explanation || "", // Add explanation field
+      explanation: challenge.explanation || "",
       order: challenge.order,
+      difficulty: challenge.difficulty || "",
+      tags: challenge.tags || "",
       timeLimit: challenge.timeLimit || undefined,
       metadata: challenge.metadata || "",
-      questionImageSrc: challenge.questionImageSrc || "" // Fixed property name
+      questionImageSrc: challenge.questionImageSrc || ""
     });
     setEditChallengeType(challenge.type);
     
@@ -244,16 +250,17 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
 
     setIsLoading(true);
     try {
-      // Step 1: Update the challenge
       const challengeResult = await updateChallenge(editingChallenge.id, {
-        lessonId: editChallenge.lessonId, // 🚀 NEW: Include lessonId in update
+        lessonId: editChallenge.lessonId,
         type: editChallenge.type,
         question: editChallenge.question,
         explanation: editChallenge.explanation,
         order: editChallenge.order,
+        difficulty: editChallenge.difficulty || undefined,
+        tags: editChallenge.tags || undefined,
         timeLimit: editChallenge.timeLimit,
         metadata: editChallenge.metadata,
-        questionImageSrc: editChallenge.questionImageSrc // Fixed property name
+        questionImageSrc: editChallenge.questionImageSrc
       });
       
       if (challengeResult.success) {
@@ -320,16 +327,17 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
 
     setIsLoading(true);
     try {
-      // Step 1: Create the challenge
       const challengeResult = await createChallenge({
         lessonId: newChallenge.lessonId,
         type: newChallenge.type,
         question: newChallenge.question,
         explanation: newChallenge.explanation,
         order: newChallenge.order,
+        difficulty: newChallenge.difficulty || undefined,
+        tags: newChallenge.tags || undefined,
         timeLimit: newChallenge.timeLimit,
         metadata: newChallenge.metadata,
-        questionImageSrc: newChallenge.questionImageSrc // Fixed property name
+        questionImageSrc: newChallenge.questionImageSrc
       });
       
       if (challengeResult.success && challengeResult.challenge) {
@@ -354,16 +362,17 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
             await loadChallengesForLesson(selectedLessonId);
           }
           
-          // Reset form
           setNewChallenge({ 
             lessonId: newChallenge.lessonId,
             type: "",
             question: "",
             explanation: "",
             order: challenges.filter(c => c.lesson?.id === newChallenge.lessonId).length + 2,
+            difficulty: "",
+            tags: "",
             timeLimit: undefined,
             metadata: "",
-            questionImageSrc: "" // Fixed property name
+            questionImageSrc: ""
           });
           setSelectedChallengeType("");
           
@@ -750,6 +759,33 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                   </p>
                 </div>
                 
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="difficulty">Zorluk Seviyesi</Label>
+                    <select
+                      id="difficulty"
+                      value={newChallenge.difficulty}
+                      onChange={(e) => setNewChallenge({ ...newChallenge, difficulty: e.target.value })}
+                      className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="">Seçilmedi</option>
+                      <option value="EASY">Kolay</option>
+                      <option value="MEDIUM">Orta</option>
+                      <option value="HARD">Zor</option>
+                    </select>
+                  </div>
+                  <div>
+                    <Label htmlFor="tags">Etiketler</Label>
+                    <Input
+                      id="tags"
+                      value={newChallenge.tags}
+                      onChange={(e) => setNewChallenge({ ...newChallenge, tags: e.target.value })}
+                      placeholder="kelime,gramer,hayvanlar"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Virgülle ayırarak etiket girin</p>
+                  </div>
+                </div>
+
                 <div>
                   <Label htmlFor="questionImageSrc">Soru Resmi (İsteğe Bağlı)</Label>
                   <ImageUpload
@@ -935,11 +971,31 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                                 </Badge>
                               ) : null;
                             })()}
+                            {challenge.difficulty && (
+                              <Badge className={`text-xs ${
+                                challenge.difficulty === 'EASY' ? 'bg-green-100 text-green-700' :
+                                challenge.difficulty === 'MEDIUM' ? 'bg-yellow-100 text-yellow-700' :
+                                'bg-red-100 text-red-700'
+                              }`}>
+                                {challenge.difficulty === 'EASY' ? 'Kolay' : challenge.difficulty === 'MEDIUM' ? 'Orta' : 'Zor'}
+                              </Badge>
+                            )}
                           </div>
-                          <p className="text-sm text-gray-500">
-                            Order: {challenge.order} • ID: {challenge.id} • 
-                            Options: {challenge.challengeOptions?.length || 0}
-                          </p>
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <p className="text-sm text-gray-500">
+                              Order: {challenge.order} • ID: {challenge.id} • 
+                              Options: {challenge.challengeOptions?.length || 0}
+                            </p>
+                            {challenge.tags && (
+                              <div className="flex gap-1 flex-wrap">
+                                {challenge.tags.split(',').map((tag, i) => (
+                                  <Badge key={i} variant="outline" className="text-[10px] px-1.5 py-0">
+                                    {tag.trim()}
+                                  </Badge>
+                                ))}
+                              </div>
+                            )}
+                          </div>
                           
                           {/* Image Previews */}
                           {challenge.questionImageSrc && (
@@ -1130,6 +1186,33 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                   <p className="text-xs text-gray-500 mt-1">
                     Bu açıklama, kullanıcı soruyu yanlış yanıtladığında gösterilecektir.
                   </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="edit-difficulty">Zorluk Seviyesi</Label>
+                    <select
+                      id="edit-difficulty"
+                      value={editChallenge.difficulty}
+                      onChange={(e) => setEditChallenge({ ...editChallenge, difficulty: e.target.value })}
+                      className="w-full rounded-md border border-gray-300 p-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                      <option value="">Seçilmedi</option>
+                      <option value="EASY">Kolay</option>
+                      <option value="MEDIUM">Orta</option>
+                      <option value="HARD">Zor</option>
+                    </select>
+                  </div>
+                  <div>
+                    <Label htmlFor="edit-tags">Etiketler</Label>
+                    <Input
+                      id="edit-tags"
+                      value={editChallenge.tags}
+                      onChange={(e) => setEditChallenge({ ...editChallenge, tags: e.target.value })}
+                      placeholder="kelime,gramer,hayvanlar"
+                    />
+                    <p className="text-xs text-gray-500 mt-1">Virgülle ayırarak etiket girin</p>
+                  </div>
                 </div>
 
                 <div>

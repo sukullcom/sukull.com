@@ -99,6 +99,8 @@ export const challengesEnum = pgEnum("type", [
   "TIMER_CHALLENGE"
 ]);
 
+export const difficultyEnum = pgEnum("difficulty", ["EASY", "MEDIUM", "HARD"]);
+
 export const challenges = pgTable("challenges", {
   id: serial("id").primaryKey(),
   lessonId: integer("lesson_id")
@@ -106,13 +108,13 @@ export const challenges = pgTable("challenges", {
     .notNull(),
   type: challengesEnum("type").notNull(),
   question: text("question").notNull(),
-  questionImageSrc: text("question_image_src"), // Add image support for questions
-  explanation: text("explanation"), // Optional explanation shown when user answers incorrectly
+  questionImageSrc: text("question_image_src"),
+  explanation: text("explanation"),
   order: integer("order").notNull(),
-  // Timer configuration for TIMER_CHALLENGE type
-  timeLimit: integer("time_limit"), // in seconds, null for non-timed challenges
-  // Additional metadata for complex challenge types (JSON string)
-  metadata: text("metadata"), // For storing type-specific configuration
+  difficulty: difficultyEnum("difficulty"),
+  tags: text("tags"),
+  timeLimit: integer("time_limit"),
+  metadata: text("metadata"),
 });
 
 export const challengesRelations = relations(challenges, ({ one, many }) => ({
@@ -156,6 +158,10 @@ export const challengeProgress = pgTable("challenge_progress", {
     .references(() => challenges.id, { onDelete: "cascade" })
     .notNull(),
   completed: boolean("completed").notNull().default(false),
+  correctCount: integer("correct_count").notNull().default(0),
+  incorrectCount: integer("incorrect_count").notNull().default(0),
+  lastAttemptedAt: timestamp("last_attempted_at"),
+  firstCompletedAt: timestamp("first_completed_at"),
 });
 
 export const challengeProgressRelations = relations(challengeProgress, ({ one, many }) => ({

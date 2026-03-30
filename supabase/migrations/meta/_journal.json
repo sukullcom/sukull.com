@@ -36,6 +36,20 @@
       "when": 1773758247203,
       "tag": "0004_dizzy_mach_iv",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1774883203182,
+      "tag": "0005_previous_bloodscream",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1774883414977,
+      "tag": "0006_lush_red_wolf",
+      "breakpoints": true
     }
   ]
 }

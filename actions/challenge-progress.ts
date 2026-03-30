@@ -48,7 +48,11 @@ export const upsertChallengeProgress = async (challengeId: number) => {
   if (isPractice) {
     await db
       .update(challengeProgress)
-      .set({ completed: true })
+      .set({
+        completed: true,
+        correctCount: (existingChallengeProgress.correctCount ?? 0) + 1,
+        lastAttemptedAt: new Date(),
+      })
       .where(eq(challengeProgress.id, existingChallengeProgress.id));
 
     // Check streak continuity and initialize if needed
@@ -94,11 +98,15 @@ export const upsertChallengeProgress = async (challengeId: number) => {
       .where(eq(userProgress.userId, userId));
   }
 
-  // Insert new challenge progress
+  const now = new Date();
   await db.insert(challengeProgress).values({
     challengeId,
     userId,
     completed: true,
+    correctCount: 1,
+    incorrectCount: 0,
+    lastAttemptedAt: now,
+    firstCompletedAt: now,
   });
 
   await db
@@ -276,9 +284,16 @@ export const reduceHearts = async (challengeId: number) => {
   // Check if user has infinite hearts subscription
   const hasInfiniteHearts = await checkSubscriptionStatus(userId);
   
-  // If user has infinite hearts, don't reduce hearts or points
   if (hasInfiniteHearts) {
-    return; // No error, just continue without reducing hearts
+    await db.insert(challengeProgress).values({
+      challengeId,
+      userId,
+      completed: false,
+      correctCount: 0,
+      incorrectCount: 1,
+      lastAttemptedAt: new Date(),
+    });
+    return;
   }
   
   if (currentUserProgress.hearts === 0) return { error: "hearts" };
@@ -290,6 +305,32 @@ export const reduceHearts = async (challengeId: number) => {
       points: currentUserProgress.points - 2,
     })
     .where(eq(userProgress.userId, userId));
+
+  const existingProgress = await db.query.challengeProgress.findFirst({
+    where: and(
+      eq(challengeProgress.userId, userId),
+      eq(challengeProgress.challengeId, challengeId)
+    )
+  });
+
+  if (existingProgress) {
+    await db
+      .update(challengeProgress)
+      .set({
+        incorrectCount: (existingProgress.incorrectCount ?? 0) + 1,
+        lastAttemptedAt: new Date(),
+      })
+      .where(eq(challengeProgress.id, existingProgress.id));
+  } else {
+    await db.insert(challengeProgress).values({
+      challengeId,
+      userId,
+      completed: false,
+      correctCount: 0,
+      incorrectCount: 1,
+      lastAttemptedAt: new Date(),
+    });
+  }
 
   // Delay before recalculating streak
   await new Promise(resolve => setTimeout(resolve, 100));
