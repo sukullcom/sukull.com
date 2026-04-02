@@ -258,6 +258,62 @@ export async function deleteChallenge(challengeId: number) {
   }
 }
 
+export async function cloneChallenge(challengeId: number, targetLessonId?: number) {
+  try {
+    const original = await db.query.challenges.findFirst({
+      where: eq(challenges.id, challengeId),
+      with: { challengeOptions: true },
+    });
+
+    if (!original) {
+      return { success: false, error: "Challenge not found" };
+    }
+
+    const siblingCount = await db.query.challenges.findMany({
+      where: eq(challenges.lessonId, targetLessonId ?? original.lessonId),
+      columns: { id: true },
+    });
+
+    const [cloned] = await db
+      .insert(challenges)
+      .values({
+        lessonId: targetLessonId ?? original.lessonId,
+        type: original.type,
+        question: original.question,
+        explanation: original.explanation,
+        questionImageSrc: original.questionImageSrc,
+        order: siblingCount.length + 1,
+        difficulty: original.difficulty,
+        tags: original.tags,
+        timeLimit: original.timeLimit,
+        metadata: original.metadata,
+      })
+      .returning();
+
+    if (original.challengeOptions && original.challengeOptions.length > 0) {
+      await db.insert(challengeOptions).values(
+        original.challengeOptions.map((opt) => ({
+          challengeId: cloned.id,
+          text: opt.text,
+          correct: opt.correct,
+          imageSrc: opt.imageSrc,
+          audioSrc: opt.audioSrc,
+          correctOrder: opt.correctOrder,
+          pairId: opt.pairId,
+          isBlank: opt.isBlank,
+          dragData: opt.dragData,
+        }))
+      );
+    }
+
+    revalidatePath("/admin/course-builder");
+    return { success: true, challenge: cloned };
+  } catch (error) {
+    console.error("Error cloning challenge:", error);
+    return { success: false, error: `Failed to clone challenge: ${error instanceof Error ? error.message : String(error)}` };
+  }
+}
+
 // Challenge Option Actions
 export async function createChallengeOptions(
   challengeId: number,
@@ -345,6 +401,124 @@ export async function deleteChallengeOption(optionId: number) {
   } catch (error) {
     console.error("Error deleting challenge option:", error);
     return { success: false, error: "Failed to delete challenge option" };
+  }
+}
+
+// Import Course from JSON
+export async function importCourseFromJSON(jsonData: {
+  course: { title: string; imageSrc?: string };
+  units: Array<{
+    title: string;
+    description: string;
+    order: number;
+    lessons: Array<{
+      title: string;
+      order: number;
+      challenges: Array<{
+        question: string;
+        type: string;
+        difficulty?: string;
+        tags?: string;
+        explanation?: string;
+        timeLimit?: number;
+        metadata?: string;
+        questionImageSrc?: string;
+        options: Array<{
+          text?: string;
+          correct: boolean;
+          imageSrc?: string;
+          audioSrc?: string;
+          correctOrder?: number;
+          pairId?: number;
+          isBlank?: boolean;
+          dragData?: string;
+        }>;
+      }>;
+    }>;
+  }>;
+}) {
+  try {
+    const [course] = await db
+      .insert(courses)
+      .values({
+        title: jsonData.course.title,
+        imageSrc: jsonData.course.imageSrc || "/courses/default.svg",
+      })
+      .returning();
+
+    let totalUnits = 0;
+    let totalLessons = 0;
+    let totalChallenges = 0;
+
+    for (const unitData of jsonData.units) {
+      const [unit] = await db
+        .insert(units)
+        .values({
+          courseId: course.id,
+          title: unitData.title,
+          description: unitData.description,
+          order: unitData.order,
+        })
+        .returning();
+      totalUnits++;
+
+      for (const lessonData of unitData.lessons) {
+        const [lesson] = await db
+          .insert(lessons)
+          .values({
+            unitId: unit.id,
+            title: lessonData.title,
+            order: lessonData.order,
+          })
+          .returning();
+        totalLessons++;
+
+        for (const challengeData of lessonData.challenges) {
+          const [challenge] = await db
+            .insert(challenges)
+            .values({
+              lessonId: lesson.id,
+              type: challengeData.type as "SELECT" | "ASSIST" | "DRAG_DROP" | "FILL_BLANK" | "MATCH_PAIRS" | "SEQUENCE" | "TIMER_CHALLENGE",
+              question: challengeData.question,
+              explanation: challengeData.explanation,
+              questionImageSrc: challengeData.questionImageSrc,
+              order: challengeData.options ? totalChallenges + 1 : 1,
+              difficulty: challengeData.difficulty as "EASY" | "MEDIUM" | "HARD" | undefined,
+              tags: challengeData.tags,
+              timeLimit: challengeData.timeLimit,
+              metadata: challengeData.metadata,
+            })
+            .returning();
+          totalChallenges++;
+
+          if (challengeData.options && challengeData.options.length > 0) {
+            await db.insert(challengeOptions).values(
+              challengeData.options.map((opt) => ({
+                challengeId: challenge.id,
+                text: opt.text,
+                correct: opt.correct,
+                imageSrc: opt.imageSrc,
+                audioSrc: opt.audioSrc,
+                correctOrder: opt.correctOrder,
+                pairId: opt.pairId,
+                isBlank: opt.isBlank,
+                dragData: opt.dragData,
+              }))
+            );
+          }
+        }
+      }
+    }
+
+    revalidatePath("/admin/course-builder");
+    return {
+      success: true,
+      course,
+      stats: { units: totalUnits, lessons: totalLessons, challenges: totalChallenges },
+    };
+  } catch (error) {
+    console.error("Error importing course:", error);
+    return { success: false, error: `Import failed: ${error instanceof Error ? error.message : String(error)}` };
   }
 }
 

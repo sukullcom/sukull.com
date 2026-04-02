@@ -67,7 +67,7 @@ export const Footer = ({ onCheck, status, disabled, lessonId, explanation }: Pro
               window.location.href = `/lesson/${lessonId}`;
             }}
           >
-            Practice again
+            Tekrar Çöz
           </Button>
         )}
         {/* "Check/Next/Retry/Continue" */}
@@ -78,10 +78,10 @@ export const Footer = ({ onCheck, status, disabled, lessonId, explanation }: Pro
           size="lg" // sabit "lg"
           variant={status === "wrong" ? "danger" : "secondary"}
         >
-          {status === "none" && "Check"}
-          {status === "correct" && "Next"}
-          {status === "wrong" && "Retry"}
-          {status === "completed" && "Continue"}
+          {status === "none" && "Kontrol Et"}
+          {status === "correct" && "Sonraki"}
+          {status === "wrong" && "Tekrar Dene"}
+          {status === "completed" && "Devam Et"}
         </Button>
       </div>
     </footer>

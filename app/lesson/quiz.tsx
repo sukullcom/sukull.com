@@ -201,7 +201,11 @@ export const Quiz = ({
   // *******************************
   const { challengeOptions = [], type, timeLimit } = challenge;
   const title =
-    type === "ASSIST" ? "Doğru cevapladığına emin misin?" : challenge.question;
+    type === "ASSIST"
+      ? "Doğru cevapladığına emin misin?"
+      : type === "FILL_BLANK"
+        ? "Boşlukları doldurun"
+        : challenge.question;
 
   // Handle timer expiration
   const handleTimeUp = () => {
@@ -236,26 +240,31 @@ export const Quiz = ({
 
   // onContinue: handle answer checking
   const onContinue = () => {
-    // If already in 'wrong' or 'correct' state => Next step
     if (status === "wrong") {
       setStatus("none");
       setSelectedOption(undefined);
       return;
     }
     
-    // For normal answer checking, we need a selected option
-    if (!selectedOption) return;
+    if (!selectedOption && selectedOption !== -1 && selectedOption !== -2) return;
     if (status === "correct") {
       onNext();
       return;
     }
 
-    // Check the answer
-    const correctOption = challengeOptions.find((o) => o.correct);
-    if (!correctOption) return;
+    let isAnswerCorrect: boolean;
 
-    if (correctOption.id === selectedOption) {
-      // Answer is correct
+    if (selectedOption === -2) {
+      isAnswerCorrect = true;
+    } else if (selectedOption === -1) {
+      isAnswerCorrect = false;
+    } else {
+      const correctOption = challengeOptions.find((o) => o.correct);
+      if (!correctOption) return;
+      isAnswerCorrect = correctOption.id === selectedOption;
+    }
+
+    if (isAnswerCorrect) {
       startTransition(() => {
         upsertChallengeProgress(challenge.id)
           .then((response) => {
@@ -268,17 +277,14 @@ export const Quiz = ({
             setPercentage((prev) => prev + 100 / challenges.length);
 
             if (initialPercentage === 100) {
-              // Practice mode: only award points, no hearts
               setPoints((prev) => prev + 2);
             } else {
-              // First time: award points only
               setPoints((prev) => prev + 10);
             }
           })
           .catch(() => toast.error("Bir şeyler yanlış gitti. Lütfen tekrar deneyin."));
       });
     } else {
-      // Answer is wrong
       startTransition(() => {
         reduceHearts(challenge.id)
           .then((response) => {
@@ -343,7 +349,7 @@ export const Quiz = ({
         </div>
       </div>
       <Footer
-        disabled={pending || (!selectedOption && status === "none")}
+        disabled={pending || (selectedOption === undefined && status === "none")}
         status={status}
         onCheck={onContinue}
         lessonId={lessonId}

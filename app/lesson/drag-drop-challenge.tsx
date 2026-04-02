@@ -150,18 +150,11 @@ export const DragDropChallenge = ({
         }
       });
       
-      // Only select the correct option if ALL placements are correct
       if (allCorrect) {
         const correctOption = options.find(opt => opt.correct);
-        if (correctOption) {
-          onSelect(correctOption.id);
-        }
+        onSelect(correctOption?.id ?? -2);
       } else {
-        // If placements are wrong, select a wrong option to enable Check button
-        const wrongOption = options.find(opt => !opt.correct);
-        if (wrongOption) {
-          onSelect(wrongOption.id);
-        }
+        onSelect(-1);
       }
     }
   };

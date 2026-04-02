@@ -2,14 +2,17 @@ import { lessons, units } from "@/db/schema"
 import { UnitBanner } from "./unit-banner"
 import { LessonButton } from "./lesson-button"
 
+type LessonWithProgress = typeof lessons.$inferSelect & {
+    completed: boolean
+    challengeCount: number
+}
+
 type Props = {
     id: number
     order: number
     title: string
     description: string
-    lessons: (typeof lessons.$inferSelect & {
-        completed: boolean
-    })[]
+    lessons: LessonWithProgress[]
     activeLesson: typeof lessons.$inferSelect & {
         unit: typeof units.$inferSelect
     } | undefined
@@ -17,7 +20,6 @@ type Props = {
 }
 
 export const Unit = ({
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     id,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     order,
@@ -27,13 +29,29 @@ export const Unit = ({
     activeLesson,
     activeLessonPercentage,
 }: Props) => {
+    const unitActiveLesson = lessons.find(
+        (lesson) => !lesson.completed && lesson.challengeCount > 0
+    )
+    const isGlobalActiveInThisUnit = activeLesson?.unit?.id === id
+    const hasAnyContent = lessons.some((l) => l.challengeCount > 0)
+
     return (
         <>
-            <UnitBanner title={title} description={description} />
+            <UnitBanner
+                title={title}
+                description={description}
+                activeLessonId={unitActiveLesson?.id}
+                hasContent={hasAnyContent}
+            />
             <div className="flex items-center flex-col relative">
                 {lessons.map((lesson, index) => {
-                    const isCurrent = lesson.id === activeLesson?.id
-                    const isLocked = !lesson.completed && !isCurrent
+                    const hasContent = lesson.challengeCount > 0
+                    const isCurrent = hasContent && lesson.id === unitActiveLesson?.id
+                    const isLocked = !hasContent || (!lesson.completed && !isCurrent)
+
+                    const percentage = isCurrent && isGlobalActiveInThisUnit
+                        ? activeLessonPercentage
+                        : 0
 
                     return (
                         <LessonButton 
@@ -43,7 +61,7 @@ export const Unit = ({
                             totalCount={lessons.length - 1}
                             current={isCurrent}
                             locked={isLocked}
-                            percentage={activeLessonPercentage}
+                            percentage={percentage}
                         />
                     )
                 })}

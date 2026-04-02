@@ -14,11 +14,12 @@ import { ImageUpload } from "@/components/ui/image-upload";
 import Image from "next/image";
 import { 
   Plus, Trash2, Target, Clock, 
-  Move, Type, Shuffle, MousePointer, CheckSquare, Edit, ImageIcon
+  Move, Type, Shuffle, MousePointer, CheckSquare, Edit, ImageIcon, Copy
 } from "lucide-react";
 import { 
   createChallenge, 
   deleteChallenge, 
+  cloneChallenge,
   getChallengesForLesson,
   getLessonsForCourse,
   createChallengeOptions,
@@ -414,6 +415,25 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
       }
     } catch {
       toast.error("Zorluk silinirken bir hata oluştu");
+    }
+  };
+
+  const handleCloneChallenge = async (challengeId: number) => {
+    try {
+      const result = await cloneChallenge(challengeId, selectedLessonId ?? undefined);
+      if (result.success) {
+        if (selectedLessonId) {
+          await loadChallengesForLesson(selectedLessonId);
+        }
+        toast.success("Zorluk başarıyla kopyalandı!");
+        if (onChallengeCreated) {
+          onChallengeCreated();
+        }
+      } else {
+        toast.error(result.error || "Zorluk kopyalanamadı");
+      }
+    } catch {
+      toast.error("Zorluk kopyalanırken bir hata oluştu");
     }
   };
 
@@ -1042,18 +1062,28 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                         </div>
                       </div>
                       
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-1">
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => openEditDialog(challenge)}
+                          title="Düzenle"
                         >
                           <Edit className="w-4 h-4" />
                         </Button>
                         <Button
                           variant="ghost"
                           size="sm"
+                          onClick={() => handleCloneChallenge(challenge.id)}
+                          title="Kopyala"
+                        >
+                          <Copy className="w-4 h-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
                           onClick={() => handleDeleteChallenge(challenge.id)}
+                          title="Sil"
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>

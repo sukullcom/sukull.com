@@ -11,7 +11,7 @@ const LessonPage = async () => {
     userProgressData,
   ]);
 
-  if (!lesson || !userProgress) {
+  if (!lesson || !userProgress || lesson.challenges.length === 0) {
     redirect("/learn");
   }
 

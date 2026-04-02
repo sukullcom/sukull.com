@@ -33,7 +33,7 @@ export const FillBlankChallenge = ({
   selectedOption,
   disabled,
   question,
-  questionImageSrc, // Add questionImageSrc prop
+  questionImageSrc,
 }: Props) => {
   const [blankItems, setBlankItems] = useState<BlankItem[]>([]);
   const [userAnswers, setUserAnswers] = useState<Record<number, string>>({});
@@ -112,19 +112,11 @@ export const FillBlankChallenge = ({
         return answer?.toLowerCase().trim() === blank.correctAnswer?.toLowerCase().trim();
       });
 
-      // Enable Check button when all blanks are filled
       if (allCorrect) {
-        // All answers are correct - select correct option
         const correctOption = options.find(opt => opt.correct);
-        if (correctOption) {
-          onSelect(correctOption.id);
-        }
+        onSelect(correctOption?.id ?? -2);
       } else {
-        // Some answers are wrong - select wrong option to enable Check button
-        const wrongOption = options.find(opt => !opt.correct);
-        if (wrongOption) {
-          onSelect(wrongOption.id);
-        }
+        onSelect(-1);
       }
     }
   };
@@ -166,7 +158,7 @@ export const FillBlankChallenge = ({
           isWrong && "border-rose-500 bg-rose-50 text-rose-700",
           disabled && "cursor-not-allowed bg-gray-100"
         )}
-        placeholder={`${item.placeholderNumber ? `Blank ${item.placeholderNumber}` : '____'}`}
+        placeholder="?"
         autoComplete="off"
         spellCheck="false"
       />
@@ -203,21 +195,9 @@ export const FillBlankChallenge = ({
       </div>
 
       {/* Instructions */}
-      <div className="text-sm text-gray-600 text-center space-y-2">
-        <p>Boşlukları doğru kelimeler veya değerlerle doldur</p>
-        <p className="text-xs text-gray-500">
-          Cevaplarını sırayla yaz: {blankItems.filter(item => item.isBlank).map(item => `{${item.placeholderNumber}}`).join(', ')}
-        </p>
-      </div>
-
-      {/* Debug info during development */}
-      {process.env.NODE_ENV === 'development' && (
-        <div className="text-xs text-gray-400 border p-2 rounded">
-          <div>Question: {question}</div>
-          <div>Blanks: {blankItems.filter(item => item.isBlank).length}</div>
-          <div>Answers: {JSON.stringify(userAnswers)}</div>
-        </div>
-      )}
+      <p className="text-sm text-gray-500 text-center">
+        Boşlukları doğru değerlerle doldurun
+      </p>
     </div>
   );
 }; 

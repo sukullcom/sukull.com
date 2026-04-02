@@ -85,8 +85,10 @@ export const getUnits = cache(async () => {
 
   const normalizedData = data.map((unit) => {
     const lessonsWithCompletedStatus = unit.lessons.map((lesson) => {
-      if (lesson.challenges.length === 0) {
-        return { ...lesson, completed: false };
+      const challengeCount = lesson.challenges.length;
+
+      if (challengeCount === 0) {
+        return { ...lesson, completed: false, challengeCount };
       }
       const allCompletedChallenges = lesson.challenges.every((challenge) => {
         return (
@@ -96,7 +98,7 @@ export const getUnits = cache(async () => {
         );
       });
 
-      return { ...lesson, completed: allCompletedChallenges };
+      return { ...lesson, completed: allCompletedChallenges, challengeCount };
     });
 
     return { ...unit, lessons: lessonsWithCompletedStatus };
@@ -177,6 +179,7 @@ export const getCourseProgress = cache(async () => {
   const firstUncompletedLesson = unitsInActiveCourse
     .flatMap((unit) => unit.lessons)
     .find((lesson) => {
+      if (lesson.challenges.length === 0) return false;
       return lesson.challenges.some((challenge) => {
         return (
           !challenge.challengeProgress ||

@@ -3,13 +3,20 @@ import { redirect } from "next/navigation";
 import { Quiz } from "../quiz";
 
 type Props = {
-  params: {
-    lessonId: number;
-  };
+  params: Promise<{
+    lessonId: string;
+  }>;
 };
 
 const LessonIdPage = async ({ params }: Props) => {
-  const lessonData = getLesson(params.lessonId);
+  const { lessonId: lessonIdParam } = await params;
+  const lessonId = Number(lessonIdParam);
+
+  if (!lessonId || isNaN(lessonId)) {
+    redirect("/learn");
+  }
+
+  const lessonData = getLesson(lessonId);
   const userProgressData = getUserProgress();
 
   const [lesson, userProgress] = await Promise.all([
@@ -17,7 +24,7 @@ const LessonIdPage = async ({ params }: Props) => {
     userProgressData,
   ]);
 
-  if (!lesson || !userProgress) {
+  if (!lesson || !userProgress || lesson.challenges.length === 0) {
     redirect("/learn");
   }
 
@@ -33,7 +40,7 @@ const LessonIdPage = async ({ params }: Props) => {
       initialHearts={userProgress.hearts}
       initialPoints={userProgress.points}
       initialPercentage={initialPercentage}
-      userSubscription={null} // TODO: Add user subscription
+      userSubscription={null}
       hasInfiniteHearts={userProgress.hasInfiniteHearts || false}
     />
   );

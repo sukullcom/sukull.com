@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Plus, BookOpen, Edit, Trash2 } from "lucide-react";
-import { createCourse, deleteCourse, updateCourse } from "../actions";
+import { Plus, BookOpen, Edit, Trash2, Upload } from "lucide-react";
+import { createCourse, deleteCourse, updateCourse, importCourseFromJSON } from "../actions";
 import { toast } from "sonner";
 import { ImageUpload } from "@/components/ui/image-upload";
 
@@ -33,6 +33,38 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
     imageSrc: ""
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isImporting, setIsImporting] = useState(false);
+
+  const handleImportJSON = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsImporting(true);
+    try {
+      const text = await file.text();
+      const jsonData = JSON.parse(text);
+
+      if (!jsonData.course || !jsonData.units || !Array.isArray(jsonData.units)) {
+        toast.error("Geçersiz JSON formatı. 'course' ve 'units' alanları gereklidir.");
+        return;
+      }
+
+      const result = await importCourseFromJSON(jsonData);
+      if (result.success && result.course) {
+        setCourses([...courses, result.course]);
+        toast.success(
+          `Kurs başarıyla içe aktarıldı! ${result.stats?.units} ünite, ${result.stats?.lessons} ders, ${result.stats?.challenges} soru oluşturuldu.`
+        );
+      } else {
+        toast.error(result.error || "İçe aktarma başarısız");
+      }
+    } catch (err) {
+      toast.error(`JSON dosyası okunamadı: ${err instanceof Error ? err.message : "Geçersiz format"}`);
+    } finally {
+      setIsImporting(false);
+      e.target.value = "";
+    }
+  };
 
   const handleCreateCourse = async () => {
     if (!newCourse.title.trim()) {
@@ -125,13 +157,26 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
           <p className="text-gray-600">Kurslarınızı yönetin</p>
         </div>
         
-        <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="w-4 h-4 mr-2" />
-              Kurs Oluştur
-            </Button>
-          </DialogTrigger>
+        <div className="flex items-center gap-2">
+          <label className={`inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium cursor-pointer transition-colors ${isImporting ? "bg-gray-300 pointer-events-none" : "bg-amber-500 hover:bg-amber-600 text-white"}`}>
+            <Upload className="w-4 h-4" />
+            {isImporting ? "İçe aktarılıyor..." : "JSON İçe Aktar"}
+            <input
+              type="file"
+              accept=".json"
+              className="hidden"
+              onChange={handleImportJSON}
+              disabled={isImporting}
+            />
+          </label>
+
+          <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus className="w-4 h-4 mr-2" />
+                Kurs Oluştur
+              </Button>
+            </DialogTrigger>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle>Yeni Kurs Oluştur</DialogTitle>
@@ -168,6 +213,7 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
             </div>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
 
       {/* Edit Course Dialog */}

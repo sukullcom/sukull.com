@@ -90,17 +90,10 @@ export const SequenceChallenge = ({
     );
 
     if (isCorrect) {
-      // Sequence is correct - select correct option
       const correctOption = options.find(opt => opt.correct);
-      if (correctOption) {
-        setTimeout(() => onSelect(correctOption.id), 300);
-      }
+      setTimeout(() => onSelect(correctOption?.id ?? -2), 300);
     } else {
-      // Sequence is wrong - select wrong option to enable Check button
-      const wrongOption = options.find(opt => !opt.correct);
-      if (wrongOption) {
-        setTimeout(() => onSelect(wrongOption.id), 300);
-      }
+      setTimeout(() => onSelect(-1), 300);
     }
   };
 

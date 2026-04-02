@@ -107,24 +107,16 @@ export const MatchPairsChallenge = ({
             : c
         ));
 
-        // Check if all pairs are matched
         const totalPairs = new Set(cards.map(c => c.pairId)).size;
         if (newMatchedPairs.length === totalPairs) {
-          // All pairs matched - award points
           const correctOption = options.find(opt => opt.correct);
-          if (correctOption) {
-            setTimeout(() => onSelect(correctOption.id), 500);
-          }
+          setTimeout(() => onSelect(correctOption?.id ?? -2), 500);
         }
         
         setSelectedCards([]);
         setIsChecking(false);
       } else {
-        // Wrong match - deduct hearts immediately
-        const wrongOption = options.find(opt => !opt.correct);
-        if (wrongOption) {
-          onSelect(wrongOption.id);
-        }
+        onSelect(-1);
         
         // Reset selection after brief delay
         setTimeout(() => {
