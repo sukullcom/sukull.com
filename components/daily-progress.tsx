@@ -46,14 +46,11 @@ export function DailyProgress() {
     // Add visibility change listener to refresh when user returns to tab
     const handleVisibilityChange = () => {
       if (!document.hidden) {
-        console.log("👁️ DAILY PROGRESS: Tab became visible, refreshing data");
         loadProgress(true);
       }
     };
-    
-    // Add focus event listener to refresh when window gets focus
+
     const handleFocus = () => {
-      console.log("🔍 DAILY PROGRESS: Window focused, refreshing data");
       loadProgress(true);
     };
     
@@ -99,7 +96,7 @@ export function DailyProgress() {
         <div className="flex items-center gap-2">
           <Image
             src={achieved ? "/istikrar.svg" : "/istikrarsiz.svg"}
-            alt={achieved ? "Goal achieved" : "Goal not achieved"}
+            alt={achieved ? "Hedef tutturuldu" : "Hedef tutturulmadı"}
             width={24}
             height={24}
             className="w-6 h-6"

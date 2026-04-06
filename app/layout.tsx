@@ -10,8 +10,8 @@ import { PracticeModal } from "@/components/modals/practice-modal";
 const nunito = Nunito({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Sukull - Interactive Learning Platform",
-  description: "Learn through interactive games, coding challenges, and educational content",
+  title: "Sukull - Etkileşimli Öğrenme Platformu",
+  description: "Oyunlar, kodlama yarışmaları ve etkileşimli içeriklerle öğren",
   icons: {
     icon: [
       { url: '/mascot_normal.svg', type: 'image/svg+xml' },
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="tr">
       <head>
         <link rel="icon" href="/mascot_normal.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/mascot_normal.svg" />

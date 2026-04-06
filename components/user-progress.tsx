@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { InfinityIcon } from "lucide-react"; // import Fire icon for streak
+import { InfinityIcon } from "lucide-react";
 import { courses } from "@/db/schema";
 import { normalizeAvatarUrl } from "@/utils/avatar";
 
@@ -40,7 +40,7 @@ export const UserProgress = ({
             src="/points.svg"
             height={22}
             width={22}
-            alt="Points"
+            alt="Puan"
             className="mr-0.5"
           />
           {points}
@@ -52,7 +52,7 @@ export const UserProgress = ({
             src="/heart.svg"
             height={20}
             width={20}
-            alt="Hearts"
+            alt="Can"
             className="mr-1"
           />
           {hasInfiniteHearts ? (

@@ -7,51 +7,47 @@ import { StickyWrapper } from "@/components/sticky-wrapper";
 import { UserProgress } from "@/components/user-progress";
 import { Quests } from "@/components/quests";
 import { DailyProgress } from "@/components/daily-progress";
-import { checkStreakContinuity } from "@/actions/daily-streak";
+import { checkStreakContinuity, getStreakCount } from "@/actions/daily-streak";
 
 export default async function ProtectedLayout({
   children,
 }: {
   children: ReactNode;
 }) {
-  // 1) Check session
   const user = await getServerUser();
   if (!user) {
     redirect("/login");
   }
 
-  // 2) Load user progress. (If you want to allow partial usage, skip the redirect.)
-  const userProgress = await getUserProgress();
-  if (!userProgress || !userProgress.activeCourse) {
-    // Redirect to courses page with a toast message
-    redirect("/courses?message=select-course");
-  }
-
-  // 3) Check streak continuity for the user whenever they access the protected area
-  // This ensures streaks are reset if they missed daily goals
+  // Run streak check FIRST so DB is up-to-date before getUserProgress reads it
   try {
     await checkStreakContinuity(user.id);
   } catch {
-    // Ignore errors from setting avatar in localStorage
+    // best-effort
   }
 
-  // 4) Render a single layout with your "sidebar" or "sticky" progress
+  const userProgress = await getUserProgress();
+  if (!userProgress || !userProgress.activeCourse) {
+    redirect("/courses?message=select-course");
+  }
+
+  // Fetch the actual current streak (post-reset) directly from DB
+  const currentStreak = await getStreakCount(user.id);
+
   return (
     <div className="flex flex-row-reverse">
       <StickyWrapper>
-        {userProgress ? (
-          <UserProgress
-            activeCourse={userProgress.activeCourse!}
-            hearts={userProgress.hearts}
-            points={userProgress.points}
-            istikrar={userProgress.istikrar}
-            hasInfiniteHearts={userProgress.hasInfiniteHearts || false}
-          />
-        ) : null}
+        <UserProgress
+          activeCourse={userProgress.activeCourse!}
+          hearts={userProgress.hearts}
+          points={userProgress.points}
+          istikrar={currentStreak}
+          hasInfiniteHearts={userProgress.hasInfiniteHearts || false}
+        />
 
         <DailyProgress />
-        <Quests 
-          currentStreak={userProgress.istikrar}
+        <Quests
+          currentStreak={currentStreak}
           achievements={{
             profileEditingUnlocked: userProgress.profileEditingUnlocked || false,
             studyBuddyUnlocked: userProgress.studyBuddyUnlocked || false,
@@ -60,7 +56,6 @@ export default async function ProtectedLayout({
         />
       </StickyWrapper>
 
-      {/* The main content from each nested page */}
       <div className="flex-1">{children}</div>
     </div>
   );

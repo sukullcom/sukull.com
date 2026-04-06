@@ -66,7 +66,7 @@ export async function getProfileDataOnServer() {
 
   if (!row) {
     return {
-      userName: "Anonymous",
+      userName: "Anonim",
       userImageSrc: "/mascot_purple.svg",
       profileLocked: false,
       schoolId: null,
@@ -113,7 +113,7 @@ export async function updateProfileAction(
     await db
       .update(userProgress)
       .set({
-        userName: newName || "Anonymous",
+        userName: newName || "Anonim",
         userImageSrc: normalizeAvatarUrl(newImage),
         schoolId,
         dailyTarget: newDailyTarget,

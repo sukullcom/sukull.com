@@ -7,6 +7,7 @@ import { getUserDailyStreakForMonth } from "@/actions/daily-streak";
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 import { addMonths, startOfMonth, endOfMonth, getDay, format } from "date-fns";
+import { tr } from "date-fns/locale";
 
 interface DailyRecord {
   id: number;
@@ -194,7 +195,7 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
           width={20}
           height={20}
           src={achieved ? "/istikrar.svg" : "/istikrarsiz.svg"}
-          alt={achieved ? "Achieved" : "Not achieved"}
+          alt={achieved ? "Başarılı" : "Başarısız"}
           className="w-5 h-5 mt-1"
         />
       </div>
@@ -209,7 +210,7 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
           {"<"}
         </Button>
         <div className="text-xl font-bold">
-          {format(selectedDate, "MMMM yyyy")}
+          {format(selectedDate, "MMMM yyyy", { locale: tr })}
         </div>
         <div className="flex items-center gap-2">
           {/* 🎯 NEW: Manual refresh button */}

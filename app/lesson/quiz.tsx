@@ -6,9 +6,8 @@ import { Header } from "./header";
 import { QuestionBubble } from "./question-bubble";
 import { Challenge } from "./challenge";
 import { Footer } from "./footer";
-import { upsertChallengeProgress } from "@/actions/challenge-progress";
+import { upsertChallengeProgress, reduceHearts, awardLessonCompletionBonus } from "@/actions/challenge-progress";
 import { toast } from "sonner";
-import { reduceHearts } from "@/actions/user-progress";
 import Image from "next/image";
 import { ResultCard } from "./result-card";
 import { useRouter } from "next/navigation";
@@ -16,6 +15,7 @@ import Confetti from "react-confetti";
 import { useHeartsModal } from "@/store/use-hearts-modal";
 import { usePracticeModal } from "@/store/use-practice-modal";
 import { MathRenderer } from "@/components/ui/math-renderer";
+import { SCORING_SYSTEM } from "@/constants";
 
 type Props = {
   initialPercentage: number;
@@ -108,15 +108,21 @@ export const Quiz = ({
   const [lessonId] = useState(initialLessonId);
   const [hearts, setHearts] = useState(initialHearts);
   const [points, setPoints] = useState(initialPoints);
+  const [wrongCount, setWrongCount] = useState(0);
+  const [correctCount, setCorrectCount] = useState(0);
+  const [lessonBonuses, setLessonBonuses] = useState<{
+    completionBonus: number;
+    perfectBonus: number;
+  } | null>(null);
 
-  // If initialPercentage === 100 (all questions complete), practice
+  const isPracticeMode = initialPercentage === 100;
+
   const [percentage, setPercentage] = useState(() =>
-    initialPercentage === 100 ? 0 : initialPercentage
+    isPracticeMode ? 0 : initialPercentage
   );
 
   const [challenges] = useState(initialLessonChallenges);
 
-  // Find active (not yet completed) challenge
   const [activeIndex, setActiveIndex] = useState(() => {
     const idx = challenges.findIndex((c) => !c.completed);
     return idx === -1 ? 0 : idx;
@@ -126,7 +132,7 @@ export const Quiz = ({
   const [status, setStatus] = useState<"correct" | "wrong" | "none">("none");
 
   useMount(() => {
-    if (initialPercentage === 100) {
+    if (isPracticeMode) {
       openPracticeModal();
     }
   });
@@ -137,13 +143,19 @@ export const Quiz = ({
   const challenge = challenges[activeIndex];
   const lessonFinished = !challenge;
 
-  // Play finish audio once when lesson is complete
   useEffect(() => {
     if (lessonFinished && !finishPlayedRef.current) {
       finishPlayedRef.current = true;
       finishControls.play();
+
+      if (!isPracticeMode) {
+        awardLessonCompletionBonus(lessonId, wrongCount).then((bonuses) => {
+          setLessonBonuses(bonuses);
+          setPoints((prev) => prev + bonuses.completionBonus + bonuses.perfectBonus);
+        });
+      }
     }
-  }, [lessonFinished, finishControls]);
+  }, [lessonFinished, finishControls, lessonId, wrongCount, isPracticeMode]);
 
   // *******************************
   // 5) Render finished lesson screen
@@ -166,14 +178,14 @@ export const Quiz = ({
         <div className="flex flex-col gap-y-4 lg:gap-y-8 max-w-lg mx-auto text-center items-center justify-center h-full">
           <Image
             src="/finish.svg"
-            alt="Finish"
+            alt="Tamamlandı"
             className="hidden lg:block"
             height={100}
             width={100}
           />
           <Image
             src="/finish.svg"
-            alt="Finish"
+            alt="Tamamlandı"
             className="block lg:hidden"
             height={50}
             width={50}
@@ -182,6 +194,49 @@ export const Quiz = ({
             Tebrikler! <br />
             Dersi tamamladın.
           </h1>
+
+          {/* Bonus breakdown */}
+          {!isPracticeMode && (
+            <div className="w-full space-y-2 text-sm">
+              <div className="flex justify-between items-center px-4 py-2 bg-orange-50 rounded-lg">
+                <span className="text-neutral-600">Doğru cevaplar ({correctCount}/{challenges.length})</span>
+                <span className="font-bold text-orange-500">
+                  +{correctCount * SCORING_SYSTEM.LESSON_CHALLENGE_FIRST}
+                </span>
+              </div>
+              {wrongCount > 0 && (
+                <div className="flex justify-between items-center px-4 py-2 bg-red-50 rounded-lg">
+                  <span className="text-neutral-600">Yanlış cevaplar ({wrongCount})</span>
+                  <span className="font-bold text-red-500">
+                    {wrongCount * SCORING_SYSTEM.LESSON_CHALLENGE_PENALTY}
+                  </span>
+                </div>
+              )}
+              {lessonBonuses && lessonBonuses.completionBonus > 0 && (
+                <div className="flex justify-between items-center px-4 py-2 bg-green-50 rounded-lg">
+                  <span className="text-neutral-600">Ders tamamlama bonusu</span>
+                  <span className="font-bold text-green-600">
+                    +{lessonBonuses.completionBonus}
+                  </span>
+                </div>
+              )}
+              {lessonBonuses && lessonBonuses.perfectBonus > 0 && (
+                <div className="flex justify-between items-center px-4 py-2 bg-emerald-50 rounded-lg border border-emerald-200">
+                  <span className="text-emerald-700 font-medium">🎯 Hatasız ders bonusu!</span>
+                  <span className="font-bold text-emerald-600">
+                    +{lessonBonuses.perfectBonus}
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
+
+          {isPracticeMode && (
+            <div className="w-full px-4 py-2 bg-blue-50 rounded-lg text-sm">
+              <span className="text-blue-600">Pratik modu — soru başına +{SCORING_SYSTEM.LESSON_CHALLENGE_PRACTICE} puan</span>
+            </div>
+          )}
+
           <div className="flex items-center gap-x-4 w-full">
             <ResultCard variant="points" value={points} />
             <ResultCard variant="hearts" value={hearts} hasInfiniteHearts={hasInfiniteHearts} />
@@ -210,7 +265,6 @@ export const Quiz = ({
   // Handle timer expiration
   const handleTimeUp = () => {
     if (status === "none") {
-      // Time expired - treat as wrong answer
       startTransition(() => {
         reduceHearts(challenge.id)
           .then((response) => {
@@ -221,9 +275,10 @@ export const Quiz = ({
 
             incorrectControls.play();
             setStatus("wrong");
-            if (!response?.error) {
+            setWrongCount((c) => c + 1);
+            if (!response?.error && !hasInfiniteHearts) {
               setHearts((prev) => Math.max(prev - 1, 0));
-              setPoints((prev) => prev - 2);
+              setPoints((prev) => prev - 1);
             }
           })
           .catch(() => toast.error("Bir şeyler yanlış gitti. Lütfen tekrar deneyin."));
@@ -274,12 +329,13 @@ export const Quiz = ({
             }
             correctControls.play();
             setStatus("correct");
+            setCorrectCount((c) => c + 1);
             setPercentage((prev) => prev + 100 / challenges.length);
 
-            if (initialPercentage === 100) {
-              setPoints((prev) => prev + 2);
+            if (isPracticeMode) {
+              setPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_PRACTICE);
             } else {
-              setPoints((prev) => prev + 10);
+              setPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_FIRST);
             }
           })
           .catch(() => toast.error("Bir şeyler yanlış gitti. Lütfen tekrar deneyin."));
@@ -295,14 +351,21 @@ export const Quiz = ({
 
             incorrectControls.play();
             setStatus("wrong");
-            if (!response?.error) {
+            setWrongCount((c) => c + 1);
+            if (!response?.error && !hasInfiniteHearts) {
               setHearts((prev) => Math.max(prev - 1, 0));
-              setPoints((prev) => prev - 2);
+              setPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_PENALTY);
             }
           })
           .catch(() => toast.error("Bir şeyler yanlış gitti. Lütfen tekrar deneyin."));
       });
     }
+  };
+
+  const onSkipWrongToNext = () => {
+    setStatus("none");
+    setSelectedOption(undefined);
+    setActiveIndex((current) => current + 1);
   };
 
   // *******************************
@@ -352,6 +415,7 @@ export const Quiz = ({
         disabled={pending || (selectedOption === undefined && status === "none")}
         status={status}
         onCheck={onContinue}
+        onSkipWrong={onSkipWrongToNext}
         lessonId={lessonId}
         explanation={challenge.explanation}
       />

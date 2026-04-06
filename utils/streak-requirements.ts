@@ -1,19 +1,12 @@
 // utils/streak-requirements.ts
 
 export const STREAK_REQUIREMENTS = {
-  // Granular profile editing requirements
-  USERNAME_CHANGE: 10,        // Change username
-  DAILY_GOAL_CHANGE: 20,      // Select daily goal
-  AVATAR_CHANGE: 30,          // Change profile avatar
-  SCHOOL_SELECTION: 50,       // Select school
-  
-  // Study buddy features (keeping as is)
-  STUDY_BUDDY_FEATURES: 15,   // Creating posts and sending messages
-  
-  // Legacy support (will be removed after migration)
-  PROFILE_EDITING: 30,        // Deprecated - use granular requirements instead
-  // Temporarily disabled - lab functionality (Sukull Code Editor)
-  // CODE_SNIPPET_SHARING: 30,   // Sharing code snippets
+  USERNAME_CHANGE: 3,
+  DAILY_GOAL_CHANGE: 7,
+  STUDY_BUDDY_FEATURES: 7,
+  AVATAR_CHANGE: 14,
+  SCHOOL_SELECTION: 14,
+  PROFILE_EDITING: 14,
 } as const;
 
 export const STREAK_REQUIREMENT_MESSAGES = {
@@ -22,10 +15,7 @@ export const STREAK_REQUIREMENT_MESSAGES = {
   AVATAR_CHANGE: `Avatar resminizi değiştirmek için ${STREAK_REQUIREMENTS.AVATAR_CHANGE} gün istikrarın olması gerekiyor.`,
   SCHOOL_SELECTION: `Okulunuzu seçmek için ${STREAK_REQUIREMENTS.SCHOOL_SELECTION} gün istikrarın olması gerekiyor.`,
   STUDY_BUDDY_FEATURES: `Çalışma arkadaşı özelliklerini kullanmak için ${STREAK_REQUIREMENTS.STUDY_BUDDY_FEATURES} gün istikrarın olması gerekiyor.`,
-  // Legacy support
   PROFILE_EDITING: `Profil bilgilerini değiştirmek için ${STREAK_REQUIREMENTS.PROFILE_EDITING} gün istikrarın olması gerekiyor.`,
-  // Temporarily disabled - lab functionality (Sukull Code Editor)
-  // CODE_SNIPPET_SHARING: `Kod parçacığı paylaşmak için ${STREAK_REQUIREMENTS.CODE_SNIPPET_SHARING} gün istikrarın olması gerekiyor.`,
 } as const;
 
 export type StreakRequirementType = keyof typeof STREAK_REQUIREMENTS;
@@ -153,6 +143,11 @@ export function getAllStreakRules(): Array<{
       description: "Günlük puan hedefinizi belirleme/değiştirme"
     },
     {
+      feature: "Çalışma Arkadaşı",
+      requirement: STREAK_REQUIREMENTS.STUDY_BUDDY_FEATURES,
+      description: "Gönderi oluşturma ve mesaj gönderme"
+    },
+    {
       feature: "Avatar Değiştirme",
       requirement: STREAK_REQUIREMENTS.AVATAR_CHANGE,
       description: "Profil resminizi değiştirme"
@@ -162,16 +157,5 @@ export function getAllStreakRules(): Array<{
       requirement: STREAK_REQUIREMENTS.SCHOOL_SELECTION,
       description: "Okulunuzu seçme/değiştirme"
     },
-    {
-      feature: "Çalışma Arkadaşı",
-      requirement: STREAK_REQUIREMENTS.STUDY_BUDDY_FEATURES,
-      description: "Gönderi oluşturma ve mesaj gönderme"
-    },
-    // Temporarily disabled - lab functionality (Sukull Code Editor)
-    // {
-    //   feature: "Kod Paylaşımı",
-    //   requirement: STREAK_REQUIREMENTS.CODE_SNIPPET_SHARING,
-    //   description: "Kod parçacığı paylaşma"
-    // }
   ];
 } 

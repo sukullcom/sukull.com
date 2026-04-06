@@ -31,20 +31,12 @@ export async function GET(request: NextRequest) {
       }
 
       case 'teacher-applications': {
-        // Get all teacher applications
-        console.log('[Admin API] Fetching teacher applications...');
         const applications = await getAllTeacherApplications();
-        console.log('[Admin API] Found teacher applications:', applications.length);
-        console.log('[Admin API] Sample application:', applications[0]);
         return NextResponse.json({ applications });
       }
 
       case 'student-applications': {
-        // ✅ NEW: Get all student applications
-        console.log('[Admin API] Fetching student applications...');
         const applications = await getAllStudentApplications();
-        console.log('[Admin API] Found student applications:', applications.length);
-        console.log('[Admin API] Sample application:', applications[0]);
         return NextResponse.json({ applications });
       }
 

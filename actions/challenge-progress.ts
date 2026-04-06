@@ -2,11 +2,12 @@
 
 import db from "@/db/drizzle";
 import { getUserProgress, checkSubscriptionStatus } from "@/db/queries";
-import { challengeProgress, challenges, schools, userProgress } from "@/db/schema";
+import { challengeProgress, challenges, lessons, schools, userProgress } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { getServerUser } from "@/lib/auth";
 import { updateDailyStreak, checkStreakContinuity } from "./daily-streak";
+import { SCORING_SYSTEM } from "@/constants";
 
 export const upsertChallengeProgress = async (challengeId: number) => {
   const user = await getServerUser();
@@ -71,17 +72,14 @@ export const upsertChallengeProgress = async (challengeId: number) => {
     await db
       .update(userProgress)
       .set({
-        points: currentUserProgress.points + 2,
+        points: currentUserProgress.points + 5,
       })
       .where(eq(userProgress.userId, userId));
 
-      // Allow a short delay for the update to be visible
-      await new Promise(resolve => setTimeout(resolve, 100));
       await updateDailyStreak();
 
     revalidatePath("/learn");
     revalidatePath(`/lesson/${lessonId}`);
-    revalidatePath("/leaderboard");
     return;
   }
 
@@ -114,153 +112,83 @@ export const upsertChallengeProgress = async (challengeId: number) => {
     .set({ points: currentUserProgress.points + 10 })
     .where(eq(userProgress.userId, userId));
 
-  // Allow a short delay so the updated points are visible
-  await new Promise(resolve => setTimeout(resolve, 100));
   await updateDailyStreak();
 
-  // Recalculate school total points if needed
-  const userSchool = await db.query.userProgress.findFirst({
-    where: eq(userProgress.userId, userId),
-    columns: { schoolId: true },
-  });
-  if (userSchool?.schoolId) {
-    const schoolUsers = await db.query.userProgress.findMany({
-      where: eq(userProgress.schoolId, userSchool.schoolId),
-      columns: { points: true },
-    });
-    const newTotalPoints = schoolUsers.reduce((sum, u) => sum + u.points, 0);
-    await db
-      .update(schools)
-      .set({ totalPoints: newTotalPoints })
-      .where(eq(schools.id, userSchool.schoolId));
+  if (currentUserProgress.schoolId) {
+    try {
+      const schoolUsers = await db.query.userProgress.findMany({
+        where: eq(userProgress.schoolId, currentUserProgress.schoolId),
+        columns: { points: true },
+      });
+      const newTotalPoints = schoolUsers.reduce((sum, u) => sum + u.points, 0);
+      await db
+        .update(schools)
+        .set({ totalPoints: newTotalPoints })
+        .where(eq(schools.id, currentUserProgress.schoolId));
+    } catch {
+      // best-effort
+    }
   }
 
   revalidatePath("/learn");
   revalidatePath(`/lesson/${lessonId}`);
-  revalidatePath("/leaderboard");
 };
 
 export async function addPointsToUser(pointsToAdd: number) {
-  try {
-    console.log(`🎮 addPointsToUser called with: ${pointsToAdd} points`);
-    
-    // Validate input
-    if (!pointsToAdd || pointsToAdd <= 0) {
-      console.log(`❌ Invalid points amount: ${pointsToAdd}`);
-      throw new Error("Invalid points amount");
-    }
+  if (!pointsToAdd || pointsToAdd <= 0) {
+    throw new Error("Invalid points amount");
+  }
 
   const user = await getServerUser();
-  if (!user) {
-      console.log("❌ User not authenticated");
-    throw new Error("Unauthorized");
-  }
-    
+  if (!user) throw new Error("Unauthorized");
   const userId = user.id;
-    console.log(`👤 Processing points for user: ${userId}`);
 
-  // FIRST: Check if daily reset is needed (automatic new day detection)
-  const { checkAndPerformDailyResetIfNeeded } = await import("./daily-streak");
+  const { checkAndPerformDailyResetIfNeeded, checkStreakContinuity } =
+    await import("./daily-streak");
   await checkAndPerformDailyResetIfNeeded();
-
-  // Check streak continuity
-  const { checkStreakContinuity } = await import("./daily-streak");
   await checkStreakContinuity(userId);
 
   const currentUserProgress = await db.query.userProgress.findFirst({
     where: eq(userProgress.userId, userId),
-      columns: { points: true, schoolId: true, previousTotalPoints: true, userId: true },
+    columns: { points: true, schoolId: true, previousTotalPoints: true, userId: true },
   });
-    
-  if (!currentUserProgress) {
-      console.log(`❌ User progress not found for user: ${userId}`);
-    throw new Error("User progress not found");
-  }
+  if (!currentUserProgress) throw new Error("User progress not found");
 
-    console.log(`📊 Current user points: ${currentUserProgress.points}`);
-
-  // Initialize streak tracking if needed
-  if (currentUserProgress.previousTotalPoints === null || currentUserProgress.previousTotalPoints === undefined) {
-      console.log("🔄 Initializing streak tracking");
+  if (currentUserProgress.previousTotalPoints == null) {
     await db.update(userProgress)
-      .set({
-        previousTotalPoints: currentUserProgress.points,
-        lastStreakCheck: new Date(),
-      })
+      .set({ previousTotalPoints: currentUserProgress.points, lastStreakCheck: new Date() })
       .where(eq(userProgress.userId, userId));
   }
 
   const newPoints = (currentUserProgress.points || 0) + pointsToAdd;
-    console.log(`➕ Updating points from ${currentUserProgress.points} to ${newPoints}`);
-    
-    // Update user points with error handling
-    const updateResult = await db
+
+  await db
     .update(userProgress)
     .set({ points: newPoints })
-      .where(eq(userProgress.userId, userId))
-      .returning({ updatedPoints: userProgress.points, userId: userProgress.userId });
+    .where(eq(userProgress.userId, userId));
 
-    if (!updateResult || updateResult.length === 0) {
-      console.log("❌ Failed to update user points - no rows affected");
-      throw new Error("Failed to update user points");
-    }
-
-    console.log(`✅ Successfully updated points to: ${updateResult[0].updatedPoints}`);
-
-    // Verify the update
-    const verifyUpdate = await db.query.userProgress.findFirst({
-      where: eq(userProgress.userId, userId),
-      columns: { points: true },
-    });
-    
-    if (verifyUpdate && verifyUpdate.points === newPoints) {
-      console.log(`✅ Points update verified: ${verifyUpdate.points}`);
-    } else {
-      console.log(`⚠️ Points verification failed. Expected: ${newPoints}, Got: ${verifyUpdate?.points}`);
-    }
-
-  // Delay to let update be visible before recalculating streak
-  await new Promise(resolve => setTimeout(resolve, 100));
   await updateDailyStreak();
 
-    // Update school points if user belongs to a school
   if (currentUserProgress.schoolId) {
-      console.log(`🏫 Updating school points for school: ${currentUserProgress.schoolId}`);
-      try {
-    const schoolUsers = await db.query.userProgress.findMany({
-      where: eq(userProgress.schoolId, currentUserProgress.schoolId),
-      columns: { points: true },
-    });
-    const newTotalPoints = schoolUsers.reduce((sum, u) => sum + u.points, 0);
-    await db
-      .update(schools)
-      .set({ totalPoints: newTotalPoints })
-      .where(eq(schools.id, currentUserProgress.schoolId));
-        console.log(`✅ School points updated to: ${newTotalPoints}`);
-      } catch (schoolError) {
-        console.error("❌ Error updating school points:", schoolError);
-        // Don't throw here - user points were already updated successfully
-      }
+    try {
+      const schoolUsers = await db.query.userProgress.findMany({
+        where: eq(userProgress.schoolId, currentUserProgress.schoolId),
+        columns: { points: true },
+      });
+      const newTotalPoints = schoolUsers.reduce((sum, u) => sum + u.points, 0);
+      await db
+        .update(schools)
+        .set({ totalPoints: newTotalPoints })
+        .where(eq(schools.id, currentUserProgress.schoolId));
+    } catch {
+      // School update is best-effort; user points already saved
+    }
   }
 
-    // Comprehensive cache revalidation
-    console.log("🔄 Revalidating cache paths");
   revalidatePath("/learn");
   revalidatePath("/lesson");
-  revalidatePath("/leaderboard");
-    revalidatePath("/profile");
-    revalidatePath("/games");
-    revalidatePath("/games/snakable");
-    revalidatePath("/"); // Root path
-    
-    console.log(`🎉 addPointsToUser completed successfully! Added ${pointsToAdd} points.`);
-    return { success: true, pointsAdded: pointsToAdd, newTotal: newPoints };
-    
-  } catch (error) {
-    console.error("❌ Error in addPointsToUser:", error);
-    console.error("❌ Error stack:", error instanceof Error ? error.stack : "No stack available");
-    throw error;
-  }
+
+  return { success: true, pointsAdded: pointsToAdd, newTotal: newPoints };
 }
 
 export const reduceHearts = async (challengeId: number) => {
@@ -269,7 +197,9 @@ export const reduceHearts = async (challengeId: number) => {
   const userId = user.id;
   const currentUserProgress = await getUserProgress();
   if (!currentUserProgress) throw new Error("User progress not found");
-  const challenge = await db.query.challenges.findFirst({ where: eq(challenges.id, challengeId) });
+  const challenge = await db.query.challenges.findFirst({
+    where: eq(challenges.id, challengeId),
+  });
   if (!challenge) throw new Error("Challenge not found");
   const lessonId = challenge.lessonId;
   const existingCP = await db.query.challengeProgress.findFirst({
@@ -280,10 +210,10 @@ export const reduceHearts = async (challengeId: number) => {
   });
   const isPractice = !!existingCP;
   if (isPractice) return { error: "practice" };
-  
+
   // Check if user has infinite hearts subscription
   const hasInfiniteHearts = await checkSubscriptionStatus(userId);
-  
+
   if (hasInfiniteHearts) {
     await db.insert(challengeProgress).values({
       challengeId,
@@ -295,15 +225,21 @@ export const reduceHearts = async (challengeId: number) => {
     });
     return;
   }
-  
+
   if (currentUserProgress.hearts === 0) return { error: "hearts" };
 
+  const newHeartCount = Math.max(currentUserProgress.hearts - 1, 0);
+  const updateFields: Record<string, unknown> = {
+    hearts: newHeartCount,
+    points: currentUserProgress.points - 1,
+  };
+  // Start regen timer if hearts drop below max for the first time
+  if (!currentUserProgress.lastHeartRegenAt) {
+    updateFields.lastHeartRegenAt = new Date();
+  }
   await db
     .update(userProgress)
-    .set({
-      hearts: Math.max(currentUserProgress.hearts - 1, 0),
-      points: currentUserProgress.points - 2,
-    })
+    .set(updateFields)
     .where(eq(userProgress.userId, userId));
 
   const existingProgress = await db.query.challengeProgress.findFirst({
@@ -332,12 +268,53 @@ export const reduceHearts = async (challengeId: number) => {
     });
   }
 
-  // Delay before recalculating streak
-  await new Promise(resolve => setTimeout(resolve, 100));
   await updateDailyStreak();
 
-  revalidatePath("/shop");
   revalidatePath("/learn");
-  revalidatePath("/leaderboard");
   revalidatePath(`/lesson/${lessonId}`);
 };
+
+/**
+ * Awards bonus points when a lesson is fully completed.
+ * Returns the bonuses that were awarded so the client can display them.
+ */
+export async function awardLessonCompletionBonus(
+  lessonId: number,
+  wrongCount: number
+) {
+  const user = await getServerUser();
+  if (!user) return { completionBonus: 0, perfectBonus: 0 };
+  const userId = user.id;
+
+  const progress = await db.query.userProgress.findFirst({
+    where: eq(userProgress.userId, userId),
+    columns: { points: true, schoolId: true },
+  });
+  if (!progress) return { completionBonus: 0, perfectBonus: 0 };
+
+  const lesson = await db.query.lessons.findFirst({
+    where: eq(lessons.id, lessonId),
+    columns: { id: true },
+    with: {
+      challenges: { columns: { id: true } },
+    },
+  });
+  if (!lesson || lesson.challenges.length === 0)
+    return { completionBonus: 0, perfectBonus: 0 };
+
+  const completionBonus = SCORING_SYSTEM.LESSON_COMPLETION_BONUS;
+  const perfectBonus = wrongCount === 0 ? SCORING_SYSTEM.PERFECT_LESSON_BONUS : 0;
+  const totalBonus = completionBonus + perfectBonus;
+
+  if (totalBonus > 0) {
+    await db
+      .update(userProgress)
+      .set({ points: progress.points + totalBonus })
+      .where(eq(userProgress.userId, userId));
+
+    await updateDailyStreak();
+    revalidatePath("/learn");
+  }
+
+  return { completionBonus, perfectBonus };
+}

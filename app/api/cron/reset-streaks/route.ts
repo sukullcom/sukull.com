@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { performDailyReset } from "@/actions/daily-streak";
+import { performDailyReset, applyDailyStreakBonuses } from "@/actions/daily-streak";
 
 export async function POST(request: NextRequest) {
   try {
@@ -17,6 +17,11 @@ export async function POST(request: NextRequest) {
     console.log("Daily reset job started at:", startTime.toISOString());
     
     const result = await performDailyReset();
+
+    // Apply streak bonuses after reset (rewards for maintaining streaks)
+    if (result.success) {
+      await applyDailyStreakBonuses();
+    }
     
     const endTime = new Date();
     const duration = endTime.getTime() - startTime.getTime();
@@ -61,13 +66,16 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// GET method for health check
+/** Sağlık kontrolü — tetikleme yöntemi production yanıtında açıklanmaz. */
 export async function GET() {
+  if (process.env.NODE_ENV === "production") {
+    return NextResponse.json({ ok: true }, { status: 200 });
+  }
   return NextResponse.json(
-    { 
+    {
       message: "Daily streak reset endpoint is healthy",
       timestamp: new Date().toISOString(),
-      instructions: "Use POST with Bearer token to trigger reset"
+      instructions: "Use POST with Bearer token to trigger reset",
     },
     { status: 200 }
   );

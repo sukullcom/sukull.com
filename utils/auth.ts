@@ -127,7 +127,7 @@ export const auth = {
 
     // If user doesn't exist or is not 'email' provider, do a "silent success"
     if (!userData || userData.provider !== 'email') {
-      return { success: true, message: 'If an account exists, a password reset link will be sent.' }
+      return { success: true, message: 'Hesap mevcutsa şifre sıfırlama bağlantısı gönderilecektir.' }
     }
 
     const res = await supabase.auth.resetPasswordForEmail(email)
@@ -135,7 +135,7 @@ export const auth = {
 
     return {
       success: true,
-      message: 'If an account exists, a password reset link will be sent.',
+      message: 'Hesap mevcutsa şifre sıfırlama bağlantısı gönderilecektir.',
     }
   },
 
@@ -156,7 +156,7 @@ export const auth = {
     if (!userData || userData.provider !== 'email') {
       return { 
         success: true, 
-        message: 'If an account exists and needs verification, a verification email will be sent.' 
+        message: 'Hesap mevcutsa doğrulama e-postası gönderilecektir.' 
       }
     }
 
@@ -176,7 +176,7 @@ export const auth = {
 
     return {
       success: true,
-      message: 'Verification email sent. Please check your inbox and spam folder.',
+      message: 'Doğrulama e-postası gönderildi. Gelen kutunuzu ve spam klasörünüzü kontrol edin.',
     }
   },
 }

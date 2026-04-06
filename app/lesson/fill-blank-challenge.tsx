@@ -44,20 +44,32 @@ export const FillBlankChallenge = ({
     
     // Get blank answers in order (options with isBlank: true)
     const blankAnswers = options.filter(opt => opt.isBlank).sort((a, b) => a.id - b.id);
-    
-    // Parse the question to find blanks (marked with {blank_number})
-    const parts = question.split(/(\{\d+\})/);
+    const numBlanks = blankAnswers.length;
+
+    // Only split on {1}…{numBlanks} so LaTeX braces like \sqrt{81} are NOT treated as blanks.
+    // Longer indices first (e.g. {10} before {1}) so "{10}" is not split as "{1}"+"0}".
+    const placeholderPatterns =
+      numBlanks > 0
+        ? Array.from({ length: numBlanks }, (_, i) => `\\{${i + 1}\\}`).sort(
+            (a, b) => b.length - a.length
+          )
+        : [];
+    const splitRegex =
+      placeholderPatterns.length > 0
+        ? new RegExp(`(${placeholderPatterns.join("|")})`)
+        : null;
+
+    const parts = splitRegex ? question.split(splitRegex) : [question];
     let itemId = 0;
 
     parts.forEach((part) => {
-      if (part.match(/\{\d+\}/)) {
-        // This is a placeholder like {1}, {2}, etc.
+      if (splitRegex && part.match(/^\{\d+\}$/)) {
         const placeholderMatch = part.match(/\{(\d+)\}/);
         if (placeholderMatch) {
-          const placeholderNumber = parseInt(placeholderMatch[1]);
-          const blankIndex = placeholderNumber - 1; // Convert to 0-based index
+          const placeholderNumber = parseInt(placeholderMatch[1], 10);
+          const blankIndex = placeholderNumber - 1;
           const correctAnswer = blankAnswers[blankIndex]?.text;
-          
+
           items.push({
             id: itemId++,
             text: "",

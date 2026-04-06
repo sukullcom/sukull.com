@@ -1,7 +1,7 @@
 // actions/user-progress.ts
 'use server';
 
-import { POINTS_TO_REFILL } from '@/constants';
+import { POINTS_TO_REFILL, SCORING_SYSTEM } from '@/constants';
 import db from '@/db/drizzle';
 import { getCourseById, getUserProgress, checkSubscriptionStatus } from '@/db/queries';
 import { challengeProgress, challenges, schools, userProgress, userDailyStreak } from '@/db/schema';
@@ -146,6 +146,7 @@ export const upsertUserProgress = async (courseId: number) => {
   }
 };
 
+/** @deprecated Ders sırasında kullanmayın; kavram ustalığı ve challenge_progress için `challenge-progress.reduceHearts` kullanın. */
 export const reduceHearts = async (challengeId: number) => {
   const user = await getServerUser();
   if (!user) throw new Error('Unauthorized');
@@ -179,9 +180,7 @@ export const reduceHearts = async (challengeId: number) => {
     })
     .where(eq(userProgress.userId, userId));
 
-  revalidatePath('/shop');
   revalidatePath('/learn');
-  revalidatePath('/leaderboard');
   revalidatePath(`/lesson/${lessonId}`);
 };
 
@@ -196,12 +195,12 @@ export const refillHearts = async () => {
     .set({
       hearts: 5,
       points: currentUserProgress.points - POINTS_TO_REFILL,
+      lastHeartRegenAt: new Date(),
     })
     .where(eq(userProgress.userId, currentUserProgress.userId));
 
   revalidatePath('/shop');
   revalidatePath('/learn');
-  revalidatePath('/leaderboard');
 };
 
 /**
@@ -334,10 +333,27 @@ export const reduceHeartsForSubScribe = async () => {
     })
     .where(eq(userProgress.userId, user.id));
 
-  revalidatePath('/games/SubScribe');
-  revalidatePath('/shop');
   revalidatePath('/learn');
-  revalidatePath('/leaderboard');
   
   return { success: true, hearts: newHearts, hasInfiniteHearts: false };
 };
+
+export async function purchaseStreakFreeze() {
+  const progress = await getUserProgress();
+  if (!progress) return { error: "Kullanıcı bulunamadı" };
+
+  const cost = SCORING_SYSTEM.STREAK_FREEZE_COST;
+  if (progress.points < cost) return { error: "Yeterli puanın yok" };
+
+  await db
+    .update(userProgress)
+    .set({
+      points: progress.points - cost,
+      streakFreezeCount: (progress.streakFreezeCount ?? 0) + 1,
+    })
+    .where(eq(userProgress.userId, progress.userId));
+
+  revalidatePath('/shop');
+  revalidatePath('/learn');
+  return { success: true };
+}

@@ -1,4 +1,11 @@
 /** @type {import('next').NextConfig} */
+
+const allowedOrigins = [
+  "https://sukull.com",
+  "https://www.sukull.com",
+  process.env.NODE_ENV !== "production" && "http://localhost:3000",
+].filter(Boolean).join(", ");
+
 const nextConfig = {
   async headers() {
     return [
@@ -7,7 +14,7 @@ const nextConfig = {
         headers: [
           {
             key: "Access-Control-Allow-Origin",
-            value: "*",
+            value: allowedOrigins,
           },
           {
             key: "Access-Control-Allow-Methods",
@@ -16,10 +23,6 @@ const nextConfig = {
           {
             key: "Access-Control-Allow-Headers",
             value: "Content-Type, Authorization",
-          },
-          {
-            key: "Content-Range",
-            value: "bytes : 0-9/*",
           },
         ],
       },

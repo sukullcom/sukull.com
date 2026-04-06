@@ -43,7 +43,8 @@ export const HeartsModal = () => {
             Canın kalmadı!
           </DialogTitle>
           <DialogDescription className="text-center text-base">
-            Eski dersleri tekrar ederek veya puanlarını kullanarak canını arttırabilirsin.
+            Mağazadan puanlarınla can doldurabilir, eski dersleri tekrar edebilir
+            veya canların her 4 saatte otomatik olarak yenilenmesini bekleyebilirsin.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="mb-4">
@@ -54,7 +55,7 @@ export const HeartsModal = () => {
               size="lg"
               onClick={onClick}
             >
-              Mağazaya gİt
+              Mağazaya Git
             </Button>
             <Button
               variant="primaryOutline"
@@ -62,7 +63,7 @@ export const HeartsModal = () => {
               size="lg"
               onClick={close}
             >
-              Hayır, teşekkür ederİm
+              Hayır, teşekkür ederim
             </Button>
           </div>
         </DialogFooter>

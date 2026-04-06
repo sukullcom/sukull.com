@@ -65,7 +65,7 @@ export function CreateAccountForm() {
       <input
         id="email"
         type="email"
-        placeholder="Email"
+        placeholder="E-posta"
         className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
         value={email}
         onChange={(e) => setEmail(e.target.value)}

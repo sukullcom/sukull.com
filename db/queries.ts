@@ -27,6 +27,9 @@ import { getServerUser } from "@/lib/auth";
 import { normalizeAvatarUrl } from "@/utils/avatar";
 
 
+const HEART_REGEN_INTERVAL_MS = 4 * 60 * 60 * 1000; // 4 hours
+const HEART_MAX = 5;
+
 export const getUserProgress = cache(async () => {
   const user = await getServerUser();
   if (!user) {
@@ -34,7 +37,6 @@ export const getUserProgress = cache(async () => {
   }
   const userId = user.id;
 
-  // Check subscription status before returning user progress
   await checkSubscriptionStatus(userId);
 
   const data = await db.query.userProgress.findFirst({
@@ -46,7 +48,31 @@ export const getUserProgress = cache(async () => {
 
   if (!data) return null;
 
-  // Normalize avatar URL to ensure it works with Next.js Image component
+  // On-access heart regeneration: add 1 heart per 4 hours elapsed
+  if (data.hearts < HEART_MAX && !data.hasInfiniteHearts) {
+    if (!data.lastHeartRegenAt) {
+      // First time hearts are below max — anchor the regen timer to now
+      await db
+        .update(userProgress)
+        .set({ lastHeartRegenAt: new Date() })
+        .where(eq(userProgress.userId, userId));
+      data.lastHeartRegenAt = new Date();
+    } else {
+      const elapsed = Date.now() - new Date(data.lastHeartRegenAt).getTime();
+      const heartsToAdd = Math.floor(elapsed / HEART_REGEN_INTERVAL_MS);
+
+      if (heartsToAdd > 0) {
+        const newHearts = Math.min(data.hearts + heartsToAdd, HEART_MAX);
+        await db
+          .update(userProgress)
+          .set({ hearts: newHearts, lastHeartRegenAt: new Date() })
+          .where(eq(userProgress.userId, userId));
+        data.hearts = newHearts;
+        data.lastHeartRegenAt = new Date();
+      }
+    }
+  }
+
   return {
     ...data,
     userImageSrc: normalizeAvatarUrl(data.userImageSrc)
@@ -71,9 +97,11 @@ export const getUnits = cache(async () => {
         orderBy: (lessons, { asc }) => [asc(lessons.order)],
         with: {
           challenges: {
+            columns: { id: true, order: true },
             orderBy: (challenges, { asc }) => [asc(challenges.order)],
             with: {
               challengeProgress: {
+                columns: { completed: true },
                 where: eq(challengeProgress.userId, userId),
               },
             },

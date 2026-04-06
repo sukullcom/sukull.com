@@ -37,6 +37,7 @@ const ShopPage = async () => {
             hasActiveSubscription={hasActiveSubscription}
             hasInfiniteHearts={userProgress.hasInfiniteHearts}
             subscriptionExpiresAt={userProgress.subscriptionExpiresAt}
+            streakFreezeCount={userProgress.streakFreezeCount ?? 0}
           />
         </div>
       </FeedWrapper>

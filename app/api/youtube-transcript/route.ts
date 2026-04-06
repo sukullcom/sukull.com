@@ -47,7 +47,6 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  console.log(`Fetching transcript for: ${videoId}, language: ${requestedLang}`);
 
   const ytdlp = new YtDlp();
   const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
@@ -56,11 +55,8 @@ export async function GET(req: NextRequest) {
     // First, check if yt-dlp is available and download if needed
     const isInstalled = await ytdlp.checkInstallationAsync();
     if (!isInstalled) {
-      console.log("Installing yt-dlp...");
+      // yt-dlp will auto-install
     }
-
-    // Get video info including available subtitles
-    console.log("Fetching video information...");
     const videoInfo = await ytdlp.getInfoAsync(videoUrl);
     
     if (videoInfo._type !== 'video') {
@@ -74,8 +70,6 @@ export async function GET(req: NextRequest) {
     const subtitles = videoInfo.subtitles || {};
     const automaticCaptions = videoInfo.automatic_captions || {};
     
-    console.log("Available subtitles:", Object.keys(subtitles));
-    console.log("Available auto-captions:", Object.keys(automaticCaptions));
 
     // Function to extract transcript from subtitle data
     const extractTranscript = async (lang: string, isAutomatic: boolean = false): Promise<TranscriptLine[] | null> => {
@@ -97,7 +91,6 @@ export async function GET(req: NextRequest) {
 
         if (!subtitle) subtitle = langSubs[0];
 
-        console.log(`Fetching ${lang} ${isAutomatic ? 'auto' : 'manual'} (${subtitle.ext})`);
 
         // Fetch the subtitle content
         const response = await fetch(subtitle.url);
@@ -247,7 +240,6 @@ export async function GET(req: NextRequest) {
       }, { status: 404 });
     }
 
-    console.log(`Successfully processed transcript: ${transcript.length} lines, language: ${usedLanguage}${isAutomatic ? ' (automatic)' : ''}`);
 
     return NextResponse.json({
       transcript,

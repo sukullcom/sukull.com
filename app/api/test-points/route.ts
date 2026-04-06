@@ -48,8 +48,12 @@ export async function POST() {
 }
 
 export async function GET() {
+  const admin = await isAdmin();
+  if (!admin) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
   return NextResponse.json({
     message: "Daily reset test endpoint",
-    usage: "POST to trigger manual daily reset (admin only)"
+    usage: "POST to trigger manual daily reset (admin only)",
   });
 } 
