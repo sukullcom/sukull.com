@@ -108,6 +108,7 @@ export const Quiz = ({
   const [lessonId] = useState(initialLessonId);
   const [hearts, setHearts] = useState(initialHearts);
   const [points, setPoints] = useState(initialPoints);
+  const [lessonPoints, setLessonPoints] = useState(0);
   const [wrongCount, setWrongCount] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [lessonBonuses, setLessonBonuses] = useState<{
@@ -151,7 +152,9 @@ export const Quiz = ({
       if (!isPracticeMode) {
         awardLessonCompletionBonus(lessonId, wrongCount).then((bonuses) => {
           setLessonBonuses(bonuses);
-          setPoints((prev) => prev + bonuses.completionBonus + bonuses.perfectBonus);
+          const bonusTotal = bonuses.completionBonus + bonuses.perfectBonus;
+          setPoints((prev) => prev + bonusTotal);
+          setLessonPoints((prev) => prev + bonusTotal);
         });
       }
     }
@@ -238,7 +241,7 @@ export const Quiz = ({
           )}
 
           <div className="flex items-center gap-x-4 w-full">
-            <ResultCard variant="points" value={points} />
+            <ResultCard variant="points" value={lessonPoints} />
             <ResultCard variant="hearts" value={hearts} hasInfiniteHearts={hasInfiniteHearts} />
           </div>
         </div>
@@ -279,6 +282,7 @@ export const Quiz = ({
             if (!response?.error && !hasInfiniteHearts) {
               setHearts((prev) => Math.max(prev - 1, 0));
               setPoints((prev) => prev - 1);
+              setLessonPoints((prev) => prev - 1);
             }
           })
           .catch(() => toast.error("Bir şeyler yanlış gitti. Lütfen tekrar deneyin."));
@@ -334,8 +338,10 @@ export const Quiz = ({
 
             if (isPracticeMode) {
               setPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_PRACTICE);
+              setLessonPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_PRACTICE);
             } else {
               setPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_FIRST);
+              setLessonPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_FIRST);
             }
           })
           .catch(() => toast.error("Bir şeyler yanlış gitti. Lütfen tekrar deneyin."));
@@ -355,6 +361,7 @@ export const Quiz = ({
             if (!response?.error && !hasInfiniteHearts) {
               setHearts((prev) => Math.max(prev - 1, 0));
               setPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_PENALTY);
+              setLessonPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_PENALTY);
             }
           })
           .catch(() => toast.error("Bir şeyler yanlış gitti. Lütfen tekrar deneyin."));

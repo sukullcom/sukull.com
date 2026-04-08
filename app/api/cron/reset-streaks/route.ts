@@ -45,7 +45,6 @@ export async function POST(request: NextRequest) {
           success: false, 
           message: "Daily reset failed",
           error: result.error,
-          details: result.details,
           timestamp: endTime.toISOString(),
           duration: `${duration}ms`
         },

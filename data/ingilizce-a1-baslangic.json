@@ -1,0 +1,492 @@
+{
+  "course": {
+    "title": "İngilizce (Başlangıç) — A1",
+    "imageSrc": ""
+  },
+  "units": [
+    {
+      "title": "Selamlaşma, Tanışma ve Sayılar",
+      "description": "Temel selamlaşma ifadeleri, kendini tanıtma, sayılar ve yaş bildirme",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "Greetings — Selamlaşma",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "'Good morning' ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["greetings", "vocabulary"],
+              "explanation": "'Good morning' İngilizce'de 'Günaydın' anlamına gelir. Sabah saatlerinde kullanılan bir selamlaşma ifadesidir.",
+              "options": [
+                {"text": "İyi akşamlar", "correct": false},
+                {"text": "Günaydın", "correct": true},
+                {"text": "İyi geceler", "correct": false},
+                {"text": "Hoşça kal", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "İngilizce selamlaşma ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["greetings", "vocabulary"],
+              "explanation": "Hello = Merhaba, Good evening = İyi akşamlar, Goodbye = Hoşça kal.",
+              "options": [
+                {"text": "Hello", "pairId": 1, "correct": false},
+                {"text": "Merhaba", "pairId": 1, "correct": false},
+                {"text": "Good evening", "pairId": 2, "correct": false},
+                {"text": "İyi akşamlar", "pairId": 2, "correct": false},
+                {"text": "Goodbye", "pairId": 3, "correct": false},
+                {"text": "Hoşça kal", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Birinden ayrılırken hangi ifadeyi kullanırsınız?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["greetings"],
+              "explanation": "'Goodbye' veya kısaltması 'Bye' ayrılırken kullanılır. 'See you later' (Sonra görüşürüz) da kullanılabilir.",
+              "options": [
+                {"text": "Good morning", "correct": false},
+                {"text": "Hello", "correct": false},
+                {"text": "Goodbye / Bye", "correct": true},
+                {"text": "Good afternoon", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'How are you?' sorusuna en uygun cevap hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["greetings", "conversation"],
+              "explanation": "'How are you?' (Nasılsın?) sorusuna 'I'm fine, thank you.' (İyiyim, teşekkür ederim.) şeklinde cevap verilir.",
+              "options": [
+                {"text": "My name is Ali.", "correct": false},
+                {"text": "I'm fine, thank you.", "correct": true},
+                {"text": "I'm from Turkey.", "correct": false},
+                {"text": "Goodbye.", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'Good night' hangi durumda kullanılır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["greetings"],
+              "explanation": "'Good night' (İyi geceler) yatmaya giderken veya gece vakti vedalaşırken kullanılır. Selamlaşma değil, vedalaşma ifadesidir.",
+              "options": [
+                {"text": "Sabah selamlaşmada", "correct": false},
+                {"text": "Öğle yemeğinde", "correct": false},
+                {"text": "Yatmaya giderken veya gece vedalaşırken", "correct": true},
+                {"text": "Okula girerken", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Selamlaşma ifadelerini kullanım zamanlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["greetings"],
+              "explanation": "Good morning sabah, Good afternoon öğleden sonra, Good evening akşam saatlerinde kullanılır.",
+              "options": [
+                {"text": "Good morning", "pairId": 1, "correct": false},
+                {"text": "Sabah (06:00-12:00)", "pairId": 1, "correct": false},
+                {"text": "Good afternoon", "pairId": 2, "correct": false},
+                {"text": "Öğleden sonra (12:00-18:00)", "pairId": 2, "correct": false},
+                {"text": "Good evening", "pairId": 3, "correct": false},
+                {"text": "Akşam (18:00 sonrası)", "pairId": 3, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Introductions — Kendini Tanıtma",
+          "order": 2,
+          "challenges": [
+            {"question": "'My name is Ayşe.' cümlesinin Türkçe karşılığı nedir?", "type": "SELECT", "difficulty": "EASY", "tags": ["introductions"], "explanation": "'My name is Ayşe.' = 'Benim adım Ayşe.' İngilizce'de kendini tanıtmak için 'My name is...' kalıbı kullanılır.", "options": [{"text": "Ayşe nerede?", "correct": false}, {"text": "Benim adım Ayşe.", "correct": true}, {"text": "Ayşe nasıl?", "correct": false}, {"text": "Ayşe kaç yaşında?", "correct": false}], "order": 1},
+            {"question": "'What is your name?' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["introductions", "questions"], "explanation": "'What is your name?' = 'Adın ne?' / 'İsminiz nedir?' Karşıdaki kişinin adını sormak için kullanılır.", "options": [{"text": "Nerelisin?", "correct": false}, {"text": "Kaç yaşındasın?", "correct": false}, {"text": "Adın ne?", "correct": true}, {"text": "Nasılsın?", "correct": false}], "order": 2},
+            {"question": "I ___ a student.", "type": "FILL_BLANK", "difficulty": "MEDIUM", "tags": ["to be", "grammar"], "explanation": "'I' zamiri ile 'am' kullanılır: I am (Ben ...yım/...yim). 'I am a student.' = 'Ben bir öğrenciyim.'", "options": [{"text": "am", "correct": true}, {"text": "is", "correct": false}, {"text": "are", "correct": false}, {"text": "be", "correct": false}], "order": 3},
+            {"question": "Tanışma ifadelerini Türkçe karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "MEDIUM", "tags": ["introductions"], "explanation": "Nice to meet you = Tanıştığıma memnun oldum, Where are you from? = Nerelisin?, How old are you? = Kaç yaşındasın?", "options": [{"text": "Nice to meet you", "pairId": 1, "correct": false}, {"text": "Tanıştığıma memnun oldum", "pairId": 1, "correct": false}, {"text": "Where are you from?", "pairId": 2, "correct": false}, {"text": "Nerelisin?", "pairId": 2, "correct": false}, {"text": "How old are you?", "pairId": 3, "correct": false}, {"text": "Kaç yaşındasın?", "pairId": 3, "correct": false}], "order": 4},
+            {"question": "'I am from Turkey.' cümlesinin anlamı nedir?", "type": "SELECT", "difficulty": "EASY", "tags": ["introductions", "countries"], "explanation": "'I am from Turkey.' = 'Ben Türkiye'denim.' / 'Türkiyeliyim.' Nereli olduğunu söylemek için 'I am from + ülke' kalıbı kullanılır.", "options": [{"text": "Türkiye'ye gideceğim.", "correct": false}, {"text": "Ben Türkiye'denim.", "correct": true}, {"text": "Türkiye güzeldir.", "correct": false}, {"text": "Türkiye'de yaşıyorum.", "correct": false}], "order": 5},
+            {"question": "She ___ a teacher.", "type": "FILL_BLANK", "difficulty": "HARD", "tags": ["to be", "grammar"], "explanation": "'She' (O - kadın) zamiri ile 'is' kullanılır: She is a teacher. = O bir öğretmendir.", "options": [{"text": "is", "correct": true}, {"text": "am", "correct": false}, {"text": "are", "correct": false}, {"text": "be", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Numbers 1-20 — Sayılar 1-20",
+          "order": 3,
+          "challenges": [
+            {"question": "İngilizce sayıları Türkçe karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "EASY", "tags": ["numbers"], "explanation": "One = 1 (bir), Five = 5 (beş), Ten = 10 (on).", "options": [{"text": "One", "pairId": 1, "correct": false}, {"text": "1 (bir)", "pairId": 1, "correct": false}, {"text": "Five", "pairId": 2, "correct": false}, {"text": "5 (beş)", "pairId": 2, "correct": false}, {"text": "Ten", "pairId": 3, "correct": false}, {"text": "10 (on)", "pairId": 3, "correct": false}], "order": 1},
+            {"question": "'Seven' kaçtır?", "type": "SELECT", "difficulty": "EASY", "tags": ["numbers"], "explanation": "'Seven' İngilizce'de 7 (yedi) demektir.", "options": [{"text": "6", "correct": false}, {"text": "7", "correct": true}, {"text": "8", "correct": false}, {"text": "9", "correct": false}], "order": 2},
+            {"question": "'Twelve' kaçtır?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["numbers"], "explanation": "'Twelve' İngilizce'de 12 (on iki) demektir. 11 = eleven, 12 = twelve, 13 = thirteen.", "options": [{"text": "10", "correct": false}, {"text": "11", "correct": false}, {"text": "12", "correct": true}, {"text": "20", "correct": false}], "order": 3},
+            {"question": "İngilizce sayıları eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "MEDIUM", "tags": ["numbers"], "explanation": "Thirteen = 13, Fifteen = 15, Twenty = 20.", "options": [{"text": "Thirteen", "pairId": 1, "correct": false}, {"text": "13", "pairId": 1, "correct": false}, {"text": "Fifteen", "pairId": 2, "correct": false}, {"text": "15", "pairId": 2, "correct": false}, {"text": "Twenty", "pairId": 3, "correct": false}, {"text": "20", "pairId": 3, "correct": false}], "order": 4},
+            {"question": "'Eighteen' kaçtır?", "type": "SELECT", "difficulty": "HARD", "tags": ["numbers"], "explanation": "'Eighteen' = 18 (on sekiz). '-teen' takısı 13'ten 19'a kadar olan sayılarda kullanılır.", "options": [{"text": "15", "correct": false}, {"text": "16", "correct": false}, {"text": "17", "correct": false}, {"text": "18", "correct": true}], "order": 5},
+            {"question": "3 + 8 = ? İngilizce olarak doğru cevap hangisidir?", "type": "SELECT", "difficulty": "HARD", "tags": ["numbers", "math"], "explanation": "3 (three) + 8 (eight) = 11 (eleven). 'Three plus eight equals eleven.'", "options": [{"text": "Ten", "correct": false}, {"text": "Eleven", "correct": true}, {"text": "Twelve", "correct": false}, {"text": "Nine", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Numbers & Age — Büyük Sayılar ve Yaş",
+          "order": 4,
+          "challenges": [
+            {"question": "'Thirty' kaçtır?", "type": "SELECT", "difficulty": "EASY", "tags": ["numbers"], "explanation": "'Thirty' = 30 (otuz). Onluk sayılar: 20=twenty, 30=thirty, 40=forty, 50=fifty.", "options": [{"text": "13", "correct": false}, {"text": "30", "correct": true}, {"text": "33", "correct": false}, {"text": "3", "correct": false}], "order": 1},
+            {"question": "Onluk sayıları İngilizce karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "MEDIUM", "tags": ["numbers"], "explanation": "Forty = 40, Sixty = 60, Hundred = 100.", "options": [{"text": "Forty", "pairId": 1, "correct": false}, {"text": "40", "pairId": 1, "correct": false}, {"text": "Sixty", "pairId": 2, "correct": false}, {"text": "60", "pairId": 2, "correct": false}, {"text": "Hundred", "pairId": 3, "correct": false}, {"text": "100", "pairId": 3, "correct": false}], "order": 2},
+            {"question": "'Fifty-five' kaçtır?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["numbers"], "explanation": "'Fifty-five' = 55. İngilizce'de iki basamaklı sayılar 'onluk-birlik' şeklinde okunur: fifty (50) + five (5) = fifty-five (55).", "options": [{"text": "45", "correct": false}, {"text": "55", "correct": true}, {"text": "65", "correct": false}, {"text": "50", "correct": false}], "order": 3},
+            {"question": "'I am fifteen years old.' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["age"], "explanation": "'I am fifteen years old.' = 'Ben on beş yaşındayım.' Yaş söylemek için 'I am + sayı + years old' kalıbı kullanılır.", "options": [{"text": "On beş kitabım var.", "correct": false}, {"text": "Ben on beş yaşındayım.", "correct": true}, {"text": "Saat on beş.", "correct": false}, {"text": "On beş gün kaldı.", "correct": false}], "order": 4},
+            {"question": "'How old are you?' sorusuna 'Ben 12 yaşındayım.' cevabını İngilizce olarak hangisi doğru ifade eder?", "type": "SELECT", "difficulty": "HARD", "tags": ["age", "questions"], "explanation": "'I am twelve years old.' veya kısaca 'I'm twelve.' Ben 12 yaşındayım demektir.", "options": [{"text": "I have twelve.", "correct": false}, {"text": "I am twelve years old.", "correct": true}, {"text": "My age twelve.", "correct": false}, {"text": "I twelve old.", "correct": false}], "order": 5},
+            {"question": "'Ninety-nine' kaçtır?", "type": "SELECT", "difficulty": "HARD", "tags": ["numbers"], "explanation": "'Ninety-nine' = 99. Ninety (90) + nine (9) = ninety-nine (99).", "options": [{"text": "89", "correct": false}, {"text": "90", "correct": false}, {"text": "99", "correct": true}, {"text": "100", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "The Alphabet & Spelling — Alfabe ve Heceleme",
+          "order": 5,
+          "challenges": [
+            {"question": "İngiliz alfabesinde kaç harf vardır?", "type": "SELECT", "difficulty": "EASY", "tags": ["alphabet"], "explanation": "İngiliz alfabesinde 26 harf vardır. Türk alfabesinden farklı olarak 'q', 'w', 'x' harfleri bulunur; 'ç', 'ş', 'ğ', 'ö', 'ü' gibi harfler yoktur.", "options": [{"text": "24", "correct": false}, {"text": "26", "correct": true}, {"text": "29", "correct": false}, {"text": "28", "correct": false}], "order": 1},
+            {"question": "İngiliz alfabesindeki sesli harfler (vowels) hangileridir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["alphabet", "vowels"], "explanation": "İngiliz alfabesindeki sesli harfler: A, E, I, O, U. Toplam 5 sesli harf vardır.", "options": [{"text": "A, B, C, D, E", "correct": false}, {"text": "A, E, I, O, U", "correct": true}, {"text": "A, E, I, O, U, Y", "correct": false}, {"text": "B, C, D, F, G", "correct": false}], "order": 2},
+            {"question": "Harfleri İngilizce telaffuzlarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["alphabet", "pronunciation"], "explanation": "A harfi /ey/, B harfi /bi/, C harfi /si/ şeklinde telaffuz edilir.", "options": [{"text": "A", "pairId": 1, "correct": false}, {"text": "/ey/", "pairId": 1, "correct": false}, {"text": "B", "pairId": 2, "correct": false}, {"text": "/bi/", "pairId": 2, "correct": false}, {"text": "C", "pairId": 3, "correct": false}, {"text": "/si/", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "'Can you spell your name?' ne anlama gelir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["spelling"], "explanation": "'Can you spell your name?' = 'Adını harf harf söyleyebilir misin?' / 'Adını heceleyebilir misin?'", "options": [{"text": "Adını yazabilir misin?", "correct": false}, {"text": "Adını harf harf söyleyebilir misin?", "correct": true}, {"text": "Adın ne?", "correct": false}, {"text": "Adını değiştirebilir misin?", "correct": false}], "order": 4},
+            {"question": "Türk alfabesinde olup İngiliz alfabesinde olmayan harf hangisidir?", "type": "SELECT", "difficulty": "EASY", "tags": ["alphabet", "comparison"], "explanation": "'Ş' harfi Türk alfabesinde var ama İngiliz alfabesinde yoktur. İngilizce'de 'sh' harfleriyle bu ses karşılanır.", "options": [{"text": "S", "correct": false}, {"text": "Ş", "correct": true}, {"text": "T", "correct": false}, {"text": "K", "correct": false}], "order": 5},
+            {"question": "İngiliz alfabesinde olup Türk alfabesinde olmayan harf hangisidir?", "type": "SELECT", "difficulty": "HARD", "tags": ["alphabet", "comparison"], "explanation": "'W' harfi İngiliz alfabesinde var ama Türk alfabesinde yoktur. Aynı şekilde 'Q' ve 'X' de İngiliz alfabesine özgüdür.", "options": [{"text": "A", "correct": false}, {"text": "W", "correct": true}, {"text": "N", "correct": false}, {"text": "R", "correct": false}], "order": 6}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kişisel Bilgiler ve Aile",
+      "description": "Ülkeler, milliyetler, meslekler, aile üyeleri, sıfatlar ve iyelik zamirleri",
+      "order": 2,
+      "lessons": [
+        {
+          "title": "Countries & Nationalities — Ülkeler ve Milliyetler",
+          "order": 1,
+          "challenges": [
+            {"question": "Ülkeleri milliyetleriyle eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "EASY", "tags": ["countries", "nationalities"], "explanation": "Turkey → Turkish, England → English, Germany → German.", "options": [{"text": "Turkey", "pairId": 1, "correct": false}, {"text": "Turkish", "pairId": 1, "correct": false}, {"text": "England", "pairId": 2, "correct": false}, {"text": "English", "pairId": 2, "correct": false}, {"text": "Germany", "pairId": 3, "correct": false}, {"text": "German", "pairId": 3, "correct": false}], "order": 1},
+            {"question": "'I am Turkish.' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["nationalities"], "explanation": "'I am Turkish.' = 'Ben Türk'üm.' Milliyet belirtmek için 'I am + milliyet' kalıbı kullanılır.", "options": [{"text": "Ben Türkçe konuşuyorum.", "correct": false}, {"text": "Ben Türk'üm.", "correct": true}, {"text": "Ben Türkiye'deyim.", "correct": false}, {"text": "Türkiye güzel.", "correct": false}], "order": 2},
+            {"question": "'France' ülkesinin milliyeti (nationality) nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["countries", "nationalities"], "explanation": "France (Fransa) → French (Fransız). Milliyet ifadesinde ülke adı değil milliyet sıfatı kullanılır.", "options": [{"text": "France", "correct": false}, {"text": "French", "correct": true}, {"text": "Francian", "correct": false}, {"text": "Franchish", "correct": false}], "order": 3},
+            {"question": "Ülkeleri milliyetleriyle eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["countries", "nationalities"], "explanation": "Japan → Japanese, Italy → Italian, Spain → Spanish.", "options": [{"text": "Japan", "pairId": 1, "correct": false}, {"text": "Japanese", "pairId": 1, "correct": false}, {"text": "Italy", "pairId": 2, "correct": false}, {"text": "Italian", "pairId": 2, "correct": false}, {"text": "Spain", "pairId": 3, "correct": false}, {"text": "Spanish", "pairId": 3, "correct": false}], "order": 4},
+            {"question": "'Where are you from?' sorusuna 'Almanya'danım.' cevabını İngilizce olarak hangisi doğru ifade eder?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["countries", "conversation"], "explanation": "'I am from Germany.' = 'Ben Almanya'danım.' 'Where are you from?' sorusuna 'I am from + ülke adı' ile cevap verilir.", "options": [{"text": "I am Germany.", "correct": false}, {"text": "I am from Germany.", "correct": true}, {"text": "I am German from.", "correct": false}, {"text": "From Germany I am.", "correct": false}], "order": 5},
+            {"question": "He ___ from Brazil.", "type": "FILL_BLANK", "difficulty": "HARD", "tags": ["to be", "countries"], "explanation": "'He' zamiri ile 'is' kullanılır: He is from Brazil. = O Brezilya'dan.", "options": [{"text": "is", "correct": true}, {"text": "am", "correct": false}, {"text": "are", "correct": false}, {"text": "be", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Jobs & Occupations — Meslekler",
+          "order": 2,
+          "challenges": [
+            {"question": "Meslekleri Türkçe karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "EASY", "tags": ["jobs", "vocabulary"], "explanation": "Doctor = Doktor, Teacher = Öğretmen, Engineer = Mühendis.", "options": [{"text": "Doctor", "pairId": 1, "correct": false}, {"text": "Doktor", "pairId": 1, "correct": false}, {"text": "Teacher", "pairId": 2, "correct": false}, {"text": "Öğretmen", "pairId": 2, "correct": false}, {"text": "Engineer", "pairId": 3, "correct": false}, {"text": "Mühendis", "pairId": 3, "correct": false}], "order": 1},
+            {"question": "'Nurse' kelimesinin Türkçe karşılığı nedir?", "type": "SELECT", "difficulty": "EASY", "tags": ["jobs"], "explanation": "'Nurse' = Hemşire.", "options": [{"text": "Avukat", "correct": false}, {"text": "Hemşire", "correct": true}, {"text": "Mühendis", "correct": false}, {"text": "Polis", "correct": false}], "order": 2},
+            {"question": "'She is a pilot.' cümlesinin Türkçe karşılığı nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["jobs", "sentences"], "explanation": "'She is a pilot.' = 'O bir pilot.' Meslek söylerken 'a/an' kullanılır: a doctor, an engineer.", "options": [{"text": "O pilotluk yapıyor.", "correct": false}, {"text": "O bir pilot.", "correct": true}, {"text": "O pilota gidiyor.", "correct": false}, {"text": "O pilot olmak istiyor.", "correct": false}], "order": 3},
+            {"question": "'What do you do?' sorusu ne sorar?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["jobs", "questions"], "explanation": "'What do you do?' = 'Ne iş yapıyorsun?' / 'Mesleğin ne?' Bu soru meslek sormak için kullanılır.", "options": [{"text": "Ne yapıyorsun şu an?", "correct": false}, {"text": "Mesleğin ne?", "correct": true}, {"text": "Nereye gidiyorsun?", "correct": false}, {"text": "Ne yiyorsun?", "correct": false}], "order": 4},
+            {"question": "Meslekleri İngilizce karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["jobs"], "explanation": "Lawyer = Avukat, Firefighter = İtfaiyeci, Chef = Aşçıbaşı/Şef.", "options": [{"text": "Lawyer", "pairId": 1, "correct": false}, {"text": "Avukat", "pairId": 1, "correct": false}, {"text": "Firefighter", "pairId": 2, "correct": false}, {"text": "İtfaiyeci", "pairId": 2, "correct": false}, {"text": "Chef", "pairId": 3, "correct": false}, {"text": "Aşçıbaşı", "pairId": 3, "correct": false}], "order": 5},
+            {"question": "He is ___ engineer.", "type": "FILL_BLANK", "difficulty": "HARD", "tags": ["articles", "grammar"], "explanation": "Sesli harf (a, e, i, o, u) ile başlayan sözcüklerden önce 'an' kullanılır: an engineer, an apple. 'He is an engineer.' = O bir mühendis.", "options": [{"text": "an", "correct": true}, {"text": "a", "correct": false}, {"text": "the", "correct": false}, {"text": "is", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Family Members — Aile Üyeleri",
+          "order": 3,
+          "challenges": [
+            {"question": "Aile üyelerini Türkçe karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "EASY", "tags": ["family"], "explanation": "Mother = Anne, Father = Baba, Sister = Kız kardeş.", "options": [{"text": "Mother", "pairId": 1, "correct": false}, {"text": "Anne", "pairId": 1, "correct": false}, {"text": "Father", "pairId": 2, "correct": false}, {"text": "Baba", "pairId": 2, "correct": false}, {"text": "Sister", "pairId": 3, "correct": false}, {"text": "Kız kardeş", "pairId": 3, "correct": false}], "order": 1},
+            {"question": "'Brother' kelimesinin Türkçe karşılığı nedir?", "type": "SELECT", "difficulty": "EASY", "tags": ["family"], "explanation": "'Brother' = Erkek kardeş. Ağabey de 'brother' veya 'elder/older brother' olarak ifade edilir.", "options": [{"text": "Kız kardeş", "correct": false}, {"text": "Erkek kardeş", "correct": true}, {"text": "Amca", "correct": false}, {"text": "Kuzen", "correct": false}], "order": 2},
+            {"question": "'Grandmother' ne demektir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["family"], "explanation": "'Grandmother' = Büyükanne (babaanne veya anneanne). İngilizce'de anne tarafı/baba tarafı ayrımı yapılmaz.", "options": [{"text": "Teyze", "correct": false}, {"text": "Büyükanne", "correct": true}, {"text": "Büyükbaba", "correct": false}, {"text": "Hala", "correct": false}], "order": 3},
+            {"question": "Aile üyelerini İngilizce karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["family"], "explanation": "Uncle = Amca/Dayı, Aunt = Hala/Teyze, Cousin = Kuzen.", "options": [{"text": "Uncle", "pairId": 1, "correct": false}, {"text": "Amca / Dayı", "pairId": 1, "correct": false}, {"text": "Aunt", "pairId": 2, "correct": false}, {"text": "Hala / Teyze", "pairId": 2, "correct": false}, {"text": "Cousin", "pairId": 3, "correct": false}, {"text": "Kuzen", "pairId": 3, "correct": false}], "order": 4},
+            {"question": "'I have two brothers and one sister.' ne anlama gelir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["family", "have"], "explanation": "'I have two brothers and one sister.' = 'İki erkek kardeşim ve bir kız kardeşim var.'", "options": [{"text": "İki kız kardeşim ve bir erkek kardeşim var.", "correct": false}, {"text": "İki erkek kardeşim ve bir kız kardeşim var.", "correct": true}, {"text": "İki amcam ve bir teyzem var.", "correct": false}, {"text": "İki abim ve bir ablam var.", "correct": false}], "order": 5},
+            {"question": "'This is my grandfather.' cümlesinin Türkçe karşılığı nedir?", "type": "SELECT", "difficulty": "HARD", "tags": ["family", "this is"], "explanation": "'This is my grandfather.' = 'Bu benim büyükbabam.' 'This is...' kalıbı birini tanıtırken kullanılır.", "options": [{"text": "Bu benim büyükannem.", "correct": false}, {"text": "Bu benim büyükbabam.", "correct": true}, {"text": "Bu benim amcam.", "correct": false}, {"text": "Büyükbabam nerede?", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Describing People — İnsanları Tanımlama",
+          "order": 4,
+          "challenges": [
+            {"question": "Sıfatları Türkçe karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "EASY", "tags": ["adjectives"], "explanation": "Tall = Uzun (boylu), Short = Kısa (boylu), Young = Genç.", "options": [{"text": "Tall", "pairId": 1, "correct": false}, {"text": "Uzun (boylu)", "pairId": 1, "correct": false}, {"text": "Short", "pairId": 2, "correct": false}, {"text": "Kısa (boylu)", "pairId": 2, "correct": false}, {"text": "Young", "pairId": 3, "correct": false}, {"text": "Genç", "pairId": 3, "correct": false}], "order": 1},
+            {"question": "'She is beautiful.' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["adjectives"], "explanation": "'She is beautiful.' = 'O güzel.' (kadın için)", "options": [{"text": "O çirkin.", "correct": false}, {"text": "O güzel.", "correct": true}, {"text": "O uzun.", "correct": false}, {"text": "O yaşlı.", "correct": false}], "order": 2},
+            {"question": "'Old' kelimesinin zıt anlamlısı hangisidir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["adjectives", "opposites"], "explanation": "'Old' (yaşlı/eski) ↔ 'Young' (genç) veya 'New' (yeni). Kişi için 'young', eşya için 'new' kullanılır.", "options": [{"text": "Big", "correct": false}, {"text": "Young", "correct": true}, {"text": "Tall", "correct": false}, {"text": "Strong", "correct": false}], "order": 3},
+            {"question": "Zıt anlamlı sıfatları eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["adjectives", "opposites"], "explanation": "Big ↔ Small, Happy ↔ Sad, Fast ↔ Slow.", "options": [{"text": "Big", "pairId": 1, "correct": false}, {"text": "Small", "pairId": 1, "correct": false}, {"text": "Happy", "pairId": 2, "correct": false}, {"text": "Sad", "pairId": 2, "correct": false}, {"text": "Fast", "pairId": 3, "correct": false}, {"text": "Slow", "pairId": 3, "correct": false}], "order": 4},
+            {"question": "'He is tall and strong.' ne anlama gelir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["adjectives", "describing"], "explanation": "'He is tall and strong.' = 'O uzun boylu ve güçlü.' 'And' (ve) bağlacı ile sıfatlar birleştirilebilir.", "options": [{"text": "O kısa ve zayıf.", "correct": false}, {"text": "O uzun boylu ve güçlü.", "correct": true}, {"text": "O yaşlı ve yorgun.", "correct": false}, {"text": "O genç ve güzel.", "correct": false}], "order": 5},
+            {"question": "They ___ happy.", "type": "FILL_BLANK", "difficulty": "HARD", "tags": ["to be", "adjectives"], "explanation": "'They' (Onlar) zamiri ile 'are' kullanılır: They are happy. = Onlar mutlu.", "options": [{"text": "are", "correct": true}, {"text": "is", "correct": false}, {"text": "am", "correct": false}, {"text": "be", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Possessive Adjectives — İyelik Sıfatları",
+          "order": 5,
+          "challenges": [
+            {"question": "İyelik sıfatlarını zamirleriyle eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "MEDIUM", "tags": ["possessives"], "explanation": "I → my (benim), You → your (senin), He → his (onun - erkek).", "options": [{"text": "I", "pairId": 1, "correct": false}, {"text": "my", "pairId": 1, "correct": false}, {"text": "You", "pairId": 2, "correct": false}, {"text": "your", "pairId": 2, "correct": false}, {"text": "He", "pairId": 3, "correct": false}, {"text": "his", "pairId": 3, "correct": false}], "order": 1},
+            {"question": "'This is my book.' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["possessives"], "explanation": "'This is my book.' = 'Bu benim kitabım.' 'My' = benim.", "options": [{"text": "Bu senin kitabın.", "correct": false}, {"text": "Bu benim kitabım.", "correct": true}, {"text": "Bu onun kitabı.", "correct": false}, {"text": "Bu bir kitap.", "correct": false}], "order": 2},
+            {"question": "'Her' iyelik sıfatı kimin için kullanılır?", "type": "SELECT", "difficulty": "EASY", "tags": ["possessives"], "explanation": "'Her' (onun) kadın için kullanılır. Erkek için 'his' kullanılır. Her name = Onun adı (kadın), His name = Onun adı (erkek).", "options": [{"text": "Erkek için", "correct": false}, {"text": "Kadın için", "correct": true}, {"text": "Çoğul için", "correct": false}, {"text": "Hayvan için", "correct": false}], "order": 3},
+            {"question": "This is ___ car. (onların)", "type": "FILL_BLANK", "difficulty": "HARD", "tags": ["possessives"], "explanation": "'Their' = Onların. 'This is their car.' = 'Bu onların arabası.'", "options": [{"text": "their", "correct": true}, {"text": "they", "correct": false}, {"text": "them", "correct": false}, {"text": "there", "correct": false}], "order": 4},
+            {"question": "İyelik sıfatlarını Türkçe karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["possessives"], "explanation": "Our = Bizim, Your (çoğul) = Sizin, Their = Onların.", "options": [{"text": "Our", "pairId": 1, "correct": false}, {"text": "Bizim", "pairId": 1, "correct": false}, {"text": "Your (çoğul)", "pairId": 2, "correct": false}, {"text": "Sizin", "pairId": 2, "correct": false}, {"text": "Their", "pairId": 3, "correct": false}, {"text": "Onların", "pairId": 3, "correct": false}], "order": 5},
+            {"question": "'What is his name?' ne anlama gelir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["possessives", "questions"], "explanation": "'What is his name?' = 'Onun (erkek) adı ne?' 'His' erkek için kullanılan iyelik sıfatıdır.", "options": [{"text": "Onun (kadın) adı ne?", "correct": false}, {"text": "Onun (erkek) adı ne?", "correct": true}, {"text": "Senin adın ne?", "correct": false}, {"text": "Benim adım ne?", "correct": false}], "order": 6}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Günlük Yaşam ve Rutinler",
+      "description": "Günler, aylar, saat söyleme, günlük rutinler ve Simple Present Tense",
+      "order": 3,
+      "lessons": [
+        {
+          "title": "Days & Months — Günler ve Aylar",
+          "order": 1,
+          "challenges": [
+            {"question": "Haftanın günlerini İngilizce karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "EASY", "tags": ["days"], "explanation": "Monday = Pazartesi, Wednesday = Çarşamba, Friday = Cuma.", "options": [{"text": "Monday", "pairId": 1, "correct": false}, {"text": "Pazartesi", "pairId": 1, "correct": false}, {"text": "Wednesday", "pairId": 2, "correct": false}, {"text": "Çarşamba", "pairId": 2, "correct": false}, {"text": "Friday", "pairId": 3, "correct": false}, {"text": "Cuma", "pairId": 3, "correct": false}], "order": 1},
+            {"question": "'Saturday' hangi gündür?", "type": "SELECT", "difficulty": "EASY", "tags": ["days"], "explanation": "'Saturday' = Cumartesi. Haftanın günleri İngilizce'de büyük harfle başlar.", "options": [{"text": "Pazar", "correct": false}, {"text": "Cumartesi", "correct": true}, {"text": "Cuma", "correct": false}, {"text": "Perşembe", "correct": false}], "order": 2},
+            {"question": "'January' hangi aydır?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["months"], "explanation": "'January' = Ocak. Yılın ilk ayıdır. Aylar da İngilizce'de büyük harfle başlar.", "options": [{"text": "Şubat", "correct": false}, {"text": "Ocak", "correct": true}, {"text": "Mart", "correct": false}, {"text": "Aralık", "correct": false}], "order": 3},
+            {"question": "Ayları İngilizce karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["months"], "explanation": "March = Mart, August = Ağustos, December = Aralık.", "options": [{"text": "March", "pairId": 1, "correct": false}, {"text": "Mart", "pairId": 1, "correct": false}, {"text": "August", "pairId": 2, "correct": false}, {"text": "Ağustos", "pairId": 2, "correct": false}, {"text": "December", "pairId": 3, "correct": false}, {"text": "Aralık", "pairId": 3, "correct": false}], "order": 4},
+            {"question": "'What day is it today?' sorusu ne sorar?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["days", "questions"], "explanation": "'What day is it today?' = 'Bugün günlerden ne?' / 'Bugün hangi gün?'", "options": [{"text": "Bugün ayın kaçı?", "correct": false}, {"text": "Bugün hangi gün?", "correct": true}, {"text": "Saat kaç?", "correct": false}, {"text": "Hava nasıl?", "correct": false}], "order": 5},
+            {"question": "Haftanın günlerinin doğru sıralaması hangisidir?", "type": "SELECT", "difficulty": "HARD", "tags": ["days", "order"], "explanation": "İngilizce'de hafta genellikle Monday ile başlar: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday.", "options": [{"text": "Sunday, Monday, Tuesday...", "correct": false}, {"text": "Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday", "correct": true}, {"text": "Saturday, Sunday, Monday...", "correct": false}, {"text": "Friday, Saturday, Sunday...", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Telling the Time — Saat Söyleme",
+          "order": 2,
+          "challenges": [
+            {"question": "'What time is it?' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["time", "questions"], "explanation": "'What time is it?' = 'Saat kaç?'", "options": [{"text": "Bugün hangi gün?", "correct": false}, {"text": "Saat kaç?", "correct": true}, {"text": "Ne zaman?", "correct": false}, {"text": "Neredesin?", "correct": false}], "order": 1},
+            {"question": "'It is three o'clock.' saat kaçtır?", "type": "SELECT", "difficulty": "EASY", "tags": ["time"], "explanation": "'It is three o'clock.' = 'Saat 3:00.' 'O'clock' tam saatlerde kullanılır.", "options": [{"text": "3:30", "correct": false}, {"text": "3:00", "correct": true}, {"text": "13:00", "correct": false}, {"text": "3:15", "correct": false}], "order": 2},
+            {"question": "Saat ifadelerini eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "MEDIUM", "tags": ["time"], "explanation": "Half past = buçuk, Quarter past = çeyrek geçe, Quarter to = çeyreğe çeyrek var.", "options": [{"text": "Half past seven", "pairId": 1, "correct": false}, {"text": "7:30 (yedi buçuk)", "pairId": 1, "correct": false}, {"text": "Quarter past nine", "pairId": 2, "correct": false}, {"text": "9:15 (dokuzu çeyrek geçe)", "pairId": 2, "correct": false}, {"text": "Quarter to five", "pairId": 3, "correct": false}, {"text": "4:45 (beşe çeyrek var)", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "'It's ten past two.' saat kaçtır?", "type": "SELECT", "difficulty": "HARD", "tags": ["time"], "explanation": "'Ten past two' = 2:10 (ikiyi on geçe). 'Past' geçe anlamına gelir.", "options": [{"text": "2:00", "correct": false}, {"text": "10:02", "correct": false}, {"text": "2:10", "correct": true}, {"text": "10:20", "correct": false}], "order": 4},
+            {"question": "'It's twenty to six.' saat kaçtır?", "type": "SELECT", "difficulty": "HARD", "tags": ["time"], "explanation": "'Twenty to six' = 5:40 (altıya yirmi var). 'To' var anlamına gelir.", "options": [{"text": "6:20", "correct": false}, {"text": "5:20", "correct": false}, {"text": "5:40", "correct": true}, {"text": "6:40", "correct": false}], "order": 5},
+            {"question": "'At' edatı saat ifadelerinde nasıl kullanılır?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["time", "prepositions"], "explanation": "'At' belirli bir saat belirtirken kullanılır: at 7 o'clock, at noon (öğlen), at midnight (gece yarısı).", "options": [{"text": "Gün belirtirken", "correct": false}, {"text": "Belirli bir saat belirtirken", "correct": true}, {"text": "Ay belirtirken", "correct": false}, {"text": "Yıl belirtirken", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Daily Routines — Günlük Rutinler",
+          "order": 3,
+          "challenges": [
+            {"question": "Günlük rutinleri Türkçe karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "EASY", "tags": ["daily routines"], "explanation": "Wake up = Uyanmak, Have breakfast = Kahvaltı yapmak, Go to school = Okula gitmek.", "options": [{"text": "Wake up", "pairId": 1, "correct": false}, {"text": "Uyanmak", "pairId": 1, "correct": false}, {"text": "Have breakfast", "pairId": 2, "correct": false}, {"text": "Kahvaltı yapmak", "pairId": 2, "correct": false}, {"text": "Go to school", "pairId": 3, "correct": false}, {"text": "Okula gitmek", "pairId": 3, "correct": false}], "order": 1},
+            {"question": "'I brush my teeth.' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["daily routines"], "explanation": "'I brush my teeth.' = 'Dişlerimi fırçalarım.'", "options": [{"text": "Saçımı tararım.", "correct": false}, {"text": "Dişlerimi fırçalarım.", "correct": true}, {"text": "Yüzümü yıkarım.", "correct": false}, {"text": "Duş alırım.", "correct": false}], "order": 2},
+            {"question": "'I go to bed at 10 o'clock.' cümlesinin anlamı nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["daily routines", "time"], "explanation": "'I go to bed at 10 o'clock.' = 'Saat 10'da yatağa giderim.' 'Go to bed' = yatmak.", "options": [{"text": "Saat 10'da kalkarım.", "correct": false}, {"text": "Saat 10'da yatağa giderim.", "correct": true}, {"text": "Saat 10'da okula giderim.", "correct": false}, {"text": "Saat 10'da yemek yerim.", "correct": false}], "order": 3},
+            {"question": "Günlük aktiviteleri eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "MEDIUM", "tags": ["daily routines"], "explanation": "Take a shower = Duş almak, Do homework = Ödev yapmak, Watch TV = TV izlemek.", "options": [{"text": "Take a shower", "pairId": 1, "correct": false}, {"text": "Duş almak", "pairId": 1, "correct": false}, {"text": "Do homework", "pairId": 2, "correct": false}, {"text": "Ödev yapmak", "pairId": 2, "correct": false}, {"text": "Watch TV", "pairId": 3, "correct": false}, {"text": "TV izlemek", "pairId": 3, "correct": false}], "order": 4},
+            {"question": "'Have lunch' ne anlama gelir?", "type": "SELECT", "difficulty": "HARD", "tags": ["daily routines", "meals"], "explanation": "'Have lunch' = 'Öğle yemeği yemek.' Have breakfast = kahvaltı, have lunch = öğle yemeği, have dinner = akşam yemeği.", "options": [{"text": "Kahvaltı yapmak", "correct": false}, {"text": "Öğle yemeği yemek", "correct": true}, {"text": "Akşam yemeği yemek", "correct": false}, {"text": "Atıştırmak", "correct": false}], "order": 5},
+            {"question": "I ___ to school every day.", "type": "FILL_BLANK", "difficulty": "HARD", "tags": ["daily routines", "simple present"], "explanation": "'I go to school every day.' = 'Her gün okula giderim.' Simple Present Tense'de 'I' zamiri ile fiil yalın hâlde kullanılır.", "options": [{"text": "go", "correct": true}, {"text": "goes", "correct": false}, {"text": "going", "correct": false}, {"text": "went", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Simple Present: Positive — Geniş Zaman: Olumlu",
+          "order": 4,
+          "challenges": [
+            {"question": "Simple Present Tense (Geniş Zaman) ne zaman kullanılır?", "type": "SELECT", "difficulty": "EASY", "tags": ["simple present", "grammar"], "explanation": "Simple Present Tense alışkanlıklar, genel doğrular ve tekrarlanan eylemler için kullanılır: I play football every week.", "options": [{"text": "Şu an yapılan eylemler için", "correct": false}, {"text": "Alışkanlıklar, genel doğrular ve tekrarlanan eylemler için", "correct": true}, {"text": "Geçmişte yapılan eylemler için", "correct": false}, {"text": "Gelecekte yapılacak eylemler için", "correct": false}], "order": 1},
+            {"question": "He ___ football every Saturday.", "type": "FILL_BLANK", "difficulty": "MEDIUM", "tags": ["simple present", "third person"], "explanation": "He/She/It ile fiillere '-s' veya '-es' eklenir: He plays football. (play → plays)", "options": [{"text": "plays", "correct": true}, {"text": "play", "correct": false}, {"text": "playing", "correct": false}, {"text": "played", "correct": false}], "order": 2},
+            {"question": "'She reads books every night.' cümlesinin Türkçe karşılığı nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["simple present"], "explanation": "'She reads books every night.' = 'O her gece kitap okur.' He/She/It'de fiil '-s' alır: read → reads.", "options": [{"text": "O kitap okuyor şu an.", "correct": false}, {"text": "O her gece kitap okur.", "correct": true}, {"text": "O dün kitap okudu.", "correct": false}, {"text": "O kitap okumak istiyor.", "correct": false}], "order": 3},
+            {"question": "Zamirlerle doğru fiil çekimlerini eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["simple present", "conjugation"], "explanation": "I/You/We/They → play (yalın), He/She/It → plays (-s eklenir).", "options": [{"text": "I play", "pairId": 1, "correct": false}, {"text": "Doğru (yalın hâl)", "pairId": 1, "correct": false}, {"text": "She plays", "pairId": 2, "correct": false}, {"text": "Doğru (-s eklenir)", "pairId": 2, "correct": false}, {"text": "They play", "pairId": 3, "correct": false}, {"text": "Doğru (yalın hâl)", "pairId": 3, "correct": false}], "order": 4},
+            {"question": "'We live in Ankara.' cümlesinin anlamı nedir?", "type": "SELECT", "difficulty": "EASY", "tags": ["simple present"], "explanation": "'We live in Ankara.' = 'Biz Ankara'da yaşarız/yaşıyoruz.'", "options": [{"text": "Biz Ankara'ya gideceğiz.", "correct": false}, {"text": "Biz Ankara'da yaşarız.", "correct": true}, {"text": "Biz Ankara'dan geldik.", "correct": false}, {"text": "Biz Ankara'yı severiz.", "correct": false}], "order": 5},
+            {"question": "'The sun rises in the east.' cümlesi hangi kullanıma örnektir?", "type": "SELECT", "difficulty": "HARD", "tags": ["simple present", "general truth"], "explanation": "'The sun rises in the east.' = 'Güneş doğudan doğar.' Bu, Simple Present Tense'in genel doğrular için kullanılmasına örnektir.", "options": [{"text": "Alışkanlık", "correct": false}, {"text": "Genel doğru (bilimsel gerçek)", "correct": true}, {"text": "Şu anki eylem", "correct": false}, {"text": "Gelecek plan", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Simple Present: Negative & Questions — Olumsuz ve Soru",
+          "order": 5,
+          "challenges": [
+            {"question": "'I don't like fish.' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["simple present", "negative"], "explanation": "'I don't like fish.' = 'Balık sevmem.' Olumsuz yapı: I/You/We/They + don't + fiil.", "options": [{"text": "Balık severim.", "correct": false}, {"text": "Balık sevmem.", "correct": true}, {"text": "Balık yiyorum.", "correct": false}, {"text": "Balık yemek istiyorum.", "correct": false}], "order": 1},
+            {"question": "She ___ like coffee.", "type": "FILL_BLANK", "difficulty": "MEDIUM", "tags": ["simple present", "negative"], "explanation": "He/She/It ile olumsuz yapı: doesn't + fiil (yalın). She doesn't like coffee. = O kahve sevmez.", "options": [{"text": "doesn't", "correct": true}, {"text": "don't", "correct": false}, {"text": "isn't", "correct": false}, {"text": "not", "correct": false}], "order": 2},
+            {"question": "'Do you speak English?' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["simple present", "questions"], "explanation": "'Do you speak English?' = 'İngilizce konuşur musun?' Soru yapısı: Do/Does + özne + fiil (yalın)?", "options": [{"text": "İngilizce öğreniyor musun?", "correct": false}, {"text": "İngilizce konuşur musun?", "correct": true}, {"text": "İngilizce zor mu?", "correct": false}, {"text": "İngilizce biliyor musun?", "correct": false}], "order": 3},
+            {"question": "Olumlu ve olumsuz yapıları eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["simple present", "negative"], "explanation": "I like → I don't like, She likes → She doesn't like, They play → They don't play.", "options": [{"text": "I like", "pairId": 1, "correct": false}, {"text": "I don't like", "pairId": 1, "correct": false}, {"text": "She likes", "pairId": 2, "correct": false}, {"text": "She doesn't like", "pairId": 2, "correct": false}, {"text": "They play", "pairId": 3, "correct": false}, {"text": "They don't play", "pairId": 3, "correct": false}], "order": 4},
+            {"question": "___ she live in Istanbul?", "type": "FILL_BLANK", "difficulty": "HARD", "tags": ["simple present", "questions"], "explanation": "He/She/It ile soru: Does + özne + fiil (yalın)? 'Does she live in Istanbul?' = 'O İstanbul'da mı yaşar?'", "options": [{"text": "Does", "correct": true}, {"text": "Do", "correct": false}, {"text": "Is", "correct": false}, {"text": "Are", "correct": false}], "order": 5},
+            {"question": "'He doesn't eat meat.' cümlesinin anlamı nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["simple present", "negative"], "explanation": "'He doesn't eat meat.' = 'O et yemez.' 'Doesn't' kullanıldığında fiil yalın kalır: eat (eats değil).", "options": [{"text": "O et yiyor.", "correct": false}, {"text": "O et yemez.", "correct": true}, {"text": "O et yemek istiyor.", "correct": false}, {"text": "O et yedi.", "correct": false}], "order": 6}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Yiyecekler, İçecekler ve Alışveriş",
+      "description": "Yiyecek-içecek kelimeleri, sayılabilen/sayılamayan isimler, sipariş verme, alışveriş ve beğeni ifadeleri",
+      "order": 4,
+      "lessons": [
+        {
+          "title": "Food & Drinks — Yiyecekler ve İçecekler",
+          "order": 1,
+          "challenges": [
+            {"question": "Yiyecekleri Türkçe karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "EASY", "tags": ["food", "vocabulary"], "explanation": "Bread = Ekmek, Cheese = Peynir, Egg = Yumurta.", "options": [{"text": "Bread", "pairId": 1, "correct": false}, {"text": "Ekmek", "pairId": 1, "correct": false}, {"text": "Cheese", "pairId": 2, "correct": false}, {"text": "Peynir", "pairId": 2, "correct": false}, {"text": "Egg", "pairId": 3, "correct": false}, {"text": "Yumurta", "pairId": 3, "correct": false}], "order": 1},
+            {"question": "'Chicken' ne demektir?", "type": "SELECT", "difficulty": "EASY", "tags": ["food"], "explanation": "'Chicken' = Tavuk. Hem hayvan hem de yiyecek olarak kullanılır.", "options": [{"text": "Balık", "correct": false}, {"text": "Tavuk", "correct": true}, {"text": "Et", "correct": false}, {"text": "Pirinç", "correct": false}], "order": 2},
+            {"question": "İçecekleri İngilizce karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "MEDIUM", "tags": ["drinks"], "explanation": "Water = Su, Milk = Süt, Juice = Meyve suyu.", "options": [{"text": "Water", "pairId": 1, "correct": false}, {"text": "Su", "pairId": 1, "correct": false}, {"text": "Milk", "pairId": 2, "correct": false}, {"text": "Süt", "pairId": 2, "correct": false}, {"text": "Juice", "pairId": 3, "correct": false}, {"text": "Meyve suyu", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "'Vegetable' ne demektir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["food"], "explanation": "'Vegetable' = Sebze. 'Fruit' = Meyve.", "options": [{"text": "Meyve", "correct": false}, {"text": "Sebze", "correct": true}, {"text": "Et", "correct": false}, {"text": "Tatlı", "correct": false}], "order": 4},
+            {"question": "'I am hungry.' ne anlama gelir?", "type": "SELECT", "difficulty": "HARD", "tags": ["food", "expressions"], "explanation": "'I am hungry.' = 'Açım.' / 'Karnım aç.' 'Hungry' = aç, 'Thirsty' = susuz.", "options": [{"text": "Yorgunum.", "correct": false}, {"text": "Açım.", "correct": true}, {"text": "Susuzum.", "correct": false}, {"text": "Hastayım.", "correct": false}], "order": 5},
+            {"question": "'I am thirsty.' ne anlama gelir?", "type": "SELECT", "difficulty": "HARD", "tags": ["drinks", "expressions"], "explanation": "'I am thirsty.' = 'Susadım.' / 'Susuzum.'", "options": [{"text": "Açım.", "correct": false}, {"text": "Yorgunum.", "correct": false}, {"text": "Susadım.", "correct": true}, {"text": "Üşüyorum.", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Some & Any — Bazı ve Hiç",
+          "order": 2,
+          "challenges": [
+            {"question": "'Some' ne zaman kullanılır?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["some/any", "grammar"], "explanation": "'Some' (bazı/biraz) olumlu cümlelerde ve teklif/rica soru cümlelerinde kullanılır: I have some milk. / Would you like some tea?", "options": [{"text": "Olumsuz cümlelerde", "correct": false}, {"text": "Olumlu cümlelerde ve teklif sorularında", "correct": true}, {"text": "Yalnızca soru cümlelerinde", "correct": false}, {"text": "Her zaman", "correct": false}], "order": 1},
+            {"question": "'Any' ne zaman kullanılır?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["some/any", "grammar"], "explanation": "'Any' (hiç/herhangi) olumsuz cümlelerde ve soru cümlelerinde kullanılır: I don't have any milk. / Do you have any milk?", "options": [{"text": "Olumlu cümlelerde", "correct": false}, {"text": "Olumsuz cümlelerde ve soru cümlelerinde", "correct": true}, {"text": "Yalnızca olumlu cümlelerde", "correct": false}, {"text": "Her zaman", "correct": false}], "order": 2},
+            {"question": "There ___ some water in the glass.", "type": "FILL_BLANK", "difficulty": "EASY", "tags": ["there is/are", "some"], "explanation": "'Water' sayılamayan isimdir, tekil muamele görür: There is some water. = Bardakta biraz su var.", "options": [{"text": "is", "correct": true}, {"text": "are", "correct": false}, {"text": "am", "correct": false}, {"text": "have", "correct": false}], "order": 3},
+            {"question": "Some/Any kullanımlarını eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["some/any"], "explanation": "Olumlu → some, olumsuz → any, teklif sorusu → some.", "options": [{"text": "I have ___ apples.", "pairId": 1, "correct": false}, {"text": "some (olumlu)", "pairId": 1, "correct": false}, {"text": "I don't have ___ apples.", "pairId": 2, "correct": false}, {"text": "any (olumsuz)", "pairId": 2, "correct": false}, {"text": "Would you like ___ tea?", "pairId": 3, "correct": false}, {"text": "some (teklif)", "pairId": 3, "correct": false}], "order": 4},
+            {"question": "'There aren't any eggs.' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["there is/are", "any"], "explanation": "'There aren't any eggs.' = 'Hiç yumurta yok.'", "options": [{"text": "Biraz yumurta var.", "correct": false}, {"text": "Hiç yumurta yok.", "correct": true}, {"text": "Çok yumurta var.", "correct": false}, {"text": "Yumurta istiyorum.", "correct": false}], "order": 5},
+            {"question": "Do you have ___ brothers?", "type": "FILL_BLANK", "difficulty": "HARD", "tags": ["some/any", "questions"], "explanation": "Soru cümlesinde 'any' kullanılır: Do you have any brothers? = Hiç erkek kardeşin var mı?", "options": [{"text": "any", "correct": true}, {"text": "some", "correct": false}, {"text": "a", "correct": false}, {"text": "the", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Ordering Food — Sipariş Verme",
+          "order": 3,
+          "challenges": [
+            {"question": "'Can I have a glass of water, please?' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["ordering", "polite expressions"], "explanation": "'Can I have a glass of water, please?' = 'Bir bardak su alabilir miyim, lütfen?'", "options": [{"text": "Su var mı?", "correct": false}, {"text": "Bir bardak su alabilir miyim, lütfen?", "correct": true}, {"text": "Su istemiyorum.", "correct": false}, {"text": "Suyu nereye koyayım?", "correct": false}], "order": 1},
+            {"question": "Restoran ifadelerini eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "MEDIUM", "tags": ["ordering", "restaurant"], "explanation": "I'd like = İstiyorum/Rica ederim, The bill please = Hesap lütfen, Can I have = Alabilir miyim.", "options": [{"text": "I'd like a pizza.", "pairId": 1, "correct": false}, {"text": "Bir pizza istiyorum.", "pairId": 1, "correct": false}, {"text": "The bill, please.", "pairId": 2, "correct": false}, {"text": "Hesap, lütfen.", "pairId": 2, "correct": false}, {"text": "Can I have some tea?", "pairId": 3, "correct": false}, {"text": "Biraz çay alabilir miyim?", "pairId": 3, "correct": false}], "order": 2},
+            {"question": "'Would you like some coffee?' ne anlama gelir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["ordering", "offers"], "explanation": "'Would you like some coffee?' = 'Biraz kahve ister misiniz?' Bu, kibar bir teklif cümlesidir.", "options": [{"text": "Kahve sever misiniz?", "correct": false}, {"text": "Biraz kahve ister misiniz?", "correct": true}, {"text": "Kahve var mı?", "correct": false}, {"text": "Kahve nerede?", "correct": false}], "order": 3},
+            {"question": "'Yes, please.' ve 'No, thank you.' ne zaman kullanılır?", "type": "SELECT", "difficulty": "EASY", "tags": ["polite expressions"], "explanation": "'Yes, please.' bir teklifi kabul ederken, 'No, thank you.' bir teklifi kibarca reddederken kullanılır.", "options": [{"text": "Soru sorarken", "correct": false}, {"text": "Bir teklifi kabul ederken / kibarca reddederken", "correct": true}, {"text": "Vedalaşırken", "correct": false}, {"text": "Selamlaşırken", "correct": false}], "order": 4},
+            {"question": "'Menu' kelimesi ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["restaurant"], "explanation": "'Menu' = Menü / Yemek listesi. Restoranda sipariş vermek için bakılan listedir.", "options": [{"text": "Hesap", "correct": false}, {"text": "Menü / Yemek listesi", "correct": true}, {"text": "Garson", "correct": false}, {"text": "Masa", "correct": false}], "order": 5},
+            {"question": "Kibar ifadeleri Türkçe karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["polite expressions"], "explanation": "Please = Lütfen, Thank you = Teşekkür ederim, You're welcome = Rica ederim / Bir şey değil.", "options": [{"text": "Please", "pairId": 1, "correct": false}, {"text": "Lütfen", "pairId": 1, "correct": false}, {"text": "Thank you", "pairId": 2, "correct": false}, {"text": "Teşekkür ederim", "pairId": 2, "correct": false}, {"text": "You're welcome", "pairId": 3, "correct": false}, {"text": "Rica ederim / Bir şey değil", "pairId": 3, "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Shopping — Alışveriş",
+          "order": 4,
+          "challenges": [
+            {"question": "'How much is it?' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["shopping"], "explanation": "'How much is it?' = 'Bu ne kadar?' / 'Fiyatı ne?' Fiyat sormak için kullanılır.", "options": [{"text": "Bu nedir?", "correct": false}, {"text": "Bu ne kadar?", "correct": true}, {"text": "Bu nerede?", "correct": false}, {"text": "Bu kimin?", "correct": false}], "order": 1},
+            {"question": "'It's ten dollars.' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["shopping", "money"], "explanation": "'It's ten dollars.' = 'On dolar.' Fiyat söylerken 'It's + fiyat' kalıbı kullanılır.", "options": [{"text": "On tane istiyorum.", "correct": false}, {"text": "On dolar.", "correct": true}, {"text": "Saat on.", "correct": false}, {"text": "On yaşında.", "correct": false}], "order": 2},
+            {"question": "Alışveriş ifadelerini eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "MEDIUM", "tags": ["shopping"], "explanation": "How much = Ne kadar, Cheap = Ucuz, Expensive = Pahalı.", "options": [{"text": "How much?", "pairId": 1, "correct": false}, {"text": "Ne kadar?", "pairId": 1, "correct": false}, {"text": "Cheap", "pairId": 2, "correct": false}, {"text": "Ucuz", "pairId": 2, "correct": false}, {"text": "Expensive", "pairId": 3, "correct": false}, {"text": "Pahalı", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "'Can I try this on?' ne anlama gelir?", "type": "SELECT", "difficulty": "HARD", "tags": ["shopping", "clothes"], "explanation": "'Can I try this on?' = 'Bunu deneyebilir miyim?' Kıyafet alışverişinde kullanılan bir ifadedir.", "options": [{"text": "Bunu alabilir miyim?", "correct": false}, {"text": "Bunu deneyebilir miyim?", "correct": true}, {"text": "Bunu iade edebilir miyim?", "correct": false}, {"text": "Bu ne kadar?", "correct": false}], "order": 4},
+            {"question": "'I'll take it.' ne anlama gelir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["shopping"], "explanation": "'I'll take it.' = 'Bunu alacağım.' / 'Bunu alıyorum.' Alışverişte bir ürünü almaya karar verdiğinizde söylenir.", "options": [{"text": "Bunu istemiyorum.", "correct": false}, {"text": "Bunu alacağım.", "correct": true}, {"text": "Bunu deneyeceğim.", "correct": false}, {"text": "Bunu değiştireceğim.", "correct": false}], "order": 5},
+            {"question": "Alışveriş diyaloğunu tamamlayın: 'How much is this T-shirt?' — '___'", "type": "SELECT", "difficulty": "HARD", "tags": ["shopping", "dialogue"], "explanation": "Fiyat sorusuna fiyat ile cevap verilir: 'It's fifteen dollars.' = 'On beş dolar.'", "options": [{"text": "It's blue.", "correct": false}, {"text": "It's large.", "correct": false}, {"text": "It's fifteen dollars.", "correct": true}, {"text": "It's my T-shirt.", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Likes & Dislikes — Sevmek ve Sevmemek",
+          "order": 5,
+          "challenges": [
+            {"question": "'I like pizza.' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["likes", "food"], "explanation": "'I like pizza.' = 'Pizza severim.' 'Like' = sevmek, beğenmek.", "options": [{"text": "Pizza istiyorum.", "correct": false}, {"text": "Pizza severim.", "correct": true}, {"text": "Pizza yiyorum.", "correct": false}, {"text": "Pizza güzel.", "correct": false}], "order": 1},
+            {"question": "'I don't like spinach.' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["dislikes"], "explanation": "'I don't like spinach.' = 'Ispanak sevmem.'", "options": [{"text": "Ispanak severim.", "correct": false}, {"text": "Ispanak sevmem.", "correct": true}, {"text": "Ispanak yiyorum.", "correct": false}, {"text": "Ispanak yok.", "correct": false}], "order": 2},
+            {"question": "Beğeni ifadelerini derecelendirmeleriyle eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["likes", "dislikes"], "explanation": "Love = Bayılmak/Çok sevmek, Like = Sevmek, Hate = Nefret etmek.", "options": [{"text": "I love chocolate.", "pairId": 1, "correct": false}, {"text": "Çikolataya bayılırım", "pairId": 1, "correct": false}, {"text": "I like tea.", "pairId": 2, "correct": false}, {"text": "Çay severim", "pairId": 2, "correct": false}, {"text": "I hate onions.", "pairId": 3, "correct": false}, {"text": "Soğandan nefret ederim", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "'Do you like ice cream?' sorusuna olumlu cevap hangisidir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["likes", "questions"], "explanation": "'Do you like ice cream?' = 'Dondurma sever misin?' Olumlu cevap: 'Yes, I do.' = 'Evet, severim.'", "options": [{"text": "Yes, I am.", "correct": false}, {"text": "Yes, I do.", "correct": true}, {"text": "Yes, I like.", "correct": false}, {"text": "Yes, I have.", "correct": false}], "order": 4},
+            {"question": "She ___ like vegetables.", "type": "FILL_BLANK", "difficulty": "MEDIUM", "tags": ["dislikes", "negative"], "explanation": "She/He/It ile olumsuz: doesn't + fiil. She doesn't like vegetables. = O sebze sevmez.", "options": [{"text": "doesn't", "correct": true}, {"text": "don't", "correct": false}, {"text": "isn't", "correct": false}, {"text": "not", "correct": false}], "order": 5},
+            {"question": "'What's your favourite food?' ne anlama gelir?", "type": "SELECT", "difficulty": "HARD", "tags": ["likes", "questions"], "explanation": "'What's your favourite food?' = 'En sevdiğin yemek ne?' 'Favourite' (İngiliz İngilizcesi) / 'Favorite' (Amerikan İngilizcesi) = En sevdiğin.", "options": [{"text": "Ne yemek istiyorsun?", "correct": false}, {"text": "En sevdiğin yemek ne?", "correct": true}, {"text": "Ne yiyorsun?", "correct": false}, {"text": "Yemek var mı?", "correct": false}], "order": 6}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Yerler, Yönler ve Ev",
+      "description": "Şehirdeki yerler, yer edatları, there is/are, yön tarifi ve ev/oda kelimeleri",
+      "order": 5,
+      "lessons": [
+        {
+          "title": "Places in a City — Şehirdeki Yerler",
+          "order": 1,
+          "challenges": [
+            {"question": "Yerleri Türkçe karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "EASY", "tags": ["places", "vocabulary"], "explanation": "Hospital = Hastane, School = Okul, Library = Kütüphane.", "options": [{"text": "Hospital", "pairId": 1, "correct": false}, {"text": "Hastane", "pairId": 1, "correct": false}, {"text": "School", "pairId": 2, "correct": false}, {"text": "Okul", "pairId": 2, "correct": false}, {"text": "Library", "pairId": 3, "correct": false}, {"text": "Kütüphane", "pairId": 3, "correct": false}], "order": 1},
+            {"question": "'Supermarket' ne demektir?", "type": "SELECT", "difficulty": "EASY", "tags": ["places"], "explanation": "'Supermarket' = Market / Süpermarket.", "options": [{"text": "Hastane", "correct": false}, {"text": "Market", "correct": true}, {"text": "Park", "correct": false}, {"text": "İstasyon", "correct": false}], "order": 2},
+            {"question": "'Where is the bank?' ne anlama gelir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["places", "questions"], "explanation": "'Where is the bank?' = 'Banka nerede?'", "options": [{"text": "Banka kaçta açılıyor?", "correct": false}, {"text": "Banka nerede?", "correct": true}, {"text": "Bu bir banka mı?", "correct": false}, {"text": "Bankaya gidebilir miyim?", "correct": false}], "order": 3},
+            {"question": "Yerleri İngilizce karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["places"], "explanation": "Pharmacy = Eczane, Museum = Müze, Airport = Havalimanı.", "options": [{"text": "Pharmacy", "pairId": 1, "correct": false}, {"text": "Eczane", "pairId": 1, "correct": false}, {"text": "Museum", "pairId": 2, "correct": false}, {"text": "Müze", "pairId": 2, "correct": false}, {"text": "Airport", "pairId": 3, "correct": false}, {"text": "Havalimanı", "pairId": 3, "correct": false}], "order": 4},
+            {"question": "'Post office' ne demektir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["places"], "explanation": "'Post office' = Postane.", "options": [{"text": "Polis merkezi", "correct": false}, {"text": "Postane", "correct": true}, {"text": "Ofis", "correct": false}, {"text": "İtfaiye", "correct": false}], "order": 5},
+            {"question": "'Police station' ne demektir?", "type": "SELECT", "difficulty": "HARD", "tags": ["places"], "explanation": "'Police station' = Polis merkezi / Karakol.", "options": [{"text": "İtfaiye", "correct": false}, {"text": "Hastane", "correct": false}, {"text": "Polis merkezi", "correct": true}, {"text": "İstasyon", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Prepositions of Place — Yer Edatları",
+          "order": 2,
+          "challenges": [
+            {"question": "Yer edatlarını Türkçe karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "EASY", "tags": ["prepositions"], "explanation": "In = İçinde, On = Üstünde, Under = Altında.", "options": [{"text": "In", "pairId": 1, "correct": false}, {"text": "İçinde", "pairId": 1, "correct": false}, {"text": "On", "pairId": 2, "correct": false}, {"text": "Üstünde", "pairId": 2, "correct": false}, {"text": "Under", "pairId": 3, "correct": false}, {"text": "Altında", "pairId": 3, "correct": false}], "order": 1},
+            {"question": "'The cat is under the table.' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["prepositions"], "explanation": "'The cat is under the table.' = 'Kedi masanın altında.'", "options": [{"text": "Kedi masanın üstünde.", "correct": false}, {"text": "Kedi masanın altında.", "correct": true}, {"text": "Kedi masanın yanında.", "correct": false}, {"text": "Kedi masanın arkasında.", "correct": false}], "order": 2},
+            {"question": "'Next to' ne anlama gelir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["prepositions"], "explanation": "'Next to' = Yanında / Bitişiğinde. 'The bank is next to the school.' = 'Banka okulun yanında.'", "options": [{"text": "Karşısında", "correct": false}, {"text": "Yanında", "correct": true}, {"text": "Arkasında", "correct": false}, {"text": "İçinde", "correct": false}], "order": 3},
+            {"question": "Edatları Türkçe karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["prepositions"], "explanation": "Behind = Arkasında, In front of = Önünde, Between = Arasında.", "options": [{"text": "Behind", "pairId": 1, "correct": false}, {"text": "Arkasında", "pairId": 1, "correct": false}, {"text": "In front of", "pairId": 2, "correct": false}, {"text": "Önünde", "pairId": 2, "correct": false}, {"text": "Between", "pairId": 3, "correct": false}, {"text": "Arasında", "pairId": 3, "correct": false}], "order": 4},
+            {"question": "The book is ___ the bag.", "type": "FILL_BLANK", "difficulty": "MEDIUM", "tags": ["prepositions"], "explanation": "'The book is in the bag.' = 'Kitap çantanın içinde.' 'In' kapalı bir alanın içini ifade eder.", "options": [{"text": "in", "correct": true}, {"text": "on", "correct": false}, {"text": "at", "correct": false}, {"text": "to", "correct": false}], "order": 5},
+            {"question": "'The pharmacy is opposite the park.' ne anlama gelir?", "type": "SELECT", "difficulty": "HARD", "tags": ["prepositions", "places"], "explanation": "'Opposite' = Karşısında. 'The pharmacy is opposite the park.' = 'Eczane parkın karşısında.'", "options": [{"text": "Eczane parkın yanında.", "correct": false}, {"text": "Eczane parkın karşısında.", "correct": true}, {"text": "Eczane parkın arkasında.", "correct": false}, {"text": "Eczane parkın içinde.", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "There is / There are — Var / Vardır",
+          "order": 3,
+          "challenges": [
+            {"question": "'There is' ne zaman kullanılır?", "type": "SELECT", "difficulty": "EASY", "tags": ["there is/are"], "explanation": "'There is' tekil veya sayılamayan isimlerle kullanılır: There is a book. / There is some water.", "options": [{"text": "Çoğul isimlerle", "correct": false}, {"text": "Tekil veya sayılamayan isimlerle", "correct": true}, {"text": "Her zaman", "correct": false}, {"text": "Soru cümlelerinde", "correct": false}], "order": 1},
+            {"question": "'There are two cats in the garden.' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["there is/are"], "explanation": "'There are two cats in the garden.' = 'Bahçede iki kedi var.' Çoğul isimlerle 'there are' kullanılır.", "options": [{"text": "İki kedi bahçeye gidiyor.", "correct": false}, {"text": "Bahçede iki kedi var.", "correct": true}, {"text": "İki kedim var.", "correct": false}, {"text": "Kediler bahçede oynuyor.", "correct": false}], "order": 2},
+            {"question": "There ___ a hospital near here.", "type": "FILL_BLANK", "difficulty": "MEDIUM", "tags": ["there is/are"], "explanation": "'A hospital' tekil isimdir, 'there is' kullanılır: There is a hospital near here. = Yakınlarda bir hastane var.", "options": [{"text": "is", "correct": true}, {"text": "are", "correct": false}, {"text": "am", "correct": false}, {"text": "be", "correct": false}], "order": 3},
+            {"question": "There is/are kullanımlarını eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["there is/are"], "explanation": "There is + tekil, There are + çoğul, There isn't/aren't + olumsuz.", "options": [{"text": "There is a pen.", "pairId": 1, "correct": false}, {"text": "Bir kalem var (tekil)", "pairId": 1, "correct": false}, {"text": "There are five pens.", "pairId": 2, "correct": false}, {"text": "Beş kalem var (çoğul)", "pairId": 2, "correct": false}, {"text": "There isn't a pen.", "pairId": 3, "correct": false}, {"text": "Kalem yok (olumsuz)", "pairId": 3, "correct": false}], "order": 4},
+            {"question": "___ there any shops near here?", "type": "FILL_BLANK", "difficulty": "HARD", "tags": ["there is/are", "questions"], "explanation": "'Shops' çoğul isimdir, soru cümlesinde 'Are' kullanılır: Are there any shops near here? = Yakınlarda hiç dükkan var mı?", "options": [{"text": "Are", "correct": true}, {"text": "Is", "correct": false}, {"text": "Do", "correct": false}, {"text": "Does", "correct": false}], "order": 5},
+            {"question": "'Is there a park near here?' sorusuna olumsuz cevap hangisidir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["there is/are", "questions"], "explanation": "'Is there...?' sorusuna olumsuz cevap: 'No, there isn't.' = 'Hayır, yok.'", "options": [{"text": "No, there aren't.", "correct": false}, {"text": "No, there isn't.", "correct": true}, {"text": "No, it isn't.", "correct": false}, {"text": "No, I don't.", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Giving Directions — Yön Tarifi",
+          "order": 4,
+          "challenges": [
+            {"question": "Yön tarifinde kullanılan ifadeleri eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "MEDIUM", "tags": ["directions"], "explanation": "Turn left = Sola dön, Turn right = Sağa dön, Go straight = Düz git.", "options": [{"text": "Turn left", "pairId": 1, "correct": false}, {"text": "Sola dön", "pairId": 1, "correct": false}, {"text": "Turn right", "pairId": 2, "correct": false}, {"text": "Sağa dön", "pairId": 2, "correct": false}, {"text": "Go straight", "pairId": 3, "correct": false}, {"text": "Düz git", "pairId": 3, "correct": false}], "order": 1},
+            {"question": "'Go straight ahead.' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["directions"], "explanation": "'Go straight ahead.' = 'Düz ileri git.'", "options": [{"text": "Sola dön.", "correct": false}, {"text": "Düz ileri git.", "correct": true}, {"text": "Geri dön.", "correct": false}, {"text": "Dur.", "correct": false}], "order": 2},
+            {"question": "'It's on the left.' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["directions"], "explanation": "'It's on the left.' = 'Sol tarafta.' / 'Solda.'", "options": [{"text": "Sağda.", "correct": false}, {"text": "Solda.", "correct": true}, {"text": "Karşıda.", "correct": false}, {"text": "Arkada.", "correct": false}], "order": 3},
+            {"question": "'Excuse me, how can I get to the museum?' ne anlama gelir?", "type": "SELECT", "difficulty": "HARD", "tags": ["directions", "asking"], "explanation": "'Excuse me, how can I get to the museum?' = 'Affedersiniz, müzeye nasıl gidebilirim?'", "options": [{"text": "Müze nedir?", "correct": false}, {"text": "Müzeye nasıl gidebilirim?", "correct": true}, {"text": "Müze kaçta açılıyor?", "correct": false}, {"text": "Müze güzel mi?", "correct": false}], "order": 4},
+            {"question": "Yön tarifinde kullanılan ifadeleri eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["directions"], "explanation": "Cross the street = Karşıya geç, Take the first left = İlk soldan dön, It's on your right = Sağ tarafınızda.", "options": [{"text": "Cross the street", "pairId": 1, "correct": false}, {"text": "Karşıya geç", "pairId": 1, "correct": false}, {"text": "Take the first left", "pairId": 2, "correct": false}, {"text": "İlk soldan dön", "pairId": 2, "correct": false}, {"text": "It's on your right", "pairId": 3, "correct": false}, {"text": "Sağ tarafınızda", "pairId": 3, "correct": false}], "order": 5},
+            {"question": "'Stop' ne anlama gelir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["directions"], "explanation": "'Stop' = 'Dur' / 'Durma'. Trafik ve yön tarifinde sık kullanılan bir kelimedir.", "options": [{"text": "Git", "correct": false}, {"text": "Dur", "correct": true}, {"text": "Dön", "correct": false}, {"text": "Geç", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Home & Rooms — Ev ve Odalar",
+          "order": 5,
+          "challenges": [
+            {"question": "Odaları Türkçe karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "EASY", "tags": ["home", "rooms"], "explanation": "Kitchen = Mutfak, Bedroom = Yatak odası, Bathroom = Banyo.", "options": [{"text": "Kitchen", "pairId": 1, "correct": false}, {"text": "Mutfak", "pairId": 1, "correct": false}, {"text": "Bedroom", "pairId": 2, "correct": false}, {"text": "Yatak odası", "pairId": 2, "correct": false}, {"text": "Bathroom", "pairId": 3, "correct": false}, {"text": "Banyo", "pairId": 3, "correct": false}], "order": 1},
+            {"question": "'Living room' ne demektir?", "type": "SELECT", "difficulty": "EASY", "tags": ["home", "rooms"], "explanation": "'Living room' = Oturma odası / Salon.", "options": [{"text": "Yatak odası", "correct": false}, {"text": "Oturma odası", "correct": true}, {"text": "Mutfak", "correct": false}, {"text": "Garaj", "correct": false}], "order": 2},
+            {"question": "Ev eşyalarını İngilizce karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "MEDIUM", "tags": ["home", "furniture"], "explanation": "Chair = Sandalye, Table = Masa, Bed = Yatak.", "options": [{"text": "Chair", "pairId": 1, "correct": false}, {"text": "Sandalye", "pairId": 1, "correct": false}, {"text": "Table", "pairId": 2, "correct": false}, {"text": "Masa", "pairId": 2, "correct": false}, {"text": "Bed", "pairId": 3, "correct": false}, {"text": "Yatak", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "'Garden' ne demektir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["home"], "explanation": "'Garden' = Bahçe.", "options": [{"text": "Garaj", "correct": false}, {"text": "Bahçe", "correct": true}, {"text": "Balkon", "correct": false}, {"text": "Çatı", "correct": false}], "order": 4},
+            {"question": "'There are three bedrooms in my house.' ne anlama gelir?", "type": "SELECT", "difficulty": "HARD", "tags": ["home", "there is/are"], "explanation": "'There are three bedrooms in my house.' = 'Evimde üç yatak odası var.'", "options": [{"text": "Üç evim var.", "correct": false}, {"text": "Evimde üç yatak odası var.", "correct": true}, {"text": "Evim üç katlı.", "correct": false}, {"text": "Üç oda istiyorum.", "correct": false}], "order": 5},
+            {"question": "'Fridge' ne demektir?", "type": "SELECT", "difficulty": "HARD", "tags": ["home", "furniture"], "explanation": "'Fridge' (kısaltma: refrigerator) = Buzdolabı. Mutfakta bulunan bir ev eşyasıdır.", "options": [{"text": "Fırın", "correct": false}, {"text": "Buzdolabı", "correct": true}, {"text": "Çamaşır makinesi", "correct": false}, {"text": "Bulaşık makinesi", "correct": false}], "order": 6}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hobiler, Yetenekler ve Hava Durumu",
+      "description": "Hobiler, can/can't (yetenekler), hava durumu, mevsimler, kıyafetler, renkler ve Present Continuous Tense",
+      "order": 6,
+      "lessons": [
+        {
+          "title": "Hobbies — Hobiler",
+          "order": 1,
+          "challenges": [
+            {"question": "Hobileri Türkçe karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "EASY", "tags": ["hobbies"], "explanation": "Reading = Okumak, Swimming = Yüzmek, Playing football = Futbol oynamak.", "options": [{"text": "Reading", "pairId": 1, "correct": false}, {"text": "Okumak", "pairId": 1, "correct": false}, {"text": "Swimming", "pairId": 2, "correct": false}, {"text": "Yüzmek", "pairId": 2, "correct": false}, {"text": "Playing football", "pairId": 3, "correct": false}, {"text": "Futbol oynamak", "pairId": 3, "correct": false}], "order": 1},
+            {"question": "'I like listening to music.' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["hobbies"], "explanation": "'I like listening to music.' = 'Müzik dinlemeyi severim.' 'Like + -ing' kalıbı kullanılır.", "options": [{"text": "Müzik dinliyorum.", "correct": false}, {"text": "Müzik dinlemeyi severim.", "correct": true}, {"text": "Müzik çalıyorum.", "correct": false}, {"text": "Müzik güzel.", "correct": false}], "order": 2},
+            {"question": "'What are your hobbies?' ne anlama gelir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["hobbies", "questions"], "explanation": "'What are your hobbies?' = 'Hobilerin neler?'", "options": [{"text": "Nereye gidiyorsun?", "correct": false}, {"text": "Hobilerin neler?", "correct": true}, {"text": "Ne iş yapıyorsun?", "correct": false}, {"text": "Ne yemek istiyorsun?", "correct": false}], "order": 3},
+            {"question": "Hobileri İngilizce karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["hobbies"], "explanation": "Cooking = Yemek yapmak, Drawing = Resim çizmek, Cycling = Bisiklet sürmek.", "options": [{"text": "Cooking", "pairId": 1, "correct": false}, {"text": "Yemek yapmak", "pairId": 1, "correct": false}, {"text": "Drawing", "pairId": 2, "correct": false}, {"text": "Resim çizmek", "pairId": 2, "correct": false}, {"text": "Cycling", "pairId": 3, "correct": false}, {"text": "Bisiklet sürmek", "pairId": 3, "correct": false}], "order": 4},
+            {"question": "'In my free time, I play video games.' ne anlama gelir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["hobbies", "free time"], "explanation": "'In my free time, I play video games.' = 'Boş zamanlarımda video oyunu oynarım.'", "options": [{"text": "Oyun almak istiyorum.", "correct": false}, {"text": "Boş zamanlarımda video oyunu oynarım.", "correct": true}, {"text": "Video oyunları pahalı.", "correct": false}, {"text": "Video oyunlarını sevmiyorum.", "correct": false}], "order": 5},
+            {"question": "'Travelling' ne demektir?", "type": "SELECT", "difficulty": "HARD", "tags": ["hobbies"], "explanation": "'Travelling' = Seyahat etmek / Gezmek.", "options": [{"text": "Koşmak", "correct": false}, {"text": "Seyahat etmek", "correct": true}, {"text": "Alışveriş yapmak", "correct": false}, {"text": "Uyumak", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Can / Can't — Yetenekler",
+          "order": 2,
+          "challenges": [
+            {"question": "'I can swim.' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["can", "abilities"], "explanation": "'I can swim.' = 'Yüzebilirim.' / 'Yüzme bilirim.' 'Can' yetenek ve beceri belirtir.", "options": [{"text": "Yüzüyorum.", "correct": false}, {"text": "Yüzebilirim.", "correct": true}, {"text": "Yüzmek istiyorum.", "correct": false}, {"text": "Yüzmeyi severim.", "correct": false}], "order": 1},
+            {"question": "'She can't drive.' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["can't", "abilities"], "explanation": "'She can't drive.' = 'O araba kullanamaz.' / 'Araba kullanmayı bilmez.' 'Can't' = yapamamak.", "options": [{"text": "O araba kullanır.", "correct": false}, {"text": "O araba kullanamaz.", "correct": true}, {"text": "O araba kullanmak istiyor.", "correct": false}, {"text": "O araba kullanıyor.", "correct": false}], "order": 2},
+            {"question": "Can/Can't kullanımlarını eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "MEDIUM", "tags": ["can/can't"], "explanation": "Can = yapabilmek/bilmek, Can't = yapamamak/bilmemek, Can + soru = yapabilir mi?", "options": [{"text": "I can cook.", "pairId": 1, "correct": false}, {"text": "Yemek yapabilirim.", "pairId": 1, "correct": false}, {"text": "I can't sing.", "pairId": 2, "correct": false}, {"text": "Şarkı söyleyemem.", "pairId": 2, "correct": false}, {"text": "Can you dance?", "pairId": 3, "correct": false}, {"text": "Dans edebilir misin?", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "___ you play the guitar?", "type": "FILL_BLANK", "difficulty": "MEDIUM", "tags": ["can", "questions"], "explanation": "Soru cümlesinde 'Can' başa gelir: Can you play the guitar? = Gitar çalabilir misin?", "options": [{"text": "Can", "correct": true}, {"text": "Do", "correct": false}, {"text": "Are", "correct": false}, {"text": "Is", "correct": false}], "order": 4},
+            {"question": "'Can you help me?' ne anlama gelir?", "type": "SELECT", "difficulty": "HARD", "tags": ["can", "requests"], "explanation": "'Can you help me?' = 'Bana yardım edebilir misin?' 'Can' rica ve istek için de kullanılır.", "options": [{"text": "Bana yardım edebilir misin?", "correct": true}, {"text": "Yardım sever misin?", "correct": false}, {"text": "Yardıma ihtiyacın var mı?", "correct": false}, {"text": "Yardımcı oluyorum.", "correct": false}], "order": 5},
+            {"question": "'Can' ile 'can't' arasındaki fark nedir?", "type": "SELECT", "difficulty": "HARD", "tags": ["can/can't", "grammar"], "explanation": "'Can' olumlu (yapabilirim), 'can't' (cannot) olumsuz (yapamam). 'Can' ile fiil her zaman yalın hâlde kullanılır: can swim (can swims değil).", "options": [{"text": "Can geçmiş zaman, can't gelecek zaman", "correct": false}, {"text": "Can olumlu (yapabilirim), can't olumsuz (yapamam); fiil yalın kalır", "correct": true}, {"text": "Aralarında fark yok", "correct": false}, {"text": "Can soru, can't cevap için kullanılır", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Weather & Seasons — Hava Durumu ve Mevsimler",
+          "order": 3,
+          "challenges": [
+            {"question": "Mevsimleri İngilizce karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "EASY", "tags": ["seasons"], "explanation": "Spring = İlkbahar, Summer = Yaz, Winter = Kış.", "options": [{"text": "Spring", "pairId": 1, "correct": false}, {"text": "İlkbahar", "pairId": 1, "correct": false}, {"text": "Summer", "pairId": 2, "correct": false}, {"text": "Yaz", "pairId": 2, "correct": false}, {"text": "Winter", "pairId": 3, "correct": false}, {"text": "Kış", "pairId": 3, "correct": false}], "order": 1},
+            {"question": "'It's sunny today.' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["weather"], "explanation": "'It's sunny today.' = 'Bugün güneşli.'", "options": [{"text": "Bugün yağmurlu.", "correct": false}, {"text": "Bugün güneşli.", "correct": true}, {"text": "Bugün bulutlu.", "correct": false}, {"text": "Bugün soğuk.", "correct": false}], "order": 2},
+            {"question": "'What's the weather like?' ne anlama gelir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["weather", "questions"], "explanation": "'What's the weather like?' = 'Hava nasıl?' Hava durumu sormak için kullanılan kalıp cümledir.", "options": [{"text": "Hava kaç derece?", "correct": false}, {"text": "Hava nasıl?", "correct": true}, {"text": "Hava ne zaman düzelecek?", "correct": false}, {"text": "Bugün hangi gün?", "correct": false}], "order": 3},
+            {"question": "Hava durumu ifadelerini eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["weather"], "explanation": "Rainy = Yağmurlu, Snowy = Karlı, Cloudy = Bulutlu.", "options": [{"text": "Rainy", "pairId": 1, "correct": false}, {"text": "Yağmurlu", "pairId": 1, "correct": false}, {"text": "Snowy", "pairId": 2, "correct": false}, {"text": "Karlı", "pairId": 2, "correct": false}, {"text": "Cloudy", "pairId": 3, "correct": false}, {"text": "Bulutlu", "pairId": 3, "correct": false}], "order": 4},
+            {"question": "'It's cold and windy.' ne anlama gelir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["weather"], "explanation": "'It's cold and windy.' = 'Soğuk ve rüzgârlı.'", "options": [{"text": "Sıcak ve güneşli.", "correct": false}, {"text": "Soğuk ve rüzgârlı.", "correct": true}, {"text": "Ilık ve bulutlu.", "correct": false}, {"text": "Yağmurlu ve karlı.", "correct": false}], "order": 5},
+            {"question": "'Autumn' hangi mevsimdir?", "type": "SELECT", "difficulty": "HARD", "tags": ["seasons"], "explanation": "'Autumn' (İngiliz İngilizcesi) veya 'Fall' (Amerikan İngilizcesi) = Sonbahar.", "options": [{"text": "İlkbahar", "correct": false}, {"text": "Yaz", "correct": false}, {"text": "Sonbahar", "correct": true}, {"text": "Kış", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Clothes & Colours — Kıyafetler ve Renkler",
+          "order": 4,
+          "challenges": [
+            {"question": "Kıyafetleri Türkçe karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "EASY", "tags": ["clothes"], "explanation": "Shirt = Gömlek, Trousers = Pantolon, Shoes = Ayakkabılar.", "options": [{"text": "Shirt", "pairId": 1, "correct": false}, {"text": "Gömlek", "pairId": 1, "correct": false}, {"text": "Trousers", "pairId": 2, "correct": false}, {"text": "Pantolon", "pairId": 2, "correct": false}, {"text": "Shoes", "pairId": 3, "correct": false}, {"text": "Ayakkabılar", "pairId": 3, "correct": false}], "order": 1},
+            {"question": "'Red' hangi renktir?", "type": "SELECT", "difficulty": "EASY", "tags": ["colours"], "explanation": "'Red' = Kırmızı.", "options": [{"text": "Mavi", "correct": false}, {"text": "Kırmızı", "correct": true}, {"text": "Yeşil", "correct": false}, {"text": "Sarı", "correct": false}], "order": 2},
+            {"question": "Renkleri İngilizce karşılıklarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "MEDIUM", "tags": ["colours"], "explanation": "Blue = Mavi, Green = Yeşil, Yellow = Sarı.", "options": [{"text": "Blue", "pairId": 1, "correct": false}, {"text": "Mavi", "pairId": 1, "correct": false}, {"text": "Green", "pairId": 2, "correct": false}, {"text": "Yeşil", "pairId": 2, "correct": false}, {"text": "Yellow", "pairId": 3, "correct": false}, {"text": "Sarı", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "'She is wearing a blue dress.' ne anlama gelir?", "type": "SELECT", "difficulty": "HARD", "tags": ["clothes", "colours"], "explanation": "'She is wearing a blue dress.' = 'O mavi bir elbise giyiyor.' 'Wear' = giymek.", "options": [{"text": "O mavi bir elbise aldı.", "correct": false}, {"text": "O mavi bir elbise giyiyor.", "correct": true}, {"text": "O mavi elbiseyi seviyor.", "correct": false}, {"text": "O mavi elbise istiyor.", "correct": false}], "order": 4},
+            {"question": "'Coat' ne demektir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["clothes"], "explanation": "'Coat' = Mont / Palto. Kışın giyilen dış giysidir.", "options": [{"text": "Kazak", "correct": false}, {"text": "Mont / Palto", "correct": true}, {"text": "Etek", "correct": false}, {"text": "Şapka", "correct": false}], "order": 5},
+            {"question": "'White' ve 'Black' ne anlama gelir?", "type": "SELECT", "difficulty": "HARD", "tags": ["colours"], "explanation": "'White' = Beyaz, 'Black' = Siyah.", "options": [{"text": "Gri ve Kahverengi", "correct": false}, {"text": "Beyaz ve Siyah", "correct": true}, {"text": "Pembe ve Mor", "correct": false}, {"text": "Turuncu ve Sarı", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Present Continuous — Şimdiki Zaman",
+          "order": 5,
+          "challenges": [
+            {"question": "Present Continuous Tense ne zaman kullanılır?", "type": "SELECT", "difficulty": "EASY", "tags": ["present continuous", "grammar"], "explanation": "Present Continuous Tense (Şimdiki Zaman) şu an devam eden eylemler için kullanılır. Yapısı: am/is/are + fiil-ing.", "options": [{"text": "Geçmişte yapılan eylemler için", "correct": false}, {"text": "Şu an devam eden eylemler için", "correct": true}, {"text": "Gelecekte yapılacak eylemler için", "correct": false}, {"text": "Alışkanlıklar için", "correct": false}], "order": 1},
+            {"question": "'I am reading a book now.' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["present continuous"], "explanation": "'I am reading a book now.' = 'Şu an bir kitap okuyorum.'", "options": [{"text": "Kitap okumayı severim.", "correct": false}, {"text": "Şu an bir kitap okuyorum.", "correct": true}, {"text": "Dün kitap okudum.", "correct": false}, {"text": "Her gün kitap okurum.", "correct": false}], "order": 2},
+            {"question": "She ___ watching TV.", "type": "FILL_BLANK", "difficulty": "MEDIUM", "tags": ["present continuous"], "explanation": "'She' ile 'is' kullanılır: She is watching TV. = O TV izliyor.", "options": [{"text": "is", "correct": true}, {"text": "am", "correct": false}, {"text": "are", "correct": false}, {"text": "be", "correct": false}], "order": 3},
+            {"question": "Present Continuous yapılarını eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["present continuous"], "explanation": "I am + ing, He/She is + ing, They are + ing.", "options": [{"text": "I am eating.", "pairId": 1, "correct": false}, {"text": "Yemek yiyorum.", "pairId": 1, "correct": false}, {"text": "She is sleeping.", "pairId": 2, "correct": false}, {"text": "O uyuyor.", "pairId": 2, "correct": false}, {"text": "They are playing.", "pairId": 3, "correct": false}, {"text": "Onlar oynuyor.", "pairId": 3, "correct": false}], "order": 4},
+            {"question": "'What are you doing?' ne anlama gelir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["present continuous", "questions"], "explanation": "'What are you doing?' = 'Ne yapıyorsun?' Şu anki eylemi soran bir sorudur.", "options": [{"text": "Ne yaparsın?", "correct": false}, {"text": "Ne yapıyorsun?", "correct": true}, {"text": "Ne yaptın?", "correct": false}, {"text": "Ne yapacaksın?", "correct": false}], "order": 5},
+            {"question": "They ___ not listening to the teacher.", "type": "FILL_BLANK", "difficulty": "HARD", "tags": ["present continuous", "negative"], "explanation": "'They' ile 'are' kullanılır: They are not listening. = Onlar öğretmeni dinlemiyor.", "options": [{"text": "are", "correct": true}, {"text": "is", "correct": false}, {"text": "am", "correct": false}, {"text": "do", "correct": false}], "order": 6}
+          ]
+        }
+      ]
+    }
+  ]
+}

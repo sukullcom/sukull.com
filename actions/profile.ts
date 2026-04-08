@@ -5,7 +5,7 @@ import db from "@/db/drizzle";
 import { userProgress, users, schools } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { getServerUser } from "@/lib/auth";
-import { updateDailyStreak, checkStreakContinuity } from "./daily-streak";
+import { checkStreakContinuity } from "./daily-streak";
 import { normalizeAvatarUrl } from '@/utils/avatar';
 
 /**
@@ -18,26 +18,7 @@ export async function getProfileDataOnServer() {
   if (!user) throw new Error("Unauthorized");
   const userId = user.id;
 
-  // Check streak continuity first
   await checkStreakContinuity(userId);
-
-  // Get current progress to check if streak tracking is initialized
-  const progress = await db.query.userProgress.findFirst({
-    where: eq(userProgress.userId, userId),
-  });
-
-  // Initialize streak tracking if needed
-  if (progress && (progress.previousTotalPoints === null || progress.previousTotalPoints === undefined)) {
-    await db.update(userProgress)
-      .set({
-        previousTotalPoints: progress.points,
-        lastStreakCheck: new Date(), // Keep as local time for profile initialization
-      })
-      .where(eq(userProgress.userId, userId));
-  }
-
-  // Update daily streak after checking continuity
-  await updateDailyStreak();
 
   const row = await db.query.userProgress.findFirst({
     where: eq(userProgress.userId, userId),
@@ -160,13 +141,8 @@ export async function getUserProfile() {
     
     const userId = user.id;
     
-    // Check streak continuity first
     await checkStreakContinuity(userId);
-    
-    // Update daily streak after checking continuity
-    // This ensures the streak is up-to-date when shown to the user
-    await updateDailyStreak();
-    
+
     // Get user progress
     const progress = await db.query.userProgress.findFirst({
       where: eq(userProgress.userId, userId),

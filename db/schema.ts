@@ -399,10 +399,11 @@ export const studyBuddyMessagesRelations = relations(studyBuddyMessages, ({ one 
 export const userDailyStreak = pgTable("user_daily_streak", {
   id: serial("id").primaryKey(),
   userId: text("user_id").notNull(),
-  // Store the day (date only; no time)
   date: timestamp("date").notNull(),
   achieved: boolean("achieved").notNull().default(false),
-});
+}, (table) => [
+  uniqueIndex("user_daily_streak_user_date_idx").on(table.userId, table.date),
+]);
 export const userDailyStreakRelations = relations(userDailyStreak, ({ one }) => ({
   user: one(users, {
     fields: [userDailyStreak.userId],

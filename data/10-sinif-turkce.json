@@ -1,0 +1,2810 @@
+{
+  "course": {
+    "title": "10. Sınıf Türk Dili ve Edebiyatı",
+    "imageSrc": ""
+  },
+  "units": [
+    {
+      "title": "Edebiyat Dönemleri ve Türk Edebiyatına Giriş",
+      "description": "Türk edebiyatı dönemleri, Türklerin kullandığı alfabeler, edebiyat-tarih-din ilişkisi, İslamiyet öncesi edebiyat ve geçiş dönemi eserleri",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "Türk Edebiyatı Dönemleri ve Sınıflandırma",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Türk edebiyatı kaç ana döneme ayrılır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["edebiyat dönemleri"],
+              "explanation": "Türk edebiyatı genel olarak üç ana döneme ayrılır: İslamiyet Öncesi Türk Edebiyatı, İslami Dönem Türk Edebiyatı (Divan ve Halk Edebiyatı) ve Batı Etkisindeki Türk Edebiyatı.",
+              "options": [
+                {"text": "İki", "correct": false},
+                {"text": "Üç", "correct": true},
+                {"text": "Dört", "correct": false},
+                {"text": "Beş", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "İslamiyet'in kabulünden sonra oluşan ve saray çevresinde gelişen edebiyata ne denir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Divan edebiyatı"],
+              "explanation": "İslamiyet'in kabulünden sonra saray çevresinde, medrese eğitimi almış kişiler tarafından oluşturulan edebiyata 'Divan edebiyatı' (Klasik Türk edebiyatı) denir.",
+              "options": [
+                {"text": "Halk edebiyatı", "correct": false},
+                {"text": "Divan edebiyatı", "correct": true},
+                {"text": "Tanzimat edebiyatı", "correct": false},
+                {"text": "Cumhuriyet edebiyatı", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Türk edebiyatı dönemlerini kronolojik sırasıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["edebiyat dönemleri", "kronoloji"],
+              "explanation": "İslamiyet Öncesi en eski dönemdir, ardından İslami Dönem (Divan+Halk) ve son olarak Batı etkisindeki dönem (Tanzimat ve sonrası) gelir.",
+              "options": [
+                {"text": "1. dönem", "pairId": 1, "correct": false},
+                {"text": "İslamiyet Öncesi Türk Edebiyatı", "pairId": 1, "correct": false},
+                {"text": "2. dönem", "pairId": 2, "correct": false},
+                {"text": "İslami Dönem (Divan + Halk)", "pairId": 2, "correct": false},
+                {"text": "3. dönem", "pairId": 3, "correct": false},
+                {"text": "Batı Etkisindeki Türk Edebiyatı", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Batı etkisindeki Türk edebiyatı hangi olayla başlamıştır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Tanzimat", "Batı etkisi"],
+              "explanation": "Batı etkisindeki Türk edebiyatı, 1839 Tanzimat Fermanı'nın ilanıyla başlayan yenileşme hareketiyle birlikte ortaya çıkmıştır.",
+              "options": [
+                {"text": "Fetih hareketiyle", "correct": false},
+                {"text": "Tanzimat Fermanı'nın ilanıyla", "correct": true},
+                {"text": "Cumhuriyet'in ilanıyla", "correct": false},
+                {"text": "Matbaanın Türkiye'ye gelmesiyle", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Halk edebiyatı ile Divan edebiyatı arasındaki en temel fark aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Halk edebiyatı", "Divan edebiyatı", "karşılaştırma"],
+              "explanation": "Halk edebiyatı hece ölçüsü ve sade Türkçe kullanırken, Divan edebiyatı aruz ölçüsü ve Arapça-Farsça ağırlıklı süslü bir dil kullanır.",
+              "options": [
+                {"text": "Halk edebiyatı yazılı, Divan edebiyatı sözlüdür", "correct": false},
+                {"text": "Halk edebiyatı hece ölçüsü ve sade dil; Divan edebiyatı aruz ölçüsü ve süslü dil kullanır", "correct": true},
+                {"text": "Divan edebiyatı halkın ürünüdür", "correct": false},
+                {"text": "Halk edebiyatı yalnızca nesir türündedir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Aşağıdakilerden hangisi Batı etkisindeki Türk edebiyatı dönemlerinden biri değildir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["edebiyat dönemleri"],
+              "explanation": "Divan edebiyatı İslami Dönem'e aittir. Tanzimat, Servetifünun ve Millî Edebiyat Batı etkisindeki dönemlerdendir.",
+              "options": [
+                {"text": "Tanzimat edebiyatı", "correct": false},
+                {"text": "Servetifünun edebiyatı", "correct": false},
+                {"text": "Divan edebiyatı", "correct": true},
+                {"text": "Millî Edebiyat", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Türklerin Kullandığı Alfabeler",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Türklerin kullandığı bilinen ilk alfabe hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["alfabe", "Göktürk"],
+              "explanation": "Türklerin bilinen ilk alfabesi Göktürk (Köktürk) alfabesidir. Orhun Yazıtları bu alfabeyle yazılmıştır.",
+              "options": [
+                {"text": "Arap alfabesi", "correct": false},
+                {"text": "Latin alfabesi", "correct": false},
+                {"text": "Göktürk alfabesi", "correct": true},
+                {"text": "Kiril alfabesi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Orhun Yazıtları hangi yüzyıla aittir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Orhun Yazıtları"],
+              "explanation": "Orhun Yazıtları (Göktürk Kitabeleri) 8. yüzyıla (MS 720-735) aittir. Türk edebiyatının ilk yazılı örnekleri kabul edilir.",
+              "options": [
+                {"text": "5. yüzyıl", "correct": false},
+                {"text": "8. yüzyıl", "correct": true},
+                {"text": "11. yüzyıl", "correct": false},
+                {"text": "13. yüzyıl", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Türklerin İslamiyet'i kabul etmesinden sonra kullanmaya başladıkları alfabe hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["alfabe", "Arap alfabesi"],
+              "explanation": "Türkler İslamiyet'i kabul ettikten sonra Arap alfabesini kullanmaya başlamışlardır. Bu alfabe 1928 Harf Devrimine kadar kullanılmıştır.",
+              "options": [
+                {"text": "Göktürk alfabesi", "correct": false},
+                {"text": "Uygur alfabesi", "correct": false},
+                {"text": "Arap alfabesi", "correct": true},
+                {"text": "Latin alfabesi", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Türklerin kullandığı alfabeleri kronolojik sırasıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["alfabe", "kronoloji"],
+              "explanation": "Göktürk alfabesi en eski, Uygur alfabesi ikinci, Arap alfabesi İslamiyet sonrası, Latin alfabesi 1928'den itibaren kullanılmıştır.",
+              "options": [
+                {"text": "1. (en eski)", "pairId": 1, "correct": false},
+                {"text": "Göktürk alfabesi", "pairId": 1, "correct": false},
+                {"text": "2.", "pairId": 2, "correct": false},
+                {"text": "Uygur alfabesi", "pairId": 2, "correct": false},
+                {"text": "3. (İslamiyet sonrası)", "pairId": 3, "correct": false},
+                {"text": "Arap alfabesi", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Türkiye'de Latin alfabesine geçiş hangi yıl gerçekleşmiştir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["alfabe", "Harf Devrimi"],
+              "explanation": "1 Kasım 1928'de kabul edilen Harf Devrimi ile Türkiye'de Arap alfabesinden Latin alfabesine geçilmiştir.",
+              "options": [
+                {"text": "1920", "correct": false},
+                {"text": "1923", "correct": false},
+                {"text": "1928", "correct": true},
+                {"text": "1935", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Uygur alfabesinin Göktürk alfabesinden en önemli farkı aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["alfabe", "Uygur"],
+              "explanation": "Uygur alfabesi, Göktürk alfabesinin aksine soldan sağa değil yukarıdan aşağıya doğru yazılır. Ayrıca 18 harften oluşur ve bazı harfler birden fazla sesi karşılar.",
+              "options": [
+                {"text": "Daha az harften oluşur ve yukarıdan aşağıya yazılır", "correct": true},
+                {"text": "Yalnızca rakamlardan oluşur", "correct": false},
+                {"text": "Sağdan sola yazılır", "correct": false},
+                {"text": "Hiçbir farkı yoktur", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Edebiyat-Tarih ve Edebiyat-Din İlişkisi",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Edebiyatın tarihle olan ilişkisini en iyi gösteren tür aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["edebiyat-tarih ilişkisi"],
+              "explanation": "Tarihî roman, tarihî olayları edebî bir kurguyla anlattığı için edebiyat-tarih ilişkisini en iyi gösteren türdür.",
+              "options": [
+                {"text": "Fabl", "correct": false},
+                {"text": "Tarihî roman", "correct": true},
+                {"text": "Deneme", "correct": false},
+                {"text": "Günlük", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "İslamiyet'in Türk edebiyatı üzerindeki en belirgin etkisi aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["edebiyat-din ilişkisi"],
+              "explanation": "İslamiyet'in kabulüyle Arapça ve Farsça sözcükler Türkçeye girmiş, aruz ölçüsü kullanılmaya başlanmış, tasavvuf ve dinî temalar edebiyatın merkezine oturmuştur.",
+              "options": [
+                {"text": "Hece ölçüsünün yaygınlaşması", "correct": false},
+                {"text": "Arapça-Farsça sözcüklerin dile girmesi ve dinî temaların yaygınlaşması", "correct": true},
+                {"text": "Sözlü edebiyatın tamamen bitmesi", "correct": false},
+                {"text": "Latin alfabesinin kullanılması", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Edebî eserlerin tarihî belge olarak kullanılmasının sınırlılığı nereden kaynaklanır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["edebiyat-tarih ilişkisi"],
+              "explanation": "Edebî eserler kurguya ve sanatçının yorumuna dayanır, nesnel tarihî gerçekliği birebir yansıtmaz. Bu nedenle tarihî belge olarak doğrudan kullanılmaları sınırlıdır.",
+              "options": [
+                {"text": "Eski dilde yazılmış olmalarından", "correct": false},
+                {"text": "Kurguya ve sanatçının öznel yorumuna dayanmasından", "correct": true},
+                {"text": "Tarihle hiçbir ilgilerinin olmamasından", "correct": false},
+                {"text": "Çok uzun olmalarından", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Edebiyat-din ilişkisine örnek türleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["edebiyat-din ilişkisi", "türler"],
+              "explanation": "İlahi Allah aşkını anlatan dinî şiir, mevlid Hz. Muhammed'in doğumunu anlatan eser, münacaat Allah'a yakarış şiiridir.",
+              "options": [
+                {"text": "İlahi", "pairId": 1, "correct": false},
+                {"text": "Allah aşkını anlatan şiir", "pairId": 1, "correct": false},
+                {"text": "Mevlid", "pairId": 2, "correct": false},
+                {"text": "Hz. Muhammed'in doğumunu anlatan", "pairId": 2, "correct": false},
+                {"text": "Münacaat", "pairId": 3, "correct": false},
+                {"text": "Allah'a yakarış", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Yunus Emre'nin şiirlerinde edebiyat-din ilişkisinin yansıması aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["edebiyat-din ilişkisi", "Yunus Emre"],
+              "explanation": "Yunus Emre, tasavvuf felsefesiyle İlahi aşkı, sevgiyi ve hoşgörüyü sade bir Türkçeyle ifade etmiştir. Bu, edebiyat-din ilişkisinin en güzel örneklerindendir.",
+              "options": [
+                {"text": "Savaş ve kahramanlık temaları işlemiştir", "correct": false},
+                {"text": "Tasavvuf felsefesiyle ilahi aşkı ve sevgiyi şiire yansıtmıştır", "correct": true},
+                {"text": "Yalnızca bilimsel konularda yazmıştır", "correct": false},
+                {"text": "Arapça eserler vermiştir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Aşağıdakilerden hangisi edebiyat-tarih ilişkisine örnek olamaz?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["edebiyat-tarih ilişkisi"],
+              "explanation": "Bir kimya deneyi raporu bilimsel bir metindir ve edebiyat-tarih ilişkisiyle doğrudan bağlantısı yoktur.",
+              "options": [
+                {"text": "Kurtuluş Savaşı'nı konu alan bir roman", "correct": false},
+                {"text": "Osmanlı dönemini anlatan bir tiyatro", "correct": false},
+                {"text": "Bir kimya deneyi raporu", "correct": true},
+                {"text": "Fatih Sultan Mehmet'i anlatan bir biyografi", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "İslamiyet Öncesi Türk Edebiyatı",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "İslamiyet öncesi Türk edebiyatının sözlü ürünleri arasında atasözü karşılığı olarak kullanılan türe ne ad verilir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["İslamiyet öncesi", "sav"],
+              "explanation": "İslamiyet öncesi Türk edebiyatında atasözlerinin karşılığı 'sav'dır. Savlar, toplumun deneyimlerinden doğan özlü sözlerdir.",
+              "options": [
+                {"text": "Sagu", "correct": false},
+                {"text": "Koşuk", "correct": false},
+                {"text": "Sav", "correct": true},
+                {"text": "Destan", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Ölen bir kişinin ardından söylenen ağıt niteliğindeki şiirlere İslamiyet öncesi Türk edebiyatında ne denirdi?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["İslamiyet öncesi", "sagu"],
+              "explanation": "'Sagu', İslamiyet öncesi Türk edebiyatında ölen kişinin ardından düzenlenen yuğ (cenaze) törenlerinde söylenen ağıt şiirleridir.",
+              "options": [
+                {"text": "Sav", "correct": false},
+                {"text": "Sagu", "correct": true},
+                {"text": "Koşuk", "correct": false},
+                {"text": "Destan", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Doğa, aşk ve kahramanlık konularında söylenen lirik şiirlere İslamiyet öncesinde ne ad verilirdi?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["İslamiyet öncesi", "koşuk"],
+              "explanation": "'Koşuk', İslamiyet öncesi dönemde sığır (av) ve şölen (toy) törenlerinde söylenen, doğa, aşk ve kahramanlık temalarını işleyen lirik şiirlerdir.",
+              "options": [
+                {"text": "Sav", "correct": false},
+                {"text": "Sagu", "correct": false},
+                {"text": "Koşuk", "correct": true},
+                {"text": "Gazel", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "İslamiyet öncesi sözlü edebiyat türlerini doğru tanımlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["İslamiyet öncesi", "sözlü edebiyat"],
+              "explanation": "Sav atasözü, sagu ağıt, koşuk lirik şiir karşılığıdır.",
+              "options": [
+                {"text": "Sav", "pairId": 1, "correct": false},
+                {"text": "Atasözü karşılığı", "pairId": 1, "correct": false},
+                {"text": "Sagu", "pairId": 2, "correct": false},
+                {"text": "Ağıt (cenaze şiiri)", "pairId": 2, "correct": false},
+                {"text": "Koşuk", "pairId": 3, "correct": false},
+                {"text": "Lirik şiir (doğa, aşk)", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Orhun Yazıtları kimin adına dikilmiştir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Orhun Yazıtları"],
+              "explanation": "Orhun Yazıtları başlıca Bilge Kağan, Kül Tigin ve vezir Tonyukuk adına dikilmiştir. Yollug Tigin tarafından yazılmıştır.",
+              "options": [
+                {"text": "Yalnızca Mete Han adına", "correct": false},
+                {"text": "Bilge Kağan, Kül Tigin ve Tonyukuk adına", "correct": true},
+                {"text": "Yalnızca Attila adına", "correct": false},
+                {"text": "Oğuz Kağan adına", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "İslamiyet öncesi Türk edebiyatının genel özellikleri arasında hangisi yer almaz?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["İslamiyet öncesi", "genel özellikler"],
+              "explanation": "İslamiyet öncesi Türk edebiyatı sözlü geleneğe dayanır, hece ölçüsü kullanılır, doğa ve kahramanlık temaları işlenir. Aruz ölçüsü Divan edebiyatına aittir.",
+              "options": [
+                {"text": "Sözlü geleneğe dayanır", "correct": false},
+                {"text": "Hece ölçüsü kullanılır", "correct": false},
+                {"text": "Aruz ölçüsü kullanılır", "correct": true},
+                {"text": "Doğa ve kahramanlık temaları işlenir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Geçiş Dönemi Eserleri",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "İslamiyet'in kabulünden sonra yazılan ilk Türkçe eserlerden Kutadgu Bilig'in yazarı kimdir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["geçiş dönemi", "Kutadgu Bilig"],
+              "explanation": "Kutadgu Bilig (Mutluluk Veren Bilgi), 1069-1070 yıllarında Yusuf Has Hacip tarafından yazılmıştır.",
+              "options": [
+                {"text": "Kaşgarlı Mahmut", "correct": false},
+                {"text": "Yusuf Has Hacip", "correct": true},
+                {"text": "Ahmet Yesevi", "correct": false},
+                {"text": "Edip Ahmet Yükneki", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Divanü Lügati't-Türk hangi amaçla yazılmıştır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["geçiş dönemi", "Divanü Lügati't-Türk"],
+              "explanation": "Kaşgarlı Mahmut, Divanü Lügati't-Türk'ü Araplara Türkçe öğretmek ve Türkçenin zenginliğini göstermek amacıyla yazmıştır.",
+              "options": [
+                {"text": "Türklere Arapça öğretmek için", "correct": false},
+                {"text": "Araplara Türkçe öğretmek ve Türkçenin zenginliğini göstermek için", "correct": true},
+                {"text": "Devlet yönetimi hakkında bilgi vermek için", "correct": false},
+                {"text": "Din eğitimi vermek için", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Geçiş dönemi eserlerini yazarlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["geçiş dönemi", "eserler"],
+              "explanation": "Kutadgu Bilig = Yusuf Has Hacip, Divanü Lügati't-Türk = Kaşgarlı Mahmut, Atabetü'l-Hakayık = Edip Ahmet Yükneki.",
+              "options": [
+                {"text": "Kutadgu Bilig", "pairId": 1, "correct": false},
+                {"text": "Yusuf Has Hacip", "pairId": 1, "correct": false},
+                {"text": "Divanü Lügati't-Türk", "pairId": 2, "correct": false},
+                {"text": "Kaşgarlı Mahmut", "pairId": 2, "correct": false},
+                {"text": "Atabetü'l-Hakayık", "pairId": 3, "correct": false},
+                {"text": "Edip Ahmet Yükneki", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kutadgu Bilig'in konusu aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["geçiş dönemi", "Kutadgu Bilig"],
+              "explanation": "Kutadgu Bilig (Mutluluk Veren Bilgi), ideal devlet yönetimi ve insanın mutluluğa nasıl ulaşacağı konusunu işleyen bir siyasetnamedir.",
+              "options": [
+                {"text": "Aşk ve sevgi", "correct": false},
+                {"text": "İdeal devlet yönetimi ve mutluluğa ulaşma", "correct": true},
+                {"text": "Savaş ve kahramanlık", "correct": false},
+                {"text": "Doğa güzellikleri", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Divanü Lügati't-Türk'ün edebiyat tarihi açısından önemi nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["geçiş dönemi", "Divanü Lügati't-Türk"],
+              "explanation": "Divanü Lügati't-Türk, Türk lehçelerini derlemiş bir ansiklopedik sözlüktür. İçinde sav, sagu, koşuk örnekleri de yer alması onu İslamiyet öncesi edebiyatın korunmasında çok değerli kılar.",
+              "options": [
+                {"text": "İlk Türkçe roman olması", "correct": false},
+                {"text": "İslamiyet öncesi sözlü edebiyat örneklerini de içermesi ve Türk lehçelerinin ansiklopedik sözlüğü olması", "correct": true},
+                {"text": "İlk tiyatro eseri olması", "correct": false},
+                {"text": "Yalnızca din eğitimi vermesi", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Divan-ı Hikmet kimin eseridir ve konusu nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["geçiş dönemi", "Divan-ı Hikmet"],
+              "explanation": "Divan-ı Hikmet, Ahmet Yesevi'nin eseridir. İslami öğretileri sade Türkçeyle halka anlatan dinî-tasavvufi şiirlerden oluşur.",
+              "options": [
+                {"text": "Kaşgarlı Mahmut – sözlük", "correct": false},
+                {"text": "Ahmet Yesevi – dinî-tasavvufi şiirler", "correct": true},
+                {"text": "Yusuf Has Hacip – siyasetname", "correct": false},
+                {"text": "Edip Ahmet Yükneki – ahlâk kitabı", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Divan Edebiyatı (Klasik Türk Edebiyatı)",
+      "description": "Divan edebiyatının genel özellikleri, nazım biçimleri (gazel, kaside, mesnevi, rubai, şarkı), nesir ve temsilcileri",
+      "order": 2,
+      "lessons": [
+        {
+          "title": "Divan Edebiyatının Genel Özellikleri",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Divan edebiyatında kullanılan ölçü hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Divan edebiyatı", "aruz ölçüsü"],
+              "explanation": "Divan edebiyatında aruz ölçüsü kullanılır. Aruz, hecelerin açık (kısa) ve kapalı (uzun) oluşuna dayanan bir ölçü sistemidir.",
+              "options": [
+                {"text": "Hece ölçüsü", "correct": false},
+                {"text": "Aruz ölçüsü", "correct": true},
+                {"text": "Serbest ölçü", "correct": false},
+                {"text": "Parmak ölçüsü", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Divan edebiyatında temel nazım birimi hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Divan edebiyatı", "beyit"],
+              "explanation": "Divan edebiyatında temel nazım birimi beyittir. Beyit, anlam bakımından birbirini tamamlayan iki mısradan oluşur.",
+              "options": [
+                {"text": "Dörtlük", "correct": false},
+                {"text": "Beyit", "correct": true},
+                {"text": "Bend", "correct": false},
+                {"text": "Paragraf", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Divan edebiyatında kalıplaşmış söz ve kavramlara ne denir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Divan edebiyatı", "mazmun"],
+              "explanation": "'Mazmun', Divan edebiyatında herkes tarafından bilinen kalıplaşmış söz ve kavramlardır. Örneğin sevgilinin boyu 'servi', yüzü 'ay' ile ifade edilir.",
+              "options": [
+                {"text": "Redif", "correct": false},
+                {"text": "Kafiye", "correct": false},
+                {"text": "Mazmun", "correct": true},
+                {"text": "Aruz", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Divan edebiyatı özelliklerini doğru karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["Divan edebiyatı", "özellikler"],
+              "explanation": "Aruz ölçüsü = şiir ölçüsü, beyit = nazım birimi, mazmun = kalıplaşmış sözdür.",
+              "options": [
+                {"text": "Aruz", "pairId": 1, "correct": false},
+                {"text": "Şiir ölçüsü", "pairId": 1, "correct": false},
+                {"text": "Beyit", "pairId": 2, "correct": false},
+                {"text": "İki mısralık nazım birimi", "pairId": 2, "correct": false},
+                {"text": "Mazmun", "pairId": 3, "correct": false},
+                {"text": "Kalıplaşmış söz/kavram", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Divan edebiyatında dil ve üslup için hangisi doğrudur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Divan edebiyatı", "dil"],
+              "explanation": "Divan edebiyatında Arapça ve Farsça sözcüklerle yüklü ağır ve süslü bir dil (Osmanlıca) kullanılmıştır.",
+              "options": [
+                {"text": "Sade ve yalın Türkçe kullanılmıştır", "correct": false},
+                {"text": "Arapça ve Farsça sözcüklerle yüklü ağır bir dil kullanılmıştır", "correct": true},
+                {"text": "Yalnızca Farsça yazılmıştır", "correct": false},
+                {"text": "Konuşma dili esas alınmıştır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Divan edebiyatında en çok işlenen tema aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["Divan edebiyatı", "temalar"],
+              "explanation": "Divan edebiyatında en çok işlenen tema aşktır (beşerî ve ilahi aşk). Bunun yanında tabiat, ölüm, tasavvuf, övgü gibi temalar da işlenmiştir.",
+              "options": [
+                {"text": "Bilim ve teknoloji", "correct": false},
+                {"text": "Toplumsal eleştiri", "correct": false},
+                {"text": "Aşk (beşerî ve ilahi)", "correct": true},
+                {"text": "Siyaset", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Gazel ve Kaside",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Gazelin kafiye düzeni (uyak örgüsü) nasıldır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["gazel", "kafiye düzeni"],
+              "explanation": "Gazelin kafiye düzeni aa / ba / ca / da / ea şeklindedir. İlk beyit (matla) kendi arasında kafiyelidir, diğer beyitlerin ikinci mısraları matla ile kafiyelidir.",
+              "options": [
+                {"text": "abab / cdcd", "correct": false},
+                {"text": "aa / ba / ca / da", "correct": true},
+                {"text": "abcabc", "correct": false},
+                {"text": "aabb / ccdd", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Gazelde en çok işlenen konu aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["gazel", "konu"],
+              "explanation": "Gazelde en çok aşk, sevgili, güzellik, ayrılık, içki ve tabiat konuları işlenir.",
+              "options": [
+                {"text": "Savaş ve kahramanlık", "correct": false},
+                {"text": "Aşk, sevgili ve güzellik", "correct": true},
+                {"text": "Bilimsel keşifler", "correct": false},
+                {"text": "Devlet yönetimi", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Kasidenin gazelden en önemli farkı aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kaside", "gazel", "karşılaştırma"],
+              "explanation": "Kaside, bir kişiyi (padişah, devlet adamı) övmek amacıyla yazılır ve 33-99 beyit arasındadır. Gazel ise aşk konulu ve 5-15 beyittir.",
+              "options": [
+                {"text": "Kaside aşk konuludur, gazel övgü konuludur", "correct": false},
+                {"text": "Kaside bir kişiyi övmek amacıyla yazılır ve daha uzundur", "correct": true},
+                {"text": "Gazel daha uzundur", "correct": false},
+                {"text": "Kaside hece ölçüsüyle yazılır", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Gazelin ilk beytine ne ad verilir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["gazel", "matla"],
+              "explanation": "Gazelin ilk beytine 'matla' denir. Matla beytinde iki mısra birbiriyle kafiyelidir (aa).",
+              "options": [
+                {"text": "Makta", "correct": false},
+                {"text": "Matla", "correct": true},
+                {"text": "Beytü'l-gazel", "correct": false},
+                {"text": "Nesib", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Gazel ve kaside terimlerini doğru tanımlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["gazel", "kaside", "terimler"],
+              "explanation": "Matla gazelin ilk beyti, makta gazelin son beyti, nesib kasidenin giriş bölümüdür.",
+              "options": [
+                {"text": "Matla", "pairId": 1, "correct": false},
+                {"text": "Gazelin ilk beyti", "pairId": 1, "correct": false},
+                {"text": "Makta", "pairId": 2, "correct": false},
+                {"text": "Gazelin son beyti", "pairId": 2, "correct": false},
+                {"text": "Nesib", "pairId": 3, "correct": false},
+                {"text": "Kasidenin giriş bölümü", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Şairinin mahlasının (takma ad) geçtiği beyite ne denir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["gazel", "mahlas"],
+              "explanation": "Şairin mahlasının geçtiği beyite 'taç beyit' denir. Genellikle gazelin son beyti olan 'makta'da yer alır.",
+              "options": [
+                {"text": "Matla beyti", "correct": false},
+                {"text": "Nesib beyti", "correct": false},
+                {"text": "Taç beyit", "correct": true},
+                {"text": "Beytü'l-gazel", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Mesnevi, Rubai ve Şarkı",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Mesnevinin kafiye düzeni nasıldır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["mesnevi", "kafiye düzeni"],
+              "explanation": "Mesnevide her beyit kendi arasında kafiyelidir: aa / bb / cc / dd. Bu sayede uzun konular (aşk hikâyeleri, destanlar) anlatılabilir.",
+              "options": [
+                {"text": "aa / ba / ca", "correct": false},
+                {"text": "aa / bb / cc / dd", "correct": true},
+                {"text": "abab / cdcd", "correct": false},
+                {"text": "aaaa / bbbb", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Rubai kaç mısradan oluşur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["rubai"],
+              "explanation": "Rubai dört mısradan oluşan bir nazım biçimidir. Kafiye düzeni genellikle aaba şeklindedir.",
+              "options": [
+                {"text": "İki", "correct": false},
+                {"text": "Dört", "correct": true},
+                {"text": "Altı", "correct": false},
+                {"text": "Sekiz", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Şarkı nazım biçimi hangi edebiyat dönemine özgüdür?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["şarkı", "Divan edebiyatı"],
+              "explanation": "Şarkı, Divan edebiyatına Türklerin kazandırdığı özgün bir nazım biçimidir. Bestelenmek için yazılır ve dörtlüklerden oluşur.",
+              "options": [
+                {"text": "Halk edebiyatı", "correct": false},
+                {"text": "Divan edebiyatı (Türklere özgü)", "correct": true},
+                {"text": "Tanzimat edebiyatı", "correct": false},
+                {"text": "Cumhuriyet edebiyatı", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Nazım biçimlerini kafiye düzenleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["nazım biçimleri", "kafiye düzeni"],
+              "explanation": "Gazel: aa/ba/ca, mesnevi: aa/bb/cc, rubai: aaba.",
+              "options": [
+                {"text": "Gazel", "pairId": 1, "correct": false},
+                {"text": "aa / ba / ca / da", "pairId": 1, "correct": false},
+                {"text": "Mesnevi", "pairId": 2, "correct": false},
+                {"text": "aa / bb / cc / dd", "pairId": 2, "correct": false},
+                {"text": "Rubai", "pairId": 3, "correct": false},
+                {"text": "aaba", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Mesnevinin diğer nazım biçimlerinden en önemli farkı nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["mesnevi", "özellik"],
+              "explanation": "Mesnevide her beyit kendi arasında kafiyeli olduğu için kafiye bulmak kolaylaşır ve çok uzun konular (aşk hikâyeleri, destanlar, dinî konular) anlatılabilir.",
+              "options": [
+                {"text": "En kısa nazım biçimidir", "correct": false},
+                {"text": "Her beyit kendi arasında kafiyeli olduğu için uzun konular anlatılabilir", "correct": true},
+                {"text": "Hece ölçüsüyle yazılır", "correct": false},
+                {"text": "Yalnızca dört mısradan oluşur", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Rubai türünün dünya edebiyatındaki en ünlü temsilcisi kimdir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["rubai", "Ömer Hayyam"],
+              "explanation": "Rubai türünün dünya edebiyatındaki en ünlü temsilcisi İranlı şair ve matematikçi Ömer Hayyam'dır.",
+              "options": [
+                {"text": "Fuzulî", "correct": false},
+                {"text": "Mevlânâ", "correct": false},
+                {"text": "Ömer Hayyam", "correct": true},
+                {"text": "Nedim", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Divan Edebiyatında Nesir ve Temsilciler",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Divan edebiyatının en büyük gazel şairi olarak kabul edilen kişi kimdir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Divan edebiyatı", "Fuzulî"],
+              "explanation": "Fuzulî (16. yy), özellikle aşk temalı gazelleriyle Divan edebiyatının en büyük şairlerinden kabul edilir. 'Leylâ vü Mecnun' mesnevisi de ünlüdür.",
+              "options": [
+                {"text": "Nedim", "correct": false},
+                {"text": "Bâkî", "correct": false},
+                {"text": "Fuzulî", "correct": true},
+                {"text": "Nef'î", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Lale Devri şairi olarak bilinen ve şarkı türünün en önemli temsilcisi olan kişi kimdir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Divan edebiyatı", "Nedim"],
+              "explanation": "Nedim (18. yy), Lale Devri'nin en önemli şairidir. Şarkı türünün en başarılı temsilcisi olarak kabul edilir.",
+              "options": [
+                {"text": "Fuzulî", "correct": false},
+                {"text": "Bâkî", "correct": false},
+                {"text": "Nedim", "correct": true},
+                {"text": "Şeyh Galip", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Divan edebiyatı şairlerini ünlü eserleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["Divan edebiyatı", "temsilciler"],
+              "explanation": "Fuzulî 'Leylâ vü Mecnun', Şeyh Galip 'Hüsn ü Aşk', Nâbî 'Hayriyye' adlı mesnevileri yazmıştır.",
+              "options": [
+                {"text": "Fuzulî", "pairId": 1, "correct": false},
+                {"text": "Leylâ vü Mecnun", "pairId": 1, "correct": false},
+                {"text": "Şeyh Galip", "pairId": 2, "correct": false},
+                {"text": "Hüsn ü Aşk", "pairId": 2, "correct": false},
+                {"text": "Nâbî", "pairId": 3, "correct": false},
+                {"text": "Hayriyye", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Divan edebiyatında nesir (düzyazı) türleri arasında hangisi yer alır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Divan edebiyatı", "nesir"],
+              "explanation": "Divan edebiyatında nesir türleri: tezkire (biyografi), tarih, seyahatname (gezi yazısı), münşeat (mektuplar) gibi türlerdir.",
+              "options": [
+                {"text": "Roman", "correct": false},
+                {"text": "Tezkire (biyografi)", "correct": true},
+                {"text": "Deneme", "correct": false},
+                {"text": "Makale", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Evliya Çelebi hangi eseriyle tanınır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Divan edebiyatı", "Evliya Çelebi"],
+              "explanation": "Evliya Çelebi, 17. yüzyılda yazdığı 'Seyahatname' adlı 10 ciltlik gezi yazısıyla tanınır. Osmanlı coğrafyasını ayrıntılı şekilde anlatmıştır.",
+              "options": [
+                {"text": "Leylâ vü Mecnun", "correct": false},
+                {"text": "Seyahatname", "correct": true},
+                {"text": "Hayriyye", "correct": false},
+                {"text": "Hüsn ü Aşk", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hiciv (yergi) türünde en ünlü Divan şairi kimdir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["Divan edebiyatı", "Nef'î"],
+              "explanation": "Nef'î (17. yy), keskin dili ve sert hicivleriyle (yergileriyle) tanınır. Kaside türünde de çok başarılıdır.",
+              "options": [
+                {"text": "Fuzulî", "correct": false},
+                {"text": "Nef'î", "correct": true},
+                {"text": "Nedim", "correct": false},
+                {"text": "Bâkî", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Divan Edebiyatında Mazmunlar ve Üslup",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Divan şiirinde sevgilinin boyu hangi mazmunla ifade edilir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["mazmun", "servi"],
+              "explanation": "Divan şiirinde sevgilinin uzun ve ince boyu 'servi' (selvi ağacı) ile ifade edilir.",
+              "options": [
+                {"text": "Gül", "correct": false},
+                {"text": "Bülbül", "correct": false},
+                {"text": "Servi (selvi)", "correct": true},
+                {"text": "Mum", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Divan şiirinde âşık hangi mazmunla simgelenir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["mazmun", "bülbül"],
+              "explanation": "Divan şiirinde âşık 'bülbül' ile, sevgili ise 'gül' ile simgelenir. Bülbülün güle olan aşkı, âşığın sevgiliye duyduğu aşkı temsil eder.",
+              "options": [
+                {"text": "Gül", "correct": false},
+                {"text": "Bülbül", "correct": true},
+                {"text": "Servi", "correct": false},
+                {"text": "Pervane", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Mazmunları doğru karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["mazmun"],
+              "explanation": "Gül = sevgili, bülbül = âşık, ok = kirpik (sevgilinin kirpikleri oka benzetilir).",
+              "options": [
+                {"text": "Gül", "pairId": 1, "correct": false},
+                {"text": "Sevgili", "pairId": 1, "correct": false},
+                {"text": "Bülbül", "pairId": 2, "correct": false},
+                {"text": "Âşık", "pairId": 2, "correct": false},
+                {"text": "Ok", "pairId": 3, "correct": false},
+                {"text": "Sevgilinin kirpiği", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Divan edebiyatının üslup özelliklerinden hangisi doğrudur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Divan edebiyatı", "üslup"],
+              "explanation": "Divan edebiyatında sanatlı söyleyiş ön plandadır. Söz sanatları (teşbih, istiare, mecaz, tezat) yoğun biçimde kullanılır.",
+              "options": [
+                {"text": "Sade ve yalın anlatım esastır", "correct": false},
+                {"text": "Sanatlı söyleyiş ve söz sanatları yoğun olarak kullanılır", "correct": true},
+                {"text": "Konuşma dili kullanılır", "correct": false},
+                {"text": "Bilimsel bir dil tercih edilir", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Divan şiirinde sevgilinin yüzü hangi mazmunla ifade edilir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["mazmun", "ay/güneş"],
+              "explanation": "Divan şiirinde sevgilinin yüzü parlaklığı nedeniyle 'ay' veya 'güneş' ile ifade edilir.",
+              "options": [
+                {"text": "Servi", "correct": false},
+                {"text": "Ay veya güneş", "correct": true},
+                {"text": "Bülbül", "correct": false},
+                {"text": "Lale", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Divan edebiyatında 'pervane' mazmunu neyi simgeler?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["mazmun", "pervane"],
+              "explanation": "Pervane (kelebek), aşkı uğruna mumun (sevgilinin) ateşinde yanan, kendini feda eden âşığı simgeler.",
+              "options": [
+                {"text": "Sevgiliyi", "correct": false},
+                {"text": "Doğayı", "correct": false},
+                {"text": "Aşkı uğruna kendini feda eden âşığı", "correct": true},
+                {"text": "Padişahı", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Halk Edebiyatı",
+      "description": "Anonim halk edebiyatı (mani, türkü, ninni, ağıt), âşık edebiyatı (koşma, semai), tekke edebiyatı, halk hikâyeleri ve Dede Korkut",
+      "order": 3,
+      "lessons": [
+        {
+          "title": "Halk Edebiyatının Genel Özellikleri",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Halk edebiyatında kullanılan ölçü hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Halk edebiyatı", "hece ölçüsü"],
+              "explanation": "Halk edebiyatında hece ölçüsü kullanılır. Mısralardaki hece sayısının eşitliğine dayanır.",
+              "options": [
+                {"text": "Aruz ölçüsü", "correct": false},
+                {"text": "Hece ölçüsü", "correct": true},
+                {"text": "Serbest ölçü", "correct": false},
+                {"text": "Karma ölçü", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Halk edebiyatında temel nazım birimi hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Halk edebiyatı", "dörtlük"],
+              "explanation": "Halk edebiyatında temel nazım birimi dörtlüktür (4 mısralık birim). Divan edebiyatında ise beyittir.",
+              "options": [
+                {"text": "Beyit", "correct": false},
+                {"text": "Dörtlük", "correct": true},
+                {"text": "Bend", "correct": false},
+                {"text": "Paragraf", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Halk edebiyatı hangi üç ana kola ayrılır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Halk edebiyatı", "kollar"],
+              "explanation": "Halk edebiyatı üç ana kola ayrılır: Anonim Halk Edebiyatı, Âşık Edebiyatı ve Tekke (Tasavvuf) Edebiyatı.",
+              "options": [
+                {"text": "Divan, Tanzimat, Cumhuriyet", "correct": false},
+                {"text": "Anonim, Âşık, Tekke (Tasavvuf)", "correct": true},
+                {"text": "Şiir, Roman, Tiyatro", "correct": false},
+                {"text": "Sözlü, Yazılı, Karma", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Halk edebiyatı ile Divan edebiyatını özelliklerle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["Halk edebiyatı", "Divan edebiyatı", "karşılaştırma"],
+              "explanation": "Halk edebiyatı sade Türkçe ve hece ölçüsü, Divan edebiyatı Osmanlıca ve aruz ölçüsü kullanır.",
+              "options": [
+                {"text": "Halk edebiyatı ölçüsü", "pairId": 1, "correct": false},
+                {"text": "Hece ölçüsü", "pairId": 1, "correct": false},
+                {"text": "Divan edebiyatı ölçüsü", "pairId": 2, "correct": false},
+                {"text": "Aruz ölçüsü", "pairId": 2, "correct": false},
+                {"text": "Halk edebiyatı dili", "pairId": 3, "correct": false},
+                {"text": "Sade halk Türkçesi", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Halk edebiyatında genellikle hangi kafiye türü kullanılır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Halk edebiyatı", "kafiye"],
+              "explanation": "Halk edebiyatında genellikle yarım kafiye ve cinaslı kafiye kullanılır. Tam ve zengin kafiye Divan edebiyatında yaygındır.",
+              "options": [
+                {"text": "Zengin kafiye", "correct": false},
+                {"text": "Yarım kafiye ve cinaslı kafiye", "correct": true},
+                {"text": "Tunç kafiye", "correct": false},
+                {"text": "Kafiye kullanılmaz", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Halk edebiyatının en belirgin özelliği aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["Halk edebiyatı", "sözlü gelenek"],
+              "explanation": "Halk edebiyatı büyük ölçüde sözlü geleneğe dayanır. Şiirler saz eşliğinde söylenir, yazıya geçirilmesi sonradan olmuştur.",
+              "options": [
+                {"text": "Yazılı geleneğe dayanır", "correct": false},
+                {"text": "Sözlü geleneğe dayanır ve saz eşliğinde söylenir", "correct": true},
+                {"text": "Yalnızca saray çevresinde üretilir", "correct": false},
+                {"text": "Arapça ve Farsça eserler içerir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Anonim Halk Edebiyatı (Mani, Türkü, Ninni, Ağıt)",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Mani kaç mısradan oluşur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["mani"],
+              "explanation": "Mani, dört mısradan (dörtlük) oluşan nazım biçimidir. Kafiye düzeni aaba şeklindedir ve 7'li hece ölçüsüyle yazılır.",
+              "options": [
+                {"text": "İki", "correct": false},
+                {"text": "Dört", "correct": true},
+                {"text": "Altı", "correct": false},
+                {"text": "Sekiz", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Türkünün en belirgin özelliği hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["türkü"],
+              "explanation": "Türkü, ezgiyle (müzikle) söylenen, anonim halk edebiyatının en yaygın nazım biçimlerinden biridir. Bent ve kavuştak (nakarat) bölümlerinden oluşur.",
+              "options": [
+                {"text": "Yazılı olması", "correct": false},
+                {"text": "Ezgiyle (müzikle) söylenmesi", "correct": true},
+                {"text": "Aruz ölçüsüyle yazılması", "correct": false},
+                {"text": "Yalnızca aşk konusu işlemesi", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Anonim halk edebiyatı türlerini doğru tanımlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["anonim halk edebiyatı", "türler"],
+              "explanation": "Mani 4 mısralık kısa şiir, türkü ezgiyle söylenen nakaratlı şiir, ninni çocukları uyutmak için söylenen ezgidir.",
+              "options": [
+                {"text": "Mani", "pairId": 1, "correct": false},
+                {"text": "4 mısralık kısa şiir (aaba)", "pairId": 1, "correct": false},
+                {"text": "Türkü", "pairId": 2, "correct": false},
+                {"text": "Ezgiyle söylenen nakaratlı şiir", "pairId": 2, "correct": false},
+                {"text": "Ninni", "pairId": 3, "correct": false},
+                {"text": "Çocukları uyutmak için söylenen", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Ölen bir kişinin ardından yakılan, acı ve üzüntü ifade eden türe ne denir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ağıt"],
+              "explanation": "Ağıt, ölen bir kişinin ardından duyulan acı ve üzüntüyü dile getiren halk edebiyatı türüdür. İslamiyet öncesindeki karşılığı 'sagu'dur.",
+              "options": [
+                {"text": "Türkü", "correct": false},
+                {"text": "Ağıt", "correct": true},
+                {"text": "Mani", "correct": false},
+                {"text": "Koşma", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Maninin ilk iki mısrası genellikle hangi amaçla kullanılır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["mani", "yapı"],
+              "explanation": "Maninin ilk iki mısrası genellikle doldurma (hazırlık) mısralarıdır; asıl duygu ve düşünce son iki mısrada ifade edilir.",
+              "options": [
+                {"text": "Asıl anlamı taşır", "correct": false},
+                {"text": "Kafiyeyi oluşturmak için doldurma amaçlıdır", "correct": true},
+                {"text": "Öğretici bilgi verir", "correct": false},
+                {"text": "Nakarat olarak tekrarlanır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Aşağıdakilerden hangisi anonim halk edebiyatının özelliklerinden biri değildir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["anonim halk edebiyatı"],
+              "explanation": "Anonim halk edebiyatında ürünlerin sahibi (yazarı) belli değildir. 'Belirli bir sanatçı tarafından üretilmesi' anonim halk edebiyatına aykırıdır.",
+              "options": [
+                {"text": "Sözlü gelenekle aktarılır", "correct": false},
+                {"text": "Sahibi (yazarı) belli değildir", "correct": false},
+                {"text": "Halk dilinde ve hece ölçüsündedir", "correct": false},
+                {"text": "Belirli bir sanatçı tarafından üretilir", "correct": true}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Âşık Edebiyatı (Koşma, Semai, Varsağı)",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Koşma kaç dörtlükten oluşur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["koşma"],
+              "explanation": "Koşma, 3 ile 5 dörtlükten oluşan, 11'li hece ölçüsüyle yazılan, âşık edebiyatının en yaygın nazım biçimidir.",
+              "options": [
+                {"text": "1-2 dörtlük", "correct": false},
+                {"text": "3-5 dörtlük", "correct": true},
+                {"text": "10-15 dörtlük", "correct": false},
+                {"text": "Sınırsız", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Âşık edebiyatında şairlerin kullandığı takma ada ne denir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["âşık edebiyatı", "mahlas"],
+              "explanation": "Âşık edebiyatında şairlerin kullandığı takma ada 'mahlas' denir. Âşıklar şiirlerinin son dörtlüğünde mahlaslarını kullanır.",
+              "options": [
+                {"text": "Lakap", "correct": false},
+                {"text": "Mahlas", "correct": true},
+                {"text": "Unvan", "correct": false},
+                {"text": "Soyisim", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Semai ile koşma arasındaki en temel fark nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["semai", "koşma", "karşılaştırma"],
+              "explanation": "Semai 8'li hece ölçüsüyle, koşma 11'li hece ölçüsüyle yazılır. Semai özel bir ezgiyle söylenir.",
+              "options": [
+                {"text": "Koşma aşk konuludur, semai değildir", "correct": false},
+                {"text": "Semai 8'li, koşma 11'li hece ölçüsüyle yazılır", "correct": true},
+                {"text": "Semai dörtlük, koşma beyit kullanır", "correct": false},
+                {"text": "Hiçbir farkları yoktur", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Âşık edebiyatı temsilcilerini yüzyıllarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["âşık edebiyatı", "temsilciler"],
+              "explanation": "Karacaoğlan 17. yy (aşk, doğa), Köroğlu 16. yy (kahramanlık), Âşık Veysel 20. yy (sade dil, vatan sevgisi).",
+              "options": [
+                {"text": "Karacaoğlan", "pairId": 1, "correct": false},
+                {"text": "17. yy – Aşk ve doğa şairi", "pairId": 1, "correct": false},
+                {"text": "Köroğlu", "pairId": 2, "correct": false},
+                {"text": "16. yy – Kahramanlık şairi", "pairId": 2, "correct": false},
+                {"text": "Âşık Veysel", "pairId": 3, "correct": false},
+                {"text": "20. yy – Vatan sevgisi", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Varsağının koşmadan farkı nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["varsağı"],
+              "explanation": "Varsağı, koşma gibi 11'li hece ölçüsüyle yazılır ancak yiğitçe, mertçe bir üslupla söylenir. 'Bre', 'hey', 'behey' gibi ünlemler kullanılması özelliğidir.",
+              "options": [
+                {"text": "Aruz ölçüsüyle yazılır", "correct": false},
+                {"text": "Yiğitçe bir üslupla söylenir; 'bre', 'hey' gibi ünlemler kullanılır", "correct": true},
+                {"text": "Beyitlerden oluşur", "correct": false},
+                {"text": "Yalnızca kadınlar tarafından söylenir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Aşağıdakilerden hangisi âşık edebiyatının özelliklerinden biri değildir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["âşık edebiyatı", "özellikler"],
+              "explanation": "Âşık edebiyatında şairler (ozanlar) saz çalarak şiir söyler. Aruz ölçüsü Divan edebiyatına aittir.",
+              "options": [
+                {"text": "Şiirler saz eşliğinde söylenir", "correct": false},
+                {"text": "Hece ölçüsü kullanılır", "correct": false},
+                {"text": "Aruz ölçüsü kullanılır", "correct": true},
+                {"text": "Şairlerin mahlası vardır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Tekke (Tasavvuf) Edebiyatı",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Tekke edebiyatının temel konusu nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["tekke edebiyatı", "konu"],
+              "explanation": "Tekke (tasavvuf) edebiyatında Allah aşkı, ilahi sevgi, dinî-tasavvufi düşünceler ve hoşgörü temel konulardır.",
+              "options": [
+                {"text": "Savaş ve kahramanlık", "correct": false},
+                {"text": "Allah aşkı ve tasavvufi düşünceler", "correct": true},
+                {"text": "Bilim ve teknoloji", "correct": false},
+                {"text": "Toplumsal eleştiri", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Allah'ın birliğini ve büyüklüğünü anlatan, camilerde veya tekkelerde söylenen şiirlere ne denir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ilahi"],
+              "explanation": "İlahi, Allah'ın birliğini, büyüklüğünü ve ilahi aşkı anlatan, dinî törenlerde söylenen şiirlerdir. Yunus Emre bu türün en büyük temsilcisidir.",
+              "options": [
+                {"text": "Koşma", "correct": false},
+                {"text": "İlahi", "correct": true},
+                {"text": "Gazel", "correct": false},
+                {"text": "Türkü", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Tekke edebiyatı nazım türlerini doğru tanımlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["tekke edebiyatı", "nazım türleri"],
+              "explanation": "İlahi genel dinî şiir, nefes Bektaşi tarikatında söylenen şiir, nutuk tarikat büyüklerinin öğretici şiiridir.",
+              "options": [
+                {"text": "İlahi", "pairId": 1, "correct": false},
+                {"text": "Allah aşkını anlatan genel dinî şiir", "pairId": 1, "correct": false},
+                {"text": "Nefes", "pairId": 2, "correct": false},
+                {"text": "Bektaşi tarikatında söylenen şiir", "pairId": 2, "correct": false},
+                {"text": "Nutuk", "pairId": 3, "correct": false},
+                {"text": "Tarikat büyüklerinin öğretici şiiri", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Tekke edebiyatının en büyük temsilcisi kimdir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["tekke edebiyatı", "Yunus Emre"],
+              "explanation": "Yunus Emre (13. yy), sade Türkçesiyle ilahi aşk, insan sevgisi ve hoşgörü temalarını işlemiştir. Tekke edebiyatının en büyük temsilcisidir.",
+              "options": [
+                {"text": "Karacaoğlan", "correct": false},
+                {"text": "Fuzulî", "correct": false},
+                {"text": "Yunus Emre", "correct": true},
+                {"text": "Nedim", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Mevlânâ Celâleddîn-i Rûmî'nin en ünlü eseri hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["tekke edebiyatı", "Mevlânâ"],
+              "explanation": "Mevlânâ'nın en ünlü eseri, 25.700 beyitlik bir mesnevi olan 'Mesnevî-i Ma'nevî'dir. Farsça yazılmıştır.",
+              "options": [
+                {"text": "Divan-ı Kebir", "correct": false},
+                {"text": "Mesnevi", "correct": true},
+                {"text": "Mantıku't-Tayr", "correct": false},
+                {"text": "Leylâ vü Mecnun", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Tasavvufun temel hedefi aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["tasavvuf"],
+              "explanation": "Tasavvufun temel hedefi insanın nefsini arındırarak Allah'a yakınlaşması ve ilahi aşka ulaşmasıdır. Bu yolculuğa 'seyr ü sülûk' denir.",
+              "options": [
+                {"text": "Zenginlik ve güç elde etmek", "correct": false},
+                {"text": "Nefsi arındırarak Allah'a yakınlaşmak", "correct": true},
+                {"text": "Siyasi güç kazanmak", "correct": false},
+                {"text": "Bilimsel bilgi edinmek", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Halk Hikâyeleri ve Dede Korkut",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Dede Korkut Hikâyeleri'nin en önemli özelliği nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Dede Korkut"],
+              "explanation": "Dede Korkut Hikâyeleri, İslamiyet öncesi ve sonrası Oğuz Türklerinin yaşamını, gelenek ve göreneklerini anlatan, nazım-nesir (şiir-düzyazı) karışık yazılmış ilk anlatı örneklerindendir.",
+              "options": [
+                {"text": "Yalnızca şiir biçiminde yazılmıştır", "correct": false},
+                {"text": "Oğuz Türklerinin yaşamını nazım-nesir karışık anlatır", "correct": true},
+                {"text": "Arapça yazılmıştır", "correct": false},
+                {"text": "Yalnızca aşk konusu işler", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Dede Korkut Hikâyeleri kaç hikâyeden oluşur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Dede Korkut"],
+              "explanation": "Dede Korkut Hikâyeleri bir önsöz ve 12 hikâyeden oluşur. Sonradan bulunan Dresden nüshasıyla birlikte toplam sayı artmıştır.",
+              "options": [
+                {"text": "5", "correct": false},
+                {"text": "12", "correct": true},
+                {"text": "20", "correct": false},
+                {"text": "50", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Halk hikâyelerinin destanlardan en önemli farkı nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["halk hikâyesi", "destan", "karşılaştırma"],
+              "explanation": "Halk hikâyelerinde olağanüstülük destanlara göre azalmıştır ve bireysel konular (aşk, sevgi) daha çok işlenir. Destanlarda ise millî ve toplumsal konular ağırlıktadır.",
+              "options": [
+                {"text": "Halk hikâyeleri manzumdur", "correct": false},
+                {"text": "Halk hikâyelerinde olağanüstülük azalmıştır ve bireysel konular ağırlıktadır", "correct": true},
+                {"text": "Destanlar kısadır, halk hikâyeleri uzundur", "correct": false},
+                {"text": "Halk hikâyelerinin yazarı bellidir", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Ünlü halk hikâyelerini konularıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["halk hikâyesi"],
+              "explanation": "Kerem ile Aslı ve Ferhat ile Şirin aşk hikâyesi, Köroğlu ise kahramanlık hikâyesidir.",
+              "options": [
+                {"text": "Kerem ile Aslı", "pairId": 1, "correct": false},
+                {"text": "Aşk hikâyesi", "pairId": 1, "correct": false},
+                {"text": "Köroğlu", "pairId": 2, "correct": false},
+                {"text": "Kahramanlık hikâyesi", "pairId": 2, "correct": false},
+                {"text": "Ferhat ile Şirin", "pairId": 3, "correct": false},
+                {"text": "Aşk hikâyesi", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Halk hikâyelerinin Divan edebiyatındaki karşılığı hangisidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["halk hikâyesi", "mesnevi"],
+              "explanation": "Halk hikâyeleri, Divan edebiyatındaki mesnevilerin halk edebiyatındaki karşılığı olarak kabul edilir. Her ikisi de uzun anlatılardır.",
+              "options": [
+                {"text": "Gazel", "correct": false},
+                {"text": "Kaside", "correct": false},
+                {"text": "Mesnevi", "correct": true},
+                {"text": "Rubai", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Dede Korkut Hikâyeleri hangi Türk boyunun yaşamını anlatır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Dede Korkut", "Oğuz"],
+              "explanation": "Dede Korkut Hikâyeleri, Oğuz Türklerinin yaşamını, kahramanlıklarını, gelenek ve göreneklerini anlatır.",
+              "options": [
+                {"text": "Kıpçak Türkleri", "correct": false},
+                {"text": "Oğuz Türkleri", "correct": true},
+                {"text": "Uygur Türkleri", "correct": false},
+                {"text": "Karluk Türkleri", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Tanzimat ve Servetifünun Edebiyatı",
+      "description": "Tanzimat edebiyatının özellikleri, roman ve hikâyesi; Servetifünun edebiyatı, dönem karşılaştırmaları",
+      "order": 4,
+      "lessons": [
+        {
+          "title": "Tanzimat Edebiyatının Genel Özellikleri",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Tanzimat edebiyatı hangi olayla başlamıştır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Tanzimat", "başlangıç"],
+              "explanation": "Tanzimat edebiyatı, 1860'ta Şinasi ve Agâh Efendi tarafından çıkarılan Tercüman-ı Ahval gazetesiyle başlamıştır.",
+              "options": [
+                {"text": "Tanzimat Fermanı'nın ilanıyla (1839)", "correct": false},
+                {"text": "Tercüman-ı Ahval gazetesinin çıkmasıyla (1860)", "correct": true},
+                {"text": "Cumhuriyet'in ilanıyla (1923)", "correct": false},
+                {"text": "İstanbul'un fethiyle (1453)", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Tanzimat edebiyatının en önemli yeniliği aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Tanzimat", "yenilikler"],
+              "explanation": "Tanzimat edebiyatıyla roman, hikâye, tiyatro, gazete, makale gibi Batılı türler Türk edebiyatına girmiştir.",
+              "options": [
+                {"text": "Aruz ölçüsünün kullanılmaya başlanması", "correct": false},
+                {"text": "Roman, hikâye, tiyatro gibi Batılı türlerin edebiyata girmesi", "correct": true},
+                {"text": "Hece ölçüsünün yaygınlaşması", "correct": false},
+                {"text": "Divan şiirinin devam ettirilmesi", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Sanat toplum içindir' görüşünü savunan Tanzimat sanatçıları aşağıdakilerden hangisini amaçlamıştır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["Tanzimat", "sanat anlayışı"],
+              "explanation": "Tanzimat 1. Dönem sanatçıları 'sanat toplum içindir' anlayışıyla halkı eğitmeyi, Batılı değerleri yaymayı ve toplumsal sorunlara dikkat çekmeyi amaçlamıştır.",
+              "options": [
+                {"text": "Yalnızca sanat için eser üretmeyi", "correct": false},
+                {"text": "Halkı eğitmeyi ve toplumsal sorunlara dikkat çekmeyi", "correct": true},
+                {"text": "Divan edebiyatını sürdürmeyi", "correct": false},
+                {"text": "Yalnızca eğlence amaçlı eserler vermeyi", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Tanzimat edebiyatı temsilcilerini eserleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["Tanzimat", "temsilciler"],
+              "explanation": "Namık Kemal 'İntibah' ve 'Vatan yahut Silistre', Şinasi 'Şair Evlenmesi' (ilk tiyatro), Ahmet Mithat 'Felâtun Bey ile Rakım Efendi' yazmıştır.",
+              "options": [
+                {"text": "Namık Kemal", "pairId": 1, "correct": false},
+                {"text": "İntibah (roman)", "pairId": 1, "correct": false},
+                {"text": "Şinasi", "pairId": 2, "correct": false},
+                {"text": "Şair Evlenmesi (tiyatro)", "pairId": 2, "correct": false},
+                {"text": "Ahmet Mithat Efendi", "pairId": 3, "correct": false},
+                {"text": "Felâtun Bey ile Rakım Efendi", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Tanzimat edebiyatında dil konusunda nasıl bir yaklaşım benimsenmiştir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Tanzimat", "dil"],
+              "explanation": "Tanzimat 1. Dönem sanatçıları halkın anlayacağı sade bir dil kullanmayı amaçlamış, ancak bunu tam olarak başaramamışlardır.",
+              "options": [
+                {"text": "Divan edebiyatının ağır dili aynen korunmuştur", "correct": false},
+                {"text": "Sade dil amaçlanmış ama tam başarılamamıştır", "correct": true},
+                {"text": "Yalnızca Arapça yazılmıştır", "correct": false},
+                {"text": "Konuşma dili birebir kullanılmıştır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Tanzimat edebiyatında ilk Türkçe tiyatro eseri hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Tanzimat", "tiyatro", "ilk eser"],
+              "explanation": "'Şair Evlenmesi' (1859), Şinasi tarafından yazılan ve Türk edebiyatının ilk tiyatro eseri kabul edilen komedidir.",
+              "options": [
+                {"text": "Vatan yahut Silistre – Namık Kemal", "correct": false},
+                {"text": "Şair Evlenmesi – Şinasi", "correct": true},
+                {"text": "İntibah – Namık Kemal", "correct": false},
+                {"text": "Araba Sevdası – Recaizade Mahmut Ekrem", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Tanzimat Dönemi Roman ve Hikâyesi",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Türk edebiyatının ilk çeviri romanı hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Tanzimat", "ilk roman"],
+              "explanation": "Yusuf Kâmil Paşa'nın Fénelon'dan çevirdiği 'Telemak' (1862) Türk edebiyatının ilk çeviri romanıdır.",
+              "options": [
+                {"text": "İntibah", "correct": false},
+                {"text": "Taaşşuk-ı Talat ve Fitnat", "correct": false},
+                {"text": "Telemak (Yusuf Kâmil Paşa çevirisi)", "correct": true},
+                {"text": "Cezmi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Tanzimat romanlarında en çok işlenen konu aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Tanzimat", "roman konuları"],
+              "explanation": "Tanzimat romanlarında yanlış Batılılaşma, görücü usulü evlilik, kölelik, eğitim gibi toplumsal konular sıkça işlenmiştir.",
+              "options": [
+                {"text": "Mitolojik konular", "correct": false},
+                {"text": "Yanlış Batılılaşma ve toplumsal sorunlar", "correct": true},
+                {"text": "Bilimsel keşifler", "correct": false},
+                {"text": "Yalnızca aşk konusu", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Yanlış Batılılaşma' konusunu ele alan Tanzimat romanı hangisidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["Tanzimat", "yanlış Batılılaşma"],
+              "explanation": "'Felâtun Bey ile Rakım Efendi' (Ahmet Mithat Efendi), yanlış Batılılaşmayı (Felâtun Bey) ve doğru Batılılaşmayı (Rakım Efendi) karşılaştıran bir romandır.",
+              "options": [
+                {"text": "İntibah – Namık Kemal", "correct": false},
+                {"text": "Felâtun Bey ile Rakım Efendi – Ahmet Mithat Efendi", "correct": true},
+                {"text": "Sergüzeşt – Samipaşazade Sezai", "correct": false},
+                {"text": "Cezmi – Namık Kemal", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Tanzimat romanlarının teknik açıdan en büyük eksikliği nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["Tanzimat", "roman tekniği"],
+              "explanation": "Tanzimat romanlarında yazar, olaylara müdahale eder, kendi fikirlerini açıkça belirtir, tesadüflere sıkça başvurulur ve karakter derinliği zayıftır.",
+              "options": [
+                {"text": "Çok uzun olmalarıdır", "correct": false},
+                {"text": "Yazarın olaylara müdahalesi, tesadüflere başvurması ve teknik zayıflık", "correct": true},
+                {"text": "Konu çeşitliliğinin fazla olması", "correct": false},
+                {"text": "Arapça yazılmaları", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Tanzimat romanlarını konularıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["Tanzimat", "romanlar"],
+              "explanation": "İntibah ahlâkî çöküş, Sergüzeşt esaret/kölelik, Araba Sevdası yanlış Batılılaşma konusunu işler.",
+              "options": [
+                {"text": "İntibah – Namık Kemal", "pairId": 1, "correct": false},
+                {"text": "Ahlâkî çöküş", "pairId": 1, "correct": false},
+                {"text": "Sergüzeşt – Samipaşazade", "pairId": 2, "correct": false},
+                {"text": "Esaret ve kölelik", "pairId": 2, "correct": false},
+                {"text": "Araba Sevdası – Recaizade", "pairId": 3, "correct": false},
+                {"text": "Yanlış Batılılaşma", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Namık Kemal'in İntibah romanının Türk edebiyatı tarihindeki önemi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Tanzimat", "İntibah"],
+              "explanation": "İntibah (1876), Türk edebiyatının ilk edebî romanı kabul edilir. Romanda Ali Bey'in ahlâkî çöküşü anlatılır.",
+              "options": [
+                {"text": "İlk çeviri romandır", "correct": false},
+                {"text": "İlk edebî roman olarak kabul edilir", "correct": true},
+                {"text": "İlk tarihî romandır", "correct": false},
+                {"text": "İlk tiyatro eseridir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Servetifünun Edebiyatının Genel Özellikleri",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Servetifünun edebiyatı hangi dergi etrafında oluşmuştur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Servetifünun", "dergi"],
+              "explanation": "Servetifünun edebiyatı, 1896'da Tevfik Fikret'in başyazarlığında 'Servet-i Fünûn' dergisi etrafında toplanan sanatçılar tarafından oluşturulmuştur.",
+              "options": [
+                {"text": "Tercüman-ı Ahval", "correct": false},
+                {"text": "Servet-i Fünûn", "correct": true},
+                {"text": "Genç Kalemler", "correct": false},
+                {"text": "Varlık", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Servetifünun edebiyatının Tanzimat edebiyatından en önemli farkı nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Servetifünun", "Tanzimat", "karşılaştırma"],
+              "explanation": "Servetifünun sanatçıları 'sanat sanat içindir' anlayışını benimsemiştir. Tanzimat'ın 'sanat toplum içindir' görüşünden ayrılırlar. Dil daha ağır ve süslüdür.",
+              "options": [
+                {"text": "Toplumsal konulara daha fazla yer verilmiştir", "correct": false},
+                {"text": "'Sanat sanat içindir' anlayışı benimsenmiş, dil daha süslüdür", "correct": true},
+                {"text": "Hece ölçüsü kullanılmıştır", "correct": false},
+                {"text": "Roman türü terk edilmiştir", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Servetifünun edebiyatının en önemli romancısı kimdir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Servetifünun", "Halit Ziya"],
+              "explanation": "Halit Ziya Uşaklıgil, Servetifünun döneminin ve Türk edebiyatının en önemli romancılarından biridir. 'Mai ve Siyah' ve 'Aşk-ı Memnu' en ünlü eserleridir.",
+              "options": [
+                {"text": "Namık Kemal", "correct": false},
+                {"text": "Tevfik Fikret", "correct": false},
+                {"text": "Halit Ziya Uşaklıgil", "correct": true},
+                {"text": "Mehmet Rauf", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Servetifünun döneminin önemli eserlerini yazarlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["Servetifünun", "eserler"],
+              "explanation": "'Aşk-ı Memnu' Halit Ziya Uşaklıgil'in, 'Eylül' Mehmet Rauf'un, 'Rübâb-ı Şikeste' Tevfik Fikret'in eseridir.",
+              "options": [
+                {"text": "Aşk-ı Memnu", "pairId": 1, "correct": false},
+                {"text": "Halit Ziya Uşaklıgil", "pairId": 1, "correct": false},
+                {"text": "Eylül", "pairId": 2, "correct": false},
+                {"text": "Mehmet Rauf", "pairId": 2, "correct": false},
+                {"text": "Rübâb-ı Şikeste", "pairId": 3, "correct": false},
+                {"text": "Tevfik Fikret", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Servetifünun şiirinde en çok işlenen temalar hangileridir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Servetifünun", "şiir temaları"],
+              "explanation": "Servetifünun şiirinde karamsarlık, hayal kırıklığı, doğa, aşk ve kaçış temaları ön plandadır.",
+              "options": [
+                {"text": "Vatan, millet, hürriyet", "correct": false},
+                {"text": "Karamsarlık, hayal kırıklığı, doğa ve aşk", "correct": true},
+                {"text": "Bilim ve teknoloji", "correct": false},
+                {"text": "Toplumsal eleştiri ve hiciv", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Servetifünun edebiyatının dil özelliği hakkında aşağıdakilerden hangisi doğrudur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["Servetifünun", "dil"],
+              "explanation": "Servetifünun edebiyatında Arapça ve Farsça sözcükler yoğun olarak kullanılmış, dil Tanzimat'tan bile daha ağır ve süslü hâle gelmiştir.",
+              "options": [
+                {"text": "Sade ve yalın bir Türkçe kullanılmıştır", "correct": false},
+                {"text": "Dil Tanzimat'tan daha ağır ve süslüdür", "correct": true},
+                {"text": "Yalnızca konuşma dili kullanılmıştır", "correct": false},
+                {"text": "Dil tamamen Fransızca etkisindedir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Servetifünun Dönemi Roman ve Şiiri",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Türk edebiyatında Batılı tekniklerle yazılmış ilk gerçek roman hangisidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["Servetifünun", "roman"],
+              "explanation": "Halit Ziya Uşaklıgil'in 'Mai ve Siyah' (1897) ve özellikle 'Aşk-ı Memnu' (1900) romanları Batılı tekniklerle yazılmış ilk başarılı Türk romanları kabul edilir.",
+              "options": [
+                {"text": "İntibah – Namık Kemal", "correct": false},
+                {"text": "Aşk-ı Memnu – Halit Ziya Uşaklıgil", "correct": true},
+                {"text": "Sergüzeşt – Samipaşazade Sezai", "correct": false},
+                {"text": "Araba Sevdası – Recaizade Mahmut Ekrem", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Türk edebiyatının ilk psikolojik romanı hangisidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["Servetifünun", "psikolojik roman"],
+              "explanation": "Mehmet Rauf'un 'Eylül' (1901) romanı, Türk edebiyatının ilk psikolojik romanı kabul edilir.",
+              "options": [
+                {"text": "Mai ve Siyah – Halit Ziya", "correct": false},
+                {"text": "Eylül – Mehmet Rauf", "correct": true},
+                {"text": "Aşk-ı Memnu – Halit Ziya", "correct": false},
+                {"text": "Kiralık Konak – Yakup Kadri", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Tevfik Fikret'in Türk şiirine getirdiği en önemli yenilik nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Servetifünun", "Tevfik Fikret"],
+              "explanation": "Tevfik Fikret, Türk şiirine serbest müstezad (serbest ölçü denemesi), anjambman (mısra aşımı) ve beyit bütünlüğü yerine konu bütünlüğünü getirmiştir.",
+              "options": [
+                {"text": "Hece ölçüsünü kullanmıştır", "correct": false},
+                {"text": "Anjambman ve konu bütünlüğünü şiire kazandırmıştır", "correct": true},
+                {"text": "Yalnızca gazel yazmıştır", "correct": false},
+                {"text": "Şiiri tamamen terk etmiştir", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Aşk-ı Memnu' romanının konusu nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Aşk-ı Memnu"],
+              "explanation": "'Aşk-ı Memnu' (Yasak Aşk), zengin bir ailenin yaşam tarzını ve yasak bir aşk ilişkisinin yıkıcı sonuçlarını anlatan bir romandır.",
+              "options": [
+                {"text": "Kurtuluş Savaşı", "correct": false},
+                {"text": "Zengin bir ailede yasak aşk ve sonuçları", "correct": true},
+                {"text": "Köy hayatı", "correct": false},
+                {"text": "Bir sanatçının hayatı", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Cenap Şahabettin hangi edebiyat döneminin şairidir ve en ünlü şiiri hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Servetifünun", "Cenap Şahabettin"],
+              "explanation": "Cenap Şahabettin, Servetifünun döneminin önemli şairlerindendir. 'Elhan-ı Şita' (Kış Nağmeleri) en ünlü şiiridir.",
+              "options": [
+                {"text": "Tanzimat – Hürriyet Kasidesi", "correct": false},
+                {"text": "Servetifünun – Elhan-ı Şita", "correct": true},
+                {"text": "Millî Edebiyat – Safahat", "correct": false},
+                {"text": "Cumhuriyet – Kaldırımlar", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Servetifünun romanı ile Tanzimat romanı arasındaki en belirgin fark hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Servetifünun", "Tanzimat", "roman karşılaştırma"],
+              "explanation": "Servetifünun romanında teknik olgunlaşmış, realist ve natüralist akımlar etkili olmuş, karakter tahlilleri derinleşmiştir. Tanzimat romanı teknik açıdan daha zayıftır.",
+              "options": [
+                {"text": "Servetifünun romanı daha kısadır", "correct": false},
+                {"text": "Servetifünun romanında teknik olgunlaşmış ve realizm etkili olmuştur", "correct": true},
+                {"text": "Tanzimat romanı daha gerçekçidir", "correct": false},
+                {"text": "Aralarında hiçbir fark yoktur", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Dönem Karşılaştırmaları ve Değerlendirme",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Tanzimat ve Servetifünun edebiyatının ortak yönü aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Tanzimat", "Servetifünun", "ortak"],
+              "explanation": "Her iki dönemde de Batılı edebiyat türleri (roman, hikâye, tiyatro) kullanılmıştır. Fransız edebiyatı etkisi güçlüdür.",
+              "options": [
+                {"text": "İkisi de hece ölçüsü kullanmıştır", "correct": false},
+                {"text": "İkisi de Batılı türleri kullanmış ve Fransız edebiyatından etkilenmiştir", "correct": true},
+                {"text": "İkisi de sade dil kullanmıştır", "correct": false},
+                {"text": "İkisi de 'sanat toplum içindir' demiştir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Edebiyat dönemlerini sanat anlayışlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["edebiyat dönemleri", "sanat anlayışı"],
+              "explanation": "Tanzimat 1. Dönem 'sanat toplum içindir', Servetifünun 'sanat sanat içindir', Millî Edebiyat 'millî konular' görüşünü benimsemiştir.",
+              "options": [
+                {"text": "Tanzimat 1. Dönem", "pairId": 1, "correct": false},
+                {"text": "Sanat toplum içindir", "pairId": 1, "correct": false},
+                {"text": "Servetifünun", "pairId": 2, "correct": false},
+                {"text": "Sanat sanat içindir", "pairId": 2, "correct": false},
+                {"text": "Millî Edebiyat", "pairId": 3, "correct": false},
+                {"text": "Millî konular ve sade dil", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Servetifünun edebiyatının sona erme nedeni aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["Servetifünun", "sona eriş"],
+              "explanation": "Servetifünun edebiyatı, 1901'de Hüseyin Cahit'in 'Edebiyat ve Hukuk' adlı makalesinin sansür tarafından kapatılmasıyla fiilen sona ermiştir.",
+              "options": [
+                {"text": "Sanatçıların vefat etmesi", "correct": false},
+                {"text": "Sansür nedeniyle derginin kapatılması (1901)", "correct": true},
+                {"text": "Cumhuriyet'in ilanı", "correct": false},
+                {"text": "Millî Edebiyat akımının başlaması", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Divan, Tanzimat ve Servetifünun dönemlerini dil açısından karşılaştırdığımızda hangisi doğrudur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["dil karşılaştırma"],
+              "explanation": "Divan edebiyatı Osmanlıca (ağır), Tanzimat sadeleşmeye çalışmış ama tam başaramamış, Servetifünun ise dili tekrar ağırlaştırmıştır.",
+              "options": [
+                {"text": "Üçü de aynı dili kullanmıştır", "correct": false},
+                {"text": "Divan ağır, Tanzimat sadeleşmeye çalışmış, Servetifünun tekrar ağırlaşmıştır", "correct": true},
+                {"text": "Servetifünun en sade dili kullanmıştır", "correct": false},
+                {"text": "Tanzimat en ağır dili kullanmıştır", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Edebiyat dönemlerini kronolojik sırasıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["kronoloji"],
+              "explanation": "Tanzimat (1860-1896), Servetifünun (1896-1901), Millî Edebiyat (1911-1923) kronolojik sırayla ilerler.",
+              "options": [
+                {"text": "1860-1896", "pairId": 1, "correct": false},
+                {"text": "Tanzimat edebiyatı", "pairId": 1, "correct": false},
+                {"text": "1896-1901", "pairId": 2, "correct": false},
+                {"text": "Servetifünun edebiyatı", "pairId": 2, "correct": false},
+                {"text": "1911-1923", "pairId": 3, "correct": false},
+                {"text": "Millî Edebiyat", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Tanzimat edebiyatının Divan edebiyatından en büyük kopuşu hangi alanda olmuştur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Tanzimat", "Divan", "fark"],
+              "explanation": "Tanzimat ile Divan edebiyatı arasındaki en büyük kopuş tür/biçim alanında olmuştur: roman, hikâye, tiyatro, makale gibi Batılı nesir türleri edebiyata girmiştir.",
+              "options": [
+                {"text": "Ölçü (aruz yerine hece)", "correct": false},
+                {"text": "Batılı nesir türlerinin (roman, hikâye, tiyatro) edebiyata girmesi", "correct": true},
+                {"text": "Şiirin tamamen terk edilmesi", "correct": false},
+                {"text": "Dilde tamamen sadeleşme", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Millî Edebiyat ve Cumhuriyet Dönemi",
+      "description": "Millî Edebiyat döneminin özellikleri, şiir ve hikâyesi; Cumhuriyet dönemi edebiyatına giriş, anı ve gezi yazısı türleri",
+      "order": 5,
+      "lessons": [
+        {
+          "title": "Millî Edebiyat Döneminin Genel Özellikleri",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Millî Edebiyat akımı hangi dergi etrafında oluşmuştur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Millî Edebiyat", "Genç Kalemler"],
+              "explanation": "Millî Edebiyat akımı, 1911'de Selanik'te çıkarılan 'Genç Kalemler' dergisi etrafında oluşmuştur. Ömer Seyfettin, Ali Canip Yöntem ve Ziya Gökalp öncüleridir.",
+              "options": [
+                {"text": "Servet-i Fünûn", "correct": false},
+                {"text": "Genç Kalemler", "correct": true},
+                {"text": "Tercüman-ı Ahval", "correct": false},
+                {"text": "Varlık", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Millî Edebiyat döneminin en önemli ilkesi aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Millî Edebiyat", "ilkeler"],
+              "explanation": "Millî Edebiyat'ın en önemli ilkeleri: sade ve anlaşılır Türkçe kullanmak, millî konuları işlemek ve hece ölçüsünü kullanmaktır.",
+              "options": [
+                {"text": "Ağır ve süslü dil kullanmak", "correct": false},
+                {"text": "Sade Türkçe kullanmak ve millî konuları işlemek", "correct": true},
+                {"text": "Yalnızca Fransız edebiyatını taklit etmek", "correct": false},
+                {"text": "Aruz ölçüsünü yaygınlaştırmak", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Yeni Lisan' makalesiyle Millî Edebiyat'ın dil anlayışını ortaya koyan yazar kimdir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Millî Edebiyat", "Yeni Lisan"],
+              "explanation": "'Yeni Lisan' (Yeni Dil) makalesi, Ömer Seyfettin tarafından yazılmış ve Genç Kalemler dergisinde yayımlanmıştır. Bu makale Millî Edebiyat'ın dil manifestosu niteliğindedir.",
+              "options": [
+                {"text": "Ziya Gökalp", "correct": false},
+                {"text": "Ömer Seyfettin", "correct": true},
+                {"text": "Tevfik Fikret", "correct": false},
+                {"text": "Yakup Kadri Karaosmanoğlu", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Millî Edebiyat döneminin öncülerini rolleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["Millî Edebiyat", "öncüler"],
+              "explanation": "Ziya Gökalp düşünce adamı (Türkçülük ideolojisi), Ömer Seyfettin hikâyeci (sade dil öncüsü), Mehmet Emin Yurdakul ise 'Millî Şair' olarak bilinir.",
+              "options": [
+                {"text": "Ziya Gökalp", "pairId": 1, "correct": false},
+                {"text": "Düşünce adamı (Türkçülük)", "pairId": 1, "correct": false},
+                {"text": "Ömer Seyfettin", "pairId": 2, "correct": false},
+                {"text": "Hikâyeci (sade dil öncüsü)", "pairId": 2, "correct": false},
+                {"text": "Mehmet Emin Yurdakul", "pairId": 3, "correct": false},
+                {"text": "Millî Şair (hece ölçüsü)", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Millî Edebiyat döneminde romanlarda en çok işlenen konu nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Millî Edebiyat", "roman konuları"],
+              "explanation": "Millî Edebiyat döneminde Anadolu'ya açılma, millî mücadele, yanlış Batılılaşma ve toplumsal sorunlar romanlarda sıkça işlenmiştir.",
+              "options": [
+                {"text": "Saray hayatı", "correct": false},
+                {"text": "Anadolu'ya açılma, millî mücadele ve toplumsal sorunlar", "correct": true},
+                {"text": "Yalnızca aşk", "correct": false},
+                {"text": "Bilim kurgu", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Millî Edebiyat döneminin en ünlü romanı hangisidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["Millî Edebiyat", "roman"],
+              "explanation": "Halide Edib Adıvar'ın 'Ateşten Gömlek' (1922) ve Yakup Kadri'nin 'Yaban' (1932) dönemin en ünlü romanlarıdır. 'Yaban' Kurtuluş Savaşı'nı konu alan en önemli romandır.",
+              "options": [
+                {"text": "Aşk-ı Memnu – Halit Ziya", "correct": false},
+                {"text": "Yaban – Yakup Kadri Karaosmanoğlu", "correct": true},
+                {"text": "Mai ve Siyah – Halit Ziya", "correct": false},
+                {"text": "İntibah – Namık Kemal", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Millî Edebiyat Dönemi Şiir ve Hikâyesi",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Millî Edebiyat döneminde şiirde tercih edilen ölçü hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Millî Edebiyat", "hece ölçüsü"],
+              "explanation": "Millî Edebiyat döneminde aruz ölçüsü yerine hece ölçüsü tercih edilmiştir. Bu, millî bir edebiyat oluşturma idealinin bir parçasıdır.",
+              "options": [
+                {"text": "Aruz ölçüsü", "correct": false},
+                {"text": "Hece ölçüsü", "correct": true},
+                {"text": "Serbest ölçü", "correct": false},
+                {"text": "Karma ölçü", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Ömer Seyfettin'in hikâyelerinin en belirgin özelliği nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Ömer Seyfettin", "hikâye"],
+              "explanation": "Ömer Seyfettin, sade bir Türkçeyle millî konuları (kahramanlık, tarih, toplumsal sorunlar) işleyen olay hikâyeleri yazmıştır.",
+              "options": [
+                {"text": "Ağır ve süslü bir dil kullanması", "correct": false},
+                {"text": "Sade Türkçeyle millî konuları işleyen olay hikâyeleri yazması", "correct": true},
+                {"text": "Yalnızca aşk konusu işlemesi", "correct": false},
+                {"text": "Aruz ölçüsüyle şiir yazması", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Beş Hececiler (Hecenin Beş Şairi) grubunu oluşturan şairler hangi edebiyat dönemine aittir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Beş Hececiler", "Millî Edebiyat"],
+              "explanation": "Beş Hececiler (Faruk Nafiz Çamlıbel, Enis Behiç Koryürek, Halit Fahri Ozansoy, Yusuf Ziya Ortaç, Orhan Seyfi Orhon) Millî Edebiyat döneminden Cumhuriyet dönemine geçiş sürecinin şairleridir.",
+              "options": [
+                {"text": "Tanzimat", "correct": false},
+                {"text": "Servetifünun", "correct": false},
+                {"text": "Millî Edebiyat / Cumhuriyet geçiş dönemi", "correct": true},
+                {"text": "Divan edebiyatı", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Ömer Seyfettin'in ünlü hikâyelerini konularıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["Ömer Seyfettin", "hikâyeler"],
+              "explanation": "'Kaşağı' çocukluk hatırası, 'Bomba' millî mücadele, 'Pembe İncili Kaftan' tarihî kahramanlık temasını işler.",
+              "options": [
+                {"text": "Kaşağı", "pairId": 1, "correct": false},
+                {"text": "Çocukluk hatırası", "pairId": 1, "correct": false},
+                {"text": "Bomba", "pairId": 2, "correct": false},
+                {"text": "Millî mücadele", "pairId": 2, "correct": false},
+                {"text": "Pembe İncili Kaftan", "pairId": 3, "correct": false},
+                {"text": "Tarihî kahramanlık", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Millî Edebiyat şiirinde Anadolu ve halk kültürüne yönelişin nedeni nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["Millî Edebiyat", "Anadolu"],
+              "explanation": "Millî Edebiyat sanatçıları, Osmanlı İmparatorluğu'nun çöküş döneminde millî kimliği güçlendirmek ve halka ulaşmak için Anadolu'ya, halk kültürüne ve sade Türkçeye yönelmiştir.",
+              "options": [
+                {"text": "Avrupa'yı taklit etmek için", "correct": false},
+                {"text": "Millî kimliği güçlendirmek ve halka ulaşmak için", "correct": true},
+                {"text": "Divan edebiyatını canlandırmak için", "correct": false},
+                {"text": "Yalnızca estetik kaygıyla", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Mehmet Âkif Ersoy'un 'Safahat' adlı eserinin önemi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Mehmet Âkif Ersoy", "Safahat"],
+              "explanation": "Mehmet Âkif Ersoy, İstiklâl Marşı'nın şairidir. 'Safahat' toplumsal konuları işleyen 7 kitaplık manzum eseridir. Aruz ölçüsüyle yazmasına rağmen Millî Edebiyat'a yakın durur.",
+              "options": [
+                {"text": "İlk Türk romanıdır", "correct": false},
+                {"text": "İstiklâl Marşı şairinin toplumsal konuları manzum olarak işlediği eseridir", "correct": true},
+                {"text": "İlk hikâye kitabıdır", "correct": false},
+                {"text": "İlk tiyatro eseridir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Cumhuriyet Dönemi Edebiyatına Giriş",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Cumhuriyet dönemi edebiyatı hangi tarihle başlar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Cumhuriyet edebiyatı"],
+              "explanation": "Cumhuriyet dönemi edebiyatı, 1923'te Cumhuriyet'in ilanıyla başlar.",
+              "options": [
+                {"text": "1908", "correct": false},
+                {"text": "1919", "correct": false},
+                {"text": "1923", "correct": true},
+                {"text": "1928", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Cumhuriyet dönemi edebiyatının ilk yıllarında hangi konular ön plana çıkmıştır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Cumhuriyet edebiyatı", "konular"],
+              "explanation": "Cumhuriyet'in ilk yıllarında Atatürk devrimleri, Anadolu'nun sorunları, köy hayatı, millî değerler ve yeni toplum düzeni ön plana çıkmıştır.",
+              "options": [
+                {"text": "Saray hayatı ve padişahlar", "correct": false},
+                {"text": "Atatürk devrimleri, Anadolu'nun sorunları ve yeni toplum düzeni", "correct": true},
+                {"text": "Yalnızca aşk ve doğa", "correct": false},
+                {"text": "Osmanlı İmparatorluğu'nun yeniden kurulması", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "1928 Harf Devrimi'nin edebiyat üzerindeki etkisi nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Harf Devrimi", "etki"],
+              "explanation": "Harf Devrimi ile okuma-yazma oranı artmış, edebiyat daha geniş kitlelere ulaşmış ancak eski harflerle yazılmış eserlere erişim zorlaşmıştır.",
+              "options": [
+                {"text": "Edebiyat tamamen sona ermiştir", "correct": false},
+                {"text": "Okuma-yazma yaygınlaşmış ama eski eserlere erişim zorlaşmıştır", "correct": true},
+                {"text": "Hiçbir etkisi olmamıştır", "correct": false},
+                {"text": "Yalnızca şiir türünü etkilemiştir", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Cumhuriyet dönemi edebiyat akımlarını doğru tanımlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["Cumhuriyet edebiyatı", "akımlar"],
+              "explanation": "Garip hareketi şiirde sadelik ve günlük dil, İkinci Yeni kapalı ve imgeli şiir, Toplumcu Gerçekçiler toplumsal sorunlar ve köy romanı yazmıştır.",
+              "options": [
+                {"text": "Garip hareketi", "pairId": 1, "correct": false},
+                {"text": "Şiirde sadelik ve günlük dil", "pairId": 1, "correct": false},
+                {"text": "İkinci Yeni", "pairId": 2, "correct": false},
+                {"text": "Kapalı ve imgeli şiir", "pairId": 2, "correct": false},
+                {"text": "Toplumcu Gerçekçiler", "pairId": 3, "correct": false},
+                {"text": "Toplumsal sorunlar ve köy romanı", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Cumhuriyet döneminde dilde sadeleşme hareketi nasıl ilerlemiştir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["Cumhuriyet", "dil sadeleşme"],
+              "explanation": "Cumhuriyet döneminde Türk Dil Kurumu (1932) kurulmuş, Arapça-Farsça sözcükler ayıklanmaya çalışılmış, öz Türkçe hareketi güçlenmiştir.",
+              "options": [
+                {"text": "Osmanlıca aynen korunmuştur", "correct": false},
+                {"text": "Türk Dil Kurumu kurulmuş ve öz Türkçe hareketi güçlenmiştir", "correct": true},
+                {"text": "Yalnızca Farsça sözcükler atılmıştır", "correct": false},
+                {"text": "Dilde hiçbir değişiklik yapılmamıştır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Cumhuriyet döneminin ilk büyük şairlerinden Nâzım Hikmet hangi akımı temsil eder?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Nâzım Hikmet", "serbest şiir"],
+              "explanation": "Nâzım Hikmet, Türk şiirine serbest vezni (ölçüsüz şiir) getiren ve toplumcu gerçekçi akımın en önemli temsilcisidir.",
+              "options": [
+                {"text": "Hececilik", "correct": false},
+                {"text": "Toplumcu gerçekçilik ve serbest şiir", "correct": true},
+                {"text": "Garip hareketi", "correct": false},
+                {"text": "İkinci Yeni", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Anı (Hatıra) Türü",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Anı (hatıra) türünün en belirgin özelliği nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["anı"],
+              "explanation": "Anı, bir kişinin yaşadığı veya tanık olduğu olayları kendi bakış açısından, aradan zaman geçtikten sonra anlattığı yazı türüdür.",
+              "options": [
+                {"text": "Olaylar yaşanırken yazılır", "correct": false},
+                {"text": "Yaşanmış olaylar sonradan hatırlanarak yazılır", "correct": true},
+                {"text": "Tamamen kurgu ürünüdür", "correct": false},
+                {"text": "Nesnel bilgi aktarır", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Anı ile günlük arasındaki temel fark nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["anı", "günlük", "karşılaştırma"],
+              "explanation": "Anı aradan zaman geçtikten sonra yazılır, günlük ise olaylar yaşandığı gün yazılır.",
+              "options": [
+                {"text": "Günlük uzun, anı kısadır", "correct": false},
+                {"text": "Anı sonradan yazılır, günlük aynı gün yazılır", "correct": true},
+                {"text": "Anı nesneldir, günlük özneldir", "correct": false},
+                {"text": "Hiçbir farkları yoktur", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Anı türünün edebiyat tarihi açısından önemi nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["anı", "edebiyat tarihi"],
+              "explanation": "Anılar, döneme ait toplumsal, siyasi ve kültürel bilgiler içerdikleri için tarihî belge niteliği taşır ve edebiyat tarihine ışık tutar.",
+              "options": [
+                {"text": "Hiçbir tarihî değeri yoktur", "correct": false},
+                {"text": "Döneme ait toplumsal ve kültürel bilgiler içerdiği için tarihî belge niteliği taşır", "correct": true},
+                {"text": "Yalnızca eğlence amaçlıdır", "correct": false},
+                {"text": "Bilimsel araştırma niteliğindedir", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Metin türlerini doğru özelliklerle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["metin türleri"],
+              "explanation": "Anı geçmiş olayları hatırlatarak yazar, günlük o gün yaşananları kaydeder, biyografi başkasının hayatını anlatır.",
+              "options": [
+                {"text": "Anı", "pairId": 1, "correct": false},
+                {"text": "Geçmiş olaylar sonradan anlatılır", "pairId": 1, "correct": false},
+                {"text": "Günlük", "pairId": 2, "correct": false},
+                {"text": "Olaylar aynı gün kaydedilir", "pairId": 2, "correct": false},
+                {"text": "Biyografi", "pairId": 3, "correct": false},
+                {"text": "Başkasının hayatı anlatılır", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Türk edebiyatında anı türünün önemli örnekleri arasında hangisi yer alır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["anı", "Türk edebiyatı"],
+              "explanation": "Halit Ziya Uşaklıgil'in 'Kırk Yıl' ve 'Saray ve Ötesi' adlı eserleri, Türk edebiyatının en önemli anı örneklerindendir.",
+              "options": [
+                {"text": "Mai ve Siyah – Halit Ziya", "correct": false},
+                {"text": "Kırk Yıl – Halit Ziya Uşaklıgil", "correct": true},
+                {"text": "Leylâ vü Mecnun – Fuzulî", "correct": false},
+                {"text": "Seyahatname – Evliya Çelebi", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Anı yazarken dikkat edilmesi gereken en önemli husus nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["anı", "yazım"],
+              "explanation": "Anı yazarken samimi, içten ve inandırıcı olmak önemlidir. Yaşanmış gerçek olaylar anlatıldığı için doğruluk ve samimiyet ön planda olmalıdır.",
+              "options": [
+                {"text": "Hayal ürünü olaylar eklemek", "correct": false},
+                {"text": "Samimi, içten ve inandırıcı olmak", "correct": true},
+                {"text": "Mümkün olduğunca kısa yazmak", "correct": false},
+                {"text": "Resmî bir dil kullanmak", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Gezi Yazısı ve Haber Metni",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Gezi yazısının temel amacı nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["gezi yazısı"],
+              "explanation": "Gezi yazısı, bir yazarın gezdiği yerleri, gördüklerini, izlenimlerini ve kültürel gözlemlerini aktardığı metin türüdür.",
+              "options": [
+                {"text": "Bilimsel araştırma sonuçlarını paylaşmak", "correct": false},
+                {"text": "Gezilen yerlerin izlenimlerini ve kültürel gözlemleri aktarmak", "correct": true},
+                {"text": "Resmî bilgi vermek", "correct": false},
+                {"text": "Haber aktarmak", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Türk edebiyatının en ünlü gezi yazısı hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["gezi yazısı", "Evliya Çelebi"],
+              "explanation": "Evliya Çelebi'nin 'Seyahatname'si (17. yy), Türk edebiyatının ve dünya edebiyatının en önemli gezi yazılarından biridir.",
+              "options": [
+                {"text": "Kutadgu Bilig", "correct": false},
+                {"text": "Seyahatname – Evliya Çelebi", "correct": true},
+                {"text": "Safahat – Mehmet Âkif", "correct": false},
+                {"text": "Mai ve Siyah – Halit Ziya", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Haber metninin en önemli özelliği nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["haber metni"],
+              "explanation": "Haber metni, olayları nesnel bir dille, doğru ve tarafsız olarak aktarmalıdır. 5N1K (ne, nerede, ne zaman, nasıl, neden, kim) kuralına uyulur.",
+              "options": [
+                {"text": "Öznel ve duygusal bir dil kullanılması", "correct": false},
+                {"text": "Nesnel, doğru ve tarafsız olması (5N1K)", "correct": true},
+                {"text": "Edebî sanatlarla süslenmesi", "correct": false},
+                {"text": "Yalnızca resmî kurumlarda kullanılması", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Gezi yazısı türlerini doğru tanımlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["gezi yazısı", "haber metni"],
+              "explanation": "Seyahatname klasik gezi yazısı, röportaj kişiyle yapılan görüşme, haber olayın nesnel aktarımıdır.",
+              "options": [
+                {"text": "Seyahatname", "pairId": 1, "correct": false},
+                {"text": "Gezilen yerlerin ayrıntılı anlatımı", "pairId": 1, "correct": false},
+                {"text": "Röportaj", "pairId": 2, "correct": false},
+                {"text": "Kişiyle yapılan görüşme", "pairId": 2, "correct": false},
+                {"text": "Haber", "pairId": 3, "correct": false},
+                {"text": "Olayın nesnel aktarımı (5N1K)", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Gazete haberlerinde kullanılan 'ters piramit' tekniği nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["haber metni", "ters piramit"],
+              "explanation": "Ters piramit tekniğinde en önemli bilgi başta verilir, ayrıntılar sonra gelir. Okuyucu ilk cümleden haberin özünü öğrenir.",
+              "options": [
+                {"text": "En önemsiz bilgiyle başlamak", "correct": false},
+                {"text": "En önemli bilgiyi başta verip ayrıntıları sonra aktarmak", "correct": true},
+                {"text": "Haberi şiir biçiminde yazmak", "correct": false},
+                {"text": "Her haberi eşit uzunlukta yazmak", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Aşağıdakilerden hangisi gezi yazısının özelliklerinden biri değildir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["gezi yazısı", "özellikler"],
+              "explanation": "Gezi yazısında yazarın gözlemleri ve izlenimleri yer alır, tamamen nesnel olması beklenmez. Tamamen nesnel olma haber metninin özelliğidir.",
+              "options": [
+                {"text": "Yazarın kişisel izlenimleri yer alır", "correct": false},
+                {"text": "Gezilen yerin kültürel özellikleri aktarılır", "correct": false},
+                {"text": "Tamamen nesnel ve kişisel yorumdan arınmış olmalıdır", "correct": true},
+                {"text": "Betimleyici bir dil kullanılır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Dil Bilgisi: Fiilimsiler, Tamlamalar ve Cümle Çeşitleri",
+      "description": "Fiilimsiler (isim-fiil, sıfat-fiil, zarf-fiil), isim ve sıfat tamlamaları, cümle çeşitleri",
+      "order": 6,
+      "lessons": [
+        {
+          "title": "Fiilimsiler: İsim-Fiil (Mastar)",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Fiilimsi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["fiilimsiler"],
+              "explanation": "Fiilimsiler, fiil kök veya gövdelerine getirilen özel eklerle türetilen ve cümlede isim, sıfat veya zarf görevinde kullanılan sözcüklerdir.",
+              "options": [
+                {"text": "Fiillerin çekimli hâli", "correct": false},
+                {"text": "Fiillerden türeyen ve cümlede isim, sıfat veya zarf görevinde kullanılan sözcükler", "correct": true},
+                {"text": "Yalnızca isim görevi gören sözcükler", "correct": false},
+                {"text": "Edatların bir türü", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "İsim-fiil (mastar) hangi eklerle yapılır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["isim-fiil", "mastar"],
+              "explanation": "İsim-fiil (mastar), fiillere -mak/-mek, -ma/-me, -ış/-iş/-uş/-üş ekleri getirilerek yapılır: yazmak, okuma, gülüş.",
+              "options": [
+                {"text": "-en, -an, -dık, -acak", "correct": false},
+                {"text": "-mak/-mek, -ma/-me, -ış/-iş", "correct": true},
+                {"text": "-arak/-erek, -ınca/-ince", "correct": false},
+                {"text": "-dı/-di, -mış/-miş", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Okumak en güzel alışkanlıktır.' cümlesinde 'okumak' sözcüğü hangi görevdedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["isim-fiil", "cümlede görev"],
+              "explanation": "'Okumak' sözcüğü -mak ekiyle türetilmiş bir isim-fiildir ve cümlede özne görevindedir.",
+              "options": [
+                {"text": "Yüklem", "correct": false},
+                {"text": "Özne (isim-fiil)", "correct": true},
+                {"text": "Nesne", "correct": false},
+                {"text": "Zarf tümleci", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "İsim-fiil eklerini örneklerle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["isim-fiil", "ekler"],
+              "explanation": "-mak/-mek → yazmak, -ma/-me → yazma, -ış/-iş → gülüş.",
+              "options": [
+                {"text": "-mak/-mek", "pairId": 1, "correct": false},
+                {"text": "yazmak, okumak", "pairId": 1, "correct": false},
+                {"text": "-ma/-me", "pairId": 2, "correct": false},
+                {"text": "yazma, okuma", "pairId": 2, "correct": false},
+                {"text": "-ış/-iş/-uş/-üş", "pairId": 3, "correct": false},
+                {"text": "gülüş, bakış, koşuş", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'Çocuğun gülüşü herkesi mutlu etti.' cümlesindeki 'gülüş' hangi fiilimsi türüdür?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["isim-fiil"],
+              "explanation": "'Gülüş' sözcüğü 'gül-' fiiline -üş eki getirilerek oluşturulmuş bir isim-fiildir. Cümlede öznenin bir parçası olarak isim görevindedir.",
+              "options": [
+                {"text": "Sıfat-fiil", "correct": false},
+                {"text": "İsim-fiil (mastar)", "correct": true},
+                {"text": "Zarf-fiil", "correct": false},
+                {"text": "Çekimli fiil", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Aşağıdaki cümlelerin hangisinde isim-fiil kullanılmamıştır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["isim-fiil", "ayırt etme"],
+              "explanation": "'Koşarak geldi.' cümlesinde 'koşarak' bir zarf-fiildir (-arak eki), isim-fiil değildir.",
+              "options": [
+                {"text": "Yürümek sağlıklıdır.", "correct": false},
+                {"text": "Annesinin gelişi onu sevindirdi.", "correct": false},
+                {"text": "Koşarak geldi.", "correct": true},
+                {"text": "Resim yapma konusunda yetenekli.", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Fiilimsiler: Sıfat-Fiil ve Zarf-Fiil",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Sıfat-fiil (ortaç) hangi görevde kullanılır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["sıfat-fiil"],
+              "explanation": "Sıfat-fiil (ortaç), fiilden türeyen ve cümlede sıfat görevinde kullanılan sözcüklerdir. İsimleri niteler.",
+              "options": [
+                {"text": "Zarf görevinde", "correct": false},
+                {"text": "Sıfat görevinde (isimleri niteler)", "correct": true},
+                {"text": "Yüklem görevinde", "correct": false},
+                {"text": "Bağlaç görevinde", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "'Okuyan çocuk başarılı olur.' cümlesindeki 'okuyan' sözcüğü hangi fiilimsi türüdür?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["sıfat-fiil"],
+              "explanation": "'Okuyan' sözcüğü 'oku-' fiiline -yan eki getirilerek oluşturulmuş bir sıfat-fiildir ve 'çocuk' ismini nitelemektedir.",
+              "options": [
+                {"text": "İsim-fiil", "correct": false},
+                {"text": "Sıfat-fiil (ortaç)", "correct": true},
+                {"text": "Zarf-fiil", "correct": false},
+                {"text": "Çekimli fiil", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Zarf-fiil (ulaç/bağ-fiil) hangi görevde kullanılır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["zarf-fiil"],
+              "explanation": "Zarf-fiil, fiilden türeyen ve cümlede zarf görevinde (fiilin nasıl, ne zaman, ne şekilde yapıldığını belirten) kullanılan sözcüklerdir.",
+              "options": [
+                {"text": "İsim görevinde", "correct": false},
+                {"text": "Sıfat görevinde", "correct": false},
+                {"text": "Zarf görevinde (fiilin durumunu belirtir)", "correct": true},
+                {"text": "Edat görevinde", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Fiilimsi türlerini doğru eklerle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["fiilimsiler", "ekler"],
+              "explanation": "Sıfat-fiil -an/-en, -dık, -acak; zarf-fiil -arak/-erek, -ınca/-ince, -ıp/-ip; isim-fiil -mak/-mek, -ma/-me, -ış/-iş ekleriyle yapılır.",
+              "options": [
+                {"text": "Sıfat-fiil", "pairId": 1, "correct": false},
+                {"text": "-an/-en, -dık, -acak", "pairId": 1, "correct": false},
+                {"text": "Zarf-fiil", "pairId": 2, "correct": false},
+                {"text": "-arak/-erek, -ınca/-ince, -ıp/-ip", "pairId": 2, "correct": false},
+                {"text": "İsim-fiil", "pairId": 3, "correct": false},
+                {"text": "-mak/-mek, -ma/-me, -ış/-iş", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'Gülerek cevap verdi.' cümlesindeki 'gülerek' sözcüğü hangi fiilimsi türüdür?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["zarf-fiil"],
+              "explanation": "'Gülerek' sözcüğü 'gül-' fiiline -erek eki getirilerek oluşturulmuş bir zarf-fiildir. 'Cevap verdi' fiilinin nasıl yapıldığını belirtir.",
+              "options": [
+                {"text": "İsim-fiil", "correct": false},
+                {"text": "Sıfat-fiil", "correct": false},
+                {"text": "Zarf-fiil (ulaç)", "correct": true},
+                {"text": "Çekimli fiil", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Aşağıdaki cümlelerin hangisinde sıfat-fiil kullanılmıştır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["sıfat-fiil", "belirleme"],
+              "explanation": "'Kırılacak eşyaları dikkatli taşıyın.' cümlesinde 'kırılacak' sözcüğü -acak sıfat-fiil ekiyle türetilmiş ve 'eşyalar' ismini nitelemiştir.",
+              "options": [
+                {"text": "Koşarak eve gitti.", "correct": false},
+                {"text": "Okumak insanı geliştirir.", "correct": false},
+                {"text": "Kırılacak eşyaları dikkatli taşıyın.", "correct": true},
+                {"text": "Gülünce yüzü aydınlanıyor.", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "İsim ve Sıfat Tamlamaları",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "İsim tamlamasında tamlayan ve tamlanan ne demektir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["isim tamlaması"],
+              "explanation": "İsim tamlamasında birinci sözcük (tamlayan) ikinci sözcüğü (tamlanan) belirler. Örneğin 'evin kapısı'nda 'ev' tamlayan, 'kapı' tamlanandır.",
+              "options": [
+                {"text": "Tamlayan nitelendiren, tamlanan nitelenen sözcüktür", "correct": false},
+                {"text": "Tamlayan belirleyen, tamlanan belirlenen sözcüktür", "correct": true},
+                {"text": "Tamlayan ve tamlanan aynı anlama gelir", "correct": false},
+                {"text": "Tamlayan her zaman sıfattır", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "'Çocuğun kalemi' hangi tamlama türüdür?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["isim tamlaması", "belirtili"],
+              "explanation": "'Çocuğun kalemi' belirtili isim tamlamasıdır: tamlayan -ın/-in eki, tamlanan -(s)ı/-(s)i eki almıştır.",
+              "options": [
+                {"text": "Belirtisiz isim tamlaması", "correct": false},
+                {"text": "Belirtili isim tamlaması", "correct": true},
+                {"text": "Sıfat tamlaması", "correct": false},
+                {"text": "Zincirleme isim tamlaması", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Okul bahçesi' hangi tamlama türüdür?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["isim tamlaması", "belirtisiz"],
+              "explanation": "'Okul bahçesi' belirtisiz isim tamlamasıdır: tamlayan ek almamış, tamlanan -(s)ı/-(s)i eki almıştır.",
+              "options": [
+                {"text": "Belirtili isim tamlaması", "correct": false},
+                {"text": "Belirtisiz isim tamlaması", "correct": true},
+                {"text": "Sıfat tamlaması", "correct": false},
+                {"text": "Takısız isim tamlaması", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Tamlama türlerini örneklerle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["tamlamalar"],
+              "explanation": "'Evin kapısı' belirtili isim tamlaması, 'demir kapı' takısız isim tamlaması, 'güzel ev' sıfat tamlamasıdır.",
+              "options": [
+                {"text": "Evin kapısı", "pairId": 1, "correct": false},
+                {"text": "Belirtili isim tamlaması", "pairId": 1, "correct": false},
+                {"text": "Demir kapı", "pairId": 2, "correct": false},
+                {"text": "Takısız isim tamlaması", "pairId": 2, "correct": false},
+                {"text": "Güzel ev", "pairId": 3, "correct": false},
+                {"text": "Sıfat tamlaması", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Sıfat tamlamasında sözcüklerin sırası nasıl olmalıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sıfat tamlaması"],
+              "explanation": "Sıfat tamlamasında önce sıfat, sonra isim gelir: 'güzel ev', 'büyük araba'. Sıfat ismi niteleyerek onun özelliğini belirtir.",
+              "options": [
+                {"text": "Önce isim, sonra sıfat", "correct": false},
+                {"text": "Önce sıfat, sonra isim", "correct": true},
+                {"text": "Sıra farketmez", "correct": false},
+                {"text": "Her ikisi de aynı sözcük türündedir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'Öğretmenin odasının kapısı' hangi tamlama türüdür?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["zincirleme tamlama"],
+              "explanation": "Bu örnek, birden fazla isim tamlamasının iç içe girdiği 'zincirleme isim tamlaması'dır: öğretmenin odası → odasının kapısı.",
+              "options": [
+                {"text": "Belirtili isim tamlaması", "correct": false},
+                {"text": "Belirtisiz isim tamlaması", "correct": false},
+                {"text": "Zincirleme isim tamlaması", "correct": true},
+                {"text": "Sıfat tamlaması", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Cümle Çeşitleri: Yapısına ve Anlamına Göre",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Tek yüklemi olan ve yan cümleciği bulunmayan cümleye ne denir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["cümle çeşitleri", "basit cümle"],
+              "explanation": "Tek yüklemi olan ve yan cümleciği bulunmayan cümlelere 'basit cümle' denir.",
+              "options": [
+                {"text": "Birleşik cümle", "correct": false},
+                {"text": "Basit cümle", "correct": true},
+                {"text": "Sıralı cümle", "correct": false},
+                {"text": "Bağlı cümle", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "İçinde yan cümlecik bulunan cümleye ne denir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["cümle çeşitleri", "birleşik cümle"],
+              "explanation": "İçinde en az bir yan cümlecik (fiilimsi, ki bağlacı veya koşul eki ile bağlanan) bulunan cümlelere 'birleşik cümle' denir.",
+              "options": [
+                {"text": "Basit cümle", "correct": false},
+                {"text": "Birleşik cümle", "correct": true},
+                {"text": "Sıralı cümle", "correct": false},
+                {"text": "Devrik cümle", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Cümle yapılarını doğru tanımlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["cümle çeşitleri", "yapı"],
+              "explanation": "Basit cümle tek yüklem, sıralı cümle birden fazla yargı (virgül/noktalı virgülle ayrılmış), bağlı cümle bağlaçla bağlanmış yargılardan oluşur.",
+              "options": [
+                {"text": "Basit cümle", "pairId": 1, "correct": false},
+                {"text": "Tek yüklemli", "pairId": 1, "correct": false},
+                {"text": "Sıralı cümle", "pairId": 2, "correct": false},
+                {"text": "Virgülle ayrılmış birden fazla yargı", "pairId": 2, "correct": false},
+                {"text": "Bağlı cümle", "pairId": 3, "correct": false},
+                {"text": "Bağlaçla bağlanmış yargılar", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Hava güzel, çocuklar dışarıda oynuyor.' cümlesi yapısına göre ne tür bir cümledir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sıralı cümle"],
+              "explanation": "Bu cümlede virgülle ayrılmış iki bağımsız yargı vardır: 'Hava güzel' ve 'çocuklar dışarıda oynuyor'. Bu nedenle sıralı cümledir.",
+              "options": [
+                {"text": "Basit cümle", "correct": false},
+                {"text": "Birleşik cümle", "correct": false},
+                {"text": "Sıralı cümle", "correct": true},
+                {"text": "Bağlı cümle", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Anlamına göre 'Bugün hava güzel mi?' cümlesi hangi cümle türüdür?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["cümle çeşitleri", "soru cümlesi"],
+              "explanation": "Bu cümle soru eki 'mi' ile biten bir soru cümlesidir.",
+              "options": [
+                {"text": "Olumlu cümle", "correct": false},
+                {"text": "Olumsuz cümle", "correct": false},
+                {"text": "Soru cümlesi", "correct": true},
+                {"text": "Ünlem cümlesi", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'Yüklemi sonda olmayan cümlelere ne denir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["cümle çeşitleri", "devrik cümle"],
+              "explanation": "Türkçede normal cümle düzeninde yüklem sonda bulunur (kurallı cümle). Yüklemin sonda olmadığı cümlelere 'devrik cümle' denir.",
+              "options": [
+                {"text": "Kurallı cümle", "correct": false},
+                {"text": "Devrik cümle", "correct": true},
+                {"text": "Eksiltili cümle", "correct": false},
+                {"text": "Bağlı cümle", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Cümle Çeşitleri: Yüklemine Göre ve Anlatım Bozuklukları",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Yüklemi fiil olan cümlelere ne denir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["cümle çeşitleri", "fiil cümlesi"],
+              "explanation": "Yüklemi çekimli bir fiil olan cümlelere 'fiil cümlesi' denir. Örnek: 'Ali okula gitti.'",
+              "options": [
+                {"text": "İsim cümlesi", "correct": false},
+                {"text": "Fiil cümlesi", "correct": true},
+                {"text": "Birleşik cümle", "correct": false},
+                {"text": "Devrik cümle", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "'Hava çok güzel.' cümlesi yüklemine göre hangi türdedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["cümle çeşitleri", "isim cümlesi"],
+              "explanation": "Bu cümlede yüklem 'güzel' sözcüğüdür ve bir isim (sıfat) olduğu için bu bir isim cümlesidir.",
+              "options": [
+                {"text": "Fiil cümlesi", "correct": false},
+                {"text": "İsim cümlesi", "correct": true},
+                {"text": "Sıralı cümle", "correct": false},
+                {"text": "Devrik cümle", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Anlatım bozukluğu nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["anlatım bozukluğu"],
+              "explanation": "Anlatım bozukluğu, bir cümledeki anlam, yapı veya mantık hatalarıdır. Gereksiz sözcük, eksik öğe, anlam belirsizliği gibi durumlar anlatım bozukluğuna yol açar.",
+              "options": [
+                {"text": "Güzel ve etkili anlatım", "correct": false},
+                {"text": "Cümledeki anlam, yapı veya mantık hataları", "correct": true},
+                {"text": "Yabancı sözcük kullanımı", "correct": false},
+                {"text": "Uzun cümle kurma", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Eve geldiğinde ben evde yoktum.' cümlesinde anlatım bozukluğu var mıdır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["anlatım bozukluğu"],
+              "explanation": "Bu cümlede mantıksal bir tutarsızlık yoktur ve yapısal olarak doğrudur. Anlatım bozukluğu yoktur.",
+              "options": [
+                {"text": "Evet, özne eksikliği var", "correct": false},
+                {"text": "Evet, gereksiz sözcük var", "correct": false},
+                {"text": "Hayır, anlatım bozukluğu yoktur", "correct": true},
+                {"text": "Evet, nesne eksikliği var", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Cümle türlerini doğru tanımlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["cümle çeşitleri"],
+              "explanation": "Fiil cümlesi yüklemi çekimli fiil, isim cümlesi yüklemi isim soylu, devrik cümle ise yüklemi sonda olmayan cümledir.",
+              "options": [
+                {"text": "Fiil cümlesi", "pairId": 1, "correct": false},
+                {"text": "Yüklemi çekimli fiil", "pairId": 1, "correct": false},
+                {"text": "İsim cümlesi", "pairId": 2, "correct": false},
+                {"text": "Yüklemi isim soylu sözcük", "pairId": 2, "correct": false},
+                {"text": "Devrik cümle", "pairId": 3, "correct": false},
+                {"text": "Yüklemi sonda değil", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'Dün akşam hem sinemaya hem de tiyatroya gittik ve çok eğlendik.' cümlesi yapısına göre ne tür bir cümledir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["bağlı cümle"],
+              "explanation": "Bu cümlede iki yargı ('gittik' ve 'eğlendik') 've' bağlacıyla bağlanmıştır. Bu nedenle bağlı cümledir.",
+              "options": [
+                {"text": "Basit cümle", "correct": false},
+                {"text": "Sıralı cümle", "correct": false},
+                {"text": "Bağlı cümle", "correct": true},
+                {"text": "Birleşik cümle", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

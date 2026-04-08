@@ -48,29 +48,19 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
   const fetchRecords = async (date: Date) => {
     setLoading(true);
     try {
-      console.log("📅 CALENDAR: Fetching streak records for", format(date, "MMMM yyyy"));
-      const month = date.getMonth();  // Month should be 0-11 (JS Date standard)
+      const month = date.getMonth();
       const year = date.getFullYear();
       const recs = await getUserDailyStreakForMonth(month, year);
-      
-      console.log("📅 CALENDAR: Received", recs.length, "records:", recs);
-      
-      // Important: Properly convert Date objects to ISO strings before setting state
+
       const formattedRecs = recs.map(rec => {
-        // Extract date part only for accurate comparison
         const dateObj = new Date(rec.date);
         const dateStr = dateObj.toISOString().split('T')[0];
-        
-        return {
-          ...rec,
-          date: dateStr
-        };
+        return { ...rec, date: dateStr };
       });
-      
-      console.log("📅 CALENDAR: Formatted records:", formattedRecs);
+
       setRecords(formattedRecs);
     } catch (err) {
-      console.error("📅 CALENDAR: Failed to fetch daily streak records:", err);
+      console.error("Failed to fetch daily streak records:", err);
       setRecords([]);
     } finally {
       setLoading(false);
@@ -90,8 +80,6 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (!document.hidden) {
-        // Page became visible again - refresh current month data
-        console.log("📅 CALENDAR: Refetching streak records due to visibility change");
         fetchRecords(selectedDate);
       }
     };
@@ -105,7 +93,6 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
 
   // 🎯 NEW: Add manual refresh function
   const handleRefresh = () => {
-    console.log("📅 CALENDAR: Manual refresh triggered");
     fetchRecords(selectedDate);
   };
 
@@ -169,9 +156,6 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
     
     if (record) {
       achieved = record.achieved;
-      console.log(`📅 CALENDAR: Date ${cell.date} found in records with achieved=${achieved}`);
-    } else {
-      console.log(`📅 CALENDAR: Date ${cell.date} NOT found in records`);
     }
     
     // ✅ FIX: Use UTC+3 Turkey Time for consistent future day detection
@@ -185,7 +169,6 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
       cell.date > currentTurkeyDate
     ) {
       achieved = false;
-      console.log(`📅 CALENDAR: Date ${cell.date} is in the future (after ${currentTurkeyDate}) in Turkey Time, forcing achieved=false`);
     }
     
     return (

@@ -6,7 +6,7 @@ import { challengeProgress, challenges, lessons, schools, userProgress } from "@
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { getServerUser } from "@/lib/auth";
-import { updateDailyStreak, checkStreakContinuity } from "./daily-streak";
+import { updateDailyStreak } from "./daily-streak";
 import { SCORING_SYSTEM } from "@/constants";
 
 export const upsertChallengeProgress = async (challengeId: number) => {
@@ -56,19 +56,6 @@ export const upsertChallengeProgress = async (challengeId: number) => {
       })
       .where(eq(challengeProgress.id, existingChallengeProgress.id));
 
-    // Check streak continuity and initialize if needed
-    await checkStreakContinuity(userId);
-
-    // Initialize streak tracking if needed
-    if (currentUserProgress.previousTotalPoints === null || currentUserProgress.previousTotalPoints === undefined) {
-      await db.update(userProgress)
-        .set({
-          previousTotalPoints: currentUserProgress.points,
-          lastStreakCheck: new Date(),
-        })
-        .where(eq(userProgress.userId, userId));
-    }
-
     await db
       .update(userProgress)
       .set({
@@ -76,24 +63,11 @@ export const upsertChallengeProgress = async (challengeId: number) => {
       })
       .where(eq(userProgress.userId, userId));
 
-      await updateDailyStreak();
+    await updateDailyStreak();
 
     revalidatePath("/learn");
     revalidatePath(`/lesson/${lessonId}`);
     return;
-  }
-
-  // Check streak continuity and initialize if needed
-  await checkStreakContinuity(userId);
-
-  // Initialize streak tracking if needed
-  if (currentUserProgress.previousTotalPoints === null || currentUserProgress.previousTotalPoints === undefined) {
-    await db.update(userProgress)
-      .set({
-        previousTotalPoints: currentUserProgress.points,
-        lastStreakCheck: new Date(),
-      })
-      .where(eq(userProgress.userId, userId));
   }
 
   const now = new Date();
@@ -143,22 +117,11 @@ export async function addPointsToUser(pointsToAdd: number) {
   if (!user) throw new Error("Unauthorized");
   const userId = user.id;
 
-  const { checkAndPerformDailyResetIfNeeded, checkStreakContinuity } =
-    await import("./daily-streak");
-  await checkAndPerformDailyResetIfNeeded();
-  await checkStreakContinuity(userId);
-
   const currentUserProgress = await db.query.userProgress.findFirst({
     where: eq(userProgress.userId, userId),
     columns: { points: true, schoolId: true, previousTotalPoints: true, userId: true },
   });
   if (!currentUserProgress) throw new Error("User progress not found");
-
-  if (currentUserProgress.previousTotalPoints == null) {
-    await db.update(userProgress)
-      .set({ previousTotalPoints: currentUserProgress.points, lastStreakCheck: new Date() })
-      .where(eq(userProgress.userId, userId));
-  }
 
   const newPoints = (currentUserProgress.points || 0) + pointsToAdd;
 
@@ -267,8 +230,6 @@ export const reduceHearts = async (challengeId: number) => {
       lastAttemptedAt: new Date(),
     });
   }
-
-  await updateDailyStreak();
 
   revalidatePath("/learn");
   revalidatePath(`/lesson/${lessonId}`);

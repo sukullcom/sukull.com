@@ -26,7 +26,7 @@ export const ResultCard = ({ value, variant, hasInfiniteHearts = false }: Props)
           variant === "points" && "bg-orange-400"
         )}
       >
-        {variant === "hearts" ? "Kalan Can" : "Toplam Puan"}
+        {variant === "hearts" ? "Kalan Can" : "Kazanılan Puan"}
       </div>
       <div
         className={cn(

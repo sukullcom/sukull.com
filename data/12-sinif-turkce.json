@@ -1,0 +1,810 @@
+{
+  "course": {
+    "title": "12. Sınıf Türk Dili ve Edebiyatı",
+    "imageSrc": ""
+  },
+  "units": [
+    {
+      "title": "Edebiyat-Felsefe-Psikoloji İlişkisi ve Dil Tarihi",
+      "description": "Edebiyat-felsefe ilişkisi, edebiyat-psikoloji ilişkisi, dilin tarihî değişimi, Türkçenin önemli sözlükleri",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "Edebiyat-Felsefe İlişkisi",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Edebiyat ile felsefenin ortak yönü nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["edebiyat-felsefe"],
+              "explanation": "Edebiyat ve felsefe, insanın varoluşunu, değerlerini, dünyayı anlamlandırma çabasını konu edinir. Her ikisi de düşünce ve sorgulama üzerine kuruludur.",
+              "options": [
+                {"text": "Her ikisi de deney yapar", "correct": false},
+                {"text": "İnsanın varoluşunu ve dünyayı anlamlandırma çabasını ortak konu edinirler", "correct": true},
+                {"text": "Yalnızca güzel sanatlarla ilgilenir", "correct": false},
+                {"text": "Aralarında hiçbir ortak yön yoktur", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Varoluşçuluk (egzistansiyalizm) akımı hangi edebî eserlerde etkili olmuştur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["varoluşçuluk", "edebiyat-felsefe"],
+              "explanation": "Varoluşçuluk, Jean-Paul Sartre'ın 'Bulantı', Albert Camus'nun 'Yabancı' ve Franz Kafka'nın 'Dönüşüm' gibi eserlerinde etkili olmuştur.",
+              "options": [
+                {"text": "Yalnızca şiir eserlerinde", "correct": false},
+                {"text": "Sartre'ın 'Bulantı', Camus'nun 'Yabancı' gibi eserlerde", "correct": true},
+                {"text": "Yalnızca Divan edebiyatında", "correct": false},
+                {"text": "Yalnızca tiyatro eserlerinde", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Felsefî düşünce akımlarını edebiyat üzerindeki etkileriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["felsefe akımları", "edebiyat"],
+              "explanation": "Varoluşçuluk yabancılaşma ve bireysel özgürlük, nihilizm anlamsızlık ve hiçlik, marksizm sınıf çatışması temalarını edebiyata taşımıştır.",
+              "options": [
+                {"text": "Varoluşçuluk", "pairId": 1, "correct": false},
+                {"text": "Yabancılaşma ve bireysel özgürlük", "pairId": 1, "correct": false},
+                {"text": "Nihilizm", "pairId": 2, "correct": false},
+                {"text": "Anlamsızlık ve hiçlik duygusu", "pairId": 2, "correct": false},
+                {"text": "Marksizm", "pairId": 3, "correct": false},
+                {"text": "Sınıf çatışması ve toplumsal eşitsizlik", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Edebiyat ile felsefe arasındaki temel fark nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["edebiyat-felsefe"],
+              "explanation": "Felsefe kavramsal ve soyut düşünceyle sorular sorar; edebiyat ise bu soruları somut karakterler, olaylar ve imgeler aracılığıyla yaşatır.",
+              "options": [
+                {"text": "Edebiyat akla, felsefe duygulara hitap eder", "correct": false},
+                {"text": "Felsefe kavramsal düşünceyle sorar; edebiyat karakterler ve olaylar aracılığıyla yaşatır", "correct": true},
+                {"text": "Aralarında hiçbir fark yoktur", "correct": false},
+                {"text": "Felsefe yalnızca bilimle ilgilenir", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Türk edebiyatında felsefî derinliğiyle bilinen yazar kimdir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["edebiyat-felsefe", "Tanpınar"],
+              "explanation": "Ahmet Hamdi Tanpınar, zaman felsefesi ve medeniyetler arası gerilimi eserlerinde derinlemesine işleyerek felsefî derinliğiyle öne çıkan yazarlardan biridir.",
+              "options": [
+                {"text": "Ömer Seyfettin", "correct": false},
+                {"text": "Ahmet Hamdi Tanpınar", "correct": true},
+                {"text": "Refik Halit Karay", "correct": false},
+                {"text": "Haldun Taner", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Absürt edebiyat hangi felsefî düşünceden etkilenmiştir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["absürt", "varoluşçuluk"],
+              "explanation": "Absürt edebiyat, varoluşçuluk ve nihilizmden etkilenmiştir. Yaşamın anlamsızlığı, iletişimsizlik ve saçmalık temel temalarıdır.",
+              "options": [
+                {"text": "Klasisizm", "correct": false},
+                {"text": "Romantizm", "correct": false},
+                {"text": "Varoluşçuluk ve nihilizm", "correct": true},
+                {"text": "Pozitivizm", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Edebiyat-Psikoloji İlişkisi",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Edebiyat ile psikolojinin ortak ilgi alanı nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["edebiyat-psikoloji"],
+              "explanation": "Edebiyat ve psikoloji, insanın iç dünyasını, duygu ve düşüncelerini, bilinçaltını ve davranışlarını ortak ilgi alanı olarak paylaşır.",
+              "options": [
+                {"text": "Matematiksel hesaplamalar", "correct": false},
+                {"text": "İnsanın iç dünyası, duyguları ve davranışları", "correct": true},
+                {"text": "Siyasi olaylar", "correct": false},
+                {"text": "Doğa bilimleri", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Psikolojik roman nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["psikolojik roman"],
+              "explanation": "Psikolojik roman, kahramanın iç dünyasını, ruhsal çatışmalarını ve bilinçaltını derinlemesine inceleyen roman türüdür. Olaylardan çok iç çözümleme ön plandadır.",
+              "options": [
+                {"text": "Olayların kronolojik sırayla anlatıldığı roman", "correct": false},
+                {"text": "Kahramanın iç dünyasını ve ruhsal çatışmalarını derinlemesine inceleyen roman", "correct": true},
+                {"text": "Bilimsel terimlerin kullanıldığı roman", "correct": false},
+                {"text": "Komedi unsurları taşıyan roman", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Edebiyat-psikoloji ilişkisini yazarlarla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["psikolojik roman", "yazarlar"],
+              "explanation": "Dostoyevski 'Suç ve Ceza' ile suçluluk psikolojisi, Peyami Safa 'Dokuzuncu Hariciye Koğuşu' ile hastalık psikolojisi, Oğuz Atay 'Tutunamayanlar' ile yabancılaşma psikolojisi işlemiştir.",
+              "options": [
+                {"text": "Dostoyevski", "pairId": 1, "correct": false},
+                {"text": "Suçluluk psikolojisi", "pairId": 1, "correct": false},
+                {"text": "Peyami Safa", "pairId": 2, "correct": false},
+                {"text": "Hastalık ve iç dünya psikolojisi", "pairId": 2, "correct": false},
+                {"text": "Oğuz Atay", "pairId": 3, "correct": false},
+                {"text": "Yabancılaşma ve toplumsal bunalım", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Bilinçaltı (bilinçdışı) kavramını edebiyata en çok yansıtan akım hangisidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["bilinçaltı", "sürrealizm"],
+              "explanation": "Sürrealizm, Freud'un bilinçaltı kuramından etkilenerek rüyalar, otomatik yazma ve bilinçaltı imgeleri edebiyata taşımıştır.",
+              "options": [
+                {"text": "Klasisizm", "correct": false},
+                {"text": "Realizm", "correct": false},
+                {"text": "Sürrealizm", "correct": true},
+                {"text": "Parnasizm", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Bilinç akışı tekniğinin Türk edebiyatında kullanıldığı önemli eser hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["bilinç akışı", "Türk edebiyatı"],
+              "explanation": "Oğuz Atay'ın 'Tutunamayanlar' (1972) romanı, bilinç akışı tekniğinin Türk edebiyatındaki en önemli örneklerindendir.",
+              "options": [
+                {"text": "Çalıkuşu", "correct": false},
+                {"text": "Tutunamayanlar", "correct": true},
+                {"text": "İnce Memed", "correct": false},
+                {"text": "Yaban", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Edebiyat eserlerinde iç monolog tekniği ne amaçla kullanılır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["iç monolog"],
+              "explanation": "İç monolog, kahramanın zihninden geçenleri doğrudan okuyucuya aktararak ruhsal durumunu ve düşüncelerini anlatmak için kullanılır.",
+              "options": [
+                {"text": "Diyalog oluşturmak için", "correct": false},
+                {"text": "Kahramanın zihninden geçenleri ve ruhsal durumunu aktarmak için", "correct": true},
+                {"text": "Doğa tasvirleri yapmak için", "correct": false},
+                {"text": "Kronolojik olay anlatmak için", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Dilin Tarihî Değişimi ve Türkçenin Sözlükleri",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Türkçenin bilinen ilk yazılı kaynakları nelerdir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Türkçe tarihi"],
+              "explanation": "Orhun (Göktürk) Yazıtları (8. yüzyıl), Türkçenin bilinen ilk yazılı kaynaklarıdır.",
+              "options": [
+                {"text": "Kutadgu Bilig", "correct": false},
+                {"text": "Orhun (Göktürk) Yazıtları", "correct": true},
+                {"text": "Divan-ı Lügati't-Türk", "correct": false},
+                {"text": "Mecalisü'n-Nefais", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Divan-ı Lügati't-Türk'ün önemi nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Divan-ı Lügati't-Türk", "Kaşgarlı Mahmud"],
+              "explanation": "Kaşgarlı Mahmud tarafından 1072-1074 yıllarında yazılan Divan-ı Lügati't-Türk, Türkçenin ilk sözlüğü ve Türk dili üzerine yazılmış ilk kapsamlı eserdir.",
+              "options": [
+                {"text": "İlk Türkçe roman", "correct": false},
+                {"text": "Türkçenin ilk sözlüğü ve dil bilgisi eseri", "correct": true},
+                {"text": "İlk Türkçe şiir kitabı", "correct": false},
+                {"text": "İlk Türkçe gazete", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Türkçenin önemli sözlüklerini dönemleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["Türkçe sözlükler"],
+              "explanation": "Divan-ı Lügati't-Türk (11. yy) ilk sözlük, Kamus-ı Türkî (1901) ilk modern sözlük, TDK Türkçe Sözlük (1945) Cumhuriyet döneminin resmî sözlüğüdür.",
+              "options": [
+                {"text": "Divan-ı Lügati't-Türk", "pairId": 1, "correct": false},
+                {"text": "11. yüzyıl - İlk Türkçe sözlük", "pairId": 1, "correct": false},
+                {"text": "Kamus-ı Türkî (Şemseddin Sami)", "pairId": 2, "correct": false},
+                {"text": "1901 - İlk modern Türkçe sözlük", "pairId": 2, "correct": false},
+                {"text": "TDK Türkçe Sözlük", "pairId": 3, "correct": false},
+                {"text": "1945 - Cumhuriyet döneminin resmî sözlüğü", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Dilin tarihî süreç içinde değişmesini etkileyen en önemli faktör nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["dil değişimi"],
+              "explanation": "Toplumsal, kültürel, siyasi değişimler ve diğer dillerle etkileşim, dilin tarihî süreç içinde değişmesini etkileyen en önemli faktörlerdir.",
+              "options": [
+                {"text": "Yalnızca coğrafi koşullar", "correct": false},
+                {"text": "Toplumsal, kültürel, siyasi değişimler ve diller arası etkileşim", "correct": true},
+                {"text": "Yalnızca alfabe değişikliği", "correct": false},
+                {"text": "Yalnızca edebî akımlar", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Türkçenin tarihî dönemleri sırasıyla hangisidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["Türkçe dönemleri"],
+              "explanation": "Eski Türkçe (6-10. yy), Orta Türkçe (10-15. yy), Yeni Türkçe (15-20. yy), Modern Türkçe (20. yy-günümüz) şeklinde sınıflandırılır.",
+              "options": [
+                {"text": "Modern - Yeni - Orta - Eski", "correct": false},
+                {"text": "Eski - Orta - Yeni - Modern", "correct": true},
+                {"text": "Orta - Eski - Modern - Yeni", "correct": false},
+                {"text": "Yeni - Modern - Eski - Orta", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "1928 Harf Devrimi'nin Türkçeye etkisi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Harf Devrimi"],
+              "explanation": "1928 Harf Devrimi ile Arap alfabesinden Latin alfabesine geçilmiştir. Bu, okuryazarlık oranını artırmış ve Batı dünyasıyla iletişimi kolaylaştırmıştır.",
+              "options": [
+                {"text": "Türkçe kelimeler değişmiştir", "correct": false},
+                {"text": "Arap alfabesinden Latin alfabesine geçilmiş, okuryazarlık artmıştır", "correct": true},
+                {"text": "Yeni bir dil oluşturulmuştur", "correct": false},
+                {"text": "Dil bilgisi kuralları kaldırılmıştır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Kelimede Anlam",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Gerçek (temel) anlam nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["kelimede anlam"],
+              "explanation": "Gerçek anlam, bir sözcüğün akla ilk gelen, sözlükteki ilk anlamıdır. Mecaz veya yan anlam taşımaz.",
+              "options": [
+                {"text": "Sözcüğün benzetme yoluyla kazandığı anlam", "correct": false},
+                {"text": "Sözcüğün akla ilk gelen, sözlükteki temel anlamı", "correct": true},
+                {"text": "Sözcüğün yalnızca olumsuz anlamı", "correct": false},
+                {"text": "Sözcüğün deyim içindeki anlamı", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Mecaz anlam nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["mecaz anlam"],
+              "explanation": "Mecaz anlam, sözcüğün gerçek anlamından uzaklaşarak benzetme, ilişki veya aktarma yoluyla kazandığı yeni anlamdır.",
+              "options": [
+                {"text": "Sözcüğün sözlükteki ilk anlamı", "correct": false},
+                {"text": "Sözcüğün benzetme veya aktarma yoluyla kazandığı yeni anlam", "correct": true},
+                {"text": "Sözcüğün zıt anlamı", "correct": false},
+                {"text": "Sözcüğün eş anlamı", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Anlam türlerini örneklerle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["anlam türleri"],
+              "explanation": "'Ayak ağrıyor' → gerçek anlam, 'Dağın eteği' → mecaz anlam (aktarma), 'Kör talih' → ad aktarması (mecaz).",
+              "options": [
+                {"text": "Ayak ağrıyor", "pairId": 1, "correct": false},
+                {"text": "Gerçek anlam", "pairId": 1, "correct": false},
+                {"text": "Dağın eteği", "pairId": 2, "correct": false},
+                {"text": "Mecaz anlam (organ aktarması)", "pairId": 2, "correct": false},
+                {"text": "Başı ağrıyan sorun", "pairId": 3, "correct": false},
+                {"text": "Mecaz anlam (benzetme)", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Elini çabuk tut' cümlesindeki altı çizili sözcük hangi anlamda kullanılmıştır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["mecaz anlam", "deyim"],
+              "explanation": "'Elini çabuk tut' bir deyimdir ve 'acele et' anlamında kullanılmıştır. 'El' sözcüğü burada mecaz anlamdadır.",
+              "options": [
+                {"text": "Gerçek anlam", "correct": false},
+                {"text": "Mecaz anlam (deyim içinde)", "correct": true},
+                {"text": "Yan anlam", "correct": false},
+                {"text": "Terim anlam", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eş anlamlı (anlamdaş) sözcükler hangi seçenekte verilmiştir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["eş anlam"],
+              "explanation": "Yürek-kalp, güzel-hoş, okul-mektep eş anlamlı sözcüklerdir. Aynı veya çok yakın anlamı taşırlar.",
+              "options": [
+                {"text": "Büyük - küçük", "correct": false},
+                {"text": "Yürek - kalp", "correct": true},
+                {"text": "Güzel - çirkin", "correct": false},
+                {"text": "Gelmek - gitmek", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Terim anlam nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["terim anlam"],
+              "explanation": "Terim anlam, bir sözcüğün belirli bir bilim, sanat veya meslek alanında kazandığı özel anlamdır. Örneğin 'kök' sözcüğü botanik, matematik ve dil bilgisinde farklı terim anlamlara sahiptir.",
+              "options": [
+                {"text": "Sözcüğün mecaz anlamı", "correct": false},
+                {"text": "Sözcüğün belirli bir bilim veya sanat alanındaki özel anlamı", "correct": true},
+                {"text": "Sözcüğün eş anlamı", "correct": false},
+                {"text": "Sözcüğün zıt anlamı", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Paragrafta Anlam",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Paragrafın ana düşüncesi nasıl bulunur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["paragrafta anlam"],
+              "explanation": "Ana düşünce, paragraftaki tüm cümlelerin ortak noktasını kapsayan, yazarın asıl söylemek istediği düşüncedir. Tüm cümleler ana düşünceyi destekler.",
+              "options": [
+                {"text": "İlk cümle her zaman ana düşüncedir", "correct": false},
+                {"text": "Tüm cümlelerin ortak noktasını kapsayan, yazarın asıl vermek istediği mesajdır", "correct": true},
+                {"text": "Son cümle her zaman ana düşüncedir", "correct": false},
+                {"text": "En uzun cümle ana düşüncedir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Yardımcı düşünce nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["paragrafta anlam", "yardımcı düşünce"],
+              "explanation": "Yardımcı düşünceler, ana düşünceyi destekleyen, açıklayan ve güçlendiren alt düşüncelerdir.",
+              "options": [
+                {"text": "Ana düşüncenin kendisi", "correct": false},
+                {"text": "Ana düşünceyi destekleyen ve güçlendiren alt düşünceler", "correct": true},
+                {"text": "Paragrafla ilgisi olmayan düşünceler", "correct": false},
+                {"text": "Yazarın karşı olduğu düşünceler", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Paragraf soru türlerini doğru tanımlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["paragraf soru türleri"],
+              "explanation": "Ana düşünce: Yazarın asıl mesajı, başlık: Konuyu özetleyen ifade, konu: Paragrafın ne hakkında olduğu.",
+              "options": [
+                {"text": "Ana düşünce sorusu", "pairId": 1, "correct": false},
+                {"text": "Yazarın asıl vermek istediği mesaj", "pairId": 1, "correct": false},
+                {"text": "Başlık sorusu", "pairId": 2, "correct": false},
+                {"text": "Konuyu en iyi özetleyen ifade", "pairId": 2, "correct": false},
+                {"text": "Konu sorusu", "pairId": 3, "correct": false},
+                {"text": "Paragrafın ne hakkında olduğu", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Paragrafta anlam akışını bozan cümle sorusunda ne yapılmalıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["anlam akışı"],
+              "explanation": "Anlam akışını bozan cümle sorusunda, paragrafın konusuyla uyumsuz, diğer cümlelerle bağlantısı zayıf olan cümle bulunmalıdır.",
+              "options": [
+                {"text": "En kısa cümle seçilmelidir", "correct": false},
+                {"text": "Paragrafın konusuyla uyumsuz ve bağlantısı zayıf cümle bulunmalıdır", "correct": true},
+                {"text": "İlk cümle her zaman seçilmelidir", "correct": false},
+                {"text": "En uzun cümle seçilmelidir", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Paragrafta 'neden-sonuç' ilişkisi nasıl belirlenir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["neden-sonuç"],
+              "explanation": "Neden-sonuç ilişkisinde bir olay/durum başka bir olayı/durumu doğurur. 'Çünkü, bu nedenle, dolayısıyla, bu yüzden' gibi ifadeler ipucu verir.",
+              "options": [
+                {"text": "Yalnızca zaman bildiren ifadelere bakılır", "correct": false},
+                {"text": "'Çünkü, bu nedenle, dolayısıyla' gibi ifadeler ve olay-sonuç bağlantısı takip edilir", "correct": true},
+                {"text": "İlk ve son cümleye bakılır", "correct": false},
+                {"text": "Neden-sonuç ilişkisi paragrafta bulunamaz", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Paragrafta yazarın tavrı nasıl belirlenir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["yazarın tavrı"],
+              "explanation": "Yazarın tavrı, kullandığı sözcüklerin olumlu/olumsuz yüklenmesi, üslup ve vurguladığı noktalardan belirlenir.",
+              "options": [
+                {"text": "Yalnızca paragrafın uzunluğuna bakılır", "correct": false},
+                {"text": "Kullanılan sözcüklerin olumlu/olumsuz yüklenmesi ve üsluptan belirlenir", "correct": true},
+                {"text": "Yazarın tavrı belirlenemez", "correct": false},
+                {"text": "Yalnızca son cümleye bakılır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Cumhuriyet Dönemi Şiir Akımları",
+      "description": "Garip akımı, İkinci Yeni, toplumcu şiir, saf şiir, 1980 sonrası Türk şiiri, Cumhuriyet sonrası halk şiiri",
+      "order": 2,
+      "lessons": [
+        {
+          "title": "Garip Akımı (I. Yeni)",
+          "order": 1,
+          "challenges": [
+            {"question": "Garip akımının kurucuları kimlerdir?", "type": "SELECT", "difficulty": "EASY", "tags": ["Garip akımı"], "explanation": "Garip akımı (I. Yeni), 1941'de Orhan Veli Kanık, Melih Cevdet Anday ve Oktay Rifat Horozcu tarafından kurulmuştur.", "options": [{"text": "Nâzım Hikmet, Rıfat Ilgaz, A. Kadir", "correct": false}, {"text": "Orhan Veli Kanık, Melih Cevdet Anday, Oktay Rifat Horozcu", "correct": true}, {"text": "Cemal Süreya, Turgut Uyar, İlhan Berk", "correct": false}, {"text": "Ahmet Haşim, Yahya Kemal, Necip Fazıl", "correct": false}], "order": 1},
+            {"question": "Garip akımının şiire getirdiği en önemli yenilik nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["Garip akımı", "yenilik"], "explanation": "Garip akımı, ölçü, uyak ve süslü dili reddederek günlük konuşma diliyle, sıradan insanın hayatını anlatan, şairane olmayan şiirler yazmıştır.", "options": [{"text": "Aruz ölçüsü kullanması", "correct": false}, {"text": "Ölçü ve uyağı reddederek günlük dili şiire taşıması", "correct": true}, {"text": "Divan edebiyatını canlandırması", "correct": false}, {"text": "Yalnızca doğa şiiri yazması", "correct": false}], "order": 2},
+            {"question": "Garip akımının özelliklerini doğru ifadelerle eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["Garip akımı"], "explanation": "Garip akımı: Ölçü ve uyağın reddi, günlük dil kullanımı ve şiirde söylev tonunun terk edilmesi.", "options": [{"text": "Dil anlayışı", "pairId": 1, "correct": false}, {"text": "Günlük konuşma dili, sade Türkçe", "pairId": 1, "correct": false}, {"text": "Biçim anlayışı", "pairId": 2, "correct": false}, {"text": "Ölçü ve uyak reddi, serbest nazım", "pairId": 2, "correct": false}, {"text": "Konu anlayışı", "pairId": 3, "correct": false}, {"text": "Sıradan insan, sokak, günlük hayat", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "Orhan Veli'nin en bilinen şiiri hangisidir?", "type": "SELECT", "difficulty": "EASY", "tags": ["Orhan Veli"], "explanation": "'İstanbul'u Dinliyorum' Orhan Veli'nin en bilinen şiirlerinden biridir. Ayrıca 'Garip' adlı kitap da akımın manifestosu niteliğindedir.", "options": [{"text": "Sis", "correct": false}, {"text": "İstanbul'u Dinliyorum", "correct": true}, {"text": "Safahat", "correct": false}, {"text": "Hürriyet Kasidesi", "correct": false}], "order": 4},
+            {"question": "Garip akımı hangi akıma tepki olarak doğmuştur?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["Garip akımı", "tepki"], "explanation": "Garip akımı, dönemin süslü, ağdalı ve geleneksel kalıplara bağlı şiir anlayışına tepki olarak doğmuştur.", "options": [{"text": "İkinci Yeni'ye tepki", "correct": false}, {"text": "Geleneksel kalıplara bağlı süslü ve ağdalı şiir anlayışına tepki", "correct": true}, {"text": "Halk şiirine tepki", "correct": false}, {"text": "Toplumcu şiire tepki", "correct": false}], "order": 5},
+            {"question": "Garip akımında şiirde mizah kullanımı nasıldır?", "type": "SELECT", "difficulty": "HARD", "tags": ["Garip akımı", "mizah"], "explanation": "Garip akımında ironi, nükte ve hafif mizah sıkça kullanılır. Ciddi ve ağır konuları bile espritüel bir dille aktarma özelliği vardır.", "options": [{"text": "Mizah hiç kullanılmaz", "correct": false}, {"text": "İroni ve hafif mizah sıkça kullanılır", "correct": true}, {"text": "Yalnızca kara mizah kullanılır", "correct": false}, {"text": "Mizah yerine ağıt kullanılır", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "İkinci Yeni Şiiri",
+          "order": 2,
+          "challenges": [
+            {"question": "İkinci Yeni şiirinin en belirgin özelliği hangisidir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["İkinci Yeni"], "explanation": "İkinci Yeni, anlamı kapalılığa büründürmüş, imge ve soyutlama ağırlıklı, alışılmamış bağdaştırmalar kullanan bir şiir anlayışıdır.", "options": [{"text": "Günlük konuşma dili kullanması", "correct": false}, {"text": "Anlamı kapalılığa büründürmesi ve soyut imgeler kullanması", "correct": true}, {"text": "Hece ölçüsüne bağlı kalması", "correct": false}, {"text": "Toplumsal mesajlar vermesi", "correct": false}], "order": 1},
+            {"question": "İkinci Yeni şiirinin temsilcileri kimlerdir?", "type": "SELECT", "difficulty": "EASY", "tags": ["İkinci Yeni", "temsilciler"], "explanation": "Cemal Süreya, Turgut Uyar, İlhan Berk, Edip Cansever, Ece Ayhan ve Sezai Karakoç İkinci Yeni'nin önemli temsilcileridir.", "options": [{"text": "Orhan Veli, Melih Cevdet, Oktay Rifat", "correct": false}, {"text": "Cemal Süreya, Turgut Uyar, İlhan Berk, Edip Cansever", "correct": true}, {"text": "Nâzım Hikmet, Rıfat Ilgaz", "correct": false}, {"text": "Mehmet Âkif, Ziya Gökalp", "correct": false}], "order": 2},
+            {"question": "Garip ve İkinci Yeni akımlarını karşılaştırın.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["Garip", "İkinci Yeni", "karşılaştırma"], "explanation": "Garip açık ve sade dil, İkinci Yeni kapalı ve imgeli dil, Garip günlük hayat, İkinci Yeni bireysel iç dünya odaklıdır.", "options": [{"text": "Garip dil anlayışı", "pairId": 1, "correct": false}, {"text": "Açık, sade, günlük konuşma dili", "pairId": 1, "correct": false}, {"text": "İkinci Yeni dil anlayışı", "pairId": 2, "correct": false}, {"text": "Kapalı, imgeli, soyut dil", "pairId": 2, "correct": false}, {"text": "Ortak yönleri", "pairId": 3, "correct": false}, {"text": "Geleneksel şiir kalıplarını reddetme", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "Cemal Süreya'nın şiir anlayışı hakkında hangisi doğrudur?", "type": "SELECT", "difficulty": "HARD", "tags": ["Cemal Süreya"], "explanation": "Cemal Süreya, İkinci Yeni'nin en lirik şairidir. Aşk, özlem ve bireysel duyguları yoğun imgelerle anlatan şiirler yazmıştır.", "options": [{"text": "Toplumcu şiirler yazmıştır", "correct": false}, {"text": "Aşk ve bireysel duyguları yoğun imgelerle anlatan lirik şiirler yazmıştır", "correct": true}, {"text": "Hece ölçüsüyle yazmıştır", "correct": false}, {"text": "Yalnızca doğa şiirleri yazmıştır", "correct": false}], "order": 4},
+            {"question": "İkinci Yeni şiirinde 'alışılmamış bağdaştırma' ne demektir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["İkinci Yeni", "bağdaştırma"], "explanation": "Alışılmamış bağdaştırma, normalde bir arada kullanılmayan sözcüklerin bir araya getirilmesidir. Örneğin 'ıslak saat', 'gri bir düşünce' gibi ifadeler.", "options": [{"text": "Eş anlamlı sözcüklerin kullanılması", "correct": false}, {"text": "Normalde bir arada kullanılmayan sözcüklerin bir araya getirilmesi", "correct": true}, {"text": "Atasözlerinin kullanılması", "correct": false}, {"text": "Teknik terimlerin kullanılması", "correct": false}], "order": 5},
+            {"question": "Edip Cansever'in en ünlü eseri hangisidir?", "type": "SELECT", "difficulty": "EASY", "tags": ["Edip Cansever"], "explanation": "'Yerçekimli Karanfil' (1957) ve 'Tragedyalar' (1964) Edip Cansever'in en önemli şiir kitaplarıdır.", "options": [{"text": "Garip", "correct": false}, {"text": "Yerçekimli Karanfil", "correct": true}, {"text": "İstanbul'u Dinliyorum", "correct": false}, {"text": "Safahat", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Toplumcu Şiir ve 1960 Sonrası Toplumcu Eğilimler",
+          "order": 3,
+          "challenges": [
+            {"question": "Toplumcu şiirin en önemli temsilcisi kimdir?", "type": "SELECT", "difficulty": "EASY", "tags": ["toplumcu şiir", "Nâzım Hikmet"], "explanation": "Nâzım Hikmet, Türk edebiyatında toplumcu şiirin en önemli temsilcisidir. Serbest nazımla yazdığı şiirleriyle dünya edebiyatında da tanınmıştır.", "options": [{"text": "Ahmet Haşim", "correct": false}, {"text": "Nâzım Hikmet", "correct": true}, {"text": "Orhan Veli", "correct": false}, {"text": "Cemal Süreya", "correct": false}], "order": 1},
+            {"question": "Toplumcu şiirde işlenen temel temalar hangileridir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["toplumcu şiir", "temalar"], "explanation": "Toplumcu şiirde emekçi sınıfın sorunları, toplumsal eşitsizlik, adaletsizlik, savaş karşıtlığı ve dayanışma temaları işlenir.", "options": [{"text": "Bireysel aşk ve doğa", "correct": false}, {"text": "Emekçi sorunları, toplumsal eşitsizlik ve dayanışma", "correct": true}, {"text": "Bilim ve teknoloji", "correct": false}, {"text": "Tarihî kahramanlık", "correct": false}], "order": 2},
+            {"question": "Toplumcu şiir temsilcilerini dönemlerle eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["toplumcu şiir", "dönemler"], "explanation": "Nâzım Hikmet Cumhuriyet'in ilk yıllarından itibaren, Rıfat Ilgaz 1940'lardan itibaren, İsmet Özel 1960 sonrası toplumcu şiir yazmıştır.", "options": [{"text": "Nâzım Hikmet", "pairId": 1, "correct": false}, {"text": "1920'lerden itibaren - Öncü", "pairId": 1, "correct": false}, {"text": "Rıfat Ilgaz", "pairId": 2, "correct": false}, {"text": "1940 kuşağı toplumcusu", "pairId": 2, "correct": false}, {"text": "İsmet Özel (ilk dönemi)", "pairId": 3, "correct": false}, {"text": "1960 sonrası toplumcu eğilim", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "1960 sonrası toplumcu şiirin önceki dönemden farkı nedir?", "type": "SELECT", "difficulty": "HARD", "tags": ["1960 sonrası şiir"], "explanation": "1960 sonrası toplumcu şiir, doğrudan propaganda yerine daha bireysel ve estetik bir dille toplumsal eleştiri yapmıştır.", "options": [{"text": "Toplumsal konuları tamamen terk etmiştir", "correct": false}, {"text": "Propaganda yerine daha bireysel ve estetik bir dille toplumsal eleştiri yapmıştır", "correct": true}, {"text": "Aruz ölçüsüne geri dönmüştür", "correct": false}, {"text": "Yalnızca doğa şiiri yazmıştır", "correct": false}], "order": 4},
+            {"question": "Nâzım Hikmet'in en ünlü şiir kitabı hangisidir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["Nâzım Hikmet"], "explanation": "'Memleketimden İnsan Manzaraları' Nâzım Hikmet'in en kapsamlı ve ünlü eseridir. Anadolu insanının panoramasını çizen uzun bir şiirdir.", "options": [{"text": "Garip", "correct": false}, {"text": "Memleketimden İnsan Manzaraları", "correct": true}, {"text": "Safahat", "correct": false}, {"text": "Elhan-ı Şita", "correct": false}], "order": 5},
+            {"question": "Ataol Behramoğlu ve İsmet Özel hangi şiir anlayışını temsil eder?", "type": "SELECT", "difficulty": "EASY", "tags": ["1960 sonrası şiir"], "explanation": "Ataol Behramoğlu ve İsmet Özel (ilk dönemlerinde), 1960 sonrası toplumcu eğilimleri öne çıkaran şiir anlayışını temsil eder.", "options": [{"text": "Garip akımı", "correct": false}, {"text": "İkinci Yeni", "correct": false}, {"text": "1960 sonrası toplumcu şiir", "correct": true}, {"text": "Saf şiir", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Saf Şiir, Millî Edebiyat ve Metafizik Şiir Anlayışları",
+          "order": 4,
+          "challenges": [
+            {"question": "Cumhuriyet döneminde saf şiir anlayışını sürdüren şair kimdir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["saf şiir", "Cumhuriyet"], "explanation": "Ahmet Hamdi Tanpınar ve Cahit Sıtkı Tarancı, Cumhuriyet döneminde saf şiir anlayışını sürdüren şairlerin başında gelir.", "options": [{"text": "Nâzım Hikmet", "correct": false}, {"text": "Cahit Sıtkı Tarancı", "correct": true}, {"text": "Orhan Veli", "correct": false}, {"text": "Mehmet Âkif Ersoy", "correct": false}], "order": 1},
+            {"question": "Millî Edebiyat anlayışını yansıtan şiirin özellikleri nelerdir?", "type": "SELECT", "difficulty": "EASY", "tags": ["Millî Edebiyat şiiri"], "explanation": "Millî Edebiyat anlayışını yansıtan şiirde hece ölçüsü, sade Türkçe, millî ve tarihî konular ön plandadır.", "options": [{"text": "Aruz ölçüsü ve ağır dil", "correct": false}, {"text": "Hece ölçüsü, sade Türkçe ve millî konular", "correct": true}, {"text": "Serbest ölçü ve imgeli dil", "correct": false}, {"text": "Yalnızca aşk konusu", "correct": false}], "order": 2},
+            {"question": "Şiir anlayışlarını temsilcilerle eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["şiir anlayışları"], "explanation": "Saf şiir → Cahit Sıtkı Tarancı, Millî Edebiyat anlayışı → Arif Nihat Asya, Metafizik şiir → Necip Fazıl Kısakürek.", "options": [{"text": "Saf şiir", "pairId": 1, "correct": false}, {"text": "Cahit Sıtkı Tarancı", "pairId": 1, "correct": false}, {"text": "Millî Edebiyat anlayışı", "pairId": 2, "correct": false}, {"text": "Arif Nihat Asya", "pairId": 2, "correct": false}, {"text": "Metafizik şiir", "pairId": 3, "correct": false}, {"text": "Necip Fazıl Kısakürek", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "Necip Fazıl Kısakürek'in şiir anlayışı hakkında hangisi doğrudur?", "type": "SELECT", "difficulty": "HARD", "tags": ["Necip Fazıl"], "explanation": "Necip Fazıl, dini değerleri, metafizik arayışı ve mistik duyarlılığı ön plana çıkaran şiirler yazmıştır. 'Kaldırımlar' ve 'Çile' en ünlü şiirleridir.", "options": [{"text": "Toplumcu şiirler yazmıştır", "correct": false}, {"text": "Dinî değerleri ve metafizik arayışı ön plana çıkaran şiirler yazmıştır", "correct": true}, {"text": "Garip akımını kurmuştur", "correct": false}, {"text": "Yalnızca hiciv yazmıştır", "correct": false}], "order": 4},
+            {"question": "Cahit Sıtkı Tarancı'nın en ünlü şiiri hangisidir?", "type": "SELECT", "difficulty": "EASY", "tags": ["Cahit Sıtkı Tarancı"], "explanation": "'Otuz Beş Yaş' (1946), Cahit Sıtkı Tarancı'nın en ünlü şiiridir. Yaşlanma, ölüm ve hayatın geçiciliği temalarını işler.", "options": [{"text": "İstanbul'u Dinliyorum", "correct": false}, {"text": "Otuz Beş Yaş", "correct": true}, {"text": "Kaldırımlar", "correct": false}, {"text": "Memleketimden İnsan Manzaraları", "correct": false}], "order": 5},
+            {"question": "Sezai Karakoç hangi şiir anlayışının temsilcisidir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["Sezai Karakoç"], "explanation": "Sezai Karakoç, hem İkinci Yeni döneminde başlamış hem de dinî-metafizik şiir anlayışını geliştirmiştir. 'Diriliş' düşüncesinin kurucusudur.", "options": [{"text": "Garip akımı", "correct": false}, {"text": "Toplumcu şiir", "correct": false}, {"text": "Dinî-metafizik şiir ve İkinci Yeni", "correct": true}, {"text": "Millî Edebiyat", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "1980 Sonrası Türk Şiiri ve Cumhuriyet Sonrası Halk Şiiri",
+          "order": 5,
+          "challenges": [
+            {"question": "1980 sonrası Türk şiirinin en belirgin özelliği nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["1980 sonrası şiir"], "explanation": "1980 sonrası Türk şiiri çoğulcu bir anlayışa sahiptir. Farklı akımlar ve bireysel tarzlar bir arada var olmuş, postmodern eğilimler ve bireysel anlatım ön plana çıkmıştır.", "options": [{"text": "Tek bir akım hâkimdir", "correct": false}, {"text": "Çoğulcu anlayış, bireysel tarz ve postmodern eğilimler", "correct": true}, {"text": "Yalnızca toplumcu şiir yazılmıştır", "correct": false}, {"text": "Şiir tamamen terk edilmiştir", "correct": false}], "order": 1},
+            {"question": "Cumhuriyet sonrası halk şiirinin önemli temsilcisi kimdir?", "type": "SELECT", "difficulty": "EASY", "tags": ["halk şiiri", "Âşık Veysel"], "explanation": "Âşık Veysel, Cumhuriyet sonrası halk şiirinin en önemli temsilcisidir. Saz eşliğinde şiirler söylemiş, doğa, vatan ve insan sevgisini işlemiştir.", "options": [{"text": "Orhan Veli", "correct": false}, {"text": "Âşık Veysel", "correct": true}, {"text": "Cemal Süreya", "correct": false}, {"text": "Nâzım Hikmet", "correct": false}], "order": 2},
+            {"question": "1980 sonrası ve Cumhuriyet sonrası halk şiirini eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["1980 sonrası", "halk şiiri"], "explanation": "1980 sonrası şiir çoğulcu ve postmodern, halk şiiri geleneksel ve sözlü, her ikisi de Türk kültürünü yansıtır.", "options": [{"text": "1980 sonrası şiir", "pairId": 1, "correct": false}, {"text": "Çoğulcu, postmodern, bireysel", "pairId": 1, "correct": false}, {"text": "Cumhuriyet sonrası halk şiiri", "pairId": 2, "correct": false}, {"text": "Geleneksel, sözlü, saz eşlikli", "pairId": 2, "correct": false}, {"text": "Ortak yönleri", "pairId": 3, "correct": false}, {"text": "Türk kültürü ve toplumsal duyarlılık", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "Âşık Veysel'in en bilinen şiiri hangisidir?", "type": "SELECT", "difficulty": "EASY", "tags": ["Âşık Veysel"], "explanation": "'Uzun İnce Bir Yoldayım' Âşık Veysel'in en bilinen şiiridir. Hayatın geçiciliğini ve insanın yolculuğunu anlatır.", "options": [{"text": "İstanbul'u Dinliyorum", "correct": false}, {"text": "Uzun İnce Bir Yoldayım", "correct": true}, {"text": "Otuz Beş Yaş", "correct": false}, {"text": "Kaldırımlar", "correct": false}], "order": 4},
+            {"question": "1980 sonrası şiirde hangi özellik ön plana çıkar?", "type": "SELECT", "difficulty": "HARD", "tags": ["1980 sonrası"], "explanation": "1980 sonrası şiirde ideolojik söylem zayıflamış, bireysel deneyim, gündelik yaşam, ironi ve postmodern oyunsallık ön plana çıkmıştır.", "options": [{"text": "İdeolojik propaganda", "correct": false}, {"text": "Bireysel deneyim, ironi ve postmodern oyunsallık", "correct": true}, {"text": "Aruz ölçüsüne geri dönüş", "correct": false}, {"text": "Yalnızca doğa şiiri", "correct": false}], "order": 5},
+            {"question": "Cumhuriyet sonrası halk şiirinin geleneksel halk şiirinden farkı nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["halk şiiri", "farklar"], "explanation": "Cumhuriyet sonrası halk şairleri, geleneksel formları sürdürmekle birlikte Cumhuriyet değerleri, çağdaş konular ve toplumsal değişimi de şiirlerine yansıtmıştır.", "options": [{"text": "Aralarında hiçbir fark yoktur", "correct": false}, {"text": "Geleneksel formları sürdürerek Cumhuriyet değerlerini ve çağdaş konuları da yansıtmıştır", "correct": true}, {"text": "Saz kullanımını tamamen terk etmiştir", "correct": false}, {"text": "Yalnızca yazılı edebiyata geçmiştir", "correct": false}], "order": 6}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "1960 Sonrası Hikâye ve Çağdaş Roman",
+      "description": "1960 sonrası Cumhuriyet hikâyesi, küçürek hikâye, 1980 sonrası Türk romanı, Türk dünyası ve dünya edebiyatında çağdaş roman",
+      "order": 3,
+      "lessons": [
+        {
+          "title": "1960 Sonrası Cumhuriyet Dönemi Hikâyesi",
+          "order": 1,
+          "challenges": [
+            {"question": "1960 sonrası Türk hikâyesindeki en önemli değişim nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["1960 sonrası hikâye"], "explanation": "1960 sonrası Türk hikâyesi çeşitlenmiş; toplumcu gerçekçilik yanında bireyci, modernist, postmodern ve fantastik hikâye anlayışları ortaya çıkmıştır.", "options": [{"text": "Hikâye türü terk edilmiştir", "correct": false}, {"text": "Bireyci, modernist ve postmodern anlayışlar ortaya çıkmıştır", "correct": true}, {"text": "Yalnızca köy hikâyeleri yazılmıştır", "correct": false}, {"text": "Hikâye roman türüne dönüşmüştür", "correct": false}], "order": 1},
+            {"question": "1960 sonrası hikâyecilerini tarzlarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["1960 sonrası hikâye", "yazarlar"], "explanation": "Tomris Uyar bireysel-modernist, Bilge Karasu deneysel-felsefi, Oğuz Atay modernist-postmodern hikâye yazmıştır.", "options": [{"text": "Tomris Uyar", "pairId": 1, "correct": false}, {"text": "Bireysel ve modernist hikâye", "pairId": 1, "correct": false}, {"text": "Bilge Karasu", "pairId": 2, "correct": false}, {"text": "Deneysel ve felsefî hikâye", "pairId": 2, "correct": false}, {"text": "Oğuz Atay", "pairId": 3, "correct": false}, {"text": "Modernist-postmodern hikâye", "pairId": 3, "correct": false}], "order": 2},
+            {"question": "Adalet Ağaoğlu'nun hikâye yazarlığındaki önemi nedir?", "type": "SELECT", "difficulty": "HARD", "tags": ["Adalet Ağaoğlu"], "explanation": "Adalet Ağaoğlu, 1960 sonrası Türk hikâye ve romanında toplumsal değişimi bireyin iç dünyasıyla birlikte işleyen önemli bir yazardır.", "options": [{"text": "Yalnızca köy hikâyeleri yazmıştır", "correct": false}, {"text": "Toplumsal değişimi bireyin iç dünyasıyla birlikte işlemiştir", "correct": true}, {"text": "Garip akımının temsilcisidir", "correct": false}, {"text": "Yalnızca şiir yazmıştır", "correct": false}], "order": 3},
+            {"question": "1960 sonrası Türk hikâyesinde modernist anlatım teknikleri hangileridir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["modernist teknikler"], "explanation": "Bilinç akışı, iç monolog, zaman kırılmaları, çoklu bakış açısı ve parçalı anlatım 1960 sonrası hikâyenin modernist teknikleridir.", "options": [{"text": "Yalnızca kronolojik anlatım", "correct": false}, {"text": "Bilinç akışı, iç monolog, zaman kırılmaları ve parçalı anlatım", "correct": true}, {"text": "Yalnızca mektup tekniği", "correct": false}, {"text": "Şiirsel anlatım", "correct": false}], "order": 4},
+            {"question": "Yusuf Atılgan'ın en ünlü hikâye/roman eseri hangisidir?", "type": "SELECT", "difficulty": "EASY", "tags": ["Yusuf Atılgan"], "explanation": "'Aylak Adam' (1959) ve 'Anayurt Oteli' (1973), Yusuf Atılgan'ın en ünlü eserleridir. Yalnızlık ve yabancılaşma temaları işlenir.", "options": [{"text": "Çalıkuşu", "correct": false}, {"text": "Aylak Adam", "correct": true}, {"text": "İnce Memed", "correct": false}, {"text": "Yaban", "correct": false}], "order": 5},
+            {"question": "Postmodern hikâyenin belirgin özelliği nedir?", "type": "SELECT", "difficulty": "EASY", "tags": ["postmodern hikâye"], "explanation": "Postmodern hikâye, üstkurmaca (eserin kurgu olduğunun vurgulanması), metinlerarası göndermeler, ironi ve parçalı anlatım kullanır.", "options": [{"text": "Kronolojik ve gerçekçi anlatım", "correct": false}, {"text": "Üstkurmaca, ironi, metinlerarası göndermeler ve parçalı anlatım", "correct": true}, {"text": "Yalnızca doğa tasvirleri", "correct": false}, {"text": "Aruz ölçüsüyle yazılması", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Küçürek (Minimal) Hikâye",
+          "order": 2,
+          "challenges": [
+            {"question": "Küçürek (minimal) hikâye nedir?", "type": "SELECT", "difficulty": "EASY", "tags": ["küçürek hikâye"], "explanation": "Küçürek hikâye, birkaç cümlelik çok kısa anlatılardan oluşan ve okuyucuyu düşünmeye sevk eden, az sözcükle çok şey anlatan bir hikâye türüdür.", "options": [{"text": "Çok uzun roman", "correct": false}, {"text": "Birkaç cümlelik, az sözcükle çok şey anlatan kısa hikâye türü", "correct": true}, {"text": "Şiir biçiminde yazılan hikâye", "correct": false}, {"text": "Çocuklar için yazılan hikâye", "correct": false}], "order": 1},
+            {"question": "Küçürek hikâyenin klasik hikâyeden en önemli farkı nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["küçürek hikâye", "fark"], "explanation": "Küçürek hikâyede olay örgüsü, karakter gelişimi ve ayrıntılı tasvir minimuma indirilir. Anlam okuyucuya bırakılır.", "options": [{"text": "Daha uzun ve ayrıntılıdır", "correct": false}, {"text": "Olay ve karakter minimuma indirilir, anlam okuyucuya bırakılır", "correct": true}, {"text": "Şiir biçiminde yazılır", "correct": false}, {"text": "Aralarında fark yoktur", "correct": false}], "order": 2},
+            {"question": "Küçürek hikâye türlerini eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["küçürek hikâye türleri"], "explanation": "Küçürek hikâye: birkaç cümle, kısa kısa hikâye: bir paragraf, modern kısa hikâye: birkaç sayfa.", "options": [{"text": "Küçürek hikâye", "pairId": 1, "correct": false}, {"text": "Birkaç cümlelik anlatı", "pairId": 1, "correct": false}, {"text": "Kısa kısa hikâye", "pairId": 2, "correct": false}, {"text": "Bir paragraf uzunluğunda", "pairId": 2, "correct": false}, {"text": "Modern kısa hikâye", "pairId": 3, "correct": false}, {"text": "Birkaç sayfa uzunluğunda", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "Küçürek hikâyede okuyucunun rolü nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["küçürek hikâye", "okuyucu"], "explanation": "Küçürek hikâyede boşluklar okuyucu tarafından doldurulur. Okuyucu anlamı tamamlayan aktif bir rol üstlenir.", "options": [{"text": "Pasif dinleyicidir", "correct": false}, {"text": "Boşlukları doldurarak anlamı tamamlayan aktif bir rol üstlenir", "correct": true}, {"text": "Yalnızca okur, yorum yapmaz", "correct": false}, {"text": "Okuyucunun rolü yoktur", "correct": false}], "order": 4},
+            {"question": "Küçürek hikâye hangi dönemde yaygınlaşmıştır?", "type": "SELECT", "difficulty": "HARD", "tags": ["küçürek hikâye", "dönem"], "explanation": "Küçürek hikâye dünyada 20. yüzyılın ikinci yarısında, Türk edebiyatında ise 1990'lardan itibaren yaygınlaşmıştır.", "options": [{"text": "Tanzimat dönemi", "correct": false}, {"text": "Divan edebiyatı dönemi", "correct": false}, {"text": "20. yüzyılın ikinci yarısı, Türkiye'de 1990'lar", "correct": true}, {"text": "İslamiyet öncesi dönem", "correct": false}], "order": 5},
+            {"question": "Aşağıdakilerden hangisi küçürek hikâyenin özelliği değildir?", "type": "SELECT", "difficulty": "EASY", "tags": ["küçürek hikâye"], "explanation": "Ayrıntılı karakter analizi, küçürek hikâyenin özelliği değildir. Küçürek hikâye az sözcükle çok şey anlatır.", "options": [{"text": "Az sözcükle çok şey anlatma", "correct": false}, {"text": "Okuyucuyu düşünmeye sevk etme", "correct": false}, {"text": "Ayrıntılı karakter analizi yapma", "correct": true}, {"text": "Çok kısa olma", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "1980 Sonrası Türk Romanı",
+          "order": 3,
+          "challenges": [
+            {"question": "1980 sonrası Türk romanının en belirgin özelliği nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["1980 sonrası roman"], "explanation": "1980 sonrası Türk romanı postmodern eğilimler, tarihî roman, polisiye, fantastik gibi çeşitli türlerde zenginleşmiştir.", "options": [{"text": "Yalnızca köy romanı yazılmıştır", "correct": false}, {"text": "Postmodern eğilimler, tür çeşitliliği ve bireysel anlatım", "correct": true}, {"text": "Roman türü terk edilmiştir", "correct": false}, {"text": "Yalnızca tarihî romanlar yazılmıştır", "correct": false}], "order": 1},
+            {"question": "Orhan Pamuk'un Nobel Edebiyat Ödülü aldığı yıl hangisidir?", "type": "SELECT", "difficulty": "EASY", "tags": ["Orhan Pamuk", "Nobel"], "explanation": "Orhan Pamuk, 2006 yılında Nobel Edebiyat Ödülü'nü alan ilk Türk yazardır.", "options": [{"text": "2000", "correct": false}, {"text": "2006", "correct": true}, {"text": "2010", "correct": false}, {"text": "1998", "correct": false}], "order": 2},
+            {"question": "1980 sonrası romancıları eserlerle eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["1980 sonrası roman", "eserler"], "explanation": "Orhan Pamuk 'Benim Adım Kırmızı', İhsan Oktay Anar 'Puslu Kıtalar Atlası', Elif Şafak 'Aşk' yazmıştır.", "options": [{"text": "Orhan Pamuk", "pairId": 1, "correct": false}, {"text": "Benim Adım Kırmızı", "pairId": 1, "correct": false}, {"text": "İhsan Oktay Anar", "pairId": 2, "correct": false}, {"text": "Puslu Kıtalar Atlası", "pairId": 2, "correct": false}, {"text": "Elif Şafak", "pairId": 3, "correct": false}, {"text": "Aşk", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "Postmodern romanda üstkurmaca ne anlama gelir?", "type": "SELECT", "difficulty": "HARD", "tags": ["postmodern roman", "üstkurmaca"], "explanation": "Üstkurmaca, romanın bir kurgu olduğunun eserin içinde vurgulanmasıdır. Yazar, yazma sürecini romanın konusu yapar.", "options": [{"text": "Kronolojik anlatım", "correct": false}, {"text": "Romanın kurgu olduğunun eserin içinde vurgulanması", "correct": true}, {"text": "Bilimsel anlatım", "correct": false}, {"text": "Mektup biçiminde yazma", "correct": false}], "order": 4},
+            {"question": "Orhan Pamuk'un en bilinen romanı hangisidir?", "type": "SELECT", "difficulty": "EASY", "tags": ["Orhan Pamuk"], "explanation": "'Benim Adım Kırmızı' (1998), 'Kar' (2002), 'Masumiyet Müzesi' (2008) Orhan Pamuk'un en bilinen romanlarıdır.", "options": [{"text": "İnce Memed", "correct": false}, {"text": "Benim Adım Kırmızı", "correct": true}, {"text": "Yaban", "correct": false}, {"text": "Çalıkuşu", "correct": false}], "order": 5},
+            {"question": "1980 sonrası Türk romanında tarihî roman geleneğini sürdüren yazar kimdir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["tarihî roman"], "explanation": "İhsan Oktay Anar, tarihî malzemeyi postmodern tekniklerle birleştirerek özgün tarihî romanlar yazmıştır.", "options": [{"text": "Yaşar Kemal", "correct": false}, {"text": "İhsan Oktay Anar", "correct": true}, {"text": "Sabahattin Ali", "correct": false}, {"text": "Reşat Nuri Güntekin", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Türk Dünyası Edebiyatında Roman",
+          "order": 4,
+          "challenges": [
+            {"question": "Türk dünyası edebiyatında roman türünün en önemli temsilcisi kimdir?", "type": "SELECT", "difficulty": "EASY", "tags": ["Türk dünyası", "roman"], "explanation": "Cengiz Aytmatov, Kırgız edebiyatının ve Türk dünyası roman geleneğinin en önemli temsilcisidir.", "options": [{"text": "Orhan Pamuk", "correct": false}, {"text": "Cengiz Aytmatov", "correct": true}, {"text": "Yaşar Kemal", "correct": false}, {"text": "Reşat Nuri Güntekin", "correct": false}], "order": 1},
+            {"question": "Cengiz Aytmatov'un romanlarında işlenen temalar hangileridir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["Cengiz Aytmatov", "temalar"], "explanation": "Cengiz Aytmatov'un romanlarında insan-doğa ilişkisi, hafıza ve kimlik, toplumsal baskı ve bireysel özgürlük temaları işlenir.", "options": [{"text": "Yalnızca bilim kurgu", "correct": false}, {"text": "İnsan-doğa ilişkisi, hafıza, kimlik ve bireysel özgürlük", "correct": true}, {"text": "Yalnızca savaş", "correct": false}, {"text": "Yalnızca aşk", "correct": false}], "order": 2},
+            {"question": "Türk dünyası romancılarını ülkeleriyle eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["Türk dünyası", "romancılar"], "explanation": "Cengiz Aytmatov Kırgızistan, Muhtar Avezov Kazakistan, Çolpan Özbekistan edebiyatının temsilcileridir.", "options": [{"text": "Cengiz Aytmatov", "pairId": 1, "correct": false}, {"text": "Kırgızistan", "pairId": 1, "correct": false}, {"text": "Muhtar Avezov", "pairId": 2, "correct": false}, {"text": "Kazakistan", "pairId": 2, "correct": false}, {"text": "Çolpan (Abdülhamit Süleyman)", "pairId": 3, "correct": false}, {"text": "Özbekistan", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "Muhtar Avezov'un en ünlü romanı hangisidir?", "type": "SELECT", "difficulty": "HARD", "tags": ["Muhtar Avezov"], "explanation": "'Abay Yolu' Muhtar Avezov'un en ünlü romanıdır. Kazak şairi Abay Kunanbayev'in hayatını ve Kazak toplumunu anlatan epik bir eserdir.", "options": [{"text": "Gün Olur Asra Bedel", "correct": false}, {"text": "Abay Yolu", "correct": true}, {"text": "Cemile", "correct": false}, {"text": "Yaban", "correct": false}], "order": 4},
+            {"question": "Türk dünyası edebiyatlarının ortak roman teması nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["Türk dünyası", "ortak tema"], "explanation": "Türk dünyası romanlarında kimlik arayışı, geleneksel değerler ile modernleşme arasındaki çatışma ve özgürlük mücadelesi ortak temalardır.", "options": [{"text": "Yalnızca aşk", "correct": false}, {"text": "Kimlik arayışı, gelenek-modernleşme çatışması ve özgürlük", "correct": true}, {"text": "Yalnızca bilim kurgu", "correct": false}, {"text": "Yalnızca tarihî konular", "correct": false}], "order": 5},
+            {"question": "'Cemile' romanının yazarı kimdir?", "type": "SELECT", "difficulty": "EASY", "tags": ["Cemile", "Cengiz Aytmatov"], "explanation": "'Cemile' (1958), Cengiz Aytmatov'un ilk uzun hikâyesi/kısa romanıdır. Louis Aragon tarafından 'dünyanın en güzel aşk hikâyesi' olarak nitelendirilmiştir.", "options": [{"text": "Yaşar Kemal", "correct": false}, {"text": "Cengiz Aytmatov", "correct": true}, {"text": "Orhan Pamuk", "correct": false}, {"text": "Muhtar Avezov", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Dünya Edebiyatında Çağdaş Roman",
+          "order": 5,
+          "challenges": [
+            {"question": "Büyülü gerçekçilik (magik realizm) hangi edebiyatın ürünüdür?", "type": "SELECT", "difficulty": "EASY", "tags": ["büyülü gerçekçilik"], "explanation": "Büyülü gerçekçilik, Latin Amerika edebiyatının ürünüdür. Gabriel García Márquez en önemli temsilcisidir.", "options": [{"text": "Alman edebiyatı", "correct": false}, {"text": "Latin Amerika edebiyatı", "correct": true}, {"text": "Rus edebiyatı", "correct": false}, {"text": "Japon edebiyatı", "correct": false}], "order": 1},
+            {"question": "20. yüzyıl dünya romanının en önemli akımları hangileridir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["dünya romanı", "akımlar"], "explanation": "Modernizm, postmodernizm, büyülü gerçekçilik, varoluşçu roman ve absürt roman 20. yüzyılın önemli roman akımlarıdır.", "options": [{"text": "Yalnızca klasisizm ve romantizm", "correct": false}, {"text": "Modernizm, postmodernizm, büyülü gerçekçilik, varoluşçu roman", "correct": true}, {"text": "Yalnızca natüralizm", "correct": false}, {"text": "Yalnızca tarihî roman", "correct": false}], "order": 2},
+            {"question": "Dünya edebiyatı yazarlarını akımlarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["dünya edebiyatı", "akımlar"], "explanation": "Kafka absürt/modernist, Márquez büyülü gerçekçi, Camus varoluşçu akımın temsilcileridir.", "options": [{"text": "Franz Kafka", "pairId": 1, "correct": false}, {"text": "Absürt ve modernist roman", "pairId": 1, "correct": false}, {"text": "Gabriel García Márquez", "pairId": 2, "correct": false}, {"text": "Büyülü gerçekçilik", "pairId": 2, "correct": false}, {"text": "Albert Camus", "pairId": 3, "correct": false}, {"text": "Varoluşçu roman", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "'Yüzyıllık Yalnızlık' hangi akımın en önemli eseridir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["büyülü gerçekçilik", "Yüzyıllık Yalnızlık"], "explanation": "'Yüzyıllık Yalnızlık' (1967), Gabriel García Márquez'in eseri olup büyülü gerçekçiliğin en önemli örneğidir.", "options": [{"text": "Varoluşçuluk", "correct": false}, {"text": "Büyülü gerçekçilik", "correct": true}, {"text": "Natüralizm", "correct": false}, {"text": "Romantizm", "correct": false}], "order": 4},
+            {"question": "Postmodern romanın dünya edebiyatındaki önemli temsilcisi kimdir?", "type": "SELECT", "difficulty": "HARD", "tags": ["postmodern roman"], "explanation": "Italo Calvino, Umberto Eco, Thomas Pynchon ve Paul Auster postmodern romanın dünya edebiyatındaki önemli temsilcileridir.", "options": [{"text": "Tolstoy", "correct": false}, {"text": "Umberto Eco", "correct": true}, {"text": "Balzac", "correct": false}, {"text": "Victor Hugo", "correct": false}], "order": 5},
+            {"question": "Modernist roman ile geleneksel romanın farkı nedir?", "type": "SELECT", "difficulty": "EASY", "tags": ["modernist roman"], "explanation": "Modernist roman kronolojik anlatımı terk ederek bilinç akışı, zaman kırılmaları ve çoklu bakış açısı kullanır. Geleneksel roman ise olayları kronolojik sırayla anlatır.", "options": [{"text": "Aralarında fark yoktur", "correct": false}, {"text": "Modernist roman kronolojik anlatımı terk ederek bilinç akışı ve zaman kırılmaları kullanır", "correct": true}, {"text": "Geleneksel roman daha kısadır", "correct": false}, {"text": "Modernist roman yalnızca şiirsel dil kullanır", "correct": false}], "order": 6}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Tiyatro ve Deneme",
+      "description": "1950 sonrası Türk tiyatrosu, deneme türü, dünyada ve Türkiye'de deneme, metin türleri karşılaştırması",
+      "order": 4,
+      "lessons": [
+        {
+          "title": "1950 Sonrası Türk Tiyatrosu",
+          "order": 1,
+          "challenges": [
+            {"question": "1950 sonrası Türk tiyatrosundaki en önemli gelişme nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["1950 sonrası tiyatro"], "explanation": "1950 sonrası Türk tiyatrosu epik tiyatro, absürt tiyatro ve toplumsal eleştiri gibi farklı anlayışlarla zenginleşmiştir.", "options": [{"text": "Tiyatro tamamen terk edilmiştir", "correct": false}, {"text": "Epik tiyatro, absürt tiyatro ve toplumsal eleştiri anlayışları yaygınlaşmıştır", "correct": true}, {"text": "Yalnızca komedi oynanmıştır", "correct": false}, {"text": "Geleneksel Karagöz devam etmiştir", "correct": false}], "order": 1},
+            {"question": "Haldun Taner'in 'Keşanlı Ali Destanı'nın türü nedir?", "type": "SELECT", "difficulty": "EASY", "tags": ["Haldun Taner", "epik tiyatro"], "explanation": "'Keşanlı Ali Destanı' (1964), Haldun Taner'in epik tiyatro anlayışıyla yazdığı müzikal bir toplumsal eleştiri oyunudur.", "options": [{"text": "Klasik trajedi", "correct": false}, {"text": "Epik tiyatro (müzikal toplumsal eleştiri)", "correct": true}, {"text": "Absürt tiyatro", "correct": false}, {"text": "Komedi", "correct": false}], "order": 2},
+            {"question": "1950 sonrası tiyatro yazarlarını eserleriyle eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["tiyatro yazarları", "eserler"], "explanation": "Haldun Taner 'Keşanlı Ali Destanı', Güngör Dilmen 'Midas'ın Kulakları', Turgut Özakman 'Şu Çılgın Türkler' yazmıştır.", "options": [{"text": "Haldun Taner", "pairId": 1, "correct": false}, {"text": "Keşanlı Ali Destanı", "pairId": 1, "correct": false}, {"text": "Güngör Dilmen", "pairId": 2, "correct": false}, {"text": "Midas'ın Kulakları", "pairId": 2, "correct": false}, {"text": "Turgut Özakman", "pairId": 3, "correct": false}, {"text": "Şu Çılgın Türkler", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "Absürt tiyatronun Türk edebiyatındaki temsilcisi kimdir?", "type": "SELECT", "difficulty": "HARD", "tags": ["absürt tiyatro", "Türk edebiyatı"], "explanation": "Güngör Dilmen ve Oktay Rifat, absürt tiyatro anlayışının Türk edebiyatındaki temsilcileri arasındadır.", "options": [{"text": "Namık Kemal", "correct": false}, {"text": "Güngör Dilmen", "correct": true}, {"text": "Reşat Nuri", "correct": false}, {"text": "Orhan Veli", "correct": false}], "order": 4},
+            {"question": "Epik tiyatronun geleneksel tiyatrodan farkı nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["epik tiyatro"], "explanation": "Epik tiyatro seyirciyi düşünmeye yönlendirir, yabancılaştırma efekti kullanır. Geleneksel tiyatro ise seyirciyi duygusal olarak sürükler.", "options": [{"text": "Aralarında fark yoktur", "correct": false}, {"text": "Epik tiyatro düşündürür ve yabancılaştırma efekti kullanır", "correct": true}, {"text": "Geleneksel tiyatro daha kısadır", "correct": false}, {"text": "Epik tiyatro yalnızca müzikal içerir", "correct": false}], "order": 5},
+            {"question": "Aşağıdakilerden hangisi 1950 sonrası Türk tiyatrosunun özelliğidir?", "type": "SELECT", "difficulty": "EASY", "tags": ["1950 sonrası tiyatro"], "explanation": "1950 sonrası Türk tiyatrosunda Batılı akımlardan (epik, absürt) etkilenme, toplumsal eleştiri ve çağdaş teknikler kullanılmıştır.", "options": [{"text": "Yalnızca geleneksel oyunlar sahnelenmiştir", "correct": false}, {"text": "Batılı akımlardan etkilenme ve toplumsal eleştiri", "correct": true}, {"text": "Tiyatro yasaklanmıştır", "correct": false}, {"text": "Yalnızca çocuk tiyatrosu yapılmıştır", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Deneme Türü ve Dünya Edebiyatında Deneme",
+          "order": 2,
+          "challenges": [
+            {"question": "Deneme türünün kurucusu kimdir?", "type": "SELECT", "difficulty": "EASY", "tags": ["deneme", "Montaigne"], "explanation": "Michel de Montaigne (1533-1592), deneme türünün kurucusu olarak kabul edilir. 'Denemeler' (Essais) adlı eseri türün ilk örneğidir.", "options": [{"text": "Victor Hugo", "correct": false}, {"text": "Michel de Montaigne", "correct": true}, {"text": "Voltaire", "correct": false}, {"text": "Shakespeare", "correct": false}], "order": 1},
+            {"question": "Denemenin en belirgin özelliği hangisidir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["deneme", "özellikler"], "explanation": "Denemede yazar, bir konuyu kişisel bakış açısıyla, kanıtlama zorunluluğu olmadan, samimi ve içten bir üslupla ele alır.", "options": [{"text": "Bilimsel kanıtlama zorunluluğu vardır", "correct": false}, {"text": "Kişisel bakış açısı, kanıtlama zorunluluğu yok, samimi üslup", "correct": true}, {"text": "Resmî ve kurumsal bir dil kullanılır", "correct": false}, {"text": "Yalnızca güncel olaylar işlenir", "correct": false}], "order": 2},
+            {"question": "Deneme türünü diğer türlerle eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["deneme", "karşılaştırma"], "explanation": "Deneme kişisel düşünce ve sorgulama, makale kanıtlara dayalı ispat, sohbet samimi ve karşılıklı konuşma havası taşır.", "options": [{"text": "Deneme", "pairId": 1, "correct": false}, {"text": "Kişisel düşünce ve sorgulama", "pairId": 1, "correct": false}, {"text": "Makale", "pairId": 2, "correct": false}, {"text": "Kanıtlara dayalı ispat", "pairId": 2, "correct": false}, {"text": "Sohbet", "pairId": 3, "correct": false}, {"text": "Samimi, karşılıklı konuşma havası", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "Francis Bacon'ın deneme türündeki önemi nedir?", "type": "SELECT", "difficulty": "HARD", "tags": ["Francis Bacon", "deneme"], "explanation": "Francis Bacon, İngiliz edebiyatında deneme türünün kurucusudur. Montaigne'den farklı olarak daha kısa, öğretici ve nesnel denemeler yazmıştır.", "options": [{"text": "Roman yazarıdır", "correct": false}, {"text": "İngiliz edebiyatında deneme türünün kurucusu, daha kısa ve nesnel denemeler yazmıştır", "correct": true}, {"text": "Şiir yazarıdır", "correct": false}, {"text": "Tiyatro yazarıdır", "correct": false}], "order": 4},
+            {"question": "Deneme ile fıkra arasındaki fark nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["deneme", "fıkra"], "explanation": "Deneme bir konuyu derinlemesine sorgular ve zamanla sınırlı değildir. Fıkra ise güncel bir konuda kısa ve hızlı yorum yapar.", "options": [{"text": "Aralarında fark yoktur", "correct": false}, {"text": "Deneme derinlemesine sorgular; fıkra güncel konuda kısa yorum yapar", "correct": true}, {"text": "Fıkra daha uzundur", "correct": false}, {"text": "Deneme daha kısadır", "correct": false}], "order": 5},
+            {"question": "Denemede hangi anlatım biçimi kullanılır?", "type": "SELECT", "difficulty": "EASY", "tags": ["deneme", "anlatım"], "explanation": "Denemede açıklayıcı ve tartışmacı anlatım ön plandadır. Yazar kişisel düşüncelerini sorgulayarak açıklar.", "options": [{"text": "Öyküleyici anlatım", "correct": false}, {"text": "Açıklayıcı ve tartışmacı anlatım", "correct": true}, {"text": "Betimleyici anlatım", "correct": false}, {"text": "Emredici anlatım", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Cumhuriyet Döneminde Deneme (1923-1960)",
+          "order": 3,
+          "challenges": [
+            {"question": "Cumhuriyet döneminin en önemli deneme yazarı kimdir?", "type": "SELECT", "difficulty": "EASY", "tags": ["deneme", "Nurullah Ataç"], "explanation": "Nurullah Ataç, Cumhuriyet döneminin en önemli deneme ve eleştiri yazarıdır. Öz Türkçecilik hareketinin de savunucusudur.", "options": [{"text": "Namık Kemal", "correct": false}, {"text": "Nurullah Ataç", "correct": true}, {"text": "Mehmet Âkif", "correct": false}, {"text": "Ziya Gökalp", "correct": false}], "order": 1},
+            {"question": "Nurullah Ataç'ın deneme anlayışının özelliği nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["Nurullah Ataç", "deneme"], "explanation": "Nurullah Ataç, günlük konuşma diliyle, samimi ve içten bir üslupla denemeler yazmıştır. Öz Türkçe kullanımında ısrar etmiştir.", "options": [{"text": "Ağır ve süslü bir dil kullanmıştır", "correct": false}, {"text": "Samimi ve içten üslup, öz Türkçe kullanımı", "correct": true}, {"text": "Bilimsel denemeler yazmıştır", "correct": false}, {"text": "Yalnızca fıkra yazmıştır", "correct": false}], "order": 2},
+            {"question": "1923-1960 arası deneme yazarlarını eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["deneme", "1923-1960"], "explanation": "Nurullah Ataç eleştiri-deneme, Suut Kemal Yetkin felsefî deneme, Sabahattin Eyüboğlu kültür denemesi alanlarında eser vermiştir.", "options": [{"text": "Nurullah Ataç", "pairId": 1, "correct": false}, {"text": "Eleştiri ve deneme", "pairId": 1, "correct": false}, {"text": "Suut Kemal Yetkin", "pairId": 2, "correct": false}, {"text": "Felsefî deneme", "pairId": 2, "correct": false}, {"text": "Sabahattin Eyüboğlu", "pairId": 3, "correct": false}, {"text": "Kültür denemesi", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "Cumhuriyet dönemi denemesinde en çok işlenen konular nelerdir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["deneme", "konular"], "explanation": "Dil, kültür, sanat, edebiyat, Doğu-Batı meselesi ve toplumsal değişim Cumhuriyet dönemi denemesinin başlıca konularıdır.", "options": [{"text": "Yalnızca bilim", "correct": false}, {"text": "Dil, kültür, sanat, Doğu-Batı meselesi ve toplumsal değişim", "correct": true}, {"text": "Yalnızca siyaset", "correct": false}, {"text": "Yalnızca spor", "correct": false}], "order": 4},
+            {"question": "Ahmet Hamdi Tanpınar deneme türünde hangi konuları işlemiştir?", "type": "SELECT", "difficulty": "HARD", "tags": ["Tanpınar", "deneme"], "explanation": "Tanpınar, denemelerinde zaman, medeniyet, Doğu-Batı sentezi, İstanbul ve sanat konularını derinlemesine işlemiştir.", "options": [{"text": "Yalnızca politika", "correct": false}, {"text": "Zaman, medeniyet, Doğu-Batı sentezi ve sanat", "correct": true}, {"text": "Yalnızca köy hayatı", "correct": false}, {"text": "Yalnızca bilim", "correct": false}], "order": 5},
+            {"question": "Suut Kemal Yetkin'in en bilinen deneme kitabı hangisidir?", "type": "SELECT", "difficulty": "EASY", "tags": ["Suut Kemal Yetkin"], "explanation": "'Edebiyat Konuşmaları' ve 'Günlerin Götürdüğü' Suut Kemal Yetkin'in önemli deneme kitaplarıdır.", "options": [{"text": "Günlerin Götürdüğü", "correct": true}, {"text": "Garip", "correct": false}, {"text": "Safahat", "correct": false}, {"text": "Yaban", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Cumhuriyet Döneminde Deneme (1960 Sonrası)",
+          "order": 4,
+          "challenges": [
+            {"question": "1960 sonrası Türk denemesinin özelliği nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["1960 sonrası deneme"], "explanation": "1960 sonrası Türk denemesi, konu çeşitliliği, bireysel bakış açısı ve daha serbest bir üslupla zenginleşmiştir.", "options": [{"text": "Deneme türü terk edilmiştir", "correct": false}, {"text": "Konu çeşitliliği, bireysel bakış açısı ve serbest üslup", "correct": true}, {"text": "Yalnızca edebiyat konusu işlenmiştir", "correct": false}, {"text": "Resmî bir dil kullanılmıştır", "correct": false}], "order": 1},
+            {"question": "Cemil Meriç'in deneme yazarlığındaki önemi nedir?", "type": "SELECT", "difficulty": "HARD", "tags": ["Cemil Meriç", "deneme"], "explanation": "Cemil Meriç, Doğu ve Batı medeniyetlerini karşılaştıran, düşünce tarihi ve kültür konularında derinlikli denemeler yazan önemli bir düşünür ve yazardır.", "options": [{"text": "Yalnızca şiir yazmıştır", "correct": false}, {"text": "Doğu-Batı karşılaştırması ve düşünce tarihi konularında derinlikli denemeler yazmıştır", "correct": true}, {"text": "Yalnızca roman yazmıştır", "correct": false}, {"text": "Yalnızca gazete yazarlığı yapmıştır", "correct": false}], "order": 2},
+            {"question": "1960 sonrası deneme yazarlarını konularıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["1960 sonrası deneme", "yazarlar"], "explanation": "Cemil Meriç düşünce tarihi, Salâh Birsel mizahî deneme, Nermi Uygur felsefî deneme alanlarında eser vermiştir.", "options": [{"text": "Cemil Meriç", "pairId": 1, "correct": false}, {"text": "Düşünce tarihi ve medeniyet", "pairId": 1, "correct": false}, {"text": "Salâh Birsel", "pairId": 2, "correct": false}, {"text": "Mizahî deneme", "pairId": 2, "correct": false}, {"text": "Nermi Uygur", "pairId": 3, "correct": false}, {"text": "Felsefî deneme", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "Cemil Meriç'in en bilinen eseri hangisidir?", "type": "SELECT", "difficulty": "EASY", "tags": ["Cemil Meriç"], "explanation": "'Bu Ülke' (1974) ve 'Umrandan Uygarlığa' (1974) Cemil Meriç'in en bilinen deneme eserleridir.", "options": [{"text": "Garip", "correct": false}, {"text": "Bu Ülke", "correct": true}, {"text": "Çalıkuşu", "correct": false}, {"text": "İnce Memed", "correct": false}], "order": 4},
+            {"question": "1960 sonrası denemede hangi yeni konular işlenmiştir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["1960 sonrası deneme", "konular"], "explanation": "Kent yaşamı, bireysel özgürlük, çağdaş felsefe, teknoloji ve toplumsal dönüşüm 1960 sonrası denemede öne çıkan yeni konulardır.", "options": [{"text": "Yalnızca tarihî konular", "correct": false}, {"text": "Kent yaşamı, bireysel özgürlük, çağdaş felsefe ve teknoloji", "correct": true}, {"text": "Yalnızca köy konuları", "correct": false}, {"text": "Yalnızca dil konuları", "correct": false}], "order": 5},
+            {"question": "Denemede 'ben merkezli anlatım' ne anlama gelir?", "type": "SELECT", "difficulty": "EASY", "tags": ["deneme", "anlatım"], "explanation": "Ben merkezli anlatım, yazarın kendi deneyimlerini, düşüncelerini ve duygularını merkeze alarak yazmasıdır. Bu, deneme türünün doğasında vardır.", "options": [{"text": "Bencil bir anlatım", "correct": false}, {"text": "Yazarın kendi deneyim ve düşüncelerini merkeze alması", "correct": true}, {"text": "Üçüncü kişi ağzından anlatım", "correct": false}, {"text": "Nesnel ve bilimsel anlatım", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Düzyazı Türleri Karşılaştırması",
+          "order": 5,
+          "challenges": [
+            {"question": "Öğretici metin türlerini doğru tanımlarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["metin türleri"], "explanation": "Deneme kişisel düşünce, fıkra güncel kısa yorum, eleştiri sanat eserini değerlendirme amacı taşır.", "options": [{"text": "Deneme", "pairId": 1, "correct": false}, {"text": "Kişisel düşünce ve sorgulama", "pairId": 1, "correct": false}, {"text": "Fıkra (köşe yazısı)", "pairId": 2, "correct": false}, {"text": "Güncel konuda kısa kişisel yorum", "pairId": 2, "correct": false}, {"text": "Eleştiri", "pairId": 3, "correct": false}, {"text": "Sanat eserini değerlendirme", "pairId": 3, "correct": false}], "order": 1},
+            {"question": "Aşağıdaki türlerden hangisi öznel nitelik taşır?", "type": "SELECT", "difficulty": "EASY", "tags": ["metin türleri", "öznellik"], "explanation": "Deneme, yazarın kişisel görüş ve düşüncelerini aktardığı öznel nitelikli bir türdür.", "options": [{"text": "Bilimsel makale", "correct": false}, {"text": "Deneme", "correct": true}, {"text": "Haber metni", "correct": false}, {"text": "Ansiklopedi maddesi", "correct": false}], "order": 2},
+            {"question": "Makale ve deneme arasındaki en temel fark nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["makale", "deneme", "fark"], "explanation": "Makalede tez kanıtlarla desteklenmeli ve kaynaklar gösterilmelidir. Denemede ise kanıtlama zorunluluğu yoktur.", "options": [{"text": "Deneme daha resmîdir", "correct": false}, {"text": "Makalede kanıtlama zorunluluğu var; denemede yok", "correct": true}, {"text": "Aralarında fark yoktur", "correct": false}, {"text": "Makale daha kısadır", "correct": false}], "order": 3},
+            {"question": "Röportaj ve mülakat arasındaki fark nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["röportaj", "mülakat"], "explanation": "Mülakatta yalnızca soru-cevap aktarılır. Röportajda gazetecinin gözlem, araştırma ve yorumları da yer alır.", "options": [{"text": "Aralarında fark yoktur", "correct": false}, {"text": "Röportajda gazetecinin gözlem ve yorumları da yer alır", "correct": true}, {"text": "Mülakat daha uzundur", "correct": false}, {"text": "Röportaj yalnızca yazılıdır", "correct": false}], "order": 4},
+            {"question": "Hangi metin türünde kanıtlama zorunluluğu vardır?", "type": "SELECT", "difficulty": "EASY", "tags": ["metin türleri", "kanıtlama"], "explanation": "Makale, tez ve antitez yapısıyla bir görüşü kanıtlara dayanarak savunan türdür. Kanıtlama zorunluluğu vardır.", "options": [{"text": "Deneme", "correct": false}, {"text": "Sohbet", "correct": false}, {"text": "Makale", "correct": true}, {"text": "Anı", "correct": false}], "order": 5},
+            {"question": "Söylev ile deneme arasındaki fark nedir?", "type": "SELECT", "difficulty": "HARD", "tags": ["söylev", "deneme"], "explanation": "Söylev bir topluluk önünde sözlü olarak yapılır ve ikna etme amacı taşır. Deneme ise yazılı bir türdür ve kişisel düşünceleri sorgular.", "options": [{"text": "Aralarında fark yoktur", "correct": false}, {"text": "Söylev sözlü ve ikna amaçlı; deneme yazılı ve kişisel sorgulama", "correct": true}, {"text": "Deneme sözlü bir türdür", "correct": false}, {"text": "Söylev yazılı bir türdür", "correct": false}], "order": 6}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Söylev (Nutuk) ve Edebî Metin Çözümleme",
+      "description": "Söylev türü, İslamiyet öncesi ve sonrası söylev, Cumhuriyet döneminde söylev, edebî metin çözümleme uygulamaları",
+      "order": 5,
+      "lessons": [
+        {
+          "title": "Söylev (Nutuk) Türü",
+          "order": 1,
+          "challenges": [
+            {"question": "Söylev (nutuk) nedir?", "type": "SELECT", "difficulty": "EASY", "tags": ["söylev"], "explanation": "Söylev, bir topluluk karşısında belirli bir amaçla (ikna, bilgilendirme, coşturma) yapılan etkili ve güzel konuşmadır.", "options": [{"text": "Yazılı bir metin türü", "correct": false}, {"text": "Bir topluluk karşısında yapılan etkili konuşma", "correct": true}, {"text": "Gazete haberi", "correct": false}, {"text": "Şiir türü", "correct": false}], "order": 1},
+            {"question": "Söylevin temel amacı nedir?", "type": "SELECT", "difficulty": "EASY", "tags": ["söylev", "amaç"], "explanation": "Söylevin temel amacı dinleyicileri etkilemek, ikna etmek, bilgilendirmek veya harekete geçirmektir.", "options": [{"text": "Eğlendirmek", "correct": false}, {"text": "Dinleyicileri etkilemek, ikna etmek ve harekete geçirmek", "correct": true}, {"text": "Bilimsel araştırma yapmak", "correct": false}, {"text": "Hikâye anlatmak", "correct": false}], "order": 2},
+            {"question": "Söylevin özelliklerini doğru ifadelerle eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["söylev", "özellikler"], "explanation": "Söylev sözlü bir türdür, hitabet yeteneği gerektirir ve belirli bir amaçla yapılır.", "options": [{"text": "İletişim biçimi", "pairId": 1, "correct": false}, {"text": "Sözlü (topluluk önünde)", "pairId": 1, "correct": false}, {"text": "Gereken yetenek", "pairId": 2, "correct": false}, {"text": "Hitabet (güzel ve etkili konuşma)", "pairId": 2, "correct": false}, {"text": "Temel amaç", "pairId": 3, "correct": false}, {"text": "İkna etme ve harekete geçirme", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "Söylev ile makale arasındaki fark nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["söylev", "makale"], "explanation": "Söylev sözlü olarak yapılır ve coşku-ikna ön plandadır. Makale ise yazılı bir türdür ve kanıtlama amacı taşır.", "options": [{"text": "Aralarında fark yoktur", "correct": false}, {"text": "Söylev sözlü ve coşku-ikna amaçlı; makale yazılı ve kanıtlama amaçlı", "correct": true}, {"text": "Makale sözlü bir türdür", "correct": false}, {"text": "Söylev yazılı bir türdür", "correct": false}], "order": 4},
+            {"question": "İyi bir söylevde bulunması gereken en önemli özellik nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["söylev", "etkili konuşma"], "explanation": "İyi bir söylev, dinleyicinin dikkatini çekmeli, açık ve anlaşılır olmalı, duygusal ve mantıksal ikna unsurları içermelidir.", "options": [{"text": "Mümkün olduğunca uzun olmalı", "correct": false}, {"text": "Dikkat çekici, açık, ikna edici ve etkili olmalı", "correct": true}, {"text": "Yalnızca bilimsel terimler kullanmalı", "correct": false}, {"text": "Monoton bir ses tonuyla yapılmalı", "correct": false}], "order": 5},
+            {"question": "Söylev türünün tarihteki en eski örnekleri nerede görülür?", "type": "SELECT", "difficulty": "HARD", "tags": ["söylev", "tarih"], "explanation": "Söylev türünün en eski örnekleri Antik Yunan'da görülür. Demosthenes ve Cicero tarihin en ünlü hatiplerinden kabul edilir.", "options": [{"text": "Orta Çağ Avrupası", "correct": false}, {"text": "Antik Yunan ve Roma", "correct": true}, {"text": "Modern dönem", "correct": false}, {"text": "Eski Mısır", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "İslamiyet Öncesi ve İslamiyet Etkisinde Söylev",
+          "order": 2,
+          "challenges": [
+            {"question": "İslamiyet öncesi Türk edebiyatında söylevin en önemli örneği hangisidir?", "type": "SELECT", "difficulty": "EASY", "tags": ["İslamiyet öncesi söylev"], "explanation": "Orhun (Göktürk) Yazıtları'ndaki konuşmalar, İslamiyet öncesi Türk edebiyatında söylevin en önemli örnekleridir.", "options": [{"text": "Kutadgu Bilig", "correct": false}, {"text": "Orhun (Göktürk) Yazıtları", "correct": true}, {"text": "Divan-ı Lügati't-Türk", "correct": false}, {"text": "Mecalisü'n-Nefais", "correct": false}], "order": 1},
+            {"question": "Orhun Yazıtları'nda kimin söylevleri yer alır?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["Orhun Yazıtları"], "explanation": "Orhun Yazıtları'nda Bilge Kağan ve Kül Tigin'in halka hitaben yaptığı söylevler yer alır. Tonyukuk Yazıtı'nda ise vezir Tonyukuk'un anıları bulunur.", "options": [{"text": "Sultan Mehmet", "correct": false}, {"text": "Bilge Kağan ve Kül Tigin", "correct": true}, {"text": "Mevlâna", "correct": false}, {"text": "Atatürk", "correct": false}], "order": 2},
+            {"question": "Söylev örneklerini dönemlerle eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["söylev", "dönemler"], "explanation": "Orhun Yazıtları İslamiyet öncesi, hutbe İslamiyet etkisinde, Nutuk Cumhuriyet döneminin söylev örnekleridir.", "options": [{"text": "Orhun Yazıtları", "pairId": 1, "correct": false}, {"text": "İslamiyet öncesi Türk söylevi", "pairId": 1, "correct": false}, {"text": "Hutbe", "pairId": 2, "correct": false}, {"text": "İslamiyet etkisindeki söylev", "pairId": 2, "correct": false}, {"text": "Nutuk (Atatürk)", "pairId": 3, "correct": false}, {"text": "Cumhuriyet dönemi söylevi", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "İslamiyet etkisindeki Türk edebiyatında söylevin en yaygın biçimi nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["İslamiyet etkisinde söylev"], "explanation": "Hutbe, İslamiyet etkisindeki Türk edebiyatında söylevin en yaygın biçimidir. Cuma ve bayram namazlarında camilerde yapılır.", "options": [{"text": "Mektup", "correct": false}, {"text": "Hutbe", "correct": true}, {"text": "Gazete yazısı", "correct": false}, {"text": "Şiir", "correct": false}], "order": 4},
+            {"question": "Orhun Yazıtları'ndaki söylevlerin dil özelliği nedir?", "type": "SELECT", "difficulty": "HARD", "tags": ["Orhun Yazıtları", "dil"], "explanation": "Orhun Yazıtları'ndaki söylevler sade, güçlü ve etkileyici bir Türkçe ile yazılmıştır. Yabancı etkilerden uzak, katıksız Türkçedir.", "options": [{"text": "Arapça ve Farsça etkisi ağırdır", "correct": false}, {"text": "Sade, güçlü, etkileyici ve katıksız Türkçe", "correct": true}, {"text": "Latin harfleriyle yazılmıştır", "correct": false}, {"text": "Ağır ve süslü bir dil kullanılmıştır", "correct": false}], "order": 5},
+            {"question": "Hutbenin söylevden farkı nedir?", "type": "SELECT", "difficulty": "EASY", "tags": ["hutbe", "söylev"], "explanation": "Hutbe, dinî içerikli ve camilerde yapılan bir söylev türüdür. Genel söylev ise her konuda ve her ortamda yapılabilir.", "options": [{"text": "Aralarında fark yoktur", "correct": false}, {"text": "Hutbe dinî içerikli ve camilerde yapılır; söylev her konu ve ortamda olabilir", "correct": true}, {"text": "Söylev yalnızca camilerde yapılır", "correct": false}, {"text": "Hutbe yazılı bir türdür", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Cumhuriyet Döneminde Söylev",
+          "order": 3,
+          "challenges": [
+            {"question": "Cumhuriyet döneminin en önemli söylevi hangisidir?", "type": "SELECT", "difficulty": "EASY", "tags": ["Cumhuriyet söylevi", "Nutuk"], "explanation": "Atatürk'ün 'Nutuk' (1927) adlı eseri, Cumhuriyet döneminin en önemli söylevidir. Kurtuluş Savaşı ve Cumhuriyet'in kuruluşunu anlatır.", "options": [{"text": "Safahat", "correct": false}, {"text": "Nutuk (Atatürk)", "correct": true}, {"text": "Garip", "correct": false}, {"text": "Tutunamayanlar", "correct": false}], "order": 1},
+            {"question": "Nutuk'un konusu nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["Nutuk", "konu"], "explanation": "Nutuk, 1919'dan 1927'ye kadar olan dönemi kapsar. Kurtuluş Savaşı, Cumhuriyet'in kuruluşu ve yapılan inkılâplar anlatılır.", "options": [{"text": "Divan edebiyatı", "correct": false}, {"text": "Kurtuluş Savaşı, Cumhuriyet'in kuruluşu ve inkılâplar", "correct": true}, {"text": "Osmanlı İmparatorluğu'nun kuruluşu", "correct": false}, {"text": "Bilimsel araştırmalar", "correct": false}], "order": 2},
+            {"question": "Atatürk'ün Nutuk'u kaç gün sürmüştür?", "type": "SELECT", "difficulty": "HARD", "tags": ["Nutuk", "süre"], "explanation": "Atatürk, Nutuk'u 15-20 Ekim 1927 tarihlerinde TBMM'de 6 gün boyunca (toplam 36 saat) okumuştur.", "options": [{"text": "1 gün", "correct": false}, {"text": "6 gün (36 saat)", "correct": true}, {"text": "1 hafta", "correct": false}, {"text": "1 ay", "correct": false}], "order": 3},
+            {"question": "Nutuk'un edebî değerini eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["Nutuk", "edebî değer"], "explanation": "Nutuk tarihî belge, söylev örneği ve anı niteliği taşır.", "options": [{"text": "Tarihî değeri", "pairId": 1, "correct": false}, {"text": "Kurtuluş Savaşı ve Cumhuriyet'in birinci elden kaynağı", "pairId": 1, "correct": false}, {"text": "Edebî türü", "pairId": 2, "correct": false}, {"text": "Söylev ve anı karışımı", "pairId": 2, "correct": false}, {"text": "Dil özelliği", "pairId": 3, "correct": false}, {"text": "Dönemin Türkçesiyle yazılmış güçlü bir hitabet", "pairId": 3, "correct": false}], "order": 4},
+            {"question": "Atatürk'ün 'Gençliğe Hitabe' hangi eserin parçasıdır?", "type": "SELECT", "difficulty": "EASY", "tags": ["Gençliğe Hitabe"], "explanation": "'Gençliğe Hitabe', Nutuk'un son bölümüdür. Atatürk, Türk gençliğine seslenerek Cumhuriyet'i koruma görevini onlara vermiştir.", "options": [{"text": "Safahat", "correct": false}, {"text": "Nutuk", "correct": true}, {"text": "Çalıkuşu", "correct": false}, {"text": "İnce Memed", "correct": false}], "order": 5},
+            {"question": "Cumhuriyet döneminde söylevin önemi nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["söylev", "Cumhuriyet"], "explanation": "Cumhuriyet döneminde söylev, toplumu bilgilendirme, inkılâpları halka benimsetme ve millî birliği güçlendirme aracı olarak büyük önem taşımıştır.", "options": [{"text": "Söylev önemini yitirmiştir", "correct": false}, {"text": "Toplumu bilgilendirme, inkılâpları benimsetme ve millî birliği güçlendirme aracıdır", "correct": true}, {"text": "Yalnızca eğlence amaçlı kullanılmıştır", "correct": false}, {"text": "Yalnızca dinî amaçlı kullanılmıştır", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Edebî Metin Çözümleme: Şiir ve Düzyazı",
+          "order": 4,
+          "challenges": [
+            {"question": "Bir şiiri çözümlerken ilk dikkat edilecek unsur nedir?", "type": "SELECT", "difficulty": "EASY", "tags": ["şiir çözümleme"], "explanation": "Şiir çözümlemede önce temanın (ana duygunun) belirlenmesi gerekir. Sonra yapı, dil ve ahenk unsurları incelenir.", "options": [{"text": "Yazarın biyografisi", "correct": false}, {"text": "Temanın (ana duygunun) belirlenmesi", "correct": true}, {"text": "Şiirin uzunluğu", "correct": false}, {"text": "Yayımlandığı dergi", "correct": false}], "order": 1},
+            {"question": "Düzyazı metin çözümlemede yapı incelemesi neyi kapsar?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["düzyazı çözümleme"], "explanation": "Yapı incelemesi; olay örgüsü, kişiler, mekân, zaman, bakış açısı ve anlatım tekniklerini kapsar.", "options": [{"text": "Yalnızca dil özelliklerini", "correct": false}, {"text": "Olay örgüsü, kişiler, mekân, zaman, bakış açısı ve anlatım teknikleri", "correct": true}, {"text": "Yalnızca yazarın biyografisini", "correct": false}, {"text": "Yalnızca ölçü ve uyağı", "correct": false}], "order": 2},
+            {"question": "Metin çözümleme unsurlarını doğru kategorilerle eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["metin çözümleme"], "explanation": "İçerik = tema, konu, mesaj; Yapı = olay örgüsü, kişiler, mekân; Dil ve anlatım = üslup, söz sanatları, anlatım teknikleri.", "options": [{"text": "İçerik", "pairId": 1, "correct": false}, {"text": "Tema, konu ve mesaj", "pairId": 1, "correct": false}, {"text": "Yapı", "pairId": 2, "correct": false}, {"text": "Olay örgüsü, kişiler ve mekân", "pairId": 2, "correct": false}, {"text": "Dil ve anlatım", "pairId": 3, "correct": false}, {"text": "Üslup, söz sanatları ve teknikler", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "Bir romanda 'iç monolog' tekniği ne amaçla kullanılır?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["anlatım teknikleri", "iç monolog"], "explanation": "İç monolog, kahramanın iç dünyasını ve düşüncelerini doğrudan aktarmak için kullanılır.", "options": [{"text": "Doğa tasviri yapmak için", "correct": false}, {"text": "Kahramanın iç dünyasını ve düşüncelerini doğrudan aktarmak için", "correct": true}, {"text": "Olayları kronolojik anlatmak için", "correct": false}, {"text": "Diyalog oluşturmak için", "correct": false}], "order": 4},
+            {"question": "Bakış açısı türleri hangileridir?", "type": "SELECT", "difficulty": "HARD", "tags": ["bakış açısı"], "explanation": "Anlatım bakış açıları: ilâhî (tanrısal) bakış açısı, kahraman anlatıcı (birinci kişi) ve gözlemci (üçüncü kişi sınırlı) bakış açısıdır.", "options": [{"text": "Yalnızca birinci kişi", "correct": false}, {"text": "İlâhî (tanrısal), kahraman anlatıcı ve gözlemci bakış açısı", "correct": true}, {"text": "Yalnızca üçüncü kişi", "correct": false}, {"text": "Bakış açısı yoktur", "correct": false}], "order": 5},
+            {"question": "Edebî metnin gelenek ile ilişkisini inceleme neyi amaçlar?", "type": "SELECT", "difficulty": "EASY", "tags": ["gelenek-metin ilişkisi"], "explanation": "Edebî metnin geleneğe bağlılığı veya gelenekten kopuşu incelenerek eserin hangi edebî dönem ve akıma ait olduğu belirlenir.", "options": [{"text": "Yazarın yaşını bulmayı", "correct": false}, {"text": "Eserin hangi edebî dönem ve akıma ait olduğunu belirlemeyi", "correct": true}, {"text": "Eserin fiyatını belirlemeyi", "correct": false}, {"text": "Eserin sayfa sayısını belirlemeyi", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Edebî Dönemler ve AYT Uygulamaları",
+          "order": 5,
+          "challenges": [
+            {"question": "Türk edebiyatı dönemlerinin doğru sıralanışı hangisidir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["edebî dönemler"], "explanation": "İslamiyet öncesi → İslamiyet etkisindeki (Divan + Halk) → Tanzimat → Servetifünun → Fecr-i Âti → Millî Edebiyat → Cumhuriyet dönemi.", "options": [{"text": "Cumhuriyet → Tanzimat → Divan → İslamiyet öncesi", "correct": false}, {"text": "İslamiyet öncesi → İslamiyet etkisindeki → Tanzimat → Servetifünun → Millî Edebiyat → Cumhuriyet", "correct": true}, {"text": "Servetifünun → Tanzimat → Divan → Cumhuriyet", "correct": false}, {"text": "Halk → Divan → Cumhuriyet → Tanzimat", "correct": false}], "order": 1},
+            {"question": "Edebî dönemleri en belirgin özellikleriyle eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["edebî dönemler", "özellikler"], "explanation": "Tanzimat toplumsal fayda, Servetifünun sanat sanat içindir, Millî Edebiyat sade Türkçe ve millî konular anlayışını benimsemiştir.", "options": [{"text": "Tanzimat", "pairId": 1, "correct": false}, {"text": "Toplumsal fayda ve Batılılaşma", "pairId": 1, "correct": false}, {"text": "Servetifünun", "pairId": 2, "correct": false}, {"text": "Sanat sanat içindir, bireysel duygular", "pairId": 2, "correct": false}, {"text": "Millî Edebiyat", "pairId": 3, "correct": false}, {"text": "Sade Türkçe, hece ölçüsü, millî konular", "pairId": 3, "correct": false}], "order": 2},
+            {"question": "Bir edebî eserin dönemini belirlemek için hangi unsurlara bakılır?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["dönem belirleme"], "explanation": "Dil ve üslup, tema ve konu, biçim (ölçü, uyak), sanat anlayışı ve etkilenilen akım, eserin dönemini belirlemede kullanılan temel unsurlardır.", "options": [{"text": "Yalnızca sayfa sayısı", "correct": false}, {"text": "Dil, tema, biçim, sanat anlayışı ve etkilenilen akım", "correct": true}, {"text": "Yalnızca yazarın doğum tarihi", "correct": false}, {"text": "Yalnızca eserin yayınevi", "correct": false}], "order": 3},
+            {"question": "Aşağıdaki eserlerden hangisi Servetifünun dönemine aittir?", "type": "SELECT", "difficulty": "EASY", "tags": ["Servetifünun", "eserler"], "explanation": "Halit Ziya Uşaklıgil'in 'Mai ve Siyah' (1897) ve 'Aşk-ı Memnu' (1899) romanları Servetifünun döneminin en önemli eserleridir.", "options": [{"text": "Yaban", "correct": false}, {"text": "Aşk-ı Memnu", "correct": true}, {"text": "Tutunamayanlar", "correct": false}, {"text": "Çalıkuşu", "correct": false}], "order": 4},
+            {"question": "AYT Edebiyat sınavında en çok soru gelen konu alanı hangisidir?", "type": "SELECT", "difficulty": "HARD", "tags": ["AYT", "soru dağılımı"], "explanation": "AYT Edebiyat sınavında şiir bilgisi, edebî dönemler ve yazar-eser ilişkileri en çok soru gelen konulardır.", "options": [{"text": "Yalnızca dil bilgisi", "correct": false}, {"text": "Şiir bilgisi, edebî dönemler ve yazar-eser ilişkileri", "correct": true}, {"text": "Yalnızca yazım kuralları", "correct": false}, {"text": "Yalnızca noktalama işaretleri", "correct": false}], "order": 5},
+            {"question": "Cumhuriyet dönemi edebî akımlarının doğru kronolojik sıralanışı hangisidir?", "type": "SELECT", "difficulty": "EASY", "tags": ["Cumhuriyet dönemi", "kronoloji"], "explanation": "Beş Hececiler (1920'ler) → Yedi Meşaleciler (1928) → Garip (1941) → İkinci Yeni (1950'ler) → 1960 sonrası → 1980 sonrası.", "options": [{"text": "İkinci Yeni → Garip → 1980 sonrası → 1960 sonrası", "correct": false}, {"text": "Garip (1941) → İkinci Yeni (1950'ler) → 1960 sonrası → 1980 sonrası", "correct": true}, {"text": "1980 sonrası → Garip → İkinci Yeni", "correct": false}, {"text": "İkinci Yeni → 1980 sonrası → Garip", "correct": false}], "order": 6}
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Dil Bilgisi: Yazım Kuralları, Noktalama ve Anlam",
+      "description": "Yazım kuralları, noktalama işaretleri, cümlede anlam, söz sanatları",
+      "order": 6,
+      "lessons": [
+        {
+          "title": "Yazım Kuralları",
+          "order": 1,
+          "challenges": [
+            {"question": "Büyük harfle başlayan sözcükler hangi kurala tabidir?", "type": "SELECT", "difficulty": "EASY", "tags": ["yazım kuralları", "büyük harf"], "explanation": "Cümle başları, özel isimler (kişi, yer, kurum adları), kitap/dergi adları büyük harfle başlar.", "options": [{"text": "Yalnızca cümle başları", "correct": false}, {"text": "Cümle başları, özel isimler ve kitap/dergi adları", "correct": true}, {"text": "Tüm sözcükler", "correct": false}, {"text": "Yalnızca fiiller", "correct": false}], "order": 1},
+            {"question": "'-de/-da' ekinin yazımı hakkında doğru olan hangisidir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["yazım kuralları", "de/da"], "explanation": "'-de/-da' hâl eki sözcüğe bitişik, 'de/da' bağlacı ise ayrı yazılır. Bağlaç olan 'de/da' cümleden çıkarıldığında anlam bozulmaz.", "options": [{"text": "Her zaman bitişik yazılır", "correct": false}, {"text": "Hâl eki bitişik, bağlaç ayrı yazılır", "correct": true}, {"text": "Her zaman ayrı yazılır", "correct": false}, {"text": "Aralarında fark yoktur", "correct": false}], "order": 2},
+            {"question": "Yazım kurallarını doğru örneklerle eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["yazım kuralları"], "explanation": "'de/da' bağlacı ayrı yazılır, '-ki' bağlacı ayrı yazılır, '-ki' sıfat yapan ek bitişik yazılır.", "options": [{"text": "Ben de geldim", "pairId": 1, "correct": false}, {"text": "Bağlaç 'de' ayrı yazılır", "pairId": 1, "correct": false}, {"text": "Biliyorum ki haklısın", "pairId": 2, "correct": false}, {"text": "Bağlaç 'ki' ayrı yazılır", "pairId": 2, "correct": false}, {"text": "Evdeki hesap", "pairId": 3, "correct": false}, {"text": "Sıfat yapan '-ki' bitişik yazılır", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "Birleşik sözcüklerin yazımı hakkında hangisi doğrudur?", "type": "SELECT", "difficulty": "HARD", "tags": ["birleşik sözcükler"], "explanation": "Ses düşmesi veya türemesi olan birleşik sözcükler bitişik yazılır (kahvaltı, kayınpeder). Anlamca kaynaşmış olanlar da bitişik yazılır (hanımeli, ayçiçeği).", "options": [{"text": "Her zaman ayrı yazılır", "correct": false}, {"text": "Ses değişimi olan ve anlamca kaynaşanlar bitişik yazılır", "correct": true}, {"text": "Her zaman bitişik yazılır", "correct": false}, {"text": "Yazımları rastgeledir", "correct": false}], "order": 4},
+            {"question": "'mi' soru ekinin yazımı nasıldır?", "type": "SELECT", "difficulty": "EASY", "tags": ["yazım kuralları", "soru eki"], "explanation": "'mi/mı/mu/mü' soru eki her zaman ayrı yazılır ama kendisinden sonra gelen ekler bitişik yazılır: 'Geldi mi?', 'Gelmiş misin?'", "options": [{"text": "Her zaman bitişik yazılır", "correct": false}, {"text": "Her zaman ayrı yazılır, sonraki ekler bitişik", "correct": true}, {"text": "Bazen ayrı bazen bitişik", "correct": false}, {"text": "Yalnızca soru cümlelerinde kullanılır", "correct": false}], "order": 5},
+            {"question": "Kısaltmalara getirilen eklerin yazımı nasıldır?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["kısaltmalar", "yazım"], "explanation": "Kısaltmalara getirilen ekler kesme işaretiyle ayrılır: TBMM'ye, TDK'nin, NATO'nun.", "options": [{"text": "Kesme işareti kullanılmaz", "correct": false}, {"text": "Ekler kesme işaretiyle ayrılır", "correct": true}, {"text": "Ekler ayrı yazılır", "correct": false}, {"text": "Kısaltmalara ek getirilmez", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Noktalama İşaretleri",
+          "order": 2,
+          "challenges": [
+            {"question": "Virgülün kullanıldığı durumlardan biri hangisidir?", "type": "SELECT", "difficulty": "EASY", "tags": ["noktalama", "virgül"], "explanation": "Virgül; sıralı sözcükler arasında, uzun cümlelerde anlam karışıklığını önlemek için ve hitap sözcüklerinden sonra kullanılır.", "options": [{"text": "Yalnızca cümle sonunda", "correct": false}, {"text": "Sıralı sözcükler arasında ve hitap sözcüklerinden sonra", "correct": true}, {"text": "Yalnızca soru cümlelerinde", "correct": false}, {"text": "Her sözcükten sonra", "correct": false}], "order": 1},
+            {"question": "Noktalı virgül ne zaman kullanılır?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["noktalama", "noktalı virgül"], "explanation": "Noktalı virgül; sıralı cümleleri birbirinden ayırmada ve virgüllerle ayrılmış öğeleri gruplandırmada kullanılır.", "options": [{"text": "Cümle sonunda", "correct": false}, {"text": "Sıralı cümleleri ayırmada ve gruplandırmada", "correct": true}, {"text": "Soru cümlelerinde", "correct": false}, {"text": "Kitap adlarında", "correct": false}], "order": 2},
+            {"question": "Noktalama işaretlerini doğru kullanım yerleriyle eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["noktalama işaretleri"], "explanation": "İki nokta açıklama öncesi, üç nokta tamamlanmamış cümlede, tırnak işareti alıntılarda kullanılır.", "options": [{"text": "İki nokta (:)", "pairId": 1, "correct": false}, {"text": "Açıklama veya örneklemeden önce", "pairId": 1, "correct": false}, {"text": "Üç nokta (...)", "pairId": 2, "correct": false}, {"text": "Tamamlanmamış cümle veya anlamlı susma", "pairId": 2, "correct": false}, {"text": "Tırnak işareti (\" \")", "pairId": 3, "correct": false}, {"text": "Doğrudan alıntı ve başlık", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "Kesme işareti hangi durumda kullanılır?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["kesme işareti"], "explanation": "Kesme işareti; özel isimlere getirilen çekim eklerini ayırmak için ve kısaltmalara eklenen ekler için kullanılır.", "options": [{"text": "Her sözcüğe ek getirildiğinde", "correct": false}, {"text": "Özel isimlere getirilen çekim eklerini ve kısaltmalara eklenen ekleri ayırmak için", "correct": true}, {"text": "Cümle sonlarında", "correct": false}, {"text": "Virgül yerine", "correct": false}], "order": 4},
+            {"question": "Ünlem işareti ne zaman kullanılır?", "type": "SELECT", "difficulty": "EASY", "tags": ["noktalama", "ünlem"], "explanation": "Ünlem işareti; sevinç, korku, şaşkınlık, heyecan gibi güçlü duyguları ifade eden cümlelerin ve seslenmelerin sonunda kullanılır.", "options": [{"text": "Soru cümlelerinin sonunda", "correct": false}, {"text": "Güçlü duygu ifade eden cümlelerin ve seslenmelerin sonunda", "correct": true}, {"text": "Her cümlenin sonunda", "correct": false}, {"text": "Virgül yerine", "correct": false}], "order": 5},
+            {"question": "Parantez içinde verilen bilgi neyi gösterir?", "type": "SELECT", "difficulty": "HARD", "tags": ["noktalama", "parantez"], "explanation": "Parantez, cümle içinde ek bilgi, açıklama, tarih veya alternatif ifade belirtmek için kullanılır.", "options": [{"text": "Ana düşünceyi", "correct": false}, {"text": "Ek bilgi, açıklama, tarih veya alternatif ifade", "correct": true}, {"text": "Soru cümlesini", "correct": false}, {"text": "Yüklemi", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Cümlede Anlam",
+          "order": 3,
+          "challenges": [
+            {"question": "Neden-sonuç cümlesi hangisidir?", "type": "SELECT", "difficulty": "EASY", "tags": ["cümlede anlam", "neden-sonuç"], "explanation": "Neden-sonuç cümlesinde bir olay veya durum başka bir olayın nedeni olarak gösterilir.", "options": [{"text": "Yarın hava güzel olacak.", "correct": false}, {"text": "Çok çalıştığı için sınavı geçti.", "correct": true}, {"text": "Kitap okumayı severim.", "correct": false}, {"text": "Bugün pazartesi.", "correct": false}], "order": 1},
+            {"question": "Amaç-sonuç cümlesi hangisidir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["cümlede anlam", "amaç-sonuç"], "explanation": "Amaç-sonuç cümlesinde bir eylemin yapılma amacı belirtilir.", "options": [{"text": "Hava soğuk olduğu için palto giydim.", "correct": false}, {"text": "Sınavı geçmek için çok çalışıyor.", "correct": true}, {"text": "Dün akşam yağmur yağdı.", "correct": false}, {"text": "Bu kitap çok güzel.", "correct": false}], "order": 2},
+            {"question": "Cümlede anlam ilişkilerini doğru türleriyle eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["cümlede anlam"], "explanation": "Neden-sonuç: bir olay diğerini doğurur, koşul-sonuç: bir koşula bağlı sonuç, karşılaştırma: iki durumun kıyaslanması.", "options": [{"text": "Çok çalıştığı için başardı", "pairId": 1, "correct": false}, {"text": "Neden-sonuç", "pairId": 1, "correct": false}, {"text": "Erken kalkarsan yetişirsin", "pairId": 2, "correct": false}, {"text": "Koşul-sonuç", "pairId": 2, "correct": false}, {"text": "O kadar güzel ki anlatamam", "pairId": 3, "correct": false}, {"text": "Abartma (mübalağa)", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "Nesnel yargı bildiren cümle hangisidir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["nesnel yargı"], "explanation": "Nesnel yargı, kişisel görüş içermeyen, herkes tarafından doğrulanabilecek bir bilgi bildirir.", "options": [{"text": "Bu film çok güzeldi.", "correct": false}, {"text": "Dünya Güneş'in etrafında döner.", "correct": true}, {"text": "Bence en iyi mevsim ilkbahardır.", "correct": false}, {"text": "Bu kitap sıkıcıydı.", "correct": false}], "order": 4},
+            {"question": "Öznel yargı bildiren cümle hangisidir?", "type": "SELECT", "difficulty": "EASY", "tags": ["öznel yargı"], "explanation": "Öznel yargı, kişisel görüş, duygu veya beğeni bildiren cümledir.", "options": [{"text": "Ankara Türkiye'nin başkentidir.", "correct": false}, {"text": "Su 100 derecede kaynar.", "correct": false}, {"text": "Bu resim çok etkileyici.", "correct": true}, {"text": "Yılın 12 ayı vardır.", "correct": false}], "order": 5},
+            {"question": "Koşul bildiren cümle hangisidir?", "type": "SELECT", "difficulty": "HARD", "tags": ["koşul cümlesi"], "explanation": "Koşul cümlesinde bir eylemin gerçekleşmesi başka bir koşula bağlanır. '-se/-sa' eki veya 'eğer' sözcüğü ipucu verir.", "options": [{"text": "Dün sinemaya gittik.", "correct": false}, {"text": "Yağmur yağarsa pikniğe gitmeyiz.", "correct": true}, {"text": "Bu kitap çok güzel.", "correct": false}, {"text": "Hava bugün sıcak.", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Söz Sanatları",
+          "order": 4,
+          "challenges": [
+            {"question": "Teşbih (benzetme) nedir?", "type": "SELECT", "difficulty": "EASY", "tags": ["söz sanatları", "teşbih"], "explanation": "Teşbih, aralarında ortak özellik bulunan iki varlıktan zayıf olanın güçlü olana benzetilmesidir. 'Aslan gibi cesur' ifadesi bir teşbihtir.", "options": [{"text": "İki zıt kavramın bir arada kullanılması", "correct": false}, {"text": "Aralarında benzerlik olan iki varlıktan zayıfın güçlüye benzetilmesi", "correct": true}, {"text": "Abartılı anlatım", "correct": false}, {"text": "Sözcüğün zıt anlamda kullanılması", "correct": false}], "order": 1},
+            {"question": "İstiare (eğretileme) nedir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["söz sanatları", "istiare"], "explanation": "İstiare, benzetmenin temel unsurlarından yalnızca birinin (benzeyen veya benzetilen) söylenmesiyle yapılan söz sanatıdır.", "options": [{"text": "Tam bir benzetme", "correct": false}, {"text": "Benzetmenin bir unsurunun söylenmesiyle yapılan söz sanatı", "correct": true}, {"text": "Abartma", "correct": false}, {"text": "Kişileştirme", "correct": false}], "order": 2},
+            {"question": "Söz sanatlarını doğru tanımlarıyla eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["söz sanatları"], "explanation": "Teşbih = benzetme, mecaz-ı mürsel = ad aktarması, mübalağa = abartma.", "options": [{"text": "Teşbih", "pairId": 1, "correct": false}, {"text": "Benzetme", "pairId": 1, "correct": false}, {"text": "Mecaz-ı mürsel", "pairId": 2, "correct": false}, {"text": "Ad aktarması (ilgi ilişkisi)", "pairId": 2, "correct": false}, {"text": "Mübalağa", "pairId": 3, "correct": false}, {"text": "Abartma", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "Tezat (karşıtlık) sanatına örnek hangisidir?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["söz sanatları", "tezat"], "explanation": "Tezat, anlamca birbirine zıt kavramların bir arada kullanılmasıdır. 'Ağlarım hatıra geldikçe gülüştüklerimiz' (ağlamak-gülmek) örneğinde tezat vardır.", "options": [{"text": "Gül gibi güzel", "correct": false}, {"text": "Ağlarım hatıra geldikçe gülüştüklerimiz", "correct": true}, {"text": "Bin yıldır bekledim", "correct": false}, {"text": "Dağlar bile ağladı", "correct": false}], "order": 4},
+            {"question": "Tecahül-i arif (bilmezden gelme) nedir?", "type": "SELECT", "difficulty": "HARD", "tags": ["söz sanatları", "tecahül-i arif"], "explanation": "Tecahül-i arif, bilinen bir şeyi bilmezden gelerek soru biçiminde söyleme sanatıdır. 'Şakaklarıma kar mı yağdı ne var?' (saçın beyazlaması bilindiği hâlde sorulur).", "options": [{"text": "Bilmediğini itiraf etme", "correct": false}, {"text": "Bilinen bir şeyi bilmezden gelerek soru biçiminde söyleme", "correct": true}, {"text": "Abartma", "correct": false}, {"text": "Benzetme", "correct": false}], "order": 5},
+            {"question": "Kişileştirme (teşhis) sanatına örnek hangisidir?", "type": "SELECT", "difficulty": "EASY", "tags": ["söz sanatları", "kişileştirme"], "explanation": "'Güneş güldü' ifadesinde güneşe insana ait bir özellik (gülmek) verilmiştir. Bu kişileştirme sanatıdır.", "options": [{"text": "Aslan gibi güçlü", "correct": false}, {"text": "Güneş güldü", "correct": true}, {"text": "Bin yıl geçse unutamam", "correct": false}, {"text": "O bir tilki", "correct": false}], "order": 6}
+          ]
+        },
+        {
+          "title": "Yazım-Noktalama ve Anlam Uygulamaları",
+          "order": 5,
+          "challenges": [
+            {"question": "Aşağıdaki cümlelerin hangisinde yazım yanlışı vardır?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["yazım kuralları", "uygulama"], "explanation": "'Herşey' yanlış yazımdır, doğrusu 'her şey' şeklinde ayrı yazılmalıdır.", "options": [{"text": "Bugün hava çok güzel.", "correct": false}, {"text": "Herşey yolunda gidiyordu.", "correct": true}, {"text": "Yarın okula gideceğim.", "correct": false}, {"text": "Bu kitabı okudum.", "correct": false}], "order": 1},
+            {"question": "Aşağıdaki cümlelerin hangisinde noktalama yanlışı vardır?", "type": "SELECT", "difficulty": "HARD", "tags": ["noktalama", "uygulama"], "explanation": "Virgül, özne ile yüklem arasına konmamalıdır. 'Ali, okula gitti.' cümlesinde virgül gereksizdir (özne ile yüklem arasında).", "options": [{"text": "Ali dün okula gitti.", "correct": false}, {"text": "Ali, okula gitti.", "correct": true}, {"text": "\"Yarın geleceğim\" dedi.", "correct": false}, {"text": "Hava güzel; dışarı çıkalım.", "correct": false}], "order": 2},
+            {"question": "Yazım kuralı uygulamalarını eşleştirin.", "type": "MATCH_PAIRS", "difficulty": "HARD", "tags": ["yazım kuralları", "uygulama"], "explanation": "'Her şey' ayrı, 'hiçbir' bitişik, 'bir çok' → 'birçok' (bitişik) yazılır.", "options": [{"text": "Her şey", "pairId": 1, "correct": false}, {"text": "Doğru (ayrı yazılır)", "pairId": 1, "correct": false}, {"text": "Hiçbir", "pairId": 2, "correct": false}, {"text": "Doğru (bitişik yazılır)", "pairId": 2, "correct": false}, {"text": "Bir çok", "pairId": 3, "correct": false}, {"text": "Yanlış (birçok olmalı)", "pairId": 3, "correct": false}], "order": 3},
+            {"question": "Aşağıdaki cümlelerin hangisinde mecaz anlam kullanılmıştır?", "type": "SELECT", "difficulty": "EASY", "tags": ["mecaz anlam", "uygulama"], "explanation": "'Kalbi kırıldı' ifadesinde 'kırılmak' sözcüğü mecaz anlamda (gücenmek) kullanılmıştır.", "options": [{"text": "Bardak kırıldı.", "correct": false}, {"text": "Kalbi kırıldı.", "correct": true}, {"text": "Cam kırıldı.", "correct": false}, {"text": "Yumurta kırıldı.", "correct": false}], "order": 4},
+            {"question": "Hangi cümlede teşbih (benzetme) yapılmıştır?", "type": "SELECT", "difficulty": "MEDIUM", "tags": ["söz sanatları", "uygulama"], "explanation": "'Pamuk gibi beyaz' ifadesinde beyazlık pamuğa benzetilmiştir. Bu açık (tam) benzetmedir.", "options": [{"text": "Hava bugün çok sıcak.", "correct": false}, {"text": "Pamuk gibi beyaz ellerinle.", "correct": true}, {"text": "Okula erken geldim.", "correct": false}, {"text": "Bu yemek çok lezzetli.", "correct": false}], "order": 5},
+            {"question": "Aşağıdaki cümlelerin hangisi koşul-sonuç ilişkisi içerir?", "type": "SELECT", "difficulty": "EASY", "tags": ["cümlede anlam", "koşul-sonuç"], "explanation": "'Erken yatarsan erken kalkarsın' cümlesinde erken yatma koşuluna bağlı erken kalkma sonucu vardır.", "options": [{"text": "Bugün hava güzel.", "correct": false}, {"text": "Erken yatarsan erken kalkarsın.", "correct": true}, {"text": "Kitap okumayı severim.", "correct": false}, {"text": "Ankara Türkiye'nin başkentidir.", "correct": false}], "order": 6}
+          ]
+        }
+      ]
+    }
+  ]
+}

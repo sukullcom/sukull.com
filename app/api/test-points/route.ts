@@ -29,7 +29,6 @@ export async function POST() {
           success: false, 
           message: "Daily reset failed",
           error: result.error,
-          details: result.details
         },
         { status: 500 }
       );

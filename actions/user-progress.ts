@@ -4,8 +4,8 @@
 import { POINTS_TO_REFILL, SCORING_SYSTEM } from '@/constants';
 import db from '@/db/drizzle';
 import { getCourseById, getUserProgress, checkSubscriptionStatus } from '@/db/queries';
-import { challengeProgress, challenges, schools, userProgress, userDailyStreak } from '@/db/schema';
-import { and, eq, gt, sql, isNotNull } from 'drizzle-orm';
+import { challengeProgress, challenges, schools, userProgress } from '@/db/schema';
+import { and, eq, sql } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { getServerUser } from '@/lib/auth';
@@ -204,60 +204,32 @@ export const refillHearts = async () => {
 };
 
 /**
- * Updates the user's points and checks streak
- * This should be called when the user earns points from various activities
+ * Updates the user's points and checks streak.
  */
 export async function addUserPoints(points: number) {
   try {
     if (points <= 0) return null;
-    
+
     const user = await getServerUser();
     if (!user) return null;
-    
     const userId = user.id;
-    
-    // FIRST: Check if daily reset is needed (automatic new day detection)
-    const { checkAndPerformDailyResetIfNeeded, checkStreakContinuity } = await import("./daily-streak");
-    await checkAndPerformDailyResetIfNeeded();
-    
-    // Check streak continuity
-    await checkStreakContinuity(userId);
-    
-    // Get current user progress
+
     const progress = await db.query.userProgress.findFirst({
       where: eq(userProgress.userId, userId),
     });
-    
     if (!progress) return null;
-    
-    // Initialize streak tracking if needed
-    if (progress.previousTotalPoints === null || progress.previousTotalPoints === undefined) {
-      await db.update(userProgress)
-        .set({
-          previousTotalPoints: progress.points,
-          lastStreakCheck: new Date(),
-        })
-        .where(eq(userProgress.userId, userId));
-    }
-    
-    // Update points
+
     const newPoints = progress.points + points;
-    
-    await db.update(userProgress)
-      .set({
-        points: newPoints,
-      })
+    await db
+      .update(userProgress)
+      .set({ points: newPoints })
       .where(eq(userProgress.userId, userId));
-    
-    // Check if this update qualifies for a streak update
-    // and update the streak if needed
+
     await updateDailyStreak();
-    
-    // Get updated progress
+
     const updatedProgress = await db.query.userProgress.findFirst({
       where: eq(userProgress.userId, userId),
     });
-    
     return updatedProgress;
   } catch (error) {
     console.error("Error adding user points:", error);
@@ -290,15 +262,13 @@ export async function addSchoolPoints(schoolId: number, points: number) {
 }
 
 /**
- * Resets the daily streak for all users
- * This should be run once per day at midnight via a scheduled job
- * DEPRECATED: Use checkAndResetStreaks from daily-streak.ts instead
+ * Resets the daily streak for all users.
+ * Delegates to performDailyReset in daily-streak.ts.
  */
 export async function resetDailyStreaks() {
   try {
-    // Import the new function to avoid duplication
-    const { checkAndResetStreaks } = await import("./daily-streak");
-    return await checkAndResetStreaks();
+    const { performDailyReset } = await import("./daily-streak");
+    return await performDailyReset();
   } catch (error) {
     console.error("Error resetting daily streaks:", error);
     return false;

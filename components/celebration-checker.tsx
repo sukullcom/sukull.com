@@ -57,7 +57,8 @@ export function CelebrationChecker({
     if (hasRun.current) return;
     hasRun.current = true;
 
-    const today = new Date().toISOString().split("T")[0];
+    const turkeyNow = new Date(Date.now() + 3 * 60 * 60 * 1000);
+    const today = turkeyNow.toISOString().split("T")[0];
     const lastShown = getStoredMilestone();
     const lastGoalDate = getStoredGoalDate();
 
