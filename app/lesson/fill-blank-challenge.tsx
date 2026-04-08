@@ -26,6 +26,10 @@ type BlankItem = {
   placeholderNumber?: number;
 };
 
+function stripLatexWrap(text: string): string {
+  return text.replace(/^\$+/, "").replace(/\$+$/, "").trim();
+}
+
 export const FillBlankChallenge = ({
   options,
   onSelect,
@@ -68,13 +72,14 @@ export const FillBlankChallenge = ({
         if (placeholderMatch) {
           const placeholderNumber = parseInt(placeholderMatch[1], 10);
           const blankIndex = placeholderNumber - 1;
-          const correctAnswer = blankAnswers[blankIndex]?.text;
+          const rawAnswer = blankAnswers[blankIndex]?.text || "";
+          const correctAnswer = stripLatexWrap(rawAnswer);
 
           items.push({
             id: itemId++,
             text: "",
             isBlank: true,
-            correctAnswer: correctAnswer,
+            correctAnswer,
             placeholderNumber: placeholderNumber,
           });
         }
