@@ -7,7 +7,8 @@ import { redirect } from "next/navigation";
 interface GameData {
   id: string;
   name: string;
-  imageSrc: string;
+  imageSrc?: string;
+  emoji?: string;
 }
 
 const gamesData: GameData[] = [
@@ -21,12 +22,26 @@ const gamesData: GameData[] = [
     name: "SubScribe",
     imageSrc: "/subscribe.svg",
   },
-  // Temporarily disabled - piano game functionality
-  // {
-  //   id: "piano",
-  //   name: "Piano",
-  //   imageSrc: "/piano.svg",
-  // },
+  {
+    id: "speed-math",
+    name: "Hız Matematiği",
+    emoji: "⚡",
+  },
+  {
+    id: "memory-match",
+    name: "Hafıza Kartları",
+    emoji: "🧠",
+  },
+  {
+    id: "true-false",
+    name: "Doğru mu Yanlış mı?",
+    emoji: "✅",
+  },
+  {
+    id: "pattern-memory",
+    name: "Sıralama Ustası",
+    emoji: "🎯",
+  },
 ];
 
 const GamesPage = async () => {
@@ -53,6 +68,7 @@ const GamesPage = async () => {
                 <CustomCard
                   key={game.id}
                   imageSrc={game.imageSrc}
+                  emoji={game.emoji}
                   title={game.name}
                   href={`/games/${game.id}`}
                   buttonText="Oyna"

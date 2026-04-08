@@ -5,7 +5,8 @@ import { Button } from "./ui/button";
 import { ButtonProps } from "@/components/ui/button";
 
 interface CardProps {
-  imageSrc: string;
+  imageSrc?: string;
+  emoji?: string;
   title: string;
   href: string;
   buttonText: string;
@@ -15,6 +16,7 @@ interface CardProps {
 
 const CustomCard: React.FC<CardProps> = ({
   imageSrc,
+  emoji,
   title,
   href,
   buttonText,
@@ -24,14 +26,20 @@ const CustomCard: React.FC<CardProps> = ({
   return (
     <div className="border rounded-lg overflow-hidden shadow-md flex flex-col h-full">
       <div className="p-4 flex-1 flex flex-col items-center">
-        <div className="relative w-24 h-24 mb-4">
-          <Image
-            src={imageSrc}
-            alt={title}
-            fill
-            className="object-contain"
-          />
-        </div>
+        {imageSrc ? (
+          <div className="relative w-24 h-24 mb-4">
+            <Image
+              src={imageSrc}
+              alt={title}
+              fill
+              className="object-contain"
+            />
+          </div>
+        ) : emoji ? (
+          <div className="w-24 h-24 mb-4 flex items-center justify-center">
+            <span className="text-6xl">{emoji}</span>
+          </div>
+        ) : null}
         <h3 className="text-xl font-semibold text-center mb-4">{title}</h3>
         <div className="mt-auto w-full">
           <Link href={disabled ? "#" : href} className="w-full block">

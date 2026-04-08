@@ -43,6 +43,52 @@ export const SCORING_SYSTEM = {
       COMPLETION_BONUS: 15,
       PERFECT_BONUS: 25,
     },
+    SPEED_MATH: {
+      CORRECT_ANSWER: 2,
+      SPEED_BONUS_THRESHOLD_MS: 2000,
+      SPEED_BONUS: 1,
+      COMBO_MULTIPLIER_STEP: 0.25,
+      MAX_COMBO_MULTIPLIER: 3.0,
+      DIFFICULTY_MULTIPLIER: {
+        'Kolay': 1.0,
+        'Orta': 1.5,
+        'Zor': 2.0,
+        'Uzman': 3.0,
+      },
+      GAME_DURATION_SECONDS: 60,
+    },
+    MEMORY_MATCH: {
+      MATCH_POINTS: 3,
+      DIFFICULTY_MULTIPLIER: {
+        'Kolay': 1.0,
+        'Orta': 1.5,
+        'Zor': 2.0,
+      },
+      PERFECT_BONUS: 20,
+      TIME_BONUS_THRESHOLD_SECONDS: 60,
+      TIME_BONUS: 10,
+      MIN_MOVES_BONUS: 10,
+    },
+    TRUE_FALSE: {
+      CORRECT_ANSWER: 2,
+      SPEED_BONUS: 1,
+      STREAK_BONUS_THRESHOLD: 5,
+      STREAK_BONUS: 3,
+      LIVES: 3,
+      BASE_TIME_SECONDS: 4,
+      MIN_TIME_SECONDS: 1.5,
+      TIME_DECREASE_PER_QUESTION: 0.05,
+    },
+    PATTERN_MEMORY: {
+      BASE_POINTS_PER_LEVEL: 2,
+      LEVEL_MULTIPLIER: 1.5,
+      MODE_MULTIPLIER: {
+        'colors': 1.0,
+        'numbers': 1.2,
+        'mixed': 1.5,
+      },
+      PERFECT_SEQUENCE_BONUS: 5,
+    },
     LAB: {
       JOURNEY_OF_FOOD: {
         CORRECT_MATCH: 2,

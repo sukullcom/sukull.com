@@ -1,0 +1,2910 @@
+{
+  "course": {
+    "title": "İngilizce (Orta) — B1",
+    "imageSrc": ""
+  },
+  "units": [
+    {
+      "title": "Deneyimler, Haberler ve İletişim",
+      "description": "Present Perfect ile deneyim anlatma, haber okuma, resmi/gayri resmi iletişim farkları",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "Present Perfect vs Past Simple",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "'I have visited Paris three times.' ile 'I visited Paris last year.' arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["present perfect", "past simple", "grammar"],
+              "explanation": "Present Perfect (have visited) geçmişte ne zaman olduğu belirtilmeden deneyimleri anlatır. Past Simple (visited) belirli bir zamanda olmuş olayları anlatır (last year).",
+              "options": [
+                {"text": "İkisi de aynı anlama gelir", "correct": false},
+                {"text": "İlki belirli zaman belirtmez, ikincisi belirli zaman belirtir", "correct": true},
+                {"text": "İlki gelecekle, ikincisi geçmişle ilgilidir", "correct": false},
+                {"text": "İlki resmi, ikincisi gayri resmidir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Present Perfect zaman ifadelerini Past Simple zaman ifadeleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["present perfect", "past simple", "time expressions"],
+              "explanation": "Ever/never/already/yet/just → Present Perfect ile kullanılır. Yesterday/last week/ago/in 2020 → Past Simple ile kullanılır.",
+              "options": [
+                {"text": "ever / never", "pairId": 1, "correct": false},
+                {"text": "Present Perfect", "pairId": 1, "correct": false},
+                {"text": "yesterday / ago", "pairId": 2, "correct": false},
+                {"text": "Past Simple", "pairId": 2, "correct": false},
+                {"text": "already / yet", "pairId": 3, "correct": false},
+                {"text": "Present Perfect", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'She has ___ finished her homework.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["present perfect", "adverbs"],
+              "explanation": "'Just' az önce/henüz demektir ve Present Perfect ile kullanılır. 'She has just finished' = Az önce bitirdi.",
+              "options": [
+                {"text": "just", "correct": true},
+                {"text": "yet", "correct": false},
+                {"text": "ago", "correct": false},
+                {"text": "yesterday", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Have you ever tried sushi?' — 'Yes, I ___ it when I was in Japan.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["present perfect", "past simple"],
+              "explanation": "İlk cümle deneyimi soruyor (Present Perfect). Cevap belirli bir zaman ve yer belirttiği için (when I was in Japan) Past Simple kullanılır: 'tried'.",
+              "options": [
+                {"text": "tried", "correct": true},
+                {"text": "have tried", "correct": false},
+                {"text": "try", "correct": false},
+                {"text": "was trying", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hangisi gramer açısından yanlıştır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["present perfect", "past simple", "errors"],
+              "explanation": "Present Perfect ile belirli geçmiş zaman zarfları (yesterday, last week, in 2019, ago) kullanılamaz. 'I have seen him yesterday' yanlıştır; 'I saw him yesterday' olmalıdır.",
+              "options": [
+                {"text": "I have never been to Australia.", "correct": false},
+                {"text": "She visited Rome last summer.", "correct": false},
+                {"text": "I have seen him yesterday.", "correct": true},
+                {"text": "They have already left.", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Present Perfect kullanım alanlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["present perfect", "usage"],
+              "explanation": "Present Perfect'in üç temel kullanımı: deneyim (Have you ever...?), tamamlanmamış zaman (this week, today), yakın geçmiş (just, already, yet).",
+              "options": [
+                {"text": "Have you ever...?", "pairId": 1, "correct": false},
+                {"text": "Deneyim", "pairId": 1, "correct": false},
+                {"text": "I've lived here since 2010.", "pairId": 2, "correct": false},
+                {"text": "Devam eden durum", "pairId": 2, "correct": false},
+                {"text": "She's just arrived.", "pairId": 3, "correct": false},
+                {"text": "Yakın geçmiş", "pairId": 3, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Present Perfect Continuous",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "'I have been waiting for an hour.' cümlesinde hangi yapı kullanılmıştır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["present perfect continuous", "grammar"],
+              "explanation": "'Have been waiting' Present Perfect Continuous yapısıdır: have/has + been + V-ing. Geçmişte başlayıp hâlâ devam eden eylemleri anlatır.",
+              "options": [
+                {"text": "Present Continuous", "correct": false},
+                {"text": "Present Perfect Continuous", "correct": true},
+                {"text": "Past Perfect", "correct": false},
+                {"text": "Present Perfect", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Present Perfect Continuous kalıp parçalarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["present perfect continuous", "structure"],
+              "explanation": "Yapı: Özne + have/has + been + V-ing. 'I' ile 'have', 'She' ile 'has' kullanılır.",
+              "options": [
+                {"text": "I / We / They", "pairId": 1, "correct": false},
+                {"text": "have been + V-ing", "pairId": 1, "correct": false},
+                {"text": "He / She / It", "pairId": 2, "correct": false},
+                {"text": "has been + V-ing", "pairId": 2, "correct": false},
+                {"text": "since / for", "pairId": 3, "correct": false},
+                {"text": "Süre belirtir", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'She has been ___ all morning. That's why she's tired.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["present perfect continuous"],
+              "explanation": "Present Perfect Continuous devam eden eylemin görünen sonucunu açıklar. Bütün sabah çalışıyor → o yüzden yorgun.",
+              "options": [
+                {"text": "working", "correct": true},
+                {"text": "worked", "correct": false},
+                {"text": "work", "correct": false},
+                {"text": "works", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'I have read three books this month.' ile 'I have been reading this book for two weeks.' arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["present perfect", "present perfect continuous"],
+              "explanation": "Present Perfect tamamlanmış eylemin sonucuna odaklanır (3 kitap okudum). Present Perfect Continuous devam eden eylemin sürecine odaklanır (2 haftadır okuyorum).",
+              "options": [
+                {"text": "İlki tamamlanmış sonuca, ikincisi devam eden sürece odaklanır", "correct": true},
+                {"text": "İkisi de aynı anlama gelir", "correct": false},
+                {"text": "İlki geleceğe, ikincisi geçmişe bakar", "correct": false},
+                {"text": "İlki resmi, ikincisi gayri resmidir", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'How long ___ you been learning English?' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["present perfect continuous", "questions"],
+              "explanation": "Soru formunda 'have/has' öznenin önüne geçer: 'How long have you been learning...?'",
+              "options": [
+                {"text": "have", "correct": true},
+                {"text": "has", "correct": false},
+                {"text": "are", "correct": false},
+                {"text": "did", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Stative (durum) fiiller neden Continuous yapıda kullanılmaz?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["stative verbs", "grammar"],
+              "explanation": "Know, believe, want, love gibi durum fiilleri sürekli bir eylem değil, bir durumu ifade eder. 'I have been knowing' yerine 'I have known' kullanılır.",
+              "options": [
+                {"text": "Sürekli bir eylem değil, bir durumu ifade ettikleri için", "correct": true},
+                {"text": "Sadece Past Simple'da kullanılabildikleri için", "correct": false},
+                {"text": "Resmi dilde kullanıldıkları için", "correct": false},
+                {"text": "Sadece olumsuz cümlelerde kullanılabildikleri için", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "News and Media — Haberler ve Medya",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "'Breaking news: A major earthquake has hit southern Turkey.' cümlesinde 'breaking news' ne demektir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["news", "vocabulary"],
+              "explanation": "'Breaking news' son dakika haberi demektir. Haberlerde Present Perfect sıklıkla kullanılır çünkü olay az önce olmuştur.",
+              "options": [
+                {"text": "Eski haber", "correct": false},
+                {"text": "Son dakika haberi", "correct": true},
+                {"text": "Spor haberi", "correct": false},
+                {"text": "Hava durumu", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Haber türlerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["news", "vocabulary"],
+              "explanation": "Headline = Manşet/başlık, Reporter = Muhabir, Eyewitness = Görgü tanığı.",
+              "options": [
+                {"text": "Headline", "pairId": 1, "correct": false},
+                {"text": "Manşet", "pairId": 1, "correct": false},
+                {"text": "Reporter", "pairId": 2, "correct": false},
+                {"text": "Muhabir", "pairId": 2, "correct": false},
+                {"text": "Eyewitness", "pairId": 3, "correct": false},
+                {"text": "Görgü tanığı", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'According to the latest report, unemployment has decreased by 2%.' cümlesinde 'according to' ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["news", "expressions"],
+              "explanation": "'According to' ... -e göre demektir. Haber veya rapor gibi kaynaklara atıfta bulunmak için kullanılır.",
+              "options": [
+                {"text": "Karşı olarak", "correct": false},
+                {"text": "... -e göre", "correct": true},
+                {"text": "Rağmen", "correct": false},
+                {"text": "Bunun yanı sıra", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Medya ve kaynak güvenilirliği terimlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["media", "vocabulary"],
+              "explanation": "Reliable source = Güvenilir kaynak, Fake news = Sahte/yalan haber, Biased = Taraflı/önyargılı, Objective = Tarafsız/nesnel.",
+              "options": [
+                {"text": "Reliable source", "pairId": 1, "correct": false},
+                {"text": "Güvenilir kaynak", "pairId": 1, "correct": false},
+                {"text": "Fake news", "pairId": 2, "correct": false},
+                {"text": "Sahte haber", "pairId": 2, "correct": false},
+                {"text": "Biased", "pairId": 3, "correct": false},
+                {"text": "Taraflı", "pairId": 3, "correct": false},
+                {"text": "Objective", "pairId": 4, "correct": false},
+                {"text": "Tarafsız", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'The government has announced that taxes will be ___ next year.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["news", "vocabulary"],
+              "explanation": "'Raised' artırılmak/yükseltilmek demektir. 'Raise taxes' vergileri artırmak anlamına gelir.",
+              "options": [
+                {"text": "raised", "correct": true},
+                {"text": "risen", "correct": false},
+                {"text": "lifting", "correct": false},
+                {"text": "growing", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'It is reported that over 500 people have been affected by the flooding.' cümlesi neden edilgen çatıdadır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["news", "passive voice"],
+              "explanation": "Haberlerde edilgen çatı (passive voice) sıklıkla kullanılır çünkü eylemi yapanın kim olduğu değil, olayın kendisi önemlidir.",
+              "options": [
+                {"text": "Eylemi yapanın kim olduğu bilinmediği veya önemli olmadığı için", "correct": true},
+                {"text": "Resmi dil kullanmak zorunlu olduğu için", "correct": false},
+                {"text": "Cümle geçmiş zamanda olduğu için", "correct": false},
+                {"text": "Sayısal veri içerdiği için", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Formal vs Informal — Resmi ve Gayri Resmi Dil",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "'Dear Sir/Madam' ifadesi hangi tür yazışmada kullanılır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["formal", "writing"],
+              "explanation": "'Dear Sir/Madam' resmi mektup veya e-postalarda, alıcının adı bilinmediğinde kullanılan standart bir hitap şeklidir.",
+              "options": [
+                {"text": "Arkadaşa yazılan mesaj", "correct": false},
+                {"text": "Resmi e-posta veya mektup", "correct": true},
+                {"text": "Sosyal medya paylaşımı", "correct": false},
+                {"text": "Günlük sohbet", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Resmi ifadeleri gayri resmi karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["formal", "informal", "register"],
+              "explanation": "İngilizce'de aynı anlam resmi ve gayri resmi farklı kelimelerle ifade edilebilir.",
+              "options": [
+                {"text": "I would like to...", "pairId": 1, "correct": false},
+                {"text": "I want to...", "pairId": 1, "correct": false},
+                {"text": "I am writing to inquire...", "pairId": 2, "correct": false},
+                {"text": "I'm writing to ask...", "pairId": 2, "correct": false},
+                {"text": "Yours faithfully", "pairId": 3, "correct": false},
+                {"text": "Bye / Cheers", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Could you possibly send me the report by Friday?' cümlesindeki 'could you possibly' neden kullanılmıştır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["formal", "requests"],
+              "explanation": "'Could you possibly' çok kibar ve resmi bir rica kalıbıdır. İş e-postalarında doğrudan 'send me' demek yerine bu tür yumuşatıcılar kullanılır.",
+              "options": [
+                {"text": "Cümleyi daha uzun yapmak için", "correct": false},
+                {"text": "İsteği daha kibar ve resmi hale getirmek için", "correct": true},
+                {"text": "İmkansız bir şey istemek için", "correct": false},
+                {"text": "Geçmiş zamana atıfta bulunmak için", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'I look ___ to hearing from you.' resmi e-posta kapanışını tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["formal", "email"],
+              "explanation": "'I look forward to hearing from you' resmi e-postalarda standart bir kapanış cümlesidir. 'Look forward to' dört gözle beklemek demektir.",
+              "options": [
+                {"text": "forward", "correct": true},
+                {"text": "front", "correct": false},
+                {"text": "ahead", "correct": false},
+                {"text": "up", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "E-posta açılış ve kapanış kalıplarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["formal", "informal", "email"],
+              "explanation": "Resmi: Dear Mr/Mrs + Yours sincerely (adı bilinen). Dear Sir/Madam + Yours faithfully (adı bilinmeyen). Gayri resmi: Hi/Hey + Best/Cheers.",
+              "options": [
+                {"text": "Dear Mr Smith,", "pairId": 1, "correct": false},
+                {"text": "Yours sincerely,", "pairId": 1, "correct": false},
+                {"text": "Dear Sir/Madam,", "pairId": 2, "correct": false},
+                {"text": "Yours faithfully,", "pairId": 2, "correct": false},
+                {"text": "Hi John,", "pairId": 3, "correct": false},
+                {"text": "Best wishes, / Cheers,", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Aşağıdakilerden hangisi resmi bir dilde kullanılmaz?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["formal", "informal", "register"],
+              "explanation": "'Gonna' (going to'nun kısaltması) gayri resmi konuşma dilidir. Resmi yazışmalarda kesinlikle kullanılmaz.",
+              "options": [
+                {"text": "I would be grateful if...", "correct": false},
+                {"text": "Please do not hesitate to contact me.", "correct": false},
+                {"text": "I'm gonna need that report ASAP.", "correct": true},
+                {"text": "I am writing with regard to...", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Expressing Opinions — Fikir Belirtme",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "'In my opinion, social media has more disadvantages than advantages.' cümlesinde 'in my opinion' ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["opinions", "expressions"],
+              "explanation": "'In my opinion' bence/bana göre demektir. Kişisel görüş bildirirken kullanılır.",
+              "options": [
+                {"text": "Kesinlikle", "correct": false},
+                {"text": "Bence / Bana göre", "correct": true},
+                {"text": "Herkesin düşüncesine göre", "correct": false},
+                {"text": "Araştırmaya göre", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Fikir belirtme ifadelerini güçlüden zayıfa eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["opinions", "strength"],
+              "explanation": "I'm convinced = Kesinlikle eminim (en güçlü), I believe = İnanıyorum (orta), I suppose = Sanırım (en zayıf).",
+              "options": [
+                {"text": "I'm convinced", "pairId": 1, "correct": false},
+                {"text": "Kesinlikle eminim", "pairId": 1, "correct": false},
+                {"text": "I believe", "pairId": 2, "correct": false},
+                {"text": "İnanıyorum", "pairId": 2, "correct": false},
+                {"text": "I suppose", "pairId": 3, "correct": false},
+                {"text": "Sanırım", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'I see your point, but I ___ agree.' cümlesini tamamlayın. (Kibarca katılmama)",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["opinions", "disagreeing"],
+              "explanation": "'I don't quite agree' tamamen katılmıyorum demektir ve kibar bir katılmama şeklidir. 'I see your point' karşı tarafın görüşünü anladığını belirtir.",
+              "options": [
+                {"text": "don't quite", "correct": true},
+                {"text": "never", "correct": false},
+                {"text": "always", "correct": false},
+                {"text": "really", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Katılma ve katılmama ifadelerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["opinions", "agreeing", "disagreeing"],
+              "explanation": "Absolutely! = Kesinlikle (güçlü katılma). That's not entirely true = Tamamen doğru değil (kibar katılmama). I couldn't agree more = Tamamen katılıyorum.",
+              "options": [
+                {"text": "I couldn't agree more", "pairId": 1, "correct": false},
+                {"text": "Tamamen katılıyorum", "pairId": 1, "correct": false},
+                {"text": "That's not entirely true", "pairId": 2, "correct": false},
+                {"text": "Tamamen doğru değil", "pairId": 2, "correct": false},
+                {"text": "I'm not sure about that", "pairId": 3, "correct": false},
+                {"text": "Bundan emin değilim", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'On the one hand... on the other hand...' yapısı ne için kullanılır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["opinions", "discourse"],
+              "explanation": "'On the one hand... on the other hand...' (bir yandan... diğer yandan...) bir konunun hem olumlu hem olumsuz yönlerini tartışmak için kullanılır.",
+              "options": [
+                {"text": "Bir konunun iki farklı yönünü karşılaştırmak için", "correct": true},
+                {"text": "Kronolojik sıralama yapmak için", "correct": false},
+                {"text": "Sonuç bildirmek için", "correct": false},
+                {"text": "Örnek vermek için", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Tartışma bağlaçlarını Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["opinions", "connectors"],
+              "explanation": "However = Ancak/fakat, Furthermore = Ayrıca/üstelik, Nevertheless = Buna rağmen, Therefore = Bu nedenle.",
+              "options": [
+                {"text": "However", "pairId": 1, "correct": false},
+                {"text": "Ancak", "pairId": 1, "correct": false},
+                {"text": "Furthermore", "pairId": 2, "correct": false},
+                {"text": "Ayrıca", "pairId": 2, "correct": false},
+                {"text": "Nevertheless", "pairId": 3, "correct": false},
+                {"text": "Buna rağmen", "pairId": 3, "correct": false},
+                {"text": "Therefore", "pairId": 4, "correct": false},
+                {"text": "Bu nedenle", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Edilgen Yapı ve Aktarılmış Söz",
+      "description": "Passive Voice ile nesnel anlatım, Reported Speech ile başkalarının sözlerini aktarma",
+      "order": 2,
+      "lessons": [
+        {
+          "title": "Passive Voice — Edilgen Çatı",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "'The Mona Lisa was painted by Leonardo da Vinci.' cümlesinde neden edilgen çatı kullanılmıştır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["passive voice", "usage"],
+              "explanation": "Edilgen çatı, eylemi yapandan çok eylemin sonucuna veya nesnesine odaklanmak istendiğinde kullanılır. Burada Mona Lisa önemlidir.",
+              "options": [
+                {"text": "Esere (Mona Lisa) odaklanmak için", "correct": true},
+                {"text": "Leonardo'yu vurgulamak için", "correct": false},
+                {"text": "Cümleyi kısaltmak için", "correct": false},
+                {"text": "Geçmiş zaman olduğu için", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Edilgen çatı zamanlama formüllerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["passive voice", "tenses"],
+              "explanation": "Edilgen çatı formülü: be + past participle (V3). Zamanı 'be' fiilinin çekimi belirler.",
+              "options": [
+                {"text": "Present Simple Passive", "pairId": 1, "correct": false},
+                {"text": "is/are + V3", "pairId": 1, "correct": false},
+                {"text": "Past Simple Passive", "pairId": 2, "correct": false},
+                {"text": "was/were + V3", "pairId": 2, "correct": false},
+                {"text": "Present Perfect Passive", "pairId": 3, "correct": false},
+                {"text": "has/have been + V3", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'English is ___ in many countries around the world.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["passive voice", "present simple"],
+              "explanation": "Present Simple Passive: is/are + V3. 'Speak' fiilinin V3 hali 'spoken'dır. İngilizce dünyada birçok ülkede konuşulur.",
+              "options": [
+                {"text": "spoken", "correct": true},
+                {"text": "speaking", "correct": false},
+                {"text": "spoke", "correct": false},
+                {"text": "speak", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'They cancelled the flight.' cümlesinin edilgen hali hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["passive voice", "transformation"],
+              "explanation": "Etken: They cancelled the flight. → Edilgen: The flight was cancelled (by them). Nesne özne olur, fiil 'was/were + V3' yapılır.",
+              "options": [
+                {"text": "The flight was cancelled.", "correct": true},
+                {"text": "The flight is cancelled.", "correct": false},
+                {"text": "The flight has been cancelled.", "correct": false},
+                {"text": "The flight were cancelled.", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'The new hospital ___ ___ built next year.' cümlesini tamamlayın (gelecek zaman edilgen).",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["passive voice", "future"],
+              "explanation": "Future Simple Passive: will + be + V3. 'The hospital will be built' = Hastane inşa edilecek.",
+              "options": [
+                {"text": "will be", "correct": true},
+                {"text": "is being", "correct": false},
+                {"text": "was been", "correct": false},
+                {"text": "has been", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Edilgen çatının yaygın kullanım alanlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["passive voice", "usage"],
+              "explanation": "Edilgen çatı: haberlerde (olaya odaklanma), bilimsel yazılarda (nesnellik), yapanın bilinmediği durumlarda, süreç anlatımında kullanılır.",
+              "options": [
+                {"text": "My wallet was stolen.", "pairId": 1, "correct": false},
+                {"text": "Yapan bilinmiyor", "pairId": 1, "correct": false},
+                {"text": "The experiment was conducted.", "pairId": 2, "correct": false},
+                {"text": "Bilimsel nesnellik", "pairId": 2, "correct": false},
+                {"text": "A new law has been passed.", "pairId": 3, "correct": false},
+                {"text": "Haber dili", "pairId": 3, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Reported Speech — Aktarılmış Söz (Anlatımlar)",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "'She said, \"I am happy.\"' cümlesini aktarılmış söze çevirdiğimizde ne olur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["reported speech", "grammar"],
+              "explanation": "Reported Speech'te zaman bir adım geriye kayar (backshift): 'am' → 'was'. She said (that) she was happy.",
+              "options": [
+                {"text": "She said that she was happy.", "correct": true},
+                {"text": "She said that she is happy.", "correct": false},
+                {"text": "She said that I was happy.", "correct": false},
+                {"text": "She said that she has been happy.", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Reported Speech'teki zaman kaymalarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["reported speech", "tense shift"],
+              "explanation": "Direct → Reported: Present Simple → Past Simple, Present Continuous → Past Continuous, will → would.",
+              "options": [
+                {"text": "\"I work\" (Present Simple)", "pairId": 1, "correct": false},
+                {"text": "He said he worked (Past Simple)", "pairId": 1, "correct": false},
+                {"text": "\"I am working\" (Pr. Cont.)", "pairId": 2, "correct": false},
+                {"text": "He said he was working (Past Cont.)", "pairId": 2, "correct": false},
+                {"text": "\"I will help\" (Future)", "pairId": 3, "correct": false},
+                {"text": "He said he would help", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'He told me that he ___ call me later.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["reported speech", "tense shift"],
+              "explanation": "Doğrudan söz: 'I will call you later.' → Aktarma: 'He told me that he would call me later.' will → would.",
+              "options": [
+                {"text": "would", "correct": true},
+                {"text": "will", "correct": false},
+                {"text": "could", "correct": false},
+                {"text": "should", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'said' ve 'told' arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["reported speech", "verbs"],
+              "explanation": "'Said' tek başına veya 'said that' ile kullanılır. 'Told' mutlaka bir kişi nesnesi alır: 'told me/him/her/them'. 'He told that...' yanlıştır.",
+              "options": [
+                {"text": "'Told' mutlaka kişi nesnesi alır, 'said' almaz", "correct": true},
+                {"text": "'Said' resmi, 'told' gayri resmidir", "correct": false},
+                {"text": "İkisi tamamen aynıdır", "correct": false},
+                {"text": "'Said' olumsuz, 'told' olumlu cümlelerde kullanılır", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Reported Speech'te değişen zamir ve zaman ifadelerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["reported speech", "pronouns"],
+              "explanation": "Doğrudan sözden aktarmaya geçişte zamirler ve zaman ifadeleri değişir: I→he/she, today→that day, tomorrow→the next day.",
+              "options": [
+                {"text": "today", "pairId": 1, "correct": false},
+                {"text": "that day", "pairId": 1, "correct": false},
+                {"text": "tomorrow", "pairId": 2, "correct": false},
+                {"text": "the next day", "pairId": 2, "correct": false},
+                {"text": "here", "pairId": 3, "correct": false},
+                {"text": "there", "pairId": 3, "correct": false},
+                {"text": "this", "pairId": 4, "correct": false},
+                {"text": "that", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'She asked me where I ___.' dolaylı soru cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["reported speech", "questions"],
+              "explanation": "Reported questions'da soru cümlesi düz cümle sırasına döner: 'Where do you live?' → 'She asked me where I lived.' (ters çevirme yok, zaman kayması var).",
+              "options": [
+                {"text": "lived", "correct": true},
+                {"text": "live", "correct": false},
+                {"text": "did live", "correct": false},
+                {"text": "was lived", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Reported Speech — Soru ve Rica Aktarma",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "'\"Do you like coffee?\" he asked.' cümlesini reported speech'e çevirirken hangi bağlaç kullanılır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["reported speech", "questions"],
+              "explanation": "Evet/hayır soruları (yes/no questions) aktarılırken 'if' veya 'whether' bağlacı kullanılır: He asked if/whether I liked coffee.",
+              "options": [
+                {"text": "that", "correct": false},
+                {"text": "if / whether", "correct": true},
+                {"text": "what", "correct": false},
+                {"text": "which", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Doğrudan soruları dolaylı soru yapısıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["reported speech", "questions"],
+              "explanation": "Soru kelimesi olan sorularda soru kelimesi kalır ama soru sırası düz cümle sırasına döner.",
+              "options": [
+                {"text": "\"Where is the bank?\"", "pairId": 1, "correct": false},
+                {"text": "He asked where the bank was.", "pairId": 1, "correct": false},
+                {"text": "\"Are you coming?\"", "pairId": 2, "correct": false},
+                {"text": "He asked if I was coming.", "pairId": 2, "correct": false},
+                {"text": "\"What time is it?\"", "pairId": 3, "correct": false},
+                {"text": "He asked what time it was.", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'\"Don't touch that!\" she said.' → 'She told me ___ touch that.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["reported speech", "commands"],
+              "explanation": "Olumsuz emir cümleleri 'told + kişi + not to + fiil' ile aktarılır: She told me not to touch that.",
+              "options": [
+                {"text": "not to", "correct": true},
+                {"text": "don't", "correct": false},
+                {"text": "to not", "correct": false},
+                {"text": "didn't", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Rica ve emir aktarma fiillerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["reported speech", "reporting verbs"],
+              "explanation": "Advise = Tavsiye etmek, Warn = Uyarmak, Beg = Yalvarmak, Order = Emretmek.",
+              "options": [
+                {"text": "Advise", "pairId": 1, "correct": false},
+                {"text": "Tavsiye etmek", "pairId": 1, "correct": false},
+                {"text": "Warn", "pairId": 2, "correct": false},
+                {"text": "Uyarmak", "pairId": 2, "correct": false},
+                {"text": "Beg", "pairId": 3, "correct": false},
+                {"text": "Yalvarmak", "pairId": 3, "correct": false},
+                {"text": "Order", "pairId": 4, "correct": false},
+                {"text": "Emretmek", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'\"Could you please help me?\" she asked.' cümlesinin aktarılmış hali hangisidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["reported speech", "requests"],
+              "explanation": "Rica cümlelerinde 'asked + kişi + to + fiil' yapısı kullanılır: She asked me to help her.",
+              "options": [
+                {"text": "She asked me to help her.", "correct": true},
+                {"text": "She asked me if I help her.", "correct": false},
+                {"text": "She told me that I could help.", "correct": false},
+                {"text": "She asked could I help her.", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "İleri düzey aktarma fiillerini (reporting verbs) kalıplarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["reported speech", "reporting verbs"],
+              "explanation": "Suggest + V-ing: önermek, Promise + to V: söz vermek, Deny + V-ing: inkar etmek, Agree + to V: kabul etmek.",
+              "options": [
+                {"text": "Suggest", "pairId": 1, "correct": false},
+                {"text": "V-ing (doing)", "pairId": 1, "correct": false},
+                {"text": "Promise", "pairId": 2, "correct": false},
+                {"text": "to + V (to do)", "pairId": 2, "correct": false},
+                {"text": "Deny", "pairId": 3, "correct": false},
+                {"text": "V-ing (doing)", "pairId": 3, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Relative Clauses — Sıfat Cümlecikleri",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "'The man who lives next door is a doctor.' cümlesinde 'who' ne işlev görür?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["relative clauses", "grammar"],
+              "explanation": "'Who' insanlar için kullanılan ilgi zamiridir (relative pronoun). 'Who lives next door' sıfat cümleciği olarak 'man' kelimesini tanımlar.",
+              "options": [
+                {"text": "Soru soruyor", "correct": false},
+                {"text": "İnsanı tanımlayan bir sıfat cümleciği başlatıyor", "correct": true},
+                {"text": "Neden belirtiyor", "correct": false},
+                {"text": "Zaman belirtiyor", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "İlgi zamirlerini kullanım alanlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["relative clauses", "pronouns"],
+              "explanation": "Who = insanlar için, Which = nesneler/hayvanlar için, Where = yerler için, When = zamanlar için.",
+              "options": [
+                {"text": "Who", "pairId": 1, "correct": false},
+                {"text": "İnsanlar", "pairId": 1, "correct": false},
+                {"text": "Which", "pairId": 2, "correct": false},
+                {"text": "Nesneler", "pairId": 2, "correct": false},
+                {"text": "Where", "pairId": 3, "correct": false},
+                {"text": "Yerler", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'This is the book ___ I told you about.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["relative clauses", "which/that"],
+              "explanation": "'Which' veya 'that' nesneler için kullanılır. 'The book which/that I told you about' = Sana bahsettiğim kitap.",
+              "options": [
+                {"text": "which", "correct": true},
+                {"text": "who", "correct": false},
+                {"text": "where", "correct": false},
+                {"text": "when", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Defining ve Non-defining Relative Clause arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["relative clauses", "types"],
+              "explanation": "Defining (tanımlayan): Cümlenin anlamı için gereklidir, virgül kullanılmaz. Non-defining (ek bilgi): Cümleye ek bilgi ekler, virgülle ayrılır.",
+              "options": [
+                {"text": "Defining zorunlu bilgi verir (virgülsüz), Non-defining ek bilgi verir (virgüllü)", "correct": true},
+                {"text": "İkisi tamamen aynıdır", "correct": false},
+                {"text": "Defining resmi, Non-defining gayri resmidir", "correct": false},
+                {"text": "Defining nesneler, Non-defining insanlar içindir", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'My sister, ___ lives in London, is visiting us next week.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["relative clauses", "non-defining"],
+              "explanation": "Non-defining relative clause'da virgüller kullanılır ve ek bilgi verir. İnsanlar için 'who' kullanılır. (Not: Non-defining'de 'that' kullanılamaz.)",
+              "options": [
+                {"text": "who", "correct": true},
+                {"text": "that", "correct": false},
+                {"text": "which", "correct": false},
+                {"text": "whom", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Relative clause örneklerini türleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["relative clauses", "types"],
+              "explanation": "Defining: kişiyi/nesneyi ayırt eder (hangisi?). Non-defining: zaten bilinen kişi/nesne hakkında ek bilgi verir.",
+              "options": [
+                {"text": "The girl who won the prize", "pairId": 1, "correct": false},
+                {"text": "Defining (hangisi?)", "pairId": 1, "correct": false},
+                {"text": "Tom, who is my best friend,", "pairId": 2, "correct": false},
+                {"text": "Non-defining (ek bilgi)", "pairId": 2, "correct": false},
+                {"text": "The café where we first met", "pairId": 3, "correct": false},
+                {"text": "Defining (hangi kafe?)", "pairId": 3, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Causative — Yaptırma Cümleleri",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "'I had my car repaired yesterday.' cümlesinde ne anlatılmaktadır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["causative", "grammar"],
+              "explanation": "'Have something done' (have + nesne + V3) bir işi başkasına yaptırmayı ifade eder. Kişi arabasını kendisi tamir etmedi, birine yaptırdı.",
+              "options": [
+                {"text": "Arabasını kendisi tamir etti", "correct": false},
+                {"text": "Arabasını birine tamir ettirdi", "correct": true},
+                {"text": "Arabasını tamir edemedi", "correct": false},
+                {"text": "Arabasını tamir etmek istiyor", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Causative yapılarını zamanlara göre eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["causative", "tenses"],
+              "explanation": "Causative'de 'have' fiili çekimlenir: Present: have/has + nesne + V3, Past: had + nesne + V3, Future: will have + nesne + V3.",
+              "options": [
+                {"text": "I have my hair cut.", "pairId": 1, "correct": false},
+                {"text": "Şimdi/genel", "pairId": 1, "correct": false},
+                {"text": "I had my house painted.", "pairId": 2, "correct": false},
+                {"text": "Geçmişte", "pairId": 2, "correct": false},
+                {"text": "I'll have it delivered.", "pairId": 3, "correct": false},
+                {"text": "Gelecekte", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'She ___ her teeth checked every six months.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["causative", "present simple"],
+              "explanation": "Present Simple causative: She has her teeth checked. 'Has' burada 'sahip olmak' değil 'yaptırmak' anlamındadır.",
+              "options": [
+                {"text": "has", "correct": true},
+                {"text": "is", "correct": false},
+                {"text": "does", "correct": false},
+                {"text": "gets", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Get something done' ile 'have something done' arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["causative", "get vs have"],
+              "explanation": "'Have something done' ve 'get something done' aynı anlama gelir. 'Get' biraz daha gayri resmidir. İkisi de bir işi başkasına yaptırma anlamındadır.",
+              "options": [
+                {"text": "İkisi de aynı anlama gelir, 'get' daha gayri resmidir", "correct": true},
+                {"text": "Tamamen farklı anlamlardır", "correct": false},
+                {"text": "'Get' kendimiz yapmak, 'have' başkasına yaptırmak", "correct": false},
+                {"text": "'Get' geçmiş, 'have' şimdiki zaman için", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'I need to get my laptop ___.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["causative", "get"],
+              "explanation": "'Get something done' yapısında nesne + V3 (past participle) kullanılır. 'Get my laptop fixed' = Dizüstü bilgisayarımı tamir ettirmem lazım.",
+              "options": [
+                {"text": "fixed", "correct": true},
+                {"text": "fix", "correct": false},
+                {"text": "fixing", "correct": false},
+                {"text": "to fix", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Yaptırma ve kendi yapma cümlelerini ayırt edin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["causative", "meaning"],
+              "explanation": "'I cut my hair' = Saçımı kendim kestim. 'I had my hair cut' = Saçımı (kuaförde) kestirdim. Causative'de V3 kullanılır.",
+              "options": [
+                {"text": "I painted the wall.", "pairId": 1, "correct": false},
+                {"text": "Kendim boyadım", "pairId": 1, "correct": false},
+                {"text": "I had the wall painted.", "pairId": 2, "correct": false},
+                {"text": "Boyattırdım", "pairId": 2, "correct": false},
+                {"text": "I got my photo taken.", "pairId": 3, "correct": false},
+                {"text": "Fotoğrafımı çektirdim", "pairId": 3, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Koşul Cümleleri ve Varsayımlar",
+      "description": "If clauses (First, Second, Third Conditional), wish cümleleri ve olasılık ifadeleri",
+      "order": 3,
+      "lessons": [
+        {
+          "title": "First Conditional — Gerçek Koşul",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "'If it rains tomorrow, I will stay at home.' cümlesinde hangi koşul yapısı kullanılmıştır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["first conditional", "grammar"],
+              "explanation": "First Conditional: If + Present Simple, will + fiil. Gelecekte gerçekleşmesi olası durumlar için kullanılır.",
+              "options": [
+                {"text": "Zero Conditional", "correct": false},
+                {"text": "First Conditional", "correct": true},
+                {"text": "Second Conditional", "correct": false},
+                {"text": "Third Conditional", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Koşul cümlesi türlerini kullanım alanlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["conditionals", "types"],
+              "explanation": "Zero: Genel gerçekler (If you heat water, it boils). First: Olası gelecek (If it rains, I'll stay home). Second: Olası olmayan (If I won...).",
+              "options": [
+                {"text": "Zero Conditional", "pairId": 1, "correct": false},
+                {"text": "Genel gerçekler", "pairId": 1, "correct": false},
+                {"text": "First Conditional", "pairId": 2, "correct": false},
+                {"text": "Olası gelecek durumlar", "pairId": 2, "correct": false},
+                {"text": "Second Conditional", "pairId": 3, "correct": false},
+                {"text": "Hayal / olası olmayan", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'If you ___ hard, you will pass the exam.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["first conditional"],
+              "explanation": "First Conditional'da if cümleciğinde Present Simple kullanılır: If you study hard... Ana cümlede will + fiil.",
+              "options": [
+                {"text": "study", "correct": true},
+                {"text": "will study", "correct": false},
+                {"text": "studied", "correct": false},
+                {"text": "studying", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Unless you hurry, you'll miss the bus.' cümlesinde 'unless' ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["first conditional", "unless"],
+              "explanation": "'Unless' = 'if not' (eğer ... mazsan). Unless you hurry = If you don't hurry = Acele etmezsen.",
+              "options": [
+                {"text": "Eğer", "correct": false},
+                {"text": "Eğer ... mazsan (if not)", "correct": true},
+                {"text": "... olduğu sürece", "correct": false},
+                {"text": "... olmasına rağmen", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "First Conditional'da 'will' yerine kullanılabilecek alternatifleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["first conditional", "modals"],
+              "explanation": "Will yerine: might (belki), can (yapabilir), should (yapmalı). If it rains, we might cancel = belki iptal ederiz.",
+              "options": [
+                {"text": "If you ask, she might help.", "pairId": 1, "correct": false},
+                {"text": "Olasılık (belki)", "pairId": 1, "correct": false},
+                {"text": "If you finish, you can leave.", "pairId": 2, "correct": false},
+                {"text": "İzin/yetenek", "pairId": 2, "correct": false},
+                {"text": "If it snows, you should stay.", "pairId": 3, "correct": false},
+                {"text": "Tavsiye", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'As long as you ___ your best, I'll be proud of you.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["first conditional", "expressions"],
+              "explanation": "'As long as' (... olduğu sürece) koşul belirten bir bağlaçtır. Present Simple ile kullanılır: 'As long as you do your best...'",
+              "options": [
+                {"text": "do", "correct": true},
+                {"text": "will do", "correct": false},
+                {"text": "did", "correct": false},
+                {"text": "doing", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Second Conditional — Hayal Koşul",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "'If I had a million dollars, I would travel the world.' cümlesi gerçek bir durumu mu anlatıyor?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["second conditional", "grammar"],
+              "explanation": "Second Conditional hayali veya gerçekleşmesi zor durumlar için kullanılır. Kişinin bir milyon doları yok, hayal kuruyor.",
+              "options": [
+                {"text": "Evet, gerçek bir plan", "correct": false},
+                {"text": "Hayır, hayal/varsayım", "correct": true},
+                {"text": "Evet, geçmişte olan bir durum", "correct": false},
+                {"text": "Gelecekte kesin olacak bir durum", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Second Conditional formülünü parçalarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["second conditional", "structure"],
+              "explanation": "Second Conditional: If + Past Simple, would + fiil. 'Would' yerine could/might da kullanılabilir.",
+              "options": [
+                {"text": "If cümleciği", "pairId": 1, "correct": false},
+                {"text": "Past Simple", "pairId": 1, "correct": false},
+                {"text": "Ana cümlecik", "pairId": 2, "correct": false},
+                {"text": "would + fiil", "pairId": 2, "correct": false},
+                {"text": "Kullanım amacı", "pairId": 3, "correct": false},
+                {"text": "Hayal / olası olmayan", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'If I ___ you, I would accept the job offer.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["second conditional"],
+              "explanation": "'If I were you' (yerinde olsam) tavsiye kalıbıdır. Second Conditional'da 'be' fiili tüm öznelerle 'were' olarak kullanılır.",
+              "options": [
+                {"text": "were", "correct": true},
+                {"text": "was", "correct": false},
+                {"text": "am", "correct": false},
+                {"text": "would be", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "First ve Second Conditional arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["conditionals", "comparison"],
+              "explanation": "First: olası durum (If it rains... → yağabilir). Second: hayal/olası olmayan durum (If I were rich... → zengin değilim).",
+              "options": [
+                {"text": "First olası durumlar, Second hayal/olası olmayan durumlar içindir", "correct": true},
+                {"text": "First geçmiş, Second gelecek içindir", "correct": false},
+                {"text": "İkisi de aynıdır, sadece resmiyet farkı var", "correct": false},
+                {"text": "First resmi, Second gayri resmidir", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'What ___ you do if you could live anywhere in the world?' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["second conditional", "questions"],
+              "explanation": "Second Conditional sorusunda: What would + özne + do if + Past Simple? 'What would you do if...?'",
+              "options": [
+                {"text": "would", "correct": true},
+                {"text": "will", "correct": false},
+                {"text": "do", "correct": false},
+                {"text": "did", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'If I didn't have to work tomorrow, I would go to the concert tonight.' Bu cümleden ne anlıyoruz?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["second conditional", "meaning"],
+              "explanation": "Kişinin yarın çalışması gerekiyor (gerçek durum), bu yüzden konsere gidemeyecek. Second Conditional gerçek durumun tersini hayal eder.",
+              "options": [
+                {"text": "Yarın çalışması gerekiyor, bu yüzden konsere gidemeyecek", "correct": true},
+                {"text": "Yarın çalışmayacak ve konsere gidecek", "correct": false},
+                {"text": "Yarın çalışıp çalışmayacağı belli değil", "correct": false},
+                {"text": "Konsere gitmeyi planlamış", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Third Conditional — Geçmiş Koşul",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "'If I had studied harder, I would have passed the exam.' Bu cümle neyi anlatır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["third conditional", "grammar"],
+              "explanation": "Third Conditional geçmişteki değiştirilmesi imkansız durumlar için pişmanlık veya varsayım ifade eder. Kişi yeterince çalışmamış ve sınavı geçememiş.",
+              "options": [
+                {"text": "Geçmişte gerçekleşmemiş bir durumu ve sonucunu (pişmanlık)", "correct": true},
+                {"text": "Gelecekte olacak bir durumu", "correct": false},
+                {"text": "Şu an geçerli bir durumu", "correct": false},
+                {"text": "Geçmişte gerçekleşen bir durumu", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Third Conditional formül parçalarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["third conditional", "structure"],
+              "explanation": "Third Conditional: If + Past Perfect (had + V3), would have + V3. Her iki tarafta da past participle kullanılır.",
+              "options": [
+                {"text": "If cümleciği", "pairId": 1, "correct": false},
+                {"text": "had + V3 (Past Perfect)", "pairId": 1, "correct": false},
+                {"text": "Ana cümlecik", "pairId": 2, "correct": false},
+                {"text": "would have + V3", "pairId": 2, "correct": false},
+                {"text": "Kullanım amacı", "pairId": 3, "correct": false},
+                {"text": "Geçmiş pişmanlık/varsayım", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'If she ___ left earlier, she wouldn't have missed the train.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["third conditional"],
+              "explanation": "Third Conditional'da if cümleciğinde Past Perfect kullanılır: If she had left earlier... Kısaltma: If she'd left...",
+              "options": [
+                {"text": "had", "correct": true},
+                {"text": "has", "correct": false},
+                {"text": "would", "correct": false},
+                {"text": "have", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Üç koşul yapısını zaman çizgisiyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["conditionals", "comparison"],
+              "explanation": "First: gelecek olasılık, Second: şimdi hayali, Third: geçmiş pişmanlık. Sıra: 1st→gelecek, 2nd→şimdi, 3rd→geçmiş.",
+              "options": [
+                {"text": "First Conditional", "pairId": 1, "correct": false},
+                {"text": "Gelecekteki olasılık", "pairId": 1, "correct": false},
+                {"text": "Second Conditional", "pairId": 2, "correct": false},
+                {"text": "Şimdiki hayaller", "pairId": 2, "correct": false},
+                {"text": "Third Conditional", "pairId": 3, "correct": false},
+                {"text": "Geçmiş pişmanlıklar", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'If we had taken a map, we ___ ___ got lost.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["third conditional", "negatives"],
+              "explanation": "Third Conditional olumsuz: would not have + V3 (kısaltma: wouldn't have). Harita alsaydık kaybolmazdık.",
+              "options": [
+                {"text": "wouldn't have", "correct": true},
+                {"text": "won't have", "correct": false},
+                {"text": "didn't have", "correct": false},
+                {"text": "hadn't", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'I would have told you if I ___ known about the meeting.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["third conditional"],
+              "explanation": "Third Conditional: If I had known... (Past Perfect). Toplantıyı bilseydim sana söylerdim — ama bilmiyordum.",
+              "options": [
+                {"text": "had", "correct": true},
+                {"text": "have", "correct": false},
+                {"text": "would", "correct": false},
+                {"text": "has", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Wish and If Only — Keşke Cümleleri",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "'I wish I spoke French.' cümlesinde kişi ne ifade ediyor?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["wish", "grammar"],
+              "explanation": "'I wish + Past Simple' şu anki durumun tersini dilemek için kullanılır. Kişi Fransızca konuşamıyor ama keşke konuşabilse.",
+              "options": [
+                {"text": "Fransızca konuşuyor ve mutlu", "correct": false},
+                {"text": "Fransızca konuşamıyor ama keşke konuşabilse", "correct": true},
+                {"text": "Fransızca öğrenmeye başlayacak", "correct": false},
+                {"text": "Eskiden Fransızca konuşuyordu", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Wish yapılarını zamana göre eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["wish", "tenses"],
+              "explanation": "Wish + Past Simple = Şimdi hakkında dilek. Wish + Past Perfect = Geçmiş hakkında pişmanlık. Wish + would = Başkasının davranışından şikayet.",
+              "options": [
+                {"text": "I wish I knew... (Past Simple)", "pairId": 1, "correct": false},
+                {"text": "Şimdi hakkında dilek", "pairId": 1, "correct": false},
+                {"text": "I wish I had known... (Past Perf.)", "pairId": 2, "correct": false},
+                {"text": "Geçmiş pişmanlığı", "pairId": 2, "correct": false},
+                {"text": "I wish you would stop... (would)", "pairId": 3, "correct": false},
+                {"text": "Şikayet / değişim isteği", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'I wish I ___ taller.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["wish", "present"],
+              "explanation": "Wish + Past Simple: Şu anki durumun tersini dilemek. 'Be' fiili wish'te genellikle 'were' olarak kullanılır: I wish I were taller.",
+              "options": [
+                {"text": "were", "correct": true},
+                {"text": "am", "correct": false},
+                {"text": "was being", "correct": false},
+                {"text": "would be", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'If only I had listened to my parents' advice.' Bu cümlede kişi ne hissediyor?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["if only", "regret"],
+              "explanation": "'If only' wish'in daha güçlü halidir. Past Perfect ile geçmiş pişmanlığı ifade eder. Kişi ailesisin tavsiyesini dinlememiş ve pişman.",
+              "options": [
+                {"text": "Memnuniyet", "correct": false},
+                {"text": "Pişmanlık", "correct": true},
+                {"text": "Heyecan", "correct": false},
+                {"text": "Öfke", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'I wish you ___ making that noise! It's so annoying.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["wish", "would"],
+              "explanation": "'Wish + would' başkasının davranışından şikayet ederken kullanılır. 'I wish you would stop' = Keşke o gürültüyü yapmayi bıraksan.",
+              "options": [
+                {"text": "would stop", "correct": true},
+                {"text": "stopped", "correct": false},
+                {"text": "will stop", "correct": false},
+                {"text": "had stopped", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'I wish I hadn't eaten so much. I feel terrible.' cümlesinden ne anlıyoruz?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["wish", "past regret"],
+              "explanation": "Wish + Past Perfect geçmiş pişmanlığı ifade eder. Kişi çok yedi ve şimdi pişman — keşke bu kadar yemeseydi.",
+              "options": [
+                {"text": "Çok yedi ve pişman", "correct": true},
+                {"text": "Yeterince yemedi ve aç", "correct": false},
+                {"text": "Yemek yemek istiyor", "correct": false},
+                {"text": "Az yedi ve memnun", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Modal Verbs for Deduction — Tahmin Modalleri",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "'She must be tired. She's been working all day.' cümlesinde 'must' ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["modals", "deduction"],
+              "explanation": "'Must' burada zorunluluk değil, güçlü tahmin (kesinlikle öyledir) anlamındadır. Bütün gün çalıştığına göre yorgun olmalı.",
+              "options": [
+                {"text": "Yorgun olmak zorunda", "correct": false},
+                {"text": "Kesinlikle yorgun (güçlü tahmin)", "correct": true},
+                {"text": "Belki yorgun", "correct": false},
+                {"text": "Yorgun değil", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Tahmin modallerini güçlüden zayıfa eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["modals", "certainty"],
+              "explanation": "Must = kesinlikle öyledir (%95). Might/may/could = belki öyledir (%50). Can't = kesinlikle öyle değildir (%5).",
+              "options": [
+                {"text": "Must be", "pairId": 1, "correct": false},
+                {"text": "Kesinlikle öyledir", "pairId": 1, "correct": false},
+                {"text": "Might / May be", "pairId": 2, "correct": false},
+                {"text": "Belki öyledir", "pairId": 2, "correct": false},
+                {"text": "Can't be", "pairId": 3, "correct": false},
+                {"text": "Kesinlikle öyle değildir", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'He ___ be at home. His car is in the driveway.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["modals", "deduction"],
+              "explanation": "Arabası garaj yolunda olduğuna göre evde olmalı — güçlü tahmin. 'Must' kullanılır.",
+              "options": [
+                {"text": "must", "correct": true},
+                {"text": "can't", "correct": false},
+                {"text": "shouldn't", "correct": false},
+                {"text": "won't", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'That ___ be true! I don't believe it.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["modals", "deduction"],
+              "explanation": "Kişi inanmıyor, yani kesinlikle doğru olmadığını düşünüyor. Olumsuz güçlü tahmin: 'can't' (kesinlikle öyle değil).",
+              "options": [
+                {"text": "can't", "correct": true},
+                {"text": "must", "correct": false},
+                {"text": "might", "correct": false},
+                {"text": "should", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Geçmiş tahmin modallerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["modals", "past deduction"],
+              "explanation": "Geçmiş tahmin: must have + V3 (kesinlikle yaptı), might have + V3 (belki yaptı), can't have + V3 (kesinlikle yapmadı).",
+              "options": [
+                {"text": "must have done", "pairId": 1, "correct": false},
+                {"text": "Kesinlikle yaptı", "pairId": 1, "correct": false},
+                {"text": "might have done", "pairId": 2, "correct": false},
+                {"text": "Belki yaptı", "pairId": 2, "correct": false},
+                {"text": "can't have done", "pairId": 3, "correct": false},
+                {"text": "Kesinlikle yapmadı", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'She must ___ forgotten about the meeting. She's usually very reliable.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["modals", "past deduction"],
+              "explanation": "Geçmiş güçlü tahmin: must have + V3. 'She must have forgotten' = Kesinlikle unutmuştur. 'Forgotten' forget'in V3 halidir.",
+              "options": [
+                {"text": "have", "correct": true},
+                {"text": "had", "correct": false},
+                {"text": "be", "correct": false},
+                {"text": "been", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "İş Dünyası ve Kariyer",
+      "description": "İş başvurusu, mülakat, iş yerinde iletişim, toplantılar ve sunum yapma",
+      "order": 4,
+      "lessons": [
+        {
+          "title": "Job Applications — İş Başvurusu",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "'I am writing to apply for the position of Marketing Manager.' Bu cümle nerede kullanılır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["job application", "cover letter"],
+              "explanation": "Bu, resmi bir ön yazı (cover letter) veya başvuru e-postasının açılış cümlesidir. 'Apply for' bir pozisyona başvurmak demektir.",
+              "options": [
+                {"text": "Ön yazı / başvuru mektubu", "correct": true},
+                {"text": "Günlük e-posta", "correct": false},
+                {"text": "İstifa mektubu", "correct": false},
+                {"text": "Referans mektubu", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "İş başvurusu terimlerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["job application", "vocabulary"],
+              "explanation": "CV/Resume = Özgeçmiş, Cover letter = Ön yazı, Vacancy = Açık pozisyon, Qualification = Nitelik/yetkinlik.",
+              "options": [
+                {"text": "CV / Resume", "pairId": 1, "correct": false},
+                {"text": "Özgeçmiş", "pairId": 1, "correct": false},
+                {"text": "Cover letter", "pairId": 2, "correct": false},
+                {"text": "Ön yazı", "pairId": 2, "correct": false},
+                {"text": "Vacancy", "pairId": 3, "correct": false},
+                {"text": "Açık pozisyon", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'I have five years of ___ in digital marketing.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["job application", "vocabulary"],
+              "explanation": "'Experience' deneyim demektir. 'Years of experience in...' bir alandaki deneyim süresini belirtmek için kullanılır.",
+              "options": [
+                {"text": "experience", "correct": true},
+                {"text": "education", "correct": false},
+                {"text": "knowledge", "correct": false},
+                {"text": "practice", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "İş ilanı (job ad) ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["job application", "job ads"],
+              "explanation": "Competitive salary = Rekabetçi maaş, Benefits = Yan haklar, Full-time = Tam zamanlı, Part-time = Yarı zamanlı.",
+              "options": [
+                {"text": "Competitive salary", "pairId": 1, "correct": false},
+                {"text": "Rekabetçi maaş", "pairId": 1, "correct": false},
+                {"text": "Benefits", "pairId": 2, "correct": false},
+                {"text": "Yan haklar", "pairId": 2, "correct": false},
+                {"text": "Full-time", "pairId": 3, "correct": false},
+                {"text": "Tam zamanlı", "pairId": 3, "correct": false},
+                {"text": "Part-time", "pairId": 4, "correct": false},
+                {"text": "Yarı zamanlı", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'I am confident that my skills and experience make me a strong ___ for this role.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["job application", "cover letter"],
+              "explanation": "'Candidate' aday demektir. 'A strong candidate' güçlü bir aday anlamındadır.",
+              "options": [
+                {"text": "candidate", "correct": true},
+                {"text": "worker", "correct": false},
+                {"text": "person", "correct": false},
+                {"text": "employee", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Özgeçmiş bölümlerini İngilizce karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["job application", "CV"],
+              "explanation": "Work experience = İş deneyimi, Education = Eğitim, Skills = Beceriler, References = Referanslar.",
+              "options": [
+                {"text": "Work experience", "pairId": 1, "correct": false},
+                {"text": "İş deneyimi", "pairId": 1, "correct": false},
+                {"text": "Education", "pairId": 2, "correct": false},
+                {"text": "Eğitim", "pairId": 2, "correct": false},
+                {"text": "Skills", "pairId": 3, "correct": false},
+                {"text": "Beceriler", "pairId": 3, "correct": false},
+                {"text": "References", "pairId": 4, "correct": false},
+                {"text": "Referanslar", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Job Interview — İş Mülakatı",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "'What are your strengths and weaknesses?' mülakat sorusunda ne sorulmaktadır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["interview", "questions"],
+              "explanation": "'Strengths' güçlü yönler, 'weaknesses' zayıf yönler demektir. Bu, mülakatlarda en sık sorulan sorulardan biridir.",
+              "options": [
+                {"text": "Güçlü ve zayıf yönlerin neler", "correct": true},
+                {"text": "Ne kadar güçlüsün", "correct": false},
+                {"text": "Neden bu işi istiyorsun", "correct": false},
+                {"text": "Maaş beklentin ne", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Mülakat sorularını Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["interview", "questions"],
+              "explanation": "Tell me about yourself = Kendinizden bahsedin, Why should we hire you? = Sizi neden işe alalım?, Where do you see yourself in 5 years? = 5 yıl sonra nerede görüyorsunuz?",
+              "options": [
+                {"text": "Tell me about yourself.", "pairId": 1, "correct": false},
+                {"text": "Kendinizden bahsedin.", "pairId": 1, "correct": false},
+                {"text": "Why should we hire you?", "pairId": 2, "correct": false},
+                {"text": "Sizi neden işe alalım?", "pairId": 2, "correct": false},
+                {"text": "Where do you see yourself in 5 years?", "pairId": 3, "correct": false},
+                {"text": "5 yıl sonra kendinizi nerede görüyorsunuz?", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'I am a team ___ and I work well under pressure.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["interview", "skills"],
+              "explanation": "'Team player' takım oyuncusu demektir. 'Work well under pressure' baskı altında iyi çalışmak demektir. Mülakatlarda sık kullanılan ifadelerdir.",
+              "options": [
+                {"text": "player", "correct": true},
+                {"text": "member", "correct": false},
+                {"text": "worker", "correct": false},
+                {"text": "leader", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Mülakatta kullanılan olumlu kişilik sıfatlarını Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["interview", "personality"],
+              "explanation": "Proactive = Proaktif/öncü, Reliable = Güvenilir, Adaptable = Uyumlu, Detail-oriented = Detaycı.",
+              "options": [
+                {"text": "Proactive", "pairId": 1, "correct": false},
+                {"text": "Proaktif", "pairId": 1, "correct": false},
+                {"text": "Reliable", "pairId": 2, "correct": false},
+                {"text": "Güvenilir", "pairId": 2, "correct": false},
+                {"text": "Adaptable", "pairId": 3, "correct": false},
+                {"text": "Uyumlu", "pairId": 3, "correct": false},
+                {"text": "Detail-oriented", "pairId": 4, "correct": false},
+                {"text": "Detaycı", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'Could you give me an example of a time when you dealt with a difficult situation?' Bu soru ne tür bilgi istiyor?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["interview", "behavioural"],
+              "explanation": "Bu bir 'behavioural question'dır (davranışsal soru). Geçmişteki gerçek bir deneyimi anlatmanız beklenir. STAR metodu önerilir: Situation, Task, Action, Result.",
+              "options": [
+                {"text": "Geçmişteki gerçek bir deneyimi", "correct": true},
+                {"text": "Teorik bilgi", "correct": false},
+                {"text": "Gelecek planları", "correct": false},
+                {"text": "Teknik yetkinlik", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'I am particularly interested in this role because it aligns with my career goals.' cümlesinde 'aligns with' ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["interview", "expressions"],
+              "explanation": "'Align with' uyum sağlamak/örtüşmek demektir. Pozisyonun kariyer hedefleriyle uyumlu olduğu belirtiliyor.",
+              "options": [
+                {"text": "Uyumlu / örtüşüyor", "correct": true},
+                {"text": "Çelişiyor", "correct": false},
+                {"text": "Farklı", "correct": false},
+                {"text": "Benzer", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Workplace Communication — İş Yerinde İletişim",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "'I'll get back to you on that.' ifadesinin anlamı nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["workplace", "expressions"],
+              "explanation": "'Get back to someone' bir konuda daha sonra dönüş yapmak demektir. İş yerinde cevabı hemen veremediğinizde kullanılır.",
+              "options": [
+                {"text": "Size bu konuda dönüş yapacağım", "correct": true},
+                {"text": "Sizinle aynı fikirde değilim", "correct": false},
+                {"text": "Sizden geri dönüş bekliyorum", "correct": false},
+                {"text": "Bu konuyu kapatalım", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "İş yeri ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["workplace", "vocabulary"],
+              "explanation": "Deadline = Son teslim tarihi, Colleague = İş arkadaşı, Meeting = Toplantı.",
+              "options": [
+                {"text": "Deadline", "pairId": 1, "correct": false},
+                {"text": "Son teslim tarihi", "pairId": 1, "correct": false},
+                {"text": "Colleague", "pairId": 2, "correct": false},
+                {"text": "İş arkadaşı", "pairId": 2, "correct": false},
+                {"text": "Meeting", "pairId": 3, "correct": false},
+                {"text": "Toplantı", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Could you ___ me in on the project progress?' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["workplace", "phrasal verbs"],
+              "explanation": "'Fill someone in on something' bir konuda bilgilendirmek demektir. İş yerinde çok kullanılan bir phrasal verb'tür.",
+              "options": [
+                {"text": "fill", "correct": true},
+                {"text": "put", "correct": false},
+                {"text": "bring", "correct": false},
+                {"text": "get", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "İş yeri phrasal verb'lerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["workplace", "phrasal verbs"],
+              "explanation": "Take on = Üstlenmek, Put off = Ertelemek, Look into = Araştırmak, Come up with = Ortaya çıkarmak/bulmak.",
+              "options": [
+                {"text": "Take on", "pairId": 1, "correct": false},
+                {"text": "Üstlenmek", "pairId": 1, "correct": false},
+                {"text": "Put off", "pairId": 2, "correct": false},
+                {"text": "Ertelemek", "pairId": 2, "correct": false},
+                {"text": "Look into", "pairId": 3, "correct": false},
+                {"text": "Araştırmak", "pairId": 3, "correct": false},
+                {"text": "Come up with", "pairId": 4, "correct": false},
+                {"text": "Bulmak/üretmek", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'We need to prioritise this task.' cümlesinde ne söylenmektedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["workplace", "vocabulary"],
+              "explanation": "'Prioritise' öncelik vermek demektir. Bu görevin diğerlerinden önce yapılması gerektiği belirtiliyor.",
+              "options": [
+                {"text": "Bu görevi ertelememiz gerekiyor", "correct": false},
+                {"text": "Bu göreve öncelik vermemiz gerekiyor", "correct": true},
+                {"text": "Bu görevi iptal etmemiz gerekiyor", "correct": false},
+                {"text": "Bu görevi paylaşmamız gerekiyor", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'Let's ___ a meeting to discuss the new strategy.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["workplace", "collocations"],
+              "explanation": "'Set up a meeting' toplantı ayarlamak/düzenlemek demektir. İş dilinde yaygın bir kalıptır.",
+              "options": [
+                {"text": "set up", "correct": true},
+                {"text": "make up", "correct": false},
+                {"text": "give up", "correct": false},
+                {"text": "pick up", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Meetings — Toplantılar",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "'Shall we move on to the next item on the agenda?' Bu cümle toplantıda ne zaman kullanılır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["meetings", "expressions"],
+              "explanation": "'Move on to the next item' gündemimdeki bir sonraki maddeye geçmek demektir. Bir konu tartışıldıktan sonra kullanılır.",
+              "options": [
+                {"text": "Toplantı başlarken", "correct": false},
+                {"text": "Bir konu bittiğinde, sonraki konuya geçerken", "correct": true},
+                {"text": "Toplantı biterken", "correct": false},
+                {"text": "Toplantıyı iptal ederken", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Toplantı ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["meetings", "vocabulary"],
+              "explanation": "Agenda = Gündem, Minutes = Toplantı tutanağı, Chair (verb) = Toplantıyı yönetmek.",
+              "options": [
+                {"text": "Agenda", "pairId": 1, "correct": false},
+                {"text": "Gündem", "pairId": 1, "correct": false},
+                {"text": "Minutes", "pairId": 2, "correct": false},
+                {"text": "Toplantı tutanağı", "pairId": 2, "correct": false},
+                {"text": "Chair (verb)", "pairId": 3, "correct": false},
+                {"text": "Toplantıyı yönetmek", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Could I ___ something here?' toplantıda söz almak için kullanılır. Boşluğu doldurun.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["meetings", "interrupting"],
+              "explanation": "'Could I add something' bir şey ekleyebilir miyim demektir. Toplantıda kibarca söz almak için kullanılır.",
+              "options": [
+                {"text": "add", "correct": true},
+                {"text": "say", "correct": false},
+                {"text": "put", "correct": false},
+                {"text": "give", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Toplantı yönetim ifadelerini durumlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["meetings", "management"],
+              "explanation": "Let's get started = Başlayalım (açılış), To sum up = Özetlemek gerekirse (kapanış), Any other business? = Başka konu var mı? (son madde).",
+              "options": [
+                {"text": "Let's get started.", "pairId": 1, "correct": false},
+                {"text": "Açılış", "pairId": 1, "correct": false},
+                {"text": "To sum up...", "pairId": 2, "correct": false},
+                {"text": "Kapanış/özet", "pairId": 2, "correct": false},
+                {"text": "Any other business?", "pairId": 3, "correct": false},
+                {"text": "Son kontrol", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'I'm afraid I have to disagree with you on that point.' Bu cümle neden 'I'm afraid' ile başlıyor?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["meetings", "disagreeing"],
+              "explanation": "'I'm afraid' burada korku değil, kibarlık ifadesidir. Toplantıda karşı çıkarken cümleyi yumuşatmak için kullanılır: maalesef/üzgünüm ama...",
+              "options": [
+                {"text": "Karşı çıkmayı yumuşatmak ve kibar olmak için", "correct": true},
+                {"text": "Korkmuş olduğunu belirtmek için", "correct": false},
+                {"text": "Konuyu değiştirmek için", "correct": false},
+                {"text": "Toplantıdan ayrılmak için", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'Let's take a ___ and reconvene in 15 minutes.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["meetings", "vocabulary"],
+              "explanation": "'Take a break' mola vermek, 'reconvene' tekrar toplanmak demektir. Uzun toplantılarda mola vermek için kullanılır.",
+              "options": [
+                {"text": "break", "correct": true},
+                {"text": "rest", "correct": false},
+                {"text": "pause", "correct": false},
+                {"text": "stop", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Presentations — Sunum Yapma",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "'Good morning, everyone. Today, I'd like to talk about...' Bu cümle sunumun hangi bölümünde kullanılır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["presentations", "structure"],
+              "explanation": "Bu, sunumun giriş (introduction) bölümünde kullanılan standart bir açılış cümlesidir.",
+              "options": [
+                {"text": "Giriş", "correct": true},
+                {"text": "Gelişme", "correct": false},
+                {"text": "Sonuç", "correct": false},
+                {"text": "Soru-cevap", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Sunum bölümlerini sırasıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["presentations", "structure"],
+              "explanation": "Introduction = Giriş (konu tanıtımı), Main body = Ana bölüm (detaylar), Conclusion = Sonuç (özet ve kapanış).",
+              "options": [
+                {"text": "Introduction", "pairId": 1, "correct": false},
+                {"text": "Giriş", "pairId": 1, "correct": false},
+                {"text": "Main body", "pairId": 2, "correct": false},
+                {"text": "Ana bölüm", "pairId": 2, "correct": false},
+                {"text": "Conclusion", "pairId": 3, "correct": false},
+                {"text": "Sonuç", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Moving ___ to the next point...' sunumda geçiş yapmak için kullanılır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["presentations", "transitions"],
+              "explanation": "'Moving on to' bir sonraki konuya geçme ifadesidir. Sunumlarda akıcı geçiş sağlamak için kullanılır.",
+              "options": [
+                {"text": "on", "correct": true},
+                {"text": "up", "correct": false},
+                {"text": "in", "correct": false},
+                {"text": "out", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Sunum geçiş ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["presentations", "transitions"],
+              "explanation": "First of all = Her şeyden önce, As you can see = Gördüğünüz gibi, In conclusion = Sonuç olarak, Let me elaborate = Detaylandırayım.",
+              "options": [
+                {"text": "First of all", "pairId": 1, "correct": false},
+                {"text": "Her şeyden önce", "pairId": 1, "correct": false},
+                {"text": "As you can see", "pairId": 2, "correct": false},
+                {"text": "Gördüğünüz gibi", "pairId": 2, "correct": false},
+                {"text": "In conclusion", "pairId": 3, "correct": false},
+                {"text": "Sonuç olarak", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'Are there any questions?' Bu cümle sunumun hangi bölümünde söylenir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["presentations", "Q&A"],
+              "explanation": "Bu soru genellikle sunumun sonunda, soru-cevap (Q&A) bölümüne geçerken sorulur.",
+              "options": [
+                {"text": "Sunumun başında", "correct": false},
+                {"text": "Her slayttan sonra", "correct": false},
+                {"text": "Sunumun sonunda, soru-cevap bölümünde", "correct": true},
+                {"text": "Sunumun ortasında", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'To ___ up, I'd like to emphasise three key takeaways from today's presentation.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["presentations", "conclusion"],
+              "explanation": "'Sum up' özetlemek demektir. 'Key takeaways' sunumdan çıkarılacak ana mesajlar anlamındadır.",
+              "options": [
+                {"text": "sum", "correct": true},
+                {"text": "wrap", "correct": false},
+                {"text": "close", "correct": false},
+                {"text": "end", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Eğitim, Kültür ve Toplum",
+      "description": "Eğitim sistemi, kültürel farklar, toplumsal konular ve tartışma becerileri",
+      "order": 5,
+      "lessons": [
+        {
+          "title": "Education Systems — Eğitim Sistemleri",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "'She graduated from university with honours.' cümlesinde 'with honours' ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["education", "vocabulary"],
+              "explanation": "'With honours' onur/şeref derecesiyle (yüksek notla) mezun olmak demektir. 'Graduate from' bir okuldan mezun olmak anlamındadır.",
+              "options": [
+                {"text": "Normal notla mezun oldu", "correct": false},
+                {"text": "Yüksek başarıyla/şeref derecesiyle mezun oldu", "correct": true},
+                {"text": "Burslu mezun oldu", "correct": false},
+                {"text": "Erken mezun oldu", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Eğitim terimlerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["education", "vocabulary"],
+              "explanation": "Undergraduate = Lisans, Postgraduate = Lisansüstü (yüksek lisans/doktora), Scholarship = Burs.",
+              "options": [
+                {"text": "Undergraduate", "pairId": 1, "correct": false},
+                {"text": "Lisans", "pairId": 1, "correct": false},
+                {"text": "Postgraduate", "pairId": 2, "correct": false},
+                {"text": "Lisansüstü", "pairId": 2, "correct": false},
+                {"text": "Scholarship", "pairId": 3, "correct": false},
+                {"text": "Burs", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'The tuition ___ at this university are quite high.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["education", "vocabulary"],
+              "explanation": "'Tuition fees' öğrenim ücreti demektir. Üniversite masraflarından bahsederken kullanılır.",
+              "options": [
+                {"text": "fees", "correct": true},
+                {"text": "costs", "correct": false},
+                {"text": "prices", "correct": false},
+                {"text": "money", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Akademik terimlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["education", "academic"],
+              "explanation": "Thesis = Tez, Lecture = Ders/konferans, Semester = Dönem, Dean = Dekan.",
+              "options": [
+                {"text": "Thesis", "pairId": 1, "correct": false},
+                {"text": "Tez", "pairId": 1, "correct": false},
+                {"text": "Lecture", "pairId": 2, "correct": false},
+                {"text": "Ders/konferans", "pairId": 2, "correct": false},
+                {"text": "Semester", "pairId": 3, "correct": false},
+                {"text": "Dönem", "pairId": 3, "correct": false},
+                {"text": "Dean", "pairId": 4, "correct": false},
+                {"text": "Dekan", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'Online learning has become increasingly popular since the pandemic.' cümlesinde 'increasingly' ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["education", "adverbs"],
+              "explanation": "'Increasingly' giderek artan bir şekilde demektir. Pandemi sonrası çevrimiçi eğitimin giderek daha popüler olduğu belirtiliyor.",
+              "options": [
+                {"text": "Giderek artan şekilde", "correct": true},
+                {"text": "Aniden", "correct": false},
+                {"text": "Nadiren", "correct": false},
+                {"text": "Tamamen", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'Education is the most powerful weapon which you can use to change the world.' — Nelson Mandela. Bu alıntıda ne söyleniyor?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["education", "quotes"],
+              "explanation": "'Weapon' silah, 'powerful' güçlü demektir. Mandela eğitimi dünyayı değiştirmek için en güçlü araç olarak tanımlıyor.",
+              "options": [
+                {"text": "Eğitim dünyayı değiştirmek için en güçlü araçtır", "correct": true},
+                {"text": "Eğitim bir silah kadar tehlikelidir", "correct": false},
+                {"text": "Dünyayı değiştirmek imkansızdır", "correct": false},
+                {"text": "Güç her zaman eğitimden gelir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Cultural Differences — Kültürel Farklar",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "'In Japan, it is considered rude to tip at restaurants.' cümlesinde 'considered rude' ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["culture", "expressions"],
+              "explanation": "'Considered rude' kaba/ayıp sayılmak demektir. Japonya'da restoranlarda bahşiş bırakmak ayıp sayılır.",
+              "options": [
+                {"text": "Normal karşılanır", "correct": false},
+                {"text": "Kaba/ayıp sayılır", "correct": true},
+                {"text": "Zorunludur", "correct": false},
+                {"text": "Teşvik edilir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kültürel kavramları Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["culture", "vocabulary"],
+              "explanation": "Custom = Gelenek/görenek, Hospitality = Misafirperverlik, Stereotype = Kalıp yargı.",
+              "options": [
+                {"text": "Custom", "pairId": 1, "correct": false},
+                {"text": "Gelenek", "pairId": 1, "correct": false},
+                {"text": "Hospitality", "pairId": 2, "correct": false},
+                {"text": "Misafirperverlik", "pairId": 2, "correct": false},
+                {"text": "Stereotype", "pairId": 3, "correct": false},
+                {"text": "Kalıp yargı", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'When in Rome, do as the Romans do.' atasözünün anlamı nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["culture", "proverbs"],
+              "explanation": "Bu atasözü 'Bir yere gittiğinde oranın kurallarına/adetlerine uy' anlamına gelir. Kültürel uyumun önemini vurgular.",
+              "options": [
+                {"text": "Bir yere gittiğinde oranın adetlerine uy", "correct": true},
+                {"text": "Roma'ya mutlaka git", "correct": false},
+                {"text": "Her yerde aynı davran", "correct": false},
+                {"text": "Romalılar gibi yaşa", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Cultural ___ is the ability to interact effectively with people from different cultures.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["culture", "vocabulary"],
+              "explanation": "'Cultural awareness' kültürel farkındalık demektir. Farklı kültürlerden insanlarla etkili iletişim kurma becerisidir.",
+              "options": [
+                {"text": "awareness", "correct": true},
+                {"text": "knowledge", "correct": false},
+                {"text": "difference", "correct": false},
+                {"text": "experience", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "İletişim tarzı farklarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["culture", "communication"],
+              "explanation": "Direct = Doğrudan (açık sözlü), Indirect = Dolaylı (üstü kapalı), Formal = Resmi, Casual = Rahat/samimi.",
+              "options": [
+                {"text": "Direct communication", "pairId": 1, "correct": false},
+                {"text": "Doğrudan iletişim", "pairId": 1, "correct": false},
+                {"text": "Indirect communication", "pairId": 2, "correct": false},
+                {"text": "Dolaylı iletişim", "pairId": 2, "correct": false},
+                {"text": "Body language", "pairId": 3, "correct": false},
+                {"text": "Beden dili", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'You shouldn't judge a book by its cover.' Bu atasözü kültürel bağlamda ne ifade eder?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["culture", "proverbs"],
+              "explanation": "'Don't judge a book by its cover' dış görünüşe bakarak yargılama anlamına gelir. Kültürel bağlamda önyargılara karşı bir uyarıdır.",
+              "options": [
+                {"text": "İnsanları veya kültürleri dış görünüşlerine göre yargılama", "correct": true},
+                {"text": "Kitapların kapaklarını güzelleştir", "correct": false},
+                {"text": "Her zaman ilk izlenime güven", "correct": false},
+                {"text": "Kitap okumak önemlidir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Social Issues — Toplumsal Konular",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "'Gender equality means that men and women should have equal rights.' cümlesinde 'gender equality' ne demektir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["social issues", "vocabulary"],
+              "explanation": "'Gender equality' cinsiyet eşitliği demektir. Kadın ve erkeklerin eşit haklara sahip olması gerektiğini ifade eder.",
+              "options": [
+                {"text": "Cinsiyet eşitliği", "correct": true},
+                {"text": "Toplumsal cinsiyet", "correct": false},
+                {"text": "Kadın hakları", "correct": false},
+                {"text": "Eşit oy hakkı", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Toplumsal kavramları Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["social issues", "vocabulary"],
+              "explanation": "Poverty = Yoksulluk, Immigration = Göç, Human rights = İnsan hakları.",
+              "options": [
+                {"text": "Poverty", "pairId": 1, "correct": false},
+                {"text": "Yoksulluk", "pairId": 1, "correct": false},
+                {"text": "Immigration", "pairId": 2, "correct": false},
+                {"text": "Göç", "pairId": 2, "correct": false},
+                {"text": "Human rights", "pairId": 3, "correct": false},
+                {"text": "İnsan hakları", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'The gap between the rich and the poor is ___ wider.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["social issues", "vocabulary"],
+              "explanation": "'Getting wider' giderek genişliyor demektir. Zengin ve fakir arasındaki uçurumun büyüdüğü ifade edilir.",
+              "options": [
+                {"text": "getting", "correct": true},
+                {"text": "making", "correct": false},
+                {"text": "going", "correct": false},
+                {"text": "being", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Toplumsal tartışma terimlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["social issues", "debate"],
+              "explanation": "Discrimination = Ayrımcılık, Tolerance = Hoşgörü, Inequality = Eşitsizlik, Diversity = Çeşitlilik.",
+              "options": [
+                {"text": "Discrimination", "pairId": 1, "correct": false},
+                {"text": "Ayrımcılık", "pairId": 1, "correct": false},
+                {"text": "Tolerance", "pairId": 2, "correct": false},
+                {"text": "Hoşgörü", "pairId": 2, "correct": false},
+                {"text": "Inequality", "pairId": 3, "correct": false},
+                {"text": "Eşitsizlik", "pairId": 3, "correct": false},
+                {"text": "Diversity", "pairId": 4, "correct": false},
+                {"text": "Çeşitlilik", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'Raising awareness about mental health is crucial in today's society.' cümlesinde ne vurgulanmaktadır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["social issues", "health"],
+              "explanation": "'Raising awareness' farkındalık yaratmak, 'mental health' ruh sağlığı, 'crucial' çok önemli/kritik demektir.",
+              "options": [
+                {"text": "Ruh sağlığı farkındalığının bugünün toplumunda çok önemli olduğu", "correct": true},
+                {"text": "Ruh sağlığının önemsiz olduğu", "correct": false},
+                {"text": "Toplumun değişmesi gerektiği", "correct": false},
+                {"text": "Sağlık sisteminin yetersiz olduğu", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'Every individual has the right to be treated with ___ and respect.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["social issues", "values"],
+              "explanation": "'Dignity' onur/haysiyet demektir. 'Dignity and respect' temel insan hakları arasında sayılır.",
+              "options": [
+                {"text": "dignity", "correct": true},
+                {"text": "equality", "correct": false},
+                {"text": "freedom", "correct": false},
+                {"text": "justice", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Arts and Entertainment — Sanat ve Eğlence",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "'The film received critical acclaim and won several awards.' cümlesinde 'critical acclaim' ne demektir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["arts", "vocabulary"],
+              "explanation": "'Critical acclaim' eleştirmenlerden olumlu değerlendirme/övgü demektir. Film hem eleştirmenler tarafından beğenilmiş hem de ödüller almış.",
+              "options": [
+                {"text": "Eleştirmenlerden olumsuz yorum", "correct": false},
+                {"text": "Eleştirmenlerden olumlu değerlendirme", "correct": true},
+                {"text": "Gişe başarısı", "correct": false},
+                {"text": "Seyirci tarafından beğenilme", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Sanat terimlerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["arts", "vocabulary"],
+              "explanation": "Exhibition = Sergi, Masterpiece = Başyapıt, Performance = Gösteri/performans.",
+              "options": [
+                {"text": "Exhibition", "pairId": 1, "correct": false},
+                {"text": "Sergi", "pairId": 1, "correct": false},
+                {"text": "Masterpiece", "pairId": 2, "correct": false},
+                {"text": "Başyapıt", "pairId": 2, "correct": false},
+                {"text": "Performance", "pairId": 3, "correct": false},
+                {"text": "Gösteri", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'The novel is ___ on a true story.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["arts", "expressions"],
+              "explanation": "'Based on' bir şeye dayalı/dayanan demektir. 'Based on a true story' gerçek bir hikayeye dayanan anlamındadır.",
+              "options": [
+                {"text": "based", "correct": true},
+                {"text": "made", "correct": false},
+                {"text": "built", "correct": false},
+                {"text": "taken", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Film/kitap eleştiri ifadelerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["arts", "reviews"],
+              "explanation": "Thought-provoking = Düşündürücü, Gripping = Sürükleyici, Overrated = Hak ettiğinden fazla övülmüş, Disappointing = Hayal kırıklığı yaratan.",
+              "options": [
+                {"text": "Thought-provoking", "pairId": 1, "correct": false},
+                {"text": "Düşündürücü", "pairId": 1, "correct": false},
+                {"text": "Gripping", "pairId": 2, "correct": false},
+                {"text": "Sürükleyici", "pairId": 2, "correct": false},
+                {"text": "Overrated", "pairId": 3, "correct": false},
+                {"text": "Hak ettiğinden fazla övülmüş", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'Art speaks where words are unable to.' Bu sözün anlamı nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["arts", "quotes"],
+              "explanation": "Bu söz, sanatın kelimelerin yetersiz kaldığı yerde iletişim kurabildiğini ifade eder. Sanatın evrensel dili vurgulanmaktadır.",
+              "options": [
+                {"text": "Sanat, kelimelerin ifade edemediği şeyleri anlatabilir", "correct": true},
+                {"text": "Sanatçılar konuşmayı sevmez", "correct": false},
+                {"text": "Kelimeler sanattan daha güçlüdür", "correct": false},
+                {"text": "Sanat gereksizdir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Eğlence türlerini İngilizce karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["arts", "genres"],
+              "explanation": "Thriller = Gerilim, Documentary = Belgesel, Stand-up comedy = Tek kişilik komedi gösterisi, Musical = Müzikal.",
+              "options": [
+                {"text": "Thriller", "pairId": 1, "correct": false},
+                {"text": "Gerilim", "pairId": 1, "correct": false},
+                {"text": "Documentary", "pairId": 2, "correct": false},
+                {"text": "Belgesel", "pairId": 2, "correct": false},
+                {"text": "Stand-up comedy", "pairId": 3, "correct": false},
+                {"text": "Tek kişilik komedi", "pairId": 3, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Debate Skills — Tartışma Becerileri",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "'Let me play devil's advocate here.' Bu ifade tartışmada ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["debate", "expressions"],
+              "explanation": "'Play devil's advocate' tartışma uğruna karşı tarafın görüşünü savunmak demektir. Farklı bir bakış açısı sunmak için kullanılır.",
+              "options": [
+                {"text": "Karşı tarafın görüşünü (tartışma adına) savunmak", "correct": true},
+                {"text": "Kötü biri olmak", "correct": false},
+                {"text": "Konuyu değiştirmek", "correct": false},
+                {"text": "Tartışmadan çekilmek", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Tartışma bağlaçlarını işlevleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["debate", "connectors"],
+              "explanation": "For instance = Örneğin, In contrast = Aksine/öte yandan, As a result = Sonuç olarak.",
+              "options": [
+                {"text": "For instance", "pairId": 1, "correct": false},
+                {"text": "Örnek verme", "pairId": 1, "correct": false},
+                {"text": "In contrast", "pairId": 2, "correct": false},
+                {"text": "Karşılaştırma", "pairId": 2, "correct": false},
+                {"text": "As a result", "pairId": 3, "correct": false},
+                {"text": "Sonuç bildirme", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'While I understand your perspective, I would argue that...' Bu cümlede 'while' ne işlev görüyor?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["debate", "connectors"],
+              "explanation": "'While' burada 'her ne kadar/... olmasına rağmen' anlamında bir zıtlık bağlacı olarak kullanılmıştır. Karşı görüşü kabul edip kendi argümanını sunuyor.",
+              "options": [
+                {"text": "Karşı görüşü kabul edip kendi görüşünü sunmak (zıtlık)", "correct": true},
+                {"text": "Zaman belirtmek", "correct": false},
+                {"text": "Neden belirtmek", "correct": false},
+                {"text": "Örnek vermek", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'It goes without ___ that education is important.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["debate", "idioms"],
+              "explanation": "'It goes without saying' söylemeye gerek yok/apaçık demektir. Herkesin kabul ettiği bir gerçeği belirtirken kullanılır.",
+              "options": [
+                {"text": "saying", "correct": true},
+                {"text": "telling", "correct": false},
+                {"text": "speaking", "correct": false},
+                {"text": "talking", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "İleri düzey tartışma ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["debate", "academic"],
+              "explanation": "To some extent = Bir dereceye kadar, On the whole = Genel olarak, Taking everything into account = Her şey göz önüne alındığında.",
+              "options": [
+                {"text": "To some extent", "pairId": 1, "correct": false},
+                {"text": "Bir dereceye kadar", "pairId": 1, "correct": false},
+                {"text": "On the whole", "pairId": 2, "correct": false},
+                {"text": "Genel olarak", "pairId": 2, "correct": false},
+                {"text": "Taking everything into account", "pairId": 3, "correct": false},
+                {"text": "Her şey göz önüne alındığında", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'Correlation does not imply causation.' Bu bilimsel ilke ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["debate", "critical thinking"],
+              "explanation": "'Correlation' ilişki/bağıntı, 'causation' nedensellik demektir. İki şeyin birlikte olması, birinin diğerine neden olduğu anlamına gelmez.",
+              "options": [
+                {"text": "İki şeyin birlikte görülmesi, birinin diğerine neden olduğu anlamına gelmez", "correct": true},
+                {"text": "Her şeyin bir nedeni vardır", "correct": false},
+                {"text": "Bilimsel veriler her zaman doğrudur", "correct": false},
+                {"text": "İstatistikler yanıltıcıdır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Phrasal Verb'ler, Deyimler ve Genel Tekrar",
+      "description": "Yaygın phrasal verb'ler, İngilizce deyimler, bağlam içinde kelime kullanımı ve B1 genel tekrar",
+      "order": 6,
+      "lessons": [
+        {
+          "title": "Phrasal Verbs — Öbek Fiiller (1)",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "'I need to look up this word in the dictionary.' cümlesinde 'look up' ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["phrasal verbs", "vocabulary"],
+              "explanation": "'Look up' sözlükte veya internette bir şeyi aramak demektir. 'Look up a word' bir kelimeyi aramak anlamındadır.",
+              "options": [
+                {"text": "Aramak (sözlükte)", "correct": true},
+                {"text": "Yukarı bakmak", "correct": false},
+                {"text": "Bulmak", "correct": false},
+                {"text": "Okumak", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Phrasal verb'leri Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["phrasal verbs"],
+              "explanation": "Give up = Vazgeçmek/bırakmak, Find out = Öğrenmek/keşfetmek, Turn down = Reddetmek.",
+              "options": [
+                {"text": "Give up", "pairId": 1, "correct": false},
+                {"text": "Vazgeçmek", "pairId": 1, "correct": false},
+                {"text": "Find out", "pairId": 2, "correct": false},
+                {"text": "Öğrenmek", "pairId": 2, "correct": false},
+                {"text": "Turn down", "pairId": 3, "correct": false},
+                {"text": "Reddetmek", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'She turned ___ the job offer because the salary was too low.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["phrasal verbs"],
+              "explanation": "'Turn down' reddetmek demektir. İş teklifini maaş düşük olduğu için reddetti.",
+              "options": [
+                {"text": "down", "correct": true},
+                {"text": "off", "correct": false},
+                {"text": "up", "correct": false},
+                {"text": "out", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Get' ile oluşan phrasal verb'leri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["phrasal verbs", "get"],
+              "explanation": "Get along = Geçinmek/anlaşmak, Get over = Atlatmak/üstesinden gelmek, Get by = İdare etmek/geçinmek, Get rid of = Kurtulmak.",
+              "options": [
+                {"text": "Get along", "pairId": 1, "correct": false},
+                {"text": "Geçinmek", "pairId": 1, "correct": false},
+                {"text": "Get over", "pairId": 2, "correct": false},
+                {"text": "Atlatmak", "pairId": 2, "correct": false},
+                {"text": "Get by", "pairId": 3, "correct": false},
+                {"text": "İdare etmek", "pairId": 3, "correct": false},
+                {"text": "Get rid of", "pairId": 4, "correct": false},
+                {"text": "Kurtulmak", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'The meeting was called ___ due to the storm.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["phrasal verbs"],
+              "explanation": "'Call off' iptal etmek demektir. Toplantı fırtına nedeniyle iptal edildi.",
+              "options": [
+                {"text": "off", "correct": true},
+                {"text": "on", "correct": false},
+                {"text": "up", "correct": false},
+                {"text": "in", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'Break' ile oluşan phrasal verb'leri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["phrasal verbs", "break"],
+              "explanation": "Break down = Bozulmak/arızalanmak, Break up = Ayrılmak (ilişki), Break into = Zorla girmek, Break out = Patlak vermek.",
+              "options": [
+                {"text": "Break down", "pairId": 1, "correct": false},
+                {"text": "Bozulmak/arızalanmak", "pairId": 1, "correct": false},
+                {"text": "Break up", "pairId": 2, "correct": false},
+                {"text": "Ayrılmak (ilişki)", "pairId": 2, "correct": false},
+                {"text": "Break into", "pairId": 3, "correct": false},
+                {"text": "Zorla girmek", "pairId": 3, "correct": false},
+                {"text": "Break out", "pairId": 4, "correct": false},
+                {"text": "Patlak vermek", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Idioms — Deyimler",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "'It's raining cats and dogs.' deyiminin anlamı nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["idioms"],
+              "explanation": "Bu deyim 'bardaktan boşanırcasına yağmur yağıyor' anlamına gelir. Gerçekten kedi ve köpek yağmıyor!",
+              "options": [
+                {"text": "Çok şiddetli yağmur yağıyor", "correct": true},
+                {"text": "Kediler ve köpekler dışarıda", "correct": false},
+                {"text": "Hava güzel", "correct": false},
+                {"text": "Hayvanlar kaçtı", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "İngilizce deyimleri Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["idioms"],
+              "explanation": "Piece of cake = Çocuk oyuncağı (çok kolay), Break the ice = Buzları kırmak (ilk adımı atmak), Hit the nail on the head = Tam üstüne basmak.",
+              "options": [
+                {"text": "Piece of cake", "pairId": 1, "correct": false},
+                {"text": "Çocuk oyuncağı", "pairId": 1, "correct": false},
+                {"text": "Break the ice", "pairId": 2, "correct": false},
+                {"text": "Buzları kırmak", "pairId": 2, "correct": false},
+                {"text": "Hit the nail on the head", "pairId": 3, "correct": false},
+                {"text": "Tam üstüne basmak", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Don't put all your eggs in one basket.' deyimi ne tavsiye eder?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["idioms", "advice"],
+              "explanation": "Bu deyim 'tüm yumurtalarını aynı sepete koyma' yani riskini dağıt, her şeyi tek bir şeye bağlama anlamına gelir.",
+              "options": [
+                {"text": "Tüm riskini tek bir şeye bağlama", "correct": true},
+                {"text": "Yumurtaları dikkatli taşı", "correct": false},
+                {"text": "Alışverişte dikkatli ol", "correct": false},
+                {"text": "Sepetini kaybetme", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Vücut parçalı deyimleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["idioms", "body"],
+              "explanation": "Keep an eye on = Göz kulak olmak, Cost an arm and a leg = Çok pahalı olmak, Pull someone's leg = Birini kandırmak/şaka yapmak.",
+              "options": [
+                {"text": "Keep an eye on", "pairId": 1, "correct": false},
+                {"text": "Göz kulak olmak", "pairId": 1, "correct": false},
+                {"text": "Cost an arm and a leg", "pairId": 2, "correct": false},
+                {"text": "Çok pahalı olmak", "pairId": 2, "correct": false},
+                {"text": "Pull someone's leg", "pairId": 3, "correct": false},
+                {"text": "Dalga geçmek", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'She let the cat out of the ___.' deyimini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["idioms"],
+              "explanation": "'Let the cat out of the bag' bir sırrı yanlışlıkla ifşa etmek/ağzından kaçırmak demektir.",
+              "options": [
+                {"text": "bag", "correct": true},
+                {"text": "house", "correct": false},
+                {"text": "box", "correct": false},
+                {"text": "room", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "İş dünyasında kullanılan deyimleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["idioms", "business"],
+              "explanation": "Think outside the box = Kalıpların dışında düşünmek, Get the ball rolling = İşi başlatmak, The bottom line = Sonuç/asıl mesele, Back to square one = Başa dönmek.",
+              "options": [
+                {"text": "Think outside the box", "pairId": 1, "correct": false},
+                {"text": "Yaratıcı düşünmek", "pairId": 1, "correct": false},
+                {"text": "Get the ball rolling", "pairId": 2, "correct": false},
+                {"text": "İşi başlatmak", "pairId": 2, "correct": false},
+                {"text": "The bottom line", "pairId": 3, "correct": false},
+                {"text": "Asıl mesele", "pairId": 3, "correct": false},
+                {"text": "Back to square one", "pairId": 4, "correct": false},
+                {"text": "Başa dönmek", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Collocations — Eş Dizimler",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "'Make' ve 'do' arasındaki fark nedir? 'Make a decision' doğru ama 'do a decision' yanlıştır.",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["collocations", "make vs do"],
+              "explanation": "'Make' genellikle yaratıcı/üretici eylemler (make a cake, make a decision), 'do' genel görev/iş (do homework, do the dishes) için kullanılır.",
+              "options": [
+                {"text": "'Make' üretme/yaratma, 'do' görev/iş yapma eylemlerinde kullanılır", "correct": true},
+                {"text": "İkisi tamamen aynıdır", "correct": false},
+                {"text": "'Make' resmi, 'do' gayri resmidir", "correct": false},
+                {"text": "'Make' geçmiş, 'do' şimdiki zaman içindir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "'Make' ile oluşan eş dizimleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["collocations", "make"],
+              "explanation": "Make a mistake = Hata yapmak, Make progress = İlerleme kaydetmek, Make an effort = Çaba göstermek.",
+              "options": [
+                {"text": "Make a mistake", "pairId": 1, "correct": false},
+                {"text": "Hata yapmak", "pairId": 1, "correct": false},
+                {"text": "Make progress", "pairId": 2, "correct": false},
+                {"text": "İlerleme kaydetmek", "pairId": 2, "correct": false},
+                {"text": "Make an effort", "pairId": 3, "correct": false},
+                {"text": "Çaba göstermek", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'She ___ her best to finish the project on time.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["collocations", "do"],
+              "explanation": "'Do your/her/his best' elinden gelenin en iyisini yapmak demektir. 'Do' ile kullanılır, 'make' ile değil.",
+              "options": [
+                {"text": "did", "correct": true},
+                {"text": "made", "correct": false},
+                {"text": "took", "correct": false},
+                {"text": "got", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Take' ile oluşan eş dizimleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["collocations", "take"],
+              "explanation": "Take responsibility = Sorumluluk almak, Take advantage of = Faydalanmak/yararlanmak, Take place = Gerçekleşmek, Take into account = Hesaba katmak.",
+              "options": [
+                {"text": "Take responsibility", "pairId": 1, "correct": false},
+                {"text": "Sorumluluk almak", "pairId": 1, "correct": false},
+                {"text": "Take advantage of", "pairId": 2, "correct": false},
+                {"text": "Faydalanmak", "pairId": 2, "correct": false},
+                {"text": "Take place", "pairId": 3, "correct": false},
+                {"text": "Gerçekleşmek", "pairId": 3, "correct": false},
+                {"text": "Take into account", "pairId": 4, "correct": false},
+                {"text": "Hesaba katmak", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'The event ___ place in the city centre last Saturday.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["collocations", "take"],
+              "explanation": "'Take place' gerçekleşmek demektir. Geçmiş zaman: 'took place'. Etkinlik geçen cumartesi şehir merkezinde gerçekleşti.",
+              "options": [
+                {"text": "took", "correct": true},
+                {"text": "made", "correct": false},
+                {"text": "had", "correct": false},
+                {"text": "did", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Karışık eş dizimleri doğru fiillerle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["collocations", "mixed"],
+              "explanation": "Pay attention = Dikkat etmek, Catch a cold = Soğuk algınlığı kapmak, Run a business = İş yönetmek, Keep a promise = Söz tutmak.",
+              "options": [
+                {"text": "Pay attention", "pairId": 1, "correct": false},
+                {"text": "Dikkat etmek", "pairId": 1, "correct": false},
+                {"text": "Catch a cold", "pairId": 2, "correct": false},
+                {"text": "Hasta olmak", "pairId": 2, "correct": false},
+                {"text": "Run a business", "pairId": 3, "correct": false},
+                {"text": "İş yönetmek", "pairId": 3, "correct": false},
+                {"text": "Keep a promise", "pairId": 4, "correct": false},
+                {"text": "Söz tutmak", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Confusing Words — Karıştırılan Kelimeler",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "'Affect' (fiil) ve 'effect' (isim) arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["confusing words", "vocabulary"],
+              "explanation": "'Affect' (fiil) etkilemek: 'The weather affects my mood.' 'Effect' (isim) etki: 'The effect of the weather on my mood.'",
+              "options": [
+                {"text": "'Affect' fiildir (etkilemek), 'effect' isimdir (etki)", "correct": true},
+                {"text": "İkisi aynı anlama gelir", "correct": false},
+                {"text": "'Affect' olumlu, 'effect' olumsuz", "correct": false},
+                {"text": "'Affect' resmi, 'effect' gayri resmi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Karıştırılan kelime çiftlerini doğru anlamlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["confusing words"],
+              "explanation": "Borrow = Ödünç almak, Lend = Ödünç vermek, Lose = Kaybetmek, Loose = Gevşek/bol.",
+              "options": [
+                {"text": "Borrow", "pairId": 1, "correct": false},
+                {"text": "Ödünç almak", "pairId": 1, "correct": false},
+                {"text": "Lend", "pairId": 2, "correct": false},
+                {"text": "Ödünç vermek", "pairId": 2, "correct": false},
+                {"text": "Lose (fiil)", "pairId": 3, "correct": false},
+                {"text": "Kaybetmek", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Can I ___ your pen for a moment?' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["confusing words", "borrow vs lend"],
+              "explanation": "'Borrow' ödünç almak demektir (alan kişi kullanır). 'Lend' ödünç vermek (veren kişi kullanır). Kalem istiyorsun → borrow.",
+              "options": [
+                {"text": "borrow", "correct": true},
+                {"text": "lend", "correct": false},
+                {"text": "take", "correct": false},
+                {"text": "give", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Karıştırılan kelime çiftlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["confusing words"],
+              "explanation": "Advise (fiil) = Tavsiye etmek, Advice (isim) = Tavsiye. Practise (fiil, İng.İng.) = Pratik yapmak, Practice (isim) = Pratik.",
+              "options": [
+                {"text": "Advise (fiil)", "pairId": 1, "correct": false},
+                {"text": "Tavsiye etmek", "pairId": 1, "correct": false},
+                {"text": "Advice (isim)", "pairId": 2, "correct": false},
+                {"text": "Tavsiye", "pairId": 2, "correct": false},
+                {"text": "Raise (geçişli)", "pairId": 3, "correct": false},
+                {"text": "Kaldırmak/yükseltmek", "pairId": 3, "correct": false},
+                {"text": "Rise (geçişsiz)", "pairId": 4, "correct": false},
+                {"text": "Yükselmek/kalkmak", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'The sun ___ in the east.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["confusing words", "rise vs raise"],
+              "explanation": "'Rise' (geçişsiz fiil) kendi başına yükselmek demektir. Güneş doğuda doğar/yükselir. 'Raise' (geçişli fiil) bir şeyi kaldırmak demektir.",
+              "options": [
+                {"text": "rises", "correct": true},
+                {"text": "raises", "correct": false},
+                {"text": "raise", "correct": false},
+                {"text": "risen", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'I was so ___ after the long journey.' cümlesini tamamlayın (yorgun anlamında).",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["confusing words"],
+              "explanation": "'Exhausted' çok yorgun/bitkin demektir. 'Exhausting' yorucu (bir şeyi tanımlayan). 'Exhausted' kişiyi tanımlar: I was exhausted.",
+              "options": [
+                {"text": "exhausted", "correct": true},
+                {"text": "exhausting", "correct": false},
+                {"text": "tired out", "correct": false},
+                {"text": "tiring", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "B1 Review — Genel Tekrar",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Hangi cümle gramer açısından doğrudur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["grammar", "review"],
+              "explanation": "'If I had known' Third Conditional'ın doğru formüdür (If + Past Perfect, would have + V3). Diğerleri yapısal hatalar içerir.",
+              "options": [
+                {"text": "If I would have known, I would have helped.", "correct": false},
+                {"text": "If I had known, I would have helped.", "correct": true},
+                {"text": "If I knew, I would have helped.", "correct": false},
+                {"text": "If I have known, I would helped.", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Gramer yapılarını doğru zaman çizgileriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["grammar", "tenses", "review"],
+              "explanation": "Present Perfect = geçmişte başlayıp şimdiye etkisi olan, Past Perfect = geçmişte bir noktadan daha önce, Used to = eskiden yapılan alışkanlık.",
+              "options": [
+                {"text": "Present Perfect", "pairId": 1, "correct": false},
+                {"text": "Geçmiş → şimdi bağlantısı", "pairId": 1, "correct": false},
+                {"text": "Past Perfect", "pairId": 2, "correct": false},
+                {"text": "Geçmişten daha önce", "pairId": 2, "correct": false},
+                {"text": "Used to", "pairId": 3, "correct": false},
+                {"text": "Eski alışkanlıklar", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'The report ___ ___ written by the end of this week.' cümlesini tamamlayın (gelecek zaman edilgen).",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["passive voice", "future", "review"],
+              "explanation": "Future Passive: will + be + V3. 'Will be written' bu hafta sonuna kadar yazılmış olacak anlamındadır.",
+              "options": [
+                {"text": "will be", "correct": true},
+                {"text": "is being", "correct": false},
+                {"text": "has been", "correct": false},
+                {"text": "was being", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'She told me that she ___ already ___ the email.' cümlesini tamamlayın (Reported Speech + Past Perfect).",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["reported speech", "review"],
+              "explanation": "Doğrudan: 'I have already sent the email.' → Reported: 'She told me that she had already sent the email.' Present Perfect → Past Perfect.",
+              "options": [
+                {"text": "had ... sent", "correct": true},
+                {"text": "has ... sent", "correct": false},
+                {"text": "have ... send", "correct": false},
+                {"text": "was ... sending", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "B1 seviyesinde kazanılması gereken temel becerileri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["B1", "skills", "review"],
+              "explanation": "B1 seviyesinde: Tanıdık konularda görüşünü ifade edebilme, geçmiş deneyimleri anlatabilme, gelecek planlarını tartışabilme beklenir.",
+              "options": [
+                {"text": "Express opinions", "pairId": 1, "correct": false},
+                {"text": "Fikir belirtme", "pairId": 1, "correct": false},
+                {"text": "Narrate past events", "pairId": 2, "correct": false},
+                {"text": "Geçmiş olayları anlatma", "pairId": 2, "correct": false},
+                {"text": "Discuss future plans", "pairId": 3, "correct": false},
+                {"text": "Gelecek planlarını tartışma", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'The more you practise, the ___ you get.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["comparatives", "review"],
+              "explanation": "'The more...the better' yapısı: ne kadar çok...o kadar iyi. 'The more you practise, the better you get' = Ne kadar çok pratik yaparsan o kadar iyileşirsin.",
+              "options": [
+                {"text": "better", "correct": true},
+                {"text": "best", "correct": false},
+                {"text": "good", "correct": false},
+                {"text": "well", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
