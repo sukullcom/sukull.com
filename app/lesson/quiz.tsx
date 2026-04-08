@@ -71,7 +71,6 @@ const useMount = (callback: () => void) => {
 export const Quiz = ({
   initialPercentage,
   initialHearts,
-  initialPoints,
   initialLessonId,
   initialLessonChallenges,
   hasInfiniteHearts = false,
@@ -107,7 +106,6 @@ export const Quiz = ({
 
   const [lessonId] = useState(initialLessonId);
   const [hearts, setHearts] = useState(initialHearts);
-  const [points, setPoints] = useState(initialPoints);
   const [lessonPoints, setLessonPoints] = useState(0);
   const [wrongCount, setWrongCount] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
@@ -153,7 +151,6 @@ export const Quiz = ({
         awardLessonCompletionBonus(lessonId, wrongCount).then((bonuses) => {
           setLessonBonuses(bonuses);
           const bonusTotal = bonuses.completionBonus + bonuses.perfectBonus;
-          setPoints((prev) => prev + bonusTotal);
           setLessonPoints((prev) => prev + bonusTotal);
         });
       }
@@ -281,7 +278,6 @@ export const Quiz = ({
             setWrongCount((c) => c + 1);
             if (!response?.error && !hasInfiniteHearts) {
               setHearts((prev) => Math.max(prev - 1, 0));
-              setPoints((prev) => prev - 1);
               setLessonPoints((prev) => prev - 1);
             }
           })
@@ -337,10 +333,8 @@ export const Quiz = ({
             setPercentage((prev) => prev + 100 / challenges.length);
 
             if (isPracticeMode) {
-              setPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_PRACTICE);
               setLessonPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_PRACTICE);
             } else {
-              setPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_FIRST);
               setLessonPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_FIRST);
             }
           })
@@ -360,7 +354,6 @@ export const Quiz = ({
             setWrongCount((c) => c + 1);
             if (!response?.error && !hasInfiniteHearts) {
               setHearts((prev) => Math.max(prev - 1, 0));
-              setPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_PENALTY);
               setLessonPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_PENALTY);
             }
           })
