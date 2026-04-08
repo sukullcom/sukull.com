@@ -31,14 +31,19 @@ export const Items = ({
   const [showSubscriptionDialog, setShowSubscriptionDialog] = useState(false);
   const [localFreezeCount, setLocalFreezeCount] = useState(streakFreezeCount);
   const [localPoints, setLocalPoints] = useState(points);
+  const [localHearts, setLocalHearts] = useState(hearts);
 
   const freezeCost = SCORING_SYSTEM.STREAK_FREEZE_COST;
 
   const onRefillHearts = () => {
-    if (pending || hearts === 5 || localPoints < POINTS_TO_REFILL) return;
+    if (pending || localHearts === 5 || localPoints < POINTS_TO_REFILL) return;
     startTransition(() => {
       refillHearts()
-        .then(() => setLocalPoints((p) => p - POINTS_TO_REFILL))
+        .then(() => {
+          setLocalHearts(5);
+          setLocalPoints((p) => p - POINTS_TO_REFILL);
+          toast.success("Canların dolduruldu!");
+        })
         .catch(() => toast.error("Bir şeyler yanlış gitti"));
     });
   };
@@ -75,11 +80,11 @@ export const Items = ({
         </div>
         <Button
           onClick={onRefillHearts}
-          disabled={pending || hearts === 5 || localPoints < POINTS_TO_REFILL || hasInfiniteHearts}
+          disabled={pending || localHearts === 5 || localPoints < POINTS_TO_REFILL || hasInfiniteHearts}
         >
           {hasInfiniteHearts ? (
             <InfinityIcon className="h-4 w-4" />
-          ) : hearts === 5 ? (
+          ) : localHearts === 5 ? (
             "Dolu"
           ) : (
             <div className="flex items-center">

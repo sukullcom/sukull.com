@@ -1,0 +1,2908 @@
+{
+  "course": {
+    "title": "İngilizce (Temel) — A2",
+    "imageSrc": ""
+  },
+  "units": [
+    {
+      "title": "Günlük Yaşam ve Rutinler",
+      "description": "Günlük aktiviteler, ev işleri, sıklık zarfları ve zaman ifadeleri",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "Daily Activities — Günlük Aktiviteler",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "'I usually wake up at 7 o'clock.' cümlesinde 'usually' ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["adverbs", "frequency"],
+              "explanation": "'Usually' (genellikle) bir sıklık zarfıdır. Sıklık zarfları genellikle özne ile fiil arasında kullanılır: I usually wake up...",
+              "options": [
+                {"text": "Asla", "correct": false},
+                {"text": "Genellikle", "correct": true},
+                {"text": "Nadiren", "correct": false},
+                {"text": "Bazen", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Sıklık zarflarını Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["adverbs", "frequency"],
+              "explanation": "Always = Her zaman, Sometimes = Bazen, Never = Asla. Sıklık sıralaması: always > usually > often > sometimes > rarely > never.",
+              "options": [
+                {"text": "Always", "pairId": 1, "correct": false},
+                {"text": "Her zaman", "pairId": 1, "correct": false},
+                {"text": "Sometimes", "pairId": 2, "correct": false},
+                {"text": "Bazen", "pairId": 2, "correct": false},
+                {"text": "Never", "pairId": 3, "correct": false},
+                {"text": "Asla", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'She ___ breakfast every morning.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["present simple", "daily routines"],
+              "explanation": "Present Simple'da üçüncü tekil şahıs (he/she/it) ile fiillere '-s' veya '-es' eklenir: She has breakfast.",
+              "options": [
+                {"text": "has", "correct": true},
+                {"text": "have", "correct": false},
+                {"text": "having", "correct": false},
+                {"text": "had", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Do you take a shower in the morning or in the evening?' sorusunda ne sorulmaktadır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["daily routines", "questions"],
+              "explanation": "'Take a shower' duş almak demektir. Soru, kişinin sabah mı akşam mı duş aldığını sormaktadır.",
+              "options": [
+                {"text": "Sabah mı akşam mı duş aldığı", "correct": true},
+                {"text": "Nerede duş aldığı", "correct": false},
+                {"text": "Ne sıklıkla duş aldığı", "correct": false},
+                {"text": "Kiminle duş aldığı", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Günlük aktivite ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["daily routines", "vocabulary"],
+              "explanation": "Get dressed = Giyinmek, Go to bed = Yatmak, Do homework = Ödev yapmak. Bunlar günlük rutinleri anlatan yaygın ifadelerdir.",
+              "options": [
+                {"text": "Get dressed", "pairId": 1, "correct": false},
+                {"text": "Giyinmek", "pairId": 1, "correct": false},
+                {"text": "Go to bed", "pairId": 2, "correct": false},
+                {"text": "Yatmak", "pairId": 2, "correct": false},
+                {"text": "Do homework", "pairId": 3, "correct": false},
+                {"text": "Ödev yapmak", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'I often go jogging in the park.' cümlesinde kişi ne yapıyor?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["daily routines", "vocabulary"],
+              "explanation": "'Go jogging' parkta veya dışarıda koşmak demektir. 'Often' (sık sık) sıklık zarfıdır.",
+              "options": [
+                {"text": "Parkta yürüyüş yapıyor", "correct": false},
+                {"text": "Parkta koşuyor", "correct": true},
+                {"text": "Parkta oturuyor", "correct": false},
+                {"text": "Parkta bisiklete biniyor", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Housework — Ev İşleri",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "'Could you please do the dishes?' ifadesinde ne istenmektedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["housework", "requests"],
+              "explanation": "'Do the dishes' bulaşıkları yıkamak demektir. 'Could you please...?' kibar bir rica ifadesidir.",
+              "options": [
+                {"text": "Yemek yapması", "correct": false},
+                {"text": "Bulaşıkları yıkaması", "correct": true},
+                {"text": "Masayı kurması", "correct": false},
+                {"text": "Çamaşır yıkaması", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Ev işi ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["housework", "vocabulary"],
+              "explanation": "Vacuum the floor = Süpürmek (elektrikli süpürge ile), Iron the clothes = Ütü yapmak, Take out the trash = Çöpü çıkarmak.",
+              "options": [
+                {"text": "Vacuum the floor", "pairId": 1, "correct": false},
+                {"text": "Yerleri süpürmek", "pairId": 1, "correct": false},
+                {"text": "Iron the clothes", "pairId": 2, "correct": false},
+                {"text": "Ütü yapmak", "pairId": 2, "correct": false},
+                {"text": "Take out the trash", "pairId": 3, "correct": false},
+                {"text": "Çöpü çıkarmak", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'My mother ___ the laundry every Saturday.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["housework", "present simple"],
+              "explanation": "'Do the laundry' çamaşır yıkamak demektir. Üçüncü tekil şahıs için 'do' fiili 'does' olur.",
+              "options": [
+                {"text": "does", "correct": true},
+                {"text": "do", "correct": false},
+                {"text": "doing", "correct": false},
+                {"text": "done", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'I hate washing up, but I don't mind cooking.' cümlesinin anlamı nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["housework", "opinions"],
+              "explanation": "'Hate' nefret etmek, 'don't mind' aldırmamak/sorun olmamak demektir. 'Washing up' İngiliz İngilizcesinde bulaşık yıkamak anlamına gelir.",
+              "options": [
+                {"text": "Bulaşık yıkamaktan nefret eder ama yemek yapmak sorun değil", "correct": true},
+                {"text": "Yemek yapmaktan nefret eder ama bulaşık sorun değil", "correct": false},
+                {"text": "Her ikisinden de nefret eder", "correct": false},
+                {"text": "Her ikisini de sever", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hangi ifade 'yatağını topla' anlamına gelir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["housework", "vocabulary"],
+              "explanation": "'Make the/your bed' yatağını toplamak demektir. İngilizcede 'make' fiili bu kalıpta kullanılır.",
+              "options": [
+                {"text": "Do your bed", "correct": false},
+                {"text": "Make your bed", "correct": true},
+                {"text": "Clean your bed", "correct": false},
+                {"text": "Wash your bed", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Ev işi ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["housework", "vocabulary"],
+              "explanation": "Mop the floor = Paspas yapmak, Set the table = Masa kurmak, Tidy up = Toplamak/düzenlemek, Dust the shelves = Rafların tozunu almak.",
+              "options": [
+                {"text": "Mop the floor", "pairId": 1, "correct": false},
+                {"text": "Paspas yapmak", "pairId": 1, "correct": false},
+                {"text": "Set the table", "pairId": 2, "correct": false},
+                {"text": "Masa kurmak", "pairId": 2, "correct": false},
+                {"text": "Tidy up", "pairId": 3, "correct": false},
+                {"text": "Toplamak", "pairId": 3, "correct": false},
+                {"text": "Dust the shelves", "pairId": 4, "correct": false},
+                {"text": "Tozunu almak", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Telling the Time — Saati Söyleme",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "'It's half past three.' saat kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["time", "vocabulary"],
+              "explanation": "'Half past' buçuk demektir. 'Half past three' = 3:30 (üç buçuk).",
+              "options": [
+                {"text": "3:15", "correct": false},
+                {"text": "3:30", "correct": true},
+                {"text": "3:45", "correct": false},
+                {"text": "2:30", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Saat ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["time", "vocabulary"],
+              "explanation": "Quarter past = çeyrek geçe, Quarter to = çeyreğe var, O'clock = tam saat.",
+              "options": [
+                {"text": "Quarter past", "pairId": 1, "correct": false},
+                {"text": "Çeyrek geçe", "pairId": 1, "correct": false},
+                {"text": "Quarter to", "pairId": 2, "correct": false},
+                {"text": "Çeyreğe var", "pairId": 2, "correct": false},
+                {"text": "O'clock", "pairId": 3, "correct": false},
+                {"text": "Tam saat", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'It's ten to five.' saat kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["time"],
+              "explanation": "'Ten to five' beşe on var demektir, yani 4:50. 'To' bir sonraki saate ne kadar kaldığını belirtir.",
+              "options": [
+                {"text": "5:10", "correct": false},
+                {"text": "4:50", "correct": true},
+                {"text": "4:10", "correct": false},
+                {"text": "5:50", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'What time does the meeting start?' sorusunda ne sorulmaktadır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["time", "questions"],
+              "explanation": "'What time does...start?' bir şeyin saat kaçta başladığını soran bir kalıptır. Meeting = toplantı.",
+              "options": [
+                {"text": "Toplantı nerede?", "correct": false},
+                {"text": "Toplantı ne zaman bitiyor?", "correct": false},
+                {"text": "Toplantı saat kaçta başlıyor?", "correct": true},
+                {"text": "Toplantıya kim katılıyor?", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'It's twenty past eight.' saat kaçtır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["time"],
+              "explanation": "'Twenty past eight' sekizi yirmi geçe demektir, yani 8:20. 'Past' saati ne kadar geçtiğini belirtir.",
+              "options": [
+                {"text": "8:20", "correct": true},
+                {"text": "7:40", "correct": false},
+                {"text": "8:40", "correct": false},
+                {"text": "7:20", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'The train leaves at a quarter to nine.' Tren saat kaçta kalkıyor?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["time", "transport"],
+              "explanation": "'A quarter to nine' dokuza çeyrek var demektir, yani 8:45. 'Leave' kalkmak/ayrılmak anlamındadır.",
+              "options": [
+                {"text": "9:15", "correct": false},
+                {"text": "9:45", "correct": false},
+                {"text": "8:45", "correct": true},
+                {"text": "8:15", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Weekend Plans — Hafta Sonu Planları",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "'What are you going to do this weekend?' sorusunda hangi zaman kullanılmıştır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["future plans", "grammar"],
+              "explanation": "'Be going to' yapısı planlanmış gelecek eylemler için kullanılır. 'What are you going to do?' = Ne yapacaksın?",
+              "options": [
+                {"text": "Present Simple", "correct": false},
+                {"text": "Present Continuous", "correct": false},
+                {"text": "Be going to (gelecek plan)", "correct": true},
+                {"text": "Past Simple", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Hafta sonu aktivitelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["weekend", "vocabulary"],
+              "explanation": "Go shopping = Alışveriş yapmak, Visit friends = Arkadaşları ziyaret etmek, Stay at home = Evde kalmak.",
+              "options": [
+                {"text": "Go shopping", "pairId": 1, "correct": false},
+                {"text": "Alışveriş yapmak", "pairId": 1, "correct": false},
+                {"text": "Visit friends", "pairId": 2, "correct": false},
+                {"text": "Arkadaşları ziyaret etmek", "pairId": 2, "correct": false},
+                {"text": "Stay at home", "pairId": 3, "correct": false},
+                {"text": "Evde kalmak", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'I'm ___ to visit my grandparents next Sunday.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["future plans", "grammar"],
+              "explanation": "'Be going to' kalıbında 'I am going to...' kullanılır. Kısaltması: I'm going to...",
+              "options": [
+                {"text": "going", "correct": true},
+                {"text": "go", "correct": false},
+                {"text": "gone", "correct": false},
+                {"text": "went", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'We might go to the cinema on Saturday.' cümlesinde 'might' ne ifade eder?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["modals", "possibility"],
+              "explanation": "'Might' kesin olmayan bir olasılığı ifade eder (belki). Cumartesi sinemaya gidebilirler ama kesin değil.",
+              "options": [
+                {"text": "Kesinlikle gidecekler", "correct": false},
+                {"text": "Belki gidecekler (kesin değil)", "correct": true},
+                {"text": "Gitmek zorundalar", "correct": false},
+                {"text": "Gitmek istemiyorlar", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'She is going to have a barbecue with her family.' cümlesinin anlamı nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["future plans", "vocabulary"],
+              "explanation": "'Have a barbecue' mangal/barbekü yapmak demektir. 'Be going to' planlanmış bir gelecek eylemdir.",
+              "options": [
+                {"text": "Ailesiyle dışarıda yemek yiyecek", "correct": false},
+                {"text": "Ailesiyle mangal yapacak", "correct": true},
+                {"text": "Ailesiyle pikniğe gidecek", "correct": false},
+                {"text": "Ailesiyle yemek sipariş edecek", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Boş zaman aktivitelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["free time", "vocabulary"],
+              "explanation": "Play board games = Kutu oyunu oynamak, Go hiking = Doğa yürüyüşüne gitmek, Have a picnic = Piknik yapmak, Read a novel = Roman okumak.",
+              "options": [
+                {"text": "Play board games", "pairId": 1, "correct": false},
+                {"text": "Kutu oyunu oynamak", "pairId": 1, "correct": false},
+                {"text": "Go hiking", "pairId": 2, "correct": false},
+                {"text": "Doğa yürüyüşü", "pairId": 2, "correct": false},
+                {"text": "Have a picnic", "pairId": 3, "correct": false},
+                {"text": "Piknik yapmak", "pairId": 3, "correct": false},
+                {"text": "Read a novel", "pairId": 4, "correct": false},
+                {"text": "Roman okumak", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Appointments — Randevular ve Programlar",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "'I have a dentist appointment at 3 p.m.' cümlesinde kişinin ne zaman randevusu var?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["appointments", "time"],
+              "explanation": "'Dentist appointment' diş hekimi randevusu demektir. '3 p.m.' öğleden sonra saat 3'tür.",
+              "options": [
+                {"text": "Sabah 3'te", "correct": false},
+                {"text": "Öğleden sonra 3'te", "correct": true},
+                {"text": "Gece 3'te", "correct": false},
+                {"text": "Öğle 12'de", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Program ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["appointments", "vocabulary"],
+              "explanation": "Schedule = Program/takvim, Cancel = İptal etmek, Reschedule = Yeniden planlamak.",
+              "options": [
+                {"text": "Schedule", "pairId": 1, "correct": false},
+                {"text": "Program", "pairId": 1, "correct": false},
+                {"text": "Cancel", "pairId": 2, "correct": false},
+                {"text": "İptal etmek", "pairId": 2, "correct": false},
+                {"text": "Reschedule", "pairId": 3, "correct": false},
+                {"text": "Yeniden planlamak", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Can we ___ the meeting to Friday?' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["appointments", "vocabulary"],
+              "explanation": "'Move' bir toplantıyı veya randevuyu başka bir güne taşımak anlamında kullanılır.",
+              "options": [
+                {"text": "move", "correct": true},
+                {"text": "do", "correct": false},
+                {"text": "make", "correct": false},
+                {"text": "take", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'I'm afraid I can't make it on Tuesday.' cümlesinin anlamı nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["appointments", "expressions"],
+              "explanation": "'I can't make it' bir etkinliğe veya randevuya gelememe durumunu kibarca ifade eder. 'I'm afraid' üzgünüm/maalesef anlamındadır.",
+              "options": [
+                {"text": "Salı günü korkuyor", "correct": false},
+                {"text": "Salı günü gelemeyeceğini söylüyor", "correct": true},
+                {"text": "Salı günü yapamayacağını söylüyor", "correct": false},
+                {"text": "Salı gününden hoşlanmıyor", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'Are you free on Wednesday afternoon?' sorusuyla ne sorulmaktadır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["appointments", "availability"],
+              "explanation": "'Are you free?' müsait misin demektir. Bu soru randevu veya buluşma ayarlamak için karşı tarafın uygunluğunu sorar.",
+              "options": [
+                {"text": "Çarşamba öğleden sonra ücretsiz mi", "correct": false},
+                {"text": "Çarşamba öğleden sonra müsait mi", "correct": true},
+                {"text": "Çarşamba öğleden sonra tatil mi", "correct": false},
+                {"text": "Çarşamba öğleden sonra serbest mi (işten)", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'Let's meet at the café at half past two.' Buluşma saati ve yeri neresidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["appointments", "time", "places"],
+              "explanation": "'Let's meet' hadi buluşalım demektir. 'At the café' kafede, 'at half past two' saat 2:30'da anlamındadır.",
+              "options": [
+                {"text": "Kafede saat 2:00'de", "correct": false},
+                {"text": "Kafede saat 2:30'da", "correct": true},
+                {"text": "Restoranda saat 2:30'da", "correct": false},
+                {"text": "Kafede saat 12:30'da", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Geçmiş Deneyimler ve Anılar",
+      "description": "Past Simple ile geçmiş olayları anlatma, tatil ve seyahat deneyimleri",
+      "order": 2,
+      "lessons": [
+        {
+          "title": "Past Simple — Geçmiş Zaman",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "'I visited Istanbul last summer.' cümlesinde hangi zaman kullanılmıştır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["past simple", "grammar"],
+              "explanation": "'Visited' fiilinin geçmiş zaman halidir (visit → visited). 'Last summer' (geçen yaz) geçmiş zaman işaretidir.",
+              "options": [
+                {"text": "Present Simple", "correct": false},
+                {"text": "Past Simple", "correct": true},
+                {"text": "Future Simple", "correct": false},
+                {"text": "Present Continuous", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Düzenli fiillerin geçmiş zaman hallerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["past simple", "regular verbs"],
+              "explanation": "Düzenli fiillere '-ed' eklenir: play → played, watch → watched, listen → listened.",
+              "options": [
+                {"text": "Play", "pairId": 1, "correct": false},
+                {"text": "Played", "pairId": 1, "correct": false},
+                {"text": "Watch", "pairId": 2, "correct": false},
+                {"text": "Watched", "pairId": 2, "correct": false},
+                {"text": "Listen", "pairId": 3, "correct": false},
+                {"text": "Listened", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'She ___ to the party last night.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["past simple", "irregular verbs"],
+              "explanation": "'Go' fiilinin Past Simple hali 'went'tir. Bu düzensiz (irregular) bir fiildir: go → went → gone.",
+              "options": [
+                {"text": "went", "correct": true},
+                {"text": "goed", "correct": false},
+                {"text": "goes", "correct": false},
+                {"text": "going", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Did you enjoy the movie?' sorusuna olumsuz cevap hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["past simple", "questions"],
+              "explanation": "Past Simple soru cümlelerinde 'Did' yardımcı fiili kullanılır. Olumsuz cevap: 'No, I didn't.' (did not kısaltması).",
+              "options": [
+                {"text": "Yes, I do.", "correct": false},
+                {"text": "No, I don't.", "correct": false},
+                {"text": "No, I didn't.", "correct": true},
+                {"text": "No, I wasn't.", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Düzensiz fiilleri geçmiş zaman halleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["past simple", "irregular verbs"],
+              "explanation": "Düzensiz fiillerin geçmiş zaman halleri ezberlenmesi gerekir: eat → ate, see → saw, buy → bought, take → took.",
+              "options": [
+                {"text": "Eat", "pairId": 1, "correct": false},
+                {"text": "Ate", "pairId": 1, "correct": false},
+                {"text": "See", "pairId": 2, "correct": false},
+                {"text": "Saw", "pairId": 2, "correct": false},
+                {"text": "Buy", "pairId": 3, "correct": false},
+                {"text": "Bought", "pairId": 3, "correct": false},
+                {"text": "Take", "pairId": 4, "correct": false},
+                {"text": "Took", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Past Simple'da olumsuz cümle nasıl kurulur? 'I ___ watch TV yesterday.'",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["past simple", "negatives"],
+              "explanation": "Past Simple olumsuz cümlelerde 'did not' (kısaltma: didn't) kullanılır ve ana fiil yalın halde kalır: I didn't watch.",
+              "options": [
+                {"text": "didn't", "correct": true},
+                {"text": "don't", "correct": false},
+                {"text": "wasn't", "correct": false},
+                {"text": "not", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Holiday Memories — Tatil Anıları",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "'We stayed at a beautiful hotel by the sea.' cümlesinde tatilciler nerede kaldı?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["holidays", "vocabulary"],
+              "explanation": "'By the sea' deniz kenarında demektir. 'Stayed at a hotel' bir otelde kaldık anlamındadır.",
+              "options": [
+                {"text": "Dağ evi", "correct": false},
+                {"text": "Deniz kenarında güzel bir otel", "correct": true},
+                {"text": "Arkadaşının evi", "correct": false},
+                {"text": "Kamp alanı", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Tatil kelimelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["holidays", "vocabulary"],
+              "explanation": "Suitcase = Bavul, Sunscreen = Güneş kremi, Souvenir = Hatıra/hediyelik eşya.",
+              "options": [
+                {"text": "Suitcase", "pairId": 1, "correct": false},
+                {"text": "Bavul", "pairId": 1, "correct": false},
+                {"text": "Sunscreen", "pairId": 2, "correct": false},
+                {"text": "Güneş kremi", "pairId": 2, "correct": false},
+                {"text": "Souvenir", "pairId": 3, "correct": false},
+                {"text": "Hediyelik eşya", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'The weather was amazing, and we swam in the sea every day.' Bu cümlede hava nasıldı?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["holidays", "past simple"],
+              "explanation": "'Amazing' harika/muhteşem demektir. 'Swam' swim fiilinin geçmiş zaman halidir (swim → swam).",
+              "options": [
+                {"text": "Yağmurlu", "correct": false},
+                {"text": "Muhteşem", "correct": true},
+                {"text": "Soğuk", "correct": false},
+                {"text": "Bulutlu", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'We ___ souvenirs from the local market.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["holidays", "past simple"],
+              "explanation": "'Buy' fiilinin geçmiş zaman hali 'bought'tur (düzensiz fiil). 'Local market' yerel pazar demektir.",
+              "options": [
+                {"text": "bought", "correct": true},
+                {"text": "buyed", "correct": false},
+                {"text": "buy", "correct": false},
+                {"text": "buying", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'I had the best holiday of my life!' ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["holidays", "expressions"],
+              "explanation": "'The best...of my life' hayatımın en iyisi kalıbıdır. 'Had' have fiilinin geçmiş halidir.",
+              "options": [
+                {"text": "Hayatımın en kötü tatiliydi", "correct": false},
+                {"text": "İyi bir tatil yaptım", "correct": false},
+                {"text": "Hayatımın en iyi tatiliydi", "correct": true},
+                {"text": "Tatile gitmek istedim", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Seyahat aktivitelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["holidays", "vocabulary"],
+              "explanation": "Go sightseeing = Gezi yapmak, Try local food = Yerel yemekleri denemek, Take photos = Fotoğraf çekmek, Explore the city = Şehri keşfetmek.",
+              "options": [
+                {"text": "Go sightseeing", "pairId": 1, "correct": false},
+                {"text": "Gezi yapmak", "pairId": 1, "correct": false},
+                {"text": "Try local food", "pairId": 2, "correct": false},
+                {"text": "Yerel yemekleri denemek", "pairId": 2, "correct": false},
+                {"text": "Take photos", "pairId": 3, "correct": false},
+                {"text": "Fotoğraf çekmek", "pairId": 3, "correct": false},
+                {"text": "Explore the city", "pairId": 4, "correct": false},
+                {"text": "Şehri keşfetmek", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Life Events — Hayat Olayları",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "'She was born in 1998.' cümlesinde 'was born' ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["life events", "past simple"],
+              "explanation": "'Was born' doğmak demektir. İngilizcede 'born' her zaman 'be' fiiliyle kullanılır: I was born, He was born.",
+              "options": [
+                {"text": "Büyüdü", "correct": false},
+                {"text": "Doğdu", "correct": true},
+                {"text": "Yaşadı", "correct": false},
+                {"text": "Taşındı", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Hayat olaylarını Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["life events", "vocabulary"],
+              "explanation": "Graduate = Mezun olmak, Get married = Evlenmek, Move house = Ev taşımak.",
+              "options": [
+                {"text": "Graduate", "pairId": 1, "correct": false},
+                {"text": "Mezun olmak", "pairId": 1, "correct": false},
+                {"text": "Get married", "pairId": 2, "correct": false},
+                {"text": "Evlenmek", "pairId": 2, "correct": false},
+                {"text": "Move house", "pairId": 3, "correct": false},
+                {"text": "Ev taşımak", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'He grew up in a small village.' cümlesinde 'grew up' ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["life events", "phrasal verbs"],
+              "explanation": "'Grow up' büyümek demektir (çocukluktan yetişkinliğe). 'Grew' grow fiilinin geçmiş halidir.",
+              "options": [
+                {"text": "Yetişti/büyüdü", "correct": true},
+                {"text": "Ziyaret etti", "correct": false},
+                {"text": "Çalıştı", "correct": false},
+                {"text": "Doğdu", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'They ___ married in 2020.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["life events", "past simple"],
+              "explanation": "'Get married' evlenmek demektir. Geçmiş zaman hali: 'got married'. Get → got düzensiz bir fiildir.",
+              "options": [
+                {"text": "got", "correct": true},
+                {"text": "get", "correct": false},
+                {"text": "getting", "correct": false},
+                {"text": "gets", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'After university, she started her own business.' cümlesinin anlamı nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["life events", "career"],
+              "explanation": "'Start a business' iş kurmak demektir. 'Her own business' kendi işi anlamındadır. 'After university' üniversiteden sonra.",
+              "options": [
+                {"text": "Üniversiteden sonra iş aradı", "correct": false},
+                {"text": "Üniversiteden sonra kendi işini kurdu", "correct": true},
+                {"text": "Üniversitede bir şirkette çalıştı", "correct": false},
+                {"text": "Üniversiteyi bıraktı", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Kariyer ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["life events", "career"],
+              "explanation": "Get a promotion = Terfi almak, Retire = Emekli olmak, Change careers = Kariyer değiştirmek, Get fired = İşten çıkarılmak.",
+              "options": [
+                {"text": "Get a promotion", "pairId": 1, "correct": false},
+                {"text": "Terfi almak", "pairId": 1, "correct": false},
+                {"text": "Retire", "pairId": 2, "correct": false},
+                {"text": "Emekli olmak", "pairId": 2, "correct": false},
+                {"text": "Change careers", "pairId": 3, "correct": false},
+                {"text": "Kariyer değiştirmek", "pairId": 3, "correct": false},
+                {"text": "Get fired", "pairId": 4, "correct": false},
+                {"text": "İşten çıkarılmak", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Storytelling — Hikaye Anlatma",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "'Once upon a time, there was a little girl.' cümlesi ne tür bir ifadedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["storytelling", "expressions"],
+              "explanation": "'Once upon a time' (Bir varmış bir yokmuş) hikaye başlangıç kalıbıdır. Masallar ve hikayeler bu şekilde başlar.",
+              "options": [
+                {"text": "Haber cümlesi", "correct": false},
+                {"text": "Hikaye başlangıcı", "correct": true},
+                {"text": "Soru cümlesi", "correct": false},
+                {"text": "Emir cümlesi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Hikaye bağlaçlarını Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["storytelling", "connectors"],
+              "explanation": "First = Önce, Then = Sonra, Finally = Son olarak. Bunlar olayları sıralamak için kullanılır.",
+              "options": [
+                {"text": "First", "pairId": 1, "correct": false},
+                {"text": "Önce", "pairId": 1, "correct": false},
+                {"text": "Then", "pairId": 2, "correct": false},
+                {"text": "Sonra", "pairId": 2, "correct": false},
+                {"text": "Finally", "pairId": 3, "correct": false},
+                {"text": "Son olarak", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Suddenly, the lights went out.' cümlesinde 'suddenly' ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["storytelling", "adverbs"],
+              "explanation": "'Suddenly' aniden/birdenbire demektir. 'The lights went out' ışıklar söndü anlamındadır.",
+              "options": [
+                {"text": "Yavaş yavaş", "correct": false},
+                {"text": "Aniden", "correct": true},
+                {"text": "Neyse ki", "correct": false},
+                {"text": "Maalesef", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Sıralama zarflarını Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["storytelling", "sequencing"],
+              "explanation": "After that = Ondan sonra, Meanwhile = Bu sırada, In the end = Sonunda, Before that = Ondan önce.",
+              "options": [
+                {"text": "After that", "pairId": 1, "correct": false},
+                {"text": "Ondan sonra", "pairId": 1, "correct": false},
+                {"text": "Meanwhile", "pairId": 2, "correct": false},
+                {"text": "Bu sırada", "pairId": 2, "correct": false},
+                {"text": "In the end", "pairId": 3, "correct": false},
+                {"text": "Sonunda", "pairId": 3, "correct": false},
+                {"text": "Before that", "pairId": 4, "correct": false},
+                {"text": "Ondan önce", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'While I was walking home, it started to rain.' cümlesinde iki olay arasındaki ilişki nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["storytelling", "past continuous"],
+              "explanation": "'While' (... iken) iki eylemin aynı anda gerçekleştiğini belirtir. Uzun süren eylem Past Continuous (was walking), kısa eylem Past Simple (started).",
+              "options": [
+                {"text": "Biri diğerinin sebebidir", "correct": false},
+                {"text": "Biri devam ederken diğeri başlamıştır", "correct": true},
+                {"text": "İkisi de aynı anda bitmiştir", "correct": false},
+                {"text": "Biri diğerinden sonra olmuştur", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'___ I was sleeping, someone knocked on the door.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["storytelling", "past continuous"],
+              "explanation": "'While' (... iken) devam eden bir eylem sırasında başka bir eylemin olduğunu belirtir. While + Past Continuous yapısı kullanılır.",
+              "options": [
+                {"text": "While", "correct": true},
+                {"text": "When", "correct": false},
+                {"text": "After", "correct": false},
+                {"text": "Before", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Childhood Memories — Çocukluk Anıları",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "'When I was a child, I used to play in the garden.' cümlesinde 'used to' ne ifade eder?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["used to", "past habits"],
+              "explanation": "'Used to' geçmişte düzenli yapılan ama artık yapılmayan alışkanlıkları ifade eder. Eskiden yapardım anlamındadır.",
+              "options": [
+                {"text": "Şu an da yapıyorum", "correct": false},
+                {"text": "Eskiden yapardım (artık yapmıyorum)", "correct": true},
+                {"text": "Yapmak zorundaydım", "correct": false},
+                {"text": "Yapabilirim", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Çocukluk aktivitelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["childhood", "vocabulary"],
+              "explanation": "Play hide and seek = Saklambaç oynamak, Climb trees = Ağaca tırmanmak, Ride a bicycle = Bisiklete binmek.",
+              "options": [
+                {"text": "Play hide and seek", "pairId": 1, "correct": false},
+                {"text": "Saklambaç oynamak", "pairId": 1, "correct": false},
+                {"text": "Climb trees", "pairId": 2, "correct": false},
+                {"text": "Ağaca tırmanmak", "pairId": 2, "correct": false},
+                {"text": "Ride a bicycle", "pairId": 3, "correct": false},
+                {"text": "Bisiklete binmek", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'My grandmother ___ tell us stories every evening.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["used to", "past habits"],
+              "explanation": "'Used to' geçmişteki alışkanlıkları anlatır. 'My grandmother used to tell us stories' = Büyükannem bize her akşam hikaye anlatırdı.",
+              "options": [
+                {"text": "used to", "correct": true},
+                {"text": "use to", "correct": false},
+                {"text": "uses to", "correct": false},
+                {"text": "using to", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'We didn't use to have smartphones when I was young.' cümlesinin anlamı nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["used to", "negatives"],
+              "explanation": "'Didn't use to' geçmişte sahip olunmayan/yapılmayan şeyleri ifade eder. Olumsuzda 'used' değil 'use' kullanılır.",
+              "options": [
+                {"text": "Gençken akıllı telefonlarımız yoktu", "correct": true},
+                {"text": "Akıllı telefonları kullanmayı bilmezdik", "correct": false},
+                {"text": "Akıllı telefonları sevmezdik", "correct": false},
+                {"text": "Akıllı telefonları satın alamazdık", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'Did you use to walk to school?' sorusunun Türkçe karşılığı nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["used to", "questions"],
+              "explanation": "'Did you use to...?' geçmişteki alışkanlıkları soran soru kalıbıdır. Soru ve olumsuzda 'used' yerine 'use' kullanılır.",
+              "options": [
+                {"text": "Okula yürüyor musun?", "correct": false},
+                {"text": "Okula yürüyecek misin?", "correct": false},
+                {"text": "Eskiden okula yürür müydün?", "correct": true},
+                {"text": "Okula yürümeyi sever misin?", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Geçmiş alışkanlık ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["used to", "expressions"],
+              "explanation": "I used to believe = Eskiden inanırdım, We used to live = Eskiden yaşardık, They used to play = Eskiden oynarlardı.",
+              "options": [
+                {"text": "I used to believe", "pairId": 1, "correct": false},
+                {"text": "Eskiden inanırdım", "pairId": 1, "correct": false},
+                {"text": "We used to live", "pairId": 2, "correct": false},
+                {"text": "Eskiden yaşardık", "pairId": 2, "correct": false},
+                {"text": "They used to play", "pairId": 3, "correct": false},
+                {"text": "Eskiden oynarlardı", "pairId": 3, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Alışveriş, Yemek ve Hizmetler",
+      "description": "Mağazada ve restoranda iletişim, fiyat sorma, sipariş verme ve şikayet etme",
+      "order": 3,
+      "lessons": [
+        {
+          "title": "Shopping — Alışveriş",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "'How much does this T-shirt cost?' sorusunda ne sorulmaktadır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["shopping", "questions"],
+              "explanation": "'How much does...cost?' bir şeyin fiyatını sormak için kullanılır. 'T-shirt' tişört demektir.",
+              "options": [
+                {"text": "Tişörtün rengi", "correct": false},
+                {"text": "Tişörtün fiyatı", "correct": true},
+                {"text": "Tişörtün bedeni", "correct": false},
+                {"text": "Tişörtün markası", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Alışveriş ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["shopping", "vocabulary"],
+              "explanation": "Try on = Denemek (giysi), Receipt = Fiş/makbuz, Discount = İndirim.",
+              "options": [
+                {"text": "Try on", "pairId": 1, "correct": false},
+                {"text": "Denemek", "pairId": 1, "correct": false},
+                {"text": "Receipt", "pairId": 2, "correct": false},
+                {"text": "Fiş", "pairId": 2, "correct": false},
+                {"text": "Discount", "pairId": 3, "correct": false},
+                {"text": "İndirim", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Can I try this on?' ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["shopping", "expressions"],
+              "explanation": "'Try on' bir giysiyi denemek anlamındadır. Mağazada deneme kabinine girmeden önce kullanılan kibar bir sorma şeklidir.",
+              "options": [
+                {"text": "Bunu deneyebilir miyim?", "correct": true},
+                {"text": "Bunu alabilir miyim?", "correct": false},
+                {"text": "Bunu değiştirebilir miyim?", "correct": false},
+                {"text": "Bunu görebilir miyim?", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'This jacket is too small. Do you have it in a ___ size?' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["shopping", "adjectives"],
+              "explanation": "'Too small' çok küçük demektir, bu yüzden daha büyük bir beden istenir. 'Larger' = daha büyük (large'ın karşılaştırma hali).",
+              "options": [
+                {"text": "larger", "correct": true},
+                {"text": "smaller", "correct": false},
+                {"text": "cheaper", "correct": false},
+                {"text": "shorter", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'I'd like to return this. It doesn't fit.' ifadesinde müşteri ne yapmak istiyor?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["shopping", "complaints"],
+              "explanation": "'Return' iade etmek, 'It doesn't fit' uymamak demektir. Müşteri ürünü iade etmek istiyor çünkü bedeni uymuyor.",
+              "options": [
+                {"text": "Değiştirmek", "correct": false},
+                {"text": "İade etmek", "correct": true},
+                {"text": "Tamir ettirmek", "correct": false},
+                {"text": "Daha ucuzunu almak", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Alışveriş beden ve ölçü ifadelerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["shopping", "sizes"],
+              "explanation": "Tight = Dar, Loose = Bol, It fits perfectly = Tam oluyor, Out of stock = Stokta yok.",
+              "options": [
+                {"text": "Tight", "pairId": 1, "correct": false},
+                {"text": "Dar", "pairId": 1, "correct": false},
+                {"text": "Loose", "pairId": 2, "correct": false},
+                {"text": "Bol", "pairId": 2, "correct": false},
+                {"text": "It fits perfectly", "pairId": 3, "correct": false},
+                {"text": "Tam oluyor", "pairId": 3, "correct": false},
+                {"text": "Out of stock", "pairId": 4, "correct": false},
+                {"text": "Stokta yok", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "At a Restaurant — Restoranda",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "'Could we have the menu, please?' ifadesinde ne istenmektedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["restaurant", "requests"],
+              "explanation": "'Menu' yemek listesi/menü demektir. 'Could we have...please?' kibar bir isteme şeklidir.",
+              "options": [
+                {"text": "Hesap", "correct": false},
+                {"text": "Menü", "correct": true},
+                {"text": "Su", "correct": false},
+                {"text": "Masa", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Restoran ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["restaurant", "vocabulary"],
+              "explanation": "Starter = Başlangıç/meze, Main course = Ana yemek, Dessert = Tatlı.",
+              "options": [
+                {"text": "Starter", "pairId": 1, "correct": false},
+                {"text": "Başlangıç", "pairId": 1, "correct": false},
+                {"text": "Main course", "pairId": 2, "correct": false},
+                {"text": "Ana yemek", "pairId": 2, "correct": false},
+                {"text": "Dessert", "pairId": 3, "correct": false},
+                {"text": "Tatlı", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'I'll ___ the grilled chicken, please.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["restaurant", "ordering"],
+              "explanation": "'I'll have' restoranda sipariş verirken kullanılan standart ifadedir. 'Grilled chicken' ızgara tavuk demektir.",
+              "options": [
+                {"text": "have", "correct": true},
+                {"text": "take", "correct": false},
+                {"text": "want", "correct": false},
+                {"text": "eat", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Is there anything you'd recommend?' sorusunda garsondan ne istenmektedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["restaurant", "recommendations"],
+              "explanation": "'Recommend' tavsiye etmek demektir. Müşteri garsonun yemek tavsiyesi istemektedir.",
+              "options": [
+                {"text": "Menüde ne var diye soruyor", "correct": false},
+                {"text": "Yemek tavsiyesi istiyor", "correct": true},
+                {"text": "Fiyatları soruyor", "correct": false},
+                {"text": "Alerjisi olduğunu söylüyor", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'Could we have the bill, please?' ifadesinde ne istenmektedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["restaurant", "paying"],
+              "explanation": "'The bill' hesap demektir. Bu ifade yemek sonrası hesabı istemek için kullanılır. Amerikan İngilizcesinde 'check' da kullanılır.",
+              "options": [
+                {"text": "Menü istiyor", "correct": false},
+                {"text": "Hesap istiyor", "correct": true},
+                {"text": "Ekstra tabak istiyor", "correct": false},
+                {"text": "Tatlı menüsü istiyor", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Yemek pişirme yöntemlerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["restaurant", "cooking"],
+              "explanation": "Grilled = Izgara, Fried = Kızartma, Baked = Fırında, Steamed = Buharda pişmiş.",
+              "options": [
+                {"text": "Grilled", "pairId": 1, "correct": false},
+                {"text": "Izgara", "pairId": 1, "correct": false},
+                {"text": "Fried", "pairId": 2, "correct": false},
+                {"text": "Kızartma", "pairId": 2, "correct": false},
+                {"text": "Baked", "pairId": 3, "correct": false},
+                {"text": "Fırında", "pairId": 3, "correct": false},
+                {"text": "Steamed", "pairId": 4, "correct": false},
+                {"text": "Buharda", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Food Preferences — Yemek Tercihleri",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "'I'm allergic to nuts.' cümlesinde kişi ne söylüyor?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["food", "health"],
+              "explanation": "'Allergic to' bir şeye alerjisi olmak demektir. 'Nuts' fındık/ceviz gibi kabuklu yemişler demektir.",
+              "options": [
+                {"text": "Fındığı sevmiyor", "correct": false},
+                {"text": "Fındığa alerjisi var", "correct": true},
+                {"text": "Fındık yemek istiyor", "correct": false},
+                {"text": "Fındık çok pahalı", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Diyet ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["food", "diet"],
+              "explanation": "Vegetarian = Vejetaryen (et yemeyen), Vegan = Vegan (hiçbir hayvansal ürün tüketmeyen), Gluten-free = Glutensiz.",
+              "options": [
+                {"text": "Vegetarian", "pairId": 1, "correct": false},
+                {"text": "Vejetaryen", "pairId": 1, "correct": false},
+                {"text": "Vegan", "pairId": 2, "correct": false},
+                {"text": "Hayvansal ürün yok", "pairId": 2, "correct": false},
+                {"text": "Gluten-free", "pairId": 3, "correct": false},
+                {"text": "Glutensiz", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'I can't stand spicy food.' cümlesinde kişi baharatlı yemekler hakkında ne düşünüyor?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["food", "opinions"],
+              "explanation": "'Can't stand' bir şeye tahammül edememek/çok sevmemek demektir. 'Spicy food' baharatlı/acılı yemek demektir.",
+              "options": [
+                {"text": "Çok seviyor", "correct": false},
+                {"text": "Hiç sevmiyor", "correct": true},
+                {"text": "Bazen yiyor", "correct": false},
+                {"text": "İlk kez deniyor", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Does this dish ___ any dairy products?' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["food", "ingredients"],
+              "explanation": "'Contain' içermek demektir. 'Dairy products' süt ürünleri (peynir, yoğurt, tereyağı vb.) demektir.",
+              "options": [
+                {"text": "contain", "correct": true},
+                {"text": "has", "correct": false},
+                {"text": "include", "correct": false},
+                {"text": "have", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Tat ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["food", "taste"],
+              "explanation": "Spicy = Acılı/baharatlı, Bland = Tatsız/yavan, Savoury = Tuzlu/lezzetli (tatlı olmayan), Bitter = Acı.",
+              "options": [
+                {"text": "Spicy", "pairId": 1, "correct": false},
+                {"text": "Acılı", "pairId": 1, "correct": false},
+                {"text": "Bland", "pairId": 2, "correct": false},
+                {"text": "Tatsız", "pairId": 2, "correct": false},
+                {"text": "Savoury", "pairId": 3, "correct": false},
+                {"text": "Tuzlu lezzet", "pairId": 3, "correct": false},
+                {"text": "Bitter", "pairId": 4, "correct": false},
+                {"text": "Acı", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'This soup is delicious! Can I have the recipe?' cümlesinin anlamı nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["food", "compliments"],
+              "explanation": "'Delicious' çok lezzetli demektir. 'Recipe' tarif demektir. Kişi çorbayı beğenmiş ve tarifini istiyor.",
+              "options": [
+                {"text": "Çorba kötü, başka istiyor", "correct": false},
+                {"text": "Çorba lezzetli, tarifini istiyor", "correct": true},
+                {"text": "Çorba soğuk, yenisini istiyor", "correct": false},
+                {"text": "Çorbayı bitirdi, bir daha istiyor", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Services — Hizmetler",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "'I'd like to book a room for two nights.' cümlesinde ne yapılmak isteniyor?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["services", "hotel"],
+              "explanation": "'Book a room' oda rezervasyonu yapmak demektir. 'For two nights' iki gecelik anlamındadır.",
+              "options": [
+                {"text": "Oda temizliği istiyor", "correct": false},
+                {"text": "İki gecelik oda ayırtmak istiyor", "correct": true},
+                {"text": "Odayı değiştirmek istiyor", "correct": false},
+                {"text": "Oda fiyatını soruyor", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Otel ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["services", "hotel"],
+              "explanation": "Check in = Giriş yapmak, Check out = Çıkış yapmak, Room service = Oda servisi.",
+              "options": [
+                {"text": "Check in", "pairId": 1, "correct": false},
+                {"text": "Giriş yapmak", "pairId": 1, "correct": false},
+                {"text": "Check out", "pairId": 2, "correct": false},
+                {"text": "Çıkış yapmak", "pairId": 2, "correct": false},
+                {"text": "Room service", "pairId": 3, "correct": false},
+                {"text": "Oda servisi", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'The air conditioning in my room isn't working.' cümlesinde sorun nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["services", "complaints"],
+              "explanation": "'Air conditioning' klima demektir. 'Isn't working' çalışmıyor anlamındadır. Otel odasındaki klima bozuk.",
+              "options": [
+                {"text": "Oda çok küçük", "correct": false},
+                {"text": "Klima çalışmıyor", "correct": true},
+                {"text": "Sıcak su yok", "correct": false},
+                {"text": "Televizyon bozuk", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Could you ___ me a wake-up call at 7 a.m.?' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["services", "hotel"],
+              "explanation": "'Give me a wake-up call' sabah uyandırma hizmeti istemek demektir. 'Could you give me...' kibar bir ricadır.",
+              "options": [
+                {"text": "give", "correct": true},
+                {"text": "make", "correct": false},
+                {"text": "do", "correct": false},
+                {"text": "take", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'I'd like to make a complaint about the noise from the next room.' cümlesinde ne yapılıyor?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["services", "complaints"],
+              "explanation": "'Make a complaint' şikayet etmek demektir. 'Noise' gürültü, 'next room' yan oda demektir.",
+              "options": [
+                {"text": "Oda değiştirmek istiyor", "correct": false},
+                {"text": "Yan odadan gelen gürültüden şikayet ediyor", "correct": true},
+                {"text": "Oda servisi istiyor", "correct": false},
+                {"text": "Erken çıkış yapmak istiyor", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Şikayet ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["services", "complaints"],
+              "explanation": "I'm not satisfied = Memnun değilim, I'd like a refund = Para iadesi istiyorum, It's unacceptable = Kabul edilemez, I want to speak to the manager = Müdürle görüşmek istiyorum.",
+              "options": [
+                {"text": "I'm not satisfied", "pairId": 1, "correct": false},
+                {"text": "Memnun değilim", "pairId": 1, "correct": false},
+                {"text": "I'd like a refund", "pairId": 2, "correct": false},
+                {"text": "Para iadesi istiyorum", "pairId": 2, "correct": false},
+                {"text": "It's unacceptable", "pairId": 3, "correct": false},
+                {"text": "Kabul edilemez", "pairId": 3, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Money and Payment — Para ve Ödeme",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "'Can I pay by card?' sorusunun Türkçe karşılığı nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["money", "payment"],
+              "explanation": "'Pay by card' kartla ödemek demektir. Nakit yerine kredi veya banka kartıyla ödeme yapmak istenmektedir.",
+              "options": [
+                {"text": "Kartımı görebilir miyim?", "correct": false},
+                {"text": "Kartla ödeyebilir miyim?", "correct": true},
+                {"text": "Kart var mı?", "correct": false},
+                {"text": "Kartımı kaybettim", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Ödeme ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["money", "payment"],
+              "explanation": "Cash = Nakit, Change = Bozuk para/para üstü, Tip = Bahşiş.",
+              "options": [
+                {"text": "Cash", "pairId": 1, "correct": false},
+                {"text": "Nakit", "pairId": 1, "correct": false},
+                {"text": "Change", "pairId": 2, "correct": false},
+                {"text": "Para üstü", "pairId": 2, "correct": false},
+                {"text": "Tip", "pairId": 3, "correct": false},
+                {"text": "Bahşiş", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Keep the change.' ifadesinin anlamı nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["money", "expressions"],
+              "explanation": "'Keep the change' para üstünü alın/kalsın demektir. Genellikle bahşiş olarak söylenir.",
+              "options": [
+                {"text": "Para üstünü verin", "correct": false},
+                {"text": "Para üstü kalsın", "correct": true},
+                {"text": "Bozuk para var mı?", "correct": false},
+                {"text": "Daha fazla para istiyorum", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'This is too ___ . Is there a cheaper option?' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["money", "adjectives"],
+              "explanation": "'Too expensive' çok pahalı demektir. 'Cheaper' daha ucuz (cheap'in karşılaştırma hali).",
+              "options": [
+                {"text": "expensive", "correct": true},
+                {"text": "cheap", "correct": false},
+                {"text": "much", "correct": false},
+                {"text": "big", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'Is the service charge included?' sorusunda ne sorulmaktadır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["money", "restaurant"],
+              "explanation": "'Service charge' servis ücreti demektir. 'Included' dahil anlamındadır. Hesaba servis ücretinin dahil olup olmadığı soruluyor.",
+              "options": [
+                {"text": "Servis hızlı mı?", "correct": false},
+                {"text": "Servis ücreti dahil mi?", "correct": true},
+                {"text": "Ekstra servis var mı?", "correct": false},
+                {"text": "Servis ne zaman?", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Finans ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["money", "finance"],
+              "explanation": "Save money = Para biriktirmek, Spend money = Para harcamak, Lend money = Borç vermek, Borrow money = Borç almak.",
+              "options": [
+                {"text": "Save money", "pairId": 1, "correct": false},
+                {"text": "Para biriktirmek", "pairId": 1, "correct": false},
+                {"text": "Spend money", "pairId": 2, "correct": false},
+                {"text": "Para harcamak", "pairId": 2, "correct": false},
+                {"text": "Lend money", "pairId": 3, "correct": false},
+                {"text": "Borç vermek", "pairId": 3, "correct": false},
+                {"text": "Borrow money", "pairId": 4, "correct": false},
+                {"text": "Borç almak", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Sağlık, Vücut ve Duygular",
+      "description": "Sağlık sorunlarını anlatma, doktorda iletişim, duygular ve tavsiye verme",
+      "order": 4,
+      "lessons": [
+        {
+          "title": "Health Problems — Sağlık Sorunları",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "'I have a headache.' cümlesinde kişinin sorunu nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["health", "body"],
+              "explanation": "'Headache' baş ağrısı demektir. 'I have a headache' baş ağrım var anlamındadır.",
+              "options": [
+                {"text": "Karın ağrısı", "correct": false},
+                {"text": "Baş ağrısı", "correct": true},
+                {"text": "Diş ağrısı", "correct": false},
+                {"text": "Sırt ağrısı", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Sağlık sorunlarını Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["health", "vocabulary"],
+              "explanation": "Stomachache = Karın ağrısı, Sore throat = Boğaz ağrısı, Fever = Ateş.",
+              "options": [
+                {"text": "Stomachache", "pairId": 1, "correct": false},
+                {"text": "Karın ağrısı", "pairId": 1, "correct": false},
+                {"text": "Sore throat", "pairId": 2, "correct": false},
+                {"text": "Boğaz ağrısı", "pairId": 2, "correct": false},
+                {"text": "Fever", "pairId": 3, "correct": false},
+                {"text": "Ateş", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'You should see a doctor.' cümlesinde ne tavsiye ediliyor?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["health", "advice"],
+              "explanation": "'Should' tavsiye verirken kullanılır. 'See a doctor' doktora gitmek demektir.",
+              "options": [
+                {"text": "İlaç alması", "correct": false},
+                {"text": "Doktora gitmesi", "correct": true},
+                {"text": "Evde kalması", "correct": false},
+                {"text": "Eczaneye gitmesi", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'I've been coughing all week.' cümlesinde kişi ne zamandan beri öksürüyor?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["health", "duration"],
+              "explanation": "'All week' bütün hafta demektir. 'Coughing' öksürmek anlamındadır. Kişi bir haftadır öksürüyor.",
+              "options": [
+                {"text": "Bir gündür", "correct": false},
+                {"text": "Bir haftadır", "correct": true},
+                {"text": "Bir aydır", "correct": false},
+                {"text": "Dünden beri", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'You ___ take some medicine for your cold.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["health", "advice", "modals"],
+              "explanation": "'Should' tavsiye verirken kullanılır. 'Take medicine' ilaç almak, 'cold' soğuk algınlığı demektir.",
+              "options": [
+                {"text": "should", "correct": true},
+                {"text": "must", "correct": false},
+                {"text": "can", "correct": false},
+                {"text": "will", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hastalık belirtilerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["health", "symptoms"],
+              "explanation": "Runny nose = Burun akması, Dizzy = Baş dönmesi, Rash = Döküntü/kızarıklık, Swollen = Şiş.",
+              "options": [
+                {"text": "Runny nose", "pairId": 1, "correct": false},
+                {"text": "Burun akması", "pairId": 1, "correct": false},
+                {"text": "Dizzy", "pairId": 2, "correct": false},
+                {"text": "Baş dönmesi", "pairId": 2, "correct": false},
+                {"text": "Rash", "pairId": 3, "correct": false},
+                {"text": "Döküntü", "pairId": 3, "correct": false},
+                {"text": "Swollen", "pairId": 4, "correct": false},
+                {"text": "Şiş", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "At the Doctor's — Doktorda",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "'What seems to be the problem?' sorusunu kim sorar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["doctor", "questions"],
+              "explanation": "'What seems to be the problem?' (Sorun nedir?) doktorun hastayı muayene ederken sorduğu standart bir sorudur.",
+              "options": [
+                {"text": "Hasta", "correct": false},
+                {"text": "Doktor", "correct": true},
+                {"text": "Hemşire", "correct": false},
+                {"text": "Eczacı", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Tıbbi ifadeleri Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["doctor", "vocabulary"],
+              "explanation": "Prescription = Reçete, Appointment = Randevu, Examination = Muayene.",
+              "options": [
+                {"text": "Prescription", "pairId": 1, "correct": false},
+                {"text": "Reçete", "pairId": 1, "correct": false},
+                {"text": "Appointment", "pairId": 2, "correct": false},
+                {"text": "Randevu", "pairId": 2, "correct": false},
+                {"text": "Examination", "pairId": 3, "correct": false},
+                {"text": "Muayene", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Take this medicine twice a day after meals.' cümlesinde ilaç nasıl kullanılacak?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["doctor", "instructions"],
+              "explanation": "'Twice a day' günde iki kez, 'after meals' yemeklerden sonra demektir.",
+              "options": [
+                {"text": "Günde bir kez yemekten önce", "correct": false},
+                {"text": "Günde iki kez yemeklerden sonra", "correct": true},
+                {"text": "Günde üç kez aç karnına", "correct": false},
+                {"text": "Haftada iki kez", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'How long have you ___ feeling this way?' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["doctor", "present perfect"],
+              "explanation": "'How long have you been...?' ne zamandır sorusudur. Present Perfect Continuous yapısı ile devam eden durumlar sorulur.",
+              "options": [
+                {"text": "been", "correct": true},
+                {"text": "be", "correct": false},
+                {"text": "being", "correct": false},
+                {"text": "was", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'You need to rest and drink plenty of fluids.' cümlesinde doktorun tavsiyeleri nelerdir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["doctor", "advice"],
+              "explanation": "'Rest' dinlenmek, 'drink plenty of fluids' bol sıvı içmek demektir. 'Plenty of' bol/çok miktarda anlamındadır.",
+              "options": [
+                {"text": "Egzersiz yapması ve az yemesi", "correct": false},
+                {"text": "Dinlenmesi ve bol sıvı içmesi", "correct": true},
+                {"text": "İlaç alması ve erken yatması", "correct": false},
+                {"text": "Hastaneye yatması", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Tıbbi talimat ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["doctor", "instructions"],
+              "explanation": "Take a deep breath = Derin nefes alın, Roll up your sleeve = Kolunuzu sıvayın, Open your mouth = Ağzınızı açın.",
+              "options": [
+                {"text": "Take a deep breath", "pairId": 1, "correct": false},
+                {"text": "Derin nefes alın", "pairId": 1, "correct": false},
+                {"text": "Roll up your sleeve", "pairId": 2, "correct": false},
+                {"text": "Kolunuzu sıvayın", "pairId": 2, "correct": false},
+                {"text": "Open your mouth", "pairId": 3, "correct": false},
+                {"text": "Ağzınızı açın", "pairId": 3, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Emotions and Feelings — Duygular",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "'I'm really excited about the trip!' cümlesinde kişi ne hissediyor?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["emotions", "vocabulary"],
+              "explanation": "'Excited' heyecanlı demektir. 'About the trip' gezi/yolculuk hakkında anlamındadır.",
+              "options": [
+                {"text": "Kızgın", "correct": false},
+                {"text": "Heyecanlı", "correct": true},
+                {"text": "Üzgün", "correct": false},
+                {"text": "Korkmuş", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Duygu sıfatlarını Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["emotions", "adjectives"],
+              "explanation": "Worried = Endişeli, Bored = Sıkılmış, Surprised = Şaşırmış.",
+              "options": [
+                {"text": "Worried", "pairId": 1, "correct": false},
+                {"text": "Endişeli", "pairId": 1, "correct": false},
+                {"text": "Bored", "pairId": 2, "correct": false},
+                {"text": "Sıkılmış", "pairId": 2, "correct": false},
+                {"text": "Surprised", "pairId": 3, "correct": false},
+                {"text": "Şaşırmış", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'The movie was really boring.' ve 'I was bored.' arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["emotions", "adjectives", "grammar"],
+              "explanation": "'-ing' ile biten sıfatlar (boring) bir şeyin neden olduğu hissi anlatır. '-ed' ile biten sıfatlar (bored) hisseden kişiyi anlatır.",
+              "options": [
+                {"text": "İkisi de aynı anlama gelir", "correct": false},
+                {"text": "'Boring' filmi tanımlar, 'bored' kişinin hissini tanımlar", "correct": true},
+                {"text": "'Boring' geçmiş, 'bored' şimdiki zaman", "correct": false},
+                {"text": "'Boring' daha güçlü bir ifade", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "-ed / -ing sıfat çiftlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["emotions", "adjectives"],
+              "explanation": "Tired ↔ Tiring (yorgun/yorucu), Interested ↔ Interesting (ilgili/ilginç), Frightened ↔ Frightening (korkmuş/korkutucu).",
+              "options": [
+                {"text": "Tired", "pairId": 1, "correct": false},
+                {"text": "Tiring", "pairId": 1, "correct": false},
+                {"text": "Interested", "pairId": 2, "correct": false},
+                {"text": "Interesting", "pairId": 2, "correct": false},
+                {"text": "Frightened", "pairId": 3, "correct": false},
+                {"text": "Frightening", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'She was disappointed because she didn't get the job.' cümlesinde kişi neden hayal kırıklığına uğramış?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["emotions", "reasons"],
+              "explanation": "'Disappointed' hayal kırıklığına uğramış demektir. 'Didn't get the job' işe alınmamak anlamındadır.",
+              "options": [
+                {"text": "İşi beğenmediği için", "correct": false},
+                {"text": "İşe alınmadığı için", "correct": true},
+                {"text": "İşten çıkarıldığı için", "correct": false},
+                {"text": "İşe geç kaldığı için", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Duygu ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["emotions", "expressions"],
+              "explanation": "Proud = Gururlu, Jealous = Kıskanç, Embarrassed = Utanmış, Relieved = Rahatlamış.",
+              "options": [
+                {"text": "Proud", "pairId": 1, "correct": false},
+                {"text": "Gururlu", "pairId": 1, "correct": false},
+                {"text": "Jealous", "pairId": 2, "correct": false},
+                {"text": "Kıskanç", "pairId": 2, "correct": false},
+                {"text": "Embarrassed", "pairId": 3, "correct": false},
+                {"text": "Utanmış", "pairId": 3, "correct": false},
+                {"text": "Relieved", "pairId": 4, "correct": false},
+                {"text": "Rahatlamış", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Giving Advice — Tavsiye Verme",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "'You should get more sleep.' cümlesinde ne tavsiye ediliyor?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["advice", "modals"],
+              "explanation": "'Should' tavsiye vermek için kullanılır. 'Get more sleep' daha fazla uyumak demektir.",
+              "options": [
+                {"text": "Daha az yemek yemesi", "correct": false},
+                {"text": "Daha fazla uyuması", "correct": true},
+                {"text": "Daha çok çalışması", "correct": false},
+                {"text": "Erken kalkması", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Tavsiye kalıplarını Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["advice", "expressions"],
+              "explanation": "You should = Yapmalısın, Why don't you = Neden yapmıyorsun, If I were you = Yerinde olsam.",
+              "options": [
+                {"text": "You should", "pairId": 1, "correct": false},
+                {"text": "Yapmalısın", "pairId": 1, "correct": false},
+                {"text": "Why don't you", "pairId": 2, "correct": false},
+                {"text": "Neden yapmıyorsun", "pairId": 2, "correct": false},
+                {"text": "If I were you", "pairId": 3, "correct": false},
+                {"text": "Yerinde olsam", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'You shouldn't eat too much junk food.' cümlesinde ne tavsiye ediliyor?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["advice", "health"],
+              "explanation": "'Shouldn't' yapmamalısın anlamında olumsuz tavsiye verir. 'Junk food' abur cubur/hazır yiyecek demektir.",
+              "options": [
+                {"text": "Çok fazla abur cubur yememesi", "correct": true},
+                {"text": "Hiç yemek yememesi", "correct": false},
+                {"text": "Daha fazla yemek yemesi", "correct": false},
+                {"text": "Sadece abur cubur yemesi", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'If I ___ you, I would talk to her about it.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["advice", "conditionals"],
+              "explanation": "'If I were you' (yerinde olsam) tavsiye vermek için kullanılan sabit bir kalıptır. 'Was' yerine 'were' kullanılır.",
+              "options": [
+                {"text": "were", "correct": true},
+                {"text": "was", "correct": false},
+                {"text": "am", "correct": false},
+                {"text": "be", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'Why don't you try meditation?' cümlesinde ne önerilmektedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["advice", "suggestions"],
+              "explanation": "'Why don't you...?' bir şey önermek/tavsiye etmek için kullanılır. 'Meditation' meditasyon demektir.",
+              "options": [
+                {"text": "Meditasyon yapmaması", "correct": false},
+                {"text": "Meditasyonu denemesi", "correct": true},
+                {"text": "Meditasyon hakkında okuması", "correct": false},
+                {"text": "Meditasyonu bırakması", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Tavsiye gücü sıralamasını eşleştirin (güçlüden zayıfa).",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["advice", "modals"],
+              "explanation": "Must = Zorunluluk (en güçlü), Should = Tavsiye (orta), Could = Öneri (en hafif).",
+              "options": [
+                {"text": "Must (en güçlü)", "pairId": 1, "correct": false},
+                {"text": "Yapmalısın (zorunlu)", "pairId": 1, "correct": false},
+                {"text": "Should (orta)", "pairId": 2, "correct": false},
+                {"text": "Yapsan iyi olur", "pairId": 2, "correct": false},
+                {"text": "Could (en hafif)", "pairId": 3, "correct": false},
+                {"text": "Yapabilirsin (öneri)", "pairId": 3, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Healthy Lifestyle — Sağlıklı Yaşam",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "'You should exercise at least three times a week.' cümlesinde ne tavsiye ediliyor?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["health", "exercise"],
+              "explanation": "'Exercise' egzersiz yapmak, 'at least' en az, 'three times a week' haftada üç kez demektir.",
+              "options": [
+                {"text": "Her gün egzersiz yapması", "correct": false},
+                {"text": "Haftada en az üç kez egzersiz yapması", "correct": true},
+                {"text": "Ayda üç kez egzersiz yapması", "correct": false},
+                {"text": "Üç saat egzersiz yapması", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Sağlıklı yaşam ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["health", "lifestyle"],
+              "explanation": "Balanced diet = Dengeli beslenme, Get enough sleep = Yeterli uyku almak, Stay hydrated = Bol su içmek.",
+              "options": [
+                {"text": "Balanced diet", "pairId": 1, "correct": false},
+                {"text": "Dengeli beslenme", "pairId": 1, "correct": false},
+                {"text": "Get enough sleep", "pairId": 2, "correct": false},
+                {"text": "Yeterli uyku almak", "pairId": 2, "correct": false},
+                {"text": "Stay hydrated", "pairId": 3, "correct": false},
+                {"text": "Bol su içmek", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Smoking is bad for your health.' cümlesinde ne söyleniyor?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["health", "habits"],
+              "explanation": "'Smoking' sigara içmek, 'bad for your health' sağlığınız için zararlı demektir.",
+              "options": [
+                {"text": "Sigara içmek sağlığa zararlıdır", "correct": true},
+                {"text": "Sigara içmek pahalıdır", "correct": false},
+                {"text": "Sigara içmek yasaklanmıştır", "correct": false},
+                {"text": "Sigara içmek zordur", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'It's important to ___ at least 2 litres of water a day.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["health", "advice"],
+              "explanation": "'Drink water' su içmek demektir. Günde en az 2 litre su içmek sağlık için önemlidir.",
+              "options": [
+                {"text": "drink", "correct": true},
+                {"text": "eat", "correct": false},
+                {"text": "take", "correct": false},
+                {"text": "have", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Zararlı alışkanlıkları Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["health", "habits"],
+              "explanation": "Skip meals = Öğün atlamak, Stay up late = Geç saatlere kadar uyanık kalmak, Overeat = Aşırı yemek, Lead a sedentary life = Hareketsiz yaşam sürmek.",
+              "options": [
+                {"text": "Skip meals", "pairId": 1, "correct": false},
+                {"text": "Öğün atlamak", "pairId": 1, "correct": false},
+                {"text": "Stay up late", "pairId": 2, "correct": false},
+                {"text": "Geç yatmak", "pairId": 2, "correct": false},
+                {"text": "Overeat", "pairId": 3, "correct": false},
+                {"text": "Aşırı yemek", "pairId": 3, "correct": false},
+                {"text": "Sedentary life", "pairId": 4, "correct": false},
+                {"text": "Hareketsiz yaşam", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'A healthy mind in a healthy body.' atasözünün Türkçe karşılığı hangisidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["health", "proverbs"],
+              "explanation": "Bu Latince kökenli bir atasözüdür. Türkçe karşılığı 'Sağlam kafa sağlam vücutta bulunur'dur.",
+              "options": [
+                {"text": "Sağlam kafa sağlam vücutta bulunur", "correct": true},
+                {"text": "Sağlık en büyük servettir", "correct": false},
+                {"text": "Gülen yüze kılıç değmez", "correct": false},
+                {"text": "İyilik yap denize at", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Ulaşım, Yol Tarifi ve Seyahat",
+      "description": "Toplu taşıma, yol tarifi sorma/verme, havalimanı ve seyahat planlaması",
+      "order": 5,
+      "lessons": [
+        {
+          "title": "Public Transport — Toplu Taşıma",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "'Which platform does the train to London leave from?' sorusunda ne sorulmaktadır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["transport", "questions"],
+              "explanation": "'Platform' peron, 'leave from' kalkmak anlamındadır. Londra treninin hangi perondan kalktığı sorulmaktadır.",
+              "options": [
+                {"text": "Trenin ne zaman kalktığı", "correct": false},
+                {"text": "Trenin hangi perondan kalktığı", "correct": true},
+                {"text": "Trenin nerede durduğu", "correct": false},
+                {"text": "Bilet fiyatı", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Ulaşım araçlarını Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["transport", "vocabulary"],
+              "explanation": "Underground/Subway = Metro, Coach = Şehirlerarası otobüs, Ferry = Feribot/vapur.",
+              "options": [
+                {"text": "Underground", "pairId": 1, "correct": false},
+                {"text": "Metro", "pairId": 1, "correct": false},
+                {"text": "Coach", "pairId": 2, "correct": false},
+                {"text": "Şehirlerarası otobüs", "pairId": 2, "correct": false},
+                {"text": "Ferry", "pairId": 3, "correct": false},
+                {"text": "Vapur", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'A single ticket to Manchester, please.' cümlesinde ne istenmektedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["transport", "tickets"],
+              "explanation": "'Single ticket' tek yön bilet demektir (dönüş dahil değil). 'Return ticket' gidiş-dönüş bilettir.",
+              "options": [
+                {"text": "Manchester'a gidiş-dönüş bilet", "correct": false},
+                {"text": "Manchester'a tek yön bilet", "correct": true},
+                {"text": "Manchester'a aylık kart", "correct": false},
+                {"text": "Manchester'a iki bilet", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Do I need to ___ at the next station?' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["transport", "phrasal verbs"],
+              "explanation": "'Change' aktarma yapmak demektir. 'Do I need to change?' bir sonraki istasyonda aktarma yapmam gerekiyor mu sorusudur.",
+              "options": [
+                {"text": "change", "correct": true},
+                {"text": "stop", "correct": false},
+                {"text": "leave", "correct": false},
+                {"text": "move", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Bilet ve yolculuk ifadelerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["transport", "vocabulary"],
+              "explanation": "Return ticket = Gidiş-dönüş bilet, Delayed = Gecikmiş/rötar, Rush hour = Yoğun saat, Season ticket = Sezon/dönem bileti.",
+              "options": [
+                {"text": "Return ticket", "pairId": 1, "correct": false},
+                {"text": "Gidiş-dönüş bilet", "pairId": 1, "correct": false},
+                {"text": "Delayed", "pairId": 2, "correct": false},
+                {"text": "Gecikmiş", "pairId": 2, "correct": false},
+                {"text": "Rush hour", "pairId": 3, "correct": false},
+                {"text": "Yoğun saat", "pairId": 3, "correct": false},
+                {"text": "Season ticket", "pairId": 4, "correct": false},
+                {"text": "Dönem bileti", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'The bus runs every 15 minutes during peak hours.' cümlesinde otobüs ne sıklıkla gelir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["transport", "frequency"],
+              "explanation": "'Runs every 15 minutes' her 15 dakikada bir gelir demektir. 'Peak hours' yoğun saatler anlamındadır.",
+              "options": [
+                {"text": "Her 5 dakikada bir", "correct": false},
+                {"text": "Her 15 dakikada bir", "correct": true},
+                {"text": "Her 30 dakikada bir", "correct": false},
+                {"text": "Saatte bir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Directions — Yol Tarifi",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "'Turn left at the traffic lights.' cümlesinde ne yapılması isteniyor?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["directions", "instructions"],
+              "explanation": "'Turn left' sola dönmek, 'traffic lights' trafik ışıkları demektir.",
+              "options": [
+                {"text": "Trafik ışıklarında sağa dönmek", "correct": false},
+                {"text": "Trafik ışıklarında sola dönmek", "correct": true},
+                {"text": "Trafik ışıklarında durmak", "correct": false},
+                {"text": "Trafik ışıklarını geçmek", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Yön ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["directions", "vocabulary"],
+              "explanation": "Go straight = Düz gidin, Turn right = Sağa dönün, Go past = Yanından geçin.",
+              "options": [
+                {"text": "Go straight", "pairId": 1, "correct": false},
+                {"text": "Düz gidin", "pairId": 1, "correct": false},
+                {"text": "Turn right", "pairId": 2, "correct": false},
+                {"text": "Sağa dönün", "pairId": 2, "correct": false},
+                {"text": "Go past", "pairId": 3, "correct": false},
+                {"text": "Yanından geçin", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Excuse me, how do I get to the nearest pharmacy?' sorusunda ne sorulmaktadır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["directions", "questions"],
+              "explanation": "'How do I get to...?' bir yere nasıl gidilir sorusudur. 'Nearest pharmacy' en yakın eczane demektir.",
+              "options": [
+                {"text": "En yakın hastane nerede", "correct": false},
+                {"text": "En yakın eczaneye nasıl gidilir", "correct": true},
+                {"text": "Eczane kaçta açılır", "correct": false},
+                {"text": "Eczane var mı", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'The museum is ___ the park and the library.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["directions", "prepositions"],
+              "explanation": "'Between' iki yer arasında demektir. 'Between A and B' = A ile B arasında.",
+              "options": [
+                {"text": "between", "correct": true},
+                {"text": "next", "correct": false},
+                {"text": "near", "correct": false},
+                {"text": "behind", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Konum belirten ifadeleri Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["directions", "prepositions"],
+              "explanation": "Opposite = Karşısında, Next to = Yanında, On the corner = Köşede, At the end of the street = Sokağın sonunda.",
+              "options": [
+                {"text": "Opposite", "pairId": 1, "correct": false},
+                {"text": "Karşısında", "pairId": 1, "correct": false},
+                {"text": "Next to", "pairId": 2, "correct": false},
+                {"text": "Yanında", "pairId": 2, "correct": false},
+                {"text": "On the corner", "pairId": 3, "correct": false},
+                {"text": "Köşede", "pairId": 3, "correct": false},
+                {"text": "At the end of", "pairId": 4, "correct": false},
+                {"text": "Sonunda", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'It's about a ten-minute walk from here.' cümlesinin anlamı nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["directions", "distance"],
+              "explanation": "'A ten-minute walk' on dakikalık yürüme mesafesi demektir. 'From here' buradan anlamındadır.",
+              "options": [
+                {"text": "Buradan on dakika uzaklıkta (yürüyerek)", "correct": true},
+                {"text": "On dakika sonra açılıyor", "correct": false},
+                {"text": "Buradan on kilometre uzaklıkta", "correct": false},
+                {"text": "On dakika beklemeniz gerekiyor", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "At the Airport — Havalimanında",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "'Where is the check-in desk for Turkish Airlines?' sorusunda ne sorulmaktadır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["airport", "questions"],
+              "explanation": "'Check-in desk' kayıt/check-in bankosu demektir. Türk Hava Yolları'nın bankosunun nerede olduğu soruluyor.",
+              "options": [
+                {"text": "Uçak ne zaman kalkıyor", "correct": false},
+                {"text": "Check-in bankosu nerede", "correct": true},
+                {"text": "Bilet fiyatı ne kadar", "correct": false},
+                {"text": "Kapı numarası kaç", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Havalimanı ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["airport", "vocabulary"],
+              "explanation": "Boarding pass = Biniş kartı, Gate = Kapı (biniş kapısı), Luggage = Bagaj.",
+              "options": [
+                {"text": "Boarding pass", "pairId": 1, "correct": false},
+                {"text": "Biniş kartı", "pairId": 1, "correct": false},
+                {"text": "Gate", "pairId": 2, "correct": false},
+                {"text": "Biniş kapısı", "pairId": 2, "correct": false},
+                {"text": "Luggage", "pairId": 3, "correct": false},
+                {"text": "Bagaj", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Please fasten your seatbelts. We are about to take off.' Bu anons ne zaman yapılır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["airport", "announcements"],
+              "explanation": "'Fasten your seatbelts' emniyet kemerlerinizi bağlayın, 'take off' havalanmak/kalkmak demektir. Uçak kalkmadan önce yapılan bir anonsdur.",
+              "options": [
+                {"text": "Uçak indikten sonra", "correct": false},
+                {"text": "Uçak kalkmadan önce", "correct": true},
+                {"text": "Turbulans sırasında", "correct": false},
+                {"text": "Yemek servisi sırasında", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'My flight has been ___ by two hours.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["airport", "problems"],
+              "explanation": "'Delayed' gecikmiş/rötar yapmış demektir. 'Delayed by two hours' iki saat gecikmiş anlamındadır.",
+              "options": [
+                {"text": "delayed", "correct": true},
+                {"text": "cancelled", "correct": false},
+                {"text": "changed", "correct": false},
+                {"text": "moved", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Uçuş ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["airport", "flight"],
+              "explanation": "Take off = Havalanmak, Land = İnmek, Layover = Aktarma bekleme süresi, Turbulence = Türbülans.",
+              "options": [
+                {"text": "Take off", "pairId": 1, "correct": false},
+                {"text": "Havalanmak", "pairId": 1, "correct": false},
+                {"text": "Land", "pairId": 2, "correct": false},
+                {"text": "İnmek", "pairId": 2, "correct": false},
+                {"text": "Layover", "pairId": 3, "correct": false},
+                {"text": "Aktarma bekleme", "pairId": 3, "correct": false},
+                {"text": "Turbulence", "pairId": 4, "correct": false},
+                {"text": "Türbülans", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'Is this a direct flight or do we have a stopover?' sorusunda ne sorulmaktadır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["airport", "questions"],
+              "explanation": "'Direct flight' direkt uçuş, 'stopover' aktarma/mola demektir. Uçuşun aktarmalı mı direkt mi olduğu soruluyor.",
+              "options": [
+                {"text": "Uçuş ne kadar sürüyor", "correct": false},
+                {"text": "Uçuş direkt mi aktarmalı mı", "correct": true},
+                {"text": "Uçak ne zaman kalkıyor", "correct": false},
+                {"text": "Uçuş ücreti ne kadar", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Accommodation — Konaklama",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "'Is breakfast included in the room price?' sorusunda ne sorulmaktadır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["accommodation", "questions"],
+              "explanation": "'Breakfast included' kahvaltı dahil mi demektir. Oda fiyatına kahvaltının dahil olup olmadığı sorulmaktadır.",
+              "options": [
+                {"text": "Kahvaltı kaçta", "correct": false},
+                {"text": "Oda fiyatına kahvaltı dahil mi", "correct": true},
+                {"text": "Kahvaltıda ne var", "correct": false},
+                {"text": "Kahvaltı nerede", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Konaklama türlerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["accommodation", "vocabulary"],
+              "explanation": "Hostel = Hostel/pansiyon, Bed and breakfast = Oda-kahvaltı, Campsite = Kamp alanı.",
+              "options": [
+                {"text": "Hostel", "pairId": 1, "correct": false},
+                {"text": "Pansiyon", "pairId": 1, "correct": false},
+                {"text": "Bed and breakfast", "pairId": 2, "correct": false},
+                {"text": "Oda-kahvaltı", "pairId": 2, "correct": false},
+                {"text": "Campsite", "pairId": 3, "correct": false},
+                {"text": "Kamp alanı", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'We'd like a room with a sea view, if possible.' cümlesinde ne istenmektedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["accommodation", "requests"],
+              "explanation": "'Sea view' deniz manzarası demektir. 'If possible' mümkünse anlamındadır.",
+              "options": [
+                {"text": "Denize yakın bir oda", "correct": false},
+                {"text": "Deniz manzaralı bir oda", "correct": true},
+                {"text": "Havuzlu bir oda", "correct": false},
+                {"text": "Balkonlu bir oda", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'What time is ___?' — 'Check-out is at 11 a.m.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["accommodation", "hotel"],
+              "explanation": "'Check-out' otelden çıkış demektir. Otelden çıkış saatini soran standart bir sorudur.",
+              "options": [
+                {"text": "check-out", "correct": true},
+                {"text": "check-in", "correct": false},
+                {"text": "breakfast", "correct": false},
+                {"text": "dinner", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Otel olanakları ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["accommodation", "facilities"],
+              "explanation": "Swimming pool = Yüzme havuzu, Gym/Fitness centre = Spor salonu, Laundry service = Çamaşırhane hizmeti, Free Wi-Fi = Ücretsiz Wi-Fi.",
+              "options": [
+                {"text": "Swimming pool", "pairId": 1, "correct": false},
+                {"text": "Yüzme havuzu", "pairId": 1, "correct": false},
+                {"text": "Gym", "pairId": 2, "correct": false},
+                {"text": "Spor salonu", "pairId": 2, "correct": false},
+                {"text": "Laundry service", "pairId": 3, "correct": false},
+                {"text": "Çamaşır hizmeti", "pairId": 3, "correct": false},
+                {"text": "Free Wi-Fi", "pairId": 4, "correct": false},
+                {"text": "Ücretsiz Wi-Fi", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'I'd like to extend my stay for two more nights.' cümlesinin anlamı nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["accommodation", "requests"],
+              "explanation": "'Extend my stay' kalış süresini uzatmak demektir. 'Two more nights' iki gece daha anlamındadır.",
+              "options": [
+                {"text": "İki gece önce ayrılmak istiyor", "correct": false},
+                {"text": "Kalış süresini iki gece daha uzatmak istiyor", "correct": true},
+                {"text": "Oda değiştirmek istiyor", "correct": false},
+                {"text": "İki odalık yer istiyor", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Travel Problems — Seyahat Sorunları",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "'I've lost my passport!' cümlesinde sorun nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["travel problems", "vocabulary"],
+              "explanation": "'Lost' kaybetmek demektir (lose'un geçmiş hali). 'Passport' pasaport demektir.",
+              "options": [
+                {"text": "Pasaportunu unutmuş", "correct": false},
+                {"text": "Pasaportunu kaybetmiş", "correct": true},
+                {"text": "Pasaportu çalınmış", "correct": false},
+                {"text": "Pasaportun süresi dolmuş", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Seyahat sorunlarını Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["travel problems", "vocabulary"],
+              "explanation": "Missed the flight = Uçağı kaçırmak, Lost luggage = Kayıp bagaj, Cancelled = İptal edilmiş.",
+              "options": [
+                {"text": "Missed the flight", "pairId": 1, "correct": false},
+                {"text": "Uçağı kaçırmak", "pairId": 1, "correct": false},
+                {"text": "Lost luggage", "pairId": 2, "correct": false},
+                {"text": "Kayıp bagaj", "pairId": 2, "correct": false},
+                {"text": "Cancelled", "pairId": 3, "correct": false},
+                {"text": "İptal edilmiş", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'My suitcase was ___ when it arrived.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["travel problems", "vocabulary"],
+              "explanation": "'Damaged' hasar görmüş/zarar görmüş demektir. Bavulun geldiğinde hasarlı olduğunu ifade eder.",
+              "options": [
+                {"text": "damaged", "correct": true},
+                {"text": "lost", "correct": false},
+                {"text": "stolen", "correct": false},
+                {"text": "broken", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'I need to report a theft.' cümlesinde kişi ne yapmak istiyor?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["travel problems", "emergencies"],
+              "explanation": "'Report' bildirmek/ihbar etmek, 'theft' hırsızlık demektir. Kişi hırsızlık bildirmek istiyor.",
+              "options": [
+                {"text": "Kayıp eşya bildirmek", "correct": false},
+                {"text": "Hırsızlık bildirmek", "correct": true},
+                {"text": "Kaza bildirmek", "correct": false},
+                {"text": "Şikayet etmek", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Acil durum ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["travel problems", "emergencies"],
+              "explanation": "Call the police = Polisi arayın, I need help = Yardıma ihtiyacım var, Where is the embassy? = Büyükelçilik nerede?, I've been robbed = Soyuldum.",
+              "options": [
+                {"text": "Call the police", "pairId": 1, "correct": false},
+                {"text": "Polisi arayın", "pairId": 1, "correct": false},
+                {"text": "I need help", "pairId": 2, "correct": false},
+                {"text": "Yardıma ihtiyacım var", "pairId": 2, "correct": false},
+                {"text": "The embassy", "pairId": 3, "correct": false},
+                {"text": "Büyükelçilik", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'Could you help me? I think I'm lost.' cümlesinin anlamı nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["travel problems", "asking for help"],
+              "explanation": "'I think I'm lost' kayboldum sanırım demektir. 'Could you help me?' yardım eder misiniz kibar bir rica ifadesidir.",
+              "options": [
+                {"text": "Bir şey kaybetti", "correct": false},
+                {"text": "Yolunu kaybetmiş, yardım istiyor", "correct": true},
+                {"text": "Bagajını arıyor", "correct": false},
+                {"text": "Bilet almak istiyor", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Karşılaştırmalar, Teknoloji ve Gelecek",
+      "description": "Karşılaştırma yapıları, teknoloji kelime bilgisi, gelecek planları ve tahminler",
+      "order": 6,
+      "lessons": [
+        {
+          "title": "Comparisons — Karşılaştırmalar",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "'Istanbul is bigger than Ankara.' cümlesinde hangi yapı kullanılmıştır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["comparatives", "grammar"],
+              "explanation": "'Bigger than' karşılaştırma (comparative) yapısıdır. Kısa sıfatlara '-er' eklenir: big → bigger.",
+              "options": [
+                {"text": "Superlative (en üstünlük)", "correct": false},
+                {"text": "Comparative (karşılaştırma)", "correct": true},
+                {"text": "Positive (olumlu)", "correct": false},
+                {"text": "Past tense (geçmiş zaman)", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Karşılaştırma sıfatlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["comparatives", "adjectives"],
+              "explanation": "Cheap → Cheaper (daha ucuz), Tall → Taller (daha uzun), Hot → Hotter (daha sıcak). Kısa sıfatlara '-er' eklenir.",
+              "options": [
+                {"text": "Cheap", "pairId": 1, "correct": false},
+                {"text": "Cheaper", "pairId": 1, "correct": false},
+                {"text": "Tall", "pairId": 2, "correct": false},
+                {"text": "Taller", "pairId": 2, "correct": false},
+                {"text": "Hot", "pairId": 3, "correct": false},
+                {"text": "Hotter", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'This book is ___ interesting than that one.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["comparatives", "grammar"],
+              "explanation": "Uzun sıfatların karşılaştırma halinde sıfatın önüne 'more' getirilir: more interesting than.",
+              "options": [
+                {"text": "more", "correct": true},
+                {"text": "most", "correct": false},
+                {"text": "much", "correct": false},
+                {"text": "very", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Mount Everest is the highest mountain in the world.' cümlesinde hangi yapı kullanılmıştır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["superlatives", "grammar"],
+              "explanation": "'The highest' en üstünlük (superlative) yapısıdır. 'The + sıfat + -est' kalıbı bir grup içindeki en üstünü belirtir.",
+              "options": [
+                {"text": "Comparative (karşılaştırma)", "correct": false},
+                {"text": "Superlative (en üstünlük)", "correct": true},
+                {"text": "Positive (olumlu)", "correct": false},
+                {"text": "Equality (eşitlik)", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Düzensiz karşılaştırma sıfatlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["comparatives", "irregular"],
+              "explanation": "Good → Better → Best, Bad → Worse → Worst, Far → Further → Furthest. Bunlar düzensiz sıfatlardır.",
+              "options": [
+                {"text": "Good", "pairId": 1, "correct": false},
+                {"text": "Better / Best", "pairId": 1, "correct": false},
+                {"text": "Bad", "pairId": 2, "correct": false},
+                {"text": "Worse / Worst", "pairId": 2, "correct": false},
+                {"text": "Far", "pairId": 3, "correct": false},
+                {"text": "Further / Furthest", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'This is the ___ expensive restaurant I've ever been to.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["superlatives", "grammar"],
+              "explanation": "Uzun sıfatların en üstünlük halinde 'the most' kullanılır: the most expensive.",
+              "options": [
+                {"text": "most", "correct": true},
+                {"text": "more", "correct": false},
+                {"text": "much", "correct": false},
+                {"text": "very", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Technology — Teknoloji",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "'Can you send me the file by email?' cümlesinde ne istenmektedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["technology", "communication"],
+              "explanation": "'Send a file by email' e-posta ile dosya göndermek demektir.",
+              "options": [
+                {"text": "Dosyayı yazdırması", "correct": false},
+                {"text": "Dosyayı e-posta ile göndermesi", "correct": true},
+                {"text": "Dosyayı silmesi", "correct": false},
+                {"text": "Dosyayı kaydetmesi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Teknoloji terimlerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["technology", "vocabulary"],
+              "explanation": "Password = Şifre, Download = İndirmek, Upload = Yüklemek.",
+              "options": [
+                {"text": "Password", "pairId": 1, "correct": false},
+                {"text": "Şifre", "pairId": 1, "correct": false},
+                {"text": "Download", "pairId": 2, "correct": false},
+                {"text": "İndirmek", "pairId": 2, "correct": false},
+                {"text": "Upload", "pairId": 3, "correct": false},
+                {"text": "Yüklemek", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'My phone battery is ___ . I need to charge it.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["technology", "problems"],
+              "explanation": "'Dead' (bitmiş/ölmüş) telefon pili için kullanılır. 'Charge' şarj etmek demektir.",
+              "options": [
+                {"text": "dead", "correct": true},
+                {"text": "broken", "correct": false},
+                {"text": "old", "correct": false},
+                {"text": "slow", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'The Wi-Fi connection is very slow today.' cümlesinde sorun nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["technology", "problems"],
+              "explanation": "'Slow' yavaş demektir. Wi-Fi bağlantısının bugün çok yavaş olduğu belirtiliyor.",
+              "options": [
+                {"text": "Wi-Fi yok", "correct": false},
+                {"text": "Wi-Fi çok yavaş", "correct": true},
+                {"text": "Wi-Fi şifresi yanlış", "correct": false},
+                {"text": "Wi-Fi çok pahalı", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "İnternet ve bilgisayar terimlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["technology", "internet"],
+              "explanation": "Browser = Tarayıcı, Search engine = Arama motoru, Log in = Giriş yapmak, Update = Güncelleme.",
+              "options": [
+                {"text": "Browser", "pairId": 1, "correct": false},
+                {"text": "Tarayıcı", "pairId": 1, "correct": false},
+                {"text": "Search engine", "pairId": 2, "correct": false},
+                {"text": "Arama motoru", "pairId": 2, "correct": false},
+                {"text": "Log in", "pairId": 3, "correct": false},
+                {"text": "Giriş yapmak", "pairId": 3, "correct": false},
+                {"text": "Update", "pairId": 4, "correct": false},
+                {"text": "Güncelleme", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'You should back up your files regularly.' cümlesinde ne tavsiye ediliyor?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["technology", "advice"],
+              "explanation": "'Back up' yedeklemek demektir. 'Regularly' düzenli olarak anlamındadır. Dosyaların düzenli olarak yedeklenmesi tavsiye ediliyor.",
+              "options": [
+                {"text": "Dosyaları silmesi", "correct": false},
+                {"text": "Dosyaları düzenli olarak yedeklemesi", "correct": true},
+                {"text": "Dosyaları paylaşması", "correct": false},
+                {"text": "Dosyaları şifrelemesi", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Future Plans — Gelecek Planları",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "'I will probably study abroad next year.' cümlesinde 'probably' ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["future", "adverbs"],
+              "explanation": "'Probably' muhtemelen demektir. 'Study abroad' yurt dışında okumak anlamındadır.",
+              "options": [
+                {"text": "Kesinlikle", "correct": false},
+                {"text": "Muhtemelen", "correct": true},
+                {"text": "Asla", "correct": false},
+                {"text": "Belki", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Gelecek zaman ifadelerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["future", "time expressions"],
+              "explanation": "Next week = Gelecek hafta, In the future = Gelecekte, Soon = Yakında.",
+              "options": [
+                {"text": "Next week", "pairId": 1, "correct": false},
+                {"text": "Gelecek hafta", "pairId": 1, "correct": false},
+                {"text": "In the future", "pairId": 2, "correct": false},
+                {"text": "Gelecekte", "pairId": 2, "correct": false},
+                {"text": "Soon", "pairId": 3, "correct": false},
+                {"text": "Yakında", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'I think it ___ rain tomorrow.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["future", "predictions"],
+              "explanation": "'Will' gelecek zaman tahminleri için kullanılır. 'I think it will rain' yarın yağmur yağacağını düşünüyorum.",
+              "options": [
+                {"text": "will", "correct": true},
+                {"text": "is going to", "correct": false},
+                {"text": "would", "correct": false},
+                {"text": "shall", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Will' ve 'Be going to' arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["future", "grammar"],
+              "explanation": "'Will' anlık kararlar ve tahminler için, 'be going to' önceden planlanmış niyetler ve kanıta dayalı tahminler için kullanılır.",
+              "options": [
+                {"text": "İkisi tamamen aynıdır", "correct": false},
+                {"text": "'Will' anlık karar/tahmin, 'be going to' plan/kanıtlı tahmin", "correct": true},
+                {"text": "'Will' resmi, 'be going to' gayri resmi", "correct": false},
+                {"text": "'Will' yakın gelecek, 'be going to' uzak gelecek", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Gelecek planları anlatan kalıpları eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["future", "expressions"],
+              "explanation": "I'm planning to = Planlamak, I hope to = Ummak, I'd like to = İstemek (kibar).",
+              "options": [
+                {"text": "I'm planning to", "pairId": 1, "correct": false},
+                {"text": "Planlıyorum", "pairId": 1, "correct": false},
+                {"text": "I hope to", "pairId": 2, "correct": false},
+                {"text": "Umuyorum", "pairId": 2, "correct": false},
+                {"text": "I'd like to", "pairId": 3, "correct": false},
+                {"text": "İsterdim/isterim", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'By 2030, electric cars will be everywhere.' cümlesinin anlamı nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["future", "predictions"],
+              "explanation": "'By 2030' 2030'a kadar demektir. Cümle, 2030 yılına kadar elektrikli arabaların her yerde olacağını tahmin ediyor.",
+              "options": [
+                {"text": "2030'da elektrikli arabalar üretilecek", "correct": false},
+                {"text": "2030'a kadar elektrikli arabalar her yerde olacak", "correct": true},
+                {"text": "2030'dan sonra elektrikli arabalar kullanılmayacak", "correct": false},
+                {"text": "2030'da sadece elektrikli arabalar olacak", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "The Environment — Çevre",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "'We should recycle more to protect the environment.' cümlesinde ne tavsiye ediliyor?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["environment", "advice"],
+              "explanation": "'Recycle' geri dönüşüm yapmak, 'protect the environment' çevreyi korumak demektir.",
+              "options": [
+                {"text": "Daha az tüketmek", "correct": false},
+                {"text": "Çevreyi korumak için daha fazla geri dönüşüm yapmak", "correct": true},
+                {"text": "Daha az araba kullanmak", "correct": false},
+                {"text": "Ağaç dikmek", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Çevre terimlerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["environment", "vocabulary"],
+              "explanation": "Pollution = Kirlilik, Global warming = Küresel ısınma, Renewable energy = Yenilenebilir enerji.",
+              "options": [
+                {"text": "Pollution", "pairId": 1, "correct": false},
+                {"text": "Kirlilik", "pairId": 1, "correct": false},
+                {"text": "Global warming", "pairId": 2, "correct": false},
+                {"text": "Küresel ısınma", "pairId": 2, "correct": false},
+                {"text": "Renewable energy", "pairId": 3, "correct": false},
+                {"text": "Yenilenebilir enerji", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'If we don't act now, the problem will get worse.' cümlesinde ne söyleniyor?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["environment", "conditionals"],
+              "explanation": "'If we don't act' harekete geçmezsek, 'get worse' daha kötüleşmek demektir. First Conditional yapısı kullanılmıştır.",
+              "options": [
+                {"text": "Sorun çözülebilir", "correct": false},
+                {"text": "Şimdi harekete geçmezsek sorun daha da kötüleşecek", "correct": true},
+                {"text": "Sorun zaten çok kötü", "correct": false},
+                {"text": "Harekete geçmek faydasız", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'We should reduce our carbon ___.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["environment", "vocabulary"],
+              "explanation": "'Carbon footprint' karbon ayak izi demektir. İnsan aktivitelerinin çevreye olan etkisini ifade eder.",
+              "options": [
+                {"text": "footprint", "correct": true},
+                {"text": "emission", "correct": false},
+                {"text": "dioxide", "correct": false},
+                {"text": "waste", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Çevre eylemlerini Türkçe karşılıklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["environment", "actions"],
+              "explanation": "Reduce = Azaltmak, Reuse = Tekrar kullanmak, Plant trees = Ağaç dikmek, Save energy = Enerji tasarrufu yapmak.",
+              "options": [
+                {"text": "Reduce", "pairId": 1, "correct": false},
+                {"text": "Azaltmak", "pairId": 1, "correct": false},
+                {"text": "Reuse", "pairId": 2, "correct": false},
+                {"text": "Tekrar kullanmak", "pairId": 2, "correct": false},
+                {"text": "Plant trees", "pairId": 3, "correct": false},
+                {"text": "Ağaç dikmek", "pairId": 3, "correct": false},
+                {"text": "Save energy", "pairId": 4, "correct": false},
+                {"text": "Enerji tasarrufu", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'Climate change is one of the biggest challenges facing humanity.' cümlesinin anlamı nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["environment", "global issues"],
+              "explanation": "'Climate change' iklim değişikliği, 'biggest challenges' en büyük zorluklar, 'facing humanity' insanlığın karşılaştığı demektir.",
+              "options": [
+                {"text": "İklim değişikliği insanlığın en büyük sorunlarından biridir", "correct": true},
+                {"text": "İklim değişikliği durdurulamaz", "correct": false},
+                {"text": "İklim değişikliği sadece bazı ülkeleri etkiler", "correct": false},
+                {"text": "İklim değişikliği çözülmüştür", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Review and Practice — Genel Tekrar",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "'If I ___ enough money, I would travel around the world.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["conditionals", "grammar"],
+              "explanation": "Second Conditional yapısı: 'If + Past Simple, would + fiil'. Gerçekleşmesi zor/imkansız durumlar için kullanılır.",
+              "options": [
+                {"text": "had", "correct": true},
+                {"text": "have", "correct": false},
+                {"text": "has", "correct": false},
+                {"text": "having", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Karışık dil yapılarını doğru kullanımlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["grammar", "review"],
+              "explanation": "Since = ... den beri (Present Perfect ile), For = ... süreyle/boyunca, Already = Çoktan/zaten, Yet = Henüz (olumsuz/soru).",
+              "options": [
+                {"text": "Since", "pairId": 1, "correct": false},
+                {"text": "...den beri", "pairId": 1, "correct": false},
+                {"text": "For", "pairId": 2, "correct": false},
+                {"text": "...boyunca", "pairId": 2, "correct": false},
+                {"text": "Already", "pairId": 3, "correct": false},
+                {"text": "Çoktan/zaten", "pairId": 3, "correct": false},
+                {"text": "Yet", "pairId": 4, "correct": false},
+                {"text": "Henüz", "pairId": 4, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'She has lived in London ___ five years.' cümlesini tamamlayın.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["present perfect", "grammar"],
+              "explanation": "'For' belirli bir süreyi ifade eder (beş yıl, üç ay gibi). 'Since' belirli bir başlangıç noktası içindir (2019'dan beri).",
+              "options": [
+                {"text": "for", "correct": true},
+                {"text": "since", "correct": false},
+                {"text": "during", "correct": false},
+                {"text": "ago", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Have you ever been to Japan?' sorusuna uygun cevap hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["present perfect", "experience"],
+              "explanation": "'Have you ever...?' hiç ... yaptın mı sorusudur. Present Perfect ile deneyimleri sorar. Uygun cevap: 'No, I haven't. But I'd love to go.'",
+              "options": [
+                {"text": "Yes, I go every year.", "correct": false},
+                {"text": "No, I haven't. But I'd love to go.", "correct": true},
+                {"text": "Yes, I went yesterday.", "correct": false},
+                {"text": "No, I don't.", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "İngilizce günlük kullanılan kısaltmaları eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["abbreviations", "vocabulary"],
+              "explanation": "ASAP = As soon as possible (En kısa sürede), FYI = For your information (Bilginize), BTW = By the way (Bu arada).",
+              "options": [
+                {"text": "ASAP", "pairId": 1, "correct": false},
+                {"text": "En kısa sürede", "pairId": 1, "correct": false},
+                {"text": "FYI", "pairId": 2, "correct": false},
+                {"text": "Bilginize", "pairId": 2, "correct": false},
+                {"text": "BTW", "pairId": 3, "correct": false},
+                {"text": "Bu arada", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "'Practice makes perfect.' atasözünün Türkçe karşılığı hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["proverbs", "review"],
+              "explanation": "'Practice makes perfect' birebir çevirisi 'Pratik mükemmelleştirir'dir. Türkçe karşılığı 'Tekrar başarının anasıdır' veya 'Yaparak öğrenilir'dir.",
+              "options": [
+                {"text": "Tekrar başarının anasıdır", "correct": true},
+                {"text": "Acele işe şeytan karışır", "correct": false},
+                {"text": "Damlaya damlaya göl olur", "correct": false},
+                {"text": "Bir elin nesi var iki elin sesi var", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
