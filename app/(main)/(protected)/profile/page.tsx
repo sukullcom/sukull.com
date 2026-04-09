@@ -9,8 +9,8 @@ export default async function ProfilePage() {
   } catch (error) {
     console.error("Error fetching profile data:", error);
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p>Error loading profile data. Please try again later.</p>
+      <div className="flex items-center justify-center py-20 px-6 text-center">
+        <p className="text-neutral-600">Profil verileri yüklenirken bir hata oluştu. Lütfen sayfayı yenileyin.</p>
       </div>
     );
   }

@@ -62,8 +62,8 @@ const GamesPage = async () => {
           <p className="text-muted-foreground text-center text-lg mb-6">
             Oyunlar ile hem öğrenip hem de puan kazan
           </p>
-          <div className="p-8">
-            <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-3 gap-6 auto-rows-fr">
+          <div className="w-full px-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 auto-rows-fr">
               {gamesData.map((game) => (
                 <CustomCard
                   key={game.id}

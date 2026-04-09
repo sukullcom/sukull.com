@@ -77,7 +77,7 @@ export const Sidebar = ({ className }: Props) => {
         {/* <SidebarItem label="Laboratuvarlar" href="/lab" iconSrc={labIcon} /> */}
         <SidebarItem label="Çantam" href="/shop" iconSrc={shopIcon} />
         <SidebarItem label="Çalışma Arkadaşı" href="/study-buddy" iconSrc="/study_buddy.svg" />
-        <SidebarItem label="Profİl" href="/profile" iconSrc="/mascot_normal.svg" />
+        <SidebarItem label="Profil" href="/profile" iconSrc="/mascot_normal.svg" />
       </div>
       <div className="p-4 mt-auto">
         <Button

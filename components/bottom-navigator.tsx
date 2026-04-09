@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
-import { Button } from "./ui/button";
 import { createClient } from "@/utils/supabase/client";
 import { User, Session } from "@supabase/supabase-js";
 import { useSecureLogout } from "@/hooks/use-secure-logout";
@@ -50,7 +49,6 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
     });
   };
 
-  // Regular navigation items (excluding games, lab, shop)
   const navItems = [
     { href: "/learn", iconSrc: "/desk.svg" },
     { href: "/leaderboard", iconSrc: "/leaderboard.svg" },
@@ -58,11 +56,9 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
     { href: "/profile", iconSrc: "/mascot_normal.svg" },
   ];
 
-  // Dropdown items for Games, Lab, and Shop
   const dropdownItems = [
+    { label: "Özel Ders", href: "/private-lesson", iconSrc: "/private_lesson.svg" },
     { label: "Oyunlar", href: "/games", iconSrc: "/games.svg" },
-    // Temporarily disabled - lab functionality
-    // { label: "Laboratuvar", href: "/lab", iconSrc: "/lab.svg" },
     { label: "Mağaza", href: "/shop", iconSrc: "/bag.svg" },
     { label: "Hedefler", href: "/quests", iconSrc: "/quests.svg" },
   ];
@@ -76,7 +72,7 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
     >
       {/* Regular navigation items */}
       {navItems.map((item) => {
-        const isActive = pathname === item.href;
+        const isActive = pathname.startsWith(item.href);
         return (
           <Link
             key={item.href}
@@ -112,14 +108,14 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
           <Image src="/more.svg" alt="Menu" height={42} width={42} className="mr-2" />
         </Link>
         {isDropdownOpen && (
-          <div className="absolute bottom-14 right-0 w-40 bg-white shadow-lg rounded-lg border border-gray-200 z-50">
+          <div className="absolute bottom-14 right-0 w-44 bg-white shadow-lg rounded-lg border border-gray-200 z-50">
             <ul>
               {dropdownItems.map((item) => (
                 <li key={item.href}>
                   <Link
                     prefetch={false}
                     href={item.href}
-                    className="flex items-center px-4 py-2 hover:bg-gray-100"
+                    className="flex items-center px-4 py-2.5 hover:bg-gray-100"
                     onClick={() => setDropdownOpen(false)}
                   >
                     <Image
@@ -133,24 +129,26 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
                   </Link>
                 </li>
               ))}
+              <li className="border-t border-gray-100">
+                <button
+                  onClick={() => {
+                    setDropdownOpen(false);
+                    handleLogout();
+                  }}
+                  disabled={isLoggingOut}
+                  className="flex items-center w-full px-4 py-2.5 hover:bg-gray-100 text-rose-600"
+                >
+                  <Image src="/exit.svg" alt="Çıkış" height={24} width={24} className="mr-2" />
+                  <span className="text-sm font-medium">
+                    {isLoggingOut ? "Çıkış..." : "Çıkış Yap"}
+                  </span>
+                </button>
+              </li>
             </ul>
           </div>
         )}
       </div>
 
-      <div>
-        <Button
-          onClick={handleLogout}
-          disabled={isLoggingOut}
-          variant="secondary"
-          className="justify-start h-[44px] flex items-center pl-3"
-        >
-          <Image src="/exit.svg" alt="Çıkış Yap" height={20} width={20} />
-          <span className="text-left pr-1">
-            {isLoggingOut ? 'Çıkış...' : 'Çıkış'}
-          </span>
-        </Button>
-      </div>
     </div>
   );
 };

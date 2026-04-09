@@ -68,7 +68,6 @@ export default function ProfilePageClient({
     try {
       // Generate a new random avatar URL from the avataaars.io service
       const newAvatarUrl = generator.generateRandomAvatar();
-      console.log("Generated avatar URL:", newAvatarUrl);
       
       // Set the new avatar URL
       setAvatarUrl(newAvatarUrl);
@@ -168,10 +167,23 @@ export default function ProfilePageClient({
   const isExternalAvatar = avatarUrl.startsWith('http');
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <div className="max-w-2xl mx-auto">
-        <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-white">
-          <h1 className="text-2xl font-bold text-center text-gray-800">Profil Ayarları</h1>
+    <div className="flex flex-row-reverse gap-[48px] px-3 sm:px-6">
+      <div className="flex-1 pb-10">
+        <div className="w-full flex flex-col items-center mb-6">
+          <Image
+            src="/mascot_normal.svg"
+            alt="Profil"
+            height={100}
+            width={100}
+          />
+          <h1 className="text-center font-bold text-neutral-800 text-2xl mt-4 mb-2">
+            Profil Ayarları
+          </h1>
+          <p className="text-muted-foreground text-center text-base">
+            Profilini düzenle ve kişiselleştir
+          </p>
+        </div>
+        <div className="max-w-xl mx-auto border-2 rounded-xl p-6 space-y-4 shadow-sm bg-white">
           
           {error && (
             <p className="text-sm text-red-600 text-center">
@@ -311,13 +323,13 @@ export default function ProfilePageClient({
               <div className={`flex justify-between items-center ${canChangeAvatar ? 'text-green-700' : 'text-amber-700'}`}>
                 <span>Avatar Değiştirme</span>
                 <span className="font-medium">
-                  {canChangeAvatar ? '✅ Açık' : `🔒 ${STREAK_REQUIREMENTS.AVATAR_CHANGE} gün istikrargerekli`}
+                  {canChangeAvatar ? '✅ Açık' : `🔒 ${STREAK_REQUIREMENTS.AVATAR_CHANGE} gün istikrar gerekli`}
                 </span>
               </div>
               <div className={`flex justify-between items-center ${canSelectSchool ? 'text-green-700' : 'text-amber-700'}`}>
                 <span>Okul Seçimi</span>
                 <span className="font-medium">
-                  {canSelectSchool ? '✅ Açık' : `🔒 ${STREAK_REQUIREMENTS.SCHOOL_SELECTION} gün istikrargerekli`}
+                  {canSelectSchool ? '✅ Açık' : `🔒 ${STREAK_REQUIREMENTS.SCHOOL_SELECTION} gün istikrar gerekli`}
                 </span>
               </div>
             </div>
