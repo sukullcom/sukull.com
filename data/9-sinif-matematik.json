@@ -156,22 +156,22 @@
               "options": [
                 {
                   "text": "$\\mathbb{N}$ (Doğal sayılar)",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "$\\mathbb{Z}$ (Tam sayılar)",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "$\\mathbb{Q}$ (Rasyonel sayılar)",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "$\\mathbb{R}$ (Gerçek sayılar)",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -355,22 +355,22 @@
               "options": [
                 {
                   "text": "$4^2$ ifadesini $2$ tabanında yaz: $(2^2)^2$",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Üssün üssü kuralını uygula: $2^4$",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Çarpımı yaz: $2^3 \\cdot 2^4$",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Üsleri toplayarak sonucu bul: $2^7 = 128$",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -555,22 +555,22 @@
               "options": [
                 {
                   "text": "$72$'yi asal çarpanlarına ayır: $72 = 2^3 \\cdot 3^2$",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Kök içindeki tam kareleri belirle: $2^2 \\cdot 3^2 \\cdot 2$",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Tam kareleri kök dışına çıkar: $2 \\cdot 3 \\cdot \\sqrt{2}$",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Sonucu yaz: $6\\sqrt{2}$",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -756,22 +756,22 @@
               "options": [
                 {
                   "text": "Tam kare özdeşliğini belirle: $(a+b)^2 = a^2 + 2ab + b^2$",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "$a = 3x$ ve $b = 2$ olarak ata",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Her terimi hesapla: $(3x)^2 + 2(3x)(2) + 2^2$",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Sonucu sadeleştir: $9x^2 + 12x + 4$",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -957,22 +957,22 @@
               "options": [
                 {
                   "text": "$(-\\infty, -2)$",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "$[-2, 0]$",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "$(0, 3)$",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "$[3, +\\infty)$",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -1162,22 +1162,22 @@
               "options": [
                 {
                   "text": "Parantezleri aç: $5x + 10 - 3x + 3 = 17$",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Benzer terimleri topla: $2x + 13 = 17$",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Sabit terimleri sağa taşı: $2x = 4$",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Her iki tarafı $2$'ye böl: $x = 2$",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -1360,22 +1360,22 @@
               "options": [
                 {
                   "text": "Parantezi aç: $2x - 2 \\leq 3x + 4$",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "$x$'li terimleri bir tarafa topla: $2x - 3x \\leq 4 + 2$",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Sadeleştir: $-x \\leq 6$",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Her iki tarafı $-1$ ile çarp (yön değişir): $x \\geq -6$",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -1559,22 +1559,22 @@
               "options": [
                 {
                   "text": "Mutlak değer tanımını uygula: $-5 < x - 3 < 5$",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Eşitsizliğin her tarafına $3$ ekle: $-5+3 < x < 5+3$",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Sadeleştir: $-2 < x < 8$",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Çözüm kümesini aralık olarak yaz: $(-2, 8)$",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -1757,22 +1757,22 @@
               "options": [
                 {
                   "text": "$y$-kesim noktasını bul: $(0, 3)$",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "$x$-kesim noktasını bul: $(3, 0)$",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "İki noktayı koordinat düzleminde işaretle",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Noktaları birleştirerek doğruyu çiz",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -1957,22 +1957,22 @@
               "options": [
                 {
                   "text": "Değişkeni belirle: Ayşe'nin parası $= x$ TL",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Ali'nin parasını ifade et: $3x$ TL",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Denklemi kur: $x + 3x = 80$",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Denklemi çöz: $4x = 80$, $x = 20$ TL",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -2165,22 +2165,22 @@
               "options": [
                 {
                   "text": "İfadenin bir cümle olup olmadığını kontrol et",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Cümlenin soru veya emir içerip içermediğini kontrol et",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "İfadenin kesin bir doğruluk değerine sahip olup olmadığını belirle",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Doğruluk değeri belirlenebiliyorsa önerme olarak kabul et",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -2364,22 +2364,22 @@
               "options": [
                 {
                   "text": "$p$ ve $q$ için olası doğruluk değerlerini listele (D-D, D-Y, Y-D, Y-Y)",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "$p$: D, $q$: D durumunu değerlendir → $p \\wedge q$: Doğru",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "$p$: D, $q$: Y ve $p$: Y, $q$: D durumlarını değerlendir → $p \\wedge q$: Yanlış",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "$p$: Y, $q$: Y durumunu değerlendir → $p \\wedge q$: Yanlış",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -2561,22 +2561,22 @@
               "options": [
                 {
                   "text": "Koşullu önermeyi belirle: $p \\Rightarrow q$",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Ön koşulun ($p$) doğruluğunu kontrol et",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Modus ponens kuralını uygula",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Sonuca ulaş: $q$ doğrudur",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -2760,22 +2760,22 @@
               "options": [
                 {
                   "text": "Başla",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "$a$ ve $b$ sayılarını gir",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "$a > b$ koşulunu kontrol et",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Koşul doğruysa $a$'yı, yanlışsa $b$'yi yazdır ve bitir",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -2960,22 +2960,22 @@
               "options": [
                 {
                   "text": "Başla ve $n$ sayısını gir",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "$n \\leq 1$ ise \"asal değil\" yaz ve bitir",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "$i = 2$'den $\\sqrt{n}$'ye kadar $n$'nin $i$'ye bölünüp bölünmediğini kontrol et",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Hiçbir bölme tam bölünme vermezse \"asal\" yaz ve bitir",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -3167,22 +3167,22 @@
               "options": [
                 {
                   "text": "Üçgenin iç açılar toplamının $180°$ olduğunu hatırla",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Verilen iki açıyı topla",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "$180°$'den bu toplamı çıkar",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Bulunan değerin $0° < \\alpha < 180°$ aralığında olduğunu doğrula",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -3366,22 +3366,22 @@
               "options": [
                 {
                   "text": "Üçgen eşitsizliğini hatırla: iki kenar toplamı > üçüncü kenar",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "$4 + 7 = 11 > 10$ → sağlanıyor ✓",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "$4 + 10 = 14 > 7$ → sağlanıyor ✓",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "$7 + 10 = 17 > 4$ → sağlanıyor ✓ → Üçgen oluşur",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -3567,22 +3567,22 @@
               "options": [
                 {
                   "text": "Üçgenin köşe noktalarını belirle",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Bir kenarı taban olarak seç",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Tabanın uzunluğunu hesapla",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Yüksekliği bul ve $A = \\frac{1}{2} \\cdot \\text{taban} \\cdot \\text{yükseklik}$ formülünü uygula",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -3767,22 +3767,22 @@
               "options": [
                 {
                   "text": "Pisagor teoremini hatırla: $a^2 + b^2 = c^2$",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Değerleri yerine koy: $3^2 + 4^2 = c^2$",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Hesapla: $9 + 16 = c^2$, yani $c^2 = 25$",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Karekök al: $c = 5$ cm",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -3966,22 +3966,22 @@
               "options": [
                 {
                   "text": "Üçgenin bir köşesinden karşı kenara paralel bir doğru çiz",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Paralel doğruların oluşturduğu ters açıları belirle",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Doğru üzerindeki açıların toplamının $180°$ olduğunu kullan",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Ters açıların eşitliğinden iç açılar toplamının $180°$ olduğunu göster",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -4209,22 +4209,22 @@
               "options": [
                 {
                   "text": "Üçgenin köşe koordinatlarını belirle",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Her köşenin $y$ koordinatının işaretini değiştir",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Yansımış köşelerin yeni koordinatlarını yaz",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Her köşenin $x$ koordinatına $2$ ekle",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -4383,22 +4383,22 @@
               "options": [
                 {
                   "text": "Verilen bilgileri şekil üzerinde işaretle",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Eşit olduğu bilinen iki kenarı belirle",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Bu iki kenar arasındaki açıların eşitliğini göster",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "K.A.K. koşuluna göre üçgenlerin eşliğini yaz",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -4619,22 +4619,22 @@
               "options": [
                 {
                   "text": "Üçgende paralel doğruyu ve kestiği kenarları belirle",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Tales orantı eşitliğini kur",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Çapraz çarpma işlemi yap",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Denklemi çözerek bilinmeyeni bul",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -4793,22 +4793,22 @@
               "options": [
                 {
                   "text": "$x$ koordinatlarının farkını bul: $4 - 1 = 3$",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "$y$ koordinatlarının farkını bul: $6 - 2 = 4$",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Farkların karelerini al: $9$ ve $16$",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Karelerin toplamının karekökünü hesapla: $\\sqrt{25} = 5$",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -4998,22 +4998,22 @@
               "options": [
                 {
                   "text": "Benzer üçgenlerin karşılıklı köşelerini belirle",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Karşılıklı kenarların oranını yaz",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Benzerlik oranını ($k$) hesapla",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Bilinmeyen kenarı benzerlik oranıyla bul",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -5208,22 +5208,22 @@
               "options": [
                 {
                   "text": "Araştırma sorusunu belirle",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Veri toplama yöntemini seç",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Verileri topla ve düzenle",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Verileri analiz et ve yorumla",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -5443,22 +5443,22 @@
               "options": [
                 {
                   "text": "Her sınıfın orta noktasını (sınıf değerini) bul",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Sınıf değerlerini frekanslarla çarp",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Çarpımların toplamını hesapla",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Toplamı toplam frekansa böl",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -5648,22 +5648,22 @@
               "options": [
                 {
                   "text": "Aritmetik ortalamayı hesapla",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Her verinin ortalamadan farkını bul",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Farkların karelerini al ve topla",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Toplamı veri sayısına böl ve karekökünü al",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -5824,22 +5824,22 @@
               "options": [
                 {
                   "text": "Verilerin açıklığını belirle",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Sınıf aralıklarını ve sayısını belirle",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Her sınıf aralığının frekansını hesapla",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Sınıf aralıklarını yatay, frekansları dikey eksende göster",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -6060,22 +6060,22 @@
               "options": [
                 {
                   "text": "Merkezi eğilim ve yayılım ölçülerini hesapla",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Grafikleri inceleyerek dağılım şeklini belirle",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Uç değerlerin etkisini değerlendir",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Sonuçlara dayalı çıkarım ve karar ver",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -6270,22 +6270,22 @@
               "options": [
                 {
                   "text": "Deneyi tanımla",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Olası tüm sonuçları listele",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Sonuçları küme olarak yaz",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Örneklem uzayın eleman sayısını belirle",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -6443,22 +6443,22 @@
               "options": [
                 {
                   "text": "Deneyi belirle ve çok sayıda tekrarla",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "İstenen olayın gerçekleşme sayısını say",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Toplam deneme sayısını belirle",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Gerçekleşme sayısını toplam deneme sayısına böl",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -6676,22 +6676,22 @@
               "options": [
                 {
                   "text": "Örneklem uzayı belirle",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Örneklem uzaydaki toplam eleman sayısını bul",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "İstenen olayı oluşturan sonuçları belirle",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Olay eleman sayısını toplam eleman sayısına böl",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -6880,22 +6880,22 @@
               "options": [
                 {
                   "text": "İlk olayın olasılığını hesapla",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "İlk olayın gerçekleşmesinin koşulları nasıl değiştirdiğini belirle",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Koşullu olasılığı hesapla",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "İki olasılığı çarparak ortak olasılığı bul",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -7054,22 +7054,22 @@
               "options": [
                 {
                   "text": "Geçmiş verileri topla ve analiz et",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Olayların gerçekleşme olasılığını hesapla",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Olası hasar tutarlarını belirle",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Beklenen değeri hesaplayarak prim belirle",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],

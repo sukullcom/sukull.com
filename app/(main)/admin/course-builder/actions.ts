@@ -429,6 +429,7 @@ export async function importCourseFromJSON(jsonData: {
           imageSrc?: string;
           audioSrc?: string;
           correctOrder?: number;
+          sequenceOrder?: number;
           pairId?: number;
           isBlank?: boolean;
           dragData?: string;
@@ -499,7 +500,7 @@ export async function importCourseFromJSON(jsonData: {
                 correct: opt.correct,
                 imageSrc: opt.imageSrc,
                 audioSrc: opt.audioSrc,
-                correctOrder: opt.correctOrder,
+                correctOrder: opt.correctOrder ?? opt.sequenceOrder,
                 pairId: opt.pairId,
                 isBlank: opt.isBlank,
                 dragData: opt.dragData,

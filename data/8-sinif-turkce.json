@@ -194,22 +194,22 @@
               "options": [
                 {
                   "text": "Sözcüğün geçtiği cümleyi dikkatlice okuyun.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Sözcüğün cümledeki bağlamını inceleyin.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Sözcüğün gerçek anlamıyla cümleye uyup uymadığını kontrol edin.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Sözcüğün kullanıldığı anlam türünü (gerçek, mecaz, terim) belirleyin.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -399,22 +399,22 @@
               "options": [
                 {
                   "text": "Atasözündeki sözcüklerin gerçek anlamlarını belirleyin.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Sözcüklerin mecaz anlamlarını düşünün.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Atasözünün vermek istediği mesajı çıkarın.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Mesajı günlük hayattan bir örnekle ilişkilendirin.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -607,22 +607,22 @@
               "options": [
                 {
                   "text": "Güzel - hoş (eş anlamlı)",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Güzel - şirin (yakın anlamlı)",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Güzel - sıradan (uzak anlamlı)",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Güzel - çirkin (zıt anlamlı)",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -819,22 +819,22 @@
               "options": [
                 {
                   "text": "Benzeyen (teşbih edilen)",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Kendisine benzetilen (benzetilen)",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Benzetme yönü (ortak özellik)",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Benzetme edatı (gibi, kadar vb.)",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -1026,22 +1026,22 @@
               "options": [
                 {
                   "text": "Cümleyi okuyun ve dikkat çeken sözcüğü veya ifadeyi belirleyin.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Sözcüğün gerçek mi yoksa mecaz mı kullanıldığını kontrol edin.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Mecazlı kullanımın türünü belirleyin (benzetme, kişileştirme, abartma, ad aktarması).",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Söz sanatını gerekçesiyle birlikte açıklayın.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -1239,22 +1239,22 @@
               "options": [
                 {
                   "text": "Cümledeki yüklemi bulun.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Yükleme 'kim?' veya 'ne?' sorusunu sorun.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Bu soruya cevap veren sözcük veya söz grubunu belirleyin.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Belirlediğiniz ögenin özne olduğunu doğrulayın.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -1445,22 +1445,22 @@
               "options": [
                 {
                   "text": "Yüklemi bulun.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Özneyi bulun (yükleme kim/ne sorusu).",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Nesneyi bulun (yükleme kimi/neyi/ne sorusu).",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Tümleçleri bulun (nereye, ne zaman, nasıl vb.).",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -1648,22 +1648,22 @@
               "options": [
                 {
                   "text": "Basit cümle (tek yüklem)",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Birleşik cümle (ana cümle + yan cümle)",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Sıralı cümle (birden fazla yargı, virgülle)",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Bağlı cümle (birden fazla yargı, bağlaçla)",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -1854,22 +1854,22 @@
               "options": [
                 {
                   "text": "Ali okula gitti. (olumlu)",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Ali okula gitmedi. (olumsuz)",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Ali okula gitti mi? (soru)",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Ali okula ne çabuk gitmiş! (ünlem)",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -2060,22 +2060,22 @@
               "options": [
                 {
                   "text": "Dün ders çalıştım. (1 yüklem)",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Koşarak eve geldi. (1 yüklem + 1 fiilimsi)",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Annesi geldi, babası gitti. (2 yüklem)",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Ali geldi, Ayşe gitti ve herkes sevindi. (3 yüklem)",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -2274,22 +2274,22 @@
               "options": [
                 {
                   "text": "Fiil kökünü belirleyin: gel-",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "İsim-fiil eki ekleyin: gelme",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Tamlama içinde kullanın: geç gelme alışkanlığı",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Cümlede kullanın: Geç gelme alışkanlığından vazgeçmelisin.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -2479,22 +2479,22 @@
               "options": [
                 {
                   "text": "Sözcüğün bir fiil kökü taşıyıp taşımadığını kontrol edin.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Sıfat-fiil eki (-an, -ası, -mez, -ar, -dik, -ecek, -miş) olup olmadığını belirleyin.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Sözcüğün bir ismi niteleyip nitelemediğini kontrol edin.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Sözcüğü sıfat-fiil (ortaç) olarak belirleyin.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -2686,22 +2686,22 @@
               "options": [
                 {
                   "text": "Cümledeki fiilimsiyi (çekimsiz fiili) bulun.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Fiilimsinin aldığı eki belirleyin.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Ekin isim-fiil, sıfat-fiil veya zarf-fiil eki olduğunu tespit edin.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Fiilimsinin cümledeki görevini (isim, sıfat veya zarf) belirleyin.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -2890,22 +2890,22 @@
               "options": [
                 {
                   "text": "Cümledeki yüklemi (fiili) belirleyin.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Yükleme 'kimi?' veya 'neyi/ne?' sorusunu sorun.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Bu soruya anlamlı bir cevap alınıp alınamadığını kontrol edin.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Cevap alınıyorsa geçişli, alınamıyorsa geçişsiz fiildir.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -3093,22 +3093,22 @@
               "options": [
                 {
                   "text": "Etken çatı (özne eylemi yapar)",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Dönüşlü çatı (özne eylemi kendine yapar)",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "İşteş çatı (özneler karşılıklı/birlikte yapar)",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Edilgen çatı (özne belli değildir)",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -3308,22 +3308,22 @@
               "options": [
                 {
                   "text": "Hava çok soğudu.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Yollar buz tuttu.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Araçlar kayarak kaza yaptı.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Trafik uzun süre durdu.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -3519,22 +3519,22 @@
               "options": [
                 {
                   "text": "Cümleyi dikkatli bir şekilde okuyun.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Cümlede kişisel görüş veya duygu ifadesi olup olmadığını belirleyin.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Cümledeki bilginin kanıtlanabilir olup olmadığını kontrol edin.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Cümlenin öznel veya nesnel olduğuna karar verin.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -3729,22 +3729,22 @@
               "options": [
                 {
                   "text": "Metni dikkatli bir şekilde okuyun.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Açıkça ifade edilmeyen ipuçlarını belirleyin.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "İpuçlarından hareketle olası anlamları düşünün.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "En tutarlı çıkarımı belirleyerek sonuca ulaşın.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -3937,22 +3937,22 @@
               "options": [
                 {
                   "text": "Cümleyi dikkatli okuyun.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Anlam açısından tutarsız veya gereksiz ifade olup olmadığını belirleyin.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Bozukluğun türünü tespit edin (tekrar, çelişki, deyim yanlışı vb.).",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Gereksiz veya yanlış ifadeyi çıkararak cümleyi düzeltin.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -4151,22 +4151,22 @@
               "options": [
                 {
                   "text": "Cümlenin ögelerini (özne, yüklem, nesne, tümleç) belirleyin.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Özne-yüklem uyumunu (kişi, çoğul/tekil) kontrol edin.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Eklerin ve bağlaçların doğru kullanılıp kullanılmadığını inceleyin.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Hatalı yapıyı düzelterek cümleyi yeniden yazın.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -4370,22 +4370,22 @@
               "options": [
                 {
                   "text": "Cümle başlarındaki sözcüklerin büyük harfle başlayıp başlamadığını kontrol edin.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Kişi, yer ve ülke adlarının büyük harfle yazılıp yazılmadığını inceleyin.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Kurum ve kuruluş adlarının her sözcüğünün büyük harfle başladığını doğrulayın.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Unvan ve saygı sözcüklerinin yazımını kontrol edin.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -4581,22 +4581,22 @@
               "options": [
                 {
                   "text": "Cümleyi dikkatli okuyun.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "'de/da' sözcüğünü cümleden çıkararak anlamın bozulup bozulmadığını kontrol edin.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "'de/da' yerine 'dahi' veya 'bile' koyarak anlamlı olup olmadığını deneyin.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Anlamlıysa bağlaçtır (ayrı yazılır); anlamsızsa hâl ekidir (bitişik yazılır).",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -4792,22 +4792,22 @@
               "options": [
                 {
                   "text": "Sözcüklerin tek tek anlamlarını belirleyin.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Birlikte kullanıldığında anlam kayması olup olmadığını kontrol edin.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "TDK yazım kılavuzundan sözcüğün bitişik mi ayrı mı yazıldığını kontrol edin.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Kurala uygun biçimde bitişik veya ayrı yazın.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -5000,22 +5000,22 @@
               "options": [
                 {
                   "text": "Cümle sınırlarını belirleyerek cümle sonu işaretlerini koyun (nokta, soru, ünlem).",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Cümle içindeki sıralamalara ve ara sözlere virgül koyun.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Doğrudan aktarımlara tırnak işareti, açıklamalara iki nokta koyun.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Metni baştan sona okuyarak noktalama tutarlılığını kontrol edin.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -5214,22 +5214,22 @@
               "options": [
                 {
                   "text": "Tüm seçenekleri dikkatli okuyun.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Bildiğiniz yazım ve noktalama kurallarını uygulayarak hatalı seçenekleri eleyin.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Kalan seçenekleri karşılaştırarak en doğru olanı belirleyin.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Seçtiğiniz yanıtı son kez kontrol ederek işaretleyin.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -5432,22 +5432,22 @@
               "options": [
                 {
                   "text": "Paragrafı en az iki kez dikkatli okuyun.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Paragrafın ne hakkında olduğunu (konuyu) belirleyin.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Her cümlenin ana düşünceyi mi yoksa onu destekleyen ayrıntıyı mı verdiğini belirleyin.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Tüm cümleleri kapsayan en genel yargıyı ana düşünce olarak belirleyin.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -5642,22 +5642,22 @@
               "options": [
                 {
                   "text": "Metni dikkatli bir şekilde okuyun.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Metinde olay örgüsü, betimleme veya bilgi aktarımı olup olmadığını belirleyin.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Metnin amacını (bilgilendirme, eğlendirme, düşündürme, ikna etme) tespit edin.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Belirlediğiniz özelliklere göre metin türüne karar verin.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -5851,22 +5851,22 @@
               "options": [
                 {
                   "text": "Görselin türünü belirleyin (tablo, grafik, afiş vb.).",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Başlık, alt başlık ve etiketleri inceleyin.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Görseldeki sayısal verileri veya bilgileri okuyun.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Verilerden yorum ve çıkarım yapın.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -6060,22 +6060,22 @@
               "options": [
                 {
                   "text": "Her iki metni ayrı ayrı dikkatli okuyun.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Her metnin konusunu, temasını ve anlatım biçimini belirleyin.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Metinlerin ortak ve farklı yönlerini tespit edin.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Benzerlik ve farklılıklardan hareketle genel bir değerlendirme yapın.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -6271,22 +6271,22 @@
               "options": [
                 {
                   "text": "Önce soru kökünü okuyarak ne sorulduğunu anlayın.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Paragrafı dikkatli bir şekilde, soru kökünü aklınızda tutarak okuyun.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Seçenekleri tek tek paragrafla karşılaştırarak eleyin.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Kalan en uygun seçeneği yanıt olarak işaretleyin.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],

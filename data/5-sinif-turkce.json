@@ -193,22 +193,22 @@
               "options": [
                 {
                   "text": "Sözcüğü cümle içinde bul.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Cümleden anlamını tahmin et.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Sözlükten anlamını kontrol et.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Sözcüğü yeni bir cümlede kullan.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -398,22 +398,22 @@
               "options": [
                 {
                   "text": "Minicik",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Küçük",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Büyük",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Kocaman",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -603,22 +603,22 @@
               "options": [
                 {
                   "text": "Gözleri mavi.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Masanın gözünü açtı.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Göz göze geldik.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Gözden düştü.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -807,22 +807,22 @@
               "options": [
                 {
                   "text": "Baş göz etmek",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Göz yummak",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "El vermek",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Ayak uydurmak",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -1011,22 +1011,22 @@
               "options": [
                 {
                   "text": "Ali arkadaşlarıyla kavga etti.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Annesi 'Tatlı dil yılanı deliğinden çıkarır.' dedi.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Ali arkadaşlarından özür diledi.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Arkadaşları onu affetti ve barıştılar.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -1224,22 +1224,22 @@
               "options": [
                 {
                   "text": "araba",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "bahçe",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "çiçek",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "defter",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -1429,22 +1429,22 @@
               "options": [
                 {
                   "text": "Minicik",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Küçücük",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Büyükçe",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Kocaman",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -1634,22 +1634,22 @@
               "options": [
                 {
                   "text": "Birinci",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Üçüncü",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Beşinci",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Onuncu",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -1841,22 +1841,22 @@
               "options": [
                 {
                   "text": "Ben",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Sen",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Biz",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Onlar",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -2050,22 +2050,22 @@
               "options": [
                 {
                   "text": "Dün okula yeni bir öğrenci geldi.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "O çok sessiz ve utangaç görünüyordu.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Ben ona yanıma oturmasını söyledim.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Sonunda güzel bir arkadaşlık kurduk.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -2262,22 +2262,22 @@
               "options": [
                 {
                   "text": "Ali sabah erkenden uyandı.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Kahvaltısını yaptı.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Okula yürüyerek gitti.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Derslerini dikkatle dinledi.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -2466,22 +2466,22 @@
               "options": [
                 {
                   "text": "Hava çok sıcaktı.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Çocuklar susadı.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Markete gittiler.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Su satın aldılar.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -2670,22 +2670,22 @@
               "options": [
                 {
                   "text": "Proje konusu belirle.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "Araştırma yap.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "Deneyi gerçekleştir.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Projeyi sun.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -2874,22 +2874,22 @@
               "options": [
                 {
                   "text": "Kar",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "yağarsa",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "kardan adam",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "yaparız.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -3081,22 +3081,22 @@
               "options": [
                 {
                   "text": "Ankara Türkiye'nin başkentidir.",
-                  "sequenceOrder": 1,
+                  "correctOrder": 1,
                   "correct": false
                 },
                 {
                   "text": "İstanbul'da Boğaziçi Köprüsü vardır.",
-                  "sequenceOrder": 2,
+                  "correctOrder": 2,
                   "correct": false
                 },
                 {
                   "text": "İstanbul en güzel şehirdir.",
-                  "sequenceOrder": 3,
+                  "correctOrder": 3,
                   "correct": false
                 },
                 {
                   "text": "Ankara'da yaşamak çok keyiflidir.",
-                  "sequenceOrder": 4,
+                  "correctOrder": 4,
                   "correct": false
                 }
               ],
@@ -3298,22 +3298,22 @@
                 {
                   "text": "Türkiye (ülke adı)",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "İstanbul (şehir adı)",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Ahmet (kişi adı)",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "kalem (tür ismi)",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -3509,22 +3509,22 @@
                 {
                   "text": "Cümleyi dikkatlice oku",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "'De/da'nın görevini belirle",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Bağlaçsa ayrı, ekse bitişik yaz",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Cümleyi tekrar okuyarak kontrol et",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -3718,22 +3718,22 @@
                 {
                   "text": "Cümleyi oku ve anla",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Cümle türünü belirle (haber, soru, ünlem)",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Uygun noktalama işaretini koy",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Cümleyi tekrar okuyarak kontrol et",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -3928,22 +3928,22 @@
                 {
                   "text": "Konuşan kişiyi yaz (Annesi:)",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "İki nokta koy (:)",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Tırnak işareti aç ve konuşmayı yaz",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Tırnak işaretini kapat ve noktalama ekle",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -4140,22 +4140,22 @@
                 {
                   "text": "Paragraftaki cümleleri belirle",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Her cümlenin türünü tespit et",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Uygun noktalama işaretlerini yerleştir",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Paragrafı baştan okuyarak kontrol et",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -4359,22 +4359,22 @@
                 {
                   "text": "Metni baştan sona dikkatlice oku",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Metnin konusunu belirle",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Yardımcı fikirleri tespit et",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Yardımcı fikirlerden yola çıkarak ana fikri belirle",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -4569,22 +4569,22 @@
                 {
                   "text": "Metni dikkatlice oku",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Anahtar sözcüklerin altını çiz",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "En çok tekrar eden kavramı belirle",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Konuyu tek bir cümleyle ifade et",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -4779,22 +4779,22 @@
                 {
                   "text": "Metindeki olayı veya durumu belirle",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "'Bu neden oldu?' sorusunu sor",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "'Bunun sonucunda ne oldu?' sorusunu sor",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Neden ve sonucu eşleştirerek ilişkiyi belirle",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -4989,22 +4989,22 @@
                 {
                   "text": "Cümleyi dikkatlice oku",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Cümledeki ipuçlarını belirle",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Doğrudan söylenmeyen anlamı düşün",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Çıkarımını cümleyle karşılaştırarak doğrula",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -5200,22 +5200,22 @@
                 {
                   "text": "Metni baştan sona oku",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Metnin yapısal özelliklerini incele (dize, paragraf)",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "İçeriği analiz et (olay mı, bilgi mi, duygu mu?)",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Metin türünü belirle ve gerekçele",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -5418,22 +5418,22 @@
                 {
                   "text": "Sözcüğü yaz",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Ekleri sondan başlayarak tek tek at",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Kalan parçanın anlamlı olup olmadığını kontrol et",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Anlamlı en küçük parçayı kök olarak belirle",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -5628,22 +5628,22 @@
                 {
                   "text": "Sözcüğün kökünü bul",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Köke eklenen ekleri sırasıyla belirle",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Anlam veya tür değiştiren eki yapım eki olarak işaretle",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Yapım ekinin türünü belirle (isimden isim, fiilden isim vb.)",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -5840,22 +5840,22 @@
                 {
                   "text": "Sözcüğün kökünü belirle",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Eklenme sırasına göre ekleri listele",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Yapım eklerini ve çekim eklerini ayır",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Her ekin görevini (türünü) belirle",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -6050,22 +6050,22 @@
                 {
                   "text": "Sözcüğü kök ve ekine ayır",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Kökün son harfini belirle",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Ekin ilk harfini kontrol et",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Ses değişimini tespit et ve adlandır",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -6260,22 +6260,22 @@
                 {
                   "text": "Fiil kökünün son ünlüsünü belirle",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Eklenen ekin ne olduğuna bak (-yor gibi)",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Geniş ünlü (a, e) varsa dar ünlüye (ı, i, u, ü) çevir",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Sözcüğü doğru biçimiyle yaz",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6

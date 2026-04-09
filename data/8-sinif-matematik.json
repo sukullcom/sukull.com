@@ -181,22 +181,22 @@
                 {
                   "text": "Sayıyı en küçük asal $2$ ile bölmeye devam et",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Kalan tek asal çarpanlar için $3,5,7,\\ldots$ ile devam et",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Bölüm $1$ olunca dur",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Üsleri yaz: $\\displaystyle n = p_1^{a_1} p_2^{a_2}\\cdots$",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -374,22 +374,22 @@
                 {
                   "text": "Her iki sayıyı asal çarpanlarına ayır",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Ortak asalları belirle",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Ortak asallarda üs olarak daha küçük olanı al",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Seçilen asal kuvvetleri çarp",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -564,22 +564,22 @@
                 {
                   "text": "Taban $-2$, üs $4$ (çift)",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Parantez içi: $(-2)^4$",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Çift kuvvet negatif işareti götürür",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Sonuç pozitif: $(-2)^4=16$",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -755,22 +755,22 @@
                 {
                   "text": "Virgülü $3$'ün sağına kaydır: $3{,}4$",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "$4$ basamak sola gidildiğinden $n=3$",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Sonuç: $3{,}4 \\cdot 10^3$",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Kontrol: $3{,}4 \\cdot 1000 = 3400$",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -949,17 +949,17 @@
                 {
                   "text": "$12=3\\cdot 4$ ve $3$ ile $4$ aralarında asal",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Önce $3$ kuralını kontrol et",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Sonra $4$ kuralını kontrol et",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 }
               ],
               "order": 6
@@ -1141,22 +1141,22 @@
                 {
                   "text": "Çarpanlarına ayır: $\\sqrt{4\\cdot 3}$",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Kural: $\\sqrt{4}\\sqrt{3}$",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "$\\sqrt{4}=2$",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Sonuç: $2\\sqrt{3}$",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -1330,22 +1330,22 @@
                 {
                   "text": "Kesri $\\dfrac{a}{\\sqrt{2}}$ biçiminde düşün",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Pay ve paydayı $\\sqrt{2}$ ile çarp",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Payda $\\sqrt{2}\\cdot\\sqrt{2}=2$ olur",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Sonucu sadeleştir",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -1519,22 +1519,22 @@
                 {
                   "text": "Araştırma sorusunu netleştir",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Veri toplama yöntemini seç",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Veriyi düzenle ve temsil et",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Yorumla",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -1708,17 +1708,17 @@
                 {
                   "text": "Verileri küçükten büyüğe sırala",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Gözlem sayısı tek ise ortadaki değeri al",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Bu değer medyandır",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 }
               ],
               "order": 6
@@ -1892,22 +1892,22 @@
                 {
                   "text": "Başlık ve eksenleri oku",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Ölçek ve birimlere dikkat et",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Eğilim/karşılaştırmayı belirle",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Sonuç cümlesi kur",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -2089,17 +2089,17 @@
                 {
                   "text": "Örnek uzayı ve sonuçların eş olası olduğunu kontrol et",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "İstenen olaya uygun sonuçları say",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Uygun sayıyı, tüm sonuç sayısına böl",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 }
               ],
               "order": 6
@@ -2274,22 +2274,22 @@
                 {
                   "text": "Birinci aşamanın dallarını ve olasılıklarını yaz",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Her düğümden ikinci aşama dallarını ekle",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Her tam yolun olasılığını dalların çarpımı olarak bul",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "İstenen yolların olasılıklarını topla (ayık olaylarda)",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -2463,22 +2463,22 @@
                 {
                   "text": "Birinci çok terimlinin her terimini ikinciye dağıt",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Ara çarpımları yaz",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Benzer terimleri birleştir",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "En düşük dereceden başlayarak düzenle",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -2652,22 +2652,22 @@
                 {
                   "text": "Terimlerin ortak çarpanını bul",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Her terimi ortak çarpana böl",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Ortak çarpanı parantez dışına al",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Parantez içini kontrol et",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -2841,22 +2841,22 @@
                 {
                   "text": "Verilenleri matematiksel ifadeye çevir",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Gerekirse özdeşlik veya çarpanlara ayır",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Olasılık ise uygun kuralı seç (klasik/çarpım/koşullu)",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Sonucu yorumla",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -3040,22 +3040,22 @@
                 {
                   "text": "İki tarafta aynı işlemi yaparak sadeleştir",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Bilinmeyenli terimi bir yanda topla",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Son olarak bilinmeyenin katsayısına böl",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Çözümü denklemde kontrol et (isteğe bağlı)",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -3231,22 +3231,22 @@
                 {
                   "text": "Verilenleri ve isteneni yaz",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Bilinmeyen için $x$ seç",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Denklemi kur ve çöz",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Sonucu birimle birlikte yorumla",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -3420,22 +3420,22 @@
                 {
                   "text": "İki tarafta toplama/çıkarma ile sadeleştir",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "$ax$ terimini bir yanda bırak",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "$a>0$ ise $a$'ya böl (yön aynı kalır)",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Çözüm kümesini aralık olarak yaz",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -3609,22 +3609,22 @@
                 {
                   "text": "Her eşitsizliği ayrı ayrı çöz",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Çözüm aralıklarını sayı doğrusunda çiz",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Ortak (kesişim) kısmı belirle",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Sonucu aralık veya grafikle yaz",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -3799,22 +3799,22 @@
                 {
                   "text": "Verileri denklem veya eşitsizliğe çevir",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Cebirsel işlemlerle sadeleştir",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Çözüm kümesini bul",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Gerekirse sayı doğrusunda veya bağlamda yorumla",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -3995,22 +3995,22 @@
                 {
                   "text": "Verilen iç açıları topla",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Gerekirse $180^\\circ$'den çıkararak bilinmeyeni bul",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Dış açı verilmişse komşu olmayan iç açılarla bağ kur",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Sonucu derece cinsinden yaz",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -4184,22 +4184,22 @@
                 {
                   "text": "Verilen ölçüleri (taban, yükseklik, açı) belirle",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Uygun alan formülünü seç",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Değerleri yerine koy ve sadeleştir",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Birim kare olarak sonucu yaz",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -4375,22 +4375,22 @@
                 {
                   "text": "Şekilde karşılıklı köşe ve kenarları adlandır",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Verilen eşitlikleri yaz",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "KKK, KAK veya AKA'dan hangisinin sağlandığını seç",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Sonuç cümlesi: üçgenler eştir",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -4564,22 +4564,22 @@
                 {
                   "text": "Benzerlik kriterini (ör. AA) kontrol et",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Karşılıklı kenarları eşleştir",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Oran $k$'yı kur",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "İstenen uzunluğu oranla hesapla",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -4753,22 +4753,22 @@
                 {
                   "text": "Şekli ve verilen ölçüleri incele",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Eşlik mi benzerlik mi gerektiğine karar ver",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Uygun teoremi uygula",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Sonucu birim ve mantıkla doğrula",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -4949,22 +4949,22 @@
                 {
                   "text": "Eksen doğrusunu belirle",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Noktadan eksene dik çiz",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Eksenin diğer tarafında aynı uzaklıkta görüntüyü işaretle",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Gerekirse koordinatlarla doğrula",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -5138,22 +5138,22 @@
                 {
                   "text": "Verilen dönüşüm sırasını oku",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Her adımda noktanın yeni koordinatını bul",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Bir önceki çıktıyı bir sonraki adıma ver",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Son koordinatı yaz",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -5327,22 +5327,22 @@
                 {
                   "text": "Yarıçap $r$ ve yükseklik $h$'yi belirle",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Taban alanını $\\pi r^2$ olarak bul",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Hacim için $V=(\\pi r^2)h$ hesapla",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Birimi küp olarak yaz",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -5516,22 +5516,22 @@
                 {
                   "text": "Taban yarıçapı $r$ ve yüksekliği $h$'yi yaz",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Ana doğru (yan açıklığı) $l=\\sqrt{r^2+h^2}$ bul",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Gerekirse açılım için çevre ilişkisini kur",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "İstenen açıyı veya alanı hesapla",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
@@ -5705,22 +5705,22 @@
                 {
                   "text": "Tüm uzunlukları aynı birimde yaz",
                   "correct": false,
-                  "sequenceOrder": 1
+                  "correctOrder": 1
                 },
                 {
                   "text": "Alan ve hacim formülünü seç",
                   "correct": false,
-                  "sequenceOrder": 2
+                  "correctOrder": 2
                 },
                 {
                   "text": "Sayısal hesabı yap",
                   "correct": false,
-                  "sequenceOrder": 3
+                  "correctOrder": 3
                 },
                 {
                   "text": "Sonucu doğru birimle (cm$^2$ veya cm$^3$) ver",
                   "correct": false,
-                  "sequenceOrder": 4
+                  "correctOrder": 4
                 }
               ],
               "order": 6
