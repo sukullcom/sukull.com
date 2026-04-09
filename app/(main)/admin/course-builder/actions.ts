@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import db from "@/db/drizzle";
 import { courses, units, lessons, challenges, challengeOptions } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, and, sql } from "drizzle-orm";
 
 // Course Actions
 export async function createCourse(data: { title: string; imageSrc: string }) {
@@ -520,6 +520,176 @@ export async function importCourseFromJSON(jsonData: {
   } catch (error) {
     console.error("Error importing course:", error);
     return { success: false, error: `Import failed: ${error instanceof Error ? error.message : String(error)}` };
+  }
+}
+
+// Append/Merge content into an existing course from JSON
+// - Units matched by title → if exists, use it; if not, create new
+// - Lessons matched by title within unit → if exists, append challenges; if not, create new
+// - Challenges are always added (never replaced) to preserve user progress
+export async function appendToCourse(
+  courseId: number,
+  jsonData: {
+    units: Array<{
+      title: string;
+      description: string;
+      order?: number;
+      lessons: Array<{
+        title: string;
+        order?: number;
+        challenges: Array<{
+          question: string;
+          type: string;
+          difficulty?: string;
+          tags?: string;
+          explanation?: string;
+          timeLimit?: number;
+          metadata?: string;
+          questionImageSrc?: string;
+          options: Array<{
+            text?: string;
+            correct: boolean;
+            imageSrc?: string;
+            audioSrc?: string;
+            correctOrder?: number;
+            sequenceOrder?: number;
+            pairId?: number;
+            isBlank?: boolean;
+            dragData?: string;
+          }>;
+        }>;
+      }>;
+    }>;
+  }
+) {
+  try {
+    const existingCourse = await db.query.courses.findFirst({
+      where: eq(courses.id, courseId),
+    });
+    if (!existingCourse) {
+      return { success: false, error: "Kurs bulunamadı (ID: " + courseId + ")" };
+    }
+
+    const existingUnits = await db.query.units.findMany({
+      where: eq(units.courseId, courseId),
+      orderBy: (u, { desc }) => [desc(u.order)],
+    });
+    const unitByTitle = new Map(existingUnits.map((u) => [u.title.trim().toLowerCase(), u]));
+    let maxUnitOrder = existingUnits.length > 0 ? existingUnits[0].order : 0;
+
+    let addedUnits = 0;
+    let addedLessons = 0;
+    let addedChallenges = 0;
+    let skippedLessons = 0;
+
+    for (const unitData of jsonData.units) {
+      const unitKey = unitData.title.trim().toLowerCase();
+      let unit = unitByTitle.get(unitKey);
+
+      if (!unit) {
+        maxUnitOrder++;
+        const [newUnit] = await db
+          .insert(units)
+          .values({
+            courseId,
+            title: unitData.title,
+            description: unitData.description,
+            order: unitData.order ?? maxUnitOrder,
+          })
+          .returning();
+        unit = newUnit;
+        addedUnits++;
+      }
+
+      const existingLessons = await db.query.lessons.findMany({
+        where: eq(lessons.unitId, unit.id),
+        orderBy: (l, { desc }) => [desc(l.order)],
+      });
+      const lessonByTitle = new Map(
+        existingLessons.map((l) => [l.title.trim().toLowerCase(), l])
+      );
+      let maxLessonOrder = existingLessons.length > 0 ? existingLessons[0].order : 0;
+
+      for (const lessonData of unitData.lessons) {
+        const lessonKey = lessonData.title.trim().toLowerCase();
+        let lesson = lessonByTitle.get(lessonKey);
+
+        if (!lesson) {
+          maxLessonOrder++;
+          const [newLesson] = await db
+            .insert(lessons)
+            .values({
+              unitId: unit.id,
+              title: lessonData.title,
+              order: lessonData.order ?? maxLessonOrder,
+            })
+            .returning();
+          lesson = newLesson;
+          addedLessons++;
+        } else {
+          skippedLessons++;
+        }
+
+        const maxOrderResult = await db
+          .select({ maxOrder: sql<number>`COALESCE(MAX(${challenges.order}), 0)` })
+          .from(challenges)
+          .where(eq(challenges.lessonId, lesson.id));
+        let challengeOrder = maxOrderResult[0]?.maxOrder ?? 0;
+
+        for (const chData of lessonData.challenges) {
+          challengeOrder++;
+          const [challenge] = await db
+            .insert(challenges)
+            .values({
+              lessonId: lesson.id,
+              type: chData.type as "SELECT" | "ASSIST" | "DRAG_DROP" | "FILL_BLANK" | "MATCH_PAIRS" | "SEQUENCE" | "TIMER_CHALLENGE",
+              question: chData.question,
+              explanation: chData.explanation,
+              questionImageSrc: chData.questionImageSrc,
+              order: challengeOrder,
+              difficulty: chData.difficulty as "EASY" | "MEDIUM" | "HARD" | undefined,
+              tags: chData.tags,
+              timeLimit: chData.timeLimit,
+              metadata: chData.metadata,
+            })
+            .returning();
+          addedChallenges++;
+
+          if (chData.options && chData.options.length > 0) {
+            await db.insert(challengeOptions).values(
+              chData.options.map((opt) => ({
+                challengeId: challenge.id,
+                text: opt.text,
+                correct: opt.correct,
+                imageSrc: opt.imageSrc,
+                audioSrc: opt.audioSrc,
+                correctOrder: opt.correctOrder ?? opt.sequenceOrder,
+                pairId: opt.pairId,
+                isBlank: opt.isBlank,
+                dragData: opt.dragData,
+              }))
+            );
+          }
+        }
+      }
+    }
+
+    revalidatePath("/admin/course-builder");
+    return {
+      success: true,
+      stats: {
+        addedUnits,
+        addedLessons,
+        addedChallenges,
+        skippedLessons,
+      },
+    };
+  } catch (error) {
+    console.error("Error appending to course:", error);
+    return {
+      success: false,
+      error: `İçerik ekleme hatası: ${error instanceof Error ? error.message : String(error)}`,
+    };
   }
 }
 

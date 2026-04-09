@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Plus, BookOpen, Edit, Trash2, Upload } from "lucide-react";
-import { createCourse, deleteCourse, updateCourse, importCourseFromJSON } from "../actions";
+import { createCourse, deleteCourse, updateCourse, importCourseFromJSON, appendToCourse } from "../actions";
 import { toast } from "sonner";
 import { ImageUpload } from "@/components/ui/image-upload";
 
@@ -34,6 +34,41 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
   });
   const [isLoading, setIsLoading] = useState(false);
   const [isImporting, setIsImporting] = useState(false);
+  const [appendingCourseId, setAppendingCourseId] = useState<number | null>(null);
+
+  const handleAppendJSON = async (courseId: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setAppendingCourseId(courseId);
+    try {
+      const text = await file.text();
+      const jsonData = JSON.parse(text);
+
+      if (!jsonData.units || !Array.isArray(jsonData.units)) {
+        toast.error("Geçersiz JSON formatı. 'units' alanı gereklidir.");
+        return;
+      }
+
+      const result = await appendToCourse(courseId, jsonData);
+      if (result.success && result.stats) {
+        const s = result.stats;
+        const parts: string[] = [];
+        if (s.addedUnits > 0) parts.push(s.addedUnits + " yeni ünite");
+        if (s.addedLessons > 0) parts.push(s.addedLessons + " yeni ders");
+        if (s.addedChallenges > 0) parts.push(s.addedChallenges + " yeni soru");
+        if (s.skippedLessons > 0) parts.push(s.skippedLessons + " mevcut derse eklendi");
+        toast.success("İçerik eklendi: " + parts.join(", "));
+      } else {
+        toast.error(result.error || "İçerik ekleme başarısız");
+      }
+    } catch (err) {
+      toast.error(`JSON dosyası okunamadı: ${err instanceof Error ? err.message : "Geçersiz format"}`);
+    } finally {
+      setAppendingCourseId(null);
+      e.target.value = "";
+    }
+  };
 
   const handleImportJSON = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -295,13 +330,33 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
                 <div className="text-sm text-gray-600">
                   Image: {course.imageSrc}
                 </div>
-                <Button
-                  onClick={() => onSelectCourse(course)}
-                  className="w-full"
-                >
-                  <Edit className="w-4 h-4 mr-2" />
-                  Kursu Yönet
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    onClick={() => onSelectCourse(course)}
+                    className="flex-1"
+                  >
+                    <Edit className="w-4 h-4 mr-2" />
+                    Kursu Yönet
+                  </Button>
+                  <label
+                    className={`inline-flex items-center justify-center gap-1 px-3 py-2 rounded-md text-sm font-medium cursor-pointer transition-colors ${
+                      appendingCourseId === course.id
+                        ? "bg-gray-300 pointer-events-none"
+                        : "bg-emerald-500 hover:bg-emerald-600 text-white"
+                    }`}
+                    title="Mevcut kursa JSON ile içerik ekle"
+                  >
+                    <Upload className="w-4 h-4" />
+                    {appendingCourseId === course.id ? "..." : "Ekle"}
+                    <input
+                      type="file"
+                      accept=".json"
+                      className="hidden"
+                      onChange={(e) => handleAppendJSON(course.id, e)}
+                      disabled={appendingCourseId === course.id}
+                    />
+                  </label>
+                </div>
               </div>
             </CardContent>
           </Card>
