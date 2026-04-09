@@ -20,8 +20,11 @@ export default async function CoursesPage() {
     ]);
 
     return (
-      <div className="h-full max-w-[912px] px-6 mx-auto py-6">
-        <h1 className="text-3xl font-extrabold text-neutral-800 mb-6">Dersler</h1>
+      <div className="h-full max-w-[1024px] px-4 sm:px-6 mx-auto py-6">
+        <div className="mb-6">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-neutral-800">Dersler</h1>
+          <p className="text-neutral-500 text-sm mt-1">Öğrenmek istediğin dersi seç ve hemen başla</p>
+        </div>
         <List courses={courses} activeCourseId={userProgress?.activeCourseId} />
       </div>
     );

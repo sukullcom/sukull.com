@@ -1,13 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { courses } from "@/db/schema";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Plus, BookOpen, Edit, Trash2, Upload } from "lucide-react";
+import { Plus, BookOpen, Edit, Trash2, Upload, Search, Settings } from "lucide-react";
 import { createCourse, deleteCourse, updateCourse, importCourseFromJSON, appendToCourse } from "../actions";
 import { toast } from "sonner";
 import { ImageUpload } from "@/components/ui/image-upload";
@@ -183,19 +182,36 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
     }
   };
 
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredCourses = useMemo(() => {
+    if (!searchQuery.trim()) return courses;
+    const q = searchQuery.toLowerCase().trim();
+    return courses.filter(
+      (c) => c.title.toLowerCase().includes(q) || String(c.id).includes(q)
+    );
+  }, [courses, searchQuery]);
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">Courses</h2>
-          <p className="text-gray-600">Kurslarınızı yönetin</p>
+          <h2 className="text-xl font-bold text-gray-900">
+            Kurslar <span className="text-gray-400 font-normal text-sm">({courses.length})</span>
+          </h2>
         </div>
-        
+
         <div className="flex items-center gap-2">
-          <label className={`inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium cursor-pointer transition-colors ${isImporting ? "bg-gray-300 pointer-events-none" : "bg-amber-500 hover:bg-amber-600 text-white"}`}>
+          <label
+            className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-md text-sm font-medium cursor-pointer transition-colors ${
+              isImporting
+                ? "bg-gray-300 pointer-events-none"
+                : "bg-amber-500 hover:bg-amber-600 text-white"
+            }`}
+          >
             <Upload className="w-4 h-4" />
-            {isImporting ? "İçe aktarılıyor..." : "JSON İçe Aktar"}
+            {isImporting ? "..." : "Yeni Kurs (JSON)"}
             <input
               type="file"
               accept=".json"
@@ -207,48 +223,68 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
 
           <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
             <DialogTrigger asChild>
-              <Button>
-                <Plus className="w-4 h-4 mr-2" />
-                Kurs Oluştur
+              <Button size="sm">
+                <Plus className="w-4 h-4 mr-1" />
+                Boş Kurs
               </Button>
             </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>Yeni Kurs Oluştur</DialogTitle>
-              <p className="text-sm text-gray-600">Yeni bir kurs oluşturmak için detayları doldurun</p>
-            </DialogHeader>
-            
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="title">Kurs Başlığı</Label>
-                <Input
-                  id="title"
-                  value={newCourse.title}
-                  onChange={(e) => setNewCourse({ ...newCourse, title: e.target.value })}
-                  placeholder="Kurs başlığını girin"
-                />
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle>Yeni Kurs Oluştur</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div>
+                  <Label htmlFor="title">Kurs Başlığı</Label>
+                  <Input
+                    id="title"
+                    value={newCourse.title}
+                    onChange={(e) =>
+                      setNewCourse({ ...newCourse, title: e.target.value })
+                    }
+                    placeholder="Kurs başlığını girin"
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="imageSrc">Kurs Resmi</Label>
+                  <ImageUpload
+                    value={newCourse.imageSrc}
+                    onChange={(url) =>
+                      setNewCourse({
+                        ...newCourse,
+                        imageSrc: url || "/mascot_purple.svg",
+                      })
+                    }
+                    disabled={isLoading}
+                    placeholder="Kurs resmi yükleyin"
+                  />
+                </div>
+                <div className="flex justify-end space-x-2">
+                  <Button
+                    variant="primaryOutline"
+                    onClick={() => setIsCreateOpen(false)}
+                  >
+                    İptal
+                  </Button>
+                  <Button onClick={handleCreateCourse} disabled={isLoading}>
+                    {isLoading ? "Oluşturuluyor..." : "Oluştur"}
+                  </Button>
+                </div>
               </div>
-              <div>
-                <Label htmlFor="imageSrc">Kurs Resmi</Label>
-                <ImageUpload
-                  value={newCourse.imageSrc}
-                  onChange={(url) => setNewCourse({ ...newCourse, imageSrc: url || "/mascot_purple.svg" })}
-                  disabled={isLoading}
-                  placeholder="Kurs resmi yükleyin"
-                />
-              </div>
-              <div className="flex justify-end space-x-2">
-                <Button variant="primaryOutline" onClick={() => setIsCreateOpen(false)}>
-                  İptal
-                </Button>
-                <Button onClick={handleCreateCourse} disabled={isLoading}>
-                  {isLoading ? "Oluşturuluyor..." : "Kurs Oluştur"}
-                </Button>
-              </div>
-            </div>
-          </DialogContent>
-        </Dialog>
+            </DialogContent>
+          </Dialog>
         </div>
+      </div>
+
+      {/* Search */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Kurs ara (isim veya ID)..."
+          className="w-full sm:w-80 pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-200"
+        />
       </div>
 
       {/* Edit Course Dialog */}
@@ -256,16 +292,16 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Kursu Düzenle</DialogTitle>
-            <p className="text-sm text-gray-600">Kurs detaylarını güncelleyin</p>
           </DialogHeader>
-          
           <div className="space-y-4">
             <div>
               <Label htmlFor="edit-title">Kurs Başlığı</Label>
               <Input
                 id="edit-title"
                 value={editCourse.title}
-                onChange={(e) => setEditCourse({ ...editCourse, title: e.target.value })}
+                onChange={(e) =>
+                  setEditCourse({ ...editCourse, title: e.target.value })
+                }
                 placeholder="Kurs başlığını girin"
               />
             </div>
@@ -273,102 +309,125 @@ export function CourseManager({ courses: initialCourses, onSelectCourse }: Cours
               <Label htmlFor="edit-imageSrc">Kurs Resmi</Label>
               <ImageUpload
                 value={editCourse.imageSrc}
-                onChange={(url) => setEditCourse({ ...editCourse, imageSrc: url || "/mascot_purple.svg" })}
+                onChange={(url) =>
+                  setEditCourse({
+                    ...editCourse,
+                    imageSrc: url || "/mascot_purple.svg",
+                  })
+                }
                 disabled={isLoading}
                 placeholder="Kurs resmi yükleyin"
               />
             </div>
             <div className="flex justify-end space-x-2">
-              <Button variant="primaryOutline" onClick={() => setIsEditOpen(false)}>
+              <Button
+                variant="primaryOutline"
+                onClick={() => setIsEditOpen(false)}
+              >
                 İptal
               </Button>
               <Button onClick={handleEditCourse} disabled={isLoading}>
-                {isLoading ? "Güncelleniyor..." : "Kursu Güncelle"}
+                {isLoading ? "Güncelleniyor..." : "Güncelle"}
               </Button>
             </div>
           </div>
         </DialogContent>
       </Dialog>
 
-      {/* Course Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {courses.map((course) => (
-          <Card key={course.id} className="hover:shadow-lg transition-shadow">
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center">
-                    <BookOpen className="w-5 h-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <CardTitle className="text-lg">{course.title}</CardTitle>
-                    <p className="text-sm text-gray-500">ID: {course.id}</p>
-                  </div>
-                </div>
-                <div className="flex space-x-1">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => openEditDialog(course)}
-                    className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
-                  >
-                    <Edit className="w-4 h-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleDeleteCourse(course.id)}
-                    className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                <div className="text-sm text-gray-600">
-                  Image: {course.imageSrc}
-                </div>
-                <div className="flex gap-2">
-                  <Button
+      {/* Compact Table */}
+      <div className="border rounded-lg overflow-hidden bg-white">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="bg-gray-50 border-b text-left text-gray-500 text-xs uppercase tracking-wider">
+              <th className="px-4 py-2.5 w-16">ID</th>
+              <th className="px-4 py-2.5">Kurs Adı</th>
+              <th className="px-4 py-2.5 text-right w-52">İşlemler</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100">
+            {filteredCourses.map((course) => (
+              <tr
+                key={course.id}
+                className="hover:bg-gray-50 transition-colors"
+              >
+                <td className="px-4 py-2 text-gray-400 font-mono text-xs">
+                  {course.id}
+                </td>
+                <td className="px-4 py-2">
+                  <button
                     onClick={() => onSelectCourse(course)}
-                    className="flex-1"
+                    className="text-gray-800 font-medium hover:text-blue-600 hover:underline text-left"
                   >
-                    <Edit className="w-4 h-4 mr-2" />
-                    Kursu Yönet
-                  </Button>
-                  <label
-                    className={`inline-flex items-center justify-center gap-1 px-3 py-2 rounded-md text-sm font-medium cursor-pointer transition-colors ${
-                      appendingCourseId === course.id
-                        ? "bg-gray-300 pointer-events-none"
-                        : "bg-emerald-500 hover:bg-emerald-600 text-white"
-                    }`}
-                    title="Mevcut kursa JSON ile içerik ekle"
-                  >
-                    <Upload className="w-4 h-4" />
-                    {appendingCourseId === course.id ? "..." : "Ekle"}
-                    <input
-                      type="file"
-                      accept=".json"
-                      className="hidden"
-                      onChange={(e) => handleAppendJSON(course.id, e)}
-                      disabled={appendingCourseId === course.id}
-                    />
-                  </label>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-        
+                    {course.title}
+                  </button>
+                </td>
+                <td className="px-4 py-2">
+                  <div className="flex items-center justify-end gap-1">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => onSelectCourse(course)}
+                      className="h-7 px-2 text-xs text-gray-600 hover:text-blue-600"
+                      title="Kursu Yönet"
+                    >
+                      <Settings className="w-3.5 h-3.5 mr-1" />
+                      Yönet
+                    </Button>
+                    <label
+                      className={`inline-flex items-center gap-1 h-7 px-2 rounded-md text-xs font-medium cursor-pointer transition-colors ${
+                        appendingCourseId === course.id
+                          ? "bg-gray-200 pointer-events-none text-gray-400"
+                          : "text-emerald-600 hover:bg-emerald-50"
+                      }`}
+                      title="JSON ile içerik ekle"
+                    >
+                      <Upload className="w-3.5 h-3.5" />
+                      {appendingCourseId === course.id ? "..." : "Ekle"}
+                      <input
+                        type="file"
+                        accept=".json"
+                        className="hidden"
+                        onChange={(e) => handleAppendJSON(course.id, e)}
+                        disabled={appendingCourseId === course.id}
+                      />
+                    </label>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => openEditDialog(course)}
+                      className="h-7 w-7 p-0 text-gray-400 hover:text-blue-600"
+                      title="Düzenle"
+                    >
+                      <Edit className="w-3.5 h-3.5" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleDeleteCourse(course.id)}
+                      className="h-7 w-7 p-0 text-gray-400 hover:text-red-600"
+                      title="Sil"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </Button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        {filteredCourses.length === 0 && courses.length > 0 && (
+          <div className="text-center py-8 text-gray-400 text-sm">
+            Arama sonucu bulunamadı
+          </div>
+        )}
+
         {courses.length === 0 && (
-          <div className="col-span-full text-center py-12 bg-gray-50 rounded-lg border border-gray-200">
-            <BookOpen className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">Henüz kurs yok</h3>
-            <p className="text-gray-600 mb-4">Başlamak için ilk kursunuzu oluşturun</p>
-            <Button onClick={() => setIsCreateOpen(true)}>
-              <Plus className="w-4 h-4 mr-2" />
+          <div className="text-center py-12">
+            <BookOpen className="w-10 h-10 text-gray-300 mx-auto mb-3" />
+            <p className="text-gray-500 text-sm mb-3">Henüz kurs yok</p>
+            <Button size="sm" onClick={() => setIsCreateOpen(true)}>
+              <Plus className="w-4 h-4 mr-1" />
               İlk Kursunuzu Oluşturun
             </Button>
           </div>
