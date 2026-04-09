@@ -55,6 +55,18 @@
                 {
                   "text": "15",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$8$",
+                  "correct": false
+                },
+                {
+                  "text": "$12$",
+                  "correct": false
+                },
+                {
+                  "text": "$20$",
                   "correct": false
                 }
               ],
@@ -256,6 +268,18 @@
                 {
                   "text": "24",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$12$",
+                  "correct": false
+                },
+                {
+                  "text": "$16$",
+                  "correct": false
+                },
+                {
+                  "text": "$120$",
                   "correct": false
                 }
               ],
@@ -453,6 +477,18 @@
                 {
                   "text": "10",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$15$",
+                  "correct": false
+                },
+                {
+                  "text": "$20$",
+                  "correct": false
+                },
+                {
+                  "text": "$5$",
                   "correct": false
                 }
               ],
@@ -650,6 +686,18 @@
                 {
                   "text": "15",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$12$",
+                  "correct": false
+                },
+                {
+                  "text": "$20$",
+                  "correct": false
+                },
+                {
+                  "text": "$30$",
                   "correct": false
                 }
               ],
@@ -848,6 +896,18 @@
                 {
                   "text": "2",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$1$",
+                  "correct": false
+                },
+                {
+                  "text": "$3$",
+                  "correct": false
+                },
+                {
+                  "text": "$4$",
                   "correct": false
                 }
               ],
@@ -1052,6 +1112,18 @@
                 {
                   "text": "5",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$3$",
+                  "correct": false
+                },
+                {
+                  "text": "$7$",
+                  "correct": false
+                },
+                {
+                  "text": "$11$",
                   "correct": false
                 }
               ],
@@ -1250,6 +1322,18 @@
                 {
                   "text": "6",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$3$",
+                  "correct": false
+                },
+                {
+                  "text": "$9$",
+                  "correct": false
+                },
+                {
+                  "text": "$27$",
                   "correct": false
                 }
               ],
@@ -1450,6 +1534,18 @@
                 {
                   "text": "2",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$1$",
+                  "correct": false
+                },
+                {
+                  "text": "$3$",
+                  "correct": false
+                },
+                {
+                  "text": "$4$",
                   "correct": false
                 }
               ],
@@ -1647,6 +1743,18 @@
                 {
                   "text": "7",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$4$",
+                  "correct": false
+                },
+                {
+                  "text": "$10$",
+                  "correct": false
+                },
+                {
+                  "text": "$5$",
                   "correct": false
                 }
               ],
@@ -1844,6 +1952,18 @@
                 {
                   "text": "3",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$2$",
+                  "correct": false
+                },
+                {
+                  "text": "$6$",
+                  "correct": false
+                },
+                {
+                  "text": "$4$",
                   "correct": false
                 }
               ],
@@ -2050,6 +2170,18 @@
                 {
                   "text": "3",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$1$",
+                  "correct": false
+                },
+                {
+                  "text": "$5$",
+                  "correct": false
+                },
+                {
+                  "text": "$7$",
                   "correct": false
                 }
               ],
@@ -2250,6 +2382,18 @@
                 {
                   "text": "-3",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$-4$",
+                  "correct": false
+                },
+                {
+                  "text": "$3$",
+                  "correct": false
+                },
+                {
+                  "text": "$5$",
                   "correct": false
                 }
               ],
@@ -2450,6 +2594,18 @@
                 {
                   "text": "3",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$6$",
+                  "correct": false
+                },
+                {
+                  "text": "$9$",
+                  "correct": false
+                },
+                {
+                  "text": "$2$",
                   "correct": false
                 }
               ],
@@ -2650,6 +2806,18 @@
                 {
                   "text": "2",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$3$",
+                  "correct": false
+                },
+                {
+                  "text": "$4$",
+                  "correct": false
+                },
+                {
+                  "text": "$1$",
                   "correct": false
                 }
               ],
@@ -2848,6 +3016,18 @@
                 {
                   "text": "8",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$2$",
+                  "correct": false
+                },
+                {
+                  "text": "$5$",
+                  "correct": false
+                },
+                {
+                  "text": "$10$",
                   "correct": false
                 }
               ],
@@ -3055,6 +3235,18 @@
                 {
                   "text": "-7",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$2$",
+                  "correct": false
+                },
+                {
+                  "text": "$-3$",
+                  "correct": false
+                },
+                {
+                  "text": "$7$",
                   "correct": false
                 }
               ],
@@ -3255,6 +3447,18 @@
                 {
                   "text": "0",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$-9$",
+                  "correct": false
+                },
+                {
+                  "text": "$9$",
+                  "correct": false
+                },
+                {
+                  "text": "$36$",
                   "correct": false
                 }
               ],
@@ -3445,6 +3649,18 @@
                 {
                   "text": "12",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$7$",
+                  "correct": false
+                },
+                {
+                  "text": "$-7$",
+                  "correct": false
+                },
+                {
+                  "text": "$3$",
                   "correct": false
                 }
               ],
@@ -3643,6 +3859,18 @@
                 {
                   "text": "2",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$-2$",
+                  "correct": false
+                },
+                {
+                  "text": "$3$",
+                  "correct": false
+                },
+                {
+                  "text": "$4$",
                   "correct": false
                 }
               ],
@@ -3847,6 +4075,18 @@
                 {
                   "text": "6",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$3$",
+                  "correct": false
+                },
+                {
+                  "text": "$9$",
+                  "correct": false
+                },
+                {
+                  "text": "$4$",
                   "correct": false
                 }
               ],
@@ -4053,6 +4293,18 @@
                 {
                   "text": "20",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$8$",
+                  "correct": false
+                },
+                {
+                  "text": "$16$",
+                  "correct": false
+                },
+                {
+                  "text": "$28$",
                   "correct": false
                 }
               ],
@@ -4254,6 +4506,18 @@
                 {
                   "text": "95",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$85$",
+                  "correct": false
+                },
+                {
+                  "text": "$105$",
+                  "correct": false
+                },
+                {
+                  "text": "$90$",
                   "correct": false
                 }
               ],
@@ -4455,6 +4719,18 @@
                 {
                   "text": "10",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$7$",
+                  "correct": false
+                },
+                {
+                  "text": "$12$",
+                  "correct": false
+                },
+                {
+                  "text": "$14$",
                   "correct": false
                 }
               ],
@@ -4657,6 +4933,18 @@
                 {
                   "text": "50",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$40$",
+                  "correct": false
+                },
+                {
+                  "text": "$60$",
+                  "correct": false
+                },
+                {
+                  "text": "$45$",
                   "correct": false
                 }
               ],
@@ -4849,6 +5137,18 @@
                 {
                   "text": "24√3",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$16\\sqrt{3}$",
+                  "correct": false
+                },
+                {
+                  "text": "$36\\sqrt{3}$",
+                  "correct": false
+                },
+                {
+                  "text": "$12\\sqrt{3}$",
                   "correct": false
                 }
               ],
@@ -5059,6 +5359,18 @@
                 {
                   "text": "150",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$100$",
+                  "correct": false
+                },
+                {
+                  "text": "$125$",
+                  "correct": false
+                },
+                {
+                  "text": "$200$",
                   "correct": false
                 }
               ],
@@ -5260,6 +5572,18 @@
                 {
                   "text": "4",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$3$",
+                  "correct": false
+                },
+                {
+                  "text": "$5$",
+                  "correct": false
+                },
+                {
+                  "text": "$6$",
                   "correct": false
                 }
               ],
@@ -5461,6 +5785,18 @@
                 {
                   "text": "48",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$36$",
+                  "correct": false
+                },
+                {
+                  "text": "$72$",
+                  "correct": false
+                },
+                {
+                  "text": "$16$",
                   "correct": false
                 }
               ],
@@ -5662,6 +5998,18 @@
                 {
                   "text": "36",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$27$",
+                  "correct": false
+                },
+                {
+                  "text": "$18$",
+                  "correct": false
+                },
+                {
+                  "text": "$12$",
                   "correct": false
                 }
               ],
@@ -5867,6 +6215,18 @@
                 {
                   "text": "6",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$3$",
+                  "correct": false
+                },
+                {
+                  "text": "$4$",
+                  "correct": false
+                },
+                {
+                  "text": "$9$",
                   "correct": false
                 }
               ],

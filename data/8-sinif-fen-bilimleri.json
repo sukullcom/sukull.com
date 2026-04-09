@@ -1,0 +1,3273 @@
+{
+  "course": {
+    "title": "8. Sınıf Fen Bilimleri",
+    "imageSrc": ""
+  },
+  "units": [
+    {
+      "title": "Mevsimler ve İklim",
+      "description": "Dünya'nın eksen eğikliği, mevsimlerin oluşumu, iklim kuşakları, iklim değişikliği (MEB 2025-2026)",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "Dünya'nın Eksen Eğikliği ve Mevsimler",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Mevsimlerin oluşmasının temel sebebi nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["mevsimler", "eksen eğikliği"],
+              "explanation": "Mevsimlerin oluşmasının temel sebebi Dünya'nın ekseninin yörünge düzlemine 23,5° eğik olmasıdır. Bu eğiklik, Güneş ışınlarının yıl boyunca farklı açılarla yeryüzüne ulaşmasına neden olur.",
+              "options": [
+                {"text": "Dünya'nın Güneş'e yakınlığı ve uzaklığı", "correct": false},
+                {"text": "Dünya'nın ekseninin 23,5° eğik olması", "correct": true},
+                {"text": "Ay'ın çekim kuvveti", "correct": false},
+                {"text": "Güneş'in büyüklüğünün değişmesi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Dünya'nın ekseni yörünge düzlemine ___ derece eğiktir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["eksen eğikliği", "derece"],
+              "explanation": "Dünya'nın dönme ekseni yörünge düzlemine 23,5° eğiktir. Bu eğiklik sabit kalır ve Dünya yörüngesinde dönerken hep aynı yönü gösterir.",
+              "options": [
+                {"text": "23,5", "correct": true},
+                {"text": "45", "correct": false},
+                {"text": "90", "correct": false},
+                {"text": "12", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Kuzey yarımkürede yaz mevsimi yaşanırken Güney yarımkürede hangi mevsim yaşanır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["mevsimler", "yarımküre"],
+              "explanation": "Dünya'nın eksen eğikliği nedeniyle yarımküreler zıt mevsimler yaşar. Kuzey yarımkürede yaz iken Güney yarımkürede kış, Kuzey'de ilkbahar iken Güney'de sonbahardır.",
+              "options": [
+                {"text": "Yaz", "correct": false},
+                {"text": "İlkbahar", "correct": false},
+                {"text": "Kış", "correct": true},
+                {"text": "Sonbahar", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Mevsimlerin oluşumundaki faktörleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["mevsimler", "faktörler"],
+              "explanation": "Mevsimlerin oluşumu birden fazla faktörün birleşimidir.",
+              "options": [
+                {"text": "Eksen eğikliği (23,5°)", "pairId": 1, "correct": false},
+                {"text": "Güneş ışınlarının geliş açısını değiştirir", "pairId": 1, "correct": false},
+                {"text": "Dünya'nın yörünge hareketi", "pairId": 2, "correct": false},
+                {"text": "Yıl boyunca farklı konumlarda olmasını sağlar", "pairId": 2, "correct": false},
+                {"text": "Gündüz süresinin değişmesi", "pairId": 3, "correct": false},
+                {"text": "Yazın uzun gündüz → daha fazla ısınma", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "21 Haziran'da Kuzey yarımkürede gündüz süresi en uzundur. Bu güne ne denir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["gündönümü", "21 haziran"],
+              "explanation": "21 Haziran Kuzey yarımkürede en uzun gündüz ve en kısa gece yaşanır. Buna 'yaz gündönümü' (summer solstice) denir. Güneş ışınları Yengeç Dönencesi'ne dik gelir.",
+              "options": [
+                {"text": "Kış gündönümü", "correct": false},
+                {"text": "Yaz gündönümü (en uzun gün)", "correct": true},
+                {"text": "İlkbahar ekinoksu", "correct": false},
+                {"text": "Sonbahar ekinoksu", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Ekinoks nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["ekinoks"],
+              "explanation": "Ekinoks (gece-gündüz eşitliği), gündüz ve gece sürelerinin eşit olduğu günlerdir. 21 Mart (ilkbahar ekinoksu) ve 23 Eylül (sonbahar ekinoksu) tarihlerinde gerçekleşir. Güneş ışınları Ekvator'a dik gelir.",
+              "options": [
+                {"text": "En uzun gündüz", "correct": false},
+                {"text": "En kısa gündüz", "correct": false},
+                {"text": "Gece ve gündüz sürelerinin eşit olduğu gün", "correct": true},
+                {"text": "Ay tutulması", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Güneş Işınlarının Geliş Açısı",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Güneş ışınları dik açıyla geldiğinde yüzey nasıl etkilenir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["güneş ışınları", "dik açı"],
+              "explanation": "Güneş ışınları dik (90°) açıyla geldiğinde enerji küçük alana yoğunlaşır ve yüzey daha fazla ısınır. Eğik geldiğinde enerji geniş alana yayılır ve ısınma azalır.",
+              "options": [
+                {"text": "Daha az ısınır", "correct": false},
+                {"text": "Daha fazla ısınır (enerji küçük alana yoğunlaşır)", "correct": true},
+                {"text": "Hiç ısınmaz", "correct": false},
+                {"text": "Aynı kalır", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Güneş ışınlarının geliş açısı ile sıcaklık arasındaki ilişkiyi eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["güneş açısı", "sıcaklık"],
+              "explanation": "Güneş ışınlarının geliş açısı ısınmayı doğrudan etkiler.",
+              "options": [
+                {"text": "Dik açı (90°)", "pairId": 1, "correct": false},
+                {"text": "En yüksek ısınma (tropikal bölgeler)", "pairId": 1, "correct": false},
+                {"text": "Eğik açı (küçük açı)", "pairId": 2, "correct": false},
+                {"text": "Düşük ısınma (kutup bölgeleri)", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Ekvator bölgesi neden her zaman sıcaktır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ekvator", "sıcaklık"],
+              "explanation": "Ekvator bölgesinde Güneş ışınları yıl boyunca dik veya dike yakın açıyla gelir. Bu nedenle yıl boyunca yüksek sıcaklık yaşanır ve belirgin mevsim farkı olmaz.",
+              "options": [
+                {"text": "Güneş'e en yakın olduğu için", "correct": false},
+                {"text": "Güneş ışınları yıl boyunca dik veya dike yakın geldiği için", "correct": true},
+                {"text": "Okyanuslara yakın olduğu için", "correct": false},
+                {"text": "Deniz seviyesinde olduğu için", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kutup bölgelerinde yaz aylarında 24 saat gündüz yaşanmasına ___ denir.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["gece yarısı güneşi"],
+              "explanation": "Kutup bölgelerinde yaz aylarında Güneş batmaz, 24 saat gündüz yaşanır. Buna 'gece yarısı güneşi' (midnight sun) denir. Kışın ise 24 saat karanlık yaşanır (kutup gecesi).",
+              "options": [
+                {"text": "gece yarısı güneşi", "correct": true},
+                {"text": "tam tutulma", "correct": false},
+                {"text": "ekinoks", "correct": false},
+                {"text": "gündönümü", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Yaz mevsiminde bir bölge neden kışa göre daha sıcaktır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yaz", "sıcaklık"],
+              "explanation": "Yazın o yarımküre Güneş'e doğru eğilir, Güneş ışınları daha dik gelir ve gündüz süresi uzundur. Daha dik ışın + daha uzun gündüz = daha fazla ısınma.",
+              "options": [
+                {"text": "Dünya Güneş'e daha yakındır", "correct": false},
+                {"text": "Güneş ışınları daha dik gelir ve gündüz süresi uzundur", "correct": true},
+                {"text": "Atmosfer incedir", "correct": false},
+                {"text": "Rüzgâr az eser", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Öğle vakti Güneş en yüksek noktadayken gölge uzunluğu nasıldır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["gölge", "güneş açısı"],
+              "explanation": "Güneş gökyüzünde ne kadar yüksekse (dik ışın) gölge o kadar kısadır. Sabah ve akşam Güneş alçakken (eğik ışın) gölgeler uzundur.",
+              "options": [
+                {"text": "En uzun", "correct": false},
+                {"text": "En kısa", "correct": true},
+                {"text": "Gölge oluşmaz", "correct": false},
+                {"text": "Orta uzunlukta", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "İklim Kuşakları",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Dünya'daki temel iklim kuşaklarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["iklim kuşakları"],
+              "explanation": "Dünya üç temel iklim kuşağına ayrılır.",
+              "options": [
+                {"text": "Tropikal (sıcak) kuşak", "pairId": 1, "correct": false},
+                {"text": "Ekvator çevresi (0°-23,5° enlem)", "pairId": 1, "correct": false},
+                {"text": "Ilıman (orta) kuşak", "pairId": 2, "correct": false},
+                {"text": "23,5°-66,5° enlemler arası", "pairId": 2, "correct": false},
+                {"text": "Kutup (soğuk) kuşak", "pairId": 3, "correct": false},
+                {"text": "66,5°-90° enlemler (kutuplar)", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Türkiye hangi iklim kuşağında yer alır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["türkiye", "ılıman kuşak"],
+              "explanation": "Türkiye, 36°-42° Kuzey enlemleri arasında yer aldığı için ılıman (orta) iklim kuşağındadır. Dört mevsim belirgin olarak yaşanır.",
+              "options": [
+                {"text": "Tropikal kuşak", "correct": false},
+                {"text": "Ilıman (orta) kuşak", "correct": true},
+                {"text": "Kutup kuşağı", "correct": false},
+                {"text": "Ekvator kuşağı", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Tropikal bölgelerde mevsim farkı neden belirgin değildir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["tropikal", "mevsim"],
+              "explanation": "Tropikal bölgelerde Güneş ışınları yıl boyunca dik veya dike yakın açıyla gelir. Bu nedenle sıcaklık yıl boyunca yüksek ve nispeten sabit kalır. Mevsim farkı belirgin değildir.",
+              "options": [
+                {"text": "Yağmur yağmadığı için", "correct": false},
+                {"text": "Güneş ışınları yıl boyunca dik veya dike yakın geldiği için", "correct": true},
+                {"text": "Rüzgâr olmadığı için", "correct": false},
+                {"text": "Denize yakın olduğu için", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Ilıman kuşağın en belirgin özelliği nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ılıman kuşak"],
+              "explanation": "Ilıman kuşakta dört mevsim belirgin olarak yaşanır. Güneş ışınlarının geliş açısı ve gündüz süresi yıl boyunca önemli ölçüde değişir.",
+              "options": [
+                {"text": "Her zaman sıcak olması", "correct": false},
+                {"text": "Dört mevsimin belirgin yaşanması", "correct": true},
+                {"text": "Her zaman soğuk olması", "correct": false},
+                {"text": "Hiç yağmur yağmaması", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Yengeç Dönencesi'nin enlemi ___ derece kuzeydir.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["yengeç dönencesi"],
+              "explanation": "Yengeç Dönencesi 23,5° Kuzey enlemindedir. 21 Haziran'da Güneş ışınları bu enlem çizgisine dik gelir. Oğlak Dönencesi ise 23,5° Güney enlemindedir (21 Aralık'ta dik ışın).",
+              "options": [
+                {"text": "23,5", "correct": true},
+                {"text": "45", "correct": false},
+                {"text": "66,5", "correct": false},
+                {"text": "90", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "İklimi etkileyen faktörler hangileridir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["iklim faktörleri"],
+              "explanation": "İklimi etkileyen faktörler: enlem (en önemlisi), yükselti, denize uzaklık, rüzgâr yönü, okyanus akıntıları ve dağların uzanış yönüdür.",
+              "options": [
+                {"text": "Sadece enlem", "correct": false},
+                {"text": "Enlem, yükselti, denize uzaklık, rüzgâr, okyanus akıntıları", "correct": true},
+                {"text": "Sadece sıcaklık", "correct": false},
+                {"text": "Sadece yağış miktarı", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "İklim ve Hava Durumu Farkı",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "İklim ile hava durumu arasındaki farkları eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["iklim", "hava durumu", "fark"],
+              "explanation": "İklim ve hava durumu farklı kavramlardır.",
+              "options": [
+                {"text": "İklim", "pairId": 1, "correct": false},
+                {"text": "Uzun yıllar boyunca atmosfer koşullarının ortalaması", "pairId": 1, "correct": false},
+                {"text": "Hava durumu", "pairId": 2, "correct": false},
+                {"text": "Kısa süreli (anlık/günlük) atmosfer koşulları", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "'Yarın yağmur yağacak' ifadesi neyi tanımlar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["hava durumu"],
+              "explanation": "Bu kısa süreli bir tahmindir, dolayısıyla hava durumunu tanımlar. İklim ise uzun yılların ortalamasıdır: 'Akdeniz bölgesinde yazlar sıcak ve kurak geçer' gibi.",
+              "options": [
+                {"text": "İklim", "correct": false},
+                {"text": "Hava durumu", "correct": true},
+                {"text": "Mevsim", "correct": false},
+                {"text": "Ekinoks", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "İklim en az ___ yıllık verilerle belirlenir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["iklim", "süre"],
+              "explanation": "Bir bölgenin iklimini belirlemek için en az 30-35 yıllık meteorolojik veriler (sıcaklık, yağış, nem, rüzgâr) kullanılır.",
+              "options": [
+                {"text": "30", "correct": true},
+                {"text": "5", "correct": false},
+                {"text": "1", "correct": false},
+                {"text": "100", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Meteoroloji hangi kavramla ilgilenir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["meteoroloji"],
+              "explanation": "Meteoroloji, hava durumunu inceleyen bilim dalıdır. Kısa süreli atmosfer olaylarını (sıcaklık, yağış, rüzgâr, nem) gözlemler ve tahmin eder.",
+              "options": [
+                {"text": "Yıldızlar", "correct": false},
+                {"text": "Hava durumu ve atmosfer olayları", "correct": true},
+                {"text": "Deniz canlıları", "correct": false},
+                {"text": "Kayaçlar", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hava durumunu ölçen aletleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["ölçüm aletleri"],
+              "explanation": "Hava durumu farklı aletlerle ölçülür.",
+              "options": [
+                {"text": "Termometre", "pairId": 1, "correct": false},
+                {"text": "Sıcaklık ölçer", "pairId": 1, "correct": false},
+                {"text": "Barometre", "pairId": 2, "correct": false},
+                {"text": "Atmosfer basıncı ölçer", "pairId": 2, "correct": false},
+                {"text": "Anemometre", "pairId": 3, "correct": false},
+                {"text": "Rüzgâr hızı ölçer", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hangi ifade iklimi tanımlar?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["iklim", "tanım"],
+              "explanation": "'Karadeniz bölgesinde her mevsim yağış görülür' uzun süreli bir gözlemdir ve iklimi tanımlar.",
+              "options": [
+                {"text": "Bu akşam hava soğuyacak", "correct": false},
+                {"text": "Karadeniz bölgesinde her mevsim yağış görülür", "correct": true},
+                {"text": "Yarın güneşli olacak", "correct": false},
+                {"text": "Bugün rüzgâr esiyor", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Küresel İklim Değişikliği",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Sera etkisi nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sera etkisi"],
+              "explanation": "Sera etkisi, atmosferdeki gazların (CO₂, metan, su buharı) Güneş'ten gelen ısıyı tutarak Dünya'yı sıcak tutmasıdır. Doğal sera etkisi yaşam için gereklidir ancak aşırısı küresel ısınmaya yol açar.",
+              "options": [
+                {"text": "Güneş'in patlaması", "correct": false},
+                {"text": "Atmosferdeki gazların ısıyı tutarak Dünya'yı sıcak tutması", "correct": true},
+                {"text": "Ozon tabakasının kalınlaşması", "correct": false},
+                {"text": "Deniz seviyesinin yükselmesi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Küresel ısınmanın başlıca sebeplerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["küresel ısınma", "sebepler"],
+              "explanation": "İnsan faaliyetleri sera gazı artışına ve küresel ısınmaya neden olmaktadır.",
+              "options": [
+                {"text": "Fosil yakıt kullanımı", "pairId": 1, "correct": false},
+                {"text": "CO₂ salınımı artışı", "pairId": 1, "correct": false},
+                {"text": "Ormansızlaşma", "pairId": 2, "correct": false},
+                {"text": "CO₂ emiliminin azalması", "pairId": 2, "correct": false},
+                {"text": "Hayvancılık ve tarım", "pairId": 3, "correct": false},
+                {"text": "Metan gazı salınımı", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "İklim değişikliğinin en önemli sonuçlarından biri ___ erimesidir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["buzul", "erime"],
+              "explanation": "Küresel ısınma kutup buzullarının ve dağ buzullarının erimesine neden olur. Eriyen buzullar deniz seviyesinin yükselmesine, su kaynaklarının azalmasına ve habitat kaybına yol açar.",
+              "options": [
+                {"text": "buzulların", "correct": true},
+                {"text": "kayaların", "correct": false},
+                {"text": "kumların", "correct": false},
+                {"text": "metallerin", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Karbon ayak izi nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["karbon ayak izi"],
+              "explanation": "Karbon ayak izi, bir bireyin, kuruluşun veya ürünün faaliyetleri sonucu atmosfere salınan toplam sera gazı miktarıdır. Genellikle CO₂ eşdeğeri olarak ölçülür.",
+              "options": [
+                {"text": "Ayak izinin karbon kopyası", "correct": false},
+                {"text": "Faaliyetler sonucu atmosfere salınan toplam sera gazı miktarı", "correct": true},
+                {"text": "Karbondioksitin kimyasal formülü", "correct": false},
+                {"text": "Bir enerji birimi", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "İklim değişikliğiyle mücadelede neler yapılabilir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["iklim mücadele"],
+              "explanation": "Yenilenebilir enerji kullanımı, ağaçlandırma, enerji tasarrufu, toplu taşıma kullanımı ve geri dönüşüm iklim değişikliğiyle mücadelenin temel adımlarıdır.",
+              "options": [
+                {"text": "Daha fazla fosil yakıt kullanmak", "correct": false},
+                {"text": "Yenilenebilir enerji, ağaçlandırma, tasarruf, toplu taşıma", "correct": true},
+                {"text": "Ormanları kesmek", "correct": false},
+                {"text": "Hiçbir şey yapılamaz", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Paris İklim Anlaşması'nın amacı nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["paris anlaşması"],
+              "explanation": "2015 Paris İklim Anlaşması, küresel sıcaklık artışını sanayi öncesi döneme kıyasla 2°C'nin altında (tercihen 1,5°C) tutmayı hedefler. 190'dan fazla ülke imzalamıştır.",
+              "options": [
+                {"text": "Uzay araştırmalarını hızlandırmak", "correct": false},
+                {"text": "Küresel sıcaklık artışını 2°C altında tutmak", "correct": true},
+                {"text": "Nükleer enerjiyi yasaklamak", "correct": false},
+                {"text": "Okyanuslarda balıkçılığı düzenlemek", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "DNA ve Genetik Kod",
+      "description": "DNA yapısı, genetik kod, mutasyon, modifikasyon, adaptasyon, biyoteknoloji (MEB 2025-2026)",
+      "order": 2,
+      "lessons": [
+        {
+          "title": "DNA'nın Yapısı",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "DNA'nın yapı taşı olan nükleotid hangi bileşenlerden oluşur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["nükleotid", "DNA yapısı"],
+              "explanation": "Her nükleotid üç bileşenden oluşur: fosfat grubu, deoksiriboz şekeri ve azotlu organik baz. Bu üçlü yapı DNA'nın temel yapı taşıdır.",
+              "options": [
+                {"text": "Protein, yağ, karbonhidrat", "correct": false},
+                {"text": "Fosfat, deoksiriboz şekeri, azotlu organik baz", "correct": true},
+                {"text": "Amino asit, vitamin, mineral", "correct": false},
+                {"text": "Glikoz, fruktoz, galaktoz", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "DNA'daki baz eşleşmelerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["baz eşleşmesi"],
+              "explanation": "DNA'da bazlar belirli kurallara göre eşleşir: Adenin (A) her zaman Timin (T) ile, Guanin (G) her zaman Sitozin (C) ile eşleşir. Buna Chargaff kuralı denir.",
+              "options": [
+                {"text": "Adenin (A)", "pairId": 1, "correct": false},
+                {"text": "Timin (T)", "pairId": 1, "correct": false},
+                {"text": "Guanin (G)", "pairId": 2, "correct": false},
+                {"text": "Sitozin (C)", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "DNA'nın şekli neye benzer?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["çift sarmal"],
+              "explanation": "DNA çift sarmal (double helix) yapısındadır, burulmuş merdivene benzer. İki iplik karşılıklı olarak bazlarıyla birbirine bağlanır ve sarmal oluşturur.",
+              "options": [
+                {"text": "Düz çizgi", "correct": false},
+                {"text": "Çift sarmal (burulmuş merdiven)", "correct": true},
+                {"text": "Daire", "correct": false},
+                {"text": "Üçgen", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "DNA'da Adenin sayısı her zaman ___ sayısına eşittir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["chargaff kuralı"],
+              "explanation": "Chargaff kuralına göre DNA'da A=T ve G=C eşleşmesi olduğundan Adenin sayısı Timin sayısına, Guanin sayısı Sitozin sayısına eşittir.",
+              "options": [
+                {"text": "Timin", "correct": true},
+                {"text": "Guanin", "correct": false},
+                {"text": "Sitozin", "correct": false},
+                {"text": "Adenin", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "DNA nerede bulunur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["çekirdek", "DNA konumu"],
+              "explanation": "DNA ağırlıklı olarak hücre çekirdeğinde bulunur. Ayrıca mitokondri ve kloroplast organellerinde de az miktarda DNA bulunur.",
+              "options": [
+                {"text": "Hücre zarında", "correct": false},
+                {"text": "Hücre çekirdeğinde", "correct": true},
+                {"text": "Sitoplazmada (serbest)", "correct": false},
+                {"text": "Hücre duvarında", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "DNA'nın görevi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["DNA görevi"],
+              "explanation": "DNA, canlının tüm kalıtsal bilgisini taşır ve protein sentezini yönetir. Göz rengi, kan grubu gibi tüm özelliklerin şifresi DNA'dadır.",
+              "options": [
+                {"text": "Enerji üretmek", "correct": false},
+                {"text": "Kalıtsal bilgiyi taşımak ve protein sentezini yönetmek", "correct": true},
+                {"text": "Hücreyi korumak", "correct": false},
+                {"text": "Besin depolamak", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Gen, Kromozom ve Genetik Kod",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Gen, DNA ve kromozom ilişkisini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["gen", "kromozom", "DNA"],
+              "explanation": "DNA, gen ve kromozom arasında hiyerarşik bir ilişki vardır.",
+              "options": [
+                {"text": "DNA", "pairId": 1, "correct": false},
+                {"text": "Genetik bilgiyi taşıyan çift sarmal molekül", "pairId": 1, "correct": false},
+                {"text": "Gen", "pairId": 2, "correct": false},
+                {"text": "DNA'nın bir özelliği kodlayan bölümü", "pairId": 2, "correct": false},
+                {"text": "Kromozom", "pairId": 3, "correct": false},
+                {"text": "DNA'nın proteinlerle paketlenmiş hali", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Genetik kod evrenseldir. Bu ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["genetik kod", "evrensel"],
+              "explanation": "Genetik kodun evrensel olması, tüm canlılarda (bakteri, bitki, hayvan, insan) aynı baz dizilerinin aynı amino asitleri kodlaması demektir. Bu, tüm canlıların ortak bir atadan geldiğini destekler.",
+              "options": [
+                {"text": "Sadece insanlarda geçerli", "correct": false},
+                {"text": "Tüm canlılarda aynı baz dizileri aynı amino asitleri kodlar", "correct": true},
+                {"text": "Sadece hayvanlarda geçerli", "correct": false},
+                {"text": "Her canlıda farklıdır", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "İnsan hücresinde kaç kromozom bulunur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["kromozom sayısı"],
+              "explanation": "İnsan vücut hücrelerinde 46 kromozom (23 çift) bulunur. 22 çift otozom (vücut), 1 çift gonozom (cinsiyet: XX=kadın, XY=erkek) olmak üzere toplam 23 çifttir.",
+              "options": [
+                {"text": "23", "correct": false},
+                {"text": "46 (23 çift)", "correct": true},
+                {"text": "92", "correct": false},
+                {"text": "12", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Her gen bir ___ sentezini yönetir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["gen", "protein"],
+              "explanation": "Genler protein sentezini yönetir. Her gen belirli bir proteinin amino asit dizilimini belirler. Proteinler de vücuttaki yapısal ve işlevsel görevleri yerine getirir.",
+              "options": [
+                {"text": "protein", "correct": true},
+                {"text": "vitamin", "correct": false},
+                {"text": "mineral", "correct": false},
+                {"text": "yağ", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Cinsiyeti belirleyen kromozomlar hangileridir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["cinsiyet kromozomu"],
+              "explanation": "Kadınlarda cinsiyet kromozomları XX, erkeklerde XY'dir. Cinsiyeti belirleyen baba'nın sperm hücresidir: X taşıyan sperm → kız, Y taşıyan sperm → erkek.",
+              "options": [
+                {"text": "AA ve BB", "correct": false},
+                {"text": "XX (kadın) ve XY (erkek)", "correct": true},
+                {"text": "AB ve BA", "correct": false},
+                {"text": "1 ve 2 numaralı kromozomlar", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Kromozom sayısının türden türe farklılık göstermesi neyi ifade eder?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kromozom", "tür farkı"],
+              "explanation": "Her türün kendine özgü kromozom sayısı vardır (insan: 46, köpek: 78, meyve sineği: 8). Ancak kromozom sayısı zekâ veya gelişmişlikle ilgili değildir; gen içeriği ve düzenlenişi önemlidir.",
+              "options": [
+                {"text": "Daha fazla kromozom = daha gelişmiş", "correct": false},
+                {"text": "Her türün kendine özgü kromozom sayısı vardır, sayı gelişmişlikle ilgili değildir", "correct": true},
+                {"text": "Tüm canlıların aynı sayıda kromozomu var", "correct": false},
+                {"text": "Kromozom sayısı değişkendir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Mutasyon ve Modifikasyon",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Mutasyon ve modifikasyon arasındaki farkları eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["mutasyon", "modifikasyon"],
+              "explanation": "Mutasyon DNA'daki kalıcı değişim, modifikasyon çevre etkisiyle oluşan geçici değişimdir.",
+              "options": [
+                {"text": "Mutasyon", "pairId": 1, "correct": false},
+                {"text": "DNA'daki kalıcı değişim, sonraki nesle aktarılır", "pairId": 1, "correct": false},
+                {"text": "Modifikasyon", "pairId": 2, "correct": false},
+                {"text": "Çevre etkisiyle oluşan geçici değişim, aktarılmaz", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Hangisi modifikasyona örnektir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["modifikasyon", "örnek"],
+              "explanation": "Güneşte bronzlaşma bir modifikasyondur çünkü deri rengindeki değişim geçicidir ve DNA'da bir değişiklik olmaz. Çocuğa aktarılmaz. Spor yaparak kas geliştirme de modifikasyondur.",
+              "options": [
+                {"text": "Altı parmaklı doğmak", "correct": false},
+                {"text": "Güneşte bronzlaşmak", "correct": true},
+                {"text": "Albinizm (renk pigmenti eksikliği)", "correct": false},
+                {"text": "Orak hücreli anemi", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Mutasyona neden olan etkenler nelerdir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["mutasyon", "etkenler"],
+              "explanation": "Mutasyona neden olan etkenler (mutajenler): radyasyon (UV, X-ışınları), kimyasal maddeler (sigara dumanı, benzin), virüsler ve DNA eşlenme hataları olabilir.",
+              "options": [
+                {"text": "Sadece radyasyon", "correct": false},
+                {"text": "Radyasyon, kimyasal maddeler, virüsler, DNA kopyalama hataları", "correct": true},
+                {"text": "Sadece beslenme", "correct": false},
+                {"text": "Sadece egzersiz", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Mutasyon her zaman zararlı mıdır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["mutasyon", "etki"],
+              "explanation": "Hayır, mutasyonlar zararlı, yararlı veya nötr olabilir. Zararlı mutasyon: kanser. Yararlı mutasyon: antibiyotiğe dirençli bakteri. Nötr mutasyon: göz rengi farklılığı.",
+              "options": [
+                {"text": "Evet, her zaman zararlıdır", "correct": false},
+                {"text": "Hayır; zararlı, yararlı veya nötr (etkisiz) olabilir", "correct": true},
+                {"text": "Evet, her zaman hastalığa yol açar", "correct": false},
+                {"text": "Hayır, her zaman yararlıdır", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Modifikasyon sonraki nesillere ___ .",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["modifikasyon", "kalıtım"],
+              "explanation": "Modifikasyonlar çevre etkisiyle oluşur, DNA'da değişiklik olmaz. Bu nedenle sonraki nesillere aktarılmaz. Spor yapan babanın çocuğu kaslı doğmaz.",
+              "options": [
+                {"text": "aktarılmaz", "correct": true},
+                {"text": "aktarılır", "correct": false},
+                {"text": "bazen aktarılır", "correct": false},
+                {"text": "her zaman aktarılır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hangisi mutasyona örnektir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["mutasyon", "örnek"],
+              "explanation": "Albinizm (renk pigmenti üretilememesi) bir gen mutasyonudur. DNA'da melanin üretimini kodlayan gende değişim vardır. Kalıtsaldır.",
+              "options": [
+                {"text": "Spor yaparak kas geliştirme", "correct": false},
+                {"text": "Albinizm (renk pigmenti eksikliği)", "correct": true},
+                {"text": "Güneşte yanma", "correct": false},
+                {"text": "Saç boyama", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Adaptasyon ve Evrim",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Adaptasyon (uyum) örneklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["adaptasyon", "örnekler"],
+              "explanation": "Canlılar yaşam ortamlarına uyum sağlayan özellikler geliştirmiştir.",
+              "options": [
+                {"text": "Kutup ayısının beyaz kürkü", "pairId": 1, "correct": false},
+                {"text": "Kar ortamında kamufla (gizlenme)", "pairId": 1, "correct": false},
+                {"text": "Kaktüsün dikensi yaprakları", "pairId": 2, "correct": false},
+                {"text": "Su kaybını en aza indirme", "pairId": 2, "correct": false},
+                {"text": "Bukalemunun renk değiştirmesi", "pairId": 3, "correct": false},
+                {"text": "Çevreye uyum ve avdan korunma", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Doğal seçilim (seleksiyon) ne demektir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["doğal seçilim"],
+              "explanation": "Doğal seçilim, çevreye daha iyi uyum sağlayan bireylerin hayatta kalma ve üreme şansının daha yüksek olması, böylece avantajlı özelliklerin nesiller boyunca yaygınlaşmasıdır.",
+              "options": [
+                {"text": "İnsanların hayvanları seçmesi", "correct": false},
+                {"text": "Çevreye uyumlu bireylerin hayatta kalıp üremesi ve özelliklerinin yaygınlaşması", "correct": true},
+                {"text": "En güçlü bireyin tüm diğerlerini yok etmesi", "correct": false},
+                {"text": "Rastgele hayatta kalma", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Evrim kavramını ilk sistematik olarak açıklayan bilim insanı ___ dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["darwin", "evrim"],
+              "explanation": "Charles Darwin, 1859'da yayımlanan 'Türlerin Kökeni' kitabıyla doğal seçilim yoluyla evrim teorisini sistematik olarak açıklayan bilim insanıdır.",
+              "options": [
+                {"text": "Darwin", "correct": true},
+                {"text": "Mendel", "correct": false},
+                {"text": "Pasteur", "correct": false},
+                {"text": "Newton", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Antibiyotik direnci gösteren bakteriler nasıl ortaya çıkar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["antibiyotik direnci", "doğal seçilim"],
+              "explanation": "Mutasyon sonucu bazı bakteriler antibiyotiğe dirençli olur. Antibiyotik uygulandığında dirençsiz bakteriler ölür, dirençli olanlar hayatta kalır ve çoğalır. Bu doğal seçilimin bir örneğidir.",
+              "options": [
+                {"text": "Antibiyotik bakterileri güçlendirir", "correct": false},
+                {"text": "Doğal seçilim: dirençli mutantlar hayatta kalır ve çoğalır", "correct": true},
+                {"text": "Bakteriler ilaç yapmayı öğrenir", "correct": false},
+                {"text": "İlaç bozuktur", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Adaptasyon kalıtsal mıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["adaptasyon", "kalıtım"],
+              "explanation": "Evet, adaptasyonlar kalıtsal özelliklerdir. Nesiller boyunca doğal seçilim yoluyla o çevrede avantaj sağlayan özellikler gen havuzunda yaygınlaşır ve yavruya aktarılır.",
+              "options": [
+                {"text": "Hayır, geçicidir", "correct": false},
+                {"text": "Evet, genetik olarak sonraki nesillere aktarılır", "correct": true},
+                {"text": "Sadece hayvanlarda", "correct": false},
+                {"text": "Sadece insanlarda", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Fosiller evrimle ilgili nasıl kanıt sağlar?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["fosil", "evrim kanıtı"],
+              "explanation": "Fosiller geçmişteki canlıların kalıntılarıdır. Farklı jeolojik katmanlardaki fosiller, türlerin zaman içinde nasıl değiştiğini ve birbirine dönüştüğünü gösterir.",
+              "options": [
+                {"text": "Fosiller evrimle ilgisizdir", "correct": false},
+                {"text": "Geçmiş canlıların kalıntılarını göstererek türlerin zaman içindeki değişimini kanıtlar", "correct": true},
+                {"text": "Sadece dinozorları gösterir", "correct": false},
+                {"text": "Fosiller gelecekteki canlıları gösterir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Biyoteknoloji ve GDO",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Biyoteknoloji nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["biyoteknoloji"],
+              "explanation": "Biyoteknoloji, canlı organizmalardan veya onların bileşenlerinden yararlanarak ürün ve hizmet üretme teknolojisidir. Tıp, tarım, gıda ve çevre alanlarında kullanılır.",
+              "options": [
+                {"text": "Sadece bilgisayar teknolojisi", "correct": false},
+                {"text": "Canlı organizmalardan yararlanarak ürün ve hizmet üretme teknolojisi", "correct": true},
+                {"text": "Robot yapma bilimi", "correct": false},
+                {"text": "Uzay teknolojisi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Biyoteknoloji uygulama alanlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["biyoteknoloji", "alanlar"],
+              "explanation": "Biyoteknoloji birçok alanda kullanılır.",
+              "options": [
+                {"text": "Tıpta", "pairId": 1, "correct": false},
+                {"text": "İnsülin üretimi, gen tedavisi, aşı geliştirme", "pairId": 1, "correct": false},
+                {"text": "Tarımda", "pairId": 2, "correct": false},
+                {"text": "GDO'lu bitkiler, hastalığa dayanıklı çeşitler", "pairId": 2, "correct": false},
+                {"text": "Çevrede", "pairId": 3, "correct": false},
+                {"text": "Biyoremediasyon (kirlilik temizleme)", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "GDO (Genetiği Değiştirilmiş Organizma) ne demektir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["GDO"],
+              "explanation": "GDO, gen mühendisliği yöntemleriyle DNA'sında değişiklik yapılmış canlıdır. Başka bir türden gen aktarılarak istenilen özellik (zararlılara direnç, verim artışı) kazandırılır.",
+              "options": [
+                {"text": "Doğal yollarla ıslah edilmiş bitki", "correct": false},
+                {"text": "Gen mühendisliğiyle DNA'sı değiştirilmiş canlı", "correct": true},
+                {"text": "Organik tarım ürünü", "correct": false},
+                {"text": "Genetiği incelenmiş canlı", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Genetik mühendisliğinde insülin ___ kullanılarak üretilir.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["insülin", "bakteri"],
+              "explanation": "İnsan insülin geni bakteri (E. coli) DNA'sına aktarılır. Bakteri hızla çoğalarak insülin üretir. Bu yöntemle diyabet hastaları için güvenli ve bol miktarda insülin elde edilir.",
+              "options": [
+                {"text": "bakteri", "correct": true},
+                {"text": "bitki", "correct": false},
+                {"text": "mantar", "correct": false},
+                {"text": "virüs", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "GDO'nun olası avantaj ve dezavantajları nelerdir?",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["GDO", "avantaj", "dezavantaj"],
+              "explanation": "GDO konusu tartışmalıdır.",
+              "options": [
+                {"text": "Avantaj", "pairId": 1, "correct": false},
+                {"text": "Verim artışı, hastalığa direnç, vitamin zenginleştirme", "pairId": 1, "correct": false},
+                {"text": "Dezavantaj/endişe", "pairId": 2, "correct": false},
+                {"text": "Biyoçeşitlilik kaybı, alerji riski, uzun vadeli etkilerin bilinmemesi", "pairId": 2, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Klonlama nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["klonlama"],
+              "explanation": "Klonlama, bir canlının genetik kopyasının oluşturulmasıdır. Dolly koyunu (1996), vücut hücresinden klonlanan ilk memeli hayvanıdır. Tıbbi araştırmalarda kök hücre klonlaması da kullanılır.",
+              "options": [
+                {"text": "İki canlının birleştirilmesi", "correct": false},
+                {"text": "Bir canlının genetik olarak aynı kopyasının oluşturulması", "correct": true},
+                {"text": "Bir canlının renginin değiştirilmesi", "correct": false},
+                {"text": "Yapay zekâ ile canlı üretme", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Basınç",
+      "description": "Katılarda basınç, sıvı basıncı, gaz basıncı, atmosfer basıncı, Pascal ilkesi (MEB 2025-2026)",
+      "order": 3,
+      "lessons": [
+        {
+          "title": "Katılarda Basınç",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Basınç nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["basınç", "tanım"],
+              "explanation": "Basınç, birim yüzeye uygulanan kuvvettir. Basınç = Kuvvet / Alan. Birimi Pascal (Pa) dir. 1 Pa = 1 N/m².",
+              "options": [
+                {"text": "Toplam kuvvet", "correct": false},
+                {"text": "Birim yüzeye uygulanan kuvvet (P = F / A)", "correct": true},
+                {"text": "Cismin ağırlığı", "correct": false},
+                {"text": "Cismin hızı", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Basınç birimi ___ (Pa) dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["basınç", "birim"],
+              "explanation": "Basınç birimi Pascal'dır (Pa). Blaise Pascal'ın adından gelir. 1 Pa = 1 Newton / 1 metrekare.",
+              "options": [
+                {"text": "Pascal", "correct": true},
+                {"text": "Newton", "correct": false},
+                {"text": "Joule", "correct": false},
+                {"text": "Watt", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Aynı kuvvetle bastırıldığında temas yüzeyi küçüldükçe basınç nasıl değişir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["basınç", "alan"],
+              "explanation": "P = F/A formülünde kuvvet (F) sabitken alan (A) küçülürse basınç (P) artar. Bu yüzden bıçağın keskin kenarı, geniş kenarından daha çok basınç uygular.",
+              "options": [
+                {"text": "Azalır", "correct": false},
+                {"text": "Artar", "correct": true},
+                {"text": "Değişmez", "correct": false},
+                {"text": "Sıfırlanır", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Basınç örneklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["basınç", "günlük örnekler"],
+              "explanation": "Günlük hayatta basınç kavramının birçok uygulaması vardır.",
+              "options": [
+                {"text": "Çivi (sivri uç)", "pairId": 1, "correct": false},
+                {"text": "Küçük alan → yüksek basınç → kolay batma", "pairId": 1, "correct": false},
+                {"text": "Kayak takımı (geniş taban)", "pairId": 2, "correct": false},
+                {"text": "Büyük alan → düşük basınç → karda batmama", "pairId": 2, "correct": false},
+                {"text": "Paletli araç (tank)", "pairId": 3, "correct": false},
+                {"text": "Geniş palet → düşük basınç → yumuşak zeminde hareket", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "100 N kuvvet 0,5 m² yüzeye etki ederse basınç kaç Pa olur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["basınç", "hesaplama"],
+              "explanation": "P = F / A = 100 N / 0,5 m² = 200 Pa.",
+              "options": [
+                {"text": "50 Pa", "correct": false},
+                {"text": "200 Pa", "correct": true},
+                {"text": "500 Pa", "correct": false},
+                {"text": "100 Pa", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Neden topuklu ayakkabı yumuşak zeminde iz bırakır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["basınç", "topuklu ayakkabı"],
+              "explanation": "Topuklu ayakkabının temas yüzeyi çok küçüktür. Vücudun ağırlığı küçük alana yoğunlaşır, basınç çok artar ve yumuşak zeminde derin iz bırakır.",
+              "options": [
+                {"text": "Ayakkabı çok ağır olduğu için", "correct": false},
+                {"text": "Temas yüzeyi çok küçük olduğu için basınç çok yüksek", "correct": true},
+                {"text": "Zemin kaygan olduğu için", "correct": false},
+                {"text": "Yerçekimi fazla olduğu için", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Sıvı Basıncı",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Sıvı basıncı nelere bağlıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sıvı basıncı", "faktörler"],
+              "explanation": "Sıvı basıncı sıvının yoğunluğuna (d), derinliğine (h) ve yerçekimi ivmesine (g) bağlıdır: P = d × g × h. Kabın şekline bağlı değildir.",
+              "options": [
+                {"text": "Kabın şekline ve genişliğine", "correct": false},
+                {"text": "Sıvının yoğunluğuna ve derinliğe", "correct": true},
+                {"text": "Sıvının rengine", "correct": false},
+                {"text": "Kabın malzemesine", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Sıvıda derinlik arttıkça basınç nasıl değişir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["derinlik", "basınç"],
+              "explanation": "P = d×g×h formülüne göre derinlik (h) arttıkça basınç doğru orantılı olarak artar. Bu nedenle denizin derinliklerine dalındıkça basınç çok artar.",
+              "options": [
+                {"text": "Azalır", "correct": false},
+                {"text": "Artar", "correct": true},
+                {"text": "Değişmez", "correct": false},
+                {"text": "Sıfırlanır", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Sıvı basıncı kabın ___ bağlı değildir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["sıvı basıncı", "kap şekli"],
+              "explanation": "Sıvı basıncı kabın şekline bağlı değildir. Aynı yoğunluktaki sıvı, farklı şekildeki kaplarda aynı derinlikte aynı basıncı uygular. Bu 'Pascal'ın prensibinin' bir sonucudur.",
+              "options": [
+                {"text": "şekline", "correct": true},
+                {"text": "derinliğine", "correct": false},
+                {"text": "sıcaklığına", "correct": false},
+                {"text": "yoğunluğuna", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Baraj duvarları neden alt kısımda daha kalın yapılır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["baraj", "basınç"],
+              "explanation": "Suyun basıncı derinlikle artar. Baraj duvarının alt kısmına daha fazla basınç etkir. Bu nedenle alt kısım daha kalın yapılarak bu yüksek basınca dayanacak şekilde tasarlanır.",
+              "options": [
+                {"text": "Estetik nedenlerle", "correct": false},
+                {"text": "Alt kısımda sıvı basıncı daha yüksek olduğu için", "correct": true},
+                {"text": "Malzeme tasarrufu için", "correct": false},
+                {"text": "Depreme dayanıklılık için", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Sıvı basıncının günlük hayattaki örneklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["sıvı basıncı", "örnekler"],
+              "explanation": "Sıvı basıncı günlük hayatta birçok yerde karşımıza çıkar.",
+              "options": [
+                {"text": "Dalgıçların kulak ağrısı", "pairId": 1, "correct": false},
+                {"text": "Derinlikte artan su basıncı", "pairId": 1, "correct": false},
+                {"text": "Su deposunun yükseğe konulması", "pairId": 2, "correct": false},
+                {"text": "Yükseklik farkıyla basınç oluşturup suyu taşıma", "pairId": 2, "correct": false},
+                {"text": "Çay otomatının musluğu altta", "pairId": 3, "correct": false},
+                {"text": "Alt kısımda basınç daha yüksek, sıvı kolay akar", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Aynı derinlikte yoğunluğu daha fazla olan sıvı daha ___ basınç uygular.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["yoğunluk", "basınç"],
+              "explanation": "P = d×g×h formülünde yoğunluk (d) arttıkça basınç artar. Tuzlu su, tatlı sudan daha yoğundur ve aynı derinlikte daha fazla basınç uygular.",
+              "options": [
+                {"text": "fazla", "correct": true},
+                {"text": "az", "correct": false},
+                {"text": "aynı", "correct": false},
+                {"text": "sıfır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Gaz Basıncı ve Atmosfer Basıncı",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Atmosfer basıncı nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["atmosfer basıncı"],
+              "explanation": "Atmosfer basıncı, havanın ağırlığının yüzeyimize uyguladığı basınçtır. Deniz seviyesinde yaklaşık 1 atm (101.325 Pa) dir. Yükselti arttıkça hava inceleceğinden basınç azalır.",
+              "options": [
+                {"text": "Suyun basıncı", "correct": false},
+                {"text": "Hava kütlesinin yeryüzüne uyguladığı basınç", "correct": true},
+                {"text": "Rüzgârın hızı", "correct": false},
+                {"text": "Sıcaklığın etkisi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Yükseklik arttıkça atmosfer basıncı nasıl değişir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["yükselti", "basınç"],
+              "explanation": "Yükseldikçe üstümüzdeki hava miktarı azalır, dolayısıyla atmosfer basıncı düşer. Bu yüzden yüksek dağlarda nefes almak zorlaşır ve su daha düşük sıcaklıkta kaynar.",
+              "options": [
+                {"text": "Artar", "correct": false},
+                {"text": "Azalır", "correct": true},
+                {"text": "Değişmez", "correct": false},
+                {"text": "Önce artar sonra azalır", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Atmosfer basıncını ilk ölçen bilim insanı ___ dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["torricelli", "barometre"],
+              "explanation": "Evangelista Torricelli, 1643'te cıva barometresi ile atmosfer basıncını ilk kez ölçmüştür. Deniz seviyesinde atmosfer basıncı yaklaşık 760 mmHg'dir.",
+              "options": [
+                {"text": "Torricelli", "correct": true},
+                {"text": "Pascal", "correct": false},
+                {"text": "Newton", "correct": false},
+                {"text": "Galileo", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Gaz basıncını etkileyen faktörleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["gaz basıncı", "faktörler"],
+              "explanation": "Kapalı kaptaki gaz basıncını üç faktör etkiler.",
+              "options": [
+                {"text": "Sıcaklık artışı", "pairId": 1, "correct": false},
+                {"text": "Gaz basıncı artar (moleküller hızlanır)", "pairId": 1, "correct": false},
+                {"text": "Hacim azalması", "pairId": 2, "correct": false},
+                {"text": "Gaz basıncı artar (sıkıştırılma)", "pairId": 2, "correct": false},
+                {"text": "Gaz miktarı artışı", "pairId": 3, "correct": false},
+                {"text": "Gaz basıncı artar (daha çok molekül)", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Yüksek dağlarda su neden 100°C'den düşük sıcaklıkta kaynar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kaynama noktası", "basınç"],
+              "explanation": "Atmosfer basıncı düşük olduğunda su moleküllerinin buharlaşması kolaylaşır. Yüksek dağlarda basınç düşük olduğundan su 100°C'ye ulaşmadan kaynar (örn. 2000m'de ~93°C).",
+              "options": [
+                {"text": "Hava soğuk olduğu için", "correct": false},
+                {"text": "Atmosfer basıncının düşük olması kaynama noktasını düşürür", "correct": true},
+                {"text": "Su saf olmadığı için", "correct": false},
+                {"text": "Rüzgâr etkisiyle", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Düdüklü tencere neden yemekleri hızlı pişirir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["düdüklü tencere", "basınç"],
+              "explanation": "Düdüklü tencere kapalı ve basınçlı ortam oluşturur. Basınç artınca kaynama noktası yükselir (120°C+). Su daha yüksek sıcaklıkta kaynadığından yemekler daha hızlı pişer.",
+              "options": [
+                {"text": "Ateşi daha iyi tutar", "correct": false},
+                {"text": "İç basınç artarak kaynama noktasını yükseltir, yemek daha sıcakta pişer", "correct": true},
+                {"text": "Buharı tutarak suyu sıcak tutar", "correct": false},
+                {"text": "Özel malzemeden yapılmıştır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Pascal İlkesi ve Hidrolik Sistemler",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Pascal ilkesi ne der?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["pascal ilkesi"],
+              "explanation": "Pascal ilkesi: Kapalı kaptaki sıvıya uygulanan basınç, sıvının her noktasına eşit olarak iletilir. Bu ilke hidrolik sistemlerin temelini oluşturur.",
+              "options": [
+                {"text": "Basınç sadece dipte hissedilir", "correct": false},
+                {"text": "Kapalı kaptaki sıvıya uygulanan basınç her noktaya eşit iletilir", "correct": true},
+                {"text": "Sıvı basıncı sıcaklığa bağlıdır", "correct": false},
+                {"text": "Gaz basıncı hacimle orantılıdır", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Hidrolik sistemlerin çalışma prensibini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["hidrolik", "prensip"],
+              "explanation": "Hidrolik sistemler Pascal ilkesine dayanır.",
+              "options": [
+                {"text": "Küçük pistona küçük kuvvet", "pairId": 1, "correct": false},
+                {"text": "Sıvıda basınç oluşturur", "pairId": 1, "correct": false},
+                {"text": "Basınç sıvıda eşit iletilir", "pairId": 2, "correct": false},
+                {"text": "Büyük pistona aynı basınç gelir", "pairId": 2, "correct": false},
+                {"text": "Büyük pistonun alanı büyük", "pairId": 3, "correct": false},
+                {"text": "F = P × A → Büyük kuvvet elde edilir", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Hidrolik fren sistemi ___ ilkesine dayanır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["hidrolik fren", "pascal"],
+              "explanation": "Araçlardaki hidrolik fren sistemi Pascal ilkesine dayanır. Fren pedalına uygulanan küçük kuvvet, sıvı aracılığıyla tüm tekerleklerdeki fren balatalarına eşit basınç olarak iletilir.",
+              "options": [
+                {"text": "Pascal", "correct": true},
+                {"text": "Newton", "correct": false},
+                {"text": "Ohm", "correct": false},
+                {"text": "Archimedes", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Hangisi hidrolik sistem kullanan araçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["hidrolik", "örnekler"],
+              "explanation": "Hidrolik krikolar, küçük bir kuvvetle ağır araçları kaldırır. Ayrıca araç frenleri, iş makineleri (ekskavatör), asansörler ve diş hekimi koltukları da hidrolik sistem kullanır.",
+              "options": [
+                {"text": "Bisiklet", "correct": false},
+                {"text": "Hidrolik kriko (araba kaldırma)", "correct": true},
+                {"text": "Yelken", "correct": false},
+                {"text": "Elektrikli süpürge", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hidrolik sistemde küçük pistonun alanı 2 cm², büyük pistonun alanı 20 cm² ise kuvvet kazancı kaçtır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["hidrolik", "kuvvet kazancı"],
+              "explanation": "Kuvvet kazancı = Büyük piston alanı / Küçük piston alanı = 20/2 = 10 kat. Küçük pistona 10 N uygulanırsa büyük pistonda 100 N kuvvet elde edilir.",
+              "options": [
+                {"text": "2 kat", "correct": false},
+                {"text": "10 kat", "correct": true},
+                {"text": "20 kat", "correct": false},
+                {"text": "40 kat", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bileşik kaplar ilkesi ne der?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["bileşik kaplar"],
+              "explanation": "Bileşik kaplar ilkesi: Alttan birbirine bağlı kaplardaki aynı sıvı, kabın şeklinden bağımsız olarak aynı seviyeye gelir. Bu, sıvının her noktadaki basıncının eşit olmasından kaynaklanır.",
+              "options": [
+                {"text": "Sıvı büyük kapta daha yüksek durur", "correct": false},
+                {"text": "Alttan birbirine bağlı kaplarda aynı sıvı aynı seviyeye gelir", "correct": true},
+                {"text": "Sıvı küçük kapta daha yüksek durur", "correct": false},
+                {"text": "Sıvılar farklı seviyelerde kalır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Kaldırma Kuvveti ve Yüzme-Batma",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Archimedes (Arşimet) ilkesi ne der?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["arşimet", "kaldırma kuvveti"],
+              "explanation": "Arşimet ilkesi: Sıvıya batırılan cisme, cismin batık kısmının yer değiştirdiği sıvının ağırlığı kadar yukarı yönlü kaldırma kuvveti etki eder.",
+              "options": [
+                {"text": "Cisimler sıvıda her zaman yüzer", "correct": false},
+                {"text": "Cisme, taşırdığı sıvının ağırlığı kadar yukarı doğru kaldırma kuvveti uygulanır", "correct": true},
+                {"text": "Sıvıdaki cisimler ağırlaşır", "correct": false},
+                {"text": "Cisimler sıvıda her zaman batar", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Yüzme-batma koşullarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["yüzme", "batma"],
+              "explanation": "Cismin sıvıda yüzmesi veya batması, cismin yoğunluğu ile sıvının yoğunluğunun karşılaştırılmasına bağlıdır.",
+              "options": [
+                {"text": "Cismin yoğunluğu < sıvı yoğunluğu", "pairId": 1, "correct": false},
+                {"text": "Cisim yüzer", "pairId": 1, "correct": false},
+                {"text": "Cismin yoğunluğu = sıvı yoğunluğu", "pairId": 2, "correct": false},
+                {"text": "Cisim askıda kalır", "pairId": 2, "correct": false},
+                {"text": "Cismin yoğunluğu > sıvı yoğunluğu", "pairId": 3, "correct": false},
+                {"text": "Cisim batar", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Çelik gemi neden batmaz?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["gemi", "yüzme"],
+              "explanation": "Çelik suyun yoğunluğundan büyüktür ama gemi içi boş olduğundan geminin ortalama yoğunluğu suyunkinden küçük olur. Gemi büyük hacimde su taşırır ve yeterli kaldırma kuvveti oluşur.",
+              "options": [
+                {"text": "Çelik hafif bir metal olduğu için", "correct": false},
+                {"text": "Geminin içi boş olduğundan ortalama yoğunluğu suyunkinden düşük", "correct": true},
+                {"text": "Motorun gücü sayesinde", "correct": false},
+                {"text": "Deniz suyunun tuzu sayesinde", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Tuzlu suda yüzmek tatlı suya göre neden daha kolaydır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["tuzlu su", "kaldırma kuvveti"],
+              "explanation": "Tuzlu suyun yoğunluğu tatlı sudan fazladır. Yoğunluk arttıkça kaldırma kuvveti artar. Bu nedenle tuzlu suda (örn. Lut Gölü) yüzmek çok daha kolaydır.",
+              "options": [
+                {"text": "Tuzlu su daha sıcaktır", "correct": false},
+                {"text": "Tuzlu suyun yoğunluğu daha fazla olduğundan kaldırma kuvveti artar", "correct": true},
+                {"text": "Tuz suyu kaydırır", "correct": false},
+                {"text": "Tuzlu suda rüzgâr yardımcı olur", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Kaldırma kuvveti sıvının ___ ile doğru orantılıdır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["kaldırma kuvveti", "yoğunluk"],
+              "explanation": "Kaldırma kuvveti = d(sıvı) × V(batık) × g formülüyle hesaplanır. Sıvının yoğunluğu arttıkça kaldırma kuvveti artar.",
+              "options": [
+                {"text": "yoğunluğu", "correct": true},
+                {"text": "sıcaklığı", "correct": false},
+                {"text": "rengi", "correct": false},
+                {"text": "hacmi", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Denizaltı nasıl batar ve yüzer?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["denizaltı", "yoğunluk"],
+              "explanation": "Denizaltı balast tanklarına su alarak ağırlaşır (yoğunluğu artar) ve batar. Tanklar basınçlı hava ile boşaltıldığında hafifler (yoğunluğu azalır) ve yüzer.",
+              "options": [
+                {"text": "Motor gücüyle aşağı-yukarı hareket eder", "correct": false},
+                {"text": "Balast tanklarına su alıp boşaltarak yoğunluğunu değiştirir", "correct": true},
+                {"text": "Kanatlarla yüzer", "correct": false},
+                {"text": "Mıknatıs kullanır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Madde ve Endüstri",
+      "description": "Periyodik tablo, kimyasal bağlar, kimyasal tepkimeler, asitler-bazlar (MEB 2025-2026)",
+      "order": 4,
+      "lessons": [
+        {
+          "title": "Periyodik Tablo",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Periyodik tabloyu düzenleyen bilim insanı kimdir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["periyodik tablo", "mendeleev"],
+              "explanation": "Dmitri Mendeleev, 1869'da elementleri atom ağırlıklarına göre sıralayarak periyodik tabloyu oluşturmuştur. Günümüzde elementler atom numarasına (proton sayısı) göre sıralanır.",
+              "options": [
+                {"text": "Newton", "correct": false},
+                {"text": "Mendeleev", "correct": true},
+                {"text": "Einstein", "correct": false},
+                {"text": "Dalton", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Periyodik tabloda elementler neye göre sıralanır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["periyodik tablo", "sıralama"],
+              "explanation": "Modern periyodik tabloda elementler artan atom numarasına (proton sayısı) göre soldan sağa sıralanır. Aynı sütundaki elementler benzer kimyasal özellikler gösterir.",
+              "options": [
+                {"text": "Ağırlıklarına göre", "correct": false},
+                {"text": "Artan atom numarasına (proton sayısına) göre", "correct": true},
+                {"text": "Renklerine göre", "correct": false},
+                {"text": "Keşif tarihlerine göre", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Periyodik tablodaki grup ve periyot kavramlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["grup", "periyot"],
+              "explanation": "Periyodik tabloda yatay satırlar periyot, dikey sütunlar gruptur.",
+              "options": [
+                {"text": "Periyot (yatay satır)", "pairId": 1, "correct": false},
+                {"text": "Soldan sağa atom numarası artar, özellikler değişir", "pairId": 1, "correct": false},
+                {"text": "Grup (dikey sütun)", "pairId": 2, "correct": false},
+                {"text": "Aynı gruptaki elementler benzer kimyasal özellikler gösterir", "pairId": 2, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Periyodik tabloda ___ periyot (yatay satır) vardır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["periyot sayısı"],
+              "explanation": "Periyodik tabloda 7 periyot (yatay satır) ve 18 grup (dikey sütun) vardır. Her periyot yeni bir elektron kabuğunun dolmaya başladığını gösterir.",
+              "options": [
+                {"text": "7", "correct": true},
+                {"text": "18", "correct": false},
+                {"text": "8", "correct": false},
+                {"text": "10", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Periyodik tabloda metaller genellikle nerede bulunur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["metaller", "konum"],
+              "explanation": "Metaller periyodik tablonun sol ve ortasında, ametaller sağ üst kısmında, yarı metaller (metaloidler) ise arada yer alır.",
+              "options": [
+                {"text": "Sağ üstte", "correct": false},
+                {"text": "Sol ve ortada", "correct": true},
+                {"text": "Sadece en altta", "correct": false},
+                {"text": "Sadece en üstte", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Soy gazlar (18. grup) neden tepkimeye girmez?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["soy gazlar"],
+              "explanation": "Soy gazlar (helyum, neon, argon, kripton, ksenon, radon) en dış elektron kabuğu tam dolu olduğundan kararlıdır. Elektron alıp verme ihtiyacı duymaz, bu nedenle kimyasal tepkimeye girmez.",
+              "options": [
+                {"text": "Çok hafif oldukları için", "correct": false},
+                {"text": "En dış elektron kabukları tam dolu olduğundan kararlıdırlar", "correct": true},
+                {"text": "Gaz halinde oldukları için", "correct": false},
+                {"text": "Renksiz oldukları için", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Kimyasal Bağlar",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Kimyasal bağ türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["kimyasal bağ", "türler"],
+              "explanation": "İki temel kimyasal bağ türü vardır.",
+              "options": [
+                {"text": "İyonik bağ", "pairId": 1, "correct": false},
+                {"text": "Elektron alışverişi (metal-ametal arası, NaCl)", "pairId": 1, "correct": false},
+                {"text": "Kovalent bağ", "pairId": 2, "correct": false},
+                {"text": "Elektron ortaklaşması (ametal-ametal arası, H₂O)", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Atomlar neden kimyasal bağ oluşturur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kimyasal bağ", "sebep"],
+              "explanation": "Atomlar en dış elektron kabuğunu doldurarak (oktet kuralı — 8 elektron, helyum için 2) kararlı hale gelmek ister. Bunun için elektron alır, verir veya ortaklaşa kullanır.",
+              "options": [
+                {"text": "Manyetik çekim nedeniyle", "correct": false},
+                {"text": "Son katmanı doldurup kararlı hale gelmek için (oktet kuralı)", "correct": true},
+                {"text": "Yerçekimi etkisiyle", "correct": false},
+                {"text": "Sıcaklık nedeniyle", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Yemek tuzu (NaCl) hangi bağ türüyle oluşur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["iyonik bağ", "NaCl"],
+              "explanation": "NaCl, sodyum (metal) ve klor (ametal) arasında iyonik bağla oluşur. Na bir elektron vererek Na⁺, Cl bir elektron alarak Cl⁻ iyonu olur ve zıt yüklü iyonlar birbirini çeker.",
+              "options": [
+                {"text": "Kovalent bağ", "correct": false},
+                {"text": "İyonik bağ", "correct": true},
+                {"text": "Metalik bağ", "correct": false},
+                {"text": "Hidrojen bağı", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kovalent bağda atomlar elektronlarını ___.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["kovalent bağ"],
+              "explanation": "Kovalent bağda ametal atomları elektronlarını ortaklaşa kullanır (paylaşır). Her iki atom da paylaşılan elektronları kullanarak kararlı hale gelir.",
+              "options": [
+                {"text": "ortaklaşa kullanır", "correct": true},
+                {"text": "tamamen verir", "correct": false},
+                {"text": "kaybeder", "correct": false},
+                {"text": "yok eder", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hangisi iyonik bileşiğin özelliğidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["iyonik bileşik", "özellik"],
+              "explanation": "İyonik bileşikler: yüksek erime/kaynama noktasına sahip, suda çözündüğünde veya erimiş halde elektrik iletir, kristal yapıdadır ve genellikle katı haldedir.",
+              "options": [
+                {"text": "Düşük erime noktası ve gaz hali", "correct": false},
+                {"text": "Yüksek erime noktası, kristal yapı, çözelti halinde iletken", "correct": true},
+                {"text": "Yumuşak ve esnek yapı", "correct": false},
+                {"text": "Elektrik iletmez", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Su molekülü (H₂O) hangi bağ türüyle oluşur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["kovalent bağ", "su"],
+              "explanation": "Su (H₂O), hidrojen (ametal) ve oksijen (ametal) arasında kovalent bağla oluşur. Oksijen atomu iki hidrojen atomuyla elektron paylaşır.",
+              "options": [
+                {"text": "İyonik bağ", "correct": false},
+                {"text": "Kovalent bağ", "correct": true},
+                {"text": "Metalik bağ", "correct": false},
+                {"text": "Van der Waals kuvveti", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Kimyasal Tepkimeler",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Kimyasal tepkimede ne olur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["kimyasal tepkime", "tanım"],
+              "explanation": "Kimyasal tepkimede maddeler arasında bağlar kopar ve yeni bağlar oluşarak yeni maddeler meydana gelir. Atom türü ve sayısı değişmez, yalnızca düzenlenişi değişir.",
+              "options": [
+                {"text": "Atomlar yok olur", "correct": false},
+                {"text": "Maddeler arasında bağlar kopar, yeni bağlar oluşarak yeni maddeler oluşur", "correct": true},
+                {"text": "Sadece renk değişir", "correct": false},
+                {"text": "Atomlar büyür", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kimyasal denklemlerin temel kavramlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["denklem", "kavramlar"],
+              "explanation": "Kimyasal denklem tepkimeyi sembolik olarak ifade eder.",
+              "options": [
+                {"text": "Girişenler (reaktifler)", "pairId": 1, "correct": false},
+                {"text": "Ok işaretinin solundaki maddeler", "pairId": 1, "correct": false},
+                {"text": "Ürünler", "pairId": 2, "correct": false},
+                {"text": "Ok işaretinin sağındaki maddeler", "pairId": 2, "correct": false},
+                {"text": "Katsayı", "pairId": 3, "correct": false},
+                {"text": "Formülün önündeki sayı (denklem dengeleme)", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Kütlenin Korunumu Yasası ne der?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kütlenin korunumu"],
+              "explanation": "Kütlenin Korunumu Yasası (Lavoisier Yasası): Kimyasal tepkimede toplam kütle değişmez. Girişenlerin toplam kütlesi, ürünlerin toplam kütlesine eşittir.",
+              "options": [
+                {"text": "Kütle artabilir veya azalabilir", "correct": false},
+                {"text": "Tepkimede girişenlerin toplam kütlesi ürünlerin toplam kütlesine eşittir", "correct": true},
+                {"text": "Kütle her zaman artar", "correct": false},
+                {"text": "Kütle yok olabilir", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kimyasal tepkime hızını etkileyen faktörlerden biri ___ dır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["tepkime hızı"],
+              "explanation": "Kimyasal tepkime hızını etkileyen faktörler: sıcaklık, derişim (yoğunluk), katalizör, temas yüzeyi ve maddenin cinsidir. Sıcaklık artınca genellikle tepkime hızlanır.",
+              "options": [
+                {"text": "sıcaklık", "correct": true},
+                {"text": "renk", "correct": false},
+                {"text": "koku", "correct": false},
+                {"text": "ses", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Yanma tepkimesinin ortak ürünleri nelerdir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["yanma", "ürünler"],
+              "explanation": "Bir madde oksijenle tepkimeye girdiğinde (yanma) genellikle karbondioksit (CO₂) ve su (H₂O) oluşur. Yanma ekzotermik (ısı veren) bir tepkimedir.",
+              "options": [
+                {"text": "Hidrojen ve azot", "correct": false},
+                {"text": "Karbondioksit (CO₂) ve su (H₂O)", "correct": true},
+                {"text": "Oksijen ve helyum", "correct": false},
+                {"text": "Tuz ve su", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Katalizör ne yapar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["katalizör"],
+              "explanation": "Katalizör, tepkime hızını artıran ancak kendisi tepkimede tükenmeyen maddedir. Aktivasyon enerjisini düşürerek tepkimenin daha kolay gerçekleşmesini sağlar.",
+              "options": [
+                {"text": "Tepkimeyi durdurur", "correct": false},
+                {"text": "Tepkime hızını artırır ancak kendisi tükenmez", "correct": true},
+                {"text": "Yeni ürün oluşturur", "correct": false},
+                {"text": "Tepkimeyi yavaşlatır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Asitler ve Bazlar",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Asit ve baz özelliklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["asit", "baz"],
+              "explanation": "Asitler ve bazlar zıt kimyasal özellikler gösterir.",
+              "options": [
+                {"text": "Asit", "pairId": 1, "correct": false},
+                {"text": "Ekşi tat, mavi turnusolü kırmızıya çevirir, pH < 7", "pairId": 1, "correct": false},
+                {"text": "Baz", "pairId": 2, "correct": false},
+                {"text": "Acı tat, kaygan his, kırmızı turnusolü maviye çevirir, pH > 7", "pairId": 2, "correct": false},
+                {"text": "Nötr", "pairId": 3, "correct": false},
+                {"text": "pH = 7, saf su gibi ne asit ne baz", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "pH ölçeğinde 7'den küçük değerler neyi gösterir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["pH", "asit"],
+              "explanation": "pH ölçeğinde 0-14 arası değerler kullanılır. pH < 7 asidik, pH = 7 nötr, pH > 7 baziktir. pH değeri küçüldükçe asitlik artar.",
+              "options": [
+                {"text": "Bazik çözelti", "correct": false},
+                {"text": "Asidik çözelti", "correct": true},
+                {"text": "Nötr çözelti", "correct": false},
+                {"text": "Tuzlu çözelti", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Asit + Baz → ___ + Su tepkimesine nötrleşme denir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["nötrleşme", "tuz"],
+              "explanation": "Nötrleşme tepkimesinde asit ve baz birleşerek tuz ve su oluşturur. Örnek: HCl + NaOH → NaCl + H₂O.",
+              "options": [
+                {"text": "Tuz", "correct": true},
+                {"text": "Gaz", "correct": false},
+                {"text": "Asit", "correct": false},
+                {"text": "Baz", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Günlük hayattaki asit örneklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["asit", "örnekler"],
+              "explanation": "Asitler günlük hayatta birçok yerde bulunur.",
+              "options": [
+                {"text": "Limon suyu", "pairId": 1, "correct": false},
+                {"text": "Sitrik asit (pH ≈ 2)", "pairId": 1, "correct": false},
+                {"text": "Sirke", "pairId": 2, "correct": false},
+                {"text": "Asetik asit (pH ≈ 3)", "pairId": 2, "correct": false},
+                {"text": "Mide sıvısı", "pairId": 3, "correct": false},
+                {"text": "Hidroklorik asit (pH ≈ 1-2)", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hangisi bazik bir maddedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["baz", "örnek"],
+              "explanation": "Sabun bazik bir maddedir (pH ≈ 9-10). Kaygan hissi ve acımsı tadı vardır. Diğer baz örnekleri: çamaşır suyu, amonyak, kabartma tozu çözeltisi.",
+              "options": [
+                {"text": "Limon suyu", "correct": false},
+                {"text": "Sabun", "correct": true},
+                {"text": "Sirke", "correct": false},
+                {"text": "Portakal suyu", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Asit yağmurlarının çevresel etkisi nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["asit yağmuru", "çevre"],
+              "explanation": "Asit yağmurları toprağı, gölleri asidikleştirir; bitkileri, su canlılarını öldürür; tarihi yapıları ve metalleri aşındırır. SO₂ ve NOx gazlarının atmosferdeki su ile tepkimesinden oluşur.",
+              "options": [
+                {"text": "Hiç etkisi yoktur", "correct": false},
+                {"text": "Bitkileri öldürür, suları asidikleştirir, yapıları aşındırır", "correct": true},
+                {"text": "Sadece metalleri etkiler", "correct": false},
+                {"text": "Toprağı verimli yapar", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Endüstride Kimya",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Endüstriyel kimyasal süreçleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["endüstri", "kimya"],
+              "explanation": "Kimyasal tepkimeler endüstride yaygın kullanılır.",
+              "options": [
+                {"text": "Demir-çelik üretimi", "pairId": 1, "correct": false},
+                {"text": "Demir cevherinden indirgeme ile demir elde etme", "pairId": 1, "correct": false},
+                {"text": "Gübre üretimi", "pairId": 2, "correct": false},
+                {"text": "Azot ve fosfor bileşiklerinden bitki besini yapma", "pairId": 2, "correct": false},
+                {"text": "İlaç endüstrisi", "pairId": 3, "correct": false},
+                {"text": "Kimyasal sentez ile etken madde üretimi", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Polimer nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["polimer"],
+              "explanation": "Polimer, küçük moleküllerin (monomer) tekrarlı olarak birleşmesiyle oluşan büyük moleküldür. Plastikler, naylon, kauçuk, DNA ve proteinler polimer örnekleridir.",
+              "options": [
+                {"text": "Tek atomlu bir element", "correct": false},
+                {"text": "Küçük moleküllerin tekrarlı birleşmesiyle oluşan büyük molekül", "correct": true},
+                {"text": "Bir metal türü", "correct": false},
+                {"text": "Doğal bir mineral", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Plastiklerin geri dönüşümü neden önemlidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["plastik", "geri dönüşüm"],
+              "explanation": "Plastikler doğada yüzlerce yıl bozunmaz. Geri dönüşüm: çevre kirliliğini azaltır, doğal kaynakları korur, enerji tasarrufu sağlar ve atık miktarını düşürür.",
+              "options": [
+                {"text": "Önemli değildir", "correct": false},
+                {"text": "Plastik doğada yüzlerce yıl bozunmaz, çevre korunması için şarttır", "correct": true},
+                {"text": "Sadece ekonomik nedenlerle", "correct": false},
+                {"text": "Plastikler kendiliğinden dönüşür", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Sabun üretimi ___ adlı kimyasal tepkimeyle gerçekleşir.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["sabun", "saponifikasyon"],
+              "explanation": "Sabun, yağ/hayvansal yağların bazlarla (NaOH/KOH) tepkimesi sonucu oluşur. Bu tepkimeye saponifikasyon (sabunlaşma) denir.",
+              "options": [
+                {"text": "saponifikasyon", "correct": true},
+                {"text": "nötrleşme", "correct": false},
+                {"text": "yanma", "correct": false},
+                {"text": "oksitlenme", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Fosil yakıtlar yerine biyoyakıt kullanmanın avantajı nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["biyoyakıt"],
+              "explanation": "Biyoyakıtlar (biyodizel, biyoetanol) yenilenebilir kaynaklardan (bitkiler, atıklar) üretilir. Fosil yakıtlara göre daha az sera gazı salınımı yapar ve sürdürülebilirdir.",
+              "options": [
+                {"text": "Daha ucuzdur", "correct": false},
+                {"text": "Yenilenebilir kaynaklardan üretilir, daha az sera gazı salınımı yapar", "correct": true},
+                {"text": "Daha güçlü enerji sağlar", "correct": false},
+                {"text": "Hiçbir avantajı yoktur", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Kimyasal atıkların çevreye etkisini azaltmak için ne yapılmalıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kimyasal atık", "çevre"],
+              "explanation": "Kimyasal atıklar arıtma tesislerinde işlenmeli, zararlı maddeler güvenli şekilde depolanmalı, geri dönüşüm yapılmalı ve yeşil kimya prensipleri benimsenmelidir.",
+              "options": [
+                {"text": "Doğaya bırakılabilir", "correct": false},
+                {"text": "Arıtma, güvenli depolama, geri dönüşüm ve yeşil kimya uygulamaları", "correct": true},
+                {"text": "Sadece denize boşaltmak", "correct": false},
+                {"text": "Yakmak yeterlidir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Ses",
+      "description": "Ses dalgaları, sesin özellikleri, frekans, genlik, yankı, rezonans, ses yalıtımı (MEB 2025-2026)",
+      "order": 5,
+      "lessons": [
+        {
+          "title": "Ses Dalgaları ve Oluşumu",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Ses nasıl oluşur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ses", "oluşum"],
+              "explanation": "Ses, madde taneciklerinin titreşmesiyle oluşur. Bir cisim titreştiğinde çevresindeki hava moleküllerini iter, bu sıkışma ve genleşme dalgası kulakta ses olarak algılanır.",
+              "options": [
+                {"text": "Işığın titreşmesiyle", "correct": false},
+                {"text": "Madde taneciklerinin titreşmesiyle", "correct": true},
+                {"text": "Sıcaklık değişimiyle", "correct": false},
+                {"text": "Elektrik akımıyla", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Ses dalgası hangi dalga türüne girer?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["boyuna dalga"],
+              "explanation": "Ses boyuna (longitudinal) dalgadır. Sıkışma ve genleşme bölgeleri dalga yönünde oluşur. Enine dalga ise (ışık, su dalgası gibi) dalga yönüne dik titreşim gösterir.",
+              "options": [
+                {"text": "Enine dalga", "correct": false},
+                {"text": "Boyuna dalga", "correct": true},
+                {"text": "Elektromanyetik dalga", "correct": false},
+                {"text": "Yüzey dalgası", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Ses boşlukta (vakumda) yayılır mı?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ses", "vakum"],
+              "explanation": "Hayır, ses madde ortamına ihtiyaç duyar (katı, sıvı, gaz). Boşlukta (vakumda) ses yayılamaz çünkü titreşecek tanecik yoktur. Uzayda ses duyulmaz.",
+              "options": [
+                {"text": "Evet, hızla yayılır", "correct": false},
+                {"text": "Hayır, ses madde ortamına ihtiyaç duyar", "correct": true},
+                {"text": "Sadece ışık hızında yayılır", "correct": false},
+                {"text": "Yavaşça yayılır", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Sesin farklı ortamlardaki hızını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["ses hızı", "ortam"],
+              "explanation": "Ses, katılarda en hızlı, gazlarda en yavaş yayılır (tanecikler arası mesafe etkisi).",
+              "options": [
+                {"text": "Katılar (demir)", "pairId": 1, "correct": false},
+                {"text": "En hızlı (~5000 m/s)", "pairId": 1, "correct": false},
+                {"text": "Sıvılar (su)", "pairId": 2, "correct": false},
+                {"text": "Orta hız (~1500 m/s)", "pairId": 2, "correct": false},
+                {"text": "Gazlar (hava)", "pairId": 3, "correct": false},
+                {"text": "En yavaş (~340 m/s)", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Havada sesin hızı yaklaşık ___ m/s'dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["ses hızı", "hava"],
+              "explanation": "Havada sesin hızı yaklaşık 340 m/s'dir (20°C'de). Sıcaklık arttıkça ses hızı da artar.",
+              "options": [
+                {"text": "340", "correct": true},
+                {"text": "1500", "correct": false},
+                {"text": "300000", "correct": false},
+                {"text": "100", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Şimşek çaktığında önce ışığı sonra sesi algılamamızın nedeni nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ses hızı", "ışık hızı"],
+              "explanation": "Işık hızı (~300.000 km/s) ses hızından (~340 m/s) çok daha büyüktür. Bu nedenle ışık anında ulaşırken ses daha geç gelir. Gecikme süresinden uzaklık hesaplanabilir.",
+              "options": [
+                {"text": "Ses daha erken çıkar", "correct": false},
+                {"text": "Işık hızı ses hızından çok daha büyük olduğu için ışık önce ulaşır", "correct": true},
+                {"text": "Gözümüz kulağımızdan daha hızlı çalışır", "correct": false},
+                {"text": "Şimşek önce ışık sonra ses üretir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Sesin Özellikleri",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Sesin temel özelliklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["ses özellikleri"],
+              "explanation": "Sesin üç temel özelliği: yükseklik (ince-kalın), şiddet (güçlü-zayıf) ve tınıdır.",
+              "options": [
+                {"text": "Yükseklik (frekans)", "pairId": 1, "correct": false},
+                {"text": "Sesin ince veya kalın olması", "pairId": 1, "correct": false},
+                {"text": "Şiddet (genlik)", "pairId": 2, "correct": false},
+                {"text": "Sesin güçlü veya zayıf olması", "pairId": 2, "correct": false},
+                {"text": "Tını", "pairId": 3, "correct": false},
+                {"text": "Aynı notayı çalan farklı enstrümanları ayırt etme", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Frekans arttıkça ses nasıl değişir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["frekans", "ses yüksekliği"],
+              "explanation": "Frekans (titreşim sayısı) arttıkça ses daha ince (tiz) olur. Frekans azaldıkça ses daha kalın (pes) olur. Frekans birimi Hertz (Hz) dir.",
+              "options": [
+                {"text": "Ses kalınlaşır", "correct": false},
+                {"text": "Ses incelir (tizleşir)", "correct": true},
+                {"text": "Ses şiddeti artar", "correct": false},
+                {"text": "Ses kaybolur", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Sesin şiddeti (gürlüğü) neye bağlıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["genlik", "şiddet"],
+              "explanation": "Sesin şiddeti genliğe (titreşimin büyüklüğü) bağlıdır. Genlik arttıkça ses daha gür (şiddetli) olur. Ses şiddeti desibel (dB) birimi ile ölçülür.",
+              "options": [
+                {"text": "Frekansa", "correct": false},
+                {"text": "Genliğe (titreşim büyüklüğü)", "correct": true},
+                {"text": "Dalga boyuna", "correct": false},
+                {"text": "Hıza", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Ses şiddeti birimi ___ (dB) dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["desibel"],
+              "explanation": "Ses şiddeti desibel (dB) birimiyle ölçülür. Fısıltı ~20 dB, normal konuşma ~60 dB, rock konser ~110 dB, ağrı eşiği ~130 dB'dir.",
+              "options": [
+                {"text": "desibel", "correct": true},
+                {"text": "hertz", "correct": false},
+                {"text": "watt", "correct": false},
+                {"text": "pascal", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "İnsan kulağı hangi frekans aralığındaki sesleri duyar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["işitme aralığı"],
+              "explanation": "İnsan kulağı 20 Hz - 20.000 Hz (20 kHz) aralığındaki sesleri duyar. 20 Hz altı: infrases (duyulmaz), 20.000 Hz üstü: ultrases (duyulmaz). Yaşla üst sınır düşer.",
+              "options": [
+                {"text": "0 Hz - 100 Hz", "correct": false},
+                {"text": "20 Hz - 20.000 Hz", "correct": true},
+                {"text": "100 Hz - 100.000 Hz", "correct": false},
+                {"text": "1 Hz - 10 Hz", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Tını nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["tını"],
+              "explanation": "Tını, aynı yükseklik ve şiddetteki seslerin farklı duyulmasını sağlayan özelliktir. Keman ve piyano aynı La notasını çalsa bile farklı duyulur çünkü ürettikleri harmonik bileşenler farklıdır.",
+              "options": [
+                {"text": "Sesin hızı", "correct": false},
+                {"text": "Aynı notayı çalan farklı kaynakları ayırt etmemizi sağlayan özellik", "correct": true},
+                {"text": "Sesin şiddeti", "correct": false},
+                {"text": "Sesin frekansı", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Yankı ve Sesin Yansıması",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Yankı (eko) nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["yankı", "yansıma"],
+              "explanation": "Yankı, sesin sert bir yüzeyden yansıyarak tekrar duyulmasıdır. Yankı duyulması için ses kaynağı ile yansıtıcı yüzey arasında en az 17 metre mesafe olmalıdır.",
+              "options": [
+                {"text": "Sesin yutulması", "correct": false},
+                {"text": "Sesin sert yüzeyden yansıyarak tekrar duyulması", "correct": true},
+                {"text": "Sesin kaybolması", "correct": false},
+                {"text": "Sesin hızlanması", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Yankı duyulması için kaynak ile yansıtıcı yüzey arası en az ___ metre olmalıdır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["yankı", "mesafe"],
+              "explanation": "İnsan kulağı aynı sesi 0,1 saniye arayla ayrı duyabilir. Ses 0,1s'de 34 m yol alır (gidiş + dönüş). Tek yön mesafe en az 17 metredir.",
+              "options": [
+                {"text": "17", "correct": true},
+                {"text": "5", "correct": false},
+                {"text": "100", "correct": false},
+                {"text": "1", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Ses yansıması hangi alanlarda kullanılır?",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["ses yansıması", "kullanım"],
+              "explanation": "Ses yansıması günlük hayatta ve teknolojide birçok alanda kullanılır.",
+              "options": [
+                {"text": "Sonar sistemi", "pairId": 1, "correct": false},
+                {"text": "Deniz altındaki cisimlerin tespiti", "pairId": 1, "correct": false},
+                {"text": "Ultrason (USG)", "pairId": 2, "correct": false},
+                {"text": "Tıpta görüntüleme (hamilelik takibi)", "pairId": 2, "correct": false},
+                {"text": "Yarasa ekolokasyonu", "pairId": 3, "correct": false},
+                {"text": "Ultrases göndererek çevresini algılama", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Konser salonlarında akustik düzenleme neden yapılır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["akustik"],
+              "explanation": "Konser salonlarında sesin düzgün dağılması, yankının kontrol edilmesi ve ses kalitesinin artırılması için akustik düzenleme yapılır. Yumuşak malzemeler sesi yutar, sert yüzeyler yansıtır.",
+              "options": [
+                {"text": "Estetik görünüm için", "correct": false},
+                {"text": "Sesin düzgün dağılımı, yankı kontrolü ve ses kalitesini artırmak için", "correct": true},
+                {"text": "Sıcaklığı ayarlamak için", "correct": false},
+                {"text": "Aydınlatma düzenlemesi için", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Yumuşak ve pürüzlü yüzeyler sese ne yapar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ses yutma"],
+              "explanation": "Yumuşak ve pürüzlü yüzeyler (halı, perde, sünger) sesi yutar (soğurur). Bu nedenle ses yalıtımında bu malzemeler kullanılır. Sert ve düz yüzeyler ise sesi yansıtır.",
+              "options": [
+                {"text": "Sesi yansıtır", "correct": false},
+                {"text": "Sesi yutar (soğurur)", "correct": true},
+                {"text": "Sesi güçlendirir", "correct": false},
+                {"text": "Sese hiç etki etmez", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Ses yalıtımı neden önemlidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ses yalıtımı"],
+              "explanation": "Ses kirliliği sağlık sorunlarına (işitme kaybı, stres, uyku bozukluğu) yol açar. Ses yalıtımı evlerde, işyerlerinde ve fabrikalarda gürültüyü azaltarak sağlıklı bir ortam sağlar.",
+              "options": [
+                {"text": "Gerekli değildir", "correct": false},
+                {"text": "Gürültü kirliliğini azaltarak sağlığı ve yaşam kalitesini korur", "correct": true},
+                {"text": "Sadece müzik stüdyolarında gerekir", "correct": false},
+                {"text": "Sıcaklık kontrolü için", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Rezonans ve Ses Olayları",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Rezonans nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["rezonans"],
+              "explanation": "Rezonans, bir cismin doğal frekansıyla aynı frekanstaki dış titreşimle uyarıldığında titreşim genliğinin (büyüklüğünün) çok artması olayıdır. Salıncağı itmek rezonansın günlük örneğidir.",
+              "options": [
+                {"text": "Sesin kaybolması", "correct": false},
+                {"text": "Doğal frekansla uyumlu dış titreşimle genliğin çok artması", "correct": true},
+                {"text": "Sesin yansıması", "correct": false},
+                {"text": "Sesin kırılması", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Hangisi rezonansa örnektir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["rezonans", "örnek"],
+              "explanation": "Şarkıcının belirli bir frekansla söyleyerek cam bardağı kırması klasik rezonans örneğidir. Ses dalgası cam'ın doğal frekansına uyunca titreşim genliği artarak cam kırılır.",
+              "options": [
+                {"text": "Rüzgârda yaprakların hışırdaması", "correct": false},
+                {"text": "Şarkıcının sesiyle cam bardağın kırılması", "correct": true},
+                {"text": "Denizde dalga oluşması", "correct": false},
+                {"text": "Pil ile ampul yakma", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Ultrases (20.000 Hz üstü) nerelerde kullanılır?",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["ultrases", "kullanım"],
+              "explanation": "Ultrases dalga boyu kısa olduğundan hassas ölçüm ve görüntüleme yapılabilir.",
+              "options": [
+                {"text": "Tıpta (ultrasonografi)", "pairId": 1, "correct": false},
+                {"text": "Bebek görüntüleme, organ inceleme", "pairId": 1, "correct": false},
+                {"text": "Temizlikte", "pairId": 2, "correct": false},
+                {"text": "Ultrasonik temizleyiciler (gözlük, takı)", "pairId": 2, "correct": false},
+                {"text": "Endüstride", "pairId": 3, "correct": false},
+                {"text": "Metal parçalardaki çatlak tespiti", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "İnfrases ___ Hz altındaki seslerdir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["infrases"],
+              "explanation": "İnfrases 20 Hz altındaki seslerdir ve insan kulağı tarafından duyulmaz. Deprem dalgaları, filler arası iletişim, volkanik etkinlik infrases üretir.",
+              "options": [
+                {"text": "20", "correct": true},
+                {"text": "100", "correct": false},
+                {"text": "1000", "correct": false},
+                {"text": "20000", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Doppler etkisi nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["doppler etkisi"],
+              "explanation": "Doppler etkisi, ses kaynağı ile gözlemci birbirine yaklaşırken sesin daha tiz (yüksek frekans), uzaklaşırken daha pes (düşük frekans) duyulmasıdır. Ambulans sireni buna örnektir.",
+              "options": [
+                {"text": "Sesin yansıması", "correct": false},
+                {"text": "Ses kaynağı yaklaşırken tizleşme, uzaklaşırken pesleşme", "correct": true},
+                {"text": "Sesin soğurulması", "correct": false},
+                {"text": "Sesin güçlenmesi", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Ses kirliliği insan sağlığını nasıl etkiler?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ses kirliliği", "sağlık"],
+              "explanation": "Uzun süreli gürültüye maruz kalma: işitme kaybı, stres, yüksek tansiyon, uyku bozukluğu, dikkat dağınıklığı ve kalp-damar hastalıkları riskini artırır. 85 dB üzeri gürültü tehlikelidir.",
+              "options": [
+                {"text": "Sağlığı etkilemez", "correct": false},
+                {"text": "İşitme kaybı, stres, uyku bozukluğu, kalp-damar sorunları", "correct": true},
+                {"text": "Sadece kulaklara zarar verir", "correct": false},
+                {"text": "Sadece çocukları etkiler", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Müzikte Ses",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Müzik aletlerinin ses üretim yöntemlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["müzik", "ses üretimi"],
+              "explanation": "Müzik aletleri farklı yöntemlerle ses üretir.",
+              "options": [
+                {"text": "Telli çalgılar (gitar, keman)", "pairId": 1, "correct": false},
+                {"text": "Tel titreşimi", "pairId": 1, "correct": false},
+                {"text": "Üflemeli çalgılar (flüt, klarnet)", "pairId": 2, "correct": false},
+                {"text": "Hava sütunu titreşimi", "pairId": 2, "correct": false},
+                {"text": "Vurmalı çalgılar (davul, zil)", "pairId": 3, "correct": false},
+                {"text": "Zarın veya cismin titreşimi", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Gitarın telini sıkıştırdığımızda ses neden incelir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["tel", "frekans"],
+              "explanation": "Teli sıkıştırmak (kısaltmak) veya germek titreşim frekansını artırır. Frekans arttıkça ses incelir. Teli uzatmak veya kalın tel kullanmak frekansı düşürür ve ses kalınlaşır.",
+              "options": [
+                {"text": "Tel kalınlaştığı için", "correct": false},
+                {"text": "Tel kısaldıkça titreşim frekansı artar ve ses incelir", "correct": true},
+                {"text": "Daha fazla hava titreştiği için", "correct": false},
+                {"text": "Telin ağırlığı değiştiği için", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Müzikte bir oktav ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["oktav", "frekans"],
+              "explanation": "Bir oktav, frekansın iki katına çıkmasıdır. Örneğin 440 Hz La notasının bir oktav üstü 880 Hz'dir. Aynı nota ismini taşıyan en yakın iki ses bir oktav arayla ayırt edilir.",
+              "options": [
+                {"text": "8 farklı nota", "correct": false},
+                {"text": "Frekansın iki katına çıkması (aynı nota bir üst/alt perde)", "correct": true},
+                {"text": "Sesin gürlüğünün artması", "correct": false},
+                {"text": "8 saniye süren ses", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Ses perdesi ___ ile belirlenir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["perde", "frekans"],
+              "explanation": "Ses perdesi (ince-kalın) frekansla belirlenir. Yüksek frekans = ince (tiz) ses, düşük frekans = kalın (pes) ses.",
+              "options": [
+                {"text": "frekans", "correct": true},
+                {"text": "genlik", "correct": false},
+                {"text": "hız", "correct": false},
+                {"text": "sıcaklık", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Gürültü ile müzik arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["gürültü", "müzik"],
+              "explanation": "Müzik düzenli titreşimlerden oluşan hoşa giden sestir. Gürültü ise düzensiz, rahatsız edici sestir. Müzikte belirli frekanslar kullanılır, gürültüde rastgele frekanslar karışıktır.",
+              "options": [
+                {"text": "Hiç fark yoktur", "correct": false},
+                {"text": "Müzik düzenli titreşim, gürültü düzensiz ve rahatsız edici ses", "correct": true},
+                {"text": "Müzik her zaman gürültüdür", "correct": false},
+                {"text": "Gürültü daha az enerjilidir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "İşitme sağlığını korumak için ne yapılmalıdır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["işitme sağlığı"],
+              "explanation": "Kulaklık sesini kısık tutmak, gürültülü ortamlarda kulak tıkacı kullanmak, uzun süreli gürültüden kaçınmak ve düzenli işitme testi yaptırmak işitme sağlığını korur.",
+              "options": [
+                {"text": "Her zaman yüksek sesle müzik dinlemek", "correct": false},
+                {"text": "Kulaklık sesini kısık tutmak, gürültüde koruyucu kullanmak", "correct": true},
+                {"text": "Hiç müzik dinlememek", "correct": false},
+                {"text": "İşitme testine gerek yok", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Deprem ve Doğal Süreçler",
+      "description": "Levha tektoniği, depremler, volkanlar, yer kabuğu hareketleri, afet hazırlığı (MEB 2025-2026)",
+      "order": 6,
+      "lessons": [
+        {
+          "title": "Levha Tektoniği",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Levha tektoniği teorisine göre yer kabuğu nasıl yapılanmıştır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["levha tektoniği"],
+              "explanation": "Yer kabuğu (litosfer), birçok büyük ve küçük levhadan (plaka) oluşur. Bu levhalar manto üzerinde çok yavaş hareket eder (yılda birkaç cm). Levhaların etkileşimi deprem, volkan ve dağ oluşumuna neden olur.",
+              "options": [
+                {"text": "Tek parça halinde sabit", "correct": false},
+                {"text": "Birçok levhadan oluşur, levhalar manto üzerinde yavaşça hareket eder", "correct": true},
+                {"text": "Sıvı haldedir", "correct": false},
+                {"text": "Sadece iki büyük parçadan oluşur", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Levha hareketlerini ve sonuçlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["levha hareketi", "sonuçlar"],
+              "explanation": "Levhalar birbirine göre üç şekilde hareket eder.",
+              "options": [
+                {"text": "Uzaklaşma (ıraksama)", "pairId": 1, "correct": false},
+                {"text": "Okyanus ortası sırtları, yeni kabuk oluşumu", "pairId": 1, "correct": false},
+                {"text": "Yakınlaşma (yakınsama)", "pairId": 2, "correct": false},
+                {"text": "Dağ oluşumu, dalma-batma, deprem/volkan", "pairId": 2, "correct": false},
+                {"text": "Yanal kayma (transform)", "pairId": 3, "correct": false},
+                {"text": "Fay hattı, güçlü depremler (San Andreas Fayı)", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Levhaları hareket ettiren güç ___ daki konveksiyon akıntılarıdır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["manto", "konveksiyon"],
+              "explanation": "Manto (yer kabuğu altındaki sıcak kayaç katmanı) daki konveksiyon akıntıları levhaları hareket ettirir. Sıcak magma yükselir, soğuyunca yanlara kayar, soğuyunca alçalır — bu döngü levhaları sürükler.",
+              "options": [
+                {"text": "manto", "correct": true},
+                {"text": "atmosfer", "correct": false},
+                {"text": "okyanus", "correct": false},
+                {"text": "uzay", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Himalaya dağları nasıl oluşmuştur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["dağ oluşumu", "himalaya"],
+              "explanation": "Himalayalar, Hint levhası ile Avrasya levhasının yaklaşık 50 milyon yıl önce çarpışmasıyla oluşmuştur. İki kıtasal levha çarpışınca yer kabuğu kıvrılarak yükselmiş ve dünyanın en yüksek dağları oluşmuştur.",
+              "options": [
+                {"text": "Volkanik patlamalarla", "correct": false},
+                {"text": "Hint ve Avrasya levhalarının çarpışmasıyla", "correct": true},
+                {"text": "Erozyonla", "correct": false},
+                {"text": "Buzullarla", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Kıtaların birleşik olduğu süper kıtaya ne ad verilir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["pangea"],
+              "explanation": "Yaklaşık 200-300 milyon yıl önce tüm kıtalar 'Pangea' adlı tek bir süper kıta halindeydi. Levha hareketleriyle parçalanarak bugünkü kıtalara dönüşmüştür.",
+              "options": [
+                {"text": "Atlantis", "correct": false},
+                {"text": "Pangea", "correct": true},
+                {"text": "Gondwana", "correct": false},
+                {"text": "Laurasia", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Kıtaların parçalanmasını destekleyen kanıt hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kıta kayması", "kanıt"],
+              "explanation": "Alfred Wegener kıta kayması teorisini önermiştir. Kanıtlar: kıtaların kıyı şekillerinin birbirine uyması (Güney Amerika-Afrika), farklı kıtalarda aynı fosillerin bulunması, iklim izlerinin uyumu.",
+              "options": [
+                {"text": "Güneş tutulmaları", "correct": false},
+                {"text": "Kıtaların kıyı şekillerinin uyumu ve farklı kıtalarda aynı fosiller", "correct": true},
+                {"text": "Ay'ın çekim kuvveti", "correct": false},
+                {"text": "Okyanus sıcaklıkları", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Depremler",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Deprem nasıl oluşur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["deprem", "oluşum"],
+              "explanation": "Deprem, yer kabuğundaki fay hatları boyunca biriken enerjinin aniden boşalmasıyla oluşur. Levhaların birbirine sürtünmesi veya çarpışması enerji biriktirir, kaya kırılınca deprem meydana gelir.",
+              "options": [
+                {"text": "Rüzgâr etkisiyle", "correct": false},
+                {"text": "Fay hatlarında biriken enerjinin aniden boşalmasıyla", "correct": true},
+                {"text": "Yağmurun etkisiyle", "correct": false},
+                {"text": "Güneş patlamalarıyla", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Depremle ilgili terimleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["deprem", "terimler"],
+              "explanation": "Depremin temel terimleri vardır.",
+              "options": [
+                {"text": "Odak noktası (hiposantr)", "pairId": 1, "correct": false},
+                {"text": "Depremin yer altında başladığı nokta", "pairId": 1, "correct": false},
+                {"text": "Merkez üssü (episantr)", "pairId": 2, "correct": false},
+                {"text": "Odak noktasının yeryüzündeki izdüşümü", "pairId": 2, "correct": false},
+                {"text": "Fay hattı", "pairId": 3, "correct": false},
+                {"text": "Yer kabuğundaki kırık/çatlak hattı", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Depremin şiddetini ölçen alet ___ dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["sismograf"],
+              "explanation": "Sismograf (sismometre), deprem dalgalarını kaydeden alettir. Deprem büyüklüğü Richter ölçeğiyle (1-10), şiddeti Mercalli ölçeğiyle (I-XII) ifade edilir.",
+              "options": [
+                {"text": "sismograf", "correct": true},
+                {"text": "barometre", "correct": false},
+                {"text": "termometre", "correct": false},
+                {"text": "voltmetre", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Deprem dalgası türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["deprem dalgaları"],
+              "explanation": "Depremde üç tür dalga oluşur.",
+              "options": [
+                {"text": "P dalgası (birincil)", "pairId": 1, "correct": false},
+                {"text": "En hızlı, boyuna dalga, katı-sıvı-gazda yayılır", "pairId": 1, "correct": false},
+                {"text": "S dalgası (ikincil)", "pairId": 2, "correct": false},
+                {"text": "Daha yavaş, enine dalga, sadece katılarda yayılır", "pairId": 2, "correct": false},
+                {"text": "Yüzey dalgaları", "pairId": 3, "correct": false},
+                {"text": "En yavaş ama en yıkıcı, yer yüzeyinde yayılır", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Türkiye neden deprem riski yüksek bir ülkedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["türkiye", "deprem"],
+              "explanation": "Türkiye, Avrasya, Afrika ve Arap levhalarının kesişim noktasında yer alır. Kuzey Anadolu Fay Hattı (KAF) ve Doğu Anadolu Fay Hattı (DAF) gibi aktif fay hatları bulunur.",
+              "options": [
+                {"text": "Denize yakın olduğu için", "correct": false},
+                {"text": "Birden fazla levhanın kesişim noktasında aktif fay hatları üzerinde yer alır", "correct": true},
+                {"text": "Dağlık arazi olduğu için", "correct": false},
+                {"text": "Toprak yapısı zayıf olduğu için", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Richter ölçeğinde büyüklük 1 artınca enerji kaç kat artar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["richter", "enerji"],
+              "explanation": "Richter ölçeğinde her 1 birimlik artış, açığa çıkan enerjinin yaklaşık 32 katına çıkmasını ifade eder. Yani 6 büyüklüğündeki deprem, 5 büyüklüğünden 32 kat daha fazla enerji açığa çıkarır.",
+              "options": [
+                {"text": "2 kat", "correct": false},
+                {"text": "10 kat", "correct": false},
+                {"text": "Yaklaşık 32 kat", "correct": true},
+                {"text": "100 kat", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Volkanlar ve Sıcak Su Kaynakları",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Volkan nasıl oluşur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["volkan", "oluşum"],
+              "explanation": "Volkan, yer kabuğundaki zayıf noktalardan magmanın (erimiş kayaç) yeryüzüne çıkmasıyla oluşur. Genellikle levha sınırlarında veya sıcak noktaların (hotspot) üzerinde bulunur.",
+              "options": [
+                {"text": "Rüzgâr erozyonuyla", "correct": false},
+                {"text": "Magmanın yer kabuğundaki zayıf noktalardan yüzeye çıkmasıyla", "correct": true},
+                {"text": "Nehirlerin aşındırmasıyla", "correct": false},
+                {"text": "Buzulların erimesiyle", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Volkan yapılarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["volkan", "yapı"],
+              "explanation": "Volkanların iç yapısı belirli bölümlerden oluşur.",
+              "options": [
+                {"text": "Magma odası", "pairId": 1, "correct": false},
+                {"text": "Erimiş kayacın depolandığı yer altı boşluğu", "pairId": 1, "correct": false},
+                {"text": "Baca (kanal)", "pairId": 2, "correct": false},
+                {"text": "Magmanın yüzeye çıktığı yol", "pairId": 2, "correct": false},
+                {"text": "Krater", "pairId": 3, "correct": false},
+                {"text": "Volkanın tepesindeki çukurluk", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Yeryüzüne çıkan magmaya ___ denir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["lav"],
+              "explanation": "Magma yer altındaki erimiş kayaçtır. Yeryüzüne çıkınca 'lav' adını alır. Lav soğuyunca katılaşarak volkanik kayaçları (bazalt, obsidyen) oluşturur.",
+              "options": [
+                {"text": "lav", "correct": true},
+                {"text": "kum", "correct": false},
+                {"text": "toprak", "correct": false},
+                {"text": "kil", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Jeotermal enerji nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["jeotermal"],
+              "explanation": "Jeotermal enerji, yer kabuğunun altındaki sıcak kayaçların ve magmanın ısısından elde edilen enerjidir. Sıcak su kaynakları, kaplıcalar ve jeotermal elektrik santralleri bu enerjiyi kullanır.",
+              "options": [
+                {"text": "Güneş enerjisi", "correct": false},
+                {"text": "Yer altının sıcaklığından (iç ısı) elde edilen enerji", "correct": true},
+                {"text": "Rüzgâr enerjisi", "correct": false},
+                {"text": "Nükleer enerji", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Volkanik patlamaların olumlu etkileri var mıdır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["volkan", "olumlu etki"],
+              "explanation": "Evet: volkanik topraklar çok verimlidir (mineral bakımından zengin), jeotermal enerji kaynağı oluşturur, yeni kara parçası yaratır (ada oluşumu) ve değerli mineraller yeryüzüne çıkar.",
+              "options": [
+                {"text": "Hayır, sadece zararlıdır", "correct": false},
+                {"text": "Evet: verimli toprak, jeotermal enerji, yeni kara, mineral kaynağı", "correct": true},
+                {"text": "Sadece turizme katkı sağlar", "correct": false},
+                {"text": "Hayır, hiçbir faydası yoktur", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Ateş Çemberi (Ring of Fire) neresidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["ateş çemberi"],
+              "explanation": "Ateş Çemberi (Ring of Fire), Pasifik Okyanusu'nu çevreleyen, dünyanın en aktif deprem ve volkan kuşağıdır. Dünya depremlerinin %75'i ve aktif volkanların çoğu bu bölgede yer alır.",
+              "options": [
+                {"text": "Akdeniz çevresi", "correct": false},
+                {"text": "Pasifik Okyanusu çevresindeki deprem ve volkan kuşağı", "correct": true},
+                {"text": "Atlantik Okyanusu ortası", "correct": false},
+                {"text": "Kuzey Kutbu çevresi", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Yer Kabuğunun Şekillenmesi",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Yer kabuğunu şekillendiren iç ve dış kuvvetleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["iç kuvvetler", "dış kuvvetler"],
+              "explanation": "Yer kabuğu hem iç hem dış kuvvetlerle şekillenir.",
+              "options": [
+                {"text": "İç kuvvetler", "pairId": 1, "correct": false},
+                {"text": "Deprem, volkan, kıvrılma, kırılma (yapıcı)", "pairId": 1, "correct": false},
+                {"text": "Dış kuvvetler", "pairId": 2, "correct": false},
+                {"text": "Erozyon, aşınma, rüzgâr, su, buzul (yıkıcı/aşındırıcı)", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Erozyon nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["erozyon"],
+              "explanation": "Erozyon, su, rüzgâr, buzul gibi dış kuvvetlerin kayaç ve toprağı aşındırıp taşımasıdır. Verimli toprağın kaybına neden olur. Ağaçlandırma erozyonu önlemenin en etkili yoludur.",
+              "options": [
+                {"text": "Volkanik patlama", "correct": false},
+                {"text": "Su, rüzgâr, buzulun kayaç ve toprağı aşındırıp taşıması", "correct": true},
+                {"text": "Deprem oluşumu", "correct": false},
+                {"text": "Dağ oluşumu", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Kayaç türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["kayaç", "türler"],
+              "explanation": "Üç ana kayaç türü vardır ve birbirine dönüşebilir (kayaç döngüsü).",
+              "options": [
+                {"text": "Magmatik kayaç", "pairId": 1, "correct": false},
+                {"text": "Magmanın soğuyup katılaşmasıyla (granit, bazalt)", "pairId": 1, "correct": false},
+                {"text": "Tortul (sedimanter) kayaç", "pairId": 2, "correct": false},
+                {"text": "Taşınmış malzemenin birikmesiyle (kum taşı, kireç taşı)", "pairId": 2, "correct": false},
+                {"text": "Başkalaşım (metamorfik) kayaç", "pairId": 3, "correct": false},
+                {"text": "Isı ve basınçla değişime uğramış (mermer, şist)", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Fosiller genellikle ___ kayaçlarda bulunur.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["fosil", "tortul kayaç"],
+              "explanation": "Fosiller genellikle tortul (sedimanter) kayaçlarda bulunur. Canlı kalıntıları katmanlar halinde biriken çamur ve kumla örtülerek fosilleşir.",
+              "options": [
+                {"text": "tortul", "correct": true},
+                {"text": "magmatik", "correct": false},
+                {"text": "metamorfik", "correct": false},
+                {"text": "volkanik", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Heyelan nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["heyelan"],
+              "explanation": "Heyelan, eğimli yamaçlardaki toprak ve kayaçların ağırlıkları, su doygunluğu veya deprem etkisiyle aşağı doğru kaymasıdır. Ağaçlandırma, drenaj ve istinat duvarları heyelanı önler.",
+              "options": [
+                {"text": "Bir volkan türü", "correct": false},
+                {"text": "Yamaçtaki toprak ve kayaçların aşağı doğru kayması", "correct": true},
+                {"text": "Bir erozyon türü değildir", "correct": false},
+                {"text": "Sadece depremle oluşur", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Kayaç döngüsünde ne olur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kayaç döngüsü"],
+              "explanation": "Kayaç döngüsü: Magmatik kayaçlar aşınarak tortul kayaçlara, tortul kayaçlar ısı-basınçla metamorfik kayaçlara, tüm kayaçlar eriyerek tekrar magmaya dönüşebilir. Bu sürekli bir döngüdür.",
+              "options": [
+                {"text": "Kayaçlar hiç değişmez", "correct": false},
+                {"text": "Üç kayaç türü sürekli olarak birbirine dönüşür", "correct": true},
+                {"text": "Sadece magmatik kayaç oluşur", "correct": false},
+                {"text": "Kayaçlar zamanla yok olur", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Doğal Afetlere Hazırlık",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Deprem sırasında yapılması gereken davranışları eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["deprem", "güvenlik"],
+              "explanation": "Deprem anında doğru davranış hayat kurtarır.",
+              "options": [
+                {"text": "Bina içindeysen", "pairId": 1, "correct": false},
+                {"text": "Çök-Kapan-Tutun (sağlam masanın altına)", "pairId": 1, "correct": false},
+                {"text": "Açık alandaysan", "pairId": 2, "correct": false},
+                {"text": "Binalardan, enerji hatlarından ve ağaçlardan uzaklaş", "pairId": 2, "correct": false},
+                {"text": "Araçtaysan", "pairId": 3, "correct": false},
+                {"text": "Güvenli yere çekil, dur, araçta kal", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Deprem çantasında neler bulunmalıdır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["deprem çantası"],
+              "explanation": "Deprem çantasında: su (kişi başı 3 gün yetecek kadar), konserve gıda, el feneri, pil, ilk yardım seti, düdük, önemli belgelerin fotokopileri, nakit para ve ilaçlar bulunmalıdır.",
+              "options": [
+                {"text": "Sadece para", "correct": false},
+                {"text": "Su, gıda, fener, ilk yardım, düdük, ilaç, belge kopyaları", "correct": true},
+                {"text": "Sadece telefon", "correct": false},
+                {"text": "Sadece giysi", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "AFAD'ın açılımı ___ dır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["AFAD"],
+              "explanation": "AFAD: Afet ve Acil Durum Yönetimi Başkanlığı. Türkiye'de doğal afetlere hazırlık, müdahale ve koordinasyondan sorumlu resmi kurumdur.",
+              "options": [
+                {"text": "Afet ve Acil Durum Yönetimi Başkanlığı", "correct": true},
+                {"text": "Anadolu Fen ve Araştırma Derneği", "correct": false},
+                {"text": "Acil Faaliyet ve Destek", "correct": false},
+                {"text": "Afet Araştırma Derneği", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Depreme dayanıklı bina yapımında dikkat edilmesi gerekenler nelerdir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["deprem", "yapı"],
+              "explanation": "Depreme dayanıklı bina: sağlam zemin, yeterli ve kaliteli beton-demir, bina yönetmeliklerine uygunluk, taşıyıcı sisteme müdahale etmeme ve düzenli kontrol gerektirir.",
+              "options": [
+                {"text": "Sadece yüksek yapmak", "correct": false},
+                {"text": "Sağlam zemin, kaliteli malzeme, yönetmeliklere uygunluk, düzenli kontrol", "correct": true},
+                {"text": "Sadece kalın duvar", "correct": false},
+                {"text": "Ucuz malzeme kullanmak", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Tsunami nedir ve nasıl oluşur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["tsunami"],
+              "explanation": "Tsunami, deniz altı depremleri, volkanik patlamalar veya heyelanların deniz suyunu yerinden oynatmasıyla oluşan dev dalgalardır. Kıyıya yaklaştıkça yükselerek büyük yıkıma neden olabilir.",
+              "options": [
+                {"text": "Rüzgâr dalgası", "correct": false},
+                {"text": "Deniz altı depremi/volkanının oluşturduğu dev dalga", "correct": true},
+                {"text": "Gelgit olayı", "correct": false},
+                {"text": "Okyanus akıntısı", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Doğal afet bilinçlendirmesi neden önemlidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["bilinçlendirme", "afet"],
+              "explanation": "Doğal afetler engellenemez ancak zararları azaltılabilir. Bilinçli toplum: doğru davranışları bilir, hazırlıklıdır, panik yapmaz ve kurtarma çalışmalarını kolaylaştırır.",
+              "options": [
+                {"text": "Önemli değildir, afetler önlenemez", "correct": false},
+                {"text": "Afetler önlenemez ama zararları azaltılabilir; bilinçli toplum daha az kayıp verir", "correct": true},
+                {"text": "Sadece bilim insanları için önemli", "correct": false},
+                {"text": "Sadece çocuklar için gerekli", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Elektrik Yükleri ve Enerji Dönüşümleri",
+      "description": "Statik elektrik, elektriklenme, elektrik yükleri, enerji kaynakları ve dönüşümleri (MEB 2025-2026)",
+      "order": 7,
+      "lessons": [
+        {
+          "title": "Elektrik Yükleri ve Elektriklenme",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Atomun temel parçacıklarını yükleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["atom", "yük"],
+              "explanation": "Atom üç temel parçacıktan oluşur.",
+              "options": [
+                {"text": "Proton", "pairId": 1, "correct": false},
+                {"text": "Pozitif (+) yüklü, çekirdekte", "pairId": 1, "correct": false},
+                {"text": "Elektron", "pairId": 2, "correct": false},
+                {"text": "Negatif (−) yüklü, yörüngelerde", "pairId": 2, "correct": false},
+                {"text": "Nötron", "pairId": 3, "correct": false},
+                {"text": "Yüksüz, çekirdekte", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Elektriklenme olayında hangi parçacık hareket eder?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["elektriklenme", "elektron"],
+              "explanation": "Elektriklenmede sadece elektronlar hareket eder. Protonlar çekirdekte sabit kalır. Cisimler elektron kazandığında (−) yüklü, kaybettiğinde (+) yüklü olur.",
+              "options": [
+                {"text": "Protonlar", "correct": false},
+                {"text": "Elektronlar", "correct": true},
+                {"text": "Nötronlar", "correct": false},
+                {"text": "Hepsi birlikte", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Sürtünmeyle elektriklenmede ne olur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sürtünme", "elektriklenme"],
+              "explanation": "İki farklı cisim sürtüldüğünde bir cisimden diğerine elektron geçer. Elektron kazanan (−) yüklü, kaybeden (+) yüklü olur. Balon saça sürtüldüğünde saçı çeker — bu statik elektriktir.",
+              "options": [
+                {"text": "Protonlar aktarılır", "correct": false},
+                {"text": "Bir cisimden diğerine elektron geçer", "correct": true},
+                {"text": "Yeni yük oluşur", "correct": false},
+                {"text": "Hiçbir şey olmaz", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Elektriklenme yöntemlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["elektriklenme", "yöntemler"],
+              "explanation": "Üç temel elektriklenme yöntemi vardır.",
+              "options": [
+                {"text": "Sürtünme ile", "pairId": 1, "correct": false},
+                {"text": "İki cisim sürtülerek elektron aktarımı", "pairId": 1, "correct": false},
+                {"text": "Dokunma (temas) ile", "pairId": 2, "correct": false},
+                {"text": "Yüklü cisim nötr cisme dokunarak yük paylaşımı", "pairId": 2, "correct": false},
+                {"text": "Etki (indüksiyon) ile", "pairId": 3, "correct": false},
+                {"text": "Dokunmadan, yaklaşarak yüklerin yeniden dağılması", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Aynı yüklü cisimler birbirini ___, zıt yüklü cisimler birbirini ___.",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["yük etkileşimi"],
+              "explanation": "Aynı yüklü cisimler (++ veya −−) birbirini iter, zıt yüklü cisimler (+−) birbirini çeker. Bu, Coulomb kuvvetidir.",
+              "options": [
+                {"text": "Çeker, iter", "correct": false},
+                {"text": "İter, çeker", "correct": true},
+                {"text": "İkisi de çeker", "correct": false},
+                {"text": "İkisi de iter", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Elektroskop ne işe yarar?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["elektroskop"],
+              "explanation": "Elektroskop, bir cismin elektrik yüklü olup olmadığını ve yükün türünü (pozitif/negatif) tespit etmek için kullanılan basit bir alettir. Metal yapraklar yüklenince birbirini iterek açılır.",
+              "options": [
+                {"text": "Akım ölçer", "correct": false},
+                {"text": "Cismin elektrik yüklü olup olmadığını ve yükün türünü belirler", "correct": true},
+                {"text": "Gerilim ölçer", "correct": false},
+                {"text": "Manyetik alan ölçer", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Statik Elektrik ve Günlük Hayat",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Günlük hayatta statik elektrik örneklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["statik elektrik", "günlük"],
+              "explanation": "Statik elektrik günlük hayatta sıkça karşımıza çıkar.",
+              "options": [
+                {"text": "Kapı koluna dokunurken çarpma", "pairId": 1, "correct": false},
+                {"text": "Vücuttaki statik yükün boşalması", "pairId": 1, "correct": false},
+                {"text": "Saçların kabarması (bere çıkarınca)", "pairId": 2, "correct": false},
+                {"text": "Saçların aynı yükle yüklenmesi, birbirini itmesi", "pairId": 2, "correct": false},
+                {"text": "Yıldırım", "pairId": 3, "correct": false},
+                {"text": "Bulutlardaki yük birikiminin boşalması", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Yıldırım nasıl oluşur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["yıldırım"],
+              "explanation": "Fırtına bulutlarında su damlacıkları ve buz kristalleri sürtünerek elektriksel yük birikir. Bulut altı (−), üstü (+) yüklenir. Yükler yeterince büyüyünce bulut-yer veya bulut-bulut arası elektrik boşalması (yıldırım) olur.",
+              "options": [
+                {"text": "Güneş ışınlarından", "correct": false},
+                {"text": "Bulutlardaki sürtünmeyle biriken yüklerin aniden boşalmasıyla", "correct": true},
+                {"text": "Rüzgâr kuvvetinden", "correct": false},
+                {"text": "Yağmur damlalarının çarpışmasından (sadece)", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Paratonerin görevi nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["paratoner"],
+              "explanation": "Paratoner, binaların tepesine yerleştirilen sivri uçlu metal çubuktur. Yıldırımı kendine çekerek elektrik akımını iletken kablo aracılığıyla güvenle toprağa iletir ve binayı korur.",
+              "options": [
+                {"text": "Yıldırımı engellemek", "correct": false},
+                {"text": "Yıldırımı çekerek güvenle toprağa iletmek", "correct": true},
+                {"text": "Elektrik üretmek", "correct": false},
+                {"text": "Yağmuru engellemek", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Topraklama ne işe yarar?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["topraklama"],
+              "explanation": "Topraklama, elektrikli cihazlardaki kaçak akımı veya statik yükü güvenle toprağa ileterek elektrik çarpmasını önler. Fişteki üçüncü bacak (toprak hattı) bu iş için kullanılır.",
+              "options": [
+                {"text": "Elektriği güçlendirir", "correct": false},
+                {"text": "Kaçak akımı veya fazla yükü güvenle toprağa ileterek çarpmayı önler", "correct": true},
+                {"text": "Pili şarj eder", "correct": false},
+                {"text": "İnterneti hızlandırır", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Benzin istasyonlarında 'statik elektrik uyarısı' neden yapılır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["statik", "güvenlik"],
+              "explanation": "Benzin buharı çok yanıcıdır. Statik elektrik kıvılcımı (araçtan inerek metal parçaya dokunma) benzin buharını tutuşturabilir. Bu nedenle arabaya binmeden önce metal bir yüzeye dokunarak yükü boşaltmak gerekir.",
+              "options": [
+                {"text": "Statik elektrik pompayı bozar", "correct": false},
+                {"text": "Statik kıvılcım yanıcı benzin buharını tutuşturabilir", "correct": true},
+                {"text": "Statik elektrik yakıtın kalitesini düşürür", "correct": false},
+                {"text": "Uyarı gereksizdir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Fotokopi makinesi ___ prensibini kullanır.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["fotokopi", "statik"],
+              "explanation": "Fotokopi makinesi statik elektrik prensibini kullanır. Işığa duyarlı silindir yüklenir, belgenin ışıklı/karanlık bölgeleri yükü etkileyerek toner (mürekkep tozu) çeker ve kağıda aktarılır.",
+              "options": [
+                {"text": "statik elektrik", "correct": true},
+                {"text": "manyetizma", "correct": false},
+                {"text": "ışık kırılması", "correct": false},
+                {"text": "ses dalgası", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Enerji Kaynakları",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Yenilenebilir ve yenilenemez enerji kaynaklarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["yenilenebilir", "yenilenemez"],
+              "explanation": "Enerji kaynakları iki ana gruba ayrılır.",
+              "options": [
+                {"text": "Güneş, rüzgâr, jeotermal, hidroelektrik, biyokütle", "pairId": 1, "correct": false},
+                {"text": "Yenilenebilir (tükenmez, çevre dostu)", "pairId": 1, "correct": false},
+                {"text": "Kömür, petrol, doğalgaz, nükleer (uranyum)", "pairId": 2, "correct": false},
+                {"text": "Yenilenemez (tükenir, çevre kirliliği)", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Türkiye'de en çok kullanılan yenilenebilir enerji kaynağı hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["türkiye", "hidroelektrik"],
+              "explanation": "Türkiye'de en çok kullanılan yenilenebilir enerji kaynağı hidroelektrik enerjidir. Birçok baraj ve HES (Hidroelektrik Santral) ile elektrik üretimi yapılır.",
+              "options": [
+                {"text": "Güneş enerjisi", "correct": false},
+                {"text": "Hidroelektrik enerji", "correct": true},
+                {"text": "Rüzgâr enerjisi", "correct": false},
+                {"text": "Jeotermal enerji", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Nükleer enerji nasıl üretilir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["nükleer enerji"],
+              "explanation": "Nükleer enerji, ağır atom çekirdeklerinin (uranyum-235) parçalanması (fisyon) sırasında açığa çıkan büyük enerjiden üretilir. Az yakıtla çok enerji üretir ancak radyoaktif atık sorunu vardır.",
+              "options": [
+                {"text": "Kömürün yakılmasıyla", "correct": false},
+                {"text": "Atom çekirdeklerinin parçalanmasıyla (nükleer fisyon)", "correct": true},
+                {"text": "Suyun buharlaştırılmasıyla", "correct": false},
+                {"text": "Güneş panelleriyle", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Güneş paneli ve rüzgâr türbininin ortak dezavantajı nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yenilenebilir", "dezavantaj"],
+              "explanation": "Güneş paneli güneşli hava, rüzgâr türbini yeterli rüzgâr gerektirdiğinden kesintisiz enerji garantisi verilemez. Enerji depolama teknolojileri (batarya) bu soruna çözüm olmaya başlamıştır.",
+              "options": [
+                {"text": "Çevre kirliliği yapmaları", "correct": false},
+                {"text": "Hava koşullarına bağlı, kesintisiz enerji garantisi verememe", "correct": true},
+                {"text": "Çok pahalı olmaları", "correct": false},
+                {"text": "Radyoaktif atık üretmeleri", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Fosil yakıtların en büyük çevresel zararı ___ dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["fosil yakıt", "çevre"],
+              "explanation": "Fosil yakıtların en büyük çevresel zararı sera gazı (özellikle CO₂) salınımıdır. Bu salınım küresel ısınmaya ve iklim değişikliğine yol açar.",
+              "options": [
+                {"text": "sera gazı salınımı", "correct": true},
+                {"text": "ses kirliliği", "correct": false},
+                {"text": "su kirliliği", "correct": false},
+                {"text": "ışık kirliliği", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Enerji verimliliği neden önemlidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["enerji verimliliği"],
+              "explanation": "Enerji verimliliği: daha az enerji harcayarak aynı hizmeti almaktır. Kaynakları korur, maliyeti düşürür, çevre kirliliğini azaltır ve iklim değişikliğiyle mücadeleye katkı sağlar.",
+              "options": [
+                {"text": "Önemli değildir", "correct": false},
+                {"text": "Kaynakları korur, maliyeti düşürür, çevre kirliliğini azaltır", "correct": true},
+                {"text": "Sadece ekonomik nedenlerle", "correct": false},
+                {"text": "Sadece fabrikalarda önemli", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Enerji Dönüşümleri ve Santraller",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Elektrik santrali türlerini enerji kaynağıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["santral", "enerji kaynağı"],
+              "explanation": "Farklı santral türleri farklı enerji kaynaklarını elektriğe dönüştürür.",
+              "options": [
+                {"text": "Termik santral", "pairId": 1, "correct": false},
+                {"text": "Kömür, doğalgaz yakarak buhar türbini çevirir", "pairId": 1, "correct": false},
+                {"text": "HES (Hidroelektrik)", "pairId": 2, "correct": false},
+                {"text": "Suyun potansiyel enerjisiyle türbin çevirir", "pairId": 2, "correct": false},
+                {"text": "RES (Rüzgâr)", "pairId": 3, "correct": false},
+                {"text": "Rüzgârın kinetik enerjisiyle kanat ve jeneratör döndürür", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Termik santralde enerji dönüşümü sırası nasıldır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["termik santral", "dönüşüm"],
+              "explanation": "Termik santral: Kimyasal enerji (yakıt) → Isı enerjisi (yanma) → Kinetik enerji (buhar türbini) → Elektrik enerjisi (jeneratör).",
+              "options": [
+                {"text": "Elektrik → Isı → Hareket", "correct": false},
+                {"text": "Kimyasal → Isı → Kinetik → Elektrik", "correct": true},
+                {"text": "Güneş → Isı → Elektrik", "correct": false},
+                {"text": "Hareket → Isı → Kimyasal", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Elektrik enerjisinin evlerde kullanımlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["elektrik", "kullanım"],
+              "explanation": "Elektrik enerjisi evde farklı enerjilere dönüştürülür.",
+              "options": [
+                {"text": "Ampul (LED)", "pairId": 1, "correct": false},
+                {"text": "Elektrik → Işık enerjisi", "pairId": 1, "correct": false},
+                {"text": "Ütü / Isıtıcı", "pairId": 2, "correct": false},
+                {"text": "Elektrik → Isı enerjisi", "pairId": 2, "correct": false},
+                {"text": "Elektrikli süpürge", "pairId": 3, "correct": false},
+                {"text": "Elektrik → Kinetik (hareket) enerjisi", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Enerji tasarrufu sağlayan önlemler nelerdir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["enerji tasarrufu"],
+              "explanation": "LED ampul kullanmak, A+++ enerji sınıfı cihaz tercih etmek, ısı yalıtımı yapmak, gereksiz ışıkları kapatmak ve toplu taşıma kullanmak enerji tasarrufu sağlar.",
+              "options": [
+                {"text": "Işıkları sürekli açık bırakmak", "correct": false},
+                {"text": "LED ampul, A+++ cihaz, yalıtım, gereksiz ışıkları kapatma", "correct": true},
+                {"text": "Eski cihazları kullanmaya devam etmek", "correct": false},
+                {"text": "Klima hep açık bırakmak", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hidroelektrik santralde suyun ___ enerjisi elektrik enerjisine dönüştürülür.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["HES", "potansiyel enerji"],
+              "explanation": "Barajda yüksekte biriktirilen suyun potansiyel (konumsal) enerjisi, düşürüldüğünde kinetik enerjiye dönüşür ve türbini döndürerek elektrik enerjisi üretir.",
+              "options": [
+                {"text": "potansiyel", "correct": true},
+                {"text": "ısı", "correct": false},
+                {"text": "kimyasal", "correct": false},
+                {"text": "nükleer", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Elektrik iletim hatlarında yüksek gerilim kullanılmasının sebebi nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["yüksek gerilim", "iletim"],
+              "explanation": "Elektrik uzak mesafelere iletilirken kabloların direnci nedeniyle enerji kaybı (ısı) oluşur. Gerilim yükseltilerek akım düşürülür ve kayıp azaltılır. Evlere yaklaşırken gerilim 220V'a düşürülür.",
+              "options": [
+                {"text": "Daha parlak ışık vermek için", "correct": false},
+                {"text": "Akımı düşürüp iletim kaybını (ısı kaybı) azaltmak için", "correct": true},
+                {"text": "Güvenlik için", "correct": false},
+                {"text": "Kablo kalınlığını artırmak için", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Sürdürülebilir Enerji Geleceği",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Sürdürülebilir enerji ne demektir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["sürdürülebilir enerji"],
+              "explanation": "Sürdürülebilir enerji, bugünkü ihtiyaçları karşılarken gelecek nesillerin ihtiyaçlarını tehlikeye atmayan enerji üretimi ve tüketimidir. Yenilenebilir kaynakları temel alır.",
+              "options": [
+                {"text": "Mümkün olduğunca çok enerji tüketmek", "correct": false},
+                {"text": "Gelecek nesilleri riske atmadan bugünkü ihtiyaçları karşılayan enerji", "correct": true},
+                {"text": "Sadece fosil yakıt kullanmak", "correct": false},
+                {"text": "Enerji kullanmamak", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Gelecekteki enerji teknolojilerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["gelecek", "enerji teknolojisi"],
+              "explanation": "Bilim insanları yeni enerji teknolojileri üzerinde çalışmaktadır.",
+              "options": [
+                {"text": "Hidrojen yakıt pili", "pairId": 1, "correct": false},
+                {"text": "Hidrojeni yakıt olarak kullanır, atığı sadece su", "pairId": 1, "correct": false},
+                {"text": "Nükleer füzyon", "pairId": 2, "correct": false},
+                {"text": "Güneş'in enerji kaynağını taklit, neredeyse sınırsız enerji", "pairId": 2, "correct": false},
+                {"text": "Gelişmiş enerji depolama", "pairId": 3, "correct": false},
+                {"text": "Büyük kapasiteli bataryalar, yenilenebilir enerjinin depolanması", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Elektrikli araçların çevresel avantajı nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["elektrikli araç"],
+              "explanation": "Elektrikli araçlar egzoz gazı çıkarmaz (sıfır emisyon), daha sessizdir ve yenilenebilir enerjiyle şarj edildiğinde karbon ayak izi çok düşüktür.",
+              "options": [
+                {"text": "Daha hızlıdır", "correct": false},
+                {"text": "Egzoz gazı çıkarmaz, yenilenebilir enerjiyle düşük karbon ayak izi", "correct": true},
+                {"text": "Daha ucuzdur", "correct": false},
+                {"text": "Bakım gerektirmez", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Akıllı şebekeler (smart grid) ne işe yarar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["akıllı şebeke"],
+              "explanation": "Akıllı şebekeler, dijital teknoloji kullanarak elektrik üretimi, iletimi ve tüketimini anlık olarak izleyip optimize eden sistemlerdir. Arz-talep dengesi, kayıp azaltma ve yenilenebilir entegrasyonunu kolaylaştırır.",
+              "options": [
+                {"text": "Sadece internet sağlar", "correct": false},
+                {"text": "Elektrik üretim ve tüketimini dijital olarak optimize eden sistem", "correct": true},
+                {"text": "Telefon şarj etmek için", "correct": false},
+                {"text": "Sadece fabrikalarda kullanılır", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Bireysel olarak enerji geleceğine nasıl katkı sağlayabiliriz?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["bireysel katkı", "enerji"],
+              "explanation": "Enerji tasarrufu, geri dönüşüm, toplu taşıma/bisiklet kullanımı, yenilenebilir enerji desteklemesi, bilinçli tüketim ve çevre bilincini yaymak bireysel katkılardır.",
+              "options": [
+                {"text": "Hiçbir şey yapamayız", "correct": false},
+                {"text": "Tasarruf, geri dönüşüm, toplu taşıma, bilinçli tüketim ve farkındalık", "correct": true},
+                {"text": "Daha fazla tüketmek", "correct": false},
+                {"text": "Sadece hükümetler çözebilir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Enerji okuryazarlığı, enerjinin nereden geldiğini anlama ve ___ verebilme yetkinliğidir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["enerji okuryazarlığı"],
+              "explanation": "Enerji okuryazarlığı, enerjinin nereden geldiğini, nasıl kullanıldığını, çevresel etkilerini anlama ve bilinçli enerji kararları verebilme yetkinliğidir.",
+              "options": [
+                {"text": "bilinçli enerji kararları", "correct": true},
+                {"text": "çok enerji tüketme", "correct": false},
+                {"text": "enerji üretme", "correct": false},
+                {"text": "elektrik okuma", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

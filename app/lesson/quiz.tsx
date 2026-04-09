@@ -259,7 +259,7 @@ export const Quiz = ({
     type === "ASSIST"
       ? "Doğru cevapladığına emin misin?"
       : type === "FILL_BLANK"
-        ? "Boşlukları doldurun"
+        ? "Boşluğa uygun seçeneği seçin"
         : challenge.question;
 
   // Handle timer expiration

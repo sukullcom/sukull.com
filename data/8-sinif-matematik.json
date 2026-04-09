@@ -112,7 +112,7 @@
               "options": [
                 {
                   "text": "$360$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -293,7 +293,7 @@
               "order": 3
             },
             {
-              "question": "$a=2^2\\cdot 3$ ve $b=2\\cdot 3^3$ ise $\\mathrm{EKOK}(a,b)={1}$.",
+              "question": "$a=2^2\\cdot 3$ ve $b=2\\cdot 3^3$ ise $\\mathrm{EKOK}(a,b)=$ {1}.",
               "type": "FILL_BLANK",
               "difficulty": "HARD",
               "tags": [
@@ -304,7 +304,7 @@
               "options": [
                 {
                   "text": "$108$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -485,7 +485,7 @@
               "order": 3
             },
             {
-              "question": "Herhangi bir $a \\neq 0$ için $a^0={1}$ kuralında boşluğa gelen değer {1}.",
+              "question": "Herhangi bir $a \\neq 0$ için $a^0=$ {1} kuralında boşluğa gelen değer {1}.",
               "type": "FILL_BLANK",
               "difficulty": "EASY",
               "tags": [
@@ -495,7 +495,7 @@
               "options": [
                 {
                   "text": "$1$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -686,7 +686,7 @@
               "options": [
                 {
                   "text": "$3$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -879,7 +879,7 @@
               "options": [
                 {
                   "text": "$300$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -1073,7 +1073,7 @@
               "options": [
                 {
                   "text": "$6$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -1252,7 +1252,7 @@
               "order": 3
             },
             {
-              "question": "$\\dfrac{\\sqrt{18}}{\\sqrt{2}} = {1}$ (tam sayı).",
+              "question": "$\\dfrac{\\sqrt{18}}{\\sqrt{2}} =`$ {1} (tam sayı).",
               "type": "FILL_BLANK",
               "difficulty": "EASY",
               "tags": [
@@ -1262,7 +1262,7 @@
               "options": [
                 {
                   "text": "$3$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -1451,7 +1451,7 @@
               "options": [
                 {
                   "text": "tepe değeri (mod)",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -1640,7 +1640,7 @@
               "options": [
                 {
                   "text": "$10$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -1824,7 +1824,7 @@
               "options": [
                 {
                   "text": "frekansı",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -2021,7 +2021,7 @@
               "options": [
                 {
                   "text": "tüm sonuç sayısına",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -2206,7 +2206,7 @@
               "options": [
                 {
                   "text": "çarpım",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -2395,7 +2395,7 @@
               "options": [
                 {
                   "text": "$7$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -2584,7 +2584,7 @@
               "options": [
                 {
                   "text": "$-2$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -2773,7 +2773,7 @@
               "options": [
                 {
                   "text": "$\\dfrac{3}{5}$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -2971,7 +2971,7 @@
               "options": [
                 {
                   "text": "$8$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -3163,7 +3163,7 @@
               "options": [
                 {
                   "text": "$60$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -3352,7 +3352,7 @@
               "options": [
                 {
                   "text": "$x>3$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -3541,7 +3541,7 @@
               "options": [
                 {
                   "text": "kapalı",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -3731,7 +3731,7 @@
               "options": [
                 {
                   "text": "$x>7$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -3927,7 +3927,7 @@
               "options": [
                 {
                   "text": "toplam",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -4116,7 +4116,7 @@
               "options": [
                 {
                   "text": "$24$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -4305,7 +4305,7 @@
               "options": [
                 {
                   "text": "arası",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -4496,7 +4496,7 @@
               "options": [
                 {
                   "text": "$36$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -4685,7 +4685,7 @@
               "options": [
                 {
                   "text": "$3$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -4881,7 +4881,7 @@
               "options": [
                 {
                   "text": "uzunlukları",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -5070,7 +5070,7 @@
               "options": [
                 {
                   "text": "$(-5,6)$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -5259,7 +5259,7 @@
               "options": [
                 {
                   "text": "$84$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -5448,7 +5448,7 @@
               "options": [
                 {
                   "text": "$12$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {
@@ -5637,7 +5637,7 @@
               "options": [
                 {
                   "text": "$100$",
-                  "correct": false,
+                  "correct": true,
                   "isBlank": true
                 },
                 {

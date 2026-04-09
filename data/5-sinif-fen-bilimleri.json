@@ -1,0 +1,3265 @@
+{
+  "course": {
+    "title": "5. Sınıf Fen Bilimleri",
+    "imageSrc": ""
+  },
+  "units": [
+    {
+      "title": "Güneş, Dünya ve Ay",
+      "description": "Güneş'in yapısı, Dünya'nın katmanları, Ay'ın hareketleri, Güneş ve Ay tutulması (MEB 2025-2026)",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "Güneş'in Yapısı ve Özellikleri",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Güneş aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["güneş", "yıldız"],
+              "explanation": "Güneş, Güneş Sistemi'nin merkezindeki bir yıldızdır. Kendi ışığını ve ısısını üretir. Gezegenler ve uydular yıldız değildir.",
+              "options": [
+                {"text": "Gezegen", "correct": false},
+                {"text": "Uydu", "correct": false},
+                {"text": "Yıldız", "correct": true},
+                {"text": "Kuyruklu yıldız", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Güneş ile ilgili kavramları eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["güneş", "özellikler"],
+              "explanation": "Güneş çok sıcak gazlardan oluşan bir yıldızdır. Dünya'ya ışık ve ısı sağlar ve Güneş Sistemi'ndeki en büyük gök cismidir.",
+              "options": [
+                {"text": "Güneş'in yapısı", "pairId": 1, "correct": false},
+                {"text": "Sıcak gazlardan oluşur", "pairId": 1, "correct": false},
+                {"text": "Güneş'in önemi", "pairId": 2, "correct": false},
+                {"text": "Dünya'ya ışık ve ısı verir", "pairId": 2, "correct": false},
+                {"text": "Güneş'in konumu", "pairId": 3, "correct": false},
+                {"text": "Güneş Sistemi'nin merkezinde", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Güneş enerjisini ___ tepkimeleriyle üretir.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["güneş", "enerji"],
+              "explanation": "Güneş, çekirdeğinde gerçekleşen nükleer füzyon (çekirdek birleşmesi) tepkimeleriyle enerji üretir. Hidrojen atomları helyuma dönüşürken büyük miktarda enerji açığa çıkar.",
+              "options": [
+                {"text": "nükleer füzyon", "correct": true},
+                {"text": "kimyasal yanma", "correct": false},
+                {"text": "elektrik", "correct": false},
+                {"text": "manyetik", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Güneş ile Dünya arasındaki uzaklık yaklaşık kaç milyon km'dir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["güneş", "uzaklık"],
+              "explanation": "Güneş ile Dünya arasındaki ortalama uzaklık yaklaşık 150 milyon km'dir. Bu mesafe '1 Astronomik Birim (AU)' olarak da adlandırılır.",
+              "options": [
+                {"text": "15 milyon km", "correct": false},
+                {"text": "150 milyon km", "correct": true},
+                {"text": "384.000 km", "correct": false},
+                {"text": "1 milyar km", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Güneş'ten Dünya'ya gelen ışık yaklaşık ___ dakikada ulaşır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["güneş", "ışık hızı"],
+              "explanation": "Güneş ışığı yaklaşık 8 dakikada Dünya'ya ulaşır. Işık saniyede 300.000 km hızla yol alır ve 150 milyon km'lik mesafeyi yaklaşık 8 dakikada kat eder.",
+              "options": [
+                {"text": "8", "correct": true},
+                {"text": "1", "correct": false},
+                {"text": "60", "correct": false},
+                {"text": "30", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hangisi Güneş hakkında doğru bir bilgidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["güneş", "bilgi"],
+              "explanation": "Güneş kendi ışığını ve ısısını üretir çünkü bir yıldızdır. Gezegenler ve uydular kendi ışıklarını üretmez, Güneş'ten aldıkları ışığı yansıtır.",
+              "options": [
+                {"text": "Güneş katı bir cisimdir", "correct": false},
+                {"text": "Güneş kendi ışığını üretir", "correct": true},
+                {"text": "Güneş Dünya'dan küçüktür", "correct": false},
+                {"text": "Güneş bir gezegendir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Dünya'nın Katmanları",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Dünya'nın katmanlarını dıştan içe doğru eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["dünya", "katmanlar"],
+              "explanation": "Dünya dıştan içe doğru: Yer kabuğu (en ince, üzerinde yaşadığımız katman), Manto (en kalın katman), Çekirdek (en sıcak katman) olmak üzere 3 ana katmandan oluşur.",
+              "options": [
+                {"text": "Yer kabuğu", "pairId": 1, "correct": false},
+                {"text": "En dış ve en ince katman", "pairId": 1, "correct": false},
+                {"text": "Manto", "pairId": 2, "correct": false},
+                {"text": "En kalın katman, yarı akışkan yapıda", "pairId": 2, "correct": false},
+                {"text": "Çekirdek", "pairId": 3, "correct": false},
+                {"text": "En iç ve en sıcak katman", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Dünya'nın en kalın katmanı hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["dünya", "manto"],
+              "explanation": "Manto, Dünya'nın en kalın katmanıdır. Yaklaşık 2.900 km kalınlığında olup yer kabuğu ile çekirdek arasında yer alır. Yarı akışkan yapıdadır.",
+              "options": [
+                {"text": "Yer kabuğu", "correct": false},
+                {"text": "Manto", "correct": true},
+                {"text": "Dış çekirdek", "correct": false},
+                {"text": "İç çekirdek", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Üzerinde yaşadığımız, en ince Dünya katmanı ___ olarak adlandırılır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["dünya", "yer kabuğu"],
+              "explanation": "Yer kabuğu Dünya'nın en dış ve en ince katmanıdır. Kalınlığı okyanus tabanında yaklaşık 5-10 km, kıtalarda ise 30-70 km arasındadır.",
+              "options": [
+                {"text": "yer kabuğu", "correct": true},
+                {"text": "manto", "correct": false},
+                {"text": "çekirdek", "correct": false},
+                {"text": "atmosfer", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Dünya'nın çekirdeği hangi metallerden oluşur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["dünya", "çekirdek"],
+              "explanation": "Dünya'nın çekirdeği ağırlıklı olarak demir ve nikel metallerinden oluşur. İç çekirdek katı, dış çekirdek ise sıvı haldedir.",
+              "options": [
+                {"text": "Altın ve gümüş", "correct": false},
+                {"text": "Demir ve nikel", "correct": true},
+                {"text": "Bakır ve çinko", "correct": false},
+                {"text": "Alüminyum ve kalay", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Dünya'nın dış çekirdeği ___ halde bulunur.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["dünya", "dış çekirdek"],
+              "explanation": "Dış çekirdek sıvı halde demir ve nikelden oluşur. Bu sıvı metalin hareketi Dünya'nın manyetik alanını oluşturur. İç çekirdek ise çok yüksek basınç nedeniyle katı haldedir.",
+              "options": [
+                {"text": "sıvı", "correct": true},
+                {"text": "katı", "correct": false},
+                {"text": "gaz", "correct": false},
+                {"text": "plazma", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hangisi Dünya'nın katmanları hakkında yanlış bir bilgidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["dünya", "katmanlar", "yanlış"],
+              "explanation": "Yer kabuğu Dünya'nın en ince katmanıdır, en kalın değil. En kalın katman mantodur. İçe doğru gidildikçe sıcaklık ve basınç artar.",
+              "options": [
+                {"text": "Yer kabuğu en dış katmandır", "correct": false},
+                {"text": "Yer kabuğu en kalın katmandır", "correct": true},
+                {"text": "Çekirdek en sıcak katmandır", "correct": false},
+                {"text": "Manto yarı akışkan yapıdadır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Ay'ın Hareketleri ve Evreleri",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Ay, Dünya'nın etrafındaki bir turunu yaklaşık kaç günde tamamlar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ay", "dolanım"],
+              "explanation": "Ay, Dünya'nın etrafındaki bir dolanımını yaklaşık 29,5 günde tamamlar. Bu süreye 'bir ay' (sinodik ay) denir ve Ay'ın evrelerinin tekrar etme süresidir.",
+              "options": [
+                {"text": "7 gün", "correct": false},
+                {"text": "29,5 gün", "correct": true},
+                {"text": "365 gün", "correct": false},
+                {"text": "1 gün", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Ay'ın evrelerini görünümleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["ay", "evreler"],
+              "explanation": "Ay'ın evreleri, Ay'ın Güneş'ten aldığı ışığı Dünya'dan farklı açılarla görmemizden kaynaklanır.",
+              "options": [
+                {"text": "Yeni Ay", "pairId": 1, "correct": false},
+                {"text": "Ay görünmez (karanlık)", "pairId": 1, "correct": false},
+                {"text": "İlk Dördün", "pairId": 2, "correct": false},
+                {"text": "Ay'ın sağ yarısı aydınlık", "pairId": 2, "correct": false},
+                {"text": "Dolunay", "pairId": 3, "correct": false},
+                {"text": "Ay'ın tamamı aydınlık (tam daire)", "pairId": 3, "correct": false},
+                {"text": "Son Dördün", "pairId": 4, "correct": false},
+                {"text": "Ay'ın sol yarısı aydınlık", "pairId": 4, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Ay'ın evreleri oluşmasının sebebi nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ay", "evre sebebi"],
+              "explanation": "Ay kendi ışığını üretmez, Güneş'ten gelen ışığı yansıtır. Ay, Dünya etrafında dönerken Güneş ışığını yansıtan kısmını farklı açılardan görürüz. Bu da Ay'ın evrelerini oluşturur.",
+              "options": [
+                {"text": "Dünya'nın gölgesi Ay'ın üzerine düşer", "correct": false},
+                {"text": "Ay'ın Güneş'ten aldığı ışığı farklı açılardan görmemiz", "correct": true},
+                {"text": "Ay büyüyüp küçülür", "correct": false},
+                {"text": "Bulutlar Ay'ı kapatır", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Ay'ın tamamının aydınlık göründüğü evreye ___ denir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["ay", "dolunay"],
+              "explanation": "Dolunay, Ay'ın Güneş'e bakan yüzünün tamamının Dünya'dan görülebildiği evredir. Bu evrede Ay tam bir daire şeklinde parlak görünür.",
+              "options": [
+                {"text": "dolunay", "correct": true},
+                {"text": "yeni ay", "correct": false},
+                {"text": "hilal", "correct": false},
+                {"text": "ilk dördün", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Ay kendi ışığını üretir mi?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ay", "ışık"],
+              "explanation": "Ay kendi ışığını üretmez. Ay bir uydudur ve Güneş'ten gelen ışığı yansıtarak parlak görünür. Kendi ışığını üreten gök cisimlerine yıldız denir.",
+              "options": [
+                {"text": "Evet, kendi ışığını üretir", "correct": false},
+                {"text": "Hayır, Güneş'ten gelen ışığı yansıtır", "correct": true},
+                {"text": "Sadece dolunay evresinde üretir", "correct": false},
+                {"text": "Dünya'dan gelen ışığı yansıtır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Ay, Dünya etrafında dönerken aynı zamanda kendi etrafında da döner. Bu nedenle Dünya'dan hep Ay'ın ___ yüzünü görürüz.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["ay", "aynı yüz"],
+              "explanation": "Ay'ın kendi ekseni etrafındaki dönüş süresi ile Dünya etrafındaki dolanım süresi eşittir. Bu yüzden Dünya'dan her zaman Ay'ın aynı yüzünü görürüz.",
+              "options": [
+                {"text": "aynı", "correct": true},
+                {"text": "farklı", "correct": false},
+                {"text": "karanlık", "correct": false},
+                {"text": "parlak", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Güneş Tutulması ve Ay Tutulması",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Güneş tutulması nasıl oluşur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["güneş tutulması"],
+              "explanation": "Güneş tutulması, Ay'ın Güneş ile Dünya arasına girerek Güneş'i kısmen veya tamamen kapatmasıyla oluşur. Bu olay sadece Yeni Ay evresinde gerçekleşebilir.",
+              "options": [
+                {"text": "Dünya, Güneş ile Ay arasına girer", "correct": false},
+                {"text": "Ay, Güneş ile Dünya arasına girer", "correct": true},
+                {"text": "Güneş, Dünya ile Ay arasına girer", "correct": false},
+                {"text": "Dünya kendi etrafında döner", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Tutulma türlerini oluşum koşullarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["tutulma", "türler"],
+              "explanation": "Güneş tutulmasında Ay, Güneş'i kapatır (Yeni Ay'da). Ay tutulmasında Dünya'nın gölgesi Ay'a düşer (Dolunay'da).",
+              "options": [
+                {"text": "Güneş tutulması", "pairId": 1, "correct": false},
+                {"text": "Ay, Güneş ile Dünya arasında (Yeni Ay)", "pairId": 1, "correct": false},
+                {"text": "Ay tutulması", "pairId": 2, "correct": false},
+                {"text": "Dünya, Güneş ile Ay arasında (Dolunay)", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Ay tutulması hangi Ay evresinde gerçekleşir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ay tutulması", "dolunay"],
+              "explanation": "Ay tutulması Dolunay evresinde gerçekleşir. Bu olay, Dünya'nın Güneş ile Ay arasına girmesiyle oluşur ve Dünya'nın gölgesi Ay'ın üzerine düşer.",
+              "options": [
+                {"text": "Yeni Ay", "correct": false},
+                {"text": "İlk Dördün", "correct": false},
+                {"text": "Dolunay", "correct": true},
+                {"text": "Son Dördün", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Güneş tutulması ___ evresinde gerçekleşir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["güneş tutulması", "yeni ay"],
+              "explanation": "Güneş tutulması Yeni Ay evresinde olur çünkü bu evrede Ay, Güneş ile Dünya arasında yer alır ve Güneş'i kapatabilir.",
+              "options": [
+                {"text": "Yeni Ay", "correct": true},
+                {"text": "Dolunay", "correct": false},
+                {"text": "İlk Dördün", "correct": false},
+                {"text": "Son Dördün", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Güneş tutulmasına çıplak gözle bakmak neden tehlikelidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["güneş tutulması", "güvenlik"],
+              "explanation": "Güneş'in yoğun ışığı ve zararlı ışınları (ultraviyole, kızılötesi) gözün retina tabakasına kalıcı hasar verebilir. Güneş tutulması özel filtreli gözlüklerle izlenmelidir.",
+              "options": [
+                {"text": "Güneş çok uzak olduğu için", "correct": false},
+                {"text": "Güneş'in ışınları göze kalıcı hasar verebilir", "correct": true},
+                {"text": "Tutulma çok kısa sürdüğü için", "correct": false},
+                {"text": "Tehlikeli değildir, rahatça bakılabilir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Ay tutulması sırasında Dünya'nın ___ Ay'ın üzerine düşer.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["ay tutulması", "gölge"],
+              "explanation": "Ay tutulmasında Dünya, Güneş ile Ay arasına girer ve Dünya'nın gölgesi Ay'ın üzerine düşer. Bu nedenle Ay kararır veya kızılımsı bir renk alır.",
+              "options": [
+                {"text": "gölgesi", "correct": true},
+                {"text": "ışığı", "correct": false},
+                {"text": "havası", "correct": false},
+                {"text": "suyu", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Dünya'nın Hareketleri",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Dünya'nın kendi ekseni etrafındaki dönüş süresi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["dünya", "dönme"],
+              "explanation": "Dünya kendi ekseni etrafında yaklaşık 24 saatte (1 günde) bir tur döner. Bu hareket gece-gündüz oluşmasına neden olur.",
+              "options": [
+                {"text": "1 saat", "correct": false},
+                {"text": "24 saat (1 gün)", "correct": true},
+                {"text": "30 gün", "correct": false},
+                {"text": "365 gün", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Dünya'nın hareketlerini sonuçlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["dünya", "hareketler"],
+              "explanation": "Dünya iki temel hareket yapar: kendi ekseni etrafında dönme (gece-gündüz) ve Güneş etrafında dolanma (mevsimler).",
+              "options": [
+                {"text": "Kendi ekseni etrafında dönme", "pairId": 1, "correct": false},
+                {"text": "Gece ve gündüz oluşumu", "pairId": 1, "correct": false},
+                {"text": "Güneş etrafında dolanma", "pairId": 2, "correct": false},
+                {"text": "Mevsimlerin oluşumu", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Dünya, Güneş etrafındaki bir turunu yaklaşık ___ günde tamamlar.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["dünya", "dolanım"],
+              "explanation": "Dünya, Güneş etrafındaki bir turunu yaklaşık 365 gün 6 saatte tamamlar. Bu süre bir yılı oluşturur.",
+              "options": [
+                {"text": "365", "correct": true},
+                {"text": "30", "correct": false},
+                {"text": "24", "correct": false},
+                {"text": "180", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Mevsimlerin oluşmasının temel sebebi nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["mevsimler", "eksen eğikliği"],
+              "explanation": "Mevsimlerin oluşmasının temel sebebi Dünya'nın eksen eğikliğidir (yaklaşık 23,5°). Bu eğiklik nedeniyle Güneş ışınları yılın farklı dönemlerinde yarım kürelere farklı açılarla düşer.",
+              "options": [
+                {"text": "Dünya'nın Güneş'e yakınlaşması ve uzaklaşması", "correct": false},
+                {"text": "Dünya'nın eksen eğikliği", "correct": true},
+                {"text": "Ay'ın Dünya etrafında dönmesi", "correct": false},
+                {"text": "Güneş'in büyüyüp küçülmesi", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Kuzey yarım kürede yaz mevsimi yaşanırken güney yarım kürede ___ mevsimi yaşanır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["mevsimler", "yarım küre"],
+              "explanation": "Dünya'nın eksen eğikliği nedeniyle iki yarım kürede mevsimler zıt olarak yaşanır. Kuzey yarım kürede yaz iken güney yarım kürede kıştır.",
+              "options": [
+                {"text": "kış", "correct": true},
+                {"text": "yaz", "correct": false},
+                {"text": "ilkbahar", "correct": false},
+                {"text": "sonbahar", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Gece ve gündüzün oluşma sebebi aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["gece-gündüz"],
+              "explanation": "Dünya kendi ekseni etrafında döndükçe Güneş'e bakan tarafta gündüz, bakmayan tarafta gece olur. Bu dönüş hareketi 24 saatte tamamlanır.",
+              "options": [
+                {"text": "Güneş'in Dünya etrafında dönmesi", "correct": false},
+                {"text": "Dünya'nın kendi ekseni etrafında dönmesi", "correct": true},
+                {"text": "Ay'ın Dünya'yı gölgelemesi", "correct": false},
+                {"text": "Dünya'nın Güneş etrafında dolanması", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Canlılar Dünyası",
+      "description": "Canlıların sınıflandırılması, mikroskobik canlılar, mantarlar, bitkiler ve hayvanlar (MEB 2025-2026)",
+      "order": 2,
+      "lessons": [
+        {
+          "title": "Canlıların Sınıflandırılması",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Canlılar neden sınıflandırılır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["sınıflandırma", "amaç"],
+              "explanation": "Canlılar, benzerlik ve farklılıklarına göre gruplandırılarak tanınması, incelenmesi ve aralarındaki akrabalık ilişkilerinin anlaşılması kolaylaştırılır.",
+              "options": [
+                {"text": "Canlıları yok etmek için", "correct": false},
+                {"text": "İncelemeyi ve tanımayı kolaylaştırmak için", "correct": true},
+                {"text": "Sadece isim vermek için", "correct": false},
+                {"text": "Canlıları birbirinden ayırmak için değil", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Canlı alemlerini örneklerle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["sınıflandırma", "alemler"],
+              "explanation": "Canlılar bitkiler, hayvanlar, mantarlar, protistler (tek hücreli ökaryotlar) ve bakteriler (prokaryotlar) gibi farklı alemlere ayrılır.",
+              "options": [
+                {"text": "Bitkiler alemi", "pairId": 1, "correct": false},
+                {"text": "Çam, gül, yosun", "pairId": 1, "correct": false},
+                {"text": "Hayvanlar alemi", "pairId": 2, "correct": false},
+                {"text": "Kedi, balık, karınca", "pairId": 2, "correct": false},
+                {"text": "Mantarlar alemi", "pairId": 3, "correct": false},
+                {"text": "Şapkalı mantar, küf, maya", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Hayvanlar omurgalı ve omurgasız olarak ikiye ayrılır. Hangisi omurgasız hayvandır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["hayvanlar", "omurgasız"],
+              "explanation": "Kelebek omurgasız (böcek) bir hayvandır. Kedi, balık ve kurbağa omurgalı hayvanlardır çünkü omurga kemikleri vardır.",
+              "options": [
+                {"text": "Kedi", "correct": false},
+                {"text": "Balık", "correct": false},
+                {"text": "Kelebek", "correct": true},
+                {"text": "Kurbağa", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Omurgalı hayvanlar ___ ana gruba ayrılır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["omurgalılar", "gruplar"],
+              "explanation": "Omurgalı hayvanlar 5 ana gruba ayrılır: Memeliler, kuşlar, sürüngenler, kurbağalar (amfibiler) ve balıklar.",
+              "options": [
+                {"text": "5", "correct": true},
+                {"text": "3", "correct": false},
+                {"text": "2", "correct": false},
+                {"text": "10", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hangisi sınıflandırmada kullanılan bir özellik değildir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["sınıflandırma", "kriterler"],
+              "explanation": "Canlıların sınıflandırılmasında hücre yapısı, beslenme şekli, üreme tipi gibi bilimsel özellikler kullanılır. Renk tercihi bilimsel bir sınıflandırma kriteri değildir.",
+              "options": [
+                {"text": "Hücre yapısı", "correct": false},
+                {"text": "Beslenme şekli", "correct": false},
+                {"text": "Renk tercihi", "correct": true},
+                {"text": "Üreme tipi", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bitkiler ve hayvanlar arasındaki en temel farkı eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["bitkiler", "hayvanlar", "fark"],
+              "explanation": "Bitkiler fotosentez yaparak kendi besinini üretir (üretici), hayvanlar ise hazır besin tüketir (tüketici).",
+              "options": [
+                {"text": "Bitkiler", "pairId": 1, "correct": false},
+                {"text": "Kendi besinini üretir (üretici)", "pairId": 1, "correct": false},
+                {"text": "Hayvanlar", "pairId": 2, "correct": false},
+                {"text": "Hazır besinle beslenir (tüketici)", "pairId": 2, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Mikroskobik Canlılar ve Mantarlar",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Çıplak gözle görülemeyecek kadar küçük canlılara ne ad verilir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["mikroskobik", "tanım"],
+              "explanation": "Çıplak gözle görülemeyecek kadar küçük canlılara mikroskobik canlılar (mikroorganizmalar) denir. Bunları görmek için mikroskop kullanılır.",
+              "options": [
+                {"text": "Dev canlılar", "correct": false},
+                {"text": "Mikroskobik canlılar", "correct": true},
+                {"text": "Fosiller", "correct": false},
+                {"text": "Yırtıcılar", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Mikroskobik canlıları ve mantarları örneklerle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["bakteri", "mantar", "örnekler"],
+              "explanation": "Bakteriler tek hücreli prokaryot canlılardır. Mantarlar ise ökaryot olup kendi besinini üretemez; çürükçül veya parazit olarak yaşarlar.",
+              "options": [
+                {"text": "Bakteri", "pairId": 1, "correct": false},
+                {"text": "Yoğurt yapımında kullanılan tek hücreli canlı", "pairId": 1, "correct": false},
+                {"text": "Mantar", "pairId": 2, "correct": false},
+                {"text": "Ekmek küfü, şapkalı mantar, maya", "pairId": 2, "correct": false},
+                {"text": "Virüs", "pairId": 3, "correct": false},
+                {"text": "Grip, COVID-19 gibi hastalıklara neden olan yapı", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Hangisi bakterilerin faydalı kullanım alanıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["bakteri", "fayda"],
+              "explanation": "Yoğurt ve peynir yapımında faydalı bakteriler kullanılır. Bakterilerin hepsi zararlı değildir; birçoğu sindirime yardımcı olur, besin üretiminde ve doğadaki ayrışma süreçlerinde görev alır.",
+              "options": [
+                {"text": "Hastalık yapmak", "correct": false},
+                {"text": "Yoğurt ve peynir yapımı", "correct": true},
+                {"text": "Çevreyi kirletmek", "correct": false},
+                {"text": "Bitkileri kurutmak", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Mantarlar kendi besinini ___ çünkü fotosentez yapamazlar.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["mantar", "beslenme"],
+              "explanation": "Mantarlar klorofil içermediği için fotosentez yapamaz ve kendi besinini üretemez. Hazır organik maddeleri çürüterek veya canlılar üzerinde parazit yaşayarak beslenir.",
+              "options": [
+                {"text": "üretemez", "correct": true},
+                {"text": "üretir", "correct": false},
+                {"text": "depolar", "correct": false},
+                {"text": "satar", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Küf mantarı oluşumunu önlemek için besinler nasıl saklanmalıdır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["küf", "saklama"],
+              "explanation": "Küf mantarları nemli ve sıcak ortamlarda hızla çoğalır. Besinleri serin ve kuru yerlerde saklamak, buzdolabı kullanmak küf oluşumunu önler.",
+              "options": [
+                {"text": "Sıcak ve nemli ortamda", "correct": false},
+                {"text": "Serin ve kuru ortamda (buzdolabı)", "correct": true},
+                {"text": "Güneş altında açıkta", "correct": false},
+                {"text": "Ortam fark etmez", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Antibiyotik ilaçlar hangi tür mikroorganizmalara karşı etkilidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["antibiyotik", "bakteri"],
+              "explanation": "Antibiyotikler sadece bakterilere karşı etkilidir. Virüslere karşı etkisizdir. Grip gibi virüs kaynaklı hastalıklarda antibiyotik kullanmak yanlıştır ve antibiyotik direncine yol açabilir.",
+              "options": [
+                {"text": "Virüsler", "correct": false},
+                {"text": "Bakteriler", "correct": true},
+                {"text": "Mantarlar", "correct": false},
+                {"text": "Tüm mikroorganizmalar", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Bitkilerde Üreme ve Gelişme",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Çiçekli bitkilerde üremeyi sağlayan organ hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["bitki", "çiçek"],
+              "explanation": "Çiçek, çiçekli bitkilerin üreme organıdır. Çiçeğin içinde bulunan erkek organ (stamen) ve dişi organ (pistil) tozlaşma ve döllenme ile tohum oluşumunu sağlar.",
+              "options": [
+                {"text": "Yaprak", "correct": false},
+                {"text": "Kök", "correct": false},
+                {"text": "Çiçek", "correct": true},
+                {"text": "Gövde", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Tozlaşma çeşitlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["tozlaşma", "türler"],
+              "explanation": "Tozlaşma, çiçeğin erkek organından (anterden) çıkan polenlerin dişi organa (tepecik) taşınmasıdır.",
+              "options": [
+                {"text": "Böceklerle tozlaşma", "pairId": 1, "correct": false},
+                {"text": "Arı, kelebek gibi böcekler poleni taşır", "pairId": 1, "correct": false},
+                {"text": "Rüzgârla tozlaşma", "pairId": 2, "correct": false},
+                {"text": "Rüzgâr polenleri uçurarak taşır", "pairId": 2, "correct": false},
+                {"text": "Kendi kendine tozlaşma", "pairId": 3, "correct": false},
+                {"text": "Aynı çiçeğin poleni kendi dişi organına ulaşır", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bir tohumun çimlenmesi için ___ , su ve uygun sıcaklık gereklidir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["çimlenme", "koşullar"],
+              "explanation": "Tohumun çimlenmesi için hava (oksijen), su ve uygun sıcaklık gereklidir. Işık çimlenme için zorunlu değildir, çimlenme toprak altında gerçekleşir.",
+              "options": [
+                {"text": "hava", "correct": true},
+                {"text": "ışık", "correct": false},
+                {"text": "gübre", "correct": false},
+                {"text": "toprak", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Döllenme sonucu oluşan yapı hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["döllenme", "tohum"],
+              "explanation": "Tozlaşma sonrası polen tüpü ile erkek üreme hücresi dişi üreme hücresine ulaşır ve döllenme gerçekleşir. Döllenme sonucu yumurtalık tohuma, çiçeğin tabanı ise meyveye dönüşür.",
+              "options": [
+                {"text": "Yaprak", "correct": false},
+                {"text": "Tohum", "correct": true},
+                {"text": "Kök", "correct": false},
+                {"text": "Polen", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Tohumların yayılma yollarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["tohum yayılma"],
+              "explanation": "Bitkiler tohumlarını farklı yollarla yayarak neslin devamını sağlar.",
+              "options": [
+                {"text": "Rüzgârla yayılma", "pairId": 1, "correct": false},
+                {"text": "Karahindiba, akçaağaç (kanatlı tohumlar)", "pairId": 1, "correct": false},
+                {"text": "Hayvanlarla yayılma", "pairId": 2, "correct": false},
+                {"text": "Meyveler yenerek veya tüylere yapışarak", "pairId": 2, "correct": false},
+                {"text": "Suyla yayılma", "pairId": 3, "correct": false},
+                {"text": "Hindistan cevizi (su akıntılarıyla)", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Çiçeksiz bitkilerde üreme nasıl gerçekleşir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["çiçeksiz bitki", "spor"],
+              "explanation": "Eğrelti otları ve karayosunları gibi çiçeksiz bitkiler tohum yerine spor oluşturarak ürer. Sporlar uygun koşullarda çimlenerek yeni bitki oluşturur.",
+              "options": [
+                {"text": "Tohum oluşturarak", "correct": false},
+                {"text": "Spor oluşturarak", "correct": true},
+                {"text": "Çiçek açarak", "correct": false},
+                {"text": "Meyve vererek", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Omurgalı Hayvanlar",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Omurgalı hayvan gruplarını örneklerle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["omurgalılar", "gruplar"],
+              "explanation": "Omurgalılar 5 gruba ayrılır ve her grubun kendine özgü özellikleri vardır.",
+              "options": [
+                {"text": "Memeliler", "pairId": 1, "correct": false},
+                {"text": "İnek, yunus, yarasa", "pairId": 1, "correct": false},
+                {"text": "Kuşlar", "pairId": 2, "correct": false},
+                {"text": "Kartal, penguen, papağan", "pairId": 2, "correct": false},
+                {"text": "Sürüngenler", "pairId": 3, "correct": false},
+                {"text": "Yılan, kertenkele, timsah", "pairId": 3, "correct": false},
+                {"text": "Balıklar", "pairId": 4, "correct": false},
+                {"text": "Palamut, köpek balığı, alabalık", "pairId": 4, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Memelilerin ortak özelliği nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["memeliler", "özellik"],
+              "explanation": "Memeliler yavrularını sütle besleyen, vücut sıcaklığı sabit (sıcakkanlı), genellikle kıllarla/tüylerle kaplı olan canlılardır.",
+              "options": [
+                {"text": "Yumurta ile ürer", "correct": false},
+                {"text": "Yavrularını sütle besler", "correct": true},
+                {"text": "Solungaçla solunum yapar", "correct": false},
+                {"text": "Pullarla kaplıdır", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Kurbağalar (amfibiler) yaşamlarının bir bölümünü suda, bir bölümünü ___ geçirir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["amfibi", "yaşam"],
+              "explanation": "Amfibiler (iki yaşamlılar) larva döneminde suda solungaçla, ergin döneminde karada akciğer ve deriyle solunum yapar.",
+              "options": [
+                {"text": "karada", "correct": true},
+                {"text": "havada", "correct": false},
+                {"text": "toprak altında", "correct": false},
+                {"text": "ağaçta", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Sürüngenlerin vücudu ne ile kaplıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sürüngenler", "pul"],
+              "explanation": "Sürüngenlerin vücudu keratin yapılı pullarla veya plakalarla kaplıdır. Bu yapı su kaybını önler. Sürüngenler soğukkanlıdır ve yumurtayla ürer.",
+              "options": [
+                {"text": "Tüy", "correct": false},
+                {"text": "Kıl", "correct": false},
+                {"text": "Pul veya plakalar", "correct": true},
+                {"text": "Nemli deri", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Balıklar ___ ile solunum yapar.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["balıklar", "solunum"],
+              "explanation": "Balıklar sudaki çözünmüş oksijeni solungaçları aracılığıyla alarak solunum yapar. Solungaç, balıkların temel solunum organıdır.",
+              "options": [
+                {"text": "solungaç", "correct": true},
+                {"text": "akciğer", "correct": false},
+                {"text": "deri", "correct": false},
+                {"text": "burun", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hangisi soğukkanlı (vücut sıcaklığı çevre sıcaklığına göre değişen) bir hayvandır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["soğukkanlı", "sıcakkanlı"],
+              "explanation": "Yılan soğukkanlı bir sürüngendir. Vücut sıcaklığı çevre sıcaklığına göre değişir. Kedi ve güvercin sıcakkanlıdır (vücut sıcaklığı sabittir). Memeliler ve kuşlar sıcakkanlıdır.",
+              "options": [
+                {"text": "Kedi", "correct": false},
+                {"text": "Güvercin", "correct": false},
+                {"text": "Yılan", "correct": true},
+                {"text": "İnsan", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Omurgasız Hayvanlar ve Biyoçeşitlilik",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Omurgasız hayvan gruplarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["omurgasızlar", "gruplar"],
+              "explanation": "Omurgasızlar Dünya'daki hayvan türlerinin büyük çoğunluğunu oluşturur.",
+              "options": [
+                {"text": "Böcekler", "pairId": 1, "correct": false},
+                {"text": "Arı, karınca, uğur böceği", "pairId": 1, "correct": false},
+                {"text": "Yumuşakçalar", "pairId": 2, "correct": false},
+                {"text": "Salyangoz, ahtapot, midye", "pairId": 2, "correct": false},
+                {"text": "Solucanlar", "pairId": 3, "correct": false},
+                {"text": "Toprak solucanı, sülük", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Böceklerin kaç bacağı vardır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["böcekler", "bacak"],
+              "explanation": "Böceklerin 6 bacağı ve 3 bölümden oluşan vücudu (baş, göğüs, karın) vardır. Çoğunun kanatları da bulunur. Örümcekler böcek değildir, 8 bacakları vardır.",
+              "options": [
+                {"text": "4 bacak", "correct": false},
+                {"text": "6 bacak", "correct": true},
+                {"text": "8 bacak", "correct": false},
+                {"text": "10 bacak", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Biyoçeşitlilik ne demektir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["biyoçeşitlilik", "tanım"],
+              "explanation": "Biyoçeşitlilik, bir bölgedeki farklı canlı türlerinin zenginliğidir. Ne kadar çok farklı tür varsa biyoçeşitlilik o kadar yüksektir. Ekosistem dengesi için biyoçeşitlilik çok önemlidir.",
+              "options": [
+                {"text": "Bir bölgedeki canlı sayısı", "correct": false},
+                {"text": "Bir bölgedeki farklı canlı türlerinin zenginliği", "correct": true},
+                {"text": "Bitki sayısının hayvan sayısından fazla olması", "correct": false},
+                {"text": "Sadece hayvanların çeşitliliği", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Nesli tükenmekte olan canlıların korunması için oluşturulan alanlara ___ denir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["koruma", "milli park"],
+              "explanation": "Milli parklar, doğal yaşam alanlarının ve nesli tehlike altındaki canlıların korunması için devlet tarafından oluşturulan koruma alanlarıdır.",
+              "options": [
+                {"text": "milli park", "correct": true},
+                {"text": "hayvanat bahçesi", "correct": false},
+                {"text": "tarla", "correct": false},
+                {"text": "çiftlik", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hangisi biyoçeşitliliği tehdit eden faktörlerden biridir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["biyoçeşitlilik", "tehdit"],
+              "explanation": "Orman tahribatı (habitat yıkımı) biyoçeşitliliğin en büyük tehditlerinden biridir. Canlıların yaşam alanları yok edildiğinde türler nesil tükenme riski ile karşı karşıya kalır.",
+              "options": [
+                {"text": "Ağaç dikme kampanyaları", "correct": false},
+                {"text": "Orman tahribatı", "correct": true},
+                {"text": "Doğal alanların korunması", "correct": false},
+                {"text": "Geri dönüşüm yapmak", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Toprak solucanlarının ekosistem için önemi nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["solucan", "toprak"],
+              "explanation": "Toprak solucanları toprağı havalandırır, organik maddeleri parçalayarak toprağın verimliliğini artırır. Bu nedenle 'doğanın çiftçisi' olarak da bilinirler.",
+              "options": [
+                {"text": "Bitkileri yerler", "correct": false},
+                {"text": "Toprağı havalandırır ve verimli kılar", "correct": true},
+                {"text": "Diğer hayvanları avlar", "correct": false},
+                {"text": "Suyu kirletir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kuvvetin Ölçülmesi ve Sürtünme",
+      "description": "Kuvvet kavramı, kuvvetin ölçülmesi, sürtünme kuvveti, sürtünmenin etkileri (MEB 2025-2026)",
+      "order": 3,
+      "lessons": [
+        {
+          "title": "Kuvvet Kavramı ve Ölçülmesi",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Kuvvetin birimi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["kuvvet", "birim"],
+              "explanation": "Kuvvetin birimi Newton'dur (N). Bu birim, ünlü fizikçi Isaac Newton'ın adından gelir. Kuvvet dinamometre ile ölçülür.",
+              "options": [
+                {"text": "Kilogram (kg)", "correct": false},
+                {"text": "Newton (N)", "correct": true},
+                {"text": "Metre (m)", "correct": false},
+                {"text": "Saniye (s)", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kuvvet kavramlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["kuvvet", "kavramlar"],
+              "explanation": "Kuvvet bir cismi iterek veya çekerek hareket ettiren, hızını veya yönünü değiştiren etkidir.",
+              "options": [
+                {"text": "Kuvvetin birimi", "pairId": 1, "correct": false},
+                {"text": "Newton (N)", "pairId": 1, "correct": false},
+                {"text": "Kuvvet ölçme aracı", "pairId": 2, "correct": false},
+                {"text": "Dinamometre", "pairId": 2, "correct": false},
+                {"text": "Kuvvetin gösterimi", "pairId": 3, "correct": false},
+                {"text": "Ok işareti ile (yön ve büyüklük)", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Kuvvet ölçmek için kullanılan alete ___ denir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["kuvvet", "dinamometre"],
+              "explanation": "Dinamometre (kuvvet ölçer), içindeki yayın uzama miktarına göre kuvveti Newton cinsinden ölçen aletir.",
+              "options": [
+                {"text": "dinamometre", "correct": true},
+                {"text": "termometre", "correct": false},
+                {"text": "barometre", "correct": false},
+                {"text": "terazi", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Bir cisme uygulanan kuvvet ne yapabilir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kuvvet", "etkileri"],
+              "explanation": "Kuvvet bir cismin hareketini başlatabilir, durdurabilir, hızını artırabilir veya azaltabilir ve hareket yönünü değiştirebilir. Ayrıca cismin şeklini değiştirebilir.",
+              "options": [
+                {"text": "Sadece cismi hareket ettirebilir", "correct": false},
+                {"text": "Cismi hareket ettirme, durdurma, yön ve şeklini değiştirme", "correct": true},
+                {"text": "Sadece cismi durdurabilir", "correct": false},
+                {"text": "Sadece cismin rengini değiştirebilir", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Yer çekimi kuvveti cisimleri hangi yöne çeker?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["yer çekimi"],
+              "explanation": "Yer çekimi (gravitasyon) kuvveti tüm cisimleri Dünya'nın merkezine doğru çeker. Bu nedenle havaya atılan cisimler yere düşer.",
+              "options": [
+                {"text": "Yukarı doğru", "correct": false},
+                {"text": "Yere (Dünya'nın merkezine) doğru", "correct": true},
+                {"text": "Yana doğru", "correct": false},
+                {"text": "Hiçbir yöne çekmez", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bir cismin ağırlığı ___ kuvvetinden kaynaklanır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["ağırlık", "yer çekimi"],
+              "explanation": "Ağırlık, yer çekimi kuvvetinin cisme uyguladığı kuvvettir. Ağırlık Newton (N) ile ölçülür. Kütle (kg) ile ağırlık (N) farklı kavramlardır.",
+              "options": [
+                {"text": "yer çekimi", "correct": true},
+                {"text": "sürtünme", "correct": false},
+                {"text": "manyetik", "correct": false},
+                {"text": "rüzgâr", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Sürtünme Kuvveti",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Sürtünme kuvveti nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["sürtünme", "tanım"],
+              "explanation": "Sürtünme kuvveti, birbirine temas eden iki yüzey arasında harekete karşı oluşan kuvvettir. Her zaman hareket yönünün tersi yönünde etki eder.",
+              "options": [
+                {"text": "Cisimleri hızlandıran kuvvet", "correct": false},
+                {"text": "Harekete karşı oluşan, hareketi zorlaştıran kuvvet", "correct": true},
+                {"text": "Cisimleri havaya kaldıran kuvvet", "correct": false},
+                {"text": "Sadece sıvılarda oluşan kuvvet", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Sürtünme kuvvetini etkileyen faktörleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["sürtünme", "faktörler"],
+              "explanation": "Sürtünme kuvveti yüzey pürüzlülüğüne ve cismin ağırlığına bağlıdır.",
+              "options": [
+                {"text": "Yüzey pürüzlü olursa", "pairId": 1, "correct": false},
+                {"text": "Sürtünme kuvveti artar", "pairId": 1, "correct": false},
+                {"text": "Yüzey kaygan/düz olursa", "pairId": 2, "correct": false},
+                {"text": "Sürtünme kuvveti azalır", "pairId": 2, "correct": false},
+                {"text": "Cismin ağırlığı artarsa", "pairId": 3, "correct": false},
+                {"text": "Sürtünme kuvveti artar", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Buz üzerinde yürürken kayma sebebi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["sürtünme", "kaygan yüzey"],
+              "explanation": "Buz yüzeyi çok düz ve kaygan olduğu için sürtünme kuvveti çok azdır. Sürtünme az olunca ayakkabı ile zemin arasında yeterli tutunma sağlanamaz ve kayarız.",
+              "options": [
+                {"text": "Yer çekimi fazladır", "correct": false},
+                {"text": "Sürtünme kuvveti çok azdır", "correct": true},
+                {"text": "Rüzgâr etkisi", "correct": false},
+                {"text": "Buz ağırdır", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Arabaların lastiklerinin yüzeyi neden pürüzlüdür (desenlidir)?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sürtünme", "lastik"],
+              "explanation": "Lastik desenleri yol ile lastik arasındaki sürtünme kuvvetini artırır. Bu sayede araç yolda daha iyi tutunur, kayma ve frenleme mesafesi azalır. Özellikle yağmurlu havalarda desen önemi artar.",
+              "options": [
+                {"text": "Güzel görünsün diye", "correct": false},
+                {"text": "Yol ile sürtünmeyi artırarak tutunmayı sağlamak için", "correct": true},
+                {"text": "Lastiğin hafif olması için", "correct": false},
+                {"text": "Hava direncini azaltmak için", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Sürtünme kuvveti her zaman zararlı ___ .",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["sürtünme", "fayda-zarar"],
+              "explanation": "Sürtünme kuvveti her zaman zararlı değildir. Yürümek, fren yapmak, yazmak gibi birçok günlük eylem sürtünme sayesinde mümkündür.",
+              "options": [
+                {"text": "değildir", "correct": true},
+                {"text": "olur", "correct": false},
+                {"text": "mıdır", "correct": false},
+                {"text": "olmalıdır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Sürtünmeyi azaltmanın yollarından biri aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["sürtünme", "azaltma"],
+              "explanation": "Yağlama (yağ, gres vb.) yüzeyler arasındaki sürtünmeyi azaltır. Tekerlek ve rulman kullanmak da sürtünmeyi azaltmanın etkili yollarıdır.",
+              "options": [
+                {"text": "Yüzeyi daha pürüzlü yapmak", "correct": false},
+                {"text": "Yüzeyleri yağlamak", "correct": true},
+                {"text": "Cismin ağırlığını artırmak", "correct": false},
+                {"text": "Temas alanını artırmak", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Ağırlık ve Kütle",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Kütle ve ağırlık arasındaki farkı eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["kütle", "ağırlık"],
+              "explanation": "Kütle cismin içindeki madde miktarıdır ve her yerde sabittir. Ağırlık ise yer çekimi kuvvetidir ve bulunulan yere göre değişir.",
+              "options": [
+                {"text": "Kütle", "pairId": 1, "correct": false},
+                {"text": "Madde miktarı, kg ile ölçülür, her yerde sabittir", "pairId": 1, "correct": false},
+                {"text": "Ağırlık", "pairId": 2, "correct": false},
+                {"text": "Yer çekimi kuvveti, N ile ölçülür, yere göre değişir", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Ay'da bir insanın kütlesi değişir mi?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kütle", "ay"],
+              "explanation": "Kütle her yerde aynıdır çünkü cismin içindeki madde miktarı değişmez. Ağırlık ise Ay'da Dünya'dakinin yaklaşık 1/6'sına düşer çünkü Ay'ın yer çekimi daha zayıftır.",
+              "options": [
+                {"text": "Evet, kütle azalır", "correct": false},
+                {"text": "Hayır, kütle değişmez ancak ağırlık azalır", "correct": true},
+                {"text": "Evet, kütle artar", "correct": false},
+                {"text": "Hayır, ne kütle ne ağırlık değişir", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Kütle ___ ile ölçülür.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["kütle", "ölçme"],
+              "explanation": "Kütle eşit kollu terazi veya elektronik terazi ile ölçülür. Birimi kilogram (kg) veya gram (g) dır. Ağırlık ise dinamometre ile ölçülür.",
+              "options": [
+                {"text": "terazi", "correct": true},
+                {"text": "dinamometre", "correct": false},
+                {"text": "cetvel", "correct": false},
+                {"text": "termometre", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Dünya'da 60 kg kütleli bir cismin ağırlığı yaklaşık kaç Newton'dur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["ağırlık", "hesaplama"],
+              "explanation": "Dünya'da ağırlık ≈ kütle × 10 (yerçekimi ivmesi yaklaşık 10 N/kg). Yani 60 kg × 10 = 600 N.",
+              "options": [
+                {"text": "60 N", "correct": false},
+                {"text": "600 N", "correct": true},
+                {"text": "6000 N", "correct": false},
+                {"text": "6 N", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Ağırlığın birimi ___ (N)'dur.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["ağırlık", "birim"],
+              "explanation": "Ağırlık bir kuvvettir ve kuvvetin birimi Newton (N) dur. Kütle ile ağırlığı karıştırmamak gerekir: kütle kg, ağırlık N birimindedir.",
+              "options": [
+                {"text": "Newton", "correct": true},
+                {"text": "kilogram", "correct": false},
+                {"text": "metre", "correct": false},
+                {"text": "litre", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hangisi doğru bir ifadedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kütle", "ağırlık", "karşılaştırma"],
+              "explanation": "Kütle madde miktarıdır ve evrende her yerde aynıdır. Ağırlık ise yer çekimine bağlı olarak değişir. Ay'da, Jüpiter'de veya uzay boşluğunda kütle aynı kalır ama ağırlık farklıdır.",
+              "options": [
+                {"text": "Kütle ve ağırlık aynı şeydir", "correct": false},
+                {"text": "Kütle her yerde sabittir, ağırlık yer çekimine göre değişir", "correct": true},
+                {"text": "Ağırlık her yerde sabittir, kütle değişir", "correct": false},
+                {"text": "İkisi de her yerde değişir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Mıknatıs ve Manyetik Kuvvet",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Mıknatısın kutuplarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["mıknatıs", "kutuplar"],
+              "explanation": "Her mıknatısın kuzey (N) ve güney (S) olmak üzere iki kutbu vardır. Zıt kutuplar birbirini çeker, aynı kutuplar iter.",
+              "options": [
+                {"text": "Kuzey-Güney kutupları", "pairId": 1, "correct": false},
+                {"text": "Birbirini çeker (zıt kutuplar)", "pairId": 1, "correct": false},
+                {"text": "Kuzey-Kuzey kutupları", "pairId": 2, "correct": false},
+                {"text": "Birbirini iter (aynı kutuplar)", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Mıknatıs aşağıdaki maddelerden hangisini çeker?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["mıknatıs", "çekme"],
+              "explanation": "Mıknatıs demir, çelik, nikel ve kobalt gibi manyetik metalleri çeker. Bakır, alüminyum, ahşap, plastik gibi malzemeleri çekmez.",
+              "options": [
+                {"text": "Plastik kalem", "correct": false},
+                {"text": "Demir çivi", "correct": true},
+                {"text": "Ahşap masa", "correct": false},
+                {"text": "Cam bardak", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Mıknatısın etrafındaki görünmez etkisinin olduğu bölgeye ___ alanı denir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["mıknatıs", "manyetik alan"],
+              "explanation": "Manyetik alan, mıknatısın çevresinde manyetik kuvvetin hissedildiği bölgedir. Demir tozları ile görselleştirilebilir.",
+              "options": [
+                {"text": "manyetik", "correct": true},
+                {"text": "elektrik", "correct": false},
+                {"text": "ısı", "correct": false},
+                {"text": "ışık", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Pusula nasıl çalışır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["pusula", "manyetik"],
+              "explanation": "Pusula iğnesi küçük bir mıknatıstır. Dünya'nın manyetik alanı etkisiyle pusula iğnesi her zaman kuzey-güney doğrultusunda durur ve yön bulmamıza yardımcı olur.",
+              "options": [
+                {"text": "Güneş enerjisiyle çalışır", "correct": false},
+                {"text": "Mıknatıslı iğne Dünya'nın manyetik alanıyla yönlenir", "correct": true},
+                {"text": "Pille çalışır", "correct": false},
+                {"text": "GPS sinyalleriyle çalışır", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Bir mıknatıs ikiye bölünürse ne olur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["mıknatıs", "bölme"],
+              "explanation": "Bir mıknatıs ikiye bölündüğünde her parça yeni bir mıknatıs olur ve her birinin kendi kuzey ve güney kutbu oluşur. Tek kutuplu mıknatıs elde etmek mümkün değildir.",
+              "options": [
+                {"text": "Mıknatıslık özelliğini kaybeder", "correct": false},
+                {"text": "Her parça kendi kuzey ve güney kutbuna sahip yeni bir mıknatıs olur", "correct": true},
+                {"text": "Sadece bir parça mıknatıs olur", "correct": false},
+                {"text": "Kutuplar kaybolur", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Mıknatıs, manyetik özelliğini yüksek ___ ve şiddetli darbelerle kaybedebilir.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["mıknatıs", "özellik kaybı"],
+              "explanation": "Mıknatıslar yüksek sıcaklık, şiddetli darbeler ve güçlü elektrik akımına maruz kaldığında manyetik özelliklerini kaybedebilir.",
+              "options": [
+                {"text": "sıcaklık", "correct": true},
+                {"text": "basınç", "correct": false},
+                {"text": "nem", "correct": false},
+                {"text": "ışık", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Kuvvet ve Hareket İlişkisi",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Bir cisme birden fazla kuvvet uygulandığında sonuç nasıl belirlenir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["bileşke kuvvet"],
+              "explanation": "Bir cisme uygulanan tüm kuvvetlerin toplamına (birleşimine) bileşke kuvvet denir. Kuvvetler aynı yönde ise toplanır, zıt yönde ise çıkarılır.",
+              "options": [
+                {"text": "En büyük kuvvet geçerlidir", "correct": false},
+                {"text": "Kuvvetlerin bileşkesi (toplamı veya farkı) hesaplanır", "correct": true},
+                {"text": "Kuvvetler birbirini yok eder", "correct": false},
+                {"text": "Sadece ilk uygulanan kuvvet geçerlidir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kuvvet yönlerini sonuçlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["kuvvet", "yön"],
+              "explanation": "Aynı yöndeki kuvvetler toplanır (güçlenir), zıt yöndeki kuvvetler çıkarılır.",
+              "options": [
+                {"text": "Aynı yönde 5 N + 3 N", "pairId": 1, "correct": false},
+                {"text": "Bileşke: 8 N (aynı yönde)", "pairId": 1, "correct": false},
+                {"text": "Zıt yönde 10 N ve 4 N", "pairId": 2, "correct": false},
+                {"text": "Bileşke: 6 N (büyük kuvvet yönünde)", "pairId": 2, "correct": false},
+                {"text": "Zıt yönde 5 N ve 5 N", "pairId": 3, "correct": false},
+                {"text": "Bileşke: 0 N (dengede, hareket etmez)", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bir cisme uygulanan bileşke kuvvet sıfır (0 N) ise cisim ne yapar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["bileşke kuvvet", "denge"],
+              "explanation": "Bileşke kuvvet sıfırsa cisim dengededir. Duruyorsa durmaya devam eder, hareket ediyorsa sabit hızla hareket etmeye devam eder (Newton'un 1. yasası).",
+              "options": [
+                {"text": "Her zaman durur", "correct": false},
+                {"text": "Dengededir: duruyorsa durur, hareket ediyorsa sabit hızla devam eder", "correct": true},
+                {"text": "Hızlanır", "correct": false},
+                {"text": "Havaya kalkar", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Bir kutuyu 15 N ile sağa, 10 N ile sola itiyorsak bileşke kuvvet ___ N sağa doğrudur.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["bileşke", "hesaplama"],
+              "explanation": "Zıt yöndeki kuvvetler çıkarılır: 15 N - 10 N = 5 N. Büyük kuvvetin yönü olan sağ tarafa doğru 5 N bileşke kuvvet oluşur.",
+              "options": [
+                {"text": "5", "correct": true},
+                {"text": "25", "correct": false},
+                {"text": "10", "correct": false},
+                {"text": "15", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Dengelenmiş kuvvetler ile dengelenmemiş kuvvetler arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["dengeli", "dengesiz kuvvet"],
+              "explanation": "Dengelenmiş kuvvetlerde bileşke 0'dır ve hareket durumu değişmez. Dengelenmemiş kuvvetlerde bileşke 0'dan farklıdır ve cisim hızlanır, yavaşlar veya yön değiştirir.",
+              "options": [
+                {"text": "Dengelenmiş: bileşke 0, hareket değişmez; Dengelenmemiş: bileşke ≠ 0, hareket değişir", "correct": true},
+                {"text": "İkisi de aynıdır", "correct": false},
+                {"text": "Dengelenmiş kuvvetlerde cisim durur, dengelenmemişte hep hızlanır", "correct": false},
+                {"text": "Dengelenmemiş kuvvet daha küçüktür", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hava direnci (hava sürtünmesi) hangi yönde etki eder?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["hava direnci"],
+              "explanation": "Hava direnci, hareket yönünün tersine etki eden bir sürtünme kuvvetidir. Paraşüt hava direncini artırarak düşüş hızını azaltır.",
+              "options": [
+                {"text": "Hareket yönünde", "correct": false},
+                {"text": "Hareket yönünün tersinde", "correct": true},
+                {"text": "Yukarı doğru", "correct": false},
+                {"text": "Hava direnci bir kuvvet değildir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Madde ve Değişim",
+      "description": "Maddenin halleri, hal değişimi, ısı-sıcaklık farkı, saf madde ve karışımlar (MEB 2025-2026)",
+      "order": 4,
+      "lessons": [
+        {
+          "title": "Maddenin Halleri",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Maddenin üç halini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["madde", "haller"],
+              "explanation": "Madde katı, sıvı ve gaz olmak üzere üç halde bulunur. Her halin kendine özgü özellikleri vardır.",
+              "options": [
+                {"text": "Katı", "pairId": 1, "correct": false},
+                {"text": "Belirli şekli ve hacmi var (buz, taş)", "pairId": 1, "correct": false},
+                {"text": "Sıvı", "pairId": 2, "correct": false},
+                {"text": "Belirli hacmi var, bulunduğu kabın şeklini alır (su)", "pairId": 2, "correct": false},
+                {"text": "Gaz", "pairId": 3, "correct": false},
+                {"text": "Belirli şekli ve hacmi yok, her yöne yayılır (hava)", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Hangi madde hali bulunduğu kabın tamamını doldurarak yayılır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["gaz"],
+              "explanation": "Gazların belirli bir şekli ve hacmi yoktur. Bulundukları kabın tamamına yayılırlar. Gaz tanecikleri arasındaki boşluk çok fazladır ve serbestçe hareket ederler.",
+              "options": [
+                {"text": "Katı", "correct": false},
+                {"text": "Sıvı", "correct": false},
+                {"text": "Gaz", "correct": true},
+                {"text": "Hepsi", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Sıvıların belirli bir şekli yoktur ama belirli bir ___ vardır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["sıvı", "özellik"],
+              "explanation": "Sıvıların belirli bir hacmi vardır ancak belirli bir şekli yoktur. Konuldukları kabın şeklini alırlar ama hacimlerini korurlar.",
+              "options": [
+                {"text": "hacmi", "correct": true},
+                {"text": "rengi", "correct": false},
+                {"text": "ağırlığı", "correct": false},
+                {"text": "kokusu", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Katı maddelerin tanecikleri arasındaki boşluk nasıldır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["katı", "tanecik"],
+              "explanation": "Katı maddelerde tanecikler birbirine çok yakındır ve aralarındaki boşluk çok azdır. Tanecikler sabit konumlarında titreşim hareketi yapar.",
+              "options": [
+                {"text": "Çok fazla", "correct": false},
+                {"text": "Çok az", "correct": true},
+                {"text": "Orta düzeyde", "correct": false},
+                {"text": "Hiç boşluk yoktur", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hangisi gaz haldeki maddeye örnektir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["gaz", "örnek"],
+              "explanation": "Oksijen normal koşullarda gaz haldedir. Buz katı, su sıvı, cıva ise oda sıcaklığında sıvı haldeki bir metaldir.",
+              "options": [
+                {"text": "Buz", "correct": false},
+                {"text": "Su", "correct": false},
+                {"text": "Oksijen", "correct": true},
+                {"text": "Cıva", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Maddenin tanecik modeline göre tanecikler en hızlı hangi halde hareket eder?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["tanecik", "hareket"],
+              "explanation": "Gaz halinde tanecikler en hızlı ve en serbest hareket eder. Sıvıda biraz daha yavaş, katıda ise sadece titreşim hareketi yapar.",
+              "options": [
+                {"text": "Katı halde", "correct": false},
+                {"text": "Sıvı halde", "correct": false},
+                {"text": "Gaz halde", "correct": true},
+                {"text": "Hepsinde eşit", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Hal Değişimleri",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Hal değişimlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["hal değişimi"],
+              "explanation": "Maddelere ısı verildiğinde veya alındığında hal değişimi gerçekleşir.",
+              "options": [
+                {"text": "Erime", "pairId": 1, "correct": false},
+                {"text": "Katıdan sıvıya (buz → su)", "pairId": 1, "correct": false},
+                {"text": "Buharlaşma", "pairId": 2, "correct": false},
+                {"text": "Sıvıdan gaza (su → su buharı)", "pairId": 2, "correct": false},
+                {"text": "Yoğuşma", "pairId": 3, "correct": false},
+                {"text": "Gazdan sıvıya (su buharı → su)", "pairId": 3, "correct": false},
+                {"text": "Donma", "pairId": 4, "correct": false},
+                {"text": "Sıvıdan katıya (su → buz)", "pairId": 4, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Suyun kaynama noktası kaç °C'dir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["kaynama", "su"],
+              "explanation": "Saf suyun normal atmosfer basıncında kaynama noktası 100 °C'dir. Bu sıcaklıkta su yoğun buharlaşma ile gaza (su buharına) dönüşür.",
+              "options": [
+                {"text": "0 °C", "correct": false},
+                {"text": "50 °C", "correct": false},
+                {"text": "100 °C", "correct": true},
+                {"text": "200 °C", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Buzun erime noktası ___ °C'dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["erime", "buz"],
+              "explanation": "Buzun erime noktası 0 °C'dir. Bu sıcaklıkta buz (katı su) eriyerek sıvı suya dönüşür.",
+              "options": [
+                {"text": "0", "correct": true},
+                {"text": "100", "correct": false},
+                {"text": "-10", "correct": false},
+                {"text": "50", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Soğuk bir bardağın dış yüzeyinde oluşan su damlacıklarının sebebi nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yoğuşma"],
+              "explanation": "Havadaki su buharı soğuk bardağın yüzeyinde soğuyarak sıvıya dönüşür. Bu olaya yoğuşma (yoğunlaşma) denir. Gazdan sıvıya geçiştir.",
+              "options": [
+                {"text": "Bardaktan su sızıyor", "correct": false},
+                {"text": "Havadaki su buharının yoğuşması (gazdan sıvıya geçiş)", "correct": true},
+                {"text": "Bardağın terlemesi", "correct": false},
+                {"text": "Dışarıdan su damlatılmış", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Katıdan doğrudan gaza geçişe ___ denir.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["süblimleşme"],
+              "explanation": "Süblimleşme, katı maddenin sıvı haline geçmeden doğrudan gaza dönüşmesidir. Naftalin (güve hapı) ve kuru buz (katı CO₂) buna örnektir.",
+              "options": [
+                {"text": "süblimleşme", "correct": true},
+                {"text": "buharlaşma", "correct": false},
+                {"text": "erime", "correct": false},
+                {"text": "kaynama", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hal değişimi sırasında maddenin sıcaklığı ne olur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["hal değişimi", "sıcaklık"],
+              "explanation": "Saf maddelerde hal değişimi süresince sıcaklık sabit kalır. Verilen ısı, maddenin hal değişimi için kullanılır. Hal değişimi tamamlanana kadar sıcaklık artmaz.",
+              "options": [
+                {"text": "Sürekli artar", "correct": false},
+                {"text": "Hal değişimi süresince sabit kalır", "correct": true},
+                {"text": "Sürekli azalır", "correct": false},
+                {"text": "Önce artar sonra azalır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Isı ve Sıcaklık",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Isı ve sıcaklık arasındaki farkları eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["ısı", "sıcaklık"],
+              "explanation": "Isı enerji transferi, sıcaklık ise maddenin sıcaklık derecesidir. İkisi farklı kavramlardır.",
+              "options": [
+                {"text": "Isı", "pairId": 1, "correct": false},
+                {"text": "Enerji aktarımıdır, birimi joule veya kaloridir", "pairId": 1, "correct": false},
+                {"text": "Sıcaklık", "pairId": 2, "correct": false},
+                {"text": "Maddenin soğukluk/sıcaklık derecesi, birimi °C'dir", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Sıcaklık ölçmek için kullanılan alete ne denir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["sıcaklık", "termometre"],
+              "explanation": "Termometre sıcaklık ölçen aletir. Birimi Celsius (°C), Fahrenheit (°F) veya Kelvin (K) olabilir. Türkiye'de genellikle Celsius kullanılır.",
+              "options": [
+                {"text": "Dinamometre", "correct": false},
+                {"text": "Termometre", "correct": true},
+                {"text": "Barometre", "correct": false},
+                {"text": "Higrometre", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Isı her zaman ___ sıcaklıktaki cisimden düşük sıcaklıktaki cisme geçer.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["ısı", "aktarım"],
+              "explanation": "Isı her zaman yüksek sıcaklıktaki cisimden düşük sıcaklıktaki cisme doğru geçer. Bu geçiş iki cismin sıcaklığı eşitlenene kadar devam eder.",
+              "options": [
+                {"text": "yüksek", "correct": true},
+                {"text": "düşük", "correct": false},
+                {"text": "eşit", "correct": false},
+                {"text": "orta", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Sıcak çay zamanla neden soğur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ısı aktarımı"],
+              "explanation": "Sıcak çay çevresindeki havadan daha yüksek sıcaklıktadır. Isı, sıcak çaydan soğuk havaya doğru geçer. Çay ısı kaybettikçe soğur, bu aktarım sıcaklıklar eşitlenene kadar devam eder.",
+              "options": [
+                {"text": "Çayın içindeki ısı yok olur", "correct": false},
+                {"text": "Isı çaydan çevresindeki havaya geçer", "correct": true},
+                {"text": "Hava çaya soğukluk verir", "correct": false},
+                {"text": "Çayın rengi değişir", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Isı aktarım yollarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["ısı aktarımı", "yollar"],
+              "explanation": "Isı üç yolla aktarılır: iletim, konveksiyon (taşıma) ve ışıma.",
+              "options": [
+                {"text": "İletim (kondüksiyon)", "pairId": 1, "correct": false},
+                {"text": "Katı maddeler içinde temas yoluyla (metal kaşık ısınması)", "pairId": 1, "correct": false},
+                {"text": "Konveksiyon (taşıma)", "pairId": 2, "correct": false},
+                {"text": "Sıvı ve gazlarda akışkan hareketiyle (kaynayan su)", "pairId": 2, "correct": false},
+                {"text": "Işıma (radyasyon)", "pairId": 3, "correct": false},
+                {"text": "Herhangi bir ortama gerek kalmadan (Güneş'ten gelen ısı)", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hangisi ısı yalıtkanıdır (ısıyı iyi iletmez)?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yalıtkan", "iletken"],
+              "explanation": "Tahta (ahşap) ısıyı iyi iletmez, yani ısı yalıtkanıdır. Bu nedenle tavaların sapları ahşap veya plastik yapılır. Demir, bakır ve alüminyum ise ısı iletkenidir.",
+              "options": [
+                {"text": "Demir", "correct": false},
+                {"text": "Bakır", "correct": false},
+                {"text": "Tahta", "correct": true},
+                {"text": "Alüminyum", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Saf Madde ve Karışımlar",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Saf madde ve karışım kavramlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["saf madde", "karışım"],
+              "explanation": "Saf madde tek tür tanecikten oluşur. Karışım ise iki veya daha fazla saf maddenin bir araya gelmesiyle oluşur.",
+              "options": [
+                {"text": "Saf madde", "pairId": 1, "correct": false},
+                {"text": "Tek tür tanecikten oluşur (saf su, altın)", "pairId": 1, "correct": false},
+                {"text": "Karışım", "pairId": 2, "correct": false},
+                {"text": "Birden fazla maddenin bir arada olması (tuzlu su, hava)", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Hangisi bir karışımdır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["karışım", "örnek"],
+              "explanation": "Tuzlu su, tuz ve suyun karışımıdır. Saf su, demir ve oksijen ise saf maddelerdir (tek tür tanecikten oluşur).",
+              "options": [
+                {"text": "Saf su", "correct": false},
+                {"text": "Tuzlu su", "correct": true},
+                {"text": "Demir", "correct": false},
+                {"text": "Oksijen gazı", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Homojen karışımlara ___ denir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["homojen", "çözelti"],
+              "explanation": "Homojen karışımlara çözelti denir. Çözeltilerde maddeler eşit dağılmıştır ve gözle ayırt edilemez. Tuzlu su, şekerli su örnektir.",
+              "options": [
+                {"text": "çözelti", "correct": true},
+                {"text": "alaşım", "correct": false},
+                {"text": "süspansiyon", "correct": false},
+                {"text": "emülsiyon", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Hangisi heterojen (bileşenleri gözle ayırt edilebilen) bir karışımdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["heterojen"],
+              "explanation": "Zeytinyağı-su karışımında iki sıvı birbiriyle karışmaz ve gözle ayırt edilebilir (heterojen). Tuzlu su, şekerli su ve sirke homojen karışımdır.",
+              "options": [
+                {"text": "Tuzlu su", "correct": false},
+                {"text": "Şekerli su", "correct": false},
+                {"text": "Zeytinyağı-su karışımı", "correct": true},
+                {"text": "Sirke", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Karışımları ayırma yöntemlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["ayırma yöntemleri"],
+              "explanation": "Karışımlar, bileşenlerin özellik farklarından yararlanılarak ayrılır.",
+              "options": [
+                {"text": "Süzme", "pairId": 1, "correct": false},
+                {"text": "Katı-sıvı karışımını ayırma (kum-su)", "pairId": 1, "correct": false},
+                {"text": "Buharlaştırma", "pairId": 2, "correct": false},
+                {"text": "Çözünmüş katıyı elde etme (tuzlu sudan tuzu)", "pairId": 2, "correct": false},
+                {"text": "Mıknatısla ayırma", "pairId": 3, "correct": false},
+                {"text": "Demir tozunu kum veya talaştan ayırma", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Tuzlu sudan tuzu elde etmek için hangi yöntem kullanılır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["buharlaştırma"],
+              "explanation": "Tuzlu su ısıtılarak su buharlaştırılır ve geriye tuz kalır. Bu yönteme buharlaştırma denir. Doğal tuz gölleri ve denizlerden tuz bu yöntemle elde edilir.",
+              "options": [
+                {"text": "Süzme", "correct": false},
+                {"text": "Buharlaştırma", "correct": true},
+                {"text": "Mıknatısla ayırma", "correct": false},
+                {"text": "Yoğunluk farkı", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Çözünme ve Çözeltiler",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Çözeltinin bileşenlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["çözelti", "bileşen"],
+              "explanation": "Çözelti = Çözücü + Çözünen. Genellikle miktarı fazla olan çözücü, az olan çözünendir. Tuzlu suda su çözücü, tuz çözünendir.",
+              "options": [
+                {"text": "Çözücü", "pairId": 1, "correct": false},
+                {"text": "Miktarı fazla olan madde (su)", "pairId": 1, "correct": false},
+                {"text": "Çözünen", "pairId": 2, "correct": false},
+                {"text": "Miktarı az olan, çözünen madde (tuz)", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Şekerin suda çözünme hızını artırmak için ne yapılabilir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["çözünme hızı"],
+              "explanation": "Çözünme hızını artırmak için: suyun sıcaklığını artırmak, karıştırmak veya şekeri toz haline getirmek (temas yüzeyini artırmak) etkili yollardır.",
+              "options": [
+                {"text": "Soğuk su kullanmak", "correct": false},
+                {"text": "Sıcaklığı artırmak, karıştırmak, toz haline getirmek", "correct": true},
+                {"text": "Daha az su kullanmak", "correct": false},
+                {"text": "Bekletmek ama karıştırmamak", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bir çözeltiye çözünen madde eklenmeye devam edilirse ve artık çözünemezse bu çözeltiye ___ çözelti denir.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["doymuş çözelti"],
+              "explanation": "Doymuş çözelti: belirli sıcaklıkta daha fazla madde çözemeyecek kadar çözünen içeren çözeltidir. Eklenen madde çözünmeden dibe çöker.",
+              "options": [
+                {"text": "doymuş", "correct": true},
+                {"text": "seyreltik", "correct": false},
+                {"text": "derişik", "correct": false},
+                {"text": "doymamış", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Sıcaklık artışı genellikle katı maddelerin sudaki çözünürlüğünü nasıl etkiler?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["çözünürlük", "sıcaklık"],
+              "explanation": "Genellikle sıcaklık arttıkça katı maddelerin sudaki çözünürlüğü artar. Sıcak suda daha fazla şeker veya tuz çözünebilir.",
+              "options": [
+                {"text": "Azaltır", "correct": false},
+                {"text": "Artırır", "correct": true},
+                {"text": "Değiştirmez", "correct": false},
+                {"text": "Önce artırır sonra azaltır", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hangisi suda çözünmez?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["çözünme", "yağ"],
+              "explanation": "Zeytinyağı suda çözünmez çünkü yağ ve su molekülleri birbirine karışmaz. Tuz, şeker ve soda suda çözünür.",
+              "options": [
+                {"text": "Tuz", "correct": false},
+                {"text": "Şeker", "correct": false},
+                {"text": "Zeytinyağı", "correct": true},
+                {"text": "Soda", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Çözünme hızını etkileyen faktörlerden biri ___ yüzeyini artırmaktır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["çözünme hızı", "temas yüzeyi"],
+              "explanation": "Çözünen maddenin temas yüzeyi artırılırsa (örn. küp şekeri yerine toz şeker) çözünme hızı artar. Küçük parçalar çözücüyle daha fazla temas eder.",
+              "options": [
+                {"text": "temas", "correct": true},
+                {"text": "alt", "correct": false},
+                {"text": "üst", "correct": false},
+                {"text": "yan", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Işığın Yayılması",
+      "description": "Işık kaynakları, ışığın doğrusal yayılması, gölge oluşumu, ışığın yansıması, ayna çeşitleri (MEB 2025-2026)",
+      "order": 5,
+      "lessons": [
+        {
+          "title": "Işık Kaynakları ve Doğrusal Yayılması",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Işık kaynaklarını türlerine göre eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["ışık kaynağı"],
+              "explanation": "Doğal ışık kaynakları doğada kendiliğinden var olan, yapay ışık kaynakları ise insanlar tarafından üretilen ışık kaynaklarıdır.",
+              "options": [
+                {"text": "Güneş, yıldızlar, şimşek", "pairId": 1, "correct": false},
+                {"text": "Doğal ışık kaynakları", "pairId": 1, "correct": false},
+                {"text": "Ampul, mum, fener", "pairId": 2, "correct": false},
+                {"text": "Yapay ışık kaynakları", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Işık nasıl yayılır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ışık", "doğrusal yayılma"],
+              "explanation": "Işık doğrusal olarak (düz bir çizgide) yayılır. Bu nedenle ışığın önüne konan cisimler gölge oluşturur ve ışık köşeleri dönemez.",
+              "options": [
+                {"text": "Eğri çizgide", "correct": false},
+                {"text": "Doğrusal (düz çizgide)", "correct": true},
+                {"text": "Zikzak şeklinde", "correct": false},
+                {"text": "Spiral şeklinde", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Işığın doğrusal yayılmasının kanıtı aşağıdakilerden hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["doğrusal yayılma", "kanıt"],
+              "explanation": "Gölge oluşumu ışığın doğrusal yayıldığının en açık kanıtıdır. Işık doğrusal gittiği için önüne konan opak (ışık geçirmeyen) cismin arkasına ulaşamaz ve gölge oluşur.",
+              "options": [
+                {"text": "Gökkuşağı oluşması", "correct": false},
+                {"text": "Gölge oluşumu", "correct": true},
+                {"text": "Suyun berrak olması", "correct": false},
+                {"text": "Ses duyulması", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Işığı geçirmeyen maddelere ___ madde denir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["opak", "saydam"],
+              "explanation": "Opak (ışık geçirmez) maddeler: tahta, metal, karton. Saydam maddeler: cam, temiz su. Yarı saydam maddeler: buzlu cam, yağlı kâğıt.",
+              "options": [
+                {"text": "opak", "correct": true},
+                {"text": "saydam", "correct": false},
+                {"text": "yarı saydam", "correct": false},
+                {"text": "parlak", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Maddeleri ışık geçirgenliklerine göre eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["saydam", "opak", "yarı saydam"],
+              "explanation": "Maddeler ışığı geçirme durumlarına göre üç grupta incelenir.",
+              "options": [
+                {"text": "Cam, temiz su", "pairId": 1, "correct": false},
+                {"text": "Saydam (ışığı tamamen geçirir)", "pairId": 1, "correct": false},
+                {"text": "Buzlu cam, yağlı kâğıt", "pairId": 2, "correct": false},
+                {"text": "Yarı saydam (ışığı kısmen geçirir)", "pairId": 2, "correct": false},
+                {"text": "Tahta, metal", "pairId": 3, "correct": false},
+                {"text": "Opak (ışığı geçirmez)", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Işığın hızı yaklaşık kaç km/s'dir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["ışık hızı"],
+              "explanation": "Işık evrende bilinen en hızlı şeydir. Vakumda (boşlukta) yaklaşık 300.000 km/s hızla yayılır. Bu hızla 1 saniyede Dünya'nın etrafında yaklaşık 7,5 tur atabilir.",
+              "options": [
+                {"text": "340 km/s", "correct": false},
+                {"text": "3.000 km/s", "correct": false},
+                {"text": "300.000 km/s", "correct": true},
+                {"text": "30 km/s", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Gölge Oluşumu",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Gölge oluşabilmesi için neler gereklidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["gölge", "koşullar"],
+              "explanation": "Gölge oluşması için üç şey gereklidir: ışık kaynağı, opak cisim ve gölgenin düşeceği bir perde (yüzey). Işık cismin arkasına geçemediğinde gölge oluşur.",
+              "options": [
+                {"text": "Sadece ışık kaynağı", "correct": false},
+                {"text": "Işık kaynağı, opak cisim ve perde (yüzey)", "correct": true},
+                {"text": "Sadece opak cisim", "correct": false},
+                {"text": "Saydam cisim ve ışık kaynağı", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Gölge türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["gölge", "tam gölge", "yarı gölge"],
+              "explanation": "Noktasal (küçük) ışık kaynağı sadece tam gölge, geniş (büyük) ışık kaynağı hem tam gölge hem yarı gölge oluşturur.",
+              "options": [
+                {"text": "Tam gölge (umbra)", "pairId": 1, "correct": false},
+                {"text": "Işığın hiç ulaşmadığı koyu bölge", "pairId": 1, "correct": false},
+                {"text": "Yarı gölge (penumbra)", "pairId": 2, "correct": false},
+                {"text": "Işığın kısmen ulaştığı daha açık bölge", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Opak cisim ışık kaynağına yaklaştırılırsa gölgesi nasıl değişir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["gölge", "büyüklük"],
+              "explanation": "Opak cisim ışık kaynağına yaklaştırıldıkça gölgesi büyür. Uzaklaştırıldıkça gölge küçülür. Bunun nedeni ışığın doğrusal yayılması ve açı değişimidir.",
+              "options": [
+                {"text": "Gölge küçülür", "correct": false},
+                {"text": "Gölge büyür", "correct": true},
+                {"text": "Gölge değişmez", "correct": false},
+                {"text": "Gölge kaybolur", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Saydam cisimler gölge oluşturur mu?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["saydam", "gölge"],
+              "explanation": "Saydam cisimler (cam, temiz su) ışığı geçirdikleri için gölge oluşturmazlar. Sadece opak ve yarı saydam cisimler gölge oluşturur.",
+              "options": [
+                {"text": "Evet, koyu gölge oluşturur", "correct": false},
+                {"text": "Hayır, ışığı geçirdiği için gölge oluşturmaz", "correct": true},
+                {"text": "Sadece gece gölge oluşturur", "correct": false},
+                {"text": "Renkli gölge oluşturur", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Güneş tutulmasında Ay'ın gölgesi ___ üzerine düşer.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["güneş tutulması", "gölge"],
+              "explanation": "Güneş tutulmasında Ay, Güneş ile Dünya arasına girer ve Ay'ın gölgesi Dünya'nın yüzeyine düşer. Gölgenin düştüğü bölgede Güneş kısmen veya tamamen karanlık görünür.",
+              "options": [
+                {"text": "Dünya'nın", "correct": true},
+                {"text": "Ay'ın", "correct": false},
+                {"text": "Güneş'in", "correct": false},
+                {"text": "yıldızların", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Işık kaynağı büyükse (geniş ışık kaynağı) cismin arkasında ne oluşur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["gölge", "geniş kaynak"],
+              "explanation": "Geniş (büyük) ışık kaynağı kullanıldığında cismin arkasında hem tam gölge (koyu merkez) hem yarı gölge (daha açık kenarlık) oluşur.",
+              "options": [
+                {"text": "Sadece tam gölge", "correct": false},
+                {"text": "Hem tam gölge hem yarı gölge", "correct": true},
+                {"text": "Hiç gölge oluşmaz", "correct": false},
+                {"text": "Sadece yarı gölge", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Işığın Yansıması",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Işığın yansıma kuralı nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yansıma", "kural"],
+              "explanation": "Işığın yansıma kuralı: Gelme açısı = Yansıma açısı. Işık düz bir yüzeye çarptığında geldiği açıyla aynı açıda yansır.",
+              "options": [
+                {"text": "Gelme açısı yansıma açısından büyüktür", "correct": false},
+                {"text": "Gelme açısı = Yansıma açısı", "correct": true},
+                {"text": "Gelme açısı yansıma açısından küçüktür", "correct": false},
+                {"text": "Yansıma açısı her zaman 90°dir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Yansıma türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["yansıma", "düzgün", "dağınık"],
+              "explanation": "Düzgün yansıma parlak/düz yüzeylerde, dağınık yansıma pürüzlü yüzeylerde gerçekleşir.",
+              "options": [
+                {"text": "Düzgün yansıma", "pairId": 1, "correct": false},
+                {"text": "Ayna, sakin göl yüzeyi (görüntü oluşur)", "pairId": 1, "correct": false},
+                {"text": "Dağınık yansıma", "pairId": 2, "correct": false},
+                {"text": "Duvar, kâğıt, toprak (görüntü oluşmaz)", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Aynada kendimizi görmemizin sebebi ___ olayıdır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["yansıma", "ayna"],
+              "explanation": "Aynada kendimizi görmemiz ışığın yansıması sayesindedir. Vücudumuzdan yansıyan ışık aynaya çarpıp düzgün yansıma ile gözümüze ulaşır.",
+              "options": [
+                {"text": "yansıma", "correct": true},
+                {"text": "kırılma", "correct": false},
+                {"text": "soğurma", "correct": false},
+                {"text": "saçılma", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Düz aynada oluşan görüntü nasıldır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["düz ayna", "görüntü"],
+              "explanation": "Düz aynada oluşan görüntü: cisimle aynı büyüklükte, dik (ters değil) ve aynaya olan uzaklık cismin aynaya uzaklığına eşittir. Görüntü sanaldır (aynanın arkasında oluşur).",
+              "options": [
+                {"text": "Cisimden büyük ve ters", "correct": false},
+                {"text": "Cisimle aynı büyüklükte ve dik", "correct": true},
+                {"text": "Cisimden küçük ve ters", "correct": false},
+                {"text": "Her zaman bulanık", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Işığı en iyi yansıtan yüzey hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["yansıma", "yüzey"],
+              "explanation": "Parlak ve düz yüzeyler (ayna, cilalı metal) ışığı en iyi yansıtır. Mat ve pürüzlü yüzeyler ışığı dağınık yansıtır.",
+              "options": [
+                {"text": "Siyah kumaş", "correct": false},
+                {"text": "Ayna (parlak ve düz yüzey)", "correct": true},
+                {"text": "Tahta", "correct": false},
+                {"text": "Kumlu zemin", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Cisimleri görmemiz nasıl gerçekleşir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["görme", "ışık"],
+              "explanation": "Cisimlerden yansıyan veya cisimlerin yaydığı ışık gözümüze ulaşınca cisimleri görürüz. Karanlıkta göremeyiz çünkü ışık olmadan yansıma gerçekleşmez.",
+              "options": [
+                {"text": "Gözümüzden ışık çıkar ve cisimlere ulaşır", "correct": false},
+                {"text": "Cisimlerden yansıyan/yayılan ışık gözümüze ulaşır", "correct": true},
+                {"text": "Cisimler hava aracılığıyla görülür", "correct": false},
+                {"text": "Ses dalgalarıyla görürüz", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Ayna Çeşitleri",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Ayna çeşitlerini örnekleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["ayna", "çeşitler"],
+              "explanation": "Üç tür ayna vardır: düz, çukur ve tümsek. Her birinin farklı yansıtma özellikleri ve kullanım alanları vardır.",
+              "options": [
+                {"text": "Düz ayna", "pairId": 1, "correct": false},
+                {"text": "Evdeki aynalar, dolap aynası", "pairId": 1, "correct": false},
+                {"text": "Çukur ayna", "pairId": 2, "correct": false},
+                {"text": "Far, makyaj aynası, güneş ocağı", "pairId": 2, "correct": false},
+                {"text": "Tümsek ayna", "pairId": 3, "correct": false},
+                {"text": "Araç dikiz aynası, market güvenlik aynası", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Çukur ayna görüntüyü nasıl oluşturur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["çukur ayna"],
+              "explanation": "Çukur ayna, yakın mesafede büyük ve dik görüntü oluşturur (makyaj aynası). Uzak mesafede ise küçük ve ters görüntü oluşturur. Işığı bir noktada toplar.",
+              "options": [
+                {"text": "Her zaman küçük görüntü", "correct": false},
+                {"text": "Yakında büyük-dik, uzakta küçük-ters görüntü", "correct": true},
+                {"text": "Her zaman aynı büyüklükte görüntü", "correct": false},
+                {"text": "Görüntü oluşturmaz", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Tümsek ayna her zaman ___ ve dik görüntü oluşturur.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["tümsek ayna"],
+              "explanation": "Tümsek ayna her zaman cisimden küçük, dik ve sanal görüntü oluşturur. Bu özellik geniş görüş alanı sağladığından araç aynalarında ve güvenlik aynalarında kullanılır.",
+              "options": [
+                {"text": "küçük", "correct": true},
+                {"text": "büyük", "correct": false},
+                {"text": "eşit", "correct": false},
+                {"text": "ters", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kaşık gibi bir yüzeyin iç (çukur) tarafına baktığınızda yüzünüz nasıl görünür?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["çukur ayna", "günlük"],
+              "explanation": "Kaşığın iç (çukur) yüzeyine yakından bakıldığında yüz büyük görünür (çukur ayna etkisi). Uzaktan bakıldığında ise ters görünür.",
+              "options": [
+                {"text": "Normal büyüklükte", "correct": false},
+                {"text": "Büyütülmüş görünür", "correct": true},
+                {"text": "Hiç görünmez", "correct": false},
+                {"text": "Küçültülmüş görünür", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Arabaların far lambaları neden çukur ayna kullanır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["çukur ayna", "far"],
+              "explanation": "Çukur aynalar ışığı bir noktada toplar ve paralel ışık demeti oluşturur. Bu özellik sayesinde far lambasındaki ışık uzak mesafeye güçlü şekilde gönderilir.",
+              "options": [
+                {"text": "Görüntüyü büyütmek için", "correct": false},
+                {"text": "Işığı toplayıp paralel ışın demeti oluşturmak için", "correct": true},
+                {"text": "Daha ucuz olduğu için", "correct": false},
+                {"text": "Renkleri değiştirmek için", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hangisi tümsek ayna kullanım alanıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["tümsek ayna", "kullanım"],
+              "explanation": "Tümsek ayna geniş görüş alanı sağladığı için araçların yan dikiz aynalarında, kavşak aynalarında ve market güvenlik aynalarında kullanılır.",
+              "options": [
+                {"text": "Makyaj aynası", "correct": false},
+                {"text": "Araba far lambası", "correct": false},
+                {"text": "Araç dikiz aynası ve kavşak aynası", "correct": true},
+                {"text": "Teleskop", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Işık ve Renk",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Beyaz ışık (güneş ışığı) aslında neyin birleşimidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["beyaz ışık", "renk"],
+              "explanation": "Beyaz ışık aslında 7 rengin (kırmızı, turuncu, sarı, yeşil, mavi, çivit, mor) birleşimidir. Bu renkler prizma ile ayrıştırılabilir ve gökkuşağı oluşur.",
+              "options": [
+                {"text": "Sadece sarı ışıktan", "correct": false},
+                {"text": "7 farklı rengin birleşiminden", "correct": true},
+                {"text": "Sadece kırmızı ve maviden", "correct": false},
+                {"text": "Renksiz ışıktan", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Gökkuşağı nasıl oluşur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["gökkuşağı"],
+              "explanation": "Gökkuşağı, güneş ışığının yağmur damlacıklarından geçerken kırılması ve renklerine ayrışması ile oluşur. Her damla küçük bir prizma gibi çalışır.",
+              "options": [
+                {"text": "Bulutlar boyanır", "correct": false},
+                {"text": "Güneş ışığının yağmur damlalarında kırılıp renklerine ayrışması", "correct": true},
+                {"text": "Ay'ın yansıması", "correct": false},
+                {"text": "Rüzgâr etkisi", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Kırmızı bir cisim kırmızı görünür çünkü sadece ___ ışığı yansıtır.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["renk", "yansıma"],
+              "explanation": "Cisimler kendilerine düşen ışığın bir kısmını yansıtıp bir kısmını soğurur (emer). Kırmızı cisim sadece kırmızı ışığı yansıtır, diğer renkleri soğurur.",
+              "options": [
+                {"text": "kırmızı", "correct": true},
+                {"text": "beyaz", "correct": false},
+                {"text": "mavi", "correct": false},
+                {"text": "tüm", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Siyah cisimler ışığı nasıl etkiler?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["siyah", "soğurma"],
+              "explanation": "Siyah cisimler üzerine düşen tüm ışığı soğurur (emer) ve hiçbir rengi yansıtmaz. Bu nedenle siyah görünürler. Beyaz cisimler ise tüm ışığı yansıtır.",
+              "options": [
+                {"text": "Tüm ışığı yansıtır", "correct": false},
+                {"text": "Tüm ışığı soğurur (emer)", "correct": true},
+                {"text": "Sadece kırmızı ışığı soğurur", "correct": false},
+                {"text": "Işığı geçirir", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Gökkuşağı renklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["gökkuşağı", "renkler"],
+              "explanation": "Gökkuşağında 7 renk dıştan içe doğru sıralanır. Bu sıralama beyaz ışığın kırılma miktarlarının farklı olmasından kaynaklanır.",
+              "options": [
+                {"text": "En dıştaki renk", "pairId": 1, "correct": false},
+                {"text": "Kırmızı", "pairId": 1, "correct": false},
+                {"text": "Ortadaki renk", "pairId": 2, "correct": false},
+                {"text": "Yeşil", "pairId": 2, "correct": false},
+                {"text": "En içteki renk", "pairId": 3, "correct": false},
+                {"text": "Mor", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Beyaz ışığı renklerine ayıran cam cisme ___ denir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["prizma"],
+              "explanation": "Prizma, beyaz ışığı renklerine (tayfına) ayıran üçgen şekilli cam cisimdir. Newton bu deneyle beyaz ışığın bileşik yapıda olduğunu kanıtlamıştır.",
+              "options": [
+                {"text": "prizma", "correct": true},
+                {"text": "mercek", "correct": false},
+                {"text": "ayna", "correct": false},
+                {"text": "filtre", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "İnsan ve Çevre",
+      "description": "Doğal kaynaklar, çevre kirliliği, geri dönüşüm, yenilenebilir enerji, ekosistem (MEB 2025-2026)",
+      "order": 6,
+      "lessons": [
+        {
+          "title": "Doğal Kaynaklar",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Yenilenebilir ve yenilenemez enerji kaynaklarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["enerji", "yenilenebilir"],
+              "explanation": "Yenilenebilir kaynaklar doğada sürekli var olur (güneş, rüzgâr, su). Yenilenemez kaynaklar sınırlıdır ve tükenebilir (kömür, petrol, doğalgaz).",
+              "options": [
+                {"text": "Güneş, rüzgâr, su enerjisi", "pairId": 1, "correct": false},
+                {"text": "Yenilenebilir enerji kaynakları", "pairId": 1, "correct": false},
+                {"text": "Kömür, petrol, doğalgaz", "pairId": 2, "correct": false},
+                {"text": "Yenilenemez (fosil) enerji kaynakları", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Hangisi yenilenebilir enerji kaynağıdır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["yenilenebilir"],
+              "explanation": "Rüzgâr enerjisi yenilenebilir bir enerji kaynağıdır. Doğada sürekli var olur ve tükenmez. Kömür, petrol ve doğalgaz ise yenilenemez fosil yakıtlardır.",
+              "options": [
+                {"text": "Kömür", "correct": false},
+                {"text": "Petrol", "correct": false},
+                {"text": "Rüzgâr enerjisi", "correct": true},
+                {"text": "Doğalgaz", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Fosil yakıtların (kömür, petrol, doğalgaz) oluşumu ___ yıl sürer.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["fosil yakıt"],
+              "explanation": "Fosil yakıtlar milyonlarca yıl önce yaşamış canlıların kalıntılarının yüksek basınç ve sıcaklık altında dönüşmesiyle oluşmuştur. Bu nedenle kısa sürede yenilenemezler.",
+              "options": [
+                {"text": "milyonlarca", "correct": true},
+                {"text": "yüzlerce", "correct": false},
+                {"text": "binlerce", "correct": false},
+                {"text": "onlarca", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Su neden önemli bir doğal kaynaktır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["su", "doğal kaynak"],
+              "explanation": "Su tüm canlılar için yaşamsal bir kaynaktır. İçme, tarım, sanayi, enerji üretimi gibi birçok alanda kullanılır. Temiz su kaynakları sınırlıdır ve korunmalıdır.",
+              "options": [
+                {"text": "Sadece balıklar için gereklidir", "correct": false},
+                {"text": "Tüm canlılar için yaşamsal, tarım-sanayi-enerji için gerekli", "correct": true},
+                {"text": "Sadece enerji üretimi için kullanılır", "correct": false},
+                {"text": "Sınırsız bir kaynaktır", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Toprak erozyonunun en büyük sebebi nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["erozyon", "toprak"],
+              "explanation": "Toprak erozyonunun en büyük sebebi ormansızlaşma (ağaçların kesilmesi) ve bitki örtüsünün tahribidir. Ağaç kökleri toprağı tutar; ağaçlar kesilince toprak su ve rüzgârla taşınır.",
+              "options": [
+                {"text": "Aşırı gübre kullanımı", "correct": false},
+                {"text": "Ormanların tahrip edilmesi ve bitki örtüsü kaybı", "correct": true},
+                {"text": "Çok fazla yağmur yağması", "correct": false},
+                {"text": "Güneş ışınları", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Doğal kaynakları korumak için bireysel olarak ne yapabiliriz?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["koruma", "bireysel"],
+              "explanation": "Su ve elektrik tasarrufu, geri dönüşüm, toplu taşıma kullanımı gibi bireysel adımlar doğal kaynakların korunmasına katkı sağlar.",
+              "options": [
+                {"text": "Daha fazla enerji tüketmek", "correct": false},
+                {"text": "Su ve elektrik tasarrufu yapmak, geri dönüşüme katkıda bulunmak", "correct": true},
+                {"text": "Plastiği çöpe atmak", "correct": false},
+                {"text": "Hiçbir şey yapamayız", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Çevre Kirliliği",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Çevre kirliliği türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["kirlilik", "türler"],
+              "explanation": "Çevre kirliliği hava, su ve toprak kirliliği olarak üç ana grupta incelenir.",
+              "options": [
+                {"text": "Hava kirliliği", "pairId": 1, "correct": false},
+                {"text": "Fabrika dumanları, egzoz gazları", "pairId": 1, "correct": false},
+                {"text": "Su kirliliği", "pairId": 2, "correct": false},
+                {"text": "Fabrika atıkları, tarım ilaçları, kanalizasyon", "pairId": 2, "correct": false},
+                {"text": "Toprak kirliliği", "pairId": 3, "correct": false},
+                {"text": "Çöpler, kimyasal atıklar, aşırı gübre", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Hava kirliliğinin en büyük sebeplerinden biri nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["hava kirliliği"],
+              "explanation": "Fosil yakıtların (kömür, petrol, doğalgaz) yakılması hava kirliliğinin en büyük sebeplerinden biridir. Fabrikalar, araçlar ve ısınma sistemleri bu kirliliğin başlıca kaynaklarıdır.",
+              "options": [
+                {"text": "Ağaç dikmek", "correct": false},
+                {"text": "Fosil yakıtların yakılması", "correct": true},
+                {"text": "Rüzgâr enerjisi kullanmak", "correct": false},
+                {"text": "Bisiklet kullanmak", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Sera etkisi ve küresel ısınmanın ana sebebi atmosferdeki ___ gazlarının artmasıdır.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["sera etkisi", "küresel ısınma"],
+              "explanation": "Karbondioksit (CO₂), metan gibi sera gazlarının atmosferdeki oranı arttıkça Dünya'nın ortalama sıcaklığı yükselir. Buna küresel ısınma denir.",
+              "options": [
+                {"text": "sera", "correct": true},
+                {"text": "oksijen", "correct": false},
+                {"text": "azot", "correct": false},
+                {"text": "helyum", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Plastik atıkların doğada çözünmesi ne kadar sürer?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["plastik", "çözünme"],
+              "explanation": "Plastik atıklar doğada yüzlerce yıl (bazı türler 1000 yıla kadar) çözünmeden kalır. Bu nedenle plastik kullanımını azaltmak ve geri dönüşüm çok önemlidir.",
+              "options": [
+                {"text": "1-2 yıl", "correct": false},
+                {"text": "10-20 yıl", "correct": false},
+                {"text": "Yüzlerce yıl", "correct": true},
+                {"text": "1 ay", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hangisi su kirliliğine yol açar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["su kirliliği"],
+              "explanation": "Fabrika atıklarının arıtılmadan su kaynaklarına bırakılması su kirliliğinin en önemli nedenlerinden biridir. Kirli su canlılar için zehirli olabilir.",
+              "options": [
+                {"text": "Yağmur suyu", "correct": false},
+                {"text": "Fabrika atıklarının arıtılmadan suya bırakılması", "correct": true},
+                {"text": "Balıkların yaşaması", "correct": false},
+                {"text": "Su arıtma tesisi kurmak", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Ozon tabakasının incelmesinin sebebi nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["ozon", "CFC"],
+              "explanation": "Ozon tabakası zararlı ultraviyole (UV) ışınlarından bizi korur. CFC (kloroflorokarbon) gibi kimyasallar (eski buzdolapları, spreyler) ozon tabakasını incelterek bu korumayı zayıflatır.",
+              "options": [
+                {"text": "Ağaçların kesilmesi", "correct": false},
+                {"text": "CFC gibi zararlı kimyasalların atmosfere salınması", "correct": true},
+                {"text": "Fazla oksijen üretilmesi", "correct": false},
+                {"text": "Güneş'in büyümesi", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Geri Dönüşüm ve Sürdürülebilirlik",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Geri dönüştürülebilen maddeleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["geri dönüşüm", "maddeler"],
+              "explanation": "Kâğıt, cam, plastik ve metal geri dönüştürülebilir. Geri dönüşüm hem doğal kaynakları korur hem de çevre kirliliğini azaltır.",
+              "options": [
+                {"text": "Kâğıt", "pairId": 1, "correct": false},
+                {"text": "Yeni kâğıt ürünleri (ağaçları korur)", "pairId": 1, "correct": false},
+                {"text": "Cam", "pairId": 2, "correct": false},
+                {"text": "Yeni cam şişeler (sınırsız geri dönüşüm)", "pairId": 2, "correct": false},
+                {"text": "Metal (alüminyum)", "pairId": 3, "correct": false},
+                {"text": "Yeni metal ürünler (enerji tasarrufu)", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Geri dönüşüm sembolü kaç oktan oluşur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["geri dönüşüm", "sembol"],
+              "explanation": "Geri dönüşüm sembolü birbirini kovalayan 3 oktan oluşur. Bu üçgen, 'azalt-yeniden kullan-geri dönüştür' döngüsünü temsil eder.",
+              "options": [
+                {"text": "1 ok", "correct": false},
+                {"text": "2 ok", "correct": false},
+                {"text": "3 ok", "correct": true},
+                {"text": "4 ok", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "1 ton kâğıdın geri dönüştürülmesi yaklaşık ___ ağacı kurtarır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["geri dönüşüm", "ağaç"],
+              "explanation": "1 ton atık kâğıdın geri dönüştürülmesi yaklaşık 17 ağacı kesilmekten kurtarır. Ayrıca büyük miktarda su ve enerji tasarrufu sağlar.",
+              "options": [
+                {"text": "17", "correct": true},
+                {"text": "2", "correct": false},
+                {"text": "100", "correct": false},
+                {"text": "50", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kompostlama nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kompost"],
+              "explanation": "Kompostlama, organik atıkların (meyve-sebze kabukları, yapraklar vb.) doğal olarak ayrışarak gübreye dönüştürülmesi işlemidir. Toprak verimliliğini artırır ve çöp miktarını azaltır.",
+              "options": [
+                {"text": "Plastik atıkların eritilmesi", "correct": false},
+                {"text": "Organik atıkların doğal olarak gübreye dönüştürülmesi", "correct": true},
+                {"text": "Camın kırılması", "correct": false},
+                {"text": "Atıkların yakılması", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "'Azalt, Yeniden Kullan, Geri Dönüştür' kuralında ilk yapılması gereken hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["3R", "azalt"],
+              "explanation": "İlk adım 'Azalt' (Reduce): tüketimi azaltmak. Daha sonra 'Yeniden Kullan' (Reuse) ve en son 'Geri Dönüştür' (Recycle) gelir. En etkili yol atık oluşumunu en baştan azaltmaktır.",
+              "options": [
+                {"text": "Geri dönüştür", "correct": false},
+                {"text": "Yeniden kullan", "correct": false},
+                {"text": "Azalt (tüketimi azalt)", "correct": true},
+                {"text": "Hepsini aynı anda yapmak", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Sürdürülebilir kalkınma ne demektir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["sürdürülebilirlik"],
+              "explanation": "Sürdürülebilir kalkınma: bugünkü ihtiyaçları karşılarken gelecek nesillerin ihtiyaçlarını da tehlikeye atmamaktır. Doğal kaynakların dengeli kullanımını, çevre korunmasını ve ekonomik gelişmeyi birlikte hedefler.",
+              "options": [
+                {"text": "Sadece ekonomik büyüme", "correct": false},
+                {"text": "Bugünkü ihtiyaçları karşılarken gelecek nesillerin ihtiyaçlarını tehlikeye atmamak", "correct": true},
+                {"text": "Doğal kaynakları hızla tüketmek", "correct": false},
+                {"text": "Sadece çevreyi korumak, kalkınmayı durdurmak", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Ekosistem ve Besin Zinciri",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Ekosistem nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ekosistem", "tanım"],
+              "explanation": "Ekosistem, belirli bir bölgedeki canlıların (bitkiler, hayvanlar, mikroorganizmalar) birbirleriyle ve cansız çevreleriyle (su, toprak, hava, ışık) etkileşim içinde olduğu yaşam alanıdır.",
+              "options": [
+                {"text": "Sadece hayvanların yaşadığı yer", "correct": false},
+                {"text": "Canlıların birbirleriyle ve cansız çevreleriyle etkileşim içinde olduğu yaşam alanı", "correct": true},
+                {"text": "Sadece bitkilerin bulunduğu alan", "correct": false},
+                {"text": "İnsanların yaşadığı şehir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Besin zincirindeki rolleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["besin zinciri", "roller"],
+              "explanation": "Besin zincirinde enerji üreticiden tüketicilere doğru aktarılır. Ayrıştırıcılar ise ölü organik maddeleri parçalar.",
+              "options": [
+                {"text": "Üretici", "pairId": 1, "correct": false},
+                {"text": "Kendi besinini üreten canlılar (bitkiler)", "pairId": 1, "correct": false},
+                {"text": "Birincil tüketici", "pairId": 2, "correct": false},
+                {"text": "Otçul hayvanlar (tavşan, geyik)", "pairId": 2, "correct": false},
+                {"text": "İkincil tüketici", "pairId": 3, "correct": false},
+                {"text": "Etçil hayvanlar (tilki, kartal)", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Besin zincirinde enerji hangi yönde akar?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["enerji akışı"],
+              "explanation": "Enerji güneşten bitkilere (üretici), bitkilerden otçullara (birincil tüketici), otçullardan etçillere (ikincil tüketici) doğru tek yönlü akar.",
+              "options": [
+                {"text": "Tüketiciden üreticiye", "correct": false},
+                {"text": "Üreticiden tüketicilere doğru (tek yönlü)", "correct": true},
+                {"text": "Her yöne eşit", "correct": false},
+                {"text": "Sadece etçillerden otçullara", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Besin zincirinde bir canlı türü yok olursa ne olur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["ekosistem dengesi"],
+              "explanation": "Besin zincirindeki bir halka koptuğunda tüm ekosistem etkilenir. Bir türün yok olması, onu yiyen canlıların açlıkla karşılaşmasına, onun yediği canlıların aşırı çoğalmasına yol açabilir.",
+              "options": [
+                {"text": "Hiçbir şey olmaz", "correct": false},
+                {"text": "Ekosistem dengesi bozulur, diğer türler de etkilenir", "correct": true},
+                {"text": "Sadece o tür etkilenir", "correct": false},
+                {"text": "Başka türler otomatik olarak o boşluğu doldurur", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Ölü canlıları ve organik atıkları parçalayarak toprağa geri kazandıran canlılara ___ denir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["ayrıştırıcı"],
+              "explanation": "Ayrıştırıcılar (decomposers) — bakteriler ve mantarlar — ölü canlıları ve organik artıkları parçalayarak toprağa besin maddesi kazandırır. Doğanın geri dönüşümcüleridir.",
+              "options": [
+                {"text": "ayrıştırıcı", "correct": true},
+                {"text": "üretici", "correct": false},
+                {"text": "tüketici", "correct": false},
+                {"text": "yırtıcı", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Güneş → Çimen → Tavşan → Tilki besin zincirinde tilki hangi tüketici basamağındadır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["besin zinciri", "basamak"],
+              "explanation": "Çimen üretici, tavşan birincil tüketici (otçul), tilki ise ikincil tüketici (etçil) basamağındadır.",
+              "options": [
+                {"text": "Üretici", "correct": false},
+                {"text": "Birincil tüketici", "correct": false},
+                {"text": "İkincil tüketici", "correct": true},
+                {"text": "Ayrıştırıcı", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Çevre Dostu Uygulamalar",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Yenilenebilir enerji kaynaklarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["yenilenebilir enerji"],
+              "explanation": "Bu enerji kaynakları çevre dostu, sürdürülebilir ve tükenmez kaynaklardır.",
+              "options": [
+                {"text": "Güneş enerjisi", "pairId": 1, "correct": false},
+                {"text": "Güneş panelleriyle elektrik üretimi", "pairId": 1, "correct": false},
+                {"text": "Rüzgâr enerjisi", "pairId": 2, "correct": false},
+                {"text": "Rüzgâr türbinleriyle elektrik üretimi", "pairId": 2, "correct": false},
+                {"text": "Hidroelektrik enerji", "pairId": 3, "correct": false},
+                {"text": "Barajlarda su gücüyle elektrik üretimi", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Karbon ayak izi ne demektir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["karbon ayak izi"],
+              "explanation": "Karbon ayak izi, bir bireyin veya kurumun faaliyetleri sonucu atmosfere salınan toplam sera gazı (özellikle CO₂) miktarıdır. Daha az enerji tüketmek, toplu taşıma kullanmak karbon ayak izini azaltır.",
+              "options": [
+                {"text": "Ayakkabının zeminde bıraktığı iz", "correct": false},
+                {"text": "Faaliyetler sonucu atmosfere salınan toplam sera gazı miktarı", "correct": true},
+                {"text": "Karbon kâğıdının bıraktığı leke", "correct": false},
+                {"text": "Ormandaki karbon miktarı", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Ağaçlar çevre için neden bu kadar önemlidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ağaç", "fotosentez"],
+              "explanation": "Ağaçlar fotosentez yaparak karbondioksiti (CO₂) alır ve oksijen (O₂) üretir. Ayrıca toprağı tutar, canlılara yaşam alanı sağlar ve iklimi düzenler.",
+              "options": [
+                {"text": "Sadece gölge yapmak için", "correct": false},
+                {"text": "CO₂ alıp O₂ üretir, toprağı tutar, canlılara yaşam alanı sağlar", "correct": true},
+                {"text": "Sadece meyve vermek için", "correct": false},
+                {"text": "Sadece mobilya yapmak için", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Çevre dostu ulaşım yöntemleri hangileridir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ulaşım", "çevre dostu"],
+              "explanation": "Bisiklet, yürüme ve toplu taşıma çevre dostu ulaşım yöntemleridir. Bireysel araç kullanımını azaltmak hava kirliliğini ve karbon salınımını azaltır.",
+              "options": [
+                {"text": "Her yere arabayla gitmek", "correct": false},
+                {"text": "Bisiklet, yürüme ve toplu taşıma kullanmak", "correct": true},
+                {"text": "Her yere uçakla gitmek", "correct": false},
+                {"text": "Motorlu tekne kullanmak", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Elektrik tasarrufu yapmak çevreyi nasıl korur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["elektrik tasarrufu"],
+              "explanation": "Elektriğin büyük kısmı fosil yakıtlardan (kömür, doğalgaz) üretilir. Elektrik tasarrufu yapmak fosil yakıt tüketimini ve dolayısıyla sera gazı salınımını azaltır.",
+              "options": [
+                {"text": "Elektrik tasarrufu çevreyi etkilemez", "correct": false},
+                {"text": "Fosil yakıt tüketimi ve sera gazı salınımı azalır", "correct": true},
+                {"text": "Sadece fatura düşer, çevreyle ilgisi yoktur", "correct": false},
+                {"text": "Elektrik bitebilir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Türkiye'de en çok kullanılan yenilenebilir enerji kaynağı hangisidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["Türkiye", "hidroelektrik"],
+              "explanation": "Türkiye'de en çok kullanılan yenilenebilir enerji kaynağı hidroelektrik enerjidir. Türkiye'nin zengin akarsu kaynakları sayesinde birçok baraj ve hidroelektrik santral bulunmaktadır.",
+              "options": [
+                {"text": "Güneş enerjisi", "correct": false},
+                {"text": "Rüzgâr enerjisi", "correct": false},
+                {"text": "Hidroelektrik enerji", "correct": true},
+                {"text": "Jeotermal enerji", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Elektrik Devreleri",
+      "description": "Basit elektrik devreleri, devre elemanları, iletken-yalıtkan, seri-paralel bağlama, elektrik güvenliği (MEB 2025-2026)",
+      "order": 7,
+      "lessons": [
+        {
+          "title": "Basit Elektrik Devresi",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Basit bir elektrik devresinin temel elemanları nelerdir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["devre", "elemanlar"],
+              "explanation": "Basit bir elektrik devresi en az şu elemanlardan oluşur: enerji kaynağı (pil), iletken tel, anahtar ve yük (ampul). Bu elemanlar bir döngü oluşturmalıdır.",
+              "options": [
+                {"text": "Sadece pil ve ampul", "correct": false},
+                {"text": "Pil, iletken tel, anahtar ve ampul", "correct": true},
+                {"text": "Sadece iletken tel", "correct": false},
+                {"text": "Pil ve mıknatıs", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Devre elemanlarını görevleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["devre", "elemanlar"],
+              "explanation": "Her devre elemanının belirli bir görevi vardır.",
+              "options": [
+                {"text": "Pil (enerji kaynağı)", "pairId": 1, "correct": false},
+                {"text": "Devreye elektrik enerjisi sağlar", "pairId": 1, "correct": false},
+                {"text": "Anahtar", "pairId": 2, "correct": false},
+                {"text": "Devreyi açar ve kapatır", "pairId": 2, "correct": false},
+                {"text": "Ampul", "pairId": 3, "correct": false},
+                {"text": "Elektrik enerjisini ışık ve ısıya dönüştürür", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bir elektrik devresinde akımın akması için devrenin ___ olması gerekir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["devre", "kapalı"],
+              "explanation": "Elektrik akımının akabilmesi için devrenin kapalı (kesintisiz döngü) olması gerekir. Anahtar açıksa veya tel kopuksa devre açıktır ve akım akmaz.",
+              "options": [
+                {"text": "kapalı", "correct": true},
+                {"text": "açık", "correct": false},
+                {"text": "büyük", "correct": false},
+                {"text": "renkli", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Anahtar açıkken ampul neden yanar mı?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["anahtar", "açık devre"],
+              "explanation": "Anahtar açıkken devre kopuktur (açık devre), akım akmaz ve ampul yanmaz. Ampulün yanması için anahtar kapatılarak devre kapalı hale getirilmelidir.",
+              "options": [
+                {"text": "Evet, yanar", "correct": false},
+                {"text": "Hayır, devre açık olduğu için akım akmaz ve yanmaz", "correct": true},
+                {"text": "Yarım parlaklıkta yanar", "correct": false},
+                {"text": "Yanıp söner", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Pilin ___ kutbundan çıkan akım, devreden geçerek pilin eksi kutbuna döner.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["akım", "yön"],
+              "explanation": "Geleneksel akım yönü (uzlaşımsal akım yönü) pilin artı (+) kutbundan çıkıp devreden geçerek eksi (-) kutbuna döner.",
+              "options": [
+                {"text": "artı", "correct": true},
+                {"text": "eksi", "correct": false},
+                {"text": "orta", "correct": false},
+                {"text": "yan", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hangisi elektrik devresinin çalışabilmesi için zorunlu değildir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["devre", "zorunlu"],
+              "explanation": "Anahtar devreyi kontrol etmek için kullanışlıdır ancak zorunlu değildir. Telleri doğrudan bağlayarak da devre kapatılabilir. Pil, tel ve yük (ampul) zorunlu elemanlardır.",
+              "options": [
+                {"text": "Enerji kaynağı (pil)", "correct": false},
+                {"text": "İletken tel", "correct": false},
+                {"text": "Anahtar", "correct": true},
+                {"text": "Yük (ampul)", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "İletken ve Yalıtkan Maddeler",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "İletken ve yalıtkan maddeleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["iletken", "yalıtkan"],
+              "explanation": "İletkenler elektrik akımını iyi iletir (metaller). Yalıtkanlar ise elektrik akımını iletmez (plastik, cam, kauçuk).",
+              "options": [
+                {"text": "Bakır, demir, alüminyum", "pairId": 1, "correct": false},
+                {"text": "İletken maddeler (akımı iletir)", "pairId": 1, "correct": false},
+                {"text": "Plastik, cam, kauçuk", "pairId": 2, "correct": false},
+                {"text": "Yalıtkan maddeler (akımı iletmez)", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Elektrik kablolarının dışı neden plastik ile kaplanmıştır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["yalıtkan", "güvenlik"],
+              "explanation": "Plastik yalıtkan bir maddedir, elektrik akımını iletmez. Kabloların dışının plastik olması insanları elektrik çarpmasından korur ve kısa devre oluşmasını önler.",
+              "options": [
+                {"text": "Güzel görünsün diye", "correct": false},
+                {"text": "Elektrik çarpmasını önlemek için (plastik yalıtkandır)", "correct": true},
+                {"text": "Kabloyu sağlamlaştırmak için", "correct": false},
+                {"text": "Akımı güçlendirmek için", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Elektrik akımını en iyi ileten maddelerden biri ___ dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["iletken", "bakır"],
+              "explanation": "Bakır, en iyi elektrik iletkenlerinden biridir. Bu nedenle elektrik kablolarının iç kısmı genellikle bakırdan yapılır. Gümüş daha iyi iletir ama çok pahalıdır.",
+              "options": [
+                {"text": "bakır", "correct": true},
+                {"text": "plastik", "correct": false},
+                {"text": "cam", "correct": false},
+                {"text": "tahta", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Hangisi elektrik iletkenidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["iletken"],
+              "explanation": "Demir çivi bir metaldir ve elektrik iletkenidir. Tahta, lastik ve seramik yalıtkan maddelerdir.",
+              "options": [
+                {"text": "Tahta kalem", "correct": false},
+                {"text": "Demir çivi", "correct": true},
+                {"text": "Lastik eldiven", "correct": false},
+                {"text": "Seramik tabak", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Saf su elektrik iletir mi?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["su", "iletken"],
+              "explanation": "Saf (damıtık) su elektrik iletmez, yalıtkandır. Ancak içinde tuz, mineral gibi çözünmüş maddeler varsa (musluk suyu, deniz suyu) elektrik iletir. Bu nedenle ıslak elle elektrikli aletlere dokunmak tehlikelidir.",
+              "options": [
+                {"text": "Evet, saf su iyi bir iletkendir", "correct": false},
+                {"text": "Hayır, saf su yalıtkandır ancak içinde çözünmüş madde varsa iletir", "correct": true},
+                {"text": "Hiçbir su elektrik iletmez", "correct": false},
+                {"text": "Sadece sıcak su iletir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Elektrikçilerin lastik eldiven ve lastik çizme giymesinin sebebi nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["güvenlik", "yalıtkan"],
+              "explanation": "Lastik (kauçuk) yalıtkan bir maddedir ve elektrik akımını iletmez. Elektrikçiler bu koruyucu ekipmanları giyerek elektrik çarpmasından korunur.",
+              "options": [
+                {"text": "Rahat olduğu için", "correct": false},
+                {"text": "Lastik yalıtkan olduğu için elektrik çarpmasından korur", "correct": true},
+                {"text": "Kirlenmeyi önlemek için", "correct": false},
+                {"text": "Soğuktan korunmak için", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Seri ve Paralel Bağlama",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Seri bağlama ve paralel bağlama arasındaki farkları eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["seri", "paralel"],
+              "explanation": "Seri bağlamada elemanlar art arda, paralel bağlamada ise yan yana bağlanır. Her birinin farklı özellikleri vardır.",
+              "options": [
+                {"text": "Seri bağlama", "pairId": 1, "correct": false},
+                {"text": "Elemanlar art arda, bir ampul bozulursa hepsi söner", "pairId": 1, "correct": false},
+                {"text": "Paralel bağlama", "pairId": 2, "correct": false},
+                {"text": "Elemanlar yan yana, bir ampul bozulursa diğerleri yanar", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Evdeki elektrik tesisatında ampuller genellikle nasıl bağlıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["paralel", "ev tesisatı"],
+              "explanation": "Evlerde ampuller paralel bağlıdır. Bu sayede bir ampul bozulduğunda diğerleri yanmaya devam eder ve her ampul tam parlaklıkta çalışır.",
+              "options": [
+                {"text": "Seri bağlı", "correct": false},
+                {"text": "Paralel bağlı", "correct": true},
+                {"text": "Karışık bağlı", "correct": false},
+                {"text": "Bağlantı türü fark etmez", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Seri bağlı devrede ampul sayısı artırılırsa ampullerin parlaklığı nasıl değişir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["seri", "parlaklık"],
+              "explanation": "Seri bağlı devrede ampul sayısı arttıkça devre direnci artar, akım azalır ve ampullerin parlaklığı azalır. Her eklenen ampul diğerlerinin parlaklığını düşürür.",
+              "options": [
+                {"text": "Artar", "correct": false},
+                {"text": "Azalır", "correct": true},
+                {"text": "Değişmez", "correct": false},
+                {"text": "Önce artar sonra azalır", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Paralel bağlı devrede bir ampul çıkarılırsa diğerleri söner mi?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["paralel", "bağımsızlık"],
+              "explanation": "Paralel bağlamada her ampul pilin kutupları arasına doğrudan bağlıdır. Bu nedenle bir ampulün çıkarılması veya bozulması diğerlerini etkilemez.",
+              "options": [
+                {"text": "Evet, hepsi söner", "correct": false},
+                {"text": "Hayır, diğerleri yanmaya devam eder", "correct": true},
+                {"text": "Sadece yanındaki söner", "correct": false},
+                {"text": "Hepsi daha parlak yanar", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Seri bağlı devrede akım her noktada ___ dır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["seri", "akım"],
+              "explanation": "Seri bağlı devrede akımın geçeceği tek bir yol vardır. Bu nedenle devrenin her noktasında akım aynıdır (eşittir).",
+              "options": [
+                {"text": "aynı", "correct": true},
+                {"text": "farklı", "correct": false},
+                {"text": "sıfır", "correct": false},
+                {"text": "artan", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Yılbaşı ağacı ışıkları genellikle seri bağlıdır. Bu bağlama türünün dezavantajı nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["seri", "dezavantaj"],
+              "explanation": "Seri bağlamada bir ampul bozulduğunda devre açılır ve tüm ampuller söner. Bozuk ampulü bulmak zordur çünkü hepsi sönüktür.",
+              "options": [
+                {"text": "Çok pahalıdır", "correct": false},
+                {"text": "Bir ampul bozulunca tüm ampuller söner", "correct": true},
+                {"text": "Çok parlak yanar", "correct": false},
+                {"text": "Dezavantajı yoktur", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Piller ve Enerji Dönüşümü",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Pilin görevi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["pil", "görev"],
+              "explanation": "Pil, kimyasal enerjiyi elektrik enerjisine dönüştüren bir enerji kaynağıdır. Devreye elektrik enerjisi sağlayarak ampulün yanmasını, motorun dönmesini sağlar.",
+              "options": [
+                {"text": "Işık üretmek", "correct": false},
+                {"text": "Kimyasal enerjiyi elektrik enerjisine dönüştürmek", "correct": true},
+                {"text": "Isı üretmek", "correct": false},
+                {"text": "Hareket enerjisi üretmek", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Enerji dönüşümlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["enerji dönüşümü"],
+              "explanation": "Elektrik enerjisi farklı enerji türlerine dönüştürülerek kullanılır.",
+              "options": [
+                {"text": "Ampul", "pairId": 1, "correct": false},
+                {"text": "Elektrik → Işık + Isı enerjisi", "pairId": 1, "correct": false},
+                {"text": "Elektrik motoru", "pairId": 2, "correct": false},
+                {"text": "Elektrik → Hareket (kinetik) enerjisi", "pairId": 2, "correct": false},
+                {"text": "Elektrikli ısıtıcı", "pairId": 3, "correct": false},
+                {"text": "Elektrik → Isı enerjisi", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Seri bağlı pillerin toplam gerilimi (voltajı) nasıl hesaplanır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["pil", "seri", "voltaj"],
+              "explanation": "Seri bağlı pillerin gerilimleri (voltajları) toplanır. İki tane 1,5 V pil seri bağlanırsa toplam gerilim = 1,5 + 1,5 = 3 V olur.",
+              "options": [
+                {"text": "Gerilim değişmez", "correct": false},
+                {"text": "Gerilimler toplanır", "correct": true},
+                {"text": "Gerilim yarıya düşer", "correct": false},
+                {"text": "Gerilimler çarpılır", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kullanılmış piller neden çöpe atılmamalıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["pil", "çevre"],
+              "explanation": "Piller zararlı kimyasallar (kadmiyum, cıva, kurşun) içerir. Çöpe atılan piller toprağa ve suya karışarak çevre kirliliğine yol açar. Atık piller özel toplama kutularına atılmalıdır.",
+              "options": [
+                {"text": "Tekrar şarj edilebileceği için", "correct": false},
+                {"text": "İçindeki zararlı kimyasallar çevreyi kirletir", "correct": true},
+                {"text": "Patlayabilir", "correct": false},
+                {"text": "Çöpe atılabilir, sorun yoktur", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Şarj edilebilir piller ile tek kullanımlık piller arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["pil", "şarj"],
+              "explanation": "Şarj edilebilir piller tekrar tekrar kullanılabilir, çevreye daha az zarar verir ve uzun vadede daha ekonomiktir. Tek kullanımlık piller ise enerjisi bitince atılır.",
+              "options": [
+                {"text": "Hiçbir fark yoktur", "correct": false},
+                {"text": "Şarj edilebilir piller tekrar kullanılabilir, daha çevre dostu", "correct": true},
+                {"text": "Tek kullanımlık piller daha güçlüdür", "correct": false},
+                {"text": "Şarj edilebilir piller daha zararlıdır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "1,5 V'luk 3 pil seri bağlanırsa toplam gerilim ___ V olur.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["pil", "seri", "hesaplama"],
+              "explanation": "Seri bağlamada gerilimler toplanır: 1,5 + 1,5 + 1,5 = 4,5 V.",
+              "options": [
+                {"text": "4,5", "correct": true},
+                {"text": "1,5", "correct": false},
+                {"text": "3", "correct": false},
+                {"text": "6", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Elektrik Güvenliği",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Elektrik güvenliği kurallarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["güvenlik", "kurallar"],
+              "explanation": "Elektrik tehlikeli olabilir. Güvenlik kurallarına uymak hayat kurtarır.",
+              "options": [
+                {"text": "Islak elle prize dokunmak", "pairId": 1, "correct": false},
+                {"text": "Tehlikeli — elektrik çarpması riski", "pairId": 1, "correct": false},
+                {"text": "Hasarlı kablolar", "pairId": 2, "correct": false},
+                {"text": "Kullanılmamalı — yangın ve çarpma riski", "pairId": 2, "correct": false},
+                {"text": "Sigorta kullanımı", "pairId": 3, "correct": false},
+                {"text": "Aşırı akımda devreyi keser — koruma sağlar", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kısa devre nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kısa devre"],
+              "explanation": "Kısa devre, elektrik akımının yükten (ampul, motor vb.) geçmeden doğrudan pilin kutupları arasında akmasıdır. Çok yüksek akım akar, teller ısınır ve yangın çıkabilir.",
+              "options": [
+                {"text": "Devrenin kısa olması", "correct": false},
+                {"text": "Akımın yükten geçmeden doğrudan pilin kutupları arasında akması", "correct": true},
+                {"text": "Pilin bitmesi", "correct": false},
+                {"text": "Anahtarın kapalı olması", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Sigorta devreden ___ akım geçtiğinde devreyi keser.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["sigorta", "koruma"],
+              "explanation": "Sigorta, devreden aşırı (fazla) akım geçtiğinde eriyerek devreyi keser. Bu sayede kısa devre ve aşırı yüklenmeden kaynaklanan yangınları önler.",
+              "options": [
+                {"text": "aşırı", "correct": true},
+                {"text": "az", "correct": false},
+                {"text": "normal", "correct": false},
+                {"text": "hiç", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Elektrik çarpmasına karşı hangisi güvenlik önlemidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["güvenlik", "önlem"],
+              "explanation": "Topraklama hattı, aşırı akımı güvenli bir şekilde toprağa ileterek elektrik çarpmasını önler. Evdeki prizlerde topraklama hattı bulunur.",
+              "options": [
+                {"text": "Islak elle elektrikli cihaz kullanmak", "correct": false},
+                {"text": "Topraklama hattı kullanmak", "correct": true},
+                {"text": "Hasarlı kablo kullanmak", "correct": false},
+                {"text": "Prizi aşırı yüklemek", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Yüksek gerilim hatlarının yakınında neden tehlike uyarısı bulunur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yüksek gerilim", "tehlike"],
+              "explanation": "Yüksek gerilim hatları çok yüksek voltaj taşır (binlerce volt). Yaklaşılması halinde havadan atlama yaparak (ark oluşumu) ölümcül elektrik çarpmasına neden olabilir.",
+              "options": [
+                {"text": "Gürültü yapar", "correct": false},
+                {"text": "Çok yüksek voltaj taşır, yaklaşmak ölümcül olabilir", "correct": true},
+                {"text": "Sadece kuşlar için tehlikelidir", "correct": false},
+                {"text": "Görüntü kirliliği yapar", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bir elektrik yangınında su kullanmak neden tehlikelidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["yangın", "elektrik güvenliği"],
+              "explanation": "Su elektrik iletkenidir. Elektrik yangınına su sıkılırsa akım su aracılığıyla kişiye iletilir ve elektrik çarpmasına neden olur. Elektrik yangınlarında önce elektrik kesilmeli, sonra kuru kimyevi tozlu yangın söndürücü kullanılmalıdır.",
+              "options": [
+                {"text": "Su etkisiz olduğu için", "correct": false},
+                {"text": "Su elektrik iletir, çarpma riski oluşturur", "correct": true},
+                {"text": "Yangını büyütür", "correct": false},
+                {"text": "Tehlikeli değildir, su kullanılabilir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

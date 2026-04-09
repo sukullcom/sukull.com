@@ -1,0 +1,2774 @@
+{
+  "course": {
+    "title": "10. Sınıf Fizik",
+    "imageSrc": ""
+  },
+  "units": [
+    {
+      "title": "Elektrik Akımı ve Devreler",
+      "description": "Seri-paralel devreler, Kirchhoff yasaları, elektriksel güç ve enerji, wheatstone köprüsü (MEB 2025-2026)",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "Seri ve Paralel Devreler",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Seri bağlı dirençlerde toplam direnç nasıl hesaplanır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["seri bağlantı", "direnç"],
+              "explanation": "Seri bağlı dirençlerin toplam direnci, dirençlerin toplamına eşittir: R_toplam = R₁ + R₂ + R₃ + ... Seri bağlantıda toplam direnç her zaman en büyük tek dirençten büyüktür.",
+              "options": [
+                {"text": "R_toplam = R₁ × R₂", "correct": false},
+                {"text": "R_toplam = R₁ + R₂ + R₃ + ...", "correct": true},
+                {"text": "1/R_toplam = 1/R₁ + 1/R₂", "correct": false},
+                {"text": "R_toplam = R₁ − R₂", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Paralel bağlı dirençlerde toplam direnç formülünü eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["paralel bağlantı", "direnç"],
+              "explanation": "Paralel bağlantıda toplam direnç formülü ve sonucu.",
+              "options": [
+                {"text": "Paralel direnç formülü", "pairId": 1, "correct": false},
+                {"text": "1/R_top = 1/R₁ + 1/R₂ + 1/R₃ + ...", "pairId": 1, "correct": false},
+                {"text": "İki eşit direnç (R) paralel", "pairId": 2, "correct": false},
+                {"text": "R_top = R/2", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "3Ω ve 6Ω paralel bağlanırsa toplam direnç ___ Ω olur.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["paralel", "hesaplama"],
+              "explanation": "1/R = 1/3 + 1/6 = 2/6 + 1/6 = 3/6 = 1/2, yani R = 2Ω. Paralel bağlantıda toplam direnç her zaman en küçük tek dirençten küçüktür.",
+              "options": [
+                {"text": "2", "correct": true},
+                {"text": "9", "correct": false},
+                {"text": "18", "correct": false},
+                {"text": "4,5", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Seri devrede akım her yerde ___ dir.",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["seri", "akım"],
+              "explanation": "Seri devrede akımın izleyeceği tek yol vardır, bu nedenle akım devrenin her noktasında aynıdır. Gerilim ise dirençler arasında paylaşılır.",
+              "options": [
+                {"text": "Farklı", "correct": false},
+                {"text": "Aynı", "correct": true},
+                {"text": "Sıfır", "correct": false},
+                {"text": "İki katı", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Paralel devrede gerilim her dalda nasıldır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["paralel", "gerilim"],
+              "explanation": "Paralel devrede her dalın iki ucu aynı iki noktaya bağlıdır, bu nedenle her dalda gerilim aynıdır. Akım ise dallara dirençleriyle ters orantılı olarak paylaşılır.",
+              "options": [
+                {"text": "Her dalda farklı", "correct": false},
+                {"text": "Her dalda aynı", "correct": true},
+                {"text": "Sadece ilk dalda var", "correct": false},
+                {"text": "Sıfır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Karma (seri-paralel) devre problemlerini çözmek için ilk adım ne olmalıdır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["karma devre"],
+              "explanation": "Karma devrelerde önce paralel bağlı dirençler eşdeğer tek dirence indirgenir, sonra elde edilen seri devre çözülür. Adım adım sadeleştirme yapılır.",
+              "options": [
+                {"text": "Hemen Ohm yasasını uygulamak", "correct": false},
+                {"text": "Paralel grupları eşdeğer dirence indirgemek, sonra seri toplamak", "correct": true},
+                {"text": "Tüm dirençleri toplamak", "correct": false},
+                {"text": "Akımı tahmin etmek", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Kirchhoff Yasaları",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Kirchhoff'un akım yasası (1. yasa) ne der?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kirchhoff", "akım yasası"],
+              "explanation": "Kirchhoff'un 1. yasası (Düğüm Noktası Yasası): Bir düğüm noktasına giren akımların toplamı, çıkan akımların toplamına eşittir. Bu, yük korunumunun ifadesidir.",
+              "options": [
+                {"text": "Akım her yerde aynıdır", "correct": false},
+                {"text": "Bir düğüme giren akımlar toplamı = çıkan akımlar toplamı", "correct": true},
+                {"text": "Akım dirençle orantılıdır", "correct": false},
+                {"text": "Akım gerilimle ters orantılıdır", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kirchhoff'un gerilim yasası (2. yasa) ne der?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kirchhoff", "gerilim yasası"],
+              "explanation": "Kirchhoff'un 2. yasası (Çevrim Yasası): Kapalı bir çevrim boyunca gerilim düşümlerinin cebirsel toplamı sıfırdır. Bu, enerjinin korunumunun ifadesidir.",
+              "options": [
+                {"text": "Gerilim her yerde aynıdır", "correct": false},
+                {"text": "Kapalı çevrimde gerilim düşümlerinin cebirsel toplamı sıfırdır", "correct": true},
+                {"text": "Toplam gerilim toplam akıma eşittir", "correct": false},
+                {"text": "Gerilim sadece pilde oluşur", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Kirchhoff yasalarının temelini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["kirchhoff", "temel"],
+              "explanation": "Her Kirchhoff yasası bir korunum yasasına dayanır.",
+              "options": [
+                {"text": "1. Yasa (Akım/Düğüm)", "pairId": 1, "correct": false},
+                {"text": "Yük korunumu", "pairId": 1, "correct": false},
+                {"text": "2. Yasa (Gerilim/Çevrim)", "pairId": 2, "correct": false},
+                {"text": "Enerji korunumu", "pairId": 2, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Bir düğüm noktasına 3A ve 5A akım giriyor. Çıkan akım ___ A'dır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["kirchhoff 1", "hesaplama"],
+              "explanation": "Kirchhoff 1. yasa: Giren = Çıkan → 3 + 5 = 8 A çıkmalıdır.",
+              "options": [
+                {"text": "8", "correct": true},
+                {"text": "2", "correct": false},
+                {"text": "15", "correct": false},
+                {"text": "1,67", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Kirchhoff yasaları ne zaman Ohm yasasından daha kullanışlıdır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kirchhoff", "uygulama"],
+              "explanation": "Kirchhoff yasaları birden fazla kaynak (pil/jeneratör) içeren karmaşık devrelerde kullanılır. Basit tek kaynakli seri/paralel devrelerde Ohm yasası yeterlidir.",
+              "options": [
+                {"text": "Basit seri devrelerde", "correct": false},
+                {"text": "Birden fazla kaynak içeren karmaşık devrelerde", "correct": true},
+                {"text": "Tek direnç içeren devrelerde", "correct": false},
+                {"text": "Hiçbir zaman", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "12V pil, 2Ω ve 4Ω seri dirençli devrede akım kaç Amper'dir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["seri devre", "hesaplama"],
+              "explanation": "R_top = 2 + 4 = 6Ω. I = V/R = 12/6 = 2A.",
+              "options": [
+                {"text": "6 A", "correct": false},
+                {"text": "2 A", "correct": true},
+                {"text": "3 A", "correct": false},
+                {"text": "72 A", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Elektriksel Güç ve Enerji",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Elektriksel güç formüllerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["güç", "formüller"],
+              "explanation": "Elektriksel güç farklı formüllerle hesaplanabilir.",
+              "options": [
+                {"text": "P = V × I", "pairId": 1, "correct": false},
+                {"text": "Gerilim × Akım", "pairId": 1, "correct": false},
+                {"text": "P = I² × R", "pairId": 2, "correct": false},
+                {"text": "Akım karesi × Direnç", "pairId": 2, "correct": false},
+                {"text": "P = V² / R", "pairId": 3, "correct": false},
+                {"text": "Gerilim karesi / Direnç", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "220V şebekede 5A çeken bir cihazın gücü ___ W'tır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["güç", "hesaplama"],
+              "explanation": "P = V × I = 220 × 5 = 1100 W = 1,1 kW.",
+              "options": [
+                {"text": "1100", "correct": true},
+                {"text": "44", "correct": false},
+                {"text": "225", "correct": false},
+                {"text": "1000", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Elektrik enerjisi nasıl hesaplanır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["enerji", "hesaplama"],
+              "explanation": "E = P × t (Enerji = Güç × Süre). SI birimi Joule (J): E = W × s. Elektrik faturalarında kWh kullanılır: 1 kWh = 3,6 × 10⁶ J.",
+              "options": [
+                {"text": "E = P / t", "correct": false},
+                {"text": "E = P × t (Güç × Süre)", "correct": true},
+                {"text": "E = P + t", "correct": false},
+                {"text": "E = V × I", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "2 kW'lık bir ısıtıcı 3 saat çalışırsa kaç kWh enerji harcar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["kWh", "hesaplama"],
+              "explanation": "E = P × t = 2 kW × 3 h = 6 kWh.",
+              "options": [
+                {"text": "6 kWh", "correct": true},
+                {"text": "5 kWh", "correct": false},
+                {"text": "0,67 kWh", "correct": false},
+                {"text": "600 kWh", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Seri bağlı özdeş ampullerde güç paylaşımı nasıldır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["seri", "güç"],
+              "explanation": "Seri bağlı özdeş ampullerde akım aynı olduğundan her ampulde harcanan güç eşittir (P = I²R, I ve R aynı). Dirençleri farklıysa direnci büyük olan daha fazla güç harcar.",
+              "options": [
+                {"text": "İlk ampul en çok güç harcar", "correct": false},
+                {"text": "Özdeşse eşit paylaşılır; farklıysa büyük dirençli daha çok harcar", "correct": true},
+                {"text": "Son ampul en çok harcar", "correct": false},
+                {"text": "Güç paylaşılmaz", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Joule ısısı nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["joule ısısı"],
+              "explanation": "Joule ısısı, elektrik akımının dirençli iletkenlerden geçerken ürettiği ısıdır. Q = I²Rt formülüyle hesaplanır. Elektrikli ısıtıcılar, ütüler ve tost makineleri bu prensibi kullanır.",
+              "options": [
+                {"text": "Işığın ısı üretmesi", "correct": false},
+                {"text": "Akımın direnç üzerinden geçerken ürettiği ısı (Q = I²Rt)", "correct": true},
+                {"text": "Manyetik alanın ısı üretmesi", "correct": false},
+                {"text": "Kimyasal tepkimenin ısısı", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Pilin İç Direnci ve EMK",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "EMK (elektromotor kuvveti) nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["EMK"],
+              "explanation": "EMK (ε), pilin devre açıkken (yüksüz) uçları arasındaki gerilimdir. Pilin kimyasal enerjisini elektrik enerjisine dönüştürme kapasitesidir. Birimi Volt'tur.",
+              "options": [
+                {"text": "Bir kuvvet türü", "correct": false},
+                {"text": "Pilin yüksüz haldeki uç gerilimi, enerji dönüşüm kapasitesi", "correct": true},
+                {"text": "Dış devredeki gerilim düşümü", "correct": false},
+                {"text": "Akımın büyüklüğü", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Pilin iç direnci devreyi nasıl etkiler?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["iç direnç"],
+              "explanation": "Pilin iç direnci (r) akımın bir kısmını pil içinde ısıya dönüştürür. Bu nedenle yüklü devrede uç gerilim (V) EMK'dan (ε) küçüktür: V = ε − I·r.",
+              "options": [
+                {"text": "Hiç etkilemez", "correct": false},
+                {"text": "Uç gerilimi EMK'dan düşürür (V = ε − I·r), enerji kaybına neden olur", "correct": true},
+                {"text": "Akımı artırır", "correct": false},
+                {"text": "Gerilimi artırır", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "EMK ve iç direnç ilişkisini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["EMK", "iç direnç"],
+              "explanation": "Pil devresi formülleri.",
+              "options": [
+                {"text": "ε = I·(R + r)", "pairId": 1, "correct": false},
+                {"text": "EMK = Akım × (Dış direnç + İç direnç)", "pairId": 1, "correct": false},
+                {"text": "V = ε − I·r", "pairId": 2, "correct": false},
+                {"text": "Uç gerilim = EMK − İç gerilim düşümü", "pairId": 2, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "EMK'sı 12V, iç direnci 1Ω olan pilin 5Ω dış dirence bağlandığında akım ___ A'dır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["EMK", "hesaplama"],
+              "explanation": "I = ε / (R + r) = 12 / (5 + 1) = 12/6 = 2A.",
+              "options": [
+                {"text": "2", "correct": true},
+                {"text": "12", "correct": false},
+                {"text": "2,4", "correct": false},
+                {"text": "6", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Pil yaşlandıkça iç direnci nasıl değişir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["pil", "yaşlanma"],
+              "explanation": "Pil yaşlandıkça kimyasal maddeler tükendiğinden iç direnç artar. İç direnç artınca uç gerilim düşer ve pil daha az verimli çalışır. Sonunda kullanılamaz hale gelir.",
+              "options": [
+                {"text": "Azalır", "correct": false},
+                {"text": "Artar (pil zayıflar, uç gerilim düşer)", "correct": true},
+                {"text": "Değişmez", "correct": false},
+                {"text": "Sıfırlanır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Kısa devre durumunda pildeki akım neden çok artar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kısa devre", "akım"],
+              "explanation": "Kısa devrede dış direnç R ≈ 0 olur. I = ε/(R+r) formülünde R sıfıra yaklaşınca akım çok artar: I ≈ ε/r. Sadece iç direnç sınırlar. Bu aşırı akım ısınmaya ve hasara neden olur.",
+              "options": [
+                {"text": "Gerilim arttığı için", "correct": false},
+                {"text": "Dış direnç ≈ 0 olunca akımı sadece küçük iç direnç sınırlar (I ≈ ε/r)", "correct": true},
+                {"text": "İç direnç sıfıra düştüğü için", "correct": false},
+                {"text": "Manyetik alan oluştuğu için", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Elektrik Devre Elemanları ve Ölçme",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Ampermetre ve voltmetrenin devreye bağlanmasını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["ampermetre", "voltmetre"],
+              "explanation": "Ölçü aletleri doğru bağlanmalıdır.",
+              "options": [
+                {"text": "Ampermetre", "pairId": 1, "correct": false},
+                {"text": "Seri bağlanır, iç direnci çok küçük (devreyi etkilemez)", "pairId": 1, "correct": false},
+                {"text": "Voltmetre", "pairId": 2, "correct": false},
+                {"text": "Paralel bağlanır, iç direnci çok büyük (akım çekmez)", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Ampermetrenin iç direnci neden çok küçük olmalıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ampermetre", "iç direnç"],
+              "explanation": "Ampermetre seri bağlanır. İç direnci büyük olursa devrenin toplam direncini önemli ölçüde artırır ve akımı değiştirir. Doğru ölçüm için iç direnç ihmal edilebilir kadar küçük olmalıdır.",
+              "options": [
+                {"text": "Ucuz olması için", "correct": false},
+                {"text": "Devrenin akımını değiştirmemek için", "correct": true},
+                {"text": "Daha hızlı ölçmek için", "correct": false},
+                {"text": "İç direncin önemi yoktur", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Potansiyometre (reosta) ne işe yarar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["potansiyometre"],
+              "explanation": "Potansiyometre (reosta), devredeki direnci ayarlanabilir şekilde değiştiren elemandır. Ses kontrolü, fan hız ayarı ve lamba parlaklık ayarında kullanılır.",
+              "options": [
+                {"text": "Akım ölçer", "correct": false},
+                {"text": "Devredeki direnci kademeli olarak değiştirir", "correct": true},
+                {"text": "Gerilim üretir", "correct": false},
+                {"text": "Manyetik alan oluşturur", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kondansatörün (sığacın) görevi nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kondansatör"],
+              "explanation": "Kondansatör, elektrik yükünü ve enerjiyi depolayan devre elemanıdır. İki iletken levha arasında yalıtkan (dielektrik) bulunur. Fotoğraf flaşı, bilgisayar belleği ve filtre devrelerinde kullanılır.",
+              "options": [
+                {"text": "Akım üretir", "correct": false},
+                {"text": "Elektrik yükünü ve enerjiyi depolar", "correct": true},
+                {"text": "Direnci artırır", "correct": false},
+                {"text": "Manyetik enerji depolar", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Wheatstone köprüsü ne işe yarar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["wheatstone"],
+              "explanation": "Wheatstone köprüsü, bilinmeyen bir direnci yüksek hassasiyetle ölçmek için kullanılan devre düzeneğidir. Denge durumunda galvanometre sıfır gösterir ve bilinmeyen direnç hesaplanır.",
+              "options": [
+                {"text": "Akım ölçmek için", "correct": false},
+                {"text": "Bilinmeyen direnci yüksek hassasiyetle ölçmek için", "correct": true},
+                {"text": "Gerilim üretmek için", "correct": false},
+                {"text": "Pil şarj etmek için", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bir devrede voltmetre ___ olarak bağlanır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["voltmetre", "bağlantı"],
+              "explanation": "Voltmetre, gerilim ölçmek istenen elemanın iki ucuna paralel olarak bağlanır.",
+              "options": [
+                {"text": "paralel", "correct": true},
+                {"text": "seri", "correct": false},
+                {"text": "karışık", "correct": false},
+                {"text": "tek uçtan", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Manyetizma",
+      "description": "Mıknatıslar, manyetik alan, akımın manyetik alanı, manyetik kuvvet, Dünya'nın manyetik alanı (MEB 2025-2026)",
+      "order": 2,
+      "lessons": [
+        {
+          "title": "Mıknatıslar ve Manyetik Alan",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Manyetik alan çizgileri nasıl yönelir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["manyetik alan", "çizgiler"],
+              "explanation": "Manyetik alan çizgileri mıknatısın kuzey (N) kutbundan çıkıp güney (S) kutbuna girer. Mıknatıs içinde güney'den kuzeye devam eder (kapalı çevrimler). Çizgiler asla kesişmez.",
+              "options": [
+                {"text": "Güney'den kuzeye (dışarıda)", "correct": false},
+                {"text": "Kuzey'den güney'e (dışarıda)", "correct": true},
+                {"text": "Rastgele yönlüdür", "correct": false},
+                {"text": "Paralel düz çizgilerdir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Mıknatıs kutupları arası etkileşimi eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["kutup", "etkileşim"],
+              "explanation": "Mıknatıs kutupları elektrik yüklerine benzer şekilde etkileşir.",
+              "options": [
+                {"text": "Aynı kutuplar (N-N veya S-S)", "pairId": 1, "correct": false},
+                {"text": "Birbirini iter", "pairId": 1, "correct": false},
+                {"text": "Zıt kutuplar (N-S)", "pairId": 2, "correct": false},
+                {"text": "Birbirini çeker", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bir mıknatıs ikiye bölünürse ne olur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["mıknatıs", "bölünme"],
+              "explanation": "Bir mıknatıs kaç parçaya bölünürse bölünsün her parça kendi kuzey ve güney kutbuna sahip yeni bir mıknatıs olur. Tek kutuplu mıknatıs (monopol) elde edilemez.",
+              "options": [
+                {"text": "Bir parça N, diğeri S kutuplu olur", "correct": false},
+                {"text": "Her parça yeni N ve S kutuplu mıknatıs olur", "correct": true},
+                {"text": "Mıknatıslığını kaybeder", "correct": false},
+                {"text": "Tek kutuplu mıknatıs oluşur", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Mıknatıs hangi metalleri çeker?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ferromanyetik"],
+              "explanation": "Mıknatıslar ferromanyetik maddeleri çeker: demir (Fe), kobalt (Co), nikel (Ni) ve bunların alaşımları. Altın, gümüş, bakır, alüminyum manyetik değildir.",
+              "options": [
+                {"text": "Tüm metalleri", "correct": false},
+                {"text": "Demir, kobalt, nikel (ferromanyetik maddeler)", "correct": true},
+                {"text": "Altın ve gümüşü", "correct": false},
+                {"text": "Sadece demiri", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Manyetik alan şiddeti birimi ___ (T) dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["manyetik alan", "birim"],
+              "explanation": "Manyetik alan şiddetinin (B) SI birimi Tesla'dır (T). Nikola Tesla'nın adından gelir. 1 T = 1 Wb/m² = 1 kg/(A·s²). Dünya'nın manyetik alanı yaklaşık 50 μT'dır.",
+              "options": [
+                {"text": "Tesla", "correct": true},
+                {"text": "Newton", "correct": false},
+                {"text": "Coulomb", "correct": false},
+                {"text": "Watt", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Dünya'nın manyetik alanı pusula ibresini neden kuzeye çevirir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["dünya", "manyetik alan"],
+              "explanation": "Dünya dev bir mıknatıs gibidir. Coğrafi kuzey kutbu yakınlarında manyetik güney kutbu (S) bulunur. Pusula ibresinin kuzey ucu (N) manyetik güney'e doğru çekilir — bu nedenle coğrafi kuzeyi gösterir.",
+              "options": [
+                {"text": "Yerçekimi nedeniyle", "correct": false},
+                {"text": "Coğrafi kuzey yakınlarında manyetik güney kutbu olduğu için", "correct": true},
+                {"text": "Güneş'in çekim kuvveti", "correct": false},
+                {"text": "Ay'ın etkisi", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Akımın Manyetik Alanı",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Elektrik akımı manyetik alan oluşturur mu?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["akım", "manyetik alan"],
+              "explanation": "Evet! Hans Christian Oersted 1820'de keşfetti: akım taşıyan tel etrafında manyetik alan oluşur. Bu keşif elektrik ve manyetizmanın ilişkili olduğunu gösterdi (elektromanyetizma).",
+              "options": [
+                {"text": "Hayır, ilişkisi yoktur", "correct": false},
+                {"text": "Evet, akım taşıyan tel etrafında manyetik alan oluşur", "correct": true},
+                {"text": "Sadece çok yüksek akımlarda", "correct": false},
+                {"text": "Sadece süper iletkenlerde", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Düz telin manyetik alan çizgileri nasıl şekillidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["düz tel", "manyetik alan"],
+              "explanation": "Akım taşıyan düz tel etrafında manyetik alan çizgileri eş merkezli daireler şeklindedir. Tel'den uzaklaştıkça alan zayıflar. Alan yönü sağ el kuralıyla belirlenir.",
+              "options": [
+                {"text": "Düz çizgiler", "correct": false},
+                {"text": "Tel etrafında eş merkezli daireler", "correct": true},
+                {"text": "Rastgele", "correct": false},
+                {"text": "Spiral", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Sağ el kuralı ne için kullanılır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sağ el kuralı"],
+              "explanation": "Sağ el kuralı: Sağ elin başparmağı akım yönünü gösterirse, kıvrılan parmaklar manyetik alanın yönünü gösterir. Düz tel, bobin ve solenoid için kullanılır.",
+              "options": [
+                {"text": "Kuvvetin yönünü bulmak için", "correct": false},
+                {"text": "Akım taşıyan telin manyetik alan yönünü bulmak için", "correct": true},
+                {"text": "Akımın büyüklüğünü bulmak için", "correct": false},
+                {"text": "Direnci hesaplamak için", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Elektromıknatıs nasıl yapılır?",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["elektromıknatıs"],
+              "explanation": "Elektromıknatıs yapılışı ve güçlendirme yöntemleri.",
+              "options": [
+                {"text": "Demir çekirdeğe tel sarmak ve akım geçirmek", "pairId": 1, "correct": false},
+                {"text": "Temel yapım yöntemi", "pairId": 1, "correct": false},
+                {"text": "Sarım sayısını ve akımı artırmak", "pairId": 2, "correct": false},
+                {"text": "Manyetik alanı güçlendirir", "pairId": 2, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Solenoidin içindeki manyetik alan nasıldır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["solenoid"],
+              "explanation": "Solenoid (silindirik bobin) içindeki manyetik alan düzgündür — her noktada aynı şiddet ve yön. Dışarıda ise çubuk mıknatısa benzer alan çizgileri oluşur.",
+              "options": [
+                {"text": "Dairesel ve düzensiz", "correct": false},
+                {"text": "İç kısımda düzgün (homojen), çubuk mıknatısa benzer", "correct": true},
+                {"text": "Sadece dışarıda var", "correct": false},
+                {"text": "Sıfır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Elektromıknatısın kalıcı mıknatısa göre avantajı ___.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["elektromıknatıs", "avantaj"],
+              "explanation": "Elektromıknatısın en büyük avantajı açılıp kapatılabilmesidir. Akım kesilince manyetik özelliği kaybolur. Hurda vinçlerinde, tren frenleme sistemlerinde bu özellik kullanılır.",
+              "options": [
+                {"text": "açılıp kapatılabilmesi", "correct": true},
+                {"text": "ucuz olması", "correct": false},
+                {"text": "hafif olması", "correct": false},
+                {"text": "güçsüz olması", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Manyetik Kuvvet",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Manyetik alanda akım taşıyan tele kuvvet etkiler mi?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["manyetik kuvvet"],
+              "explanation": "Evet, manyetik alan içindeki akım taşıyan tele bir kuvvet etki eder: F = B·I·L·sin(θ). Bu prensibi elektrik motorları kullanır. Kuvvet hem akım hem alan yönüne diktir.",
+              "options": [
+                {"text": "Hayır, etkilemez", "correct": false},
+                {"text": "Evet, F = B·I·L·sin(θ) kuvveti etkir", "correct": true},
+                {"text": "Sadece çok güçlü alanlarda", "correct": false},
+                {"text": "Sadece DC akımda", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Manyetik kuvvetin yönünü bulmak için hangi kural kullanılır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["sol el kuralı", "kuvvet yönü"],
+              "explanation": "Fleming'in sol el kuralı (motor kuralı): İşaret parmağı manyetik alan (B), orta parmak akım (I) yönünü gösterirse başparmak kuvvet (F) yönünü gösterir.",
+              "options": [
+                {"text": "Sağ el kuralı", "correct": false},
+                {"text": "Fleming'in sol el kuralı (motor kuralı)", "correct": true},
+                {"text": "Newton'un 3. yasası", "correct": false},
+                {"text": "Lenz yasası", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Elektrik motorunun çalışma prensibini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["motor", "prensip"],
+              "explanation": "Elektrik motoru manyetik kuvvet prensibini kullanır.",
+              "options": [
+                {"text": "Manyetik alan içinde akım taşıyan bobine kuvvet etkir", "pairId": 1, "correct": false},
+                {"text": "Bobin döner → Elektrik enerjisi → Hareket enerjisi", "pairId": 1, "correct": false},
+                {"text": "Komütatör (kolektör)", "pairId": 2, "correct": false},
+                {"text": "Akım yönünü her yarım turda değiştirerek sürekli dönme sağlar", "pairId": 2, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Manyetik alanda hareket eden yüklü parçacığa etkiyen kuvvet ne yönündedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["lorentz kuvveti"],
+              "explanation": "Manyetik alan içinde hareket eden yüklü parçacığa Lorentz kuvveti etkir: F = q·v·B·sin(θ). Bu kuvvet hem hız hem alan yönüne diktir, parçacığı dairesel veya spiral yörüngeye sokar.",
+              "options": [
+                {"text": "Hareket yönünde", "correct": false},
+                {"text": "Hem hıza hem manyetik alana dik yönde", "correct": true},
+                {"text": "Manyetik alan yönünde", "correct": false},
+                {"text": "Yerçekimi yönünde", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "İki paralel akım taşıyan tel birbirine ___ uygular.",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["paralel teller", "kuvvet"],
+              "explanation": "Aynı yöne akım taşıyan paralel teller birbirini çeker, zıt yöne taşıyan teller birbirini iter. Her telin manyetik alanı diğer tele kuvvet uygular.",
+              "options": [
+                {"text": "Elektrik kuvveti", "correct": false},
+                {"text": "Manyetik kuvvet (aynı yön → çekme, zıt yön → itme)", "correct": true},
+                {"text": "Yerçekimi kuvveti", "correct": false},
+                {"text": "Sürtünme kuvveti", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Galvanometre ___ ölçer.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["galvanometre"],
+              "explanation": "Galvanometre, çok küçük akımları ölçen hassas bir alettir. Manyetik alan içindeki bobinin akımla döndürülmesi prensibine dayanır. Ampermetre ve voltmetre galvanometreden türetilir.",
+              "options": [
+                {"text": "küçük akımları", "correct": true},
+                {"text": "sıcaklığı", "correct": false},
+                {"text": "basıncı", "correct": false},
+                {"text": "direnci", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Elektromanyetik İndüksiyon",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Faraday'ın elektromanyetik indüksiyon keşfi nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["faraday", "indüksiyon"],
+              "explanation": "Faraday (1831): Değişen manyetik akı bir iletken döngüde EMK (gerilim) ve dolayısıyla akım indükler. Mıknatısın bobine yaklaştırılıp uzaklaştırılması akım üretir.",
+              "options": [
+                {"text": "Manyetik alan oluşturma", "correct": false},
+                {"text": "Değişen manyetik akının iletkenede EMK ve akım oluşturması", "correct": true},
+                {"text": "Akımın manyetik alan oluşturması", "correct": false},
+                {"text": "Statik elektrik oluşturma", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Lenz yasası ne der?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["lenz yasası"],
+              "explanation": "Lenz yasası: İndüklenen akımın yönü, kendisini oluşturan manyetik akı değişimini engelleyecek yöndedir. Mıknatıs yaklaşırken indüklenen akım iten manyetik alan oluşturur.",
+              "options": [
+                {"text": "İndüklenen akım değişimi destekler", "correct": false},
+                {"text": "İndüklenen akım kendisini oluşturan değişimi engelleyecek yöndedir", "correct": true},
+                {"text": "İndüklenen akım her zaman aynı yöndedir", "correct": false},
+                {"text": "İndüklenen akım sıfırdır", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "İndüklenen EMK'yı artıran faktörleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["indüksiyon", "EMK artırma"],
+              "explanation": "İndüklenen EMK'yı artırmak için.",
+              "options": [
+                {"text": "Mıknatısı daha hızlı hareket ettirmek", "pairId": 1, "correct": false},
+                {"text": "Akı değişim hızı artar → EMK artar", "pairId": 1, "correct": false},
+                {"text": "Bobindeki sarım sayısını artırmak", "pairId": 2, "correct": false},
+                {"text": "Daha fazla iletken döngü → EMK artar", "pairId": 2, "correct": false},
+                {"text": "Daha güçlü mıknatıs kullanmak", "pairId": 3, "correct": false},
+                {"text": "Manyetik akı değişimi büyür → EMK artar", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Jeneratör (dinamo) ___ dönüşümünü yapar.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["jeneratör"],
+              "explanation": "Jeneratör, mekanik (hareket) enerjiyi elektrik enerjisine dönüştürür. Motorun tam tersini yapar. Manyetik alan içinde dönen bobin değişen akı nedeniyle EMK oluşturur.",
+              "options": [
+                {"text": "Hareket enerjisini elektrik enerjisine", "correct": true},
+                {"text": "Elektrik enerjisini hareket enerjisine", "correct": false},
+                {"text": "Isı enerjisini elektrik enerjisine", "correct": false},
+                {"text": "Kimyasal enerjiyi ısı enerjisine", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Motor ve jeneratör arasındaki farkı eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["motor", "jeneratör"],
+              "explanation": "Motor ve jeneratör aynı prensiple çalışır ama enerji dönüşüm yönü terstir.",
+              "options": [
+                {"text": "Elektrik motoru", "pairId": 1, "correct": false},
+                {"text": "Elektrik → Hareket (akım verilir, döner)", "pairId": 1, "correct": false},
+                {"text": "Jeneratör", "pairId": 2, "correct": false},
+                {"text": "Hareket → Elektrik (döndürülür, akım üretir)", "pairId": 2, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Öz indüksiyon (self-indüksiyon) nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["öz indüksiyon"],
+              "explanation": "Öz indüksiyon, bir bobindeki akım değiştiğinde bobinin kendi üzerinde EMK oluşturmasıdır. Bobin, akım değişimine karşı direnir (Lenz yasası). İndüktans birimi Henry (H) dir.",
+              "options": [
+                {"text": "Dış mıknatısın etkisi", "correct": false},
+                {"text": "Bir bobindeki akım değişiminin kendi üzerinde EMK oluşturması", "correct": true},
+                {"text": "İki bobin arasındaki etkileşim", "correct": false},
+                {"text": "Elektrik direnci", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Transformatör ve Uygulamalar",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Transformatör ne işe yarar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["transformatör"],
+              "explanation": "Transformatör, alternatif akım (AC) gerilimini yükseltmek veya düşürmek için kullanılır. Ortak demir çekirdek üzerinde farklı sarım sayılı iki bobin bulunur.",
+              "options": [
+                {"text": "DC akımı AC'ye çevirir", "correct": false},
+                {"text": "AC gerilimini yükseltmek veya düşürmek", "correct": true},
+                {"text": "Elektrik üretir", "correct": false},
+                {"text": "Akımı depolar", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Transformatör türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["transformatör", "türler"],
+              "explanation": "Transformatörler yükseltici ve düşürücü olarak ikiye ayrılır.",
+              "options": [
+                {"text": "Yükseltici transformatör", "pairId": 1, "correct": false},
+                {"text": "İkincil sarım sayısı > Birincil sarım sayısı → Gerilim artar", "pairId": 1, "correct": false},
+                {"text": "Düşürücü transformatör", "pairId": 2, "correct": false},
+                {"text": "İkincil sarım sayısı < Birincil sarım sayısı → Gerilim azalır", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Transformatör neden sadece AC ile çalışır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["AC", "transformatör"],
+              "explanation": "Transformatör elektromanyetik indüksiyon prensibine dayanır. İndüksiyon için değişen manyetik akı gerekir. AC akımı sürekli değiştiğinden akı da değişir. DC sabit olduğundan akı değişmez ve indüksiyon olmaz.",
+              "options": [
+                {"text": "DC daha tehlikeli olduğu için", "correct": false},
+                {"text": "İndüksiyon için değişen akı gerekir, DC sabit olduğundan akı değişmez", "correct": true},
+                {"text": "DC çok güçlü olduğu için", "correct": false},
+                {"text": "Teknik sınırlama", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Birincil sarımı 100, ikincil sarımı 500 olan transformatöre 220V uygulanırsa ikincil gerilim ___ V olur.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["transformatör", "hesaplama"],
+              "explanation": "V₂/V₁ = N₂/N₁ → V₂ = V₁ × (N₂/N₁) = 220 × (500/100) = 220 × 5 = 1100V.",
+              "options": [
+                {"text": "1100", "correct": true},
+                {"text": "44", "correct": false},
+                {"text": "110", "correct": false},
+                {"text": "550", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Elektrik iletim hatlarında neden yüksek gerilim kullanılır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yüksek gerilim", "iletim"],
+              "explanation": "P = I²R formülüne göre kayıp güç akımın karesiyle orantılıdır. Gerilim yükseltildiğinde aynı gücü daha düşük akımla iletmek mümkündür. Düşük akım → düşük kayıp (ısı kaybı azalır).",
+              "options": [
+                {"text": "Daha hızlı iletim için", "correct": false},
+                {"text": "Akımı düşürerek iletim kaybını (I²R) azaltmak için", "correct": true},
+                {"text": "Daha ucuz kablo kullanmak için", "correct": false},
+                {"text": "Güvenlik nedeniyle", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Transformatörün günlük hayattaki uygulamalarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["transformatör", "uygulama"],
+              "explanation": "Transformatörler günlük hayatta yaygın kullanılır.",
+              "options": [
+                {"text": "Telefon şarj adaptörü", "pairId": 1, "correct": false},
+                {"text": "220V → 5V (düşürücü)", "pairId": 1, "correct": false},
+                {"text": "Elektrik santrali çıkışı", "pairId": 2, "correct": false},
+                {"text": "Düşük gerilim → Yüksek gerilim (yükseltici)", "pairId": 2, "correct": false},
+                {"text": "Mahalle trafosu", "pairId": 3, "correct": false},
+                {"text": "Yüksek gerilim → 220V (düşürücü)", "pairId": 3, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Basınç ve Kaldırma Kuvveti",
+      "description": "Katı, sıvı ve gaz basıncı, gaz yasaları, Pascal prensibi, Arşimet prensibi (MEB 2025-2026)",
+      "order": 3,
+      "lessons": [
+        {
+          "title": "Katılarda ve Sıvılarda Basınç",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Katı basıncı formülünü ve etkileyen faktörleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["katı basınç", "faktörler"],
+              "explanation": "Katılarda basınç P = F/A formülüyle hesaplanır.",
+              "options": [
+                {"text": "Kuvvet (F) artarsa", "pairId": 1, "correct": false},
+                {"text": "Basınç artar (doğru orantı)", "pairId": 1, "correct": false},
+                {"text": "Alan (A) artarsa", "pairId": 2, "correct": false},
+                {"text": "Basınç azalır (ters orantı)", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "400 N ağırlığındaki cisim 0,02 m² yüzeye basıyorsa basınç ___ Pa'dır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["basınç", "hesaplama"],
+              "explanation": "P = F/A = 400/0,02 = 20.000 Pa = 20 kPa.",
+              "options": [
+                {"text": "20000", "correct": true},
+                {"text": "8", "correct": false},
+                {"text": "200", "correct": false},
+                {"text": "400,02", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Sıvı basıncı formülü nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["sıvı basıncı", "formül"],
+              "explanation": "Sıvı basıncı: P = ρ·g·h. ρ: sıvının yoğunluğu (kg/m³), g: yerçekimi ivmesi (≈10 m/s²), h: derinlik (m). Kabın şekline bağlı değildir.",
+              "options": [
+                {"text": "P = m·v", "correct": false},
+                {"text": "P = ρ·g·h", "correct": true},
+                {"text": "P = F·d", "correct": false},
+                {"text": "P = m·g", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Sıvı basıncının kabın şekline bağlı olmamasına ne denir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["bileşik kaplar"],
+              "explanation": "Pascal prensibi ve bileşik kaplar ilkesi: Sıvı basıncı sadece derinliğe ve yoğunluğa bağlıdır. Farklı şekildeki kaplar alttan bağlanırsa aynı sıvı aynı seviyeye gelir.",
+              "options": [
+                {"text": "Arşimet prensibi", "correct": false},
+                {"text": "Bileşik kaplar ilkesi / Pascal prensibi", "correct": true},
+                {"text": "Bernoulli prensibi", "correct": false},
+                {"text": "Newton'un 3. yasası", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Yoğunluğu 1000 kg/m³ olan suda 5 m derinlikteki basınç kaçtır? (g = 10 m/s²)",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sıvı basıncı", "hesaplama"],
+              "explanation": "P = ρ·g·h = 1000 × 10 × 5 = 50.000 Pa = 50 kPa. Not: Toplam basınç = Atmosfer basıncı + Sıvı basıncı.",
+              "options": [
+                {"text": "5000 Pa", "correct": false},
+                {"text": "50.000 Pa (50 kPa)", "correct": true},
+                {"text": "500 Pa", "correct": false},
+                {"text": "500.000 Pa", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Neden dalgıçlar çok derine daldığında özel kıyafet giyer?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["derin dalış", "basınç"],
+              "explanation": "Derinlik arttıkça su basıncı çok artar. İnsan vücudu yüksek basınca dayanamaz. Basınç kıyafetleri vücudu korur. 10 m derinlikte basınç yaklaşık 1 atm (≈100 kPa) artar.",
+              "options": [
+                {"text": "Soğuktan korunmak için", "correct": false},
+                {"text": "Artan su basıncından vücudu korumak için", "correct": true},
+                {"text": "Köpekbalığından korunmak için", "correct": false},
+                {"text": "Daha hızlı yüzmek için", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Gaz Basıncı ve Gaz Yasaları",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Gaz basıncını etkileyen faktörleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["gaz basıncı", "faktörler"],
+              "explanation": "Kapalı kaptaki ideal gazın basıncını etkileyen faktörler.",
+              "options": [
+                {"text": "Sıcaklık artarsa (V, n sabit)", "pairId": 1, "correct": false},
+                {"text": "Basınç artar (Gay-Lussac)", "pairId": 1, "correct": false},
+                {"text": "Hacim azaltılırsa (T, n sabit)", "pairId": 2, "correct": false},
+                {"text": "Basınç artar (Boyle-Mariotte)", "pairId": 2, "correct": false},
+                {"text": "Gaz miktarı artarsa (T, V sabit)", "pairId": 3, "correct": false},
+                {"text": "Basınç artar (daha çok molekül çarpar)", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Boyle-Mariotte yasası ne der?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["boyle", "yasası"],
+              "explanation": "Boyle-Mariotte: Sabit sıcaklıkta ideal gazın basıncı ile hacmi ters orantılıdır. P·V = sabit. Hacim yarıya düşerse basınç iki katına çıkar.",
+              "options": [
+                {"text": "Basınç ve hacim doğru orantılı", "correct": false},
+                {"text": "Sabit sıcaklıkta P × V = sabit (ters orantı)", "correct": true},
+                {"text": "Basınç ve sıcaklık ters orantılı", "correct": false},
+                {"text": "Hacim ve sıcaklık ters orantılı", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Charles yasası ne der?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["charles yasası"],
+              "explanation": "Charles yasası: Sabit basınçta ideal gazın hacmi mutlak sıcaklığıyla (Kelvin) doğru orantılıdır. V/T = sabit. Sıcaklık 2 katına çıkarsa hacim de 2 katına çıkar.",
+              "options": [
+                {"text": "Sabit basınçta V/T = sabit (hacim-sıcaklık doğru orantı)", "correct": true},
+                {"text": "Sabit hacimde P/T = sabit", "correct": false},
+                {"text": "P × V = sabit", "correct": false},
+                {"text": "Basınç ve hacim doğru orantılı", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "İdeal gaz denklemi ___ dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["ideal gaz denklemi"],
+              "explanation": "İdeal gaz denklemi: PV = nRT. P: basınç, V: hacim, n: mol sayısı, R: gaz sabiti (8,314 J/mol·K), T: mutlak sıcaklık (Kelvin). Tüm gaz yasalarını birleştirir.",
+              "options": [
+                {"text": "PV = nRT", "correct": true},
+                {"text": "PV = mgh", "correct": false},
+                {"text": "P = ρgh", "correct": false},
+                {"text": "F = ma", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Atmosfer basıncı deniz seviyesinde yaklaşık kaç Pa'dır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["atmosfer basıncı"],
+              "explanation": "Deniz seviyesinde atmosfer basıncı yaklaşık 101.325 Pa ≈ 101 kPa = 1 atm = 760 mmHg'dir.",
+              "options": [
+                {"text": "1000 Pa", "correct": false},
+                {"text": "101.325 Pa (≈ 1 atm)", "correct": true},
+                {"text": "10.000 Pa", "correct": false},
+                {"text": "1.000.000 Pa", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Lastik basıncının sıcak havada artmasının sebebi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["gaz basıncı", "sıcaklık"],
+              "explanation": "Lastik sabit hacimli kapalı bir kap gibidir. Sıcaklık arttığında gaz moleküllerinin kinetik enerjisi artar, daha hızlı ve sert çarpar → basınç artar (Gay-Lussac yasası).",
+              "options": [
+                {"text": "Lastik genleştiği için", "correct": false},
+                {"text": "Gaz molekülleri hızlanarak daha sert çarpar (Gay-Lussac)", "correct": true},
+                {"text": "Hava girer", "correct": false},
+                {"text": "Kauçuk ısınır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Pascal Prensibi ve Hidrolik",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Pascal prensibi ne der?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["pascal prensibi"],
+              "explanation": "Pascal prensibi: Kapalı kaptaki sıvıya uygulanan basınç, sıvının her noktasına eşit olarak iletilir. Bu prensip hidrolik sistemlerin temelini oluşturur.",
+              "options": [
+                {"text": "Basınç sadece aşağı doğru iletilir", "correct": false},
+                {"text": "Kapalı sıvıya uygulanan basınç her noktaya eşit iletilir", "correct": true},
+                {"text": "Basınç sadece yukarı doğru iletilir", "correct": false},
+                {"text": "Basınç azalarak iletilir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Hidrolik sistem kuvvet kazancını nasıl sağlar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["hidrolik", "kuvvet kazancı"],
+              "explanation": "Basınç eşit iletildiğinden (P₁ = P₂ → F₁/A₁ = F₂/A₂), büyük pistonun alanı küçük pistonunkinden büyükse, büyük pistonda daha fazla kuvvet elde edilir. Kuvvet kazancı = A₂/A₁.",
+              "options": [
+                {"text": "Enerji üretir", "correct": false},
+                {"text": "Eşit basıncı büyük alanda büyük kuvvete dönüştürür (F₂ = P × A₂)", "correct": true},
+                {"text": "Sürtünmeyi artırır", "correct": false},
+                {"text": "Hız kazancı sağlar", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Hidrolik kriko nasıl çalışır?",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["kriko", "çalışma"],
+              "explanation": "Hidrolik krikoda Pascal prensibi uygulanır.",
+              "options": [
+                {"text": "Küçük pistona az kuvvet uygulanır", "pairId": 1, "correct": false},
+                {"text": "Sıvıda basınç oluşur ve eşit iletilir", "pairId": 1, "correct": false},
+                {"text": "Büyük pistonun alanı çok daha geniştir", "pairId": 2, "correct": false},
+                {"text": "Aynı basınç büyük alana etki eder → Büyük kuvvet = araba kaldırma", "pairId": 2, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Küçük piston alanı 5 cm², büyük piston alanı 100 cm² ise kuvvet kazancı ___ dır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["kuvvet kazancı", "hesaplama"],
+              "explanation": "Kuvvet kazancı = A₂/A₁ = 100/5 = 20. Küçük pistona 10 N uygulanırsa büyük pistonda 200 N elde edilir.",
+              "options": [
+                {"text": "20", "correct": true},
+                {"text": "105", "correct": false},
+                {"text": "500", "correct": false},
+                {"text": "95", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hidrolik frende neden sıvı kullanılır, gaz kullanılmaz?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["hidrolik", "sıvı"],
+              "explanation": "Sıvılar pratik olarak sıkıştırılamaz, basıncı anında ve kayıpsız iletir. Gaz sıkıştırılabilir olduğundan basınç iletimi gecikir ve kayıplıdır — fren gecikir, güvenlik riski oluşur.",
+              "options": [
+                {"text": "Sıvı daha ucuz olduğu için", "correct": false},
+                {"text": "Sıvı sıkıştırılamaz, basıncı anında ve kayıpsız iletir", "correct": true},
+                {"text": "Gaz çok ağır olduğu için", "correct": false},
+                {"text": "Estetik nedenlerle", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hidrolik sistemde yapılan iş korunur mu?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["hidrolik", "iş"],
+              "explanation": "Evet, enerjinin korunumu gereği iş korunur. Kuvvet kazancı sağlanırken mesafe kaybı olur: W₁ = W₂ → F₁·d₁ = F₂·d₂. Büyük kuvvet elde edilir ama mesafe küçülür.",
+              "options": [
+                {"text": "Hayır, enerji üretilir", "correct": false},
+                {"text": "Evet, kuvvet artarsa mesafe aynı oranda azalır (W₁ = W₂)", "correct": true},
+                {"text": "Hayır, enerji kaybolur", "correct": false},
+                {"text": "İş iki katına çıkar", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Kaldırma Kuvveti ve Arşimet Prensibi",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Arşimet prensibini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["arşimet", "prensip"],
+              "explanation": "Arşimet prensibi sıvı ve gazlar için geçerlidir.",
+              "options": [
+                {"text": "Kaldırma kuvveti (Fk)", "pairId": 1, "correct": false},
+                {"text": "Taşırılan akışkan ağırlığına eşit yukarı yönlü kuvvet", "pairId": 1, "correct": false},
+                {"text": "Fk = ρ_sıvı × V_batık × g", "pairId": 2, "correct": false},
+                {"text": "Sıvı yoğunluğu × Batık hacim × Yerçekimi ivmesi", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Yüzme koşulu nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yüzme", "koşul"],
+              "explanation": "Cisim yüzer: kaldırma kuvveti = ağırlık (Fk = G) veya cismin ortalama yoğunluğu < sıvı yoğunluğu. Cisim batar: yoğunluğu > sıvı yoğunluğu. Eşitse askıda kalır.",
+              "options": [
+                {"text": "Cisim sıvıdan hafifse", "correct": false},
+                {"text": "Kaldırma kuvveti ≥ Ağırlık (cisim yoğunluğu ≤ sıvı yoğunluğu)", "correct": true},
+                {"text": "Cisim küçükse", "correct": false},
+                {"text": "Sıvı soğuksa", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Yoğunluğu 800 kg/m³ olan cisim suda (1000 kg/m³) yüzdüğünde hacminin yüzde kaçı batıktır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["yüzme", "hesaplama"],
+              "explanation": "Yüzen cisim: ρ_cisim/ρ_sıvı = V_batık/V_toplam → 800/1000 = 0,80 → %80'i batıktır, %20'si yüzeyde.",
+              "options": [
+                {"text": "%100", "correct": false},
+                {"text": "%80", "correct": true},
+                {"text": "%50", "correct": false},
+                {"text": "%20", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Buzdağının ___ kısmı su altındadır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["buzdağı"],
+              "explanation": "Buzun yoğunluğu ≈ 920 kg/m³, deniz suyunun yoğunluğu ≈ 1025 kg/m³. 920/1025 ≈ %90. Buzdağının yaklaşık %90'ı su altında, sadece %10'u görünür.",
+              "options": [
+                {"text": "büyük", "correct": true},
+                {"text": "küçük", "correct": false},
+                {"text": "yarısı", "correct": false},
+                {"text": "tamamı", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Helyum balonu neden yükselir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["kaldırma kuvveti", "gaz"],
+              "explanation": "Helyumun yoğunluğu havanın yoğunluğundan küçüktür. Arşimet prensibi gazlar için de geçerlidir. Havanın balonun hacmi kadar kütlesi balonun toplam kütlesinden büyük olduğunda balon yükselir.",
+              "options": [
+                {"text": "Manyetik kuvvet nedeniyle", "correct": false},
+                {"text": "Helyumun yoğunluğu havadan küçük, kaldırma kuvveti > ağırlık", "correct": true},
+                {"text": "Rüzgâr kaldırır", "correct": false},
+                {"text": "Elektrik kuvveti nedeniyle", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Denizaltı batma ve yüzme kontrolünü nasıl yapar?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["denizaltı"],
+              "explanation": "Denizaltı balast tanklarına su alarak ortalama yoğunluğunu artırır → batar. Basınçlı hava ile suyu boşaltarak yoğunluğunu azaltır → yüzer. Tam askıda kalma da mümkündür.",
+              "options": [
+                {"text": "Motor gücüyle", "correct": false},
+                {"text": "Balast tanklarına su alıp boşaltarak yoğunluğunu değiştirir", "correct": true},
+                {"text": "Kanatlarla", "correct": false},
+                {"text": "Manyetik alan ile", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Bernoulli Prensibi ve Akışkanlar",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Bernoulli prensibi ne der?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["bernoulli"],
+              "explanation": "Bernoulli prensibi: Hareket halindeki akışkanda hız arttığında basınç azalır ve tersi. P + ½ρv² + ρgh = sabit. Uçakların uçması, sprey çalışması bu prensibe dayanır.",
+              "options": [
+                {"text": "Hız arttıkça basınç artar", "correct": false},
+                {"text": "Hareket halindeki akışkanda hız arttıkça basınç azalır", "correct": true},
+                {"text": "Basınç her yerde eşittir", "correct": false},
+                {"text": "Akışkanlar hareket edemez", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Uçak kanat profili neden uçmayı sağlar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["uçak", "kaldırma"],
+              "explanation": "Kanat profilinde üst yüzey alt yüzeyden daha uzundur. Hava üstten daha hızlı akar → üstte basınç azalır (Bernoulli). Alt ve üst arasındaki basınç farkı yukarı yönlü kaldırma kuvveti oluşturur.",
+              "options": [
+                {"text": "Motor gücüyle doğrudan kaldırılır", "correct": false},
+                {"text": "Kanat üstünde hava hızlı → basınç düşük, altta yavaş → basınç yüksek → yukarı kuvvet", "correct": true},
+                {"text": "Yerçekimi azaltılır", "correct": false},
+                {"text": "Hava yukarı iter", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bernoulli prensibi örneklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["bernoulli", "örnekler"],
+              "explanation": "Bernoulli prensibi günlük hayatta birçok olayı açıklar.",
+              "options": [
+                {"text": "Hızla geçen trenin yakınında çekilme", "pairId": 1, "correct": false},
+                {"text": "Tren yanında hava hızlanır → basınç düşer → çekme", "pairId": 1, "correct": false},
+                {"text": "Sprey (püskürtücü)", "pairId": 2, "correct": false},
+                {"text": "Hava hızlanınca basınç düşer → sıvı çekilir", "pairId": 2, "correct": false},
+                {"text": "Şiddetli rüzgârda çatı uçması", "pairId": 3, "correct": false},
+                {"text": "Çatı üstünde hız fazla → basınç düşük → yukarı kaldırma", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Venturi tüpünde daralan bölgede hız artar ve basınç ___.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["venturi", "basınç"],
+              "explanation": "Venturi tüpünde boru daralınca süreklilik denklemi gereği (A₁v₁ = A₂v₂) hız artar. Bernoulli prensibine göre hız arttığında basınç azalır.",
+              "options": [
+                {"text": "azalır", "correct": true},
+                {"text": "artar", "correct": false},
+                {"text": "değişmez", "correct": false},
+                {"text": "sıfırlanır", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Süreklilik denklemi ne der?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["süreklilik denklemi"],
+              "explanation": "Süreklilik denklemi: A₁·v₁ = A₂·v₂. Bir borudan akan akışkanda kesit alanı küçülürse hız artar, büyürse hız azalır. Debi (hacim akış hızı) sabittir.",
+              "options": [
+                {"text": "Basınç × Hacim = sabit", "correct": false},
+                {"text": "Kesit alanı × Hız = sabit (A₁v₁ = A₂v₂)", "correct": true},
+                {"text": "Kuvvet × Mesafe = sabit", "correct": false},
+                {"text": "Kütle × Hız = sabit", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Neden bahçe hortumunun ucunu daralttığınızda su daha hızlı çıkar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["süreklilik", "günlük"],
+              "explanation": "Süreklilik denklemi: A₁v₁ = A₂v₂. Hortumun ucu daraltılınca kesit alanı küçülür, aynı miktarda suyun geçmesi için hız artmak zorundadır.",
+              "options": [
+                {"text": "Daha fazla su gelir", "correct": false},
+                {"text": "Kesit küçülünce aynı debide hız artar (süreklilik denklemi)", "correct": true},
+                {"text": "Su basıncı artar", "correct": false},
+                {"text": "Yerçekimi etkisi", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Dalgalar — İleri",
+      "description": "Dalga mekaniği, süperpozisyon, duran dalgalar, ses olayları, EM spektrum uygulamaları (MEB 2025-2026)",
+      "order": 4,
+      "lessons": [
+        {
+          "title": "Süperpozisyon ve Girişim",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Süperpozisyon ilkesi ne der?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["süperpozisyon"],
+              "explanation": "Süperpozisyon ilkesi: İki veya daha fazla dalga aynı noktada buluştuğunda, o noktadaki toplam yer değiştirme tek tek dalgaların yer değiştirmelerinin cebirsel toplamıdır.",
+              "options": [
+                {"text": "Dalgalar birbirini yok eder", "correct": false},
+                {"text": "Buluşan dalgaların yer değiştirmeleri cebirsel olarak toplanır", "correct": true},
+                {"text": "Dalgalar birbirini hızlandırır", "correct": false},
+                {"text": "Dalgalar birbirini geçemez", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Yapıcı ve yıkıcı girişimi eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["girişim"],
+              "explanation": "İki dalga girişim yaptığında sonuç dalgaların fazına bağlıdır.",
+              "options": [
+                {"text": "Yapıcı girişim", "pairId": 1, "correct": false},
+                {"text": "Aynı faz: genlikler toplanır, dalga güçlenir", "pairId": 1, "correct": false},
+                {"text": "Yıkıcı girişim", "pairId": 2, "correct": false},
+                {"text": "Zıt faz: genlikler birbirini götürür, dalga zayıflar/sönümlenir", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Gürültü önleyici kulaklıklar hangi dalga olayını kullanır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["yıkıcı girişim", "kulaklık"],
+              "explanation": "Aktif gürültü önleyici (ANC) kulaklıklar, dış sesi mikrofon ile algılar ve tam zıt fazda bir ses dalgası üretir. Yıkıcı girişim sayesinde gürültü sönümlenir.",
+              "options": [
+                {"text": "Yansıma", "correct": false},
+                {"text": "Yıkıcı girişim (anti-faz dalga üretme)", "correct": true},
+                {"text": "Kırılma", "correct": false},
+                {"text": "Kırınım", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Young'un çift yarık deneyinde ışığın hangi özelliği kanıtlanır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["çift yarık", "girişim"],
+              "explanation": "Young'un çift yarık deneyi (1801), ışığın dalga doğasını kanıtlar. İki yarıktan geçen ışık dalgaları girişim yaparak parlak ve karanlık çizgiler oluşturur (girişim deseni).",
+              "options": [
+                {"text": "Parçacık doğası", "correct": false},
+                {"text": "Dalga doğası (girişim yapabilme)", "correct": true},
+                {"text": "Elektrik özelliği", "correct": false},
+                {"text": "Manyetik özelliği", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "İnce film girişimi günlük hayatta nerede gözlenir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ince film", "girişim"],
+              "explanation": "Sabun balonu ve yağ tabakası üzerindeki renkli görüntüler ince film girişiminden kaynaklanır. Işık ince tabakadan yansırken farklı mesafeler kat eder ve girişim yapar.",
+              "options": [
+                {"text": "Gökkuşağında", "correct": false},
+                {"text": "Sabun balonu ve su üzerindeki yağ tabakası renklerinde", "correct": true},
+                {"text": "Aynada", "correct": false},
+                {"text": "Güneş batışında", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "İki dalganın girişim yapabilmesi için ___ olmaları gerekir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["eş fazlı", "girişim koşulu"],
+              "explanation": "Kalıcı (kararlı) girişim deseni oluşması için dalgaların eş fazlı (koherent) olması gerekir: aynı frekans, sabit faz farkı ve aynı dalga boyu.",
+              "options": [
+                {"text": "eş fazlı (koherent)", "correct": true},
+                {"text": "farklı frekanslı", "correct": false},
+                {"text": "farklı türde", "correct": false},
+                {"text": "çok güçlü", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Duran Dalgalar",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Duran dalga nasıl oluşur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["duran dalga", "oluşum"],
+              "explanation": "Duran dalga, aynı frekans ve genlikte iki dalganın zıt yönlerden gelerek süperpozisyon yapmasıyla oluşur. Genellikle ipin ucundan yansıyan dalga ile gelen dalga duran dalga oluşturur.",
+              "options": [
+                {"text": "Tek dalganın hızlanmasıyla", "correct": false},
+                {"text": "Aynı frekans ve genlikte zıt yönlü iki dalganın girişimiyle", "correct": true},
+                {"text": "Dalganın durmasıyla", "correct": false},
+                {"text": "Ortam değiştiren dalganın kırılmasıyla", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Duran dalga terimlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["düğüm", "karın"],
+              "explanation": "Duran dalganın iki karakteristik noktası vardır.",
+              "options": [
+                {"text": "Düğüm noktası", "pairId": 1, "correct": false},
+                {"text": "Genliğin sıfır olduğu, hiç titreşmeyen nokta", "pairId": 1, "correct": false},
+                {"text": "Karın noktası", "pairId": 2, "correct": false},
+                {"text": "Genliğin maksimum olduğu, en çok titreşen nokta", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Gitar teli çalındığında duran dalga oluşur. Temel frekans (1. harmonik) ne demektir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["temel frekans", "harmonik"],
+              "explanation": "Temel frekans (1. harmonik), telin üretebileceği en düşük frekanslı duran dalgadır. Dalga boyu = 2L (L: tel uzunluğu). Diğer harmonikler temel frekansın tam katlarıdır.",
+              "options": [
+                {"text": "En yüksek frekans", "correct": false},
+                {"text": "Telin en düşük frekanslı duran dalgası (λ = 2L)", "correct": true},
+                {"text": "Ses hızı", "correct": false},
+                {"text": "Telin gerginliği", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Müzik aletlerinde farklı harmonikler ___ oluşturur.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["harmonik", "tını"],
+              "explanation": "Her müzik aleti farklı oranlarda harmonikler üretir. Bu harmonik karışım tınıyı belirler. Aynı notayı çalan keman ve piyano farklı duyulur çünkü harmonik içerikleri farklıdır.",
+              "options": [
+                {"text": "tını", "correct": true},
+                {"text": "yankı", "correct": false},
+                {"text": "gürültü", "correct": false},
+                {"text": "rezonans", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Açık boru ile kapalı borunun harmonikleri arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["boru", "harmonik"],
+              "explanation": "Açık boru (flüt gibi) tüm harmonikleri üretir (1., 2., 3., ...). Kapalı boru (klarnet gibi) sadece tek sayılı harmonikleri üretir (1., 3., 5., ...). Bu nedenle farklı tınıya sahiptirler.",
+              "options": [
+                {"text": "Fark yoktur", "correct": false},
+                {"text": "Açık boru: tüm harmonikler; Kapalı boru: sadece tek harmonikler", "correct": true},
+                {"text": "Kapalı boru ses çıkarmaz", "correct": false},
+                {"text": "Açık boru daha sessizdir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Rezonans frekansı nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["rezonans frekansı"],
+              "explanation": "Rezonans frekansı, bir sistemin doğal frekansıdır. Dışarıdan bu frekansta enerji verildiğinde duran dalga oluşur ve genlik maksimuma ulaşır. Salıncağın itilme frekansı buna örnektir.",
+              "options": [
+                {"text": "En düşük frekans", "correct": false},
+                {"text": "Sistemin doğal frekansı, dışarıdan bu frekansta uyarılınca genlik maksimum olur", "correct": true},
+                {"text": "En yüksek frekans", "correct": false},
+                {"text": "Duyulabilir en düşük frekans", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Ses Dalgaları — İleri",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Sesin 3 özelliğini belirleyen fiziksel parametreleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["ses", "özellikler"],
+              "explanation": "Sesin algılanan özellikleri fiziksel parametrelerle belirlenir.",
+              "options": [
+                {"text": "Perde (ince/kalın)", "pairId": 1, "correct": false},
+                {"text": "Frekans (Hz) ile belirlenir", "pairId": 1, "correct": false},
+                {"text": "Gürlük (kuvvetli/zayıf)", "pairId": 2, "correct": false},
+                {"text": "Genlik ve şiddet (dB) ile belirlenir", "pairId": 2, "correct": false},
+                {"text": "Tını (renk)", "pairId": 3, "correct": false},
+                {"text": "Harmonik bileşenlerle belirlenir", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Ses hızı hangi faktörlere bağlıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ses hızı", "faktörler"],
+              "explanation": "Ses hızı: ortamın türüne (katı > sıvı > gaz), sıcaklığına (arttıkça hızlanır) ve yoğunluğuna bağlıdır. Havada ≈ 340 m/s, suda ≈ 1500 m/s, çelikte ≈ 5000 m/s.",
+              "options": [
+                {"text": "Sadece frekansa bağlı", "correct": false},
+                {"text": "Ortam türüne, sıcaklığa ve yoğunluğa bağlı", "correct": true},
+                {"text": "Ses kaynağının gücüne bağlı", "correct": false},
+                {"text": "Hiçbir şeye bağlı değil, sabit", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Doppler etkisini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["doppler"],
+              "explanation": "Doppler etkisi: kaynak ve gözlemci arası mesafe değiştiğinde algılanan frekans değişir.",
+              "options": [
+                {"text": "Kaynak yaklaşırken", "pairId": 1, "correct": false},
+                {"text": "Frekans yükselir (ses tizleşir)", "pairId": 1, "correct": false},
+                {"text": "Kaynak uzaklaşırken", "pairId": 2, "correct": false},
+                {"text": "Frekans düşer (ses pesleşir)", "pairId": 2, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Ses hızını aşan cisimlerin oluşturduğu şok dalgasına ___ denir.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["sonik patlama"],
+              "explanation": "Ses hızını aşan (süpersonik) cisimler sonik patlama (sonic boom) oluşturur. Ses dalgaları cismin arkasında konik bir şok dalgası oluşturarak güçlü bir patlama sesi üretir.",
+              "options": [
+                {"text": "sonik patlama", "correct": true},
+                {"text": "yankı", "correct": false},
+                {"text": "rezonans", "correct": false},
+                {"text": "ultrason", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Ultrasonun tıptaki kullanım alanlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["ultrason", "tıp"],
+              "explanation": "Ultrases (>20 kHz) tıpta yaygın kullanılır.",
+              "options": [
+                {"text": "Ultrasonografi (USG)", "pairId": 1, "correct": false},
+                {"text": "Organ/bebek görüntüleme (zararsız)", "pairId": 1, "correct": false},
+                {"text": "Taş kırma (litotripsi)", "pairId": 2, "correct": false},
+                {"text": "Böbrek/safra taşlarını ultrasonla parçalama", "pairId": 2, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Desibel (dB) ölçeğinde her 10 dB artış ses şiddetini kaç katına çıkarır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["desibel", "ölçek"],
+              "explanation": "dB logaritmik bir ölçektir. Her 10 dB artış, ses şiddetinin 10 katına çıkması demektir. 60 dB → 70 dB: şiddet 10 kat artar. 60 dB → 80 dB: 100 kat artar.",
+              "options": [
+                {"text": "2 katına", "correct": false},
+                {"text": "10 katına", "correct": true},
+                {"text": "100 katına", "correct": false},
+                {"text": "Değişmez", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Elektromanyetik Dalgalar — İleri",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Elektromanyetik dalga nasıl oluşur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["EM dalga", "oluşum"],
+              "explanation": "EM dalga, ivmelenen yüklü parçacık tarafından oluşturulur. Değişen elektrik alan manyetik alan, değişen manyetik alan elektrik alan oluşturur. Bu karşılıklı oluşum dalga olarak yayılır.",
+              "options": [
+                {"text": "Sabit yüklerden", "correct": false},
+                {"text": "İvmelenen (hızı değişen) yüklü parçacıklardan", "correct": true},
+                {"text": "Mıknatıstan", "correct": false},
+                {"text": "Yerçekiminden", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "EM spektrumu enerji sırasına göre eşleştirin (düşük → yüksek).",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["EM spektrum", "enerji"],
+              "explanation": "EM dalgalar frekans/enerji arttıkça farklı adlar alır.",
+              "options": [
+                {"text": "Radyo dalgaları", "pairId": 1, "correct": false},
+                {"text": "En düşük enerji/frekans, en uzun dalga boyu", "pairId": 1, "correct": false},
+                {"text": "Görünür ışık", "pairId": 2, "correct": false},
+                {"text": "Orta enerji, göz algılayabilir", "pairId": 2, "correct": false},
+                {"text": "Gama ışınları", "pairId": 3, "correct": false},
+                {"text": "En yüksek enerji/frekans, en kısa dalga boyu", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "EM dalganın boşluktaki hızı ___ m/s'dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["ışık hızı"],
+              "explanation": "Tüm EM dalgalar boşlukta aynı hızla yayılır: c = 3 × 10⁸ m/s = 300.000 km/s. Ortama girdiğinde (cam, su) yavaşlar.",
+              "options": [
+                {"text": "3 × 10⁸", "correct": true},
+                {"text": "340", "correct": false},
+                {"text": "1500", "correct": false},
+                {"text": "3 × 10⁶", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Mikrodalga fırın nasıl çalışır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["mikrodalga", "çalışma"],
+              "explanation": "Mikrodalga fırın, su moleküllerinin doğal frekansına yakın frekansta mikrodalgalar üretir. Su molekülleri bu dalgalarla rezonansa girerek hızla titreşir ve ısı üretir.",
+              "options": [
+                {"text": "Işınla ısıtır", "correct": false},
+                {"text": "Su moleküllerini rezonansa sokarak titreştirir ve ısı üretir", "correct": true},
+                {"text": "Elektrik akımıyla ısıtır", "correct": false},
+                {"text": "Kızılötesi ışınla ısıtır", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Kızılötesi uzaktan kumandalar nasıl çalışır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["kızılötesi", "kumanda"],
+              "explanation": "Uzaktan kumanda kızılötesi LED ile kodlanmış ışık darbeleri gönderir. TV'nin alıcısı bu darbeleri çözerek komutları uygular. Kızılötesi gözle görünmez ama kamera ile görülebilir.",
+              "options": [
+                {"text": "Radyo dalgasıyla", "correct": false},
+                {"text": "Kızılötesi ışık darbeleriyle kodlanmış sinyal göndererek", "correct": true},
+                {"text": "Ultrasonla", "correct": false},
+                {"text": "Bluetooth ile", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "X-ışınlarının ve gama ışınlarının ortak tehlikesi nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["iyonlaştırıcı", "tehlike"],
+              "explanation": "X ve gama ışınları iyonlaştırıcı radyasyondur: atomlardan elektron koparabilir. Bu, DNA hasarına, hücre ölümüne ve kanser riskine yol açar. Dozaj kontrolü ve koruma kritik önemdedir.",
+              "options": [
+                {"text": "Ses kirliliği", "correct": false},
+                {"text": "İyonlaştırıcı radyasyon: DNA hasarı ve kanser riski", "correct": true},
+                {"text": "Isı üretimi", "correct": false},
+                {"text": "Zararsızdır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Dalga ve Teknoloji",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Radar nasıl çalışır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["radar"],
+              "explanation": "Radar, mikro dalga veya radyo dalgası gönderip nesneye çarpıp dönen sinyalin süresini ölçer. Süre ve ışık hızından uzaklık hesaplanır. Doppler radarı hız da ölçer.",
+              "options": [
+                {"text": "Ses dalgası gönderir", "correct": false},
+                {"text": "EM dalga gönderip yansıyan sinyalin süresinden uzaklık hesaplar", "correct": true},
+                {"text": "Işık gönderir", "correct": false},
+                {"text": "Manyetik alan ölçer", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Fiber optik haberleşme hangi dalga olayını kullanır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["fiber optik"],
+              "explanation": "Fiber optik kablolar tam iç yansıma kullanır. Işık ince cam liflerin içinde sürekli yansıyarak çok uzak mesafelere çok hızlı veri iletir. İnternet altyapısında yaygındır.",
+              "options": [
+                {"text": "Kırılma", "correct": false},
+                {"text": "Tam iç yansıma", "correct": true},
+                {"text": "Girişim", "correct": false},
+                {"text": "Kırınım", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Wi-Fi, Bluetooth ve 5G ___ frekans aralığında çalışır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["kablosuz", "mikro dalga"],
+              "explanation": "Wi-Fi, Bluetooth ve 5G mikro dalga (mikrodalga) frekans aralığında çalışır. Radyo dalgalarının yüksek frekanslı alt grubudur (GHz bandı).",
+              "options": [
+                {"text": "mikro dalga", "correct": true},
+                {"text": "X-ışını", "correct": false},
+                {"text": "gama ışını", "correct": false},
+                {"text": "kızılötesi", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "SONAR ve RADAR arasındaki farkı eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["sonar", "radar"],
+              "explanation": "Her ikisi de sinyal gönderip yansımasını ölçer ama farklı dalga türleri kullanır.",
+              "options": [
+                {"text": "SONAR", "pairId": 1, "correct": false},
+                {"text": "Ses dalgaları kullanır, su altında çalışır", "pairId": 1, "correct": false},
+                {"text": "RADAR", "pairId": 2, "correct": false},
+                {"text": "EM dalgalar kullanır, havada/uzayda çalışır", "pairId": 2, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Lazer ışığının özellikleri nelerdir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["lazer"],
+              "explanation": "Lazer: tek frekanslı (monokromatik), eş fazlı (koherent), paralel ışınlı (az yayılan) ve çok yoğun ışıktır. Cerrahi, iletişim, ölçüm, CD/DVD okuma ve endüstride kullanılır.",
+              "options": [
+                {"text": "Normal ışık gibidir", "correct": false},
+                {"text": "Tek frekanslı, eş fazlı, paralel ve çok yoğun", "correct": true},
+                {"text": "Birçok renk içerir", "correct": false},
+                {"text": "Sadece kırmızı renktedir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hologram nasıl oluşur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["hologram"],
+              "explanation": "Hologram, lazer ışığının girişim desenini kaydederek oluşturulan 3 boyutlu görüntüdür. Referans ve cisim ışınlarının girişim deseni filme kaydedilir. Aydınlatıldığında 3D görüntü ortaya çıkar.",
+              "options": [
+                {"text": "Normal fotoğrafçılıkla", "correct": false},
+                {"text": "Lazer ışığının girişim deseninin kaydedilmesiyle 3D görüntü", "correct": true},
+                {"text": "Ayna yansımasıyla", "correct": false},
+                {"text": "Bilgisayar simülasyonuyla", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Optik",
+      "description": "Düzlem ve küresel aynalar, ince kenarlı ve kalın kenarlı mercekler, görüntü oluşumu, optik aletler (MEB 2025-2026)",
+      "order": 5,
+      "lessons": [
+        {
+          "title": "Düzlem Aynalar",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Düzlem aynada görüntünün özelliklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["düzlem ayna", "görüntü"],
+              "explanation": "Düzlem aynada oluşan görüntü belirli özelliklere sahiptir.",
+              "options": [
+                {"text": "Görüntü boyutu", "pairId": 1, "correct": false},
+                {"text": "Cisimle aynı boyutta", "pairId": 1, "correct": false},
+                {"text": "Görüntü konumu", "pairId": 2, "correct": false},
+                {"text": "Aynaya cisimle eşit uzaklıkta, aynanın arkasında (sanal)", "pairId": 2, "correct": false},
+                {"text": "Görüntü duruşu", "pairId": 3, "correct": false},
+                {"text": "Dik (aynı yönlü) ama sağ-sol yer değiştirmiş", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Düzlem aynada cisim aynaya 3 m yaklaşırsa görüntüsü kaç metre yaklaşır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["düzlem ayna", "yaklaşma"],
+              "explanation": "Cisim 3 m yaklaşırsa görüntü de 3 m yaklaşır. Toplam yaklaşma = 3 + 3 = 6 m. Cisim-ayna ve ayna-görüntü mesafesi her zaman eşittir.",
+              "options": [
+                {"text": "3 m (cisim + görüntü = 6 m yaklaşma)", "correct": false},
+                {"text": "6 m (cisim 3 m + görüntü 3 m)", "correct": true},
+                {"text": "1,5 m", "correct": false},
+                {"text": "9 m", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bir kişinin tüm vücudunu görmesi için düzlem aynanın minimum yüksekliği boy uzunluğunun ___ olmalıdır.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["düzlem ayna", "boy"],
+              "explanation": "Bir kişinin tüm vücudunu görmesi için aynanın yüksekliği boyunun yarısı kadar olması yeterlidir. Cisim aynadan ne kadar uzakta olursa olsun bu durum değişmez.",
+              "options": [
+                {"text": "yarısı", "correct": true},
+                {"text": "tamamı", "correct": false},
+                {"text": "üçte biri", "correct": false},
+                {"text": "iki katı", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Yansıma yasası ne der?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["yansıma yasası"],
+              "explanation": "Yansıma yasası: Gelme açısı = Yansıma açısı (θ₁ = θ₂). Açılar yüzeye dik olan 'normal'e göre ölçülür. Gelen ışın, yansıyan ışın ve normal aynı düzlemdedir.",
+              "options": [
+                {"text": "Gelme açısı > Yansıma açısı", "correct": false},
+                {"text": "Gelme açısı = Yansıma açısı", "correct": true},
+                {"text": "Gelme açısı < Yansıma açısı", "correct": false},
+                {"text": "Yansıma rastgele", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Düzgün yansıma ve dağınık yansıma arasındaki farkı eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["yansıma", "türler"],
+              "explanation": "Yansıma yüzeyin pürüzlülüğüne göre iki tiptir.",
+              "options": [
+                {"text": "Düzgün yansıma", "pairId": 1, "correct": false},
+                {"text": "Parlak düz yüzey (ayna) — paralel ışınlar paralel yansır", "pairId": 1, "correct": false},
+                {"text": "Dağınık yansıma", "pairId": 2, "correct": false},
+                {"text": "Pürüzlü yüzey (kâğıt) — ışınlar farklı yönlere yansır", "pairId": 2, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "İki düzlem ayna arasındaki açı 60° ise kaç görüntü oluşur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["düzlem ayna", "çoklu görüntü"],
+              "explanation": "İki düzlem ayna arasındaki görüntü sayısı: n = (360°/θ) − 1 = (360/60) − 1 = 6 − 1 = 5 görüntü.",
+              "options": [
+                {"text": "3 görüntü", "correct": false},
+                {"text": "5 görüntü", "correct": true},
+                {"text": "6 görüntü", "correct": false},
+                {"text": "Sonsuz görüntü", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Küresel Aynalar",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Küresel ayna türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["küresel ayna", "türler"],
+              "explanation": "İki tür küresel ayna vardır.",
+              "options": [
+                {"text": "Çukur (konkav) ayna", "pairId": 1, "correct": false},
+                {"text": "Işığı odak noktasında toplar, büyük/küçük gerçek veya sanal görüntü", "pairId": 1, "correct": false},
+                {"text": "Tümsek (konveks) ayna", "pairId": 2, "correct": false},
+                {"text": "Işığı dağıtır, her zaman küçük ve dik sanal görüntü", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Araçların far ışığında hangi ayna kullanılır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["çukur ayna", "far"],
+              "explanation": "Çukur (konkav) ayna: Ampul odak noktasına yerleştirildiğinde ışık paralel ışınlar halinde yansır. Far, spot ışık ve güneş ocaklarında kullanılır.",
+              "options": [
+                {"text": "Tümsek ayna", "correct": false},
+                {"text": "Çukur (konkav) ayna", "correct": true},
+                {"text": "Düzlem ayna", "correct": false},
+                {"text": "Mercek", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Araçların yan dikiz aynasında hangi ayna kullanılır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["tümsek ayna", "dikiz"],
+              "explanation": "Tümsek (konveks) ayna: Geniş görüş açısı sağlar, küçük dik sanal görüntü oluşturur. Araç yan dikiz aynaları, market güvenlik aynaları ve yol kavşak aynalarında kullanılır.",
+              "options": [
+                {"text": "Çukur ayna", "correct": false},
+                {"text": "Tümsek (konveks) ayna", "correct": true},
+                {"text": "Düzlem ayna", "correct": false},
+                {"text": "Prizma", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Çukur aynanın odak noktası ile merkez noktası arasındaki ilişkiyi eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["odak", "merkez"],
+              "explanation": "Küresel aynaların temel noktaları.",
+              "options": [
+                {"text": "Merkez noktası (C)", "pairId": 1, "correct": false},
+                {"text": "Kürenin merkezi, aynanın R uzağında", "pairId": 1, "correct": false},
+                {"text": "Odak noktası (F)", "pairId": 2, "correct": false},
+                {"text": "Merkezin yarısında, f = R/2", "pairId": 2, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Ayna denklemi: 1/f = 1/d₀ + 1/dᵢ formülünde f, ___ temsil eder.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["ayna denklemi"],
+              "explanation": "f: odak uzaklığı, d₀: cisim uzaklığı, dᵢ: görüntü uzaklığı. Bu denklem hem çukur hem tümsek aynalar için geçerlidir (işaret kurallarıyla).",
+              "options": [
+                {"text": "odak uzaklığı", "correct": true},
+                {"text": "cisim uzaklığı", "correct": false},
+                {"text": "görüntü boyutu", "correct": false},
+                {"text": "büyütme", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Çukur aynada cisim odak noktasının içinde (F ile ayna arası) olduğunda görüntü nasıldır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["çukur ayna", "görüntü"],
+              "explanation": "Cisim odak ile ayna arasında olduğunda: büyük, dik ve sanal görüntü oluşur (aynanın arkasında). Tıraş/makyaj aynaları bu prensibi kullanır.",
+              "options": [
+                {"text": "Küçük, ters, gerçek", "correct": false},
+                {"text": "Büyük, dik, sanal", "correct": true},
+                {"text": "Aynı boyut, dik, sanal", "correct": false},
+                {"text": "Görüntü oluşmaz", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Mercekler",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Mercek türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["mercek", "türler"],
+              "explanation": "İki temel mercek türü vardır.",
+              "options": [
+                {"text": "İnce kenarlı (tümsek/yakınsak)", "pairId": 1, "correct": false},
+                {"text": "Işığı odakta toplar — büyüteç, hipermetrop gözlüğü", "pairId": 1, "correct": false},
+                {"text": "Kalın kenarlı (çukur/ıraksak)", "pairId": 2, "correct": false},
+                {"text": "Işığı dağıtır — miyop gözlüğü, gözetleme deliği", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Mercek denklemi nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["mercek denklemi"],
+              "explanation": "Mercek denklemi: 1/f = 1/d₀ + 1/dᵢ. Ayna denklemiyle aynı formdadır. f: odak uzaklığı, d₀: cisim uzaklığı, dᵢ: görüntü uzaklığı. İşaret kuralları uygulanır.",
+              "options": [
+                {"text": "f = d₀ + dᵢ", "correct": false},
+                {"text": "1/f = 1/d₀ + 1/dᵢ", "correct": true},
+                {"text": "f = d₀ × dᵢ", "correct": false},
+                {"text": "f = d₀ − dᵢ", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Göz kusurlarını düzelten mercekleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["göz kusuru", "mercek"],
+              "explanation": "Göz kusurları uygun merceklerle düzeltilir.",
+              "options": [
+                {"text": "Miyop (uzağı görememe)", "pairId": 1, "correct": false},
+                {"text": "Kalın kenarlı (çukur/ıraksak) mercek", "pairId": 1, "correct": false},
+                {"text": "Hipermetrop (yakını görememe)", "pairId": 2, "correct": false},
+                {"text": "İnce kenarlı (tümsek/yakınsak) mercek", "pairId": 2, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Merceğin odak uzaklığı 10 cm ise merceğin gücü (diyoptri) ___ dır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["diyoptri", "hesaplama"],
+              "explanation": "Diyoptri = 1/f (metre cinsinden). f = 10 cm = 0,1 m → D = 1/0,1 = 10 diyoptri. Yakınsak mercek için pozitif, ıraksak mercek için negatif değer alır.",
+              "options": [
+                {"text": "10", "correct": true},
+                {"text": "0,1", "correct": false},
+                {"text": "100", "correct": false},
+                {"text": "1", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Büyüteçte cisim nereye yerleştirilir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["büyüteç"],
+              "explanation": "Büyüteçte cisim odak noktası ile mercek arasına yerleştirilir. Bu durumda büyük, dik ve sanal görüntü oluşur. Cisim odak noktasından uzaklaştırılırsa büyütme azalır.",
+              "options": [
+                {"text": "Odak noktasının ötesine", "correct": false},
+                {"text": "Odak noktası ile mercek arasına", "correct": true},
+                {"text": "Tam odak noktasına", "correct": false},
+                {"text": "Merceğin arkasına", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Astigmatizma ne ile düzeltilir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["astigmatizma"],
+              "explanation": "Astigmatizma, kornea veya merceğin düzensiz eğriliğinden kaynaklanır. Farklı meridyenlerde farklı odaklama olur. Silindirik (torik) mercekler ile düzeltilir.",
+              "options": [
+                {"text": "Çukur mercek", "correct": false},
+                {"text": "Tümsek mercek", "correct": false},
+                {"text": "Silindirik (torik) mercek", "correct": true},
+                {"text": "Düzlem ayna", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Optik Aletler",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Optik aletleri ve mercek sistemlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["optik aletler"],
+              "explanation": "Farklı optik aletler farklı mercek/ayna kombinasyonları kullanır.",
+              "options": [
+                {"text": "Fotoğraf makinesi", "pairId": 1, "correct": false},
+                {"text": "Yakınsak mercek → sensör üzerine ters/küçük gerçek görüntü", "pairId": 1, "correct": false},
+                {"text": "Teleskop (kırıcı)", "pairId": 2, "correct": false},
+                {"text": "Objektif + oküler (iki yakınsak mercek)", "pairId": 2, "correct": false},
+                {"text": "Mikroskop", "pairId": 3, "correct": false},
+                {"text": "Objektif (kısa f) + oküler (uzun f): büyük büyütme", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "İnsan gözü hangi optik alete benzer?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["göz", "fotoğraf makinesi"],
+              "explanation": "İnsan gözü fotoğraf makinesine benzer: kornea + göz merceği = objektif, retina = film/sensör, göz bebeği = diyafram, göz kapağı = obtüratör.",
+              "options": [
+                {"text": "Teleskop", "correct": false},
+                {"text": "Fotoğraf makinesi", "correct": true},
+                {"text": "Mikroskop", "correct": false},
+                {"text": "Periskop", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Mikroskopun büyütme oranı nasıl hesaplanır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["mikroskop", "büyütme"],
+              "explanation": "Mikroskopun toplam büyütmesi = Objektif büyütmesi × Oküler büyütmesi. Örnek: 40× objektif ile 10× oküler = 400× büyütme.",
+              "options": [
+                {"text": "Objektif + Oküler", "correct": false},
+                {"text": "Objektif × Oküler", "correct": true},
+                {"text": "Objektif / Oküler", "correct": false},
+                {"text": "Objektif − Oküler", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Projeksiyon cihazı hangi prensiple çalışır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["projeksiyon"],
+              "explanation": "Projeksiyon cihazı yakınsak mercek kullanır. Slayt/LCD panel merceğin odak noktası yakınına yerleştirilir. Mercek büyük, ters, gerçek görüntüyü uzaktaki perdeye yansıtır.",
+              "options": [
+                {"text": "Çukur ayna ile", "correct": false},
+                {"text": "Yakınsak mercekle büyük gerçek görüntüyü perdeye yansıtma", "correct": true},
+                {"text": "Prizma ile", "correct": false},
+                {"text": "Lazer ile", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Yansıtıcı teleskop objektif olarak ___ kullanır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["yansıtıcı teleskop"],
+              "explanation": "Yansıtıcı (reflektör) teleskop objektif olarak çukur ayna kullanır. Newton ve Cassegrain teleskopları bu türdendir. Hubble Uzay Teleskobu da yansıtıcı tiptedir.",
+              "options": [
+                {"text": "çukur ayna", "correct": true},
+                {"text": "tümsek mercek", "correct": false},
+                {"text": "prizma", "correct": false},
+                {"text": "düzlem ayna", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Endoskop hangi dalga olayını kullanarak vücudun içini görüntüler?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["endoskop", "tam iç yansıma"],
+              "explanation": "Endoskop, fiber optik kablolar aracılığıyla vücudun içini görüntüler. Işık tam iç yansıma ile ince cam lifler boyunca iletilir. Ameliyatsız teşhis ve tedavide kullanılır.",
+              "options": [
+                {"text": "Kırılma", "correct": false},
+                {"text": "Tam iç yansıma (fiber optik)", "correct": true},
+                {"text": "Girişim", "correct": false},
+                {"text": "Kırınım", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Işığın Doğası ve Foton Kavramı",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Işığın dalga-parçacık ikiliği ne demektir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["dalga-parçacık", "ikilik"],
+              "explanation": "Işık hem dalga hem parçacık (foton) gibi davranır. Girişim ve kırınım dalga davranışını, fotoelektrik etki parçacık davranışını gösterir. Bu durum kuantum fiziğinin temelini oluşturur.",
+              "options": [
+                {"text": "Işık sadece dalgadır", "correct": false},
+                {"text": "Işık deneye göre hem dalga hem parçacık davranışı gösterir", "correct": true},
+                {"text": "Işık sadece parçacıktır", "correct": false},
+                {"text": "Bu kavram geçersizdir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Fotoelektrik etki nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["fotoelektrik etki"],
+              "explanation": "Fotoelektrik etki: Yeterli enerjili ışık (foton) metal yüzeye çarptığında elektronları koparması olayıdır. Einstein bu olayla Nobel ödülü almıştır. Güneş panellerinin temelini oluşturur.",
+              "options": [
+                {"text": "Işığın kırılması", "correct": false},
+                {"text": "Işık fotonlarının metalden elektron koparması", "correct": true},
+                {"text": "Elektrik akımının ışık üretmesi", "correct": false},
+                {"text": "Manyetik alanın ışık oluşturması", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Fotonun enerjisi formülünü eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["foton", "enerji"],
+              "explanation": "Fotonun enerjisi frekansıyla doğru orantılıdır.",
+              "options": [
+                {"text": "E = h·f", "pairId": 1, "correct": false},
+                {"text": "Enerji = Planck sabiti × Frekans", "pairId": 1, "correct": false},
+                {"text": "h = 6,63 × 10⁻³⁴ J·s", "pairId": 2, "correct": false},
+                {"text": "Planck sabiti (evrensel sabit)", "pairId": 2, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Işığın rengi ___ tarafından belirlenir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["renk", "frekans"],
+              "explanation": "Işığın rengi frekansı (veya dalga boyu) tarafından belirlenir. Kırmızı ışık en düşük frekanslı, mor ışık en yüksek frekanslı görünür ışıktır.",
+              "options": [
+                {"text": "frekansı", "correct": true},
+                {"text": "genliği", "correct": false},
+                {"text": "hızı", "correct": false},
+                {"text": "şiddeti", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Güneş paneli hangi fizik olayını kullanarak elektrik üretir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["güneş paneli", "fotovoltaik"],
+              "explanation": "Güneş panelleri (fotovoltaik hücreler) fotoelektrik etkiyi kullanır. Güneş ışığı (fotonlar) yarı iletken malzemeye çarparak elektronları serbest bırakır ve elektrik akımı oluşturur.",
+              "options": [
+                {"text": "Isı enerjisi", "correct": false},
+                {"text": "Fotoelektrik etki (fotonlar elektronu serbest bırakır)", "correct": true},
+                {"text": "Manyetik indüksiyon", "correct": false},
+                {"text": "Kimyasal tepkime", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "LED (ışık yayan diyot) nasıl çalışır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["LED"],
+              "explanation": "LED'de yarı iletken malzeme içinden akım geçtiğinde elektronlar enerji seviyesi düşerek foton (ışık) yayar. Bu, fotoelektrik etkinin tersidir. Verimli, uzun ömürlü ve düşük ısılıdır.",
+              "options": [
+                {"text": "Teli ısıtarak ışık üretir", "correct": false},
+                {"text": "Yarı iletkende elektron geçişiyle foton yayarak ışık üretir", "correct": true},
+                {"text": "Gazı iyonlaştırarak ışık üretir", "correct": false},
+                {"text": "Kimyasal tepkimeyle ışık üretir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Modern Fiziğe Giriş",
+      "description": "Özel görelilik temel kavramları, atom modelleri, radyoaktivite temelleri, nükleer enerji (MEB 2025-2026)",
+      "order": 6,
+      "lessons": [
+        {
+          "title": "Einstein ve Özel Görelilik",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Einstein'ın özel görelilik teorisinin temel postülatlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["görelilik", "postülat"],
+              "explanation": "Einstein 1905'te iki temel varsayım ortaya koydu.",
+              "options": [
+                {"text": "1. Postülat", "pairId": 1, "correct": false},
+                {"text": "Fizik yasaları tüm eylemsiz referans çerçevelerinde aynıdır", "pairId": 1, "correct": false},
+                {"text": "2. Postülat", "pairId": 2, "correct": false},
+                {"text": "Işık hızı tüm gözlemciler için sabittir (c = 3×10⁸ m/s)", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "E = mc² formülü ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kütle-enerji", "E=mc²"],
+              "explanation": "E = mc²: Kütle ve enerji dönüşümlüdür. Küçük bir kütle çok büyük enerjiye eşittir (c² çok büyük). Nükleer enerji ve atom bombası bu prensibi kullanır.",
+              "options": [
+                {"text": "Enerji sadece kütleye bağlıdır", "correct": false},
+                {"text": "Kütle enerjiyle eşdeğerdir; küçük kütle = büyük enerji", "correct": true},
+                {"text": "Işık hızı kütle ile orantılıdır", "correct": false},
+                {"text": "Enerji yoktan var edilebilir", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Hiçbir cisim ışık hızına neden ulaşamaz?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["ışık hızı", "sınır"],
+              "explanation": "Özel göreliliğe göre cisim ışık hızına yaklaştıkça kütlesi sonsuza yaklaşır. Sonsuz kütle → sonsuz enerji gerekir. Bu nedenle kütleli cisimler ışık hızına asla ulaşamaz.",
+              "options": [
+                {"text": "Teknoloji yeterli değil", "correct": false},
+                {"text": "Hızlandıkça kütle artar, sonsuz enerjiye ihtiyaç olur", "correct": true},
+                {"text": "Sürtünme engeller", "correct": false},
+                {"text": "Aslında ulaşılabilir", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Zaman genleşmesi ne demektir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["zaman genleşmesi"],
+              "explanation": "Işık hızına yakın hareket eden bir saatin, duran gözlemciye göre daha yavaş ilerlediği gözlemlenir. Hız arttıkça zaman daha yavaş akar. GPS uydularında bu etki düzeltilir.",
+              "options": [
+                {"text": "Saatler bozulur", "correct": false},
+                {"text": "Hızlı hareket eden saatler yavaş gözlemlenir", "correct": true},
+                {"text": "Zaman her yerde aynıdır", "correct": false},
+                {"text": "Sadece uzayda geçerli", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "GPS uyduları görelilik düzeltmesi kullanır mı?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["GPS", "görelilik"],
+              "explanation": "Evet! GPS uyduları hem özel görelilik (hız nedeniyle zaman yavaşlaması) hem genel görelilik (yerçekimi nedeniyle zaman hızlanması) düzeltmesi yapar. Düzeltme olmazsa konum günde ~10 km sapardı.",
+              "options": [
+                {"text": "Hayır, gerek yok", "correct": false},
+                {"text": "Evet, hem özel hem genel görelilik düzeltmesi uygulanır", "correct": true},
+                {"text": "Sadece askeri GPS'te", "correct": false},
+                {"text": "Sadece uzay yolculuğunda", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "E = mc² formülünde c, ___ temsil eder.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["ışık hızı", "sabit"],
+              "explanation": "c, ışığın boşluktaki hızıdır: c ≈ 3 × 10⁸ m/s = 300.000 km/s. Evrendeki en yüksek hızdır ve tüm gözlemciler için sabittir.",
+              "options": [
+                {"text": "ışık hızı", "correct": true},
+                {"text": "ses hızı", "correct": false},
+                {"text": "kütle", "correct": false},
+                {"text": "enerji", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Atom Modelleri",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Atom modellerinin gelişimini kronolojik olarak eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["atom modeli", "tarih"],
+              "explanation": "Atom modelleri zamanla gelişmiştir.",
+              "options": [
+                {"text": "Thomson modeli (1897)", "pairId": 1, "correct": false},
+                {"text": "Pozitif hamur içinde negatif üzümler (üzümlü kek)", "pairId": 1, "correct": false},
+                {"text": "Rutherford modeli (1911)", "pairId": 2, "correct": false},
+                {"text": "Küçük yoğun çekirdek, çevresinde elektronlar (nükleer atom)", "pairId": 2, "correct": false},
+                {"text": "Bohr modeli (1913)", "pairId": 3, "correct": false},
+                {"text": "Elektronlar belirli enerji seviyelerinde (yörüngelerde) döner", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Rutherford'un altın yaprak deneyinde ne keşfedildi?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["rutherford", "deney"],
+              "explanation": "Alfa parçacıkları altın yaprağa gönderildi. Çoğu geçti (atom büyük oranda boş), az bir kısmı büyük açıyla saptı (yoğun çekirdek). Bu deney atomun çekirdekli yapısını kanıtladı.",
+              "options": [
+                {"text": "Elektronun keşfi", "correct": false},
+                {"text": "Atomun küçük, yoğun bir çekirdeğe sahip olduğu", "correct": true},
+                {"text": "Nötronun keşfi", "correct": false},
+                {"text": "Protonun keşfi", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bohr modeline göre elektron enerji seviyesi değiştirdiğinde ne olur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["bohr", "enerji seviyesi"],
+              "explanation": "Elektron yüksek enerji seviyesinden düşük seviyeye geçtiğinde foton (ışık) yayar. Düşük seviyeden yüksek seviyeye geçmek için foton soğurur. Bu nedenle atomlar çizgi spektrumları oluşturur.",
+              "options": [
+                {"text": "Hiçbir şey olmaz", "correct": false},
+                {"text": "Düşük seviyeye: foton yayar; yüksek seviyeye: foton soğurur", "correct": true},
+                {"text": "Elektron yok olur", "correct": false},
+                {"text": "Çekirdek değişir", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Modern atom modelinde (kuantum modeli) elektron nerededir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kuantum", "orbital"],
+              "explanation": "Modern kuantum modelinde elektron belirli bir yörüngede değil, çekirdek etrafındaki olasılık bulutu (orbital) içinde bulunur. Elektronun kesin konumu bilinemez (Heisenberg belirsizlik ilkesi).",
+              "options": [
+                {"text": "Sabit daire yörüngede", "correct": false},
+                {"text": "Çekirdek etrafında olasılık bulutu (orbital) içinde", "correct": true},
+                {"text": "Çekirdek içinde", "correct": false},
+                {"text": "Atomun dışında", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Neon lambaları ___ olayını kullanarak ışık üretir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["neon", "emisyon"],
+              "explanation": "Neon lambalarında elektrik akımı gaz atomlarının elektronlarını uyarır (yüksek enerji seviyesine çıkarır). Elektronlar geri dönerken foton yayar. Her gaz farklı renk üretir.",
+              "options": [
+                {"text": "emisyon (foton yayma)", "correct": true},
+                {"text": "yanma", "correct": false},
+                {"text": "manyetizma", "correct": false},
+                {"text": "sürtünme", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Spektroskopi ne işe yarar?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["spektroskopi"],
+              "explanation": "Spektroskopi, bir maddenin yaydığı veya soğurduğu ışığı analiz ederek maddenin kimyasal bileşimini belirleme yöntemidir. Yıldızların bileşimi, ilaç analizi ve adli tıpta kullanılır.",
+              "options": [
+                {"text": "Sıcaklık ölçme", "correct": false},
+                {"text": "Maddenin ışık spektrumunu analiz ederek bileşimini belirleme", "correct": true},
+                {"text": "Ses analizi", "correct": false},
+                {"text": "Hız ölçme", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Radyoaktivite",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Radyoaktivite nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["radyoaktivite"],
+              "explanation": "Radyoaktivite, kararsız atom çekirdeklerinin kendiliğinden parçacık veya enerji yayarak daha kararlı hale gelmesi olayıdır. Henri Becquerel 1896'da keşfetti.",
+              "options": [
+                {"text": "Elektrik üretimi", "correct": false},
+                {"text": "Kararsız çekirdeklerin kendiliğinden parçacık/enerji yayması", "correct": true},
+                {"text": "Kimyasal tepkime", "correct": false},
+                {"text": "Manyetik alan oluşumu", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Radyoaktif bozunma türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["bozunma", "türler"],
+              "explanation": "Üç temel radyoaktif bozunma türü vardır.",
+              "options": [
+                {"text": "Alfa (α) bozunması", "pairId": 1, "correct": false},
+                {"text": "Helyum çekirdeği yayılır, kâğıtla durdurulur", "pairId": 1, "correct": false},
+                {"text": "Beta (β) bozunması", "pairId": 2, "correct": false},
+                {"text": "Elektron/pozitron yayılır, alüminyumla durdurulur", "pairId": 2, "correct": false},
+                {"text": "Gama (γ) ışıması", "pairId": 3, "correct": false},
+                {"text": "Yüksek enerjili foton, kalın kurşunla azaltılır", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Yarı ömür ne demektir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yarı ömür"],
+              "explanation": "Yarı ömür, bir radyoaktif maddenin miktarının yarıya düşmesi için gereken süredir. Her maddenin kendine özgü yarı ömrü vardır (saniyelerden milyarlarca yıla kadar).",
+              "options": [
+                {"text": "Maddenin yarısının erimesi", "correct": false},
+                {"text": "Radyoaktif madde miktarının yarıya düşme süresi", "correct": true},
+                {"text": "Maddenin yarısının ısınması", "correct": false},
+                {"text": "Tepkimenin yarısının tamamlanması", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Karbon-14 ile yaş tayini nasıl yapılır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["karbon-14", "yaş tayini"],
+              "explanation": "Canlılar yaşarken atmosferden C-14 alır. Ölünce C-14 alımı durur ve bozunmaya başlar (yarı ömür ≈ 5730 yıl). Kalan C-14 miktarından kalıntının yaşı hesaplanır.",
+              "options": [
+                {"text": "Karbonun ağırlığını ölçerek", "correct": false},
+                {"text": "Kalan C-14 miktarını ölçerek, yarı ömürle yaşı hesaplama", "correct": true},
+                {"text": "Karbonun renginden", "correct": false},
+                {"text": "Karbonun sıcaklığından", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Radyasyonun tıpta kullanım alanlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["radyasyon", "tıp"],
+              "explanation": "Radyoaktivite tıpta teşhis ve tedavide kullanılır.",
+              "options": [
+                {"text": "Radyoterapi", "pairId": 1, "correct": false},
+                {"text": "Kanser hücrelerini gama ışınlarıyla öldürme", "pairId": 1, "correct": false},
+                {"text": "PET taraması", "pairId": 2, "correct": false},
+                {"text": "Radyoaktif izleyici ile organ görüntüleme", "pairId": 2, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Radyasyondan korunmanın üç temel ilkesi ___ dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["radyasyon koruma"],
+              "explanation": "Radyasyondan korunmanın üç temel ilkesi: Süre (kısa tutma), Mesafe (uzak durma) ve Zırhlama (kurşun/beton). Buna ALARA prensibi (As Low As Reasonably Achievable) denir.",
+              "options": [
+                {"text": "süre, mesafe ve zırhlama", "correct": true},
+                {"text": "hız ve kuvvet", "correct": false},
+                {"text": "sıcaklık ve basınç", "correct": false},
+                {"text": "enerji ve güç", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Nükleer Enerji",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Nükleer fisyon ve füzyon arasındaki farkı eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["fisyon", "füzyon"],
+              "explanation": "İki temel nükleer tepkime türü vardır.",
+              "options": [
+                {"text": "Fisyon (bölünme)", "pairId": 1, "correct": false},
+                {"text": "Ağır çekirdeğin parçalanması (uranyum → nükleer santral)", "pairId": 1, "correct": false},
+                {"text": "Füzyon (birleşme)", "pairId": 2, "correct": false},
+                {"text": "Hafif çekirdeklerin birleşmesi (hidrojen → güneş enerjisi)", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Güneş enerjisini hangi nükleer tepkimeyle üretir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["güneş", "füzyon"],
+              "explanation": "Güneş, çekirdeğinde hidrojen atomlarını helyuma dönüştüren nükleer füzyon tepkimesiyle enerji üretir. Milyonlarca derece sıcaklık ve çok yüksek basınç gerekir.",
+              "options": [
+                {"text": "Fisyon", "correct": false},
+                {"text": "Füzyon (hidrojen → helyum)", "correct": true},
+                {"text": "Kimyasal yanma", "correct": false},
+                {"text": "Radyoaktif bozunma", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Nükleer santrallerde enerji nasıl üretilir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["nükleer santral"],
+              "explanation": "Nükleer santrallerde uranyum-235 fisyonu kontrollü zincirleme tepkimeyle gerçekleşir. Açığa çıkan ısı suyu buharlaştırır, buhar türbini döndürür ve jeneratör elektrik üretir.",
+              "options": [
+                {"text": "Uranyumun yakılmasıyla", "correct": false},
+                {"text": "Kontrollü fisyon zincirleme tepkimesiyle ısı → buhar → türbin → elektrik", "correct": true},
+                {"text": "Hidrojen füzyonuyla", "correct": false},
+                {"text": "Manyetik alanla", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Nükleer enerjinin avantaj ve dezavantajlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["nükleer", "avantaj", "dezavantaj"],
+              "explanation": "Nükleer enerji tartışmalı bir konudur.",
+              "options": [
+                {"text": "Avantaj", "pairId": 1, "correct": false},
+                {"text": "Az yakıtla çok enerji, düşük CO₂ salınımı", "pairId": 1, "correct": false},
+                {"text": "Dezavantaj", "pairId": 2, "correct": false},
+                {"text": "Radyoaktif atık, kaza riski (Çernobil, Fukuşima)", "pairId": 2, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Zincirleme tepkimede kritik kütle ne demektir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kritik kütle"],
+              "explanation": "Kritik kütle, zincirleme fisyon tepkimesinin kendi kendini sürdürebilmesi için gereken minimum yakıt miktarıdır. Bu miktarın altında tepkime sönümlenir, üstünde kontrolsüz olabilir.",
+              "options": [
+                {"text": "En ağır atom", "correct": false},
+                {"text": "Zincirleme tepkimenin sürdürülebilmesi için gereken minimum yakıt miktarı", "correct": true},
+                {"text": "Santralin ağırlığı", "correct": false},
+                {"text": "Radyoaktif atık miktarı", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "ITER projesi ___ gerçekleştirmeyi hedefliyor.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["ITER", "füzyon"],
+              "explanation": "ITER (Uluslararası Termonükleer Deneysel Reaktör), kontrollü nükleer füzyonu gerçekleştirmeyi hedefleyen uluslararası bilimsel projedir. Başarılı olursa neredeyse sınırsız temiz enerji kaynağı olacaktır.",
+              "options": [
+                {"text": "kontrollü nükleer füzyon", "correct": true},
+                {"text": "uzay yolculuğu", "correct": false},
+                {"text": "yapay zekâ", "correct": false},
+                {"text": "deniz altı araştırması", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Kuantum Fiziği ve Geleceğin Teknolojileri",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Kuantum fiziğinin temelini oluşturan kavramları eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["kuantum", "kavramlar"],
+              "explanation": "Kuantum fiziği klasik fizikten temelden farklı kavramlar içerir.",
+              "options": [
+                {"text": "Dalga-parçacık ikiliği", "pairId": 1, "correct": false},
+                {"text": "Madde ve ışık hem dalga hem parçacık davranışı gösterir", "pairId": 1, "correct": false},
+                {"text": "Heisenberg belirsizlik ilkesi", "pairId": 2, "correct": false},
+                {"text": "Konum ve momentum aynı anda kesin ölçülemez", "pairId": 2, "correct": false},
+                {"text": "Kuantum tünelleme", "pairId": 3, "correct": false},
+                {"text": "Parçacıklar klasik olarak aşamayacağı engelleri geçebilir", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kuantum bilgisayar klasik bilgisayardan neden farklıdır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kuantum bilgisayar"],
+              "explanation": "Klasik bilgisayar bit (0 veya 1) kullanırken kuantum bilgisayar kübit kullanır. Kübit süperpozisyon sayesinde aynı anda hem 0 hem 1 olabilir. Bu, belirli hesaplamaları katlanarak hızlandırır.",
+              "options": [
+                {"text": "Daha büyüktür", "correct": false},
+                {"text": "Kübit kullanır: süperpozisyonla aynı anda birçok hesabı paralel yapar", "correct": true},
+                {"text": "Daha ucuzdur", "correct": false},
+                {"text": "İnternete bağlı değildir", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Süperiletkenlik nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["süperiletkenlik"],
+              "explanation": "Süperiletkenlik, belirli malzemelerin çok düşük sıcaklıklarda elektrik direncinin tamamen sıfıra düşmesidir. Akım kayıpsız akar. MRI cihazları, parçacık hızlandırıcıları ve maglev trenlerinde kullanılır.",
+              "options": [
+                {"text": "Çok iyi iletkenlik", "correct": false},
+                {"text": "Düşük sıcaklıkta direncin tamamen sıfıra düşmesi (kayıpsız akım)", "correct": true},
+                {"text": "Yüksek sıcaklıkta iletkenlik", "correct": false},
+                {"text": "Manyetik alan oluşturma", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Parçacık hızlandırıcıları (CERN gibi) ne araştırır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["CERN", "parçacık"],
+              "explanation": "Parçacık hızlandırıcıları, atom altı parçacıkları çok yüksek enerjilere hızlandırarak çarpıştırır. Bu çarpışmalarda maddenin temel yapı taşları ve evrenin ilk anlarına dair bilgiler elde edilir.",
+              "options": [
+                {"text": "Uzay yolculuğu", "correct": false},
+                {"text": "Maddenin temel yapı taşlarını ve evrenin kökenini araştırma", "correct": true},
+                {"text": "Enerji üretimi", "correct": false},
+                {"text": "İlaç geliştirme", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Nanoteknoloji ___ ölçeğinde çalışır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["nanoteknoloji"],
+              "explanation": "Nanoteknoloji, nanometre (10⁻⁹ m = milyarda bir metre) ölçeğinde malzeme ve cihaz üretimi teknolojisidir. Bu ölçekte madde farklı özellikler gösterir. Tıp, elektronik ve malzeme biliminde devrim niteliğindedir.",
+              "options": [
+                {"text": "nanometre", "correct": true},
+                {"text": "milimetre", "correct": false},
+                {"text": "metre", "correct": false},
+                {"text": "kilometre", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Fiziğin gelecekte çözmeyi hedeflediği büyük sorular nelerdir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["gelecek", "fizik"],
+              "explanation": "Fiziğin büyük açık soruları: karanlık madde ve karanlık enerji nedir? Yerçekimi kuantum fiziğiyle nasıl birleşir? Evrenin kaderi nedir? Kontrollü füzyon enerji mümkün mü?",
+              "options": [
+                {"text": "Tüm sorular çözüldü", "correct": false},
+                {"text": "Karanlık madde/enerji, kuantum yerçekimi, evrenin kaderi, kontrollü füzyon", "correct": true},
+                {"text": "Sadece enerji üretimi", "correct": false},
+                {"text": "Sadece uzay yolculuğu", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

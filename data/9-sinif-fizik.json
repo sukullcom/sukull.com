@@ -1,0 +1,2812 @@
+{
+  "course": {
+    "title": "9. Sınıf Fizik",
+    "imageSrc": ""
+  },
+  "units": [
+    {
+      "title": "Fizik Bilimine Giriş",
+      "description": "Fizik biliminin konusu, fiziksel niceliklerin ölçülmesi, birim sistemleri, bilimsel yöntem (MEB 2025-2026)",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "Fizik Bilimi ve Alanları",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Fizik biliminin tanımı nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["fizik", "tanım"],
+              "explanation": "Fizik, madde ve enerji arasındaki etkileşimleri, doğadaki temel yasaları inceleyen bilim dalıdır. Evrendeki en küçük parçacıklardan galaksilere kadar her ölçekte geçerli yasalar arar.",
+              "options": [
+                {"text": "Canlıları inceleyen bilim", "correct": false},
+                {"text": "Madde ve enerji arasındaki etkileşimleri ve doğa yasalarını inceleyen bilim", "correct": true},
+                {"text": "Kimyasal tepkimeleri inceleyen bilim", "correct": false},
+                {"text": "Dünya'nın yapısını inceleyen bilim", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Fiziğin alt dallarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["fizik", "alt dallar"],
+              "explanation": "Fizik, incelenen konuya göre alt dallara ayrılır.",
+              "options": [
+                {"text": "Mekanik", "pairId": 1, "correct": false},
+                {"text": "Kuvvet ve hareket", "pairId": 1, "correct": false},
+                {"text": "Termodinamik", "pairId": 2, "correct": false},
+                {"text": "Isı ve enerji dönüşümleri", "pairId": 2, "correct": false},
+                {"text": "Optik", "pairId": 3, "correct": false},
+                {"text": "Işık ve görme olayları", "pairId": 3, "correct": false},
+                {"text": "Elektromanyetizma", "pairId": 4, "correct": false},
+                {"text": "Elektrik ve manyetik alanlar", "pairId": 4, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Hangisi fizik biliminin inceleme alanına girmez?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["fizik", "kapsam"],
+              "explanation": "Fotosentez olayı biyolojinin konusudur. Kuvvet, hareket, enerji ve elektrik fizik biliminin temel konularıdır.",
+              "options": [
+                {"text": "Bir cismin düşme hareketi", "correct": false},
+                {"text": "Fotosentez olayı", "correct": true},
+                {"text": "Elektrik akımının oluşumu", "correct": false},
+                {"text": "Işığın yansıması", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Modern fizik hangi bilim insanının çalışmalarıyla başlamıştır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["modern fizik", "tarih"],
+              "explanation": "Modern fizik, 20. yüzyıl başında Albert Einstein'ın görelilik teorisi ve Max Planck'ın kuantum teorisiyle başlamıştır. Newton'un klasik mekaniğinin ötesine geçen bu teoriler mikro ve makro evreni açıklar.",
+              "options": [
+                {"text": "Arşimet", "correct": false},
+                {"text": "Einstein ve Planck", "correct": true},
+                {"text": "Galileo", "correct": false},
+                {"text": "Kopernik", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Fiziğin günlük hayattaki uygulamalarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["fizik", "uygulama"],
+              "explanation": "Fizik yasaları günlük hayatta sayısız teknolojik uygulamada kullanılır.",
+              "options": [
+                {"text": "GPS navigasyon", "pairId": 1, "correct": false},
+                {"text": "Görelilik teorisi (zaman düzeltmesi)", "pairId": 1, "correct": false},
+                {"text": "MRI cihazı", "pairId": 2, "correct": false},
+                {"text": "Manyetik rezonans (nükleer fizik)", "pairId": 2, "correct": false},
+                {"text": "Güneş paneli", "pairId": 3, "correct": false},
+                {"text": "Fotoelektrik etki (kuantum fiziği)", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Fizik biliminde hipotez, teori ve yasa arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["bilimsel yöntem"],
+              "explanation": "Hipotez: test edilebilir öngörü. Teori: geniş kapsamlı, çok kez doğrulanmış açıklama modeli. Yasa: doğada gözlemlenen değişmez ilişkilerin matematiksel ifadesi. Teori yanlışlanabilir, yasa ise gözlemsel bir gerçektir.",
+              "options": [
+                {"text": "Hepsi aynı anlama gelir", "correct": false},
+                {"text": "Hipotez tahmindir, teori kapsamlı açıklamadır, yasa değişmez doğa ilişkisidir", "correct": true},
+                {"text": "Yasa hipotezden türetilir", "correct": false},
+                {"text": "Teori kanıtlanmamış yasadır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Fiziksel Nicelikler ve Birimler",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "SI birim sisteminde temel büyüklükleri birimleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["SI", "birimler"],
+              "explanation": "SI (Uluslararası Birim Sistemi) 7 temel büyüklük ve birim tanımlar.",
+              "options": [
+                {"text": "Uzunluk", "pairId": 1, "correct": false},
+                {"text": "metre (m)", "pairId": 1, "correct": false},
+                {"text": "Kütle", "pairId": 2, "correct": false},
+                {"text": "kilogram (kg)", "pairId": 2, "correct": false},
+                {"text": "Zaman", "pairId": 3, "correct": false},
+                {"text": "saniye (s)", "pairId": 3, "correct": false},
+                {"text": "Sıcaklık", "pairId": 4, "correct": false},
+                {"text": "kelvin (K)", "pairId": 4, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kuvvetin SI birimi ___ dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["kuvvet", "birim"],
+              "explanation": "Kuvvetin SI birimi Newton'dur (N). 1 N = 1 kg·m/s². Kuvvet türetilmiş bir büyüklüktür (kütle × ivme).",
+              "options": [
+                {"text": "Newton", "correct": true},
+                {"text": "Joule", "correct": false},
+                {"text": "Pascal", "correct": false},
+                {"text": "Watt", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Skaler ve vektörel büyüklükler arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["skaler", "vektörel"],
+              "explanation": "Skaler büyüklükler sadece sayısal değer ve birimle ifade edilir (kütle, sıcaklık, zaman). Vektörel büyüklükler ise hem büyüklük hem yön bilgisi taşır (kuvvet, hız, ivme).",
+              "options": [
+                {"text": "Fark yoktur", "correct": false},
+                {"text": "Skaler: sadece büyüklük; vektörel: büyüklük + yön", "correct": true},
+                {"text": "Skaler hep pozitif, vektörel hep negatif", "correct": false},
+                {"text": "Vektörel büyüklükler ölçülemez", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Hangisi vektörel bir büyüklüktür?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["vektörel"],
+              "explanation": "Kuvvet vektörel bir büyüklüktür; hem büyüklüğü (10 N gibi) hem yönü (sağa, yukarı) vardır. Kütle, zaman ve sıcaklık skaler büyüklüklerdir.",
+              "options": [
+                {"text": "Kütle", "correct": false},
+                {"text": "Kuvvet", "correct": true},
+                {"text": "Zaman", "correct": false},
+                {"text": "Sıcaklık", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "1 kilometre kaç metredir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["birim dönüşümü"],
+              "explanation": "1 km = 1000 m. 'Kilo' ön eki 10³ (bin) anlamına gelir. Benzer şekilde: 1 kg = 1000 g, 1 kJ = 1000 J.",
+              "options": [
+                {"text": "100 m", "correct": false},
+                {"text": "1000 m", "correct": true},
+                {"text": "10.000 m", "correct": false},
+                {"text": "10 m", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Metre ön eklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["ön ek", "birim"],
+              "explanation": "SI birim sistemi büyüklük sırasına göre ön ekler kullanır.",
+              "options": [
+                {"text": "mili (m)", "pairId": 1, "correct": false},
+                {"text": "10⁻³ (binde bir)", "pairId": 1, "correct": false},
+                {"text": "mikro (μ)", "pairId": 2, "correct": false},
+                {"text": "10⁻⁶ (milyonda bir)", "pairId": 2, "correct": false},
+                {"text": "mega (M)", "pairId": 3, "correct": false},
+                {"text": "10⁶ (milyon)", "pairId": 3, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Ölçme ve Hata",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Ölçme nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ölçme", "tanım"],
+              "explanation": "Ölçme, bir fiziksel büyüklüğün standart bir birimle karşılaştırılmasıdır. Sonuç sayısal değer ve birimden oluşur (örn. 5,2 kg).",
+              "options": [
+                {"text": "Tahmin etme", "correct": false},
+                {"text": "Bir büyüklüğün standart birimle karşılaştırılması", "correct": true},
+                {"text": "Sadece saymak", "correct": false},
+                {"text": "Bir cismi tartmak", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Ölçme hatası türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["hata", "türler"],
+              "explanation": "Ölçme hataları iki ana gruba ayrılır.",
+              "options": [
+                {"text": "Sistematik hata", "pairId": 1, "correct": false},
+                {"text": "Düzeltilemeyen alet bozukluğu, sürekli aynı yönde sapma", "pairId": 1, "correct": false},
+                {"text": "Rastgele (tesadüfi) hata", "pairId": 2, "correct": false},
+                {"text": "Ölçümden ölçüme değişen, ortalamayla azaltılabilen sapma", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bir ölçümün duyarlılığı neye bağlıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["duyarlılık"],
+              "explanation": "Duyarlılık, ölçü aletinin ölçebildiği en küçük değere bağlıdır. Cetvelin en küçük bölümü 1 mm ise duyarlılığı 1 mm'dir. Mikrometre (0,01 mm) cetvelden daha duyarlıdır.",
+              "options": [
+                {"text": "Aletin boyutuna", "correct": false},
+                {"text": "Aletin ölçebildiği en küçük değere", "correct": true},
+                {"text": "Ölçüm yapan kişiye", "correct": false},
+                {"text": "Cismin ağırlığına", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Hassas ama doğru olmayan ölçüm ne demektir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["hassaslık", "doğruluk"],
+              "explanation": "Hassaslık: tekrarlanan ölçümlerin birbirine yakın olması. Doğruluk: ölçümlerin gerçek değere yakın olması. Alet bozuksa ölçümler hep aynı (hassas) ama gerçek değerden uzak (doğru değil) olabilir.",
+              "options": [
+                {"text": "Ölçümler birbirine yakın ama gerçek değerden uzak", "correct": true},
+                {"text": "Ölçümler gerçek değere yakın ama birbirinden uzak", "correct": false},
+                {"text": "Ölçümler hem birbirine hem gerçek değere yakın", "correct": false},
+                {"text": "Böyle bir durum olamaz", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Anlamlı rakamlar (basamaklar) neden önemlidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["anlamlı rakam"],
+              "explanation": "Anlamlı rakamlar ölçümün güvenilirliğini gösterir. Cetvel ile 3,5 cm ölçüyorsanız sonucu 3,5000 cm yazmak yanlıştır çünkü cetvelin duyarlılığı bunu desteklemez.",
+              "options": [
+                {"text": "Önemli değildir", "correct": false},
+                {"text": "Ölçümün güvenilirliğini ve duyarlılığını gösterir", "correct": true},
+                {"text": "Sadece matematik hesabı için gerekir", "correct": false},
+                {"text": "Birim sisteminde zorunludur", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bağıl hata, mutlak hatanın ölçülen değere oranı olup ___ olarak ifade edilir.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["bağıl hata"],
+              "explanation": "Bağıl hata = (Mutlak hata / Ölçülen değer) × 100. Yüzde olarak ifade edilir ve ölçümün ne kadar güvenilir olduğunu gösterir. Küçük bağıl hata daha güvenilir ölçüm demektir.",
+              "options": [
+                {"text": "yüzde", "correct": true},
+                {"text": "metre", "correct": false},
+                {"text": "kilogram", "correct": false},
+                {"text": "saniye", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Bilimsel Gösterim ve Grafik",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Bilimsel gösterim nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["bilimsel gösterim"],
+              "explanation": "Bilimsel gösterim, çok büyük veya çok küçük sayıları 'a × 10ⁿ' şeklinde yazma yöntemidir. Örn: 300.000.000 m/s = 3 × 10⁸ m/s, 0,000001 m = 1 × 10⁻⁶ m.",
+              "options": [
+                {"text": "Sayıları kelimeyle yazma", "correct": false},
+                {"text": "Büyük/küçük sayıları a × 10ⁿ şeklinde ifade etme", "correct": true},
+                {"text": "Sayıları Roma rakamlarıyla yazma", "correct": false},
+                {"text": "Yuvarlama yapma", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "0,00045 sayısının bilimsel gösterimi ___ × 10⁻⁴ tür.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["bilimsel gösterim", "uygulama"],
+              "explanation": "0,00045 = 4,5 × 10⁻⁴. Virgülü sağa 4 basamak kaydırınca 4,5 elde edilir, 10'un üssü negatif (-4) olur.",
+              "options": [
+                {"text": "4,5", "correct": true},
+                {"text": "45", "correct": false},
+                {"text": "0,45", "correct": false},
+                {"text": "450", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Grafik türlerini kullanım alanlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["grafik", "türler"],
+              "explanation": "Fizik deneylerinde farklı grafik türleri kullanılır.",
+              "options": [
+                {"text": "Doğrusal grafik", "pairId": 1, "correct": false},
+                {"text": "Doğru orantılı ilişki (F = k·x)", "pairId": 1, "correct": false},
+                {"text": "Parabol grafik", "pairId": 2, "correct": false},
+                {"text": "Kareli orantılı ilişki (y = x²)", "pairId": 2, "correct": false},
+                {"text": "Ters orantı grafiği", "pairId": 3, "correct": false},
+                {"text": "Biri artınca diğeri azalan ilişki (P·V = sabit)", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Bir grafikte bağımsız değişken hangi eksende gösterilir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["grafik", "eksen"],
+              "explanation": "Bağımsız değişken (deneyde kontrol edilen) yatay eksende (x-ekseni), bağımlı değişken (ölçülen) dikey eksende (y-ekseni) gösterilir.",
+              "options": [
+                {"text": "Dikey eksen (y)", "correct": false},
+                {"text": "Yatay eksen (x)", "correct": true},
+                {"text": "Her iki eksende", "correct": false},
+                {"text": "Grafiğin dışında", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Grafiğin eğimi neyi ifade eder?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["eğim", "grafik"],
+              "explanation": "Grafiğin eğimi, y-eksenindeki değişimin x-eksenindeki değişime oranıdır (Δy/Δx). Yol-zaman grafiğinde eğim hızı, hız-zaman grafiğinde eğim ivmeyi verir.",
+              "options": [
+                {"text": "Grafiğin güzelliğini", "correct": false},
+                {"text": "İki değişken arasındaki değişim oranını (Δy/Δx)", "correct": true},
+                {"text": "Grafiğin boyutunu", "correct": false},
+                {"text": "Ölçüm hatasını", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Doğru orantılı iki büyüklüğün grafiği nasıl bir şekildir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["doğru orantı", "grafik"],
+              "explanation": "Doğru orantılı iki büyüklük (y = k·x) grafikte orijinden geçen bir doğru oluşturur. Eğim sabit 'k' değerine eşittir.",
+              "options": [
+                {"text": "Eğri", "correct": false},
+                {"text": "Orijinden geçen doğru", "correct": true},
+                {"text": "Daire", "correct": false},
+                {"text": "Hiperbol", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Bilimsel Yöntem ve Deneysel Süreç",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Bilimsel yöntemin adımlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["bilimsel yöntem", "adımlar"],
+              "explanation": "Bilimsel yöntem sistematik bir araştırma sürecidir.",
+              "options": [
+                {"text": "1. Gözlem", "pairId": 1, "correct": false},
+                {"text": "Doğadaki bir olayı fark etme ve tanımlama", "pairId": 1, "correct": false},
+                {"text": "2. Hipotez", "pairId": 2, "correct": false},
+                {"text": "Test edilebilir bir öngörü/tahmin oluşturma", "pairId": 2, "correct": false},
+                {"text": "3. Deney", "pairId": 3, "correct": false},
+                {"text": "Kontrollü koşullarda hipotezi sınama", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Bir deneyde değişken türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["değişken", "deney"],
+              "explanation": "Bilimsel deneylerde üç tür değişken vardır.",
+              "options": [
+                {"text": "Bağımsız değişken", "pairId": 1, "correct": false},
+                {"text": "Araştırmacının değiştirdiği değişken", "pairId": 1, "correct": false},
+                {"text": "Bağımlı değişken", "pairId": 2, "correct": false},
+                {"text": "Değişimin etkisinin ölçüldüğü değişken", "pairId": 2, "correct": false},
+                {"text": "Kontrol değişkeni", "pairId": 3, "correct": false},
+                {"text": "Sabit tutulan değişkenler", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Kontrol deneyi neden yapılır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kontrol deneyi"],
+              "explanation": "Kontrol deneyi, deney sonucunun gerçekten test edilen değişkenden kaynaklandığını doğrulamak için yapılır. Değiştirilmiş ve değiştirilmemiş koşullar karşılaştırılır.",
+              "options": [
+                {"text": "Daha fazla veri toplamak için", "correct": false},
+                {"text": "Sonucun test edilen değişkenden kaynaklandığını doğrulamak için", "correct": true},
+                {"text": "Deneyi uzatmak için", "correct": false},
+                {"text": "Hipotezi değiştirmek için", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Bir hipotez yanlışlanırsa ne yapılmalıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["hipotez", "yanlışlama"],
+              "explanation": "Yanlışlanan hipotez bilimsel sürecin doğal bir parçasıdır. Yeni gözlem ve veriler ışığında hipotez düzeltilir veya yeni bir hipotez oluşturulur. Bilim bu şekilde ilerler.",
+              "options": [
+                {"text": "Deney bırakılmalı", "correct": false},
+                {"text": "Hipotez yeni veriler ışığında düzeltilmeli veya yeni hipotez kurulmalı", "correct": true},
+                {"text": "Sonuçlar gizlenmeli", "correct": false},
+                {"text": "Aynı deney tekrarlanarak farklı sonuç elde edilmeli", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Tekrarlanabilirlik bilimde neden önemlidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["tekrarlanabilirlik"],
+              "explanation": "Tekrarlanabilirlik, bir deneyin aynı koşullarda farklı kişiler tarafından tekrarlandığında aynı sonuçları vermesidir. Bu, sonucun güvenilir ve geçerli olduğunu gösterir.",
+              "options": [
+                {"text": "Önemli değildir", "correct": false},
+                {"text": "Sonucun güvenilir ve geçerli olduğunu kanıtlar", "correct": true},
+                {"text": "Daha çok veri toplanır", "correct": false},
+                {"text": "Sadece akademik gelenektir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Fizik deneyinde ___ değişken sabit tutulmalıdır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["kontrol değişkeni"],
+              "explanation": "Bir fizik deneyinde kontrol değişkenleri sabit tutulmalıdır. Bu sayede sadece bağımsız değişkenin etkisi ölçülür ve sonuçlar güvenilir olur.",
+              "options": [
+                {"text": "kontrol", "correct": true},
+                {"text": "bağımlı", "correct": false},
+                {"text": "bağımsız", "correct": false},
+                {"text": "rastgele", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Madde ve Özellikleri",
+      "description": "Kütle, hacim, özkütle, maddenin halleri, hal değişimleri, sıkıştırılabilirlik (MEB 2025-2026)",
+      "order": 2,
+      "lessons": [
+        {
+          "title": "Kütle, Hacim ve Özkütle",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Kütle ve ağırlık arasındaki farkları eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["kütle", "ağırlık"],
+              "explanation": "Kütle ve ağırlık farklı kavramlardır.",
+              "options": [
+                {"text": "Kütle", "pairId": 1, "correct": false},
+                {"text": "Madde miktarı, her yerde aynı, birimi kg", "pairId": 1, "correct": false},
+                {"text": "Ağırlık", "pairId": 2, "correct": false},
+                {"text": "Yerçekimi kuvveti, konuma göre değişir, birimi N", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Özkütle (yoğunluk) formülü nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["özkütle", "formül"],
+              "explanation": "Özkütle = Kütle / Hacim (d = m/V). Birimi kg/m³ veya g/cm³ dir. Saf suyun özkütlesi 1 g/cm³ = 1000 kg/m³ tür.",
+              "options": [
+                {"text": "d = m × V", "correct": false},
+                {"text": "d = m / V", "correct": true},
+                {"text": "d = V / m", "correct": false},
+                {"text": "d = m + V", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "200 g kütleli ve 50 cm³ hacimli bir cismin özkütlesi ___ g/cm³ tür.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["özkütle", "hesaplama"],
+              "explanation": "d = m/V = 200 g / 50 cm³ = 4 g/cm³.",
+              "options": [
+                {"text": "4", "correct": true},
+                {"text": "250", "correct": false},
+                {"text": "150", "correct": false},
+                {"text": "10000", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Özkütle maddeye özgü bir özellik midir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["özkütle", "ayırt edici"],
+              "explanation": "Evet, özkütle maddeye özgü (ayırt edici) bir özelliktir. Aynı maddenin özkütlesi sabit sıcaklık ve basınçta değişmez. Farklı maddeler genellikle farklı özkütlelere sahiptir.",
+              "options": [
+                {"text": "Hayır, her cisimde farklıdır", "correct": false},
+                {"text": "Evet, maddeye özgüdür ve ayırt edici özelliktir", "correct": true},
+                {"text": "Sadece katı maddelerde sabit", "correct": false},
+                {"text": "Sıcaklığa hiç bağlı değildir", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Özkütlesi suyunkinden küçük olan cisim suda ___.",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["özkütle", "yüzme"],
+              "explanation": "Özkütlesi suyunkinden küçük olan cisim suda yüzer. Tahta (d ≈ 0,5 g/cm³) suda yüzerken demir (d ≈ 7,8 g/cm³) batar. Su: d = 1 g/cm³.",
+              "options": [
+                {"text": "Batar", "correct": false},
+                {"text": "Yüzer", "correct": true},
+                {"text": "Çözünür", "correct": false},
+                {"text": "Buharlaşır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bazı maddelerin özkütlelerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["özkütle", "değerler"],
+              "explanation": "Farklı maddelerin özkütleleri büyük farklılıklar gösterir.",
+              "options": [
+                {"text": "Altın", "pairId": 1, "correct": false},
+                {"text": "19,3 g/cm³ (çok yoğun)", "pairId": 1, "correct": false},
+                {"text": "Demir", "pairId": 2, "correct": false},
+                {"text": "7,8 g/cm³", "pairId": 2, "correct": false},
+                {"text": "Saf su", "pairId": 3, "correct": false},
+                {"text": "1,0 g/cm³ (referans)", "pairId": 3, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Maddenin Halleri",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Maddenin üç halini tanecik düzeniyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["madde halleri", "tanecik"],
+              "explanation": "Maddenin halleri taneciklerin düzenlenişi ve hareketleriyle belirlenir.",
+              "options": [
+                {"text": "Katı", "pairId": 1, "correct": false},
+                {"text": "Tanecikler düzenli, titreşim hareketi, sabit şekil/hacim", "pairId": 1, "correct": false},
+                {"text": "Sıvı", "pairId": 2, "correct": false},
+                {"text": "Tanecikler düzensiz ama yakın, akıcı, sabit hacim", "pairId": 2, "correct": false},
+                {"text": "Gaz", "pairId": 3, "correct": false},
+                {"text": "Tanecikler çok uzak ve hızlı, şekil/hacim değişken", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Maddenin dördüncü hali hangisidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["plazma"],
+              "explanation": "Plazma, gazın çok yüksek sıcaklıkta iyonlaşması (elektronların kopması) ile oluşan madde halidir. Güneş, yıldızlar, yıldırım ve neon lambaları plazma halindedir.",
+              "options": [
+                {"text": "Jel", "correct": false},
+                {"text": "Plazma", "correct": true},
+                {"text": "Köpük", "correct": false},
+                {"text": "Kristal", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Sıvıların sabit şekli yoktur çünkü tanecikleri ___.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["sıvı", "tanecik"],
+              "explanation": "Sıvılarda tanecikler birbirine yakın ama düzensizdir, birbiri üzerinde kayabilir. Bu nedenle sıvılar bulundukları kabın şeklini alır (akıcıdır). Ancak hacimleri sabittir.",
+              "options": [
+                {"text": "birbirine yakın ama hareket edebilir", "correct": true},
+                {"text": "sabit ve düzenlidir", "correct": false},
+                {"text": "birbirinden çok uzaktır", "correct": false},
+                {"text": "hiç hareket etmez", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Gazlar neden sıkıştırılabilir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["gaz", "sıkıştırma"],
+              "explanation": "Gaz tanecikleri arasındaki mesafe çok büyüktür. Basınç uygulandığında tanecikler birbirine yaklaştırılabilir, bu nedenle hacim küçülür. Katı ve sıvılarda tanecikler zaten yakın olduğundan sıkıştırılamazlar.",
+              "options": [
+                {"text": "Tanecikleri küçüktür", "correct": false},
+                {"text": "Tanecikleri arasındaki mesafe çok büyüktür", "correct": true},
+                {"text": "Hafif oldukları için", "correct": false},
+                {"text": "Renksiz oldukları için", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Katı, sıvı ve gaz hallerinden hangisinde madde en fazla hacim kaplar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["gaz", "hacim"],
+              "explanation": "Gaz halinde tanecikler arası mesafe en büyük olduğundan aynı miktardaki madde en fazla hacmi gaz halinde kaplar. Katı en az hacim kaplar.",
+              "options": [
+                {"text": "Katı", "correct": false},
+                {"text": "Sıvı", "correct": false},
+                {"text": "Gaz", "correct": true},
+                {"text": "Hepsi eşit", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Amorf katı ve kristal katı arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["amorf", "kristal"],
+              "explanation": "Kristal katılarda tanecikler düzenli bir geometrik yapıda dizilir (tuz, elmas). Amorf katılarda düzenli yapı yoktur (cam, plastik). Amorf katıların belirli erime noktası yoktur, yumuşayarak erirler.",
+              "options": [
+                {"text": "Fark yoktur", "correct": false},
+                {"text": "Kristal: düzenli tanecik dizilimi; Amorf: düzensiz, belirli erime noktası yok", "correct": true},
+                {"text": "Amorf daha sert, kristal daha yumuşak", "correct": false},
+                {"text": "Kristal doğada bulunmaz", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Hal Değişimleri",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Hal değişimlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["hal değişimi"],
+              "explanation": "Madde ısı alarak veya vererek hal değiştirir.",
+              "options": [
+                {"text": "Erime", "pairId": 1, "correct": false},
+                {"text": "Katı → Sıvı (ısı alır)", "pairId": 1, "correct": false},
+                {"text": "Buharlaşma", "pairId": 2, "correct": false},
+                {"text": "Sıvı → Gaz (ısı alır)", "pairId": 2, "correct": false},
+                {"text": "Yoğuşma", "pairId": 3, "correct": false},
+                {"text": "Gaz → Sıvı (ısı verir)", "pairId": 3, "correct": false},
+                {"text": "Donma", "pairId": 4, "correct": false},
+                {"text": "Sıvı → Katı (ısı verir)", "pairId": 4, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Hal değişimi sırasında sıcaklık değişir mi?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["hal değişimi", "sıcaklık"],
+              "explanation": "Saf bir madde hal değiştirirken sıcaklık sabit kalır. Verilen ısı enerjisi tanecikler arası bağları kopmak veya oluşturmak için kullanılır, sıcaklık artışına değil.",
+              "options": [
+                {"text": "Evet, sürekli artar", "correct": false},
+                {"text": "Hayır, hal değişimi sırasında sıcaklık sabit kalır", "correct": true},
+                {"text": "Evet, sürekli azalır", "correct": false},
+                {"text": "Bazen artar bazen azalır", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Süblimleşme (süblimeasyon) nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["süblimleşme"],
+              "explanation": "Süblimleşme, maddenin sıvı hale geçmeden doğrudan katıdan gaza dönüşmesidir. Naftalin, kuru buz (katı CO₂) ve don olayı buna örnektir. Tersi (gaz → katı) kırağılaşma/depozisyondur.",
+              "options": [
+                {"text": "Sıvının donması", "correct": false},
+                {"text": "Katının doğrudan gaza dönüşmesi", "correct": true},
+                {"text": "Gazın sıvılaşması", "correct": false},
+                {"text": "Katının erimesi", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Suyun erime noktası ___ °C'dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["erime noktası", "su"],
+              "explanation": "Saf suyun erime (donma) noktası 0°C, kaynama noktası 100°C'dir (1 atm basınçta). Bu değerler saf su için standarttır.",
+              "options": [
+                {"text": "0", "correct": true},
+                {"text": "100", "correct": false},
+                {"text": "-10", "correct": false},
+                {"text": "50", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Buharlaşma ile kaynama arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["buharlaşma", "kaynama"],
+              "explanation": "Buharlaşma her sıcaklıkta, sadece sıvı yüzeyinden gerçekleşir. Kaynama belirli sıcaklıkta (kaynama noktası), sıvının her noktasından gerçekleşir. Kaynama noktasında buhar basıncı atmosfer basıncına eşit olur.",
+              "options": [
+                {"text": "Fark yoktur", "correct": false},
+                {"text": "Buharlaşma: her sıcaklıkta, yüzeyden; Kaynama: belirli sıcaklıkta, her noktadan", "correct": true},
+                {"text": "Kaynama daha yavaştır", "correct": false},
+                {"text": "Buharlaşma sadece sıcakta olur", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Isı-sıcaklık grafiğinde yatay bölgeler neyi gösterir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ısı-sıcaklık grafiği"],
+              "explanation": "Isı-sıcaklık grafiğinde yatay (sabit sıcaklık) bölgeler hal değişiminin gerçekleştiğini gösterir. Bu bölgelerde verilen ısı sıcaklık artışına değil, hal değişimine harcanır.",
+              "options": [
+                {"text": "Maddenin soğumasını", "correct": false},
+                {"text": "Hal değişimini (sıcaklık sabit, ısı hal değişimine harcanıyor)", "correct": true},
+                {"text": "Ölçüm hatasını", "correct": false},
+                {"text": "Maddenin ısınmasını", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Isı ve Sıcaklık",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Isı ve sıcaklık arasındaki farkları eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["ısı", "sıcaklık", "fark"],
+              "explanation": "Isı ve sıcaklık farklı kavramlardır.",
+              "options": [
+                {"text": "Isı (Q)", "pairId": 1, "correct": false},
+                {"text": "Enerji transferi, birimi Joule (J) veya kalori (cal)", "pairId": 1, "correct": false},
+                {"text": "Sıcaklık (T)", "pairId": 2, "correct": false},
+                {"text": "Taneciklerin ortalama kinetik enerjisinin ölçüsü, birimi °C veya K", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Isı her zaman hangi yönde akar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ısı akışı"],
+              "explanation": "Isı enerjisi her zaman sıcak cisimden soğuk cisme doğru akar. İki cisim aynı sıcaklığa geldiğinde ısı akışı durur (termal denge).",
+              "options": [
+                {"text": "Soğuktan sıcağa", "correct": false},
+                {"text": "Sıcaktan soğuğa", "correct": true},
+                {"text": "Her iki yönde", "correct": false},
+                {"text": "Rastgele", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Özgül ısı kapasitesi ne demektir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["özgül ısı"],
+              "explanation": "Özgül ısı (c), 1 gram maddenin sıcaklığını 1°C artırmak için gereken ısı miktarıdır. Birimi J/(g·°C) veya cal/(g·°C) dir. Suyun özgül ısısı yüksektir (4,18 J/g·°C).",
+              "options": [
+                {"text": "Maddenin erime noktası", "correct": false},
+                {"text": "1 g maddenin sıcaklığını 1°C artırmak için gereken ısı", "correct": true},
+                {"text": "Maddenin özkütlesi", "correct": false},
+                {"text": "Maddenin toplam ısısı", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Q = m × c × ΔT formülünde ΔT, ___ ifade eder.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["ısı formülü"],
+              "explanation": "Q = m·c·ΔT formülünde Q: verilen/alınan ısı, m: kütle, c: özgül ısı, ΔT: sıcaklık değişimidir (ΔT = T₂ − T₁).",
+              "options": [
+                {"text": "sıcaklık değişimi", "correct": true},
+                {"text": "toplam sıcaklık", "correct": false},
+                {"text": "kütle değişimi", "correct": false},
+                {"text": "hacim değişimi", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Sıcaklık ölçeklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["sıcaklık ölçekleri"],
+              "explanation": "Yaygın kullanılan sıcaklık ölçekleri ve suyun donma/kaynama noktaları.",
+              "options": [
+                {"text": "Celsius (°C)", "pairId": 1, "correct": false},
+                {"text": "Suyun donması: 0°C, kaynaması: 100°C", "pairId": 1, "correct": false},
+                {"text": "Kelvin (K)", "pairId": 2, "correct": false},
+                {"text": "Mutlak sıfır: 0 K, suyun donması: 273 K", "pairId": 2, "correct": false},
+                {"text": "Fahrenheit (°F)", "pairId": 3, "correct": false},
+                {"text": "Suyun donması: 32°F, kaynaması: 212°F", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Mutlak sıfır noktası kaç °C'dir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["mutlak sıfır"],
+              "explanation": "Mutlak sıfır −273,15°C (0 K) dir. Teorik olarak ulaşılabilecek en düşük sıcaklıktır. Bu noktada taneciklerin kinetik enerjisi minimum seviyededir.",
+              "options": [
+                {"text": "0°C", "correct": false},
+                {"text": "−273°C", "correct": true},
+                {"text": "−100°C", "correct": false},
+                {"text": "−1000°C", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Genleşme ve Isı Transferi",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Isınan madde neden genleşir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["genleşme"],
+              "explanation": "Sıcaklık arttığında taneciklerin kinetik enerjisi artar, daha hızlı ve geniş titreşirler. Tanecikler arası mesafe büyür, madde genleşir (hacmi artar).",
+              "options": [
+                {"text": "Kütle arttığı için", "correct": false},
+                {"text": "Taneciklerin kinetik enerjisi artarak aralarındaki mesafe büyür", "correct": true},
+                {"text": "Yeni tanecikler oluştuğu için", "correct": false},
+                {"text": "Yerçekimi azaldığı için", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Isı transferi yöntemlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["ısı transferi", "yöntemler"],
+              "explanation": "Isı üç yolla transfer edilir.",
+              "options": [
+                {"text": "İletim (kondüksiyon)", "pairId": 1, "correct": false},
+                {"text": "Temas yoluyla, katılarda etkili (kaşığın ısınması)", "pairId": 1, "correct": false},
+                {"text": "Konveksiyon (taşınım)", "pairId": 2, "correct": false},
+                {"text": "Akışkan hareketi, sıvı/gazda (kalorifer, rüzgâr)", "pairId": 2, "correct": false},
+                {"text": "Işıma (radyasyon)", "pairId": 3, "correct": false},
+                {"text": "Ortam gerektirmez, EM dalgalarla (güneş ısısı)", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Güneş ısısı Dünya'ya hangi yolla ulaşır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ışıma", "güneş"],
+              "explanation": "Güneş ile Dünya arasında uzay boşluğu vardır. Isı, ortam gerektirmeden elektromanyetik dalgalar (infrared ışınlar) aracılığıyla ışıma yoluyla ulaşır.",
+              "options": [
+                {"text": "İletim", "correct": false},
+                {"text": "Konveksiyon", "correct": false},
+                {"text": "Işıma (radyasyon)", "correct": true},
+                {"text": "Temas", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Demiryolu raylarında neden boşluk bırakılır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["genleşme", "uygulama"],
+              "explanation": "Raylar ısınınca genleşir (uzar). Boşluk bırakılmazsa genleşen ray eğilir veya kırılır. Köprülerde, kaldırımlarda ve binalarda da genleşme derzleri bırakılır.",
+              "options": [
+                {"text": "Maliyet tasarrufu için", "correct": false},
+                {"text": "Sıcakta genleşen rayın eğilip kırılmasını önlemek için", "correct": true},
+                {"text": "Estetik nedenlerle", "correct": false},
+                {"text": "Trenin yavaşlaması için", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Su neden donmaya başladığında ___ dan donarak buz yüzeyde kalır?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["suyun anomalisi"],
+              "explanation": "Su, 4°C'de en yoğundur (anormal genleşme). 4°C'nin altında soğuduğunda genleşir ve hafifler. Buz, suyun yüzeyinden oluşur çünkü 0°C'deki buz, altındaki 4°C'lik sudan daha hafiftir.",
+              "options": [
+                {"text": "yüzey", "correct": true},
+                {"text": "dip", "correct": false},
+                {"text": "orta", "correct": false},
+                {"text": "kenar", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Termos (vakumlu şişe) ısı kaybını nasıl önler?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["termos", "ısı yalıtımı"],
+              "explanation": "Termos: çift cidar arasındaki vakum iletim ve konveksiyonu önler, gümüş kaplama yüzey ışımayı yansıtır. Böylece üç ısı transfer yolu birden engellenir.",
+              "options": [
+                {"text": "Sadece kalın cam kullanarak", "correct": false},
+                {"text": "Vakum (iletim/konveksiyon önleme) ve yansıtıcı yüzey (ışıma önleme)", "correct": true},
+                {"text": "İçine buz koyarak", "correct": false},
+                {"text": "Plastik kapak ile", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hareket ve Kuvvet",
+      "description": "Hareket kavramları, düzgün doğrusal hareket, ivmeli hareket, Newton'un hareket yasaları (MEB 2025-2026)",
+      "order": 3,
+      "lessons": [
+        {
+          "title": "Hareket Kavramları",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Konum, yer değiştirme ve yol kavramlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["konum", "yer değiştirme", "yol"],
+              "explanation": "Bu üç kavram birbirinden farklıdır.",
+              "options": [
+                {"text": "Konum", "pairId": 1, "correct": false},
+                {"text": "Cismin referans noktasına göre bulunduğu yer", "pairId": 1, "correct": false},
+                {"text": "Yer değiştirme", "pairId": 2, "correct": false},
+                {"text": "Başlangıç-bitiş arası doğrusal uzaklık (vektörel)", "pairId": 2, "correct": false},
+                {"text": "Yol (alınan mesafe)", "pairId": 3, "correct": false},
+                {"text": "Toplam katedilen uzaklık (skaler)", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Hız nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["hız"],
+              "explanation": "Hız, birim zamanda kat edilen yer değiştirmedir. Vektörel bir büyüklüktür (büyüklük + yön). v = Δx / Δt. Birimi m/s dir.",
+              "options": [
+                {"text": "Toplam yol", "correct": false},
+                {"text": "Birim zamanda kat edilen yer değiştirme (vektörel)", "correct": true},
+                {"text": "Cismin ağırlığı", "correct": false},
+                {"text": "Cismin kütlesi", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Sürat ve hız arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sürat", "hız", "fark"],
+              "explanation": "Sürat skaler bir büyüklüktür (sadece büyüklük, yol/zaman). Hız vektörel bir büyüklüktür (büyüklük + yön, yer değiştirme/zaman). Araba 60 km/h süratle gider, 60 km/h kuzeye hızla gider.",
+              "options": [
+                {"text": "Aynı şeylerdir", "correct": false},
+                {"text": "Sürat: skaler (yol/zaman); Hız: vektörel (yer değiştirme/zaman, yönlü)", "correct": true},
+                {"text": "Sürat daha büyüktür", "correct": false},
+                {"text": "Hız ölçülemez", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "72 km/h hız ___ m/s'ye eşittir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["birim dönüşümü", "hız"],
+              "explanation": "km/h'den m/s'ye çevirmek için 3,6'ya bölünür: 72 / 3,6 = 20 m/s. Veya: 72 km/h = 72.000 m / 3600 s = 20 m/s.",
+              "options": [
+                {"text": "20", "correct": true},
+                {"text": "200", "correct": false},
+                {"text": "7,2", "correct": false},
+                {"text": "36", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "İvme nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ivme"],
+              "explanation": "İvme, birim zamandaki hız değişimidir. a = Δv / Δt. Birimi m/s² dir. Pozitif ivme hızlanma, negatif ivme yavaşlama anlamına gelir.",
+              "options": [
+                {"text": "Hızın kendisi", "correct": false},
+                {"text": "Birim zamandaki hız değişimi", "correct": true},
+                {"text": "Cismin konumu", "correct": false},
+                {"text": "Cismin ağırlığı", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bir cismin hızı 5 saniyede 10 m/s'den 30 m/s'ye çıkıyorsa ivmesi kaçtır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["ivme", "hesaplama"],
+              "explanation": "a = Δv / Δt = (30 − 10) / 5 = 20 / 5 = 4 m/s².",
+              "options": [
+                {"text": "2 m/s²", "correct": false},
+                {"text": "4 m/s²", "correct": true},
+                {"text": "6 m/s²", "correct": false},
+                {"text": "10 m/s²", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Düzgün Doğrusal Hareket (DDH)",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Düzgün doğrusal hareketin özellikleri nelerdir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["DDH", "özellikler"],
+              "explanation": "DDH: Hız sabittir, ivme sıfırdır, eşit zaman aralıklarında eşit yol kat edilir. Doğrusal bir yörüngede sabit hızla hareket eder.",
+              "options": [
+                {"text": "Hız sürekli artar", "correct": false},
+                {"text": "Hız sabit, ivme sıfır, eşit zamanda eşit yol", "correct": true},
+                {"text": "İvme sabittir", "correct": false},
+                {"text": "Yörünge eğriseldir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "DDH yapan cismin yol-zaman grafiği nasıldır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["DDH", "grafik"],
+              "explanation": "DDH yapan cismin yol-zaman (x-t) grafiği orijinden geçen eğimsiz bir doğrudur. Grafiğin eğimi sabit hıza eşittir.",
+              "options": [
+                {"text": "Eğri (parabol)", "correct": false},
+                {"text": "Doğru (sabit eğimli)", "correct": true},
+                {"text": "Yatay çizgi", "correct": false},
+                {"text": "Düşey çizgi", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "x = v × t formülünde x, cismin kat ettiği ___ temsil eder.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["DDH", "formül"],
+              "explanation": "x = v·t formülünde x: alınan yol (konum değişimi), v: sabit hız, t: geçen süredir. Bu formül DDH için geçerlidir.",
+              "options": [
+                {"text": "yol", "correct": true},
+                {"text": "hız", "correct": false},
+                {"text": "ivme", "correct": false},
+                {"text": "kütle", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "DDH yapan cismin hız-zaman grafiği nasıldır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["DDH", "v-t grafiği"],
+              "explanation": "DDH'de hız sabit olduğundan v-t grafiği yatay bir doğrudur. Grafiğin altında kalan alan kat edilen yola eşittir.",
+              "options": [
+                {"text": "Yukarı doğru eğimli doğru", "correct": false},
+                {"text": "Yatay doğru (sabit hız)", "correct": true},
+                {"text": "Aşağı doğru eğimli doğru", "correct": false},
+                {"text": "Parabol", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Saatte 90 km hızla giden bir araç 2 saatte kaç km yol alır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["DDH", "hesaplama"],
+              "explanation": "x = v·t = 90 km/h × 2 h = 180 km.",
+              "options": [
+                {"text": "90 km", "correct": false},
+                {"text": "180 km", "correct": true},
+                {"text": "45 km", "correct": false},
+                {"text": "360 km", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "v-t grafiğinin altında kalan alan neyi verir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["v-t grafiği", "alan"],
+              "explanation": "Hız-zaman (v-t) grafiğinin altındaki alan, o zaman aralığında kat edilen toplam yolu verir. Bu ilke tüm hareket türleri için geçerlidir.",
+              "options": [
+                {"text": "Hızı", "correct": false},
+                {"text": "Kat edilen yolu", "correct": true},
+                {"text": "İvmeyi", "correct": false},
+                {"text": "Kuvveti", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Düzgün Değişen Doğrusal Hareket (DDDH)",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "DDDH'nin özellikleri nelerdir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["DDDH"],
+              "explanation": "DDDH: İvme sabittir (sıfır değil), hız düzgün değişir (artar veya azalır), eşit zamanlarda eşit hız değişimi olur. Serbest düşme DDDH'ye örnektir.",
+              "options": [
+                {"text": "Hız ve ivme sıfır", "correct": false},
+                {"text": "İvme sabit, hız düzgün değişir", "correct": true},
+                {"text": "Hız sabit, ivme değişir", "correct": false},
+                {"text": "Her şey değişken", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "DDDH formüllerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["DDDH", "formüller"],
+              "explanation": "Düzgün değişen doğrusal hareketin temel formülleri.",
+              "options": [
+                {"text": "v = v₀ + a·t", "pairId": 1, "correct": false},
+                {"text": "Son hız = Başlangıç hızı + ivme × süre", "pairId": 1, "correct": false},
+                {"text": "x = v₀·t + ½·a·t²", "pairId": 2, "correct": false},
+                {"text": "Alınan yol (konum ve zamanla)", "pairId": 2, "correct": false},
+                {"text": "v² = v₀² + 2·a·x", "pairId": 3, "correct": false},
+                {"text": "Hız-konum ilişkisi (zamansız)", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Durgun halden 4 m/s² ivmeyle harekete geçen cismin 3 saniye sonraki hızı ___ m/s'dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["DDDH", "hesaplama"],
+              "explanation": "v = v₀ + a·t = 0 + 4 × 3 = 12 m/s.",
+              "options": [
+                {"text": "12", "correct": true},
+                {"text": "7", "correct": false},
+                {"text": "4", "correct": false},
+                {"text": "36", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "DDDH yapan cismin v-t grafiği nasıldır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["DDDH", "grafik"],
+              "explanation": "DDDH'de hız düzgün değiştiğinden v-t grafiği eğimli bir doğrudur. Doğrunun eğimi ivmeye eşittir. Yukarı eğim = hızlanma, aşağı eğim = yavaşlama.",
+              "options": [
+                {"text": "Yatay doğru", "correct": false},
+                {"text": "Eğimli doğru (eğim = ivme)", "correct": true},
+                {"text": "Parabol", "correct": false},
+                {"text": "Daire", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Serbest düşme hareketi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["serbest düşme"],
+              "explanation": "Serbest düşme, cisimlerin sadece yerçekimi etkisinde hava direnci ihmal edilerek düşmesidir. İvme sabittir: g ≈ 10 m/s² (veya 9,8 m/s²). Tüm cisimler aynı ivmeyle düşer.",
+              "options": [
+                {"text": "Hafif cisimlerin düşmesi", "correct": false},
+                {"text": "Sadece yerçekimi etkisinde, sabit ivmeyle (g ≈ 10 m/s²) düşme", "correct": true},
+                {"text": "Paraşütle iniş", "correct": false},
+                {"text": "Ağır cisimlerin düşmesi", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Serbest düşmede tüm cisimler aynı ivmeyle düşer. Bu neyi gösterir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["serbest düşme", "kütle"],
+              "explanation": "Hava direnci ihmal edildiğinde tüy ve çekiç aynı anda yere düşer (Apollo 15 Ay deneyi). Düşme ivmesi kütleye bağlı değildir, sadece yerçekimi ivmesine (g) bağlıdır.",
+              "options": [
+                {"text": "Ağır cisimler daha hızlı düşer", "correct": false},
+                {"text": "Düşme ivmesi kütleye bağlı değildir, hava direnci olmasa hepsi aynı düşer", "correct": true},
+                {"text": "Yerçekimi yoktur", "correct": false},
+                {"text": "Sadece küçük cisimler için geçerli", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Newton'un Hareket Yasaları — I ve II",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Newton'un 1. yasasını (eylemsizlik) eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["newton 1", "eylemsizlik"],
+              "explanation": "Newton'un 1. yasası eylemsizlik yasasıdır.",
+              "options": [
+                {"text": "Duran cisim", "pairId": 1, "correct": false},
+                {"text": "Net kuvvet uygulanmadıkça durmaya devam eder", "pairId": 1, "correct": false},
+                {"text": "Hareket eden cisim", "pairId": 2, "correct": false},
+                {"text": "Net kuvvet uygulanmadıkça sabit hızla hareket etmeye devam eder", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Otobüs aniden fren yapınca yolcular neden öne doğru savrulur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["eylemsizlik", "örnek"],
+              "explanation": "Eylemsizlik nedeniyle: yolcuların vücudu otobüsle birlikte ileri hareket etmektedir. Otobüs durduğunda vücut harekete devam etmek ister ve öne doğru savrulur.",
+              "options": [
+                {"text": "Yerçekimi artığı için", "correct": false},
+                {"text": "Eylemsizlik: vücut hareket halini sürdürmeye devam eder", "correct": true},
+                {"text": "Rüzgâr etkisi", "correct": false},
+                {"text": "Fren kuvveti vücuda etki eder", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Newton'un 2. yasası formülü ___ dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["newton 2", "formül"],
+              "explanation": "Newton'un 2. yasası: F = m·a. Net kuvvet, kütleyle ivmenin çarpımına eşittir. Kuvvet birimi Newton (N) = kg·m/s².",
+              "options": [
+                {"text": "F = m·a", "correct": true},
+                {"text": "F = m·v", "correct": false},
+                {"text": "F = m·g", "correct": false},
+                {"text": "F = m/a", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "5 kg kütleli cisme 20 N kuvvet uygulanırsa ivmesi kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["newton 2", "hesaplama"],
+              "explanation": "F = m·a → a = F/m = 20/5 = 4 m/s².",
+              "options": [
+                {"text": "100 m/s²", "correct": false},
+                {"text": "4 m/s²", "correct": true},
+                {"text": "25 m/s²", "correct": false},
+                {"text": "15 m/s²", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Aynı kuvvet uygulandığında kütlesi büyük olan cismin ivmesi nasıl olur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["kütle", "ivme"],
+              "explanation": "F = m·a'dan a = F/m. Kuvvet sabitken kütle artarsa ivme azalır. Büyük kamyonu itmek, küçük arabayı itmekten daha zordur.",
+              "options": [
+                {"text": "Daha büyük olur", "correct": false},
+                {"text": "Daha küçük olur", "correct": true},
+                {"text": "Aynı kalır", "correct": false},
+                {"text": "Sıfır olur", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Net kuvvet sıfır olan cisim hakkında ne söylenebilir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["denge", "net kuvvet"],
+              "explanation": "Net kuvvet sıfırsa cisim dengededir. Duruyor olabilir (statik denge) veya sabit hızla hareket ediyor olabilir (dinamik denge). İvme sıfırdır.",
+              "options": [
+                {"text": "Kesinlikle durmaktadır", "correct": false},
+                {"text": "Duruyor veya sabit hızla hareket ediyor olabilir (denge)", "correct": true},
+                {"text": "Kesinlikle hızlanmaktadır", "correct": false},
+                {"text": "Kesinlikle yavaşlamaktadır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Newton'un 3. Yasası ve Sürtünme",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Newton'un 3. yasası (etki-tepki) ne der?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["newton 3", "etki-tepki"],
+              "explanation": "Newton'un 3. yasası: Her etkiye eşit büyüklükte ve zıt yönde bir tepki vardır. A cisme B'ye kuvvet uygularsa, B de A'ya aynı büyüklükte zıt yönde kuvvet uygular.",
+              "options": [
+                {"text": "Kuvvetler her zaman dengelenir", "correct": false},
+                {"text": "Her etkiye eşit büyüklükte ve zıt yönde tepki vardır", "correct": true},
+                {"text": "Büyük cisim daha fazla kuvvet uygular", "correct": false},
+                {"text": "Kuvvet tek yönlüdür", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Etki-tepki örneklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["newton 3", "örnekler"],
+              "explanation": "Etki-tepki kuvvetleri farklı cisimlere etki eder.",
+              "options": [
+                {"text": "Roket: gaz geriye itiyor", "pairId": 1, "correct": false},
+                {"text": "Tepki: gaz roketi ileri itiyor", "pairId": 1, "correct": false},
+                {"text": "Yüzücü: suyu geriye itiyor", "pairId": 2, "correct": false},
+                {"text": "Tepki: su yüzücüyü ileri itiyor", "pairId": 2, "correct": false},
+                {"text": "Yürüme: ayak yeri geriye itiyor", "pairId": 3, "correct": false},
+                {"text": "Tepki: yer ayağı ileri itiyor", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Sürtünme kuvveti hareketi her zaman engeller mi?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["sürtünme"],
+              "explanation": "Sürtünme kuvveti hareketi zorlaştırabilir ama aynı zamanda hareketi mümkün kılar. Yürüyebilmemiz, araba sürebilmemiz, yazı yazabilmemiz sürtünme sayesindedir. Buzsuz yolda yürümek kolaydır çünkü sürtünme vardır.",
+              "options": [
+                {"text": "Evet, her zaman zararlıdır", "correct": false},
+                {"text": "Hayır, hareketi engelleyebildiği gibi mümkün de kılar (yürüme, kavrama)", "correct": true},
+                {"text": "Sürtünme kuvveti yoktur", "correct": false},
+                {"text": "Sadece katılarda var", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Sürtünme kuvvetini etkileyen faktörler nelerdir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sürtünme", "faktörler"],
+              "explanation": "Sürtünme kuvveti: yüzeylerin pürüzlülüğüne (sürtünme katsayısı, μ) ve normal kuvvete (N, yüzeye dik basma kuvveti) bağlıdır. f = μ·N. Temas alanına bağlı değildir.",
+              "options": [
+                {"text": "Sadece hıza bağlı", "correct": false},
+                {"text": "Yüzeylerin pürüzlülüğüne (μ) ve normal kuvvete (N) bağlı", "correct": true},
+                {"text": "Sadece ağırlığa bağlı", "correct": false},
+                {"text": "Temas alanına bağlı", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Statik (durma) sürtünme kuvveti kinetik (kayma) sürtünme kuvvetinden ___ dır.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["statik sürtünme", "kinetik sürtünme"],
+              "explanation": "Statik sürtünme (cismi harekete geçirmek için gereken) kinetik sürtünmeden (hareket halindeki sürtünme) büyüktür. Bu yüzden bir cismi itmek başlangıçta daha zordur.",
+              "options": [
+                {"text": "büyük", "correct": true},
+                {"text": "küçük", "correct": false},
+                {"text": "eşit", "correct": false},
+                {"text": "sıfır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Etki-tepki kuvvetleri neden birbirini dengelemez?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["newton 3", "denge"],
+              "explanation": "Etki-tepki kuvvetleri farklı cisimlere etki eder. Dengeleme ancak aynı cisme etki eden kuvvetler arasında olur. Masaya bastıran kitap ve masanın tepkisi farklı cisimlere etkir.",
+              "options": [
+                {"text": "Büyüklükleri farklıdır", "correct": false},
+                {"text": "Farklı cisimlere etki ettikleri için aynı cismi dengeleyemezler", "correct": true},
+                {"text": "Aynı yöndedirler", "correct": false},
+                {"text": "Aslında dengelenirler", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Enerji",
+      "description": "İş, güç, kinetik ve potansiyel enerji, mekanik enerjinin korunumu, enerji dönüşümleri (MEB 2025-2026)",
+      "order": 4,
+      "lessons": [
+        {
+          "title": "İş Kavramı",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Fizikteki iş tanımı nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["iş", "tanım"],
+              "explanation": "Fizikteki iş: bir cisme kuvvet uygulanarak kuvvet doğrultusunda yer değiştirmesidir. W = F·d·cos(θ). Birimi Joule (J) dir. Cisim hareket etmezse iş yapılmamıştır.",
+              "options": [
+                {"text": "Kuvvet uygulama", "correct": false},
+                {"text": "Kuvvet uygulayarak cismi kuvvet doğrultusunda yer değiştirme", "correct": true},
+                {"text": "Cismi tutma", "correct": false},
+                {"text": "Düşünme ve planlama", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "50 N kuvvetle 4 m taşınan cisim için yapılan iş ___ J'dür.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["iş", "hesaplama"],
+              "explanation": "W = F × d = 50 N × 4 m = 200 J. Kuvvet ve yer değiştirme aynı doğrultuda (cos0° = 1).",
+              "options": [
+                {"text": "200", "correct": true},
+                {"text": "54", "correct": false},
+                {"text": "12,5", "correct": false},
+                {"text": "46", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Hangisinde fiziksel iş yapılmıştır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["iş", "örnekler"],
+              "explanation": "Masayı iterek kaydırmak: kuvvet uygulanıyor ve cisim kuvvet yönünde yer değiştiriyor → iş yapılmış. Çantayı tutarak beklemekte yer değiştirme yoktur, duvara basmada hareket yoktur.",
+              "options": [
+                {"text": "Ağır çantayı tutarak bekleme", "correct": false},
+                {"text": "Masayı iterek kaydırma", "correct": true},
+                {"text": "Duvara bastırma (hareket yok)", "correct": false},
+                {"text": "Kitap okuma", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kuvvet yönüne dik yer değiştirmede yapılan iş nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["iş", "dik kuvvet"],
+              "explanation": "W = F·d·cos(θ). Kuvvet yönüne dik (90°) yer değiştirmede cos(90°) = 0 olduğundan iş sıfırdır. Yatay yüzeyde yürüyen kişinin ağırlık kuvveti iş yapmaz.",
+              "options": [
+                {"text": "Maksimum iş", "correct": false},
+                {"text": "Sıfır iş", "correct": true},
+                {"text": "Negatif iş", "correct": false},
+                {"text": "Hesaplanamaz", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Negatif iş ne demektir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["negatif iş"],
+              "explanation": "Negatif iş, kuvvetin hareket yönünün tersinde olması demektir. Sürtünme kuvveti her zaman negatif iş yapar çünkü hareket yönünün tersindedir ve kinetik enerjiyi azaltır.",
+              "options": [
+                {"text": "İş yapılmamış demektir", "correct": false},
+                {"text": "Kuvvet hareket yönünün tersinde, cismin enerjisini azaltır", "correct": true},
+                {"text": "Hata yapılmış demektir", "correct": false},
+                {"text": "Kütle negatif demektir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "İş ve enerji arasındaki ilişki nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["iş", "enerji ilişkisi"],
+              "explanation": "İş ve enerji doğrudan ilişkilidir. Bir cisme yapılan net iş, cismin kinetik enerjisindeki değişime eşittir (İş-Enerji Teoremi). İş yaparak enerji aktarılır.",
+              "options": [
+                {"text": "İlişki yoktur", "correct": false},
+                {"text": "Yapılan net iş cismin kinetik enerji değişimine eşittir", "correct": true},
+                {"text": "İş her zaman enerjiden büyüktür", "correct": false},
+                {"text": "Enerji işten bağımsızdır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Kinetik ve Potansiyel Enerji",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Kinetik enerji formülü nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kinetik enerji", "formül"],
+              "explanation": "Kinetik enerji: Eₖ = ½mv². Kütleye doğru, hızın karesine doğru orantılıdır. Hız 2 katına çıkarsa kinetik enerji 4 katına çıkar.",
+              "options": [
+                {"text": "Eₖ = m·v", "correct": false},
+                {"text": "Eₖ = ½mv²", "correct": true},
+                {"text": "Eₖ = m·g·h", "correct": false},
+                {"text": "Eₖ = F·d", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Yerçekimi potansiyel enerjisi formülü ___ dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["potansiyel enerji", "formül"],
+              "explanation": "Yerçekimi potansiyel enerjisi: Eₚ = m·g·h. Kütle (m), yerçekimi ivmesi (g ≈ 10 m/s²) ve yükseklik (h) ile doğru orantılıdır.",
+              "options": [
+                {"text": "Eₚ = m·g·h", "correct": true},
+                {"text": "Eₚ = ½mv²", "correct": false},
+                {"text": "Eₚ = F·d", "correct": false},
+                {"text": "Eₚ = m·a", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "2 kg kütleli cisim 5 m yükseklikte ise potansiyel enerjisi kaç J'dür? (g = 10 m/s²)",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["potansiyel enerji", "hesaplama"],
+              "explanation": "Eₚ = m·g·h = 2 × 10 × 5 = 100 J.",
+              "options": [
+                {"text": "17 J", "correct": false},
+                {"text": "100 J", "correct": true},
+                {"text": "50 J", "correct": false},
+                {"text": "200 J", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Enerji türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["enerji", "türler"],
+              "explanation": "Doğada farklı enerji türleri vardır.",
+              "options": [
+                {"text": "Kinetik enerji", "pairId": 1, "correct": false},
+                {"text": "Hareket enerjisi (koşan insan)", "pairId": 1, "correct": false},
+                {"text": "Potansiyel enerji", "pairId": 2, "correct": false},
+                {"text": "Konum/depolanmış enerji (yüksekteki cisim, gerilmiş yay)", "pairId": 2, "correct": false},
+                {"text": "Isı enerjisi", "pairId": 3, "correct": false},
+                {"text": "Taneciklerin rastgele hareketi (sıcak cisim)", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hızı 3 katına çıkan cismin kinetik enerjisi kaç katına çıkar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kinetik enerji", "hız"],
+              "explanation": "Eₖ = ½mv². Hız 3 katına çıkarsa: ½m(3v)² = ½m·9v² → kinetik enerji 9 katına çıkar. (3² = 9)",
+              "options": [
+                {"text": "3 katına", "correct": false},
+                {"text": "9 katına", "correct": true},
+                {"text": "6 katına", "correct": false},
+                {"text": "27 katına", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Esneklik potansiyel enerjisi neye bağlıdır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["esneklik enerjisi"],
+              "explanation": "Esneklik potansiyel enerjisi: Eₑ = ½k·x². Yay sabitine (k) ve sıkışma/gerilme miktarına (x) bağlıdır. Gerilme 2 katına çıkarsa enerji 4 katına çıkar.",
+              "options": [
+                {"text": "Yüksekliğe ve kütleye", "correct": false},
+                {"text": "Yay sabitine (k) ve sıkışma/gerilme miktarına (x)", "correct": true},
+                {"text": "Hıza ve kütleye", "correct": false},
+                {"text": "Sıcaklığa", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Mekanik Enerjinin Korunumu",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Mekanik enerjinin korunumu ne demektir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["korunum"],
+              "explanation": "Sürtünme gibi iç kuvvetler yoksa (muhafazakâr kuvvetler altında) toplam mekanik enerji (Eₖ + Eₚ) sabittir. Potansiyel enerji azaldığında kinetik enerji aynı miktarda artar ve tersi.",
+              "options": [
+                {"text": "Enerji yok olur", "correct": false},
+                {"text": "Sürtünme yoksa kinetik + potansiyel enerji toplamı sabit kalır", "correct": true},
+                {"text": "Sadece kinetik enerji korunur", "correct": false},
+                {"text": "Enerji her zaman artar", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Serbest düşen cisimde enerji dönüşümünü eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["serbest düşme", "enerji"],
+              "explanation": "Serbest düşme sırasında potansiyel enerji kinetik enerjiye dönüşür.",
+              "options": [
+                {"text": "En yüksek nokta", "pairId": 1, "correct": false},
+                {"text": "Eₚ maksimum, Eₖ = 0 (durgun)", "pairId": 1, "correct": false},
+                {"text": "Düşerken (orta)", "pairId": 2, "correct": false},
+                {"text": "Eₚ azalıyor, Eₖ artıyor", "pairId": 2, "correct": false},
+                {"text": "Yere çarpmadan hemen önce", "pairId": 3, "correct": false},
+                {"text": "Eₖ maksimum, Eₚ ≈ 0", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "10 m yükseklikten bırakılan cisim yere çarpmadan hemen önce hızı kaçtır? (g = 10 m/s²)",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["korunum", "hesaplama"],
+              "explanation": "m·g·h = ½mv² → v² = 2gh = 2×10×10 = 200 → v ≈ 14,1 m/s. Veya yaklaşık olarak √200 ≈ 14 m/s.",
+              "options": [
+                {"text": "10 m/s", "correct": false},
+                {"text": "≈ 14 m/s", "correct": true},
+                {"text": "20 m/s", "correct": false},
+                {"text": "100 m/s", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Salıncak en alçak noktada ___ enerjisi maksimumdur.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["salıncak", "kinetik"],
+              "explanation": "Salıncak en alçak noktada hızı (dolayısıyla kinetik enerjisi) maksimum, yüksekliği (potansiyel enerjisi) minimumdudr.",
+              "options": [
+                {"text": "kinetik", "correct": true},
+                {"text": "potansiyel", "correct": false},
+                {"text": "ısı", "correct": false},
+                {"text": "elektrik", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Sürtünme varsa mekanik enerji neden azalır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sürtünme", "enerji kaybı"],
+              "explanation": "Sürtünme kuvveti kinetik enerjiyi ısı enerjisine dönüştürür. Toplam enerji korunur ancak mekanik enerji (Eₖ + Eₚ) azalır. Kaybedilen mekanik enerji = üretilen ısı enerjisi.",
+              "options": [
+                {"text": "Enerji yok olur", "correct": false},
+                {"text": "Mekanik enerji ısı enerjisine dönüşerek azalır", "correct": true},
+                {"text": "Kütle azalır", "correct": false},
+                {"text": "Yerçekimi değişir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Enerjinin korunumu yasası ne der?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["enerjinin korunumu"],
+              "explanation": "Enerji yoktan var edilemez ve yok edilemez, sadece bir türden başka bir türe dönüştürülür. Evrendeki toplam enerji sabittir. Bu, fiziğin en temel yasalarından biridir.",
+              "options": [
+                {"text": "Enerji üretilebilir", "correct": false},
+                {"text": "Enerji yoktan var edilemez ve yok edilemez, yalnızca dönüşür", "correct": true},
+                {"text": "Enerji sadece artar", "correct": false},
+                {"text": "Enerji yok edilebilir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Güç",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Güç nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["güç", "tanım"],
+              "explanation": "Güç, birim zamanda yapılan iştir (P = W/t). Birimi Watt (W) dır. 1 W = 1 J/s. Güç ne kadar büyükse iş o kadar hızlı yapılır.",
+              "options": [
+                {"text": "Toplam yapılan iş", "correct": false},
+                {"text": "Birim zamanda yapılan iş (P = W/t)", "correct": true},
+                {"text": "Kuvvetin büyüklüğü", "correct": false},
+                {"text": "Enerjinin miktarı", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "600 J iş 3 saniyede yapılırsa güç ___ W'tır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["güç", "hesaplama"],
+              "explanation": "P = W/t = 600/3 = 200 W.",
+              "options": [
+                {"text": "200", "correct": true},
+                {"text": "1800", "correct": false},
+                {"text": "603", "correct": false},
+                {"text": "2", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Aynı işi daha kısa sürede yapan makine için ne söylenebilir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["güç", "süre"],
+              "explanation": "P = W/t formülünde iş (W) aynıyken süre (t) azalırsa güç (P) artar. Aynı işi daha kısa sürede yapan makine daha güçlüdür.",
+              "options": [
+                {"text": "Daha az güçlüdür", "correct": false},
+                {"text": "Daha güçlüdür", "correct": true},
+                {"text": "Aynı güçtedir", "correct": false},
+                {"text": "Güç hesaplanamaz", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Güç birimleri arasındaki ilişkiyi eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["güç", "birim"],
+              "explanation": "Güç farklı birimlerle ifade edilebilir.",
+              "options": [
+                {"text": "1 Watt", "pairId": 1, "correct": false},
+                {"text": "1 Joule / saniye", "pairId": 1, "correct": false},
+                {"text": "1 kiloWatt (kW)", "pairId": 2, "correct": false},
+                {"text": "1000 Watt", "pairId": 2, "correct": false},
+                {"text": "1 beygir gücü (HP)", "pairId": 3, "correct": false},
+                {"text": "Yaklaşık 746 Watt", "pairId": 3, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "P = F·v formülü ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["güç", "kuvvet", "hız"],
+              "explanation": "P = F·v formülü, güçün kuvvet ile hızın çarpımına eşit olduğunu gösterir. Sabit hızla hareket eden cisme uygulanan kuvvetin gücünü hesaplamak için kullanılır.",
+              "options": [
+                {"text": "Güç = Kütle × İvme", "correct": false},
+                {"text": "Güç = Kuvvet × Hız", "correct": true},
+                {"text": "Güç = Enerji × Zaman", "correct": false},
+                {"text": "Güç = İş × Hız", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Verim nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["verim"],
+              "explanation": "Verim, bir makinenin yararlı iş (çıkış) ile toplam enerji (giriş) oranıdır: η = (Yararlı iş / Toplam enerji) × 100. Sürtünme ve diğer kayıplar nedeniyle verim her zaman %100'den küçüktür.",
+              "options": [
+                {"text": "Toplam enerji", "correct": false},
+                {"text": "Yararlı iş / Toplam enerji × 100 (her zaman <%100)", "correct": true},
+                {"text": "Hızın artması", "correct": false},
+                {"text": "Güç/Kütle oranı", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Enerji Dönüşümleri ve Günlük Yaşam",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Enerji dönüşüm örneklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["enerji dönüşümü", "örnekler"],
+              "explanation": "Günlük hayatta sürekli enerji dönüşümleri gerçekleşir.",
+              "options": [
+                {"text": "Elektrik sobası", "pairId": 1, "correct": false},
+                {"text": "Elektrik → Isı", "pairId": 1, "correct": false},
+                {"text": "Rüzgâr türbini", "pairId": 2, "correct": false},
+                {"text": "Kinetik → Elektrik", "pairId": 2, "correct": false},
+                {"text": "Fotosentez", "pairId": 3, "correct": false},
+                {"text": "Işık → Kimyasal", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Araba motorunda enerji dönüşümü nasıldır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["motor", "enerji"],
+              "explanation": "Araba motoru: Kimyasal enerji (benzin) → Isı enerjisi (yanma) → Kinetik enerji (pistonlar/tekerlekler). Bir miktar enerji de ısı ve ses olarak kaybolur.",
+              "options": [
+                {"text": "Elektrik → Kinetik", "correct": false},
+                {"text": "Kimyasal → Isı → Kinetik (bir kısmı ısı/ses kaybı)", "correct": true},
+                {"text": "Kinetik → Kimyasal", "correct": false},
+                {"text": "Potansiyel → Kinetik", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Yenilenebilir enerji kaynaklarına örnek hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["yenilenebilir enerji"],
+              "explanation": "Güneş, rüzgâr, jeotermal, hidroelektrik ve biyokütle yenilenebilir enerji kaynaklarıdır. Kömür, petrol ve doğalgaz ise fosil (yenilenemez) yakıtlardır.",
+              "options": [
+                {"text": "Kömür", "correct": false},
+                {"text": "Güneş enerjisi", "correct": true},
+                {"text": "Doğalgaz", "correct": false},
+                {"text": "Petrol", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Enerji verimliliği neden önemlidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["verimlilik"],
+              "explanation": "Enerji verimliliği: daha az enerji harcayarak aynı sonucu almak. Doğal kaynakları korur, maliyeti düşürür, sera gazı salınımını azaltır. LED ampul, yalıtım, A+++ cihazlar örnek.",
+              "options": [
+                {"text": "Önemli değildir", "correct": false},
+                {"text": "Kaynakları korur, maliyeti düşürür, çevre kirliliğini azaltır", "correct": true},
+                {"text": "Sadece ekonomik", "correct": false},
+                {"text": "Sadece fabrikalarda geçerli", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "1 kWh kaç Joule'dür?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kWh", "joule"],
+              "explanation": "1 kWh = 1000 W × 3600 s = 3.600.000 J = 3,6 × 10⁶ J. Elektrik faturasında tüketim kWh cinsinden ölçülür.",
+              "options": [
+                {"text": "1000 J", "correct": false},
+                {"text": "3.600.000 J (3,6 × 10⁶ J)", "correct": true},
+                {"text": "360 J", "correct": false},
+                {"text": "100.000 J", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Perpetuum mobile (sürekli hareket makinesi) neden imkânsızdır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["perpetuum mobile"],
+              "explanation": "Termodinamiğin 1. ve 2. yasalarına göre: enerji yoktan yaratılamaz ve her dönüşümde bir miktar enerji kullanılamaz hale gelir (ısıya dönüşür). Hiçbir makine %100 verimle çalışamaz.",
+              "options": [
+                {"text": "Teknoloji yeterli değil", "correct": false},
+                {"text": "Enerjinin korunumu ve her dönüşümde kaçınılmaz kayıplar nedeniyle", "correct": true},
+                {"text": "Malzeme bulunamıyor", "correct": false},
+                {"text": "Aslında mümkündür", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Elektrik",
+      "description": "Elektrik yükleri, Coulomb yasası, elektrik alan, elektrik akımı, direnç, Ohm yasası (MEB 2025-2026)",
+      "order": 5,
+      "lessons": [
+        {
+          "title": "Elektrik Yükleri ve Coulomb Yasası",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Elektrik yükleri arasındaki etkileşimi eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["yük etkileşimi"],
+              "explanation": "Elektrik yükleri arasında itme ve çekme kuvvetleri vardır.",
+              "options": [
+                {"text": "Aynı yükler (++ veya −−)", "pairId": 1, "correct": false},
+                {"text": "Birbirini iter", "pairId": 1, "correct": false},
+                {"text": "Zıt yükler (+−)", "pairId": 2, "correct": false},
+                {"text": "Birbirini çeker", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Coulomb yasası ne der?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["coulomb yasası"],
+              "explanation": "Coulomb yasası: İki yüklü cisim arasındaki elektriksel kuvvet, yüklerin çarpımıyla doğru, aralarındaki uzaklığın karesiyle ters orantılıdır. F = k·q₁·q₂/r².",
+              "options": [
+                {"text": "Kuvvet sadece yüklere bağlıdır", "correct": false},
+                {"text": "F = k·q₁·q₂/r² (yüklerle doğru, uzaklığın karesiyle ters orantı)", "correct": true},
+                {"text": "Kuvvet sadece uzaklığa bağlıdır", "correct": false},
+                {"text": "Kuvvet yüklerin toplamına eşittir", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "İki yük arasındaki mesafe 2 katına çıkarılırsa kuvvet nasıl değişir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["coulomb", "mesafe"],
+              "explanation": "F = k·q₁·q₂/r². Uzaklık (r) 2 katına çıkarsa: F' = F/(2²) = F/4. Kuvvet 4'te 1'ine düşer.",
+              "options": [
+                {"text": "Yarıya düşer", "correct": false},
+                {"text": "4'te 1'ine düşer", "correct": true},
+                {"text": "2 katına çıkar", "correct": false},
+                {"text": "Değişmez", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Elektronun yükü negatif, protonun yükü ___'tir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["yük", "parçacık"],
+              "explanation": "Protonun yükü pozitif (+), elektronun yükü negatif (−), nötronun yükü sıfırdır (yüksüz). Temel yük birimi: e = 1,6 × 10⁻¹⁹ Coulomb.",
+              "options": [
+                {"text": "pozitif", "correct": true},
+                {"text": "negatif", "correct": false},
+                {"text": "nötr", "correct": false},
+                {"text": "değişken", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "İletken ve yalıtkan arasındaki farkı eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["iletken", "yalıtkan"],
+              "explanation": "Maddeler elektrik iletkenliklerine göre sınıflandırılır.",
+              "options": [
+                {"text": "İletken (bakır, demir, su)", "pairId": 1, "correct": false},
+                {"text": "Serbest elektronlar var, elektrik kolayca akar", "pairId": 1, "correct": false},
+                {"text": "Yalıtkan (plastik, cam, kauçuk)", "pairId": 2, "correct": false},
+                {"text": "Serbest elektron yok, elektrik akmaz", "pairId": 2, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Yarı iletken nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["yarı iletken"],
+              "explanation": "Yarı iletkenler (silisyum, germanyum), normal koşullarda yalıtkandır ama belirli koşullarda (sıcaklık, katkı, ışık) iletken olur. Transistörler, entegre devreler ve LED'ler yarı iletkenlerden yapılır.",
+              "options": [
+                {"text": "Her zaman iletken", "correct": false},
+                {"text": "Koşullara göre iletken veya yalıtkan olan madde (silisyum, germanyum)", "correct": true},
+                {"text": "Her zaman yalıtkan", "correct": false},
+                {"text": "Gaz halindeki iletken", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Elektrik Alan",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Elektrik alan nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["elektrik alan"],
+              "explanation": "Elektrik alan, bir yüklü cismin çevresinde oluşturduğu, diğer yüklere kuvvet uygulayabileceği bölgedir. Birim pozitif yüke uygulanan kuvvet olarak tanımlanır: E = F/q.",
+              "options": [
+                {"text": "Manyetik kuvvet", "correct": false},
+                {"text": "Yüklü cismin çevresinde diğer yüklere kuvvet uygulayan alan", "correct": true},
+                {"text": "Işık kaynağı", "correct": false},
+                {"text": "Elektrik akımı", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Elektrik alan çizgileri pozitif yükten ___ yöne gider.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["alan çizgileri", "yön"],
+              "explanation": "Elektrik alan çizgileri pozitif yükten dışarı doğru (uzaklaşarak), negatif yüke doğru (yaklaşarak) çizilir. Birim pozitif yükün hareket edeceği yönü gösterir.",
+              "options": [
+                {"text": "dışarı", "correct": true},
+                {"text": "içeri", "correct": false},
+                {"text": "dairesel", "correct": false},
+                {"text": "rastgele", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Elektrik alan şiddetini etkileyen faktörleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["elektrik alan", "faktörler"],
+              "explanation": "Nokta yükün elektrik alanı E = k·q/r² formülüyle hesaplanır.",
+              "options": [
+                {"text": "Yükün büyüklüğü artarsa", "pairId": 1, "correct": false},
+                {"text": "Elektrik alan şiddeti artar", "pairId": 1, "correct": false},
+                {"text": "Uzaklık artarsa", "pairId": 2, "correct": false},
+                {"text": "Elektrik alan şiddeti azalır (r² ile ters orantı)", "pairId": 2, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Düzgün elektrik alan ne demektir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["düzgün alan"],
+              "explanation": "Düzgün elektrik alan, her noktada şiddeti ve yönü aynı olan alandır. Birbirine paralel ve eşit aralıklı alan çizgileriyle gösterilir. İki paralel levha arasında oluşur.",
+              "options": [
+                {"text": "Alanın yönü sürekli değişir", "correct": false},
+                {"text": "Her noktada şiddeti ve yönü aynı olan alan", "correct": true},
+                {"text": "Sadece pozitif yük çevresinde var", "correct": false},
+                {"text": "Alan şiddeti sıfır", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Faraday kafesi elektrik alanı nasıl engeller?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["faraday kafesi"],
+              "explanation": "Faraday kafesi iletken bir zarfla (metal örgü) kaplanan alandır. Dış elektrik alan iletkenin yüzeyindeki yükleri yeniden dağıtır ve iç kısmı korur. Uçaklar yıldırımdan bu sayede korunur.",
+              "options": [
+                {"text": "Işığı kırarak", "correct": false},
+                {"text": "İletken yüzeydeki yükler yeniden dağılarak iç kısmı korur", "correct": true},
+                {"text": "Manyetik alan oluşturarak", "correct": false},
+                {"text": "Enerji üreterek", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Elektrik alan birimini eşleştirin.",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["elektrik alan", "birim"],
+              "explanation": "Elektrik alan şiddetinin birimi Newton/Coulomb (N/C) veya eşdeğer olarak Volt/metre (V/m) dir.",
+              "options": [
+                {"text": "Watt", "correct": false},
+                {"text": "Newton/Coulomb (N/C) veya Volt/metre (V/m)", "correct": true},
+                {"text": "Amper", "correct": false},
+                {"text": "Joule", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Elektrik Akımı ve Gerilim",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Elektrik akımı nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["akım", "tanım"],
+              "explanation": "Elektrik akımı, yüklü parçacıkların (genellikle elektronlar) düzenli hareketidir. Birim zamanda iletkenin bir kesitinden geçen yük miktarıdır: I = Q/t. Birimi Amper (A) dir.",
+              "options": [
+                {"text": "Elektronların rastgele hareketi", "correct": false},
+                {"text": "Yüklü parçacıkların düzenli hareketi (I = Q/t, birimi Amper)", "correct": true},
+                {"text": "Işık hızıyla hareket", "correct": false},
+                {"text": "Manyetik alan", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Gerilim (potansiyel fark) ne demektir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["gerilim", "potansiyel fark"],
+              "explanation": "Gerilim, iki nokta arasındaki elektrik potansiyel farkıdır. Yükleri hareket ettiren 'itici güçtür'. Birimi Volt (V) dir. Pil, bu potansiyel farkı oluşturan kaynaktır.",
+              "options": [
+                {"text": "Akımın hızı", "correct": false},
+                {"text": "İki nokta arasındaki elektrik potansiyel farkı (birimi Volt)", "correct": true},
+                {"text": "Direncin tersi", "correct": false},
+                {"text": "Güç birimi", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Akım ve gerilim arasındaki ilişkiyi eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["akım", "gerilim", "su benzetmesi"],
+              "explanation": "Su benzetmesi elektriği anlamayı kolaylaştırır.",
+              "options": [
+                {"text": "Gerilim (Volt)", "pairId": 1, "correct": false},
+                {"text": "Su basıncı (suyu iten güç)", "pairId": 1, "correct": false},
+                {"text": "Akım (Amper)", "pairId": 2, "correct": false},
+                {"text": "Su akış hızı (akan su miktarı)", "pairId": 2, "correct": false},
+                {"text": "Direnç (Ohm)", "pairId": 3, "correct": false},
+                {"text": "Borunun darlığı (akışı zorlaştıran)", "pairId": 3, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Bir devrede 5 saniyede 10 Coulomb yük geçerse akım ___ Amper'dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["akım", "hesaplama"],
+              "explanation": "I = Q/t = 10 C / 5 s = 2 A.",
+              "options": [
+                {"text": "2", "correct": true},
+                {"text": "50", "correct": false},
+                {"text": "15", "correct": false},
+                {"text": "0,5", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Doğru akım (DC) ve alternatif akım (AC) arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["DC", "AC"],
+              "explanation": "DC (doğru akım): yön değiştirmez, sabit yönlü (pil, batarya). AC (alternatif akım): periyodik olarak yön değiştirir (şebeke elektriği, 50 Hz). AC uzak mesafelere daha verimli iletilir.",
+              "options": [
+                {"text": "Aynı şeylerdir", "correct": false},
+                {"text": "DC: sabit yönlü akım; AC: periyodik yön değiştiren akım", "correct": true},
+                {"text": "DC daha güçlüdür", "correct": false},
+                {"text": "AC sadece fabrikalarda kullanılır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Akımın yönü konvansiyonel olarak hangi yöndedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["akım yönü"],
+              "explanation": "Konvansiyonel akım yönü pozitiften (+) negatife (−) doğrudur. Elektronların gerçek hareketi ise negatiften pozitife doğrudur. Tarihsel bir uzlaşmadır.",
+              "options": [
+                {"text": "Negatiften pozitife", "correct": false},
+                {"text": "Pozitiften negatife (konvansiyonel)", "correct": true},
+                {"text": "Her iki yöne", "correct": false},
+                {"text": "Yönü yoktur", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Direnç ve Ohm Yasası",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Ohm yasası formülü nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ohm yasası"],
+              "explanation": "Ohm yasası: V = I·R. Gerilim (V) = Akım (I) × Direnç (R). Birimi: V = Volt, I = Amper, R = Ohm (Ω).",
+              "options": [
+                {"text": "V = I + R", "correct": false},
+                {"text": "V = I × R", "correct": true},
+                {"text": "V = I / R", "correct": false},
+                {"text": "V = I − R", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Direnç neye bağlıdır?",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["direnç", "faktörler"],
+              "explanation": "İletkenin direnci dört faktöre bağlıdır: R = ρ·L/A.",
+              "options": [
+                {"text": "Uzunluk (L) artarsa", "pairId": 1, "correct": false},
+                {"text": "Direnç artar (doğru orantı)", "pairId": 1, "correct": false},
+                {"text": "Kesit alanı (A) artarsa", "pairId": 2, "correct": false},
+                {"text": "Direnç azalır (ters orantı)", "pairId": 2, "correct": false},
+                {"text": "Özdirenç (ρ) büyükse", "pairId": 3, "correct": false},
+                {"text": "Direnç büyük (madde türüne bağlı)", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "12 V gerilim ve 4 Ω direnç varsa akım ___ A'dır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["ohm yasası", "hesaplama"],
+              "explanation": "I = V/R = 12/4 = 3 A.",
+              "options": [
+                {"text": "3", "correct": true},
+                {"text": "48", "correct": false},
+                {"text": "16", "correct": false},
+                {"text": "8", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Seri ve paralel bağlantıyı eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["seri", "paralel"],
+              "explanation": "Devre elemanları seri veya paralel bağlanır.",
+              "options": [
+                {"text": "Seri bağlantı", "pairId": 1, "correct": false},
+                {"text": "Akım her yerde aynı, gerilimler toplanır", "pairId": 1, "correct": false},
+                {"text": "Paralel bağlantı", "pairId": 2, "correct": false},
+                {"text": "Gerilim her dalda aynı, akımlar toplanır", "pairId": 2, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Seri bağlı devrede bir ampul söndüğünde ne olur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["seri", "devre"],
+              "explanation": "Seri bağlı devrede akım tek yoldan geçer. Bir ampul bozulursa devre kesilir ve tüm ampuller söner. Paralel bağlantıda ise diğer ampuller yanmaya devam eder.",
+              "options": [
+                {"text": "Diğerleri daha parlak yanar", "correct": false},
+                {"text": "Tüm ampuller söner (devre kesilir)", "correct": true},
+                {"text": "Diğerleri etkilenmez", "correct": false},
+                {"text": "Sadece yanındaki söner", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Elektriksel güç formülü nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["güç", "formül"],
+              "explanation": "Elektriksel güç: P = V·I = I²·R = V²/R. Birimi Watt (W). Bir cihazın ne kadar hızlı enerji tükettiğini gösterir.",
+              "options": [
+                {"text": "P = V + I", "correct": false},
+                {"text": "P = V × I", "correct": true},
+                {"text": "P = V / I", "correct": false},
+                {"text": "P = V − I", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Elektrik Devresi Uygulamaları",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Evlerdeki elektrik bağlantısı neden paralel yapılır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["paralel", "ev elektriği"],
+              "explanation": "Paralel bağlantıda: her cihaz bağımsız çalışır, bir cihaz kapansa diğerleri etkilenmez, her cihaza aynı gerilim (220V) uygulanır. Seri bağlantıda bir cihaz bozulsa tümü kapanırdı.",
+              "options": [
+                {"text": "Daha ucuz olduğu için", "correct": false},
+                {"text": "Her cihaz bağımsız çalışır ve aynı gerilimi alır", "correct": true},
+                {"text": "Daha az kablo gerektiği için", "correct": false},
+                {"text": "Daha güzel göründüğü için", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kısa devre nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kısa devre"],
+              "explanation": "Kısa devre, akımın dirençli yol yerine dirençsiz (kısa) yoldan akmasıdır. Bu durumda akım çok artar, teller aşırı ısınır ve yangın tehlikesi oluşur. Sigortalar bunu önler.",
+              "options": [
+                {"text": "Kısa süreli elektrik kesintisi", "correct": false},
+                {"text": "Akımın dirençsiz yoldan akarak aşırı artması ve aşırı ısınma", "correct": true},
+                {"text": "Az akım geçmesi", "correct": false},
+                {"text": "Devredeki ampulün sönmesi", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Sigorta ve şalterin görevlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["sigorta", "şalter"],
+              "explanation": "Her ikisi de aşırı akım koruma sağlar.",
+              "options": [
+                {"text": "Sigorta", "pairId": 1, "correct": false},
+                {"text": "Aşırı akımda eriyen tel, devreyi keser (tek kullanımlık)", "pairId": 1, "correct": false},
+                {"text": "Otomatik şalter", "pairId": 2, "correct": false},
+                {"text": "Aşırı akımda açılan anahtar (resetlenebilir)", "pairId": 2, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "220V, 1100W bir ütü kaç Amper akım çeker?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["güç", "akım"],
+              "explanation": "P = V·I → I = P/V = 1100/220 = 5 A.",
+              "options": [
+                {"text": "0,2 A", "correct": false},
+                {"text": "5 A", "correct": true},
+                {"text": "242.000 A", "correct": false},
+                {"text": "22 A", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Topraklamanın amacı ___'ı önlemektir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["topraklama"],
+              "explanation": "Topraklama, elektrikli cihazlarda kaçak akımı güvenle toprağa ileterek elektrik çarpmasını önler. Yaşam kurtarıcı bir güvenlik önlemidir.",
+              "options": [
+                {"text": "elektrik çarpması", "correct": true},
+                {"text": "yüksek fatura", "correct": false},
+                {"text": "gürültü", "correct": false},
+                {"text": "ışık kirliliği", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Elektrik tasarrufu için en etkili yöntem hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["tasarruf"],
+              "explanation": "LED ampuller akkor ampullere göre %80-90 daha az enerji tüketir. A+++ enerji sınıfı cihazlar, iyi yalıtım ve gereksiz cihazları kapatmak da önemli tasarruf yöntemleridir.",
+              "options": [
+                {"text": "Daha kalın kablo kullanmak", "correct": false},
+                {"text": "LED ampul, A+++ cihaz kullanmak ve gereksiz cihazları kapatmak", "correct": true},
+                {"text": "Daha yüksek voltaj kullanmak", "correct": false},
+                {"text": "Gece elektrik kullanmamak", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Dalgalar",
+      "description": "Dalga kavramı, dalga türleri, dalga özellikleri, ses ve ışık dalgaları (MEB 2025-2026)",
+      "order": 6,
+      "lessons": [
+        {
+          "title": "Dalga Kavramı ve Türleri",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Dalga nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["dalga", "tanım"],
+              "explanation": "Dalga, enerjinin bir noktadan başka bir noktaya madde taşınmadan iletilmesidir. Deniz dalgasında su yukarı-aşağı hareket eder ama su ilerlemez, enerji ilerler.",
+              "options": [
+                {"text": "Madde taşınması", "correct": false},
+                {"text": "Enerjinin madde taşınmadan bir noktadan diğerine iletilmesi", "correct": true},
+                {"text": "Suyun hareketi", "correct": false},
+                {"text": "Rüzgârın etkisi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Dalga türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["dalga", "türler"],
+              "explanation": "Dalgalar titreşim yönüne göre ikiye ayrılır.",
+              "options": [
+                {"text": "Enine dalga", "pairId": 1, "correct": false},
+                {"text": "Titreşim dalga yönüne dik (ışık, su yüzey dalgası, ip dalgası)", "pairId": 1, "correct": false},
+                {"text": "Boyuna dalga", "pairId": 2, "correct": false},
+                {"text": "Titreşim dalga yönüyle aynı (ses, yay sıkışma dalgası)", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Ses dalgası hangi türdedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ses", "boyuna dalga"],
+              "explanation": "Ses boyuna (longitudinal) dalgadır. Hava molekülleri dalga yönünde ileri-geri hareket eder (sıkışma-genleşme). Işık ise enine (transversal) dalgadır.",
+              "options": [
+                {"text": "Enine dalga", "correct": false},
+                {"text": "Boyuna dalga", "correct": true},
+                {"text": "Yüzey dalgası", "correct": false},
+                {"text": "Elektromanyetik dalga", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Mekanik ve elektromanyetik dalgalar arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["mekanik", "EM dalga"],
+              "explanation": "Mekanik dalgalar ortam gerektirir (ses, su dalgası — boşlukta yayılmaz). Elektromanyetik dalgalar ortam gerektirmez (ışık, radyo — boşlukta yayılır, c = 3×10⁸ m/s).",
+              "options": [
+                {"text": "Fark yoktur", "correct": false},
+                {"text": "Mekanik dalga ortam gerektirir, EM dalga gerektirmez (boşlukta yayılır)", "correct": true},
+                {"text": "EM dalga daha yavaştır", "correct": false},
+                {"text": "Mekanik dalga daha hızlıdır", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Deprem dalgaları mekanik dalgalara ___ verir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["deprem", "mekanik dalga"],
+              "explanation": "Deprem dalgaları yer kabuğunda yayılan mekanik dalgalardır. P dalgaları (boyuna), S dalgaları (enine) ve yüzey dalgaları olmak üzere farklı türleri vardır.",
+              "options": [
+                {"text": "örnek", "correct": true},
+                {"text": "enerji", "correct": false},
+                {"text": "hız", "correct": false},
+                {"text": "ses", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hangisi elektromanyetik dalgadır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["EM dalga"],
+              "explanation": "Işık (görünür ışık), radyo dalgaları, mikrodalgalar, X-ışınları, morötesi, kızılötesi ve gama ışınları elektromanyetik dalgalardır. Ses ise mekanik dalgadır.",
+              "options": [
+                {"text": "Ses dalgası", "correct": false},
+                {"text": "Görünür ışık", "correct": true},
+                {"text": "Su dalgası", "correct": false},
+                {"text": "Deprem dalgası", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Dalga Özellikleri",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Dalga terimlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["dalga", "terimler"],
+              "explanation": "Dalganın temel terimleri vardır.",
+              "options": [
+                {"text": "Genlik (A)", "pairId": 1, "correct": false},
+                {"text": "Denge noktasından maksimum uzaklık (dalganın yüksekliği)", "pairId": 1, "correct": false},
+                {"text": "Dalga boyu (λ)", "pairId": 2, "correct": false},
+                {"text": "Bir tam dalganın uzunluğu (tepe-tepe veya çukur-çukur arası)", "pairId": 2, "correct": false},
+                {"text": "Frekans (f)", "pairId": 3, "correct": false},
+                {"text": "Birim zamandaki dalga sayısı (birimi Hz)", "pairId": 3, "correct": false},
+                {"text": "Periyot (T)", "pairId": 4, "correct": false},
+                {"text": "Bir tam dalganın geçiş süresi (T = 1/f)", "pairId": 4, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Dalga hızı formülü nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["dalga hızı"],
+              "explanation": "Dalga hızı: v = λ·f = λ/T. Dalga boyu (λ) ile frekans (f) çarpımı dalga hızını verir. Ortam değişmedikçe dalga hızı sabittir.",
+              "options": [
+                {"text": "v = λ + f", "correct": false},
+                {"text": "v = λ × f", "correct": true},
+                {"text": "v = λ / f", "correct": false},
+                {"text": "v = λ − f", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Frekansı 500 Hz, dalga boyu 0,68 m olan dalganın hızı ___ m/s'dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["dalga hızı", "hesaplama"],
+              "explanation": "v = λ·f = 0,68 × 500 = 340 m/s. (Bu sesin havadaki hızıdır.)",
+              "options": [
+                {"text": "340", "correct": true},
+                {"text": "735", "correct": false},
+                {"text": "500,68", "correct": false},
+                {"text": "170", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Genlik arttığında dalganın enerjisi nasıl değişir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["genlik", "enerji"],
+              "explanation": "Genlik arttıkça dalganın taşıdığı enerji artar. Ses dalgasında genlik artışı daha yüksek (gür) ses demektir. Deprem dalgasında büyük genlik daha fazla yıkım demektir.",
+              "options": [
+                {"text": "Azalır", "correct": false},
+                {"text": "Artar", "correct": true},
+                {"text": "Değişmez", "correct": false},
+                {"text": "Sıfırlanır", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Frekans arttığında dalga boyu nasıl değişir? (Hız sabitken)",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["frekans", "dalga boyu"],
+              "explanation": "v = λ·f formülünde hız (v) sabitken frekans (f) artarsa dalga boyu (λ) azalır. Ters orantılıdır. Mor ışık yüksek frekanslı ve kısa dalga boyludur.",
+              "options": [
+                {"text": "Artar", "correct": false},
+                {"text": "Azalır (ters orantı)", "correct": true},
+                {"text": "Değişmez", "correct": false},
+                {"text": "İlişki yoktur", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Periyot ve frekans arasındaki ilişki nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["periyot", "frekans"],
+              "explanation": "Periyot ve frekans birbirinin tersidir: T = 1/f veya f = 1/T. Frekans 100 Hz ise periyot 0,01 saniyedir.",
+              "options": [
+                {"text": "Doğru orantılı", "correct": false},
+                {"text": "Birbirinin tersi (T = 1/f)", "correct": true},
+                {"text": "Eşittirler", "correct": false},
+                {"text": "İlişki yoktur", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Dalga Olayları",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Dalga olaylarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["dalga olayları"],
+              "explanation": "Dalgalar farklı olaylar gösterir.",
+              "options": [
+                {"text": "Yansıma", "pairId": 1, "correct": false},
+                {"text": "Dalganın engelden geri dönmesi (ayna, yankı)", "pairId": 1, "correct": false},
+                {"text": "Kırılma", "pairId": 2, "correct": false},
+                {"text": "Dalganın farklı ortama geçerken yön değiştirmesi", "pairId": 2, "correct": false},
+                {"text": "Girişim", "pairId": 3, "correct": false},
+                {"text": "İki dalganın üst üste binmesi (güçlenme/zayıflama)", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kırınım (difraksiyon) nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kırınım"],
+              "explanation": "Kırınım, dalganın bir engelin kenarından geçerken yayılarak engelin arkasına dolanmasıdır. Dalga boyu büyüdükçe kırınım belirginleşir. Sesi duvarın arkasından duyabilmemiz kırınım sayesindedir.",
+              "options": [
+                {"text": "Dalganın yansıması", "correct": false},
+                {"text": "Dalganın engel kenarından dolanarak arkasına geçmesi", "correct": true},
+                {"text": "Dalganın yutulması", "correct": false},
+                {"text": "Dalganın hızlanması", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Yansıma yasasına göre gelme açısı ___ açısına eşittir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["yansıma yasası"],
+              "explanation": "Yansıma yasası: Gelme açısı (θᵢ) = Yansıma açısı (θᵣ). Açılar yüzeye dik olan 'normal' doğruya göre ölçülür.",
+              "options": [
+                {"text": "yansıma", "correct": true},
+                {"text": "kırılma", "correct": false},
+                {"text": "sapma", "correct": false},
+                {"text": "giriş", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Yapıcı ve yıkıcı girişim arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["girişim"],
+              "explanation": "Yapıcı girişim: iki dalga aynı fazda buluşur, genlik artar (güçlenir). Yıkıcı girişim: zıt fazda buluşur, birbirini sönümler (zayıflar veya tamamen yok olur).",
+              "options": [
+                {"text": "Fark yoktur", "correct": false},
+                {"text": "Yapıcı: dalgalar güçlenir; Yıkıcı: dalgalar zayıflar/sönümlenir", "correct": true},
+                {"text": "İkisi de güçlendirme yapar", "correct": false},
+                {"text": "İkisi de zayıflatma yapar", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Rezonans ne zaman gerçekleşir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["rezonans"],
+              "explanation": "Rezonans, bir sisteme doğal frekansında dışarıdan titreşim verildiğinde genliğin çok artması olayıdır. Salıncağı doğru anda itmek, bardağı kıran ses tonu buna örnektir.",
+              "options": [
+                {"text": "Dalga hızı sıfır olduğunda", "correct": false},
+                {"text": "Dış titreşim frekansı cismin doğal frekansına eşit olduğunda", "correct": true},
+                {"text": "İki dalga çarpıştığında", "correct": false},
+                {"text": "Dalga yansıdığında", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Dalga olaylarının günlük örneklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["dalga", "günlük"],
+              "explanation": "Dalga olayları günlük hayatta çevremizde sürekli gerçekleşir.",
+              "options": [
+                {"text": "Gökkuşağı", "pairId": 1, "correct": false},
+                {"text": "Işığın su damlalarında kırılması ve ayrışması", "pairId": 1, "correct": false},
+                {"text": "Yankı (eko)", "pairId": 2, "correct": false},
+                {"text": "Sesin sert yüzeyden yansıması", "pairId": 2, "correct": false},
+                {"text": "Güneş batarken kırmızı görünüm", "pairId": 3, "correct": false},
+                {"text": "Işığın atmosferde saçılması", "pairId": 3, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Elektromanyetik Spektrum",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Elektromanyetik spektrumu dalga boyuna göre sıralayın.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["EM spektrum"],
+              "explanation": "EM dalgalar dalga boyuna göre sınıflandırılır (uzun → kısa).",
+              "options": [
+                {"text": "Radyo dalgaları", "pairId": 1, "correct": false},
+                {"text": "En uzun dalga boyu, en düşük frekans", "pairId": 1, "correct": false},
+                {"text": "Görünür ışık", "pairId": 2, "correct": false},
+                {"text": "İnsan gözünün görebildiği aralık (kırmızı → mor)", "pairId": 2, "correct": false},
+                {"text": "Gama ışınları", "pairId": 3, "correct": false},
+                {"text": "En kısa dalga boyu, en yüksek enerji", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Tüm elektromanyetik dalgaların boşluktaki hızı aynı mıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ışık hızı"],
+              "explanation": "Evet, tüm EM dalgalar boşlukta ışık hızıyla yayılır: c = 3 × 10⁸ m/s ≈ 300.000 km/s. Radyo, ışık, X-ışını hepsi aynı hızla hareket eder. Farkları frekans ve dalga boylarıdır.",
+              "options": [
+                {"text": "Hayır, hepsi farklı hızda", "correct": false},
+                {"text": "Evet, hepsi ışık hızında (c = 3 × 10⁸ m/s)", "correct": true},
+                {"text": "Sadece görünür ışık hızlı", "correct": false},
+                {"text": "Gama ışınları en hızlı", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Kızılötesi (infrared) ışınlar nerede kullanılır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kızılötesi"],
+              "explanation": "Kızılötesi: uzaktan kumanda, gece görüş kameraları, termal görüntüleme, fizik tedavi, ısıtma sistemleri ve yangın algılama sistemlerinde kullanılır.",
+              "options": [
+                {"text": "Röntgen çekme", "correct": false},
+                {"text": "Uzaktan kumanda, termal görüntüleme, gece görüş", "correct": true},
+                {"text": "DNA analizi", "correct": false},
+                {"text": "Radyo yayını", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Morötesi (UV) ışınların zararlı etkisi ___  ve deri kanserine neden olabilir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["UV", "zarar"],
+              "explanation": "Morötesi ışınlar güneş yanığına ve uzun vadede deri kanserine neden olabilir. Ayrıca gözlere zarar verir. Güneş kremi ve UV koruyucu gözlük kullanmak önemlidir.",
+              "options": [
+                {"text": "güneş yanığı", "correct": true},
+                {"text": "ses kirliliği", "correct": false},
+                {"text": "manyetik bozukluk", "correct": false},
+                {"text": "ağrı", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "X-ışınları tıpta neden kullanılır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["x ışını", "tıp"],
+              "explanation": "X-ışınları yumuşak dokuyu geçer ama kemik ve diş gibi yoğun yapıları geçemez. Bu fark sayesinde kırık kemik, diş çürüğü ve organ sorunları görüntülenebilir.",
+              "options": [
+                {"text": "Isıtma için", "correct": false},
+                {"text": "Kemik ve iç organ görüntüleme (yumuşak dokuyu geçer, sert dokuyu geçemez)", "correct": true},
+                {"text": "Işık vermek için", "correct": false},
+                {"text": "İletişim için", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "EM dalgaları kullanım alanlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["EM dalga", "kullanım"],
+              "explanation": "Her EM dalga türünün kendine özgü kullanım alanları vardır.",
+              "options": [
+                {"text": "Radyo dalgaları", "pairId": 1, "correct": false},
+                {"text": "İletişim (FM/AM yayın, cep telefonu, Wi-Fi)", "pairId": 1, "correct": false},
+                {"text": "Mikrodalgalar", "pairId": 2, "correct": false},
+                {"text": "Yemek pişirme, uydu iletişimi, radar", "pairId": 2, "correct": false},
+                {"text": "Gama ışınları", "pairId": 3, "correct": false},
+                {"text": "Kanser tedavisi (radyoterapi), sterilizasyon", "pairId": 3, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Işık ve Optik Temel Kavramlar",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Işığın temel özelliklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["ışık", "özellikler"],
+              "explanation": "Işık benzersiz özelliklere sahiptir.",
+              "options": [
+                {"text": "Dalga-parçacık ikiliği", "pairId": 1, "correct": false},
+                {"text": "Işık hem dalga hem parçacık (foton) gibi davranır", "pairId": 1, "correct": false},
+                {"text": "Doğrusal yayılma", "pairId": 2, "correct": false},
+                {"text": "Homojen ortamda doğru çizgide ilerler (gölge oluşumu)", "pairId": 2, "correct": false},
+                {"text": "Boşlukta yayılma", "pairId": 3, "correct": false},
+                {"text": "Ortam gerektirmez, c = 3 × 10⁸ m/s", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Işığın boşluktaki hızı yaklaşık ___ km/s'dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["ışık hızı"],
+              "explanation": "Işık hızı c = 300.000 km/s = 3 × 10⁸ m/s. Evrendeki en yüksek hızdır (Einstein'ın göreliliğine göre hiçbir madde ışık hızına ulaşamaz).",
+              "options": [
+                {"text": "300.000", "correct": true},
+                {"text": "340", "correct": false},
+                {"text": "1000", "correct": false},
+                {"text": "150.000", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Düzlem aynada görüntü nasıldır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["düzlem ayna"],
+              "explanation": "Düzlem aynada görüntü: boyut olarak cisimle aynı, dik (ters değil), simetrik (ayna ile arasındaki mesafe eşit) ve sanaldır (perde üzerinde oluşmaz).",
+              "options": [
+                {"text": "Büyük ve ters", "correct": false},
+                {"text": "Aynı boyut, dik, simetrik ve sanal", "correct": true},
+                {"text": "Küçük ve ters", "correct": false},
+                {"text": "Büyük ve dik", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "İnce kenarlı (tümsek) mercek ışığı ___.",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["tümsek mercek"],
+              "explanation": "İnce kenarlı (tümsek/yakınsak) mercek paralel gelen ışınları bir noktada (odak noktası) toplar. Büyüteç, fotoğraf makinesi ve hipermetrop gözlüğünde kullanılır.",
+              "options": [
+                {"text": "Dağıtır", "correct": false},
+                {"text": "Bir noktada toplar (yakınsak)", "correct": true},
+                {"text": "Yansıtır", "correct": false},
+                {"text": "Emer", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Gökkuşağı hangi dalga olayıyla oluşur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["gökkuşağı", "kırılma"],
+              "explanation": "Gökkuşağı, güneş ışığının yağmur damlalarında kırılması, yansıması ve tekrar kırılmasıyla oluşur. Her renk farklı açıyla kırıldığından beyaz ışık renklerine ayrışır.",
+              "options": [
+                {"text": "Yansıma", "correct": false},
+                {"text": "Işığın su damlalarında kırılarak renklerine ayrışması", "correct": true},
+                {"text": "Girişim", "correct": false},
+                {"text": "Kırınım", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Işık yoğun ortamdan seyrek ortama geçerken nasıl kırılır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kırılma", "yoğunluk"],
+              "explanation": "Işık yoğun ortamdan (cam, su) seyrek ortama (hava) geçerken normalden uzaklaşarak kırılır. Kırılma açısı, gelme açısından büyük olur. Tersi durumda (seyrek→yoğun) normale yaklaşır.",
+              "options": [
+                {"text": "Normale yaklaşarak kırılır", "correct": false},
+                {"text": "Normalden uzaklaşarak kırılır", "correct": true},
+                {"text": "Kırılma olmaz", "correct": false},
+                {"text": "Geriye yansır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

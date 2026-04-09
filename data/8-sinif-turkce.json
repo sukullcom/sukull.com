@@ -110,7 +110,7 @@
                 {
                   "text": "gerçek",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "mecaz",
@@ -525,7 +525,7 @@
                 {
                   "text": "sesteş",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "eş anlamlı",
@@ -945,7 +945,7 @@
                 {
                   "text": "kişileştirme",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "benzetme",
@@ -1158,7 +1158,7 @@
                 {
                   "text": "yüklem",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "özne",
@@ -1363,7 +1363,7 @@
                 {
                   "text": "belirtili",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "belirtisiz",
@@ -1978,7 +1978,7 @@
                 {
                   "text": "bağlı",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "sıralı",
@@ -2193,7 +2193,7 @@
                 {
                   "text": "-mek (-mak)",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "-en (-an)",
@@ -2605,7 +2605,7 @@
                 {
                   "text": "zarf",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "dolaylı",
@@ -3436,7 +3436,7 @@
                 {
                   "text": "öznel",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "nesnel",
@@ -4256,7 +4256,7 @@
                 {
                   "text": "büyük",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "küçük",
@@ -4679,7 +4679,7 @@
                 {
                   "text": "bitişik",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "ayrı",
@@ -5098,7 +5098,7 @@
                 {
                   "text": "ayrı",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "bitişik",
@@ -5531,7 +5531,7 @@
                 {
                   "text": "öyküleyici",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "betimleyici",

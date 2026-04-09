@@ -111,7 +111,7 @@
                 {
                   "text": "sıcak",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "hızlı",
@@ -317,7 +317,7 @@
                 {
                   "text": "cimri",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "zengin",
@@ -522,7 +522,7 @@
                 {
                   "text": "tansiyonunu",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "boyunu",
@@ -726,7 +726,7 @@
                 {
                   "text": "karıştı",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "büyüdü",
@@ -930,7 +930,7 @@
                 {
                   "text": "eğilir",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "kesilir",
@@ -1143,7 +1143,7 @@
                 {
                   "text": "Ankara",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "İstanbul",
@@ -1348,7 +1348,7 @@
                 {
                   "text": "Tembel",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "Bu",
@@ -1553,7 +1553,7 @@
                 {
                   "text": "Hangi",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "Bu",
@@ -1760,7 +1760,7 @@
                 {
                   "text": "Sen",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "Bu",
@@ -1967,7 +1967,7 @@
                 {
                   "text": "onun",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "güzel",
@@ -2181,7 +2181,7 @@
                 {
                   "text": "uçuyordu",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "güzeldi",
@@ -2385,7 +2385,7 @@
                 {
                   "text": "dinç uyandı",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "geç kaldı",
@@ -2589,7 +2589,7 @@
                 {
                   "text": "kitap okudu",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "televizyon izledi",
@@ -2793,7 +2793,7 @@
                 {
                   "text": "başarılı olursun",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "hasta olursun",
@@ -2998,7 +2998,7 @@
                 {
                   "text": "Ankara'dır",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "güzeldir",

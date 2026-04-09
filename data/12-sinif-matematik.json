@@ -102,7 +102,7 @@
               "order": 3
             },
             {
-              "question": "$5^{-2} = {1}$",
+              "question": "$5^{-2} =`$ {1}",
               "type": "FILL_BLANK",
               "difficulty": "MEDIUM",
               "tags": [
@@ -114,7 +114,7 @@
                 {
                   "text": "$\\frac{1}{25}$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$-25$",
@@ -311,7 +311,7 @@
               "order": 3
             },
             {
-              "question": "$\\log_{10} 1000 = {1}$",
+              "question": "$\\log_{10} 1000 =`$ {1}",
               "type": "FILL_BLANK",
               "difficulty": "EASY",
               "tags": [
@@ -323,7 +323,7 @@
                 {
                   "text": "$3$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$2$",
@@ -520,7 +520,7 @@
               "order": 3
             },
             {
-              "question": "$\\log_5 25 = {1}$",
+              "question": "$\\log_5 25 =`$ {1}",
               "type": "FILL_BLANK",
               "difficulty": "MEDIUM",
               "tags": [
@@ -532,7 +532,7 @@
                 {
                   "text": "$2$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$5$",
@@ -726,7 +726,7 @@
               "order": 3
             },
             {
-              "question": "$3^x=81$ ise $x={1}$",
+              "question": "$3^x=81$ ise $x=$ {1}",
               "type": "FILL_BLANK",
               "difficulty": "MEDIUM",
               "tags": [
@@ -737,7 +737,7 @@
                 {
                   "text": "$4$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$3$",
@@ -942,7 +942,7 @@
                 {
                   "text": "$5$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$32$",
@@ -1146,7 +1146,7 @@
               "order": 3
             },
             {
-              "question": "$a_n=3n-2$ ise $a_4={1}$",
+              "question": "$a_n=3n-2$ ise $a_4=$ {1}",
               "type": "FILL_BLANK",
               "difficulty": "EASY",
               "tags": [
@@ -1158,7 +1158,7 @@
                 {
                   "text": "$10$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$8$",
@@ -1355,7 +1355,7 @@
               "order": 3
             },
             {
-              "question": "$a_1=7$, $d=-2$ olan aritmetik dizinin $a_6={1}$",
+              "question": "$a_1=7$, $d=-2$ olan aritmetik dizinin $a_6=$ {1}",
               "type": "FILL_BLANK",
               "difficulty": "MEDIUM",
               "tags": [
@@ -1366,7 +1366,7 @@
                 {
                   "text": "$-3$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$-5$",
@@ -1564,7 +1564,7 @@
               "order": 3
             },
             {
-              "question": "$a_1=5$, $r=-2$ olan geometrik dizinin $a_3={1}$",
+              "question": "$a_1=5$, $r=-2$ olan geometrik dizinin $a_3=$ {1}",
               "type": "FILL_BLANK",
               "difficulty": "MEDIUM",
               "tags": [
@@ -1575,7 +1575,7 @@
                 {
                   "text": "$20$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$-20$",
@@ -1772,7 +1772,7 @@
               "order": 3
             },
             {
-              "question": "$\\lim_{n\\to\\infty}\\frac{5n}{n+1}={1}$",
+              "question": "$\\lim_{n\\to\\infty}\\frac{5n}{n+1}=$ {1}",
               "type": "FILL_BLANK",
               "difficulty": "MEDIUM",
               "tags": [
@@ -1784,7 +1784,7 @@
                 {
                   "text": "$5$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$1$",
@@ -1982,7 +1982,7 @@
               "order": 3
             },
             {
-              "question": "Bir aritmetik dizide $a_1=4$, $d=5$ ise $a_3={1}$",
+              "question": "Bir aritmetik dizide $a_1=4$, $d=5$ ise $a_3=$ {1}",
               "type": "FILL_BLANK",
               "difficulty": "EASY",
               "tags": [
@@ -1993,7 +1993,7 @@
                 {
                   "text": "$14$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$9$",
@@ -2209,7 +2209,7 @@
                 {
                   "text": "$\\sin A\\sin B$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$-\\sin A\\sin B$",
@@ -2419,7 +2419,7 @@
                 {
                   "text": "$\\cos\\alpha$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$\\sin\\alpha$",
@@ -2628,7 +2628,7 @@
                 {
                   "text": "$\\cos\\alpha$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$\\sin\\alpha$",
@@ -2836,7 +2836,7 @@
                 {
                   "text": "$\\pi$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$2\\pi$",
@@ -3032,7 +3032,7 @@
               "order": 3
             },
             {
-              "question": "$\\sin^2 x+\\cos^2 x={1}$",
+              "question": "$\\sin^2 x+\\cos^2 x=$ {1}",
               "type": "FILL_BLANK",
               "difficulty": "EASY",
               "tags": [
@@ -3044,7 +3044,7 @@
                 {
                   "text": "$1$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$0$",
@@ -3259,7 +3259,7 @@
                 {
                   "text": "$8$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$5$",
@@ -3467,7 +3467,7 @@
                 {
                   "text": "$-7$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$7$",
@@ -3677,7 +3677,7 @@
                 {
                   "text": "$-5$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$5$",
@@ -3884,7 +3884,7 @@
                 {
                   "text": "$5$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$1$",
@@ -4093,7 +4093,7 @@
                 {
                   "text": "$2$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$5$",
@@ -4297,7 +4297,7 @@
               "order": 3
             },
             {
-              "question": "$\\lim_{x \\to 0} \\frac{\\sin x}{x} = {1}$",
+              "question": "$\\lim_{x \\to 0} \\frac{\\sin x}{x} =`$ {1}",
               "type": "FILL_BLANK",
               "difficulty": "MEDIUM",
               "tags": [
@@ -4309,7 +4309,7 @@
                 {
                   "text": "$1$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$0$",
@@ -4506,7 +4506,7 @@
               "order": 3
             },
             {
-              "question": "Bir fonksiyonun $x=a$ noktasında sürekli olabilmesi için $\\lim_{x \\to a}f(x)={1}$ eşitliği sağlanmalıdır.",
+              "question": "Bir fonksiyonun $x=a$ noktasında sürekli olabilmesi için $\\lim_{x \\to a}f(x)=$ {1} eşitliği sağlanmalıdır.",
               "type": "FILL_BLANK",
               "difficulty": "EASY",
               "tags": [
@@ -4518,7 +4518,7 @@
                 {
                   "text": "$f(a)$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$0$",
@@ -4715,7 +4715,7 @@
               "order": 3
             },
             {
-              "question": "$f(x)=x^5$ ise $f'(x)={1}$ dir.",
+              "question": "$f(x)=x^5$ ise $f'(x)=$ {1} dir.",
               "type": "FILL_BLANK",
               "difficulty": "MEDIUM",
               "tags": [
@@ -4727,7 +4727,7 @@
                 {
                   "text": "$5x^4$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$4x^5$",
@@ -4924,7 +4924,7 @@
               "order": 3
             },
             {
-              "question": "$f(x)=(2x+5)^3$ ise $f'(x)={1}$ dir.",
+              "question": "$f(x)=(2x+5)^3$ ise $f'(x)=$ {1} dir.",
               "type": "FILL_BLANK",
               "difficulty": "MEDIUM",
               "tags": [
@@ -4936,7 +4936,7 @@
                 {
                   "text": "$6(2x+5)^2$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$3(2x+5)^2$",
@@ -5145,7 +5145,7 @@
                 {
                   "text": "$1$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$3$",
@@ -5361,7 +5361,7 @@
                 {
                   "text": "$\\frac{x^5}{5}$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$4x^3$",
@@ -5571,7 +5571,7 @@
                 {
                   "text": "$-\\cos x$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$\\cos x$",
@@ -5780,7 +5780,7 @@
                 {
                   "text": "$\\frac{1}{3}\\sin(3x)$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$3\\sin(3x)$",
@@ -5975,7 +5975,7 @@
               "order": 3
             },
             {
-              "question": "$\\int_0^1 x^2\\,dx = {1}$",
+              "question": "$\\int_0^1 x^2\\,dx =`$ {1}",
               "type": "FILL_BLANK",
               "difficulty": "MEDIUM",
               "tags": [
@@ -5986,7 +5986,7 @@
                 {
                   "text": "$\\frac{1}{3}$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$\\frac{1}{2}$",
@@ -6195,7 +6195,7 @@
                 {
                   "text": "$9$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$27$",
@@ -6400,7 +6400,7 @@
               "order": 3
             },
             {
-              "question": "Merkezi orijin ve yarıçapı $r$ olan çemberin denklemi $x^2+y^2={1}$ biçimindedir.",
+              "question": "Merkezi orijin ve yarıçapı $r$ olan çemberin denklemi $x^2+y^2=$ {1} biçimindedir.",
               "type": "FILL_BLANK",
               "difficulty": "MEDIUM",
               "tags": [
@@ -6412,7 +6412,7 @@
                 {
                   "text": "$r^2$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$r$",
@@ -6622,7 +6622,7 @@
                 {
                   "text": "$3$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$9$",
@@ -6832,7 +6832,7 @@
                 {
                   "text": "$3$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$5$",
@@ -7041,7 +7041,7 @@
                 {
                   "text": "$r_1+r_2$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$r_1 \\cdot r_2$",
@@ -7250,7 +7250,7 @@
                 {
                   "text": "$2$",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "$-2$",

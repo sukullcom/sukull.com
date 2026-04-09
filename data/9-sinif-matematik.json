@@ -55,6 +55,18 @@
                 {
                   "text": "$\\mathbb{Q}$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$\\mathbb{R}$",
+                  "correct": false
+                },
+                {
+                  "text": "$\\mathbb{N}$",
+                  "correct": false
+                },
+                {
+                  "text": "$\\mathbb{C}$",
                   "correct": false
                 }
               ],
@@ -255,6 +267,18 @@
                 {
                   "text": "$1$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$0$",
+                  "correct": false
+                },
+                {
+                  "text": "$5$",
+                  "correct": false
+                },
+                {
+                  "text": "$-1$",
                   "correct": false
                 }
               ],
@@ -454,6 +478,18 @@
                 {
                   "text": "$3$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$9$",
+                  "correct": false
+                },
+                {
+                  "text": "$27$",
+                  "correct": false
+                },
+                {
+                  "text": "$6$",
                   "correct": false
                 }
               ],
@@ -654,6 +690,18 @@
                 {
                   "text": "$b^2$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$2b$",
+                  "correct": false
+                },
+                {
+                  "text": "$a^2$",
+                  "correct": false
+                },
+                {
+                  "text": "$ab$",
                   "correct": false
                 }
               ],
@@ -856,6 +904,18 @@
                 {
                   "text": "$4$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$3$",
+                  "correct": false
+                },
+                {
+                  "text": "$5$",
+                  "correct": false
+                },
+                {
+                  "text": "$7$",
                   "correct": false
                 }
               ],
@@ -1062,6 +1122,18 @@
                 {
                   "text": "$3$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$-3$",
+                  "correct": false
+                },
+                {
+                  "text": "$9$",
+                  "correct": false
+                },
+                {
+                  "text": "$6$",
                   "correct": false
                 }
               ],
@@ -1260,6 +1332,18 @@
                 {
                   "text": "$4$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$3$",
+                  "correct": false
+                },
+                {
+                  "text": "$5$",
+                  "correct": false
+                },
+                {
+                  "text": "$8$",
                   "correct": false
                 }
               ],
@@ -1459,6 +1543,18 @@
                 {
                   "text": "$4$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$-4$",
+                  "correct": false
+                },
+                {
+                  "text": "$10$",
+                  "correct": false
+                },
+                {
+                  "text": "$3$",
                   "correct": false
                 }
               ],
@@ -1658,6 +1754,18 @@
                 {
                   "text": "$(0, 4)$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$(4, 0)$",
+                  "correct": false
+                },
+                {
+                  "text": "$(0, -4)$",
+                  "correct": false
+                },
+                {
+                  "text": "$(-1, 4)$",
                   "correct": false
                 }
               ],
@@ -1855,6 +1963,18 @@
                 {
                   "text": "$8$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$7$",
+                  "correct": false
+                },
+                {
+                  "text": "$9$",
+                  "correct": false
+                },
+                {
+                  "text": "$15$",
                   "correct": false
                 }
               ],
@@ -2064,6 +2184,18 @@
                 {
                   "text": "Doğru",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "Yanlış",
+                  "correct": false
+                },
+                {
+                  "text": "Belirsiz",
+                  "correct": false
+                },
+                {
+                  "text": "Tanımsız",
                   "correct": false
                 }
               ],
@@ -2264,6 +2396,18 @@
                 {
                   "text": "Yanlış",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "Doğru",
+                  "correct": false
+                },
+                {
+                  "text": "Belirsiz",
+                  "correct": false
+                },
+                {
+                  "text": "Tanımsız",
                   "correct": false
                 }
               ],
@@ -2462,6 +2606,18 @@
                 {
                   "text": "Yanlış",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "Doğru",
+                  "correct": false
+                },
+                {
+                  "text": "Belirsiz",
+                  "correct": false
+                },
+                {
+                  "text": "Tanımsız",
                   "correct": false
                 }
               ],
@@ -2659,6 +2815,18 @@
                 {
                   "text": "eşkenar dörtgen (baklava dilimi)",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "dikdörtgen",
+                  "correct": false
+                },
+                {
+                  "text": "daire",
+                  "correct": false
+                },
+                {
+                  "text": "üçgen",
                   "correct": false
                 }
               ],
@@ -2860,6 +3028,18 @@
                 {
                   "text": "tekrar",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "silme",
+                  "correct": false
+                },
+                {
+                  "text": "atlama",
+                  "correct": false
+                },
+                {
+                  "text": "durdurma",
                   "correct": false
                 }
               ],
@@ -3066,6 +3246,18 @@
                 {
                   "text": "$60$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$50$",
+                  "correct": false
+                },
+                {
+                  "text": "$70$",
+                  "correct": false
+                },
+                {
+                  "text": "$120$",
                   "correct": false
                 }
               ],
@@ -3266,6 +3458,18 @@
                 {
                   "text": "$5$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$3$",
+                  "correct": false
+                },
+                {
+                  "text": "$4$",
+                  "correct": false
+                },
+                {
+                  "text": "$7$",
                   "correct": false
                 }
               ],
@@ -3465,6 +3669,18 @@
                 {
                   "text": "yükseklik",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "kenar",
+                  "correct": false
+                },
+                {
+                  "text": "çevre",
+                  "correct": false
+                },
+                {
+                  "text": "köşegen",
                   "correct": false
                 }
               ],
@@ -3667,6 +3883,18 @@
                 {
                   "text": "hipotenüs",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "dik kenar",
+                  "correct": false
+                },
+                {
+                  "text": "kenarortay",
+                  "correct": false
+                },
+                {
+                  "text": "açıortay",
                   "correct": false
                 }
               ],
@@ -3865,6 +4093,18 @@
                 {
                   "text": "toplamına",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "farkına",
+                  "correct": false
+                },
+                {
+                  "text": "çarpımına",
+                  "correct": false
+                },
+                {
+                  "text": "yarısına",
                   "correct": false
                 }
               ],
@@ -4061,7 +4301,7 @@
               "order": 1
             },
             {
-              "question": "$B(4, -1)$ noktasının $y$-eksenine göre yansıması $B'(${1}$, -1)$ noktasıdır.",
+              "question": "$B(4, -1)$ noktasının $y$-eksenine göre yansıması $B'({1}, -1)$ noktasıdır.",
               "type": "FILL_BLANK",
               "difficulty": "EASY",
               "tags": [
@@ -4074,6 +4314,18 @@
                 {
                   "text": "$-4$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$4$",
+                  "correct": false
+                },
+                {
+                  "text": "$1$",
+                  "correct": false
+                },
+                {
+                  "text": "$-1$",
                   "correct": false
                 }
               ],
@@ -4280,6 +4532,18 @@
                 {
                   "text": "$|EF|$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$|DF|$",
+                  "correct": false
+                },
+                {
+                  "text": "$|DE|$",
+                  "correct": false
+                },
+                {
+                  "text": "$|AC|$",
                   "correct": false
                 }
               ],
@@ -4485,6 +4749,18 @@
                 {
                   "text": "$8$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$4$",
+                  "correct": false
+                },
+                {
+                  "text": "$6$",
+                  "correct": false
+                },
+                {
+                  "text": "$12$",
                   "correct": false
                 }
               ],
@@ -4690,6 +4966,18 @@
                 {
                   "text": "$5$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$7$",
+                  "correct": false
+                },
+                {
+                  "text": "$3$",
+                  "correct": false
+                },
+                {
+                  "text": "$\\sqrt{7}$",
                   "correct": false
                 }
               ],
@@ -4895,6 +5183,18 @@
                 {
                   "text": "$6$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$4$",
+                  "correct": false
+                },
+                {
+                  "text": "$9$",
+                  "correct": false
+                },
+                {
+                  "text": "$12$",
                   "correct": false
                 }
               ],
@@ -5107,6 +5407,18 @@
                 {
                   "text": "$7$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$38$",
+                  "correct": false
+                },
+                {
+                  "text": "$5$",
+                  "correct": false
+                },
+                {
+                  "text": "$12$",
                   "correct": false
                 }
               ],
@@ -5309,6 +5621,18 @@
                 {
                   "text": "$4{,}5$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$4$",
+                  "correct": false
+                },
+                {
+                  "text": "$5$",
+                  "correct": false
+                },
+                {
+                  "text": "$4{,}25$",
                   "correct": false
                 }
               ],
@@ -5514,6 +5838,18 @@
                 {
                   "text": "$33$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$45$",
+                  "correct": false
+                },
+                {
+                  "text": "$12$",
+                  "correct": false
+                },
+                {
+                  "text": "$57$",
                   "correct": false
                 }
               ],
@@ -5719,6 +6055,18 @@
                 {
                   "text": "$360$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$180$",
+                  "correct": false
+                },
+                {
+                  "text": "$270$",
+                  "correct": false
+                },
+                {
+                  "text": "$90$",
                   "correct": false
                 }
               ],
@@ -5926,6 +6274,18 @@
                 {
                   "text": "simetrik",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "çarpık",
+                  "correct": false
+                },
+                {
+                  "text": "bimodal",
+                  "correct": false
+                },
+                {
+                  "text": "düzensiz",
                   "correct": false
                 }
               ],
@@ -6138,6 +6498,18 @@
                 {
                   "text": "$2$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$1$",
+                  "correct": false
+                },
+                {
+                  "text": "$4$",
+                  "correct": false
+                },
+                {
+                  "text": "$6$",
                   "correct": false
                 }
               ],
@@ -6341,6 +6713,18 @@
                 {
                   "text": "$\\frac{1}{5}$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$\\frac{1}{6}$",
+                  "correct": false
+                },
+                {
+                  "text": "$\\frac{1}{3}$",
+                  "correct": false
+                },
+                {
+                  "text": "$\\frac{1}{10}$",
                   "correct": false
                 }
               ],
@@ -6544,6 +6928,18 @@
                 {
                   "text": "$\\frac{2}{5}$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$\\frac{1}{5}$",
+                  "correct": false
+                },
+                {
+                  "text": "$\\frac{3}{10}$",
+                  "correct": false
+                },
+                {
+                  "text": "$\\frac{1}{2}$",
                   "correct": false
                 }
               ],
@@ -6747,6 +7143,18 @@
                 {
                   "text": "$\\frac{1}{6}$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$\\frac{1}{3}$",
+                  "correct": false
+                },
+                {
+                  "text": "$\\frac{5}{6}$",
+                  "correct": false
+                },
+                {
+                  "text": "$\\frac{1}{2}$",
                   "correct": false
                 }
               ],
@@ -6951,6 +7359,18 @@
                 {
                   "text": "$1$",
                   "isBlank": true,
+                  "correct": true
+                },
+                {
+                  "text": "$0$",
+                  "correct": false
+                },
+                {
+                  "text": "$10$",
+                  "correct": false
+                },
+                {
+                  "text": "$100$",
                   "correct": false
                 }
               ],

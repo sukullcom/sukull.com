@@ -1,0 +1,2768 @@
+{
+  "course": {
+    "title": "11. Sınıf Fizik",
+    "imageSrc": ""
+  },
+  "units": [
+    {
+      "title": "Kuvvet ve Hareket — İleri",
+      "description": "Vektörel büyüklükler, Newton yasaları ileri uygulamalar, sürtünme kuvveti, eğik düzlem (MEB 2025-2026)",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "Vektörel Büyüklükler ve Kuvvet Bileşenleri",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Skaler ve vektörel büyüklükleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["skaler", "vektörel"],
+              "explanation": "Skaler büyüklüklerin yalnızca sayısal değeri vardır; vektörel büyüklüklerin hem değeri hem yönü vardır.",
+              "options": [
+                {"text": "Kütle, sıcaklık, enerji", "pairId": 1, "correct": false},
+                {"text": "Skaler (yalnızca büyüklük)", "pairId": 1, "correct": false},
+                {"text": "Kuvvet, hız, ivme", "pairId": 2, "correct": false},
+                {"text": "Vektörel (büyüklük + yön)", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Bir kuvvetin x ve y bileşenlerini bulmak için hangi trigonometrik fonksiyonlar kullanılır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["bileşen", "trigonometri"],
+              "explanation": "Kuvvetin yatay bileşeni Fx = F·cos(θ), düşey bileşeni Fy = F·sin(θ) ile bulunur. θ, kuvvet vektörünün yatay eksenle yaptığı açıdır.",
+              "options": [
+                {"text": "Fx = F·sin(θ), Fy = F·cos(θ)", "correct": false},
+                {"text": "Fx = F·cos(θ), Fy = F·sin(θ)", "correct": true},
+                {"text": "Fx = F·tan(θ), Fy = F/tan(θ)", "correct": false},
+                {"text": "Fx = F/cos(θ), Fy = F/sin(θ)", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "10 N'luk bir kuvvet yatayla 60° açı yapıyorsa yatay bileşeni ___ N'dur.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["bileşen", "hesaplama"],
+              "explanation": "Fx = F·cos(60°) = 10 × 0,5 = 5 N. cos(60°) = 0,5.",
+              "options": [
+                {"text": "5", "correct": true},
+                {"text": "8,66", "correct": false},
+                {"text": "10", "correct": false},
+                {"text": "20", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Bileşke kuvvet nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["bileşke kuvvet"],
+              "explanation": "Bileşke kuvvet, bir cisme etki eden tüm kuvvetlerin vektörel toplamıdır. Tek bir kuvvetle aynı etkiyi yapan eşdeğer kuvvettir. Newton'un 2. yasası bileşke kuvvete uygulanır.",
+              "options": [
+                {"text": "En büyük kuvvet", "correct": false},
+                {"text": "Tüm kuvvetlerin vektörel toplamı", "correct": true},
+                {"text": "Kuvvetlerin çarpımı", "correct": false},
+                {"text": "En küçük kuvvet", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Aynı doğrultuda aynı yönde 3 N ve 5 N kuvvet varsa bileşke kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["bileşke", "hesaplama"],
+              "explanation": "Aynı yönde: R = 3 + 5 = 8 N. Zıt yönde olsaydı: R = 5 − 3 = 2 N (büyük kuvvetin yönünde).",
+              "options": [
+                {"text": "2 N", "correct": false},
+                {"text": "8 N", "correct": true},
+                {"text": "15 N", "correct": false},
+                {"text": "4 N", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Birbirine dik iki kuvvetin bileşkesi nasıl hesaplanır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["dik kuvvetler", "pisagor"],
+              "explanation": "Birbirine dik iki kuvvet için Pisagor teoremi uygulanır: R = √(F₁² + F₂²). Yön için tan(θ) = F₂/F₁ formülü kullanılır.",
+              "options": [
+                {"text": "R = F₁ + F₂", "correct": false},
+                {"text": "R = √(F₁² + F₂²) (Pisagor)", "correct": true},
+                {"text": "R = F₁ × F₂", "correct": false},
+                {"text": "R = F₁ − F₂", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Newton'un Hareket Yasaları — İleri Uygulamalar",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Newton'un hareket yasalarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["newton", "yasalar"],
+              "explanation": "Newton'un üç temel hareket yasası mekaniğin temelidir.",
+              "options": [
+                {"text": "1. Yasa (Eylemsizlik)", "pairId": 1, "correct": false},
+                {"text": "Net kuvvet sıfırsa cisim durur veya sabit hızla devam eder", "pairId": 1, "correct": false},
+                {"text": "2. Yasa (F = ma)", "pairId": 2, "correct": false},
+                {"text": "İvme, net kuvvetle doğru, kütleyle ters orantılı", "pairId": 2, "correct": false},
+                {"text": "3. Yasa (Etki-Tepki)", "pairId": 3, "correct": false},
+                {"text": "Her etkiye eşit büyüklükte ve zıt yönde tepki vardır", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "5 kg'lık cisme 20 N net kuvvet uygulanırsa ivme ___ m/s² olur.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["newton 2", "hesaplama"],
+              "explanation": "a = F/m = 20/5 = 4 m/s².",
+              "options": [
+                {"text": "4", "correct": true},
+                {"text": "100", "correct": false},
+                {"text": "25", "correct": false},
+                {"text": "0,25", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Asansör yukarı ivmelenerek hareket ederken bir kişinin terazideki ağırlığı nasıl değişir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["asansör", "görünür ağırlık"],
+              "explanation": "Yukarı ivme: N = m(g + a), terazi daha fazla gösterir (ağırlaşma hissi). Aşağı ivme: N = m(g − a), terazi daha az gösterir (hafiflik hissi). Serbest düşme: N = 0 (ağırlıksızlık).",
+              "options": [
+                {"text": "Değişmez", "correct": false},
+                {"text": "Artar (N = m(g + a), ağırlaşma hissi)", "correct": true},
+                {"text": "Azalır", "correct": false},
+                {"text": "Sıfır olur", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Makara sistemiyle 100 kg'lık yükü kaldırmak için gereken kuvvet nasıl azaltılır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["makara", "mekanik avantaj"],
+              "explanation": "Palanga (çoklu makara) sisteminde ipi taşıyan ip sayısı arttıkça gereken kuvvet azalır: F = W/n (n: taşıyıcı ip sayısı). Ama çekilen ip mesafesi aynı oranda artar (enerjinin korunumu).",
+              "options": [
+                {"text": "Azaltılamaz", "correct": false},
+                {"text": "Taşıyıcı ip sayısını artırarak (F = W/n)", "correct": true},
+                {"text": "İpi kalınlaştırarak", "correct": false},
+                {"text": "Yükü ısıtarak", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "İp gerilimi nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ip gerilimi"],
+              "explanation": "İp gerilimi (T), gergin bir ipteki çekme kuvvetidir. İdeal (kütlesiz ve esnemez) ipte gerilim her noktada aynıdır. Asılı cisim problemlerinde Newton yasalarıyla hesaplanır.",
+              "options": [
+                {"text": "İpin ağırlığı", "correct": false},
+                {"text": "Gergin ipteki çekme kuvveti", "correct": true},
+                {"text": "İpin uzama miktarı", "correct": false},
+                {"text": "İpin kalınlığı", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Atwood makinesi nedir ve ne için kullanılır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["atwood"],
+              "explanation": "Atwood makinesi, makara üzerinden iple bağlı iki farklı kütleden oluşur. Newton yasalarını test etmek için kullanılır. İvme: a = (m₁ − m₂)g / (m₁ + m₂), Gerilim: T = 2m₁m₂g / (m₁ + m₂).",
+              "options": [
+                {"text": "Bir motor türü", "correct": false},
+                {"text": "Makara üzerinden iple bağlı iki kütleyle Newton yasalarını test eden düzenek", "correct": true},
+                {"text": "Elektrik devresi", "correct": false},
+                {"text": "Basınç ölçer", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Sürtünme Kuvveti",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Sürtünme kuvveti türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["sürtünme", "türler"],
+              "explanation": "İki temel sürtünme türü vardır.",
+              "options": [
+                {"text": "Statik (durağan) sürtünme", "pairId": 1, "correct": false},
+                {"text": "Cismi harekete geçirmek için aşılması gereken sürtünme", "pairId": 1, "correct": false},
+                {"text": "Kinetik (kayma) sürtünme", "pairId": 2, "correct": false},
+                {"text": "Cisim hareket halindeyken etkiyen sürtünme", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Sürtünme kuvveti formülü ___ dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["sürtünme", "formül"],
+              "explanation": "Sürtünme kuvveti: f = μ·N. μ: sürtünme katsayısı, N: normal kuvvet. Yatay düzlemde N = mg olduğundan f = μ·m·g.",
+              "options": [
+                {"text": "f = μ·N", "correct": true},
+                {"text": "f = m·a", "correct": false},
+                {"text": "f = m·g", "correct": false},
+                {"text": "f = F/A", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Sürtünme kuvveti hangi faktörlere bağlıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sürtünme", "faktörler"],
+              "explanation": "Sürtünme kuvveti: (1) Normal kuvvete (N) doğru orantılı, (2) Yüzeylerin cinsine (μ sürtünme katsayısı) bağlıdır. Temas alanına bağlı DEĞİLDİR (şaşırtıcı ama doğru).",
+              "options": [
+                {"text": "Temas alanına ve hıza", "correct": false},
+                {"text": "Normal kuvvete ve yüzeylerin cinsine (sürtünme katsayısı)", "correct": true},
+                {"text": "Sadece kütleye", "correct": false},
+                {"text": "Sadece hıza", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Statik sürtünme katsayısı neden kinetik sürtünme katsayısından büyüktür?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["statik", "kinetik", "fark"],
+              "explanation": "Duran yüzeyler arasında moleküler bağlar daha güçlüdür. Harekete geçirmek için bu bağları kırmak gerekir (daha fazla kuvvet). Hareket başladıktan sonra bağlar sürekli kırılıp yeniden oluştuğundan daha az kuvvet yeterlidir.",
+              "options": [
+                {"text": "Değildir, eşittir", "correct": false},
+                {"text": "Duran yüzeylerde moleküler bağlar daha güçlü, harekete geçirmek daha zor", "correct": true},
+                {"text": "Kinetik sürtünme ısı ürettiği için", "correct": false},
+                {"text": "Temas alanı farklı olduğu için", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "20 kg'lık cisim yatay düzlemde μ = 0,3 ile çekiliyorsa sürtünme kuvveti kaçtır? (g = 10 m/s²)",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sürtünme", "hesaplama"],
+              "explanation": "N = mg = 20 × 10 = 200 N. f = μ·N = 0,3 × 200 = 60 N.",
+              "options": [
+                {"text": "6 N", "correct": false},
+                {"text": "60 N", "correct": true},
+                {"text": "200 N", "correct": false},
+                {"text": "600 N", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Sürtünme olmasa günlük hayatta ne olurdu?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["sürtünme", "günlük hayat"],
+              "explanation": "Sürtünme olmazsa: yürüyemezdik (ayak kayar), araçlar frenleme yapamazdı, vida/çivi tutmazdı, yazı yazamazdık. Sürtünme bazen zararlı olsa da (enerji kaybı, aşınma) yaşam için zorunludur.",
+              "options": [
+                {"text": "Her şey daha hızlı hareket ederdi", "correct": false},
+                {"text": "Yürüyemez, frenleme yapamaz, nesneleri tutamazdık", "correct": true},
+                {"text": "Hiçbir şey değişmezdi", "correct": false},
+                {"text": "Sadece arabalar etkilenirdi", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Eğik Düzlem",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Eğik düzlemde cisme etki eden kuvvetleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["eğik düzlem", "kuvvetler"],
+              "explanation": "Eğik düzlemde ağırlık iki bileşene ayrılır.",
+              "options": [
+                {"text": "mg·sin(θ)", "pairId": 1, "correct": false},
+                {"text": "Düzlem boyunca aşağı çeken bileşen", "pairId": 1, "correct": false},
+                {"text": "mg·cos(θ)", "pairId": 2, "correct": false},
+                {"text": "Düzleme dik bileşen (normal kuvvete eşit)", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Eğik düzlemde normal kuvvet neye eşittir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["eğik düzlem", "normal kuvvet"],
+              "explanation": "Eğik düzlemde normal kuvvet N = mg·cos(θ). Yatay düzlemde θ = 0° iken N = mg·cos(0°) = mg (tam ağırlık). θ arttıkça normal kuvvet azalır.",
+              "options": [
+                {"text": "mg", "correct": false},
+                {"text": "mg·cos(θ)", "correct": true},
+                {"text": "mg·sin(θ)", "correct": false},
+                {"text": "mg·tan(θ)", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "30° eğik düzlemdeki 10 kg cismi düzlem boyunca çeken kuvvet ___ N'dur. (g = 10 m/s²)",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["eğik düzlem", "hesaplama"],
+              "explanation": "F = mg·sin(30°) = 10 × 10 × 0,5 = 50 N. sin(30°) = 0,5.",
+              "options": [
+                {"text": "50", "correct": true},
+                {"text": "86,6", "correct": false},
+                {"text": "100", "correct": false},
+                {"text": "25", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Eğik düzlemde sürtünmeli cismin ivmesi nasıl hesaplanır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["eğik düzlem", "sürtünme", "ivme"],
+              "explanation": "Net kuvvet = mg·sin(θ) − μ·mg·cos(θ). İvme: a = g(sin(θ) − μ·cos(θ)). Eğer sin(θ) ≤ μ·cos(θ) ise cisim kaymaz (tan(θ) ≤ μ).",
+              "options": [
+                {"text": "a = g·sin(θ)", "correct": false},
+                {"text": "a = g(sin(θ) − μ·cos(θ))", "correct": true},
+                {"text": "a = g·cos(θ)", "correct": false},
+                {"text": "a = μ·g", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eğik düzlem neden basit makine olarak kullanılır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["basit makine", "eğik düzlem"],
+              "explanation": "Eğik düzlem, cismi dikey kaldırmak yerine uzun mesafede az kuvvetle yukarı taşımayı sağlar. Kuvvet kazancı = Düzlem uzunluğu / Yükseklik. Rampa, vida, kama bu prensibe dayanır.",
+              "options": [
+                {"text": "Hız kazandırır", "correct": false},
+                {"text": "Gereken kuvveti azaltır (kuvvet kazancı), ama mesafe artar", "correct": true},
+                {"text": "Sürtünmeyi ortadan kaldırır", "correct": false},
+                {"text": "İşi azaltır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Cismin eğik düzlemde kaymaya başlaması için minimum açı nasıl bulunur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kritik açı"],
+              "explanation": "Kayma başlangıcında mg·sin(θ) = μₛ·mg·cos(θ) → tan(θ) = μₛ → θ = arctan(μₛ). Bu açıya kritik açı denir. Sadece sürtünme katsayısına bağlıdır, kütleye bağlı değildir.",
+              "options": [
+                {"text": "θ = arcsin(μ)", "correct": false},
+                {"text": "θ = arctan(μₛ) — sadece sürtünme katsayısına bağlı", "correct": true},
+                {"text": "θ = 45°", "correct": false},
+                {"text": "Kütleye bağlıdır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Tork ve Denge",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Tork (moment) nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["tork", "tanım"],
+              "explanation": "Tork, bir kuvvetin bir cismi bir eksen etrafında döndürme etkisidir. τ = F × d × sin(θ). F: kuvvet, d: kuvvet kolu (eksene uzaklık), θ: kuvvet ile kol arasındaki açı. Birimi N·m.",
+              "options": [
+                {"text": "Doğrusal itme kuvveti", "correct": false},
+                {"text": "Kuvvetin bir eksende döndürme etkisi (τ = F·d·sin(θ))", "correct": true},
+                {"text": "Sürtünme kuvveti", "correct": false},
+                {"text": "Yerçekimi ivmesi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Denge koşullarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["denge", "koşullar"],
+              "explanation": "Bir cismin dengede olması için iki koşul sağlanmalıdır.",
+              "options": [
+                {"text": "Öteleme dengesi", "pairId": 1, "correct": false},
+                {"text": "Net kuvvet = 0 (ΣF = 0)", "pairId": 1, "correct": false},
+                {"text": "Dönme dengesi", "pairId": 2, "correct": false},
+                {"text": "Net tork = 0 (Στ = 0)", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Kapı kolunun menteşeden uzakta olmasının sebebi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["tork", "günlük hayat"],
+              "explanation": "Tork = F × d. Kuvvet kolu (d) ne kadar büyükse aynı kuvvetle daha fazla tork oluşturulur. Kol menteşeye yakın olsaydı kapıyı açmak çok daha zor olurdu.",
+              "options": [
+                {"text": "Estetik nedenlerle", "correct": false},
+                {"text": "Kuvvet kolu artarak az kuvvetle büyük tork sağlanır", "correct": true},
+                {"text": "Kapının ağırlığını dengelemek için", "correct": false},
+                {"text": "Güvenlik nedeniyle", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Ağırlık merkezi nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ağırlık merkezi"],
+              "explanation": "Ağırlık merkezi, cismin tüm ağırlığının toplandığı varsayılan noktadır. Düzgün (homojen) cisimlerde geometrik merkezle çakışır. Cisim ağırlık merkezinden asılırsa dengede kalır.",
+              "options": [
+                {"text": "Cismin en ağır noktası", "correct": false},
+                {"text": "Cismin tüm ağırlığının toplandığı varsayılan nokta", "correct": true},
+                {"text": "Cismin yüzey merkezi", "correct": false},
+                {"text": "Her zaman cismin ortasındadır", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Denge türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["denge", "türler"],
+              "explanation": "Üç denge türü vardır.",
+              "options": [
+                {"text": "Kararlı denge", "pairId": 1, "correct": false},
+                {"text": "İtildiğinde geri döner (top çukurda)", "pairId": 1, "correct": false},
+                {"text": "Kararsız denge", "pairId": 2, "correct": false},
+                {"text": "İtildiğinde devrilir (top tepede)", "pairId": 2, "correct": false},
+                {"text": "Nötr denge", "pairId": 3, "correct": false},
+                {"text": "İtildiğinde yeni konumda kalır (top düzlemde)", "pairId": 3, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "2 m uzunluğundaki çubuğun sol ucundan 0,5 m mesafede destek noktası var. Sol uçta 40 N yük varsa denge için sağ uca ___ N yük konmalıdır.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["tork", "hesaplama"],
+              "explanation": "Tork dengesi: 40 × 0,5 = F × 1,5 → F = 20/1,5 ≈ 13,3 N. Ancak tam sayı istendiğinden ve soru tasarımı gereği: sol tork = sağ tork → F = (40 × 0,5)/1,5 ≈ 13,3.",
+              "options": [
+                {"text": "13,3", "correct": true},
+                {"text": "40", "correct": false},
+                {"text": "60", "correct": false},
+                {"text": "20", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Atış Hareketleri",
+      "description": "Serbest düşme, dikey atış, yatay atış, eğik atış hareketleri (MEB 2025-2026)",
+      "order": 2,
+      "lessons": [
+        {
+          "title": "Serbest Düşme Hareketi",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Serbest düşme hareketi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["serbest düşme"],
+              "explanation": "Serbest düşme, cisimlerin yalnızca yerçekimi etkisiyle (hava direnci ihmal edilerek) düşmesidir. Tüm cisimler kütlelerinden bağımsız olarak aynı ivmeyle (g ≈ 10 m/s²) düşer.",
+              "options": [
+                {"text": "Ağır cisimler hızlı düşer", "correct": false},
+                {"text": "Sadece yerçekimi etkisiyle, kütleden bağımsız aynı ivmeyle düşme", "correct": true},
+                {"text": "Rüzgâr etkisiyle düşme", "correct": false},
+                {"text": "Yatay hareket", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Serbest düşme formüllerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["serbest düşme", "formüller"],
+              "explanation": "Serbest düşme formülleri (v₀ = 0, a = g).",
+              "options": [
+                {"text": "v = g·t", "pairId": 1, "correct": false},
+                {"text": "t saniye sonundaki hız", "pairId": 1, "correct": false},
+                {"text": "h = ½·g·t²", "pairId": 2, "correct": false},
+                {"text": "t saniyede alınan yol (düşme yüksekliği)", "pairId": 2, "correct": false},
+                {"text": "v² = 2·g·h", "pairId": 3, "correct": false},
+                {"text": "h yükseklikten düşen cismin son hızı", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bir cisim 3 saniyede düşerse düşme yüksekliği ___ m'dir. (g = 10 m/s²)",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["serbest düşme", "hesaplama"],
+              "explanation": "h = ½·g·t² = ½ × 10 × 3² = ½ × 10 × 9 = 45 m.",
+              "options": [
+                {"text": "45", "correct": true},
+                {"text": "30", "correct": false},
+                {"text": "90", "correct": false},
+                {"text": "15", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Galileo'nun Pisa Kulesi deneyi neyi gösterdi?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["galileo", "deney"],
+              "explanation": "Galileo (efsaneye göre) farklı kütledeki cisimleri Pisa Kulesi'nden bırakarak hepsinin aynı anda yere düştüğünü gösterdi. Bu, Aristoteles'in 'ağır cisimler daha hızlı düşer' görüşünü çürüttü.",
+              "options": [
+                {"text": "Ağır cisimler hızlı düşer", "correct": false},
+                {"text": "Tüm cisimler kütleden bağımsız aynı hızda düşer (hava direnci yoksa)", "correct": true},
+                {"text": "Yerçekimi yoktur", "correct": false},
+                {"text": "Dünya dönmektedir", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "80 m yükseklikten düşen cismin yere çarpma hızı kaçtır? (g = 10 m/s²)",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["son hız", "hesaplama"],
+              "explanation": "v² = 2gh = 2 × 10 × 80 = 1600 → v = 40 m/s.",
+              "options": [
+                {"text": "20 m/s", "correct": false},
+                {"text": "40 m/s", "correct": true},
+                {"text": "80 m/s", "correct": false},
+                {"text": "400 m/s", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Ay'da serbest düşme ivmesi Dünya'nınkinin yaklaşık 1/6'sıdır. Bu ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ay", "yerçekimi"],
+              "explanation": "Ay'da g ≈ 1,6 m/s² (Dünya'nın 1/6'sı). Cisimler daha yavaş düşer, daha yükseğe zıplanabilir. Kütle değişmez ama ağırlık 1/6'ya düşer. Apollo astronotları bunu yaşadı.",
+              "options": [
+                {"text": "Cisimler düşmez", "correct": false},
+                {"text": "Cisimler daha yavaş düşer, daha yükseğe zıplanır, ağırlık 1/6 olur", "correct": true},
+                {"text": "Kütle azalır", "correct": false},
+                {"text": "Hiçbir fark yoktur", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Dikey Atış Hareketi",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Yukarı doğru atılan cisim en yüksek noktada hangi özelliklere sahiptir?",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["dikey atış", "en yüksek nokta"],
+              "explanation": "En yüksek noktada cismin bazı özellikleri.",
+              "options": [
+                {"text": "Hız", "pairId": 1, "correct": false},
+                {"text": "Sıfır (bir an durur)", "pairId": 1, "correct": false},
+                {"text": "İvme", "pairId": 2, "correct": false},
+                {"text": "g = 10 m/s² (aşağı yönde, değişmez)", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "20 m/s ile yukarı atılan cisim ___ saniye sonra en yüksek noktaya ulaşır. (g = 10 m/s²)",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["dikey atış", "süre"],
+              "explanation": "v = v₀ − g·t → 0 = 20 − 10t → t = 2 s. En yüksek noktada v = 0.",
+              "options": [
+                {"text": "2", "correct": true},
+                {"text": "4", "correct": false},
+                {"text": "1", "correct": false},
+                {"text": "20", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Yukarı atılan cismin maksimum yüksekliği nasıl hesaplanır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["maks yükseklik"],
+              "explanation": "h_max = v₀²/(2g). Veya h = v₀t − ½gt² formülünde t = v₀/g yerine koyularak bulunabilir. Başlangıç hızı 2 katına çıkarsa yükseklik 4 katına çıkar.",
+              "options": [
+                {"text": "h = v₀ × g", "correct": false},
+                {"text": "h_max = v₀²/(2g)", "correct": true},
+                {"text": "h = v₀/g", "correct": false},
+                {"text": "h = 2v₀g", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Dikey atışta çıkış süresi ile iniş süresi arasındaki ilişki nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["çıkış", "iniş"],
+              "explanation": "Hava direnci ihmal edildiğinde çıkış süresi = iniş süresi. Toplam uçuş süresi = 2 × çıkış süresi. Ayrıca atılma hızı = yere dönme hızı.",
+              "options": [
+                {"text": "Çıkış daha uzun", "correct": false},
+                {"text": "Çıkış süresi = İniş süresi (simetrik hareket)", "correct": true},
+                {"text": "İniş daha uzun", "correct": false},
+                {"text": "Farklıdır ve hesaplanamaz", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "30 m/s ile yukarı atılan cismin maksimum yüksekliği kaçtır? (g = 10 m/s²)",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["maks yükseklik", "hesaplama"],
+              "explanation": "h_max = v₀²/(2g) = 900/20 = 45 m.",
+              "options": [
+                {"text": "30 m", "correct": false},
+                {"text": "45 m", "correct": true},
+                {"text": "90 m", "correct": false},
+                {"text": "15 m", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Havai fişek yukarı atıldığında neden yavaşlar, durur ve sonra düşer?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["dikey atış", "günlük hayat"],
+              "explanation": "Yerçekimi sürekli aşağı çeker. Yukarı giderken hız azalır (g aşağı ivme), en yüksek noktada hız sıfır olur, sonra aşağı doğru hızlanarak düşer. Tüm süre boyunca ivme sabittir.",
+              "options": [
+                {"text": "Yakıtı biter", "correct": false},
+                {"text": "Yerçekimi sürekli aşağı çeker: hız azalır → durur → düşer", "correct": true},
+                {"text": "Hava onu durdurur", "correct": false},
+                {"text": "Manyetik kuvvet çeker", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Yatay Atış Hareketi",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Yatay atış hareketinde iki bağımsız bileşeni eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["yatay atış", "bileşenler"],
+              "explanation": "Yatay atış, yatay ve düşey bileşenlerin bağımsız birleşimidir.",
+              "options": [
+                {"text": "Yatay bileşen", "pairId": 1, "correct": false},
+                {"text": "Sabit hızlı düzgün hareket (x = v₀·t)", "pairId": 1, "correct": false},
+                {"text": "Düşey bileşen", "pairId": 2, "correct": false},
+                {"text": "Serbest düşme (y = ½·g·t²)", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "20 m yükseklikten 15 m/s yatay hızla atılan cisim kaç saniyede yere ulaşır? (g = 10 m/s²)",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yatay atış", "süre"],
+              "explanation": "Düşme süresi yatay hızdan bağımsızdır. y = ½gt² → 20 = ½ × 10 × t² → t² = 4 → t = 2 s.",
+              "options": [
+                {"text": "1 s", "correct": false},
+                {"text": "2 s", "correct": true},
+                {"text": "4 s", "correct": false},
+                {"text": "1,33 s", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Yatay atışta cismin yere düşme süresi yatay hızdan ___ dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["yatay atış", "süre"],
+              "explanation": "Düşey ve yatay hareket birbirinden bağımsızdır. Düşme süresi sadece yüksekliğe ve yerçekimine bağlıdır. Yatay hız ne olursa olsun aynı yükseklikten aynı sürede düşer.",
+              "options": [
+                {"text": "bağımsız", "correct": true},
+                {"text": "doğru orantılı", "correct": false},
+                {"text": "ters orantılı", "correct": false},
+                {"text": "eşit", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Uçaktan serbest bırakılan yardım paketi neden uçağın tam altına düşmez?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["yatay atış", "uygulama"],
+              "explanation": "Paket bırakıldığında uçağın yatay hızına sahiptir ve bu hızı korur (hava direnci ihmal). Düşerken hem yatay (sabit) hem düşey (ivmeli) hareket yapar. Yere ulaştığında uçağın ilerisine düşer (hava direnci nedeniyle biraz geride kalır).",
+              "options": [
+                {"text": "Rüzgâr etkisi", "correct": false},
+                {"text": "Pakete uçağın yatay hızı aktarıldığı için düşerken ileri de hareket eder", "correct": true},
+                {"text": "Yerçekimi yatay çeker", "correct": false},
+                {"text": "Uçak durduğu için", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Yatay atışta menzil (yatay uzaklık) formülünü eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["menzil", "formül"],
+              "explanation": "Yatay atış menzili.",
+              "options": [
+                {"text": "x = v₀ × t", "pairId": 1, "correct": false},
+                {"text": "Menzil = Yatay hız × Düşme süresi", "pairId": 1, "correct": false},
+                {"text": "t = √(2h/g)", "pairId": 2, "correct": false},
+                {"text": "Düşme süresi yükseklikten hesaplanır", "pairId": 2, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "45 m yükseklikten 20 m/s yatay hızla atılan cismin menzili kaçtır? (g = 10 m/s²)",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["menzil", "hesaplama"],
+              "explanation": "t = √(2h/g) = √(90/10) = √9 = 3 s. x = v₀ × t = 20 × 3 = 60 m.",
+              "options": [
+                {"text": "40 m", "correct": false},
+                {"text": "60 m", "correct": true},
+                {"text": "90 m", "correct": false},
+                {"text": "30 m", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Eğik Atış Hareketi",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Eğik atışın yatay ve düşey bileşenlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["eğik atış", "bileşenler"],
+              "explanation": "Eğik atış başlangıç hızı iki bileşene ayrılır.",
+              "options": [
+                {"text": "v₀ₓ = v₀·cos(θ)", "pairId": 1, "correct": false},
+                {"text": "Yatay bileşen — sabit kalır", "pairId": 1, "correct": false},
+                {"text": "v₀ᵧ = v₀·sin(θ)", "pairId": 2, "correct": false},
+                {"text": "Düşey bileşen — yerçekimiyle değişir", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Eğik atışta maksimum menzil hangi açıda elde edilir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["eğik atış", "menzil açısı"],
+              "explanation": "Menzil formülü: R = v₀²·sin(2θ)/g. sin(2θ) maksimum → 2θ = 90° → θ = 45°'de menzil maksimumdur. Tamamlayıcı açılar (ör. 30° ve 60°) aynı menzili verir.",
+              "options": [
+                {"text": "30°", "correct": false},
+                {"text": "45°", "correct": true},
+                {"text": "60°", "correct": false},
+                {"text": "90°", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Eğik atış menzil formülü ___ dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["menzil", "formül"],
+              "explanation": "R = v₀²·sin(2θ)/g. θ = 45°'de sin(90°) = 1 olduğundan R_max = v₀²/g.",
+              "options": [
+                {"text": "R = v₀²·sin(2θ)/g", "correct": true},
+                {"text": "R = v₀·t", "correct": false},
+                {"text": "R = ½gt²", "correct": false},
+                {"text": "R = v₀²/g", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Eğik atışta yörünge (iz) şekli nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["eğik atış", "yörünge"],
+              "explanation": "Eğik atışta cisim parabol yörüngesi çizer. Bu şekil, yatay sabit hız ile düşey ivmeli hareketin birleşiminden oluşur. Top, mermi ve fıskiye suyu parabol çizer.",
+              "options": [
+                {"text": "Düz çizgi", "correct": false},
+                {"text": "Parabol", "correct": true},
+                {"text": "Daire", "correct": false},
+                {"text": "Elips", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "30° ve 60° atış açılarında menziller nasıl karşılaştırılır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["tamamlayıcı açılar"],
+              "explanation": "sin(2×30°) = sin(60°) ve sin(2×60°) = sin(120°) = sin(60°). Eşit! Tamamlayıcı açılar (toplamı 90°) aynı menzili verir. 30° düşük-uzun, 60° yüksek-kısa yörünge izler.",
+              "options": [
+                {"text": "60° daha uzağa gider", "correct": false},
+                {"text": "Aynı menzil (tamamlayıcı açılar eşit menzil verir)", "correct": true},
+                {"text": "30° daha uzağa gider", "correct": false},
+                {"text": "Karşılaştırılamaz", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Futbolda gol atarken eğik atış fiziği nasıl uygulanır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["eğik atış", "spor"],
+              "explanation": "Futbolcu topu belirli bir açı ve hızla vurur. Top parabol yörüngesi çizer. Düşük açı → hızlı ama kısa mesafe, yüksek açı → yavaş ama uzun süre havada. Kaleye uzaklık ve savunma durumuna göre açı seçilir.",
+              "options": [
+                {"text": "Fizik etkili değildir", "correct": false},
+                {"text": "Vuruş açısı ve hızı topun yörüngesini, menzilini ve süresini belirler", "correct": true},
+                {"text": "Sadece kuvvet önemlidir", "correct": false},
+                {"text": "Top düz gider", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Atış Hareketleri — Karşılaştırma ve Problem Çözme",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Dört atış hareketini karşılaştırın.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["atış", "karşılaştırma"],
+              "explanation": "Her atış hareketinin kendine özgü başlangıç koşulları vardır.",
+              "options": [
+                {"text": "Serbest düşme", "pairId": 1, "correct": false},
+                {"text": "v₀ = 0, sadece düşey hareket", "pairId": 1, "correct": false},
+                {"text": "Yatay atış", "pairId": 2, "correct": false},
+                {"text": "v₀ yatay, düşme başlangıçta v₀ᵧ = 0", "pairId": 2, "correct": false},
+                {"text": "Eğik atış", "pairId": 3, "correct": false},
+                {"text": "v₀ açılı, hem yatay hem düşey bileşen var", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Aynı anda biri bırakılan, diğeri yatay atılan iki cisimden hangisi önce yere düşer?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yatay atış", "serbest düşme"],
+              "explanation": "İkisi de aynı anda düşer! Düşey hareket yatay hareketten bağımsızdır. İki cisim de aynı düşey ivmeye (g) sahiptir ve aynı yükseklikten başlar.",
+              "options": [
+                {"text": "Bırakılan önce düşer", "correct": false},
+                {"text": "Aynı anda düşer (düşey hareket yataydan bağımsız)", "correct": true},
+                {"text": "Yatay atılan önce düşer", "correct": false},
+                {"text": "Belirsiz", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Hava direnci atış hareketlerini nasıl etkiler?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["hava direnci"],
+              "explanation": "Hava direnci: (1) Menzili azaltır, (2) Maksimum yüksekliği azaltır, (3) Optimal açıyı 45°'nin altına çeker, (4) Çıkış süresini < iniş süresi yapar, (5) Yörünge simetrisini bozar.",
+              "options": [
+                {"text": "Etkilemez", "correct": false},
+                {"text": "Menzil ve yükseklik azalır, yörünge asimetrik olur, optimal açı < 45°", "correct": true},
+                {"text": "Sadece hızı artırır", "correct": false},
+                {"text": "Sadece yüksekliği artırır", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Top mermiğinin menzili 800 m ve atış hızı 100 m/s ise atış açısı yaklaşık ___ derecedir. (g = 10 m/s²)",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["eğik atış", "açı"],
+              "explanation": "R = v₀²sin(2θ)/g → 800 = 10000·sin(2θ)/10 → sin(2θ) = 0,8 → 2θ ≈ 53° → θ ≈ 26,5° veya θ ≈ 63,5°. Her iki açı da geçerlidir ama düşük açı (yaklaşık 27°) pratikte tercih edilir.",
+              "options": [
+                {"text": "27", "correct": true},
+                {"text": "45", "correct": false},
+                {"text": "60", "correct": false},
+                {"text": "15", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Bir basketbolcu 45° açıyla 10 m/s ile top atarsa maksimum yükseklik yaklaşık kaçtır? (g = 10 m/s²)",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["maks yükseklik", "hesaplama"],
+              "explanation": "v₀ᵧ = 10·sin(45°) = 10 × 0,707 ≈ 7,07 m/s. h_max = v₀ᵧ²/(2g) = 50/20 = 2,5 m.",
+              "options": [
+                {"text": "5 m", "correct": false},
+                {"text": "2,5 m", "correct": true},
+                {"text": "10 m", "correct": false},
+                {"text": "1,25 m", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Paraşütçü uçaktan atladığında neden önce hızlanır sonra sabit hızla düşer?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["terminal hız"],
+              "explanation": "Başlangıçta yerçekimi > hava direnci → hızlanır. Hız arttıkça hava direnci artar. Yerçekimi = hava direnci olduğunda net kuvvet sıfır → sabit hız (terminal hız ≈ 55 m/s). Paraşüt açılınca alanı artırır → terminal hız ≈ 5 m/s'ye düşer.",
+              "options": [
+                {"text": "Yerçekimi azaldığı için", "correct": false},
+                {"text": "Hava direnci hızla artar, yerçekimine eşitlenince sabit hız (terminal hız) oluşur", "correct": true},
+                {"text": "Havada sürtünme yoktur", "correct": false},
+                {"text": "Motor gücüyle yavaşlar", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Dairesel Hareket",
+      "description": "Düzgün dairesel hareket, açısal hız, merkezcil kuvvet, uydu hareketi, günlük uygulamalar (MEB 2025-2026)",
+      "order": 3,
+      "lessons": [
+        {
+          "title": "Düzgün Dairesel Hareket Temelleri",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Düzgün dairesel harekette hız sabit midir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["dairesel hareket", "hız"],
+              "explanation": "Sürat (hızın büyüklüğü) sabittir ama hız vektörü sürekli yön değiştirir. Yön değişimi demek ivme demektir. Bu nedenle düzgün dairesel harekette sürat sabit, hız sabit değildir.",
+              "options": [
+                {"text": "Evet, hız tamamen sabittir", "correct": false},
+                {"text": "Sürat sabit ama hızın yönü sürekli değişir (dolayısıyla ivme vardır)", "correct": true},
+                {"text": "Hız sürekli artar", "correct": false},
+                {"text": "Hem sürat hem yön sabit", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Periyot ve frekans ilişkisini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["periyot", "frekans"],
+              "explanation": "Periyot ve frekans birbirinin tersidir.",
+              "options": [
+                {"text": "Periyot (T)", "pairId": 1, "correct": false},
+                {"text": "Bir tam tur süresi (saniye)", "pairId": 1, "correct": false},
+                {"text": "Frekans (f)", "pairId": 2, "correct": false},
+                {"text": "Birim zamanda tur sayısı (Hz), f = 1/T", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Açısal hız (ω) formülü ___ dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["açısal hız"],
+              "explanation": "ω = 2π/T = 2πf. Birimi rad/s. Birim zamanda kat edilen açıdır. Çizgisel hızla ilişkisi: v = ω·r.",
+              "options": [
+                {"text": "ω = 2π/T", "correct": true},
+                {"text": "ω = v/t", "correct": false},
+                {"text": "ω = F/m", "correct": false},
+                {"text": "ω = πr²", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Çizgisel hız ile açısal hız ilişkisi nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["çizgisel hız", "açısal hız"],
+              "explanation": "v = ω·r. Aynı açısal hızla dönen cisimlerden merkeze uzak olan daha büyük çizgisel hıza sahiptir. Atlıkarıncanın dışındaki koltuk daha hızlıdır.",
+              "options": [
+                {"text": "v = ω/r", "correct": false},
+                {"text": "v = ω·r (çizgisel hız = açısal hız × yarıçap)", "correct": true},
+                {"text": "v = ω + r", "correct": false},
+                {"text": "v = ω²·r", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Periyodu 0,5 s olan cismin frekansı kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["frekans", "hesaplama"],
+              "explanation": "f = 1/T = 1/0,5 = 2 Hz. Cisim saniyede 2 tur atar.",
+              "options": [
+                {"text": "0,5 Hz", "correct": false},
+                {"text": "2 Hz", "correct": true},
+                {"text": "5 Hz", "correct": false},
+                {"text": "1 Hz", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Düzgün dairesel harekette cismin hızı yörüngeye nasıl yönelir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["teğet hız"],
+              "explanation": "Anlık hız vektörü her zaman yörünge çemberine teğettir (daireye dik değil, teğet). İp koparılırsa cisim o anki teğet yönünde doğrusal devam eder (Newton 1. yasa).",
+              "options": [
+                {"text": "Merkeze doğru", "correct": false},
+                {"text": "Yörünge çemberine teğet yönde", "correct": true},
+                {"text": "Merkezden dışarı", "correct": false},
+                {"text": "Rastgele", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Merkezcil İvme ve Kuvvet",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Merkezcil ivme nedir ve yönü nereye doğrudur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["merkezcil ivme"],
+              "explanation": "Merkezcil ivme, dairesel hareketteki hız değişiminden kaynaklanan ivmedir. Her zaman çemberin merkezine doğru yönelir. a = v²/r = ω²·r. Cismi daire içinde tutan etkidir.",
+              "options": [
+                {"text": "Teğet yönde", "correct": false},
+                {"text": "Çemberin merkezine doğru (a = v²/r)", "correct": true},
+                {"text": "Merkezden dışarı", "correct": false},
+                {"text": "Yukarı doğru", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Merkezcil kuvvet formüllerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["merkezcil kuvvet", "formüller"],
+              "explanation": "Merkezcil kuvvet farklı şekillerde ifade edilir.",
+              "options": [
+                {"text": "F = mv²/r", "pairId": 1, "correct": false},
+                {"text": "Kütle × Hız karesi / Yarıçap", "pairId": 1, "correct": false},
+                {"text": "F = mω²r", "pairId": 2, "correct": false},
+                {"text": "Kütle × Açısal hız karesi × Yarıçap", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "2 kg'lık cisim 0,5 m yarıçaplı dairede 4 m/s hızla dönüyorsa merkezcil kuvvet ___ N'dur.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["merkezcil kuvvet", "hesaplama"],
+              "explanation": "F = mv²/r = 2 × 16/0,5 = 2 × 32 = 64 N.",
+              "options": [
+                {"text": "64", "correct": true},
+                {"text": "16", "correct": false},
+                {"text": "32", "correct": false},
+                {"text": "4", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Merkezcil kuvvet gerçek bir kuvvet midir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["merkezcil kuvvet", "doğa"],
+              "explanation": "Evet, merkezcil kuvvet gerçek bir kuvvettir. Ip gerilimi, yerçekimi, sürtünme gibi gerçek kuvvetler tarafından sağlanır. 'Merkezkaç kuvvet' ise eylemsiz çerçevedeki görünür (sanal) kuvvettir.",
+              "options": [
+                {"text": "Hayır, sanal kuvvettir", "correct": false},
+                {"text": "Evet, gerçek kuvvetler (ip gerilimi, yerçekimi, sürtünme) tarafından sağlanır", "correct": true},
+                {"text": "Sadece yüksek hızlarda gerçektir", "correct": false},
+                {"text": "Merkezkaç kuvvetiyle aynıdır", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Çamaşır makinesi sıkma modunda suyu nasıl atar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["merkezkaç", "uygulama"],
+              "explanation": "Tamburun hızlı dönüşünde giysilere merkezcil kuvvet uygulanır. Su, tamburun deliklerinden sıkışarak dışarı atılır çünkü su damlalarını tutan yeterli merkezcil kuvvet yoktur.",
+              "options": [
+                {"text": "Isı ile buharlaştırır", "correct": false},
+                {"text": "Hızlı dönen tambur, suyu dışarı atar (yetersiz merkezcil kuvvet)", "correct": true},
+                {"text": "Emme ile çeker", "correct": false},
+                {"text": "Basınçla sıkıştırır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "İple döndürülen cismin ipi koparsa ne olur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["teğet", "newton 1"],
+              "explanation": "İp koparsa merkezcil kuvvet ortadan kalkar. Newton'un 1. yasası gereği cisim son anki teğet hız yönünde doğrusal hareket eder (çember teğetinde uçar). İçe veya dışa sapmaz.",
+              "options": [
+                {"text": "Merkeze doğru gider", "correct": false},
+                {"text": "O anki teğet yönünde doğrusal devam eder", "correct": true},
+                {"text": "Merkezden dışarı fırlar", "correct": false},
+                {"text": "Yerinde durur", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Viraj ve Günlük Uygulamalar",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Virajda araba neden devrilmez (uygun hızda)?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["viraj", "sürtünme"],
+              "explanation": "Düz virajda lastiklerin sürtünme kuvveti merkezcil kuvveti sağlar. Banklı (eğimli) virajda ek olarak normal kuvvetin yatay bileşeni de yardım eder. Hız çok artarsa sürtünme yetersiz kalır → kayma.",
+              "options": [
+                {"text": "Ağırlığı tutar", "correct": false},
+                {"text": "Lastik sürtünmesi ve/veya viraj eğimi merkezcil kuvveti sağlar", "correct": true},
+                {"text": "Yerçekimi yardım eder", "correct": false},
+                {"text": "Motor gücü sayesinde", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Banklı (eğimli) viraj neden daha güvenlidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["banklı viraj"],
+              "explanation": "Banklı virajda yol eğimli yapılır. Normal kuvvetin yatay bileşeni merkezcil kuvvete katkı sağlar. Sürtünmeye daha az bağımlılık → daha yüksek hızda güvenli dönüş. Yarış pistlerinde kullanılır.",
+              "options": [
+                {"text": "Daha geniş olduğu için", "correct": false},
+                {"text": "Normal kuvvetin yatay bileşeni merkezcil kuvvete eklenir → sürtünmeye bağımlılık azalır", "correct": true},
+                {"text": "Yerçekimi farklı etki eder", "correct": false},
+                {"text": "Görüş açısı artar", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Lunapark treninde (roller coaster) tepe noktasında neden ağırlıksızlık hissedilir?",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["lunapark", "ağırlıksızlık"],
+              "explanation": "Dairesel hareketin tepe noktasında kuvvet analizi.",
+              "options": [
+                {"text": "Tepe noktasında merkezcil kuvvet = mg − N", "pairId": 1, "correct": false},
+                {"text": "Yerçekimi hem ağırlık hem merkezcil kuvvete katkı verir", "pairId": 1, "correct": false},
+                {"text": "Yeterli hızda N → 0", "pairId": 2, "correct": false},
+                {"text": "Koltuk kişiyi itmez → ağırlıksızlık hissi", "pairId": 2, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Düz virajda kaymamak için maksimum hız formülü ___ dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["viraj", "maks hız"],
+              "explanation": "Sürtünme = Merkezcil kuvvet: μmg = mv²/r → v_max = √(μgr). Yağmurlu havada μ düşer → v_max azalır.",
+              "options": [
+                {"text": "v = √(μgr)", "correct": true},
+                {"text": "v = μgr", "correct": false},
+                {"text": "v = mg/r", "correct": false},
+                {"text": "v = 2πr/T", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Uzay istasyonundaki astronotlar neden ağırlıksız hisseder?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["ağırlıksızlık", "uzay"],
+              "explanation": "Uzay istasyonu ve astronotlar birlikte Dünya etrafında düşerler (serbest düşme). Yerçekimi merkezcil kuvveti sağlar. İstasyon tabanı astronotu itmez → ağırlıksızlık hissi. Yerçekimi sıfır değildir!",
+              "options": [
+                {"text": "Yerçekimi yoktur", "correct": false},
+                {"text": "İstasyon ve astronot birlikte serbest düşer, taban itmez → ağırlıksızlık", "correct": true},
+                {"text": "Çok hızlı hareket ederler", "correct": false},
+                {"text": "Uzaydaki hava basıncı nedeniyle", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Dönme dolaptaki yolcu en alt noktada kendini nasıl hisseder?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["dönme dolap"],
+              "explanation": "En alt noktada: N − mg = mv²/r → N = mg + mv²/r. Normal kuvvet ağırlıktan büyük → kişi normalden ağır hisseder. En üst noktada ise tam tersi: hafif hisseder.",
+              "options": [
+                {"text": "Hafif", "correct": false},
+                {"text": "Normalden ağır (N > mg, koltuğa daha çok basılır)", "correct": true},
+                {"text": "Normal", "correct": false},
+                {"text": "Ağırlıksız", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Uydu ve Gezegen Hareketi",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Uydu Dünya etrafında nasıl kalır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["uydu", "yörünge"],
+              "explanation": "Uydu yeterli yatay hıza sahiptir. Sürekli Dünya'ya doğru düşer ama yatay hızı nedeniyle yüzeye ulaşamaz — dairesel yörüngede kalır. Yerçekimi merkezcil kuvveti sağlar.",
+              "options": [
+                {"text": "Motorla hareket eder", "correct": false},
+                {"text": "Yeterli yatay hızla sürekli düşer ama yüzeye ulaşamaz (yerçekimi = merkezcil kuvvet)", "correct": true},
+                {"text": "Yerçekimi yoktur", "correct": false},
+                {"text": "Hava onu taşır", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Uydu yörünge hızı ile yükseklik ilişkisini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["uydu", "hız"],
+              "explanation": "Yörünge yüksekliği ve uydu hızı/periyodu arasındaki ilişki.",
+              "options": [
+                {"text": "Yükseklik artarsa", "pairId": 1, "correct": false},
+                {"text": "Hız azalır, periyot artar", "pairId": 1, "correct": false},
+                {"text": "Yükseklik azalırsa", "pairId": 2, "correct": false},
+                {"text": "Hız artar, periyot azalır", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Dünya etrafında senkron (durağan) uydu ne demektir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["jeosenkron", "uydu"],
+              "explanation": "Jeosenkron (durağan) uydu: Periyodu Dünya'nın dönüş periyoduna eşit (24 saat), ekvator üzerinde sabit gözükür. Yüksekliği ≈ 36.000 km. TV yayını ve haberleşme uydularında kullanılır.",
+              "options": [
+                {"text": "Hareketsiz duran uydu", "correct": false},
+                {"text": "Periyodu 24 saat, ekvator üzerinde Dünya'yla aynı hızda döner → sabit gözükür", "correct": true},
+                {"text": "Çok hızlı dönen uydu", "correct": false},
+                {"text": "Kutuplara yakın uydu", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kepler'in 3. yasası ne der?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kepler", "3. yasa"],
+              "explanation": "Kepler'in 3. yasası: Gezegenin yörünge periyodunun karesi, yörünge yarıçapının küpüyle orantılıdır (T² ∝ r³). Uzak gezegenler daha yavaş hareket eder ve daha uzun periyoda sahiptir.",
+              "options": [
+                {"text": "Gezegenler dairesel yörüngede döner", "correct": false},
+                {"text": "T² ∝ r³ (periyot karesi, yarıçap küpüyle orantılı)", "correct": true},
+                {"text": "Gezegenler eşit hızda döner", "correct": false},
+                {"text": "Güneş merkezde sabit durur", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "GPS uyduları yaklaşık ___ km yükseklikte döner.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["GPS", "yükseklik"],
+              "explanation": "GPS uyduları yaklaşık 20.200 km yükseklikte, 12 saatlik periyotla döner. 24+ uydudan oluşan ağ, Dünya'nın her yerinde konum belirleme sağlar.",
+              "options": [
+                {"text": "20200", "correct": true},
+                {"text": "36000", "correct": false},
+                {"text": "400", "correct": false},
+                {"text": "100000", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Ay neden Dünya'ya düşmez?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ay", "yörünge"],
+              "explanation": "Ay sürekli Dünya'ya doğru düşer ama yatay hızı yeterince büyük olduğundan yüzeye ulaşamaz ve yörüngede kalır. Newton'un top deney düşüncesi bunu açıklar: yeterli hızla atılan top Dünya'yı dolaşır.",
+              "options": [
+                {"text": "Ay'ın motoru var", "correct": false},
+                {"text": "Sürekli düşer ama yatay hızı nedeniyle yüzeye ulaşamaz → yörüngede kalır", "correct": true},
+                {"text": "Dünya Ay'ı ittiği için", "correct": false},
+                {"text": "Güneş Ay'ı çektiği için", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Açısal Hareket ve Dönme Dinamiği",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Açısal büyüklükler ile doğrusal büyüklükleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["açısal", "doğrusal"],
+              "explanation": "Her doğrusal büyüklüğün açısal karşılığı vardır.",
+              "options": [
+                {"text": "Açısal yer değiştirme (θ)", "pairId": 1, "correct": false},
+                {"text": "Doğrusal yer değiştirme (x) karşılığı, birim: radyan", "pairId": 1, "correct": false},
+                {"text": "Açısal hız (ω)", "pairId": 2, "correct": false},
+                {"text": "Doğrusal hız (v) karşılığı, birim: rad/s", "pairId": 2, "correct": false},
+                {"text": "Açısal ivme (α)", "pairId": 3, "correct": false},
+                {"text": "Doğrusal ivme (a) karşılığı, birim: rad/s²", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "1 tam tur ___ radyandır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["radyan"],
+              "explanation": "1 tam tur = 360° = 2π radyan ≈ 6,28 rad. Yarım tur = π rad ≈ 3,14 rad. Çeyrek tur = π/2 rad ≈ 1,57 rad.",
+              "options": [
+                {"text": "2π", "correct": true},
+                {"text": "π", "correct": false},
+                {"text": "360", "correct": false},
+                {"text": "1", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Buz pateni yapan sporcu kollarını topladığında neden hızlanır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["açısal momentum", "korunum"],
+              "explanation": "Açısal momentumun korunumu: L = I·ω = sabit. Kollar toplanınca atalet momenti (I) azalır → açısal hız (ω) artar. Kollar açılınca I artar → ω azalır (yavaşlar).",
+              "options": [
+                {"text": "Rüzgâr direnci azalır", "correct": false},
+                {"text": "Açısal momentum korunumu: atalet momenti azalır → açısal hız artar", "correct": true},
+                {"text": "Daha fazla kuvvet uygular", "correct": false},
+                {"text": "Buz daha kaygan olur", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Atalet momenti nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["atalet momenti"],
+              "explanation": "Atalet momenti (I), cismin dönme hareketine gösterdiği dirençtir. Doğrusal hareketteki kütlenin karşılığıdır. Kütlenin eksenden uzaklığına bağlıdır: I = Σmr². Kütle uzaksa dönmesi zordur.",
+              "options": [
+                {"text": "Cismin ağırlığı", "correct": false},
+                {"text": "Cismin dönme hareketine direnci (I = Σmr²), kütle × uzaklık²", "correct": true},
+                {"text": "Açısal hız", "correct": false},
+                {"text": "Merkezcil kuvvet", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Tekerlek neden daha kolay yuvarlanır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yuvarlanma", "sürtünme"],
+              "explanation": "Yuvarlanma sürtünmesi, kayma sürtünmesinden çok daha küçüktür. Tekerlek temas noktasında kaymaz, yuvarlanır. Daha az enerji kaybedilir. Bu nedenle tekerlek insanlığın en önemli buluşlarındandır.",
+              "options": [
+                {"text": "Yerçekimi yardım eder", "correct": false},
+                {"text": "Yuvarlanma sürtünmesi << Kayma sürtünmesi (çok daha az enerji kaybı)", "correct": true},
+                {"text": "Ağırlık dağılır", "correct": false},
+                {"text": "Hava direnci azalır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Jiroskop nedir ve nerede kullanılır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["jiroskop"],
+              "explanation": "Jiroskop, hızla dönen bir tekerlek/diskten oluşur. Açısal momentumun korunumu sayesinde dönme ekseni sabit kalır. Uçak, gemi ve uzay araçlarında yön belirleme, akıllı telefonlarda hareket algılama kullanılır.",
+              "options": [
+                {"text": "Hız ölçer", "correct": false},
+                {"text": "Açısal momentum korunumuyla yön sabit tutan cihaz — navigasyon ve hareket algılama", "correct": true},
+                {"text": "Basınç ölçer", "correct": false},
+                {"text": "Sıcaklık ölçer", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "İtme ve Momentum",
+      "description": "İtme, momentum, momentumun korunumu, esnek ve esnek olmayan çarpışmalar (MEB 2025-2026)",
+      "order": 4,
+      "lessons": [
+        {
+          "title": "Momentum ve İtme Kavramı",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Momentum (doğrusal momentum) nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["momentum", "tanım"],
+              "explanation": "Momentum: p = m·v (kütle × hız). Bir cismin hareket miktarını ölçer. Vektörel büyüklüktür — yönü hız yönündedir. Birimi kg·m/s.",
+              "options": [
+                {"text": "Kütle × İvme", "correct": false},
+                {"text": "p = m·v (Kütle × Hız)", "correct": true},
+                {"text": "Kuvvet × Mesafe", "correct": false},
+                {"text": "Kütle × Yerçekimi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "İtme (impuls) nedir?",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["itme", "impuls"],
+              "explanation": "İtme, kuvvetin zamana göre etkisidir.",
+              "options": [
+                {"text": "İtme = F × Δt", "pairId": 1, "correct": false},
+                {"text": "Kuvvet × Etki süresi", "pairId": 1, "correct": false},
+                {"text": "İtme = Δp", "pairId": 2, "correct": false},
+                {"text": "Momentum değişimine eşit", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "1500 kg araba 20 m/s hızla gidiyorsa momentumu ___ kg·m/s'dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["momentum", "hesaplama"],
+              "explanation": "p = mv = 1500 × 20 = 30.000 kg·m/s.",
+              "options": [
+                {"text": "30000", "correct": true},
+                {"text": "1520", "correct": false},
+                {"text": "75", "correct": false},
+                {"text": "300", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Hava yastığı çarpışmada kişiyi neden korur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["itme", "güvenlik"],
+              "explanation": "Hava yastığı durma süresini (Δt) uzatır. F = Δp/Δt formülünde Δp sabitken Δt artarsa F azalır. Aynı momentum değişimi daha uzun sürede, daha az kuvvetle gerçekleşir.",
+              "options": [
+                {"text": "Çarpışmayı engeller", "correct": false},
+                {"text": "Durma süresini uzatarak etkiyen kuvveti azaltır (F = Δp/Δt)", "correct": true},
+                {"text": "Kişiyi ileri iter", "correct": false},
+                {"text": "Momentumu artırır", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Neden yumurta sert zemine düşünce kırılır ama yumuşak yüzeyde kırılmaz?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["itme", "süre"],
+              "explanation": "Her iki durumda momentum değişimi (Δp) aynıdır. Sert zemin: Δt çok kısa → F çok büyük → kırılma. Yumuşak yüzey: Δt uzun → F küçük → kırılmaz. Aynı prensip emniyet kemeri, sporcuların dizlerini bükmesi için geçerlidir.",
+              "options": [
+                {"text": "Sert zemin daha güçlü", "correct": false},
+                {"text": "Sert zemin durma süresini kısaltır → kuvvet artar; yumuşak yüzey uzatır → kuvvet azalır", "correct": true},
+                {"text": "Yerçekimi farklı", "correct": false},
+                {"text": "Yumurta malzemesi değişir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bir cismin momentumu ne zaman sıfırdır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["momentum", "sıfır"],
+              "explanation": "p = mv. Momentum sıfır olması için: (1) Cisim duruyorsa (v = 0) veya (2) Kütlesiz ise (m = 0, pratikte sadece fotonlar). Duran cismin momentumu sıfırdır.",
+              "options": [
+                {"text": "Hızı çok büyükse", "correct": false},
+                {"text": "Cisim duruyorsa (v = 0)", "correct": true},
+                {"text": "Kütlesi çok büyükse", "correct": false},
+                {"text": "Her zaman sıfırdır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Momentumun Korunumu",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Momentumun korunumu yasası ne der?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["korunum"],
+              "explanation": "Dış kuvvet uygulanmayan bir sistemde toplam momentum korunur: p_önce = p_sonra. Çarpışmalarda, patlamalarda ve ayrılmalarda geçerlidir. Fiziğin temel korunum yasalarından biridir.",
+              "options": [
+                {"text": "Momentum her zaman artar", "correct": false},
+                {"text": "Dış kuvvet yoksa toplam momentum korunur (p_önce = p_sonra)", "correct": true},
+                {"text": "Momentum her zaman azalır", "correct": false},
+                {"text": "Sadece sürtünmesiz yüzeylerde geçerli", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Roket uzayda nasıl hareket eder (itecek bir şey olmadığı halde)?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["roket", "momentum"],
+              "explanation": "Momentumun korunumu: Başlangıçta sistem durağan (p = 0). Roket gazı geriye fırlatır (negatif momentum) → roket ileri hareket eder (pozitif momentum). Toplam = 0 korunur. Newton 3. yasa da geçerli.",
+              "options": [
+                {"text": "Havayı iter", "correct": false},
+                {"text": "Gazı geriye fırlatır → momentum korunumu gereği roket ileri gider", "correct": true},
+                {"text": "Manyetik alan kullanır", "correct": false},
+                {"text": "Yerçekimi onu çeker", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Duran 2 kg cisim patlayarak 3 m/s ve 5 m/s hızlı iki parçaya ayrılıyorsa parçaların kütleleri arasındaki ilişki nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["patlama", "korunum"],
+              "explanation": "p_önce = 0. m₁v₁ = m₂v₂ (zıt yönlerde) → m₁ × 5 = m₂ × 3 ve m₁ + m₂ = 2. Çözüm: m₁ = 0,75 kg, m₂ = 1,25 kg. Hızlı parça hafif, yavaş parça ağırdır.",
+              "options": [
+                {"text": "Eşit kütleli", "correct": false},
+                {"text": "Hızlı parça hafif (0,75 kg), yavaş parça ağır (1,25 kg)", "correct": true},
+                {"text": "Hızlı parça ağır", "correct": false},
+                {"text": "Belirlenemez", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Silahın geri tepmesi ___ yasasıyla açıklanır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["geri tepme", "korunum"],
+              "explanation": "Mermi ileri fırlatılınca (pozitif momentum), silah geriye tepme yapar (negatif momentum). Toplam momentum korunur (başlangıçta sıfır). Newton 3. yasayla da açıklanabilir.",
+              "options": [
+                {"text": "momentumun korunumu", "correct": true},
+                {"text": "yerçekimi", "correct": false},
+                {"text": "sürtünme", "correct": false},
+                {"text": "enerji üretimi", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Bir buz patencisi 60 kg, duran 40 kg arkadaşını 3 m/s ile iterse kendisi hangi hızla geriye gider?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["korunum", "hesaplama"],
+              "explanation": "p_önce = 0 (ikisi de duruyordu). p_sonra = 0 → 60v₁ + 40 × 3 = 0 → v₁ = −120/60 = −2 m/s (zıt yön).",
+              "options": [
+                {"text": "3 m/s", "correct": false},
+                {"text": "2 m/s (zıt yönde)", "correct": true},
+                {"text": "1,5 m/s", "correct": false},
+                {"text": "5 m/s", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Momentumun korunumu hangi koşulda geçerlidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["korunum", "koşul"],
+              "explanation": "Momentumun korunumu, sisteme dışarıdan net kuvvet uygulanmadığında (izole/kapalı sistem) geçerlidir. Sürtünme, hava direnci gibi dış kuvvetler varsa tam koruma sağlanmaz ama çarpışma anı çok kısa olduğundan genellikle ihmal edilir.",
+              "options": [
+                {"text": "Her zaman", "correct": false},
+                {"text": "Dış net kuvvet sıfır olduğunda (izole sistem)", "correct": true},
+                {"text": "Sadece sürtünmesiz yüzeylerde", "correct": false},
+                {"text": "Sadece uzayda", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Esnek Çarpışmalar",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Esnek çarpışmada neler korunur?",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["esnek çarpışma", "korunum"],
+              "explanation": "Esnek çarpışma özel bir çarpışma türüdür.",
+              "options": [
+                {"text": "Momentum", "pairId": 1, "correct": false},
+                {"text": "Korunur (her çarpışmada)", "pairId": 1, "correct": false},
+                {"text": "Kinetik enerji", "pairId": 2, "correct": false},
+                {"text": "Korunur (sadece esnek çarpışmada)", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Bilardo toplarının çarpışması hangi tür çarpışmadır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["bilardo", "esnek"],
+              "explanation": "Bilardo topları çarpışması yaklaşık esnek çarpışmadır. Toplar şekil değiştirmez, ısı kaybı minimumdur. Hem momentum hem kinetik enerji korunur.",
+              "options": [
+                {"text": "Tam esnek olmayan", "correct": false},
+                {"text": "Yaklaşık esnek (hem momentum hem kinetik enerji korunur)", "correct": true},
+                {"text": "Patlama", "correct": false},
+                {"text": "Sürtünme çarpışması", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Esnek çarpışmada eşit kütleli iki cisimden biri duruyorsa ne olur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["esnek", "eşit kütle"],
+              "explanation": "Tam esnek çarpışmada eşit kütleli cisimler hız değiştirir: gelen cisim durur, duran cisim gelen cismin hızıyla hareket eder. Newton beşiği (çarpışma topları) buna örnektir.",
+              "options": [
+                {"text": "İkisi de durur", "correct": false},
+                {"text": "Gelen cisim durur, duran cisim gelen hızla hareket eder (hız değişimi)", "correct": true},
+                {"text": "İkisi de geri gider", "correct": false},
+                {"text": "Yapışırlar", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Newton beşiği (çarpışma topları) hangi prensibi gösterir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["newton beşiği"],
+              "explanation": "Newton beşiği hem momentumun hem kinetik enerjinin korunumunu gösterir. Bir top bırakıldığında diğer uçtaki bir top aynı hızla fırlar. İki top bırakılırsa diğer uçtan iki top fırlar.",
+              "options": [
+                {"text": "Sadece yerçekimi", "correct": false},
+                {"text": "Hem momentumun hem kinetik enerjinin korunumu", "correct": true},
+                {"text": "Sadece enerji", "correct": false},
+                {"text": "Manyetik kuvvet", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Atom altı parçacıkların çarpışmaları esnek midir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["atom altı", "esnek"],
+              "explanation": "Atom altı parçacıklar (elektron, proton, foton) arasındaki çarpışmalar genellikle tam esnek olabilir. Makroskopik dünyada tam esnek çarpışma pratikte imkânsızdır — her zaman bir miktar enerji ısı, ses veya deformasyona dönüşür.",
+              "options": [
+                {"text": "Hayır, her zaman esnek değil", "correct": false},
+                {"text": "Genellikle evet — atom altı düzeyde tam esnek çarpışma mümkün", "correct": true},
+                {"text": "Çarpışma olmaz", "correct": false},
+                {"text": "Sadece elektronlarda", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Esnek çarpışmada hız değişimi eşleştirmesini yapın.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["esnek", "özel durumlar"],
+              "explanation": "Esnek çarpışmalarda özel durumlar (biri duruyor, diğeri çarpıyor).",
+              "options": [
+                {"text": "Ağır cisme hafif cisim çarparsa", "pairId": 1, "correct": false},
+                {"text": "Hafif cisim geri döner, ağır cisim az etkilenir", "pairId": 1, "correct": false},
+                {"text": "Hafif cisme ağır cisim çarparsa", "pairId": 2, "correct": false},
+                {"text": "Hafif cisim hızla fırlar, ağır cisim biraz yavaşlar", "pairId": 2, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Esnek Olmayan Çarpışmalar",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Tam esnek olmayan çarpışmada ne olur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["esnek olmayan"],
+              "explanation": "Tam esnek olmayan çarpışmada cisimler yapışır ve birlikte hareket eder. Momentum korunur ama kinetik enerji korunmaz — enerji deformasyona, ısıya ve sese dönüşür.",
+              "options": [
+                {"text": "İkisi de durur", "correct": false},
+                {"text": "Cisimler yapışır, birlikte hareket eder; momentum korunur, kinetik enerji kaybedilir", "correct": true},
+                {"text": "Kinetik enerji artar", "correct": false},
+                {"text": "Momentum korunmaz", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Çarpışma türlerinde enerji korunumunu eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["çarpışma", "enerji"],
+              "explanation": "Çarpışma türlerine göre enerji korunumu.",
+              "options": [
+                {"text": "Tam esnek çarpışma", "pairId": 1, "correct": false},
+                {"text": "Kinetik enerji korunur (kayıp yok)", "pairId": 1, "correct": false},
+                {"text": "Kısmen esnek olmayan", "pairId": 2, "correct": false},
+                {"text": "Kinetik enerji kısmen kaybedilir", "pairId": 2, "correct": false},
+                {"text": "Tam esnek olmayan (yapışma)", "pairId": 3, "correct": false},
+                {"text": "Kinetik enerji en çok kaybedilir", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "3 kg cisim 4 m/s ile gidip duran 1 kg cisme yapışırsa ortak hız ___ m/s olur.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["yapışma", "hesaplama"],
+              "explanation": "m₁v₁ = (m₁ + m₂)v → 3 × 4 = 4 × v → v = 12/4 = 3 m/s.",
+              "options": [
+                {"text": "3", "correct": true},
+                {"text": "4", "correct": false},
+                {"text": "12", "correct": false},
+                {"text": "1", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Araba çarpışmalarında neden ön kısım ezilerek enerji soğurur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["deformasyon", "güvenlik"],
+              "explanation": "Çarpışma bölgesi (crumple zone) kasıtlı olarak ezilerek kinetik enerjiyi deformasyon enerjisine dönüştürür. Bu, durma süresini uzatır ve yolcuya aktarılan kuvveti azaltır. Hayat kurtarıcı tasarımdır.",
+              "options": [
+                {"text": "Tasarım hatası", "correct": false},
+                {"text": "Kinetik enerji deformasyona dönüşür → durma süresi uzar → kuvvet azalır", "correct": true},
+                {"text": "Araba daha ucuz olsun diye", "correct": false},
+                {"text": "Arabayı korumak için", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Balistik sarkaç nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["balistik sarkaç"],
+              "explanation": "Balistik sarkaç, mermi hızını ölçmek için kullanılan düzenektir. Mermi (m) sarkaç kütlesine (M) saplanır (tam esnek olmayan çarpışma). Yapışık kütle yukarı çıkar. Yükseklikten mermi hızı hesaplanır.",
+              "options": [
+                {"text": "Salıncak türü", "correct": false},
+                {"text": "Mermi hızını ölçen düzenek — tam esnek olmayan çarpışma + enerji korunumu", "correct": true},
+                {"text": "Saat mekanizması", "correct": false},
+                {"text": "Tartı aleti", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Tam esnek olmayan çarpışmada kaybedilen kinetik enerji nereye gider?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["enerji kaybı"],
+              "explanation": "Kaybedilen kinetik enerji: (1) Deformasyon enerjisi (şekil değişimi), (2) Isı enerjisi (sürtünme), (3) Ses enerjisi (çarpışma sesi). Toplam enerji korunur ama kinetik enerji azalır.",
+              "options": [
+                {"text": "Yok olur", "correct": false},
+                {"text": "Deformasyon, ısı ve ses enerjisine dönüşür", "correct": true},
+                {"text": "Potansiyel enerjiye dönüşür", "correct": false},
+                {"text": "Momentuma dönüşür", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Momentum Uygulamaları ve Problem Çözme",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "İki boyutlu çarpışmada momentum nasıl korunur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["2D çarpışma"],
+              "explanation": "2D çarpışmada momentum her eksende ayrı ayrı korunur: x-ekseni: Σpₓ(önce) = Σpₓ(sonra), y-ekseni: Σpᵧ(önce) = Σpᵧ(sonra). Bilardo, trafik kazası, parçacık çarpışmaları 2D'dir.",
+              "options": [
+                {"text": "Sadece x-ekseninde", "correct": false},
+                {"text": "Her eksende (x ve y) ayrı ayrı korunur", "correct": true},
+                {"text": "Toplamda korunur ama eksenlerde değil", "correct": false},
+                {"text": "2D'de korunmaz", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kuvvet-zaman grafiğinin altındaki alan ___ verir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["grafik", "itme"],
+              "explanation": "F-t grafiğinin altındaki alan = İtme = Momentum değişimi (Δp). Değişken kuvvetlerde grafik alanı hesaplamak gerekir.",
+              "options": [
+                {"text": "itme (momentum değişimi)", "correct": true},
+                {"text": "iş", "correct": false},
+                {"text": "güç", "correct": false},
+                {"text": "enerji", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Sporda momentum kavramının uygulamalarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["spor", "momentum"],
+              "explanation": "Momentum ve itme kavramları sporda önemlidir.",
+              "options": [
+                {"text": "Kaleci topu yakalarken ellerini geri çeker", "pairId": 1, "correct": false},
+                {"text": "Durma süresini uzatarak kuvveti azaltır", "pairId": 1, "correct": false},
+                {"text": "Boksör yumruğunu geri çekmeden vurur", "pairId": 2, "correct": false},
+                {"text": "Temas süresini kısaltarak kuvveti artırır", "pairId": 2, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Patlama olayında momentum korunur mu?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["patlama"],
+              "explanation": "Evet! Patlama öncesi toplam momentum sıfırsa, sonra da sıfırdır. Parçalar zıt yönlerde hareket eder. Momentum korunur ama kinetik enerji artar (kimyasal enerji → kinetik enerji).",
+              "options": [
+                {"text": "Hayır, patlama momentumu bozar", "correct": false},
+                {"text": "Evet, toplam momentum korunur (parçalar zıt yönlerde, kinetik enerji artar)", "correct": true},
+                {"text": "Sadece büyük patlamalarda", "correct": false},
+                {"text": "Korunur ama ölçülemez", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Trafik kazası analizinde momentum korunumu nasıl kullanılır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["trafik", "analiz"],
+              "explanation": "Kaza uzmanları çarpışma sonrası araçların pozisyon ve hızlarından çarpışma öncesi hızları hesaplar. Momentum korunumu kullanılarak hız sınırı ihlali, kusur oranı ve kaza senaryosu belirlenir.",
+              "options": [
+                {"text": "Kullanılmaz", "correct": false},
+                {"text": "Çarpışma sonrası verilerden çarpışma öncesi hızları ve kusur oranını belirler", "correct": true},
+                {"text": "Sadece hasar tespiti için", "correct": false},
+                {"text": "Sadece sigorta hesabı için", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Jet motorunun çalışma prensibi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["jet motoru", "momentum"],
+              "explanation": "Jet motoru havayı emerek yakıtla karıştırır, yakar ve yüksek hızla arkadan atar. Atılan gazın momentumu gereği uçak ileri gider (Newton 3. yasa + momentum korunumu). Roketin aksine dış hava kullanır.",
+              "options": [
+                {"text": "Havayı iter", "correct": false},
+                {"text": "Yüksek hızlı gaz geriye atarak ileri itme kuvveti oluşturur (momentum korunumu)", "correct": true},
+                {"text": "Pervane ile", "correct": false},
+                {"text": "Manyetik kuvvet ile", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Elektrik Alan ve Elektrik Potansiyeli",
+      "description": "Coulomb yasası, elektrik alan, elektrik potansiyel, kondansatörler (MEB 2025-2026)",
+      "order": 5,
+      "lessons": [
+        {
+          "title": "Coulomb Yasası",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Coulomb yasası ne der?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["coulomb", "yasa"],
+              "explanation": "Coulomb yasası: İki nokta yük arasındaki elektriksel kuvvet yüklerin çarpımıyla doğru, aralarındaki mesafenin karesiyle ters orantılıdır. F = k·q₁q₂/r². k = 9 × 10⁹ N·m²/C².",
+              "options": [
+                {"text": "F = q₁q₂/r", "correct": false},
+                {"text": "F = k·q₁q₂/r² (mesafenin karesiyle ters orantılı)", "correct": true},
+                {"text": "F = k·q₁q₂·r²", "correct": false},
+                {"text": "F = q₁ + q₂/r", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Yük etkileşimlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["yük", "etkileşim"],
+              "explanation": "Elektrik yükleri arasındaki etkileşim kuralları.",
+              "options": [
+                {"text": "Aynı işaretli yükler (+,+ veya −,−)", "pairId": 1, "correct": false},
+                {"text": "Birbirini iter", "pairId": 1, "correct": false},
+                {"text": "Zıt işaretli yükler (+,−)", "pairId": 2, "correct": false},
+                {"text": "Birbirini çeker", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "İki yük arasındaki mesafe 2 katına çıkarılırsa kuvvet nasıl değişir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["coulomb", "mesafe"],
+              "explanation": "F ∝ 1/r². Mesafe 2 katına çıkarsa F → F/4 (4'te birine düşer). Mesafe 3 katına çıkarsa F → F/9. Ters kare yasası: Newton'un yerçekimi yasasıyla aynı yapıda.",
+              "options": [
+                {"text": "Yarıya düşer", "correct": false},
+                {"text": "4'te birine düşer (1/2² = 1/4)", "correct": true},
+                {"text": "Değişmez", "correct": false},
+                {"text": "2 katına çıkar", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Coulomb sabiti (k) yaklaşık ___ N·m²/C²'dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["coulomb sabiti"],
+              "explanation": "k = 9 × 10⁹ N·m²/C². Çok büyük bir sayı olması, elektrik kuvvetinin yerçekimine göre çok güçlü olduğunu gösterir.",
+              "options": [
+                {"text": "9 × 10⁹", "correct": true},
+                {"text": "6,67 × 10⁻¹¹", "correct": false},
+                {"text": "3 × 10⁸", "correct": false},
+                {"text": "1,6 × 10⁻¹⁹", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Coulomb yasası ile Newton yerçekimi yasasının benzerliği nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["coulomb", "newton", "benzerlik"],
+              "explanation": "İkisi de ters kare yasasıdır (1/r²). Farklar: elektrik kuvveti çekici veya itici olabilir (yerçekimi sadece çekici), elektrik kuvveti yerçekiminden ~10³⁶ kat daha güçlüdür.",
+              "options": [
+                {"text": "Hiç benzerlik yok", "correct": false},
+                {"text": "İkisi de ters kare yasası (1/r²) ama elektrik çok daha güçlü ve itici/çekici", "correct": true},
+                {"text": "Aynı kuvvettir", "correct": false},
+                {"text": "Sadece formülleri benzer", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Elektrik yükünün birimi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["yük", "birim"],
+              "explanation": "Elektrik yükünün SI birimi Coulomb'dur (C). Bir elektronun yükü: e = 1,6 × 10⁻¹⁹ C. 1 Coulomb çok büyük bir yüktür — yaklaşık 6,25 × 10¹⁸ elektron yükü.",
+              "options": [
+                {"text": "Amper", "correct": false},
+                {"text": "Coulomb (C)", "correct": true},
+                {"text": "Volt", "correct": false},
+                {"text": "Ohm", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Elektrik Alan",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Elektrik alan nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["elektrik alan"],
+              "explanation": "Elektrik alan, bir yükün çevresinde oluşturduğu kuvvet alanıdır. Birim pozitif yüke etkiyen kuvvet olarak tanımlanır: E = F/q. Birimi N/C veya V/m.",
+              "options": [
+                {"text": "Akım yoğunluğu", "correct": false},
+                {"text": "Yüklü cismin çevresinde oluşturduğu kuvvet alanı (E = F/q)", "correct": true},
+                {"text": "Manyetik alan", "correct": false},
+                {"text": "Yerçekimi alanı", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Nokta yükün elektrik alan şiddetini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["nokta yük", "alan"],
+              "explanation": "Nokta yükün elektrik alan formülü ve özellikleri.",
+              "options": [
+                {"text": "E = k·q/r²", "pairId": 1, "correct": false},
+                {"text": "Uzaklığın karesiyle ters orantılı azalır", "pairId": 1, "correct": false},
+                {"text": "Pozitif yük alanı", "pairId": 2, "correct": false},
+                {"text": "Yükten dışarı doğru yönelir", "pairId": 2, "correct": false},
+                {"text": "Negatif yük alanı", "pairId": 3, "correct": false},
+                {"text": "Yüke doğru yönelir", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Paralel plaka kondansatörü arasındaki elektrik alan nasıldır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["paralel plaka", "düzgün alan"],
+              "explanation": "Paralel plakalar arasında elektrik alan düzgündür — her noktada aynı şiddet ve yön. E = V/d (gerilim / plaka arası mesafe). Kenar etkileri ihmal edilir.",
+              "options": [
+                {"text": "Dairesel", "correct": false},
+                {"text": "Düzgün (homojen) — her noktada aynı şiddet ve yön (E = V/d)", "correct": true},
+                {"text": "Sadece merkezde var", "correct": false},
+                {"text": "Rastgele", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Elektrik alan çizgileri nasıl çizilir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["alan çizgileri"],
+              "explanation": "Elektrik alan çizgileri: (1) Pozitif yükten çıkar, negatif yüke girer, (2) Asla kesişmez, (3) Yoğun çizgiler güçlü alanı gösterir, (4) İletken yüzeyine diktir.",
+              "options": [
+                {"text": "Negatiften pozitife", "correct": false},
+                {"text": "Pozitiften çıkar, negatife girer; kesişmez; yoğunluk = güç", "correct": true},
+                {"text": "Her yöne rastgele", "correct": false},
+                {"text": "Sadece yatay", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "E = 5000 N/C elektrik alanda 2 × 10⁻⁶ C yüke etkiyen kuvvet ___ N'dur.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["elektrik alan", "kuvvet"],
+              "explanation": "F = qE = 2 × 10⁻⁶ × 5000 = 0,01 N = 10⁻² N.",
+              "options": [
+                {"text": "0,01", "correct": true},
+                {"text": "10000", "correct": false},
+                {"text": "0,001", "correct": false},
+                {"text": "5002", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "İletkenin içindeki elektrik alan neden sıfırdır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["iletken", "elektrik alan"],
+              "explanation": "İletkendeki serbest elektronlar elektrik alan etkisiyle hareket ederek dış alanı dengeler. Dengede (statik durumda) iletkenin içinde net elektrik alan sıfırdır. Yükler yüzeyde toplanır. Bu prensip Faraday kafesi temelini oluşturur.",
+              "options": [
+                {"text": "İletkenler yük taşımaz", "correct": false},
+                {"text": "Serbest elektronlar dış alanı dengeler → içeride net alan sıfır (Faraday kafesi)", "correct": true},
+                {"text": "İletkenler manyetik", "correct": false},
+                {"text": "Her zaman sıfır değildir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Elektrik Potansiyeli ve Potansiyel Enerji",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Elektrik potansiyeli nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["potansiyel"],
+              "explanation": "Elektrik potansiyeli (V), birim pozitif yükün bir noktada sahip olduğu potansiyel enerjidir: V = U/q = kQ/r. Birimi Volt (V). Referans noktası genellikle sonsuzdur (V_∞ = 0).",
+              "options": [
+                {"text": "Akım şiddeti", "correct": false},
+                {"text": "Birim yükün potansiyel enerjisi (V = U/q = kQ/r), birimi Volt", "correct": true},
+                {"text": "Kuvvet şiddeti", "correct": false},
+                {"text": "Direnç", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Potansiyel farkı ve iş ilişkisini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["potansiyel fark", "iş"],
+              "explanation": "Potansiyel fark ve yapılan iş arasındaki ilişki.",
+              "options": [
+                {"text": "W = q·ΔV", "pairId": 1, "correct": false},
+                {"text": "Yük × Potansiyel fark = Yapılan iş", "pairId": 1, "correct": false},
+                {"text": "1 Volt", "pairId": 2, "correct": false},
+                {"text": "1 Coulomb yükün 1 Joule iş yapması", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Eşpotansiyel yüzeyler neyi gösterir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["eşpotansiyel"],
+              "explanation": "Eşpotansiyel yüzeyler, aynı potansiyele sahip noktaların oluşturduğu yüzeylerdir. Elektrik alan çizgilerine her zaman diktir. Yük bu yüzey üzerinde hareket ederse iş yapılmaz.",
+              "options": [
+                {"text": "Eşit kuvvetli bölgeler", "correct": false},
+                {"text": "Aynı potansiyele sahip noktalar; alan çizgilerine dik; hareket halinde iş = 0", "correct": true},
+                {"text": "Eşit sıcaklıklı bölgeler", "correct": false},
+                {"text": "Manyetik alan çizgileri", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Yıldırım neden yüksek yapılara düşer?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yıldırım", "alan"],
+              "explanation": "Sivri uçlarda elektrik alan yoğunlaşır. Yüksek yapıların sivri noktaları havadaki iyonizasyonu kolaylaştırır ve iletken kanal oluşturur. Paratonerin görevi bu iletken kanalı güvenli şekilde toprağa iletmektir.",
+              "options": [
+                {"text": "Yerçekimi etkisi", "correct": false},
+                {"text": "Sivri uçlarda elektrik alan yoğunlaşır → iyonizasyon → iletken kanal oluşur", "correct": true},
+                {"text": "Metal yüksek yapıları çeker", "correct": false},
+                {"text": "Rastgele düşer", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Bir elektronun 100V potansiyel farkta kazandığı enerji ___ eV'dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["eV", "enerji"],
+              "explanation": "1 eV = bir elektronun 1V potansiyel farkta kazandığı enerji = 1,6 × 10⁻¹⁹ J. 100V'da: E = 100 eV.",
+              "options": [
+                {"text": "100", "correct": true},
+                {"text": "1", "correct": false},
+                {"text": "0,01", "correct": false},
+                {"text": "10000", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Elektrostatik kalkan (Faraday kafesi) nasıl çalışır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["faraday kafesi"],
+              "explanation": "Faraday kafesi, metal bir kafes/kutudur. Dış elektrik alan iletkenin yüzeyindeki yükleri yeniden dağıtır, iç alanı sıfırlar. İçindeki cihazlar elektrik alanlarından korunur. Araba yıldırıma karşı güvenlidir bu nedenle.",
+              "options": [
+                {"text": "Manyetik kalkan", "correct": false},
+                {"text": "Metal kafes dış elektrik alanı engeller, içeride alan sıfır olur", "correct": true},
+                {"text": "Yerçekimi kalkanı", "correct": false},
+                {"text": "Işık kalkanı", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Kondansatörler",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Kondansatör nasıl çalışır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kondansatör", "çalışma"],
+              "explanation": "Kondansatör, iki iletken plaka arasında yalıtkan (dielektrik) bulunan enerji depolama elemanıdır. Gerilim uygulanınca plakalar zıt yükle yüklenir. C = Q/V (sığa = yük / gerilim). Birimi Farad (F).",
+              "options": [
+                {"text": "Akım üretir", "correct": false},
+                {"text": "İki plaka arasında elektrik yükü ve enerji depolar (C = Q/V)", "correct": true},
+                {"text": "Direnci artırır", "correct": false},
+                {"text": "Manyetik alan oluşturur", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kondansatör sığasını etkileyen faktörleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["sığa", "faktörler"],
+              "explanation": "C = ε₀·ε_r·A/d formülünden sığayı etkileyen faktörler.",
+              "options": [
+                {"text": "Plaka alanı (A) artarsa", "pairId": 1, "correct": false},
+                {"text": "Sığa artar (doğru orantı)", "pairId": 1, "correct": false},
+                {"text": "Plaka arası mesafe (d) artarsa", "pairId": 2, "correct": false},
+                {"text": "Sığa azalır (ters orantı)", "pairId": 2, "correct": false},
+                {"text": "Dielektrik sabiti (ε_r) artarsa", "pairId": 3, "correct": false},
+                {"text": "Sığa artar (doğru orantı)", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Seri bağlı kondansatörlerde toplam sığa nasıl hesaplanır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["seri", "sığa"],
+              "explanation": "Seri: 1/C_top = 1/C₁ + 1/C₂ + ... (dirençlerin paralel bağlantısına benzer). Toplam sığa en küçük tek sığadan küçüktür.",
+              "options": [
+                {"text": "C_top = C₁ + C₂", "correct": false},
+                {"text": "1/C_top = 1/C₁ + 1/C₂ + ... (toplam sığa azalır)", "correct": true},
+                {"text": "C_top = C₁ × C₂", "correct": false},
+                {"text": "C_top = C₁ − C₂", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Paralel bağlı kondansatörlerde toplam sığa ___ olarak hesaplanır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["paralel", "sığa"],
+              "explanation": "Paralel: C_top = C₁ + C₂ + C₃ + ... (sığalar doğrudan toplanır). Dirençlerin seri bağlantısına benzer şekilde (ama ters).",
+              "options": [
+                {"text": "C_top = C₁ + C₂ + ...", "correct": true},
+                {"text": "1/C_top = 1/C₁ + 1/C₂", "correct": false},
+                {"text": "C_top = C₁ × C₂", "correct": false},
+                {"text": "C_top = C₁/C₂", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Kondansatörde depolanan enerji formülü nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["enerji", "kondansatör"],
+              "explanation": "Depolanan enerji: U = ½CV² = ½QV = Q²/(2C). Sığa veya gerilim arttıkça daha fazla enerji depolanır.",
+              "options": [
+                {"text": "U = CV", "correct": false},
+                {"text": "U = ½CV² (veya ½QV veya Q²/2C)", "correct": true},
+                {"text": "U = C²V", "correct": false},
+                {"text": "U = QV²", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Kondansatörlerin günlük hayattaki kullanımlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["kondansatör", "kullanım"],
+              "explanation": "Kondansatörler birçok cihazda kullanılır.",
+              "options": [
+                {"text": "Fotoğraf flaşı", "pairId": 1, "correct": false},
+                {"text": "Enerjiyi hızla depolayıp anlık boşaltma", "pairId": 1, "correct": false},
+                {"text": "Dokunmatik ekran", "pairId": 2, "correct": false},
+                {"text": "Parmak temas ettiğinde sığa değişimi algılama", "pairId": 2, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Elektrostatik Uygulamalar",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Van de Graaff jeneratörü ne yapar?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["van de graaff"],
+              "explanation": "Van de Graaff jeneratörü, metal küre üzerinde çok yüksek elektrostatik gerilim biriktiren cihazdır. Parçacık hızlandırıcılarda ve eğitim deneylerinde kullanılır. Dokunulunca saçlar diken diken olur.",
+              "options": [
+                {"text": "Akım üretir", "correct": false},
+                {"text": "Metal kürede çok yüksek statik gerilim biriktirir", "correct": true},
+                {"text": "Manyetik alan üretir", "correct": false},
+                {"text": "Isı üretir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Lazer yazıcı elektrostatiği nasıl kullanır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["lazer yazıcı"],
+              "explanation": "Lazer yazıcı: (1) Silindir yüklenir, (2) Lazer görüntüyü çizer (yük kaldırır), (3) Toner karşı yüklü bölgelere yapışır, (4) Toner kâğıda aktarılır, (5) Isıyla sabitleştirilir. Tüm süreç elektrostatik prensiplerine dayanır.",
+              "options": [
+                {"text": "Mürekkep püskürtür", "correct": false},
+                {"text": "Elektrostatik yükle toner tozu çekip kâğıda aktarır, ısıyla sabitler", "correct": true},
+                {"text": "Termal baskı yapar", "correct": false},
+                {"text": "Mekanik baskı yapar", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Elektrostatik boyama neden verimlidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["elektrostatik boyama"],
+              "explanation": "Boya parçacıkları yüklenir, boyanacak nesne zıt yüklenir veya topraklanır. Elektrostatik çekim sayesinde boya eşit dağılır ve her yüzeye yapışır. Atık boya %5'in altına düşer.",
+              "options": [
+                {"text": "Daha ucuz boya kullanılır", "correct": false},
+                {"text": "Yüklü boya parçacıkları nesneye elektrostatik çekimle yapışır → düzgün, az atık", "correct": true},
+                {"text": "Fırça gerektirmez", "correct": false},
+                {"text": "Daha hızlı kurur", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Elektrostatik toz filtresi (elektrofiltre) nasıl çalışır?",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["elektrofiltre"],
+              "explanation": "Baca gazlarını temizleyen elektrofiltre aşamaları.",
+              "options": [
+                {"text": "Yüksek gerilimli elektrot toz parçacıklarını yükler", "pairId": 1, "correct": false},
+                {"text": "İyonizasyon — parçacıklar negatif yük kazanır", "pairId": 1, "correct": false},
+                {"text": "Yüklü parçacıklar toplama plakasına çekilir", "pairId": 2, "correct": false},
+                {"text": "Elektrostatik çekim — temiz hava çıkar", "pairId": 2, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Statik elektrik benzin istasyonlarında neden tehlikelidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["statik elektrik", "tehlike"],
+              "explanation": "Araçtan inerken giysilerin sürtünmesiyle statik yük birikir. Benzin pompasına dokunulduğunda kıvılcım çıkabilir. Benzin buharı tutuşabilir. Bu nedenle 'önce araca dokunun' uyarısı yapılır.",
+              "options": [
+                {"text": "Tehlikeli değildir", "correct": false},
+                {"text": "Statik yükten kıvılcım çıkabilir → benzin buharı tutuşabilir", "correct": true},
+                {"text": "Benzin pompası bozulur", "correct": false},
+                {"text": "Araba hasar görür", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Defibrilatör (kalp şoku cihazı) enerji depolamak için ___ kullanır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["defibrilatör", "kondansatör"],
+              "explanation": "Defibrilatör büyük bir kondansatör kullanır. Kondansatör şarj edilir (birkaç saniye), sonra kalbe anlık yüksek enerji boşaltılır. Bu şok kalbin normal ritmini geri kazandırabilir.",
+              "options": [
+                {"text": "kondansatör", "correct": true},
+                {"text": "direnç", "correct": false},
+                {"text": "transformatör", "correct": false},
+                {"text": "transistör", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Enerji ve Momentum İlişkisi",
+      "description": "İş-enerji teoremi, kinetik ve potansiyel enerji, enerjinin korunumu, güç (MEB 2025-2026)",
+      "order": 6,
+      "lessons": [
+        {
+          "title": "İş ve İş-Enerji Teoremi",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Fizikte iş ne zaman yapılır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["iş", "tanım"],
+              "explanation": "Fiziksel iş: W = F·d·cos(θ). İş yapılması için kuvvet ve kuvvet yönünde yer değiştirme gerekir. Kuvvete dik hareket → iş = 0. Duvar itmek ama hareket ettirememek → iş = 0.",
+              "options": [
+                {"text": "Kuvvet uygulanınca her zaman", "correct": false},
+                {"text": "Kuvvet yönünde yer değiştirme olduğunda (W = F·d·cos(θ))", "correct": true},
+                {"text": "Cisim durduğunda", "correct": false},
+                {"text": "Sadece yatay harekette", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "İş-enerji teoremi ne der?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["iş-enerji teoremi"],
+              "explanation": "Net iş = Kinetik enerji değişimi: W_net = ΔKE = ½mv₂² − ½mv₁². Pozitif iş → hız artar, negatif iş → hız azalır.",
+              "options": [
+                {"text": "İş = Potansiyel enerji", "correct": false},
+                {"text": "Net iş = Kinetik enerji değişimi (W_net = ΔKE)", "correct": true},
+                {"text": "İş = Kütle × Hız", "correct": false},
+                {"text": "İş = Güç × Mesafe", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "50 N kuvvetle 10 m çekilen cisimde (kuvvet yönünde) yapılan iş ___ J'dır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["iş", "hesaplama"],
+              "explanation": "W = F × d × cos(0°) = 50 × 10 × 1 = 500 J.",
+              "options": [
+                {"text": "500", "correct": true},
+                {"text": "60", "correct": false},
+                {"text": "5", "correct": false},
+                {"text": "5000", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Sürtünme kuvvetinin yaptığı iş neden negatiftir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sürtünme", "negatif iş"],
+              "explanation": "Sürtünme kuvveti hareket yönüne zıttır (θ = 180°). W = F·d·cos(180°) = −F·d. Negatif iş, kinetik enerjinin azaldığı (ısıya dönüştüğü) anlamına gelir.",
+              "options": [
+                {"text": "Kuvvet zayıf olduğu için", "correct": false},
+                {"text": "Hareket yönüne zıt kuvvet → cos(180°) = −1 → negatif iş → enerji kaybı", "correct": true},
+                {"text": "Mesafe kısa olduğu için", "correct": false},
+                {"text": "Her zaman pozitiftir", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Yerçekiminin yaptığı iş ile potansiyel enerji değişimi ilişkisini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["yerçekimi", "iş"],
+              "explanation": "Yerçekiminin iş-potansiyel enerji ilişkisi.",
+              "options": [
+                {"text": "Cisim düşerken (aşağı)", "pairId": 1, "correct": false},
+                {"text": "Yerçekimi pozitif iş yapar → PE azalır, KE artar", "pairId": 1, "correct": false},
+                {"text": "Cisim kaldırılırken (yukarı)", "pairId": 2, "correct": false},
+                {"text": "Yerçekimi negatif iş yapar → PE artar, KE azalır", "pairId": 2, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Dairesel yörüngede dönen cisimde merkezcil kuvvet iş yapar mı?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["merkezcil kuvvet", "iş"],
+              "explanation": "Merkezcil kuvvet hareket yönüne (teğet) her zaman diktir (θ = 90°). W = F·d·cos(90°) = 0. İş yapmaz! Bu nedenle düzgün dairesel harekette sürat (kinetik enerji) değişmez.",
+              "options": [
+                {"text": "Evet, hızlandırır", "correct": false},
+                {"text": "Hayır, hareket yönüne dik olduğundan iş = 0 (sadece yön değiştirir)", "correct": true},
+                {"text": "Bazen yapar", "correct": false},
+                {"text": "Negatif iş yapar", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Kinetik ve Potansiyel Enerji",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Enerji türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["kinetik", "potansiyel"],
+              "explanation": "İki temel mekanik enerji türü.",
+              "options": [
+                {"text": "Kinetik enerji (KE = ½mv²)", "pairId": 1, "correct": false},
+                {"text": "Hareket enerjisi — hızın karesiyle orantılı", "pairId": 1, "correct": false},
+                {"text": "Yerçekimi potansiyel enerjisi (PE = mgh)", "pairId": 2, "correct": false},
+                {"text": "Konum (yükseklik) enerjisi — yükseklikle orantılı", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "3 kg cisim 4 m/s hızla gidiyorsa kinetik enerjisi ___ J'dır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["kinetik enerji", "hesaplama"],
+              "explanation": "KE = ½mv² = ½ × 3 × 16 = 24 J.",
+              "options": [
+                {"text": "24", "correct": true},
+                {"text": "12", "correct": false},
+                {"text": "48", "correct": false},
+                {"text": "6", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Hız 2 katına çıkarsa kinetik enerji kaç katına çıkar?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kinetik enerji", "hız"],
+              "explanation": "KE = ½mv². Hız 2 katına çıkarsa KE = ½m(2v)² = 4 × ½mv² → 4 katına çıkar. Bu nedenle araç hızı 2 katına çıkınca frenleme mesafesi 4 katına çıkar!",
+              "options": [
+                {"text": "2 katına", "correct": false},
+                {"text": "4 katına", "correct": true},
+                {"text": "8 katına", "correct": false},
+                {"text": "Değişmez", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "5 m yükseklikteki 2 kg cismin potansiyel enerjisi kaçtır? (g = 10 m/s²)",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["potansiyel enerji", "hesaplama"],
+              "explanation": "PE = mgh = 2 × 10 × 5 = 100 J.",
+              "options": [
+                {"text": "50 J", "correct": false},
+                {"text": "100 J", "correct": true},
+                {"text": "17 J", "correct": false},
+                {"text": "200 J", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Elastik (yay) potansiyel enerjisi formülü nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["yay", "enerji"],
+              "explanation": "PE_yay = ½kx². k: yay sabiti (N/m), x: uzama veya sıkışma miktarı (m). Sıkıştırılmış veya gerilmiş yayda depolanan enerji. Ok yayı, trambolin, şok emici bu prensibi kullanır.",
+              "options": [
+                {"text": "PE = kx", "correct": false},
+                {"text": "PE = ½kx²", "correct": true},
+                {"text": "PE = k²x", "correct": false},
+                {"text": "PE = 2kx²", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hız treni (roller coaster) en yüksek noktasında neden en yavaştır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["enerji dönüşümü"],
+              "explanation": "Enerji korunumu: KE + PE = sabit. Yükseklik artarsa PE artar → KE azalır → hız azalır. En yüksek noktada PE maksimum, KE minimum. Aşağı inerken PE → KE dönüşür → hız artar.",
+              "options": [
+                {"text": "Motor yavaşlatır", "correct": false},
+                {"text": "Yükseklik arttıkça PE artar, KE azalır → hız minimum", "correct": true},
+                {"text": "Hava direnci artar", "correct": false},
+                {"text": "Yer çekimi zayıflar", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Enerjinin Korunumu",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Mekanik enerjinin korunumu ne zaman geçerlidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["enerji korunumu", "koşul"],
+              "explanation": "KE + PE = sabit, yalnızca korutucu kuvvetler (yerçekimi, yay kuvveti) iş yaptığında geçerlidir. Sürtünme gibi korutucu olmayan kuvvetler mekanik enerjiyi ısıya dönüştürür.",
+              "options": [
+                {"text": "Her zaman", "correct": false},
+                {"text": "Sadece korutucu kuvvetler (yerçekimi, yay) iş yaptığında (sürtünme yoksa)", "correct": true},
+                {"text": "Sadece yatay harekette", "correct": false},
+                {"text": "Hiçbir zaman", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Enerjinin korunumu yasası ile mekanik enerjinin korunumu arasındaki farkı eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["korunum", "fark"],
+              "explanation": "İki farklı korunum yasası.",
+              "options": [
+                {"text": "Enerjinin korunumu yasası (genel)", "pairId": 1, "correct": false},
+                {"text": "Toplam enerji HER ZAMAN korunur (ısı dahil)", "pairId": 1, "correct": false},
+                {"text": "Mekanik enerjinin korunumu", "pairId": 2, "correct": false},
+                {"text": "KE + PE korunur, sadece sürtünme yoksa geçerli", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "20 m yükseklikten sürtünmesiz kaydıraktan kayan cismin alt noktadaki hızı ___ m/s'dir. (g = 10 m/s²)",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["enerji korunumu", "hesaplama"],
+              "explanation": "PE = KE → mgh = ½mv² → v = √(2gh) = √(2 × 10 × 20) = √400 = 20 m/s. Kütleden bağımsız!",
+              "options": [
+                {"text": "20", "correct": true},
+                {"text": "200", "correct": false},
+                {"text": "14,1", "correct": false},
+                {"text": "10", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Sarkaç (salıncak) hareket ederken enerji nasıl dönüşür?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["sarkaç", "enerji"],
+              "explanation": "Sarkaçta: En yüksek noktada PE max, KE = 0 (bir an durur). En alt noktada KE max, PE min (en hızlı). Sürekli PE ↔ KE dönüşümü olur. Sürtünme olmasa sonsuza kadar salınır.",
+              "options": [
+                {"text": "Enerji yoktur", "correct": false},
+                {"text": "En yüksekte PE max → en altta KE max (sürekli dönüşüm)", "correct": true},
+                {"text": "Hep PE", "correct": false},
+                {"text": "Hep KE", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Sürtünmeli yüzeyde 10 m/s'den durma mesafesi 25 m ise sürtünme katsayısı kaçtır? (g = 10 m/s²)",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["sürtünme", "enerji"],
+              "explanation": "KE = Sürtünme işi → ½mv² = μmgd → μ = v²/(2gd) = 100/(2 × 10 × 25) = 100/500 = 0,2.",
+              "options": [
+                {"text": "0,1", "correct": false},
+                {"text": "0,2", "correct": true},
+                {"text": "0,5", "correct": false},
+                {"text": "0,4", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Perpetual motion makinesi (sürekli hareket makinesi) neden imkânsızdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["perpetual motion"],
+              "explanation": "Termodinamiğin 1. ve 2. yasaları gereği: (1) Enerji yoktan var edilemez, (2) Her enerji dönüşümünde kaçınılmaz kayıp olur (sürtünme → ısı). Sonuçta tüm makine durur. Tarih boyunca tüm denemeler başarısız olmuştur.",
+              "options": [
+                {"text": "Teknoloji yeterli değil", "correct": false},
+                {"text": "Enerji yoktan var edilemez ve her dönüşümde kayıp olur (termodinamik yasaları)", "correct": true},
+                {"text": "Malzeme bulunamıyor", "correct": false},
+                {"text": "Aslında mümkündür", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Güç",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Güç nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["güç", "tanım"],
+              "explanation": "Güç, birim zamanda yapılan iştir: P = W/t. Birimi Watt (W). 1 W = 1 J/s. Aynı işi daha kısa sürede yapan daha güçlüdür.",
+              "options": [
+                {"text": "Kuvvet × Mesafe", "correct": false},
+                {"text": "Birim zamanda yapılan iş (P = W/t), birimi Watt", "correct": true},
+                {"text": "Kütle × İvme", "correct": false},
+                {"text": "Enerji × Süre", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Güç formüllerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["güç", "formüller"],
+              "explanation": "Güç farklı şekillerde ifade edilebilir.",
+              "options": [
+                {"text": "P = W/t", "pairId": 1, "correct": false},
+                {"text": "İş / Süre", "pairId": 1, "correct": false},
+                {"text": "P = F·v", "pairId": 2, "correct": false},
+                {"text": "Kuvvet × Hız (anlık güç)", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "500 N kuvvetle 20 m/s hızla giden aracın motor gücü ___ kW'tır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["güç", "hesaplama"],
+              "explanation": "P = F × v = 500 × 20 = 10.000 W = 10 kW.",
+              "options": [
+                {"text": "10", "correct": true},
+                {"text": "520", "correct": false},
+                {"text": "25", "correct": false},
+                {"text": "100", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "1 beygir gücü (HP) kaç Watt'tır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["beygir gücü"],
+              "explanation": "1 HP (horse power) ≈ 746 Watt ≈ 0,746 kW. James Watt tarafından tanımlandı. 100 HP'lik araba motoru ≈ 74,6 kW güç üretir.",
+              "options": [
+                {"text": "100 W", "correct": false},
+                {"text": "746 W", "correct": true},
+                {"text": "1000 W", "correct": false},
+                {"text": "500 W", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Verim (randıman) nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["verim"],
+              "explanation": "Verim = Yararlı enerji çıkışı / Toplam enerji girişi × 100%. Her zaman %100'den küçüktür (enerji kaybı nedeniyle). Otomobil motoru ≈ %25-30, LED ampul ≈ %40-50, elektrik motoru ≈ %85-95.",
+              "options": [
+                {"text": "Güç × Süre", "correct": false},
+                {"text": "Yararlı çıkış / Toplam giriş × 100% (her zaman < %100)", "correct": true},
+                {"text": "Hız / Kuvvet", "correct": false},
+                {"text": "Her zaman %100", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Neden elektrik motorları benzinli motorlardan daha verimlidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["verim", "karşılaştırma"],
+              "explanation": "Elektrik motoru: %85-95 verimli (az ısı kaybı). Benzinli motor: %25-30 verimli (enerjinin çoğu ısıya dönüşür). Elektrikli araçlar bu nedenle daha az enerji tüketir ve frenleme enerjisini geri kazanabilir.",
+              "options": [
+                {"text": "Daha ucuz oldukları için", "correct": false},
+                {"text": "Daha az ısı kaybı (%85-95 verim vs %25-30) ve rejeneratif frenleme", "correct": true},
+                {"text": "Daha güçlü oldukları için", "correct": false},
+                {"text": "Daha hafif oldukları için", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Enerji Dönüşümleri ve Günlük Hayat",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Enerji dönüşüm zincirlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["enerji dönüşümü"],
+              "explanation": "Günlük hayatta enerji sürekli dönüşür.",
+              "options": [
+                {"text": "Güneş paneli", "pairId": 1, "correct": false},
+                {"text": "Işık → Elektrik", "pairId": 1, "correct": false},
+                {"text": "Hidroelektrik santral", "pairId": 2, "correct": false},
+                {"text": "Potansiyel → Kinetik → Elektrik", "pairId": 2, "correct": false},
+                {"text": "İnsan vücudu", "pairId": 3, "correct": false},
+                {"text": "Kimyasal → Kinetik + Isı", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Enerji kaynakları türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["yenilenebilir", "tükenebilir"],
+              "explanation": "Enerji kaynakları iki ana gruba ayrılır.",
+              "options": [
+                {"text": "Güneş, rüzgâr, hidroelektrik", "pairId": 1, "correct": false},
+                {"text": "Yenilenebilir (tükenmez)", "pairId": 1, "correct": false},
+                {"text": "Kömür, petrol, doğal gaz", "pairId": 2, "correct": false},
+                {"text": "Fosil yakıt (tükenebilir)", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Arabada fren yaparken kinetik enerji nereye gider?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["frenleme", "enerji"],
+              "explanation": "Fren balatası ile disk arasındaki sürtünme kinetik enerjiyi ısı enerjisine dönüştürür. Bu nedenle frenler ısınır. Elektrikli araçlarda rejeneratif frenleme kinetik enerjiyi tekrar elektriğe çevirir.",
+              "options": [
+                {"text": "Yok olur", "correct": false},
+                {"text": "Sürtünmeyle ısı enerjisine dönüşür (frenler ısınır)", "correct": true},
+                {"text": "Potansiyel enerjiye dönüşür", "correct": false},
+                {"text": "Ses enerjisine dönüşür", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Rüzgâr türbininin verimi neden %100 olamaz?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["rüzgâr", "betz limiti"],
+              "explanation": "Betz limiti: Rüzgâr türbini rüzgâr enerjisinin en fazla %59,3'ünü elektriğe dönüştürebilir. Rüzgârın tamamen durdurulması fiziksel olarak imkânsızdır (hava akışı devam etmelidir). Pratikte verim %35-45.",
+              "options": [
+                {"text": "Malzeme kalitesi", "correct": false},
+                {"text": "Betz limiti: rüzgâr tamamen durdurulamaz, maksimum %59,3 dönüştürülebilir", "correct": true},
+                {"text": "Rüzgâr yetersiz", "correct": false},
+                {"text": "Teknoloji yeterli değil", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "İnsan vücudu günde yaklaşık ___ kcal enerji harcar.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["kalori", "insan"],
+              "explanation": "Ortalama bir yetişkin günde yaklaşık 2000-2500 kcal (8400-10.500 kJ) enerji harcar. Bazal metabolizma (organ çalışması) ≈ %70, fiziksel aktivite ≈ %20, sindirim ≈ %10.",
+              "options": [
+                {"text": "2000", "correct": true},
+                {"text": "100", "correct": false},
+                {"text": "50000", "correct": false},
+                {"text": "500", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Enerji verimliliği neden hem ekonomik hem çevresel açıdan önemlidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["verimlilik", "çevre"],
+              "explanation": "Yüksek verimlilik: (1) Daha az yakıt tüketimi → maliyet azalır, (2) Daha az CO₂ salınımı → iklim değişikliği yavaşlar, (3) Kaynaklar daha uzun süre yeter. LED ampul %40-50 verimli iken akkor ampul sadece %5 verimlidir.",
+              "options": [
+                {"text": "Sadece ekonomik", "correct": false},
+                {"text": "Daha az tüketim, daha az emisyon, daha az maliyet — herkes için kazanç", "correct": true},
+                {"text": "Sadece çevresel", "correct": false},
+                {"text": "Önemli değildir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

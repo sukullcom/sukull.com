@@ -1,0 +1,2307 @@
+{
+  "course": {
+    "title": "12. Sınıf Fizik",
+    "imageSrc": ""
+  },
+  "units": [
+    {
+      "title": "Basit Harmonik Hareket",
+      "description": "Yay-kütle sistemi, basit sarkaç, SHM formülleri, enerji dönüşümü, rezonans (MEB 2025-2026)",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "Basit Harmonik Hareket Temelleri",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Basit harmonik hareket (BHH) nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["BHH", "tanım"],
+              "explanation": "BHH, bir cismin denge noktası etrafında periyodik olarak ileri-geri hareket etmesidir. Geri çağırıcı kuvvet yer değiştirmeyle orantılıdır ve denge noktasına doğrudur: F = -kx.",
+              "options": [
+                {"text": "Sabit hızla doğrusal hareket", "correct": false},
+                {"text": "Denge noktası etrafında periyodik hareket, geri çağırıcı kuvvet F = -kx", "correct": true},
+                {"text": "Dairesel hareket", "correct": false},
+                {"text": "Düzensiz titreşim", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "BHH terimlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["BHH", "terimler"],
+              "explanation": "Basit harmonik hareketin temel kavramları.",
+              "options": [
+                {"text": "Genlik (A)", "pairId": 1, "correct": false},
+                {"text": "Denge noktasından maksimum uzaklık", "pairId": 1, "correct": false},
+                {"text": "Periyot (T)", "pairId": 2, "correct": false},
+                {"text": "Bir tam salınım süresi", "pairId": 2, "correct": false},
+                {"text": "Frekans (f)", "pairId": 3, "correct": false},
+                {"text": "Birim zamandaki salınım sayısı (f = 1/T)", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "BHH'de geri çağırıcı kuvvet neden önemlidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["geri çağırıcı kuvvet"],
+              "explanation": "Geri çağırıcı kuvvet (F = -kx), cismi her zaman denge noktasına doğru çeker. Yer değiştirme arttıkça kuvvet artar. Bu orantı salınımın sinüzoidal (harmonik) olmasını sağlar.",
+              "options": [
+                {"text": "Cismi hızlandırır", "correct": false},
+                {"text": "Cismi denge noktasına doğru çeker, yer değiştirmeyle orantılıdır → sinüzoidal hareket", "correct": true},
+                {"text": "Sürtünmeyi ortadan kaldırır", "correct": false},
+                {"text": "Sadece yay sistemlerinde var", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "BHH'de hız ve ivme denge noktasında nasıldır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["hız", "ivme", "denge"],
+              "explanation": "Denge noktasında: yer değiştirme = 0, kuvvet = 0, ivme = 0, hız = maksimum. Uç noktalarda ise tam tersi: hız = 0, ivme ve kuvvet = maksimum.",
+              "options": [
+                {"text": "Hız = 0, ivme = maks", "correct": false},
+                {"text": "Hız = maks, ivme = 0", "correct": true},
+                {"text": "İkisi de sıfır", "correct": false},
+                {"text": "İkisi de maksimum", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "BHH örneklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["BHH", "örnekler"],
+              "explanation": "Günlük hayatta basit harmonik hareket örnekleri.",
+              "options": [
+                {"text": "Yaya asılı kütle", "pairId": 1, "correct": false},
+                {"text": "Yukarı-aşağı salınım", "pairId": 1, "correct": false},
+                {"text": "Basit sarkaç (küçük açı)", "pairId": 2, "correct": false},
+                {"text": "İleri-geri sallanma", "pairId": 2, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "BHH'de yer değiştirme-zaman grafiği ___ fonksiyonudur.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["grafik", "sinüs"],
+              "explanation": "x(t) = A·sin(ωt + φ) veya x(t) = A·cos(ωt + φ). Grafik sinüs veya kosinüs eğrisidir. A: genlik, ω: açısal frekans, φ: başlangıç fazı.",
+              "options": [
+                {"text": "sinüs (veya kosinüs)", "correct": true},
+                {"text": "doğrusal", "correct": false},
+                {"text": "parabol", "correct": false},
+                {"text": "üstel", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Yay-Kütle Sistemi",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Yay-kütle sisteminin periyot formülü nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["yay", "periyot"],
+              "explanation": "T = 2π√(m/k). m: kütle, k: yay sabiti. Periyot genliğe bağlı DEĞİLDİR. Kütle artarsa periyot artar (yavaşlar), yay sertleşirse periyot azalır (hızlanır).",
+              "options": [
+                {"text": "T = 2π√(k/m)", "correct": false},
+                {"text": "T = 2π√(m/k)", "correct": true},
+                {"text": "T = 2πmk", "correct": false},
+                {"text": "T = m/k", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Hooke yasasını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["hooke", "yay"],
+              "explanation": "Hooke yasası yay kuvvetini tanımlar.",
+              "options": [
+                {"text": "F = -kx", "pairId": 1, "correct": false},
+                {"text": "Yay kuvveti = -(yay sabiti × uzama)", "pairId": 1, "correct": false},
+                {"text": "Yay sabiti (k) büyükse", "pairId": 2, "correct": false},
+                {"text": "Yay sert → aynı uzama için daha fazla kuvvet gerekir", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Yay sabiti 200 N/m ve kütle 0,5 kg ise periyot yaklaşık ___ s'dir. (π ≈ 3,14)",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["periyot", "hesaplama"],
+              "explanation": "T = 2π√(m/k) = 2 × 3,14 × √(0,5/200) = 6,28 × √0,0025 = 6,28 × 0,05 = 0,314 ≈ 0,31 s.",
+              "options": [
+                {"text": "0,31", "correct": true},
+                {"text": "3,14", "correct": false},
+                {"text": "1", "correct": false},
+                {"text": "6,28", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Yay-kütle sisteminde genlik artarsa periyot nasıl değişir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["genlik", "periyot"],
+              "explanation": "Periyot genlikten bağımsızdır! T = 2π√(m/k) formülünde genlik (A) yoktur. Büyük veya küçük salınımda periyot aynıdır. Bu BHH'nin önemli bir özelliğidir.",
+              "options": [
+                {"text": "Artar", "correct": false},
+                {"text": "Değişmez (periyot genlikten bağımsız)", "correct": true},
+                {"text": "Azalır", "correct": false},
+                {"text": "İki katına çıkar", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Seri bağlı iki yayın eşdeğer yay sabiti nasıl hesaplanır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["seri yay"],
+              "explanation": "Seri: 1/k_eş = 1/k₁ + 1/k₂. Eşdeğer yay daha yumuşak (k_eş < en küçük k). Paralel: k_eş = k₁ + k₂ (daha sert). Dirençlerin seri/paralel hesabına benzer.",
+              "options": [
+                {"text": "k_eş = k₁ + k₂", "correct": false},
+                {"text": "1/k_eş = 1/k₁ + 1/k₂ (eşdeğer daha yumuşak)", "correct": true},
+                {"text": "k_eş = k₁ × k₂", "correct": false},
+                {"text": "k_eş = k₁ − k₂", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Araba süspansiyonları hangi fizik prensibini kullanır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["süspansiyon", "sönümleme"],
+              "explanation": "Süspansiyon yay-amortisör sistemidir. Yay darbeleri soğurur (enerji depolar), amortisör salınımı sönümler (enerji ısıya çevirir). Sönümsüz yay sonsuza kadar salınırdı.",
+              "options": [
+                {"text": "Manyetik levitasyon", "correct": false},
+                {"text": "Yay (enerji depolama) + amortisör (sönümleme) birleşimi", "correct": true},
+                {"text": "Hava basıncı", "correct": false},
+                {"text": "Sürtünme", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Basit Sarkaç",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Basit sarkaç periyot formülü nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["sarkaç", "periyot"],
+              "explanation": "T = 2π√(L/g). L: ip uzunluğu, g: yerçekimi ivmesi. Periyot kütleye ve genliğe (küçük açılarda) bağlı DEĞİLDİR. Sadece ip uzunluğuna ve yerçekimine bağlıdır.",
+              "options": [
+                {"text": "T = 2π√(g/L)", "correct": false},
+                {"text": "T = 2π√(L/g)", "correct": true},
+                {"text": "T = 2πLg", "correct": false},
+                {"text": "T = 2π√(m/g)", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Sarkaç periyodunu etkileyen ve etkilemeyen faktörleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["sarkaç", "faktörler"],
+              "explanation": "Basit sarkaçta periyodu belirleyen faktörler.",
+              "options": [
+                {"text": "İp uzunluğu (L) artarsa", "pairId": 1, "correct": false},
+                {"text": "Periyot artar (daha yavaş salınır)", "pairId": 1, "correct": false},
+                {"text": "Kütle değişirse", "pairId": 2, "correct": false},
+                {"text": "Periyot DEĞİŞMEZ", "pairId": 2, "correct": false},
+                {"text": "Yerçekimi (g) artarsa", "pairId": 3, "correct": false},
+                {"text": "Periyot azalır (daha hızlı salınır)", "pairId": 3, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "1 m uzunluğundaki sarkacın periyodu yaklaşık ___ s'dir. (g = 10 m/s², π² ≈ 10)",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["sarkaç", "hesaplama"],
+              "explanation": "T = 2π√(L/g) = 2π√(1/10) = 2π × 0,316 ≈ 2 s. (π² ≈ 10 kullanılırsa T ≈ 2 s).",
+              "options": [
+                {"text": "2", "correct": true},
+                {"text": "1", "correct": false},
+                {"text": "3,14", "correct": false},
+                {"text": "0,5", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Galileo sarkaçın hangi özelliğini keşfetti?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["galileo", "sarkaç"],
+              "explanation": "Galileo (efsaneye göre katedralden sallanan avizeyi gözlemleyerek) sarkacın eş zamanlılık özelliğini keşfetti: periyot genlikten bağımsızdır (küçük açılarda). Bu keşif saatlerin gelişimine öncülük etti.",
+              "options": [
+                {"text": "Yerçekimi", "correct": false},
+                {"text": "Periyodun genlikten bağımsız olduğu (eş zamanlılık)", "correct": true},
+                {"text": "Kütlenin etkisi", "correct": false},
+                {"text": "Hava direnci", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Sarkaçlı saat yüksek bir dağa çıkarılırsa ne olur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["sarkaç", "yerçekimi"],
+              "explanation": "Yükseklikte g azalır → T = 2π√(L/g) artar → sarkaç daha yavaş salınır → saat geri kalır. Tersine, kutuplarda g büyüktür → periyot kısa → saat ileri gider.",
+              "options": [
+                {"text": "Değişmez", "correct": false},
+                {"text": "g azalır → periyot artar → saat geri kalır (yavaşlar)", "correct": true},
+                {"text": "Saat ileri gider", "correct": false},
+                {"text": "Sarkaç durur", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Foucault sarkacı neyi kanıtlar?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["foucault", "dünya dönüşü"],
+              "explanation": "Foucault sarkacı (1851, Paris), Dünya'nın kendi ekseni etrafında döndüğünü deneysel olarak kanıtlar. Sarkaç sabit düzlemde salınırken Dünya altında döner → salınım düzlemi yavaşça kayar.",
+              "options": [
+                {"text": "Yerçekimini", "correct": false},
+                {"text": "Dünya'nın kendi ekseni etrafında döndüğünü", "correct": true},
+                {"text": "Hava direncini", "correct": false},
+                {"text": "Manyetik alanı", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "BHH'de Enerji",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "BHH'de enerji türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["BHH", "enerji"],
+              "explanation": "BHH'de kinetik ve potansiyel enerji sürekli dönüşür.",
+              "options": [
+                {"text": "Denge noktasında (x = 0)", "pairId": 1, "correct": false},
+                {"text": "KE = maks, PE = 0, hız maks", "pairId": 1, "correct": false},
+                {"text": "Uç noktada (x = ±A)", "pairId": 2, "correct": false},
+                {"text": "PE = maks, KE = 0, hız = 0", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "BHH'de toplam mekanik enerji formülü nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["toplam enerji"],
+              "explanation": "E = ½kA². Toplam enerji genliğin karesiyle orantılıdır ve sabittir (korunur). Her noktada E = KE + PE = ½mv² + ½kx² = ½kA² = sabit.",
+              "options": [
+                {"text": "E = kA", "correct": false},
+                {"text": "E = ½kA² (genliğin karesiyle orantılı, sabit)", "correct": true},
+                {"text": "E = ½mA²", "correct": false},
+                {"text": "E = kA²", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "BHH'de genlik 2 katına çıkarılırsa toplam enerji ___ katına çıkar.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["enerji", "genlik"],
+              "explanation": "E = ½kA². Genlik 2A olursa: E' = ½k(2A)² = 4 × ½kA² = 4E. Enerji genliğin karesiyle orantılı.",
+              "options": [
+                {"text": "4", "correct": true},
+                {"text": "2", "correct": false},
+                {"text": "8", "correct": false},
+                {"text": "1", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "BHH'de KE ve PE grafiklerinin şekli nasıldır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["grafik", "enerji"],
+              "explanation": "KE ve PE, konuma göre parabolik (x²) grafikler çizer. KE denge noktasında maks, uçlarda sıfır; PE tam tersi. Toplamları her noktada sabittir. Zamana göre ise sinüs kare şeklindedir.",
+              "options": [
+                {"text": "Doğrusal", "correct": false},
+                {"text": "Konuma göre parabolik, zamana göre sinüs kare; toplamları sabit", "correct": true},
+                {"text": "Sabit çizgi", "correct": false},
+                {"text": "Üstel", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Sönümlü BHH'de ne olur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sönümleme"],
+              "explanation": "Sönümlü BHH'de sürtünme veya direnç nedeniyle enerji yavaş yavaş ısıya dönüşür. Genlik zamanla azalır → salınım zayıflar ve sonunda durur. Amortisör sönümlü BHH örneğidir.",
+              "options": [
+                {"text": "Genlik artar", "correct": false},
+                {"text": "Enerji kaybıyla genlik azalır, salınım zamanla sönümlenir", "correct": true},
+                {"text": "Periyot artar", "correct": false},
+                {"text": "Hiçbir şey değişmez", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Zorlanmış salınım ve rezonans ilişkisini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["rezonans", "zorlanmış"],
+              "explanation": "Zorlanmış salınım ve rezonans kavramları.",
+              "options": [
+                {"text": "Zorlanmış salınım", "pairId": 1, "correct": false},
+                {"text": "Dış periyodik kuvvetle sürdürülen salınım", "pairId": 1, "correct": false},
+                {"text": "Rezonans", "pairId": 2, "correct": false},
+                {"text": "Dış kuvvet frekansı = doğal frekans → genlik maksimum", "pairId": 2, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "BHH Uygulamaları",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Depremde binaların sallanması hangi kavramla açıklanır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["deprem", "rezonans"],
+              "explanation": "Deprem dalgası binanın doğal frekansıyla örtüşürse rezonans oluşur → genlik aşırı artar → çökme riski. Deprem mühendisliğinde binaların doğal frekansı deprem frekanslarından uzak tutulur.",
+              "options": [
+                {"text": "Sürtünme", "correct": false},
+                {"text": "Rezonans — deprem frekansı binanın doğal frekansıyla örtüşürse yıkım", "correct": true},
+                {"text": "Yerçekimi artışı", "correct": false},
+                {"text": "Manyetik alan", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kuvars saatleri BHH'yi nasıl kullanır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kuvars", "saat"],
+              "explanation": "Kuvars kristali elektrik uygulandığında sabit frekansta (32.768 Hz) titreşir (piezoelektrik etki). Bu çok kararlı BHH, zamanı hassas ölçmek için kullanılır. Saniyede milyonda bir hata.",
+              "options": [
+                {"text": "Yay mekanizmasıyla", "correct": false},
+                {"text": "Kuvars kristalin sabit frekansta titreşmesiyle (piezoelektrik BHH)", "correct": true},
+                {"text": "Sarkaçla", "correct": false},
+                {"text": "Pillerin kimyasal enerjisiyle", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Müzikte hangi BHH örnekleri vardır?",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["müzik", "BHH"],
+              "explanation": "Müzik aletlerinde BHH yaygındır.",
+              "options": [
+                {"text": "Gitar teli", "pairId": 1, "correct": false},
+                {"text": "Gergin telin titreşimi → ses üretir", "pairId": 1, "correct": false},
+                {"text": "Diyapazon (çatal)", "pairId": 2, "correct": false},
+                {"text": "Metal çatalın sabit frekansta titreşimi → referans tonu", "pairId": 2, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Tacoma Narrows Köprüsü neden yıkıldı (1940)?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["tacoma", "rezonans"],
+              "explanation": "Rüzgâr, köprünün doğal frekansına yakın frekansta titreşim oluşturdu → rezonans → genlik kontrolsüz arttı → köprü çöktü. Bu olay rezonansın tehlikelerini gösteren en ünlü örnektir.",
+              "options": [
+                {"text": "Malzeme hatası", "correct": false},
+                {"text": "Rüzgârın rezonans oluşturması — genlik kontrolsüz arttı", "correct": true},
+                {"text": "Deprem", "correct": false},
+                {"text": "Aşırı yük", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "MRI cihazı hangi salınım prensibini kullanır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["MRI", "rezonans"],
+              "explanation": "MRI (Manyetik Rezonans Görüntüleme): Güçlü manyetik alanda hidrojen atomlarının çekirdekleri belirli frekansta (Larmor frekansı) rezonansa sokulur. Geri yayılan sinyallerden detaylı vücut görüntüsü oluşturulur.",
+              "options": [
+                {"text": "X-ışını", "correct": false},
+                {"text": "Manyetik alanda atom çekirdeklerinin rezonansa sokulması", "correct": true},
+                {"text": "Ultrason", "correct": false},
+                {"text": "Lazer", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Sismograf deprem dalgalarını ___ prensibiyle ölçer.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["sismograf"],
+              "explanation": "Sismograf, eylemsizlik prensibini kullanır. Ağır bir kütle yaya asılıdır. Zemin sallanırken kütle hareketsiz kalır (eylemsizlik). Kütle ile zemin arasındaki bağıl hareket kaydedilir.",
+              "options": [
+                {"text": "eylemsizlik", "correct": true},
+                {"text": "rezonans", "correct": false},
+                {"text": "sürtünme", "correct": false},
+                {"text": "manyetizma", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Dalga Optiği",
+      "description": "Kırınım, girişim, Young deneyi, polarizasyon, ince film girişimi (MEB 2025-2026)",
+      "order": 2,
+      "lessons": [
+        {
+          "title": "Tek Yarık Kırınımı",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Kırınım nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kırınım"],
+              "explanation": "Kırınım, dalganın engel veya yarıktan geçerken bükülüp yayılmasıdır. Dalga boyu yarık boyutuna yakınsa belirgin olur. Işık, ses, su dalgaları kırınım yapar.",
+              "options": [
+                {"text": "Işığın yansıması", "correct": false},
+                {"text": "Dalganın engel/yarıktan geçerken bükülüp yayılması", "correct": true},
+                {"text": "Işığın soğurulması", "correct": false},
+                {"text": "Işığın hızlanması", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Tek yarık kırınımı desenini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["tek yarık", "desen"],
+              "explanation": "Tek yarık kırınımında oluşan desen.",
+              "options": [
+                {"text": "Merkez şeridi", "pairId": 1, "correct": false},
+                {"text": "En parlak ve en geniş (diğerlerinin 2 katı)", "pairId": 1, "correct": false},
+                {"text": "Yan şeritler", "pairId": 2, "correct": false},
+                {"text": "Giderek zayıflayan parlak-karanlık çizgiler", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Kırınımın belirgin olması için dalga boyu yarık genişliğine göre nasıl olmalıdır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kırınım koşulu"],
+              "explanation": "Kırınım, dalga boyu (λ) yarık genişliğine (a) yakın veya büyük olduğunda belirgindir. λ << a ise dalga düz geçer (gölge oluşur). Bu nedenle ses kolayca köşeleri döner (λ büyük) ama ışık zor döner (λ çok küçük).",
+              "options": [
+                {"text": "Dalga boyu çok küçük olmalı", "correct": false},
+                {"text": "Dalga boyu yarık genişliğine yakın veya büyük olmalı", "correct": true},
+                {"text": "Dalga boyu sıfır olmalı", "correct": false},
+                {"text": "İlişkisizdir", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Neden ses köşeleri kolayca döner ama ışık dönemez?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ses", "ışık", "kırınım"],
+              "explanation": "Sesin dalga boyu büyük (cm-m), engeller küçük → belirgin kırınım → köşeleri döner. Işığın dalga boyu çok küçük (nm), engeller büyük → kırınım ihmal edilir → düz gider, gölge oluşur.",
+              "options": [
+                {"text": "Ses daha güçlü", "correct": false},
+                {"text": "Sesin dalga boyu büyük (belirgin kırınım), ışığın dalga boyu çok küçük", "correct": true},
+                {"text": "Işık daha hızlı", "correct": false},
+                {"text": "Ses gaz, ışık dalga", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "CD/DVD yüzeyindeki renkler ___ olayından kaynaklanır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["CD", "kırınım"],
+              "explanation": "CD/DVD yüzeyindeki paralel çizgiler (izler) kırınım ızgarası gibi davranır. Beyaz ışık farklı dalga boylarına (renklere) ayrılır → gökkuşağı benzeri renkler görülür.",
+              "options": [
+                {"text": "kırınım", "correct": true},
+                {"text": "yansıma", "correct": false},
+                {"text": "soğurma", "correct": false},
+                {"text": "kırılma", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Kırınım ızgarası ne işe yarar?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kırınım ızgarası"],
+              "explanation": "Kırınım ızgarası: Çok sayıda paralel yarıktan oluşur. Işığı dalga boylarına (renklere) ayırır. Prizmadan daha hassastır. Spektroskopide element analizi, astronomi ve lazer teknolojisinde kullanılır.",
+              "options": [
+                {"text": "Işığı büyütür", "correct": false},
+                {"text": "Işığı dalga boylarına (renklere) hassas şekilde ayırır", "correct": true},
+                {"text": "Işığı durdurur", "correct": false},
+                {"text": "Işığı yansıtır", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Çift Yarık Girişimi (Young Deneyi)",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Young'un çift yarık deneyinde ne gözlemlenir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["young", "girişim"],
+              "explanation": "Işık iki yarıktan geçtiğinde ekranda parlak ve karanlık şeritlerden oluşan girişim deseni gözlemlenir. Parlak çizgiler yapıcı girişim, karanlık çizgiler yıkıcı girişimden oluşur.",
+              "options": [
+                {"text": "İki parlak nokta", "correct": false},
+                {"text": "Parlak ve karanlık şeritlerden oluşan girişim deseni", "correct": true},
+                {"text": "Tek parlak bölge", "correct": false},
+                {"text": "Hiçbir desen oluşmaz", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Yapıcı ve yıkıcı girişim koşullarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["girişim", "koşullar"],
+              "explanation": "Girişim koşulları yol farkına bağlıdır.",
+              "options": [
+                {"text": "Yapıcı (parlak)", "pairId": 1, "correct": false},
+                {"text": "Yol farkı = nλ (tam dalga boyu katı)", "pairId": 1, "correct": false},
+                {"text": "Yıkıcı (karanlık)", "pairId": 2, "correct": false},
+                {"text": "Yol farkı = (n+½)λ (yarım dalga boyu farkı)", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Girişim deseni şerit aralığı formülü: Δy = ___ ile hesaplanır.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["şerit aralığı"],
+              "explanation": "Δy = λL/d. λ: dalga boyu, L: yarıklardan ekrana mesafe, d: yarıklar arası mesafe. λ veya L artarsa → şeritler seyrekleşir. d artarsa → şeritler sıklaşır.",
+              "options": [
+                {"text": "λL/d", "correct": true},
+                {"text": "λd/L", "correct": false},
+                {"text": "Ld/λ", "correct": false},
+                {"text": "λ+L+d", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Young deneyi ışığın hangi özelliğini kanıtlar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["dalga doğası"],
+              "explanation": "Young deneyi, ışığın dalga doğasını kesin olarak kanıtlar. Sadece dalgalar girişim yapabilir. Newton'un parçacık modelini çürüttü. Dalga boyu ölçümü de bu deneyle yapılabilir.",
+              "options": [
+                {"text": "Parçacık doğası", "correct": false},
+                {"text": "Dalga doğası (sadece dalgalar girişim yapar)", "correct": true},
+                {"text": "Kütle doğası", "correct": false},
+                {"text": "Elektrik doğası", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Beyaz ışıkla Young deneyi yapılırsa ne gözlemlenir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["beyaz ışık", "girişim"],
+              "explanation": "Beyaz ışık birçok dalga boyundan oluşur. Her renk farklı aralıkta girişim deseni oluşturur. Merkez şerit beyazdır, yanlara doğru renkli (gökkuşağı) şeritler gözlemlenir.",
+              "options": [
+                {"text": "Sadece siyah-beyaz şeritler", "correct": false},
+                {"text": "Merkez beyaz, yanlarda renkli (gökkuşağı) şeritler", "correct": true},
+                {"text": "Hiçbir desen oluşmaz", "correct": false},
+                {"text": "Tek renk görülür", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Young deneyinde yarıklar arası mesafe azaltılırsa şerit aralığı nasıl değişir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["şerit aralığı", "mesafe"],
+              "explanation": "Δy = λL/d. d azalırsa → Δy artar → şeritler birbirinden uzaklaşır. Yarıklar birbirine yaklaştıkça girişim deseni genişler.",
+              "options": [
+                {"text": "Azalır", "correct": false},
+                {"text": "Artar (şeritler genişler)", "correct": true},
+                {"text": "Değişmez", "correct": false},
+                {"text": "Desen kaybolur", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "İnce Film Girişimi",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "İnce film girişimi nasıl oluşur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["ince film"],
+              "explanation": "Işık ince tabakaya (sabun, yağ) geldiğinde üst ve alt yüzeyden yansır. İki yansıyan ışın arasındaki yol farkına bağlı olarak yapıcı veya yıkıcı girişim oluşur → renkler görülür.",
+              "options": [
+                {"text": "Kırılma", "correct": false},
+                {"text": "Üst ve alt yüzeyden yansıyan ışıkların girişimi → renkli görüntü", "correct": true},
+                {"text": "Soğurma", "correct": false},
+                {"text": "Kırınım", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Sabun baloncuğunun renkleri nereden gelir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["sabun balonu", "renkler"],
+              "explanation": "Sabun filmi çok incedir. Farklı kalınlıklarda farklı dalga boyları (renkler) yapıcı girişim yapar. Film kalınlığı değiştikçe renkler de değişir — bu nedenle renkler hareket eder.",
+              "options": [
+                {"text": "Sabunun kimyasal rengi", "correct": false},
+                {"text": "İnce film girişimi — film kalınlığına göre farklı renkler güçlenir", "correct": true},
+                {"text": "Güneş ışığının kırılması", "correct": false},
+                {"text": "Hava kabarcıklarından", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Anti-yansıma kaplamalar hangi prensibi kullanır?",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["anti-yansıma"],
+              "explanation": "Anti-yansıma kaplama ince film girişimini kullanır.",
+              "options": [
+                {"text": "Kaplama kalınlığı = λ/4", "pairId": 1, "correct": false},
+                {"text": "Üst ve alt yansımalar yarım dalga farkla → yıkıcı girişim", "pairId": 1, "correct": false},
+                {"text": "Yıkıcı girişim sonucu", "pairId": 2, "correct": false},
+                {"text": "Yansıma sıfıra yaklaşır → daha fazla ışık geçer (gözlük, kamera)", "pairId": 2, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Su üzerindeki yağ tabakasının renkleri ___ girişiminden kaynaklanır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["yağ", "girişim"],
+              "explanation": "Yağ filmi su üzerinde ince tabaka oluşturur. Sabun filmiyle aynı prensiple ince film girişimi yaparak gökkuşağı benzeri renkler oluşturur.",
+              "options": [
+                {"text": "ince film", "correct": true},
+                {"text": "çift yarık", "correct": false},
+                {"text": "kırınım", "correct": false},
+                {"text": "polarizasyon", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Newton halkaları nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["newton halkaları"],
+              "explanation": "Bir tümsek mercek düz cam üzerine konduğunda aralarında kama şeklinde hava tabakası oluşur. Bu tabakada ince film girişimi → eş merkezli parlak ve karanlık halkalar (Newton halkaları) gözlenir.",
+              "options": [
+                {"text": "Yerçekimi halkaları", "correct": false},
+                {"text": "Mercek-cam arasındaki hava tabakasında ince film girişimi → eş merkezli halkalar", "correct": true},
+                {"text": "Manyetik alan çizgileri", "correct": false},
+                {"text": "Optik yanılsama", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Gözlük camlarındaki mor-yeşil yansıma nedendir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["gözlük", "kaplama"],
+              "explanation": "Anti-yansıma kaplama belirli dalga boylarında yıkıcı girişim yapar (yansımayı azaltır). Tam olarak ortadan kaldıramadığı dalga boylarında zayıf renkli yansıma kalır — mor veya yeşil tonları.",
+              "options": [
+                {"text": "Camın rengi", "correct": false},
+                {"text": "Anti-yansıma kaplamanın tam bastıramadığı dalga boylarının yansıması", "correct": true},
+                {"text": "Gözün yanılsaması", "correct": false},
+                {"text": "UV filtre", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Polarizasyon",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Polarizasyon nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["polarizasyon"],
+              "explanation": "Polarizasyon, enine dalganın titreşim yönünün tek bir düzlemle sınırlandırılmasıdır. Normal ışık her yöne titreşir (polarize değil). Polarize filtre tek yönde titreşen ışığı geçirir.",
+              "options": [
+                {"text": "Işığın renginin değişmesi", "correct": false},
+                {"text": "Işığın titreşim yönünün tek düzlemle sınırlandırılması", "correct": true},
+                {"text": "Işığın hızlanması", "correct": false},
+                {"text": "Işığın yansıması", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Polarizasyonun yalnızca enine dalgalarda olmasını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["enine", "boyuna"],
+              "explanation": "Polarizasyon sadece enine dalgalarda mümkündür.",
+              "options": [
+                {"text": "Enine dalga (ışık)", "pairId": 1, "correct": false},
+                {"text": "Titreşim hareket yönüne dik → polarize edilebilir", "pairId": 1, "correct": false},
+                {"text": "Boyuna dalga (ses)", "pairId": 2, "correct": false},
+                {"text": "Titreşim hareket yönünde → polarize edilemez", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Polarize güneş gözlüğü parlamayı nasıl azaltır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["güneş gözlüğü", "parlama"],
+              "explanation": "Yüzeylerden yansıyan ışık kısmen yatay polarize olur. Polarize gözlük dikey polarize ışığı geçirir, yatay polarize parlamayı engeller. Sürücüler ve balıkçılar için idealdir.",
+              "options": [
+                {"text": "Işığı karartır", "correct": false},
+                {"text": "Yatay polarize parlamayı engeller, dikey polarize ışığı geçirir", "correct": true},
+                {"text": "UV ışığı engeller", "correct": false},
+                {"text": "Tüm ışığı durdurur", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "İki polarize filtreyi çapraz koyarsak ne olur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["çapraz polarize"],
+              "explanation": "İlk filtre tek yönde polarize ışık geçirir. İkinci filtre buna dik yönde polarize ışığı geçirir. Dik yönlerde geçen ışık sıfırdır → tamamen karanlık. Malus yasası: I = I₀cos²(θ), θ = 90° → I = 0.",
+              "options": [
+                {"text": "Işık geçmez (tamamen karanlık)", "correct": true},
+                {"text": "Işık 2 katına çıkar", "correct": false},
+                {"text": "Renk değişir", "correct": false},
+                {"text": "Normal ışık geçer", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "3D sinema gözlükleri ___ prensibini kullanır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["3D sinema"],
+              "explanation": "3D sinemada iki farklı polarizasyonda görüntü aynı anda yansıtılır. Gözlüğün sol ve sağ camları farklı polarize filtre içerir. Her göz farklı görüntü alır → beyin 3D algılar.",
+              "options": [
+                {"text": "polarizasyon", "correct": true},
+                {"text": "kırınım", "correct": false},
+                {"text": "yansıma", "correct": false},
+                {"text": "girişim", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "LCD ekranlar polarizasyonu nasıl kullanır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["LCD", "polarizasyon"],
+              "explanation": "LCD: İki çapraz polarize filtre arasında sıvı kristal bulunur. Elektrik uygulanmadan kristal ışığı 90° döndürür → geçer (parlak). Elektrik uygulanınca dönme durur → engellenir (karanlık). Piksel bazlı kontrol → görüntü.",
+              "options": [
+                {"text": "LED ışık üretir", "correct": false},
+                {"text": "Sıvı kristal elektrikle polarizasyon düzlemini kontrol ederek piksel parlaklığını ayarlar", "correct": true},
+                {"text": "Kırınım ile görüntü oluşturur", "correct": false},
+                {"text": "Girişim ile renk üretir", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Dalga Optiği Uygulamaları",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Optik çözünürlük sınırını belirleyen faktörü eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["çözünürlük", "kırınım"],
+              "explanation": "Optik aletlerin çözünürlüğünü kırınım sınırlar.",
+              "options": [
+                {"text": "Kırınım sınırı (Rayleigh kriteri)", "pairId": 1, "correct": false},
+                {"text": "Mercek açıklığı küçükse kırınım artar → çözünürlük düşer", "pairId": 1, "correct": false},
+                {"text": "Büyük teleskop merceği/aynası", "pairId": 2, "correct": false},
+                {"text": "Daha az kırınım → daha yüksek çözünürlük (daha ince detay)", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Hologram hangi dalga olaylarını birleştirir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["hologram"],
+              "explanation": "Hologram: lazer ışığının girişim desenini kaydeder. Girişim + kırınım birleşir. Aydınlatıldığında kırınım sayesinde 3D görüntü yeniden oluşur. Güvenlik etiketlerinde (banknot, kredi kartı) kullanılır.",
+              "options": [
+                {"text": "Sadece yansıma", "correct": false},
+                {"text": "Girişim (kayıt) + kırınım (geri oluşturma) birleşimi", "correct": true},
+                {"text": "Sadece kırılma", "correct": false},
+                {"text": "Elektromanyetik indüksiyon", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Neden gökyüzü mavi, gün batımı kırmızıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["rayleigh saçılması"],
+              "explanation": "Rayleigh saçılması: Kısa dalga boylu (mavi) ışık atmosfer molekülleri tarafından daha çok saçılır (∝ 1/λ⁴). Gündüz gökyüzü mavi görünür. Gün batımında ışık uzun yol kat eder → mavi saçılır, kırmızı kalır.",
+              "options": [
+                {"text": "Ozon tabakası", "correct": false},
+                {"text": "Rayleigh saçılması — kısa dalga boylu mavi ışık daha çok saçılır", "correct": true},
+                {"text": "Denizin yansıması", "correct": false},
+                {"text": "Güneşin rengi", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Fiber optik kablolarda ışık nasıl iletilir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["fiber optik"],
+              "explanation": "Fiber optik kablolarda ışık cam lifin içinde tam iç yansıma ile ilerler. Çok uzak mesafelere çok hızlı ve kayıpsız veri iletimi sağlar. İnternetin omurgasını oluşturur.",
+              "options": [
+                {"text": "Elektrik akımıyla", "correct": false},
+                {"text": "Tam iç yansıma ile cam lif boyunca", "correct": true},
+                {"text": "Kırınımla", "correct": false},
+                {"text": "Manyetik alanla", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Elmasın parlaklığı ve renkliliği ___ sayesindedir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["elmas", "dispersiyon"],
+              "explanation": "Elmasın yüksek kırılma indisi (2,42) tam iç yansımayı ve dispersiyonu (renklere ayrılma) artırır. Işık elmasta daha çok yansır ve renklere ayrılır → parlak ve göz alıcı.",
+              "options": [
+                {"text": "yüksek kırılma indisi ve dispersiyon", "correct": true},
+                {"text": "kimyasal bileşimi", "correct": false},
+                {"text": "manyetik özelliği", "correct": false},
+                {"text": "sıcaklığı", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Interferometre ne ölçer?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["interferometre"],
+              "explanation": "İnterferometre, ışık girişimi kullanarak çok küçük mesafe, kalınlık ve kırılma indisi değişimlerini ölçer. LIGO interferometresi yerçekimi dalgalarını tespit etti (2015). Mikrometer altı hassasiyetle çalışır.",
+              "options": [
+                {"text": "Sıcaklık", "correct": false},
+                {"text": "Işık girişimi ile çok küçük mesafe ve değişimleri (yerçekimi dalgaları dahil)", "correct": true},
+                {"text": "Ses hızı", "correct": false},
+                {"text": "Elektrik akımı", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Atom Fiziği ve Kuantum",
+      "description": "Fotoelektrik etki, Compton saçılması, de Broglie dalgaları, Heisenberg belirsizlik ilkesi (MEB 2025-2026)",
+      "order": 3,
+      "lessons": [
+        {
+          "title": "Fotoelektrik Etki — İleri",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Fotoelektrik etkinin temel ilkesini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["fotoelektrik", "ilke"],
+              "explanation": "Fotoelektrik etkinin temel bileşenleri.",
+              "options": [
+                {"text": "Foton enerjisi (E = hf)", "pairId": 1, "correct": false},
+                {"text": "Işığın frekansına bağlı enerji paketi", "pairId": 1, "correct": false},
+                {"text": "İş fonksiyonu (φ)", "pairId": 2, "correct": false},
+                {"text": "Elektronu metalden koparmak için gereken minimum enerji", "pairId": 2, "correct": false},
+                {"text": "KE_max = hf − φ", "pairId": 3, "correct": false},
+                {"text": "Koparılan elektronun maksimum kinetik enerjisi", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Neden ışığın şiddeti artırılarak elektron koparılamaz (eşik frekansı altında)?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["eşik frekansı"],
+              "explanation": "Her foton belirli enerjiye sahiptir (E = hf). Frekans eşik değerinin altındaysa foton enerjisi yetersizdir. Şiddet artırmak sadece foton sayısını artırır, her bir fotonun enerjisini artırmaz.",
+              "options": [
+                {"text": "Metal çok sert olduğu için", "correct": false},
+                {"text": "Her fotonun enerjisi frekansa bağlı — şiddet yalnızca foton sayısını artırır, enerjiyi değil", "correct": true},
+                {"text": "Isı ürettiği için", "correct": false},
+                {"text": "Işık yansıdığı için", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Planck sabiti (h) değeri yaklaşık ___ J·s'dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["planck sabiti"],
+              "explanation": "h = 6,63 × 10⁻³⁴ J·s. Kuantum fiziğinin temel sabitidir. Çok küçük olması kuantum etkilerinin günlük ölçekte gözlenememesinin nedenidir.",
+              "options": [
+                {"text": "6,63 × 10⁻³⁴", "correct": true},
+                {"text": "3 × 10⁸", "correct": false},
+                {"text": "1,6 × 10⁻¹⁹", "correct": false},
+                {"text": "9,1 × 10⁻³¹", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Einstein fotoelektrik etkiyi açıklayarak neyi gösterdi?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["einstein", "foton"],
+              "explanation": "Einstein, ışığın sürekli dalga değil enerji paketleri (fotonlar) şeklinde geldiğini gösterdi. Her fotonun enerjisi E = hf. Bu keşifle 1921 Nobel Fizik Ödülü aldı. Kuantum fiziğinin temelini attı.",
+              "options": [
+                {"text": "Görelilik teorisini", "correct": false},
+                {"text": "Işığın enerji paketleri (fotonlar) şeklinde geldiğini → kuantum teorisi", "correct": true},
+                {"text": "Yerçekimini", "correct": false},
+                {"text": "Dalga denklemi", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Güneş paneli fotoelektrik etkiyi kullanarak hangi dönüşümü yapar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["güneş paneli"],
+              "explanation": "Güneş panelinde fotonlar yarı iletken malzemeye çarparak elektron-boşluk çifti oluşturur → elektrik akımı. Işık enerjisi → Elektrik enerjisi dönüşümü. Temiz ve yenilenebilir enerji kaynağı.",
+              "options": [
+                {"text": "Isı → Elektrik", "correct": false},
+                {"text": "Işık → Elektrik (fotonlar elektron koparır)", "correct": true},
+                {"text": "Kimyasal → Elektrik", "correct": false},
+                {"text": "Hareket → Elektrik", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Fotoelektrik etkinin uygulamalarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["fotoelektrik", "uygulamalar"],
+              "explanation": "Fotoelektrik etki birçok teknolojide kullanılır.",
+              "options": [
+                {"text": "Fotosel (ışık sensörü)", "pairId": 1, "correct": false},
+                {"text": "Sokak lambalarının otomatik açılıp kapanması", "pairId": 1, "correct": false},
+                {"text": "Dijital kamera sensörü", "pairId": 2, "correct": false},
+                {"text": "Fotonları elektrik sinyaline çevirip görüntü oluşturma", "pairId": 2, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Compton Saçılması ve Foton Momentumu",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Compton saçılması nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["compton"],
+              "explanation": "Compton saçılması: X-ışını fotonu serbest elektronla çarpışır. Foton enerji ve momentum kaybeder (dalga boyu uzar), elektron geri teper. Bu, fotonun parçacık gibi momentuma sahip olduğunu kanıtlar.",
+              "options": [
+                {"text": "Işığın yansıması", "correct": false},
+                {"text": "Fotonun elektronla çarpışıp dalga boyu uzaması (fotonun momentumu var)", "correct": true},
+                {"text": "Elektronun ışık yayması", "correct": false},
+                {"text": "Atom çekirdeğinin parçalanması", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Foton momentumu formülü ___ dır.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["foton", "momentum"],
+              "explanation": "p = h/λ = hf/c. Foton kütlesiz olmasına rağmen momentuma sahiptir. Bu, kuantum mekaniğinin şaşırtıcı sonuçlarından biridir.",
+              "options": [
+                {"text": "p = h/λ", "correct": true},
+                {"text": "p = mv", "correct": false},
+                {"text": "p = mc", "correct": false},
+                {"text": "p = hf", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Compton saçılması ile fotoelektrik etki arasındaki farkı eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["compton", "fotoelektrik", "fark"],
+              "explanation": "İki olayın karşılaştırması.",
+              "options": [
+                {"text": "Fotoelektrik etki", "pairId": 1, "correct": false},
+                {"text": "Foton tamamen soğurulur, elektron kopar", "pairId": 1, "correct": false},
+                {"text": "Compton saçılması", "pairId": 2, "correct": false},
+                {"text": "Foton saçılır (dalga boyu uzar), elektron geri teper", "pairId": 2, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Güneş yelkeni uzay aracını nasıl iter?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["güneş yelkeni", "radyasyon basıncı"],
+              "explanation": "Fotonların momentumu vardır (p = h/λ). Güneşten gelen fotonlar yelkene çarpıp yansıdığında momentum aktarır → kuvvet oluşur. Yakıtsız uzay yolculuğu için umut verici teknoloji.",
+              "options": [
+                {"text": "Güneş rüzgârı ile", "correct": false},
+                {"text": "Fotonların momentumu → yelkene çarpınca itme kuvveti oluşur", "correct": true},
+                {"text": "Manyetik alan ile", "correct": false},
+                {"text": "Yerçekimi ile", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Radyasyon basıncı nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["radyasyon basıncı"],
+              "explanation": "Fotonlar yüzeye çarptığında momentum aktarır → kuvvet/basınç oluşur. Güneşteki radyasyon basıncı yıldızın çökmesini engeller. Laser ile mikro nesneler hareket ettirilebilir (optik cımbız).",
+              "options": [
+                {"text": "Ses basıncı", "correct": false},
+                {"text": "Fotonların yüzeye momentum aktarmasıyla oluşan basınç", "correct": true},
+                {"text": "Hava basıncı", "correct": false},
+                {"text": "Sıvı basıncı", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Optik cımbız (optical tweezers) Nobel ödülü kazandı. Ne yapar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["optik cımbız"],
+              "explanation": "Optik cımbız, lazer ışınının radyasyon basıncıyla mikro/nano boyutta nesneleri (hücre, DNA, bakteri) tutup hareket ettirir. Arthur Ashkin 2018 Nobel Fizik Ödülü aldı.",
+              "options": [
+                {"text": "Metal kesme", "correct": false},
+                {"text": "Lazer ışınıyla mikro nesneleri (hücre, DNA) tutup hareket ettirme", "correct": true},
+                {"text": "Makroskopik nesneleri taşıma", "correct": false},
+                {"text": "Işığı büyütme", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "de Broglie Dalgaları ve Madde Dalgaları",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "de Broglie hipotezi ne der?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["de broglie"],
+              "explanation": "de Broglie (1924): Her hareketli parçacığın dalga özelliği vardır. λ = h/p = h/(mv). Bu, dalga-parçacık ikiliğini maddeye genelleştirdi. 1929 Nobel Ödülü.",
+              "options": [
+                {"text": "Sadece ışık dalga", "correct": false},
+                {"text": "Her hareketli parçacık dalga özelliğine sahiptir (λ = h/mv)", "correct": true},
+                {"text": "Elektronlar dairesel hareket yapar", "correct": false},
+                {"text": "Atom bölünemez", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "de Broglie dalga boyu formüllerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["dalga boyu", "formül"],
+              "explanation": "Madde dalga boyu hesaplamaları.",
+              "options": [
+                {"text": "λ = h/p = h/(mv)", "pairId": 1, "correct": false},
+                {"text": "Dalga boyu = Planck sabiti / Momentum", "pairId": 1, "correct": false},
+                {"text": "Kütle veya hız artarsa", "pairId": 2, "correct": false},
+                {"text": "Dalga boyu azalır (dalga özelliği zayıflar)", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Neden günlük nesnelerin dalga özelliğini gözlemleyemeyiz?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["günlük nesne", "dalga boyu"],
+              "explanation": "λ = h/(mv). Makroskopik nesnelerin kütlesi çok büyük → dalga boyu çok küçük (atom boyutundan çok küçük). Ölçülemez ve gözlemlenemez. Sadece atom/elektron boyutunda anlamlıdır.",
+              "options": [
+                {"text": "Dalga özelliği yoktur", "correct": false},
+                {"text": "Kütleleri çok büyük → dalga boyları atom altı boyutlarda (ölçülemez küçük)", "correct": true},
+                {"text": "Hava direnci engeller", "correct": false},
+                {"text": "Sıcaklık etkisi", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Elektron mikroskobu de Broglie dalgalarını nasıl kullanır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["elektron mikroskobu"],
+              "explanation": "Elektronların dalga boyu görünür ışıktan çok kısa olabilir. Kısa dalga boyu → daha yüksek çözünürlük. Elektron mikroskobu atomik boyutta görüntüleme yapabilir (optik mikroskoptan ~1000 kat daha hassas).",
+              "options": [
+                {"text": "Büyük mercekler kullanır", "correct": false},
+                {"text": "Elektronların kısa dalga boyunu kullanarak atomik çözünürlükte görüntüleme", "correct": true},
+                {"text": "Lazer ışığı ile", "correct": false},
+                {"text": "X-ışını ile", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Elektron kırınımı deneyi ___ kanıtlar.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["elektron kırınımı"],
+              "explanation": "Elektronların kristal kafes üzerinden kırınım yapması, maddenin dalga özelliğine sahip olduğunu deneysel olarak kanıtladı. Davisson-Germer deneyi (1927) de Broglie'nin hipotezini doğruladı.",
+              "options": [
+                {"text": "maddenin dalga özelliği", "correct": true},
+                {"text": "maddenin parçacık özelliği", "correct": false},
+                {"text": "yerçekimi", "correct": false},
+                {"text": "manyetik alan", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "100 eV enerjili elektronun de Broglie dalga boyu yaklaşık ne kadardır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["hesaplama", "dalga boyu"],
+              "explanation": "100 eV ≈ 1,6 × 10⁻¹⁷ J. KE = p²/(2m) → p = √(2mKE). λ = h/p ≈ 0,12 nm. X-ışını dalga boyuna yakın — kristal yapı analizi için ideal.",
+              "options": [
+                {"text": "1 m", "correct": false},
+                {"text": "~0,12 nm (X-ışını dalga boyuna yakın)", "correct": true},
+                {"text": "500 nm (görünür ışık)", "correct": false},
+                {"text": "1 μm", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Heisenberg Belirsizlik İlkesi",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Heisenberg belirsizlik ilkesi ne der?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["heisenberg"],
+              "explanation": "Bir parçacığın konumu (Δx) ve momentumu (Δp) aynı anda kesin olarak ölçülemez: Δx·Δp ≥ h/(4π). Konum daha kesin bilinirse momentum daha belirsiz olur ve tersi. Ölçüm cihazı sınırlaması değil, doğanın temel özelliğidir.",
+              "options": [
+                {"text": "Ölçüm cihazları yetersizdir", "correct": false},
+                {"text": "Konum ve momentum aynı anda kesin ölçülemez (Δx·Δp ≥ h/4π) — doğanın özelliği", "correct": true},
+                {"text": "Her şey belirsizdir", "correct": false},
+                {"text": "Sadece elektronlar için geçerli", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Belirsizlik ilkesinin sonuçlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["belirsizlik", "sonuçlar"],
+              "explanation": "Belirsizlik ilkesinin önemli sonuçları.",
+              "options": [
+                {"text": "Konum kesin bilinirse (Δx → 0)", "pairId": 1, "correct": false},
+                {"text": "Momentum tamamen belirsiz olur (Δp → ∞)", "pairId": 1, "correct": false},
+                {"text": "Enerji-zaman belirsizliği (ΔE·Δt ≥ h/4π)", "pairId": 2, "correct": false},
+                {"text": "Çok kısa sürede enerji çok belirsiz olur", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Belirsizlik ilkesi neden günlük hayatta fark edilmez?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["günlük hayat"],
+              "explanation": "h/(4π) ≈ 5,3 × 10⁻³⁵ J·s çok küçüktür. Makroskopik nesneler için belirsizlik atom boyutundan çok küçüktür — pratikte sıfır. Sadece atom/elektron boyutunda anlamlı etki yapar.",
+              "options": [
+                {"text": "Geçerli değildir", "correct": false},
+                {"text": "Planck sabiti çok küçük → makroskopik belirsizlik ölçülemeyecek kadar küçük", "correct": true},
+                {"text": "Sadece laboratuvarda geçerli", "correct": false},
+                {"text": "Yerçekimi bastırır", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kuantum tünelleme belirsizlik ilkesiyle nasıl ilişkilidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["tünelleme"],
+              "explanation": "Belirsizlik ilkesi gereği parçacığın enerjisi kısa sürelerde belirsizdir. Bu, parçacığın klasik olarak aşamayacağı enerji bariyerini geçmesini mümkün kılar. Güneş'in çekirdeğindeki füzyon bu sayede gerçekleşir.",
+              "options": [
+                {"text": "İlişkisiz", "correct": false},
+                {"text": "Enerji belirsizliği sayesinde parçacık enerji bariyerini geçebilir", "correct": true},
+                {"text": "Yerçekimi etkisiyle", "correct": false},
+                {"text": "Manyetik alan nedeniyle", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Tünelleme günlük teknolojide ___ kullanılır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["STM", "tünelleme"],
+              "explanation": "Taramalı tünelleme mikroskobu (STM), kuantum tünellemeyi kullanarak yüzeyleri atomik çözünürlükte görüntüler. İğne ucu yüzeye çok yaklaştırılır, tünelleme akımı ölçülür → atomik harita.",
+              "options": [
+                {"text": "taramalı tünelleme mikroskobu (STM)", "correct": true},
+                {"text": "lazer", "correct": false},
+                {"text": "radar", "correct": false},
+                {"text": "röntgen", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Schrödinger'in kedisi düşünce deneyi neyi gösterir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["schrödinger", "kedi"],
+              "explanation": "Schrödinger'in kedisi: Kuantum süperpozisyonu makroskopik dünyaya uygulandığında ortaya çıkan paradoksu gösterir. Kedi kutu açılmadan hem canlı hem ölü (süperpozisyon). Gözlem dalga fonksiyonunu çökertir.",
+              "options": [
+                {"text": "Kedilerin davranışını", "correct": false},
+                {"text": "Kuantum süperpozisyonun makroskopik paradoksunu ve gözlemin rolünü", "correct": true},
+                {"text": "Hayvan deneylerini", "correct": false},
+                {"text": "Yerçekimini", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Kuantum Mekaniği ve Uygulamaları",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Dalga fonksiyonu (ψ) ne anlama gelir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["dalga fonksiyonu"],
+              "explanation": "Dalga fonksiyonu (ψ), kuantum mekaniğinde parçacığın durumunu tanımlar. |ψ|² parçacığın belirli bir konumda bulunma olasılığını verir. Belirli yörünge yerine olasılık bulutu kavramı.",
+              "options": [
+                {"text": "Parçacığın kesin konumu", "correct": false},
+                {"text": "Parçacığın durumu — |ψ|² bulunma olasılığını verir", "correct": true},
+                {"text": "Parçacığın hızı", "correct": false},
+                {"text": "Parçacığın rengi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kuantum bilgisayar ile klasik bilgisayar farkını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["kuantum bilgisayar"],
+              "explanation": "İki bilgisayar tipi arasındaki temel fark.",
+              "options": [
+                {"text": "Klasik bilgisayar: Bit (0 veya 1)", "pairId": 1, "correct": false},
+                {"text": "Sıralı hesaplama, tek durum", "pairId": 1, "correct": false},
+                {"text": "Kuantum bilgisayar: Kübit (0, 1 veya her ikisi aynı anda)", "pairId": 2, "correct": false},
+                {"text": "Paralel hesaplama, süperpozisyon + dolanıklık", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Kuantum dolanıklık (entanglement) nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["dolanıklık"],
+              "explanation": "İki parçacık dolanık olduğunda, birinin ölçülmesi anında diğerinin durumunu belirler — mesafe ne olursa olsun. Einstein 'hayaleti uzaktan etki' dedi. 2022 Nobel Fizik Ödülü dolanıklık çalışmalarına verildi.",
+              "options": [
+                {"text": "İki parçacığın çarpışması", "correct": false},
+                {"text": "İki parçacığın durumlarının bağlantılı olması — birinin ölçümü diğerini belirler", "correct": true},
+                {"text": "İki dalganın girişimi", "correct": false},
+                {"text": "Elektron ve protonun bağlanması", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kuantum kriptografi neden kırılamaz?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kuantum kriptografi"],
+              "explanation": "Kuantum anahtar dağıtımında (QKD) bilgi kuantum durumlarla kodlanır. Heisenberg ilkesi gereği dinleme denemesi kuantum durumu bozar → tespit edilir. Fizik yasaları güvencelidir.",
+              "options": [
+                {"text": "Şifre çok karmaşık", "correct": false},
+                {"text": "Dinleme kuantum durumu bozar → tespit edilir (fizik yasaları güvenceli)", "correct": true},
+                {"text": "İnternet bağlantısı yok", "correct": false},
+                {"text": "Aslında kırılabilir", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Yarı iletken teknolojisi kuantum mekaniğinin ___ dayanır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["yarı iletken", "bant teorisi"],
+              "explanation": "Yarı iletkenler (silikon, germanyum), kuantum mekaniğinin bant teorisine dayanır. Valans bandı ve iletkenlik bandı arasındaki enerji boşluğu kontrol edilerek transistör, diyot, LED yapılır.",
+              "options": [
+                {"text": "bant teorisi", "correct": true},
+                {"text": "yerçekimi", "correct": false},
+                {"text": "sürtünme", "correct": false},
+                {"text": "manyetizma", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Kuantum fiziğinin günlük hayata etkilerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["kuantum", "teknoloji"],
+              "explanation": "Kuantum fiziği modern teknolojinin temelidir.",
+              "options": [
+                {"text": "Transistör ve mikroçip", "pairId": 1, "correct": false},
+                {"text": "Yarı iletken fiziği → bilgisayar, telefon, internet", "pairId": 1, "correct": false},
+                {"text": "Lazer", "pairId": 2, "correct": false},
+                {"text": "Uyarılmış emisyon → cerrahi, iletişim, okuyucu", "pairId": 2, "correct": false},
+                {"text": "MRI", "pairId": 3, "correct": false},
+                {"text": "Nükleer manyetik rezonans → tıbbi görüntüleme", "pairId": 3, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Özel Görelilik — İleri",
+      "description": "Zaman genleşmesi, boy kısalması, relativistik kütle ve enerji hesaplamaları (MEB 2025-2026)",
+      "order": 4,
+      "lessons": [
+        {
+          "title": "Zaman Genleşmesi",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Zaman genleşmesi formülü nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["zaman genleşmesi", "formül"],
+              "explanation": "Δt = Δt₀/√(1 − v²/c²). Δt₀: özgün zaman (hareket eden saatte), Δt: duran gözlemcinin ölçtüğü zaman. v → c yaklaştıkça Δt → ∞ (zaman neredeyse durur).",
+              "options": [
+                {"text": "Δt = Δt₀ × v/c", "correct": false},
+                {"text": "Δt = Δt₀/√(1 − v²/c²)", "correct": true},
+                {"text": "Δt = Δt₀ × √(v/c)", "correct": false},
+                {"text": "Δt = Δt₀ + v/c", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Lorentz faktörü (γ) neyi ifade eder?",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["lorentz faktörü"],
+              "explanation": "Lorentz faktörü görelilik etkilerini ölçer.",
+              "options": [
+                {"text": "γ = 1/√(1 − v²/c²)", "pairId": 1, "correct": false},
+                {"text": "v = 0'da γ = 1 (etki yok), v → c'de γ → ∞", "pairId": 1, "correct": false},
+                {"text": "v = 0,87c'de γ ≈ 2", "pairId": 2, "correct": false},
+                {"text": "Zaman 2 kat yavaşlar, boy yarıya kısalır", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Müon parçacığı (ortalama ömür 2,2 μs) ışık hızının %99,5'iyle hareket ederse Dünya'dan ölçülen ömrü yaklaşık kaç μs'dir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["müon", "zaman genleşmesi"],
+              "explanation": "v = 0,995c → γ = 1/√(1 − 0,995²) ≈ 10. Dünya'dan ölçülen ömür = γ × 2,2 ≈ 22 μs. Bu, müonun atmosferden yere ulaşmasını açıklar — görelilik olmadan yetişemezdi.",
+              "options": [
+                {"text": "2,2 μs (değişmez)", "correct": false},
+                {"text": "~22 μs (10 kat daha uzun)", "correct": true},
+                {"text": "0,22 μs", "correct": false},
+                {"text": "220 μs", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "İkiz paradoksu nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ikiz paradoksu"],
+              "explanation": "İkizlerden biri ışık hızına yakın uzay yolculuğuna çıkar. Zaman genleşmesi nedeniyle daha az yaşlanır. Geri döndüğünde ikizi kendinden daha yaşlıdır. Paradoks gibi görünse de ivme farkı simetriyi bozar.",
+              "options": [
+                {"text": "İkizler aynı hızda yaşlanır", "correct": false},
+                {"text": "Uzaya giden ikiz daha az yaşlanır (zaman genleşmesi)", "correct": true},
+                {"text": "Dünya'daki ikiz daha az yaşlanır", "correct": false},
+                {"text": "İkisi de yaşlanmaz", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "GPS uyduları zaman genleşmesini ___ ile düzeltir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["GPS", "düzeltme"],
+              "explanation": "GPS uydularının saatleri hızları nedeniyle günde ~7 μs yavaşlar (özel görelilik) ama yerçekimi farkı nedeniyle ~45 μs hızlanır (genel görelilik). Net fark ~38 μs/gün. Düzeltilmezse konum günde ~10 km sapardı.",
+              "options": [
+                {"text": "yazılım düzeltmesi", "correct": true},
+                {"text": "donanım değişikliği", "correct": false},
+                {"text": "düzeltme gerekmez", "correct": false},
+                {"text": "ek uydu", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Zamanın yavaşlaması deneysel olarak kanıtlanmış mıdır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["deneysel kanıt"],
+              "explanation": "Evet! Müon deneyleri (1960'lar), uçakla taşınan atom saatleri (Hafele-Keating, 1971), parçacık hızlandırıcıları ve GPS uyduları zaman genleşmesini kesinlikle doğrulamıştır.",
+              "options": [
+                {"text": "Hayır, sadece teori", "correct": false},
+                {"text": "Evet — müon deneyleri, atom saatleri, GPS ve parçacık hızlandırıcıları ile", "correct": true},
+                {"text": "Kısmen", "correct": false},
+                {"text": "Tartışmalı", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Boy Kısalması",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Boy kısalması formülü nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["boy kısalması", "formül"],
+              "explanation": "L = L₀ × √(1 − v²/c²) = L₀/γ. L₀: durgun boyutu (özgün uzunluk). Hareket yönünde kısalır. Hıza dik yönde kısalma olmaz.",
+              "options": [
+                {"text": "L = L₀ × (1 + v²/c²)", "correct": false},
+                {"text": "L = L₀ × √(1 − v²/c²) = L₀/γ", "correct": true},
+                {"text": "L = L₀/v", "correct": false},
+                {"text": "L = L₀ + v/c", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Boy kısalması hangi yönde olur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yön", "kısalma"],
+              "explanation": "Boy kısalması sadece hareket yönünde olur. Hareket yönüne dik boyutlar değişmez. Cisim basık görünür. Gerçek bir fiziksel kısalma değil, uzay-zamanın geometrisidir.",
+              "options": [
+                {"text": "Her yönde eşit", "correct": false},
+                {"text": "Sadece hareket yönünde (dik yönde değişmez)", "correct": true},
+                {"text": "Sadece dikey yönde", "correct": false},
+                {"text": "Boy kısalması olmaz", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "1 m uzunluğundaki çubuk 0,866c hızla hareket ederse gözlenen boyu ___ m'dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["hesaplama"],
+              "explanation": "v = 0,866c → v²/c² = 0,75 → √(1 − 0,75) = √0,25 = 0,5. L = 1 × 0,5 = 0,5 m. Yarı boyuna kısalır.",
+              "options": [
+                {"text": "0,5", "correct": true},
+                {"text": "0,866", "correct": false},
+                {"text": "1", "correct": false},
+                {"text": "2", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Boy kısalması ve zaman genleşmesi arasındaki ilişkiyi eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["ilişki"],
+              "explanation": "İki etki birbirini tamamlar.",
+              "options": [
+                {"text": "Zaman genleşmesi", "pairId": 1, "correct": false},
+                {"text": "Δt artar (zaman yavaşlar) — γ ile çarpılır", "pairId": 1, "correct": false},
+                {"text": "Boy kısalması", "pairId": 2, "correct": false},
+                {"text": "L azalır (uzunluk kısalır) — γ ile bölünür", "pairId": 2, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "CERN'deki parçacık hızlandırıcısında protonlar ışık hızının %99,999999'uyla hareket eder. Boy kısalması gözlemlenir mi?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["CERN", "boy kısalması"],
+              "explanation": "Evet! Bu hızda γ ≈ 7000. Protonun boyutu 7000 kat kısalır. Ayrıca proton demetinin Dünya'dan ölçülen ömrü binlerce kat uzar. Bu etkiler deneysel olarak gözlemlenir ve hesaplamalara dahil edilir.",
+              "options": [
+                {"text": "Hayır, proton çok küçük", "correct": false},
+                {"text": "Evet, γ ≈ 7000 — proton 7000 kat kısalır, deneysel olarak gözlemlenir", "correct": true},
+                {"text": "Sadece teorik", "correct": false},
+                {"text": "Boy kısalması protonlarda olmaz", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Uzay yolculuğunda boy kısalması pratik fark yaratır mı?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["uzay yolculuğu"],
+              "explanation": "Evet! Uzay gemisi ışık hızına yakın giderse, gemi referans çerçevesinde hedef yıldız sistemi kısalır → daha kısa mesafe kat eder → daha kısa sürede varır. Mürettebat için yıllar, Dünya'da on yıllar geçer.",
+              "options": [
+                {"text": "Hayır, pratikte etkisi yok", "correct": false},
+                {"text": "Evet, hedef mesafe kısalır → mürettebat için yolculuk kısalır", "correct": true},
+                {"text": "Sadece kütle artar", "correct": false},
+                {"text": "Gemi büzülür ve hasar görür", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Relativistik Kütle ve Enerji",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "E = mc² formülünde kütle-enerji dönüşümünü eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["E=mc²", "dönüşüm"],
+              "explanation": "Kütle ve enerji eşdeğerliği sonuçları.",
+              "options": [
+                {"text": "1 kg kütle", "pairId": 1, "correct": false},
+                {"text": "9 × 10¹⁶ J enerji (devasa)", "pairId": 1, "correct": false},
+                {"text": "1 gram kütle", "pairId": 2, "correct": false},
+                {"text": "9 × 10¹³ J ≈ 21 kiloton TNT (atom bombası)", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Relativistik toplam enerji formülü nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["toplam enerji"],
+              "explanation": "E = γmc² = mc²/√(1 − v²/c²). Durgun enerji: E₀ = mc². Kinetik enerji: KE = (γ − 1)mc². v = 0'da KE = 0 (beklenen). v → c'de KE → ∞ (sonsuz enerji gerekir).",
+              "options": [
+                {"text": "E = mc", "correct": false},
+                {"text": "E = γmc² (γ = 1/√(1 − v²/c²))", "correct": true},
+                {"text": "E = ½mc²", "correct": false},
+                {"text": "E = mc² + ½mv²", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Nükleer tepkimelerde kütle açığı ne demektir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kütle açığı"],
+              "explanation": "Nükleer tepkimede ürünlerin toplam kütlesi girişimcilerin toplam kütlesinden az olabilir. Kayıp kütle (Δm) E = Δm·c² ile enerjiye dönüşür. Güneş'te saniyede 4 milyon ton kütle enerjiye dönüşür.",
+              "options": [
+                {"text": "Kütle kaybolur", "correct": false},
+                {"text": "Girişimci ve ürün kütlesi farkı → enerji dönüşümü (E = Δmc²)", "correct": true},
+                {"text": "Kütle artar", "correct": false},
+                {"text": "Kütle değişmez", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "1 gram maddenin enerjisi yaklaşık ___ ton TNT'ye eşdeğerdir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["enerji eşdeğer"],
+              "explanation": "E = mc² = 0,001 × (3×10⁸)² = 9 × 10¹³ J ≈ 21.000 ton TNT ≈ 21 kiloton. Hiroşima atom bombası yaklaşık bu enerjideydi.",
+              "options": [
+                {"text": "21000", "correct": true},
+                {"text": "100", "correct": false},
+                {"text": "1", "correct": false},
+                {"text": "1000000", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "PET taramasında (pozitron emisyon tomografisi) E = mc² nasıl kullanılır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["PET", "E=mc²"],
+              "explanation": "PET'te radyoaktif madde pozitron yayar. Pozitron bir elektronla buluşarak yok olur (madde-antimadde imhası). Kütle tamamen enerjiye (iki gama fotonu) dönüşür. Bu fotonlar tespit edilerek görüntü oluşturulur.",
+              "options": [
+                {"text": "X-ışını kullanır", "correct": false},
+                {"text": "Pozitron-elektron imhası → kütle tamamen gama fotonlarına dönüşür → görüntüleme", "correct": true},
+                {"text": "Manyetik alan kullanır", "correct": false},
+                {"text": "Ultrason kullanır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Antimadde nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["antimadde"],
+              "explanation": "Antimadde, normal maddenin ayna görüntüsüdür (pozitron = anti-elektron). Madde + antimadde buluşunca tamamen enerjiye dönüşür (E = 2mc²). Evrendeki en verimli enerji kaynağı ama üretimi çok pahalı.",
+              "options": [
+                {"text": "Karanlık madde", "correct": false},
+                {"text": "Normal maddenin zıt yüklü karşılığı — buluşunca tamamen enerjiye dönüşür", "correct": true},
+                {"text": "Negatif kütleli madde", "correct": false},
+                {"text": "Hayali bir kavram", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Nükleer Fizik — İleri",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Bağlanma enerjisi nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["bağlanma enerjisi"],
+              "explanation": "Bağlanma enerjisi, çekirdeği oluşturan proton ve nötronları ayırmak için gereken enerjidir. Nükleona başına bağlanma enerjisi en yüksek demir-56'dadır. Bu, nükleer tepkimelerin enerji açığını belirler.",
+              "options": [
+                {"text": "Çekirdek kütlesi", "correct": false},
+                {"text": "Çekirdeği parçalamak için gereken enerji — nükleona başına demir-56'da maksimum", "correct": true},
+                {"text": "Elektron bağlanma enerjisi", "correct": false},
+                {"text": "Kimyasal bağ enerjisi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Nükleer fisyon ve füzyonun enerji açısını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["fisyon", "füzyon", "enerji"],
+              "explanation": "Her iki tepkimede de enerji açığa çıkar.",
+              "options": [
+                {"text": "Fisyon (bölünme)", "pairId": 1, "correct": false},
+                {"text": "Demirden ağır çekirdekler bölünür → nükleona düşen BE artar → enerji çıkar", "pairId": 1, "correct": false},
+                {"text": "Füzyon (birleşme)", "pairId": 2, "correct": false},
+                {"text": "Demirden hafif çekirdekler birleşir → nükleona düşen BE artar → enerji çıkar", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Yarı ömür hesaplamasında N(t) = N₀ × (1/2)^(t/T) formülünde T, ___ temsil eder.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["yarı ömür"],
+              "explanation": "T: yarı ömür (half-life), madde miktarının yarıya düşme süresi. Her T sürede madde yarıya iner: 1 yarı ömür → ½, 2 yarı ömür → ¼, 3 yarı ömür → ⅛.",
+              "options": [
+                {"text": "yarı ömür", "correct": true},
+                {"text": "toplam zaman", "correct": false},
+                {"text": "periyot", "correct": false},
+                {"text": "sıcaklık", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "100 gram radyoaktif madde 3 yarı ömür sonra kaç gram kalır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yarı ömür", "hesaplama"],
+              "explanation": "3 yarı ömür: 100 → 50 → 25 → 12,5 gram. N = 100 × (1/2)³ = 100/8 = 12,5 g.",
+              "options": [
+                {"text": "50 g", "correct": false},
+                {"text": "12,5 g", "correct": true},
+                {"text": "25 g", "correct": false},
+                {"text": "33,3 g", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Nükleer atık problemi neden ciddidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["nükleer atık"],
+              "explanation": "Bazı atıkların yarı ömrü binlerce-milyonlarca yıl (Pu-239: 24.000 yıl). Bu süre boyunca radyoaktif kalır → güvenli depolanmalıdır. Derin jeolojik depolama (yeraltı) en güvenli çözüm olarak kabul edilir.",
+              "options": [
+                {"text": "Kolay çözülür", "correct": false},
+                {"text": "Bazı atıklar binlerce yıl radyoaktif → çok uzun süreli güvenli depolama gerekir", "correct": true},
+                {"text": "Sadece estetik sorun", "correct": false},
+                {"text": "Atık oluşmaz", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "ITER füzyon reaktörünün başarılı olması neden önemlidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ITER", "füzyon"],
+              "explanation": "Kontrollü füzyon: (1) Neredeyse sınırsız yakıt (deniz suyu), (2) Çok az radyoaktif atık, (3) CO₂ salınımı yok, (4) Çekirdek erimesi riski yok. İnsanlığın enerji sorununa kalıcı çözüm.",
+              "options": [
+                {"text": "Sadece bilimsel merak", "correct": false},
+                {"text": "Sınırsız, temiz, güvenli enerji kaynağı — insanlığın enerji sorununun çözümü", "correct": true},
+                {"text": "Silah yapımı", "correct": false},
+                {"text": "Uzay yolculuğu", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Parçacık Fiziği ve Evrenin Yapısı",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Standart Model'in temel parçacıklarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["standart model"],
+              "explanation": "Standart Model evrendeki temel parçacıkları sınıflandırır.",
+              "options": [
+                {"text": "Kuarklar (up, down, strange...)", "pairId": 1, "correct": false},
+                {"text": "Proton ve nötronları oluşturan temel parçacıklar", "pairId": 1, "correct": false},
+                {"text": "Leptonlar (elektron, müon, nötrino...)", "pairId": 2, "correct": false},
+                {"text": "Hafif, güçlü kuvvete katılmayan parçacıklar", "pairId": 2, "correct": false},
+                {"text": "Bozonlar (foton, gluon, W, Z, Higgs)", "pairId": 3, "correct": false},
+                {"text": "Kuvvetleri taşıyan aracı parçacıklar", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Higgs bozonu neden 'Tanrı parçacığı' olarak anılır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["higgs"],
+              "explanation": "Higgs bozonu, parçacıklara kütle kazandıran Higgs alanının varlığını kanıtlar. 2012'de CERN'de keşfedildi. 'Tanrı parçacığı' popüler bir isimdir — fizikçiler bu ismi sevmez ama kütlenin kökenini açıklaması nedeniyle önemlidir.",
+              "options": [
+                {"text": "Dini bir kavram", "correct": false},
+                {"text": "Parçacıklara kütle kazandıran Higgs alanını kanıtlar — kütlenin kökeni", "correct": true},
+                {"text": "En güçlü parçacık", "correct": false},
+                {"text": "İlk bulunan parçacık", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Evrendeki dört temel kuvveti güçten zayıfa doğru sıralayın.",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["temel kuvvetler"],
+              "explanation": "Güçten zayıfa: (1) Güçlü nükleer (çekirdeği tutar), (2) Elektromanyetik (yükler), (3) Zayıf nükleer (beta bozunması), (4) Kütleçekim (en zayıf ama sonsuz menzilli).",
+              "options": [
+                {"text": "Kütleçekim, elektromanyetik, güçlü, zayıf", "correct": false},
+                {"text": "Güçlü nükleer > Elektromanyetik > Zayıf nükleer > Kütleçekim", "correct": true},
+                {"text": "Elektromanyetik > Güçlü > Kütleçekim > Zayıf", "correct": false},
+                {"text": "Hepsi eşit", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Büyük Patlama (Big Bang) teorisi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["big bang"],
+              "explanation": "Büyük Patlama: Evren ~13,8 milyar yıl önce çok sıcak, yoğun bir noktadan genişlemeye başladı. Kozmik mikrodalga arka plan ışıması (CMB) ve galaksilerin uzaklaşması bu teoriyi destekler.",
+              "options": [
+                {"text": "Evren her zaman aynıydı", "correct": false},
+                {"text": "Evren ~13,8 milyar yıl önce sıcak-yoğun noktadan genişlemeye başladı", "correct": true},
+                {"text": "Evren sonsuz büyüklükteydi", "correct": false},
+                {"text": "Evren 6000 yaşında", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Karanlık madde ve karanlık enerji evrenin yüzde ___ oluşturur.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["karanlık madde", "karanlık enerji"],
+              "explanation": "Evrenin %5'i normal madde, %27'si karanlık madde, %68'i karanlık enerji. Yani bildiğimiz madde evrenin sadece %5'i! Karanlık madde/enerji doğrudan gözlenemez ama etkileri ölçülür.",
+              "options": [
+                {"text": "95", "correct": true},
+                {"text": "50", "correct": false},
+                {"text": "10", "correct": false},
+                {"text": "5", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Yerçekimi dalgaları nasıl tespit edildi?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["yerçekimi dalgaları", "LIGO"],
+              "explanation": "LIGO (Lazer Interferometre Yerçekimi Dalgası Gözlemevi) 2015'te iki kara deliğin birleşmesinden gelen yerçekimi dalgalarını tespit etti. Einstein'ın 1916 öngörüsü 100 yıl sonra doğrulandı. 2017 Nobel Ödülü.",
+              "options": [
+                {"text": "Teleskopla", "correct": false},
+                {"text": "LIGO lazer interferometresiyle — kara delik birleşmesinden gelen uzay-zaman dalgalanmaları", "correct": true},
+                {"text": "Radyo dalgasıyla", "correct": false},
+                {"text": "Henüz tespit edilemedi", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Yarı İletkenler ve Modern Teknoloji",
+      "description": "Yarı iletkenler, diyot, transistör, entegre devre, lazer, süperiletkenlik, nanoteknoloji (MEB 2025-2026)",
+      "order": 5,
+      "lessons": [
+        {
+          "title": "Yarı İletkenler ve Bant Teorisi",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "İletken, yalıtkan ve yarı iletkeni bant teorisiyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["bant teorisi"],
+              "explanation": "Bant teorisi maddeleri enerji bant yapısına göre sınıflandırır.",
+              "options": [
+                {"text": "İletken (bakır, altın)", "pairId": 1, "correct": false},
+                {"text": "Valans ve iletkenlik bandı örtüşür → elektronlar serbestçe hareket eder", "pairId": 1, "correct": false},
+                {"text": "Yalıtkan (cam, kauçuk)", "pairId": 2, "correct": false},
+                {"text": "Bantlar arası boşluk çok büyük (>5 eV) → akım akmaz", "pairId": 2, "correct": false},
+                {"text": "Yarı iletken (silikon)", "pairId": 3, "correct": false},
+                {"text": "Dar bant boşluğu (~1 eV) → sıcaklık/ışık/katkıyla iletken olur", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Silikon neden elektronik endüstrisinin temel malzemesidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["silikon"],
+              "explanation": "Silikon: (1) Yer kabuğunda bol, (2) Bant boşluğu ideal (1,1 eV), (3) Saf hale getirmesi kolay, (4) Katkılama ile özellikleri hassas kontrol edilir, (5) SiO₂ doğal yalıtkan kapak oluşturur.",
+              "options": [
+                {"text": "En iyi iletken", "correct": false},
+                {"text": "Bol, ideal bant boşluğu, katkılamayla kontrol edilir, SiO₂ yalıtkan", "correct": true},
+                {"text": "En ucuz madde", "correct": false},
+                {"text": "En hafif madde", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "n-tipi ve p-tipi yarı iletkeni eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["katkılama"],
+              "explanation": "Katkılama yarı iletkenin iletkenliğini artırır.",
+              "options": [
+                {"text": "n-tipi (fosfor katkılı)", "pairId": 1, "correct": false},
+                {"text": "Fazla elektron → negatif yük taşıyıcısı çoğunlukta", "pairId": 1, "correct": false},
+                {"text": "p-tipi (bor katkılı)", "pairId": 2, "correct": false},
+                {"text": "Elektron eksikliği (boşluk) → pozitif yük taşıyıcısı çoğunlukta", "pairId": 2, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Yarı iletkenin sıcaklık artınca iletkenliği nasıl değişir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sıcaklık", "iletkenlik"],
+              "explanation": "Yarı iletken: sıcaklık artınca elektronlar enerji kazanıp iletkenlik bandına geçer → iletkenlik ARTAR. Metal ise tam tersi: sıcaklık artınca direnç artar (titreşim → çarpışma artar).",
+              "options": [
+                {"text": "Azalır (metal gibi)", "correct": false},
+                {"text": "Artar (daha fazla elektron iletkenlik bandına geçer)", "correct": true},
+                {"text": "Değişmez", "correct": false},
+                {"text": "Önce artar sonra azalır", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Termistör ___ için kullanılır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["termistör"],
+              "explanation": "Termistör, sıcaklığa bağlı direnci değişen yarı iletken sensördür. NTC termistör: sıcaklık artar → direnç azalır. Klimalar, buzdolapları, otomobil motorları ve medikal cihazlarda kullanılır.",
+              "options": [
+                {"text": "sıcaklık ölçme", "correct": true},
+                {"text": "basınç ölçme", "correct": false},
+                {"text": "akım üretme", "correct": false},
+                {"text": "ışık algılama", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "LDR (ışığa duyarlı direnç) hangi prensiple çalışır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["LDR"],
+              "explanation": "LDR yarı iletken malzemeden yapılır. Işık fotonları elektron-boşluk çifti oluşturur → iletkenlik artar → direnç azalır. Karanlıkta direnç yüksek, aydınlıkta düşük. Sokak lambaları ve kamera pozometre.",
+              "options": [
+                {"text": "Manyetik alan", "correct": false},
+                {"text": "Fotonlar elektron-boşluk çifti oluşturur → ışıkta direnç azalır", "correct": true},
+                {"text": "Sıcaklık değişimi", "correct": false},
+                {"text": "Mekanik basınç", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Diyot ve Transistör",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Diyot nedir ve ne yapar?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["diyot"],
+              "explanation": "Diyot, p-n ekleminden oluşan yarı iletken elemandır. Akımı tek yönde geçirir (ileri yönde), ters yönde engeller. AC'yi DC'ye çevirme (doğrultma), sinyal koruma ve ışık üretme (LED) için kullanılır.",
+              "options": [
+                {"text": "Akımı artırır", "correct": false},
+                {"text": "p-n eklemi — akımı tek yönde geçirir (tek yönlü valf)", "correct": true},
+                {"text": "Akımı depolar", "correct": false},
+                {"text": "Gerilim üretir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Transistörün iki temel işlevini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["transistör", "işlevler"],
+              "explanation": "Transistör elektroniğin temel yapı taşıdır.",
+              "options": [
+                {"text": "Anahtarlama", "pairId": 1, "correct": false},
+                {"text": "Küçük sinyalle büyük akımı açıp kapama (dijital devre)", "pairId": 1, "correct": false},
+                {"text": "Yükseltme (amplifikasyon)", "pairId": 2, "correct": false},
+                {"text": "Zayıf sinyali güçlü sinyale çevirme (radyo, hoparlör)", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Moore yasası ne der?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["moore yasası"],
+              "explanation": "Moore yasası (1965): Bir mikroçipteki transistör sayısı yaklaşık her 2 yılda ikiye katlanır. 1970'te ~2000 transistör → bugün ~100 milyar. Bu büyüme bilgisayar devrimine yol açtı.",
+              "options": [
+                {"text": "Fiyatlar her yıl ikiye katlanır", "correct": false},
+                {"text": "Çipteki transistör sayısı ~2 yılda ikiye katlanır", "correct": true},
+                {"text": "Bilgisayar boyutu her yıl yarıya iner", "correct": false},
+                {"text": "İnternet hızı her yıl ikiye katlanır", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "LED (ışık yayan diyot) normal ampulden neden daha verimlidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["LED", "verimlilik"],
+              "explanation": "LED: Elektrik → doğrudan ışık (yarı iletken emisyon). Akkor ampul: Elektrik → ısı → ışık (%95 enerji ısıya gider). LED %40-50 verimli (akan: %5). Ayrıca LED daha uzun ömürlü ve dayanıklıdır.",
+              "options": [
+                {"text": "Daha parlak", "correct": false},
+                {"text": "Elektriği doğrudan ışığa çevirir (ısı kaybı çok az) — %40-50 verimli", "correct": true},
+                {"text": "Daha ucuz", "correct": false},
+                {"text": "Daha büyük", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Entegre devre (IC/çip), ___ dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["entegre devre"],
+              "explanation": "Entegre devre, tek silikon levha üzerinde milyarlarca transistör, direnç ve kondansatör içeren minyatür devredir. Bilgisayar işlemcisi, bellek, sensör gibi tüm modern elektronik buna dayanır.",
+              "options": [
+                {"text": "tek silikon üzerinde milyarlarca transistör içeren minyatür devre", "correct": true},
+                {"text": "büyük bir devre kartı", "correct": false},
+                {"text": "pil", "correct": false},
+                {"text": "motor", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Güneş hücreleri hangi yarı iletken olayı kullanır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["güneş hücresi"],
+              "explanation": "Güneş hücresi p-n ekleminde fotovoltaik etkiyi kullanır. Fotonlar yarı iletkende elektron-boşluk çifti oluşturur. p-n ekleminin elektrik alanı yükleri ayırır → akım oluşur → elektrik üretilir.",
+              "options": [
+                {"text": "Termoelektrik", "correct": false},
+                {"text": "Fotovoltaik etki — p-n ekleminde fotonlar elektron-boşluk çifti oluşturur", "correct": true},
+                {"text": "Piezoelektrik", "correct": false},
+                {"text": "Elektroliz", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Lazer ve Uygulamaları",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Lazerin çalışma prensibini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["lazer", "prensip"],
+              "explanation": "Lazer üç aşamada çalışır.",
+              "options": [
+                {"text": "Enerji pompalama", "pairId": 1, "correct": false},
+                {"text": "Atomlar uyarılarak üst enerji seviyesine çıkarılır", "pairId": 1, "correct": false},
+                {"text": "Ters nüfus (populasyon inversiyonu)", "pairId": 2, "correct": false},
+                {"text": "Uyarılmış atom sayısı > temel durumda olan", "pairId": 2, "correct": false},
+                {"text": "Uyarılmış emisyon", "pairId": 3, "correct": false},
+                {"text": "Foton → uyarılmış atom → aynı fotonun kopyası (zincir)", "pairId": 3, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Lazerin normal ışıktan farkları nelerdir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["lazer", "özellikler"],
+              "explanation": "Lazer: (1) Monokromatik (tek dalga boyu), (2) Koherent (eş fazlı), (3) Paralel (az yayılan), (4) Yüksek şiddet. Normal ışık birçok dalga boyu, farklı fazlar ve her yöne yayılır.",
+              "options": [
+                {"text": "Sadece rengi farklı", "correct": false},
+                {"text": "Tek dalga boylu, eş fazlı, paralel ve çok yoğun", "correct": true},
+                {"text": "Daha sıcak", "correct": false},
+                {"text": "Daha hızlı", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Lazerin tıptaki uygulamalarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["lazer", "tıp"],
+              "explanation": "Lazer tıpta devrim yarattı.",
+              "options": [
+                {"text": "LASIK göz ameliyatı", "pairId": 1, "correct": false},
+                {"text": "Korneayı şekillendirerek görme kusurunu düzeltme", "pairId": 1, "correct": false},
+                {"text": "Lazer cerrahisi", "pairId": 2, "correct": false},
+                {"text": "Kansız kesim, hassas doku buharlaştırma", "pairId": 2, "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Fiber optik iletişimde lazer neden kullanılır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["fiber optik", "lazer"],
+              "explanation": "Lazerin dar dalga boyu (monokromatik) ve paralel ışını, fiber optik kablolarda düşük kayıp ve yüksek bant genişliği sağlar. Tek fiber üzerinden saniyede terabitlerce veri iletilir.",
+              "options": [
+                {"text": "Ucuz olduğu için", "correct": false},
+                {"text": "Monokromatik ve paralel → düşük kayıp, yüksek bant genişliği", "correct": true},
+                {"text": "Görünür olduğu için", "correct": false},
+                {"text": "Isı ürettiği için", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "LiDAR teknolojisi ___ kullanarak 3D harita oluşturur.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["LiDAR"],
+              "explanation": "LiDAR (Light Detection and Ranging): Lazer darbeleri gönderip yansıma süresini ölçerek 3D harita oluşturur. Otonom araçlar, arkeoloji, meteoroloji ve ormancılıkta kullanılır.",
+              "options": [
+                {"text": "lazer darbeleri", "correct": true},
+                {"text": "radyo dalgaları", "correct": false},
+                {"text": "ultrason", "correct": false},
+                {"text": "kızılötesi", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Lazer soğutma (Nobel 1997) ne yapar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["lazer soğutma"],
+              "explanation": "Lazer soğutma, atomları lazer ışınlarıyla yavaşlatarak mutlak sıfıra çok yakın sıcaklıklara (nanokelvin) soğutur. Atom saatleri, Bose-Einstein yoğuşması ve temel fizik deneylerinde kullanılır.",
+              "options": [
+                {"text": "Buzdolabı gibi soğutur", "correct": false},
+                {"text": "Atomları lazerle yavaşlatarak mutlak sıfıra yakın sıcaklığa soğutur", "correct": true},
+                {"text": "Lazer ışınını soğutur", "correct": false},
+                {"text": "Odayı soğutur", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Süperiletkenlik ve İleri Malzemeler",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Süperiletkenliğin özelliklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["süperiletkenlik"],
+              "explanation": "Süperiletken malzemelerin iki temel özelliği.",
+              "options": [
+                {"text": "Sıfır direnç", "pairId": 1, "correct": false},
+                {"text": "Elektrik akımı hiç kayıp olmadan sonsuza kadar akar", "pairId": 1, "correct": false},
+                {"text": "Meissner etkisi", "pairId": 2, "correct": false},
+                {"text": "Manyetik alanı tamamen dışarı iter → manyetik levitasyon", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Süperiletkenliğin sıcaklık koşulu nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kritik sıcaklık"],
+              "explanation": "Her süperiletken malzemenin kritik sıcaklığı (Tc) vardır. Bu sıcaklığın altında direnç sıfıra düşer. Geleneksel: Tc < 30 K (-243°C). Yüksek sıcaklık süperiletkenleri: Tc ~90 K (-183°C) — sıvı azotla soğutulabilir.",
+              "options": [
+                {"text": "Her sıcaklıkta çalışır", "correct": false},
+                {"text": "Kritik sıcaklık (Tc) altında — genellikle çok düşük sıcaklıklar", "correct": true},
+                {"text": "Yüksek sıcaklıkta", "correct": false},
+                {"text": "Oda sıcaklığında", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Maglev treni süperiletkenliği nasıl kullanır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["maglev"],
+              "explanation": "Maglev: Süperiletken mıknatıslar tren ile ray arasında manyetik levitasyon (havada asılma) sağlar. Temas yok → sürtünme yok → çok yüksek hız (600+ km/h). Japonya'da ticari kullanımda.",
+              "options": [
+                {"text": "Tekerleklerle hızlanır", "correct": false},
+                {"text": "Manyetik levitasyon — tren raydan havalanır, sürtünme yok → çok yüksek hız", "correct": true},
+                {"text": "Jet motoruyla", "correct": false},
+                {"text": "Elektrik motoruyla", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "MRI cihazı süperiletken mıknatısı ___ için kullanır.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["MRI", "süperiletken"],
+              "explanation": "MRI çok güçlü ve homojen manyetik alan gerektirir (1,5-3 Tesla). Süperiletken bobinler sıfır dirençle büyük akım taşır → güçlü alan oluşturur. Sıvı helyumla soğutulur (-269°C).",
+              "options": [
+                {"text": "güçlü manyetik alan oluşturmak", "correct": true},
+                {"text": "hastayı soğutmak", "correct": false},
+                {"text": "X-ışını üretmek", "correct": false},
+                {"text": "ses üretmek", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Oda sıcaklığı süperiletkenliği neden 'Kutsal Kase' olarak adlandırılır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["oda sıcaklığı"],
+              "explanation": "Oda sıcaklığı süperiletkenliği: soğutma gerekmez → çok ucuz ve pratik. Kayıpsız enerji iletimi, manyetik levitasyon araçları, süper hızlı bilgisayarlar mümkün olur. Henüz başarılamamıştır ama aktif araştırma devam ediyor.",
+              "options": [
+                {"text": "Zaten başarıldı", "correct": false},
+                {"text": "Soğutma gerektirmez → kayıpsız iletim, levitasyon — teknolojide devrim", "correct": true},
+                {"text": "İmkânsız", "correct": false},
+                {"text": "Önemsiz", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Grafen nedir ve neden önemlidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["grafen"],
+              "explanation": "Grafen: tek atom kalınlığında karbon tabakası. Çelikten 200 kat güçlü, bakırdan daha iyi iletken, esnek ve şeffaf. Hızlı transistör, esnek ekran, güçlü kompozit ve su filtresi potansiyeli. 2010 Nobel Fizik Ödülü.",
+              "options": [
+                {"text": "Bir plastik türü", "correct": false},
+                {"text": "Tek atom kalınlığında karbon — ultra güçlü, iletken, esnek, şeffaf", "correct": true},
+                {"text": "Grafit madeni", "correct": false},
+                {"text": "Bir metal alaşım", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Nanoteknoloji ve Geleceğin Fiziği",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Nanoteknolojide boyut etkisini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["nano", "boyut etkisi"],
+              "explanation": "Nano ölçekte malzeme özellikleri değişir.",
+              "options": [
+                {"text": "Altın nanoparçacık", "pairId": 1, "correct": false},
+                {"text": "Sarı değil kırmızı/mor görünür (kuantum boyut etkisi)", "pairId": 1, "correct": false},
+                {"text": "Yüzey/hacim oranı", "pairId": 2, "correct": false},
+                {"text": "Nano ölçekte çok büyük → kimyasal reaktivite artar", "pairId": 2, "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Nanoteknolojinin tıptaki uygulamalarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["nanotıp"],
+              "explanation": "Nanoteknoloji tıpta devrim potansiyeli taşır.",
+              "options": [
+                {"text": "Hedefli ilaç taşıma", "pairId": 1, "correct": false},
+                {"text": "Nanoparçacık sadece kanser hücresine ilaç götürür → yan etki azalır", "pairId": 1, "correct": false},
+                {"text": "Nanosensörler", "pairId": 2, "correct": false},
+                {"text": "Erken hastalık tespiti (tek molekül düzeyinde)", "pairId": 2, "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Kuantum noktalar (quantum dots) ne işe yarar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["kuantum noktalar"],
+              "explanation": "Kuantum noktalar: nano boyutlu yarı iletken kristaller. Boyutlarına göre farklı renklerde ışık yayar (kuantum hapsi etkisi). QLED TV'ler, biyolojik işaretleme ve güneş hücreleri. 2023 Nobel Kimya Ödülü.",
+              "options": [
+                {"text": "Veri depolama", "correct": false},
+                {"text": "Boyutlarına göre farklı renklerde ışık yayan nano kristaller (QLED TV, biyoişaret)", "correct": true},
+                {"text": "Manyetik hafıza", "correct": false},
+                {"text": "Ses üretimi", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Karbon nanotüpler neden önemlidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["karbon nanotüp"],
+              "explanation": "Karbon nanotüpler: silindirik karbon yapıları. Çelikten 100 kat güçlü, bakırdan iyi iletken, çok hafif. Uzay asansörü, süper güçlü kompozitler, nano elektronik ve enerji depolama potansiyeli.",
+              "options": [
+                {"text": "Yakıt olarak kullanılır", "correct": false},
+                {"text": "Ultra güçlü, iletken, hafif — uzay asansörü ve nano elektronik potansiyeli", "correct": true},
+                {"text": "Gıda katkısı", "correct": false},
+                {"text": "Boya pigmenti", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Fiziğin geleceğinde hangi büyük sorular var?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["gelecek", "açık sorular"],
+              "explanation": "Fiziğin büyük açık soruları: Karanlık madde/enerji nedir? Kuantum yerçekimi nasıl birleşir? Kontrollü füzyon mümkün mü? Oda sıcaklığı süperiletkenlik? Bilinç ve kuantum? Evrendeki madde-antimadde asimetrisi?",
+              "options": [
+                {"text": "Tüm sorular çözüldü", "correct": false},
+                {"text": "Karanlık madde, kuantum yerçekimi, kontrollü füzyon, süperiletkenlik", "correct": true},
+                {"text": "Sadece enerji üretimi", "correct": false},
+                {"text": "Fizik bitmiştir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Fiziğin topluma en büyük katkısı ___ geliştirmektir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["katkı", "teknoloji"],
+              "explanation": "Fizik, modern teknolojinin ve bilimsel anlayışın temelidir. Elektrik, bilgisayar, internet, tıbbi görüntüleme, GPS, enerji üretimi — tümü fizik prensiplerine dayanır. Fizik, dünyayı anlama ve dönüştürme gücüdür.",
+              "options": [
+                {"text": "teknolojiyi ve bilimsel anlayışı", "correct": true},
+                {"text": "silahları", "correct": false},
+                {"text": "eğlenceyi", "correct": false},
+                {"text": "politikayı", "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

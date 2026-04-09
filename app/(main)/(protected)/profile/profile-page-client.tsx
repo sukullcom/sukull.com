@@ -299,25 +299,25 @@ export default function ProfilePageClient({
               <div className={`flex justify-between items-center ${canChangeUsername ? 'text-green-700' : 'text-amber-700'}`}>
                 <span>Kullanıcı Adı Değiştirme</span>
                 <span className="font-medium">
-                  {canChangeUsername ? '✅ Açık' : `🔒 ${STREAK_REQUIREMENTS.USERNAME_CHANGE} gün gerekli`}
+                  {canChangeUsername ? '✅ Açık' : `🔒 ${STREAK_REQUIREMENTS.USERNAME_CHANGE} gün istikrar gerekli`}
                 </span>
               </div>
               <div className={`flex justify-between items-center ${canChangeDailyGoal ? 'text-green-700' : 'text-amber-700'}`}>
                 <span>Günlük Hedef Belirleme</span>
                 <span className="font-medium">
-                  {canChangeDailyGoal ? '✅ Açık' : `🔒 ${STREAK_REQUIREMENTS.DAILY_GOAL_CHANGE} gün gerekli`}
+                  {canChangeDailyGoal ? '✅ Açık' : `🔒 ${STREAK_REQUIREMENTS.DAILY_GOAL_CHANGE} gün istikrar gerekli`}
                 </span>
               </div>
               <div className={`flex justify-between items-center ${canChangeAvatar ? 'text-green-700' : 'text-amber-700'}`}>
                 <span>Avatar Değiştirme</span>
                 <span className="font-medium">
-                  {canChangeAvatar ? '✅ Açık' : `🔒 ${STREAK_REQUIREMENTS.AVATAR_CHANGE} gün gerekli`}
+                  {canChangeAvatar ? '✅ Açık' : `🔒 ${STREAK_REQUIREMENTS.AVATAR_CHANGE} gün istikrargerekli`}
                 </span>
               </div>
               <div className={`flex justify-between items-center ${canSelectSchool ? 'text-green-700' : 'text-amber-700'}`}>
                 <span>Okul Seçimi</span>
                 <span className="font-medium">
-                  {canSelectSchool ? '✅ Açık' : `🔒 ${STREAK_REQUIREMENTS.SCHOOL_SELECTION} gün gerekli`}
+                  {canSelectSchool ? '✅ Açık' : `🔒 ${STREAK_REQUIREMENTS.SCHOOL_SELECTION} gün istikrargerekli`}
                 </span>
               </div>
             </div>

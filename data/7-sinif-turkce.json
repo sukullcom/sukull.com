@@ -110,7 +110,7 @@
                 {
                   "text": "gerçek anlam",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "mecaz anlam",
@@ -319,7 +319,7 @@
                 {
                   "text": "razıydı",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "bıkmıştı",
@@ -733,7 +733,7 @@
                 {
                   "text": "kişileştirme",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "benzetme",
@@ -1158,7 +1158,7 @@
                 {
                   "text": "fiil",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "isim",
@@ -1574,7 +1574,7 @@
                 {
                   "text": "ek fiil",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "çekim eki",
@@ -1783,7 +1783,7 @@
                 {
                   "text": "geniş zaman",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "istek kipi",
@@ -2207,7 +2207,7 @@
                 {
                   "text": "zarf",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "sıfat",
@@ -2621,7 +2621,7 @@
                 {
                   "text": "zaman zarfı",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "durum zarfı",
@@ -3249,7 +3249,7 @@
                 {
                   "text": "Van",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "van",
@@ -3458,7 +3458,7 @@
                 {
                   "text": "de",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "da",
@@ -3873,7 +3873,7 @@
                 {
                   "text": "tırnak işareti",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "parantez",
@@ -4300,7 +4300,7 @@
                 {
                   "text": "tüm cümleleri",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "ilk cümleyi",
@@ -4927,7 +4927,7 @@
                 {
                   "text": "çok",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "daha",
@@ -5351,7 +5351,7 @@
                 {
                   "text": "kanıtlarla",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "resimlerle",
@@ -5978,7 +5978,7 @@
                 {
                   "text": "kendi",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "bazı",
@@ -6187,7 +6187,7 @@
                 {
                   "text": "özetlemelerini",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "özetledi",

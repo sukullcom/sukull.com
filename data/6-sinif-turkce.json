@@ -110,7 +110,7 @@
                 {
                   "text": "terim",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "mecaz",
@@ -317,7 +317,7 @@
                 {
                   "text": "sesteş",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "eş anlamlı",
@@ -522,7 +522,7 @@
                 {
                   "text": "zıt",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "eş",
@@ -727,7 +727,7 @@
                 {
                   "text": "yummak",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "açmak",
@@ -932,7 +932,7 @@
                 {
                   "text": "iki",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "üç",
@@ -1148,7 +1148,7 @@
                 {
                   "text": "büyük",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "küçük",
@@ -1353,7 +1353,7 @@
                 {
                   "text": "sıfat",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "zamir",
@@ -1560,7 +1560,7 @@
                 {
                   "text": "belirtili",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "belirtisiz",
@@ -1767,7 +1767,7 @@
                 {
                   "text": "zamir",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "edat",
@@ -2188,7 +2188,7 @@
                 {
                   "text": "koşul",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "karşıtlık",
@@ -2394,7 +2394,7 @@
                 {
                   "text": "nesnel",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "öznel",
@@ -2806,7 +2806,7 @@
                 {
                   "text": "neden-sonuç",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "amaç-sonuç",
@@ -3228,7 +3228,7 @@
                 {
                   "text": "büyük",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "küçük",
@@ -3436,7 +3436,7 @@
                 {
                   "text": "de",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "da",
@@ -3647,7 +3647,7 @@
                 {
                   "text": "hanımeli",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "hanım eli",
@@ -3856,7 +3856,7 @@
                 {
                   "text": "soru işareti (?)",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "nokta (.)",
@@ -4068,7 +4068,7 @@
                 {
                   "text": "kesme",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "nokta",
@@ -4286,7 +4286,7 @@
                 {
                   "text": "yardımcı",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "temel",
@@ -4496,7 +4496,7 @@
                 {
                   "text": "ne",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "nasıl",
@@ -4704,7 +4704,7 @@
                 {
                   "text": "mekân",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "zaman",
@@ -4913,7 +4913,7 @@
                 {
                   "text": "şiir",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "hikâye",
@@ -5120,7 +5120,7 @@
                 {
                   "text": "karşılaştırma",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "eleştiri",
@@ -5338,7 +5338,7 @@
                 {
                   "text": "benzetme",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "karşılaştırma",
@@ -5548,7 +5548,7 @@
                 {
                   "text": "intak",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "teşbih",
@@ -5758,7 +5758,7 @@
                 {
                   "text": "abartma",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "benzetme",
@@ -5970,7 +5970,7 @@
                 {
                   "text": "hece",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "aruz",
@@ -6180,7 +6180,7 @@
                 {
                   "text": "anlatım",
                   "isBlank": true,
-                  "correct": false
+                  "correct": true
                 },
                 {
                   "text": "okuma",
