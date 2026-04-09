@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import db from "@/db/drizzle";
 import { courses, units, lessons, challenges, challengeOptions } from "@/db/schema";
-import { eq, and, sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 // Course Actions
 export async function createCourse(data: { title: string; imageSrc: string }) {
