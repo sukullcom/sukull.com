@@ -36,7 +36,7 @@ export const PracticeModal = () => {
             Pratik dersi
           </DialogTitle>
           <DialogDescription className="text-center text-base">
-            Pratik dersi yaparak her doğru soru için 2 puan ve 1 can kazanabilirsin. Yanlış cevapladığın sorularda puan ve can kaybetmezsin.
+            Pratik derslerinde her doğru cevap için 5 puan kazanırsın. Yanlış cevapladığın sorularda puan veya can kaybetmezsin.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="mb-4">

@@ -243,9 +243,11 @@ export const FillBlankChallenge = ({
         })}
       </div>
 
-      <p className="text-sm text-gray-500 text-center">
-        Boşluğu doldurmak için bir seçenek seçin
-      </p>
+      {status === "none" && !selectedOption && (
+        <p className="text-sm text-gray-500 text-center">
+          Boşluğu doldurmak için bir seçenek seçin
+        </p>
+      )}
     </div>
   );
 };

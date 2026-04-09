@@ -59,7 +59,7 @@ export const upsertChallengeProgress = async (challengeId: number) => {
     await db
       .update(userProgress)
       .set({
-        points: currentUserProgress.points + 5,
+        points: currentUserProgress.points + SCORING_SYSTEM.LESSON_CHALLENGE_PRACTICE,
       })
       .where(eq(userProgress.userId, userId));
 
@@ -83,7 +83,7 @@ export const upsertChallengeProgress = async (challengeId: number) => {
 
   await db
     .update(userProgress)
-    .set({ points: currentUserProgress.points + 10 })
+    .set({ points: currentUserProgress.points + SCORING_SYSTEM.LESSON_CHALLENGE_FIRST })
     .where(eq(userProgress.userId, userId));
 
   await updateDailyStreak();
@@ -194,7 +194,7 @@ export const reduceHearts = async (challengeId: number) => {
   const newHeartCount = Math.max(currentUserProgress.hearts - 1, 0);
   const updateFields: Record<string, unknown> = {
     hearts: newHeartCount,
-    points: currentUserProgress.points - 1,
+    points: currentUserProgress.points + SCORING_SYSTEM.LESSON_CHALLENGE_PENALTY,
   };
   // Start regen timer if hearts drop below max for the first time
   if (!currentUserProgress.lastHeartRegenAt) {

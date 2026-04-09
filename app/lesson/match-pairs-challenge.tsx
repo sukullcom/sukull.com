@@ -116,13 +116,10 @@ export const MatchPairsChallenge = ({
         setSelectedCards([]);
         setIsChecking(false);
       } else {
-        onSelect(-1);
-        
-        // Reset selection after brief delay
         setTimeout(() => {
           setSelectedCards([]);
           setIsChecking(false);
-        }, 1000);
+        }, 800);
       }
     }
   };

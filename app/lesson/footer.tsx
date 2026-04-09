@@ -83,9 +83,8 @@ export const Footer = ({ onCheck, onSkipWrong, status, disabled, lessonId, expla
           {status === "wrong" && onSkipWrong && (
             <Button
               type="button"
-              variant="outline"
+              variant="dangerOutline"
               size="lg"
-              className="border-rose-300 text-rose-800 hover:bg-rose-50"
               onClick={onSkipWrong}
             >
               Sonraki soruya geç

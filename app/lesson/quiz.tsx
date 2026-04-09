@@ -238,7 +238,7 @@ export const Quiz = ({
           )}
 
           <div className="flex items-center gap-x-4 w-full">
-            <ResultCard variant="points" value={lessonPoints} />
+            <ResultCard variant="points" value={Math.max(0, lessonPoints)} />
             <ResultCard variant="hearts" value={hearts} hasInfiniteHearts={hasInfiniteHearts} />
           </div>
         </div>
@@ -278,7 +278,7 @@ export const Quiz = ({
             setWrongCount((c) => c + 1);
             if (!response?.error && !hasInfiniteHearts) {
               setHearts((prev) => Math.max(prev - 1, 0));
-              setLessonPoints((prev) => prev - 1);
+              setLessonPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_PENALTY);
             }
           })
           .catch(() => toast.error("Bir şeyler yanlış gitti. Lütfen tekrar deneyin."));
@@ -330,7 +330,7 @@ export const Quiz = ({
             correctControls.play();
             setStatus("correct");
             setCorrectCount((c) => c + 1);
-            setPercentage((prev) => prev + 100 / challenges.length);
+            setPercentage((prev) => Math.min(prev + 100 / challenges.length, 100));
 
             if (isPracticeMode) {
               setLessonPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_PRACTICE);
@@ -382,7 +382,7 @@ export const Quiz = ({
 
       <div className="flex-1">
         <div className="h-full flex items-center justify-center">
-          <div className="kg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col gap-y-12">
+            <div className="lg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col gap-y-12">
             <h1 className="text-lg lg:text-3xl text-center lg:text-start font-bold text-neutral-700">
               <MathRenderer>{title}</MathRenderer>
             </h1>
@@ -400,7 +400,7 @@ export const Quiz = ({
                 }}
                 status={status}
                 selectedOption={selectedOption}
-                disabled={pending}
+                disabled={pending || status !== "none"}
                 type={type}
                 question={challenge.question}
                 questionImageSrc={challenge.questionImageSrc}

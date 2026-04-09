@@ -60,7 +60,7 @@ export const ExitModal = () => {
                 router.push("/learn")
               }}
             >
-              Dersİ bİtİr
+              Dersi Bitir
             </Button>
           </div>
         </DialogFooter>

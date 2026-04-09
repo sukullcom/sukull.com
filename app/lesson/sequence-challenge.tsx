@@ -83,7 +83,6 @@ export const SequenceChallenge = ({
     }
   }, [status, selectedOption, items]);
 
-  // Function to check sequence correctness and select appropriate option
   const checkSequenceAndSelect = (items: SequenceItem[]) => {
     const isCorrect = items.every((item, index) => 
       item.correctOrder === index + 1
@@ -92,8 +91,6 @@ export const SequenceChallenge = ({
     if (isCorrect) {
       const correctOption = options.find(opt => opt.correct);
       setTimeout(() => onSelect(correctOption?.id ?? -2), 300);
-    } else {
-      setTimeout(() => onSelect(-1), 300);
     }
   };
 
