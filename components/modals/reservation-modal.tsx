@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import {
@@ -58,10 +58,12 @@ export const ReservationModal = ({
             <Image src="/mascot_red.svg" alt="Mascot" height={80} width={80} />
           </div>
           <DialogTitle className="text-center font-bold text-2xl">
-            Ders Rezervasyonu
+            Harika seçim!
           </DialogTitle>
           <DialogDescription className="text-center text-base">
-            {teacherName} ile {getDayName(selectedSlot.dayOfWeek)} günü saat {formatTime(selectedSlot.startTime)} için bir ders rezerve etmek istediğinizden emin misiniz?
+            <span className="font-medium">{teacherName}</span> ile{" "}
+            <span className="font-medium">{getDayName(selectedSlot.dayOfWeek)}</span> günü saat{" "}
+            <span className="font-medium">{formatTime(selectedSlot.startTime)}</span> için ders ayırtmak istiyorsun, doğru mu?
           </DialogDescription>
         </DialogHeader>
 
@@ -77,9 +79,9 @@ export const ReservationModal = ({
               {isLoading ? (
                 <div className="flex items-center justify-center">
                   <span className="h-4 w-4 mr-2 border-2 border-white border-t-transparent animate-spin rounded-full"></span>
-                  Rezervasyon yapılıyor...
+                  Ayırtılıyor...
                 </div>
-              ) : "Dersi Rezerve Et"}
+              ) : "Evet, ayırt!"}
             </Button>
             <Button
               variant="ghost"
@@ -88,7 +90,7 @@ export const ReservationModal = ({
               onClick={onClose}
               disabled={isLoading}
             >
-              İptal
+              Biraz daha düşüneyim
             </Button>
           </div>
         </DialogFooter>

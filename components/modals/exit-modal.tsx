@@ -35,10 +35,10 @@ export const ExitModal = () => {
             <Image src="/mascot_sad.svg" alt="Mascot" height={80} width={80} />
           </div>
           <DialogTitle className="text-center font-bold text-2xl">
-            Bekle, gitme!
+            Dur bir dakika!
           </DialogTitle>
           <DialogDescription className="text-center text-base">
-            Dersi bırakmak istediğine emin misin?
+            Bu kadar yakınken mi bırakıyorsun? Hadi biraz daha devam edelim, yapabilirsin!
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="mb-4">
@@ -49,7 +49,7 @@ export const ExitModal = () => {
               size="lg"
               onClick={close}
             >
-              Öğrenmeye devam et
+              Tamam, devam ediyorum!
             </Button>
             <Button
               variant="dangerOutline"
@@ -60,7 +60,7 @@ export const ExitModal = () => {
                 router.push("/learn")
               }}
             >
-              Dersi Bitir
+              Yine de çıkıyorum
             </Button>
           </div>
         </DialogFooter>

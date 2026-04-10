@@ -50,10 +50,10 @@ export const CompletionModal = () => {
             <Image src="/mascot_normal.svg" alt="Congratulations" height={100} width={100} />
           </div>
           <DialogTitle className="text-center font-bold text-2xl text-green-600">
-            🎉 Tebrikler! 🎉
+            Süpersin!
           </DialogTitle>
           <DialogDescription className="text-center text-base">
-            Tüm kelimeleri tamamladın! Harika iş çıkardın.
+            Tüm kelimeleri tamamladın, harika iş çıkardın! Böyle devam et!
           </DialogDescription>
         </DialogHeader>
         

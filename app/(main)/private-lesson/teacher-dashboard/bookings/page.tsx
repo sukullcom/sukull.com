@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { useLessonStatusUpdater } from "@/hooks/use-lesson-status-updater";
+import { CancelLessonModal } from "@/components/modals/cancel-lesson-modal";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { toast } from "sonner";
 
@@ -57,6 +58,13 @@ export default function TeacherBookingsPage() {
   const [teacherMeetLink, setTeacherMeetLink] = useState<string | null>(null);
   const [joiningLessonId, setJoiningLessonId] = useState<number | null>(null);
   const [cancellingLessonId, setCancellingLessonId] = useState<number | null>(null);
+  const [cancelModal, setCancelModal] = useState<{
+    isOpen: boolean;
+    bookingId: number | null;
+    studentName: string;
+    lessonTime: string;
+    isLoading: boolean;
+  }>({ isOpen: false, bookingId: null, studentName: "", lessonTime: "", isLoading: false });
   const lessonsPerPage = 5;
   
   // Use the lesson status updater hook to automatically update completed lessons
@@ -110,22 +118,38 @@ export default function TeacherBookingsPage() {
     }
   };
 
-  const handleCancelLesson = async (bookingId: number) => {
-    if (!confirm("Bu dersi iptal etmek istediğinize emin misiniz? Öğrencinin kredisi iade edilecektir.")) return;
-    setCancellingLessonId(bookingId);
+  const handleCancelLesson = (bookingId: number) => {
+    const booking = bookings.find((b) => b.id === bookingId);
+    if (!booking) return;
+    setCancelModal({
+      isOpen: true,
+      bookingId,
+      studentName: booking.studentName || "Öğrenci",
+      lessonTime: `${formatDate(booking.startTime)} ${formatTimeRange(booking.startTime)}`,
+      isLoading: false,
+    });
+  };
+
+  const confirmCancelLesson = async () => {
+    if (!cancelModal.bookingId) return;
+    setCancelModal((prev) => ({ ...prev, isLoading: true }));
+    setCancellingLessonId(cancelModal.bookingId);
     try {
-      const res = await fetch(`/api/private-lesson/cancel-lesson/${bookingId}`, { method: "POST" });
+      const res = await fetch(`/api/private-lesson/cancel-lesson/${cancelModal.bookingId}`, { method: "POST" });
       const data = await res.json();
       if (!res.ok) {
         toast.error(data.message || "Ders iptal edilemedi");
+        setCancelModal((prev) => ({ ...prev, isLoading: false }));
         return;
       }
-      setBookings(prev => prev.map(b =>
-        b.id === bookingId ? { ...b, status: "cancelled" } : b
-      ));
+      setBookings((prev) =>
+        prev.map((b) => (b.id === cancelModal.bookingId ? { ...b, status: "cancelled" } : b))
+      );
       toast.success(data.message || "Ders başarıyla iptal edildi");
+      setCancelModal({ isOpen: false, bookingId: null, studentName: "", lessonTime: "", isLoading: false });
     } catch {
       toast.error("Ders iptal edilirken bir hata oluştu");
+      setCancelModal((prev) => ({ ...prev, isLoading: false }));
     } finally {
       setCancellingLessonId(null);
     }
@@ -444,6 +468,15 @@ export default function TeacherBookingsPage() {
           )}
         </>
       )}
+
+      <CancelLessonModal
+        isOpen={cancelModal.isOpen}
+        onClose={() => setCancelModal({ isOpen: false, bookingId: null, studentName: "", lessonTime: "", isLoading: false })}
+        onConfirm={confirmCancelLesson}
+        teacherName={cancelModal.studentName}
+        lessonTime={cancelModal.lessonTime}
+        isLoading={cancelModal.isLoading}
+      />
     </div>
   );
 } 

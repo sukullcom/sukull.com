@@ -1,9 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { X, Star } from "lucide-react";
+import Image from "next/image";
+import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { toast } from "sonner";
 
 interface ReviewData {
@@ -30,30 +39,24 @@ export const ReviewLessonModal = ({
   teacherId,
   teacherName,
   lessonDate,
-  onReviewSubmitted
+  onReviewSubmitted,
 }: ReviewLessonModalProps) => {
   const [rating, setRating] = useState<number>(0);
   const [comment, setComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleStarClick = (starRating: number) => {
-    setRating(starRating);
-  };
-
   const handleSubmit = async () => {
     if (rating === 0) {
-      toast.error("Lütfen bir puan verin (1-5 yıldız)");
+      toast.error("Önce yıldız seçmeyi unutma!");
       return;
     }
 
     setIsSubmitting(true);
-    
+
     try {
       const response = await fetch("/api/private-lesson/submit-review", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           bookingId,
           teacherId,
@@ -68,8 +71,7 @@ export const ReviewLessonModal = ({
       }
 
       const result = await response.json();
-      
-      // Call the callback to update the parent component
+
       onReviewSubmitted({
         id: result.review.id,
         rating,
@@ -77,9 +79,7 @@ export const ReviewLessonModal = ({
         createdAt: new Date().toISOString(),
       });
 
-      toast.success("Değerlendirmeniz başarıyla gönderildi!");
-      
-      // Reset form
+      toast.success("Teşekkürler, değerlendirmen kaydedildi!");
       setRating(0);
       setComment("");
       onClose();
@@ -91,118 +91,109 @@ export const ReviewLessonModal = ({
     }
   };
 
-  const renderStars = () => {
-    return Array.from({ length: 5 }, (_, i) => {
-      const starRating = i + 1;
-      return (
-        <button
-          key={i}
-          type="button"
-          onClick={() => handleStarClick(starRating)}
-          className="focus:outline-none transition-colors"
-        >
-          <Star
-            className={`h-8 w-8 ${
-              starRating <= rating
-                ? "fill-yellow-400 text-yellow-400"
-                : "text-gray-300 hover:text-yellow-300"
-            }`}
-          />
-        </button>
-      );
-    });
-  };
-
-  const getRatingLabel = (rating: number) => {
-    switch (rating) {
-      case 1: return "Çok Kötü";
-      case 2: return "Kötü";
-      case 3: return "Orta";
-      case 4: return "İyi";
-      case 5: return "Mükemmel";
+  const getRatingLabel = (r: number) => {
+    switch (r) {
+      case 1: return "Pek değil";
+      case 2: return "İdare eder";
+      case 3: return "Fena değil";
+      case 4: return "Bayıldım!";
+      case 5: return "Efsane!";
       default: return "";
     }
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between p-6 border-b">
-          <h2 className="text-xl font-semibold">Dersi Değerlendir</h2>
-          <button
-            onClick={onClose}
-            disabled={isSubmitting}
-            className="p-1 hover:bg-gray-100 rounded-full transition-colors"
-          >
-            <X className="h-5 w-5" />
-          </button>
-        </div>
-
-        <div className="p-6 space-y-6">
-          <div>
-            <h3 className="font-medium text-gray-900 mb-2">Öğretmen: {teacherName}</h3>
-            <p className="text-sm text-gray-600">Ders Tarihi: {lessonDate}</p>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-md bg-white">
+        <DialogHeader>
+          <div className="flex items-center w-full justify-center mb-5">
+            <Image src="/mascot_orange.svg" alt="Mascot" height={80} width={80} />
           </div>
+          <DialogTitle className="text-center font-bold text-2xl">
+            Ders nasıldı?
+          </DialogTitle>
+          <DialogDescription className="text-center text-base">
+            <span className="font-medium">{teacherName}</span> ile{" "}
+            <span className="font-medium">{lessonDate}</span> tarihindeki dersini puanla! Geri bildirimin çok değerli.
+          </DialogDescription>
+        </DialogHeader>
 
+        <div className="space-y-4 py-2">
+          {/* Star Rating */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
-              Dersi nasıl değerlendiriyorsunuz? <span className="text-red-500">*</span>
-            </label>
-            <div className="flex items-center justify-center gap-1 mb-2">
-              {renderStars()}
+            <p className="text-sm font-medium text-gray-700 text-center mb-3">
+              Kaç yıldız verirsin?
+            </p>
+            <div className="flex items-center justify-center gap-1 mb-1">
+              {Array.from({ length: 5 }, (_, i) => {
+                const starRating = i + 1;
+                return (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => setRating(starRating)}
+                    className="focus:outline-none transition-transform hover:scale-110"
+                  >
+                    <Star
+                      className={`h-8 w-8 ${
+                        starRating <= rating
+                          ? "fill-amber-400 text-amber-400"
+                          : "text-gray-300 hover:text-amber-300"
+                      }`}
+                    />
+                  </button>
+                );
+              })}
             </div>
             {rating > 0 && (
-              <p className="text-center text-sm font-medium text-gray-700">
+              <p className="text-center text-sm font-medium text-gray-600">
                 {getRatingLabel(rating)} ({rating}/5)
               </p>
             )}
           </div>
 
+          {/* Comment */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Yorum (İsteğe bağlı)
+            <label className="block text-sm font-medium text-gray-700 mb-1.5">
+              Bir şey eklemek ister misin?
             </label>
             <Textarea
               value={comment}
               onChange={(e) => setComment(e.target.value)}
-              placeholder="Ders hakkındaki düşüncelerinizi paylaşın..."
-              className="min-h-[100px]"
+              placeholder="Derste en çok neyi beğendin?"
+              className="min-h-[80px] resize-none"
               maxLength={500}
               disabled={isSubmitting}
             />
-            <p className="text-xs text-gray-500 mt-1">
-              {comment.length}/500 karakter
+            <p className="text-xs text-gray-400 mt-1 text-right">
+              {comment.length}/500
             </p>
           </div>
         </div>
 
-        <div className="flex gap-3 p-6 border-t">
-          <Button
-            variant="primaryOutline"
-            onClick={onClose}
-            disabled={isSubmitting}
-            className="flex-1"
-          >
-            İptal
-          </Button>
-          <Button
-            onClick={handleSubmit}
-            disabled={isSubmitting || rating === 0}
-            className="flex-1"
-          >
-            {isSubmitting ? (
-              <>
-                <span className="h-4 w-4 mr-2 border-2 border-white border-t-transparent animate-spin rounded-full"></span>
-                Gönderiliyor...
-              </>
-            ) : (
-              "Değerlendirmeyi Gönder"
-            )}
-          </Button>
-        </div>
-      </div>
-    </div>
+        <DialogFooter className="mb-4">
+          <div className="flex flex-col gap-y-4 w-full">
+            <Button
+              variant="primary"
+              className="w-full"
+              size="lg"
+              onClick={handleSubmit}
+              disabled={isSubmitting || rating === 0}
+            >
+              {isSubmitting ? "Gönderiliyor..." : "Gönder!"}
+            </Button>
+            <Button
+              variant="default"
+              className="w-full"
+              size="lg"
+              onClick={onClose}
+              disabled={isSubmitting}
+            >
+              Sonra yaparım
+            </Button>
+          </div>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
-}; 
+};

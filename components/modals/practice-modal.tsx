@@ -33,10 +33,10 @@ export const PracticeModal = () => {
             <Image src="/heart.svg" alt="Heart" height={100} width={100} />
           </div>
           <DialogTitle className="text-center font-bold text-2xl">
-            Pratik dersi
+            Pratik zamanı!
           </DialogTitle>
           <DialogDescription className="text-center text-base">
-            Pratik derslerinde her doğru cevap için 5 puan kazanırsın. Yanlış cevapladığın sorularda puan veya can kaybetmezsin.
+            Burada rahatça pratik yapabilirsin! Her doğru cevap 5 puan kazandırır, yanlışlarda ise can ya da puan kaybetmezsin. Serbest mod!
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="mb-4">
@@ -47,7 +47,7 @@ export const PracticeModal = () => {
               size="lg"
               onClick={close}
             >
-              Anlaşıldı
+              Hadi başlayalım!
             </Button>
           </div>
         </DialogFooter>

@@ -27,7 +27,7 @@ export function WarningModal({ open, message, onClose }: WarningModalProps) {
             <Image src="/mascot_sad.svg" alt="Mascot" height={80} width={80} />
           </div>
           <DialogTitle className="text-center font-bold text-2xl">
-            Uyarı
+            Bir saniye!
           </DialogTitle>
           <DialogDescription className="text-center text-base">
             {message}
@@ -40,7 +40,7 @@ export function WarningModal({ open, message, onClose }: WarningModalProps) {
             size="lg"
             onClick={onClose}
           >
-            Tamam
+            Anladım
           </Button>
         </DialogFooter>
       </DialogContent>

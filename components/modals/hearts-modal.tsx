@@ -37,14 +37,14 @@ export const HeartsModal = () => {
       <DialogContent className="max-w-md bg-white">
         <DialogHeader>
           <div className="flex items-center w-full justify-center mb-5">
-            <Image src="/mascot_bad.svg" alt="Mascot" height={80} width={80} />
+            <Image src="/mascot_sad.svg" alt="Mascot" height={80} width={80} />
           </div>
           <DialogTitle className="text-center font-bold text-2xl">
-            Canın kalmadı!
+            Eyvah, canın bitti!
           </DialogTitle>
           <DialogDescription className="text-center text-base">
-            Mağazadan puanlarınla can doldurabilir, eski dersleri tekrar edebilir
-            veya canların her 4 saatte otomatik olarak yenilenmesini bekleyebilirsin.
+            Merak etme, mağazadan puanlarınla canlarını doldurabilirsin.
+            Ya da biraz bekle, canların 4 saatte bir yenileniyor!
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="mb-4">
@@ -55,7 +55,7 @@ export const HeartsModal = () => {
               size="lg"
               onClick={onClick}
             >
-              Mağazaya Git
+              Canlarımı doldur!
             </Button>
             <Button
               variant="primaryOutline"
@@ -63,7 +63,7 @@ export const HeartsModal = () => {
               size="lg"
               onClick={close}
             >
-              Hayır, teşekkür ederim
+              Biraz beklerim
             </Button>
           </div>
         </DialogFooter>

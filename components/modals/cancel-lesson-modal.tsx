@@ -47,23 +47,23 @@ export const CancelLessonModal = ({
             <Image src="/mascot_sad.svg" alt="Mascot" height={80} width={80} />
           </div>
           <DialogTitle className="text-center font-bold text-2xl">
-            Dersi İptal Et
+            Emin misin?
           </DialogTitle>
           <DialogDescription className="text-center text-base">
             {teacherName && lessonTime ? (
               <>
                 <span className="font-medium">{teacherName}</span> ile{" "}
-                <span className="font-medium">{lessonTime}</span> tarihindeki dersinizi iptal etmek istediğinizden emin misiniz?
+                <span className="font-medium">{lessonTime}</span> tarihindeki dersini iptal etmek üzeresin.
                 <br />
                 <br />
-                <span className="text-green-600 font-medium">Ders iptal edildiğinde krediniz hesabınıza iade edilecektir.</span>
+                <span className="text-green-600 font-medium">Merak etme, kredin hesabına iade edilecek.</span>
               </>
             ) : (
               <>
-                Bu dersi iptal etmek istediğinizden emin misiniz?
+                Bu dersi iptal etmek üzeresin.
                 <br />
                 <br />
-                <span className="text-green-600 font-medium">Ders iptal edildiğinde krediniz hesabınıza iade edilecektir.</span>
+                <span className="text-green-600 font-medium">Merak etme, kredin hesabına iade edilecek.</span>
               </>
             )}
           </DialogDescription>
@@ -77,7 +77,7 @@ export const CancelLessonModal = ({
               onClick={onClose}
               disabled={isLoading}
             >
-              Vazgeç
+              Hayır, vazgeçtim
             </Button>
             <Button
               variant="danger"
@@ -86,7 +86,7 @@ export const CancelLessonModal = ({
               onClick={onConfirm}
               disabled={isLoading}
             >
-              {isLoading ? "İptal Ediliyor..." : "Dersi İptal Et"}
+              {isLoading ? "İptal ediliyor..." : "Evet, iptal et"}
             </Button>
           </div>
         </DialogFooter>
