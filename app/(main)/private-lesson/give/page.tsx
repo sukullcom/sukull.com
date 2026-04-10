@@ -144,10 +144,21 @@ export default function GiveLessonPage() {
                 </Label>
                 <Select value={field} onValueChange={handleChangeField}>
                   <SelectValue placeholder="Hangi alanda ders vermek istiyorsunuz?" />
-                  <SelectItem value="English">İngilizce</SelectItem>
-                  <SelectItem value="Mathematics">Matematik</SelectItem>
-                  <SelectItem value="Physics">Fizik</SelectItem>
-                  <SelectItem value="Chess">Satranç</SelectItem>
+                  <SelectItem value="Matematik">Matematik</SelectItem>
+                  <SelectItem value="Fizik">Fizik</SelectItem>
+                  <SelectItem value="Kimya">Kimya</SelectItem>
+                  <SelectItem value="Biyoloji">Biyoloji</SelectItem>
+                  <SelectItem value="Tarih">Tarih</SelectItem>
+                  <SelectItem value="Coğrafya">Coğrafya</SelectItem>
+                  <SelectItem value="Edebiyat">Edebiyat</SelectItem>
+                  <SelectItem value="İngilizce">İngilizce</SelectItem>
+                  <SelectItem value="Almanca">Almanca</SelectItem>
+                  <SelectItem value="Fransızca">Fransızca</SelectItem>
+                  <SelectItem value="Felsefe">Felsefe</SelectItem>
+                  <SelectItem value="Müzik">Müzik</SelectItem>
+                  <SelectItem value="Resim">Resim</SelectItem>
+                  <SelectItem value="Bilgisayar Bilimleri">Bilgisayar Bilimleri</SelectItem>
+                  <SelectItem value="Ekonomi">Ekonomi</SelectItem>
                 </Select>
               </div>
 

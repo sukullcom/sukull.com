@@ -1,21 +1,19 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectItem, SelectValue } from "@/components/ui/select";
-import { Star, Filter } from "lucide-react";
+import { Star } from "lucide-react";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import UserCreditsDisplay from "@/components/user-credits-display";
+import { normalizeAvatarUrl } from "@/utils/avatar";
 
 interface Teacher {
   id: string;
   name: string;
   email: string;
   bio?: string;
-  meetLink?: string;
   avatar?: string;
   field?: string;
   fields?: string[];
@@ -24,90 +22,53 @@ interface Teacher {
 }
 
 const FIELD_OPTIONS = [
-  { value: "all", label: "Bütün Alanlar" },
-  { value: "Matematik", label: "Matematik" },
-  { value: "Fizik", label: "Fizik" },
-  { value: "Kimya", label: "Kimya" },
-  { value: "Biyoloji", label: "Biyoloji" },
-  { value: "Tarih", label: "Tarih" },
-  { value: "Coğrafya", label: "Coğrafya" },
-  { value: "Edebiyat", label: "Edebiyat" },
-  { value: "İngilizce", label: "İngilizce" },
-  { value: "Almanca", label: "Almanca" },
-  { value: "Fransızca", label: "Fransızca" },
-  { value: "Felsefe", label: "Felsefe" },
-  { value: "Müzik", label: "Müzik" },
-  { value: "Resim", label: "Resim" },
-  { value: "Bilgisayar Bilimleri", label: "Bilgisayar Bilimleri" },
-  { value: "Ekonomi", label: "Ekonomi" },
+  "Matematik", "Fizik", "Kimya", "Biyoloji", "Tarih", "Coğrafya",
+  "Edebiyat", "İngilizce", "Almanca", "Fransızca", "Felsefe",
+  "Müzik", "Resim", "Bilgisayar Bilimleri", "Ekonomi",
 ];
 
 export default function TeachersPage() {
   const router = useRouter();
-  const [filteredTeachers, setFilteredTeachers] = useState<Teacher[]>([]);
+  const [allTeachers, setAllTeachers] = useState<Teacher[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedField, setSelectedField] = useState<string>("all");
-  const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const fetchTeachers = useCallback(async (field: string = "all") => {
+  const fetchTeachers = useCallback(async () => {
     try {
       setLoading(true);
-      const url = field === "all" 
-        ? "/api/private-lesson/available-teachers"
-        : `/api/private-lesson/available-teachers?field=${encodeURIComponent(field)}`;
-      
-      const response = await fetch(url);
-      
+      const response = await fetch("/api/private-lesson/available-teachers");
       if (!response.ok) {
         if (response.status === 403) {
-          // Not an approved student, redirect to main page
           router.push("/private-lesson");
           return;
         }
         throw new Error("Failed to fetch teachers");
       }
-      
       const data = await response.json();
-      setFilteredTeachers(data.teachers);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching teachers:", error);
+      setAllTeachers(data.teachers || []);
+    } catch {
       setError("Öğretmenler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.");
+    } finally {
       setLoading(false);
     }
   }, [router]);
 
   useEffect(() => {
-    if (mounted) {
-      fetchTeachers(selectedField);
-    }
-  }, [selectedField, fetchTeachers, mounted]);
+    fetchTeachers();
+  }, [fetchTeachers]);
 
-  const handleFieldChange = (field: string) => {
-    setSelectedField(field);
-  };
+  const filteredTeachers = useMemo(() => {
+    if (selectedField === "all") return allTeachers;
+    return allTeachers.filter((t) =>
+      t.fields?.some((f) => f.toLowerCase().includes(selectedField.toLowerCase())) ||
+      t.field?.toLowerCase().includes(selectedField.toLowerCase())
+    );
+  }, [allTeachers, selectedField]);
 
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star
-        key={i}
-        className={`h-4 w-4 ${
-          i < rating
-            ? "fill-yellow-400 text-yellow-400"
-            : "text-gray-300"
-        }`}
-      />
-    ));
-  };
-
-  if (!mounted || loading) {
+  if (loading) {
     return (
-      <div className="min-h-screen">
+      <div className="py-12">
         <LoadingSpinner size="lg" />
       </div>
     );
@@ -115,122 +76,116 @@ export default function TeachersPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Hata</h1>
-          <p className="text-gray-700 mb-6">{error}</p>
-          <Button onClick={() => router.push("/private-lesson")}>
-            Geri Dön
-          </Button>
-        </div>
+      <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
+        <p className="text-gray-500 mb-4">{error}</p>
+        <Button variant="default" onClick={() => router.push("/private-lesson")}>
+          Geri Dön
+        </Button>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto py-10 px-4">
-      {/* User Credits Display */}
-      <UserCreditsDisplay className="mb-6" />
-      
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold">Öğretmenler</h1>
-        
-        {/* Field Filter */}
-        <div className="flex items-center gap-4">
-          <Filter className="h-5 w-5 text-gray-600" />
-          <Select 
-            value={selectedField} 
-            onValueChange={handleFieldChange}
-            className="w-[200px]"
+    <div className="max-w-4xl mx-auto px-3 sm:px-6 pb-10">
+      <UserCreditsDisplay className="mb-4" />
+
+      {/* Filter */}
+      <div className="flex flex-wrap gap-2 mb-6">
+        <button
+          onClick={() => setSelectedField("all")}
+          className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
+            selectedField === "all"
+              ? "bg-green-500 text-white"
+              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+          }`}
+        >
+          Tümü
+        </button>
+        {FIELD_OPTIONS.map((field) => (
+          <button
+            key={field}
+            onClick={() => setSelectedField(field)}
+            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
+              selectedField === field
+                ? "bg-green-500 text-white"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+            }`}
           >
-            <SelectValue placeholder="Alan Seçin" />
-            {FIELD_OPTIONS.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
-              </SelectItem>
-            ))}
-          </Select>
-        </div>
+            {field}
+          </button>
+        ))}
       </div>
 
       {filteredTeachers.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-xl text-gray-600">
-            {selectedField === "all" 
-              ? "Şu anda müsait öğretmen bulunmuyor." 
-              : "Bu alanda öğretmen bulunmuyor."}
+        <div className="text-center py-16">
+          <p className="text-gray-400">
+            {selectedField === "all"
+              ? "Şu anda müsait öğretmen bulunmuyor."
+              : `"${selectedField}" alanında öğretmen bulunmuyor.`}
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="space-y-3">
           {filteredTeachers.map((teacher) => (
-            <Card key={teacher.id} className="hover:shadow-lg transition-shadow border flex flex-col h-full">
-              <CardHeader className="flex-shrink-0">
-                <div className="flex justify-center mb-4">
-                  <div className="relative w-24 h-24 rounded-full overflow-hidden border-primary/20">
-                    <Image
-                      src={teacher.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(teacher.name)}`}
-                      alt={teacher.name}
-                      fill
-                      unoptimized
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
-                <CardTitle className="text-center text-xl">{teacher.name}</CardTitle>
-                {teacher.field && (
-                  <div className="text-center mt-2">
-                    {teacher.fields && teacher.fields.length > 0 ? (
-                      <div className="flex flex-wrap gap-1 justify-center">
-                        {teacher.fields.map((field, index) => (
-                          <span
-                            key={index}
-                            className="inline-block px-2 py-1 text-xs bg-primary/10 text-primary rounded-full"
-                          >
-                            {field}
-                          </span>
-                        ))}
-                      </div>
-                    ) : (
-                      <CardDescription className="font-medium text-primary">
-                        {teacher.field}
-                      </CardDescription>
-                    )}
+            <div
+              key={teacher.id}
+              className="bg-white border rounded-xl p-4 flex items-center gap-4 hover:border-green-300 hover:shadow-sm transition-all cursor-pointer"
+              onClick={() => router.push(`/private-lesson/teachers/${teacher.id}`)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => e.key === "Enter" && router.push(`/private-lesson/teachers/${teacher.id}`)}
+            >
+              <Image
+                src={normalizeAvatarUrl(teacher.avatar)}
+                alt={teacher.name}
+                width={56}
+                height={56}
+                unoptimized={teacher.avatar?.startsWith("http")}
+                className="rounded-full object-cover w-12 h-12 sm:w-14 sm:h-14 shrink-0"
+              />
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-gray-900 text-sm sm:text-base truncate">
+                  {teacher.name}
+                </h3>
+                {teacher.fields && teacher.fields.length > 0 && (
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {teacher.fields.map((f, i) => (
+                      <span key={i} className="text-[10px] sm:text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">
+                        {f}
+                      </span>
+                    ))}
                   </div>
                 )}
-                {/* Rating Display */}
-                {teacher.averageRating && teacher.averageRating > 0 && teacher.totalReviews && teacher.totalReviews > 0 ? (
-                  <div className="flex items-center justify-center gap-2 mt-3">
-                    <div className="flex gap-0.5">
-                      {renderStars(Math.round(teacher.averageRating))}
+                {teacher.averageRating && teacher.averageRating > 0 ? (
+                  <div className="flex items-center gap-1.5 mt-1.5">
+                    <div className="flex">
+                      {Array.from({ length: 5 }, (_, i) => (
+                        <Star
+                          key={i}
+                          className={`h-3 w-3 ${
+                            i < Math.round(teacher.averageRating!)
+                              ? "fill-amber-400 text-amber-400"
+                              : "text-gray-200"
+                          }`}
+                        />
+                      ))}
                     </div>
-                    <span className="text-sm font-medium text-gray-700">
+                    <span className="text-xs font-medium text-gray-600">
                       {teacher.averageRating.toFixed(1)}
                     </span>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-[10px] text-gray-400">
                       ({teacher.totalReviews})
                     </span>
                   </div>
                 ) : (
-                  <div className="text-center mt-3">
-                    <span className="text-sm text-gray-400">Henüz değerlendirme yok</span>
-                  </div>
+                  <p className="text-[10px] text-gray-400 mt-1">Henüz değerlendirme yok</p>
                 )}
-              </CardHeader>
-              <CardFooter className="mt-auto">
-                <Button 
-                  variant="primary"
-                  className="w-full" 
-                  onClick={() => router.push(`/private-lesson/teachers/${teacher.id}`)}
-                >
-                  Programa Bak
-                </Button>
-              </CardFooter>
-            </Card>
+              </div>
+              <span className="text-gray-300 text-lg shrink-0">›</span>
+            </div>
           ))}
         </div>
       )}
     </div>
   );
-} 
-
+}

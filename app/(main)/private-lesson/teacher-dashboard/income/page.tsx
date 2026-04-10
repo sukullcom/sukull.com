@@ -131,7 +131,7 @@ export default function TeacherIncomePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen">
+      <div className="py-12">
         <LoadingSpinner size="lg" />
       </div>
     );
@@ -139,25 +139,19 @@ export default function TeacherIncomePage() {
 
   if (error || !incomeData || !reviewData) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Hata</h1>
-          <p className="text-gray-700 mb-6">{error || "Veriler yüklenemedi"}</p>
-        </div>
+      <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
+        <p className="text-gray-500">{error || "Veriler yüklenemedi"}</p>
       </div>
     );
   }
 
-  // Prepare monthly data for display
   const monthlyData = Object.entries(incomeData.monthlyIncome)
     .sort()
     .reverse()
-    .slice(0, 6); // Last 6 months
+    .slice(0, 6);
 
   return (
-    <div className="container mx-auto py-6 sm:py-8 px-4 max-w-6xl">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Gelir Takibi ve Değerlendirmeler</h1>
-
+    <div className="max-w-5xl mx-auto px-3 sm:px-6 pb-10">
       {/* Summary Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-8">
         <Card>

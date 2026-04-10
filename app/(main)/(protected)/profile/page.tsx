@@ -1,11 +1,15 @@
 import { getProfileDataOnServer } from "@/actions/profile";
+import { getProfileAnalytics } from "@/actions/profile-analytics";
 import ProfilePageClient from "./profile-page-client";
 
 export default async function ProfilePage() {
   try {
-    const profile = await getProfileDataOnServer();
+    const [profile, analytics] = await Promise.all([
+      getProfileDataOnServer(),
+      getProfileAnalytics(),
+    ]);
 
-    return <ProfilePageClient profile={profile} allSchools={[]} />;
+    return <ProfilePageClient profile={profile} allSchools={[]} analytics={analytics} />;
   } catch (error) {
     console.error("Error fetching profile data:", error);
     return (

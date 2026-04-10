@@ -63,8 +63,8 @@ export default function GoogleMeetLinkManager() {
 
   if (loading) {
     return (
-      <div className="bg-white shadow rounded p-4 mb-6">
-        <div className="animate-pulse h-32 flex items-center justify-center">
+      <div className="bg-white rounded-xl border p-6">
+        <div className="animate-pulse h-24 flex items-center justify-center">
           <p className="text-gray-400">Yükleniyor...</p>
         </div>
       </div>
@@ -72,8 +72,8 @@ export default function GoogleMeetLinkManager() {
   }
 
   return (
-    <div className="bg-white shadow rounded p-4 mb-6">
-      <h2 className="text-xl font-bold mb-4">Google Meet Bağlantısı</h2>
+    <div className="bg-white rounded-xl shadow-sm border p-6">
+      <h2 className="text-lg font-semibold mb-4">Google Meet Bağlantısı</h2>
       
       <div className="space-y-4">
         <p className="text-gray-600">
@@ -104,7 +104,7 @@ export default function GoogleMeetLinkManager() {
               <Button
                 onClick={handleSave}
                 disabled={saving}
-                className="secondary"
+                variant="primary"
               >
                 {saving ? "Kaydediliyor..." : "Kaydet"}
               </Button>

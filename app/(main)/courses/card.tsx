@@ -6,6 +6,7 @@ import { memo } from "react";
 type Props = {
   title: string;
   id: number;
+  label: string;
   imageSrc: string;
   onClick: (id: number) => void;
   disabled?: boolean;
@@ -13,28 +14,22 @@ type Props = {
   category?: string;
 };
 
-const CATEGORY_STYLES: Record<string, { accent: string; activeBorder: string; badge: string }> = {
-  matematik: { accent: "border-blue-300", activeBorder: "border-blue-500 bg-blue-50/40", badge: "bg-blue-100 text-blue-700" },
-  turkce: { accent: "border-orange-300", activeBorder: "border-orange-500 bg-orange-50/40", badge: "bg-orange-100 text-orange-700" },
-  fen: { accent: "border-emerald-300", activeBorder: "border-emerald-500 bg-emerald-50/40", badge: "bg-emerald-100 text-emerald-700" },
-  fizik: { accent: "border-purple-300", activeBorder: "border-purple-500 bg-purple-50/40", badge: "bg-purple-100 text-purple-700" },
-  ingilizce: { accent: "border-rose-300", activeBorder: "border-rose-500 bg-rose-50/40", badge: "bg-rose-100 text-rose-700" },
+const CATEGORY_STYLES: Record<string, { activeBorder: string; badge: string }> = {
+  matematik:  { activeBorder: "border-blue-500 bg-blue-50/40",    badge: "bg-blue-100 text-blue-700" },
+  turkce:     { activeBorder: "border-orange-500 bg-orange-50/40", badge: "bg-orange-100 text-orange-700" },
+  fen:        { activeBorder: "border-emerald-500 bg-emerald-50/40", badge: "bg-emerald-100 text-emerald-700" },
+  fizik:      { activeBorder: "border-purple-500 bg-purple-50/40",  badge: "bg-purple-100 text-purple-700" },
+  kimya:      { activeBorder: "border-amber-500 bg-amber-50/40",   badge: "bg-amber-100 text-amber-700" },
+  biyoloji:   { activeBorder: "border-lime-500 bg-lime-50/40",     badge: "bg-lime-100 text-lime-700" },
+  tarih:      { activeBorder: "border-yellow-500 bg-yellow-50/40", badge: "bg-yellow-100 text-yellow-700" },
+  cografya:   { activeBorder: "border-teal-500 bg-teal-50/40",    badge: "bg-teal-100 text-teal-700" },
+  ingilizce:  { activeBorder: "border-rose-500 bg-rose-50/40",    badge: "bg-rose-100 text-rose-700" },
+  diger:      { activeBorder: "border-gray-500 bg-gray-50/40",    badge: "bg-gray-100 text-gray-700" },
 };
 
-function extractLabel(title: string): string {
-  const gradeMatch = title.match(/(\d+)\.\s*[Ss]ınıf\s+(.*)/);
-  if (gradeMatch) return gradeMatch[1] + ". Sınıf";
-
-  const engMatch = title.match(/İngilizce\s*\(([^)]+)\)/i);
-  if (engMatch) return engMatch[1];
-
-  return title;
-}
-
 export const Card = memo(
-  ({ title, id, imageSrc, disabled, onClick, active, category }: Props) => {
-    const style = CATEGORY_STYLES[category || ""] || CATEGORY_STYLES.matematik;
-    const label = extractLabel(title);
+  ({ title, id, label, imageSrc, disabled, onClick, active, category }: Props) => {
+    const style = CATEGORY_STYLES[category || "diger"] || CATEGORY_STYLES.diger;
 
     return (
       <div
@@ -75,7 +70,7 @@ export const Card = memo(
 
         <span
           className={cn(
-            "text-xs font-bold px-2.5 py-1 rounded-full mt-1",
+            "text-[11px] sm:text-xs font-bold px-2.5 py-1 rounded-full mt-1 text-center leading-tight",
             style.badge
           )}
         >

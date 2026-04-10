@@ -211,13 +211,13 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
           const authData = await authResponse.json();
           
           if (!authData.authenticated) {
-            toast.error("Please log in to view teacher details");
+            toast.error("Öğretmen detaylarını görüntülemek için giriş yapınız");
             router.push("/login");
             return;
           }
         } catch (authError) {
           console.error("Auth check failed:", authError);
-          toast.error("Authentication check failed. Please log in.");
+          toast.error("Kimlik doğrulama hatası. Lütfen giriş yapın.");
           router.push("/login");
           return;
         }
@@ -365,7 +365,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
 
   if (!mounted || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="py-12">
         <LoadingSpinner size="lg" />
       </div>
     );
@@ -373,14 +373,11 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
 
   if (error || !teacher) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Hata</h1>
-          <p className="text-gray-700 mb-6">{error || "Öğretmen bulunamadı"}</p>
-          <Button onClick={() => router.push("/private-lesson/teachers")}>
-            Öğretmenlere Dön
-          </Button>
-        </div>
+      <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
+        <p className="text-gray-500 mb-4">{error || "Öğretmen bulunamadı"}</p>
+        <Button variant="default" onClick={() => router.push("/private-lesson/teachers")}>
+          Öğretmenlere Dön
+        </Button>
       </div>
     );
   }
@@ -399,11 +396,8 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
   const sortedDays = sortDaysByCurrentDay(Object.keys(availabilityByDay));
 
   return (
-    <div className="container mx-auto py-10 px-4 max-w-5xl">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">{teacher.name}</h1>
-
-      {/* User Credits Display */}
-      <UserCreditsDisplay className="mb-6" />
+    <div className="max-w-5xl mx-auto px-3 sm:px-6 pb-10">
+      <UserCreditsDisplay className="mb-4" />
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Teacher profile */}

@@ -126,20 +126,18 @@ export default function TeacherDashboardPage() {
 
   if (!mounted || loading) {
     return (
-      <div className="min-h-screen">
+      <div className="py-12">
         <LoadingSpinner size="lg" />
       </div>
     );
   }
 
-  // Don't render anything while redirecting
   if (!isTeacher) {
     return null;
   }
 
   return (
-    <div className="container max-w-3xl mx-auto py-8 sm:py-12 px-4">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">Profil Yönetimi</h1>
+    <div className="max-w-3xl mx-auto px-3 sm:px-6 pb-10">
       
       <div className="space-y-8">
         {/* Profile Summary and Bio Combined */}

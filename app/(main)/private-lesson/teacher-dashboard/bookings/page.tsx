@@ -255,7 +255,7 @@ export default function TeacherBookingsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen">
+      <div className="py-12">
         <LoadingSpinner size="lg" />
       </div>
     );
@@ -263,41 +263,34 @@ export default function TeacherBookingsPage() {
 
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <div className="text-red-500">{error}</div>
-        <Button onClick={() => window.location.reload()} className="mt-4">
-          Tekrar Dene
-        </Button>
+      <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
+        <p className="text-gray-500 mb-4">{error}</p>
+        <Button onClick={() => window.location.reload()}>Tekrar Dene</Button>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto py-10 px-4">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold">Öğrenci Randevularım</h1>
-      </div>
-
+    <div className="max-w-4xl mx-auto px-3 sm:px-6 pb-10">
       {bookings.length === 0 ? (
-        <div className="text-center py-12 border rounded-lg bg-gray-50">
-          <h2 className="text-xl font-semibold mb-4">Henüz Ders Kaydınız Yok</h2>
-          <p className="text-gray-600 mb-6">Şu an için rezerve edilmiş ders bulunmuyor.</p>
+        <div className="text-center py-16">
+          <p className="text-gray-400">Şu an için rezerve edilmiş ders bulunmuyor.</p>
         </div>
       ) : (
         <>
           {/* Tab navigation */}
-          <div className="flex border-b mb-6">
+          <div className="flex bg-gray-100 rounded-xl p-1 gap-1 mb-6">
             <button
-              className={`py-2 px-4 font-medium ${activeTab === 'upcoming' ? 'text-primary border-b-2 border-primary' : 'text-gray-500'}`}
+              className={`flex-1 rounded-lg py-2.5 px-3 text-sm font-semibold transition-all ${activeTab === 'upcoming' ? 'bg-white text-green-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
               onClick={() => setActiveTab('upcoming')}
             >
-              Yaklaşan Dersler {upcomingBookings.length > 0 && `(${upcomingBookings.length})`}
+              Yaklaşan {upcomingBookings.length > 0 && `(${upcomingBookings.length})`}
             </button>
             <button
-              className={`py-2 px-4 font-medium ${activeTab === 'completed' ? 'text-primary border-b-2 border-primary' : 'text-gray-500'}`}
+              className={`flex-1 rounded-lg py-2.5 px-3 text-sm font-semibold transition-all ${activeTab === 'completed' ? 'bg-white text-green-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
               onClick={() => setActiveTab('completed')}
             >
-              Tamamlanan Dersler {completedBookings.length > 0 && `(${completedBookings.length})`}
+              Tamamlanan {completedBookings.length > 0 && `(${completedBookings.length})`}
             </button>
           </div>
 
