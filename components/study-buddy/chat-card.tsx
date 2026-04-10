@@ -1,5 +1,4 @@
 import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import { normalizeAvatarUrl } from "@/utils/avatar";
 
@@ -56,36 +55,39 @@ export function ChatCard({ chat, currentUser, onClick, isSelected }: ChatCardPro
   };
 
   return (
-    <Card
-      className={`cursor-pointer transition-colors ${
-        isSelected ? "bg-gray-50 border-green-500" : "hover:bg-gray-50"
+    <div
+      className={`flex items-center gap-2.5 p-2.5 rounded-lg cursor-pointer transition-colors ${
+        isSelected
+          ? "bg-green-50 ring-1 ring-green-300"
+          : "hover:bg-gray-50"
       }`}
       onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => e.key === "Enter" && onClick()}
     >
-      <CardContent className="p-3 sm:p-4">
-        <div className="flex items-center gap-2 sm:gap-3">
-          <Image
-            src={normalizeAvatarUrl(typeof otherParticipantData === 'object' ? otherParticipantData?.avatarUrl : '')}
-            width={36}
-            height={36}
-            alt="Avatar"
-            className="rounded-full object-cover w-9 h-9 sm:w-10 sm:h-10 shrink-0"
-          />
-          <div className="flex-1 min-w-0">
-            <h4 className="font-medium text-gray-900 truncate">
-              {typeof otherParticipantData === 'object' && otherParticipantData?.userName || "Kullanıcı"}
-            </h4>
-            {chat.last_message && (
-              <p className="text-sm text-muted-foreground truncate">
-                {chat.last_message}
-              </p>
-            )}
-          </div>
-          <div className="text-xs text-muted-foreground">
+      <Image
+        src={normalizeAvatarUrl(typeof otherParticipantData === 'object' ? otherParticipantData?.avatarUrl : '')}
+        width={40}
+        height={40}
+        alt="Avatar"
+        className="rounded-full object-cover w-9 h-9 sm:w-10 sm:h-10 shrink-0"
+      />
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center justify-between gap-2">
+          <h4 className="font-medium text-sm text-gray-900 truncate">
+            {typeof otherParticipantData === 'object' && otherParticipantData?.userName || "Kullanıcı"}
+          </h4>
+          <span className="text-[10px] text-gray-400 shrink-0">
             {formatTime(chat.last_updated)}
-          </div>
+          </span>
         </div>
-      </CardContent>
-    </Card>
+        {chat.last_message && (
+          <p className="text-xs text-gray-400 truncate mt-0.5">
+            {chat.last_message}
+          </p>
+        )}
+      </div>
+    </div>
   );
-} 
+}

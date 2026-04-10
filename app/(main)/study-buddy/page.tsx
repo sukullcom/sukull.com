@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { FeedWrapper } from "@/components/feed-wrapper";
@@ -23,22 +23,16 @@ import {
   Users, 
   MessageCircle, 
   Plus, 
-  Search, 
   Filter,
   BookOpen,
-  Clock,
   Send,
   Edit,
   AlertCircle,
-  X 
+  X,
+  Lock,
+  Sparkles,
 } from "lucide-react";
 import { StudyBuddySchoolSelector } from "@/components/study-buddy-school-selector";
-
-interface SchoolItem {
-  id: number;
-  name: string;
-  type: string;
-}
 
 interface StudyBuddyPost {
   id: number;
@@ -84,11 +78,6 @@ interface UserMetadata {
 
 const POSTS_PER_PAGE = 10;
 const THIRTY_DAYS_IN_MS = 30 * 24 * 60 * 60 * 1000;
-
-// Cache for schools data to avoid repeated fetches
-const schoolsCache: SchoolItem[] | null = null;
-const schoolsCacheTimestamp = 0;
-const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
 
 // Anti-spam and resource protection constants
 const MESSAGE_LIMITS = {
@@ -198,10 +187,6 @@ export default function StudyBuddyPage() {
   // Refs
   const messageEndRef = useRef<HTMLDivElement>(null);
 
-  // Warning modal
-  const [warningOpen, setWarningOpen] = useState<boolean>(false);
-  const [warningMessage, setWarningMessage] = useState<string>("");
-  
   // Anti-spam tracking
   const [lastMessageTime, setLastMessageTime] = useState<number>(0);
   const [lastPostTime, setLastPostTime] = useState<number>(0);
@@ -214,12 +199,8 @@ export default function StudyBuddyPage() {
   const [editPostReason, setEditPostReason] = useState<string>("");
   const [showEditPostForm, setShowEditPostForm] = useState<boolean>(false);
   
-  // Add totalPosts state
-  const [totalPosts, setTotalPosts] = useState<number>(0);
   
   const showWarning = useCallback((msg: string) => {
-    setWarningMessage(msg);
-    setWarningOpen(true);
     turkishToast.warning(msg);
   }, []);
 
@@ -556,10 +537,8 @@ export default function StudyBuddyPage() {
         });
         
         setAllPostsRaw(enrichedPosts);
-        setTotalPosts(count || 0);
       } else {
         setAllPostsRaw([]);
-        setTotalPosts(0);
         }
       }
     } catch (error) {
@@ -1098,170 +1077,204 @@ export default function StudyBuddyPage() {
   return (
     <div className="flex flex-row-reverse gap-[48px] px-3 sm:px-6">
       <StickyWrapper>
-        <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <Users className="h-5 w-5 text-green-600" />
-              <CardTitle className="text-green-800">Çalışma Arkadaşları</CardTitle>
+        <div className="space-y-4">
+          <Card className="border-green-200 overflow-hidden">
+            <div className="bg-gradient-to-r from-green-500 to-emerald-500 px-4 py-3">
+              <div className="flex items-center gap-2 text-white">
+                <Users className="h-5 w-5" />
+                <span className="font-bold text-sm">Özet</span>
+              </div>
             </div>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-green-700">Gösterilen Gönderi</span>
-              <Badge variant="secondary" className="bg-green-100 text-green-800">
-                {totalFilteredPosts}
-              </Badge>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm text-green-700">Aktif Sohbet</span>
-              <Badge variant="secondary" className="bg-green-100 text-green-800">
-                {chats.length}
-              </Badge>
-            </div>
-            <Separator className="bg-green-200" />
-            <div className="text-xs text-green-600">
-              <p>• Aylık gönderi limiti: {POST_LIMITS.MAX_PER_MONTH}</p>
-              <p>• Günlük mesaj limiti: {MESSAGE_LIMITS.MAX_PER_DAY}</p>
-            </div>
-          </CardContent>
-        </Card>
+            <CardContent className="p-4 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-600">Gönderi</span>
+                <Badge variant="secondary" className="bg-green-100 text-green-700 font-bold">
+                  {totalFilteredPosts}
+                </Badge>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-gray-600">Aktif Sohbet</span>
+                <Badge variant="secondary" className="bg-green-100 text-green-700 font-bold">
+                  {chats.length}
+                </Badge>
+              </div>
+              <Separator />
+              <div className="text-xs text-gray-500 space-y-1">
+                <p>Aylık gönderi: {POST_LIMITS.MAX_PER_MONTH}</p>
+                <p>Günlük mesaj: {MESSAGE_LIMITS.MAX_PER_DAY}</p>
+              </div>
+            </CardContent>
+          </Card>
 
-        <Card className="bg-gradient-to-br from-blue-50 to-sky-50 border-blue-200">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-2">
-              <BookOpen className="h-5 w-5 text-blue-600" />
-              <CardTitle className="text-blue-800">Çalışma İpuçları</CardTitle>
+          <Card className="border-blue-200 overflow-hidden">
+            <div className="bg-gradient-to-r from-blue-500 to-sky-500 px-4 py-3">
+              <div className="flex items-center gap-2 text-white">
+                <BookOpen className="h-5 w-5" />
+                <span className="font-bold text-sm">İpuçları</span>
+              </div>
             </div>
-          </CardHeader>
-          <CardContent className="text-sm text-blue-700 space-y-2">
-            <p>• Çalışma arkadaşları ile belirli hedefler koyun</p>
-            <p>• Düzenli çalışma programları oluşturun</p>
-            <p>• Birbirinizi motive edin</p>
-            <p>• Başarılarınızı paylaşın</p>
-          </CardContent>
-        </Card>
+            <CardContent className="p-4 text-sm text-gray-600 space-y-2">
+              <p>✅ Belirli hedefler koyun</p>
+              <p>📅 Düzenli çalışma programları oluşturun</p>
+              <p>💪 Birbirinizi motive edin</p>
+              <p>🎯 Başarılarınızı paylaşın</p>
+            </CardContent>
+          </Card>
+        </div>
       </StickyWrapper>
 
       <FeedWrapper>
         <div className="space-y-6">
           {/* Header */}
-          <div className="text-center space-y-2">
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Çalışma Arkadaşları</h1>
-            <p className="text-sm sm:text-base text-muted-foreground">
-              Benzer hedeflere sahip çalışma arkadaşları bul ve birlikte başarıya ulaş
-            </p>
+          <div className="flex items-center gap-x-3">
+            <Image
+              src="/mascot_purple.svg"
+              alt="Maskot"
+              height={60}
+              width={60}
+            />
+            <div>
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Çalışma Arkadaşları</h1>
+              <p className="text-sm text-muted-foreground">
+                Benzer hedeflere sahip arkadaşlar bul, birlikte başar
+              </p>
+            </div>
           </div>
 
+          {!userAchievements.studyBuddyUnlocked && userStreak < 7 && (
+            <Card className="border-amber-200 bg-amber-50">
+              <CardContent className="p-4 flex items-center gap-3">
+                <Lock className="h-5 w-5 text-amber-600 shrink-0" />
+                <div className="text-sm">
+                  <span className="font-medium text-amber-800">Gönderi ve mesaj göndermek için </span>
+                  <span className="font-bold text-amber-900">7 gün istikrar</span>
+                  <span className="font-medium text-amber-800"> gerekiyor. </span>
+                  <span className="text-amber-700">({userStreak}/7 gün)</span>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           {/* Tab Navigation */}
-          <Card>
-            <CardContent className="p-0">
-              <div className="flex border-b">
-            <Button
-                  variant={activeTab === "allPosts" ? "secondary" : "ghost"}
-                  className="flex-1 rounded-none border-0 h-10 sm:h-12 text-xs sm:text-sm"
+          <div className="flex bg-gray-100 rounded-xl p-1 gap-1">
+            <button
+              className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs sm:text-sm font-semibold transition-all ${
+                activeTab === "allPosts"
+                  ? "bg-white text-green-700 shadow-sm"
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
               onClick={() => setActiveTab("allPosts")}
             >
-                  <Users className="h-4 w-4 sm:mr-2" />
-                  <span className="hidden sm:inline">Tüm Gönderiler</span>
-                  <span className="sm:hidden ml-1">Gönderiler</span>
-            </Button>
-            <Button
-                  variant={activeTab === "myPosts" ? "secondary" : "ghost"}
-                  className="flex-1 rounded-none border-0 h-10 sm:h-12 text-xs sm:text-sm"
+              <Users className="h-4 w-4" />
+              <span className="hidden sm:inline">Tüm Gönderiler</span>
+              <span className="sm:hidden">Gönderiler</span>
+            </button>
+            <button
+              className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs sm:text-sm font-semibold transition-all ${
+                activeTab === "myPosts"
+                  ? "bg-white text-green-700 shadow-sm"
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
               onClick={() => setActiveTab("myPosts")}
             >
-                  <Edit className="h-4 w-4 sm:mr-2" />
-                  <span className="hidden sm:inline">Gönderilerim</span>
-                  <span className="sm:hidden ml-1">Benim</span>
-            </Button>
-            <Button
-                  variant={activeTab === "chats" ? "secondary" : "ghost"}
-                  className="flex-1 rounded-none border-0 h-10 sm:h-12 text-xs sm:text-sm"
+              <Edit className="h-4 w-4" />
+              <span className="hidden sm:inline">Gönderilerim</span>
+              <span className="sm:hidden">Benim</span>
+            </button>
+            <button
+              className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs sm:text-sm font-semibold transition-all ${
+                activeTab === "chats"
+                  ? "bg-white text-green-700 shadow-sm"
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
               onClick={() => setActiveTab("chats")}
             >
-                  <MessageCircle className="h-4 w-4 sm:mr-2" />
-                  <span className="hidden sm:inline">Sohbetlerim</span>
-                  <span className="sm:hidden ml-1">Sohbet</span>
-            </Button>
+              <MessageCircle className="h-4 w-4" />
+              <span className="hidden sm:inline">Sohbetlerim</span>
+              <span className="sm:hidden">Sohbet</span>
+            </button>
           </div>
-            </CardContent>
-          </Card>
 
           {/* Tab Content */}
             {activeTab === "allPosts" && (
-            <div className="space-y-6">
-              {/* Filters */}
-              <Card>
-                <CardHeader className="px-4 sm:px-6">
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                    <div className="flex items-center gap-2">
-                      <Filter className="h-5 w-5 text-gray-600" />
-                      <CardTitle className="text-base sm:text-lg">Filtreler</CardTitle>
+            <div className="space-y-4">
+              {/* Action Bar */}
+              <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="w-full sm:w-auto"
+                  onClick={() => setShowNewPostForm(!showNewPostForm)}
+                >
+                  <Plus className="mr-2 h-4 w-4" />
+                  Yeni Gönderi
+                </Button>
+              </div>
+
+              {/* Filters (collapsible on mobile) */}
+              <details className="group">
+                <summary className="flex items-center gap-2 cursor-pointer text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors list-none">
+                  <Filter className="h-4 w-4" />
+                  <span>Filtrele</span>
+                  <span className="text-xs text-gray-400 ml-1">
+                    {(filterPurpose || selectedSchoolId) ? "(aktif)" : ""}
+                  </span>
+                </summary>
+                <Card className="mt-3">
+                  <CardContent className="p-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Çalışma Amacı</label>
+                        <select
+                          value={filterPurpose}
+                          onChange={(e) => setFilterPurpose(e.target.value)}
+                          className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20"
+                        >
+                          <option value="">Tümü</option>
+                          {PURPOSE_OPTIONS.map((opt) => (
+                            <option key={opt} value={opt}>
+                              {opt}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Okul Filtresi</label>
+                        <StudyBuddySchoolSelector
+                          onSchoolSelect={setSelectedSchoolId}
+                          selectedSchoolId={selectedSchoolId}
+                        />
+                      </div>
                     </div>
-                    <Button
-                      variant="primary"
-                      size="sm"
-                      className="w-full sm:w-auto"
-                      onClick={() => setShowNewPostForm(!showNewPostForm)}
-                    >
-                      <Plus className="mr-2 h-4 w-4" />
-                      Yeni Gönderi
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">Çalışma Amacı</label>
-                    <select
-                      value={filterPurpose}
-                      onChange={(e) => setFilterPurpose(e.target.value)}
-                        className="w-full rounded-xl border-2 border-gray-200 p-3 focus:border-green-500 focus:outline-none"
-                    >
-                        <option value="">Tümü</option>
-                      {PURPOSE_OPTIONS.map((opt) => (
-                        <option key={opt} value={opt}>
-                          {opt}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">Okul Filtresi</label>
-                      <StudyBuddySchoolSelector
-                        onSchoolSelect={setSelectedSchoolId}
-                        selectedSchoolId={selectedSchoolId}
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </details>
 
               {/* New Post Form */}
               {showNewPostForm && (
-                <Card className="border-green-200 bg-green-50">
-                  <CardHeader>
-                    <div className="flex items-center justify-between">
-                      <CardTitle className="text-green-800">Yeni Gönderi Oluştur</CardTitle>
-                  <Button
-                        variant="ghost"
-                    size="sm"
-                        onClick={() => setShowNewPostForm(false)}
-                  >
-                        <X className="h-4 w-4" />
-                  </Button>
-                </div>
+                <Card className="border-green-300 overflow-hidden">
+                  <div className="bg-gradient-to-r from-green-500 to-emerald-500 px-4 py-3 flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-white">
+                      <Sparkles className="h-4 w-4" />
+                      <span className="font-bold text-sm">Yeni Gönderi</span>
+                    </div>
+                    <button
+                      className="text-white/80 hover:text-white transition-colors"
+                      onClick={() => setShowNewPostForm(false)}
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <CardContent className="p-4 space-y-4">
                     {creationError && (
-                      <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg">
+                      <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg border border-red-200">
                         {creationError}
                       </div>
                     )}
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">Çalışma Amacı</label>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Çalışma Amacı</label>
                       <select
-                        className="w-full rounded-xl border-2 border-gray-200 p-3 focus:border-green-500 focus:outline-none"
+                        className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20"
                         value={postPurpose}
                         onChange={(e) => setPostPurpose(e.target.value)}
                       >
@@ -1273,22 +1286,22 @@ export default function StudyBuddyPage() {
                         ))}
                       </select>
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-sm font-medium">Açıklama</label>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Açıklama</label>
                       <textarea
-                        className="w-full rounded-xl border-2 border-gray-200 p-3 focus:border-green-500 focus:outline-none min-h-[100px]"
+                        className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20 min-h-[90px] resize-none"
                         value={postReason}
                         onChange={(e) => setPostReason(e.target.value)}
-                        placeholder={`Neden çalışma arkadaşı arıyorsun? (max ${POST_LIMITS.MAX_REASON_LENGTH} karakter)`}
+                        placeholder="Neden çalışma arkadaşı arıyorsun?"
                         maxLength={POST_LIMITS.MAX_REASON_LENGTH}
                       />
-                      <div className="flex justify-between text-xs text-gray-500">
-                        <span>{postReason.length}/{POST_LIMITS.MAX_REASON_LENGTH} karakter</span>
-                        <span>Aylık limit: {POST_LIMITS.MAX_PER_MONTH} gönderi</span>
+                      <div className="flex justify-between text-[10px] text-gray-400">
+                        <span>{postReason.length}/{POST_LIMITS.MAX_REASON_LENGTH}</span>
+                        <span>Aylık limit: {POST_LIMITS.MAX_PER_MONTH}</span>
                       </div>
                     </div>
                     <Button
-                      variant="primary"
+                      variant="secondary"
                       className="w-full"
                       onClick={handleCreatePost}
                       disabled={!postPurpose || !postReason}
@@ -1297,116 +1310,92 @@ export default function StudyBuddyPage() {
                     </Button>
                   </CardContent>
                 </Card>
-                )}
+              )}
 
-                {/* Posts List */}
-              <div className="space-y-4">
-                  {loadingPosts ? (
+              {/* Posts List */}
+              <div className="space-y-3">
+                {loadingPosts ? (
                   <LoadingSpinner size="lg" />
+                ) : displayedPosts.length === 0 ? (
+                  <Card>
+                    <CardContent className="p-8 text-center">
+                      <Users className="mx-auto h-10 w-10 text-gray-300 mb-3" />
+                      <p className="text-sm text-gray-500">Henüz gönderi bulunmuyor.</p>
+                      <p className="text-xs text-gray-400 mt-1">İlk gönderiyi sen oluştur!</p>
+                    </CardContent>
+                  </Card>
                 ) : (
-                  <>
-                    {displayedPosts.map((post) => (
-                      <PostCard
-                          key={post.id}
-                        post={post}
-                        currentUser={currentUser}
-                        onChatRequest={handleOpenChat}
-                      />
-                    ))}
-                  </>
-                  )}
-                            </div>
+                  displayedPosts.map((post) => (
+                    <PostCard
+                      key={post.id}
+                      post={post}
+                      currentUser={currentUser}
+                      onChatRequest={handleOpenChat}
+                    />
+                  ))
+                )}
+              </div>
 
-                {/* Pagination */}
+              {/* Pagination */}
               {totalFilteredPosts > POSTS_PER_PAGE && (
-                <div className="flex flex-col items-center gap-3 mt-6">
-                  <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
-                            <Button
-                      variant="secondary"
-                              size="sm"
-                      className="text-xs sm:text-sm px-2 sm:px-3"
-                      onClick={() => setCurrentPage(0)}
-                      disabled={currentPage === 0}
-                            >
-                      İlk
-                            </Button>
-                  <Button
-                      variant="secondary"
-                    size="sm"
-                    className="text-xs sm:text-sm px-2 sm:px-3"
+                <div className="flex items-center justify-center gap-2 pt-2">
+                  <button
+                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-gray-100 hover:bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                     onClick={goToPrevPage}
                     disabled={currentPage === 0}
                   >
-                      ←
-                  </Button>
-                    <div className="flex items-center px-3 py-1.5 rounded-lg bg-gray-100">
-                      <span className="text-xs sm:text-sm font-medium">
-                        {currentPage + 1} / {Math.ceil(totalFilteredPosts / POSTS_PER_PAGE)}
-                      </span>
-                    </div>
-                  <Button
-                      variant="secondary"
-                    size="sm"
-                    className="text-xs sm:text-sm px-2 sm:px-3"
+                    ← Önceki
+                  </button>
+                  <span className="text-xs font-medium text-gray-500 px-2">
+                    {currentPage + 1} / {Math.ceil(totalFilteredPosts / POSTS_PER_PAGE)}
+                  </span>
+                  <button
+                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-gray-100 hover:bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                     onClick={goToNextPage}
-                      disabled={currentPage >= Math.ceil(totalFilteredPosts / POSTS_PER_PAGE) - 1}
-                    >
-                      →
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      className="text-xs sm:text-sm px-2 sm:px-3"
-                      onClick={() => setCurrentPage(Math.ceil(totalFilteredPosts / POSTS_PER_PAGE) - 1)}
-                      disabled={currentPage >= Math.ceil(totalFilteredPosts / POSTS_PER_PAGE) - 1}
-                    >
-                      Son
-                  </Button>
-                </div>
-                  <div className="text-xs sm:text-sm text-muted-foreground">
-                    Toplam {totalFilteredPosts} gönderi
-                </div>
+                    disabled={currentPage >= Math.ceil(totalFilteredPosts / POSTS_PER_PAGE) - 1}
+                  >
+                    Sonraki →
+                  </button>
                 </div>
               )}
-              </div>
+            </div>
             )}
 
           {/* My Posts Tab */}
-            {activeTab === "myPosts" && (
-            <div className="space-y-6">
-                {loadingMyPosts ? (
+          {activeTab === "myPosts" && (
+            <div className="space-y-4">
+              {loadingMyPosts ? (
                 <LoadingSpinner size="lg" />
               ) : (
                 <>
-                  {/* Edit Form */}
                   {showEditPostForm && editingPost && (
-                    <Card className="border-blue-200 bg-blue-50">
-                      <CardHeader>
-                        <div className="flex items-center justify-between">
-                          <CardTitle className="text-blue-800">Gönderi Düzenle</CardTitle>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => {
-                              setShowEditPostForm(false);
-                              setEditingPost(null);
-                              setCreationError("");
-                            }}
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
+                    <Card className="border-blue-300 overflow-hidden">
+                      <div className="bg-gradient-to-r from-blue-500 to-sky-500 px-4 py-3 flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-white">
+                          <Edit className="h-4 w-4" />
+                          <span className="font-bold text-sm">Gönderi Düzenle</span>
                         </div>
+                        <button
+                          className="text-white/80 hover:text-white transition-colors"
+                          onClick={() => {
+                            setShowEditPostForm(false);
+                            setEditingPost(null);
+                            setCreationError("");
+                          }}
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      </div>
+                      <CardContent className="p-4 space-y-4">
                         {creationError && (
-                          <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg">
+                          <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg border border-red-200">
                             {creationError}
-                              </div>
-                            )}
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        <div className="space-y-2">
-                          <label className="text-sm font-medium">Çalışma Amacı</label>
+                          </div>
+                        )}
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Çalışma Amacı</label>
                           <select
-                            className="w-full rounded-xl border-2 border-gray-200 p-3 focus:border-blue-500 focus:outline-none"
+                            className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500/20"
                             value={editPostPurpose}
                             onChange={(e) => setEditPostPurpose(e.target.value)}
                           >
@@ -1417,41 +1406,44 @@ export default function StudyBuddyPage() {
                               </option>
                             ))}
                           </select>
-                            </div>
-                        <div className="space-y-2">
-                          <label className="text-sm font-medium">Açıklama</label>
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Açıklama</label>
                           <textarea
-                            className="w-full rounded-xl border-2 border-gray-200 p-3 focus:border-blue-500 focus:outline-none min-h-[100px]"
+                            className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500/20 min-h-[90px] resize-none"
                             value={editPostReason}
                             onChange={(e) => setEditPostReason(e.target.value)}
-                            placeholder={`Neden çalışma arkadaşı arıyorsun? (max ${POST_LIMITS.MAX_REASON_LENGTH} karakter)`}
+                            placeholder="Neden çalışma arkadaşı arıyorsun?"
                             maxLength={POST_LIMITS.MAX_REASON_LENGTH}
                           />
-                          <div className="flex justify-between text-xs text-gray-500">
-                            <span>{editPostReason.length}/{POST_LIMITS.MAX_REASON_LENGTH} karakter</span>
+                          <div className="text-[10px] text-gray-400">
+                            {editPostReason.length}/{POST_LIMITS.MAX_REASON_LENGTH}
                           </div>
                         </div>
-                          <Button 
+                        <Button
                           variant="primary"
-                          className="w-full bg-blue-500 hover:bg-blue-600"
+                          className="w-full"
                           onClick={handleEditSubmit}
                           disabled={!editPostPurpose || !editPostReason}
                         >
                           Gönderiyi Güncelle
-                          </Button>
+                        </Button>
                       </CardContent>
                     </Card>
                   )}
 
-                  {/* Posts List */}
                   {myPosts.length === 0 ? (
                     <Card>
-                      <CardContent className="p-6 text-center">
-                        <p className="text-muted-foreground">Henüz bir gönderi oluşturmadınız.</p>
+                      <CardContent className="p-8 text-center">
+                        <Edit className="mx-auto h-10 w-10 text-gray-300 mb-3" />
+                        <p className="text-sm text-gray-500">Henüz bir gönderi oluşturmadınız.</p>
+                        <p className="text-xs text-gray-400 mt-1">
+                          &quot;Tüm Gönderiler&quot; sekmesinden yeni gönderi oluşturabilirsiniz.
+                        </p>
                       </CardContent>
                     </Card>
                   ) : (
-                    <div className="space-y-4">
+                    <div className="space-y-3">
                       {myPosts.map((post) => (
                         <PostCard
                           key={post.id}
@@ -1461,30 +1453,39 @@ export default function StudyBuddyPage() {
                           onEdit={() => handleEditPost(post)}
                           onDelete={() => handleDeletePost(post.id)}
                         />
-                    ))}
-                  </div>
+                      ))}
+                    </div>
                   )}
                 </>
-                )}
-              </div>
-            )}
+              )}
+            </div>
+          )}
 
           {/* Chats Tab */}
-            {activeTab === "chats" && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+          {activeTab === "chats" && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Contact List */}
-              <div className={`col-span-1 space-y-4 ${selectedChat ? 'hidden md:block' : ''}`}>
-                <Card>
-                  <CardHeader className="px-4 sm:px-6">
-                    <CardTitle className="text-base sm:text-lg">Sohbetler</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-2 sm:p-3">
-                    {chats.length === 0 ? (
-                      <div className="text-center py-8">
-                        <p className="text-muted-foreground text-sm">Henüz bir sohbetiniz yok.</p>
-                    </div>
+              <div className={`col-span-1 ${selectedChat ? 'hidden md:block' : ''}`}>
+                <Card className="overflow-hidden">
+                  <div className="px-4 py-3 border-b bg-gray-50">
+                    <span className="text-sm font-semibold text-gray-700">Sohbetler</span>
+                    {chats.length > 0 && (
+                      <span className="text-xs text-gray-400 ml-2">({chats.length})</span>
+                    )}
+                  </div>
+                  <div className="p-1.5">
+                    {loadingChats ? (
+                      <div className="py-8 flex justify-center">
+                        <LoadingSpinner size="sm" />
+                      </div>
+                    ) : chats.length === 0 ? (
+                      <div className="text-center py-8 px-4">
+                        <MessageCircle className="mx-auto h-8 w-8 text-gray-300 mb-2" />
+                        <p className="text-sm text-gray-400">Henüz sohbetiniz yok.</p>
+                        <p className="text-xs text-gray-400 mt-1">Bir gönderideki &quot;Mesaj Gönder&quot; butonuna tıklayarak başlayın.</p>
+                      </div>
                     ) : (
-                      <div className="space-y-2">
+                      <div className="space-y-1">
                         {chats.map((chat) => (
                           <ChatCard
                             key={chat.id}
@@ -1494,122 +1495,124 @@ export default function StudyBuddyPage() {
                             isSelected={selectedChat?.id === chat.id}
                           />
                         ))}
-                                </div>
+                      </div>
                     )}
-                  </CardContent>
+                  </div>
                 </Card>
-                </div>
+              </div>
 
               {/* Chat Messages */}
               <div className={`col-span-1 md:col-span-2 ${!selectedChat ? 'hidden md:block' : ''}`}>
                 {selectedChat ? (
-                  <Card className="h-[calc(100vh-14rem)] md:h-[calc(100vh-16rem)] flex flex-col">
-                    <CardHeader className="border-b bg-gray-50/80 px-3 sm:px-6 py-3">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="md:hidden shrink-0 px-2"
-                            onClick={() => setSelectedChat(null)}
-                          >
-                            ←
-                          </Button>
-                          <Image
-                            src={normalizeAvatarUrl(selectedChat.participantsData?.[
-                              selectedChat.participants.find(p => p !== currentUser?.id)!
-                            ]?.avatarUrl)}
-                            width={36}
-                            height={36}
-                            alt="Avatar"
-                            className="rounded-full shrink-0"
-                          />
-                          <CardTitle className="text-sm sm:text-base truncate">
-                            {selectedChat.participantsData?.[
-                              selectedChat.participants.find(p => p !== currentUser?.id)!
-                            ]?.userName || "Kullanıcı"}
-                          </CardTitle>
-                    </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="hidden md:flex"
+                  <Card className="h-[calc(100vh-12rem)] md:h-[calc(100vh-14rem)] flex flex-col overflow-hidden">
+                    <div className="border-b bg-white px-3 sm:px-4 py-3 flex items-center justify-between shrink-0">
+                      <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                        <button
+                          className="md:hidden shrink-0 p-1 rounded-lg hover:bg-gray-100 transition-colors"
                           onClick={() => setSelectedChat(null)}
                         >
-                          <X className="h-4 w-4" />
-                        </Button>
+                          <span className="text-lg">←</span>
+                        </button>
+                        <Image
+                          src={normalizeAvatarUrl(selectedChat.participantsData?.[
+                            selectedChat.participants.find(p => p !== currentUser?.id)!
+                          ]?.avatarUrl)}
+                          width={36}
+                          height={36}
+                          alt="Avatar"
+                          className="rounded-full shrink-0 w-8 h-8 sm:w-9 sm:h-9"
+                        />
+                        <span className="text-sm sm:text-base font-semibold truncate">
+                          {selectedChat.participantsData?.[
+                            selectedChat.participants.find(p => p !== currentUser?.id)!
+                          ]?.userName || "Kullanıcı"}
+                        </span>
                       </div>
-                    </CardHeader>
-                    <CardContent className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4">
+                      <button
+                        className="hidden md:flex p-1 rounded-lg hover:bg-gray-100 transition-colors"
+                        onClick={() => setSelectedChat(null)}
+                      >
+                        <X className="h-4 w-4 text-gray-500" />
+                      </button>
+                    </div>
+                    <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-2.5 bg-gray-50/50">
+                      {messages.length === 0 && (
+                        <div className="flex items-center justify-center h-full">
+                          <p className="text-sm text-gray-400">Henüz mesaj yok. İlk mesajını gönder!</p>
+                        </div>
+                      )}
                       {messages.map((message) => (
                         <div
                           key={message.id}
-                              className={`flex ${
+                          className={`flex ${
                             message.sender === currentUser?.id ? "justify-end" : "justify-start"
-                              }`}
-                            >
-                              <div
-                            className={`max-w-[85%] sm:max-w-[70%] p-2.5 sm:p-3 rounded-xl ${
+                          }`}
+                        >
+                          <div
+                            className={`max-w-[80%] sm:max-w-[70%] px-3 py-2 ${
                               message.sender === currentUser?.id
-                                ? "bg-green-500 text-white"
-                                : "bg-gray-100"
+                                ? "bg-green-500 text-white rounded-2xl rounded-br-md"
+                                : "bg-white border border-gray-200 rounded-2xl rounded-bl-md"
                             }`}
                           >
-                            <p className="text-sm break-words">{message.content}</p>
-                            <span className="text-xs opacity-70">
+                            <p className="text-sm break-words leading-relaxed">{message.content}</p>
+                            <span className={`text-[10px] block mt-0.5 ${
+                              message.sender === currentUser?.id ? "text-green-100" : "text-gray-400"
+                            }`}>
                               {new Date(message.created_at).toLocaleTimeString("tr-TR", {
                                 hour: "2-digit",
                                 minute: "2-digit",
                                 hour12: false
                               })}
                             </span>
-                              </div>
-                            </div>
+                          </div>
+                        </div>
                       ))}
-                        <div ref={messageEndRef} />
-                    </CardContent>
-                    <div className="border-t bg-gray-50/80 p-3 sm:p-4">
-                      <div className="flex gap-2">
-                          <input
+                      <div ref={messageEndRef} />
+                    </div>
+                    <div className="border-t bg-white p-3 shrink-0">
+                      <div className="flex gap-2 items-end">
+                        <input
                           type="text"
-                            value={newMessage}
-                            onChange={(e) => setNewMessage(e.target.value)}
+                          value={newMessage}
+                          onChange={(e) => setNewMessage(e.target.value)}
                           placeholder="Mesajınızı yazın..."
-                          className="flex-1 rounded-xl border-2 border-gray-200 p-2.5 sm:p-3 text-sm focus:border-green-500 focus:outline-none"
-                            maxLength={MESSAGE_LIMITS.MAX_LENGTH}
-                          onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
-                          />
-                          <Button
-                            variant="primary"
-                            size="sm"
-                            onClick={handleSendMessage}
+                          className="flex-1 rounded-full border border-gray-300 px-4 py-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20"
+                          maxLength={MESSAGE_LIMITS.MAX_LENGTH}
+                          onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && handleSendMessage()}
+                        />
+                        <button
+                          onClick={handleSendMessage}
                           disabled={!newMessage.trim()}
-                          >
+                          className="shrink-0 w-10 h-10 rounded-full bg-green-500 hover:bg-green-600 disabled:bg-gray-200 text-white disabled:text-gray-400 flex items-center justify-center transition-colors"
+                        >
                           <Send className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      <div className="flex justify-between mt-2 text-xs text-muted-foreground">
-                          <span>{newMessage.length}/{MESSAGE_LIMITS.MAX_LENGTH}</span>
-                          <span>Günlük: {MESSAGE_LIMITS.MAX_PER_DAY} mesaj</span>
-                        </div>
+                        </button>
                       </div>
+                      <div className="flex justify-between mt-1.5 px-1 text-[10px] text-gray-400">
+                        <span>{newMessage.length}/{MESSAGE_LIMITS.MAX_LENGTH}</span>
+                        <span>Günlük limit: {MESSAGE_LIMITS.MAX_PER_DAY}</span>
+                      </div>
+                    </div>
                   </Card>
                 ) : (
-                  <Card className="h-64 md:h-[calc(100vh-16rem)] flex items-center justify-center">
+                  <Card className="h-64 md:h-[calc(100vh-14rem)] flex items-center justify-center">
                     <div className="text-center px-4">
-                      <MessageCircle className="mx-auto h-10 w-10 sm:h-12 sm:w-12 text-gray-400 mb-4" />
-                      <h3 className="font-semibold mb-2 text-sm sm:text-base">Sohbet Seç</h3>
-                      <p className="text-muted-foreground text-sm">
-                        Bir sohbet seçerek mesajlaşmaya başla
+                      <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
+                        <MessageCircle className="h-8 w-8 text-gray-400" />
+                      </div>
+                      <h3 className="font-semibold mb-1 text-sm sm:text-base text-gray-700">Sohbet Seç</h3>
+                      <p className="text-gray-400 text-sm">
+                        Soldaki listeden bir sohbet seç
                       </p>
-                </div>
+                    </div>
                   </Card>
             )}
-          </div>
-              </div>
-            )}
             </div>
+          </div>
+          )}
+        </div>
       </FeedWrapper>
-              </div>
+    </div>
   );
 }

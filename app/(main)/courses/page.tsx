@@ -20,10 +20,14 @@ export default async function CoursesPage() {
     ]);
 
     return (
-      <div className="h-full max-w-[1024px] px-4 sm:px-6 mx-auto py-6">
-        <div className="mb-6">
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-neutral-800">Dersler</h1>
-          <p className="text-neutral-500 text-sm mt-1">Öğrenmek istediğin dersi seç ve hemen başla</p>
+      <div className="h-full max-w-[960px] px-4 sm:px-6 mx-auto py-6">
+        <div className="text-center mb-8">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-neutral-800">
+            Ne öğrenmek istersin?
+          </h1>
+          <p className="text-neutral-400 text-sm mt-2">
+            Bir ders seç ve öğrenmeye hemen başla
+          </p>
         </div>
         <List courses={courses} activeCourseId={userProgress?.activeCourseId} />
       </div>
@@ -31,9 +35,9 @@ export default async function CoursesPage() {
   } catch (error) {
     console.error("Error in courses page:", error);
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-2xl font-bold mb-4">Bir Hata Oluştu</h1>
-        <p>Dersler yüklenirken bir hata oluştu. Lütfen sayfayı yenileyin veya daha sonra tekrar deneyin.</p>
+      <div className="flex flex-col items-center justify-center py-20 px-6 text-center">
+        <h1 className="text-xl font-bold mb-3 text-neutral-800">Bir Hata Oluştu</h1>
+        <p className="text-neutral-500">Dersler yüklenirken bir hata oluştu. Lütfen sayfayı yenileyin.</p>
       </div>
     );
   }
