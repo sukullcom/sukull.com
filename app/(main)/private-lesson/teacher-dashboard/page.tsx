@@ -177,13 +177,13 @@ export default function TeacherDashboardPage() {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Biyografi</label>
               <p className="text-gray-600 text-sm mb-2">
-                Öğrencilerin sizi daha iyi tanıması için kendinizi tanıtan bir biyografi yazın.
+                Öğrencilerin seni daha iyi tanıması için kendini tanıtan bir biyografi yaz.
               </p>
               <Textarea 
                 value={bio} 
                 onChange={(e) => setBio(e.target.value)}
                 className="min-h-[120px]"
-                placeholder="Kendinizi tanıtın, eğitim ve öğretim deneyimlerinizden bahsedin..."
+                placeholder="Kendini tanıt, eğitim ve öğretim deneyimlerinden bahset..."
               />
             </div>
             

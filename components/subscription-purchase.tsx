@@ -217,7 +217,7 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
               <label className="block text-sm font-medium mb-1">Kart Sahibi</label>
               <Input
                 type="text"
-                placeholder="JOHN DOE"
+                placeholder="AD SOYAD"
                 value={holderName}
                 onChange={(e) => setHolderName(e.target.value.toUpperCase())}
               />
@@ -235,7 +235,7 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
               <label className="block text-sm font-medium mb-1">Ad Soyad</label>
               <Input
                 type="text"
-                placeholder="John Doe"
+                placeholder="Ahmet Yılmaz"
                 value={contactName}
                 onChange={(e) => setContactName(e.target.value)}
               />

@@ -6,7 +6,7 @@ import CreditPurchase from "@/components/credit-purchase";
 
 export const metadata: Metadata = {
   title: "Kredi Satın Al | Sukull",
-  description: "Özel derslerinizi ayırtabilmek için ders kredisi satın alın",
+  description: "Özel derslerini ayırtabilmek için ders kredisi satın al",
 };
 
 const StudentCreditsPage = async () => {

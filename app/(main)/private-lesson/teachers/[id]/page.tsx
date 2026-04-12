@@ -179,7 +179,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
         await refreshAvailability();
       } else {
         const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to book lesson");
+        throw new Error(errorData.error || "Ders rezerve edilemedi");
       }
     } catch (error) {
       console.error("Error booking lesson:", error);
@@ -211,7 +211,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
           const authData = await authResponse.json();
           
           if (!authData.authenticated) {
-            toast.error("Öğretmen detaylarını görüntülemek için giriş yapınız");
+            toast.error("Öğretmen detaylarını görüntülemek için giriş yapmalısın");
             router.push("/login");
             return;
           }
@@ -232,7 +232,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
           
           // Handle different error status codes
           if (response.status === 401) {
-            toast.error("Öğretmen detaylarını görüntülemek için lütfen giriş yapınız");
+            toast.error("Öğretmen detaylarını görüntülemek için giriş yapmalısın");
             router.push("/login");
             return;
           } else if (response.status === 403) {
@@ -475,7 +475,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
             <CardHeader>
               <CardTitle>Müsait Zamanlar</CardTitle>
               <CardDescription>
-                Aşağıdaki zamanlardan birini seçerek ders rezerve edebilirsiniz
+                Aşağıdaki zamanlardan birini seçerek ders rezerve edebilirsin
               </CardDescription>
               {/* Legend */}
               <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-sm mt-2">

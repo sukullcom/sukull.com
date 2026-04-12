@@ -28,7 +28,7 @@ export default function StudentSuccessPage() {
   }, []);
 
   const finishAudio = typeof window !== "undefined" ? (
-    <audio src="/sounds/success.mp3" autoPlay />
+    <audio src="/finish.mp3" autoPlay />
   ) : null;
 
   return (
@@ -48,25 +48,22 @@ export default function StudentSuccessPage() {
             <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle2 className="w-10 h-10 text-blue-600" />
             </div>
-            <CardTitle className="text-3xl text-blue-600">Başvurunuz Alındı!</CardTitle>
+            <CardTitle className="text-3xl text-blue-600">Süper, başvurun alındı!</CardTitle>
             <CardDescription className="text-lg">
-              Öğrenci başvurunuz başarıyla kaydedildi
+              Özel ders macerası başlıyor
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {/* Success Message */}
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <p className="text-gray-700 text-center">
-                Özel ders talebiniz bize ulaştı. Size en uygun öğretmeni bulmak için 
-                çalışmalarımıza başladık. En kısa sürede sizinle iletişime geçeceğiz.
+                Ders talebini aldık! Sana en uygun öğretmeni bulmak için hemen çalışmaya başlıyoruz.
               </p>
             </div>
 
-            {/* What's Next */}
             <div className="space-y-4">
               <h3 className="font-semibold text-lg flex items-center gap-2">
                 <BookOpen className="w-5 h-5 text-blue-600" />
-                Bundan Sonra Ne Olacak?
+                Sırada ne var?
               </h3>
               
               <div className="space-y-3">
@@ -75,9 +72,9 @@ export default function StudentSuccessPage() {
                     <Search className="w-4 h-4 text-green-600" />
                   </div>
                   <div>
-                    <p className="font-medium">Öğretmen Eşleştirme</p>
+                    <p className="font-medium">Öğretmen eşleştirme</p>
                     <p className="text-sm text-gray-600">
-                      Kriterlerinize uygun öğretmenler bulunacak
+                      Kriterlerine uygun öğretmenler bulunacak
                     </p>
                   </div>
                 </div>
@@ -87,9 +84,9 @@ export default function StudentSuccessPage() {
                     <Mail className="w-4 h-4 text-green-600" />
                   </div>
                   <div>
-                    <p className="font-medium">E-posta Bildirimi</p>
+                    <p className="font-medium">E-posta bildirimi</p>
                     <p className="text-sm text-gray-600">
-                      Uygun öğretmenler bulunduğunda bilgilendirileceksiniz
+                      Uygun öğretmenler bulunduğunda sana haber vereceğiz
                     </p>
                   </div>
                 </div>
@@ -99,9 +96,9 @@ export default function StudentSuccessPage() {
                     <Calendar className="w-4 h-4 text-green-600" />
                   </div>
                   <div>
-                    <p className="font-medium">Ders Planlaması</p>
+                    <p className="font-medium">Ders planlaması</p>
                     <p className="text-sm text-gray-600">
-                      Öğretmeninizle ders programı oluşturabileceksiniz
+                      Öğretmeninle birlikte ders programını oluşturabileceksin
                     </p>
                   </div>
                 </div>
@@ -135,7 +132,7 @@ export default function StudentSuccessPage() {
         <div className="flex justify-center mt-8">
           <Image
             src="/mascot_pink.svg"
-            alt="Happy Mascot"
+            alt="Mutlu maskot"
             width={150}
             height={150}
             className="animate-bounce"

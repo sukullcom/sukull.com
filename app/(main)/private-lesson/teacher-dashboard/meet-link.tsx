@@ -77,7 +77,7 @@ export default function GoogleMeetLinkManager() {
       
       <div className="space-y-4">
         <p className="text-gray-600">
-          Aşağıda öğrencilerinizle paylaşılacak olan Google Meet bağlantınızı düzenleyebilirsiniz.
+          Aşağıda öğrencilerinle paylaşılacak olan Google Meet bağlantını düzenleyebilirsin.
           Bu bağlantı, öğrenciler özel ders aldığında onlara gösterilecektir.
         </p>
         
@@ -141,7 +141,7 @@ export default function GoogleMeetLinkManager() {
             ) : (
               <div className="space-y-4">
                 <p className="text-amber-600">
-                  Henüz bir Google Meet bağlantısı belirlemediniz. Öğrencilerle ders yapabilmek için bir bağlantı eklemeniz gerekiyor.
+                  Henüz bir Google Meet bağlantısı belirlemedin. Öğrencilerle ders yapabilmek için bir bağlantı eklemen gerekiyor.
                 </p>
                 <Button
                   onClick={() => setIsEditing(true)}

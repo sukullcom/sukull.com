@@ -172,7 +172,7 @@ export default function TeacherBookingsPage() {
       setLoading(false);
     } catch (error) {
       console.error("Error fetching bookings:", error);
-      setError("Dersleriniz yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.");
+      setError("Dersler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar dene.");
       setLoading(false);
     }
   };
@@ -390,7 +390,7 @@ export default function TeacherBookingsPage() {
                             </Button>
                             {booking.teacherJoinedAt && (
                               <p className="text-xs text-green-600 text-center font-medium">
-                                ✓ Katılımınız kaydedildi
+                                ✓ Katılımın kaydedildi
                               </p>
                             )}
                           </div>
@@ -398,7 +398,7 @@ export default function TeacherBookingsPage() {
                           <div className="space-y-3">
                             <div className="p-3 bg-gray-50 rounded-md text-center">
                               <p className="text-sm text-gray-600">
-                                Ders zamanı gelmeden 2 dakika önce buradan derse katılabilirsiniz.
+                                Ders zamanı gelmeden 2 dakika önce buradan derse katılabilirsin.
                               </p>
                               <p className="text-xs text-gray-500 mt-1">
                                 {formatTimeRange(booking.startTime)} saatleri arasında ders başlatma butonu aktif olacak

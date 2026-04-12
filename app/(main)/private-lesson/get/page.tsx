@@ -129,10 +129,10 @@ export default function GetLessonPage() {
           <Card className="shadow-lg border-yellow-200 bg-yellow-50">
             <CardContent className="p-5 sm:p-8 text-center">
               <Clock className="w-12 h-12 sm:w-16 sm:h-16 text-yellow-500 mx-auto mb-4" />
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Başvurunuz Değerlendiriliyor</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Başvurun değerlendiriliyor</h2>
               <p className="text-gray-600 mb-4">
-                <strong>{appStatus.field}</strong> alanındaki öğrenci başvurunuz inceleniyor.
-                En kısa sürede size dönüş yapılacaktır.
+                <strong>{appStatus.field}</strong> alanındaki öğrenci başvurun inceleniyor.
+                En kısa sürede sana dönüş yapılacak.
               </p>
               <div className="bg-white rounded-lg p-4 border border-yellow-200 inline-block">
                 <p className="text-sm text-gray-500">Başvuru tarihi: {appStatus.createdAt ? new Date(appStatus.createdAt).toLocaleDateString('tr-TR') : '-'}</p>
@@ -151,9 +151,9 @@ export default function GetLessonPage() {
           <Card className="shadow-lg border-green-200 bg-green-50">
             <CardContent className="p-5 sm:p-8 text-center">
               <CheckCircle className="w-12 h-12 sm:w-16 sm:h-16 text-green-500 mx-auto mb-4" />
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Başvurunuz Onaylandı!</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Başvurun onaylandı!</h2>
               <p className="text-gray-600 mb-6">
-                Öğrenci başvurunuz onaylanmıştır. Artık öğretmen listesinden ders ayırtabilirsiniz.
+                Öğrenci başvurun onaylandı! Artık öğretmen listesinden ders ayırtabilirsin.
               </p>
               <Button variant="secondary" onClick={() => router.push("/private-lesson/teachers")}>
                 Öğretmenleri Görüntüle
@@ -175,9 +175,9 @@ export default function GetLessonPage() {
               <div className="flex items-start gap-3">
                 <XCircle className="w-6 h-6 text-red-500 mt-0.5" />
                 <div>
-                  <h3 className="font-semibold text-red-800">Önceki başvurunuz reddedildi</h3>
+                  <h3 className="font-semibold text-red-800">Önceki başvurun reddedildi</h3>
                   <p className="text-sm text-red-600 mt-1">
-                    Bilgilerinizi güncelleyerek tekrar başvurabilirsiniz.
+                    Bilgilerini güncelleyerek tekrar başvurabilirsin.
                   </p>
                 </div>
               </div>
@@ -195,7 +195,7 @@ export default function GetLessonPage() {
                     Öğrenci Başvurusu
                   </h1>
                   <p className="text-gray-600">
-                    Size en uygun öğretmeni bulabilmemiz için formu eksiksiz doldurun
+                    Sana en uygun öğretmeni bulabilmemiz için formu eksiksiz doldur
                   </p>
                 </div>
                 <Image
@@ -231,7 +231,7 @@ export default function GetLessonPage() {
               Başvuru Formu
             </CardTitle>
             <CardDescription>
-              Lütfen aşağıdaki formu doldurarak bize taleplerinizi iletin. Bu bilgiler, size en uygun öğretmeni bulmamıza yardımcı olacaktır.
+              Aşağıdaki formu doldurarak bize taleplerini ilet. Bu bilgiler, sana en uygun öğretmeni bulmamıza yardımcı olacak.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -241,7 +241,7 @@ export default function GetLessonPage() {
                 <div className="space-y-2">
                   <Label htmlFor="studentName" className="flex items-center gap-2">
                     <User className="w-4 h-4" />
-                    Adınız <span className="text-red-500">*</span>
+                    Adın <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="studentName"
@@ -258,7 +258,7 @@ export default function GetLessonPage() {
                 <div className="space-y-2">
                   <Label htmlFor="studentSurname" className="flex items-center gap-2">
                     <User className="w-4 h-4" />
-                    Soyadınız <span className="text-red-500">*</span>
+                    Soyadın <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="studentSurname"
@@ -317,7 +317,7 @@ export default function GetLessonPage() {
                   Ders Alanı <span className="text-red-500">*</span>
                 </Label>
                 <Select value={formData.field} onValueChange={(value) => handleSelectChange("field", value)}>
-                  <SelectValue placeholder="Hangi alanda özel ders almak istiyorsunuz?" />
+                  <SelectValue placeholder="Hangi alanda özel ders almak istiyorsun?" />
                   <SelectItem value="Matematik">Matematik</SelectItem>
                   <SelectItem value="Fizik">Fizik</SelectItem>
                   <SelectItem value="Kimya">Kimya</SelectItem>
@@ -338,7 +338,7 @@ export default function GetLessonPage() {
                 <Textarea
                   id="studentNeeds"
                   name="studentNeeds"
-                  placeholder="Örneğin: Sınavlara hazırlık, belirli bir konu hakkında daha fazla pratik, haftalık ders sayısı tercihiniz vb."
+                  placeholder="Örneğin: Sınavlara hazırlık, belirli bir konu hakkında daha fazla pratik, haftalık ders sayısı tercihin vb."
                   value={formData.studentNeeds}
                   onChange={handleChange}
                   rows={4}
@@ -355,7 +355,7 @@ export default function GetLessonPage() {
                   <Info className="w-5 h-5 text-blue-600 mt-0.5" />
                   <div className="text-sm text-blue-800">
                     <p className="font-semibold mb-1">Gizlilik Bildirimi</p>
-                    <p>Bilgileriniz yalnızca size uygun öğretmeni belirlemek ve sizinle iletişim kurmak amacıyla kullanılacaktır. Kişisel verileriniz üçüncü kişilerle paylaşılmayacaktır.</p>
+                    <p>Bilgilerin yalnızca sana uygun öğretmeni belirlemek ve seninle iletişim kurmak amacıyla kullanılacak. Kişisel verilerin üçüncü kişilerle paylaşılmayacak.</p>
                   </div>
                 </div>
               </div>

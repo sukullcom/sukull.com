@@ -145,10 +145,7 @@ export default function CreditPurchase() {
       }
     } catch (error: unknown) {
       console.error('Payment error:', error)
-      const errorMessage = error instanceof Error 
-        ? error.message 
-        : 'Ödeme sırasında hata oluştu'
-      toast.error(errorMessage)
+      toast.error('Ödeme sırasında bir hata oluştu. Lütfen tekrar dene.')
     } finally {
       setLoading(false)
     }
@@ -262,7 +259,7 @@ export default function CreditPurchase() {
                 <label className="block text-sm font-medium mb-1">Kart Sahibi Adı</label>
                 <Input
                   type="text"
-                  placeholder="JOHN DOE"
+                  placeholder="AD SOYAD"
                   value={holderName}
                   onChange={(e) => setHolderName(e.target.value.toUpperCase())}
                 />
@@ -328,7 +325,7 @@ export default function CreditPurchase() {
                 <label className="block text-sm font-medium mb-1">Ad Soyad</label>
                 <Input
                   type="text"
-                  placeholder="John Doe"
+                  placeholder="Ahmet Yılmaz"
                   value={contactName}
                   onChange={(e) => setContactName(e.target.value)}
                 />

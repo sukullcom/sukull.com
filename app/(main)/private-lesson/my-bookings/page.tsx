@@ -183,7 +183,7 @@ export default function MyBookingsPage() {
         setLoading(false);
       } catch (error) {
         console.error("Error fetching bookings:", error);
-        setError("Dersleriniz yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.");
+        setError("Derslerin yüklenirken bir hata oluştu. Lütfen daha sonra tekrar dene.");
         setLoading(false);
       }
     };
@@ -265,7 +265,7 @@ export default function MyBookingsPage() {
       });
       
       // Show success toast instead of alert
-      toast.success('Ders başarıyla iptal edildi ve krediniz iade edildi');
+      toast.success('Ders başarıyla iptal edildi ve kredin iade edildi');
     } catch (error) {
       console.error("Error cancelling lesson:", error);
       setCancelModal(prev => ({ ...prev, isLoading: false }));
@@ -468,7 +468,7 @@ export default function MyBookingsPage() {
             </Button>
           </div>
           <div className="text-xs text-gray-500 italic text-center">
-            Dersi iptal etmek için 24 saaten fazla süreniz var
+            Dersi iptal etmek için 24 saaten fazla süren var
           </div>
         </div>
       );
@@ -564,7 +564,7 @@ export default function MyBookingsPage() {
       <div className="max-w-4xl mx-auto px-3 sm:px-6 pb-10">
         <UserCreditsDisplay className="mb-4" />
         <div className="text-center py-16">
-          <p className="text-gray-400 mb-4">Henüz bir ders rezervasyonunuz yok.</p>
+          <p className="text-gray-400 mb-4">Henüz bir ders rezervasyonun yok.</p>
           <Button variant="primary" onClick={() => router.push("/private-lesson/teachers")}>
             Ders Rezerve Et
           </Button>
@@ -673,7 +673,7 @@ export default function MyBookingsPage() {
                           // Show existing review
                           <div className="bg-white p-3 rounded border">
                             <div className="flex items-center justify-between mb-2">
-                              <span className="text-sm font-medium text-gray-700">Değerlendirmeniz</span>
+                              <span className="text-sm font-medium text-gray-700">Değerlendirmen</span>
                               <div className="flex items-center gap-1">
                                 {renderStars(booking.review.rating)}
                                 <span className="text-sm text-gray-600 ml-1">

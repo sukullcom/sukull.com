@@ -44,7 +44,7 @@ export default function GiveLessonPage() {
     e.preventDefault();
     
     if (!field) {
-      return toast.error("Lütfen bir alan seçiniz.");
+      return toast.error("Lütfen bir alan seç.");
     }
     
     setIsSubmitting(true);
@@ -95,7 +95,7 @@ export default function GiveLessonPage() {
                     Öğretmen Başvurusu
                   </h1>
                   <p className="text-sm sm:text-base text-gray-600">
-                    Bilgi ve deneyiminizi paylaşarak öğrencilere yardımcı olun
+                    Bilgi ve deneyimini paylaşarak öğrencilere yardımcı ol
                   </p>
                 </div>
                 <Image
@@ -131,7 +131,7 @@ export default function GiveLessonPage() {
               Başvuru Formu
             </CardTitle>
             <CardDescription>
-              Lütfen tüm alanları eksiksiz doldurunuz. Başvurunuz onaylandıktan sonra öğrenciler tarafından görülebilir olacaksınız.
+              Tüm alanları eksiksiz doldur. Başvurun onaylandıktan sonra öğrenciler tarafından görülebilir olacaksın.
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -143,7 +143,7 @@ export default function GiveLessonPage() {
                   Ders Alanı <span className="text-red-500">*</span>
                 </Label>
                 <Select value={field} onValueChange={handleChangeField}>
-                  <SelectValue placeholder="Hangi alanda ders vermek istiyorsunuz?" />
+                  <SelectValue placeholder="Hangi alanda ders vermek istiyorsun?" />
                   <SelectItem value="Matematik">Matematik</SelectItem>
                   <SelectItem value="Fizik">Fizik</SelectItem>
                   <SelectItem value="Kimya">Kimya</SelectItem>
@@ -167,7 +167,7 @@ export default function GiveLessonPage() {
                 <div className="space-y-2">
                   <Label htmlFor="teacherName" className="flex items-center gap-2">
                     <User className="w-4 h-4" />
-                    Adınız <span className="text-red-500">*</span>
+                    Adın <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="teacherName"
@@ -184,7 +184,7 @@ export default function GiveLessonPage() {
                 <div className="space-y-2">
                   <Label htmlFor="teacherSurname" className="flex items-center gap-2">
                     <User className="w-4 h-4" />
-                    Soyadınız <span className="text-red-500">*</span>
+                    Soyadın <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="teacherSurname"
@@ -242,8 +242,8 @@ export default function GiveLessonPage() {
                   <Info className="w-5 h-5 text-blue-600 mt-0.5" />
                   <div className="text-sm text-blue-800">
                     <p className="font-semibold mb-1">Önemli Bilgilendirme</p>
-                    <p>Başvurunuz onaylandıktan sonra öğrenciler tarafından görülebilir olacaksınız. 
-                    Profil bilgilerinizi daha sonra güncelleyebilirsiniz.</p>
+                    <p>Başvurun onaylandıktan sonra öğrenciler tarafından görülebilir olacaksın. 
+                    Profil bilgilerini daha sonra güncelleyebilirsin.</p>
                   </div>
                 </div>
               </div>

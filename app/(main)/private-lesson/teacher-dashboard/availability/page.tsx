@@ -47,7 +47,7 @@ export default async function TeacherAvailabilityPage() {
     <div className="max-w-5xl mx-auto px-3 sm:px-6 pb-10">
       <h2 className="text-lg sm:text-xl font-bold mb-2">Uygunluk Zamanları</h2>
       <p className="mb-6 text-sm text-gray-500">
-        Öğrencilere müsait olduğunuz zamanları seçin. Öğrenciler bu zaman dilimlerinden ders planlayabilir.
+        Müsait olduğun zamanları seç. Öğrenciler bu zaman dilimlerinden ders planlayabilir.
       </p>
       
       <AvailabilityPageClient 

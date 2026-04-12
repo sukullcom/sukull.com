@@ -74,7 +74,7 @@ export default function AvailabilityPageClient({
         }
       } catch (error) {
         console.error('Error fetching latest availability:', error);
-        toast.error('Müsait zamanlarınız yüklenirken bir hata oluştu.');
+        toast.error('Müsait zamanların yüklenirken bir hata oluştu.');
       }
     };
 
@@ -99,10 +99,10 @@ export default function AvailabilityPageClient({
             </div>
             <div className="ml-3">
               <h3 className="text-sm font-medium text-amber-800">
-                Profil Bilgilerinizi Tamamlayın
+                Profil bilgilerini tamamla
               </h3>
               <div className="mt-2 text-sm text-amber-700">
-                <p>Müsaitlik bilgilerinizi düzenleyebilmek için önce aşağıdaki bilgileri tamamlamanız gerekiyor:</p>
+                <p>Müsaitlik bilgilerini düzenleyebilmek için önce aşağıdaki bilgileri tamamlaman gerekiyor:</p>
                 <ul className="list-disc list-inside mt-2">
                   {missingFields.map((field, index) => (
                     <li key={index}>{field}</li>
@@ -128,7 +128,7 @@ export default function AvailabilityPageClient({
       <div className="bg-white shadow rounded-lg p-4 mb-6">
         <h2 className="text-xl font-bold mb-2">Uygunluk Takvimi</h2>
         <ul className="list-disc ml-5 text-sm text-gray-600">
-          <li>Yeşil kutucuklar seçtiğiniz müsait zamanları gösterir</li>
+          <li>Yeşil kutucuklar seçtiğin müsait zamanları gösterir</li>
           <li>Geçmiş zamanlar otomatik olarak devre dışı bırakılır</li>
           <li>Zamanlar 30 dakikalık dilimler halinde gösterilmektedir</li>
         </ul>

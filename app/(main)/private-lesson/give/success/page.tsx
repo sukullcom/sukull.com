@@ -28,7 +28,7 @@ export default function TeacherSuccessPage() {
   }, []);
 
   const finishAudio = typeof window !== "undefined" ? (
-    <audio src="/sounds/success.mp3" autoPlay />
+    <audio src="/finish.mp3" autoPlay />
   ) : null;
 
   return (
@@ -48,25 +48,22 @@ export default function TeacherSuccessPage() {
             <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle2 className="w-10 h-10 text-green-600" />
             </div>
-            <CardTitle className="text-3xl text-green-600">Başvurunuz Alındı!</CardTitle>
+            <CardTitle className="text-3xl text-green-600">Harika, başvurun alındı!</CardTitle>
             <CardDescription className="text-lg">
-              Öğretmen başvurunuz başarıyla kaydedildi
+              Öğretmen olma yolunda ilk adımı attın
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {/* Success Message */}
             <div className="bg-green-50 border border-green-200 rounded-lg p-4">
               <p className="text-gray-700 text-center">
-                Özel ders verebilmek için yaptığınız başvurunuz bize ulaştı. 
-                Bilgilerinizi inceleyip en kısa sürede sizinle iletişime geçeceğiz.
+                Başvurun bize ulaştı! Bilgilerini inceleyip en kısa sürede sana döneceğiz.
               </p>
             </div>
 
-            {/* What's Next */}
             <div className="space-y-4">
               <h3 className="font-semibold text-lg flex items-center gap-2">
                 <GraduationCap className="w-5 h-5 text-green-600" />
-                Bundan Sonra Ne Olacak?
+                Sırada ne var?
               </h3>
               
               <div className="space-y-3">
@@ -75,9 +72,9 @@ export default function TeacherSuccessPage() {
                     <FileText className="w-4 h-4 text-blue-600" />
                   </div>
                   <div>
-                    <p className="font-medium">Başvuru İncelemesi</p>
+                    <p className="font-medium">Başvuru incelemesi</p>
                     <p className="text-sm text-gray-600">
-                      Ekibimiz başvurunuzu 24-48 saat içinde inceleyecek
+                      Ekibimiz başvurunu 24-48 saat içinde inceleyecek
                     </p>
                   </div>
                 </div>
@@ -87,9 +84,9 @@ export default function TeacherSuccessPage() {
                     <Mail className="w-4 h-4 text-blue-600" />
                   </div>
                   <div>
-                    <p className="font-medium">E-posta Bildirimi</p>
+                    <p className="font-medium">E-posta bildirimi</p>
                     <p className="text-sm text-gray-600">
-                      Başvuru sonucunuz e-posta adresinize gönderilecek
+                      Sonucu e-posta adresine göndereceğiz
                     </p>
                   </div>
                 </div>
@@ -99,9 +96,9 @@ export default function TeacherSuccessPage() {
                     <Clock className="w-4 h-4 text-blue-600" />
                   </div>
                   <div>
-                    <p className="font-medium">Profil Aktivasyonu</p>
+                    <p className="font-medium">Profil aktivasyonu</p>
                     <p className="text-sm text-gray-600">
-                      Onaylandıktan sonra hemen ders vermeye başlayabilirsiniz
+                      Onaylandıktan sonra hemen ders vermeye başlayabilirsin!
                     </p>
                   </div>
                 </div>
@@ -135,7 +132,7 @@ export default function TeacherSuccessPage() {
         <div className="flex justify-center mt-8">
           <Image
             src="/mascot_pink.svg"
-            alt="Happy Mascot"
+            alt="Mutlu maskot"
             width={150}
             height={150}
             className="animate-bounce"

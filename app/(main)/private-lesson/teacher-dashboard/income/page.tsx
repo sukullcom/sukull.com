@@ -187,7 +187,7 @@ export default function TeacherIncomePage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {reviewData.averageRating > 0 ? reviewData.averageRating.toFixed(1) : "N/A"}
+              {reviewData.averageRating > 0 ? reviewData.averageRating.toFixed(1) : "—"}
             </div>
             {reviewData.averageRating > 0 && (
               <div className="flex mt-1">

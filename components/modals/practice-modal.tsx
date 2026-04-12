@@ -30,7 +30,7 @@ export const PracticeModal = () => {
       <DialogContent className="max-w-md bg-white">
         <DialogHeader>
           <div className="flex items-center w-full justify-center mb-5">
-            <Image src="/heart.svg" alt="Heart" height={100} width={100} />
+            <Image src="/heart.svg" alt="Can" height={100} width={100} />
           </div>
           <DialogTitle className="text-center font-bold text-2xl">
             Pratik zamanı!

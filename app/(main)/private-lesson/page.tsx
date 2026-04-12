@@ -60,7 +60,7 @@ export default async function PrivateLessonPage() {
                     Özel Ders Platformu
                   </h1>
                   <p className="text-lg text-gray-600 mb-6">
-                    Alanında uzman öğretmenlerle birebir özel ders alın veya bilginizi paylaşarak öğretmen olun.
+                    Alanında uzman öğretmenlerle birebir özel ders al veya bilgini paylaşarak öğretmen ol.
                   </p>
                   <div className="flex flex-wrap gap-2 sm:gap-4">
                     <Badge variant="secondary" className="px-2 sm:px-3 py-1 text-xs sm:text-sm">
@@ -80,7 +80,7 @@ export default async function PrivateLessonPage() {
                 <div className="relative hidden sm:block">
                   <Image
                     src="/mascot_pink.svg"
-                    alt="Mascot"
+                    alt="Maskot"
                     width={200}
                     height={200}
                     className="animate-bounce-slow"
@@ -105,7 +105,7 @@ export default async function PrivateLessonPage() {
               </div>
               <CardTitle className="text-xl sm:text-2xl">Öğretmen Ol</CardTitle>
               <CardDescription className="text-base">
-                Bilgi ve deneyiminizi paylaşarak öğrencilere yardımcı olun
+                Bilgi ve deneyimini paylaşarak öğrencilere yardımcı ol
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -114,13 +114,13 @@ export default async function PrivateLessonPage() {
                   <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
                     <span className="text-green-600 text-xs">✓</span>
                   </div>
-                  <span className="text-gray-600">Kendi ders saatlerinizi belirleyin</span>
+                  <span className="text-gray-600">Kendi ders saatlerini belirle</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
                     <span className="text-green-600 text-xs">✓</span>
                   </div>
-                  <span className="text-gray-600">Ücretlerinizi kendiniz belirleyin</span>
+                  <span className="text-gray-600">Ücretlerini kendin belirle</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
@@ -153,7 +153,7 @@ export default async function PrivateLessonPage() {
               </div>
               <CardTitle className="text-xl sm:text-2xl">Öğrenci Ol</CardTitle>
               <CardDescription className="text-base">
-                Uzman öğretmenlerden özel ders alarak başarınızı artırın
+                Uzman öğretmenlerden özel ders alarak başarını artır
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -194,7 +194,7 @@ export default async function PrivateLessonPage() {
         {/* Features Section */}
         <Card className="shadow-lg">
           <CardHeader>
-            <CardTitle className="text-2xl text-center">Neden Bizi Tercih Etmelisiniz?</CardTitle>
+            <CardTitle className="text-2xl text-center">Neden bizi tercih etmelisin?</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-3 gap-6">
@@ -204,7 +204,7 @@ export default async function PrivateLessonPage() {
                 </div>
                 <h3 className="font-semibold mb-2">Esnek Zamanlama</h3>
                 <p className="text-sm text-gray-600">
-                  Kendi programınıza uygun ders saatlerini seçin
+                  Kendi programına uygun ders saatlerini seç
                 </p>
               </div>
               <div className="text-center">
