@@ -304,32 +304,32 @@ export const getLessonPercentage = cache(async () => {
 
 
 export const getTopTenUsers = cache(async () => {
-  // İsteğe göre kullanıcı girişine bağımlı kılmayabilirsiniz;
-  // ama orijinalde userId yoksa boş array döndürüyordu.
   const user = await getServerUser();
   if (!user) {
     return [];
   }
 
+  return getTopUsers(10, 0);
+});
+
+export const getTopUsers = cache(async (limit: number = 50, offset: number = 0) => {
   const data = await db.query.userProgress.findMany({
     orderBy: (userProgress, { desc }) => [desc(userProgress.points)],
-    limit: 10,
+    limit,
+    offset,
     columns: {
       userId: true,
       userName: true,
       userImageSrc: true,
       points: true,
     }
-  })
+  });
 
-  // Normalize avatar URLs to ensure they work with Next.js Image component
-  const normalizedData = data.map(user => ({
+  return data.map(user => ({
     ...user,
     userImageSrc: normalizeAvatarUrl(user.userImageSrc)
   }));
-
-  return normalizedData
-})
+});
 
 
 ////// ADDED //////
@@ -351,18 +351,29 @@ export const getSchools = cache(async () => {
 });
 ////ADDED /////
 
-export const getSchoolPointsByType = cache(async (schoolType: "university" | "high_school" | "secondary_school" | "elementary_school") => {
-  // Use a single optimized query instead of multiple queries
+export const getSchoolPointsByType = cache(async (
+  schoolType: "university" | "high_school" | "secondary_school" | "elementary_school",
+  limit: number = 50,
+  offset: number = 0,
+  city?: string,
+) => {
+  const conditions = [eq(schools.type, schoolType)];
+  if (city) {
+    conditions.push(eq(schools.city, city.toUpperCase()));
+  }
+
   const topSchools = await db
     .select({
       schoolId: schools.id,
       schoolName: schools.name,
       totalPoints: schools.totalPoints,
+      city: schools.city,
     })
     .from(schools)
-    .where(eq(schools.type, schoolType))
+    .where(and(...conditions))
     .orderBy(desc(schools.totalPoints), asc(schools.name))
-    .limit(10);
+    .limit(limit)
+    .offset(offset);
 
   return topSchools;
 });

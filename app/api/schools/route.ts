@@ -123,7 +123,7 @@ export async function GET(request: NextRequest) {
       }
 
       case 'leaderboard': {
-        // Get school leaderboard
+        const offset = parseInt(searchParams.get('offset') || '0');
         const leaderboardConditions = [];
 
         if (type) {
@@ -148,7 +148,8 @@ export async function GET(request: NextRequest) {
           .from(schools)
           .where(leaderboardConditions.length > 0 ? and(...leaderboardConditions) : undefined)
           .orderBy(desc(schools.totalPoints), schools.name)
-          .limit(Math.min(limit, 50));
+          .limit(Math.min(limit, 100))
+          .offset(offset);
 
         return NextResponse.json({ schools: leaderboardResults });
       }
