@@ -1,0 +1,2900 @@
+{
+  "course": {
+    "title": "10. Sınıf Biyoloji",
+    "imageSrc": ""
+  },
+  "units": [
+    {
+      "title": "Canlılık İçin Enerji ve ATP",
+      "description": "Canlılarda enerjinin gerekliliği, ATP yapısı, enerji dönüşümleri ve metabolizma kavramları (MEB 2025-2026 Tema 1)",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "Canlılarda Enerjinin Gerekliliği",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Canlıların yaşamsal faaliyetleri için enerjiye neden ihtiyaç duyar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["enerji", "canlılık"],
+              "explanation": "Kas kasılması, sinir iletimi, aktif taşıma, biyosentez, büyüme ve üreme gibi tüm yaşamsal faaliyetler enerji gerektirir.",
+              "options": [
+                {"text": "Sadece hareket etmek için", "correct": false},
+                {"text": "Kas kasılması, sinir iletimi, aktif taşıma ve biyosentez gibi tüm yaşamsal faaliyetler için", "correct": true},
+                {"text": "Sadece vücut sıcaklığını korumak için", "correct": false},
+                {"text": "Enerji gerekli değildir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Canlılarda enerji kaynağı olarak kullanılan besinlerin enerji verme sırası nedir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["enerji", "besin"],
+              "explanation": "Önce karbonhidratlar (hızlı enerji), sonra yağlar (yüksek enerji deposu), en son proteinler (yapısal görev öncelikli) enerji kaynağı olarak kullanılır.",
+              "options": [
+                {"text": "Karbonhidratlar → Yağlar → Proteinler", "correct": true},
+                {"text": "Proteinler → Yağlar → Karbonhidratlar", "correct": false},
+                {"text": "Yağlar → Proteinler → Karbonhidratlar", "correct": false},
+                {"text": "Hepsi aynı anda kullanılır", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Canlılarda enerji dönüşümlerinde evrensel enerji birimi olarak kullanılan molekül {1} dir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["ATP"],
+              "explanation": "ATP (Adenozin Trifosfat) hücrenin enerji para birimidir. Tüm canlılarda ortak kullanılır.",
+              "options": [
+                {"text": "ATP", "isBlank": true, "correct": true},
+                {"text": "GTP", "correct": false},
+                {"text": "NADH", "correct": false},
+                {"text": "Glikoz", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Enerji türlerini canlıdaki kullanım alanlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["enerji", "tür"],
+              "explanation": "Canlılarda farklı enerji türleri farklı işlevlerde kullanılır.",
+              "options": [
+                {"text": "Kimyasal enerji", "pairId": 1, "correct": false},
+                {"text": "ATP, glikoz, yağ → besin bağlarında depolanır", "pairId": 1, "correct": false},
+                {"text": "Mekanik enerji", "pairId": 2, "correct": false},
+                {"text": "Kas kasılması, kamçı/sil hareketi", "pairId": 2, "correct": false},
+                {"text": "Elektrik enerjisi", "pairId": 3, "correct": false},
+                {"text": "Sinir impulsu iletimi, kalp pili", "pairId": 3, "correct": false},
+                {"text": "Isı enerjisi", "pairId": 4, "correct": false},
+                {"text": "Vücut sıcaklığının korunması (termoregülasyon)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Metabolizma hızı en yüksek olan organ hangisidir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["metabolizma", "organ"],
+              "timeLimit": 15,
+              "explanation": "Karaciğer vücuttaki en aktif metabolik organdır: 500'den fazla fonksiyon üstlenir, detoksifikasyon, protein sentezi, safra üretimi vb. Beyin de çok enerji tüketir.",
+              "options": [
+                {"text": "Karaciğer", "correct": true},
+                {"text": "Mide", "correct": false},
+                {"text": "Böbrek", "correct": false},
+                {"text": "Deri", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Enerji metabolizmasının temel kavramlarını küçükten büyüğe sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["metabolizma", "kavram"],
+              "explanation": "Atomlar → monomerler → polimerler → hücresel süreçler şeklinde enerji organizasyonu artar.",
+              "options": [
+                {"text": "Kimyasal bağlardaki enerji (atom düzeyi)", "correctOrder": 1, "correct": false},
+                {"text": "Monomer → polimer reaksiyonları (molekül düzeyi)", "correctOrder": 2, "correct": false},
+                {"text": "Hücresel solunum / fotosentez (organel düzeyi)", "correctOrder": 3, "correct": false},
+                {"text": "Organizma metabolizması (sistem düzeyi)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "ATP'nin Yapısı ve Görevi",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "ATP'nin yapısında hangi bileşenler bulunur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ATP", "yapı"],
+              "explanation": "ATP: Adenin bazı + Riboz şekeri + 3 Fosfat grubu. Fosfat grupları arasındaki bağlar yüksek enerjili bağlardır.",
+              "options": [
+                {"text": "Guanin + Deoksiriboz + 2 Fosfat", "correct": false},
+                {"text": "Adenin + Riboz + 3 Fosfat", "correct": true},
+                {"text": "Timin + Riboz + 3 Fosfat", "correct": false},
+                {"text": "Adenin + Glikoz + 2 Fosfat", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "ATP → ADP + Pi reaksiyonunda ne olur?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["ATP", "hidroliz"],
+              "explanation": "ATP'nin son fosfat bağı kırılınca ADP + inorganik fosfat (Pi) + enerji açığa çıkar. Bu enerji hücresel işlerde kullanılır.",
+              "options": [
+                {"text": "Son fosfat bağı kırılır, enerji açığa çıkar", "correct": true},
+                {"text": "Enerji depolanır", "correct": false},
+                {"text": "Yeni fosfat eklenir", "correct": false},
+                {"text": "Adenin bazı ayrılır", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'ATP sentezinde ADP ve Pi'nin birleştirilmesi için gerekli enerjinin büyük bölümü {1} organelinde oksidatif fosforilasyonla sağlanır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["ATP", "mitokondri"],
+              "explanation": "Mitokondri hücresel solunumun son aşamasında (oksidatif fosforilasyon) en fazla ATP üretir (34 ATP).",
+              "options": [
+                {"text": "mitokondri", "isBlank": true, "correct": true},
+                {"text": "kloroplast", "correct": false},
+                {"text": "ribozom", "correct": false},
+                {"text": "golgi", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "ATP döngüsünü sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["ATP", "döngü"],
+              "explanation": "Besinlerdeki enerji solunum ile ATP'ye dönüşür, ATP işlerde kullanılır, ADP yeniden ATP'ye dönüştürülür.",
+              "options": [
+                {"text": "Besinlerdeki kimyasal enerji (glikoz)", "correctOrder": 1, "correct": false},
+                {"text": "Hücresel solunum → ADP + Pi → ATP sentezi", "correctOrder": 2, "correct": false},
+                {"text": "ATP hücresel işlerde kullanılır (kas, taşıma, sentez)", "correctOrder": 3, "correct": false},
+                {"text": "ATP → ADP + Pi + Enerji → döngü başa döner", "correctOrder": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "ATP'nin son fosfat bağı koptuğunda yaklaşık kaç kkal enerji açığa çıkar?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "HARD",
+              "tags": ["ATP", "enerji"],
+              "timeLimit": 12,
+              "explanation": "ATP'nin terminal fosfat bağı koptuğunda yaklaşık 7,3 kkal/mol enerji açığa çıkar.",
+              "options": [
+                {"text": "7,3 kkal/mol", "correct": true},
+                {"text": "38 kkal/mol", "correct": false},
+                {"text": "2 kkal/mol", "correct": false},
+                {"text": "100 kkal/mol", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "ATP ile ilgili kavramları eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["ATP", "kavram"],
+              "explanation": "ATP hücrenin evrensel enerji taşıyıcısıdır.",
+              "options": [
+                {"text": "Substrat düzeyinde fosforilasyon", "pairId": 1, "correct": false},
+                {"text": "Enzim aracılığıyla doğrudan ATP sentezi (glikoliz, Krebs)", "pairId": 1, "correct": false},
+                {"text": "Oksidatif fosforilasyon", "pairId": 2, "correct": false},
+                {"text": "ETS + kemiosmoz ile ATP sentezi (mitokondri iç zarı)", "pairId": 2, "correct": false},
+                {"text": "Fotofosforilasyon", "pairId": 3, "correct": false},
+                {"text": "Işık enerjisiyle ATP sentezi (kloroplast tilakoid zarı)", "pairId": 3, "correct": false},
+                {"text": "ATP'nin yenilenmesi", "pairId": 4, "correct": false},
+                {"text": "Hücrede ~10 milyon ATP/sn tüketilir ve yeniden sentezlenir", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Anabolizma ve Katabolizma",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Anabolizma ve katabolizma arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["anabolizma", "katabolizma"],
+              "explanation": "Anabolizma: küçük moleküllerden büyük molekül yapımı (enerji harcar). Katabolizma: büyük moleküllerin parçalanması (enerji açığa çıkar).",
+              "options": [
+                {"text": "Aralarında fark yoktur", "correct": false},
+                {"text": "Anabolizma yapım (enerji harcar), katabolizma yıkım (enerji verir)", "correct": true},
+                {"text": "Anabolizma yıkım, katabolizma yapımdır", "correct": false},
+                {"text": "İkisi de enerji harcar", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Fotosentez anabolik mi yoksa katabolik bir reaksiyon mudur?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["fotosentez", "anabolizma"],
+              "explanation": "Fotosentez anabolik bir reaksiyondur: CO₂ ve H₂O gibi küçük inorganik moleküllerden glikoz (büyük organik molekül) sentezlenir. Enerji kaynağı güneş ışığıdır.",
+              "options": [
+                {"text": "Anabolik — küçük moleküllerden büyük organik molekül (glikoz) sentezler", "correct": true},
+                {"text": "Katabolik — büyük molekülleri parçalar", "correct": false},
+                {"text": "Ne anabolik ne katabolik", "correct": false},
+                {"text": "Sadece katabolik", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Büyük moleküllerin küçük moleküllere parçalanarak enerji açığa çıkardığı metabolik reaksiyonlara {1} denir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["katabolizma"],
+              "explanation": "Katabolizma (yıkım reaksiyonları): protein → amino asit, nişasta → glikoz, yağ → gliserol + yağ asidi gibi.",
+              "options": [
+                {"text": "katabolizma", "isBlank": true, "correct": true},
+                {"text": "anabolizma", "correct": false},
+                {"text": "fermantasyon", "correct": false},
+                {"text": "fotosentez", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Metabolik reaksiyonları türleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["metabolizma", "reaksiyon"],
+              "explanation": "Anabolik ve katabolik reaksiyonlar metabolizmanın iki yüzüdür.",
+              "options": [
+                {"text": "Protein sentezi", "pairId": 1, "correct": false},
+                {"text": "Anabolik — amino asitler birleşir (ATP harcar)", "pairId": 1, "correct": false},
+                {"text": "Hücresel solunum", "pairId": 2, "correct": false},
+                {"text": "Katabolik — glikoz parçalanır (ATP üretir)", "pairId": 2, "correct": false},
+                {"text": "DNA replikasyonu", "pairId": 3, "correct": false},
+                {"text": "Anabolik — nükleotidler birleşir (ATP harcar)", "pairId": 3, "correct": false},
+                {"text": "Sindirim", "pairId": 4, "correct": false},
+                {"text": "Katabolik — besinler parçalanır (hidroliz)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hangi reaksiyon katabolik değildir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["katabolizma", "anabolizma"],
+              "timeLimit": 12,
+              "explanation": "Fotosentez anabolik bir reaksiyondur (küçük → büyük). Solunum, sindirim ve fermantasyon katabolik reaksiyonlardır.",
+              "options": [
+                {"text": "Fotosentez", "correct": true},
+                {"text": "Hücresel solunum", "correct": false},
+                {"text": "Sindirim", "correct": false},
+                {"text": "Fermantasyon", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Besinlerin metabolik kullanım önceliğini sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["metabolizma", "besin"],
+              "explanation": "Vücut önce karbonhidratları, sonra yağları, en son proteinleri enerji kaynağı olarak kullanır.",
+              "options": [
+                {"text": "Karbonhidratlar (hızlı erişim, glikojen deposu)", "correctOrder": 1, "correct": false},
+                {"text": "Yağlar (yüksek enerji deposu, uzun süre)", "correctOrder": 2, "correct": false},
+                {"text": "Proteinler (son çare, yapısal görev öncelikli)", "correctOrder": 3, "correct": false},
+                {"text": "Amino asitlerin karbon iskeletleri Krebs'e girer", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Enzimler ve Enerji Metabolizması",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Enzimler metabolizmada neden vazgeçilmezdir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["enzim", "metabolizma"],
+              "explanation": "Enzimler aktivasyon enerjisini düşürerek reaksiyonları vücut sıcaklığında mümkün kılar. Enzimsiz metabolizma imkansızdır.",
+              "options": [
+                {"text": "Enerji üretirler", "correct": false},
+                {"text": "Aktivasyon enerjisini düşürerek reaksiyonları vücut sıcaklığında mümkün kılar", "correct": true},
+                {"text": "Reaksiyonları yavaşlatırlar", "correct": false},
+                {"text": "Sadece sindirimde kullanılır", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "NAD⁺ ve FAD nedir?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["koenzim", "NAD", "FAD"],
+              "explanation": "NAD⁺ ve FAD elektron taşıyıcı koenzimlerdir. NADH ve FADH₂ formu indirgenmiş (e⁻ taşıyan) hâldir ve ETS'ye e⁻ vererek ATP üretilir.",
+              "options": [
+                {"text": "Elektron taşıyıcı koenzimler — ETS'ye elektron vererek ATP üretimini sağlar", "correct": true},
+                {"text": "Enzim inhibitörleri", "correct": false},
+                {"text": "Vitamin türleri", "correct": false},
+                {"text": "Hormon çeşitleri", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Metabolik reaksiyonlarda enzimler reaksiyonu hızlandırır ama {1} değiştirmezler; reaksiyon sonunda aynen geri kalırlar.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["enzim", "özellik"],
+              "explanation": "Enzimler reaksiyonun denge noktasını (sonuç miktarını) değiştirmez, sadece dengeye ulaşma hızını artırır.",
+              "options": [
+                {"text": "reaksiyonun denge noktasını", "isBlank": true, "correct": true},
+                {"text": "substrat miktarını", "correct": false},
+                {"text": "ürün kalitesini", "correct": false},
+                {"text": "sıcaklığı", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Metabolizmadaki önemli koenzimleri sıralayın (sentez sırasına göre).",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["koenzim", "metabolizma"],
+              "explanation": "Glikolizde NADH, Krebs'te NADH + FADH₂, ETS'de bu koenzimler oksitlenir, son aşamada ATP sentezlenir.",
+              "options": [
+                {"text": "NAD⁺ → NADH (glikoliz ve Krebs döngüsünde indirgenir)", "correctOrder": 1, "correct": false},
+                {"text": "FAD → FADH₂ (Krebs döngüsünde indirgenir)", "correctOrder": 2, "correct": false},
+                {"text": "NADH ve FADH₂ → ETS'ye e⁻ aktarır (iç zar)", "correctOrder": 3, "correct": false},
+                {"text": "Proton gradyanı → ATP sentaz → ATP üretimi", "correctOrder": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hangisi ekzergonik (enerji veren) bir reaksiyondur?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["ekzergonik", "endergonik"],
+              "timeLimit": 12,
+              "explanation": "Hücresel solunum ekzergoniktir (enerji verir). Fotosentez, protein sentezi ve DNA replikasyonu endergoniktir (enerji harcar).",
+              "options": [
+                {"text": "Hücresel solunum", "correct": true},
+                {"text": "Fotosentez", "correct": false},
+                {"text": "Protein sentezi", "correct": false},
+                {"text": "DNA replikasyonu", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Enerji metabolizması kavramlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["metabolizma", "kavram"],
+              "explanation": "Enerji metabolizması terimleri birbirine bağlıdır.",
+              "options": [
+                {"text": "Ekzergonik reaksiyon", "pairId": 1, "correct": false},
+                {"text": "Ürünlerin enerjisi reaktanlardan düşük → enerji açığa çıkar", "pairId": 1, "correct": false},
+                {"text": "Endergonik reaksiyon", "pairId": 2, "correct": false},
+                {"text": "Ürünlerin enerjisi reaktanlardan yüksek → enerji harcanır", "pairId": 2, "correct": false},
+                {"text": "Enerji eşlenmesi", "pairId": 3, "correct": false},
+                {"text": "Ekzergonik reaksiyonun enerjisi endergonik reaksiyonu yürütür", "pairId": 3, "correct": false},
+                {"text": "Metabolizma", "pairId": 4, "correct": false},
+                {"text": "Anabolik + katabolik reaksiyonların tümü", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Enerji Dönüşümleri ve Termodinamik",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Termodinamiğin 1. yasasına göre enerji ne olur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["termodinamik", "enerji"],
+              "explanation": "Enerjinin korunumu yasası: enerji yok olmaz, bir formdan başka forma dönüşür. Toplam enerji sabit kalır.",
+              "options": [
+                {"text": "Enerji yok edilebilir", "correct": false},
+                {"text": "Enerji yaratılıp yok edilemez, sadece form değiştirir", "correct": true},
+                {"text": "Enerji sürekli artar", "correct": false},
+                {"text": "Enerji sadece ısıya dönüşür", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Fotosentez ve hücresel solunum arasındaki enerji ilişkisi nedir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["fotosentez", "solunum", "enerji"],
+              "explanation": "Fotosentez ışık enerjisini kimyasal enerjiye (glikoz) dönüştürür. Solunum glikozun kimyasal enerjisini ATP'ye dönüştürür. Birbirini tamamlayan süreçlerdir.",
+              "options": [
+                {"text": "Fotosentez ışığı glikoza, solunum glikozu ATP'ye dönüştürür — birbirini tamamlar", "correct": true},
+                {"text": "İkisi de aynı işi yapar", "correct": false},
+                {"text": "Birbirleriyle ilişkisizdir", "correct": false},
+                {"text": "İkisi de enerji harcar", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Termodinamiğin 2. yasasına göre her enerji dönüşümünde bir miktar enerji {1} olarak kaybolur ve kullanılabilir enerji azalır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["termodinamik", "entropi"],
+              "explanation": "Her enerji dönüşümünde bir miktar enerji ısı olarak çevreye yayılır (entropi artar). %100 verimli dönüşüm imkansızdır.",
+              "options": [
+                {"text": "ısı", "isBlank": true, "correct": true},
+                {"text": "ışık", "correct": false},
+                {"text": "ses", "correct": false},
+                {"text": "kimyasal enerji", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Canlılardaki enerji dönüşüm zincirini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["enerji", "dönüşüm"],
+              "explanation": "Enerji güneşten başlayarak besin zinciri boyunca dönüşür.",
+              "options": [
+                {"text": "Güneş → Bitki", "pairId": 1, "correct": false},
+                {"text": "Işık enerjisi → Kimyasal enerji (fotosentez ile glikoz)", "pairId": 1, "correct": false},
+                {"text": "Bitki → Hayvan", "pairId": 2, "correct": false},
+                {"text": "Besin enerjisi transferi (besin zinciri)", "pairId": 2, "correct": false},
+                {"text": "Glikoz → ATP", "pairId": 3, "correct": false},
+                {"text": "Hücresel solunum ile kimyasal enerji dönüşümü", "pairId": 3, "correct": false},
+                {"text": "ATP → İş", "pairId": 4, "correct": false},
+                {"text": "Mekanik, elektrik, kimyasal iş + ısı kaybı", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Güneş'ten gelen enerji bitkide hangi forma dönüşür?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "EASY",
+              "tags": ["güneş", "fotosentez"],
+              "timeLimit": 10,
+              "explanation": "Güneş enerjisi (ışık) kloroplastta fotosentez ile glikozun kimyasal bağ enerjisine dönüşür.",
+              "options": [
+                {"text": "Kimyasal enerji (glikoz)", "correct": true},
+                {"text": "Elektrik enerjisi", "correct": false},
+                {"text": "Nükleer enerji", "correct": false},
+                {"text": "Mekanik enerji", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Enerji dönüşümlerini güneşten ATP'ye kadar sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["enerji", "akış"],
+              "explanation": "Güneş → fotosentez → glikoz → solunum → ATP → hücresel iş şeklinde enerji dönüşür.",
+              "options": [
+                {"text": "Güneş ışık enerjisi yayar", "correctOrder": 1, "correct": false},
+                {"text": "Fotosentez: ışık → glikoz (kimyasal enerji)", "correctOrder": 2, "correct": false},
+                {"text": "Hücresel solunum: glikoz → ATP", "correctOrder": 3, "correct": false},
+                {"text": "ATP → hücresel iş (kas, taşıma, sentez) + ısı kaybı", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Fotosentez",
+      "description": "Fotosentez reaksiyonları, ışığa bağlı ve bağımsız evreler, fotosentez hızını etkileyen faktörler (MEB 2025-2026 Tema 1)",
+      "order": 2,
+      "lessons": [
+        {
+          "title": "Fotosentez Reaksiyonlarına Giriş",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Fotosentezin genel denklemi hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["fotosentez", "denklem"],
+              "explanation": "6CO₂ + 6H₂O + Işık → C₆H₁₂O₆ + 6O₂. Karbondioksit ve su, ışık enerjisiyle glikoz ve oksijene dönüşür.",
+              "options": [
+                {"text": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O", "correct": false},
+                {"text": "6CO₂ + 6H₂O + Işık → C₆H₁₂O₆ + 6O₂", "correct": true},
+                {"text": "6CO₂ + 6O₂ → C₆H₁₂O₆ + 6H₂O", "correct": false},
+                {"text": "C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Fotosentez hangi organelde gerçekleşir?",
+              "type": "ASSIST",
+              "difficulty": "EASY",
+              "tags": ["fotosentez", "kloroplast"],
+              "explanation": "Fotosentez kloroplastta gerçekleşir. Klorofil pigmenti ışığı emer. İç zar sistemi (tilakoid) ve stroma olmak üzere iki bölümde reaksiyonlar olur.",
+              "options": [
+                {"text": "Kloroplastta (tilakoid + stroma)", "correct": true},
+                {"text": "Mitokondride", "correct": false},
+                {"text": "Çekirdekte", "correct": false},
+                {"text": "Sitoplazmada", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Fotosentezde üretilen oksijen (O₂) {1} molekülünün parçalanmasından (fotoliz) gelir, CO₂'den değil.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["fotosentez", "fotoliz"],
+              "explanation": "Oksijen H₂O'nun fotolizinden gelir. Bu 1941'de izotop (¹⁸O) deneyleriyle kanıtlanmıştır.",
+              "options": [
+                {"text": "su (H₂O)", "isBlank": true, "correct": true},
+                {"text": "karbondioksit (CO₂)", "correct": false},
+                {"text": "glikoz (C₆H₁₂O₆)", "correct": false},
+                {"text": "klorofil", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Fotosentezin girdi ve çıktılarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["fotosentez", "girdi", "çıktı"],
+              "explanation": "Fotosentez girdi olarak CO₂, H₂O ve ışık alır; çıktı olarak glikoz ve O₂ üretir.",
+              "options": [
+                {"text": "CO₂ (karbondioksit)", "pairId": 1, "correct": false},
+                {"text": "Girdi — stomalardan alınır, karbon kaynağı", "pairId": 1, "correct": false},
+                {"text": "H₂O (su)", "pairId": 2, "correct": false},
+                {"text": "Girdi — köklerden alınır, fotolizle parçalanır", "pairId": 2, "correct": false},
+                {"text": "C₆H₁₂O₆ (glikoz)", "pairId": 3, "correct": false},
+                {"text": "Çıktı — stromada Calvin döngüsünde üretilir", "pairId": 3, "correct": false},
+                {"text": "O₂ (oksijen)", "pairId": 4, "correct": false},
+                {"text": "Çıktı — suyun fotolizinden gelir, stomadan atılır", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Klorofil hangi renk ışığı en çok emer?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["klorofil", "ışık"],
+              "timeLimit": 10,
+              "explanation": "Klorofil kırmızı (~680nm) ve mavi-mor (~430nm) ışığı en çok emer. Yeşil ışığı yansıtır → bitki yeşil görünür.",
+              "options": [
+                {"text": "Kırmızı ve mavi-mor", "correct": true},
+                {"text": "Yeşil", "correct": false},
+                {"text": "Sarı", "correct": false},
+                {"text": "Turuncu", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Fotosentezin keşif tarihçesini sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["fotosentez", "tarih"],
+              "explanation": "Van Helmont, Priestley, Ingenhousz ve Calvin'in katkıları fotosentezin anlaşılmasını sağlamıştır.",
+              "options": [
+                {"text": "Van Helmont: bitki büyümesinin topraktan değil su+havadan geldiğini gösterdi", "correctOrder": 1, "correct": false},
+                {"text": "Priestley: bitkilerin O₂ ürettiğini keşfetti (1771)", "correctOrder": 2, "correct": false},
+                {"text": "Ingenhousz: O₂ üretiminin ışık gerektirdiğini buldu", "correctOrder": 3, "correct": false},
+                {"text": "Calvin: ışıktan bağımsız reaksiyonları (Calvin döngüsü) açıkladı (1961 Nobel)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Işığa Bağlı Reaksiyonlar",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Işığa bağlı reaksiyonlar kloroplastın neresinde gerçekleşir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ışık", "tilakoid"],
+              "explanation": "Işığa bağlı reaksiyonlar tilakoid zarlarında gerçekleşir. Klorofil ve elektron taşıma zinciri (ETS) burada bulunur.",
+              "options": [
+                {"text": "Stromada", "correct": false},
+                {"text": "Tilakoid zarlarında", "correct": true},
+                {"text": "Dış zarda", "correct": false},
+                {"text": "Sitoplazmada", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Işığa bağlı reaksiyonların ürünleri nelerdir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["ışık", "ürün"],
+              "explanation": "Tilakoidde: H₂O fotolizi → O₂ + H⁺. NADP⁺ → NADPH. ADP + Pi → ATP. Bu ürünler Calvin döngüsünde kullanılır.",
+              "options": [
+                {"text": "ATP, NADPH ve O₂", "correct": true},
+                {"text": "Glikoz ve CO₂", "correct": false},
+                {"text": "Sadece O₂", "correct": false},
+                {"text": "FADH₂ ve glikoz", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'{1}, fotosentezde ışık enerjisinin kimyasal enerjiye (ATP) dönüştürülmesi sürecidir ve tilakoid zarında kemiosmoz ile gerçekleşir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["fotofosforilasyon"],
+              "explanation": "Fotofosforilasyon, ışık enerjisiyle ADP + Pi → ATP sentezlemesidir. Siklik ve asiklik olmak üzere iki türü vardır.",
+              "options": [
+                {"text": "Fotofosforilasyon", "isBlank": true, "correct": true},
+                {"text": "Oksidatif fosforilasyon", "correct": false},
+                {"text": "Substrat fosforilasyon", "correct": false},
+                {"text": "Fotoliz", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Fotosistem I ve II'yi eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["fotosistem"],
+              "explanation": "İki fotosistem birlikte çalışarak ışık enerjisini ATP ve NADPH'a dönüştürür.",
+              "options": [
+                {"text": "Fotosistem II (P680)", "pairId": 1, "correct": false},
+                {"text": "Suyu parçalar (fotoliz), O₂ üretir, e⁻'ları ETS'ye verir", "pairId": 1, "correct": false},
+                {"text": "Fotosistem I (P700)", "pairId": 2, "correct": false},
+                {"text": "e⁻'ları NADP⁺'ye aktarır → NADPH oluşur", "pairId": 2, "correct": false},
+                {"text": "Asiklik fotofosforilasyon", "pairId": 3, "correct": false},
+                {"text": "FSII + FSI birlikte → ATP + NADPH + O₂ (doğrusal)", "pairId": 3, "correct": false},
+                {"text": "Siklik fotofosforilasyon", "pairId": 4, "correct": false},
+                {"text": "Sadece FSI → yalnızca ATP üretilir (NADPH ve O₂ yok)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Suyun fotoliz denklemi nedir: 2H₂O → ?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "HARD",
+              "tags": ["fotoliz", "su"],
+              "timeLimit": 15,
+              "explanation": "Fotoliz: 2H₂O → 4H⁺ + 4e⁻ + O₂. Protonlar (H⁺) kemiosmoz için, elektronlar ETS için kullanılır.",
+              "options": [
+                {"text": "4H⁺ + 4e⁻ + O₂", "correct": true},
+                {"text": "2H₂ + O₂", "correct": false},
+                {"text": "H₂O₂ + H₂", "correct": false},
+                {"text": "4OH⁻ + O₂", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Asiklik fotofosforilasyonun aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["asiklik", "fotofosforilasyon"],
+              "explanation": "FSII'de su parçalanır → e⁻ ETS'den geçer → FSI'e aktarılır → NADPH oluşur.",
+              "options": [
+                {"text": "FSII ışığı emer, H₂O fotoliz olur → O₂ + e⁻ + H⁺", "correctOrder": 1, "correct": false},
+                {"text": "e⁻ ETS boyunca akar, H⁺ tilakoid içine pompalanır → ATP", "correctOrder": 2, "correct": false},
+                {"text": "e⁻ FSI'e ulaşır, tekrar ışıkla uyarılır", "correctOrder": 3, "correct": false},
+                {"text": "Son e⁻ alıcısı NADP⁺ → NADPH oluşur", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Işıktan Bağımsız Reaksiyonlar (Calvin Döngüsü)",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Calvin döngüsü kloroplastın neresinde gerçekleşir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Calvin", "stroma"],
+              "explanation": "Calvin döngüsü stromada gerçekleşir. Işığa bağlı reaksiyonlardan gelen ATP ve NADPH'ı kullanarak CO₂'yi glikoza dönüştürür.",
+              "options": [
+                {"text": "Tilakoidde", "correct": false},
+                {"text": "Stromada", "correct": true},
+                {"text": "Dış zarda", "correct": false},
+                {"text": "Mitokondride", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Calvin döngüsünde CO₂ hangi moleküle bağlanır?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["Calvin", "RuBisCO"],
+              "explanation": "CO₂, RuBisCO enzimi aracılığıyla RuBP'ye (5C) bağlanır → kararsız 6C → 2 molekül 3-PGA (3C) oluşur. Buna karbon fiksasyonu denir.",
+              "options": [
+                {"text": "RuBP'ye (5 karbonlu) — RuBisCO enzimi ile (karbon fiksasyonu)", "correct": true},
+                {"text": "Glikoza doğrudan", "correct": false},
+                {"text": "ATP'ye", "correct": false},
+                {"text": "NADPH'a", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Calvin döngüsünde CO₂'yi RuBP'ye bağlayan enzim {1} dir ve dünyadaki en bol enzimdir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["RuBisCO", "enzim"],
+              "explanation": "RuBisCO (Ribuloz-1,5-bisfosfat karboksilaz/oksijenaz) dünyada en çok bulunan enzimdir. Tüm fotosentez bu enzimle başlar.",
+              "options": [
+                {"text": "RuBisCO", "isBlank": true, "correct": true},
+                {"text": "ATP sentaz", "correct": false},
+                {"text": "DNA polimeraz", "correct": false},
+                {"text": "Amilaz", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Calvin döngüsünün girdi ve çıktılarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["Calvin", "girdi", "çıktı"],
+              "explanation": "Calvin döngüsü ATP ve NADPH kullanarak CO₂'yi G3P'ye (glikoz öncüsü) dönüştürür.",
+              "options": [
+                {"text": "CO₂", "pairId": 1, "correct": false},
+                {"text": "Girdi — karbon kaynağı (stomalardan)", "pairId": 1, "correct": false},
+                {"text": "ATP", "pairId": 2, "correct": false},
+                {"text": "Girdi — ışık reaksiyonlarından enerji", "pairId": 2, "correct": false},
+                {"text": "NADPH", "pairId": 3, "correct": false},
+                {"text": "Girdi — ışık reaksiyonlarından elektron/H", "pairId": 3, "correct": false},
+                {"text": "G3P (gliseraldehit-3-fosfat)", "pairId": 4, "correct": false},
+                {"text": "Çıktı — glikoz öncüsü (3 karbonlu)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "1 glikoz molekülü üretmek için Calvin döngüsü kaç kez dönmelidir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "HARD",
+              "tags": ["Calvin", "tur"],
+              "timeLimit": 12,
+              "explanation": "Her turda 1 CO₂ fikse edilir. Glikoz (C₆H₁₂O₆) için 6 CO₂ gerekir → 6 tur. 18 ATP + 12 NADPH harcanır.",
+              "options": [
+                {"text": "6 kez", "correct": true},
+                {"text": "3 kez", "correct": false},
+                {"text": "12 kez", "correct": false},
+                {"text": "1 kez", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Calvin döngüsünün aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["Calvin", "aşama"],
+              "explanation": "Karbon fiksasyonu → indirgeme → RuBP rejenerasyonu şeklinde döngü tamamlanır.",
+              "options": [
+                {"text": "Karbon fiksasyonu: CO₂ + RuBP → 2 × 3-PGA (RuBisCO ile)", "correctOrder": 1, "correct": false},
+                {"text": "İndirgeme: 3-PGA + ATP + NADPH → G3P", "correctOrder": 2, "correct": false},
+                {"text": "G3P'nin bir kısmı glikoz sentezine gider (çıktı)", "correctOrder": 3, "correct": false},
+                {"text": "RuBP rejenerasyonu: kalan G3P + ATP → RuBP (döngü devam)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Fotosentez Hızını Etkileyen Faktörler",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Fotosentez hızını etkileyen en önemli sınırlayıcı faktör hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["fotosentez", "sınırlayıcı"],
+              "explanation": "Sınırlayıcı faktör koşullara göre değişir. Genelde CO₂ konsantrasyonu, ışık şiddeti ve sıcaklık en önemli faktörlerdir. Doğada CO₂ genellikle sınırlayıcıdır.",
+              "options": [
+                {"text": "Sadece ışık", "correct": false},
+                {"text": "Koşula göre değişir: genellikle CO₂ konsantrasyonu, ışık şiddeti veya sıcaklık", "correct": true},
+                {"text": "Sadece su", "correct": false},
+                {"text": "Hiçbiri", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Işık şiddeti arttıkça fotosentez hızı nasıl değişir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["ışık", "fotosentez hızı"],
+              "explanation": "Başlangıçta doğru orantılı artar, sonra doyma noktasına ulaşır ve sabitlenir. Doyma noktasında tüm klorofil molekülleri meşguldür.",
+              "options": [
+                {"text": "Önce artar, sonra doyma noktasında sabitlenir", "correct": true},
+                {"text": "Sürekli doğrusal artar", "correct": false},
+                {"text": "Azalır", "correct": false},
+                {"text": "Değişmez", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Fotosentez hızının solunum hızına eşit olduğu ışık şiddetine {1} denir; bu noktada net gaz alışverişi sıfırdır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["kompanzasyon", "ışık"],
+              "explanation": "Kompanzasyon noktasında üretilen O₂ = tüketilen O₂ ve üretilen CO₂ = tüketilen CO₂. Net gaz alışverişi sıfırdır.",
+              "options": [
+                {"text": "kompanzasyon (denge/telafi) noktası", "isBlank": true, "correct": true},
+                {"text": "doyma noktası", "correct": false},
+                {"text": "optimum nokta", "correct": false},
+                {"text": "kırılma noktası", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Fotosentez hızını etkileyen faktörleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["fotosentez", "faktör"],
+              "explanation": "Birden fazla faktör fotosentez hızını etkiler.",
+              "options": [
+                {"text": "Işık şiddeti ↑", "pairId": 1, "correct": false},
+                {"text": "Hız artar → doyma noktasında plato", "pairId": 1, "correct": false},
+                {"text": "CO₂ konsantrasyonu ↑", "pairId": 2, "correct": false},
+                {"text": "Hız artar → belirli noktada plato (RuBisCO doyar)", "pairId": 2, "correct": false},
+                {"text": "Sıcaklık ↑", "pairId": 3, "correct": false},
+                {"text": "Optimuma kadar artar → aşırı sıcakta enzimler denatüre olur, hız düşer", "pairId": 3, "correct": false},
+                {"text": "Su eksikliği", "pairId": 4, "correct": false},
+                {"text": "Stomalar kapanır → CO₂ girişi azalır → hız düşer", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Sıcaklık 45°C'nin üzerine çıktığında fotosentez hızı neden düşer?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["sıcaklık", "enzim"],
+              "timeLimit": 12,
+              "explanation": "Yüksek sıcaklıkta RuBisCO ve diğer enzimler denatüre olur (3B yapıları bozulur), fotosentez durur.",
+              "options": [
+                {"text": "Enzimler (RuBisCO vb.) denatüre olur", "correct": true},
+                {"text": "Işık azalır", "correct": false},
+                {"text": "CO₂ artar", "correct": false},
+                {"text": "Su donar", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Sera ortamında fotosentezi artırmak için yapılan işlemleri öncelik sırasıyla belirleyin.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["sera", "fotosentez"],
+              "explanation": "Seralarda ışık, CO₂ ve sıcaklık optimize edilerek verim artırılır.",
+              "options": [
+                {"text": "Yapay aydınlatma ile ışık süresini uzat", "correctOrder": 1, "correct": false},
+                {"text": "CO₂ jeneratörü ile CO₂ konsantrasyonunu artır", "correctOrder": 2, "correct": false},
+                {"text": "Optimum sıcaklığı (25-35°C) sabit tut", "correctOrder": 3, "correct": false},
+                {"text": "Yeterli sulama ve mineral beslemesi sağla", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Fotosentezin Yaşam İçin Önemi",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Atmosferdeki oksijenin büyük bölümü nereden gelir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["oksijen", "fotosentez"],
+              "explanation": "Atmosferdeki oksijenin ~%50-80'i okyanustaki fitoplanktonlar (algler, siyanobakteriler), geri kalanı karasal bitkiler tarafından üretilir.",
+              "options": [
+                {"text": "Yalnızca ormanlardan", "correct": false},
+                {"text": "Büyük bölümü okyanus fitoplanktonları + karasal bitkilerden", "correct": true},
+                {"text": "Atmosferdeki kimyasal reaksiyonlardan", "correct": false},
+                {"text": "Volkanlardan", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Fotosentez ekosistemde hangi temel rolü üstlenir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["fotosentez", "ekosistem"],
+              "explanation": "Fotosentez birincil üretimdir: güneş enerjisini organik besinlere dönüştürerek tüm besin zincirinin temelini oluşturur. O₂ üretir, CO₂ tutar.",
+              "options": [
+                {"text": "Birincil üretim: güneş enerjisini besin zincirine sokar, O₂ üretir, CO₂ tutar", "correct": true},
+                {"text": "Sadece oksijen üretir", "correct": false},
+                {"text": "Sadece bitkileri besler", "correct": false},
+                {"text": "Önemsiz bir reaksiyondur", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Milyarlarca yıl önce siyanobakterilerin fotosentez yaparak O₂ üretmesi ve atmosferin oksijenlenmesi olayına {1} denir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["oksijen", "tarih"],
+              "explanation": "Büyük Oksijen Olayı (~2,4 milyar yıl önce) siyanobakterilerin O₂ üretimiyle atmosferin değişmesidir. Aerobik yaşamın başlangıcı.",
+              "options": [
+                {"text": "Büyük Oksijen Olayı", "isBlank": true, "correct": true},
+                {"text": "Kambriyen Patlaması", "correct": false},
+                {"text": "Büyük Patlama", "correct": false},
+                {"text": "Devoniyen Olayı", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Fotosentezin küresel karbon döngüsündeki rolünü eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["karbon döngüsü", "fotosentez"],
+              "explanation": "Fotosentez karbon döngüsünün temel bileşenidir.",
+              "options": [
+                {"text": "CO₂ tutma (karbon fiksasyonu)", "pairId": 1, "correct": false},
+                {"text": "Atmosferdeki CO₂'yi organik karbona dönüştürür", "pairId": 1, "correct": false},
+                {"text": "O₂ üretimi", "pairId": 2, "correct": false},
+                {"text": "Aerobik canlılar için solunum gazı sağlar", "pairId": 2, "correct": false},
+                {"text": "Organik besin üretimi", "pairId": 3, "correct": false},
+                {"text": "Besin zincirinin enerjisinin temelini oluşturur", "pairId": 3, "correct": false},
+                {"text": "Sera etkisi dengesi", "pairId": 4, "correct": false},
+                {"text": "CO₂ tutarak küresel ısınmayı yavaşlatır", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Fotosentez dursa ilk ne olur?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["fotosentez", "önem"],
+              "timeLimit": 12,
+              "explanation": "Fotosentez durursa O₂ üretimi ve besin üretimi (birincil üretim) durur. Besin zinciri çöker. Atmosferdeki O₂ tükenir.",
+              "options": [
+                {"text": "Besin zincirinin temeli çöker, O₂ üretimi durur", "correct": true},
+                {"text": "Sadece bitkiler ölür", "correct": false},
+                {"text": "Hiçbir şey olmaz", "correct": false},
+                {"text": "Sadece CO₂ artar", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Fosil yakıtların oluşum sürecini sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["fosil yakıt", "fotosentez"],
+              "explanation": "Fosil yakıtlar milyon yıllık fotosentez ürünlerinin jeolojik süreçlerle dönüşmüş hâlidir.",
+              "options": [
+                {"text": "Eski bitki/algler fotosentezle güneş enerjisini glikoza dönüştürdü", "correctOrder": 1, "correct": false},
+                {"text": "Ölen canlılar çökeltiler altında birikti (milyon yıllar)", "correctOrder": 2, "correct": false},
+                {"text": "Isı ve basınç altında kömür, petrol, doğalgaza dönüştü", "correctOrder": 3, "correct": false},
+                {"text": "Yakıldığında depolanan güneş enerjisi açığa çıkar + CO₂ salınır", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kemosentez ve Hücresel Solunum",
+      "description": "Kemosentez, oksijenli solunum aşamaları, glikoliz, Krebs döngüsü ve oksidatif fosforilasyon (MEB 2025-2026 Tema 1)",
+      "order": 3,
+      "lessons": [
+        {
+          "title": "Kemosentez",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Kemosentez ile fotosentez arasındaki temel fark nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kemosentez", "fotosentez"],
+              "explanation": "Fotosentez ışık enerjisi kullanırken kemosentez inorganik maddelerin oksidasyonundan elde edilen kimyasal enerjiyi kullanır.",
+              "options": [
+                {"text": "Fark yoktur", "correct": false},
+                {"text": "Kemosentez ışık yerine inorganik maddelerin kimyasal enerjisini kullanır", "correct": true},
+                {"text": "Kemosentez oksijen üretir", "correct": false},
+                {"text": "Fotosentez kimyasal enerji kullanır", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kemosentez yapan canlılara ne denir?",
+              "type": "ASSIST",
+              "difficulty": "EASY",
+              "tags": ["kemoototrof"],
+              "explanation": "Kemosentez yapan canlılar kemoototoroflardır. Nitrifikasyon bakterileri (Nitrosomonas, Nitrobacter), demir ve kükürt bakterileri buna örnektir.",
+              "options": [
+                {"text": "Kemoototrof (kemosentetik ototrof)", "correct": true},
+                {"text": "Fotoototrof", "correct": false},
+                {"text": "Kemoheterotrof", "correct": false},
+                {"text": "Fotoheterotrof", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'{1} bakterileri, amonyağı (NH₃) nitrite (NO₂⁻) oksitleyerek enerji elde eder ve bu enerjiyle CO₂'den organik madde sentezler.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["nitrifikasyon", "bakteri"],
+              "explanation": "Nitrosomonas NH₃ → NO₂⁻ (nitrit), Nitrobacter NO₂⁻ → NO₃⁻ (nitrat) dönüşümünü gerçekleştirir. Azot döngüsünün kritik aşaması.",
+              "options": [
+                {"text": "Nitrosomonas", "isBlank": true, "correct": true},
+                {"text": "Lactobacillus", "correct": false},
+                {"text": "E. coli", "correct": false},
+                {"text": "Rhizobium", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kemosentez yapan bakteri türlerini substratlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["kemosentez", "bakteri"],
+              "explanation": "Farklı kemoototrof bakteriler farklı inorganik maddeleri oksitler.",
+              "options": [
+                {"text": "Nitrosomonas", "pairId": 1, "correct": false},
+                {"text": "NH₃ → NO₂⁻ (amonyak oksidasyonu)", "pairId": 1, "correct": false},
+                {"text": "Nitrobacter", "pairId": 2, "correct": false},
+                {"text": "NO₂⁻ → NO₃⁻ (nitrit oksidasyonu)", "pairId": 2, "correct": false},
+                {"text": "Demir bakterileri", "pairId": 3, "correct": false},
+                {"text": "Fe²⁺ → Fe³⁺ (demir oksidasyonu)", "pairId": 3, "correct": false},
+                {"text": "Kükürt bakterileri", "pairId": 4, "correct": false},
+                {"text": "H₂S → S⁰ → SO₄²⁻ (kükürt oksidasyonu)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Kemosentez hangi ortamlarda özellikle önemlidir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["kemosentez", "ortam"],
+              "timeLimit": 12,
+              "explanation": "Okyanus tabanı hidrotermal bacalarında güneş ışığı ulaşmaz; buradaki ekosistem tamamen kemosentetik bakterilere dayanır.",
+              "options": [
+                {"text": "Işık ulaşmayan derin deniz hidrotermal bacaları", "correct": true},
+                {"text": "Çöller", "correct": false},
+                {"text": "Kutuplar", "correct": false},
+                {"text": "Ormanlar", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Nitrifikasyon sürecinin aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["nitrifikasyon", "azot"],
+              "explanation": "Organik N → NH₃ → NO₂⁻ → NO₃⁻ şeklinde azot formu değişir.",
+              "options": [
+                {"text": "Organik maddelerdeki azot (protein, nükleik asit) serbest kalır", "correctOrder": 1, "correct": false},
+                {"text": "Amonifikasyon: organik N → NH₃/NH₄⁺ (çürükçül bakteriler)", "correctOrder": 2, "correct": false},
+                {"text": "Nitrosomonas: NH₃ → NO₂⁻ (nitrit) + enerji", "correctOrder": 3, "correct": false},
+                {"text": "Nitrobacter: NO₂⁻ → NO₃⁻ (nitrat) + enerji → bitkiler alır", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Hücresel Solunuma Giriş ve Glikoliz",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Hücresel solunumun genel denklemi hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["solunum", "denklem"],
+              "explanation": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ~36-38 ATP. Glikozun oksijenle tam oksidasyonudur.",
+              "options": [
+                {"text": "6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂", "correct": false},
+                {"text": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP", "correct": true},
+                {"text": "C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂", "correct": false},
+                {"text": "2H₂O → 2H₂ + O₂", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Glikoliz nerede gerçekleşir ve ne üretir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["glikoliz", "sitoplazma"],
+              "explanation": "Glikoliz sitoplazmada gerçekleşir. 1 glikoz (6C) → 2 pirüvat (3C) + 2 ATP + 2 NADH. Oksijen gerektirmez.",
+              "options": [
+                {"text": "Sitoplazma: glikoz → 2 pirüvat + 2 ATP + 2 NADH (oksijen gerektirmez)", "correct": true},
+                {"text": "Mitokondri: glikoz → CO₂ + H₂O", "correct": false},
+                {"text": "Çekirdek: glikoz → ATP", "correct": false},
+                {"text": "Kloroplast: glikoz → O₂", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Glikoliz tüm canlılarda ortaktır ve oksijen {1}; bu nedenle hem aerobik hem anaerobik solunumun ilk aşamasıdır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["glikoliz", "oksijen"],
+              "explanation": "Glikoliz anaerobik (oksijensiz) bir süreçtir. Tüm canlılarda ortak olan en eski metabolik yoldur.",
+              "options": [
+                {"text": "gerektirmez (anaerobik)", "isBlank": true, "correct": true},
+                {"text": "gerektirir (aerobik)", "correct": false},
+                {"text": "üretir", "correct": false},
+                {"text": "tüketir", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Glikolizin girdi ve çıktılarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["glikoliz", "girdi", "çıktı"],
+              "explanation": "Glikoliz net 2 ATP ve 2 NADH üretir.",
+              "options": [
+                {"text": "Girdi: Glikoz (C₆)", "pairId": 1, "correct": false},
+                {"text": "1 molekül 6 karbonlu şeker", "pairId": 1, "correct": false},
+                {"text": "Girdi: 2 ATP", "pairId": 2, "correct": false},
+                {"text": "Başlangıçta yatırım olarak harcanır", "pairId": 2, "correct": false},
+                {"text": "Çıktı: 2 Pirüvat (C₃)", "pairId": 3, "correct": false},
+                {"text": "3 karbonlu, Krebs döngüsüne veya fermantasyona gider", "pairId": 3, "correct": false},
+                {"text": "Çıktı: 4 ATP (net 2)", "pairId": 4, "correct": false},
+                {"text": "Substrat düzeyinde fosforilasyonla üretilir", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Glikoliz sonucu 1 glikozdan net kaç ATP elde edilir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "EASY",
+              "tags": ["glikoliz", "ATP"],
+              "timeLimit": 10,
+              "explanation": "Glikoliz: 2 ATP harcanır (yatırım), 4 ATP üretilir → net 2 ATP. Ayrıca 2 NADH ve 2 pirüvat oluşur.",
+              "options": [
+                {"text": "Net 2 ATP", "correct": true},
+                {"text": "4 ATP", "correct": false},
+                {"text": "36 ATP", "correct": false},
+                {"text": "0 ATP", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Glikolizin aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["glikoliz", "aşama"],
+              "explanation": "Glikoz → fruktoz-1,6-bisfosfat → 2×G3P → 2×pirüvat.",
+              "options": [
+                {"text": "Enerji yatırım fazı: glikoz + 2 ATP → fruktoz-1,6-bisfosfat", "correctOrder": 1, "correct": false},
+                {"text": "Parçalanma: 6C → 2 × G3P (3C)", "correctOrder": 2, "correct": false},
+                {"text": "Enerji kazanç fazı: G3P oksidasyonu → 2 NADH üretilir", "correctOrder": 3, "correct": false},
+                {"text": "Substrat fosforilasyonu → 4 ATP üretilir, 2 pirüvat oluşur", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Krebs Döngüsü",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Krebs döngüsü hücrenin neresinde gerçekleşir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Krebs", "matriks"],
+              "explanation": "Krebs döngüsü (sitrik asit döngüsü) mitokondri matriksinde gerçekleşir.",
+              "options": [
+                {"text": "Sitoplazmada", "correct": false},
+                {"text": "Mitokondri matriksinde", "correct": true},
+                {"text": "Mitokondri iç zarında", "correct": false},
+                {"text": "Çekirdekte", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Pirüvat Krebs döngüsüne girmeden önce hangi moleküle dönüşür?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["pirüvat", "asetil-CoA"],
+              "explanation": "Pirüvat matriste pirüvat dehidrojenaz ile asetil-CoA'ya dönüşür. Bu sırada 1 CO₂ çıkar ve 1 NADH üretilir.",
+              "options": [
+                {"text": "Asetil-CoA (2C) — 1 CO₂ çıkar, 1 NADH üretilir", "correct": true},
+                {"text": "Oksaloasetat (4C)", "correct": false},
+                {"text": "Sitrik asit (6C)", "correct": false},
+                {"text": "Glikoz (6C)", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Krebs döngüsünde asetil-CoA (2C) {1} (4C) ile birleşerek sitrik asit (6C) oluşturur.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["Krebs", "oksaloasetat"],
+              "explanation": "Asetil-CoA (2C) + Oksaloasetat (4C) → Sitrik asit (6C). Döngü bu birleşmeyle başlar.",
+              "options": [
+                {"text": "oksaloasetat", "isBlank": true, "correct": true},
+                {"text": "pirüvat", "correct": false},
+                {"text": "sitrik asit", "correct": false},
+                {"text": "fumarat", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Krebs döngüsünün ürünlerini eşleştirin (1 tur için).",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["Krebs", "ürün"],
+              "explanation": "Her turda karbonlar CO₂ olarak çıkar, enerji koenzim ve ATP'de depolanır.",
+              "options": [
+                {"text": "3 NADH", "pairId": 1, "correct": false},
+                {"text": "ETS'ye e⁻ taşır → sonra ATP'ye dönüşür", "pairId": 1, "correct": false},
+                {"text": "1 FADH₂", "pairId": 2, "correct": false},
+                {"text": "ETS'ye e⁻ taşır (NADH'tan daha az ATP verir)", "pairId": 2, "correct": false},
+                {"text": "1 GTP (≈ 1 ATP)", "pairId": 3, "correct": false},
+                {"text": "Substrat düzeyinde fosforilasyonla üretilir", "pairId": 3, "correct": false},
+                {"text": "2 CO₂", "pairId": 4, "correct": false},
+                {"text": "Karbonlar oksitlenir ve CO₂ olarak salınır (nefesle atılır)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "1 glikozdan Krebs döngüsü kaç tur döner?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["Krebs", "tur"],
+              "timeLimit": 10,
+              "explanation": "1 glikoz → 2 pirüvat → 2 asetil-CoA. Her asetil-CoA için 1 tur → toplam 2 tur.",
+              "options": [
+                {"text": "2 tur", "correct": true},
+                {"text": "1 tur", "correct": false},
+                {"text": "6 tur", "correct": false},
+                {"text": "4 tur", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Pirüvattan Krebs döngüsü tamamlanana kadar olan aşamaları sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["Krebs", "aşama"],
+              "explanation": "Pirüvat → Asetil-CoA → Krebs döngüsü (sitrik asit → oksaloasetat).",
+              "options": [
+                {"text": "Pirüvat → Asetil-CoA + CO₂ + NADH (geçiş reaksiyonu)", "correctOrder": 1, "correct": false},
+                {"text": "Asetil-CoA + Oksaloasetat → Sitrik asit (6C)", "correctOrder": 2, "correct": false},
+                {"text": "Sitrik asit oksidasyonu: 2 CO₂ çıkar, 3 NADH + 1 FADH₂ üretilir", "correctOrder": 3, "correct": false},
+                {"text": "1 GTP (≈ATP) üretilir, Oksaloasetat rejenerasyonu (döngü devam)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Oksidatif Fosforilasyon ve ETS",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Oksidatif fosforilasyon hücrenin neresinde gerçekleşir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ETS", "iç zar"],
+              "explanation": "Oksidatif fosforilasyon mitokondri iç zarında gerçekleşir. ETS proteinleri ve ATP sentaz burada bulunur.",
+              "options": [
+                {"text": "Sitoplazmada", "correct": false},
+                {"text": "Mitokondri iç zarında", "correct": true},
+                {"text": "Mitokondri matriksinde", "correct": false},
+                {"text": "Dış zarda", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "ETS'de son elektron alıcısı nedir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["ETS", "oksijen"],
+              "explanation": "Oksijen (O₂) ETS'nin son elektron alıcısıdır. Elektronları ve H⁺'ları alarak H₂O oluşturur. Bu yüzden oksijenli solunum adını alır.",
+              "options": [
+                {"text": "Oksijen (O₂) — elektronları alıp H₂O oluşturur", "correct": true},
+                {"text": "CO₂", "correct": false},
+                {"text": "NADH", "correct": false},
+                {"text": "ATP", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'ETS boyunca NADH ve FADH₂ elektronlarını iletirken pompalanan H⁺ iyonlarının ATP sentaz üzerinden geri geçişine {1} denir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["kemiosmoz", "ATP"],
+              "explanation": "Kemiosmoz, H⁺ gradyanının ATP sentaz enzimi aracılığıyla ATP üretimi için kullanılmasıdır. Peter Mitchell'in kemiosmotik teorisi (1961 Nobel).",
+              "options": [
+                {"text": "kemiosmoz", "isBlank": true, "correct": true},
+                {"text": "difüzyon", "correct": false},
+                {"text": "osmoz", "correct": false},
+                {"text": "aktif taşıma", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "1 glikozdan hücresel solunumun aşamalarında üretilen ATP miktarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["ATP", "aşama"],
+              "explanation": "Toplam ~36-38 ATP üretilir; büyük bölümü oksidatif fosforilasyondan gelir.",
+              "options": [
+                {"text": "Glikoliz", "pairId": 1, "correct": false},
+                {"text": "2 ATP (net) + 2 NADH", "pairId": 1, "correct": false},
+                {"text": "Geçiş reaksiyonu", "pairId": 2, "correct": false},
+                {"text": "2 NADH (ATP yok, sadece koenzim)", "pairId": 2, "correct": false},
+                {"text": "Krebs döngüsü (×2)", "pairId": 3, "correct": false},
+                {"text": "2 GTP + 6 NADH + 2 FADH₂", "pairId": 3, "correct": false},
+                {"text": "ETS + Oksidatif fosforilasyon", "pairId": 4, "correct": false},
+                {"text": "~34 ATP (10 NADH × ~2,5 + 2 FADH₂ × ~1,5)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "1 NADH ETS'de yaklaşık kaç ATP üretir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "HARD",
+              "tags": ["NADH", "ATP"],
+              "timeLimit": 10,
+              "explanation": "1 NADH → ~2,5 ATP. 1 FADH₂ → ~1,5 ATP. NADH daha fazla ATP verir çünkü e⁻'ları ETS'ye daha erken noktada verir.",
+              "options": [
+                {"text": "~2,5 ATP", "correct": true},
+                {"text": "1 ATP", "correct": false},
+                {"text": "10 ATP", "correct": false},
+                {"text": "0,5 ATP", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Oksidatif fosforilasyonun aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["ETS", "kemiosmoz"],
+              "explanation": "NADH/FADH₂ → ETS → H⁺ pompalama → kemiosmoz → ATP.",
+              "options": [
+                {"text": "NADH ve FADH₂ elektronlarını ETS'ye verir", "correctOrder": 1, "correct": false},
+                {"text": "e⁻ ETS boyunca akarken H⁺ zarlar arası boşluğa pompalanır", "correctOrder": 2, "correct": false},
+                {"text": "H⁺ gradyanı oluşur (zarlar arası > matriks)", "correctOrder": 3, "correct": false},
+                {"text": "H⁺ ATP sentazdan geçer → kemiosmoz → ADP + Pi → ATP", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Oksijenli ve Oksijensiz Solunum Karşılaştırması",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Oksijensiz solunumda son elektron alıcısı nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["anaerobik", "solunum"],
+              "explanation": "Oksijensiz (anaerobik) solunumda O₂ yerine NO₃⁻, SO₄²⁻, Fe³⁺ gibi inorganik maddeler son e⁻ alıcısıdır. ATP verimi düşüktür.",
+              "options": [
+                {"text": "Oksijen", "correct": false},
+                {"text": "NO₃⁻, SO₄²⁻ veya Fe³⁺ gibi inorganik maddeler", "correct": true},
+                {"text": "Glikoz", "correct": false},
+                {"text": "CO₂", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Oksijenli solunum neden oksijensizden çok daha verimlidir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["aerobik", "verim"],
+              "explanation": "Oksijenli solunum glikozdan ~36-38 ATP üretir. Oksijensiz solunum (fermantasyon) sadece 2 ATP üretir. O₂ güçlü bir e⁻ alıcısı olduğundan ETS tam çalışır.",
+              "options": [
+                {"text": "O₂ güçlü e⁻ alıcısı → ETS tam çalışır → ~36-38 ATP (fermantasyonda sadece 2)", "correct": true},
+                {"text": "Oksijenli daha yavaştır", "correct": false},
+                {"text": "Oksijensiz daha verimlidir", "correct": false},
+                {"text": "Aynı verimi verirler", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Oksijenli solunum 1 glikozdan yaklaşık {1} ATP üretirken fermantasyon yalnızca 2 ATP üretir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["ATP", "verim"],
+              "explanation": "1 glikoz + 6 O₂ → 6 CO₂ + 6 H₂O + 36-38 ATP. Fermantasyonda ise yalnızca glikolizden 2 ATP elde edilir.",
+              "options": [
+                {"text": "36-38", "isBlank": true, "correct": true},
+                {"text": "2", "correct": false},
+                {"text": "100", "correct": false},
+                {"text": "10", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Oksijenli ve oksijensiz solunumu karşılaştırarak eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["aerobik", "anaerobik"],
+              "explanation": "İki solunum türü arasında önemli farklar vardır.",
+              "options": [
+                {"text": "Oksijenli solunum: son e⁻ alıcı", "pairId": 1, "correct": false},
+                {"text": "O₂ → H₂O oluşur", "pairId": 1, "correct": false},
+                {"text": "Oksijensiz solunum: son e⁻ alıcı", "pairId": 2, "correct": false},
+                {"text": "NO₃⁻, SO₄²⁻, Fe³⁺ → inorganik ürünler", "pairId": 2, "correct": false},
+                {"text": "Oksijenli solunum: yer", "pairId": 3, "correct": false},
+                {"text": "Sitoplazma + Mitokondri", "pairId": 3, "correct": false},
+                {"text": "Fermantasyon: yer", "pairId": 4, "correct": false},
+                {"text": "Yalnızca sitoplazma (mitokondri kullanılmaz)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hücresel solunumun toplam ATP verimi (1 glikoz) ne kadardır?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["ATP", "toplam"],
+              "timeLimit": 10,
+              "explanation": "Glikoliz (2) + Geçiş (0 direkt) + Krebs (2) + ETS (~32-34) = ~36-38 ATP.",
+              "options": [
+                {"text": "36-38 ATP", "correct": true},
+                {"text": "2 ATP", "correct": false},
+                {"text": "4 ATP", "correct": false},
+                {"text": "100 ATP", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hücresel solunum aşamalarını enerji verimi sırasına göre dizin.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["solunum", "verim"],
+              "explanation": "Oksidatif fosforilasyon en çok ATP üretir, glikoliz en az.",
+              "options": [
+                {"text": "Glikoliz: net 2 ATP (substrat fosf.)", "correctOrder": 1, "correct": false},
+                {"text": "Krebs döngüsü: 2 GTP ≈ 2 ATP (substrat fosf.)", "correctOrder": 2, "correct": false},
+                {"text": "NADH → ETS: ~25 ATP (10 NADH × ~2,5)", "correctOrder": 3, "correct": false},
+                {"text": "FADH₂ → ETS: ~3 ATP (2 FADH₂ × ~1,5) → Toplam ~36-38", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Fermantasyon ve Sindirim",
+      "description": "Fermantasyon türleri, canlılarda sindirim çeşitleri, insanda sindirim sistemi ve emilim (MEB 2025-2026 Tema 1)",
+      "order": 4,
+      "lessons": [
+        {
+          "title": "Fermantasyon",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Fermantasyon nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["fermantasyon"],
+              "explanation": "Fermantasyon, oksijensiz ortamda glikoliz sonrası pirüvatın organik son ürünlere (etanol veya laktat) dönüştürülmesidir. Yalnızca 2 ATP üretir.",
+              "options": [
+                {"text": "Oksijenli solunum", "correct": false},
+                {"text": "Oksijensiz ortamda pirüvatın organik son ürünlere dönüşmesi (2 ATP)", "correct": true},
+                {"text": "Fotosentezin bir aşaması", "correct": false},
+                {"text": "Protein sindirimi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Etil alkol fermantasyonunu hangi organizma gerçekleştirir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["alkol", "maya"],
+              "explanation": "Maya (Saccharomyces cerevisiae) ve bazı bitkiler etil alkol fermantasyonu yapar: Pirüvat → Etanol + CO₂. Ekmek, bira, şarap üretiminde kullanılır.",
+              "options": [
+                {"text": "Maya (Saccharomyces cerevisiae) — ekmek, bira, şarap üretimi", "correct": true},
+                {"text": "İnsan kas hücresi", "correct": false},
+                {"text": "Bitkilerin kökleri", "correct": false},
+                {"text": "Balıklar", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Yoğun egzersizde oksijen yetersiz kaldığında kas hücrelerinde {1} birikir ve kas ağrısı/yorgunluğa neden olur.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["laktik asit", "kas"],
+              "explanation": "Laktik asit fermantasyonu: Pirüvat → Laktik asit (CO₂ çıkmaz). Kas ağrısı ve yorgunluk yapar. Karaciğerde tekrar glikoza çevrilebilir (Cori döngüsü).",
+              "options": [
+                {"text": "laktik asit (laktat)", "isBlank": true, "correct": true},
+                {"text": "etil alkol", "correct": false},
+                {"text": "asetik asit", "correct": false},
+                {"text": "pirüvat", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Fermantasyon türlerini ürünleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["fermantasyon", "tür"],
+              "explanation": "İki ana fermantasyon türü vardır.",
+              "options": [
+                {"text": "Etil alkol fermantasyonu", "pairId": 1, "correct": false},
+                {"text": "Pirüvat → Etanol + CO₂ (maya, ekmek/bira)", "pairId": 1, "correct": false},
+                {"text": "Laktik asit fermantasyonu", "pairId": 2, "correct": false},
+                {"text": "Pirüvat → Laktat (kas, yoğurt, turşu)", "pairId": 2, "correct": false},
+                {"text": "Fermantasyon ATP verimi", "pairId": 3, "correct": false},
+                {"text": "Yalnızca 2 ATP (glikolizden, ETS yok)", "pairId": 3, "correct": false},
+                {"text": "NAD⁺ rejenerasyonu", "pairId": 4, "correct": false},
+                {"text": "NADH → NAD⁺ geri dönüşümü sağlanır → glikoliz devam eder", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hangisi laktik asit fermantasyonuna örnektir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "EASY",
+              "tags": ["laktik asit", "örnek"],
+              "timeLimit": 10,
+              "explanation": "Yoğurt yapımında Lactobacillus bakterileri süt şekerini (laktoz) laktik aside dönüştürür.",
+              "options": [
+                {"text": "Yoğurt yapımı (Lactobacillus)", "correct": true},
+                {"text": "Ekmek yapımı (maya)", "correct": false},
+                {"text": "Bira üretimi", "correct": false},
+                {"text": "Şarap üretimi", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Fermantasyonun endüstriyel kullanım alanlarını sıralayın (en eski → en yeni).",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["fermantasyon", "endüstri"],
+              "explanation": "Fermantasyon insanlık tarihinin en eski biyoteknoloji uygulamasıdır.",
+              "options": [
+                {"text": "Ekmek ve bira yapımı (binlerce yıl önce, Mısır/Sümer)", "correctOrder": 1, "correct": false},
+                {"text": "Yoğurt, peynir, turşu (yüzyıllar önce)", "correctOrder": 2, "correct": false},
+                {"text": "Antibiyotik üretimi — penisilin (1940'lar)", "correctOrder": 3, "correct": false},
+                {"text": "Biyoyakıt (biyoetanol) üretimi (günümüz)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Canlılarda Sindirim Çeşitleri",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Hücre içi sindirim ile hücre dışı sindirim arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sindirim", "tür"],
+              "explanation": "Hücre içi sindirim: besinler fagositozla alınıp lizozomda sindirilir (amip, sünger). Hücre dışı sindirim: enzimler sindirim kanalına salgılanır (insanlar).",
+              "options": [
+                {"text": "Fark yoktur", "correct": false},
+                {"text": "Hücre içi: lizozomda; Hücre dışı: sindirim kanalında enzimlerle", "correct": true},
+                {"text": "İkisi de hücre içinde gerçekleşir", "correct": false},
+                {"text": "Hücre dışı sadece bitkilerde görülür", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Mekanik sindirim ile kimyasal sindirim arasındaki fark nedir?",
+              "type": "ASSIST",
+              "difficulty": "EASY",
+              "tags": ["mekanik", "kimyasal", "sindirim"],
+              "explanation": "Mekanik sindirim: fiziksel parçalama (çiğneme, mide hareketleri). Kimyasal sindirim: enzimlerle bağ kırma (amilaz, pepsin, lipaz).",
+              "options": [
+                {"text": "Mekanik: fiziksel parçalama (çiğneme); Kimyasal: enzimlerle bağ kırma", "correct": true},
+                {"text": "İkisi de aynı şeydir", "correct": false},
+                {"text": "Mekanik sindirim bağ kırar", "correct": false},
+                {"text": "Kimyasal sindirim sadece midede olur", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'{1}, mantarların besin maddelerini hücre dışına enzim salgılayarak sindirmesi ve çözünmüş besinleri emmesidir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["saprofit", "mantar"],
+              "explanation": "Saprofitik (çürükçül) beslenme: organizmalar çürüyen organik madde üzerine enzim salgılar, hücre dışında sindirir ve emer.",
+              "options": [
+                {"text": "Saprofitik (hücre dışı) sindirim", "isBlank": true, "correct": true},
+                {"text": "Hücre içi sindirim", "correct": false},
+                {"text": "Fotosentez", "correct": false},
+                {"text": "Parazitlik", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Farklı canlılardaki sindirim yöntemlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["sindirim", "canlı"],
+              "explanation": "Sindirim yöntemleri canlı türüne göre farklılık gösterir.",
+              "options": [
+                {"text": "Amip", "pairId": 1, "correct": false},
+                {"text": "Fagositozla hücre içi sindirim (besin kofulu + lizozom)", "pairId": 1, "correct": false},
+                {"text": "Sünger", "pairId": 2, "correct": false},
+                {"text": "Hücre içi sindirim (koanositlerde)", "pairId": 2, "correct": false},
+                {"text": "Toprak solucanı", "pairId": 3, "correct": false},
+                {"text": "Hücre dışı sindirim, tam sindirim kanalı (ağız → anüs)", "pairId": 3, "correct": false},
+                {"text": "Mantar (küf)", "pairId": 4, "correct": false},
+                {"text": "Hücre dışı (saprofitik) sindirim: enzim salgılar, emer", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hidra nasıl sindirim yapar?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["hidra", "sindirim"],
+              "timeLimit": 12,
+              "explanation": "Hidra hem hücre içi hem hücre dışı sindirim yapar: gastrovasküler boşlukta enzimlerle parçalanır (dışı), sonra hücrelerce alınıp lizozomda sindirilir (içi).",
+              "options": [
+                {"text": "Hem hücre içi hem hücre dışı sindirim (gastrovasküler boşluk)", "correct": true},
+                {"text": "Sadece hücre içi", "correct": false},
+                {"text": "Sadece hücre dışı", "correct": false},
+                {"text": "Sindirim yapmaz", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Sindirim sistemlerinin evrimsel gelişimini sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["sindirim", "evrim"],
+              "explanation": "Basit hücre içi sindirimden karmaşık sindirim kanalına evrim.",
+              "options": [
+                {"text": "Hücre içi sindirim (amip — fagositoz + lizozom)", "correctOrder": 1, "correct": false},
+                {"text": "Gastrovasküler boşluk (hidra — tek açıklık, iç+dış sindirim)", "correctOrder": 2, "correct": false},
+                {"text": "Basit sindirim kanalı (yassı solucan — ağız var, anüs yok)", "correctOrder": 3, "correct": false},
+                {"text": "Tam sindirim kanalı (toprak solucanı → insan: ağız → anüs)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "İnsanda Sindirim Sistemi",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "İnsan sindirim kanalının doğru sırası hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["sindirim", "kanal"],
+              "explanation": "Ağız → Yutak → Yemek borusu → Mide → İnce bağırsak → Kalın bağırsak → Rektum → Anüs.",
+              "options": [
+                {"text": "Mide → Ağız → Bağırsak", "correct": false},
+                {"text": "Ağız → Yutak → Yemek borusu → Mide → İnce bağırsak → Kalın bağırsak → Anüs", "correct": true},
+                {"text": "Ağız → Mide → Kalın bağırsak → İnce bağırsak", "correct": false},
+                {"text": "Yutak → Ağız → Mide → Anüs", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Midede hangi enzim protein sindirimini başlatır?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["mide", "pepsin"],
+              "explanation": "Pepsinojen (inaktif) → HCl ile pepsin (aktif). Pepsin proteinleri polipeptitlere parçalar. Mide pH'ı ~2 (çok asidik).",
+              "options": [
+                {"text": "Pepsin (pepsinojenden HCl ile aktifleşir, pH 2)", "correct": true},
+                {"text": "Amilaz", "correct": false},
+                {"text": "Lipaz", "correct": false},
+                {"text": "Tripsin", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'{1}, karaciğerin ürettiği ve safra kesesinde depolanan, yağları emülsifiye ederek (küçük damlacıklara ayırarak) lipaz enzimine yüzey alanı sağlayan sıvıdır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["safra", "yağ"],
+              "explanation": "Safra enzim değildir; yağı küçük damlacıklara ayırarak (emülsiyon) lipazın çalışma yüzeyini artırır.",
+              "options": [
+                {"text": "Safra", "isBlank": true, "correct": true},
+                {"text": "Lipaz", "correct": false},
+                {"text": "HCl", "correct": false},
+                {"text": "Pankreas özsuyu", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Sindirim organlarını salgıladıkları enzim/maddeyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["sindirim", "enzim"],
+              "explanation": "Her sindirim organı farklı enzimler ve maddeler salgılar.",
+              "options": [
+                {"text": "Tükürük bezleri", "pairId": 1, "correct": false},
+                {"text": "Amilaz (nişasta sindirimi başlar)", "pairId": 1, "correct": false},
+                {"text": "Mide", "pairId": 2, "correct": false},
+                {"text": "HCl + Pepsin (protein sindirir)", "pairId": 2, "correct": false},
+                {"text": "Pankreas", "pairId": 3, "correct": false},
+                {"text": "Tripsin + Lipaz + Amilaz + Bikarbonat (tüm besinleri sindirir)", "pairId": 3, "correct": false},
+                {"text": "Karaciğer", "pairId": 4, "correct": false},
+                {"text": "Safra üretir (yağ emülsifikasyonu, enzim değil)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Kimyasal sindirim en çok nerede gerçekleşir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["sindirim", "ince bağırsak"],
+              "timeLimit": 10,
+              "explanation": "İnce bağırsak (duodenum) kimyasal sindirimin ana merkezidir. Pankreas enzimleri, safra ve bağırsak enzimleri burada çalışır.",
+              "options": [
+                {"text": "İnce bağırsakta (duodenum)", "correct": true},
+                {"text": "Ağızda", "correct": false},
+                {"text": "Midede", "correct": false},
+                {"text": "Kalın bağırsakta", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bir lokma ekmeğin sindirim yolculuğunu sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["sindirim", "süreç"],
+              "explanation": "Nişasta sindirimi ağızda başlar, midede durur, ince bağırsakta tamamlanır.",
+              "options": [
+                {"text": "Ağız: çiğneme + tükürük amilazı nişastayı parçalamaya başlar", "correctOrder": 1, "correct": false},
+                {"text": "Mide: asidik pH amilazı deaktive eder, nişasta sindirimi durur", "correctOrder": 2, "correct": false},
+                {"text": "İnce bağırsak: pankreas amilazı → maltoz → maltaz → glikoz", "correctOrder": 3, "correct": false},
+                {"text": "Glikoz ince bağırsak villuslarından kana emilir", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Emilim ve Besin Taşınması",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Emilim en çok nerede gerçekleşir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["emilim", "ince bağırsak"],
+              "explanation": "İnce bağırsak emilimin %90'ından fazlasının gerçekleştiği yerdir. Villus ve mikrovilluslar yüzey alanını ~600 kat artırır.",
+              "options": [
+                {"text": "Midede", "correct": false},
+                {"text": "İnce bağırsakta (villus ve mikrovilluslar sayesinde)", "correct": true},
+                {"text": "Kalın bağırsakta", "correct": false},
+                {"text": "Ağızda", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Villus yapısı emilimi nasıl artırır?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["villus", "emilim"],
+              "explanation": "Villuslar parmak şeklinde çıkıntılardır. Her villusta kan kılcalları (amino asit, glikoz, mineral emilir) ve lakteal (yağ emilir) bulunur. Mikrovilluslar yüzeyi daha da artırır.",
+              "options": [
+                {"text": "Parmak şeklinde çıkıntılar → yüzey alanını artırır, kan kılcalları + lakteal içerir", "correct": true},
+                {"text": "Sindirim enzimi salgılar", "correct": false},
+                {"text": "Besinleri depolar", "correct": false},
+                {"text": "Sadece su emer", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Yağ sindirimi ürünleri (yağ asitleri, gliserol) ince bağırsaktaki villuslardaki {1} adlı lenf damarlarına emilir, şilomikron olarak lenf sistemine geçer.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["lakteal", "yağ"],
+              "explanation": "Lakteal, villusların ortasındaki lenf kılcalıdır. Yağ asitleri burada şilomikron olarak paketlenir ve lenf sistemine geçer, sonra kana karışır.",
+              "options": [
+                {"text": "lakteal", "isBlank": true, "correct": true},
+                {"text": "kapiller", "correct": false},
+                {"text": "arter", "correct": false},
+                {"text": "ven", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Besin maddelerinin emilim yollarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["emilim", "besin"],
+              "explanation": "Farklı besinler farklı yollarla emilir.",
+              "options": [
+                {"text": "Glikoz ve amino asitler", "pairId": 1, "correct": false},
+                {"text": "Villustaki kan kılcallarına → kapı toplardamarı → karaciğer", "pairId": 1, "correct": false},
+                {"text": "Yağ asitleri ve gliserol", "pairId": 2, "correct": false},
+                {"text": "Lakteal (lenf damarı) → şilomikron → lenf → kan", "pairId": 2, "correct": false},
+                {"text": "Su ve mineraller", "pairId": 3, "correct": false},
+                {"text": "Hem ince hem kalın bağırsakta osmoz/difüzyonla emilir", "pairId": 3, "correct": false},
+                {"text": "Vitaminler", "pairId": 4, "correct": false},
+                {"text": "Sindirime uğramadan ince bağırsaktan emilir", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Kalın bağırsakta ne emilir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "EASY",
+              "tags": ["kalın bağırsak", "emilim"],
+              "timeLimit": 10,
+              "explanation": "Kalın bağırsakta su, bazı mineraller ve vitaminler (K vitamini — bağırsak bakterileri üretir) emilir. Kalan atıklar dışkı olarak atılır.",
+              "options": [
+                {"text": "Su, bazı mineraller ve vitaminler (özellikle K vitamini)", "correct": true},
+                {"text": "Protein ve yağ", "correct": false},
+                {"text": "Glikoz", "correct": false},
+                {"text": "Hiçbir şey emilmez", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Besinlerin sindirim → emilim → kullanım sürecini sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["sindirim", "emilim", "süreç"],
+              "explanation": "Besinler sindirilir, emilir, kana geçer, karaciğerde işlenir ve hücrelere dağıtılır.",
+              "options": [
+                {"text": "Besinler sindirim kanalında monomerlerine parçalanır", "correctOrder": 1, "correct": false},
+                {"text": "Monomerler ince bağırsak villuslarından emilir", "correctOrder": 2, "correct": false},
+                {"text": "Kapı toplardamarı ile karaciğere taşınır (ilk geçiş)", "correctOrder": 3, "correct": false},
+                {"text": "Kan dolaşımıyla tüm vücut hücrelerine dağıtılır → metabolizma", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Besinlerden Enerji Elde Etme",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "1 gram yağ, 1 gram karbonhidrattan kaç kat daha fazla enerji verir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["enerji", "besin"],
+              "explanation": "1g karbonhidrat = 4,1 kkal, 1g yağ = 9,3 kkal. Yağ karbonhidrattan ~2,3 kat daha fazla enerji verir.",
+              "options": [
+                {"text": "Aynı miktarda", "correct": false},
+                {"text": "Yaklaşık 2 kat fazla (9,3 kkal/g vs 4,1 kkal/g)", "correct": true},
+                {"text": "10 kat fazla", "correct": false},
+                {"text": "Daha az", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Bazal metabolizma hızı (BMH) nedir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["BMH", "metabolizma"],
+              "explanation": "BMH, vücudun temel yaşam fonksiyonları (solunum, kalp atışı, hücre yenilenmesi) için dinlenme hâlinde harcadığı minimum enerjidir. Yaş, cinsiyet, kas kütlesi ve tiroid etkiler.",
+              "options": [
+                {"text": "Dinlenme hâlinde temel yaşam fonksiyonları için harcanan minimum enerji", "correct": true},
+                {"text": "Egzersiz sırasında harcanan enerji", "correct": false},
+                {"text": "Yemek sindiriminde harcanan enerji", "correct": false},
+                {"text": "Düşünme sırasında harcanan enerji", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Besinlerin kalori değerinin ölçüldüğü cihaza {1} denir; besin yakılarak açığa çıkan ısı ölçülür.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["kalorimetre"],
+              "explanation": "Kalorimetre (bomba kalorimetresi), besinin yakılması ile açığa çıkan ısıyı ölçen cihazdır. Su sıcaklığındaki artış üzerinden kalori hesaplanır.",
+              "options": [
+                {"text": "kalorimetre", "isBlank": true, "correct": true},
+                {"text": "termometre", "correct": false},
+                {"text": "spektrofotometre", "correct": false},
+                {"text": "barometre", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Besin gruplarının enerji değerlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["besin", "kalori"],
+              "explanation": "Her besin grubunun gram başına enerji değeri farklıdır.",
+              "options": [
+                {"text": "1 g Karbonhidrat", "pairId": 1, "correct": false},
+                {"text": "4,1 kkal (hızlı enerji)", "pairId": 1, "correct": false},
+                {"text": "1 g Protein", "pairId": 2, "correct": false},
+                {"text": "4,1 kkal (önce yapısal, son çare enerji)", "pairId": 2, "correct": false},
+                {"text": "1 g Yağ", "pairId": 3, "correct": false},
+                {"text": "9,3 kkal (en yüksek enerji deposu)", "pairId": 3, "correct": false},
+                {"text": "Vitamin ve mineraller", "pairId": 4, "correct": false},
+                {"text": "0 kkal (enerji vermez, düzenleyici)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Karbonhidratın enerji değeri kaç kkal/g'dır?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "EASY",
+              "tags": ["karbonhidrat", "kalori"],
+              "timeLimit": 8,
+              "explanation": "Karbonhidrat ve protein = 4,1 kkal/g. Yağ = 9,3 kkal/g.",
+              "options": [
+                {"text": "4,1 kkal/g", "correct": true},
+                {"text": "9,3 kkal/g", "correct": false},
+                {"text": "2 kkal/g", "correct": false},
+                {"text": "7 kkal/g", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Fazla besin alımından obeziteye giden süreci sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["obezite", "enerji"],
+              "explanation": "Alınan kalori > harcanan kalori → fazla enerji yağ olarak depolanır → obezite.",
+              "options": [
+                {"text": "Günlük kalori alımı harcamayı aşar (pozitif enerji dengesi)", "correctOrder": 1, "correct": false},
+                {"text": "Fazla glikoz karaciğerde glikojene, sonra yağa dönüşür", "correctOrder": 2, "correct": false},
+                {"text": "Yağ dokusu birikir, vücut kitle indeksi (VKİ) artar", "correctOrder": 3, "correct": false},
+                {"text": "Obezite → kalp-damar, diyabet, eklem sorunları riski artar", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Ekosistem Ekolojisi",
+      "description": "Ekosistem bileşenleri, canlılar arası ilişkiler, besin zinciri/ağı, madde döngüleri ve enerji akışı (MEB 2025-2026 Tema 2)",
+      "order": 5,
+      "lessons": [
+        {
+          "title": "Ekosistem Bileşenleri ve Canlı İlişkileri",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Ekosistemin biyotik (canlı) bileşenleri hangileridir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ekosistem", "biyotik"],
+              "explanation": "Biyotik bileşenler: üreticiler (bitkiler), tüketiciler (hayvanlar) ve ayrıştırıcılar (bakteriler, mantarlar). Abiyotik bileşenler: su, ışık, toprak, sıcaklık, mineral.",
+              "options": [
+                {"text": "Su, toprak, ışık", "correct": false},
+                {"text": "Üreticiler, tüketiciler ve ayrıştırıcılar", "correct": true},
+                {"text": "Sadece bitkiler", "correct": false},
+                {"text": "Sadece hayvanlar", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Üretici, tüketici ve ayrıştırıcı arasındaki fark nedir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["üretici", "tüketici", "ayrıştırıcı"],
+              "explanation": "Üreticiler (ototrof): fotosentez/kemosentezle organik madde üretir. Tüketiciler (heterotrof): organik maddeyi yer. Ayrıştırıcılar (saprotrof): ölü maddeyi parçalar ve mineralleri geri döndürür.",
+              "options": [
+                {"text": "Üretici: organik madde üretir; Tüketici: yer; Ayrıştırıcı: ölü maddeyi parçalar", "correct": true},
+                {"text": "Hepsi aynı görevi yapar", "correct": false},
+                {"text": "Üreticiler sadece bitkidir", "correct": false},
+                {"text": "Ayrıştırıcılar canlı değildir", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Bir ekosistemde aynı türe ait bireylerin oluşturduğu topluluğa {1} denir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["popülasyon"],
+              "explanation": "Popülasyon: aynı türden, aynı bölgede yaşayan bireyler. Komünite: bir bölgedeki tüm popülasyonlar. Ekosistem: komünite + abiyotik faktörler.",
+              "options": [
+                {"text": "popülasyon", "isBlank": true, "correct": true},
+                {"text": "komünite", "correct": false},
+                {"text": "ekosistem", "correct": false},
+                {"text": "biyom", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Ekolojik organizasyon düzeylerini küçükten büyüğe sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["ekoloji", "düzey"],
+              "explanation": "Birey → Popülasyon → Komünite → Ekosistem → Biyom → Biyosfer.",
+              "options": [
+                {"text": "Birey (organizma)", "correctOrder": 1, "correct": false},
+                {"text": "Popülasyon (aynı tür bireyler)", "correctOrder": 2, "correct": false},
+                {"text": "Komünite (tüm popülasyonlar birlikte)", "correctOrder": 3, "correct": false},
+                {"text": "Ekosistem (komünite + abiyotik faktörler) → Biyom → Biyosfer", "correctOrder": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hangisi abiyotik (cansız) bir faktördür?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "EASY",
+              "tags": ["abiyotik"],
+              "timeLimit": 8,
+              "explanation": "Sıcaklık abiyotik (cansız) bir faktördür. Bitkiler, bakteriler, mantarlar biyotik faktörlerdir.",
+              "options": [
+                {"text": "Sıcaklık", "correct": true},
+                {"text": "Bitkiler", "correct": false},
+                {"text": "Bakteriler", "correct": false},
+                {"text": "Mantarlar", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Ekosistem bileşenlerini türleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["ekosistem", "bileşen"],
+              "explanation": "Ekosistem biyotik ve abiyotik bileşenlerden oluşur.",
+              "options": [
+                {"text": "Yeşil bitkiler, algler", "pairId": 1, "correct": false},
+                {"text": "Üretici (ototrof) — fotosentezle organik madde üretir", "pairId": 1, "correct": false},
+                {"text": "Otçullar, etçiller, hepçiller", "pairId": 2, "correct": false},
+                {"text": "Tüketici (heterotrof) — organik maddeyi besin olarak alır", "pairId": 2, "correct": false},
+                {"text": "Bakteri, mantar", "pairId": 3, "correct": false},
+                {"text": "Ayrıştırıcı (saprotrof) — ölü maddeyi parçalar, mineralleri geri verir", "pairId": 3, "correct": false},
+                {"text": "Su, ışık, toprak, sıcaklık", "pairId": 4, "correct": false},
+                {"text": "Abiyotik faktörler — cansız çevre koşulları", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Besin Zinciri ve Besin Ağı",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Besin zincirinde enerji hangi yönde akar?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["besin zinciri", "enerji"],
+              "explanation": "Enerji üreticilerden → birincil tüketicilere → ikincil tüketicilere → üçüncül tüketicilere doğru tek yönlü akar. Her basamakta ~%90 ısı olarak kaybolur.",
+              "options": [
+                {"text": "Tüketicilerden üreticilere", "correct": false},
+                {"text": "Üreticilerden tüketicilere doğru tek yönlü (her aşamada %90 kayıp)", "correct": true},
+                {"text": "Çift yönlü", "correct": false},
+                {"text": "Rastgele", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Besin ağı nedir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["besin ağı"],
+              "explanation": "Besin ağı, bir ekosistemde birbirine bağlı tüm besin zincirlerinin oluşturduğu karmaşık ilişkiler bütünüdür. Tek bir tür birden fazla besin zincirine dahil olabilir.",
+              "options": [
+                {"text": "Birbirine bağlı tüm besin zincirlerinin oluşturduğu karmaşık beslenme ilişkileri", "correct": true},
+                {"text": "Tek bir düz çizgi şeklinde beslenme ilişkisi", "correct": false},
+                {"text": "Sadece etçillerin beslenme ilişkisi", "correct": false},
+                {"text": "Üreticilerin kendi aralarındaki ilişki", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Besin zincirinde her basamakta enerjinin yaklaşık %{1}'i ısı olarak kaybolur, yalnızca ~%10'u bir üst basamağa aktarılır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["enerji", "kayıp"],
+              "explanation": "%10 kuralı (Lindeman verimi): her trofik düzeyde enerjinin ~%90'ı metabolizma ve ısı olarak harcanır, sadece ~%10'u bir üst basamağa geçer.",
+              "options": [
+                {"text": "90", "isBlank": true, "correct": true},
+                {"text": "50", "correct": false},
+                {"text": "10", "correct": false},
+                {"text": "75", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Besin zincirindeki trofik düzeyleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["trofik", "düzey"],
+              "explanation": "Besin zincirinde dört ana trofik düzey vardır.",
+              "options": [
+                {"text": "1. trofik düzey", "pairId": 1, "correct": false},
+                {"text": "Üreticiler (bitkiler, algler) — güneş enerjisini bağlar", "pairId": 1, "correct": false},
+                {"text": "2. trofik düzey", "pairId": 2, "correct": false},
+                {"text": "Birincil tüketiciler (otçullar — tavşan, geyik)", "pairId": 2, "correct": false},
+                {"text": "3. trofik düzey", "pairId": 3, "correct": false},
+                {"text": "İkincil tüketiciler (küçük etçiller — tilki, yılan)", "pairId": 3, "correct": false},
+                {"text": "4. trofik düzey", "pairId": 4, "correct": false},
+                {"text": "Üçüncül tüketiciler (tepe yırtıcılar — kartal, aslan)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Besin zincirinde en çok birey hangi düzeyde bulunur?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "EASY",
+              "tags": ["besin zinciri", "piramit"],
+              "timeLimit": 10,
+              "explanation": "Enerji piramidine göre en çok enerji ve birey üreticilerde (1. düzey) bulunur. Yukarı çıktıkça azalır.",
+              "options": [
+                {"text": "Üreticiler (1. trofik düzey)", "correct": true},
+                {"text": "Tepe yırtıcılar", "correct": false},
+                {"text": "İkincil tüketiciler", "correct": false},
+                {"text": "Ayrıştırıcılar", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Basit bir besin zincirini trofik düzey sırasına göre dizin.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["besin zinciri", "sıralama"],
+              "explanation": "Çimen → Çekirge → Kurbağa → Yılan → Kartal tipik bir besin zinciridir.",
+              "options": [
+                {"text": "Çimen (üretici)", "correctOrder": 1, "correct": false},
+                {"text": "Çekirge (birincil tüketici — otçul)", "correctOrder": 2, "correct": false},
+                {"text": "Kurbağa (ikincil tüketici — küçük etçil)", "correctOrder": 3, "correct": false},
+                {"text": "Yılan → Kartal (üçüncül/tepe yırtıcı)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Madde Döngüleri",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Karbon döngüsünde CO₂ atmosfere en çok hangi yolla geri döner?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["karbon", "döngü"],
+              "explanation": "Hücresel solunum (canlılar), yanma (fosil yakıtlar), çürüme ve volkanik aktivite CO₂'yi atmosfere geri verir. Solunum en yaygın doğal yoldur.",
+              "options": [
+                {"text": "Fotosentez", "correct": false},
+                {"text": "Hücresel solunum ve yanma (fosil yakıtlar)", "correct": true},
+                {"text": "Yağmur", "correct": false},
+                {"text": "Rüzgâr", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Azot döngüsünde azot fiksasyonu ne demektir?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["azot", "fiksasyon"],
+              "explanation": "Azot fiksasyonu: atmosferik N₂'nin (canlılar kullanamaz) NH₃/NH₄⁺'a dönüştürülmesidir. Bunu Rhizobium (baklagil köklerinde) ve serbest yaşayan bakteri (Azotobacter) yapar. Şimşek de az miktarda fikse eder.",
+              "options": [
+                {"text": "N₂ (atmosfer) → NH₃/NH₄⁺ dönüşümü (Rhizobium, Azotobacter, şimşek)", "correct": true},
+                {"text": "Azotun buharlaşması", "correct": false},
+                {"text": "Azotun yanması", "correct": false},
+                {"text": "Azotun yoğunlaşması", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Su döngüsünde okyanuslardan buharlaşan su, atmosferde yoğunlaşarak {1} oluşturur ve yağış olarak yeryüzüne geri döner.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["su döngüsü", "bulut"],
+              "explanation": "Buharlaşma → yoğunlaşma → bulut → yağış → yüzey akışı/yeraltı suyu → okyanus → tekrar buharlaşma.",
+              "options": [
+                {"text": "bulut", "isBlank": true, "correct": true},
+                {"text": "kar", "correct": false},
+                {"text": "sis", "correct": false},
+                {"text": "buz", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Madde döngülerini doğru eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["madde döngüsü"],
+              "explanation": "Her madde döngüsünün kendine özgü anahtar süreçleri vardır.",
+              "options": [
+                {"text": "Karbon döngüsü", "pairId": 1, "correct": false},
+                {"text": "Fotosentez (CO₂ bağlar) ↔ Solunum (CO₂ verir)", "pairId": 1, "correct": false},
+                {"text": "Azot döngüsü", "pairId": 2, "correct": false},
+                {"text": "Fiksasyon → Nitrifikasyon → Asimilasyon → Denitrifikasyon", "pairId": 2, "correct": false},
+                {"text": "Su döngüsü", "pairId": 3, "correct": false},
+                {"text": "Buharlaşma → Yoğunlaşma → Yağış → Akış", "pairId": 3, "correct": false},
+                {"text": "Fosfor döngüsü", "pairId": 4, "correct": false},
+                {"text": "Kayaçlardan aşınma → toprak → canlı → çökelme (gaz fazı yok)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hangi madde döngüsünde gaz fazı yoktur?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "HARD",
+              "tags": ["fosfor", "döngü"],
+              "timeLimit": 12,
+              "explanation": "Fosfor döngüsünde gaz fazı yoktur. Fosfor kayaçlardan çözünerek toprağa geçer, canlılar tarafından alınır ve tekrar toprağa döner.",
+              "options": [
+                {"text": "Fosfor döngüsü", "correct": true},
+                {"text": "Karbon döngüsü", "correct": false},
+                {"text": "Azot döngüsü", "correct": false},
+                {"text": "Su döngüsü", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Azot döngüsünün aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["azot döngüsü", "aşama"],
+              "explanation": "Atmosferik N₂ → fiksasyon → nitrifikasyon → asimilasyon → denitrifikasyon döngüsü.",
+              "options": [
+                {"text": "Azot fiksasyonu: N₂ → NH₃ (Rhizobium, Azotobacter)", "correctOrder": 1, "correct": false},
+                {"text": "Nitrifikasyon: NH₃ → NO₂⁻ → NO₃⁻ (Nitrosomonas, Nitrobacter)", "correctOrder": 2, "correct": false},
+                {"text": "Asimilasyon: NO₃⁻ bitkiler tarafından alınır → protein sentezi", "correctOrder": 3, "correct": false},
+                {"text": "Denitrifikasyon: NO₃⁻ → N₂ (Pseudomonas, atmosfere geri döner)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Enerji Akışı ve Ekolojik Piramitler",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Ekosistemde enerji akışı ile madde döngüsü arasındaki temel fark nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["enerji", "madde"],
+              "explanation": "Enerji tek yönlü akar (güneş → canlılar → ısı) ve geri dönüşümsüzdür. Madde döngüseldir (aynı atomlar tekrar tekrar kullanılır).",
+              "options": [
+                {"text": "Fark yoktur", "correct": false},
+                {"text": "Enerji tek yönlü (geri dönüşümsüz); madde döngüsel (tekrar kullanılır)", "correct": true},
+                {"text": "Madde tek yönlüdür", "correct": false},
+                {"text": "Enerji döngüseldir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Ekolojik piramitlerde neden her basamak bir üst basamaktan daha büyüktür?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["piramit", "enerji"],
+              "explanation": "Her trofik düzeyde enerjinin ~%90'ı metabolizma ve ısı olarak harcanır. Bu nedenle üst basamaklara daha az enerji (ve genellikle daha az biyokütle/birey) aktarılır.",
+              "options": [
+                {"text": "Her basamakta ~%90 enerji ısı olarak kaybolduğundan üst düzeylere daha az aktarılır", "correct": true},
+                {"text": "Üstte daha çok canlı vardır", "correct": false},
+                {"text": "Alttakiler daha az enerji üretir", "correct": false},
+                {"text": "Piramit her zaman ters olur", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Bir ekosistemde birim alandaki canlıların toplam kuru ağırlığına {1} denir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["biyokütle"],
+              "explanation": "Biyokütle (biyomas), belirli bir alandaki canlıların toplam organik madde miktarıdır. Biyokütle piramidi genellikle tabandan zirveye azalır.",
+              "options": [
+                {"text": "biyokütle (biyomas)", "isBlank": true, "correct": true},
+                {"text": "popülasyon", "correct": false},
+                {"text": "prodüktivite", "correct": false},
+                {"text": "habitat", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Ekolojik piramit türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["piramit", "tür"],
+              "explanation": "Üç tür ekolojik piramit vardır.",
+              "options": [
+                {"text": "Sayı piramidi", "pairId": 1, "correct": false},
+                {"text": "Her düzeydeki birey sayısı (parazit zincirinde ters olabilir)", "pairId": 1, "correct": false},
+                {"text": "Biyokütle piramidi", "pairId": 2, "correct": false},
+                {"text": "Her düzeydeki toplam kuru ağırlık (okyanus planktonunda ters olabilir)", "pairId": 2, "correct": false},
+                {"text": "Enerji piramidi", "pairId": 3, "correct": false},
+                {"text": "Her düzeyden geçen toplam enerji (her zaman dik, asla ters olmaz)", "pairId": 3, "correct": false},
+                {"text": "%10 kuralı (Lindeman)", "pairId": 4, "correct": false},
+                {"text": "Her basamakta enerjinin ~%10'u bir üst düzeye aktarılır", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hangi piramit asla ters olamaz?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["piramit", "enerji"],
+              "timeLimit": 10,
+              "explanation": "Enerji piramidi asla ters olamaz çünkü enerji her basamakta ısı olarak kaybolur, yani üst düzey alt düzeyden daha fazla enerjiye sahip olamaz.",
+              "options": [
+                {"text": "Enerji piramidi", "correct": true},
+                {"text": "Sayı piramidi", "correct": false},
+                {"text": "Biyokütle piramidi", "correct": false},
+                {"text": "Hepsi ters olabilir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Güneş enerjisinin ekosistemde izlediği yolu sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["enerji", "akış"],
+              "explanation": "Güneş → üretici → tüketici basamakları → ayrıştırıcılar. Her aşamada ısı kaybı olur.",
+              "options": [
+                {"text": "Güneş enerjisi (%100) üreticiler tarafından tutulur (fotosentez)", "correctOrder": 1, "correct": false},
+                {"text": "Birincil tüketiciler (%~10) üreticileri yiyerek enerji alır", "correctOrder": 2, "correct": false},
+                {"text": "İkincil → Üçüncül tüketiciler (%~1 → %~0,1)", "correctOrder": 3, "correct": false},
+                {"text": "Her düzeyde ısı kaybı + ayrıştırıcılar ölü maddeyi parçalar", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Popülasyon Dinamikleri ve Türler Arası Etkileşimler",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Bir popülasyonun büyüme hızını etkileyen faktörler nelerdir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["popülasyon", "büyüme"],
+              "explanation": "Doğum oranı, ölüm oranı, göç (içe/dışa) popülasyon büyüklüğünü belirler. Besin, habitat, hastalık ve avcılık sınırlayıcı faktörlerdir.",
+              "options": [
+                {"text": "Sadece doğum oranı", "correct": false},
+                {"text": "Doğum, ölüm, göç oranları ve sınırlayıcı faktörler (besin, habitat, hastalık)", "correct": true},
+                {"text": "Sadece sıcaklık", "correct": false},
+                {"text": "Popülasyonlar değişmez", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Mutualizm ne tür bir ilişkidir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["mutualizm", "simbiyoz"],
+              "explanation": "Mutualizm: iki farklı tür birbirine fayda sağlar (+/+). Örn: arı-çiçek (tozlaşma/nektar), Rhizobium-baklagil (azot/besin), liken (alg+mantar).",
+              "options": [
+                {"text": "İki türün karşılıklı fayda sağladığı ilişki (+/+)", "correct": true},
+                {"text": "Bir tür zarar görür", "correct": false},
+                {"text": "İlişkisiz birlikte yaşama", "correct": false},
+                {"text": "Bir tür diğerini yer", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Bir popülasyonun çevrenin taşıma kapasitesine ulaştığında büyüme hızının yavaşladığı büyüme modeli {1} büyümedir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["popülasyon", "büyüme"],
+              "explanation": "Lojistik (S-eğrisi) büyüme: başlangıçta hızlı, sonra yavaşlar ve taşıma kapasitesinde (K) dengelenir. J-eğrisi = üstel büyüme (sınırsız kaynak).",
+              "options": [
+                {"text": "lojistik (S-eğrisi)", "isBlank": true, "correct": true},
+                {"text": "üstel (J-eğrisi)", "correct": false},
+                {"text": "doğrusal", "correct": false},
+                {"text": "sabit", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Türler arası etkileşim türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["etkileşim", "tür"],
+              "explanation": "Türler arası ilişkiler farklı şekillerde olabilir.",
+              "options": [
+                {"text": "Mutualizm", "pairId": 1, "correct": false},
+                {"text": "+/+ (arı-çiçek, Rhizobium-baklagil)", "pairId": 1, "correct": false},
+                {"text": "Kommensalizm", "pairId": 2, "correct": false},
+                {"text": "+/0 (köpekbalığı-yapışkan balık, orkide-ağaç)", "pairId": 2, "correct": false},
+                {"text": "Parazitizm", "pairId": 3, "correct": false},
+                {"text": "+/– (bağırsak solucanı-insan, bit-kuş)", "pairId": 3, "correct": false},
+                {"text": "Av-avcı ilişkisi", "pairId": 4, "correct": false},
+                {"text": "+/– (aslan-zebra, yılan-fare)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hangisi kommensalizm örneğidir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["kommensalizm"],
+              "timeLimit": 12,
+              "explanation": "Kommensalizm: bir tür yarar görür, diğeri etkilenmez (+/0). Köpekbalığına yapışıp taşınan yapışkan balık (remora) klasik örnektir.",
+              "options": [
+                {"text": "Köpekbalığı – yapışkan balık (remora)", "correct": true},
+                {"text": "Arı – çiçek", "correct": false},
+                {"text": "Aslan – zebra", "correct": false},
+                {"text": "Bağırsak solucanı – insan", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Popülasyon büyüme sürecini sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["popülasyon", "aşama"],
+              "explanation": "Lojistik büyüme modeli 4 fazdan oluşur.",
+              "options": [
+                {"text": "Başlangıç fazı: az birey, yavaş büyüme (uyum)", "correctOrder": 1, "correct": false},
+                {"text": "Logaritmik faz: kaynak bol, hızlı üstel büyüme", "correctOrder": 2, "correct": false},
+                {"text": "Negatif hızlanma: kaynaklar azalır, büyüme yavaşlar", "correctOrder": 3, "correct": false},
+                {"text": "Denge fazı: taşıma kapasitesine (K) ulaşılır, sabitlenir", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Güncel Çevre Sorunları ve Biyoçeşitlilik",
+      "description": "Çevre kirliliği, doğal kaynakların sürdürülebilirliği, biyolojik çeşitliliğin korunması ve ekolojik ayak izi (MEB 2025-2026 Tema 2)",
+      "order": 6,
+      "lessons": [
+        {
+          "title": "Çevre Kirliliği ve Nedenleri",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Sera etkisinin artmasının ana nedeni nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sera etkisi", "küresel ısınma"],
+              "explanation": "Fosil yakıt tüketimi atmosferdeki CO₂, metan ve diğer sera gazlarını artırır. Bu gazlar güneşten gelen kızılötesi radyasyonu hapseder → küresel ısınma.",
+              "options": [
+                {"text": "Ormanların artması", "correct": false},
+                {"text": "Fosil yakıt tüketimi sonucu artan sera gazları (CO₂, CH₄)", "correct": true},
+                {"text": "Ozon tabakasının kalınlaşması", "correct": false},
+                {"text": "Rüzgâr enerjisi kullanımı", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Ozon tabakasının incelmesinin ana nedeni nedir?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["ozon", "CFC"],
+              "explanation": "CFC (kloroflorokarbon) gazları ozon (O₃) moleküllerini parçalar. Ozon tabakası UV ışınlarını süzer; incelmesi deri kanseri, katarakt ve ekosistem hasarına yol açar.",
+              "options": [
+                {"text": "CFC (kloroflorokarbon) gazlarının ozon moleküllerini parçalaması", "correct": true},
+                {"text": "CO₂ artışı", "correct": false},
+                {"text": "Orman yangınları", "correct": false},
+                {"text": "Volkanik patlamalar", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Tarımda aşırı kimyasal gübre ve pestisit kullanımı {1} kirliliğine yol açarak yeraltı suları ve akarsulardaki ekosistemi tehdit eder.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["kirlilik", "su"],
+              "explanation": "Tarımsal kimyasallar yüzey akışı ile sulara karışır (su kirliliği). Nitrat ve fosfat birikimi ötrofikasyona (aşırı alg büyümesi → oksijen azalması) neden olur.",
+              "options": [
+                {"text": "su", "isBlank": true, "correct": true},
+                {"text": "hava", "correct": false},
+                {"text": "toprak", "correct": false},
+                {"text": "ışık", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kirlilik türlerini kaynaklarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["kirlilik", "tür"],
+              "explanation": "Farklı kirlilik türleri farklı kaynaklardan gelir.",
+              "options": [
+                {"text": "Hava kirliliği", "pairId": 1, "correct": false},
+                {"text": "Fosil yakıt, fabrika, egzoz → SO₂, NOx, partikül", "pairId": 1, "correct": false},
+                {"text": "Su kirliliği", "pairId": 2, "correct": false},
+                {"text": "Tarım kimyasalları, endüstriyel atık, kanalizasyon", "pairId": 2, "correct": false},
+                {"text": "Toprak kirliliği", "pairId": 3, "correct": false},
+                {"text": "Ağır metal, plastik, tarım ilacı birikimi", "pairId": 3, "correct": false},
+                {"text": "Ses kirliliği", "pairId": 4, "correct": false},
+                {"text": "Trafik, sanayi, inşaat → stres, işitme kaybı", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Asit yağmuruna neden olan gazlar hangileridir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["asit yağmuru"],
+              "timeLimit": 12,
+              "explanation": "SO₂ (kükürt dioksit) ve NOx (azot oksitler) su buharıyla birleşerek H₂SO₄ ve HNO₃ oluşturur → asit yağmuru. Ormanları, gölleri ve yapıları aşındırır.",
+              "options": [
+                {"text": "SO₂ ve NOx", "correct": true},
+                {"text": "CO₂ ve O₂", "correct": false},
+                {"text": "N₂ ve H₂", "correct": false},
+                {"text": "CH₄ ve CFC", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Ötrofikasyon sürecini sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["ötrofikasyon"],
+              "explanation": "Aşırı besin → alg patlaması → oksijen tükenmesi → toplu canlı ölümü.",
+              "options": [
+                {"text": "Tarım/kanalizasyondan nitrat-fosfat suya karışır", "correctOrder": 1, "correct": false},
+                {"text": "Alg patlaması (aşırı alg büyümesi) — su yeşile döner", "correctOrder": 2, "correct": false},
+                {"text": "Algler ölür, ayrıştırıcılar çoğalır → çözünmüş O₂ tüketilir", "correctOrder": 3, "correct": false},
+                {"text": "Oksijen azalır → balık ve diğer canlılar ölür (ölü bölge)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Küresel İklim Değişikliği",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Küresel ısınmanın en önemli sonuçlarından biri nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["küresel ısınma", "sonuç"],
+              "explanation": "Kutup buzullarının erimesi deniz seviyesini yükseltir, kıyı şehirlerini tehdit eder. Ayrıca ekosistemler değişir, aşırı hava olayları artar, tarım etkilenir.",
+              "options": [
+                {"text": "Ozon tabakasının kalınlaşması", "correct": false},
+                {"text": "Kutup buzullarının erimesi ve deniz seviyesinin yükselmesi", "correct": true},
+                {"text": "Tüm canlıların soyu tükenir", "correct": false},
+                {"text": "Güneş enerjisi azalır", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Karbon ayak izi nedir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["karbon ayak izi"],
+              "explanation": "Karbon ayak izi, bir bireyin/kurumun faaliyetleri sonucu atmosfere salınan sera gazı miktarıdır (CO₂ eşdeğeri olarak ölçülür). Ulaşım, enerji, beslenme ve tüketim alışkanlıkları etkiler.",
+              "options": [
+                {"text": "Bir birey/kurumun faaliyetleri sonucu salınan toplam sera gazı miktarı (CO₂ eşdeğeri)", "correct": true},
+                {"text": "Ayak izinin boyutu", "correct": false},
+                {"text": "Karbon atomunun ağırlığı", "correct": false},
+                {"text": "Bitkilerin CO₂ tüketimi", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Dünya'nın ortalama sıcaklığını artıran ve sera gazı salınımının en büyük kaynağı {1} yakıtların yakılmasıdır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["fosil yakıt"],
+              "explanation": "Kömür, petrol ve doğalgaz (fosil yakıtlar) yanınca CO₂ salınır. Küresel CO₂ salınımının ~%75'i fosil yakıtlardan gelir.",
+              "options": [
+                {"text": "fosil", "isBlank": true, "correct": true},
+                {"text": "biyolojik", "correct": false},
+                {"text": "nükleer", "correct": false},
+                {"text": "yenilenebilir", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "İklim değişikliğinin etkilerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["iklim değişikliği", "etki"],
+              "explanation": "İklim değişikliğinin birçok alanda etkisi vardır.",
+              "options": [
+                {"text": "Buzul erimesi", "pairId": 1, "correct": false},
+                {"text": "Deniz seviyesi yükselir, kıyı şehirleri tehdit altında", "pairId": 1, "correct": false},
+                {"text": "Okyanus asitlenmesi", "pairId": 2, "correct": false},
+                {"text": "CO₂ denize çözünür → pH düşer → mercan ağarması", "pairId": 2, "correct": false},
+                {"text": "Aşırı hava olayları", "pairId": 3, "correct": false},
+                {"text": "Kasırga, sel, kuraklık sıklık ve şiddeti artar", "pairId": 3, "correct": false},
+                {"text": "Biyoçeşitlilik kaybı", "pairId": 4, "correct": false},
+                {"text": "Türler adapte olamaz, göç yolları değişir, nesil tükenir", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hangisi en güçlü sera gazıdır (molekül başına)?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "HARD",
+              "tags": ["sera gazı"],
+              "timeLimit": 12,
+              "explanation": "Metan (CH₄) CO₂'ye göre molekül başına ~80 kat daha güçlü sera etkisi yapar (20 yıllık periyotta). Ancak atmosferdeki miktarı CO₂'den çok daha azdır.",
+              "options": [
+                {"text": "Metan (CH₄)", "correct": true},
+                {"text": "Karbondioksit (CO₂)", "correct": false},
+                {"text": "Su buharı", "correct": false},
+                {"text": "Azot (N₂)", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Sera etkisinin oluşum mekanizmasını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["sera etkisi", "mekanizma"],
+              "explanation": "Güneş → yeryüzü → kızılötesi → sera gazları tarafından tutulma → ısınma.",
+              "options": [
+                {"text": "Güneş ışığı atmosferi geçerek yeryüzünü ısıtır", "correctOrder": 1, "correct": false},
+                {"text": "Yeryüzü ısıyı kızılötesi radyasyon olarak geri yayar", "correctOrder": 2, "correct": false},
+                {"text": "Sera gazları (CO₂, CH₄, N₂O) kızılötesiyi emerek hapseder", "correctOrder": 3, "correct": false},
+                {"text": "Atmosfer ısınır → artan sera gazlarıyla etki güçlenir → küresel ısınma", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Doğal Kaynakların Sürdürülebilir Kullanımı",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Yenilenebilir ve yenilenemez doğal kaynak arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["doğal kaynak"],
+              "explanation": "Yenilenebilir: güneş, rüzgâr, su, biyokütle (kısa sürede yenilenir). Yenilenemez: fosil yakıt, mineral (oluşumu milyon yıl sürer).",
+              "options": [
+                {"text": "Fark yoktur", "correct": false},
+                {"text": "Yenilenebilir kısa sürede yenilenir (güneş, rüzgâr); yenilenemez oluşumu çok uzun sürer (kömür, petrol)", "correct": true},
+                {"text": "Yenilenemez kaynaklar sonsuzdur", "correct": false},
+                {"text": "Yenilenebilir kaynaklar pahalıdır", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Sürdürülebilir kalkınma ne demektir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["sürdürülebilirlik"],
+              "explanation": "Bugünün ihtiyaçlarını gelecek nesillerin ihtiyaçlarını karşılama yeteneğinden ödün vermeden karşılamaktır. Ekonomi + çevre + toplum dengesi gerektirir.",
+              "options": [
+                {"text": "Bugünün ihtiyaçlarını, gelecek nesillerin kaynaklarını tüketmeden karşılamak", "correct": true},
+                {"text": "Sürekli ekonomik büyüme", "correct": false},
+                {"text": "Doğal kaynakları sınırsız kullanmak", "correct": false},
+                {"text": "Sanayileşmeden vazgeçmek", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'{1}, güneş ışığını doğrudan elektrik enerjisine dönüştüren yarı iletken panellerdir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["güneş enerjisi", "panel"],
+              "explanation": "Fotovoltaik (güneş) paneller, güneş ışığındaki fotonları yarı iletken (silikon) malzeme ile elektriğe dönüştürür.",
+              "options": [
+                {"text": "Fotovoltaik (güneş) paneller", "isBlank": true, "correct": true},
+                {"text": "Rüzgâr türbinleri", "correct": false},
+                {"text": "Jeotermal kaynaklar", "correct": false},
+                {"text": "Hidroelektrik barajlar", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Yenilenebilir enerji kaynaklarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["yenilenebilir", "enerji"],
+              "explanation": "Farklı yenilenebilir enerji kaynakları farklı doğal güçleri kullanır.",
+              "options": [
+                {"text": "Güneş enerjisi", "pairId": 1, "correct": false},
+                {"text": "Fotovoltaik panel/termal kolektör → elektrik/ısı", "pairId": 1, "correct": false},
+                {"text": "Rüzgâr enerjisi", "pairId": 2, "correct": false},
+                {"text": "Türbin kanatları → jeneratör → elektrik", "pairId": 2, "correct": false},
+                {"text": "Hidroelektrik", "pairId": 3, "correct": false},
+                {"text": "Barajda biriken suyun potansiyel enerjisi → türbin → elektrik", "pairId": 3, "correct": false},
+                {"text": "Jeotermal enerji", "pairId": 4, "correct": false},
+                {"text": "Yer altındaki sıcak su/buhar → türbin → elektrik/ısıtma", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hangisi yenilenemez kaynaktır?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "EASY",
+              "tags": ["yenilenemez", "kaynak"],
+              "timeLimit": 8,
+              "explanation": "Kömür fosil yakıttır, oluşumu milyon yıllar sürer ve yenilenemez. Güneş, rüzgâr, su yenilenebilir kaynaklardır.",
+              "options": [
+                {"text": "Kömür", "correct": true},
+                {"text": "Güneş", "correct": false},
+                {"text": "Rüzgâr", "correct": false},
+                {"text": "Su (hidro)", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Sürdürülebilir kaynak kullanımı adımlarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["sürdürülebilirlik", "adım"],
+              "explanation": "Azalt → Yeniden kullan → Geri dönüştür → Yenilenebilir enerjiye geç.",
+              "options": [
+                {"text": "Tüketimi azalt (gereksiz kullanımı kes)", "correctOrder": 1, "correct": false},
+                {"text": "Yeniden kullan (ürünleri tekrar değerlendir)", "correctOrder": 2, "correct": false},
+                {"text": "Geri dönüştür (hammaddeye çevir, atığı azalt)", "correctOrder": 3, "correct": false},
+                {"text": "Yenilenebilir enerjiye geçiş yap (fosil yakıttan uzaklaş)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Biyolojik Çeşitliliğin Önemi ve Korunması",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Biyolojik çeşitlilik neden önemlidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["biyoçeşitlilik", "önem"],
+              "explanation": "Biyoçeşitlilik ekosistemlerin direncini artırır, ilaç/besin kaynağı sağlar, tozlaşma ve su arıtma gibi ekosistem hizmetlerini sürdürür.",
+              "options": [
+                {"text": "Önemli değildir", "correct": false},
+                {"text": "Ekosistem direnci, ilaç/besin kaynağı ve ekosistem hizmetleri için kritiktir", "correct": true},
+                {"text": "Sadece estetik açıdan", "correct": false},
+                {"text": "Sadece bilim insanları için önemli", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Biyoçeşitliliğin üç düzeyi nedir?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["biyoçeşitlilik", "düzey"],
+              "explanation": "1. Genetik çeşitlilik (tür içi): aynı türdeki gen farklılıkları. 2. Tür çeşitliliği: bir bölgedeki tür sayısı ve bolluğu. 3. Ekosistem çeşitliliği: farklı habitat tipleri.",
+              "options": [
+                {"text": "Genetik çeşitlilik, tür çeşitliliği ve ekosistem çeşitliliği", "correct": true},
+                {"text": "Sadece tür çeşitliliği", "correct": false},
+                {"text": "Hayvan, bitki, bakteri çeşitliliği", "correct": false},
+                {"text": "Kara, su, hava çeşitliliği", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Doğal yaşam alanlarının tarım, kentleşme ve sanayi için tahrip edilmesine {1} denir ve biyoçeşitlilik kaybının en büyük nedenidir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["habitat", "tahribat"],
+              "explanation": "Habitat kaybı/tahribatı tür yok oluşlarının #1 nedenidir. Orman kesimi, bataklık kurutma, kentleşme buna yol açar.",
+              "options": [
+                {"text": "habitat kaybı (tahribatı)", "isBlank": true, "correct": true},
+                {"text": "aşırı avlanma", "correct": false},
+                {"text": "iklim değişikliği", "correct": false},
+                {"text": "istilacı türler", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Biyoçeşitlilik tehditlerini koruma yöntemleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["koruma", "tehdit"],
+              "explanation": "Her tehdidin kendine uygun koruma stratejisi vardır.",
+              "options": [
+                {"text": "Habitat kaybı", "pairId": 1, "correct": false},
+                {"text": "Milli parklar, doğa koruma alanları, yaban hayatı koridorları", "pairId": 1, "correct": false},
+                {"text": "Aşırı avlanma/toplanma", "pairId": 2, "correct": false},
+                {"text": "Av yasakları, CITES sözleşmesi, kota sistemi", "pairId": 2, "correct": false},
+                {"text": "İstilacı (egzotik) türler", "pairId": 3, "correct": false},
+                {"text": "Biyolojik kontrol, karantina, erken tespit ve müdahale", "pairId": 3, "correct": false},
+                {"text": "İklim değişikliği", "pairId": 4, "correct": false},
+                {"text": "Sera gazı azaltma, yenilenebilir enerji, uluslararası anlaşmalar (Paris)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "CITES sözleşmesi neyi korur?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "HARD",
+              "tags": ["CITES", "koruma"],
+              "timeLimit": 12,
+              "explanation": "CITES (Nesli Tehlike Altındaki Yabani Hayvan ve Bitki Türlerinin Uluslararası Ticaretine İlişkin Sözleşme) nesli tehlikeli türlerin uluslararası ticaretini düzenler.",
+              "options": [
+                {"text": "Nesli tehlikeli türlerin uluslararası ticaretini düzenler", "correct": true},
+                {"text": "Hava kirliliğini azaltır", "correct": false},
+                {"text": "Deniz kirliliğini önler", "correct": false},
+                {"text": "Nükleer enerjiyi denetler", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Biyoçeşitlilik koruma yöntemlerini ölçeğe göre sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["koruma", "yöntem"],
+              "explanation": "Bireysel → yerel → ulusal → uluslararası düzeyde koruma.",
+              "options": [
+                {"text": "Bireysel: tüketimi azalt, geri dönüşüm, ekolojik ayak izini küçült", "correctOrder": 1, "correct": false},
+                {"text": "Yerel: doğa koruma alanları, ağaçlandırma, çevre eğitimi", "correctOrder": 2, "correct": false},
+                {"text": "Ulusal: milli parklar, av yasakları, ÇED raporu zorunluluğu", "correctOrder": 3, "correct": false},
+                {"text": "Uluslararası: CITES, Paris Anlaşması, Biyoçeşitlilik Sözleşmesi (CBD)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Ekolojik Ayak İzi ve Bireysel Sorumluluk",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Ekolojik ayak izi nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ekolojik ayak izi"],
+              "explanation": "Ekolojik ayak izi, bir bireyin/toplumun tükettiği kaynakları üretmek ve atıklarını absorbe etmek için gereken biyolojik olarak verimli alan miktarıdır (hektar cinsinden).",
+              "options": [
+                {"text": "Ayakkabı numarası", "correct": false},
+                {"text": "Tüketilen kaynakları karşılamak ve atıkları absorbe etmek için gereken biyolojik alan miktarı", "correct": true},
+                {"text": "Yürüme mesafesi", "correct": false},
+                {"text": "Nüfus yoğunluğu", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Su ayak izi nedir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["su ayak izi"],
+              "explanation": "Su ayak izi, bir ürünün veya bireyin doğrudan ve dolaylı toplam su tüketimini ölçer. 1 kg sığır eti üretmek için ~15.000 L su gerekir.",
+              "options": [
+                {"text": "Bir ürün/bireyin doğrudan ve dolaylı toplam su tüketimi", "correct": true},
+                {"text": "Yağmur suyu miktarı", "correct": false},
+                {"text": "Deniz suyu hacmi", "correct": false},
+                {"text": "İçme suyu kalitesi", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Eğer tüm dünya Türkiye gibi tüketse dünya kaynaklarının yetersiz kalacağı gün hesaplanır ve buna {1} denir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["dünya kapasitesi"],
+              "explanation": "Dünya Limit Aşım Günü (Earth Overshoot Day), insanlığın o yıl kullanabileceği doğal kaynakları tükettiği tarihtir. Her yıl daha erken gelmektedir.",
+              "options": [
+                {"text": "Dünya Limit Aşım Günü (Earth Overshoot Day)", "isBlank": true, "correct": true},
+                {"text": "Dünya Çevre Günü", "correct": false},
+                {"text": "Karbon Nötr Günü", "correct": false},
+                {"text": "Ozon Günü", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Ekolojik ayak izini küçültme yöntemlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["ayak izi", "azaltma"],
+              "explanation": "Her alanda bireysel katkı yapılabilir.",
+              "options": [
+                {"text": "Ulaşım", "pairId": 1, "correct": false},
+                {"text": "Toplu taşıma, bisiklet, yürüyüş; kısa mesafe uçuşlardan kaçınma", "pairId": 1, "correct": false},
+                {"text": "Enerji", "pairId": 2, "correct": false},
+                {"text": "LED aydınlatma, yalıtım, güneş paneli, gereksiz tüketimi azaltma", "pairId": 2, "correct": false},
+                {"text": "Beslenme", "pairId": 3, "correct": false},
+                {"text": "Bitkisel ağırlıklı diyet, mevsiminde yerel ürün, gıda israfını önleme", "pairId": 3, "correct": false},
+                {"text": "Tüketim", "pairId": 4, "correct": false},
+                {"text": "Azalt-Yeniden Kullan-Geri Dönüştür; tek kullanımlık plastikten kaçınma", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "En büyük karbon ayak izi olan sektör hangisidir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["karbon", "sektör"],
+              "timeLimit": 12,
+              "explanation": "Enerji üretimi (elektrik ve ısı) küresel sera gazı salınımının ~%25-30'unu oluşturur. Ulaşım, sanayi ve tarım da önemli paylara sahiptir.",
+              "options": [
+                {"text": "Enerji üretimi (elektrik ve ısı)", "correct": true},
+                {"text": "Tarım", "correct": false},
+                {"text": "Ulaşım", "correct": false},
+                {"text": "Konut", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Atık yönetimi hiyerarşisini sıralayın (en çok tercih → en az tercih).",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["atık", "yönetim"],
+              "explanation": "Azaltma en iyi seçenektir, depolama/yakma son çaredir.",
+              "options": [
+                {"text": "Azalt (kaynağında önle)", "correctOrder": 1, "correct": false},
+                {"text": "Yeniden kullan (tamir et, paylaş)", "correctOrder": 2, "correct": false},
+                {"text": "Geri dönüştür (hammaddeye çevir)", "correctOrder": 3, "correct": false},
+                {"text": "Enerji geri kazanımı (yakma) → son çare: depolama", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

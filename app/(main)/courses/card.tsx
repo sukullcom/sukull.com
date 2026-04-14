@@ -23,6 +23,9 @@ const CATEGORY_STYLES: Record<string, { activeBorder: string; badge: string }> =
   biyoloji:   { activeBorder: "border-lime-500 bg-lime-50/40",     badge: "bg-lime-100 text-lime-700" },
   tarih:      { activeBorder: "border-yellow-500 bg-yellow-50/40", badge: "bg-yellow-100 text-yellow-700" },
   cografya:   { activeBorder: "border-teal-500 bg-teal-50/40",    badge: "bg-teal-100 text-teal-700" },
+  felsefe:    { activeBorder: "border-pink-500 bg-pink-50/40",     badge: "bg-pink-100 text-pink-700" },
+  dinkulturu: { activeBorder: "border-cyan-500 bg-cyan-50/40",    badge: "bg-cyan-100 text-cyan-700" },
+  sosyal:     { activeBorder: "border-orange-500 bg-orange-50/40", badge: "bg-orange-100 text-orange-700" },
   ingilizce:  { activeBorder: "border-rose-500 bg-rose-50/40",    badge: "bg-rose-100 text-rose-700" },
   diger:      { activeBorder: "border-gray-500 bg-gray-50/40",    badge: "bg-gray-100 text-gray-700" },
 };

@@ -1,0 +1,2870 @@
+{
+  "course": {
+    "title": "9. Sınıf Biyoloji",
+    "imageSrc": ""
+  },
+  "units": [
+    {
+      "title": "Yaşam Bilimi Biyoloji",
+      "description": "Biyolojinin önemi, alt dalları, bilimsel yöntem, bilim etiği ve canlıların ortak özellikleri (MEB 2025-2026 Tema 1.1)",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "Biyolojinin Önemi ve Alt Dalları",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Hangisi biyolojinin alt dallarından biri değildir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["biyoloji", "alt dal"],
+              "explanation": "Termodinamik fiziğin alt dalıdır. Botanik (bitki bilimi), zooloji (hayvan bilimi) ve sitoloji (hücre bilimi) biyolojinin alt dallarıdır.",
+              "options": [
+                {"text": "Botanik", "correct": false},
+                {"text": "Zooloji", "correct": false},
+                {"text": "Termodinamik", "correct": true},
+                {"text": "Sitoloji", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Biyoloji bilgisi günlük hayatta en çok hangi alanda kullanılır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["biyoloji", "günlük yaşam"],
+              "explanation": "Biyoloji bilgisi tıp, tarım, gıda teknolojisi ve çevre koruma gibi pek çok alanda doğrudan kullanılır.",
+              "options": [
+                {"text": "Uzay mühendisliği", "correct": false},
+                {"text": "Tıp, tarım, gıda teknolojisi ve çevre koruma", "correct": true},
+                {"text": "Bilgisayar programlama", "correct": false},
+                {"text": "Hukuk", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Antibiyotikler hangi canlılara karşı etkilidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["antibiyotik", "tıp"],
+              "explanation": "Antibiyotikler yalnızca bakterilere karşı etkilidir; virüslere etki etmez. Gereksiz kullanım bakterilerde direnç geliştirir.",
+              "options": [
+                {"text": "Virüslere", "correct": false},
+                {"text": "Bakterilere", "correct": true},
+                {"text": "Tüm mikroorganizmalara", "correct": false},
+                {"text": "Mantarlara", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'{1} bilimi, canlıların kalıtım mekanizmalarını ve genlerin yapısını inceler.' cümlesinde boşluğa hangi biyoloji dalı gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["biyoloji", "alt dal"],
+              "explanation": "Genetik, kalıtım ve genleri inceleyen biyoloji dalıdır. DNA, gen, kromozom ve kalıtsal hastalıklar genetiğin konularıdır.",
+              "options": [
+                {"text": "Genetik", "isBlank": true, "correct": true},
+                {"text": "Ekoloji", "correct": false},
+                {"text": "Anatomi", "correct": false},
+                {"text": "Fizyoloji", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Biyolojinin alt dallarını açıklamalarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["biyoloji", "alt dal"],
+              "explanation": "Biyoloji canlıları farklı açılardan inceleyen çok sayıda alt dala sahiptir.",
+              "options": [
+                {"text": "Ekoloji", "pairId": 1, "correct": false},
+                {"text": "Canlıların çevreleriyle ilişkilerini inceler", "pairId": 1, "correct": false},
+                {"text": "Mikrobiyoloji", "pairId": 2, "correct": false},
+                {"text": "Mikroorganizmaları (bakteri, virüs, mantar) inceler", "pairId": 2, "correct": false},
+                {"text": "Histoloji", "pairId": 3, "correct": false},
+                {"text": "Dokuların yapısını inceler", "pairId": 3, "correct": false},
+                {"text": "Paleontoloji", "pairId": 4, "correct": false},
+                {"text": "Fosilleri inceleyerek geçmiş canlıları araştırır", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bir hastalığın teşhis ve tedavi sürecindeki biyoloji dallarının katkı sırasını belirleyin.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["biyoloji", "disiplinler arası"],
+              "explanation": "Hastalık teşhisinde önce mikrobiyoloji etkeni saptar, biyokimya kan değerlerini analiz eder, genetik kalıtsal yatkınlığı inceler, farmakoloji tedavi geliştirir.",
+              "options": [
+                {"text": "Mikrobiyoloji: hastalık etkeni belirlenir", "correctOrder": 1, "correct": false},
+                {"text": "Biyokimya: kan ve doku analizleri yapılır", "correctOrder": 2, "correct": false},
+                {"text": "Genetik: kalıtsal yatkınlık araştırılır", "correctOrder": 3, "correct": false},
+                {"text": "Farmakoloji: ilaç/tedavi geliştirilir", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Biyoloji Biliminin Gelişimindeki Dönüm Noktaları",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Mikroskobun icadı biyoloji için neden devrim niteliğindedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["mikroskop", "tarih"],
+              "explanation": "Mikroskop, çıplak gözle görülemeyen hücrelerin ve mikroorganizmaların keşfedilmesini sağlamıştır.",
+              "options": [
+                {"text": "Daha büyük hayvanları görmek için", "correct": false},
+                {"text": "Çıplak gözle görülemeyen hücre ve mikroorganizmaların keşfedilmesini sağladı", "correct": true},
+                {"text": "Sadece fizik deneylerinde kullanıldı", "correct": false},
+                {"text": "Sadece tıpta kullanıldı", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Genetik biliminin temellerini atan bilim insanı kimdir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["genetik", "Mendel"],
+              "explanation": "Gregor Mendel bezelye bitkilerinde yaptığı çaprazlama deneyleriyle kalıtım yasalarını ortaya koymuş ve genetik biliminin babası kabul edilmiştir.",
+              "options": [
+                {"text": "Darwin", "correct": false},
+                {"text": "Gregor Mendel", "correct": true},
+                {"text": "Pasteur", "correct": false},
+                {"text": "Hooke", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Alexander Fleming hangi buluşuyla tanınır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Fleming", "penisilin"],
+              "explanation": "Alexander Fleming 1928'de penisilin antibiyotiğini keşfetmiştir. Bir petri kabında küf mantarının bakterileri öldürdüğünü fark etmiştir.",
+              "options": [
+                {"text": "Mikroskop", "correct": false},
+                {"text": "Penisilin (ilk antibiyotik)", "correct": true},
+                {"text": "Aşı", "correct": false},
+                {"text": "DNA modeli", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'{1}, hastalıklara mikroorganizmaların neden olduğunu kanıtlamış ve pastörizasyon yöntemini geliştirmiştir.' cümlesinde boşluğa hangi bilim insanı gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["Pastör", "mikrobiyoloji"],
+              "explanation": "Louis Pasteur, kendiliğinden oluş (abiyogenez) fikrini çürütmüş, kuduz aşısını geliştirmiş ve pastörizasyon yöntemini bulmuştur.",
+              "options": [
+                {"text": "Louis Pasteur", "isBlank": true, "correct": true},
+                {"text": "Robert Koch", "correct": false},
+                {"text": "Edward Jenner", "correct": false},
+                {"text": "Robert Hooke", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Biyoloji tarihindeki dönüm noktalarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["tarih", "keşif"],
+              "explanation": "Bu keşifler biyolojinin gelişimini derinden etkilemiştir.",
+              "options": [
+                {"text": "Robert Hooke (1665)", "pairId": 1, "correct": false},
+                {"text": "'Hücre' terimini ilk kullanan bilim insanı", "pairId": 1, "correct": false},
+                {"text": "Charles Darwin (1859)", "pairId": 2, "correct": false},
+                {"text": "Doğal seçilim yoluyla evrim teorisi", "pairId": 2, "correct": false},
+                {"text": "Watson ve Crick (1953)", "pairId": 3, "correct": false},
+                {"text": "DNA'nın çift sarmal yapısını keşfetti", "pairId": 3, "correct": false},
+                {"text": "İnsan Genom Projesi (2003)", "pairId": 4, "correct": false},
+                {"text": "İnsan DNA'sındaki tüm genlerin haritası", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hücre teorisinin gelişim aşamalarını kronolojik sıraya koyun.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["hücre teorisi", "tarih"],
+              "explanation": "Hooke hücreyi gözlemlemiş, Leeuwenhoek tek hücrelileri keşfetmiş, Schleiden-Schwann hücre teorisini kurmuş, Virchow 'hücre hücreden gelir' ilkesini eklemiştir.",
+              "options": [
+                {"text": "Hooke mantar dokusunda boşlukları gözlemledi (1665)", "correctOrder": 1, "correct": false},
+                {"text": "Leeuwenhoek tek hücreli canlıları keşfetti (1674)", "correctOrder": 2, "correct": false},
+                {"text": "Schleiden ve Schwann hücre teorisini kurdu (1838-39)", "correctOrder": 3, "correct": false},
+                {"text": "Virchow: 'Her hücre bir hücreden oluşur' dedi (1855)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Bilimin Doğası ve Bilimsel Yöntem",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Hipotez ile teori arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["hipotez", "teori"],
+              "explanation": "Hipotez test edilebilir geçici yanıttır. Teori ise pek çok deneyle desteklenmiş kapsamlı açıklamadır.",
+              "options": [
+                {"text": "Aralarında fark yoktur", "correct": false},
+                {"text": "Hipotez test edilmemiş geçici önerme; teori çokça sınanmış kapsamlı açıklama", "correct": true},
+                {"text": "Teori hipotezden daha zayıftır", "correct": false},
+                {"text": "Hipotez kanıtlanmış bilgidir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kontrol grubu deneylerde neden gereklidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["deney", "kontrol"],
+              "explanation": "Kontrol grubu, değişkenin etkisini karşılaştırmak için referans sağlar. Kontrol grubu olmadan sonuçların nedenini belirlemek güçleşir.",
+              "options": [
+                {"text": "Gereksizdir", "correct": false},
+                {"text": "Değişkenin etkisini karşılaştırmak için referans sağlar", "correct": true},
+                {"text": "Sadece kimya deneylerinde kullanılır", "correct": false},
+                {"text": "Deneyi hızlandırır", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bilimsel bir yasa ile teori arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["yasa", "teori"],
+              "explanation": "Yasa 'ne olduğunu' tanımlar; teori 'neden olduğunu' açıklar. Yasa teoriden üstün değildir; farklı işlevleri vardır.",
+              "options": [
+                {"text": "Yasa teoriden üstündür", "correct": false},
+                {"text": "Yasa 'ne olduğunu' tanımlar; teori 'neden olduğunu' açıklar", "correct": true},
+                {"text": "Teori kanıtlanınca yasa olur", "correct": false},
+                {"text": "Aralarında fark yoktur", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Bir deneyde araştırmacının bilinçli olarak değiştirdiği faktöre {1} denir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["deney", "değişken"],
+              "explanation": "Bağımsız değişken, araştırmacının kontrol ettiği ve bilinçli olarak değiştirdiği faktördür. Bağımlı değişken ise ölçülen sonuçtur.",
+              "options": [
+                {"text": "bağımsız değişken", "isBlank": true, "correct": true},
+                {"text": "bağımlı değişken", "correct": false},
+                {"text": "kontrol değişkeni", "correct": false},
+                {"text": "sabit faktör", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Bilimsel bilginin özelliklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["bilim", "bilgi"],
+              "explanation": "Bilimsel bilgi diğer bilgi türlerinden belirli özellikleriyle ayrılır.",
+              "options": [
+                {"text": "Evrenseldir", "pairId": 1, "correct": false},
+                {"text": "Her yerde ve herkes için geçerlidir", "pairId": 1, "correct": false},
+                {"text": "Sınanabilir", "pairId": 2, "correct": false},
+                {"text": "Deney ve gözlemle test edilebilir", "pairId": 2, "correct": false},
+                {"text": "Birikimlidir", "pairId": 3, "correct": false},
+                {"text": "Önceki bilgiler üzerine inşa edilir", "pairId": 3, "correct": false},
+                {"text": "Değişebilir", "pairId": 4, "correct": false},
+                {"text": "Yeni bulgularla düzeltilebilir veya çürütülebilir", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bilimsel yöntemin aşamalarını doğru sıraya koyun.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["bilimsel yöntem"],
+              "explanation": "Bilimsel yöntem: Gözlem → Problem belirleme → Hipotez kurma → Deney yapma → Sonuç çıkarma şeklinde ilerler.",
+              "options": [
+                {"text": "Gözlem yapma ve problem belirleme", "correctOrder": 1, "correct": false},
+                {"text": "Hipotez (geçici açıklama) kurma", "correctOrder": 2, "correct": false},
+                {"text": "Deney tasarlama ve veri toplama", "correctOrder": 3, "correct": false},
+                {"text": "Verileri analiz edip sonuç çıkarma", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Bilimsel Araştırma Süreçleri ve Bilim Etiği",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Bilimsel araştırmada 'hakem değerlendirmesi' (peer review) nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["hakem", "yayın"],
+              "explanation": "Hakem değerlendirmesi, bir bilimsel çalışmanın yayınlanmadan önce bağımsız uzmanlar tarafından incelenmesidir.",
+              "options": [
+                {"text": "Hakemin spor müsabakası yönetmesi", "correct": false},
+                {"text": "Bilimsel çalışmanın bağımsız uzmanlar tarafından incelenmesi", "correct": true},
+                {"text": "Öğretmenin ödevi kontrol etmesi", "correct": false},
+                {"text": "Deneyin tekrarlanması", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "GDO (Genetiği Değiştirilmiş Organizma) nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["GDO", "biyoetik"],
+              "explanation": "GDO, gen teknolojisiyle DNA'sında değişiklik yapılmış canlıdır. Sağlık ve çevre etkileri etik tartışmalara konu olmaktadır.",
+              "options": [
+                {"text": "Doğal yollarla ıslah edilmiş bitki", "correct": false},
+                {"text": "Gen teknolojisiyle DNA'sı değiştirilmiş canlı", "correct": true},
+                {"text": "Organik tarım ürünü", "correct": false},
+                {"text": "Bir vitamin takviyesi", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bilimsel bilgi neden kesin ve değişmez değildir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["bilim", "değişebilirlik"],
+              "explanation": "Bilimsel bilgi yeni bulgular ve gelişen teknoloji ile sürekli güncellenir. Bu bilimin güçlü yönüdür.",
+              "options": [
+                {"text": "Bilim insanları hata yapar", "correct": false},
+                {"text": "Yeni bulgular ve gelişen teknoloji ile sürekli güncellenir", "correct": true},
+                {"text": "Bilimsel bilgi tamamen kesindir", "correct": false},
+                {"text": "Bilimsel bilgi rastgeledir", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'{1}, başkasının fikirlerini veya verilerini kaynak göstermeden kendi çalışması gibi sunmaktır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["intihal", "etik"],
+              "explanation": "İntihal (plagiarism) bilim etiğinin en ağır ihlallerinden biridir.",
+              "options": [
+                {"text": "İntihal", "isBlank": true, "correct": true},
+                {"text": "Hipotez", "correct": false},
+                {"text": "Teori", "correct": false},
+                {"text": "Veri analizi", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Bilim etiği ilkelerini açıklamalarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["etik", "bilim"],
+              "explanation": "Bilim etiği, bilimsel çalışmalarda uyulması gereken ahlaki kurallardır.",
+              "options": [
+                {"text": "Dürüstlük", "pairId": 1, "correct": false},
+                {"text": "Verileri değiştirmemek, sonuçları olduğu gibi raporlamak", "pairId": 1, "correct": false},
+                {"text": "Gizlilik", "pairId": 2, "correct": false},
+                {"text": "Deney katılımcılarının kişisel bilgilerini korumak", "pairId": 2, "correct": false},
+                {"text": "Hayvan hakları (3R ilkesi)", "pairId": 3, "correct": false},
+                {"text": "Deney hayvanlarına gereksiz acı vermemek", "pairId": 3, "correct": false},
+                {"text": "Kaynakça gösterme", "pairId": 4, "correct": false},
+                {"text": "Başkalarının katkılarını belirtmek, intihalden kaçınmak", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Laboratuvar güvenlik kurallarının uygulanma sırasını belirleyin.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["laboratuvar", "güvenlik"],
+              "explanation": "Laboratuvarda önce kişisel koruyucu giyilir, sonra malzemeler kontrol edilir, deney yapılır ve atıklar uygun şekilde bertaraf edilir.",
+              "options": [
+                {"text": "Önlük, eldiven ve koruyucu gözlük giy", "correctOrder": 1, "correct": false},
+                {"text": "Deney malzemelerini ve kimyasalları kontrol et", "correctOrder": 2, "correct": false},
+                {"text": "Deneyi güvenlik kurallarına uyarak gerçekleştir", "correctOrder": 3, "correct": false},
+                {"text": "Atıkları uygun kutulara at, alanı temizle", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Canlıların Ortak Özellikleri",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Canlıyı cansızdan ayıran en temel özellik hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["canlı", "cansız"],
+              "explanation": "Hücresel yapıya sahip olmak canlıların en temel özelliğidir. Virüsler hücresel yapıya sahip olmadığı için canlı-cansız sınırında kabul edilir.",
+              "options": [
+                {"text": "Hareket etmek", "correct": false},
+                {"text": "Hücresel yapıya sahip olmak", "correct": true},
+                {"text": "Büyük olmak", "correct": false},
+                {"text": "Sert olmak", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Ototrof ve heterotrof canlılar arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["beslenme", "ototrof", "heterotrof"],
+              "explanation": "Ototrof kendi besinini üretir (fotosentez/kemosentez). Heterotrof hazır besinle beslenir. Bitkiler ototrof, hayvanlar heterotroftur.",
+              "options": [
+                {"text": "Aralarında fark yoktur", "correct": false},
+                {"text": "Ototrof kendi besinini üretir; heterotrof hazır besinle beslenir", "correct": true},
+                {"text": "Heterotrof fotosentez yapar", "correct": false},
+                {"text": "Ototrof sadece et yer", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Organizmanın uyarılara tepki vermesine ne denir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["uyarı", "tepki"],
+              "explanation": "İrritabilite (uyarılabilirlik), canlıların iç ve dış çevreden gelen uyarılara tepki verme özelliğidir.",
+              "options": [
+                {"text": "Metabolizma", "correct": false},
+                {"text": "İrritabilite (uyarılabilirlik)", "correct": true},
+                {"text": "Homeostazi", "correct": false},
+                {"text": "Adaptasyon", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'{1}, canlıların iç ortamını (vücut sıcaklığı, kan şekeri, pH) belirli sınırlar içinde sabit tutma mekanizmasıdır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["homeostazi"],
+              "explanation": "Homeostazi, canlıların iç dengesini korumasıdır. Terleme ve titreme sıcaklık homeostazisine örnektir.",
+              "options": [
+                {"text": "Homeostazi", "isBlank": true, "correct": true},
+                {"text": "Metabolizma", "correct": false},
+                {"text": "Adaptasyon", "correct": false},
+                {"text": "İrritabilite", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Üreme türlerini açıklamalarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["üreme", "tür"],
+              "explanation": "Canlılar eşeyli veya eşeysiz olarak ürer.",
+              "options": [
+                {"text": "Eşeysiz üreme", "pairId": 1, "correct": false},
+                {"text": "Tek ebeveyn, yavru genetik kopya, hızlı", "pairId": 1, "correct": false},
+                {"text": "Eşeyli üreme", "pairId": 2, "correct": false},
+                {"text": "İki ebeveyn, gamet birleşmesi, genetik çeşitlilik", "pairId": 2, "correct": false},
+                {"text": "Bölünme (amip)", "pairId": 3, "correct": false},
+                {"text": "Eşeysiz üreme örneği", "pairId": 3, "correct": false},
+                {"text": "Döllenme (sperm+yumurta)", "pairId": 4, "correct": false},
+                {"text": "Eşeyli üreme örneği", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Canlılarda organizasyon düzeylerini küçükten büyüğe sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["organizasyon", "düzey"],
+              "explanation": "Canlılar atom → molekül → organel → hücre → doku → organ → sistem → organizma şeklinde hiyerarşik düzeylere sahiptir.",
+              "options": [
+                {"text": "Molekül (su, protein, DNA)", "correctOrder": 1, "correct": false},
+                {"text": "Organel (mitokondri, ribozom)", "correctOrder": 2, "correct": false},
+                {"text": "Hücre (canlının temel birimi)", "correctOrder": 3, "correct": false},
+                {"text": "Doku → Organ → Sistem → Organizma", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Sınıflandırma ve Biyoçeşitlilik",
+      "description": "Sınıflandırmanın temelleri, taksonomi, üç üst âlem sistemi, canlı âlemleri ve biyoçeşitlilik (MEB 2025-2026 Tema 1.2)",
+      "order": 2,
+      "lessons": [
+        {
+          "title": "Sınıflandırmanın Temelleri ve Taksonomi",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "İkili adlandırma (binomial nomenklatür) sistemini kim geliştirmiştir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["Linne", "adlandırma"],
+              "explanation": "Carl Linnaeus bu sistemi geliştirmiştir. Her tür iki Latince sözcükle adlandırılır: Homo sapiens gibi.",
+              "options": [
+                {"text": "Darwin", "correct": false},
+                {"text": "Carl Linnaeus (Linne)", "correct": true},
+                {"text": "Mendel", "correct": false},
+                {"text": "Pasteur", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Tür kavramının en doğru tanımı hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["tür", "tanım"],
+              "explanation": "Tür, doğal koşullarda çiftleşerek verimli döl verebilen bireyler topluluğudur. At ve eşek → katır (kısır) = farklı türler.",
+              "options": [
+                {"text": "Aynı yerde yaşayan canlılar", "correct": false},
+                {"text": "Doğal koşullarda çiftleşerek verimli döl verebilen bireyler topluluğu", "correct": true},
+                {"text": "Benzer görünüşe sahip canlılar", "correct": false},
+                {"text": "Aynı besini yiyen canlılar", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Homo sapiens adlandırmasında 'Homo' neyi ifade eder?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["adlandırma", "insan"],
+              "explanation": "İkili adlandırmada ilk sözcük cins adıdır (büyük harf). 'sapiens' ise tür adıdır (küçük harf).",
+              "options": [
+                {"text": "Tür adı", "correct": false},
+                {"text": "Cins adı", "correct": true},
+                {"text": "Familya adı", "correct": false},
+                {"text": "Âlem adı", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'En geniş sınıflandırma birimi {1} iken, en dar sınıflandırma birimi türdür.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["taksonomi", "basamak"],
+              "explanation": "Taksonomik sıra: Âlem > Şube > Sınıf > Takım > Familya > Cins > Tür. Âlem en geniş, tür en dar birimdir.",
+              "options": [
+                {"text": "âlem", "isBlank": true, "correct": true},
+                {"text": "şube", "correct": false},
+                {"text": "familya", "correct": false},
+                {"text": "sınıf", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Modern sınıflandırmada kullanılan kriterleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["sınıflandırma", "kriter"],
+              "explanation": "Modern sınıflandırma birçok farklı veriyi birlikte değerlendirir.",
+              "options": [
+                {"text": "Morfolojik benzerlik", "pairId": 1, "correct": false},
+                {"text": "Dış ve iç yapıdaki şekilsel benzerlikler", "pairId": 1, "correct": false},
+                {"text": "Moleküler (DNA) analiz", "pairId": 2, "correct": false},
+                {"text": "DNA ve protein benzerlik oranlarının karşılaştırılması", "pairId": 2, "correct": false},
+                {"text": "Embriyolojik benzerlik", "pairId": 3, "correct": false},
+                {"text": "Embriyonik gelişim evrelerindeki benzerlikler", "pairId": 3, "correct": false},
+                {"text": "Fosil kayıtları", "pairId": 4, "correct": false},
+                {"text": "Soyu tükenmiş ata türlerin kalıntılarıyla karşılaştırma", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Sınıflandırma basamaklarını genişten dara doğru sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["taksonomi", "basamak"],
+              "explanation": "Âlem → Şube → Sınıf → Takım → Familya → Cins → Tür şeklinde geniş gruptan dar gruba ilerler.",
+              "options": [
+                {"text": "Âlem (Regnum)", "correctOrder": 1, "correct": false},
+                {"text": "Şube (Filum/Divisio)", "correctOrder": 2, "correct": false},
+                {"text": "Sınıf → Takım → Familya", "correctOrder": 3, "correct": false},
+                {"text": "Cins → Tür (Species)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Modern Sınıflandırma: Üç Üst Âlem Sistemi",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Prokaryot ve ökaryot hücre arasındaki temel fark nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["prokaryot", "ökaryot"],
+              "explanation": "Prokaryotta zarla çevrili çekirdek ve organeller yoktur; ökaryotta vardır.",
+              "options": [
+                {"text": "Büyüklük farkı", "correct": false},
+                {"text": "Prokaryotta zarla çevrili çekirdek yok, ökaryotta var", "correct": true},
+                {"text": "Prokaryotlar çok hücreli", "correct": false},
+                {"text": "Fark yoktur", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Arkeler neden ayrı bir domain olarak sınıflandırılır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["arke", "domain"],
+              "explanation": "Arkeler prokaryot görünse de hücre duvarı, membran lipitleri ve rRNA dizilimleri bakterilerden farklıdır.",
+              "options": [
+                {"text": "Daha büyük oldukları için", "correct": false},
+                {"text": "Hücre duvarı, membran ve genetik yapıları bakterilerden farklıdır", "correct": true},
+                {"text": "Çekirdekleri olduğu için", "correct": false},
+                {"text": "Fotosentez yaptıkları için", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Virüsler neden hiçbir sınıflandırma âlemine dahil edilmez?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["virüs", "sınıflandırma"],
+              "explanation": "Virüsler hücresel yapıya sahip değildir, metabolizma yapamaz ve bağımsız çoğalamaz.",
+              "options": [
+                {"text": "Çok küçük oldukları için", "correct": false},
+                {"text": "Hücresel yapıları olmadığı ve bağımsız metabolizma yapamadıkları için", "correct": true},
+                {"text": "Sadece denizde yaşadıkları için", "correct": false},
+                {"text": "Bakterilerin alt grubu oldukları için", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Üç üst âlem (domain) sistemini {1} adlı bilim insanı rRNA analizine dayalı olarak önermiştir.' cümlesinde boşluğa kim gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["domain", "Woese"],
+              "explanation": "Carl Woese 1977'de rRNA dizi analizine dayanarak Bacteria, Archaea ve Eukarya olmak üzere üç domain sistemi önermiştir.",
+              "options": [
+                {"text": "Carl Woese", "isBlank": true, "correct": true},
+                {"text": "Carl Linnaeus", "correct": false},
+                {"text": "Charles Darwin", "correct": false},
+                {"text": "Robert Whittaker", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Üç üst âlem (domain) sistemini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["domain", "üst âlem"],
+              "explanation": "Carl Woese'un önerdiği üç domain sistemi günümüzde en kabul gören sınıflandırmadır.",
+              "options": [
+                {"text": "Bacteria", "pairId": 1, "correct": false},
+                {"text": "Prokaryot, peptidoglikan duvar, her ortamda yaşar", "pairId": 1, "correct": false},
+                {"text": "Archaea", "pairId": 2, "correct": false},
+                {"text": "Prokaryot, farklı duvar yapısı, aşırı ortamlarda yaşar", "pairId": 2, "correct": false},
+                {"text": "Eukarya", "pairId": 3, "correct": false},
+                {"text": "Zarla çevrili çekirdek ve organellere sahip tüm canlılar", "pairId": 3, "correct": false},
+                {"text": "Virüsler", "pairId": 4, "correct": false},
+                {"text": "Hücresel yapı yok → hiçbir domaine dahil değil", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Canlılık tarihinde hücre tiplerinin evrimsel gelişim sırasını belirleyin.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["evrim", "hücre"],
+              "explanation": "İlk canlılar prokaryot, sonra ökaryot (endosimbiyoz ile), sonra çok hücreli ökaryotlar ve en son karmaşık organizmalar evrimleşmiştir.",
+              "options": [
+                {"text": "İlk prokaryot hücreler (bakteriler, arkeler)", "correctOrder": 1, "correct": false},
+                {"text": "Ökaryot hücreler (endosimbiyoz ile mitokondri/kloroplast)", "correctOrder": 2, "correct": false},
+                {"text": "Çok hücreli organizmalar (alg, sünger, bitki)", "correctOrder": 3, "correct": false},
+                {"text": "Karmaşık hayvanlar ve karasal bitkiler", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Bakteriler ve Arkeler",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Bakterilerin insanlar için yararlı kullanımlarından biri hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["bakteri", "yarar"],
+              "explanation": "Bakteriler yoğurt-peynir üretimi, sindirime yardım, biyolojik arıtma ve azot fiksasyonu gibi alanlarda faydalıdır.",
+              "options": [
+                {"text": "Bakteriler her zaman zararlıdır", "correct": false},
+                {"text": "Yoğurt-peynir üretimi, sindirime yardım, biyolojik arıtma", "correct": true},
+                {"text": "Sadece hastalık yapar", "correct": false},
+                {"text": "Hiçbir faydaları yoktur", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Bakterilerde üreme nasıl gerçekleşir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["bakteri", "üreme"],
+              "explanation": "Bakteriler ikiye bölünme ile eşeysiz olarak ürer. Konjugasyon genetik aktarım sağlar ama tam eşeyli üreme değildir.",
+              "options": [
+                {"text": "Eşeyli üreme ile", "correct": false},
+                {"text": "İkiye bölünme (binary fission) ile eşeysiz olarak", "correct": true},
+                {"text": "Tomurcuklanma ile", "correct": false},
+                {"text": "Sporla üreme ile", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Gram boyama yönteminin amacı nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["gram boyama", "bakteri"],
+              "explanation": "Gram boyama bakterileri hücre duvarı yapısına göre Gram (+) mor ve Gram (-) pembe olarak ayırır. Antibiyotik seçiminde önemlidir.",
+              "options": [
+                {"text": "Bakterilerin boyutunu ölçmek", "correct": false},
+                {"text": "Bakterileri hücre duvarı yapısına göre Gram (+) ve Gram (-) olarak ayırmak", "correct": true},
+                {"text": "Bakterilerin hızını ölçmek", "correct": false},
+                {"text": "Bakterileri öldürmek", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'{1}, bazı bakterilerin olumsuz koşullarda (kuraklık, yüksek sıcaklık) oluşturduğu dayanıklı yapıdır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["endospor", "bakteri"],
+              "explanation": "Endospor metabolizmayı durduran ve bakteriyi uyku hâline geçiren dayanıklı yapıdır. Koşullar uygun olunca tekrar aktifleşir.",
+              "options": [
+                {"text": "Endospor", "isBlank": true, "correct": true},
+                {"text": "Plazmid", "correct": false},
+                {"text": "Kapsül", "correct": false},
+                {"text": "Flagella", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Bakteri şekillerini adlarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["bakteri", "şekil"],
+              "explanation": "Bakteriler şekillerine göre sınıflandırılabilir.",
+              "options": [
+                {"text": "Kok (coccus)", "pairId": 1, "correct": false},
+                {"text": "Yuvarlak şekilli (Staphylococcus)", "pairId": 1, "correct": false},
+                {"text": "Basil (bacillus)", "pairId": 2, "correct": false},
+                {"text": "Çubuk şekilli (E. coli)", "pairId": 2, "correct": false},
+                {"text": "Spiral (spirillum)", "pairId": 3, "correct": false},
+                {"text": "Sarmal şekilli (Treponema)", "pairId": 3, "correct": false},
+                {"text": "Vibriyo", "pairId": 4, "correct": false},
+                {"text": "Virgül şekilli (V. cholerae)", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Arkelerin aşırı ortam türlerini sıralayın: ılımlıdan en aşırıya.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["arke", "yaşam"],
+              "explanation": "Halofiller tuzlu, metanojenler oksijensiz, asidofiller çok asidik, termofiller ise 80-120°C'de yaşar.",
+              "options": [
+                {"text": "Halofiller: çok tuzlu ortam (tuz gölü)", "correctOrder": 1, "correct": false},
+                {"text": "Metanojenler: oksijensiz ortamda metan üretir", "correctOrder": 2, "correct": false},
+                {"text": "Asidofiller: çok asidik ortam (pH 1-2)", "correctOrder": 3, "correct": false},
+                {"text": "Termofiller: 80-120°C'de yaşar (volkan çevresi)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Ökaryotlar: Protista, Mantarlar ve Bitkiler",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Mantarlar neden bitkilerden farklı bir âleme ayrılmıştır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["mantar", "bitki", "fark"],
+              "explanation": "Mantarlar fotosentez yapamaz, kitin hücre duvarı var ve hücre dışı sindirimle beslenir.",
+              "options": [
+                {"text": "Mantarlar fotosentez yapar", "correct": false},
+                {"text": "Fotosentez yapamaz, kitin hücre duvarı var ve hücre dışı sindirimle beslenir", "correct": true},
+                {"text": "Mantarlar hayvan gibidir", "correct": false},
+                {"text": "Fark yoktur", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Bitkilerin temel özelliği nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["bitki", "özellik"],
+              "explanation": "Bitkiler çok hücreli, ototrof (fotosentez yapan) ökaryotlardır. Hücre duvarları selülozdan oluşur.",
+              "options": [
+                {"text": "Heterotrof ve tek hücreli", "correct": false},
+                {"text": "Çok hücreli, ototrof, selüloz hücre duvarı", "correct": true},
+                {"text": "Çekirdeksiz", "correct": false},
+                {"text": "Hücre duvarı yok", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Simbiyotik ilişkilerden mutualizm ne demektir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["simbiyoz", "mutualizm"],
+              "explanation": "Mutualizm iki türün karşılıklı yarar sağlayarak birlikte yaşamasıdır. Liken (mantar+alg) buna örnektir.",
+              "options": [
+                {"text": "Bir canlının diğerine zarar vermesi", "correct": false},
+                {"text": "İki farklı türün karşılıklı yarar sağlayarak birlikte yaşaması", "correct": true},
+                {"text": "Bir canlının diğerinden faydalanıp zarar vermesi", "correct": false},
+                {"text": "Tek başına yaşama", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'{1} hem ototrof hem heterotrof beslenebilen (miksotrofik) bir protista örneğidir; kamçısı ve kloroplastı vardır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["protista", "öglena"],
+              "explanation": "Öglena kloroplastı sayesinde ışıkta fotosentez yapar (ototrof), karanlıkta hazır besinle beslenebilir (heterotrof).",
+              "options": [
+                {"text": "Öglena", "isBlank": true, "correct": true},
+                {"text": "Amip", "correct": false},
+                {"text": "Paramesyum", "correct": false},
+                {"text": "Plazmodyum", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Bitki gruplarını iletim dokusu ve tohum durumuna göre eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["bitki", "grup"],
+              "explanation": "Bitkiler iletim dokusu ve tohum varlığına göre gruplandırılır.",
+              "options": [
+                {"text": "Karayosunu", "pairId": 1, "correct": false},
+                {"text": "İletim dokusu yok, tohumsuz, nemli ortam", "pairId": 1, "correct": false},
+                {"text": "Eğrelti otu", "pairId": 2, "correct": false},
+                {"text": "İletim dokusu var, tohumsuz, sporla ürer", "pairId": 2, "correct": false},
+                {"text": "Açık tohumlular (çam)", "pairId": 3, "correct": false},
+                {"text": "Tohum kozalakta, meyve yok", "pairId": 3, "correct": false},
+                {"text": "Kapalı tohumlular (çiçekli)", "pairId": 4, "correct": false},
+                {"text": "Tohum meyve içinde, en gelişmiş grup", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bitkilerin evrimsel gelişim sırasını belirleyin (ilkelden gelişmişe).",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["bitki", "evrim"],
+              "explanation": "Karayosunları en ilkel karasal bitkilerdir, eğreltiler iletim dokusu kazanmış, açık tohumlular tohum, kapalı tohumlular çiçek ve meyve geliştirmiştir.",
+              "options": [
+                {"text": "Karayosunları (iletim dokusuz, tohumsuz)", "correctOrder": 1, "correct": false},
+                {"text": "Eğrelti otları (iletim dokulu, tohumsuz)", "correctOrder": 2, "correct": false},
+                {"text": "Açık tohumlular — kozalaklılar (çam, ladin)", "correctOrder": 3, "correct": false},
+                {"text": "Kapalı tohumlular — çiçekli bitkiler (en gelişmiş)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Hayvanlar Âlemi ve Biyoçeşitlilik",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Biyoçeşitlilik neden önemlidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["biyoçeşitlilik", "önem"],
+              "explanation": "Biyoçeşitlilik ekosistem dengesi, gıda güvenliği, tıbbi kaynaklar ve iklim düzenlemesi sağlar.",
+              "options": [
+                {"text": "Önemsizdir", "correct": false},
+                {"text": "Ekosistem dengesi, gıda güvenliği, tıbbi kaynaklar ve iklim düzenlemesi sağlar", "correct": true},
+                {"text": "Sadece estetik değeri vardır", "correct": false},
+                {"text": "Sadece hayvanlar için önemlidir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Türkiye'nin biyoçeşitlilik açısından zengin olmasının nedeni nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["Türkiye", "biyoçeşitlilik"],
+              "explanation": "Türkiye üç biyocoğrafik bölgenin kesişimindedir. ~12.000 bitki türü vardır, ~3.700'ü endemiktir.",
+              "options": [
+                {"text": "Küçük yüz ölçümü", "correct": false},
+                {"text": "Üç biyocoğrafik bölgenin kesişiminde olması ve iklim çeşitliliği", "correct": true},
+                {"text": "Tek bir iklim tipine sahip olması", "correct": false},
+                {"text": "Ada ülkesi olması", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Biyoçeşitliliği tehdit eden faktörlerden biri hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["biyoçeşitlilik", "tehdit"],
+              "explanation": "Habitat tahribatı, aşırı avlanma, kirlilik, iklim değişikliği ve istilacı türler başlıca tehditlerdir.",
+              "options": [
+                {"text": "Milli parklar kurulması", "correct": false},
+                {"text": "Habitat tahribatı, aşırı avlanma ve kirlilik", "correct": true},
+                {"text": "Geri dönüşüm yapılması", "correct": false},
+                {"text": "Ağaçlandırma çalışmaları", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Dünyada yalnızca belirli bir bölgede yaşayan ve başka yerde doğal olarak bulunmayan türlere {1} denir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["endemik"],
+              "explanation": "Endemik tür sadece belirli bölgede yaşar. Türkiye örnekleri: Kapadokya teresi, Toros kurbağası.",
+              "options": [
+                {"text": "endemik tür", "isBlank": true, "correct": true},
+                {"text": "istilacı tür", "correct": false},
+                {"text": "kozmopolit tür", "correct": false},
+                {"text": "göçmen tür", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Omurgalı hayvan gruplarını özelliklerine göre eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["omurgalı", "grup"],
+              "explanation": "Omurgalılar beş ana sınıfa ayrılır.",
+              "options": [
+                {"text": "Balıklar", "pairId": 1, "correct": false},
+                {"text": "Suda, solungaçla solunum, yüzgeçle hareket", "pairId": 1, "correct": false},
+                {"text": "Amfibiler (kurbağalar)", "pairId": 2, "correct": false},
+                {"text": "Larva suda, ergin karada, başkalaşım", "pairId": 2, "correct": false},
+                {"text": "Sürüngenler", "pairId": 3, "correct": false},
+                {"text": "Pullu deri, akciğer solunumu, kabuklu yumurta", "pairId": 3, "correct": false},
+                {"text": "Memeliler", "pairId": 4, "correct": false},
+                {"text": "Kıl, süt bezleri, sabit vücut sıcaklığı", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Omurgalıların evrimsel gelişim sırasını belirleyin.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["omurgalı", "evrim"],
+              "explanation": "Balıklar → amfibiler (karaya çıkış) → sürüngenler (kabuklu yumurta) → kuşlar ve memeliler şeklinde evrimleşmiştir.",
+              "options": [
+                {"text": "Balıklar (suda yaşam, solungaç solunumu)", "correctOrder": 1, "correct": false},
+                {"text": "Amfibiler (karaya geçiş, çift yaşam)", "correctOrder": 2, "correct": false},
+                {"text": "Sürüngenler (tam karasal yaşam, kabuklu yumurta)", "correctOrder": 3, "correct": false},
+                {"text": "Kuşlar ve Memeliler (sabit vücut sıcaklığı)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "İnorganik Bileşikler ve Karbonhidratlar",
+      "description": "Su, mineraller, karbonhidratlar, polisakkaritler ve yağların yapı ve görevleri (MEB 2025-2026 Tema 2.1 + 2.2 başlangıç)",
+      "order": 3,
+      "lessons": [
+        {
+          "title": "Su ve Canlılardaki Önemi",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Su hangi tür bileşiktir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["su", "bileşik"],
+              "explanation": "Su (H₂O) inorganik bir bileşiktir. Canlılarda en fazla bulunan inorganik bileşiktir.",
+              "options": [
+                {"text": "Organik bileşik", "correct": false},
+                {"text": "İnorganik bileşik", "correct": true},
+                {"text": "Protein", "correct": false},
+                {"text": "Karbonhidrat", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Bitkilerde su taşınmasında hangi mekanizma etkilidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["bitki", "su taşınma"],
+              "explanation": "Terleme-kohezyon-gerilim mekanizmasıyla ksilimde su köklerden yapraklara taşınır.",
+              "options": [
+                {"text": "Kalp gibi bir pompa", "correct": false},
+                {"text": "Terleme-kohezyon-gerilim mekanizması", "correct": true},
+                {"text": "Yerçekimi", "correct": false},
+                {"text": "Sadece difüzyon", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Yüzey gerilimi nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yüzey gerilimi", "su"],
+              "explanation": "Yüzey gerilimi, su yüzeyindeki moleküllerin kohezyon kuvvetiyle oluşan gerilimdir. Böceklerin su üstünde yürümesini sağlar.",
+              "options": [
+                {"text": "Suyun donması", "correct": false},
+                {"text": "Su yüzeyindeki moleküllerin kohezyon kuvvetiyle oluşturduğu gerilim", "correct": true},
+                {"text": "Suyun buharlaşması", "correct": false},
+                {"text": "Suyun pH değeri", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Suyun {1} özelliği sayesinde buharlaşırken çok enerji alır ve terleme ile vücut soğur.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["su", "buharlaşma"],
+              "explanation": "Yüksek buharlaşma ısısı: su buharlaşırken ortamdan çok enerji alır, böylece terleme vücudu soğutur.",
+              "options": [
+                {"text": "yüksek buharlaşma ısısı", "isBlank": true, "correct": true},
+                {"text": "yüksek özgül ısı", "correct": false},
+                {"text": "düşük viskozite", "correct": false},
+                {"text": "düşük yoğunluk", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Suyun canlılar için önemli özelliklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["su", "özellik"],
+              "explanation": "Suyun benzersiz özellikleri canlılık için vazgeçilmezdir.",
+              "options": [
+                {"text": "Yüksek özgül ısı", "pairId": 1, "correct": false},
+                {"text": "Vücut sıcaklığını dengeler, tampon görevi görür", "pairId": 1, "correct": false},
+                {"text": "Evrensel çözücü (polar yapı)", "pairId": 2, "correct": false},
+                {"text": "Birçok maddeyi çözer, metabolik reaksiyonlara ortam sağlar", "pairId": 2, "correct": false},
+                {"text": "Kohezyon", "pairId": 3, "correct": false},
+                {"text": "Su moleküllerinin birbirine tutunması (yüzey gerilimi)", "pairId": 3, "correct": false},
+                {"text": "Adhezyon", "pairId": 4, "correct": false},
+                {"text": "Su moleküllerinin yüzeylere yapışması (kılcallık)", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Suyun kimyasal reaksiyonlardaki rolünü sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["su", "reaksiyon"],
+              "explanation": "Su önce çözücü ortam oluşturur, hidrolizde bağ kırılmasına katılır, dehidrasyon sentezinde ürün olarak açığa çıkar.",
+              "options": [
+                {"text": "Çözücü ortam sağlar (reaktanları bir araya getirir)", "correctOrder": 1, "correct": false},
+                {"text": "Hidroliz: su eklenerek büyük moleküller parçalanır", "correctOrder": 2, "correct": false},
+                {"text": "Dehidrasyon sentezi: su çıkarak monomerler birleşir", "correctOrder": 3, "correct": false},
+                {"text": "Metabolizma ürünü olarak atılır (hücresel solunum → H₂O)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Mineraller",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Mineraller vücutta enerji kaynağı olarak kullanılır mı?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["mineral", "enerji"],
+              "explanation": "Mineraller enerji vermez. Düzenleyici ve yapısal görevleri vardır.",
+              "options": [
+                {"text": "Evet, temel enerji kaynağıdır", "correct": false},
+                {"text": "Hayır, enerji vermez; düzenleyici ve yapısal görevleri vardır", "correct": true},
+                {"text": "Sadece proteinlerle birlikte enerji verir", "correct": false},
+                {"text": "Sadece vitaminlerle birlikte enerji verir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Demir eksikliği hangi hastalığa yol açar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["demir", "anemi"],
+              "explanation": "Demir hemoglobinin yapı taşıdır; eksikliğinde oksijen taşıma kapasitesi düşer → anemi.",
+              "options": [
+                {"text": "Guatr", "correct": false},
+                {"text": "Anemi (kansızlık)", "correct": true},
+                {"text": "Osteoporoz", "correct": false},
+                {"text": "Diyabet", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Mineraller sindirime uğrar mı?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["mineral", "sindirim"],
+              "explanation": "Mineraller zaten en küçük yapı birimindedir, sindirime uğramadan doğrudan emilir.",
+              "options": [
+                {"text": "Evet, midede sindirilir", "correct": false},
+                {"text": "Hayır, sindirime uğramadan doğrudan emilir", "correct": true},
+                {"text": "Sadece bağırsakta sindirilir", "correct": false},
+                {"text": "Sadece proteinlerle birlikte sindirilir", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'{1} minerali tiroid hormonlarının yapımında kullanılır; eksikliğinde guatr (tiroid bezi büyümesi) görülür.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["iyot", "guatr"],
+              "explanation": "İyot tiroid hormonları (T3, T4) için gereklidir. İyot eksikliği guatra yol açar.",
+              "options": [
+                {"text": "İyot", "isBlank": true, "correct": true},
+                {"text": "Demir", "correct": false},
+                {"text": "Kalsiyum", "correct": false},
+                {"text": "Çinko", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Minerallerin canlıdaki görevlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["mineral", "görev"],
+              "explanation": "Her mineralin vücutta farklı görevleri vardır.",
+              "options": [
+                {"text": "Kalsiyum (Ca)", "pairId": 1, "correct": false},
+                {"text": "Kemik-diş yapısı, kas kasılması, kan pıhtılaşması", "pairId": 1, "correct": false},
+                {"text": "Demir (Fe)", "pairId": 2, "correct": false},
+                {"text": "Hemoglobinde O₂ taşınması, eksikliğinde anemi", "pairId": 2, "correct": false},
+                {"text": "Sodyum (Na) ve Potasyum (K)", "pairId": 3, "correct": false},
+                {"text": "Sinir iletimi, kas kasılması, ozmotik denge", "pairId": 3, "correct": false},
+                {"text": "Flor (F)", "pairId": 4, "correct": false},
+                {"text": "Diş minesini güçlendirir, çürümeye karşı korur", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Mineral eksikliği belirtilerinin ortaya çıkış sırasını belirleyin.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["mineral", "eksiklik"],
+              "explanation": "Eksiklik önce hücresel düzeyde başlar, ardından doku, organ ve sistem semptomları ortaya çıkar.",
+              "options": [
+                {"text": "Hücresel enzim aktivitesi düşer", "correctOrder": 1, "correct": false},
+                {"text": "Doku fonksiyonları bozulur (kemik zayıflaması, kas krampı)", "correctOrder": 2, "correct": false},
+                {"text": "Organ düzeyinde semptomlar belirir (guatr, anemi)", "correctOrder": 3, "correct": false},
+                {"text": "Sistemik hastalık gelişir (osteoporoz, pernisiyöz anemi)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Karbonhidratlar: Mono ve Disakkaritler",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Glikoz hangi tür karbonhidrattır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["glikoz", "monosakkarit"],
+              "explanation": "Glikoz 6 karbonlu (heksoz) bir monosakkarittir. Hücrelerin temel enerji kaynağıdır.",
+              "options": [
+                {"text": "Polisakkarit", "correct": false},
+                {"text": "Monosakkarit (heksoz)", "correct": true},
+                {"text": "Disakkarit", "correct": false},
+                {"text": "Lipid", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Laktoz intoleransı nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["laktoz", "intolerans"],
+              "explanation": "Laktaz enzimi yetersizliği nedeniyle süt şekeri sindirilemez → gaz, şişkinlik, ishal.",
+              "options": [
+                {"text": "Süt alerjisi", "correct": false},
+                {"text": "Laktaz enzimi yetersizliği nedeniyle laktozun sindirilemediği durum", "correct": true},
+                {"text": "Glikoz fazlalığı", "correct": false},
+                {"text": "Fruktoz eksikliği", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Karbonhidratların genel formülü nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["karbonhidrat", "formül"],
+              "explanation": "Karbonhidratlar C, H, O atomlarından oluşur. Genel formül: Cₙ(H₂O)ₙ. Glikoz: C₆H₁₂O₆.",
+              "options": [
+                {"text": "CₙHₙOₙ", "correct": false},
+                {"text": "Cₙ(H₂O)ₙ", "correct": true},
+                {"text": "CₙH₂ₙ", "correct": false},
+                {"text": "CₙOₙ", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'{1}, iki monomerin birleşirken bir su molekülü açığa çıkardığı reaksiyondur. Disakkarit, polipeptit ve yağ oluşumu bu yolla gerçekleşir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["dehidrasyon", "sentez"],
+              "explanation": "Dehidrasyon sentezi (yoğunlaşma) su çıkararak monomerler birleştirir. Tersi hidrolizdir.",
+              "options": [
+                {"text": "Dehidrasyon sentezi", "isBlank": true, "correct": true},
+                {"text": "Hidroliz", "correct": false},
+                {"text": "Oksidasyon", "correct": false},
+                {"text": "Fermantasyon", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Disakkaritleri bileşenleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["disakkarit"],
+              "explanation": "Disakkaritler iki monosakaritin dehidrasyon sentezi ile birleşmesinden oluşur.",
+              "options": [
+                {"text": "Maltoz (arpa şekeri)", "pairId": 1, "correct": false},
+                {"text": "Glikoz + Glikoz", "pairId": 1, "correct": false},
+                {"text": "Sükroz (sofra şekeri)", "pairId": 2, "correct": false},
+                {"text": "Glikoz + Fruktoz", "pairId": 2, "correct": false},
+                {"text": "Laktoz (süt şekeri)", "pairId": 3, "correct": false},
+                {"text": "Glikoz + Galaktoz", "pairId": 3, "correct": false},
+                {"text": "Riboz ve Deoksiriboz", "pairId": 4, "correct": false},
+                {"text": "5C'li pentozlar — RNA ve DNA'nın yapısında", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Karbonhidrat sindiriminin aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["karbonhidrat", "sindirim"],
+              "explanation": "Karbonhidrat sindirimi ağızda başlar (amilaz), midede durur (asidik pH), ince bağırsakta tamamlanır.",
+              "options": [
+                {"text": "Ağızda tükürük amilazı nişastayı parçalamaya başlar", "correctOrder": 1, "correct": false},
+                {"text": "Midede asidik ortam amilazı deaktive eder (sindirim durur)", "correctOrder": 2, "correct": false},
+                {"text": "İnce bağırsakta pankreas amilazı sindirimi tamamlar → maltoz", "correctOrder": 3, "correct": false},
+                {"text": "Maltaz, laktaz, sükraz enzimleri disakkaritleri monosakkaritlere ayırır", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Polisakkaritler",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Selülozu insanlar neden sindiremez?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["selüloz", "sindirim"],
+              "explanation": "İnsanlarda β-glikozidik bağı kıracak selülaz enzimi yoktur. Otçulların bağırsağındaki mikroplar selülaz üretir.",
+              "options": [
+                {"text": "Çok büyük olduğu için", "correct": false},
+                {"text": "β-glikozidik bağı kıracak selülaz enzimi insanda bulunmaz", "correct": true},
+                {"text": "Tatlı olmadığı için", "correct": false},
+                {"text": "Suda çözünmediği için", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Glikojen nerede depolanır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["glikojen", "depo"],
+              "explanation": "Glikojen başlıca karaciğer ve iskelet kaslarında depolanır.",
+              "options": [
+                {"text": "Kanda", "correct": false},
+                {"text": "Karaciğer ve kaslarda", "correct": true},
+                {"text": "Kemiklerde", "correct": false},
+                {"text": "Deride", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "İyot testi hangi polisakkariti belirler?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["iyot", "nişasta", "test"],
+              "explanation": "İyot çözeltisi nişastayla mor-mavi renk verir. Bu nişastanın amiloz bileşenindeki sarmal yapıdan kaynaklanır.",
+              "options": [
+                {"text": "Glikoz", "correct": false},
+                {"text": "Nişasta", "correct": true},
+                {"text": "Selüloz", "correct": false},
+                {"text": "Glikojen", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Bitki hücre duvarının yapı taşı olan {1}, β-glikoz polimerinden oluşur ve dünyadaki en bol organik bileşiktir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["selüloz", "bitki"],
+              "explanation": "Selüloz β-1,4 glikozidik bağlarla bağlanmış glikoz polimeridir. Bitki hücre duvarının temel yapısal bileşenidir.",
+              "options": [
+                {"text": "selüloz", "isBlank": true, "correct": true},
+                {"text": "nişasta", "correct": false},
+                {"text": "kitin", "correct": false},
+                {"text": "glikojen", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Polisakkaritleri türleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["polisakkarit"],
+              "explanation": "Polisakkaritler depo ve yapısal olmak üzere iki grupta incelenir.",
+              "options": [
+                {"text": "Nişasta", "pairId": 1, "correct": false},
+                {"text": "Bitkilerin depo polisakkaritidir (α-glikoz polimeri)", "pairId": 1, "correct": false},
+                {"text": "Glikojen", "pairId": 2, "correct": false},
+                {"text": "Hayvanların depo polisakkaritidir (karaciğer ve kas)", "pairId": 2, "correct": false},
+                {"text": "Selüloz", "pairId": 3, "correct": false},
+                {"text": "Bitki hücre duvarı yapısal polisakkaritidir (β-glikoz)", "pairId": 3, "correct": false},
+                {"text": "Kitin", "pairId": 4, "correct": false},
+                {"text": "Eklembacaklı dış iskeleti ve mantar hücre duvarı", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Nişasta sindiriminin ürünlerini küçülme sırasına göre dizin.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["nişasta", "sindirim"],
+              "explanation": "Nişasta → dekstrin → maltoz → glikoz şeklinde parçalanır.",
+              "options": [
+                {"text": "Nişasta (binlerce glikoz birimi — polimer)", "correctOrder": 1, "correct": false},
+                {"text": "Dekstrin (kısa glikoz zincirleri — oligomer)", "correctOrder": 2, "correct": false},
+                {"text": "Maltoz (2 glikoz birimi — disakkarit)", "correctOrder": 3, "correct": false},
+                {"text": "Glikoz (tek birim — monosakkarit, kana emilir)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Yağlar (Lipitler)",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Doymuş ve doymamış yağ arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["doymuş", "doymamış", "yağ"],
+              "explanation": "Doymuş yağda çift bağ yok (katı/hayvansal); doymamışta çift bağ var (sıvı/bitkisel).",
+              "options": [
+                {"text": "Fark yoktur", "correct": false},
+                {"text": "Doymuş yağda çift bağ yok (katı); doymamışta çift bağ var (sıvı)", "correct": true},
+                {"text": "Doymamış yağ daha zararlıdır", "correct": false},
+                {"text": "Doymuş yağ bitkiseldir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kolesterol vücutta neden gereklidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kolesterol"],
+              "explanation": "Kolesterol hücre zarı düzenleme, steroid hormon ve D vitamini sentezi, safra tuzu yapımı için gereklidir.",
+              "options": [
+                {"text": "Hiç gerekli değildir", "correct": false},
+                {"text": "Hücre zarı düzenleme, hormon ve D vitamini sentezi, safra tuzu yapımı", "correct": true},
+                {"text": "Sadece enerji için gereklidir", "correct": false},
+                {"text": "Sadece kemikler için gereklidir", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Trans yağ neden zararlıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["trans yağ", "sağlık"],
+              "explanation": "Trans yağlar LDL (kötü kolesterol) artırır, HDL azaltır, kalp-damar hastalığı riski yükseltir.",
+              "options": [
+                {"text": "Zararsızdır", "correct": false},
+                {"text": "LDL artırır, HDL azaltır, kalp-damar hastalığı riski artırır", "correct": true},
+                {"text": "Sindirim sistemine iyi gelir", "correct": false},
+                {"text": "Doğal olarak bol bulunur", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'{1}, gliserol + 2 yağ asidi + fosfat grubundan oluşan amfipatik bir moleküldür ve hücre zarının temel bileşenidir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["fosfolipit", "hücre zarı"],
+              "explanation": "Fosfolipitler polar baş (hidrofilik) ve apolar kuyruk (hidrofobik) yapısıyla hücre zarında çift tabaka oluşturur.",
+              "options": [
+                {"text": "Fosfolipit", "isBlank": true, "correct": true},
+                {"text": "Trigliserit", "correct": false},
+                {"text": "Kolesterol", "correct": false},
+                {"text": "Glikolipit", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Yağ türlerini görevleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["yağ", "tür"],
+              "explanation": "Lipitler farklı türlere ayrılır ve her birinin kendine özgü görevleri vardır.",
+              "options": [
+                {"text": "Trigliserit (nötr yağ)", "pairId": 1, "correct": false},
+                {"text": "Enerji deposu, yalıtım (1g yağ = 9,3 kkal)", "pairId": 1, "correct": false},
+                {"text": "Fosfolipit", "pairId": 2, "correct": false},
+                {"text": "Hücre zarının çift tabakalı yapısı", "pairId": 2, "correct": false},
+                {"text": "Steroid (kolesterol)", "pairId": 3, "correct": false},
+                {"text": "Hormon yapımı (östrojen, testosteron, kortizol)", "pairId": 3, "correct": false},
+                {"text": "Balmumu (vaks)", "pairId": 4, "correct": false},
+                {"text": "Su geçirmez koruyucu tabaka (kuş tüyü, yaprak)", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Yağ sindiriminin aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["yağ", "sindirim"],
+              "explanation": "Yağlar ince bağırsakta safra ile emülsifiye edilir, lipaz ile yağ asidi + gliserole parçalanır, bağırsaktan emilir.",
+              "options": [
+                {"text": "Safra tuzları yağı küçük damlacıklara ayırır (emülsiyon)", "correctOrder": 1, "correct": false},
+                {"text": "Pankreas lipazı trigliseritleri parçalar", "correctOrder": 2, "correct": false},
+                {"text": "Yağ asitleri + gliserol oluşur", "correctOrder": 3, "correct": false},
+                {"text": "İnce bağırsaktan emilir, şilomikron olarak lenfe geçer", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Proteinler, Nükleik Asitler ve Enzimler",
+      "description": "Proteinlerin yapı ve görevleri, enzimler, DNA, RNA, ATP ve vitaminler (MEB 2025-2026 Tema 2.2 devam)",
+      "order": 4,
+      "lessons": [
+        {
+          "title": "Proteinlerin Yapısı ve Görevleri",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Peptit bağı nasıl oluşur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["peptit bağı"],
+              "explanation": "Bir amino asidin karboksil grubuyla diğerinin amino grubu dehidrasyon sentezi ile birleşir.",
+              "options": [
+                {"text": "İyonik bağla", "correct": false},
+                {"text": "Amino grubunun karboksil grubuyla dehidrasyon sentezi ile birleşmesiyle", "correct": true},
+                {"text": "Glikozidik bağla", "correct": false},
+                {"text": "Ester bağıyla", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Denatürasyon ne demektir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["denatürasyon", "protein"],
+              "explanation": "Proteinin 3B yapısının bozulup işlevini kaybetmesidir. Amino asit dizilimi (birincil yapı) bozulmaz.",
+              "options": [
+                {"text": "Proteinin sentezlenmesi", "correct": false},
+                {"text": "Proteinin 3B yapısının bozulup işlevini kaybetmesi", "correct": true},
+                {"text": "Protein sindirimi", "correct": false},
+                {"text": "Amino asitlerin birleşmesi", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Esansiyel amino asit ne demektir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["amino asit", "esansiyel"],
+              "explanation": "Vücudun üretemediği, besinlerle alınması gereken amino asitlerdir. İnsanda 8 tanedir.",
+              "options": [
+                {"text": "Vücutta bol bulunan amino asitler", "correct": false},
+                {"text": "Vücudun üretemediği, besinlerle alınması gereken amino asitler", "correct": true},
+                {"text": "Zararlı amino asitler", "correct": false},
+                {"text": "Sadece bitkilerde bulunan amino asitler", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Her amino asitte ortak olarak amino grubu (-NH₂), karboksil grubu (-COOH), hidrojen ve merkez karbon bulunur; farklılık {1} adı verilen yan zincirden kaynaklanır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["amino asit", "R grubu"],
+              "explanation": "20 farklı amino asit R grubu (yan zincir) ile birbirinden ayrılır. R grubu amino asidin kimyasal özelliğini belirler.",
+              "options": [
+                {"text": "R grubu", "isBlank": true, "correct": true},
+                {"text": "peptit bağı", "correct": false},
+                {"text": "amino grubu", "correct": false},
+                {"text": "karboksil grubu", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Proteinlerin vücuttaki görevlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["protein", "görev"],
+              "explanation": "Proteinler canlılarda en çeşitli görevlere sahip organik bileşiklerdir.",
+              "options": [
+                {"text": "Yapısal", "pairId": 1, "correct": false},
+                {"text": "Keratin (saç, tırnak), kolajen (deri, tendon)", "pairId": 1, "correct": false},
+                {"text": "Enzimatik", "pairId": 2, "correct": false},
+                {"text": "Biyolojik katalizör → metabolik reaksiyonları hızlandırır", "pairId": 2, "correct": false},
+                {"text": "Taşıyıcı", "pairId": 3, "correct": false},
+                {"text": "Hemoglobin (O₂ taşır), albümin (yağ asidi taşır)", "pairId": 3, "correct": false},
+                {"text": "Savunma", "pairId": 4, "correct": false},
+                {"text": "Antikorlar (immünoglobulinler) → bağışıklık sistemi", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Protein yapı düzeylerini basitten karmaşığa sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["protein", "yapı"],
+              "explanation": "Birincil → ikincil → üçüncül → dördüncül yapı şeklinde karmaşıklık artar.",
+              "options": [
+                {"text": "Birincil: amino asit dizilim sırası (peptit bağları)", "correctOrder": 1, "correct": false},
+                {"text": "İkincil: α-heliks ve β-tabaka (H bağları)", "correctOrder": 2, "correct": false},
+                {"text": "Üçüncül: 3B katlanmış yapı (fonksiyonel şekil)", "correctOrder": 3, "correct": false},
+                {"text": "Dördüncül: birden fazla polipeptit birleşmesi (hemoglobin gibi)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Enzimler",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Enzim aktivitesini etkileyen faktörler nelerdir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["enzim", "faktör"],
+              "explanation": "Sıcaklık, pH, substrat konsantrasyonu ve inhibitörler enzim aktivitesini etkiler.",
+              "options": [
+                {"text": "Sadece sıcaklık", "correct": false},
+                {"text": "Sıcaklık, pH, substrat konsantrasyonu ve inhibitörler", "correct": true},
+                {"text": "Sadece ışık", "correct": false},
+                {"text": "Sadece basınç", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kompetitif (yarışmalı) inhibisyon nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["inhibisyon", "enzim"],
+              "explanation": "Substrata benzer molekül enzimin aktif bölgesine bağlanarak substratı engeller. Substrat artarsa etki azalır.",
+              "options": [
+                {"text": "Enzimin tamamen yok edilmesi", "correct": false},
+                {"text": "Substrata benzer molekülün aktif bölgeye bağlanıp substratı engellemesi", "correct": true},
+                {"text": "Enzimin hızlanması", "correct": false},
+                {"text": "Substratın artması", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Enzim adları genellikle neyle biter?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["enzim", "adlandırma"],
+              "explanation": "Enzimler '-az' son ekiyle adlandırılır: lipaz, amilaz, proteaz, laktaz gibi.",
+              "options": [
+                {"text": "-oz", "correct": false},
+                {"text": "-az (-ase)", "correct": true},
+                {"text": "-in", "correct": false},
+                {"text": "-ol", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Enzimler reaksiyonun başlaması için gereken enerji eşiğini düşürür; buna {1} denir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["enzim", "aktivasyon enerjisi"],
+              "explanation": "Aktivasyon enerjisi, reaksiyonun başlaması için aşılması gereken enerji eşiğidir. Enzimler bu eşiği düşürerek reaksiyonu hızlandırır.",
+              "options": [
+                {"text": "aktivasyon enerjisi", "isBlank": true, "correct": true},
+                {"text": "kinetik enerji", "correct": false},
+                {"text": "potansiyel enerji", "correct": false},
+                {"text": "serbest enerji", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Enzim-substrat etkileşim kavramlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["enzim", "substrat"],
+              "explanation": "Enzimler substratlarıyla özel bölgelerden etkileşir.",
+              "options": [
+                {"text": "Aktif bölge", "pairId": 1, "correct": false},
+                {"text": "Enzimin substratla bağlandığı özel bölge", "pairId": 1, "correct": false},
+                {"text": "Substrat", "pairId": 2, "correct": false},
+                {"text": "Enzimin etki ettiği molekül (reaktan)", "pairId": 2, "correct": false},
+                {"text": "Anahtar-kilit modeli", "pairId": 3, "correct": false},
+                {"text": "Enzim ve substratın şekilsel uyumu", "pairId": 3, "correct": false},
+                {"text": "Koenzim", "pairId": 4, "correct": false},
+                {"text": "Enzimin çalışması için gereken organik yardımcı (vitamin türevi)", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Enzim katalizli reaksiyonun aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["enzim", "reaksiyon"],
+              "explanation": "Enzim substratla birleşir, kompleks oluşur, reaksiyon gerçekleşir, ürünler ayrılır, enzim tekrar kullanılır.",
+              "options": [
+                {"text": "Substrat enzimin aktif bölgesine bağlanır", "correctOrder": 1, "correct": false},
+                {"text": "Enzim-substrat kompleksi oluşur", "correctOrder": 2, "correct": false},
+                {"text": "Reaksiyon gerçekleşir → ürün(ler) oluşur", "correctOrder": 3, "correct": false},
+                {"text": "Ürünler ayrılır, enzim değişmeden geri kalır (tekrar kullanılır)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Nükleik Asitler: DNA",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "DNA'nın görevi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["DNA", "görev"],
+              "explanation": "DNA kalıtsal bilgiyi taşır, protein sentezinde kalıp görevi görür, replikasyonla bilgiyi aktarır.",
+              "options": [
+                {"text": "Enerji üretmek", "correct": false},
+                {"text": "Kalıtsal bilgiyi taşımak ve aktarmak (genetik şifre)", "correct": true},
+                {"text": "Savunma görevi", "correct": false},
+                {"text": "Besin depolamak", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Chargaff kuralına göre %30 Adenin varsa % kaç Sitozin vardır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["Chargaff", "DNA"],
+              "explanation": "A=T=%30, toplam %60. Kalan %40 → G=C=%20 her biri.",
+              "options": [
+                {"text": "%30", "correct": false},
+                {"text": "%20", "correct": true},
+                {"text": "%25", "correct": false},
+                {"text": "%10", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "DNA replikasyonu ne demektir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["replikasyon", "DNA"],
+              "explanation": "Hücre bölünmesinden önce DNA kendini eşler. Yarı korunumlu: her yeni DNA bir eski, bir yeni zincir içerir.",
+              "options": [
+                {"text": "DNA'nın protein üretmesi", "correct": false},
+                {"text": "DNA'nın hücre bölünmesinden önce kendini eşlemesi (yarı korunumlu)", "correct": true},
+                {"text": "DNA'nın RNA'ya dönüşmesi", "correct": false},
+                {"text": "DNA'nın parçalanması", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'DNA nükleotidi üç bileşenden oluşur: fosfat grubu, {1} adlı 5 karbonlu şeker ve azotlu baz.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["DNA", "nükleotid"],
+              "explanation": "DNA'daki şeker deoksiriboz, RNA'daki ise ribozdur. İsimleri de bu şekerlerden gelir.",
+              "options": [
+                {"text": "deoksiriboz", "isBlank": true, "correct": true},
+                {"text": "riboz", "correct": false},
+                {"text": "glikoz", "correct": false},
+                {"text": "fruktoz", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "DNA ve RNA arasındaki farkları eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["DNA", "RNA", "fark"],
+              "explanation": "DNA ve RNA önemli yapısal farklılıklara sahiptir.",
+              "options": [
+                {"text": "Şeker farkı", "pairId": 1, "correct": false},
+                {"text": "DNA: deoksiriboz; RNA: riboz", "pairId": 1, "correct": false},
+                {"text": "Zincir yapısı", "pairId": 2, "correct": false},
+                {"text": "DNA: çift zincir; RNA: tek zincir", "pairId": 2, "correct": false},
+                {"text": "Azotlu baz farkı", "pairId": 3, "correct": false},
+                {"text": "DNA: Timin (T); RNA: Urasil (U)", "pairId": 3, "correct": false},
+                {"text": "Görev farkı", "pairId": 4, "correct": false},
+                {"text": "DNA: bilgi depolar; RNA: protein sentezinde aracı", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "DNA replikasyonunun aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["replikasyon", "aşama"],
+              "explanation": "Helikaz zincirleri ayırır, primaz başlatır, DNA polimeraz sentezler, ligaz parçaları birleştirir.",
+              "options": [
+                {"text": "Helikaz enzimi çift zinciri ayırır (replikasyon çatalı)", "correctOrder": 1, "correct": false},
+                {"text": "Primaz kısa RNA primer sentezler", "correctOrder": 2, "correct": false},
+                {"text": "DNA polimeraz yeni nükleotitleri ekler (5'→3')", "correctOrder": 3, "correct": false},
+                {"text": "DNA ligaz Okazaki parçalarını birleştirir, primer çıkarılır", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "RNA, ATP ve Nükleotidler",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Santral dogma nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["santral dogma"],
+              "explanation": "Genetik bilgi akışı: DNA → (transkripsiyon) → mRNA → (translasyon) → Protein.",
+              "options": [
+                {"text": "DNA'nın yapısı", "correct": false},
+                {"text": "DNA → RNA → Protein şeklinde genetik bilgi akışı", "correct": true},
+                {"text": "Hücre bölünmesi", "correct": false},
+                {"text": "Mutasyon türü", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "ATP nasıl üretilir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ATP", "üretim"],
+              "explanation": "ATP başlıca hücresel solunum (mitokondri) ve fotosentez (kloroplast) ile üretilir.",
+              "options": [
+                {"text": "Sadece besinlerden doğrudan alınır", "correct": false},
+                {"text": "Başlıca hücresel solunum (mitokondri) ve fotosentez (kloroplast) ile", "correct": true},
+                {"text": "Sadece kaslardan", "correct": false},
+                {"text": "Sadece kanda", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Transkripsiyon ve translasyon arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["transkripsiyon", "translasyon"],
+              "explanation": "Transkripsiyon: DNA → mRNA (çekirdekte). Translasyon: mRNA → Protein (ribozomda).",
+              "options": [
+                {"text": "Aralarında fark yoktur", "correct": false},
+                {"text": "Transkripsiyon: DNA → mRNA (çekirdekte); Translasyon: mRNA → Protein (ribozomda)", "correct": true},
+                {"text": "Her ikisi de çekirdekte gerçekleşir", "correct": false},
+                {"text": "Translasyon önce gerçekleşir", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'ATP (Adenozin Trifosfat) son fosfat bağı koptuğunda enerji açığa çıkar ve {1} + Pi oluşur.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["ATP", "ADP"],
+              "explanation": "ATP → ADP + Pi + Enerji. ADP (Adenozin Difosfat) 2 fosfatlı, ATP 3 fosfatlıdır.",
+              "options": [
+                {"text": "ADP", "isBlank": true, "correct": true},
+                {"text": "AMP", "correct": false},
+                {"text": "GDP", "correct": false},
+                {"text": "NAD", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "RNA türlerini görevleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["RNA", "tür"],
+              "explanation": "Protein sentezinde üç temel RNA türü görev alır.",
+              "options": [
+                {"text": "mRNA (mesajcı)", "pairId": 1, "correct": false},
+                {"text": "DNA'daki bilgiyi kopyalayıp ribozoma taşır", "pairId": 1, "correct": false},
+                {"text": "tRNA (taşıyıcı)", "pairId": 2, "correct": false},
+                {"text": "Amino asitleri ribozoma taşır (antikodon)", "pairId": 2, "correct": false},
+                {"text": "rRNA (ribozomal)", "pairId": 3, "correct": false},
+                {"text": "Ribozomun yapısına katılır", "pairId": 3, "correct": false},
+                {"text": "Ribozim", "pairId": 4, "correct": false},
+                {"text": "Katalitik aktiviteye sahip RNA (enzim gibi)", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Protein sentezinin aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["protein sentezi"],
+              "explanation": "DNA → mRNA (transkripsiyon), mRNA çekirdekten çıkıp ribozoma gider, tRNA amino asitleri getirir, polipeptit oluşur.",
+              "options": [
+                {"text": "Transkripsiyon: DNA kalıba göre mRNA sentezi (çekirdekte)", "correctOrder": 1, "correct": false},
+                {"text": "mRNA çekirdek porundan çıkıp ribozoma bağlanır", "correctOrder": 2, "correct": false},
+                {"text": "Translasyon: tRNA amino asitleri getirir, kodon-antikodon eşleşmesi", "correctOrder": 3, "correct": false},
+                {"text": "Polipeptit zinciri oluşur, katlanarak fonksiyonel protein olur", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Vitaminler",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "C vitamini eksikliğinde hangi hastalık görülür?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["C vitamini", "skorbüt"],
+              "explanation": "C vitamini eksikliği skorbüt hastalığına yol açar: diş eti kanaması, yara iyileşmesinde gecikme.",
+              "options": [
+                {"text": "Raşitizm", "correct": false},
+                {"text": "Skorbüt (diş eti kanaması, yara iyileşmesinde gecikme)", "correct": true},
+                {"text": "Gece körlüğü", "correct": false},
+                {"text": "Anemi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "D vitamini vücutta nasıl sentezlenir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["D vitamini"],
+              "explanation": "Güneş ışığının (UV-B) etkisiyle derideki kolesterol türevinden sentezlenir.",
+              "options": [
+                {"text": "Midede sentezlenir", "correct": false},
+                {"text": "Güneş ışığı (UV-B) etkisiyle deride kolesterol türevinden", "correct": true},
+                {"text": "Karaciğerde sentezlenir", "correct": false},
+                {"text": "Vücutta sentezlenemez", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Vitaminler enerji kaynağı mıdır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["vitamin", "enerji"],
+              "explanation": "Vitaminler enerji vermez; düzenleyici ve koruyucu görevleri vardır.",
+              "options": [
+                {"text": "Evet, temel enerji kaynağıdır", "correct": false},
+                {"text": "Hayır, enerji vermez; düzenleyici ve koruyucu görevleri vardır", "correct": true},
+                {"text": "Sadece yağda çözünenler enerji verir", "correct": false},
+                {"text": "Sadece B vitamini enerji verir", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'{1} vitaminleri (A, D, E, K) karaciğer ve yağ dokusunda depolanır; aşırı alımda hipervitaminoz riski vardır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["vitamin", "çözünürlük"],
+              "explanation": "Yağda çözünür vitaminler (A, D, E, K) depolanabilir. Suda çözünür olanlar (B, C) fazlası idrarla atılır.",
+              "options": [
+                {"text": "Yağda çözünür", "isBlank": true, "correct": true},
+                {"text": "Suda çözünür", "correct": false},
+                {"text": "Mineral", "correct": false},
+                {"text": "Antioksidan", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Vitamin eksikliklerini hastalıklarla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["vitamin", "eksiklik"],
+              "explanation": "Her vitaminin eksikliği farklı sağlık sorunlarına yol açar.",
+              "options": [
+                {"text": "A vitamini eksikliği", "pairId": 1, "correct": false},
+                {"text": "Gece körlüğü (niktalopi), kuru göz", "pairId": 1, "correct": false},
+                {"text": "D vitamini eksikliği", "pairId": 2, "correct": false},
+                {"text": "Raşitizm (çocuk), osteomalazi (yetişkin)", "pairId": 2, "correct": false},
+                {"text": "K vitamini eksikliği", "pairId": 3, "correct": false},
+                {"text": "Kan pıhtılaşma bozukluğu", "pairId": 3, "correct": false},
+                {"text": "B₁₂ vitamini eksikliği", "pairId": 4, "correct": false},
+                {"text": "Megaloblastik anemi, sinir sistemi bozuklukları", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bir vitaminin besinle alınıp kullanılma sürecini sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["vitamin", "emilim"],
+              "explanation": "Vitaminler sindirime uğramadan emilir, kana geçer, hedef dokuya ulaşır ve koenzim olarak görev yapar.",
+              "options": [
+                {"text": "Besinle alınır (sindirime uğramadan)", "correctOrder": 1, "correct": false},
+                {"text": "İnce bağırsaktan kana emilir", "correctOrder": 2, "correct": false},
+                {"text": "Kan yoluyla hedef dokuya taşınır", "correctOrder": 3, "correct": false},
+                {"text": "Koenzim olarak enzim aktivasyonunda görev alır", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hücrenin Yapısı ve Organelleri",
+      "description": "Prokaryot ve ökaryot hücre, hücre zarı, sitoplazma, organeller ve çekirdek (MEB 2025-2026 Tema 2.3 bölüm 1)",
+      "order": 5,
+      "lessons": [
+        {
+          "title": "Prokaryot ve Ökaryot Hücre",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Hücre teorisinin temel ilkeleri nelerdir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["hücre teorisi"],
+              "explanation": "Tüm canlılar hücreden oluşur, hücre temel birimdir, her hücre önceki hücreden gelir.",
+              "options": [
+                {"text": "Sadece hayvanlar hücreden oluşur", "correct": false},
+                {"text": "Tüm canlılar hücreden oluşur, hücre temel birimdir, hücre hücreden gelir", "correct": true},
+                {"text": "Hücreler kendiliğinden oluşur", "correct": false},
+                {"text": "Sadece bitkiler hücreden oluşur", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Ökaryot hücrelerin prokaryotlardan evrimleştiğini açıklayan teori hangisidir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["endosimbiyoz"],
+              "explanation": "Endosimbiyoz teorisi: mitokondri ve kloroplast ata hücre tarafından yutulan prokaryotlardan evrimleşmiştir.",
+              "options": [
+                {"text": "Hücre teorisi", "correct": false},
+                {"text": "Endosimbiyoz teorisi", "correct": true},
+                {"text": "Evrim teorisi", "correct": false},
+                {"text": "Spontan oluş teorisi", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bitki ve hayvan hücresinin ortak özelliği hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["bitki", "hayvan", "hücre"],
+              "explanation": "Her ikisi de ökaryot olduğundan zarla çevrili çekirdek ve organellere sahiptir.",
+              "options": [
+                {"text": "Kloroplast", "correct": false},
+                {"text": "Zarla çevrili çekirdek ve organeller (mitokondri, ER, golgi, ribozom)", "correct": true},
+                {"text": "Hücre duvarı", "correct": false},
+                {"text": "Sentrozom", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'{1}, bakterinin ana kromozomundan bağımsız, küçük dairesel DNA'dır. Antibiyotik direnci gibi ekstra genler taşır ve gen mühendisliğinde vektör olarak kullanılır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["plazmid", "bakteri"],
+              "explanation": "Plazmid bağımsız, küçük dairesel DNA molekülüdür. Konjugasyonla aktarılabilir.",
+              "options": [
+                {"text": "Plazmid", "isBlank": true, "correct": true},
+                {"text": "Kromozom", "correct": false},
+                {"text": "Ribozom", "correct": false},
+                {"text": "Mezozom", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Prokaryot ve ökaryot hücre farklarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["prokaryot", "ökaryot"],
+              "explanation": "İki temel hücre tipi arasında önemli yapısal farklar vardır.",
+              "options": [
+                {"text": "Çekirdek", "pairId": 1, "correct": false},
+                {"text": "Prokaryot: nükleoid (zarsız); Ökaryot: zarla çevrili", "pairId": 1, "correct": false},
+                {"text": "Organeller", "pairId": 2, "correct": false},
+                {"text": "Prokaryot: zarla çevrili organel yok; Ökaryot: var", "pairId": 2, "correct": false},
+                {"text": "DNA yapısı", "pairId": 3, "correct": false},
+                {"text": "Prokaryot: dairesel, histonsuz; Ökaryot: lineer, histonlu", "pairId": 3, "correct": false},
+                {"text": "Ribozom", "pairId": 4, "correct": false},
+                {"text": "Prokaryot: 70S; Ökaryot: 80S", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Endosimbiyoz teorisinin kanıtlarını güçlüden zayıfa sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["endosimbiyoz", "kanıt"],
+              "explanation": "Kendi DNA'ları (dairesel), çift zarları, 70S ribozomları ve bağımsız bölünmeleri en güçlü kanıtlardır.",
+              "options": [
+                {"text": "Mitokondri ve kloroplastın kendi dairesel DNA'sı var (prokaryot gibi)", "correctOrder": 1, "correct": false},
+                {"text": "Çift zar yapısı (iç zar eski prokaryotun zarı)", "correctOrder": 2, "correct": false},
+                {"text": "70S ribozomları var (prokaryot tipi, hücreninkinden farklı)", "correctOrder": 3, "correct": false},
+                {"text": "İkiye bölünerek çoğalır (bakteriler gibi, hücreden bağımsız)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Hücre Zarı",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Hücre zarının en önemli görevi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["hücre zarı", "görev"],
+              "explanation": "Hücre zarı seçici geçirgendir: bazı maddeleri geçirirken bazılarını geçirmez.",
+              "options": [
+                {"text": "Fotosentez yapmak", "correct": false},
+                {"text": "Seçici geçirgenlik ile madde giriş-çıkışını kontrol etmek", "correct": true},
+                {"text": "Enerji üretmek", "correct": false},
+                {"text": "DNA depolamak", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Hücre duvarı ile hücre zarı arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["hücre duvarı", "hücre zarı"],
+              "explanation": "Zar tüm hücrelerde var (esnek, seçici); duvar bitkide selüloz, mantarda kitin (sert, koruyucu).",
+              "options": [
+                {"text": "Aynı şeydir", "correct": false},
+                {"text": "Zar tüm hücrelerde var (esnek); duvar bitkide selüloz, mantarda kitin (sert)", "correct": true},
+                {"text": "Duvar tüm hücrelerde bulunur", "correct": false},
+                {"text": "Zar sert yapıdır", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Akıcı mozaik model ismini nereden alır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["akıcı mozaik"],
+              "explanation": "Bileşenlerin hareket edebilmesi (akıcı) ve farklı parçalardan oluşması (mozaik).",
+              "options": [
+                {"text": "Zarın renginden", "correct": false},
+                {"text": "Bileşenlerin hareket edebilmesi (akıcı) ve farklı parçalardan oluşması (mozaik)", "correct": true},
+                {"text": "Zarın şeklinden", "correct": false},
+                {"text": "Buluş yılından", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'{1}, hücre zarının dış yüzeyindeki glikoprotein ve glikolipitlerden oluşan karbonhidrat tabakadır; hücre tanıma ve korumada görev alır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["glikokaliks"],
+              "explanation": "Glikokaliks hücre tanıma (kan grubu), koruma, yapışma ve sinyal alımında görev alır.",
+              "options": [
+                {"text": "Glikokaliks", "isBlank": true, "correct": true},
+                {"text": "Fosfolipit", "correct": false},
+                {"text": "Kolesterol", "correct": false},
+                {"text": "Integral protein", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hücre zarının yapısını bileşenleriyle eşleştirin (Akıcı Mozaik Model).",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["hücre zarı", "yapı"],
+              "explanation": "Singer ve Nicolson'ın (1972) modeli hücre zarının yapısını açıklar.",
+              "options": [
+                {"text": "Fosfolipit çift tabaka", "pairId": 1, "correct": false},
+                {"text": "Zarın temel iskeleti: hidrofilik baş dışa, hidrofobik kuyruk içe", "pairId": 1, "correct": false},
+                {"text": "İntegral proteinler", "pairId": 2, "correct": false},
+                {"text": "Zarı baştan başa geçer → kanal, taşıyıcı, reseptör", "pairId": 2, "correct": false},
+                {"text": "Periferal proteinler", "pairId": 3, "correct": false},
+                {"text": "Zarın yüzeyine tutunmuş → sinyal iletimi, yapısal destek", "pairId": 3, "correct": false},
+                {"text": "Kolesterol", "pairId": 4, "correct": false},
+                {"text": "Hayvan hücresinde zarın akışkanlığını düzenler", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Zardan geçiş kolaylığını büyükten küçüğe sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["hücre zarı", "geçirgenlik"],
+              "explanation": "Küçük apolar moleküller en kolay, büyük polar moleküller en zor geçer.",
+              "options": [
+                {"text": "Küçük apolar moleküller (O₂, CO₂) — doğrudan geçer", "correctOrder": 1, "correct": false},
+                {"text": "Küçük polar moleküller (su, etanol) — kısmen/aquaporinle", "correctOrder": 2, "correct": false},
+                {"text": "İyonlar (Na⁺, K⁺, Cl⁻) — kanal/taşıyıcı protein gerekir", "correctOrder": 3, "correct": false},
+                {"text": "Büyük polar moleküller (glikoz, protein) — taşıyıcı/vezikül gerekir", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Sitoplazma ve Enerji Organelleri",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Mitokondri ne iş yapar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["mitokondri"],
+              "explanation": "Mitokondri hücresel solunum ile ATP üretir. 'Hücrenin enerji santrali' olarak bilinir.",
+              "options": [
+                {"text": "Fotosentez yapar", "correct": false},
+                {"text": "Hücresel solunum ile ATP üretir (hücrenin enerji santrali)", "correct": true},
+                {"text": "Protein depolar", "correct": false},
+                {"text": "DNA sentezler", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kloroplast ne iş yapar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["kloroplast"],
+              "explanation": "Kloroplast fotosentezle ışık enerjisini glikoza dönüştürür. Sadece bitki ve alg hücrelerinde bulunur.",
+              "options": [
+                {"text": "Hücresel solunum yapar", "correct": false},
+                {"text": "Fotosentez yaparak ışık enerjisini glikoza dönüştürür", "correct": true},
+                {"text": "Protein üretir", "correct": false},
+                {"text": "Sadece hayvan hücresinde bulunur", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Hücresel solunum denklemi hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["hücresel solunum", "denklem"],
+              "explanation": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + 36-38 ATP.",
+              "options": [
+                {"text": "CO₂ + H₂O → C₆H₁₂O₆ + O₂", "correct": false},
+                {"text": "C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + ATP", "correct": true},
+                {"text": "H₂O → H₂ + O₂", "correct": false},
+                {"text": "N₂ + H₂ → NH₃", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'{1}, protein filamentlerden (mikrotübül, mikrofilament, ara filament) oluşan ağdır; hücrenin şeklini, organel konumunu ve hücre içi taşımayı kontrol eder.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["hücre iskeleti"],
+              "explanation": "Hücre iskeleti (sitoskeleton) hücre şeklini, organel taşınmasını, hücre hareketini ve bölünmeyi kontrol eder.",
+              "options": [
+                {"text": "Hücre iskeleti (sitoskeleton)", "isBlank": true, "correct": true},
+                {"text": "Hücre zarı", "correct": false},
+                {"text": "Endoplazmik retikulum", "correct": false},
+                {"text": "Golgi aygıtı", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Mitokondri ve kloroplastın ortak özelliklerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["mitokondri", "kloroplast"],
+              "explanation": "Bu ortak özellikler endosimbiyoz teorisini destekler.",
+              "options": [
+                {"text": "Çift zar yapısı", "pairId": 1, "correct": false},
+                {"text": "Dış zar düz, iç zar kıvrımlı (krista / tilakoid)", "pairId": 1, "correct": false},
+                {"text": "Kendi DNA'ları", "pairId": 2, "correct": false},
+                {"text": "Dairesel DNA (prokaryotlardaki gibi)", "pairId": 2, "correct": false},
+                {"text": "Kendi ribozomları", "pairId": 3, "correct": false},
+                {"text": "70S ribozom (prokaryot tipi)", "pairId": 3, "correct": false},
+                {"text": "Bağımsız çoğalma", "pairId": 4, "correct": false},
+                {"text": "İkiye bölünerek çoğalır (bakteriler gibi)", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hücresel solunumun aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["hücresel solunum", "aşama"],
+              "explanation": "Glikoliz (sitoplazma) → pirüvat oksidasyonu → Krebs (matriks) → oksidatif fosforilasyon (iç zar).",
+              "options": [
+                {"text": "Glikoliz: glikoz → 2 pirüvat (sitoplazmada, 2 ATP)", "correctOrder": 1, "correct": false},
+                {"text": "Pirüvat oksidasyonu → Asetil-CoA (mitokondri matriksinde)", "correctOrder": 2, "correct": false},
+                {"text": "Krebs döngüsü: CO₂ çıkar, NADH/FADH₂ üretilir", "correctOrder": 3, "correct": false},
+                {"text": "Oksidatif fosforilasyon: ETS + kemiosmoz → 34 ATP (iç zar)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Zarla Çevrili Organeller",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Golgi aygıtının görevi nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["golgi", "organel"],
+              "explanation": "Golgi proteinleri/lipitleri işler, paketler ve hedeflerine gönderir. 'Hücrenin posta ofisi.'",
+              "options": [
+                {"text": "DNA sentezler", "correct": false},
+                {"text": "Protein ve lipitleri işler, paketler ve hedeflerine gönderir", "correct": true},
+                {"text": "Fotosentez yapar", "correct": false},
+                {"text": "Hücresel solunum yapar", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Lizozom ne iş yapar?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["lizozom"],
+              "explanation": "Lizozomlar hücre içi sindirim, hasarlı organellerin geri dönüşümü ve apoptoz görevlerini yapar.",
+              "options": [
+                {"text": "Enerji üretir", "correct": false},
+                {"text": "Hücre içi sindirim, hasarlı organellerin geri dönüşümü ve apoptoz", "correct": true},
+                {"text": "Protein sentezler", "correct": false},
+                {"text": "Fotosentez yapar", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bitki hücresinde büyük merkezi kofulun görevi nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["koful", "bitki"],
+              "explanation": "Su ve madde depolama, turgor basıncı sağlama, atık depolama görevlerini üstlenir.",
+              "options": [
+                {"text": "Enerji üretir", "correct": false},
+                {"text": "Su ve madde depolama, turgor basıncı sağlama, atık depolama", "correct": true},
+                {"text": "Fotosentez yapar", "correct": false},
+                {"text": "DNA depolar", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Üzerinde ribozom bulunan {1}, protein sentezi ve işlenmesi (salgı proteinleri) ile görevlidir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["ER", "organel"],
+              "explanation": "Granüllü (Rough) ER üzerinde ribozom bulunur ve salgı proteinleri sentezlenir. Granülsüz (Smooth) ER'de lipit sentezi yapılır.",
+              "options": [
+                {"text": "granüllü ER (Rough ER)", "isBlank": true, "correct": true},
+                {"text": "granülsüz ER (Smooth ER)", "correct": false},
+                {"text": "Golgi aygıtı", "correct": false},
+                {"text": "lizozom", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Organelleri görevleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["organel", "görev"],
+              "explanation": "Her organelin kendine özgü görevleri vardır.",
+              "options": [
+                {"text": "Peroksizom", "pairId": 1, "correct": false},
+                {"text": "H₂O₂ üretip katalazla parçalar, detoksifikasyon", "pairId": 1, "correct": false},
+                {"text": "Sentrozom", "pairId": 2, "correct": false},
+                {"text": "Hücre bölünmesinde iğ ipliklerini oluşturur", "pairId": 2, "correct": false},
+                {"text": "Kromoplast", "pairId": 3, "correct": false},
+                {"text": "Renkli pigment depolar (çiçek/meyve rengi)", "pairId": 3, "correct": false},
+                {"text": "Lökoplast", "pairId": 4, "correct": false},
+                {"text": "Renksiz, nişasta/yağ/protein depolar", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Salgı proteini üretiminin organel sırasını belirleyin.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["salgı", "organel"],
+              "explanation": "Granüllü ER'de sentez → Golgi'de işleme → vezikülde paketleme → ekzositozla salgı.",
+              "options": [
+                {"text": "Granüllü ER'de ribozomlarda protein sentezlenir", "correctOrder": 1, "correct": false},
+                {"text": "Taşıma vezikülleriyle Golgi aygıtına gönderilir", "correctOrder": 2, "correct": false},
+                {"text": "Golgi'de işlenir (glikozilasyon) ve paketlenir", "correctOrder": 3, "correct": false},
+                {"text": "Salgı vezikülü zarla birleşerek ekzositozla dışarı atılır", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Çekirdek, Ribozom ve Hücre Karşılaştırması",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Ribozomun görevi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ribozom"],
+              "explanation": "Ribozom protein sentezler (translasyon). Zarla çevrili değildir. Hem prokaryot hem ökaryotta bulunur.",
+              "options": [
+                {"text": "DNA sentezi", "correct": false},
+                {"text": "Protein sentezi (translasyon)", "correct": true},
+                {"text": "Lipit sentezi", "correct": false},
+                {"text": "ATP üretimi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Çekirdek zarındaki porların görevi nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["nükleer por", "çekirdek"],
+              "explanation": "mRNA, tRNA ve ribozom alt birimlerinin çekirdekten çıkışını, proteinlerin çekirdeğe girişini düzenler.",
+              "options": [
+                {"text": "Enerji üretir", "correct": false},
+                {"text": "Çekirdek ile sitoplazma arasında kontrollü madde geçişini sağlar", "correct": true},
+                {"text": "DNA'yı korur", "correct": false},
+                {"text": "Protein sentezler", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Tüm hücrelerde ortak olan yapı hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ortak", "hücre"],
+              "explanation": "Hücre zarı (plazma membranı) tüm hücrelerde bulunan evrensel yapıdır.",
+              "options": [
+                {"text": "Hücre duvarı", "correct": false},
+                {"text": "Hücre zarı (plazma membranı)", "correct": true},
+                {"text": "Kloroplast", "correct": false},
+                {"text": "Sentrozom", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Çekirdek içinde bulunan {1} adlı yapıda rRNA sentezi ve ribozom alt birimlerinin ön montajı yapılır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["çekirdekçik", "nükleolus"],
+              "explanation": "Çekirdekçik (nükleolus) rRNA sentezler ve ribozom alt birimlerini oluşturur.",
+              "options": [
+                {"text": "çekirdekçik (nükleolus)", "isBlank": true, "correct": true},
+                {"text": "kromatin", "correct": false},
+                {"text": "nükleer por", "correct": false},
+                {"text": "nükleoplazma", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Bitki ve hayvan hücresinin farklarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["bitki", "hayvan", "karşılaştırma"],
+              "explanation": "Bu iki ökaryot hücre tipi arasında önemli farklar vardır.",
+              "options": [
+                {"text": "Hücre duvarı", "pairId": 1, "correct": false},
+                {"text": "Bitki: var (selüloz); Hayvan: yok", "pairId": 1, "correct": false},
+                {"text": "Kloroplast", "pairId": 2, "correct": false},
+                {"text": "Bitki: var (fotosentez); Hayvan: yok", "pairId": 2, "correct": false},
+                {"text": "Koful", "pairId": 3, "correct": false},
+                {"text": "Bitki: büyük merkezi koful; Hayvan: küçük ve çok sayıda", "pairId": 3, "correct": false},
+                {"text": "Sentrozom", "pairId": 4, "correct": false},
+                {"text": "Bitki: genellikle yok; Hayvan: var", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Çekirdekteki genetik bilginin hücreye aktarılma sırasını belirleyin.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["çekirdek", "bilgi akışı"],
+              "explanation": "DNA çekirdekte saklanır, mRNA'ya kopyalanır, mRNA çıkıp ribozomda proteine çevrilir.",
+              "options": [
+                {"text": "DNA çekirdeğin kromatininde (kromozomda) depolanır", "correctOrder": 1, "correct": false},
+                {"text": "Transkripsiyon: DNA'dan mRNA kopyalanır", "correctOrder": 2, "correct": false},
+                {"text": "mRNA nükleer pordan geçerek sitoplazmaya çıkar", "correctOrder": 3, "correct": false},
+                {"text": "Translasyon: ribozomda mRNA'ya göre protein sentezlenir", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Madde Geçişleri ve Canlı Organizasyonu",
+      "description": "Pasif taşıma, aktif taşıma, endositoz-ekzositoz, dokular ve organizasyon düzeyleri (MEB 2025-2026 Tema 2.3 bölüm 2)",
+      "order": 6,
+      "lessons": [
+        {
+          "title": "Pasif Taşıma: Difüzyon ve Osmoz",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Osmoz nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["osmoz"],
+              "explanation": "Osmoz suyun yarı geçirgen zardan az yoğun ortamdan çok yoğun ortama geçişidir. ATP harcanmaz.",
+              "options": [
+                {"text": "Çözünen maddelerin geçişi", "correct": false},
+                {"text": "Suyun yarı geçirgen zardan az yoğun ortamdan çok yoğun ortama geçişi", "correct": true},
+                {"text": "Gazların difüzyonu", "correct": false},
+                {"text": "Aktif taşıma türü", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kırmızı kan hücresi hipotonik çözeltiye konursa ne olur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["osmoz", "eritrosit"],
+              "explanation": "Hipotonik ortamda su hücreye girer → şişer → patlayabilir (hemoliz). Hücre duvarı olmadığı için koruma yok.",
+              "options": [
+                {"text": "Büzülür", "correct": false},
+                {"text": "Şişer ve patlayabilir (hemoliz/sitoliz)", "correct": true},
+                {"text": "Değişmez", "correct": false},
+                {"text": "Bölünür", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Difüzyon hızını etkileyen faktörler nelerdir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["difüzyon", "hız"],
+              "explanation": "Konsantrasyon farkı, sıcaklık, molekül boyutu, ortam yoğunluğu ve yüzey alanı etkiler.",
+              "options": [
+                {"text": "Sadece sıcaklık", "correct": false},
+                {"text": "Konsantrasyon farkı, sıcaklık, molekül boyutu, ortam yoğunluğu, yüzey alanı", "correct": true},
+                {"text": "Sadece molekül boyutu", "correct": false},
+                {"text": "Sadece basınç", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Su alan bitki hücresinin hücre duvarına uyguladığı basınca {1} denir; bitkinin dik durmasını sağlar.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["turgor", "bitki"],
+              "explanation": "Turgor basıncı bitki hücresinin şişmesiyle hücre zarının duvara uyguladığı basınçtır. Su kaybedince solma (plazmoliz) olur.",
+              "options": [
+                {"text": "turgor basıncı", "isBlank": true, "correct": true},
+                {"text": "ozmotik basınç", "correct": false},
+                {"text": "atmosfer basıncı", "correct": false},
+                {"text": "hidrostatik basınç", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Pasif taşıma türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["pasif taşıma"],
+              "explanation": "Pasif taşıma ATP harcamadan konsantrasyon farkına bağlı gerçekleşir.",
+              "options": [
+                {"text": "Basit difüzyon", "pairId": 1, "correct": false},
+                {"text": "Küçük apolar moleküller doğrudan zardan geçer (O₂, CO₂)", "pairId": 1, "correct": false},
+                {"text": "Kolaylaştırılmış difüzyon", "pairId": 2, "correct": false},
+                {"text": "Kanal/taşıyıcı protein yardımıyla (glikoz, iyonlar)", "pairId": 2, "correct": false},
+                {"text": "Osmoz", "pairId": 3, "correct": false},
+                {"text": "Suyun yarı geçirgen zardan geçişi (aquaporin)", "pairId": 3, "correct": false},
+                {"text": "Ortak özellik", "pairId": 4, "correct": false},
+                {"text": "ATP harcanmaz, çok yoğun → az yoğun yönünde", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Hücrenin hipertonik çözeltiye konulduğundaki olayları sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["osmoz", "hipertonik"],
+              "explanation": "Dış ortam daha yoğun → su dışarı çıkar → hücre büzülür (krenasyon/plazmoliz).",
+              "options": [
+                {"text": "Hücre dışı ortam hücreden daha yoğun (hipertonik)", "correctOrder": 1, "correct": false},
+                {"text": "Su osmozla hücre içinden dışına çıkar", "correctOrder": 2, "correct": false},
+                {"text": "Hücre hacmi küçülür, sitoplazma yoğunlaşır", "correctOrder": 3, "correct": false},
+                {"text": "Hayvan hücresinde krenasyon, bitki hücresinde plazmoliz", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Aktif Taşıma",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Sodyum-potasyum pompası nasıl çalışır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["Na-K pompası"],
+              "explanation": "1 ATP ile 3 Na⁺ dışarı, 2 K⁺ içeri pompalar. Sinir impulsu ve kas kasılmasında kritiktir.",
+              "options": [
+                {"text": "Na⁺ ve K⁺'u eşit sayıda taşır", "correct": false},
+                {"text": "1 ATP ile 3 Na⁺ dışarı, 2 K⁺ içeri pompalar", "correct": true},
+                {"text": "ATP harcamaz", "correct": false},
+                {"text": "Sadece Na⁺ taşır", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Aktif taşıma hangi durumlarda gereklidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["aktif taşıma", "durum"],
+              "explanation": "Maddelerin konsantrasyon gradyanına karşı (az yoğun → çok yoğun) taşınması gerektiğinde.",
+              "options": [
+                {"text": "Sadece oksijen taşınmasında", "correct": false},
+                {"text": "Maddelerin az yoğun ortamdan çok yoğun ortama taşınması gerektiğinde", "correct": true},
+                {"text": "Su taşınmasında", "correct": false},
+                {"text": "Hiçbir zaman gerekli değildir", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bitki köklerindeki mineral alımı neden aktif taşıma gerektirir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["bitki", "kök", "mineral"],
+              "explanation": "Topraktaki mineral yoğunluğu kök hücresinden düşüktür → gradyana karşı taşıma gerekir.",
+              "options": [
+                {"text": "Mineraller büyük olduğu için", "correct": false},
+                {"text": "Topraktaki mineral yoğunluğu düşük → gradyana karşı taşıma (ATP gerekli)", "correct": true},
+                {"text": "Bitkilerde ATP üretilmez", "correct": false},
+                {"text": "Pasif taşıma yeterlidir", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Aktif taşımada maddeler konsantrasyon gradyanına {1} taşınır ve bu süreç ATP enerjisi gerektirir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["aktif taşıma"],
+              "explanation": "Aktif taşıma az yoğun → çok yoğun yönünde, yani gradyana karşı gerçekleşir.",
+              "options": [
+                {"text": "karşı (az yoğundan çok yoğuna)", "isBlank": true, "correct": true},
+                {"text": "doğrultusunda (çok yoğundan az yoğuna)", "correct": false},
+                {"text": "paralel", "correct": false},
+                {"text": "rastgele", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Taşıma türlerini karşılaştırarak eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["taşıma", "karşılaştırma"],
+              "explanation": "Hücre zarından madde geçişi farklı mekanizmalarla olur.",
+              "options": [
+                {"text": "Basit difüzyon", "pairId": 1, "correct": false},
+                {"text": "ATP yok, protein yok, küçük apolar (O₂, CO₂)", "pairId": 1, "correct": false},
+                {"text": "Kolaylaştırılmış difüzyon", "pairId": 2, "correct": false},
+                {"text": "ATP yok, kanal/taşıyıcı var, polar/büyük (glikoz)", "pairId": 2, "correct": false},
+                {"text": "Aktif taşıma", "pairId": 3, "correct": false},
+                {"text": "ATP var, pompa var, gradyana karşı", "pairId": 3, "correct": false},
+                {"text": "Endositoz/Ekzositoz", "pairId": 4, "correct": false},
+                {"text": "ATP var, vezikül oluşumu, çok büyük moleküller", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Na⁺/K⁺ pompasının bir çevrimindeki olayları sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["Na-K pompası", "çevrim"],
+              "explanation": "3 Na⁺ bağlanır → ATP fosforlar → şekil değişir, Na⁺ dışarı → 2 K⁺ bağlanır, içeri alınır.",
+              "options": [
+                {"text": "3 Na⁺ pompanın iç yüzüne bağlanır", "correctOrder": 1, "correct": false},
+                {"text": "ATP hidroliz olur, pompa fosforilasyonla şekil değiştirir", "correctOrder": 2, "correct": false},
+                {"text": "3 Na⁺ dışarı bırakılır, 2 K⁺ dış yüzüne bağlanır", "correctOrder": 3, "correct": false},
+                {"text": "Fosfat ayrılır, pompa eski şekline döner, 2 K⁺ içeri bırakılır", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Endositoz ve Ekzositoz",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Ekzositoz nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ekzositoz"],
+              "explanation": "Veziküllerin zarla birleşerek maddeleri hücre dışına boşaltmasıdır. Hormon ve nörotransmitter salınımı örnektir.",
+              "options": [
+                {"text": "Hücreye madde alımı", "correct": false},
+                {"text": "Veziküllerin zarla birleşerek maddeleri hücre dışına boşaltması", "correct": true},
+                {"text": "Hücre bölünmesi", "correct": false},
+                {"text": "DNA sentezi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Akyuvarların bakterileri yemesi hangi taşıma türüdür?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["fagositoz", "akyuvar"],
+              "explanation": "Fagositoz: yalancı ayaklar bakteriyi sarar → fagozom → lizozomla birleşir → sindirilir.",
+              "options": [
+                {"text": "Osmoz", "correct": false},
+                {"text": "Fagositoz (endositoz)", "correct": true},
+                {"text": "Difüzyon", "correct": false},
+                {"text": "Aktif taşıma", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Endositoz ve ekzositoz neden sadece ökaryot hücrelerde görülür?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["endositoz", "ekzositoz", "ökaryot"],
+              "explanation": "Ökaryotların iç zar sistemi ve esnek zarı var; prokaryotlarda sert duvar ve iç zar eksikliği engeller.",
+              "options": [
+                {"text": "Prokaryotlar daha hızlıdır", "correct": false},
+                {"text": "Ökaryotların iç zar sistemi ve esnek zarı var; prokaryotlarda sert duvar engeller", "correct": true},
+                {"text": "Prokaryotlarda ATP yoktur", "correct": false},
+                {"text": "Fark yoktur, prokaryotlarda da görülür", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'{1}, sıvı ve çözünmüş maddelerin küçük veziküllerle hücre içine alınmasıdır. Buna hücre içmesi de denir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["pinositoz"],
+              "explanation": "Pinositoz (hücre içmesi): sıvı ve çözünmüş maddeler küçük veziküllerle alınır. Fagositoz ise katı partikül alımıdır.",
+              "options": [
+                {"text": "Pinositoz", "isBlank": true, "correct": true},
+                {"text": "Fagositoz", "correct": false},
+                {"text": "Ekzositoz", "correct": false},
+                {"text": "Osmoz", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Endositoz türlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["endositoz"],
+              "explanation": "Endositoz büyük moleküllerin vezikül oluşturarak hücre içine alınmasıdır.",
+              "options": [
+                {"text": "Fagositoz", "pairId": 1, "correct": false},
+                {"text": "Katı partiküller (bakteri) yalancı ayaklarla sarılır", "pairId": 1, "correct": false},
+                {"text": "Pinositoz", "pairId": 2, "correct": false},
+                {"text": "Sıvı ve çözünmüş maddeler küçük veziküllerle alınır", "pairId": 2, "correct": false},
+                {"text": "Reseptör aracılı endositoz", "pairId": 3, "correct": false},
+                {"text": "Spesifik moleküller reseptöre bağlanır, klatrin kaplı vezikül", "pairId": 3, "correct": false},
+                {"text": "Ekzositoz", "pairId": 4, "correct": false},
+                {"text": "Vezikül zarla birleşir, maddeler dışarı salınır (ters yön)", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Fagositozun aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["fagositoz", "aşama"],
+              "explanation": "Akyuvar bakteriye yaklaşır → yalancı ayaklarla sarar → fagozom → lizozomla birleşir → sindirilir.",
+              "options": [
+                {"text": "Akyuvar reseptörlerle bakteriyi algılar", "correctOrder": 1, "correct": false},
+                {"text": "Yalancı ayaklar (psödopod) bakteriyi sarar → fagozom oluşur", "correctOrder": 2, "correct": false},
+                {"text": "Fagozom lizozomla birleşir → fagolizozom", "correctOrder": 3, "correct": false},
+                {"text": "Lizozomal enzimler bakteriyi sindirir, artıklar ekzositozla atılır", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Doku Çeşitleri ve Organizasyonu",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Kan hangi doku tipine aittir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kan", "doku"],
+              "explanation": "Kan, bağ dokunun özel bir türüdür. Hücreler arası maddesi sıvıdır (plazma).",
+              "options": [
+                {"text": "Epitel doku", "correct": false},
+                {"text": "Bağ doku (özel bir türü)", "correct": true},
+                {"text": "Kas doku", "correct": false},
+                {"text": "Sinir doku", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Stoma ne işe yarar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["stoma", "bitki"],
+              "explanation": "Stoma yaprak epidermisindeki gözeneklerdir. CO₂/O₂ gaz alışverişi ve terleme sağlar.",
+              "options": [
+                {"text": "Su emer", "correct": false},
+                {"text": "Gaz alışverişi (CO₂, O₂) ve terleme (transpirasyon) sağlar", "correct": true},
+                {"text": "Besin depolar", "correct": false},
+                {"text": "Fotosentez yapar", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Kök hücre nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kök hücre"],
+              "explanation": "Henüz farklılaşmamış, farklı hücre tiplerine dönüşebilen hücredir.",
+              "options": [
+                {"text": "Ölü hücre", "correct": false},
+                {"text": "Henüz farklılaşmamış, farklı hücre tiplerine dönüşebilen hücre", "correct": true},
+                {"text": "Sadece bitkilerde bulunur", "correct": false},
+                {"text": "Kan hücresi", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'Bitkilerde sürekli mitoz bölünme yaparak büyümeyi sağlayan dokuya {1} denir; uç ve yanal meristemler buna örnektir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["meristem", "bitki"],
+              "explanation": "Meristem (bölünür) doku, bitkilerdeki büyüme noktalarında bulunur ve yeni hücreler üretir.",
+              "options": [
+                {"text": "meristem (bölünür) doku", "isBlank": true, "correct": true},
+                {"text": "parankima doku", "correct": false},
+                {"text": "iletim dokusu", "correct": false},
+                {"text": "örtü dokusu", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hayvan doku tiplerini görevleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["doku", "hayvan"],
+              "explanation": "Hayvanlarda dört temel doku tipi vardır.",
+              "options": [
+                {"text": "Epitel doku", "pairId": 1, "correct": false},
+                {"text": "Yüzeyleri örter, salgı yapar (deri, bağırsak iç yüzeyi)", "pairId": 1, "correct": false},
+                {"text": "Bağ doku", "pairId": 2, "correct": false},
+                {"text": "Destek ve bağlama: kemik, kıkırdak, kan, yağ dokusu", "pairId": 2, "correct": false},
+                {"text": "Kas doku", "pairId": 3, "correct": false},
+                {"text": "Kasılarak hareket: düz, çizgili, kalp kası", "pairId": 3, "correct": false},
+                {"text": "Sinir doku", "pairId": 4, "correct": false},
+                {"text": "Uyarı algılama ve iletme: nöron + nörogliya", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bir hücrenin farklılaşma (özelleşme) sürecini sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["farklılaşma", "hücre"],
+              "explanation": "Zigottan başlayarak hücreler bölünür, bazı genler aktifleşir/susturulur, özelleşmiş hücre/doku oluşur.",
+              "options": [
+                {"text": "Zigot (döllenmiş yumurta) mitoz bölünmeyle çoğalır", "correctOrder": 1, "correct": false},
+                {"text": "Embriyonik hücrelerde bazı genler aktifleşir, bazıları susturulur", "correctOrder": 2, "correct": false},
+                {"text": "Hücreler belirli yapılar (kas, sinir, kan) kazanır → farklılaşma", "correctOrder": 3, "correct": false},
+                {"text": "Aynı tip farklılaşmış hücreler doku → organ → sistem oluşturur", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Organ ve Sistem Organizasyonu",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Organ nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["organ"],
+              "explanation": "Organ, farklı doku tiplerinin bir araya gelerek belirli bir görevi yerine getirdiği yapıdır.",
+              "options": [
+                {"text": "Tek tip dokudan oluşan yapı", "correct": false},
+                {"text": "Farklı dokuların bir araya gelerek belirli bir görevi yapan yapı", "correct": true},
+                {"text": "Hücrenin başka adı", "correct": false},
+                {"text": "Sistemin başka adı", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Sindirim sistemi organlarının sırasını belirleyin.",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sindirim", "organ"],
+              "explanation": "Ağız → Yemek borusu → Mide → İnce bağırsak → Kalın bağırsak → Anüs.",
+              "options": [
+                {"text": "Mide → Ağız → Bağırsak", "correct": false},
+                {"text": "Ağız → Yemek borusu → Mide → İnce bağırsak → Kalın bağırsak → Anüs", "correct": true},
+                {"text": "Bağırsak → Mide → Ağız", "correct": false},
+                {"text": "Ağız → Kalın bağırsak → Mide", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Organizmadaki sistemler neden koordineli çalışmalıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["koordinasyon", "sistem"],
+              "explanation": "Sistemler birbirine bağımlıdır; birinin aksaması diğerlerini etkiler.",
+              "options": [
+                {"text": "Her sistem bağımsız çalışır", "correct": false},
+                {"text": "Sistemler birbirine bağımlıdır; biri aksaksa diğerleri de etkilenir", "correct": true},
+                {"text": "Sadece iki sistem birlikte çalışır", "correct": false},
+                {"text": "Koordinasyon gereksizdir", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "'{1}, aynı yapı ve görevdeki hücrelerin birleşimidir. Epitel, bağ, kas ve sinir dokusu dört temel türdür.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["doku", "tanım"],
+              "explanation": "Doku, aynı yapı ve göreve sahip hücrelerin birlikte oluşturduğu yapıdır.",
+              "options": [
+                {"text": "Doku", "isBlank": true, "correct": true},
+                {"text": "Organ", "correct": false},
+                {"text": "Sistem", "correct": false},
+                {"text": "Organizma", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "İnsan vücudundaki ana sistemleri görevleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["sistem", "görev"],
+              "explanation": "İnsan vücudunda birçok organ sistemi koordineli çalışır.",
+              "options": [
+                {"text": "Dolaşım sistemi", "pairId": 1, "correct": false},
+                {"text": "Kalp, damarlar, kan → besin/O₂ taşıma, atık uzaklaştırma", "pairId": 1, "correct": false},
+                {"text": "Solunum sistemi", "pairId": 2, "correct": false},
+                {"text": "Burun, akciğer → O₂ alımı, CO₂ atımı", "pairId": 2, "correct": false},
+                {"text": "Boşaltım sistemi", "pairId": 3, "correct": false},
+                {"text": "Böbrekler, mesane → metabolik atık ve fazla su uzaklaştırma", "pairId": 3, "correct": false},
+                {"text": "Sinir sistemi", "pairId": 4, "correct": false},
+                {"text": "Beyin, omurilik, sinirler → uyarı algılama ve koordinasyon", "pairId": 4, "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Canlılardaki organizasyon düzeylerini küçükten büyüğe sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["organizasyon", "düzey"],
+              "explanation": "Hücre → Doku → Organ → Sistem → Organizma hiyerarşik yapı oluşturur.",
+              "options": [
+                {"text": "Hücre (canlının en küçük birimi)", "correctOrder": 1, "correct": false},
+                {"text": "Doku (aynı görevdeki hücrelerin birleşimi)", "correctOrder": 2, "correct": false},
+                {"text": "Organ (farklı dokuların bir araya gelmesi)", "correctOrder": 3, "correct": false},
+                {"text": "Sistem → Organizma", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

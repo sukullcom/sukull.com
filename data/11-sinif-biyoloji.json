@@ -1,0 +1,2900 @@
+{
+  "course": {
+    "title": "11. Sınıf Biyoloji",
+    "imageSrc": ""
+  },
+  "units": [
+    {
+      "title": "Sinir Sistemi ve Duyu Organları",
+      "description": "Sinir sisteminin yapısı, nöron, sinir iletimi, endokrin sistem, hormonlar ve duyu organları (MEB 2025-2026)",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "Sinir Sisteminin Yapısı ve Görevleri",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "İnsan sinir sistemi hangi iki ana bölümden oluşur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["sinir sistemi", "yapı"],
+              "explanation": "Merkezi sinir sistemi (MSS): beyin + omurilik. Çevresel sinir sistemi (ÇSS): kranial ve spinal sinirler + otonom sinir sistemi.",
+              "options": [
+                {"text": "Merkezi sinir sistemi (beyin+omurilik) ve Çevresel sinir sistemi", "correct": true},
+                {"text": "Sadece beyin ve kalp", "correct": false},
+                {"text": "Kas sistemi ve kemik sistemi", "correct": false},
+                {"text": "Sindirim ve solunum sistemi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Beyin kabuğunun (serebral korteks) lob bölümlerinin görevleri nelerdir?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["beyin", "lob"],
+              "explanation": "Frontal lob: düşünme, planlama, istemli hareket. Parietal lob: dokunma, ağrı duyusu. Temporal lob: işitme, hafıza. Oksipital lob: görme.",
+              "options": [
+                {"text": "Frontal: düşünme/hareket; Parietal: dokunma; Temporal: işitme; Oksipital: görme", "correct": true},
+                {"text": "Hepsi aynı işlevi yapar", "correct": false},
+                {"text": "Sadece 2 lob vardır", "correct": false},
+                {"text": "Loblar sadece hayvanlarda bulunur", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Omurilik, beyin ile vücut arasında sinir impulsu iletimini sağlar ve {1} hareketlerin merkezidir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["omurilik", "refleks"],
+              "explanation": "Omurilik refleks yayının merkezidir. Refleks: uyaran → duyu nöronu → omurilik → motor nöron → tepki (beyin devre dışı, hızlı koruma).",
+              "options": [
+                {"text": "refleks", "isBlank": true, "correct": true},
+                {"text": "istemli", "correct": false},
+                {"text": "bilinçli", "correct": false},
+                {"text": "hormonal", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Sinir sistemi bölümlerini görevleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["sinir sistemi", "bölüm"],
+              "explanation": "Her sinir sistemi bölümünün kendine özgü görevi vardır.",
+              "options": [
+                {"text": "Beyin (serebrum)", "pairId": 1, "correct": false},
+                {"text": "Düşünme, hafıza, istemli hareket, konuşma, duyu yorumlama", "pairId": 1, "correct": false},
+                {"text": "Beyincik (serebellum)", "pairId": 2, "correct": false},
+                {"text": "Denge, koordinasyon, kas hareketlerinin ince ayarı", "pairId": 2, "correct": false},
+                {"text": "Omurilik soğanı (medulla oblongata)", "pairId": 3, "correct": false},
+                {"text": "Solunum, kalp atışı, kan basıncı, yutma, öksürme (otonom)", "pairId": 3, "correct": false},
+                {"text": "Omurilik (spinal kord)", "pairId": 4, "correct": false},
+                {"text": "Refleks merkezi, beyin-vücut arası impuls iletimi", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Beyincik hangi temel görevi yapar?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "EASY",
+              "tags": ["beyincik"],
+              "timeLimit": 10,
+              "explanation": "Beyincik denge ve koordinasyondan sorumludur. Kas hareketlerinin ince ayarını yapar. Hasar görürse yürüyüş bozulur, titreme olur.",
+              "options": [
+                {"text": "Denge ve koordinasyon", "correct": true},
+                {"text": "Düşünme ve hafıza", "correct": false},
+                {"text": "Solunum kontrolü", "correct": false},
+                {"text": "Sindirim kontrolü", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Refleks yayının aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["refleks", "yay"],
+              "explanation": "Uyaran → reseptör → duyu nöronu → ara nöron (omurilik) → motor nöron → efektör (kas/bez).",
+              "options": [
+                {"text": "Reseptör uyaranı algılar (deri, göz vb.)", "correctOrder": 1, "correct": false},
+                {"text": "Duyu nöronu impulsu omuriliğe taşır", "correctOrder": 2, "correct": false},
+                {"text": "Ara nöron (omurilik) impulsu motor nörona aktarır", "correctOrder": 3, "correct": false},
+                {"text": "Motor nöron efektöre (kas/bez) impuls gönderir → tepki", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Nöron Yapısı ve Sinir İletimi",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Nöronun üç temel kısmı nelerdir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["nöron", "yapı"],
+              "explanation": "Dendrit: uyaranı alır. Hücre gövdesi (soma): çekirdeği ve organelleri içerir. Akson: impulsu ileterek diğer hücrelere taşır.",
+              "options": [
+                {"text": "Dendrit, hücre gövdesi (soma) ve akson", "correct": true},
+                {"text": "Sadece dendrit ve akson", "correct": false},
+                {"text": "Çekirdek, ribozom, mitokondri", "correct": false},
+                {"text": "Kılcal, arter, ven", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Miyelin kılıfın görevi nedir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["miyelin", "kılıf"],
+              "explanation": "Miyelin kılıf (Schwann hücreleri) aksonu sararak elektrik yalıtımı sağlar. İmpuls Ranvier boğumlarında atlar (tuzlu iletim) → hız artar (120 m/s'ye kadar).",
+              "options": [
+                {"text": "Aksonu yalıtır, impuls hızını artırır (tuzlu/sıçrayıcı iletim)", "correct": true},
+                {"text": "Besin depolar", "correct": false},
+                {"text": "Nöronu besler", "correct": false},
+                {"text": "Sinaps oluşturur", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Nöronun uyarılmadığı dinlenme durumunda hücre zarının iç tarafı dış tarafına göre negatif yüklüdür ve bu potansiyel farkına {1} denir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["istirahat potansiyeli"],
+              "explanation": "İstirahat (dinlenme) potansiyeli yaklaşık -70 mV'tur. Na⁺/K⁺ pompası (3Na⁺ dışarı, 2K⁺ içeri) bu dengeyi sürdürür.",
+              "options": [
+                {"text": "istirahat (dinlenme) potansiyeli", "isBlank": true, "correct": true},
+                {"text": "aksiyon potansiyeli", "correct": false},
+                {"text": "eşik değeri", "correct": false},
+                {"text": "sinaptik potansiyel", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Sinir iletimi aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["aksiyon potansiyeli", "iletim"],
+              "explanation": "Uyarı → depolarizasyon → repolarizasyon → istirahat durumuna dönüş.",
+              "options": [
+                {"text": "Eşik uyarı: Na⁺ kanalları açılır, Na⁺ içeri girer (depolarizasyon -70→+30 mV)", "correctOrder": 1, "correct": false},
+                {"text": "Aksiyon potansiyeli akson boyunca dalga şeklinde ilerler", "correctOrder": 2, "correct": false},
+                {"text": "K⁺ kanalları açılır, K⁺ dışarı çıkar (repolarizasyon +30→-70 mV)", "correctOrder": 3, "correct": false},
+                {"text": "Na⁺/K⁺ pompası iyon dengesini yeniden kurar (istirahat potansiyeli)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Aksiyon potansiyeli sırasında hücre içi yük nasıl değişir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "HARD",
+              "tags": ["aksiyon potansiyeli"],
+              "timeLimit": 12,
+              "explanation": "Depolarizasyonda -70 mV'tan +30 mV'a yükselir (Na⁺ girişi), sonra repolarizasyonda tekrar -70 mV'a döner (K⁺ çıkışı).",
+              "options": [
+                {"text": "-70 mV → +30 mV (depolarizasyon), sonra tekrar -70 mV (repolarizasyon)", "correct": true},
+                {"text": "Değişmez", "correct": false},
+                {"text": "+70 mV → -30 mV", "correct": false},
+                {"text": "Sürekli pozitif kalır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Sinaps yapısını bileşenleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["sinaps"],
+              "explanation": "Sinaps, iki nöron arasındaki bağlantı noktasıdır.",
+              "options": [
+                {"text": "Presinaptik uç (akson ucu)", "pairId": 1, "correct": false},
+                {"text": "Sinaptik veziküller içinde nörotransmitter bulunur", "pairId": 1, "correct": false},
+                {"text": "Sinaptik aralık", "pairId": 2, "correct": false},
+                {"text": "İki nöron arası ~20 nm boşluk, nörotransmitter difüzle geçer", "pairId": 2, "correct": false},
+                {"text": "Postsinaptik zar", "pairId": 3, "correct": false},
+                {"text": "Reseptörler nörotransmitteri bağlar → yeni impuls başlar/engellenir", "pairId": 3, "correct": false},
+                {"text": "Asetilkolin", "pairId": 4, "correct": false},
+                {"text": "Yaygın nörotransmitter: kas-sinir kavşağında kasılmayı başlatır", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Endokrin Sistem ve Hormonlar",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Endokrin sistem ile sinir sistemi arasındaki temel fark nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["endokrin", "sinir"],
+              "explanation": "Sinir sistemi: hızlı, kısa süreli, elektriksel impuls. Endokrin: yavaş, uzun süreli, kimyasal (hormon) iletim. İkisi birlikte homeostazı sağlar.",
+              "options": [
+                {"text": "Sinir: hızlı/elektriksel; Endokrin: yavaş/kimyasal (hormon) — birlikte homeostaz sağlar", "correct": true},
+                {"text": "Aralarında fark yoktur", "correct": false},
+                {"text": "Endokrin daha hızlıdır", "correct": false},
+                {"text": "Sinir sistemi hormon salgılar", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Hipofiz bezine neden 'bezlerin bezi' denir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["hipofiz", "bez"],
+              "explanation": "Hipofiz bezi diğer endokrin bezleri (tiroid, böbrek üstü, gonadlar) kontrol eden hormonlar salgılar. Hipotalamus tarafından yönetilir.",
+              "options": [
+                {"text": "Diğer endokrin bezleri kontrol eden hormonlar salgıladığı için", "correct": true},
+                {"text": "En büyük bez olduğu için", "correct": false},
+                {"text": "Sadece büyüme hormonu salgıladığı için", "correct": false},
+                {"text": "Beyin kabuğunda olduğu için", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Kan şekerini düşüren hormon {1} olup pankreas beta hücrelerinden salgılanır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["insülin", "pankreas"],
+              "explanation": "İnsülin kan glikozunu düşürür (hücrelere glikoz alımını artırır, glikojen sentezini uyarır). Glukagon ise kan şekerini yükseltir.",
+              "options": [
+                {"text": "insülin", "isBlank": true, "correct": true},
+                {"text": "glukagon", "correct": false},
+                {"text": "adrenalin", "correct": false},
+                {"text": "tiroksin", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Endokrin bezleri salgıladıkları hormonlarla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["endokrin", "hormon"],
+              "explanation": "Her endokrin bez spesifik hormonlar salgılar.",
+              "options": [
+                {"text": "Tiroid bezi", "pairId": 1, "correct": false},
+                {"text": "Tiroksin (T₃/T₄): metabolizma hızını düzenler, iyot gerektirir", "pairId": 1, "correct": false},
+                {"text": "Böbrek üstü bezi (adrenal medulla)", "pairId": 2, "correct": false},
+                {"text": "Adrenalin: stres hormonu, kalp hızı↑, kan şekeri↑, uyanıklık↑", "pairId": 2, "correct": false},
+                {"text": "Pankreas (Langerhans adacıkları)", "pairId": 3, "correct": false},
+                {"text": "İnsülin (β): kan şekeri↓ / Glukagon (α): kan şekeri↑", "pairId": 3, "correct": false},
+                {"text": "Hipofiz ön lobu", "pairId": 4, "correct": false},
+                {"text": "Büyüme hormonu (STH/GH), TSH, FSH, LH, prolaktin", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Tiroid bezinin yeterli hormon üretebilmesi için hangi mineral gereklidir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "EASY",
+              "tags": ["tiroid", "iyot"],
+              "timeLimit": 10,
+              "explanation": "Tiroksin (T₃/T₄) yapısında iyot bulunur. İyot eksikliği guatr (tiroid büyümesi) ve hipotiroidizme neden olur. İyotlu tuz kullanımı önerilir.",
+              "options": [
+                {"text": "İyot", "correct": true},
+                {"text": "Kalsiyum", "correct": false},
+                {"text": "Demir", "correct": false},
+                {"text": "Sodyum", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Kan şekeri düzenlenmesinin aşamalarını sıralayın (yüksek kan şekeri durumunda).",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["kan şekeri", "insülin"],
+              "explanation": "Yüksek kan şekeri → insülin → glikoz hücrelere girer → kan şekeri düşer → insülin salgısı durur.",
+              "options": [
+                {"text": "Yemek sonrası kan glikoz düzeyi yükselir", "correctOrder": 1, "correct": false},
+                {"text": "Pankreas β hücreleri insülin salgılar", "correctOrder": 2, "correct": false},
+                {"text": "İnsülin: hücrelere glikoz alımını artırır, glikojen sentezini uyarır", "correctOrder": 3, "correct": false},
+                {"text": "Kan şekeri normal düzeye iner → insülin salgısı durur (negatif geri bildirim)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Duyu Organlarının Yapısı ve İşleyişi",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Gözde ışığı algılayan hücreler hangileridir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["göz", "retina"],
+              "explanation": "Çubuk (rod) hücreleri: az ışıkta görme, siyah-beyaz. Koni (kon) hücreleri: renkli görme, parlak ışıkta çalışır. İkisi de retinadadır.",
+              "options": [
+                {"text": "Çubuk (rod) ve koni (kon) hücreleri (retinada)", "correct": true},
+                {"text": "Kornea hücreleri", "correct": false},
+                {"text": "İris hücreleri", "correct": false},
+                {"text": "Lens hücreleri", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kulakta ses dalgalarını sinir impulsuna çeviren yapı hangisidir?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["kulak", "korti"],
+              "explanation": "Korti organı (iç kulak, koklea/salyangoz) ses titreşimlerini mekanik enerji → elektriksel sinir impulsuna çevirir. Tüy hücreleri reseptör görevi yapar.",
+              "options": [
+                {"text": "Korti organı (kokleada tüy hücreleri)", "correct": true},
+                {"text": "Kulak zarı", "correct": false},
+                {"text": "Östaki borusu", "correct": false},
+                {"text": "Yarım daire kanalları", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Kulaktaki {1}, vücudun dengesini ve pozisyonunu algılar; içindeki sıvı ve otolitlerin hareketini tüy hücreleri algılar.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["denge", "vestibüler"],
+              "explanation": "Yarım daire kanalları ve vestibüler organlar (kesecik-tulumcuk) dengeyi sağlar. Baş pozisyonu ve dönme hareketlerini algılar.",
+              "options": [
+                {"text": "yarım daire kanalları ve vestibüler organlar", "isBlank": true, "correct": true},
+                {"text": "korti organı", "correct": false},
+                {"text": "kulak zarı", "correct": false},
+                {"text": "östaki borusu", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Ses işitme sürecini sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["işitme", "süreç"],
+              "explanation": "Ses dalgası → dış kulak → kulak zarı → kemikçikler → oval pencere → koklea → Korti organı → sinir.",
+              "options": [
+                {"text": "Ses dalgası kulak kepçesi → dış kulak yolu → kulak zarını titreştirir", "correctOrder": 1, "correct": false},
+                {"text": "Çekiç → Örs → Üzengi kemikçikleri titreşimi 20× güçlendirerek oval pencereye aktarır", "correctOrder": 2, "correct": false},
+                {"text": "Kokleadaki sıvı dalgalanır, Korti organındaki tüy hücreleri bükülür", "correctOrder": 3, "correct": false},
+                {"text": "Tüy hücreleri impuls üretir → işitme siniri → beyin temporal lob → ses algısı", "correctOrder": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Dilin üzerindeki tat alma reseptörleri nerelerde bulunur?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "EASY",
+              "tags": ["tat", "papilla"],
+              "timeLimit": 10,
+              "explanation": "Tat tomurcukları papillaların (dil üzerindeki çıkıntılar) yan yüzeylerinde bulunur. 5 temel tat: tatlı, tuzlu, ekşi, acı ve umami.",
+              "options": [
+                {"text": "Papillalardaki tat tomurcuklarında", "correct": true},
+                {"text": "Dilin altında", "correct": false},
+                {"text": "Dudaklarda", "correct": false},
+                {"text": "Yutak içinde", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Duyu organlarını algıladıkları uyaranlarla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["duyu", "uyaran"],
+              "explanation": "Her duyu organı belirli bir uyaran türüne özelleşmiştir.",
+              "options": [
+                {"text": "Göz (retina)", "pairId": 1, "correct": false},
+                {"text": "Işık (foton) → görme duyusu", "pairId": 1, "correct": false},
+                {"text": "Kulak (koklea)", "pairId": 2, "correct": false},
+                {"text": "Ses dalgası (mekanik) → işitme duyusu", "pairId": 2, "correct": false},
+                {"text": "Burun (koku epiteli)", "pairId": 3, "correct": false},
+                {"text": "Kimyasal moleküller (havada) → koku duyusu", "pairId": 3, "correct": false},
+                {"text": "Deri (reseptörler)", "pairId": 4, "correct": false},
+                {"text": "Basınç, sıcaklık, ağrı, dokunma → dokunma duyusu", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Sinir Sistemi ve Duyu Organı Sağlığı",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Hangi hastalık miyelin kılıfın tahrip olmasıyla ortaya çıkar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": ["MS", "miyelin"],
+              "explanation": "Multipl skleroz (MS) otoimmün bir hastalıktır. Bağışıklık sistemi miyelin kılıfına saldırır → sinir iletimi bozulur → kas güçsüzlüğü, denge kaybı, görme bozuklukları.",
+              "options": [
+                {"text": "Multipl Skleroz (MS)", "correct": true},
+                {"text": "Parkinson", "correct": false},
+                {"text": "Epilepsi", "correct": false},
+                {"text": "Miyopi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Parkinson hastalığının nedeni nedir?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["Parkinson", "dopamin"],
+              "explanation": "Beyin sapındaki substantia nigra'da dopamin üreten nöronların kaybı. Dopamin eksikliği → titreme, yavaş hareket, kas sertliği, denge bozukluğu.",
+              "options": [
+                {"text": "Dopamin üreten nöronların kaybı (substantia nigra)", "correct": true},
+                {"text": "Serotonin fazlalığı", "correct": false},
+                {"text": "Miyelin artışı", "correct": false},
+                {"text": "Adrenalin eksikliği", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Göz küresinin normalden uzun olması veya göz merceğinin fazla kırması sonucu uzaktaki cisimlerin net görülememesine {1} denir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["miyopi", "göz"],
+              "explanation": "Miyopi (yakın görme bozukluğu): görüntü retinanın önünde oluşur. Kalın kenarlı (ıraksak/negatif) mercekle düzeltilir.",
+              "options": [
+                {"text": "miyopi (yakın görüşlülük)", "isBlank": true, "correct": true},
+                {"text": "hipermetropi", "correct": false},
+                {"text": "astigmatizm", "correct": false},
+                {"text": "presbiopi", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Göz kusurlarını düzeltme yöntemleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["göz", "kusur"],
+              "explanation": "Her göz kusuru farklı lens türü ile düzeltilir.",
+              "options": [
+                {"text": "Miyopi (yakın görüşlülük)", "pairId": 1, "correct": false},
+                {"text": "Kalın kenarlı (ıraksak/negatif) mercek", "pairId": 1, "correct": false},
+                {"text": "Hipermetropi (uzak görüşlülük)", "pairId": 2, "correct": false},
+                {"text": "İnce kenarlı (yakınsak/pozitif) mercek", "pairId": 2, "correct": false},
+                {"text": "Astigmatizm", "pairId": 3, "correct": false},
+                {"text": "Silindirik mercek (kornea eğriliği düzensiz)", "pairId": 3, "correct": false},
+                {"text": "Presbiopi (yaşlılık uzak görüşlülüğü)", "pairId": 4, "correct": false},
+                {"text": "İnce kenarlı mercek (lens esnekliği yaşla azalır)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Alzheimer hastalığı hangi beyin bölgesini en çok etkiler?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "HARD",
+              "tags": ["Alzheimer", "beyin"],
+              "timeLimit": 12,
+              "explanation": "Alzheimer, hipokampus (hafıza merkezi) ve serebral korteksteki nöron kaybıyla başlar. Amiloid plaklar ve tau yumakları birikir → hafıza kaybı, bilişsel gerileme.",
+              "options": [
+                {"text": "Hipokampus ve serebral korteks", "correct": true},
+                {"text": "Beyincik", "correct": false},
+                {"text": "Omurilik soğanı", "correct": false},
+                {"text": "Omurilik", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Sinir sistemi sağlığını koruma yöntemlerini öncelik sırasıyla dizin.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["sinir", "sağlık"],
+              "explanation": "Düzenli uyku, beslenme, egzersiz ve zararlı maddelerden kaçınma sinir sistemi sağlığının temelidir.",
+              "options": [
+                {"text": "Yeterli ve kaliteli uyku (7-9 saat, beyin detoksu)", "correctOrder": 1, "correct": false},
+                {"text": "Dengeli beslenme (omega-3, antioksidan, B vitaminleri)", "correctOrder": 2, "correct": false},
+                {"text": "Düzenli fiziksel egzersiz (kan akışı↑, nörotrofin↑)", "correctOrder": 3, "correct": false},
+                {"text": "Alkol, sigara, uyuşturucudan kaçınma (nöron hasarını önleme)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Destek-Hareket ve Sindirim Sistemi",
+      "description": "İskelet sistemi, kas sistemi, eklemler, sindirim kanalı, sindirim enzimleri ve sindirim sağlığı (MEB 2025-2026)",
+      "order": 2,
+      "lessons": [
+        {
+          "title": "İskelet Sistemi ve Kemik Yapısı",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "İnsan iskelet sisteminde yaklaşık kaç kemik bulunur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["iskelet", "kemik"],
+              "explanation": "Yetişkin insanda 206 kemik bulunur. Bebekler ~270 kemikle doğar, bazıları büyümeyle kaynaşır.",
+              "options": [
+                {"text": "206", "correct": true},
+                {"text": "106", "correct": false},
+                {"text": "306", "correct": false},
+                {"text": "150", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kemik dokusundaki osteoblast ve osteoklast hücrelerinin görevleri nedir?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["kemik", "hücre"],
+              "explanation": "Osteoblast: yeni kemik dokusu oluşturur (yapım). Osteoklast: eski kemik dokusunu yıkar (yıkım). Dengeli çalışmaları kemik yenilenmesini sağlar.",
+              "options": [
+                {"text": "Osteoblast: kemik yapımı; Osteoklast: kemik yıkımı — birlikte kemik yenilenmesini sağlar", "correct": true},
+                {"text": "İkisi de kemik üretir", "correct": false},
+                {"text": "İkisi de kemik yıkar", "correct": false},
+                {"text": "Kan hücresi üretir", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Uzun kemiklerin uç kısımlarında (epifiz) bulunan {1}, sürtünmeyi azaltır ve darbeleri emer.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["kıkırdak", "eklem"],
+              "explanation": "Eklem kıkırdağı (hiyalin kıkırdak) pürüzsüz bir yüzey sağlayarak kemiklerin birbirine sürtünmesini önler ve şok absorbe eder.",
+              "options": [
+                {"text": "eklem kıkırdağı (hiyalin kıkırdak)", "isBlank": true, "correct": true},
+                {"text": "kemik iliği", "correct": false},
+                {"text": "periost", "correct": false},
+                {"text": "tendon", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Eklem türlerini hareket kapasiteleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["eklem", "tür"],
+              "explanation": "Farklı eklem türleri farklı hareket kapasitelerine sahiptir.",
+              "options": [
+                {"text": "Oynar eklem (sinoviyal)", "pairId": 1, "correct": false},
+                {"text": "Geniş hareket: diz, dirsek, omuz, kalça (sinoviyal sıvı)", "pairId": 1, "correct": false},
+                {"text": "Yarı oynar eklem", "pairId": 2, "correct": false},
+                {"text": "Sınırlı hareket: omurga diskleri, leğen kemikleri arası", "pairId": 2, "correct": false},
+                {"text": "Oynamaz eklem", "pairId": 3, "correct": false},
+                {"text": "Hareket yok: kafatası kemikleri (sütürler)", "pairId": 3, "correct": false},
+                {"text": "Top-yuva eklemi", "pairId": 4, "correct": false},
+                {"text": "Her yönde hareket: omuz, kalça eklemi", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Kan hücreleri vücudun neresinde üretilir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["kemik iliği", "kan"],
+              "timeLimit": 10,
+              "explanation": "Kırmızı kemik iliği (uzun kemiklerin epifizleri, yassı kemikler) kan hücresi üretir (hematopoez). Alyuvar, akyuvar ve trombosit burada yapılır.",
+              "options": [
+                {"text": "Kırmızı kemik iliğinde", "correct": true},
+                {"text": "Karaciğerde", "correct": false},
+                {"text": "Dalakta", "correct": false},
+                {"text": "Kalpte", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "İskelet sisteminin görevlerini öneme göre sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["iskelet", "görev"],
+              "explanation": "İskelet sistemi çok yönlü görevler üstlenir.",
+              "options": [
+                {"text": "Destek: vücuda şekil verir, dik duruşu sağlar", "correctOrder": 1, "correct": false},
+                {"text": "Koruma: beyin (kafatası), kalp-akciğer (göğüs kafesi), omurilik (omurga)", "correctOrder": 2, "correct": false},
+                {"text": "Hareket: kaslar kemiklere tutunarak hareketi sağlar (kaldıraç sistemi)", "correctOrder": 3, "correct": false},
+                {"text": "Kan yapımı (kırmızı kemik iliği) + Mineral deposu (Ca²⁺, PO₄³⁻)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Kas Sistemi ve Kasılma Mekanizması",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "İnsan vücudundaki üç kas türü hangileridir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["kas", "tür"],
+              "explanation": "İskelet kası (çizgili, istemli), düz kas (iç organlar, istemsiz) ve kalp kası (çizgili ama istemsiz, kendiliğinden ritmik kasılır).",
+              "options": [
+                {"text": "İskelet (çizgili-istemli), düz (istemsiz) ve kalp kası (çizgili-istemsiz)", "correct": true},
+                {"text": "Sadece iskelet kası", "correct": false},
+                {"text": "Kemik kası ve sinir kası", "correct": false},
+                {"text": "Uzun kas ve kısa kas", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kas kasılmasında aktin ve miyozin nasıl çalışır?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["aktin", "miyozin", "kasılma"],
+              "explanation": "Kayan iplikçik modeli: miyozin başları aktin üzerinde bağlanma-çekme-bırakma döngüsü yapar. ATP enerjisiyle miyozin başları aktini çeker → sarkomer kısalır → kas kasılır.",
+              "options": [
+                {"text": "Miyozin başları ATP kullanarak aktin ipliklerini çeker → sarkomer kısalır (kayan iplikçik)", "correct": true},
+                {"text": "Aktin ve miyozin kısalır", "correct": false},
+                {"text": "Sadece aktin kasılır", "correct": false},
+                {"text": "Kas hücreleri bölünür", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Kas kasılmasının başlaması için motor nörondan salgılanan {1} kas hücre zarındaki reseptörlere bağlanmalıdır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["asetilkolin", "nöromüsküler"],
+              "explanation": "Asetilkolin, nöromüsküler kavşakta motor nörondan salgılanır. Kas zarındaki reseptörlere bağlanınca Ca²⁺ salınır ve kasılma başlar.",
+              "options": [
+                {"text": "asetilkolin", "isBlank": true, "correct": true},
+                {"text": "dopamin", "correct": false},
+                {"text": "serotonin", "correct": false},
+                {"text": "adrenalin", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kas kasılma sürecini sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["kasılma", "süreç"],
+              "explanation": "Motor nöron → asetilkolin → Ca²⁺ salınımı → aktin-miyozin etkileşimi → kasılma.",
+              "options": [
+                {"text": "Motor nöron impulsla asetilkolin salgılar (nöromüsküler kavşak)", "correctOrder": 1, "correct": false},
+                {"text": "Kas zarında aksiyon potansiyeli oluşur → T-tübüller → sarkoplazmik retikulum", "correctOrder": 2, "correct": false},
+                {"text": "Ca²⁺ serbest kalır → troponin-tropomiyozin kompleksi yerinden kayar → miyozin bağlanma yerleri açılır", "correctOrder": 3, "correct": false},
+                {"text": "Miyozin başları ATP ile aktin üzerinde çapraz köprü döngüsü → sarkomer kısalır → kasılma", "correctOrder": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Antagonist kaslar ne demektir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["antagonist", "kas"],
+              "timeLimit": 10,
+              "explanation": "Antagonist kaslar birbirine zıt çalışır. Örn: biseps kasılırken (kol bükme) triseps gevşer; triseps kasılırken (kol açma) biseps gevşer.",
+              "options": [
+                {"text": "Zıt çalışan kas çiftleri (biseps-triseps gibi)", "correct": true},
+                {"text": "Aynı yönde çalışan kaslar", "correct": false},
+                {"text": "Kemiklere tutunmayan kaslar", "correct": false},
+                {"text": "Sadece bacaklardaki kaslar", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Kas türlerini özellikleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["kas", "özellik"],
+              "explanation": "Üç kas türünün farklı özellikleri vardır.",
+              "options": [
+                {"text": "İskelet kası", "pairId": 1, "correct": false},
+                {"text": "Çizgili, çok çekirdekli, istemli, hızlı kasılır, çabuk yorulur", "pairId": 1, "correct": false},
+                {"text": "Düz kas", "pairId": 2, "correct": false},
+                {"text": "Çizgisiz, tek çekirdekli, istemsiz, yavaş kasılır, geç yorulur", "pairId": 2, "correct": false},
+                {"text": "Kalp kası", "pairId": 3, "correct": false},
+                {"text": "Çizgili, tek çekirdekli, istemsiz, ritmik kasılır, yorulmaz", "pairId": 3, "correct": false},
+                {"text": "Tendon ve bağ (ligament)", "pairId": 4, "correct": false},
+                {"text": "Tendon: kas-kemik bağlantısı; Bağ: kemik-kemik bağlantısı", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Sindirim Sisteminin Yapısı",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "İnsan sindirim kanalı sırasıyla hangi organlardan oluşur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["sindirim", "kanal"],
+              "explanation": "Ağız → yutak → yemek borusu → mide → ince bağırsak (duodenum, jejunum, ileum) → kalın bağırsak → rektum → anüs.",
+              "options": [
+                {"text": "Ağız → Yutak → Yemek borusu → Mide → İnce bağırsak → Kalın bağırsak → Anüs", "correct": true},
+                {"text": "Ağız → Mide → Karaciğer → Bağırsak", "correct": false},
+                {"text": "Mide → Ağız → Bağırsak → Anüs", "correct": false},
+                {"text": "Ağız → Kalın bağırsak → İnce bağırsak", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Pankreasın sindirim sistemindeki rolü nedir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["pankreas", "sindirim"],
+              "explanation": "Pankreas ekzokrin (sindirim enzimleri: tripsin, lipaz, amilaz) ve endokrin (insülin, glukagon) işlev görür. Bikarbonat salgılayarak mide asidini nötralize eder.",
+              "options": [
+                {"text": "Sindirim enzimleri (tripsin, lipaz, amilaz) + bikarbonat salgılar; ayrıca insülin/glukagon üretir", "correct": true},
+                {"text": "Sadece insülin üretir", "correct": false},
+                {"text": "Safra üretir", "correct": false},
+                {"text": "Besinleri depolar", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Yemek borusunda besin lokmalarını mideye doğru iten dalgasal kas hareketlerine {1} denir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["peristaltizm"],
+              "explanation": "Peristaltik hareketler: düz kasların sıralı kasılma-gevşeme dalgaları. Besinleri sindirim kanalı boyunca ilerletir. Yer çekimine bağlı değildir.",
+              "options": [
+                {"text": "peristaltik hareketler (peristaltizm)", "isBlank": true, "correct": true},
+                {"text": "segmentasyon", "correct": false},
+                {"text": "refleks", "correct": false},
+                {"text": "difüzyon", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Sindirim yardımcı organlarını görevleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["sindirim", "yardımcı organ"],
+              "explanation": "Karaciğer, pankreas ve tükürük bezleri sindirime yardımcı organlardır.",
+              "options": [
+                {"text": "Karaciğer", "pairId": 1, "correct": false},
+                {"text": "Safra üretir (yağ emülsifikasyonu), detoksifikasyon, protein sentezi", "pairId": 1, "correct": false},
+                {"text": "Safra kesesi", "pairId": 2, "correct": false},
+                {"text": "Safrayı depolar ve gerektiğinde duodenuma salgılar", "pairId": 2, "correct": false},
+                {"text": "Pankreas", "pairId": 3, "correct": false},
+                {"text": "Tripsin, lipaz, amilaz + bikarbonat (asit nötralizasyonu)", "pairId": 3, "correct": false},
+                {"text": "Tükürük bezleri", "pairId": 4, "correct": false},
+                {"text": "Amilaz (nişasta sindirimi) + mukus + lizozim (antimikrobiyal)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Sindirimde HCl'nin (hidroklorik asit) görevi nedir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["HCl", "mide"],
+              "timeLimit": 12,
+              "explanation": "HCl mide pH'ını ~2'ye düşürür. Pepsinojeni aktif pepsin'e dönüştürür, proteinleri denatüre eder ve bakterileri öldürür.",
+              "options": [
+                {"text": "Pepsinojeni aktifleştirir, proteinleri denatüre eder, bakterileri öldürür", "correct": true},
+                {"text": "Yağ sindirir", "correct": false},
+                {"text": "Karbonhidrat sindirir", "correct": false},
+                {"text": "Vitamin üretir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Karbonhidratların sindirim aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["karbonhidrat", "sindirim"],
+              "explanation": "Nişasta → maltoz → glikoz şeklinde sindirilir.",
+              "options": [
+                {"text": "Ağız: tükürük amilazı nişastayı maltoza parçalar", "correctOrder": 1, "correct": false},
+                {"text": "Mide: asidik pH amilazı deaktive eder, karbonhidrat sindirimi durur", "correctOrder": 2, "correct": false},
+                {"text": "İnce bağırsak: pankreas amilazı nişasta → maltoz sindirimini tamamlar", "correctOrder": 3, "correct": false},
+                {"text": "Bağırsak epiteli: maltaz, sukraz, laktaz → monosakkaritler (glikoz, fruktoz, galaktoz)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Besinlerin Kimyasal Sindirimi ve Emilimi",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Protein sindirimi hangi organda başlar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["protein", "sindirim"],
+              "explanation": "Protein sindirimi midede başlar: HCl + pepsin. İnce bağırsakta tripsin ve kimotripsin ile devam eder. Son olarak peptidazlar amino asitlere parçalar.",
+              "options": [
+                {"text": "Midede (pepsin + HCl)", "correct": true},
+                {"text": "Ağızda", "correct": false},
+                {"text": "İnce bağırsakta", "correct": false},
+                {"text": "Kalın bağırsakta", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Yağ sindiriminde safranın rolü nedir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["safra", "yağ"],
+              "explanation": "Safra enzim değildir. Yağları küçük damlacıklara ayırır (emülsiyon) → lipaz enziminin çalışma yüzey alanını artırır. Karaciğer üretir, safra kesesi depolar.",
+              "options": [
+                {"text": "Yağları emülsifiye ederek lipaz için yüzey alanını artırır (enzim değildir)", "correct": true},
+                {"text": "Yağları doğrudan sindirir", "correct": false},
+                {"text": "Protein sindirir", "correct": false},
+                {"text": "Mide asidini nötralize eder", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'İnce bağırsak iç yüzeyindeki {1} yapıları emilim yüzey alanını ~600 kat artırarak besinlerin verimli emilimini sağlar.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["villus", "emilim"],
+              "explanation": "Villuslar (çıkıntılar) ve üzerlerindeki mikrovilluslar emilim yüzeyini dramatik şekilde artırır. Her villusta kan kılcalları ve lakteal bulunur.",
+              "options": [
+                {"text": "villus ve mikrovillus", "isBlank": true, "correct": true},
+                {"text": "bezler", "correct": false},
+                {"text": "kıvrımlar", "correct": false},
+                {"text": "kaslar", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Besin sindirim ürünlerini emilim yollarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["emilim", "besin"],
+              "explanation": "Farklı besinler farklı yollarla emilir ve taşınır.",
+              "options": [
+                {"text": "Amino asitler ve glikoz", "pairId": 1, "correct": false},
+                {"text": "Kan kılcalları → kapı toplardamarı → karaciğer", "pairId": 1, "correct": false},
+                {"text": "Yağ asitleri ve gliserol", "pairId": 2, "correct": false},
+                {"text": "Lakteal → lenf sistemi → kan dolaşımı", "pairId": 2, "correct": false},
+                {"text": "Su ve mineraller", "pairId": 3, "correct": false},
+                {"text": "Osmoz/difüzyonla ince ve kalın bağırsakta emilir", "pairId": 3, "correct": false},
+                {"text": "K vitamini", "pairId": 4, "correct": false},
+                {"text": "Kalın bağırsak bakterileri üretir → kalın bağırsakta emilir", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Proteinlerin son sindirim ürünü nedir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "EASY",
+              "tags": ["protein", "amino asit"],
+              "timeLimit": 8,
+              "explanation": "Protein → polipeptit → dipeptit → amino asit. Amino asitler ince bağırsaktan kana emilir.",
+              "options": [
+                {"text": "Amino asitler", "correct": true},
+                {"text": "Glikoz", "correct": false},
+                {"text": "Yağ asitleri", "correct": false},
+                {"text": "Nükleotidler", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Sindirim sistemi hastalıklarını nedenlerini sıralayarak kavrayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["sindirim", "hastalık"],
+              "explanation": "Beslenme alışkanlıkları → fonksiyonel bozukluklar → yapısal değişiklikler → kronik hastalıklar.",
+              "options": [
+                {"text": "Kötü beslenme alışkanlıkları (fast food, lifli gıda azlığı, düzensiz öğün)", "correctOrder": 1, "correct": false},
+                {"text": "Gastrit/reflü: mide asidinin yemek borusuna kaçması, mukoza erozyonu", "correctOrder": 2, "correct": false},
+                {"text": "Ülser: mukoza tabakasının aşınması → mide/duodenum duvarında yara", "correctOrder": 3, "correct": false},
+                {"text": "Kronik hastalıklar: Crohn, ülseratif kolit, kolon kanseri (uzun vadeli)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Destek-Hareket ve Sindirim Sistemi Sağlığı",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Osteoporoz (kemik erimesi) en çok kimlerde görülür?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["osteoporoz", "kemik"],
+              "explanation": "Menopoz sonrası kadınlarda en sık görülür (östrojen düşüşü). Kalsiyum/D vitamini eksikliği, hareketsizlik ve yaş risk faktörleridir.",
+              "options": [
+                {"text": "Menopoz sonrası kadınlarda (östrojen düşüşü nedeniyle)", "correct": true},
+                {"text": "Sadece erkeklerde", "correct": false},
+                {"text": "Çocuklarda", "correct": false},
+                {"text": "Sporcularda", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Skolyoz nedir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["skolyoz", "omurga"],
+              "explanation": "Skolyoz omurganın yana doğru anormal eğrilmesidir. Genellikle ergenlikte fark edilir. Ağır vakalarda korse veya ameliyat gerekebilir.",
+              "options": [
+                {"text": "Omurganın yana doğru anormal eğrilmesi (S veya C şekli)", "correct": true},
+                {"text": "Kemik kırığı", "correct": false},
+                {"text": "Eklem iltihabı", "correct": false},
+                {"text": "Kas yırtığı", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'{1}, kanda ürik asit seviyesinin yükselmesi sonucu eklemlerde kristal birikmesiyle oluşan ağrılı bir eklem hastalığıdır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["gut", "eklem"],
+              "explanation": "Gut hastalığı: ürik asit kristalleri eklemlerde (özellikle ayak başparmağı) birikir → akut iltihaplanma ve şiddetli ağrı.",
+              "options": [
+                {"text": "Gut (damla hastalığı)", "isBlank": true, "correct": true},
+                {"text": "Romatoid artrit", "correct": false},
+                {"text": "Osteoartrit", "correct": false},
+                {"text": "Fibromiyalji", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Destek-hareket sistemi hastalıklarını önlemlerle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["iskelet", "sağlık"],
+              "explanation": "Her hastalığın kendine özgü önleyici tedbirleri vardır.",
+              "options": [
+                {"text": "Osteoporoz", "pairId": 1, "correct": false},
+                {"text": "Kalsiyum + D vitamini alımı, düzenli egzersiz, güneş ışığı", "pairId": 1, "correct": false},
+                {"text": "Bel fıtığı", "pairId": 2, "correct": false},
+                {"text": "Doğru oturma pozisyonu, ağır kaldırma tekniği, karın/sırt kası güçlendirme", "pairId": 2, "correct": false},
+                {"text": "Kas yaralanmaları", "pairId": 3, "correct": false},
+                {"text": "Egzersiz öncesi ısınma, sonrası soğuma, aşırı yüklenmeden kaçınma", "pairId": 3, "correct": false},
+                {"text": "Çürük ve diş eti hastalığı", "pairId": 4, "correct": false},
+                {"text": "Düzenli diş fırçalama, şekerli gıda azaltma, düzenli diş kontrolü", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Kemik sağlığı için en önemli vitamin hangisidir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "EASY",
+              "tags": ["D vitamini", "kemik"],
+              "timeLimit": 10,
+              "explanation": "D vitamini bağırsaktan kalsiyum emilimini artırır. Eksikliği çocuklarda raşitizm, yetişkinlerde osteomalazi (kemik yumuşaması) yapar.",
+              "options": [
+                {"text": "D vitamini", "correct": true},
+                {"text": "C vitamini", "correct": false},
+                {"text": "B12 vitamini", "correct": false},
+                {"text": "A vitamini", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Sağlıklı sindirim sistemi için yapılması gereken adımları sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["sindirim", "sağlık"],
+              "explanation": "Beslenme düzeni, lif, su ve düzenli hareket sindirim sağlığının temellerdir.",
+              "options": [
+                {"text": "Düzenli ve dengeli öğünler (atlamadan, sabit saatlerde)", "correctOrder": 1, "correct": false},
+                {"text": "Bol lifli gıda tüketimi (sebze, meyve, tam tahıl)", "correctOrder": 2, "correct": false},
+                {"text": "Yeterli su tüketimi (günde ~2 litre)", "correctOrder": 3, "correct": false},
+                {"text": "Düzenli fiziksel aktivite + stres yönetimi", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Dolaşım ve Bağışıklık Sistemi",
+      "description": "Kalp, kan, damarlar, lenf dolaşımı, bağışıklık türleri ve vücudun savunma mekanizmaları (MEB 2025-2026)",
+      "order": 3,
+      "lessons": [
+        {
+          "title": "Kalbin Yapısı ve İşleyişi",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "İnsan kalbi kaç odacıktan oluşur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["kalp", "yapı"],
+              "explanation": "İnsan kalbi 4 odacıklıdır: 2 kulakçık (atrium) üstte, 2 karıncık (ventrikül) altta. Sol taraf oksijenli, sağ taraf oksijensiz kanı pompalar.",
+              "options": [
+                {"text": "4 (2 kulakçık + 2 karıncık)", "correct": true},
+                {"text": "2", "correct": false},
+                {"text": "3", "correct": false},
+                {"text": "6", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kalp kapakçıklarının görevi nedir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["kalp", "kapakçık"],
+              "explanation": "Kapakçıklar kanın geri akışını önler. Biküspid (mitral): sol kulakçık-karıncık arası. Triküspid: sağ kulakçık-karıncık arası. Yarım ay kapakçıkları: aort ve pulmoner arter çıkışlarında.",
+              "options": [
+                {"text": "Kanın geri akışını önler (tek yönlü akış sağlar)", "correct": true},
+                {"text": "Kanı pompalar", "correct": false},
+                {"text": "Oksijen üretir", "correct": false},
+                {"text": "Kan hücresi üretir", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Kalbin kendi ritmini oluşturan ve {1} adı verilen özel yapı sağ kulakçıkta bulunur ve kalbin doğal pili olarak çalışır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["sinoatriyal", "kalp pili"],
+              "explanation": "Sinoatriyal (SA) düğüm sağ kulakçıkta bulunur, kendi başına elektrik impulsu üretir (~72 atım/dk). Kalbin doğal pili olarak çalışır.",
+              "options": [
+                {"text": "sinoatriyal (SA) düğüm", "isBlank": true, "correct": true},
+                {"text": "atriyoventriküler (AV) düğüm", "correct": false},
+                {"text": "His demeti", "correct": false},
+                {"text": "Purkinje lifleri", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kalp odacıklarını görevleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["kalp", "odacık"],
+              "explanation": "Her odacık farklı bir görev üstlenir.",
+              "options": [
+                {"text": "Sağ kulakçık", "pairId": 1, "correct": false},
+                {"text": "Vücuttan (vena kava) gelen oksijensiz kanı alır", "pairId": 1, "correct": false},
+                {"text": "Sağ karıncık", "pairId": 2, "correct": false},
+                {"text": "Oksijensiz kanı akciğerlere (pulmoner arter) pompalar", "pairId": 2, "correct": false},
+                {"text": "Sol kulakçık", "pairId": 3, "correct": false},
+                {"text": "Akciğerlerden (pulmoner ven) gelen oksijenli kanı alır", "pairId": 3, "correct": false},
+                {"text": "Sol karıncık", "pairId": 4, "correct": false},
+                {"text": "Oksijenli kanı tüm vücuda (aort) pompalar (en kalın duvarlı)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Kalbin en kalın duvarlı odacığı hangisidir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["kalp", "sol karıncık"],
+              "timeLimit": 10,
+              "explanation": "Sol karıncık tüm vücuda kan pompaladığı için en kalın miyokard (kas) duvarına sahiptir.",
+              "options": [
+                {"text": "Sol karıncık", "correct": true},
+                {"text": "Sağ karıncık", "correct": false},
+                {"text": "Sol kulakçık", "correct": false},
+                {"text": "Sağ kulakçık", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Kalp atım döngüsünü sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["kalp", "döngü"],
+              "explanation": "SA düğüm → kulakçıklar kasılır → AV düğüm → His demeti → Purkinje → karıncıklar kasılır.",
+              "options": [
+                {"text": "SA düğüm impuls üretir → kulakçıklar kasılır (atriyal sistol)", "correctOrder": 1, "correct": false},
+                {"text": "AV düğüm impulsu geciktirerek karıncıklara iletir", "correctOrder": 2, "correct": false},
+                {"text": "His demeti ve Purkinje lifleri → karıncıklar kasılır (ventriküler sistol)", "correctOrder": 3, "correct": false},
+                {"text": "Diastol: tüm kalp gevşer, odacıklar kanla dolar → döngü tekrarlar", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Kan ve Damar Yapısı",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Kanın bileşenleri nelerdir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["kan", "bileşen"],
+              "explanation": "Plazma (~%55): su, protein, hormon, atık. Şekilli elemanlar (~%45): alyuvar (eritrosit), akyuvar (lökosit) ve kan pulcukları (trombosit).",
+              "options": [
+                {"text": "Plazma + Alyuvar + Akyuvar + Trombosit", "correct": true},
+                {"text": "Sadece alyuvar ve plazma", "correct": false},
+                {"text": "Su ve protein", "correct": false},
+                {"text": "Sadece kan pulcukları", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Arter, ven ve kılcal damar arasındaki farklar nelerdir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["damar", "tür"],
+              "explanation": "Arter: kalbi terk eden kan, kalın duvarlı, yüksek basınç. Ven: kalbe dönen kan, ince duvarlı, kapakçıklı. Kılcal: tek tabakalı, madde alışverişi yapılır.",
+              "options": [
+                {"text": "Arter: kalpten uzaklaşan/kalın duvar; Ven: kalbe dönen/kapakçıklı; Kılcal: madde alışverişi", "correct": true},
+                {"text": "Hepsi aynıdır", "correct": false},
+                {"text": "Ven en kalın duvarlıdır", "correct": false},
+                {"text": "Kılcal damar en geniş damardır", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'İnsan kanında oksijen taşıyan kırmızı renk pigmenti {1} olup yapısında demir (Fe²⁺) bulunur.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["hemoglobin", "oksijen"],
+              "explanation": "Hemoglobin (Hb) alyuvarlarda bulunur ve O₂ taşır. Her Hb 4 O₂ bağlayabilir. Demir eksikliği → anemi (kansızlık).",
+              "options": [
+                {"text": "hemoglobin", "isBlank": true, "correct": true},
+                {"text": "miyoglobin", "correct": false},
+                {"text": "klorofil", "correct": false},
+                {"text": "bilirubin", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kan gruplarını antijen-antikor ilişkisiyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["kan grubu", "antijen"],
+              "explanation": "ABO kan grubu sistemi alyuvar yüzeyindeki antijenlere ve plazmadaki antikorlara göre belirlenir.",
+              "options": [
+                {"text": "A kan grubu", "pairId": 1, "correct": false},
+                {"text": "A antijeni taşır, Anti-B antikoru bulunur", "pairId": 1, "correct": false},
+                {"text": "B kan grubu", "pairId": 2, "correct": false},
+                {"text": "B antijeni taşır, Anti-A antikoru bulunur", "pairId": 2, "correct": false},
+                {"text": "AB kan grubu", "pairId": 3, "correct": false},
+                {"text": "A+B antijeni taşır, antikor yok (genel alıcı)", "pairId": 3, "correct": false},
+                {"text": "O kan grubu", "pairId": 4, "correct": false},
+                {"text": "Antijen yok, Anti-A + Anti-B antikoru var (genel verici)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Genel verici kan grubu hangisidir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "EASY",
+              "tags": ["kan grubu", "verici"],
+              "timeLimit": 8,
+              "explanation": "O Rh(-) genel vericidir çünkü alyuvar yüzeyinde A, B antijeni ve Rh faktörü yoktur. AB Rh(+) genel alıcıdır.",
+              "options": [
+                {"text": "O Rh(-)", "correct": true},
+                {"text": "AB Rh(+)", "correct": false},
+                {"text": "A Rh(+)", "correct": false},
+                {"text": "B Rh(-)", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Kan pıhtılaşma sürecini sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["pıhtılaşma"],
+              "explanation": "Damar hasarı → trombositler → protrombin → trombin → fibrinojen → fibrin ağı.",
+              "options": [
+                {"text": "Damar hasarı → trombositler hasar bölgesine yapışır (trombosit tıkacı)", "correctOrder": 1, "correct": false},
+                {"text": "Trombositler tromboplastin salgılar + Ca²⁺", "correctOrder": 2, "correct": false},
+                {"text": "Protrombin → Trombin (aktif enzim) dönüşümü", "correctOrder": 3, "correct": false},
+                {"text": "Trombin: Fibrinojen → Fibrin ağı (kalıcı pıhtı) → kanamayı durdurur", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Büyük ve Küçük Kan Dolaşımı",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Küçük kan dolaşımı (akciğer dolaşımı) hangi yolu izler?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["küçük dolaşım", "akciğer"],
+              "explanation": "Sağ karıncık → pulmoner arter → akciğerler (O₂ alır, CO₂ verir) → pulmoner ven → sol kulakçık. Pulmoner arter oksijensiz kan taşıyan tek arterdir.",
+              "options": [
+                {"text": "Sağ karıncık → Pulmoner arter → Akciğerler → Pulmoner ven → Sol kulakçık", "correct": true},
+                {"text": "Sol karıncık → Aort → Vücut → Vena kava → Sağ kulakçık", "correct": false},
+                {"text": "Kalp → Beyin → Kalp", "correct": false},
+                {"text": "Karaciğer → Akciğer → Kalp", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Büyük kan dolaşımının görevi nedir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["büyük dolaşım"],
+              "explanation": "Sol karıncık → aort → tüm vücut organları → vena kava → sağ kulakçık. Oksijenli kanı organlara dağıtır, oksijensiz kanı kalbe geri toplar.",
+              "options": [
+                {"text": "Sol karıncık → aort → vücut (O₂ dağıtır, CO₂ toplar) → vena kava → sağ kulakçık", "correct": true},
+                {"text": "Akciğerlerde gaz değişimi", "correct": false},
+                {"text": "Sadece beyne kan götürür", "correct": false},
+                {"text": "Lenf dolaşımıdır", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Pulmoner arter, oksijensiz kan taşıyan tek {1} dir; pulmoner ven ise oksijenli kan taşıyan tek vendir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["pulmoner", "arter"],
+              "explanation": "Normalde arterler oksijenli, venler oksijensiz kan taşır. Pulmoner damarlar bunun tek istisnasıdır.",
+              "options": [
+                {"text": "arter", "isBlank": true, "correct": true},
+                {"text": "ven", "correct": false},
+                {"text": "kılcal", "correct": false},
+                {"text": "lenf damarı", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Dolaşım yollarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["dolaşım", "yol"],
+              "explanation": "İnsan vücudunda farklı dolaşım yolları vardır.",
+              "options": [
+                {"text": "Küçük dolaşım", "pairId": 1, "correct": false},
+                {"text": "Kalp ↔ Akciğer (gaz değişimi: O₂ alır, CO₂ bırakır)", "pairId": 1, "correct": false},
+                {"text": "Büyük dolaşım", "pairId": 2, "correct": false},
+                {"text": "Kalp ↔ Tüm vücut (O₂ dağıtır, CO₂ toplar)", "pairId": 2, "correct": false},
+                {"text": "Kapı toplardamarı dolaşımı", "pairId": 3, "correct": false},
+                {"text": "Bağırsak → Karaciğer (emilen besinleri karaciğere taşır)", "pairId": 3, "correct": false},
+                {"text": "Lenf dolaşımı", "pairId": 4, "correct": false},
+                {"text": "Doku sıvısı toplama → lenf düğümleri (filtrasyon) → kan dolaşımına geri döner", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Kılcal damarlarda madde alışverişi hangi mekanizmayla olur?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["kılcal", "difüzyon"],
+              "timeLimit": 10,
+              "explanation": "Kılcal damar duvarı tek hücre kalınlığındadır. O₂, CO₂, besin ve atıklar difüzyonla (basınç farkıyla) kan ↔ doku sıvısı arasında değişir.",
+              "options": [
+                {"text": "Difüzyon (basınç/konsantrasyon farkıyla)", "correct": true},
+                {"text": "Aktif taşıma", "correct": false},
+                {"text": "Osmoz", "correct": false},
+                {"text": "Endositoz", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Kanın vücuttaki dolaşım yolculuğunu sıralayın (küçük + büyük dolaşım).",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["dolaşım", "yolculuk"],
+              "explanation": "Oksijensiz kan → akciğer → oksijenli kan → vücut → oksijensiz kan → tekrar.",
+              "options": [
+                {"text": "Sağ karıncık → pulmoner arter → akciğer kılcalları (O₂ alır, CO₂ verir)", "correctOrder": 1, "correct": false},
+                {"text": "Pulmoner ven → sol kulakçık → sol karıncık", "correctOrder": 2, "correct": false},
+                {"text": "Sol karıncık → aort → vücut kılcalları (O₂ verir, CO₂ alır)", "correctOrder": 3, "correct": false},
+                {"text": "Vena kava → sağ kulakçık → sağ karıncık → döngü devam", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Lenf Dolaşımı ve Bağışıklık Sistemi",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Lenf sisteminin başlıca görevleri nelerdir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["lenf", "görev"],
+              "explanation": "Lenf sistemi: 1) Fazla doku sıvısını toplar, kan dolaşımına geri döndürür. 2) Yağ emilimi (lakteal). 3) Bağışıklık (lenf düğümleri, lenfositler). 4) Filtrasyon.",
+              "options": [
+                {"text": "Doku sıvısı toplama, yağ emilimi, bağışıklık ve filtrasyon", "correct": true},
+                {"text": "Sadece kan üretimi", "correct": false},
+                {"text": "Sadece sindirim", "correct": false},
+                {"text": "Sadece oksijen taşıma", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Doğal (doğuştan) bağışıklık ile edinilmiş (kazanılmış) bağışıklık arasındaki fark nedir?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["bağışıklık", "tür"],
+              "explanation": "Doğal: doğuştan var, spesifik değil, hızlı (deri, mukus, fagositoz, NK hücreleri). Edinilmiş: maruziyetle gelişir, spesifik, hafızalı (T ve B lenfositleri, antikor).",
+              "options": [
+                {"text": "Doğal: doğuştan, hızlı, spesifik olmayan; Edinilmiş: spesifik, hafızalı (T/B lenfosit, antikor)", "correct": true},
+                {"text": "Aralarında fark yoktur", "correct": false},
+                {"text": "Doğal bağışıklık daha yavaştır", "correct": false},
+                {"text": "Edinilmiş bağışıklık doğuştan gelir", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Aşılama, zayıflatılmış veya öldürülmüş patojenlerin vücuda verilerek {1} bağışıklık oluşturulmasıdır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["aşı", "bağışıklık"],
+              "explanation": "Aşı yapay aktif bağışıklık sağlar. Vücut antijen tanır, antikor üretir ve hafıza hücreleri oluşturur. Gerçek enfeksiyonda hızlı tepki verir.",
+              "options": [
+                {"text": "yapay aktif", "isBlank": true, "correct": true},
+                {"text": "doğal aktif", "correct": false},
+                {"text": "yapay pasif", "correct": false},
+                {"text": "doğal pasif", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Bağışıklık türlerini örnekleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["bağışıklık", "örnek"],
+              "explanation": "Bağışıklık aktif/pasif ve doğal/yapay olarak sınıflandırılır.",
+              "options": [
+                {"text": "Doğal aktif bağışıklık", "pairId": 1, "correct": false},
+                {"text": "Hastalık geçirerek kazanılan (kızamık geçirip bağışık olma)", "pairId": 1, "correct": false},
+                {"text": "Yapay aktif bağışıklık", "pairId": 2, "correct": false},
+                {"text": "Aşılama (zayıflatılmış antijen → hafıza hücresi oluşur)", "pairId": 2, "correct": false},
+                {"text": "Doğal pasif bağışıklık", "pairId": 3, "correct": false},
+                {"text": "Anne sütü (IgA) ve plasentadan antikor geçişi (IgG)", "pairId": 3, "correct": false},
+                {"text": "Yapay pasif bağışıklık", "pairId": 4, "correct": false},
+                {"text": "Serum tedavisi (hazır antikor enjeksiyonu, kısa süreli)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Antikor üreten hücre hangisidir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["antikor", "B lenfosit"],
+              "timeLimit": 10,
+              "explanation": "B lenfositleri plazma hücrelerine dönüşerek antikor (immünoglobülin) üretir. T lenfositleri ise hücresel bağışıklıkla görevlidir.",
+              "options": [
+                {"text": "B lenfositi (plazma hücresine dönüşerek)", "correct": true},
+                {"text": "T lenfositi", "correct": false},
+                {"text": "Alyuvar", "correct": false},
+                {"text": "Trombosit", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Vücudun savunma hatlarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["savunma", "hat"],
+              "explanation": "Üç savunma hattı vardır: fiziksel bariyerler → doğuştan gelen hücreler → edinilmiş bağışıklık.",
+              "options": [
+                {"text": "1. hat: Fiziksel bariyerler (deri, mukus, tükürük, mide asidi, gözyaşı)", "correctOrder": 1, "correct": false},
+                {"text": "2. hat: Doğuştan gelen hücreler (fagositler, NK hücreleri, iltihap, ateş)", "correctOrder": 2, "correct": false},
+                {"text": "3. hat: Edinilmiş bağışıklık — B lenfosit (antikor) + T lenfosit (hücresel)", "correctOrder": 3, "correct": false},
+                {"text": "Hafıza hücreleri oluşur → aynı patojenle tekrar karşılaşınca hızlı ve güçlü tepki", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Dolaşım Sistemi Sağlığı",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Ateroskleroz (damar sertliği) nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ateroskleroz", "damar"],
+              "explanation": "Arter duvarlarında kolesterol, yağ ve kalsiyum birikimi (plak) → damar çapı daralır → kan akışı azalır. Kalp krizi ve inme riski artar.",
+              "options": [
+                {"text": "Arter duvarlarında plak birikmesi → damar daralması → kalp krizi/inme riski", "correct": true},
+                {"text": "Venlerin genişlemesi", "correct": false},
+                {"text": "Kan basıncının düşmesi", "correct": false},
+                {"text": "Alyuvar sayısının artması", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Hipertansiyon (yüksek tansiyon) neden tehlikelidir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["hipertansiyon"],
+              "explanation": "Sürekli yüksek kan basıncı damar duvarlarını yıpratır, kalbi yorar. Kalp yetmezliği, inme, böbrek hasarı ve göz hasarına yol açabilir. Sessiz katil olarak bilinir.",
+              "options": [
+                {"text": "Damar yıpranması → kalp yetmezliği, inme, böbrek/göz hasarı riski (sessiz katil)", "correct": true},
+                {"text": "Hiçbir zararı yoktur", "correct": false},
+                {"text": "Sadece baş ağrısı yapar", "correct": false},
+                {"text": "Kan şekerini artırır", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Kalp krizinin (miyokard enfarktüsü) en sık nedeni koroner {1} tıkanmasıdır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["kalp krizi", "koroner"],
+              "explanation": "Koroner arterler kalp kasını besler. Ateroskleroz veya kan pıhtısı ile tıkanırsa kalp kası oksijensiz kalır → miyokard enfarktüsü (kalp krizi).",
+              "options": [
+                {"text": "arter", "isBlank": true, "correct": true},
+                {"text": "ven", "correct": false},
+                {"text": "kapakçık", "correct": false},
+                {"text": "sinir", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Dolaşım sistemi hastalıklarını risk faktörleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["dolaşım", "risk"],
+              "explanation": "Her dolaşım hastalığının kendine özgü risk faktörleri vardır.",
+              "options": [
+                {"text": "Ateroskleroz", "pairId": 1, "correct": false},
+                {"text": "Yüksek kolesterol, sigara, hareketsizlik, obezite", "pairId": 1, "correct": false},
+                {"text": "Hipertansiyon", "pairId": 2, "correct": false},
+                {"text": "Aşırı tuz, stres, obezite, genetik, yaş", "pairId": 2, "correct": false},
+                {"text": "Varis", "pairId": 3, "correct": false},
+                {"text": "Uzun süre ayakta durma, genetik, gebelik (ven kapakçıkları bozulur)", "pairId": 3, "correct": false},
+                {"text": "Anemi (kansızlık)", "pairId": 4, "correct": false},
+                {"text": "Demir eksikliği, B12/folik asit yetersizliği, kronik kan kaybı", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Normal kan basıncı değeri yaklaşık kaçtır?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "EASY",
+              "tags": ["tansiyon", "normal"],
+              "timeLimit": 10,
+              "explanation": "Normal kan basıncı: 120/80 mmHg. Sistolik (120): kalp kasılırken. Diastolik (80): kalp gevşerken. 140/90 üzeri hipertansiyon.",
+              "options": [
+                {"text": "120/80 mmHg", "correct": true},
+                {"text": "180/120 mmHg", "correct": false},
+                {"text": "90/60 mmHg", "correct": false},
+                {"text": "200/100 mmHg", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Kalp-damar sağlığını koruma adımlarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["kalp", "sağlık"],
+              "explanation": "Dengeli beslenme → egzersiz → zararlı alışkanlıklardan kaçınma → düzenli kontrol.",
+              "options": [
+                {"text": "Dengeli beslenme: doymuş yağ/tuz azalt, meyve/sebze/tam tahıl artır", "correctOrder": 1, "correct": false},
+                {"text": "Düzenli aerobik egzersiz (haftada min. 150 dk orta şiddet)", "correctOrder": 2, "correct": false},
+                {"text": "Sigara/alkol bırakma, stres yönetimi, ideal kilo koruma", "correctOrder": 3, "correct": false},
+                {"text": "Düzenli sağlık kontrolü (tansiyon, kolesterol, kan şekeri ölçümü)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Solunum ve Üriner Sistem",
+      "description": "Solunum sistemi yapısı, gaz taşınması, böbrek ve idrar oluşumu, homeostaz (MEB 2025-2026)",
+      "order": 4,
+      "lessons": [
+        {
+          "title": "Solunum Sisteminin Yapısı ve İşleyişi",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Solunum yolunun doğru sırası hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["solunum", "yol"],
+              "explanation": "Burun → yutak → gırtlak (larinks) → soluk borusu (trakea) → bronşlar → bronşiyoller → alveol kesecikleri.",
+              "options": [
+                {"text": "Burun → Yutak → Gırtlak → Soluk borusu → Bronş → Bronşiyol → Alveol", "correct": true},
+                {"text": "Burun → Bronş → Akciğer → Soluk borusu", "correct": false},
+                {"text": "Ağız → Yemek borusu → Akciğer", "correct": false},
+                {"text": "Gırtlak → Burun → Soluk borusu", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Diyafram kasının solunumdaki rolü nedir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["diyafram", "solunum"],
+              "explanation": "İnspirasyonda (nefes alma): diyafram kasılır, düzleşir → göğüs hacmi artar → akciğerler genişler → hava girer. Ekspirasyonda gevşer, kubbeleşir → hava çıkar.",
+              "options": [
+                {"text": "Kasılınca düzleşir → göğüs hacmi artar → hava girer; gevşeyince hava çıkar", "correct": true},
+                {"text": "Oksijen üretir", "correct": false},
+                {"text": "CO₂ filtreler", "correct": false},
+                {"text": "Solunumla ilgisi yoktur", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Alveoller ~300 milyon adet olup toplam iç yüzey alanı yaklaşık {1} m²'dir ve bu gaz alışverişi verimliliğini sağlar.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["alveol", "yüzey"],
+              "explanation": "Alveollerin toplam yüzey alanı ~70-100 m² (bir tenis kortu büyüklüğünde). Tek tabakalı yassı epitelle kaplı, gaz difüzyonu için ideal.",
+              "options": [
+                {"text": "70-100", "isBlank": true, "correct": true},
+                {"text": "5-10", "correct": false},
+                {"text": "500", "correct": false},
+                {"text": "1-2", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Solunum yapılarını görevleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["solunum", "yapı"],
+              "explanation": "Her solunum yapısının kendine özgü görevi vardır.",
+              "options": [
+                {"text": "Burun (nazal kavite)", "pairId": 1, "correct": false},
+                {"text": "Havanın ısıtılması, nemlendirilmesi ve filtrelenmesi (kıl+mukus)", "pairId": 1, "correct": false},
+                {"text": "Soluk borusu (trakea)", "pairId": 2, "correct": false},
+                {"text": "C-şeklinde kıkırdak halkaları açık tutar, kirpikli epitel mukusu yukarı iter", "pairId": 2, "correct": false},
+                {"text": "Gırtlak (larinks)", "pairId": 3, "correct": false},
+                {"text": "Ses telleri içerir, ses üretir; epiglot yutma sırasında soluk yolunu kapatır", "pairId": 3, "correct": false},
+                {"text": "Alveol", "pairId": 4, "correct": false},
+                {"text": "Gaz alışverişi: O₂ kana geçer, CO₂ havaya verilir (difüzyon)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Epiglotun görevi nedir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "EASY",
+              "tags": ["epiglot"],
+              "timeLimit": 10,
+              "explanation": "Epiglot yutma sırasında gırtlak girişini kapatarak yiyecek/içeceğin soluk borusuna kaçmasını önler.",
+              "options": [
+                {"text": "Yutma sırasında soluk borusu girişini kapatarak besin kaçışını önler", "correct": true},
+                {"text": "Ses üretir", "correct": false},
+                {"text": "Oksijen filtreler", "correct": false},
+                {"text": "Öksürük refleksini başlatır", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Nefes alma (inspirasyon) sürecini sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["inspirasyon", "süreç"],
+              "explanation": "Diyafram + kaburgalar arası kaslar kasılır → hacim artar → basınç düşer → hava girer.",
+              "options": [
+                {"text": "Beyin solunum merkezi (medulla oblongata) sinir impulsu gönderir", "correctOrder": 1, "correct": false},
+                {"text": "Diyafram kasılır (düzleşir) + kaburgalar arası kaslar kasılır (kaburgalar kalkar)", "correctOrder": 2, "correct": false},
+                {"text": "Göğüs kafesi hacmi artar → akciğer içi basınç düşer (Boyle yasası)", "correctOrder": 3, "correct": false},
+                {"text": "Atmosfer basıncı > akciğer basıncı → hava burundan akciğerlere akar", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Gaz Taşınması ve Solunum Sağlığı",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Oksijen kanda en çok nasıl taşınır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["oksijen", "hemoglobin"],
+              "explanation": "O₂'nin ~%97'si hemoglobine (Hb) bağlı olarak (oksihemoglobin, HbO₂) taşınır. ~%3'ü plazmada çözünmüş hâlde taşınır.",
+              "options": [
+                {"text": "~%97'si hemoglobine bağlı (HbO₂), ~%3'ü plazmada çözünmüş", "correct": true},
+                {"text": "Tamamı plazmada çözünmüş", "correct": false},
+                {"text": "Akyuvarlarda", "correct": false},
+                {"text": "Trombositlerde", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "CO₂ kanda hangi formlarda taşınır?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["CO₂", "taşınma"],
+              "explanation": "CO₂ taşınması: ~%70 bikarbonat (HCO₃⁻) olarak plazmada, ~%23 karbaminohemoglobin (HbCO₂), ~%7 çözünmüş CO₂ olarak.",
+              "options": [
+                {"text": "~%70 bikarbonat (HCO₃⁻), ~%23 Hb'ye bağlı (HbCO₂), ~%7 çözünmüş", "correct": true},
+                {"text": "Tamamı hemoglobine bağlı", "correct": false},
+                {"text": "Tamamı bikarbonat olarak", "correct": false},
+                {"text": "Tamamı çözünmüş olarak", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Karbonmonoksit (CO) zehirlenmesinde CO, hemoglobine O₂'den yaklaşık {1} kat daha güçlü bağlanarak oksijen taşınmasını engeller.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["CO", "zehirlenme"],
+              "explanation": "CO'nun hemoglobine afinitesi O₂'den ~200-250 kat fazladır. Karboksihemoglobin (HbCO) oluşur, oksijen taşınamaz → doku oksijensizliği → ölüm.",
+              "options": [
+                {"text": "200-250", "isBlank": true, "correct": true},
+                {"text": "2-3", "correct": false},
+                {"text": "10", "correct": false},
+                {"text": "50", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Solunum sistemi hastalıklarını nedenlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["solunum", "hastalık"],
+              "explanation": "Her solunum hastalığının farklı bir mekanizması vardır.",
+              "options": [
+                {"text": "Astım", "pairId": 1, "correct": false},
+                {"text": "Bronşiyollerin daralması ve iltihaplanması → nefes darlığı, hırıltı", "pairId": 1, "correct": false},
+                {"text": "KOAH (Kronik Obstrüktif Akciğer Hastalığı)", "pairId": 2, "correct": false},
+                {"text": "Sigara → kronik bronşit + amfizem → geri dönüşümsüz akciğer hasarı", "pairId": 2, "correct": false},
+                {"text": "Zatürre (pnömoni)", "pairId": 3, "correct": false},
+                {"text": "Bakteri/virüs enfeksiyonu → alveollerde sıvı birikmesi → gaz değişimi bozulur", "pairId": 3, "correct": false},
+                {"text": "Akciğer kanseri", "pairId": 4, "correct": false},
+                {"text": "Sigara en büyük risk: akciğer hücrelerinde kontrolsüz çoğalma", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Sigaranın akciğerlere en zararlı etkisi nedir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["sigara", "akciğer"],
+              "timeLimit": 10,
+              "explanation": "Sigara dumanı kirpikli epiteli tahrip eder, mukus birikmesine yol açar, alveol duvarlarını yıkar (amfizem) ve kanser riskini 20+ kat artırır.",
+              "options": [
+                {"text": "Alveol hasarı (amfizem) + akciğer kanseri riski 20+ kat artar", "correct": true},
+                {"text": "Sadece öksürük yapar", "correct": false},
+                {"text": "Zararı yoktur", "correct": false},
+                {"text": "Sadece nefesi kokutturur", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Alveoller ve kılcallar arası gaz değişimini sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["gaz değişimi", "alveol"],
+              "explanation": "Gaz değişimi basınç farkına dayalı difüzyonla gerçekleşir.",
+              "options": [
+                {"text": "Hava alveole ulaşır (yüksek O₂, düşük CO₂)", "correctOrder": 1, "correct": false},
+                {"text": "O₂ alveoleden kılcal kana difüzle geçer (kısmi basınç farkı)", "correctOrder": 2, "correct": false},
+                {"text": "CO₂ kılcal kandan alveole difüzle geçer", "correctOrder": 3, "correct": false},
+                {"text": "O₂'li kan pulmoner venle kalbe döner, CO₂'li hava nefesle atılır", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Üriner Sistemin Yapısı ve Görevleri",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Üriner sistem hangi organlardan oluşur?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["üriner", "organ"],
+              "explanation": "İki böbrek (idrar üretimi) + iki üreter (idrar taşıma) + idrar kesesi (mesane, depolama) + üretra (idrar atılımı).",
+              "options": [
+                {"text": "Böbrekler, üreterler, idrar kesesi (mesane) ve üretra", "correct": true},
+                {"text": "Sadece böbrekler", "correct": false},
+                {"text": "Böbrekler ve karaciğer", "correct": false},
+                {"text": "Mide ve bağırsak", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Nefronun yapısı ve görevi nedir?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["nefron", "böbrek"],
+              "explanation": "Nefron böbreğin fonksiyonel birimidir (~1 milyon/böbrek). Bowman kapsülü + proksimal tüp + Henle kulpu + distal tüp + toplama kanalı. Filtrasyon, geri emilim ve salgılama yapar.",
+              "options": [
+                {"text": "Böbreğin işlevsel birimi: Bowman kapsülü + tüpler + Henle kulpu → filtrasyon, geri emilim, salgılama", "correct": true},
+                {"text": "Kan hücresi üretir", "correct": false},
+                {"text": "Hormon salgılar", "correct": false},
+                {"text": "Sadece suyu filtreler", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Böbreklerde kanın süzülmesi {1} adlı yapıda gerçekleşir; burada kan basıncıyla plazmanın bir kısmı Bowman kapsülüne geçer.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["glomerül", "filtrasyon"],
+              "explanation": "Glomerül, afferent arteriolden gelen kanın süzüldüğü kılcal yumağıdır. Kan basıncıyla su, glikoz, amino asit, tuzlar ve üre süzülür; kan hücreleri ve proteinler geçemez.",
+              "options": [
+                {"text": "glomerül (kılcal damar yumağı)", "isBlank": true, "correct": true},
+                {"text": "Henle kulpu", "correct": false},
+                {"text": "toplama kanalı", "correct": false},
+                {"text": "üreter", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Nefron bölümlerini görevleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["nefron", "bölüm"],
+              "explanation": "Nefronun her bölümü farklı bir işlev görür.",
+              "options": [
+                {"text": "Glomerül + Bowman kapsülü", "pairId": 1, "correct": false},
+                {"text": "Filtrasyon: plazma bileşenleri süzülür (günde ~180 L süzüntü)", "pairId": 1, "correct": false},
+                {"text": "Proksimal tübül", "pairId": 2, "correct": false},
+                {"text": "Geri emilim: glikoz, amino asit, Na⁺, su'nun ~%65'i geri emilir", "pairId": 2, "correct": false},
+                {"text": "Henle kulpu", "pairId": 3, "correct": false},
+                {"text": "İdrar yoğunlaştırma: ters akım sistemi ile su geri emilimi", "pairId": 3, "correct": false},
+                {"text": "Distal tübül + Toplama kanalı", "pairId": 4, "correct": false},
+                {"text": "İnce ayar: ADH (su), aldosteron (Na⁺) kontrolüyle son düzenleme", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Böbrekler günde yaklaşık kaç litre kan süzer?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["böbrek", "filtrasyon"],
+              "timeLimit": 10,
+              "explanation": "Böbrekler günde ~180 L plazma süzer (glomerüler filtrasyon). ~%99'u geri emilir, yalnızca ~1,5-2 L idrar olarak atılır.",
+              "options": [
+                {"text": "~180 litre (ama ~%99'u geri emilir)", "correct": true},
+                {"text": "5 litre", "correct": false},
+                {"text": "500 litre", "correct": false},
+                {"text": "1 litre", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "İdrar oluşumu sürecini sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["idrar", "oluşum"],
+              "explanation": "Filtrasyon → geri emilim → salgılama → atılım.",
+              "options": [
+                {"text": "Glomerüler filtrasyon: kan basıncıyla plazma Bowman kapsülüne süzülür", "correctOrder": 1, "correct": false},
+                {"text": "Tübüler geri emilim: glikoz, amino asit, su, Na⁺ kana geri döner", "correctOrder": 2, "correct": false},
+                {"text": "Tübüler salgılama: H⁺, K⁺, ilaçlar, atıklar tübüle aktif taşımayla salgılanır", "correctOrder": 3, "correct": false},
+                {"text": "İdrar toplama kanalı → renal pelvis → üreter → mesane → üretra → atılım", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Homeostaz ve Böbreklerin Düzenleyici Rolü",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Homeostaz nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["homeostaz"],
+              "explanation": "Homeostaz, vücudun iç ortam koşullarını (sıcaklık, pH, ozmotik basınç, kan şekeri, su-mineral dengesi) dar sınırlar içinde sabit tutma yeteneğidir.",
+              "options": [
+                {"text": "Vücudun iç ortamını sabit tutma yeteneği (sıcaklık, pH, ozmotik basınç vb.)", "correct": true},
+                {"text": "Sürekli değişen vücut koşulları", "correct": false},
+                {"text": "Sadece vücut sıcaklığının korunması", "correct": false},
+                {"text": "Dış çevre koşullarının kontrolü", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "ADH (antidiüretik hormon) ne işe yarar?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["ADH", "su dengesi"],
+              "explanation": "ADH hipofiz arka lobundan salgılanır. Toplama kanallarında su geri emilimini artırır → idrar azalır, kan hacmi korunur. Dehidrasyonda ADH artar.",
+              "options": [
+                {"text": "Toplama kanallarında su geri emilimini artırır → idrar azalır, kan hacmi korunur", "correct": true},
+                {"text": "İdrar üretimini artırır", "correct": false},
+                {"text": "Kan şekerini düşürür", "correct": false},
+                {"text": "Kalsiyum emilimini artırır", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'{1}, böbrek üstü bezi korteksinden salgılanan ve böbreklerde Na⁺ geri emilimini artırarak kan basıncını yükselten hormondur.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["aldosteron", "böbrek"],
+              "explanation": "Aldosteron distal tübül ve toplama kanalında Na⁺ geri emilimini artırır (K⁺ salgılanır). Na⁺ su çeker → kan hacmi ve basıncı artar.",
+              "options": [
+                {"text": "Aldosteron", "isBlank": true, "correct": true},
+                {"text": "ADH", "correct": false},
+                {"text": "Renin", "correct": false},
+                {"text": "Kortizol", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Böbreklerin homeostaz rollerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["böbrek", "homeostaz"],
+              "explanation": "Böbrekler birçok homeostatik mekanizmada merkezi rol oynar.",
+              "options": [
+                {"text": "Su dengesi", "pairId": 1, "correct": false},
+                {"text": "ADH kontrolüyle su geri emilimi ayarlanır", "pairId": 1, "correct": false},
+                {"text": "Tuz (Na⁺/K⁺) dengesi", "pairId": 2, "correct": false},
+                {"text": "Aldosteron kontrolüyle Na⁺ geri emilimi/K⁺ salgılanması ayarlanır", "pairId": 2, "correct": false},
+                {"text": "Kan pH dengesi", "pairId": 3, "correct": false},
+                {"text": "H⁺ salgılama ve HCO₃⁻ geri emilimi ile pH 7,35-7,45'te tutulur", "pairId": 3, "correct": false},
+                {"text": "Kan basıncı düzenlemesi", "pairId": 4, "correct": false},
+                {"text": "Renin-anjiyotensin-aldosteron sistemi (RAAS) ile basınç ayarlanır", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Vücut su kaybettiğinde ne olur?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["dehidrasyon", "ADH"],
+              "timeLimit": 12,
+              "explanation": "Kan ozmotik basıncı artar → hipotalamus algılar → ADH salgılanır → böbreklerde su geri emilimi artar → idrar azalır ve yoğunlaşır.",
+              "options": [
+                {"text": "ADH artar → su geri emilimi artar → idrar azalır ve yoğunlaşır", "correct": true},
+                {"text": "İdrar miktarı artar", "correct": false},
+                {"text": "ADH azalır", "correct": false},
+                {"text": "Kan basıncı yükselir", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Negatif geri bildirim mekanizmasını sıralayın (vücut sıcaklığı örneği).",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["negatif geri bildirim", "sıcaklık"],
+              "explanation": "Sapma → algılama → düzeltme → normalleşme → sinyal durur (negatif geri bildirim döngüsü).",
+              "options": [
+                {"text": "Vücut sıcaklığı 37°C'nin üstüne çıkar (sapma)", "correctOrder": 1, "correct": false},
+                {"text": "Hipotalamus sıcaklık artışını algılar (sensör)", "correctOrder": 2, "correct": false},
+                {"text": "Terleme başlar + deri damarları genişler → ısı kaybı artar (efektör tepki)", "correctOrder": 3, "correct": false},
+                {"text": "Sıcaklık 37°C'ye döner → hipotalamus sinyali durdurur (negatif geri bildirim)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Üriner Sistem Sağlığı",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Böbrek taşı nasıl oluşur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["böbrek taşı"],
+              "explanation": "İdrardaki kalsiyum oksalat, kalsiyum fosfat veya ürik asit gibi mineraller kristalleşerek taş oluşturur. Yetersiz su tüketimi, aşırı tuz ve genetik risk faktörleridir.",
+              "options": [
+                {"text": "İdrardaki minerallerin (Ca oksalat, ürik asit) kristalleşmesiyle", "correct": true},
+                {"text": "Bakteriyel enfeksiyonla", "correct": false},
+                {"text": "Aşırı su tüketiminden", "correct": false},
+                {"text": "Vitamin fazlalığından", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Diyaliz (hemodiyaliz) ne zaman gereklidir?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["diyaliz", "böbrek yetmezliği"],
+              "explanation": "Böbrekler fonksiyonlarının ~%85-90'ını kaybettiğinde (son dönem böbrek yetmezliği) diyaliz gerekir. Yapay olarak kanı süzer, atıkları ve fazla sıvıyı temizler.",
+              "options": [
+                {"text": "Böbrekler işlevini ~%85-90 kaybettiğinde (son dönem yetmezlik) — yapay kan süzme", "correct": true},
+                {"text": "Hafif idrar yolu enfeksiyonunda", "correct": false},
+                {"text": "Böbrek taşında", "correct": false},
+                {"text": "Her böbrek hastasında", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'{1}, idrar yollarına bakteri (genellikle E. coli) bulaşmasıyla oluşan ve sık idrara çıkma, yanma hissiyle seyreden enfeksiyondur.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["idrar yolu enfeksiyonu"],
+              "explanation": "Üriner sistem enfeksiyonu (ÜSE/İYE), kadınlarda kısa üretra nedeniyle daha yaygındır. Bol su tüketerek ve hijyene dikkat ederek önlenebilir.",
+              "options": [
+                {"text": "İdrar yolu enfeksiyonu (İYE/ÜSE)", "isBlank": true, "correct": true},
+                {"text": "Böbrek taşı", "correct": false},
+                {"text": "Nefrit", "correct": false},
+                {"text": "Prostatit", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Böbrek hastalıklarını önlemlerle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["böbrek", "sağlık"],
+              "explanation": "Her böbrek sorununun kendine özgü korunma yöntemi vardır.",
+              "options": [
+                {"text": "Böbrek taşı", "pairId": 1, "correct": false},
+                {"text": "Günde 2-3 L su, düşük tuz/oksalat diyeti", "pairId": 1, "correct": false},
+                {"text": "İdrar yolu enfeksiyonu", "pairId": 2, "correct": false},
+                {"text": "Bol su, kişisel hijyen, idrar tutmama", "pairId": 2, "correct": false},
+                {"text": "Kronik böbrek hastalığı", "pairId": 3, "correct": false},
+                {"text": "Diyabet ve hipertansiyon kontrolü, düzenli check-up", "pairId": 3, "correct": false},
+                {"text": "Böbrek yetmezliği (son dönem)", "pairId": 4, "correct": false},
+                {"text": "Diyaliz veya böbrek nakli", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Böbrek sağlığı için günde en az kaç litre su önerilir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "EASY",
+              "tags": ["su", "böbrek"],
+              "timeLimit": 8,
+              "explanation": "Yetişkinler için günde en az 2-2,5 litre su önerilir. Yeterli su böbreklerde atık konsantrasyonunu düşürür ve taş oluşumunu önler.",
+              "options": [
+                {"text": "2-2,5 litre", "correct": true},
+                {"text": "0,5 litre", "correct": false},
+                {"text": "10 litre", "correct": false},
+                {"text": "5 litre", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Böbrek yetmezliği gelişim sürecini sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["böbrek yetmezliği", "süreç"],
+              "explanation": "Risk faktörü → hasar → fonksiyon kaybı → son dönem yetmezlik → diyaliz/nakil.",
+              "options": [
+                {"text": "Risk faktörleri: kontrolsüz diyabet, hipertansiyon, tekrarlayan enfeksiyon", "correctOrder": 1, "correct": false},
+                {"text": "Nefron hasarı başlar, GFR (glomerüler filtrasyon hızı) yavaşça düşer", "correctOrder": 2, "correct": false},
+                {"text": "Kanda üre, kreatinin birikir, su-elektrolit dengesi bozulur", "correctOrder": 3, "correct": false},
+                {"text": "Son dönem böbrek yetmezliği (GFR<%15) → diyaliz veya böbrek nakli gerekir", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Üreme Sistemi ve Embriyonik Gelişim",
+      "description": "Erkek ve kadın üreme sistemi, gametogenez, menstrual döngü, döllenme ve embriyonik gelişim (MEB 2025-2026)",
+      "order": 5,
+      "lessons": [
+        {
+          "title": "Erkek Üreme Sistemi",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Erkek üreme sisteminin temel organları nelerdir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["erkek", "üreme"],
+              "explanation": "Testisler (sperm ve testosteron üretimi), epididimis (sperm olgunlaşması), vas deferens (sperm taşıma), prostat/seminal vezikül (sıvı üretimi), üretra ve penis.",
+              "options": [
+                {"text": "Testisler, epididimis, vas deferens, prostat, seminal veziküller, üretra, penis", "correct": true},
+                {"text": "Sadece testisler", "correct": false},
+                {"text": "Testisler ve mesane", "correct": false},
+                {"text": "Böbrekler ve testisler", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Spermatogenez nedir ve nerede gerçekleşir?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["spermatogenez", "testis"],
+              "explanation": "Spermatogenez: olgun sperm hücresi üretimi. Testislerdeki seminifer tübüllerde gerçekleşir. Spermatogonium (2n) → mitoz → mayoz I → mayoz II → spermatid → olgun sperm (n). ~74 gün sürer.",
+              "options": [
+                {"text": "Testislerin seminifer tübüllerinde sperm üretimi: 2n → mitoz + mayoz → n (~74 gün)", "correct": true},
+                {"text": "Yumurta hücresi üretimi", "correct": false},
+                {"text": "Testosteron üretimi", "correct": false},
+                {"text": "Prostat sıvısı üretimi", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Erkeklik hormonu {1}, testislerin Leydig hücrelerinde üretilir ve erkek eşey özelliklerinin gelişimini sağlar.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["testosteron"],
+              "explanation": "Testosteron: ses kalınlaşması, sakal/bıyık büyümesi, kas-kemik gelişimi, sperm üretiminin düzenlenmesi. LH kontrolünde salgılanır.",
+              "options": [
+                {"text": "testosteron", "isBlank": true, "correct": true},
+                {"text": "östrojen", "correct": false},
+                {"text": "progesteron", "correct": false},
+                {"text": "insülin", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Spermatogenez aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["spermatogenez", "aşama"],
+              "explanation": "Spermatogonium → primer spermatosit → sekonder spermatosit → spermatid → sperm.",
+              "options": [
+                {"text": "Spermatogonium (2n) mitoz ile çoğalır", "correctOrder": 1, "correct": false},
+                {"text": "Primer spermatosit (2n) → Mayoz I → 2 sekonder spermatosit (n)", "correctOrder": 2, "correct": false},
+                {"text": "Sekonder spermatosit → Mayoz II → 4 spermatid (n)", "correctOrder": 3, "correct": false},
+                {"text": "Spermiogenez: spermatid → olgun sperm (baş, boyun, kuyruk oluşur)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Testisler neden vücut dışında (skrotum) bulunur?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["testis", "sıcaklık"],
+              "timeLimit": 10,
+              "explanation": "Sperm üretimi vücut sıcaklığından (~37°C) 2-3°C düşük sıcaklıkta (34-35°C) optimal çalışır. Skrotum bu sıcaklık farkını sağlar.",
+              "options": [
+                {"text": "Sperm üretimi için vücut sıcaklığından 2-3°C düşük sıcaklık gerektiği için", "correct": true},
+                {"text": "Koruma amaçlı", "correct": false},
+                {"text": "Daha fazla alan sağlamak için", "correct": false},
+                {"text": "Hormonal nedenlerle", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Semen bileşenlerini kaynakları ile eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["semen", "bileşen"],
+              "explanation": "Semen sperm + aksesuar bez salgılarından oluşur.",
+              "options": [
+                {"text": "Sperm hücreleri", "pairId": 1, "correct": false},
+                {"text": "Testisler (seminifer tübüller) — genetik materyal taşır", "pairId": 1, "correct": false},
+                {"text": "Seminal vezikül sıvısı (~%60)", "pairId": 2, "correct": false},
+                {"text": "Fruktoz (enerji), prostaglandin — sperm besler", "pairId": 2, "correct": false},
+                {"text": "Prostat sıvısı (~%30)", "pairId": 3, "correct": false},
+                {"text": "Bazik sıvı — vajina asidini nötralize eder", "pairId": 3, "correct": false},
+                {"text": "Cowper bezi sıvısı", "pairId": 4, "correct": false},
+                {"text": "Kayganlaştırıcı — üretrayı temizler ve kayganlaştırır", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Kadın Üreme Sistemi ve Menstrual Döngü",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Kadın üreme sisteminin temel organları nelerdir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["kadın", "üreme"],
+              "explanation": "Yumurtalıklar (ovaryum): yumurta ve hormon üretimi. Yumurta kanalları (fallop tüpü): döllenme yeri. Rahim (uterus): embriyo gelişimi. Vajina: doğum kanalı.",
+              "options": [
+                {"text": "Yumurtalıklar, yumurta kanalları (fallop), rahim (uterus) ve vajina", "correct": true},
+                {"text": "Sadece rahim", "correct": false},
+                {"text": "Yumurtalıklar ve mesane", "correct": false},
+                {"text": "Böbrekler ve rahim", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Menstrual döngü ortalama kaç gündür ve hangi hormonlar kontrol eder?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["menstrual", "döngü"],
+              "explanation": "Ortalama 28 gün. FSH ve LH (hipofiz), östrojen ve progesteron (ovaryum) kontrol eder. Folliküler faz → ovulasyon → lüteal faz → menstruasyon.",
+              "options": [
+                {"text": "~28 gün; FSH, LH (hipofiz) + östrojen, progesteron (ovaryum) kontrol eder", "correct": true},
+                {"text": "7 gün; sadece östrojen", "correct": false},
+                {"text": "60 gün; testosteron", "correct": false},
+                {"text": "14 gün; sadece progesteron", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Menstrual döngünün ~14. gününde LH hormonunun ani yükselmesiyle olgun yumurtanın ovaryumdan atılmasına {1} denir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["ovulasyon"],
+              "explanation": "Ovulasyon: LH pike'i → olgun follikül patlar → yumurta (oosit II) fallop tüpüne bırakılır. Döllenme olmazsa ~14 gün sonra menstruasyon başlar.",
+              "options": [
+                {"text": "ovulasyon (yumurtlama)", "isBlank": true, "correct": true},
+                {"text": "menstruasyon", "correct": false},
+                {"text": "implantasyon", "correct": false},
+                {"text": "fertilizasyon", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Menstrual döngünün fazlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["menstrual", "faz"],
+              "explanation": "Döngü dört fazdan oluşur.",
+              "options": [
+                {"text": "Menstruasyon (1-5. gün)", "pairId": 1, "correct": false},
+                {"text": "Endometrium dökülür (kanama), yeni döngü başlar", "pairId": 1, "correct": false},
+                {"text": "Folliküler faz (1-13. gün)", "pairId": 2, "correct": false},
+                {"text": "FSH → follikül büyür → östrojen artar → endometrium kalınlaşır", "pairId": 2, "correct": false},
+                {"text": "Ovulasyon (~14. gün)", "pairId": 3, "correct": false},
+                {"text": "LH pike'i → olgun yumurta ovaryumdan atılır", "pairId": 3, "correct": false},
+                {"text": "Lüteal faz (15-28. gün)", "pairId": 4, "correct": false},
+                {"text": "Korpus luteum → progesteron → endometrium korunur; döllenme yoksa → döngü tekrar", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Ovulasyon hangi hormonun ani yükselmesiyle tetiklenir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["LH", "ovulasyon"],
+              "timeLimit": 10,
+              "explanation": "LH (lüteinleştirici hormon) pike'i ovulasyonu tetikler. Yüksek östrojen pozitif geri bildirimle hipofizden LH salınımını artırır.",
+              "options": [
+                {"text": "LH (lüteinleştirici hormon)", "correct": true},
+                {"text": "FSH", "correct": false},
+                {"text": "Östrojen", "correct": false},
+                {"text": "Progesteron", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Oogenez aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["oogenez", "yumurta"],
+              "explanation": "Oogonium → primer oosit → sekonder oosit → ovum.",
+              "options": [
+                {"text": "Fetal dönem: oogonium (2n) → primer oosit (2n, mayoz I'de durur — doğuma kadar)", "correctOrder": 1, "correct": false},
+                {"text": "Ergenlik sonrası: her ay 1 primer oosit mayoz I'i tamamlar → sekonder oosit (n) + 1. kutup hücresi", "correctOrder": 2, "correct": false},
+                {"text": "Ovulasyon: sekonder oosit (mayoz II'de durur) fallop tüpüne atılır", "correctOrder": 3, "correct": false},
+                {"text": "Döllenme olursa: mayoz II tamamlanır → ovum (n) + 2. kutup hücresi → zigot (2n)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Döllenme ve Embriyonik Gelişim",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Döllenme (fertilizasyon) nerede gerçekleşir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["döllenme", "yer"],
+              "explanation": "Döllenme genellikle yumurta kanalının (fallop tüpü) ampulla bölgesinde gerçekleşir. Sperm yumurtayı deler → çekirdekler birleşir → zigot (2n) oluşur.",
+              "options": [
+                {"text": "Yumurta kanalının (fallop tüpü) ampulla bölgesinde", "correct": true},
+                {"text": "Rahimde", "correct": false},
+                {"text": "Yumurtalıkta", "correct": false},
+                {"text": "Vajinada", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "İmplantasyon (tutunma) nedir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["implantasyon", "embriyo"],
+              "explanation": "Zigot bölünerek blastosist hâline gelir (~5-7 gün). Blastosist rahim iç duvarına (endometrium) tutunur (implantasyon). hCG hormonu salgılanmaya başlar.",
+              "options": [
+                {"text": "Blastosistin (~5-7 gün) rahim endometriumuna tutunması → hCG salgılanır", "correct": true},
+                {"text": "Spermin yumurtayı delmesi", "correct": false},
+                {"text": "Bebeğin doğması", "correct": false},
+                {"text": "Ovulasyonun gerçekleşmesi", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Gebelik testleri, blastosistin implantasyonundan sonra salgılanan {1} hormonunu ölçerek hamileliği tespit eder.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["hCG", "gebelik"],
+              "explanation": "hCG (human koryonik gonadotropin) korpus luteumu yaşatır → progesteron devam eder → endometrium korunur → menstruasyon olmaz.",
+              "options": [
+                {"text": "hCG (human koryonik gonadotropin)", "isBlank": true, "correct": true},
+                {"text": "östrojen", "correct": false},
+                {"text": "progesteron", "correct": false},
+                {"text": "LH", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Embriyonik gelişim aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["embriyo", "gelişim"],
+              "explanation": "Zigot → morula → blastosist → gastrulasyon → organogenez.",
+              "options": [
+                {"text": "Döllenme: sperm + yumurta → zigot (2n, tek hücreli)", "correctOrder": 1, "correct": false},
+                {"text": "Segmentasyon: zigot mitoz ile bölünür → morula (16-32 hücre) → blastosist (boşluklu)", "correctOrder": 2, "correct": false},
+                {"text": "Gastrulasyon: 3 germ tabakası oluşur (ektoderm, mezoderm, endoderm)", "correctOrder": 3, "correct": false},
+                {"text": "Organogenez: germ tabakalarından organ ve doku sistemleri gelişir", "correctOrder": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Zigot oluşumundan sonra ilk bölünme yaklaşık ne zaman gerçekleşir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["zigot", "bölünme"],
+              "timeLimit": 12,
+              "explanation": "İlk mitotik bölünme döllenmeden ~30 saat sonra gerçekleşir. 2 hücre → 4 → 8 → 16 (morula) → blastosist (~5-7 gün).",
+              "options": [
+                {"text": "~30 saat sonra", "correct": true},
+                {"text": "Birkaç dakika sonra", "correct": false},
+                {"text": "1 hafta sonra", "correct": false},
+                {"text": "1 ay sonra", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Germ tabakalarını oluşturdukları doku/organlarla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["germ tabaka", "organogenez"],
+              "explanation": "Üç germ tabakası tüm doku ve organların kökenini oluşturur.",
+              "options": [
+                {"text": "Ektoderm (dış tabaka)", "pairId": 1, "correct": false},
+                {"text": "Deri, sinir sistemi, göz lensi, diş minesi", "pairId": 1, "correct": false},
+                {"text": "Mezoderm (orta tabaka)", "pairId": 2, "correct": false},
+                {"text": "Kas, kemik, kan, kalp, böbrek, üreme organları", "pairId": 2, "correct": false},
+                {"text": "Endoderm (iç tabaka)", "pairId": 3, "correct": false},
+                {"text": "Sindirim kanalı epiteli, akciğer, karaciğer, pankreas, tiroid", "pairId": 3, "correct": false},
+                {"text": "Plasenta", "pairId": 4, "correct": false},
+                {"text": "Anne-fetüs arası besin/gaz/atık alışverişi, kordon bağı ile bağlı", "pairId": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Gebelik Süreci ve Üreme Sağlığı",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "İnsan gebelik süresi yaklaşık kaç haftadır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["gebelik", "süre"],
+              "explanation": "Normal gebelik ~38-40 hafta (9 ay). 3 trimestere ayrılır: 1. trimester (1-12 hafta), 2. trimester (13-26), 3. trimester (27-40).",
+              "options": [
+                {"text": "~38-40 hafta (9 ay, 3 trimester)", "correct": true},
+                {"text": "20 hafta", "correct": false},
+                {"text": "52 hafta", "correct": false},
+                {"text": "6 ay", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Plasentanın görevleri nelerdir?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["plasenta", "görev"],
+              "explanation": "Plasenta: O₂ ve besin anne kanından fetüse geçer, CO₂ ve atıklar fetüsten anneye geçer (difüzyon). Hormon üretir (hCG, progesteron, östrojen). Anne-fetüs kanları doğrudan karışmaz.",
+              "options": [
+                {"text": "Besin/gaz alışverişi, atık uzaklaştırma, hormon üretimi (kan karışmaz)", "correct": true},
+                {"text": "Sadece oksijen verir", "correct": false},
+                {"text": "Fetüsü beslemez", "correct": false},
+                {"text": "Sadece doğumda işlev görür", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Gebelikte alınan alkol fetüste {1} sendromuna yol açabilir: büyüme geriliği, yüz anomalileri ve zihinsel engel.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["fetal alkol", "sendrom"],
+              "explanation": "Fetal Alkol Sendromu (FAS): gebelikte alkol kullanımı → plasenta yoluyla fetüse geçer → geri dönüşümsüz fiziksel ve zihinsel hasar.",
+              "options": [
+                {"text": "Fetal Alkol", "isBlank": true, "correct": true},
+                {"text": "Down", "correct": false},
+                {"text": "Turner", "correct": false},
+                {"text": "Klinefelter", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Doğum kontrol yöntemlerini mekanizmalarıyla eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["doğum kontrolü"],
+              "explanation": "Farklı doğum kontrol yöntemleri farklı mekanizmalarla çalışır.",
+              "options": [
+                {"text": "Kondom (bariyer)", "pairId": 1, "correct": false},
+                {"text": "Sperm-yumurta temasını fiziksel olarak engeller + cinsel hastalıktan korur", "pairId": 1, "correct": false},
+                {"text": "Doğum kontrol hapı (hormonal)", "pairId": 2, "correct": false},
+                {"text": "Östrojen+progesteron → ovulasyonu baskılar (FSH/LH inhibisyonu)", "pairId": 2, "correct": false},
+                {"text": "Rahim içi araç (RİA/spiral)", "pairId": 3, "correct": false},
+                {"text": "Rahime yerleştirilir → implantasyonu zorlaştırır + sperm hareketini engeller", "pairId": 3, "correct": false},
+                {"text": "Tüp ligasyonu / Vazektomi", "pairId": 4, "correct": false},
+                {"text": "Cerrahi: yumurta kanalı / vas deferens kesilir (kalıcı yöntem)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Gebeliğin ilk trimesterinde en kritik olay hangisidir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "HARD",
+              "tags": ["trimester", "organogenez"],
+              "timeLimit": 12,
+              "explanation": "1. trimesterde organogenez gerçekleşir: tüm organ sistemlerinin temelleri atılır. Bu dönem teratojen (zararlı madde) etkisine en hassas dönemdir.",
+              "options": [
+                {"text": "Organogenez (tüm organ taslakları oluşur — teratojenlere en hassas dönem)", "correct": true},
+                {"text": "Bebeğin doğması", "correct": false},
+                {"text": "Bebeğin kilo alması", "correct": false},
+                {"text": "Sadece büyüme", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Gebelik trimesterlerini kronolojik olarak sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["trimester", "gelişim"],
+              "explanation": "1. trimester: organ oluşumu; 2. trimester: büyüme/hareket; 3. trimester: olgunlaşma/doğuma hazırlık.",
+              "options": [
+                {"text": "1. trimester (1-12 hafta): organogenez, kalp atımı başlar, embriyo → fetüs", "correctOrder": 1, "correct": false},
+                {"text": "2. trimester (13-26 hafta): hızlı büyüme, hareket hissedilir, cinsiyet belirginleşir", "correctOrder": 2, "correct": false},
+                {"text": "3. trimester (27-40 hafta): akciğerler olgunlaşır, kilo alır, doğuma hazırlık", "correctOrder": 3, "correct": false},
+                {"text": "Doğum (travay): rahim kasılmaları → serviks genişler → bebek doğar → plasenta atılır", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Üreme Sistemi Sağlığı",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Cinsel yolla bulaşan hastalıklara (CYBH) hangileri örnektir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["CYBH", "hastalık"],
+              "explanation": "HPV (genital siğil, rahim ağzı kanseri), HIV/AIDS, sifiliz, gonore (bel soğukluğu), klamidya, hepatit B en yaygın CYBH'lerdir.",
+              "options": [
+                {"text": "HPV, HIV/AIDS, sifiliz, gonore, klamidya, hepatit B", "correct": true},
+                {"text": "Grip ve nezle", "correct": false},
+                {"text": "Diyabet ve hipertansiyon", "correct": false},
+                {"text": "Astım ve bronşit", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "HPV aşısı neyi korur?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["HPV", "aşı"],
+              "explanation": "HPV aşısı, rahim ağzı (serviks) kanseri ve genital siğile neden olan HPV tiplerini (16, 18 vb.) önler. Cinsel aktivite öncesi yapılması idealdir.",
+              "options": [
+                {"text": "Rahim ağzı kanseri ve genital siğile neden olan HPV tiplerini önler", "correct": true},
+                {"text": "HIV/AIDS'i önler", "correct": false},
+                {"text": "Gebeliği önler", "correct": false},
+                {"text": "Gribi önler", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'{1}, kadınlarda yumurtalıkların işlevini kaybettiği, östrojen düzeyinin düştüğü ve menstrual döngünün sona erdiği fizyolojik süreçtir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["menopoz"],
+              "explanation": "Menopoz genellikle 45-55 yaş arasında gerçekleşir. Östrojen düşer → sıcak basması, kemik erimesi riski, ruh hâli değişimleri gibi semptomlar olabilir.",
+              "options": [
+                {"text": "Menopoz", "isBlank": true, "correct": true},
+                {"text": "Puberte", "correct": false},
+                {"text": "Ovulasyon", "correct": false},
+                {"text": "Menstruasyon", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "CYBH korunma yöntemlerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["CYBH", "korunma"],
+              "explanation": "Farklı korunma yöntemlerinin farklı etkinlik düzeyleri vardır.",
+              "options": [
+                {"text": "Kondom kullanımı", "pairId": 1, "correct": false},
+                {"text": "En erişilebilir bariyer; hem gebelik hem CYBH koruması", "pairId": 1, "correct": false},
+                {"text": "HPV aşısı", "pairId": 2, "correct": false},
+                {"text": "Rahim ağzı kanseri ve genital siğili ~%90 oranında önler", "pairId": 2, "correct": false},
+                {"text": "Düzenli tarama (PAP smear)", "pairId": 3, "correct": false},
+                {"text": "Rahim ağzı hücre değişikliklerini erken tespit eder", "pairId": 3, "correct": false},
+                {"text": "Eğitim ve farkındalık", "pairId": 4, "correct": false},
+                {"text": "Riskleri bilme, bilinçli karar verme, düzenli sağlık kontrolü", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "İnfertilite (kısırlık) en sık hangi nedenlerden kaynaklanır?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "HARD",
+              "tags": ["infertilite"],
+              "timeLimit": 12,
+              "explanation": "Kadında: ovulasyon bozukluğu, tüp tıkanıklığı, endometriozis. Erkekte: düşük sperm sayısı/kalitesi. %30 kadın, %30 erkek, %20 her ikisi, %20 açıklanamayan.",
+              "options": [
+                {"text": "Kadında ovulasyon bozukluğu/tüp tıkanıklığı; erkekte düşük sperm sayısı/kalitesi", "correct": true},
+                {"text": "Sadece yaşlılık", "correct": false},
+                {"text": "Sadece kadın kaynaklı", "correct": false},
+                {"text": "Sadece stres", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Üreme sağlığını koruma adımlarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["üreme", "sağlık"],
+              "explanation": "Eğitim → korunma → tarama → tedavi sıralaması önemlidir.",
+              "options": [
+                {"text": "Üreme sağlığı eğitimi (puberteden itibaren, doğru bilgi)", "correctOrder": 1, "correct": false},
+                {"text": "CYBH korunma: kondom kullanımı, HPV aşısı", "correctOrder": 2, "correct": false},
+                {"text": "Düzenli sağlık taramaları (PAP smear, meme muayenesi, PSA testi)", "correctOrder": 3, "correct": false},
+                {"text": "Sorun varsa erken tedavi (infertilite, enfeksiyon, hormonal bozukluk)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Komünite ve Popülasyon Ekolojisi",
+      "description": "Komünite yapısı, tür içi/arası etkileşimler, simbiyotik ilişkiler, süksesyon ve popülasyon dinamiği (MEB 2025-2026)",
+      "order": 6,
+      "lessons": [
+        {
+          "title": "Komünite Yapısı ve Etkileyen Faktörler",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Komünite nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["komünite"],
+              "explanation": "Komünite, belirli bir bölgede yaşayan tüm popülasyonların (farklı türler) birlikte oluşturduğu canlı topluluğudur. Orman komünitesi = ağaçlar + kuşlar + böcekler + mantarlar + bakteriler vb.",
+              "options": [
+                {"text": "Belirli bir bölgedeki tüm farklı tür popülasyonlarının oluşturduğu canlı topluluğu", "correct": true},
+                {"text": "Aynı türden bireyler", "correct": false},
+                {"text": "Sadece bitkiler", "correct": false},
+                {"text": "Cansız çevre faktörleri", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Dominant (baskın) tür nedir?",
+              "type": "ASSIST",
+              "difficulty": "MEDIUM",
+              "tags": ["dominant", "tür"],
+              "explanation": "Dominant tür, komünitede en çok birey sayısına sahip veya en fazla biyokütleyi oluşturan ve komünite yapısını en çok etkileyen türdür. Örn: ormanda meşe ağaçları.",
+              "options": [
+                {"text": "Komünitede en çok birey/biyokütle ile komünite yapısını en çok etkileyen tür", "correct": true},
+                {"text": "En büyük hayvan", "correct": false},
+                {"text": "En hızlı üreyen tür", "correct": false},
+                {"text": "En nadir tür", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'{1} tür, sayıca az olmasına rağmen komünite yapısı üzerinde orantısız büyük etki yaratan türdür (örn: deniz yıldızı, su samuru).' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["kilit taşı", "tür"],
+              "explanation": "Kilit taşı (keystone) tür: ekosistemde dengeyi koruyan kritik türdür. Çıkarılırsa ekosistem yapısı dramatik şekilde değişir.",
+              "options": [
+                {"text": "Kilit taşı (keystone)", "isBlank": true, "correct": true},
+                {"text": "Dominant", "correct": false},
+                {"text": "İstilacı", "correct": false},
+                {"text": "Endemik", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Komünite yapısını etkileyen faktörleri eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["komünite", "faktör"],
+              "explanation": "Biyotik ve abiyotik faktörler birlikte komünite yapısını belirler.",
+              "options": [
+                {"text": "İklim (abiyotik)", "pairId": 1, "correct": false},
+                {"text": "Sıcaklık, yağış → hangi türlerin yaşayabileceğini belirler", "pairId": 1, "correct": false},
+                {"text": "Türler arası rekabet (biyotik)", "pairId": 2, "correct": false},
+                {"text": "Aynı kaynak için yarışan türlerden biri azalabilir (rekabetçi dışlama)", "pairId": 2, "correct": false},
+                {"text": "Av-avcı ilişkisi (biyotik)", "pairId": 3, "correct": false},
+                {"text": "Avcılar av popülasyonunu kontrol eder → çeşitliliği artırabilir", "pairId": 3, "correct": false},
+                {"text": "Doğal afetler (abiyotik)", "pairId": 4, "correct": false},
+                {"text": "Yangın, sel, volkan → süksesyon başlatır, komünite yapısını sıfırlar", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Ekolojik niş nedir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "HARD",
+              "tags": ["niş", "ekoloji"],
+              "timeLimit": 12,
+              "explanation": "Ekolojik niş, bir türün ekosistemde yaşadığı yer (habitat) + beslenme biçimi + diğer türlerle ilişkileri + çevresel tolerans aralığı — yani 'mesleği' ve 'adresi'nin tamamıdır.",
+              "options": [
+                {"text": "Bir türün habitat + beslenme + ilişkiler + tolerans aralığının tamamı ('ekosistemdeki rolü')", "correct": true},
+                {"text": "Sadece yaşadığı yer", "correct": false},
+                {"text": "Sadece ne yediği", "correct": false},
+                {"text": "Popülasyon büyüklüğü", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Ekolojik organizasyon düzeylerini sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["ekoloji", "düzey"],
+              "explanation": "Birey → Popülasyon → Komünite → Ekosistem → Biyom → Biyosfer.",
+              "options": [
+                {"text": "Birey: tek bir organizma", "correctOrder": 1, "correct": false},
+                {"text": "Popülasyon: aynı tür bireylerin aynı bölgedeki topluluğu", "correctOrder": 2, "correct": false},
+                {"text": "Komünite: farklı popülasyonların birlikteliği", "correctOrder": 3, "correct": false},
+                {"text": "Ekosistem: komünite + abiyotik faktörler → Biyom → Biyosfer", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Tür İçi ve Türler Arası Rekabet",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Tür içi rekabet ile türler arası rekabet arasındaki fark nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["rekabet", "tür"],
+              "explanation": "Tür içi: aynı türün bireyleri arasında (besin, eş, yuva). Türler arası: farklı türler arasında ortak kaynak paylaşımı. Tür içi rekabet genellikle daha şiddetlidir (aynı niş).",
+              "options": [
+                {"text": "Tür içi: aynı tür bireyleri arasında (daha şiddetli); Türler arası: farklı türler arasında", "correct": true},
+                {"text": "Aralarında fark yoktur", "correct": false},
+                {"text": "Türler arası rekabet daha şiddetlidir", "correct": false},
+                {"text": "Tür içi rekabet sadece hayvanlarda olur", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Rekabetçi dışlama (Gause) prensibi nedir?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["Gause", "dışlama"],
+              "explanation": "Aynı ekolojik nişi paylaşan iki tür uzun süre bir arada yaşayamaz. Biri diğerini dışlar veya türler niş farklılaştırması yaparak birlikte yaşar.",
+              "options": [
+                {"text": "Aynı nişi paylaşan iki tür birlikte kalamaz; biri dışlanır veya niş farklılaştırması olur", "correct": true},
+                {"text": "İki tür her zaman birlikte yaşar", "correct": false},
+                {"text": "Rekabet her zaman ölümle sonuçlanır", "correct": false},
+                {"text": "Sadece laboratuvarda geçerlidir", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'İki tür aynı kaynağı kullanırken nişlerini farklılaştırarak birlikte yaşamasına {1} denir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "HARD",
+              "tags": ["niş", "farklılaştırma"],
+              "explanation": "Niş farklılaştırması (kaynak bölüşümü): türler farklı zamanda beslenir, farklı yükseklikte yaşar veya farklı besin kullanır → birlikte yaşayabilir.",
+              "options": [
+                {"text": "niş farklılaştırması (kaynak bölüşümü)", "isBlank": true, "correct": true},
+                {"text": "rekabetçi dışlama", "correct": false},
+                {"text": "mutualizm", "correct": false},
+                {"text": "kommensalizm", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Rekabet sonuçlarını eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["rekabet", "sonuç"],
+              "explanation": "Rekabetin farklı sonuçları olabilir.",
+              "options": [
+                {"text": "Rekabetçi dışlama", "pairId": 1, "correct": false},
+                {"text": "Zayıf rakip o bölgeden tamamen yok olur (Gause prensibi)", "pairId": 1, "correct": false},
+                {"text": "Niş farklılaştırması", "pairId": 2, "correct": false},
+                {"text": "Türler kaynak/zaman/alan bakımından farklılaşır → birlikte yaşar", "pairId": 2, "correct": false},
+                {"text": "Karakter ayrışması", "pairId": 3, "correct": false},
+                {"text": "Rekabet eden türler fiziksel olarak farklılaşır (gaga boyutu, vücut büyüklüğü)", "pairId": 3, "correct": false},
+                {"text": "Tür içi rekabet sonucu", "pairId": 4, "correct": false},
+                {"text": "Popülasyon büyüklüğü düzenlenir, zayıf bireyler elenir (doğal seçilim)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Galapagos ispinozlarında gaga farklılığı hangi ekolojik kavrama örnektir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "HARD",
+              "tags": ["karakter ayrışması", "Darwin"],
+              "timeLimit": 12,
+              "explanation": "Galapagos ispinozları farklı besin kaynaklarına göre farklı gaga şekilleri geliştirmiştir. Bu karakter ayrışması ve niş farklılaştırmasına örnektir.",
+              "options": [
+                {"text": "Karakter ayrışması ve niş farklılaştırması", "correct": true},
+                {"text": "Mutualizm", "correct": false},
+                {"text": "Parazitizm", "correct": false},
+                {"text": "Kommensalizm", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Rekabetin şiddetini belirleyen faktörleri sıralayın (en önemliden aza).",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["rekabet", "faktör"],
+              "explanation": "Niş örtüşmesi, kaynak sınırlılığı, popülasyon yoğunluğu rekabetin şiddetini belirler.",
+              "options": [
+                {"text": "Niş örtüşme derecesi (aynı kaynağı kullanan türler arası en şiddetli)", "correctOrder": 1, "correct": false},
+                {"text": "Kaynağın sınırlılığı (kaynak az → rekabet şiddetli)", "correctOrder": 2, "correct": false},
+                {"text": "Popülasyon yoğunluğu (birey sayısı fazla → birey başı kaynak azalır)", "correctOrder": 3, "correct": false},
+                {"text": "Çevresel koşullar (kuraklık, kış → kaynak kıtlığı → rekabet artar)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Simbiyotik İlişkiler",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Simbiyoz ne demektir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["simbiyoz"],
+              "explanation": "Simbiyoz, farklı türlerden iki organizmanın yakın ve uzun süreli birlikte yaşamasıdır. Mutualizm (+/+), kommensalizm (+/0), parazitizm (+/–) olarak üç türü vardır.",
+              "options": [
+                {"text": "Farklı türlerin yakın ve uzun süreli birlikte yaşaması (mutualizm, kommensalizm, parazitizm)", "correct": true},
+                {"text": "Sadece zararlı ilişki", "correct": false},
+                {"text": "Aynı tür bireylerin birlikte yaşaması", "correct": false},
+                {"text": "Av-avcı ilişkisi", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Parazitizm ile av-avcı ilişkisi arasındaki fark nedir?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["parazitizm", "avcılık"],
+              "explanation": "Parazit konakçısını genellikle öldürmez (uzun süre beslenme). Avcı avını öldürür ve yer. Parazit konakçıda yaşar (endo/ektoparazit), avcı avıyla birlikte yaşamaz.",
+              "options": [
+                {"text": "Parazit konakçıyı genellikle öldürmez (birlikte yaşar); avcı avını öldürür", "correct": true},
+                {"text": "Aynı şeydir", "correct": false},
+                {"text": "Parazit avını öldürür", "correct": false},
+                {"text": "Avcı konakçısında yaşar", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'{1}, bir organizmanın diğeri üzerinde veya içinde yaşayarak besin aldığı (+/–) ilişkidir; konakçıya zarar verir ama genellikle öldürmez.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["parazitizm"],
+              "explanation": "Parazitizm (+/–): parazit fayda görür, konakçı zarar görür. Örnekler: bağırsak solucanı, bit, kene, küsküt bitkisi.",
+              "options": [
+                {"text": "Parazitizm", "isBlank": true, "correct": true},
+                {"text": "Mutualizm", "correct": false},
+                {"text": "Kommensalizm", "correct": false},
+                {"text": "Amensalizm", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Simbiyotik ilişki türlerini doğa örnekleriyle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["simbiyoz", "örnek"],
+              "explanation": "Her simbiyotik ilişki türünün doğada birçok örneği vardır.",
+              "options": [
+                {"text": "Liken (alg + mantar)", "pairId": 1, "correct": false},
+                {"text": "Mutualizm (+/+): alg fotosentez yapar, mantar su/mineral sağlar", "pairId": 1, "correct": false},
+                {"text": "Ağaç üstünde yetişen orkide", "pairId": 2, "correct": false},
+                {"text": "Kommensalizm (+/0): orkide ışık alır, ağaç etkilenmez", "pairId": 2, "correct": false},
+                {"text": "Kene – köpek", "pairId": 3, "correct": false},
+                {"text": "Parazitizm (+/–): kene kan emer (ektoparazit), köpek zarar görür", "pairId": 3, "correct": false},
+                {"text": "Mikorizal mantarlar – bitki kökleri", "pairId": 4, "correct": false},
+                {"text": "Mutualizm (+/+): mantar mineral/su sağlar, bitki organik besin verir", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Hangisi endoparazit örneğidir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["endoparazit"],
+              "timeLimit": 10,
+              "explanation": "Endoparazit konakçının içinde yaşar: bağırsak solucanı, sıtma etkeni (Plasmodium), tenya. Ektoparazit dışta yaşar: bit, pire, kene.",
+              "options": [
+                {"text": "Bağırsak solucanı (tenya)", "correct": true},
+                {"text": "Bit", "correct": false},
+                {"text": "Kene", "correct": false},
+                {"text": "Pire", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Simbiyotik ilişkilerin evrimsel gelişimini sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["simbiyoz", "evrim"],
+              "explanation": "Basit etkileşimlerden karmaşık ortak yaşama evrimi.",
+              "options": [
+                {"text": "Tesadüfi karşılaşma: iki tür aynı ortamda yaşamaya başlar", "correctOrder": 1, "correct": false},
+                {"text": "Avantaj oluşur: birlikte yaşam bir/iki tarafa fayda sağlar", "correctOrder": 2, "correct": false},
+                {"text": "Karşılıklı adaptasyon: türler birbirine uyum sağlar (koevrim)", "correctOrder": 3, "correct": false},
+                {"text": "Zorunlu simbiyoz: türler birbirine bağımlı hâle gelir (liken, mikorizal)", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Süksesyon",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Ekolojik süksesyon nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["süksesyon"],
+              "explanation": "Süksesyon, bir komünitenin zaman içinde değişerek başka bir komüniteye dönüşmesi sürecidir. Öncü türler ortamı hazırlar, zamanla daha karmaşık türler gelir.",
+              "options": [
+                {"text": "Komünitenin zaman içinde değişerek başka bir komüniteye dönüşmesi süreci", "correct": true},
+                {"text": "Bir türün nesli tükenmesi", "correct": false},
+                {"text": "Ani iklim değişikliği", "correct": false},
+                {"text": "Popülasyon artışı", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Primer süksesyon ile sekonder süksesyon arasındaki fark nedir?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["primer", "sekonder", "süksesyon"],
+              "explanation": "Primer: hiç toprak/canlı olmayan yüzeyde başlar (lav akıntısı, buzul çekilmesi). Çok yavaş (yüzlerce yıl). Sekonder: var olan bir komünitenin bozulmasıyla başlar (yangın, sel). Toprak mevcuttur, daha hızlı.",
+              "options": [
+                {"text": "Primer: çıplak yüzey, toprak yok, çok yavaş; Sekonder: toprak var, daha hızlı (yangın/sel sonrası)", "correct": true},
+                {"text": "İkisi de aynıdır", "correct": false},
+                {"text": "Sekonder daha yavaştır", "correct": false},
+                {"text": "Primer sadece suda olur", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Primer süksesyonda çıplak kayalar üzerinde ilk yerleşen canlılar {1} dır; kayaları parçalayarak toprak oluşumunu başlatır.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["öncü tür", "liken"],
+              "explanation": "Likenler (alg+mantar) ve yosunlar primer süksesyonda öncü türlerdir. Kayaları kimyasal/mekanik olarak parçalar → toprak oluşur → diğer bitkiler gelir.",
+              "options": [
+                {"text": "likenler ve yosunlar (öncü türler)", "isBlank": true, "correct": true},
+                {"text": "ağaçlar", "correct": false},
+                {"text": "otlar", "correct": false},
+                {"text": "hayvanlar", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Süksesyon türlerini örneklerle eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["süksesyon", "örnek"],
+              "explanation": "İki süksesyon türünün farklı başlangıç noktaları vardır.",
+              "options": [
+                {"text": "Primer süksesyon örneği", "pairId": 1, "correct": false},
+                {"text": "Volkanik ada, buzul çekilmesi → liken → ot → çalı → orman", "pairId": 1, "correct": false},
+                {"text": "Sekonder süksesyon örneği", "pairId": 2, "correct": false},
+                {"text": "Orman yangını sonrası → otlar → çalılar → ağaçlar → olgun orman", "pairId": 2, "correct": false},
+                {"text": "Öncü türler", "pairId": 3, "correct": false},
+                {"text": "Liken, yosun, tek yıllık otlar (sert koşullara dayanıklı, hızlı üreyen)", "pairId": 3, "correct": false},
+                {"text": "Klimaks (doruk) komünite", "pairId": 4, "correct": false},
+                {"text": "Süksesyonun ulaştığı kararlı son komünite (meşe ormanı, tropikal yağmur ormanı)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Süksesyonun son (kararlı) aşamasına ne denir?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "MEDIUM",
+              "tags": ["klimaks", "komünite"],
+              "timeLimit": 10,
+              "explanation": "Klimaks komünite, süksesyonun ulaştığı en olgun ve kararlı komünitedir. Tür çeşitliliği ve biyokütle en yüksektir. Büyük bozulma olmadıkça değişmez.",
+              "options": [
+                {"text": "Klimaks (doruk) komünite", "correct": true},
+                {"text": "Öncü komünite", "correct": false},
+                {"text": "Ara komünite", "correct": false},
+                {"text": "Geçici komünite", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Primer süksesyon aşamalarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["primer", "aşama"],
+              "explanation": "Çıplak yüzey → liken/yosun → otlar → çalılar → ağaçlar → klimaks orman.",
+              "options": [
+                {"text": "Çıplak kaya: likenler ve yosunlar yerleşir → kayaları parçalar, toprak oluşumu başlar", "correctOrder": 1, "correct": false},
+                {"text": "İnce toprak: tek yıllık otlar ve eğrelti otları yerleşir → toprak zenginleşir", "correctOrder": 2, "correct": false},
+                {"text": "Kalınlaşan toprak: çok yıllık otlar, çalılar ve küçük ağaçlar gelir", "correctOrder": 3, "correct": false},
+                {"text": "Klimaks orman: büyük ağaçlar baskın olur → kararlı doruk komünite oluşur", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Popülasyon Dinamiği",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Popülasyon büyüklüğünü belirleyen dört temel faktör nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["popülasyon", "faktör"],
+              "explanation": "Doğum oranı (natalite), ölüm oranı (mortalite), içe göç (imigrason) ve dışa göç (emigrasyon). N = N₀ + Doğum + İçe göç – Ölüm – Dışa göç.",
+              "options": [
+                {"text": "Doğum oranı, ölüm oranı, içe göç ve dışa göç", "correct": true},
+                {"text": "Sadece doğum ve ölüm", "correct": false},
+                {"text": "Sıcaklık ve yağış", "correct": false},
+                {"text": "Besin ve su", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Yoğunluğa bağlı sınırlayıcı faktörler ile yoğunluktan bağımsız faktörler arasındaki fark nedir?",
+              "type": "ASSIST",
+              "difficulty": "HARD",
+              "tags": ["sınırlayıcı", "faktör"],
+              "explanation": "Yoğunluğa bağlı: rekabet, hastalık, avcılık — popülasyon büyüdükçe etkisi artar. Yoğunluktan bağımsız: doğal afet, iklim, yangın — popülasyon büyüklüğünden bağımsız etki eder.",
+              "options": [
+                {"text": "Bağlı: etkisi yoğunlukla artar (hastalık, rekabet); Bağımsız: sabit etki (afet, iklim)", "correct": true},
+                {"text": "Aralarında fark yoktur", "correct": false},
+                {"text": "Bağımsız faktörler daha şiddetlidir", "correct": false},
+                {"text": "Bağlı faktörler abiyotiktir", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "'Bir popülasyonun çevre koşullarının destekleyebileceği maksimum birey sayısına {1} denir ve K harfi ile gösterilir.' cümlesinde boşluğa ne gelmelidir?",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["taşıma kapasitesi", "K"],
+              "explanation": "Taşıma kapasitesi (K): bir ortamın kaynaklarının (besin, su, alan) sürdürebileceği maksimum popülasyon büyüklüğüdür. Popülasyon K'ya ulaşınca büyüme durur.",
+              "options": [
+                {"text": "taşıma kapasitesi", "isBlank": true, "correct": true},
+                {"text": "biyotik potansiyel", "correct": false},
+                {"text": "çevre direnci", "correct": false},
+                {"text": "büyüme hızı", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Popülasyon büyüme modellerini eşleştirin.",
+              "type": "MATCH_PAIRS",
+              "difficulty": "HARD",
+              "tags": ["popülasyon", "model"],
+              "explanation": "İki temel popülasyon büyüme modeli vardır.",
+              "options": [
+                {"text": "Üstel (J-eğrisi) büyüme", "pairId": 1, "correct": false},
+                {"text": "Sınırsız kaynak → sürekli hızlanan büyüme (doğada nadir, kısa süreli)", "pairId": 1, "correct": false},
+                {"text": "Lojistik (S-eğrisi) büyüme", "pairId": 2, "correct": false},
+                {"text": "Başlangıçta hızlı → yavaşlar → K'da dengelenir (çoğu popülasyonda)", "pairId": 2, "correct": false},
+                {"text": "r-stratejist türler", "pairId": 3, "correct": false},
+                {"text": "Çok yavru, az ebeveyn bakımı, kısa ömür (böcek, bakteri)", "pairId": 3, "correct": false},
+                {"text": "K-stratejist türler", "pairId": 4, "correct": false},
+                {"text": "Az yavru, çok ebeveyn bakımı, uzun ömür (fil, insan, balina)", "pairId": 4, "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "r-stratejist türler hangi ortamlarda avantajlıdır?",
+              "type": "TIMER_CHALLENGE",
+              "difficulty": "HARD",
+              "tags": ["r-strateji", "ortam"],
+              "timeLimit": 12,
+              "explanation": "r-stratejistler değişken/öngörülemeyen ortamlarda avantajlıdır: hızlı üreme, kısa nesil süresi, bol yavru → popülasyonu hızla yeniden kurar.",
+              "options": [
+                {"text": "Değişken ve öngörülemeyen ortamlarda (hızlı üreme ile popülasyonu yenileyebilir)", "correct": true},
+                {"text": "Kararlı ve sabit ortamlarda", "correct": false},
+                {"text": "Soğuk iklimde", "correct": false},
+                {"text": "Derin denizlerde", "correct": false}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Lojistik popülasyon büyüme fazlarını sıralayın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["lojistik", "faz"],
+              "explanation": "Yavaş başlangıç → hızlı büyüme → yavaşlama → denge (S eğrisi).",
+              "options": [
+                {"text": "Gecikme fazı: az birey, çevreye uyum sağlanır", "correctOrder": 1, "correct": false},
+                {"text": "Logaritmik (üstel) faz: kaynaklar bol, hızlı büyüme", "correctOrder": 2, "correct": false},
+                {"text": "Negatif hızlanma fazı: kaynaklar azalır, rekabet/hastalık artar → büyüme yavaşlar", "correctOrder": 3, "correct": false},
+                {"text": "Denge fazı: popülasyon taşıma kapasitesine (K) ulaşır, etrafında salınır", "correctOrder": 4, "correct": false}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

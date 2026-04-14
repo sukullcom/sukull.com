@@ -52,21 +52,25 @@ function parseGrade(title: string): number | null {
 }
 
 function detectTopic(title: string): string {
-  const t = title.toLowerCase();
+  const t = title.toLocaleLowerCase("tr");
   if (t.includes("ingilizce") || t.includes("english")) return "ingilizce";
   return "diger";
 }
 
 function extractSubject(title: string): string {
-  const t = title.toLowerCase();
+  const t = title.toLocaleLowerCase("tr");
   if (t.includes("matematik")) return "Matematik";
   if (t.includes("türkçe") || t.includes("türk dili") || t.includes("edebiyat")) return "Türkçe";
   if (t.includes("fen bilimleri")) return "Fen Bilimleri";
   if (t.includes("fizik")) return "Fizik";
   if (t.includes("kimya")) return "Kimya";
   if (t.includes("biyoloji")) return "Biyoloji";
+  if (t.includes("din kültürü") || t.includes("din kulturu")) return "Din Kültürü";
+  if (t.includes("felsefe")) return "Felsefe";
+  if (t.includes("inkılap") || t.includes("inkilap")) return "Tarih";
   if (t.includes("tarih")) return "Tarih";
-  if (t.includes("coğrafya")) return "Coğrafya";
+  if (t.includes("coğrafya") || t.includes("cografya")) return "Coğrafya";
+  if (t.includes("sosyal bilgiler")) return "Sosyal Bilgiler";
   return title.replace(/\d+\.\s*[Ss]ınıf\s*/, "").trim();
 }
 
@@ -87,6 +91,9 @@ const SUBJECT_STYLES: Record<string, string> = {
   "Biyoloji": "biyoloji",
   "Tarih": "tarih",
   "Coğrafya": "cografya",
+  "Felsefe": "felsefe",
+  "Din Kültürü": "dinkulturu",
+  "Sosyal Bilgiler": "sosyal",
 };
 
 export const List = ({ courses, activeCourseId }: Props) => {
@@ -139,7 +146,7 @@ export const List = ({ courses, activeCourseId }: Props) => {
       }
     });
 
-    const subjectOrder = ["Matematik", "Türkçe", "Fen Bilimleri", "Fizik", "Kimya", "Biyoloji", "Tarih", "Coğrafya"];
+    const subjectOrder = ["Matematik", "Türkçe", "Fen Bilimleri", "Fizik", "Kimya", "Biyoloji", "Tarih", "Coğrafya", "Felsefe", "Din Kültürü", "Sosyal Bilgiler"];
     Object.values(grades).forEach((arr) =>
       arr.sort((a, b) => {
         const sa = extractSubject(a.title);
