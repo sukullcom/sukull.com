@@ -96,7 +96,7 @@ export const LeaderboardClient = ({
 
           const res = await fetch(`/api/schools?${params}`);
           const data = await res.json();
-          const mapped = (data.schools || []).map((s: any) => ({
+          const mapped = (data.schools || []).map((s: { id: number; name: string; totalPoints: number; city?: string }) => ({
             schoolId: s.id,
             schoolName: s.name,
             totalPoints: s.totalPoints,
@@ -151,7 +151,7 @@ export const LeaderboardClient = ({
         const res = await fetch(`/api/schools?${params}`);
         const data = await res.json();
         const newSchools: SchoolEntry[] = (data.schools || []).map(
-          (s: any) => ({
+          (s: { id: number; name: string; totalPoints: number; city?: string }) => ({
             schoolId: s.id,
             schoolName: s.name,
             totalPoints: s.totalPoints,
