@@ -62,7 +62,7 @@ export const Podium = ({ entries, variant }: PodiumProps) => {
           <div
             key={entry.id}
             className={cn(
-              "flex flex-col items-center",
+              "flex flex-col items-center flex-1 min-w-0",
               style.order,
               "animate-in fade-in slide-in-from-bottom-4 duration-500",
             )}
@@ -109,7 +109,7 @@ export const Podium = ({ entries, variant }: PodiumProps) => {
 
             <div
               className={cn(
-                "flex flex-col items-center justify-end rounded-t-xl w-full min-w-[5rem] max-w-[8rem]",
+                "flex flex-col items-center justify-end rounded-t-xl w-full min-w-0 max-w-[7rem] sm:max-w-[8rem]",
                 style.bg,
                 style.height,
               )}

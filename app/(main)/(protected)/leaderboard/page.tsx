@@ -1,4 +1,3 @@
-import { FeedWrapper } from "@/components/feed-wrapper";
 import {
   getTopUsers,
   getUserProgress,
@@ -52,44 +51,42 @@ const LeaderboardPage = async () => {
     const cities = citiesData.map((c) => c.city);
 
     return (
-      <div className="flex flex-row-reverse gap-[48px] px-2 sm:px-6">
-        <FeedWrapper>
-          <div className="w-full flex flex-col items-center">
-            <Image
-              src="/mascot_red.svg"
-              alt="Leaderboard"
-              height={90}
-              width={90}
-              priority={false}
-            />
-            <h1 className="text-center font-bold text-neutral-800 text-2xl mt-4 mb-1">
-              Puan Tabloları
-            </h1>
-            <p className="text-muted-foreground text-center text-sm mb-6 max-w-md">
-              Bir gün puan tablolarına bir göz attın ve ne gördün? Hem sen hem
-              de okulun oradaydı!
-            </p>
+      <div className="w-full pb-10 px-3 sm:px-6 overflow-x-hidden">
+        <div className="w-full flex flex-col items-center overflow-hidden">
+          <Image
+            src="/mascot_red.svg"
+            alt="Leaderboard"
+            height={90}
+            width={90}
+            priority={false}
+          />
+          <h1 className="text-center font-bold text-neutral-800 text-2xl mt-4 mb-1">
+            Puan Tabloları
+          </h1>
+          <p className="text-muted-foreground text-center text-sm mb-6 max-w-md">
+            Bir gün puan tablolarına bir göz attın ve ne gördün? Hem sen hem
+            de okulun oradaydı!
+          </p>
 
-            <RankCards
-              userRank={userAndSchoolRank?.userRank ?? null}
-              schoolRank={userAndSchoolRank?.schoolRank ?? null}
-              userRankInSchool={userAndSchoolRank?.userRankInSchool ?? null}
-            />
+          <RankCards
+            userRank={userAndSchoolRank?.userRank ?? null}
+            schoolRank={userAndSchoolRank?.schoolRank ?? null}
+            userRankInSchool={userAndSchoolRank?.userRankInSchool ?? null}
+          />
 
-            <LeaderboardClient
-              initialUsers={topUsers}
-              initialSchools={{
-                university: universityData,
-                high_school: highSchoolData,
-                secondary_school: secondaryData,
-                elementary_school: elementaryData,
-              }}
-              currentUserId={user?.id ?? null}
-              currentSchoolId={userAndSchoolRank?.schoolId ?? null}
-              cities={cities}
-            />
-          </div>
-        </FeedWrapper>
+          <LeaderboardClient
+            initialUsers={topUsers}
+            initialSchools={{
+              university: universityData,
+              high_school: highSchoolData,
+              secondary_school: secondaryData,
+              elementary_school: elementaryData,
+            }}
+            currentUserId={user?.id ?? null}
+            currentSchoolId={userAndSchoolRank?.schoolId ?? null}
+            cities={cities}
+          />
+        </div>
       </div>
     );
   } catch (error) {

@@ -7,39 +7,13 @@ import learnIcon from "@/public/desk.svg";
 import leaderboardIcon from "@/public/leaderboard.svg";
 import shopIcon from "@/public/bag.svg";
 import gameIcon from "@/public/games.svg";
-import labIcon from "@/public/lab.svg";
 import privateLessonIcon from "@/public/private_lesson.svg";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { Button } from "./ui/button";
-import { createClient } from "@/utils/supabase/client";
-import { User } from "@supabase/supabase-js";
-import { useSecureLogout } from "@/hooks/use-secure-logout";
-
 
 type Props = {
   className?: string;
 };
 
 export const Sidebar = ({ className }: Props) => {
-  const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
-  const { logout, isLoggingOut } = useSecureLogout();
-
-  useEffect(() => {
-    const supabase = createClient();
-    supabase.auth.getSession().then(({ data }: { data: { session: { user: User } | null } }) => {
-      setUser(data.session?.user || null);
-    });
-  }, []);
-
-  const handleLogout = async () => {
-    await logout({
-      showToast: true,
-      redirectTo: '/login'
-    });
-  };
-
   return (
     <div
       className={cn(
@@ -73,30 +47,9 @@ export const Sidebar = ({ className }: Props) => {
           href="/leaderboard"
           iconSrc={leaderboardIcon}
         />
-        {/* Temporarily disabled - lab functionality */}
-        {/* <SidebarItem label="Laboratuvarlar" href="/lab" iconSrc={labIcon} /> */}
         <SidebarItem label="Çantam" href="/shop" iconSrc={shopIcon} />
         <SidebarItem label="Çalışma Arkadaşı" href="/study-buddy" iconSrc="/study_buddy.svg" />
         <SidebarItem label="Profil" href="/profile" iconSrc="/mascot_normal.svg" />
-      </div>
-      <div className="p-4 mt-auto">
-        <Button
-          onClick={handleLogout}
-          disabled={isLoggingOut}
-          variant="secondary"
-          className="justify-start h-[52px] flex items-center w-full"
-        >
-          <Image
-            src="/exit.svg"
-            alt="Çıkış Yap"
-            className="mr-1"
-            height={26}
-            width={26}
-          />
-          <span className="text-left">
-            {isLoggingOut ? 'Çıkış yapılıyor...' : 'Çıkış Yap'}
-          </span>
-        </Button>
       </div>
     </div>
   );

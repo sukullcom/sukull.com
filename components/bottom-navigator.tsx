@@ -5,9 +5,6 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
-import { createClient } from "@/utils/supabase/client";
-import { User, Session } from "@supabase/supabase-js";
-import { useSecureLogout } from "@/hooks/use-secure-logout";
 
 type BottomNavigatorProps = {
   className?: string;
@@ -15,19 +12,9 @@ type BottomNavigatorProps = {
 
 export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
   const pathname = usePathname();
-  const [user, setUser] = useState<User | null>(null);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { logout, isLoggingOut } = useSecureLogout();
 
-  useEffect(() => {
-    const supabase = createClient();
-    supabase.auth.getSession().then(({ data: { session } }: { data: { session: Session | null } }) => {
-      setUser(session?.user || null);
-    });
-  }, []);
-
-  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -41,13 +28,6 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
     return () =>
       document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-
-  const handleLogout = async () => {
-    await logout({
-      showToast: true,
-      redirectTo: '/login'
-    });
-  };
 
   const navItems = [
     { href: "/learn", iconSrc: "/desk.svg" },
@@ -70,7 +50,6 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
         className
       )}
     >
-      {/* Regular navigation items */}
       {navItems.map((item) => {
         const isActive = pathname.startsWith(item.href);
         return (
@@ -78,17 +57,19 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
             key={item.href}
             prefetch={false}
             href={item.href}
-            className={cn(
-              "flex flex-col items-center justify-center text-xs",
-              isActive && "text-green-500"
-            )}
+            className="flex flex-col items-center justify-center gap-0.5"
           >
             <Image
               src={item.iconSrc}
               alt=""
-              height={isActive ? 44 : 42}
-              width={isActive ? 44 : 42}
-              className="mr-2"
+              height={isActive ? 36 : 32}
+              width={isActive ? 36 : 32}
+            />
+            <div
+              className={cn(
+                "h-[3px] w-3 rounded-full transition-colors",
+                isActive ? "bg-green-500" : "bg-transparent"
+              )}
             />
           </Link>
         );
@@ -96,17 +77,18 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
 
       {/* More dropdown */}
       <div className="relative" ref={dropdownRef}>
-        <Link
-          prefetch={false}
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            setDropdownOpen(!isDropdownOpen);
-          }}
-          className="flex flex-col items-center justify-center text-xs"
+        <button
+          onClick={() => setDropdownOpen(!isDropdownOpen)}
+          className="flex flex-col items-center justify-center gap-0.5"
         >
-          <Image src="/more.svg" alt="Menu" height={42} width={42} className="mr-2" />
-        </Link>
+          <Image src="/more.svg" alt="Menu" height={32} width={32} />
+          <div
+            className={cn(
+              "h-[3px] w-3 rounded-full transition-colors",
+              isDropdownOpen ? "bg-green-500" : "bg-transparent"
+            )}
+          />
+        </button>
         {isDropdownOpen && (
           <div className="absolute bottom-14 right-0 w-44 bg-white shadow-lg rounded-lg border border-gray-200 z-50">
             <ul>
@@ -129,26 +111,10 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
                   </Link>
                 </li>
               ))}
-              <li className="border-t border-gray-100">
-                <button
-                  onClick={() => {
-                    setDropdownOpen(false);
-                    handleLogout();
-                  }}
-                  disabled={isLoggingOut}
-                  className="flex items-center w-full px-4 py-2.5 hover:bg-gray-100 text-rose-600"
-                >
-                  <Image src="/exit.svg" alt="Çıkış" height={24} width={24} className="mr-2" />
-                  <span className="text-sm font-medium">
-                    {isLoggingOut ? "Çıkış..." : "Çıkış Yap"}
-                  </span>
-                </button>
-              </li>
             </ul>
           </div>
         )}
       </div>
-
     </div>
   );
 };

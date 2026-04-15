@@ -25,7 +25,9 @@ import {
   BookOpen,
   TrendingUp,
   Lock,
+  LogOut,
 } from "lucide-react";
+import { useSecureLogout } from "@/hooks/use-secure-logout";
 
 type ProfileProps = {
   userName: string;
@@ -55,6 +57,7 @@ export default function ProfilePageClient({
   const [selectedSchoolId, setSelectedSchoolId] = useState<number | null>(profile.schoolId ?? null);
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
+  const { logout, isLoggingOut } = useSecureLogout();
 
   const userAchievements = {
     profileEditingUnlocked: profile.profileEditingUnlocked,
@@ -452,6 +455,19 @@ export default function ProfilePageClient({
                 <span className="text-gray-500">Mevcut İstikrar</span>
                 <span className="font-bold text-amber-600">{profile.istikrar} gün</span>
               </div>
+            </div>
+
+            {/* Account */}
+            <div className="pt-4 border-t border-gray-200">
+              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Hesap</h3>
+              <button
+                onClick={() => logout({ showToast: true, redirectTo: "/login" })}
+                disabled={isLoggingOut}
+                className="flex items-center gap-2 w-full px-4 py-3 rounded-xl text-rose-600 bg-rose-50 hover:bg-rose-100 transition-colors text-sm font-medium disabled:opacity-50"
+              >
+                <LogOut className="h-4 w-4" />
+                {isLoggingOut ? "Çıkış yapılıyor..." : "Çıkış Yap"}
+              </button>
             </div>
           </div>
         )}

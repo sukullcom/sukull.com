@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, useTransition } from "react";
+import { useCallback, useEffect, useState, useTransition } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -12,7 +12,6 @@ import {
   BookOpen,
   Pencil,
   MapPin,
-  Search,
   ChevronDown,
   Loader2,
 } from "lucide-react";
@@ -75,8 +74,6 @@ export const LeaderboardClient = ({
     elementary_school: initialSchools.elementary_school.length >= 50,
   });
   const [cityLoading, startCityLoad] = useTransition();
-  const highlightRef = useRef<HTMLDivElement>(null);
-  const tabsRef = useRef<HTMLDivElement>(null);
 
   const isSchoolTab = activeTab !== "users";
   const currentSchoolType = isSchoolTab ? (activeTab as SchoolType) : null;
@@ -174,13 +171,6 @@ export const LeaderboardClient = ({
     });
   };
 
-  const scrollToMe = () => {
-    highlightRef.current?.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-    });
-  };
-
   const renderList = () => {
     if (activeTab === "users") {
       const items = users.slice(3);
@@ -192,7 +182,6 @@ export const LeaderboardClient = ({
             return (
               <div
                 key={u.userId}
-                ref={isMe ? highlightRef : undefined}
                 className={cn(
                   "flex items-center w-full px-3 py-2.5 rounded-xl mb-1.5 transition-colors",
                   isMe
@@ -235,7 +224,6 @@ export const LeaderboardClient = ({
           return (
             <div
               key={s.schoolId}
-              ref={isMine ? highlightRef : undefined}
               className={cn(
                 "flex items-center w-full px-3 py-2.5 rounded-xl mb-1.5 transition-colors",
                 isMine
@@ -292,11 +280,10 @@ export const LeaderboardClient = ({
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full overflow-hidden">
       {/* Tab Bar */}
       <div
-        ref={tabsRef}
-        className="flex gap-0.5 sm:gap-1 overflow-x-auto pb-2 mb-5 scrollbar-hide border-b border-gray-200 -mx-1 px-1"
+        className="flex gap-0.5 sm:gap-1 overflow-x-auto pb-2 mb-5 scrollbar-hide border-b border-gray-200"
       >
         {TABS.map(({ id, label, icon: Icon }) => (
           <button
@@ -340,17 +327,6 @@ export const LeaderboardClient = ({
           )}
         </div>
       )}
-
-      {/* "Beni Bul" button */}
-      <div className="flex justify-end mb-3">
-        <button
-          onClick={scrollToMe}
-          className="flex items-center gap-1 text-xs font-medium text-lime-600 hover:text-lime-700 transition-colors"
-        >
-          <Search className="h-3.5 w-3.5" />
-          Beni Bul
-        </button>
-      </div>
 
       {/* Podium */}
       <Podium
