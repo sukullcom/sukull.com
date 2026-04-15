@@ -26,6 +26,7 @@ import {
   TrendingUp,
   Lock,
   LogOut,
+  CheckCircle,
 } from "lucide-react";
 import { useSecureLogout } from "@/hooks/use-secure-logout";
 
@@ -56,7 +57,6 @@ export default function ProfilePageClient({
   const [dailyTarget, setDailyTarget] = useState(profile.dailyTarget || 50);
   const [selectedSchoolId, setSelectedSchoolId] = useState<number | null>(profile.schoolId ?? null);
   const [pending, startTransition] = useTransition();
-  const [error, setError] = useState<string | null>(null);
   const { logout, isLoggingOut } = useSecureLogout();
 
   const userAchievements = {
@@ -87,7 +87,6 @@ export default function ProfilePageClient({
   }, [generator, canChangeAvatar]);
 
   const handleSave = useCallback(() => {
-    setError(null);
     if (username.trim() !== profile.userName && !canChangeUsername) {
       toast.error(getStreakRequirementMessage("USERNAME_CHANGE"));
       return;
@@ -105,7 +104,7 @@ export default function ProfilePageClient({
       return;
     }
     if (!username.trim()) {
-      setError("Kullanıcı adı boş olamaz.");
+      toast.error("Kullanıcı adı boş olamaz.");
       return;
     }
 
@@ -115,7 +114,7 @@ export default function ProfilePageClient({
       schoolToSave = selectedSchoolId;
     }
     if (!profile.schoolId && !selectedSchoolId && canSelectSchool) {
-      setError("Lütfen bir okul seçin!");
+      toast.error("Lütfen bir okul seçin!");
       return;
     }
 
@@ -123,7 +122,6 @@ export default function ProfilePageClient({
       updateProfileAction(username.trim(), avatarUrl, schoolToSave, dailyTarget)
         .then(() => toast.success("Profil güncellendi!"))
         .catch((err) => {
-          setError(err.message || "Profil güncellenirken hata oluştu.");
           toast.error(err.message || "Profil güncellenirken hata oluştu.");
         });
     });
@@ -359,18 +357,15 @@ export default function ProfilePageClient({
         {/* Settings Tab */}
         {activeTab === "settings" && (
           <div className="max-w-xl mx-auto border rounded-xl p-5 sm:p-6 space-y-5 bg-white">
-            {error && (
-              <p className="text-sm text-red-600 text-center bg-red-50 p-3 rounded-lg">{error}</p>
-            )}
 
             {/* Avatar */}
             <div className="flex flex-col items-center space-y-3">
-              <div className="w-28 h-28 overflow-hidden rounded-full relative">
+              <div className="w-32 h-32 sm:w-36 sm:h-36 overflow-hidden rounded-full relative border-4 border-gray-100 shadow-md">
                 <Image
                   src={avatarUrl}
                   alt="Avatar"
                   fill
-                  sizes="112px"
+                  sizes="144px"
                   className="object-cover"
                   priority
                   unoptimized={isExternalAvatar}
@@ -445,16 +440,20 @@ export default function ProfilePageClient({
             </Button>
 
             {/* Feature Unlock Status */}
-            <div className="p-4 bg-gray-50 rounded-xl space-y-2">
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Özellik Durumu</h3>
-              <UnlockRow label="Kullanıcı Adı" unlocked={canChangeUsername} req={STREAK_REQUIREMENTS.USERNAME_CHANGE} />
-              <UnlockRow label="Günlük Hedef" unlocked={canChangeDailyGoal} req={STREAK_REQUIREMENTS.DAILY_GOAL_CHANGE} />
-              <UnlockRow label="Avatar" unlocked={canChangeAvatar} req={STREAK_REQUIREMENTS.AVATAR_CHANGE} />
-              <UnlockRow label="Okul Seçimi" unlocked={canSelectSchool} req={STREAK_REQUIREMENTS.SCHOOL_SELECTION} />
-              <div className="pt-2 border-t border-gray-200 mt-2 flex justify-between text-sm">
-                <span className="text-gray-500">Mevcut İstikrar</span>
-                <span className="font-bold text-amber-600">{profile.istikrar} gün</span>
+            <div className="rounded-xl border bg-gradient-to-br from-amber-50 to-orange-50 p-4 space-y-3">
+              <div className="flex items-center justify-between mb-1">
+                <h3 className="text-xs font-semibold text-amber-700 uppercase tracking-wide flex items-center gap-1.5">
+                  <Zap className="h-3.5 w-3.5" />
+                  Özellik Kilitleri
+                </h3>
+                <span className="text-sm font-bold text-amber-600 bg-amber-100 px-2.5 py-0.5 rounded-full">
+                  {profile.istikrar} gün
+                </span>
               </div>
+              <UnlockRow label="Kullanıcı Adı" unlocked={canChangeUsername} req={STREAK_REQUIREMENTS.USERNAME_CHANGE} streak={profile.istikrar} />
+              <UnlockRow label="Günlük Hedef" unlocked={canChangeDailyGoal} req={STREAK_REQUIREMENTS.DAILY_GOAL_CHANGE} streak={profile.istikrar} />
+              <UnlockRow label="Avatar" unlocked={canChangeAvatar} req={STREAK_REQUIREMENTS.AVATAR_CHANGE} streak={profile.istikrar} />
+              <UnlockRow label="Okul Seçimi" unlocked={canSelectSchool} req={STREAK_REQUIREMENTS.SCHOOL_SELECTION} streak={profile.istikrar} />
             </div>
 
             {/* Account */}
@@ -566,14 +565,24 @@ function LockedHint({ days, label }: { days: number; label: string }) {
   );
 }
 
-function UnlockRow({ label, unlocked, req }: { label: string; unlocked: boolean; req: number }) {
+function UnlockRow({ label, unlocked, req, streak = 0 }: { label: string; unlocked: boolean; req: number; streak?: number }) {
+  const pct = unlocked ? 100 : Math.min(Math.round((streak / req) * 100), 100);
   return (
-    <div className="flex items-center justify-between text-xs">
-      <span className="text-gray-600">{label}</span>
-      {unlocked ? (
-        <span className="text-green-600 font-medium">Açık</span>
-      ) : (
-        <span className="text-amber-600 font-medium">{req} gün gerekli</span>
+    <div className="space-y-1">
+      <div className="flex items-center justify-between text-xs">
+        <span className="text-gray-700 font-medium">{label}</span>
+        {unlocked ? (
+          <span className="text-green-600 font-semibold flex items-center gap-1">
+            <CheckCircle className="h-3 w-3" /> Açık
+          </span>
+        ) : (
+          <span className="text-amber-600 font-medium">{streak}/{req} gün</span>
+        )}
+      </div>
+      {!unlocked && (
+        <div className="h-1.5 bg-amber-200/50 rounded-full overflow-hidden">
+          <div className="h-full bg-amber-500 rounded-full transition-all" style={{ width: `${pct}%` }} />
+        </div>
       )}
     </div>
   );

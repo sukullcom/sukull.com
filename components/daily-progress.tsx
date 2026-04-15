@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { getCurrentDayProgress } from "@/actions/daily-streak";
 import Image from "next/image";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, AlertCircle } from "lucide-react";
 
 interface DailyProgressData {
   pointsEarnedToday: number;
@@ -16,9 +16,9 @@ interface DailyProgressData {
 export function DailyProgress() {
   const [progressData, setProgressData] = useState<DailyProgressData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  // Memoize the load progress function
   const loadProgress = useCallback(async (showRefreshIndicator = false) => {
     try {
       if (showRefreshIndicator) {
@@ -26,12 +26,14 @@ export function DailyProgress() {
       }
       const data = await getCurrentDayProgress();
       setProgressData(data);
+      setHasError(false);
     } catch (error) {
       console.error("Error loading daily progress:", error);
+      setHasError(true);
     } finally {
       setLoading(false);
       if (showRefreshIndicator) {
-        setTimeout(() => setIsRefreshing(false), 500); // Show refresh indicator briefly
+        setTimeout(() => setIsRefreshing(false), 500);
       }
     }
   }, []);
@@ -84,6 +86,24 @@ export function DailyProgress() {
   }
 
   if (!progressData) {
+    if (hasError) {
+      return (
+        <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-4 rounded-xl text-white shadow-lg">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 text-sm opacity-90">
+              <AlertCircle className="h-4 w-4" />
+              <span>İlerleme yüklenemedi</span>
+            </div>
+            <button
+              onClick={() => loadProgress(true)}
+              className="p-1 hover:bg-white/20 rounded-full transition-colors"
+            >
+              <RefreshCw className={`w-4 h-4 ${isRefreshing ? "animate-spin" : ""}`} />
+            </button>
+          </div>
+        </div>
+      );
+    }
     return null;
   }
 

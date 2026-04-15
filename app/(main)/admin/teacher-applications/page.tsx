@@ -1,11 +1,32 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
-import { Check, X, User, BookOpen, Mail, Phone, Settings } from "lucide-react";
+import Link from "next/link";
+import {
+  Check,
+  X,
+  User,
+  BookOpen,
+  Mail,
+  Phone,
+  Settings,
+  Search,
+  ArrowLeft,
+  ChevronLeft,
+  ChevronRight,
+  Loader2,
+  GraduationCap,
+  Briefcase,
+  Monitor,
+  Calendar,
+  Wallet,
+  FileText,
+} from "lucide-react";
 import { FieldSelector } from "./components/field-selector";
 
 type TeacherApplication = {
@@ -15,29 +36,60 @@ type TeacherApplication = {
   teacherEmail: string;
   teacherPhoneNumber: string;
   field: string;
+  education: string | null;
+  experienceYears: string | null;
+  targetLevels: string | null;
+  availableHours: string | null;
+  lessonMode: string | null;
+  hourlyRate: string | null;
+  bio: string | null;
   quizResult: number;
   passed: boolean;
   status: "pending" | "approved" | "rejected";
   createdAt: string;
 };
 
+type StatusFilter = "all" | "pending" | "approved" | "rejected";
+
+const PAGE_SIZE = 20;
+
 export default function TeacherApplicationsPage() {
   const [applications, setApplications] = useState<TeacherApplication[]>([]);
+  const [filtered, setFiltered] = useState<TeacherApplication[]>([]);
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState<number | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
+  const [page, setPage] = useState(0);
   const [fieldSelector, setFieldSelector] = useState<{
     isOpen: boolean;
     applicationId: number | null;
     teacherName: string;
-  }>({
-    isOpen: false,
-    applicationId: null,
-    teacherName: "",
-  });
+  }>({ isOpen: false, applicationId: null, teacherName: "" });
+
+  useEffect(() => { fetchApplications(); }, []);
+
+  const applyFilters = useCallback((apps: TeacherApplication[], query: string, status: StatusFilter) => {
+    let result = apps;
+    if (status !== "all") {
+      result = result.filter(a => a.status === status);
+    }
+    if (query.trim()) {
+      const q = query.toLowerCase();
+      result = result.filter(a =>
+        `${a.teacherName} ${a.teacherSurname}`.toLowerCase().includes(q) ||
+        a.teacherEmail.toLowerCase().includes(q) ||
+        a.field.toLowerCase().includes(q)
+      );
+    }
+    return result;
+  }, []);
 
   useEffect(() => {
-    fetchApplications();
-  }, []);
+    const result = applyFilters(applications, searchQuery, statusFilter);
+    setFiltered(result);
+    setPage(0);
+  }, [applications, searchQuery, statusFilter, applyFilters]);
 
   const fetchApplications = async () => {
     try {
@@ -47,193 +99,216 @@ export default function TeacherApplicationsPage() {
         setApplications(data.applications || []);
       } else {
         toast.error("Başvurular yüklenirken hata oluştu");
-        setApplications([]);
       }
-    } catch (error) {
-      console.error("Error fetching applications:", error);
+    } catch {
       toast.error("Başvurular yüklenirken hata oluştu");
-      setApplications([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const updateApplicationStatus = async (id: number, status: "approved" | "rejected") => {
+  const updateStatus = async (id: number, status: "approved" | "rejected") => {
     setUpdating(id);
     try {
       const action = status === "approved" ? "approve" : "reject";
       const response = await fetch(`/api/admin/teacher-applications/${id}`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action }),
       });
-
       if (response.ok) {
         toast.success(`Başvuru ${status === "approved" ? "onaylandı" : "reddedildi"}`);
         fetchApplications();
       } else {
-        const errorData = await response.json();
-        console.error("API Error:", errorData);
-        toast.error(`İşlem başarısız: ${errorData.message || "Bilinmeyen hata"}`);
+        const err = await response.json();
+        toast.error(`İşlem başarısız: ${err.message || "Bilinmeyen hata"}`);
       }
-    } catch (error) {
-      console.error("Error updating application:", error);
+    } catch {
       toast.error("İşlem başarısız: Bağlantı hatası");
     } finally {
       setUpdating(null);
     }
   };
 
-  const openFieldSelector = (applicationId: number, teacherName: string) => {
-    setFieldSelector({
-      isOpen: true,
-      applicationId,
-      teacherName,
-    });
-  };
+  const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+  const pageData = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
 
-  const closeFieldSelector = () => {
-    setFieldSelector({
-      isOpen: false,
-      applicationId: null,
-      teacherName: "",
-    });
-  };
-
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "approved":
-        return <Badge className="bg-green-100 text-green-800">Onaylandı</Badge>;
-      case "rejected":
-        return <Badge className="bg-red-100 text-red-800">Reddedildi</Badge>;
-      default:
-        return <Badge className="bg-yellow-100 text-yellow-800">Beklemede</Badge>;
-    }
+  const statusCounts = {
+    all: applications.length,
+    pending: applications.filter(a => a.status === "pending").length,
+    approved: applications.filter(a => a.status === "approved").length,
+    rejected: applications.filter(a => a.status === "rejected").length,
   };
 
   if (loading) {
     return (
-      <div className="container py-10">
-        <div className="flex justify-center items-center min-h-[400px]">
-          <span className="loading loading-spinner loading-lg"></span>
-        </div>
+      <div className="flex justify-center items-center min-h-[400px]">
+        <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
       </div>
     );
   }
 
   return (
-    <div className="container py-10">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Öğretmen Başvuruları</h1>
-        <Button onClick={fetchApplications} variant="primaryOutline">
-          Yenile
-        </Button>
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
+      {/* Breadcrumb */}
+      <div className="flex items-center gap-2 mb-6">
+        <Link href="/admin" className="text-sm text-gray-500 hover:text-gray-700 flex items-center gap-1">
+          <ArrowLeft className="h-3.5 w-3.5" /> Dashboard
+        </Link>
+        <span className="text-sm text-gray-300">/</span>
+        <span className="text-sm font-medium text-gray-800">Öğretmen Başvuruları</span>
       </div>
 
-      {applications.length === 0 ? (
-        <Card>
-          <CardContent className="py-8">
-            <p className="text-center text-gray-500">Henüz başvuru bulunmuyor.</p>
-          </CardContent>
-        </Card>
+      <h1 className="text-2xl font-bold text-gray-900 mb-6">Öğretmen Başvuruları</h1>
+
+      {/* Filters */}
+      <div className="flex flex-col sm:flex-row gap-3 mb-6">
+        <div className="relative flex-1 max-w-sm">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <Input
+            placeholder="İsim, e-posta veya alan ara..."
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            className="pl-9"
+          />
+        </div>
+        <div className="flex gap-1.5 flex-wrap">
+          {(["all", "pending", "approved", "rejected"] as StatusFilter[]).map(s => (
+            <button
+              key={s}
+              onClick={() => setStatusFilter(s)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+                statusFilter === s
+                  ? "bg-gray-900 text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              }`}
+            >
+              {{ all: "Tümü", pending: "Beklemede", approved: "Onaylı", rejected: "Reddedildi" }[s]}
+              <span className="ml-1 opacity-70">({statusCounts[s]})</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Results */}
+      <p className="text-sm text-gray-500 mb-4">{filtered.length} sonuç bulundu</p>
+
+      {pageData.length === 0 ? (
+        <Card><CardContent className="py-8"><p className="text-center text-gray-500">Sonuç bulunamadı.</p></CardContent></Card>
       ) : (
-        <div className="grid gap-6">
-          {Array.isArray(applications) ? applications.map((application) => (
-            <Card key={application.id}>
-              <CardHeader>
-                <div className="flex justify-between items-start">
-                  <CardTitle className="flex items-center gap-2">
-                    <User className="h-5 w-5" />
-                    {application.teacherName} {application.teacherSurname}
-                  </CardTitle>
-                  {getStatusBadge(application.status)}
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-2 gap-4 mb-4">
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <Mail className="h-4 w-4 text-gray-500" />
-                      <span className="text-sm">{application.teacherEmail}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Phone className="h-4 w-4 text-gray-500" />
-                      <span className="text-sm">{application.teacherPhoneNumber}</span>
-                    </div>
+        <div className="space-y-4">
+          {pageData.map(app => (
+            <Card key={app.id} className="overflow-hidden">
+              <CardContent className="p-5">
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
+                  <div className="flex items-center gap-2">
+                    <User className="h-5 w-5 text-gray-400" />
+                    <span className="font-semibold text-gray-800">{app.teacherName} {app.teacherSurname}</span>
+                    <StatusBadge status={app.status} />
                   </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <BookOpen className="h-4 w-4 text-gray-500" />
-                      <span className="text-sm">{application.field}</span>
-                    </div>
-                  </div>
+                  <span className="text-xs text-gray-400">{new Date(app.createdAt).toLocaleDateString("tr-TR")}</span>
                 </div>
 
-                <div className="flex items-center gap-4 mb-4">
-                  <span className="text-sm text-gray-600">
-                    Quiz Sonucu: <strong>{application.quizResult}</strong>
-                  </span>
-                  <span className="text-sm text-gray-600">
-                    Durum: <strong>{application.passed ? "Geçti" : "Kaldı"}</strong>
-                  </span>
-                  <span className="text-sm text-gray-600">
-                    Tarih: <strong>{new Date(application.createdAt).toLocaleDateString("tr-TR")}</strong>
-                  </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2 text-sm mb-4">
+                  <InfoRow icon={Mail} label="E-posta" value={app.teacherEmail} />
+                  <InfoRow icon={Phone} label="Telefon" value={app.teacherPhoneNumber} />
+                  <InfoRow icon={BookOpen} label="Alan" value={app.field} />
+                  {app.education && <InfoRow icon={GraduationCap} label="Eğitim" value={app.education} />}
+                  {app.experienceYears && <InfoRow icon={Briefcase} label="Deneyim" value={app.experienceYears} />}
+                  {app.targetLevels && <InfoRow icon={BookOpen} label="Hedef Seviye" value={app.targetLevels} />}
+                  {app.availableHours && <InfoRow icon={Calendar} label="Müsaitlik" value={app.availableHours} />}
+                  {app.lessonMode && <InfoRow icon={Monitor} label="Ders Şekli" value={app.lessonMode} />}
+                  {app.hourlyRate && <InfoRow icon={Wallet} label="Ücret" value={app.hourlyRate} />}
                 </div>
 
-                {application.status === "pending" && (
-                  <div className="flex gap-2 pt-4 border-t">
+                {app.bio && (
+                  <div className="flex items-start gap-2 text-sm text-gray-600 mb-4 bg-gray-50 rounded-lg p-3">
+                    <FileText className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
+                    <p className="leading-relaxed">{app.bio}</p>
+                  </div>
+                )}
+
+                {app.status === "pending" && (
+                  <div className="flex flex-wrap gap-2 pt-3 border-t">
                     <Button
-                      onClick={() => openFieldSelector(application.id, `${application.teacherName} ${application.teacherSurname}`)}
-                      disabled={updating === application.id}
-                      variant="secondary"
-                      size="sm"
+                      onClick={() => setFieldSelector({ isOpen: true, applicationId: app.id, teacherName: `${app.teacherName} ${app.teacherSurname}` })}
+                      disabled={updating === app.id}
+                      variant="secondary" size="sm"
                     >
-                      <Settings className="h-4 w-4 mr-2" />
-                      Alan Seç & Onayla
+                      <Settings className="h-4 w-4 mr-1.5" /> Alan Seç & Onayla
                     </Button>
                     <Button
-                      onClick={() => updateApplicationStatus(application.id, "approved")}
-                      disabled={updating === application.id}
-                      variant="primaryOutline"
-                      size="sm"
+                      onClick={() => updateStatus(app.id, "approved")}
+                      disabled={updating === app.id}
+                      variant="primaryOutline" size="sm"
                     >
-                      <Check className="h-4 w-4 mr-2" />
-                      Hızlı Onayla
+                      <Check className="h-4 w-4 mr-1.5" /> Hızlı Onayla
                     </Button>
                     <Button
-                      onClick={() => updateApplicationStatus(application.id, "rejected")}
-                      disabled={updating === application.id}
-                      variant="danger"
-                      size="sm"
+                      onClick={() => updateStatus(app.id, "rejected")}
+                      disabled={updating === app.id}
+                      variant="danger" size="sm"
                     >
-                      <X className="h-4 w-4 mr-2" />
-                      Reddet
+                      <X className="h-4 w-4 mr-1.5" /> Reddet
                     </Button>
                   </div>
                 )}
               </CardContent>
             </Card>
-          )) : (
-            <Card>
-              <CardContent className="py-8">
-                <p className="text-center text-gray-500">Veri yüklenirken bir hata oluştu.</p>
-              </CardContent>
-            </Card>
-          )}
+          ))}
         </div>
       )}
 
-      {/* Field Selector Modal */}
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-3 mt-6">
+          <Button variant="ghost" size="sm" disabled={page === 0} onClick={() => setPage(p => p - 1)}>
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          <span className="text-sm text-gray-600">
+            Sayfa {page + 1} / {totalPages}
+          </span>
+          <Button variant="ghost" size="sm" disabled={page >= totalPages - 1} onClick={() => setPage(p => p + 1)}>
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </div>
+      )}
+
       <FieldSelector
         isOpen={fieldSelector.isOpen}
-        onClose={closeFieldSelector}
+        onClose={() => setFieldSelector({ isOpen: false, applicationId: null, teacherName: "" })}
         applicationId={fieldSelector.applicationId || 0}
         teacherName={fieldSelector.teacherName}
-        onFieldsChange={() => {}} // This is handled inside the component
+        onFieldsChange={() => {}}
       />
     </div>
   );
-} 
+}
+
+function InfoRow({ icon: Icon, label, value }: { icon: React.ElementType; label: string; value: string }) {
+  return (
+    <div className="flex items-center gap-2 text-gray-600">
+      <Icon className="h-3.5 w-3.5 text-gray-400 shrink-0" />
+      <span className="text-gray-400 text-xs">{label}:</span>
+      <span className="truncate">{value}</span>
+    </div>
+  );
+}
+
+function StatusBadge({ status }: { status: string }) {
+  const styles: Record<string, string> = {
+    pending: "bg-yellow-100 text-yellow-800",
+    approved: "bg-green-100 text-green-800",
+    rejected: "bg-red-100 text-red-800",
+  };
+  const labels: Record<string, string> = {
+    pending: "Beklemede",
+    approved: "Onaylı",
+    rejected: "Reddedildi",
+  };
+  return (
+    <Badge className={styles[status] || styles.pending}>
+      {labels[status] || status}
+    </Badge>
+  );
+}

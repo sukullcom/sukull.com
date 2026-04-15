@@ -56,7 +56,12 @@ export default async function ProtectedLayout({
         />
       </StickyWrapper>
 
-      <div className="flex-1 min-w-0">{children}</div>
+      <div className="flex-1 min-w-0">
+        <div className="lg:hidden px-3 mb-4">
+          <DailyProgress />
+        </div>
+        {children}
+      </div>
     </div>
   );
 }

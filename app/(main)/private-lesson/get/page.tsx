@@ -22,7 +22,12 @@ import {
   Clock,
   CheckCircle,
   XCircle,
-  Loader2
+  Loader2,
+  GraduationCap,
+  Timer,
+  Calendar,
+  Wallet,
+  Monitor
 } from "lucide-react";
 
 type ApplicationStatus = {
@@ -39,6 +44,11 @@ export default function GetLessonPage() {
     studentPhoneNumber: "",
     studentEmail: "",
     field: "",
+    studentLevel: "",
+    lessonDuration: "",
+    availableHours: "",
+    budget: "",
+    lessonMode: "",
     studentNeeds: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -88,27 +98,38 @@ export default function GetLessonPage() {
         body: JSON.stringify(formData),
       });
 
+      const data = await res.json();
+
       if (res.ok) {
         router.push("/private-lesson/get/success");
       } else {
-        toast.error("Bir hata oluştu. Lütfen tekrar deneyin.");
+        toast.error(data.error || "Bir hata oluştu. Lütfen tekrar deneyin.");
       }
+    } catch {
+      toast.error("Bir hata oluştu. Lütfen tekrar deneyin.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Calculate form completion percentage
   const completionPercentage = () => {
     const requiredFields = [
       formData.studentName,
       formData.studentSurname,
       formData.studentPhoneNumber,
       formData.studentEmail,
-      formData.field
+      formData.field,
+      formData.studentLevel,
     ];
-    const completed = requiredFields.filter(f => f !== "").length;
-    return Math.round((completed / 5) * 100);
+    const optionalFields = [
+      formData.lessonDuration,
+      formData.availableHours,
+      formData.budget,
+      formData.lessonMode,
+    ];
+    const requiredCompleted = requiredFields.filter(f => f !== "").length;
+    const optionalCompleted = optionalFields.filter(f => f !== "").length;
+    return Math.round(((requiredCompleted + optionalCompleted * 0.5) / (requiredFields.length + optionalFields.length * 0.5)) * 100);
   };
 
   if (loading) {
@@ -191,10 +212,10 @@ export default function GetLessonPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div className="flex-1">
-                  <h1 className="text-3xl font-bold text-gray-800 mb-2">
+                  <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
                     Öğrenci Başvurusu
                   </h1>
-                  <p className="text-gray-600">
+                  <p className="text-sm sm:text-base text-gray-600">
                     Sana en uygun öğretmeni bulabilmemiz için formu eksiksiz doldur
                   </p>
                 </div>
@@ -310,23 +331,107 @@ export default function GetLessonPage() {
                 </div>
               </div>
 
-              {/* Field Selection */}
-              <div className="space-y-2">
-                <Label htmlFor="field" className="flex items-center gap-2">
-                  <BookOpen className="w-4 h-4" />
-                  Ders Alanı <span className="text-red-500">*</span>
-                </Label>
-                <Select value={formData.field} onValueChange={(value) => handleSelectChange("field", value)}>
-                  <SelectValue placeholder="Hangi alanda özel ders almak istiyorsun?" />
-                  <SelectItem value="Matematik">Matematik</SelectItem>
-                  <SelectItem value="Fizik">Fizik</SelectItem>
-                  <SelectItem value="Kimya">Kimya</SelectItem>
-                  <SelectItem value="Biyoloji">Biyoloji</SelectItem>
-                  <SelectItem value="İngilizce">İngilizce</SelectItem>
-                  <SelectItem value="Türkçe">Türkçe</SelectItem>
-                  <SelectItem value="Tarih">Tarih</SelectItem>
-                  <SelectItem value="Coğrafya">Coğrafya</SelectItem>
-                </Select>
+              {/* Field & Level Selection */}
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="field" className="flex items-center gap-2">
+                    <BookOpen className="w-4 h-4" />
+                    Ders Alanı <span className="text-red-500">*</span>
+                  </Label>
+                  <Select value={formData.field} onValueChange={(value) => handleSelectChange("field", value)}>
+                    <SelectValue placeholder="Ders alanı seç" />
+                    <SelectItem value="Matematik">Matematik</SelectItem>
+                    <SelectItem value="Fizik">Fizik</SelectItem>
+                    <SelectItem value="Kimya">Kimya</SelectItem>
+                    <SelectItem value="Biyoloji">Biyoloji</SelectItem>
+                    <SelectItem value="İngilizce">İngilizce</SelectItem>
+                    <SelectItem value="Türkçe">Türkçe</SelectItem>
+                    <SelectItem value="Tarih">Tarih</SelectItem>
+                    <SelectItem value="Coğrafya">Coğrafya</SelectItem>
+                    <SelectItem value="Edebiyat">Edebiyat</SelectItem>
+                    <SelectItem value="Felsefe">Felsefe</SelectItem>
+                    <SelectItem value="Bilgisayar Bilimleri">Bilgisayar Bilimleri</SelectItem>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="studentLevel" className="flex items-center gap-2">
+                    <GraduationCap className="w-4 h-4" />
+                    Sınıf / Seviye <span className="text-red-500">*</span>
+                  </Label>
+                  <Select value={formData.studentLevel} onValueChange={(value) => handleSelectChange("studentLevel", value)}>
+                    <SelectValue placeholder="Seviyeni seç" />
+                    <SelectItem value="İlkokul (1-4)">İlkokul (1-4)</SelectItem>
+                    <SelectItem value="Ortaokul (5-8)">Ortaokul (5-8)</SelectItem>
+                    <SelectItem value="Lise (9-12)">Lise (9-12)</SelectItem>
+                    <SelectItem value="Üniversite Hazırlık">Üniversite Hazırlık</SelectItem>
+                    <SelectItem value="Üniversite">Üniversite</SelectItem>
+                    <SelectItem value="Yetişkin / Genel">Yetişkin / Genel</SelectItem>
+                  </Select>
+                </div>
+              </div>
+
+              {/* Lesson Preferences */}
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="lessonDuration" className="flex items-center gap-2">
+                    <Timer className="w-4 h-4" />
+                    Tercih Edilen Ders Süresi
+                  </Label>
+                  <Select value={formData.lessonDuration} onValueChange={(value) => handleSelectChange("lessonDuration", value)}>
+                    <SelectValue placeholder="Ders süresi seç" />
+                    <SelectItem value="30">30 dakika</SelectItem>
+                    <SelectItem value="45">45 dakika</SelectItem>
+                    <SelectItem value="60">60 dakika</SelectItem>
+                    <SelectItem value="90">90 dakika</SelectItem>
+                    <SelectItem value="120">120 dakika</SelectItem>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="lessonMode" className="flex items-center gap-2">
+                    <Monitor className="w-4 h-4" />
+                    Ders Şekli
+                  </Label>
+                  <Select value={formData.lessonMode} onValueChange={(value) => handleSelectChange("lessonMode", value)}>
+                    <SelectValue placeholder="Ders şekli seç" />
+                    <SelectItem value="Online">Online</SelectItem>
+                    <SelectItem value="Yüz yüze">Yüz yüze</SelectItem>
+                    <SelectItem value="Farketmez">Farketmez</SelectItem>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="availableHours" className="flex items-center gap-2">
+                    <Calendar className="w-4 h-4" />
+                    Müsait Olduğun Saatler
+                  </Label>
+                  <Select value={formData.availableHours} onValueChange={(value) => handleSelectChange("availableHours", value)}>
+                    <SelectValue placeholder="Saat aralığı seç" />
+                    <SelectItem value="Sabah (09:00-12:00)">Sabah (09:00-12:00)</SelectItem>
+                    <SelectItem value="Öğleden sonra (12:00-17:00)">Öğleden sonra (12:00-17:00)</SelectItem>
+                    <SelectItem value="Akşam (17:00-21:00)">Akşam (17:00-21:00)</SelectItem>
+                    <SelectItem value="Hafta sonu">Hafta sonu</SelectItem>
+                    <SelectItem value="Esnek">Esnek / Farketmez</SelectItem>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="budget" className="flex items-center gap-2">
+                    <Wallet className="w-4 h-4" />
+                    Bütçe Beklentisi (Saat başı)
+                  </Label>
+                  <Select value={formData.budget} onValueChange={(value) => handleSelectChange("budget", value)}>
+                    <SelectValue placeholder="Bütçe aralığı seç" />
+                    <SelectItem value="0-200 TL">0-200 TL</SelectItem>
+                    <SelectItem value="200-400 TL">200-400 TL</SelectItem>
+                    <SelectItem value="400-600 TL">400-600 TL</SelectItem>
+                    <SelectItem value="600+ TL">600+ TL</SelectItem>
+                    <SelectItem value="Farketmez">Farketmez</SelectItem>
+                  </Select>
+                </div>
               </div>
 
               {/* Additional Information */}
@@ -342,6 +447,7 @@ export default function GetLessonPage() {
                   value={formData.studentNeeds}
                   onChange={handleChange}
                   rows={4}
+                  maxLength={500}
                   className="resize-none transition-all duration-200 focus:scale-[1.01]"
                 />
                 <p className="text-xs text-gray-500">

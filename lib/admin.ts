@@ -7,17 +7,33 @@ const adminEmails = process.env.ADMIN_EMAILS
   ? process.env.ADMIN_EMAILS.split(",").map(email => email.trim().toLowerCase())
   : [];
 
+/**
+ * Unified admin check: uses DB role as source of truth,
+ * auto-syncs from ADMIN_EMAILS when they diverge.
+ */
 export const isAdmin = async () => {
   const user = await getServerUser();
   if (!user) return null;
 
-  const userEmail = user.email; // Access the user's email from the token
-  if (!userEmail) {
-    return false;
+  const userRecord = await db.query.users.findFirst({
+    where: eq(users.id, user.id),
+    columns: { role: true },
+  });
+
+  if (userRecord?.role === "admin") return true;
+
+  const emailMatch = user.email
+    ? adminEmails.includes(user.email.toLowerCase())
+    : false;
+
+  if (emailMatch && userRecord && userRecord.role !== "admin") {
+    await db.update(users)
+      .set({ role: "admin", updated_at: new Date() })
+      .where(eq(users.id, user.id));
+    return true;
   }
 
-  // Check if the user's email is in the list of admin emails
-  return adminEmails.includes(userEmail.toLowerCase());
+  return false;
 };
 
 /**

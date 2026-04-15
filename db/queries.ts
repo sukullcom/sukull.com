@@ -537,7 +537,6 @@ export async function getAllTeacherApplications() {
     orderBy: (teacherApplications, { desc }) => [desc(teacherApplications.createdAt)],
   });
   
-  // Transform the data to match frontend expectations
   const transformedApplications = applications.map(app => ({
     id: app.id,
     userId: app.userId,
@@ -546,6 +545,13 @@ export async function getAllTeacherApplications() {
     teacherEmail: app.teacherEmail || "N/A",
     teacherPhoneNumber: app.teacherPhoneNumber || "N/A",
     field: app.field,
+    education: app.education || null,
+    experienceYears: app.experienceYears || null,
+    targetLevels: app.targetLevels || null,
+    availableHours: app.availableHours || null,
+    lessonMode: app.lessonMode || null,
+    hourlyRate: app.hourlyRate || null,
+    bio: app.bio || null,
     quizResult: app.quizResult,
     passed: app.passed,
     classification: app.classification,
@@ -1229,17 +1235,18 @@ export async function getAllStudentApplications() {
     orderBy: (privateLessonApplications, { desc }) => [desc(privateLessonApplications.createdAt)],
   });
   
-  // Transform the data to match frontend expectations
   const transformedApplications = applications.map(app => ({
     id: app.id,
     studentName: app.studentName,
     studentSurname: app.studentSurname,
     studentEmail: app.studentEmail,
     studentPhoneNumber: app.studentPhoneNumber,
-    subject: app.field, // Map field to subject
-    studentLevel: "Genel", // Default value since not in schema
-    lessonDuration: "60", // Default value since not in schema
-    availableHours: "Belirtilmemiş", // Default value since not in schema
+    subject: app.field,
+    studentLevel: app.studentLevel || null,
+    lessonDuration: app.lessonDuration || null,
+    availableHours: app.availableHours || null,
+    budget: app.budget || null,
+    lessonMode: app.lessonMode || null,
     status: app.status || "pending",
     approved: app.approved || false,
     userId: app.userId,

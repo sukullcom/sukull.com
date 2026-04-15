@@ -4,10 +4,17 @@ import { revalidatePath } from "next/cache";
 import db from "@/db/drizzle";
 import { courses, units, lessons, challenges, challengeOptions } from "@/db/schema";
 import { eq, sql } from "drizzle-orm";
+import { isAdmin } from "@/lib/admin";
+
+async function requireAdmin() {
+  const admin = await isAdmin();
+  if (!admin) throw new Error("Unauthorized");
+}
 
 // Course Actions
 export async function createCourse(data: { title: string; imageSrc: string }) {
   try {
+    await requireAdmin();
     const [course] = await db
       .insert(courses)
       .values({
@@ -27,6 +34,7 @@ export async function createCourse(data: { title: string; imageSrc: string }) {
 
 export async function updateCourse(courseId: number, data: { title: string; imageSrc: string }) {
   try {
+    await requireAdmin();
     const [course] = await db
       .update(courses)
       .set({
@@ -47,6 +55,7 @@ export async function updateCourse(courseId: number, data: { title: string; imag
 
 export async function deleteCourse(courseId: number) {
   try {
+    await requireAdmin();
     await db.delete(courses).where(eq(courses.id, courseId));
     revalidatePath("/admin/course-builder");
     return { success: true };
@@ -64,6 +73,7 @@ export async function createUnit(data: {
   order: number; 
 }) {
   try {
+    await requireAdmin();
     const [unit] = await db
       .insert(units)
       .values(data)
@@ -84,6 +94,7 @@ export async function updateUnit(unitId: number, data: {
   order: number; 
 }) {
   try {
+    await requireAdmin();
     const [unit] = await db
       .update(units)
       .set({
@@ -105,6 +116,7 @@ export async function updateUnit(unitId: number, data: {
 
 export async function deleteUnit(unitId: number) {
   try {
+    await requireAdmin();
     await db.delete(units).where(eq(units.id, unitId));
     revalidatePath("/admin/course-builder");
     return { success: true };
@@ -121,6 +133,7 @@ export async function createLesson(data: {
   order: number; 
 }) {
   try {
+    await requireAdmin();
     const [lesson] = await db
       .insert(lessons)
       .values(data)
@@ -140,6 +153,7 @@ export async function updateLesson(lessonId: number, data: {
   order: number; 
 }) {
   try {
+    await requireAdmin();
     const [lesson] = await db
       .update(lessons)
       .set({
@@ -160,6 +174,7 @@ export async function updateLesson(lessonId: number, data: {
 
 export async function deleteLesson(lessonId: number) {
   try {
+    await requireAdmin();
     await db.delete(lessons).where(eq(lessons.id, lessonId));
     revalidatePath("/admin/course-builder");
     return { success: true };
@@ -183,6 +198,7 @@ export async function createChallenge(data: {
   questionImageSrc?: string;
 }) {
   try {
+    await requireAdmin();
     const [challenge] = await db
       .insert(challenges)
       .values({
@@ -221,6 +237,7 @@ export async function updateChallenge(challengeId: number, data: {
   questionImageSrc?: string;
 }) {
   try {
+    await requireAdmin();
     const [challenge] = await db
       .update(challenges)
       .set({
@@ -249,6 +266,7 @@ export async function updateChallenge(challengeId: number, data: {
 
 export async function deleteChallenge(challengeId: number) {
   try {
+    await requireAdmin();
     await db.delete(challenges).where(eq(challenges.id, challengeId));
     revalidatePath("/admin/course-builder");
     return { success: true };
@@ -260,6 +278,7 @@ export async function deleteChallenge(challengeId: number) {
 
 export async function cloneChallenge(challengeId: number, targetLessonId?: number) {
   try {
+    await requireAdmin();
     const original = await db.query.challenges.findFirst({
       where: eq(challenges.id, challengeId),
       with: { challengeOptions: true },
@@ -329,6 +348,7 @@ export async function createChallengeOptions(
   }>
 ) {
   try {
+    await requireAdmin();
     const challengeOptionsData = options.map(option => ({
       challengeId,
       ...option,
@@ -363,6 +383,7 @@ export async function updateChallengeOptions(
   }>
 ) {
   try {
+    await requireAdmin();
     // Delete existing options for this challenge
     await db.delete(challengeOptions).where(eq(challengeOptions.challengeId, challengeId));
 
@@ -395,6 +416,7 @@ export async function updateChallengeOptions(
 
 export async function deleteChallengeOption(optionId: number) {
   try {
+    await requireAdmin();
     await db.delete(challengeOptions).where(eq(challengeOptions.id, optionId));
     revalidatePath("/admin/course-builder");
     return { success: true };
@@ -439,6 +461,7 @@ export async function importCourseFromJSON(jsonData: {
   }>;
 }) {
   try {
+    await requireAdmin();
     const [course] = await db
       .insert(courses)
       .values({
@@ -563,6 +586,7 @@ export async function appendToCourse(
   }
 ) {
   try {
+    await requireAdmin();
     const existingCourse = await db.query.courses.findFirst({
       where: eq(courses.id, courseId),
     });
@@ -696,6 +720,7 @@ export async function appendToCourse(
 // Get Units for Course
 export async function getUnitsForCourse(courseId: number) {
   try {
+    await requireAdmin();
     const courseUnits = await db.query.units.findMany({
       where: eq(units.courseId, courseId),
       orderBy: (units, { asc }) => [asc(units.order)],
@@ -712,6 +737,7 @@ export async function getUnitsForCourse(courseId: number) {
 // Get Lessons for Course
 export async function getLessonsForCourse(courseId: number) {
   try {
+    await requireAdmin();
     // First get the units for this course
     const courseUnits = await db
       .select({ id: units.id })
@@ -744,6 +770,7 @@ export async function getLessonsForCourse(courseId: number) {
 // Get Challenges for Course (kept for compatibility, but will be replaced by lesson-based loading)
 export async function getChallengesForCourse(courseId: number) {
   try {
+    await requireAdmin();
     // First get lesson IDs for this course
     const courseLessons = await db
       .select({ id: lessons.id })
@@ -782,6 +809,7 @@ export async function getChallengesForCourse(courseId: number) {
 // 🚀 NEW: Get Challenges for Specific Lesson (Performance Optimized)
 export async function getChallengesForLesson(lessonId: number) {
   try {
+    await requireAdmin();
     const lessonChallenges = await db.query.challenges.findMany({
       where: (challenges, { eq }) => eq(challenges.lessonId, lessonId),
       with: {

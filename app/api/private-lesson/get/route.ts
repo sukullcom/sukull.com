@@ -49,7 +49,12 @@ export async function POST(request: NextRequest) {
       studentPhoneNumber,
       studentEmail,
       field,
-      studentNeeds = ""
+      studentNeeds = "",
+      studentLevel = null,
+      lessonDuration = null,
+      availableHours = null,
+      budget = null,
+      lessonMode = null,
     } = body;
 
     if (!studentName || !studentSurname || !studentPhoneNumber || !studentEmail || !field) {
@@ -73,7 +78,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create student application
     const application = await db.insert(privateLessonApplications).values({
       userId: user.id,
       studentName,
@@ -82,6 +86,11 @@ export async function POST(request: NextRequest) {
       studentEmail,
       field,
       studentNeeds,
+      studentLevel,
+      lessonDuration,
+      availableHours,
+      budget,
+      lessonMode,
       status: "pending",
       createdAt: new Date(),
     }).returning();

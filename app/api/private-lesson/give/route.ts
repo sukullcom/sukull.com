@@ -2,8 +2,36 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
 import db from "@/db/drizzle";
 import { teacherApplications } from "@/db/schema";
+import { eq, desc } from "drizzle-orm";
 
-// Teacher Application Submission
+export async function GET() {
+  try {
+    const user = await getServerUser();
+    if (!user) {
+      return NextResponse.json({ error: "Giriş yapmanız gerekiyor" }, { status: 401 });
+    }
+
+    const application = await db.query.teacherApplications.findFirst({
+      where: (apps) => eq(apps.userId, user.id),
+      orderBy: (apps) => [desc(apps.createdAt)],
+    });
+
+    if (!application) {
+      return NextResponse.json({ hasApplication: false });
+    }
+
+    return NextResponse.json({
+      hasApplication: true,
+      status: application.status,
+      field: application.field,
+      createdAt: application.createdAt,
+    });
+  } catch (error) {
+    console.error("Teacher application status check error:", error);
+    return NextResponse.json({ error: "Bir hata oluştu" }, { status: 500 });
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     // Get the current user
@@ -23,7 +51,14 @@ export async function POST(request: NextRequest) {
       teacherEmail,
       field,
       quizResult = 0,
-      passed = true
+      passed = true,
+      education = null,
+      experienceYears = null,
+      targetLevels = null,
+      availableHours = null,
+      lessonMode = null,
+      hourlyRate = null,
+      bio = null,
     } = body;
 
     // Validate required fields
@@ -40,13 +75,23 @@ export async function POST(request: NextRequest) {
     });
 
     if (existingApplication) {
-      return NextResponse.json(
-        { error: "Zaten bir eğitmen başvurunuz bulunmaktadır" },
-        { status: 400 }
-      );
+      if (existingApplication.status === "pending") {
+        return NextResponse.json(
+          { error: "Başvurunuz zaten inceleme sürecindedir. Lütfen sonucu bekleyin." },
+          { status: 400 }
+        );
+      }
+      if (existingApplication.status === "approved") {
+        return NextResponse.json(
+          { error: "Zaten onaylanmış bir eğitmen hesabınız bulunmaktadır." },
+          { status: 400 }
+        );
+      }
+      // Rejected: delete old application so user can re-apply
+      await db.delete(teacherApplications)
+        .where(eq(teacherApplications.userId, user.id));
     }
 
-    // Create teacher application
     const application = await db.insert(teacherApplications).values({
       userId: user.id,
       field,
@@ -56,7 +101,14 @@ export async function POST(request: NextRequest) {
       teacherSurname,
       teacherPhoneNumber,
       teacherEmail,
-      classification: "pending", // Set initial status
+      education,
+      experienceYears,
+      targetLevels,
+      availableHours,
+      lessonMode,
+      hourlyRate,
+      bio,
+      classification: "pending",
       status: "pending",
       createdAt: new Date(),
       updatedAt: new Date(),
