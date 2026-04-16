@@ -231,11 +231,11 @@ export default function GetLessonPage() {
               <div className="mt-6">
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-sm text-gray-600">Form Tamamlanma</span>
-                  <span className="text-sm font-semibold text-blue-600">{completionPercentage()}%</span>
+                  <span className="text-sm font-semibold text-green-600">{completionPercentage()}%</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2">
                   <div 
-                    className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+                    className="bg-green-500 h-2 rounded-full transition-all duration-300"
                     style={{ width: `${completionPercentage()}%` }}
                   />
                 </div>

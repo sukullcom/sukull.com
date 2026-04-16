@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { LoadingSpinner } from "@/components/loading-spinner";
-import { InfinityIcon } from "lucide-react";
+import { InfinityIcon, CircleCheck, Music, BookOpen, Microscope, Lightbulb } from "lucide-react";
 
 interface UserProgress {
   hearts: number;
@@ -134,20 +134,20 @@ export default function VideoSelectionPage() {
       </p>
       
       <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-        <h3 className="font-semibold text-green-800 mb-2">✅ Mevcut Videolar</h3>
+        <h3 className="font-semibold text-green-800 mb-2"><CircleCheck className="w-4 h-4 inline text-green-500" /> Mevcut Videolar</h3>
         <ul className="text-sm text-green-700 space-y-1">
-          <li>• <strong>Rick Astley - Never Gonna Give You Up</strong> - Klasik şarkı 🎵</li>
-          <li>• <strong>Slow Productivity (Cal Newport)</strong> - Eğitim videosu 📚</li>
-          <li>• <strong>Kurzgesagt - Immune System</strong> - Bilim videosu 🧬</li>
+          <li>• <strong>Rick Astley - Never Gonna Give You Up</strong> - Klasik şarkı <Music className="w-4 h-4 inline text-purple-500" /></li>
+          <li>• <strong>Slow Productivity (Cal Newport)</strong> - Eğitim videosu <BookOpen className="w-4 h-4 inline text-blue-500" /></li>
+          <li>• <strong>Kurzgesagt - Immune System</strong> - Bilim videosu <Microscope className="w-4 h-4 inline text-emerald-500" /></li>
         </ul>
         <p className="text-xs text-green-600 mt-2">
-          💡 %100 çalışma garantili ve tamamen ücretsiz!
+          <Lightbulb className="w-4 h-4 inline text-yellow-500" /> %100 çalışma garantili ve tamamen ücretsiz!
         </p>
       </div>
 
       <h2 className="text-lg font-semibold mb-3">Video Seç</h2>
       <p className="text-sm text-gray-600 mb-4">
-        ✅ Bu videolar çalışma garantili, yüksek kaliteli transcript&apos;lere sahip ve <span className="font-semibold text-green-600">tamamen ücretsiz!</span>
+        <CircleCheck className="w-4 h-4 inline text-green-500" /> Bu videolar çalışma garantili, yüksek kaliteli transcript&apos;lere sahip ve <span className="font-semibold text-green-600">tamamen ücretsiz!</span>
       </p>
       <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
         {predefinedVideos.map((v) => (
@@ -172,7 +172,7 @@ export default function VideoSelectionPage() {
               <h3 style={{ margin: 0, fontSize: "18px", fontWeight: "bold" }}>{v.title}</h3>
               <p style={{ margin: 0, fontSize: "14px", color: "#555" }}>Oyna</p>
               <div className="flex items-center gap-1 mt-1">
-                <span className="text-xs font-medium text-green-600">✅ Ücretsiz</span>
+                <span className="text-xs font-medium text-green-600"><CircleCheck className="w-3 h-3 inline" /> Ücretsiz</span>
               </div>
             </div>
           </button>

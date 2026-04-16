@@ -1,6 +1,7 @@
 import { lessons, units } from "@/db/schema"
 import { UnitBanner } from "./unit-banner"
 import { LessonButton } from "./lesson-button"
+import type { SubjectColorConfig } from "@/lib/subject-colors"
 
 type LessonWithProgress = typeof lessons.$inferSelect & {
     completed: boolean
@@ -13,6 +14,7 @@ type Props = {
     title: string
     description: string
     lessons: LessonWithProgress[]
+    subjectColor: SubjectColorConfig
     activeLesson: typeof lessons.$inferSelect & {
         unit: typeof units.$inferSelect
     } | undefined
@@ -26,6 +28,7 @@ export const Unit = ({
     title,
     description,
     lessons,
+    subjectColor,
     activeLesson,
     activeLessonPercentage,
 }: Props) => {
@@ -42,6 +45,7 @@ export const Unit = ({
                 description={description}
                 activeLessonId={unitActiveLesson?.id}
                 hasContent={hasAnyContent}
+                subjectColor={subjectColor}
             />
             <div className="flex items-center flex-col relative">
                 {lessons.map((lesson, index) => {
@@ -62,6 +66,7 @@ export const Unit = ({
                             current={isCurrent}
                             locked={isLocked}
                             percentage={percentage}
+                            subjectColor={subjectColor}
                         />
                     )
                 })}

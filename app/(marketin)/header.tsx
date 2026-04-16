@@ -53,11 +53,16 @@ export const Header = () => {
           >
             {isLoggingOut ? 'Çıkış yapılıyor...' : 'Çıkış Yap'}
           </Button>
-        ) : (
-          <Button size="lg" variant="ghost" onClick={() => router.push('/login')}>
-            Gİrİş Yap
-          </Button>
-        )}
+        ) : !loading ? (
+          <div className="flex items-center gap-2">
+            <Button size="lg" variant="ghost" onClick={() => router.push('/login')}>
+              Giriş Yap
+            </Button>
+            <Button size="lg" variant="secondary" onClick={() => router.push('/create-account')}>
+              Kayıt Ol
+            </Button>
+          </div>
+        ) : null}
       </div>
     </header>
   );

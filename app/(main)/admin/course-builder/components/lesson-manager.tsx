@@ -341,7 +341,7 @@ export function LessonManager({ courseId, courseName }: LessonManagerProps) {
                 className="mt-1"
               />
               <p className="text-xs text-gray-500 mt-1">
-                💡 Lower numbers appear first. Use arrows on lesson cards for quick reordering.
+                Lower numbers appear first. Use arrows on lesson cards for quick reordering.
               </p>
             </div>
             

@@ -4,55 +4,55 @@ import React from 'react'
 
 export const Footer = () => {
   return (
-    <footer className='hidden lg:block h-20 w-full border-t-2 border-slate-200 p-2'>
-        <div className='max-w-screen-lg mx-auto flex items-center justify-evenly h-full'>
-            <Button size="lg" variant="ghost" className='w-full'>
-                <Image 
-                    src="/mascot_blue.svg" 
-                    alt="Croatian" 
-                    height={32} 
+    <footer className='h-auto w-full border-t-2 border-slate-200 py-3 px-2'>
+        <div className='max-w-screen-lg mx-auto flex flex-wrap items-center justify-center gap-2 sm:justify-evenly'>
+            <Button size="lg" variant="ghost" className='flex-shrink-0'>
+                <Image
+                    src="/mascot_blue.svg"
+                    alt="Matematik dersi"
+                    height={32}
                     width={40}
-                    className='mr-4 rounded-md'
+                    className='mr-2 rounded-md'
                 />
-                Matematİk
+                Matematik
             </Button>
-            <Button size="lg" variant="ghost" className='w-full'>
-                <Image 
-                    src="/mascot_orange.svg" 
-                    alt="Spanish" 
-                    height={32} 
+            <Button size="lg" variant="ghost" className='flex-shrink-0'>
+                <Image
+                    src="/mascot_orange.svg"
+                    alt="Fen Bilimleri dersi"
+                    height={32}
                     width={40}
-                    className='mr-4 rounded-md'
+                    className='mr-2 rounded-md'
                 />
-                Kodlama
+                Fen Bilimleri
             </Button>
-            <Button size="lg" variant="ghost" className='w-full'>
-                <Image 
-                    src="/mascot_pink.svg" 
-                    alt="French" 
-                    height={32} 
+            <Button size="lg" variant="ghost" className='flex-shrink-0'>
+                <Image
+                    src="/mascot_pink.svg"
+                    alt="Türkçe dersi"
+                    height={32}
                     width={40}
-                    className='mr-4 rounded-md'
+                    className='mr-2 rounded-md'
                 />
-                Yabancı Dİl
+                Türkçe
             </Button>
-            <Button size="lg" variant="ghost" className='w-full'>
-                <Image 
-                    src="/mascot_sad.svg" 
-                    alt="Italian" 
-                    height={32} 
+            <Button size="lg" variant="ghost" className='flex-shrink-0'>
+                <Image
+                    src="/mascot_sad.svg"
+                    alt="İngilizce dersi"
+                    height={32}
                     width={40}
-                    className='mr-4 rounded-md'
+                    className='mr-2 rounded-md'
                 />
-                Hobİ Derslerİ
+                İngilizce
             </Button>
-            <Button size="lg" variant="ghost" className='w-full'>
-                <Image 
-                    src="/mascot_bad.svg" 
-                    alt="Japanese" 
-                    height={32} 
+            <Button size="lg" variant="ghost" className='flex-shrink-0'>
+                <Image
+                    src="/mascot_bad.svg"
+                    alt="Daha fazla ders"
+                    height={32}
                     width={40}
-                    className='mr-4 rounded-md'
+                    className='mr-2 rounded-md'
                 />
                 ve daha fazlası...
             </Button>

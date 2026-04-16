@@ -6,8 +6,9 @@ import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export const metadata: Metadata = {
-  title: "Admin Dashboard | Sukull",
+  title: "Admin Dashboard",
   description: "Administrative tools and controls",
+  robots: { index: false, follow: false },
 };
 
 export default async function AdminLayout({

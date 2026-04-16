@@ -45,7 +45,7 @@ export default function Home() {
                 className="w-full"
                 onClick={() => router.push('/create-account')}
               >
-                Haydİ Başlayalım
+                Haydi Başlayalım
               </Button>
               <Button
                 size="lg"

@@ -7,17 +7,39 @@ import { ExitModal } from "@/components/modals/exit-modal";
 import { HeartsModal } from "@/components/modals/hearts-modal";
 import { PracticeModal } from "@/components/modals/practice-modal";
 
-const nunito = Nunito({ subsets: ["latin"] });
+const nunito = Nunito({ subsets: ["latin", "latin-ext"] });
 
 export const metadata: Metadata = {
-  title: "Sukull - Etkileşimli Öğrenme Platformu",
-  description: "Oyunlar, kodlama yarışmaları ve etkileşimli içeriklerle öğren",
+  metadataBase: new URL("https://sukull.com"),
+  title: {
+    default: "Sukull - Etkileşimli Öğrenme Platformu",
+    template: "%s | Sukull",
+  },
+  description: "Matematik, Fen Bilimleri, Türkçe, İngilizce ve daha fazlası — etkileşimli dersler, oyunlar ve pratiklerle öğren.",
   icons: {
     icon: [
-      { url: '/mascot_normal.svg', type: 'image/svg+xml' },
-      { url: '/mascot_normal.svg', sizes: '32x32', type: 'image/svg+xml' },
+      { url: "/mascot_normal.svg", type: "image/svg+xml" },
     ],
-    apple: '/mascot_normal.svg',
+    apple: "/mascot_normal.svg",
+  },
+  openGraph: {
+    type: "website",
+    locale: "tr_TR",
+    url: "https://sukull.com",
+    siteName: "Sukull",
+    title: "Sukull - Etkileşimli Öğrenme Platformu",
+    description: "Matematik, Fen Bilimleri, Türkçe, İngilizce ve daha fazlası — etkileşimli dersler, oyunlar ve pratiklerle öğren.",
+    images: [{ url: "/hero.svg", width: 1200, height: 630, alt: "Sukull" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sukull - Etkileşimli Öğrenme Platformu",
+    description: "Matematik, Fen Bilimleri, Türkçe, İngilizce ve daha fazlası — etkileşimli dersler, oyunlar ve pratiklerle öğren.",
+    images: ["/hero.svg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

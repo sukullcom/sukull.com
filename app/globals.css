@@ -11,23 +11,6 @@ body,
   @apply h-full;
 }
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ffffff;
-    --foreground: #0a0a0a;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
 
 @layer utilities {
   .text-balance {
@@ -138,20 +121,6 @@ body {
   z-index: 50; /* Bottom navigator is always in front */
 }
 
-
-/* styles/globals.css */
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: #fafafa;
-  margin: 0;
-  padding: 0;
-}
-
-h1 {
-  text-align: center;
-  color: #333;
-}
 
 button {
   transition: background-color 0.3s;

@@ -7,6 +7,7 @@ import { ButtonProps } from "@/components/ui/button";
 interface CardProps {
   imageSrc?: string;
   emoji?: string;
+  icon?: React.ReactNode;
   title: string;
   href: string;
   buttonText: string;
@@ -17,6 +18,7 @@ interface CardProps {
 const CustomCard: React.FC<CardProps> = ({
   imageSrc,
   emoji,
+  icon,
   title,
   href,
   buttonText,
@@ -34,6 +36,10 @@ const CustomCard: React.FC<CardProps> = ({
               fill
               className="object-contain"
             />
+          </div>
+        ) : icon ? (
+          <div className="w-24 h-24 mb-4 flex items-center justify-center">
+            {icon}
           </div>
         ) : emoji ? (
           <div className="w-24 h-24 mb-4 flex items-center justify-center">

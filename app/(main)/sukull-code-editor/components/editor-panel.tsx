@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { RotateCcwIcon, ShareIcon, TypeIcon } from "lucide-react";
+import { RotateCcwIcon, ShareIcon, TypeIcon, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { defineMonacoThemes, LANGUAGE_CONFIG } from "../constants";
 import { useCodeEditorStore } from "@/store/useCodeEditorStore";
@@ -253,7 +253,7 @@ function EditorPanel() {
               className="absolute top-2 right-2 text-gray-400 hover:text-gray-200"
               onClick={closeShareDialog}
             >
-              ✕
+              <X className="w-5 h-5" />
             </button>
             <h2 className="text-lg font-bold mb-4 text-white">Kod Paylaş</h2>
             <p className="text-sm text-gray-400 mb-4">

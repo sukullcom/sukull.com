@@ -108,10 +108,10 @@ export default function StudentSuccessPage() {
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <Button
-                variant="default"
+                variant="primary"
                 size="lg"
                 onClick={() => router.push("/courses")}
-                className="flex-1 bg-blue-500 hover:bg-blue-600 text-white"
+                className="flex-1"
               >
                 Kurslara Göz At
                 <ArrowRight className="w-4 h-4 ml-2" />

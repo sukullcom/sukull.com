@@ -1,6 +1,10 @@
+import { Metadata } from "next";
 import { Footer } from "./footer";
 import { Header } from "./header";
 
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 type Props = {
   children: React.ReactNode;

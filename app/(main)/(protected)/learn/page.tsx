@@ -12,6 +12,7 @@ import { redirect } from "next/navigation";
 import { Unit } from "./unit";
 import { lessons, units as unitsSchema } from "@/db/schema";
 import { CelebrationChecker } from "@/components/celebration-checker";
+import { getSubjectColor } from "@/lib/subject-colors";
 
 const LearnPage = async () => {
   const userProgressData = getUserProgress();
@@ -37,6 +38,8 @@ const LearnPage = async () => {
     return;
   }
 
+  const subjectColor = getSubjectColor(userProgress.activeCourse.title);
+
   return (
     <div className="flex flex-row-reverse gap-[48px] px-3 sm:px-6">
       <FeedWrapper>
@@ -57,6 +60,7 @@ const LearnPage = async () => {
               description={unit.description}
               title={unit.title}
               lessons={unit.lessons}
+              subjectColor={subjectColor}
               activeLesson={
                 courseProgress.activeLesson as
                   | (typeof lessons.$inferSelect & {

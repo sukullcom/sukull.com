@@ -6,6 +6,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useTransition, useCallback, useEffect, useRef, useMemo } from "react";
 import { upsertUserProgress } from "@/actions/user-progress";
 import { toast } from "sonner";
+import { extractSubject } from "@/lib/subject-colors";
+import { Globe, BookOpen } from "lucide-react";
 
 type Props = {
   courses: (typeof courses.$inferSelect)[];
@@ -15,7 +17,7 @@ type Props = {
 type GradeGroup = {
   key: string;
   label: string;
-  emoji: string;
+  icon: React.ReactNode;
   color: string;
   gradient: string;
   courses: (typeof courses.$inferSelect)[];
@@ -24,26 +26,26 @@ type GradeGroup = {
 type TopicGroup = {
   key: string;
   label: string;
-  emoji: string;
+  icon: React.ReactNode;
   color: string;
   gradient: string;
   courses: (typeof courses.$inferSelect)[];
 };
 
-const GRADE_META: Record<number, { emoji: string; color: string; gradient: string }> = {
-  5:  { emoji: "5️⃣", color: "text-sky-700",     gradient: "from-sky-500 to-sky-600" },
-  6:  { emoji: "6️⃣", color: "text-cyan-700",    gradient: "from-cyan-500 to-cyan-600" },
-  7:  { emoji: "7️⃣", color: "text-teal-700",    gradient: "from-teal-500 to-teal-600" },
-  8:  { emoji: "8️⃣", color: "text-emerald-700", gradient: "from-emerald-500 to-emerald-600" },
-  9:  { emoji: "9️⃣", color: "text-blue-700",    gradient: "from-blue-500 to-blue-600" },
-  10: { emoji: "🔟", color: "text-indigo-700",  gradient: "from-indigo-500 to-indigo-600" },
-  11: { emoji: "1️⃣1️⃣", color: "text-violet-700",  gradient: "from-violet-500 to-violet-600" },
-  12: { emoji: "1️⃣2️⃣", color: "text-purple-700",  gradient: "from-purple-500 to-purple-600" },
+const GRADE_META: Record<number, { icon: React.ReactNode; color: string; gradient: string }> = {
+  5:  { icon: <span className="text-white font-bold text-sm">5</span>, color: "text-sky-700",     gradient: "from-sky-500 to-sky-600" },
+  6:  { icon: <span className="text-white font-bold text-sm">6</span>, color: "text-cyan-700",    gradient: "from-cyan-500 to-cyan-600" },
+  7:  { icon: <span className="text-white font-bold text-sm">7</span>, color: "text-teal-700",    gradient: "from-teal-500 to-teal-600" },
+  8:  { icon: <span className="text-white font-bold text-sm">8</span>, color: "text-emerald-700", gradient: "from-emerald-500 to-emerald-600" },
+  9:  { icon: <span className="text-white font-bold text-sm">9</span>, color: "text-blue-700",    gradient: "from-blue-500 to-blue-600" },
+  10: { icon: <span className="text-white font-bold text-sm">10</span>, color: "text-indigo-700",  gradient: "from-indigo-500 to-indigo-600" },
+  11: { icon: <span className="text-white font-bold text-sm">11</span>, color: "text-violet-700",  gradient: "from-violet-500 to-violet-600" },
+  12: { icon: <span className="text-white font-bold text-sm">12</span>, color: "text-purple-700",  gradient: "from-purple-500 to-purple-600" },
 };
 
-const TOPIC_META: Record<string, { label: string; emoji: string; color: string; gradient: string }> = {
-  ingilizce: { label: "İngilizce", emoji: "🌍", color: "text-rose-700", gradient: "from-rose-400 to-rose-500" },
-  diger:     { label: "Diğer",     emoji: "📚", color: "text-gray-700", gradient: "from-gray-500 to-gray-600" },
+const TOPIC_META: Record<string, { label: string; icon: React.ReactNode; color: string; gradient: string }> = {
+  ingilizce: { label: "İngilizce", icon: <Globe className="w-5 h-5 text-white" />, color: "text-rose-700", gradient: "from-rose-400 to-rose-500" },
+  diger:     { label: "Diğer",     icon: <BookOpen className="w-5 h-5 text-white" />, color: "text-gray-700", gradient: "from-gray-500 to-gray-600" },
 };
 
 function parseGrade(title: string): number | null {
@@ -55,23 +57,6 @@ function detectTopic(title: string): string {
   const t = title.toLocaleLowerCase("tr");
   if (t.includes("ingilizce") || t.includes("english")) return "ingilizce";
   return "diger";
-}
-
-function extractSubject(title: string): string {
-  const t = title.toLocaleLowerCase("tr");
-  if (t.includes("matematik")) return "Matematik";
-  if (t.includes("türkçe") || t.includes("türk dili") || t.includes("edebiyat")) return "Türkçe";
-  if (t.includes("fen bilimleri")) return "Fen Bilimleri";
-  if (t.includes("fizik")) return "Fizik";
-  if (t.includes("kimya")) return "Kimya";
-  if (t.includes("biyoloji")) return "Biyoloji";
-  if (t.includes("din kültürü") || t.includes("din kulturu")) return "Din Kültürü";
-  if (t.includes("felsefe")) return "Felsefe";
-  if (t.includes("inkılap") || t.includes("inkilap")) return "Tarih";
-  if (t.includes("tarih")) return "Tarih";
-  if (t.includes("coğrafya") || t.includes("cografya")) return "Coğrafya";
-  if (t.includes("sosyal bilgiler")) return "Sosyal Bilgiler";
-  return title.replace(/\d+\.\s*[Ss]ınıf\s*/, "").trim();
 }
 
 function extractTopicLabel(title: string): string {
@@ -168,11 +153,11 @@ export const List = ({ courses, activeCourseId }: Props) => {
 
     const sortedGradeKeys = Object.keys(grades).map(Number).sort((a, b) => a - b);
     const gradeGroups: GradeGroup[] = sortedGradeKeys.map((g) => {
-      const meta = GRADE_META[g] || { emoji: "📘", color: "text-gray-700", gradient: "from-gray-500 to-gray-600" };
+      const meta = GRADE_META[g] || { icon: <BookOpen className="w-5 h-5 text-white" />, color: "text-gray-700", gradient: "from-gray-500 to-gray-600" };
       return {
         key: `grade-${g}`,
         label: `${g}. Sınıf`,
-        emoji: meta.emoji,
+        icon: meta.icon,
         color: meta.color,
         gradient: meta.gradient,
         courses: grades[g],
@@ -187,7 +172,7 @@ export const List = ({ courses, activeCourseId }: Props) => {
         return {
           key: k,
           label: meta.label,
-          emoji: meta.emoji,
+          icon: meta.icon,
           color: meta.color,
           gradient: meta.gradient,
           courses: topics[k],
@@ -206,7 +191,7 @@ export const List = ({ courses, activeCourseId }: Props) => {
   }
 
   const renderSection = (
-    group: { key: string; label: string; emoji: string; color: string; gradient: string; courses: (typeof courses.$inferSelect)[] },
+    group: { key: string; label: string; icon: React.ReactNode; color: string; gradient: string; courses: (typeof courses.$inferSelect)[] },
     mode: "grade" | "topic"
   ) => (
     <section key={group.key}>
@@ -214,7 +199,7 @@ export const List = ({ courses, activeCourseId }: Props) => {
         <div
           className={`w-10 h-10 rounded-xl bg-gradient-to-br ${group.gradient} flex items-center justify-center text-lg shadow-sm`}
         >
-          <span className="text-sm">{group.emoji}</span>
+          {group.icon}
         </div>
         <div>
           <h2 className={`text-lg font-bold ${group.color}`}>

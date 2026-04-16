@@ -4,6 +4,7 @@ import { SCORING_SYSTEM } from "@/constants";
 import { useCompletionModal } from "@/store/use-completion-modal";
 import LyricLine from "./lyrics-line";
 import Image from "next/image";
+import { Sparkles, CircleCheck, Trophy } from "lucide-react";
 
 interface LyricWord {
   word: string;
@@ -132,7 +133,7 @@ export default function LyricsGame({ lyrics, difficulty = "Kolay" }: LyricsGameP
       <div className="text-right">
         <div className="mb-2">
           <span className="text-sm text-green-600 block">
-            🎉 Tüm kelimeler tamamlandı!
+            <Sparkles className="w-4 h-4 inline" /> Tüm kelimeler tamamlandı!
           </span>
           <span className="text-sm text-blue-600">
             Final puan: {previewFinalScore}
@@ -151,7 +152,7 @@ export default function LyricsGame({ lyrics, difficulty = "Kolay" }: LyricsGameP
   } else {
     actionElement = (
       <div className="flex items-center gap-2 text-green-600 font-semibold">
-        <span className="text-xl">✅</span>
+        <span><CircleCheck className="w-4 h-4 text-green-500" /></span>
         <div className="text-right">
           <span className="text-md block">Tamamlandı!</span>
           <span className="text-sm">Final: {previewFinalScore} puan</span>
@@ -180,7 +181,7 @@ export default function LyricsGame({ lyrics, difficulty = "Kolay" }: LyricsGameP
           </div>
           <div className="text-right">
             {mistakeCount === 0 && remainingMissingWords === 0 && (
-              <span className="text-green-600 font-semibold">🏆 Mükemmel!</span>
+              <span className="text-green-600 font-semibold"><Trophy className="w-5 h-5 inline text-amber-500" /> Mükemmel!</span>
             )}
           </div>
         </div>

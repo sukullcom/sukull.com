@@ -104,7 +104,7 @@ export function LoginForm() {
             Giriş yapılıyor...
           </>
         ) : (
-          'E-posta İle Gİrİş'
+          'E-posta ile Giriş'
         )}
       </Button>
 

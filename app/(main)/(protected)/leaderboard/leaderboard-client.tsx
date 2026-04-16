@@ -283,17 +283,17 @@ export const LeaderboardClient = ({
     <div className="w-full overflow-hidden">
       {/* Tab Bar */}
       <div
-        className="flex gap-0.5 sm:gap-1 overflow-x-auto pb-2 mb-5 scrollbar-hide border-b border-gray-200"
+        className="flex bg-gray-100 rounded-xl p-1 gap-0.5 mb-5 overflow-x-auto scrollbar-hide"
       >
         {TABS.map(({ id, label, icon: Icon }) => (
           <button
             key={id}
             onClick={() => setActiveTab(id)}
             className={cn(
-              "flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-2.5 rounded-t-lg text-xs sm:text-sm font-medium whitespace-nowrap transition-colors shrink-0",
+              "flex items-center justify-center gap-1 sm:gap-1.5 flex-1 px-2.5 sm:px-3 py-2.5 rounded-lg text-xs sm:text-sm font-semibold whitespace-nowrap transition-all shrink-0",
               activeTab === id
-                ? "bg-white text-lime-700 border-b-2 border-lime-500 shadow-sm"
-                : "text-neutral-500 hover:text-neutral-700 hover:bg-gray-50",
+                ? "bg-white text-green-700 shadow-sm"
+                : "text-gray-500 hover:text-gray-700",
             )}
           >
             <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
@@ -311,7 +311,7 @@ export const LeaderboardClient = ({
             <select
               value={selectedCity}
               onChange={(e) => handleCityChange(e.target.value)}
-              className="w-full appearance-none rounded-lg border border-gray-200 bg-white px-3 py-2 pr-8 text-sm text-neutral-700 focus:border-lime-400 focus:outline-none focus:ring-1 focus:ring-lime-400"
+              className="w-full appearance-none rounded-lg border border-gray-200 bg-white px-3 py-2 pr-8 text-sm text-neutral-700 focus:border-green-400 focus:outline-none focus:ring-1 focus:ring-green-400"
             >
               <option value="">Tüm Türkiye</option>
               {cities.map((c) => (
@@ -323,7 +323,7 @@ export const LeaderboardClient = ({
             <ChevronDown className="pointer-events-none absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
           </div>
           {cityLoading && (
-            <Loader2 className="h-4 w-4 animate-spin text-lime-600" />
+            <Loader2 className="h-4 w-4 animate-spin text-green-600" />
           )}
         </div>
       )}
@@ -354,7 +354,7 @@ function LoadMoreButton({
         size="sm"
         onClick={onClick}
         disabled={loading}
-        className="text-lime-600 hover:text-lime-700 gap-1.5"
+        className="text-green-600 hover:text-green-700 gap-1.5"
       >
         {loading ? (
           <Loader2 className="h-4 w-4 animate-spin" />

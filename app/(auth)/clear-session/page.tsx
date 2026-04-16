@@ -4,14 +4,17 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { Trash2, AlertTriangle, RefreshCw, CircleCheck, Info, XCircle } from "lucide-react";
+
+type StatusEntry = { type: "loading" | "success" | "info" | "error"; message: string };
 
 export default function ClearSessionPage() {
-  const [status, setStatus] = useState<string[]>([]);
+  const [status, setStatus] = useState<StatusEntry[]>([]);
   const [isClearing, setIsClearing] = useState(false);
   const router = useRouter();
 
-  const addStatus = (message: string) => {
-    setStatus(prev => [...prev, message]);
+  const addStatus = (type: StatusEntry["type"], message: string) => {
+    setStatus(prev => [...prev, { type, message }]);
   };
 
   const clearEverything = async () => {
@@ -19,76 +22,69 @@ export default function ClearSessionPage() {
     setStatus([]);
 
     try {
-      // 1. Sign out from Supabase
-      addStatus("🔄 Signing out from Supabase...");
+      addStatus("loading", "Signing out from Supabase...");
       const supabase = createClient();
       await supabase.auth.signOut();
-      addStatus("✅ Signed out from Supabase");
+      addStatus("success", "Signed out from Supabase");
 
-      // 2. Clear all localStorage
-      addStatus("🔄 Clearing localStorage...");
+      addStatus("loading", "Clearing localStorage...");
       localStorage.clear();
-      addStatus("✅ Cleared localStorage");
+      addStatus("success", "Cleared localStorage");
 
-      // 3. Clear all sessionStorage
-      addStatus("🔄 Clearing sessionStorage...");
+      addStatus("loading", "Clearing sessionStorage...");
       sessionStorage.clear();
-      addStatus("✅ Cleared sessionStorage");
+      addStatus("success", "Cleared sessionStorage");
 
-      // 4. Clear all cookies
-      addStatus("🔄 Clearing cookies...");
+      addStatus("loading", "Clearing cookies...");
       document.cookie.split(";").forEach((c) => {
         document.cookie = c
           .replace(/^ +/, "")
           .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
       });
-      addStatus("✅ Cleared cookies");
+      addStatus("success", "Cleared cookies");
 
-      // 5. Clear service workers
-      addStatus("🔄 Unregistering service workers...");
+      addStatus("loading", "Unregistering service workers...");
       if ('serviceWorker' in navigator) {
         const registrations = await navigator.serviceWorker.getRegistrations();
         for (const registration of registrations) {
           await registration.unregister();
         }
-        addStatus(`✅ Unregistered ${registrations.length} service worker(s)`);
+        addStatus("success", `Unregistered ${registrations.length} service worker(s)`);
       } else {
-        addStatus("ℹ️ No service workers found");
+        addStatus("info", "No service workers found");
       }
 
-      // 6. Clear cache storage
-      addStatus("🔄 Clearing cache storage...");
+      addStatus("loading", "Clearing cache storage...");
       if ('caches' in window) {
         const cacheNames = await caches.keys();
         await Promise.all(cacheNames.map(name => caches.delete(name)));
-        addStatus(`✅ Cleared ${cacheNames.length} cache(s)`);
+        addStatus("success", `Cleared ${cacheNames.length} cache(s)`);
       } else {
-        addStatus("ℹ️ No cache storage found");
+        addStatus("info", "No cache storage found");
       }
 
-      addStatus("✅ ALL DONE! Redirecting to login...");
+      addStatus("success", "ALL DONE! Redirecting to login...");
       
       setTimeout(() => {
         window.location.href = '/login';
       }, 2000);
 
     } catch (error) {
-      addStatus(`❌ Error: ${error}`);
+      addStatus("error", `Error: ${error}`);
     } finally {
       setIsClearing(false);
     }
   };
 
   useEffect(() => {
-    // Show info on load
-    addStatus("ℹ️ Ready to clear all session data");
+    addStatus("info", "Ready to clear all session data");
   }, []);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <div className="max-w-2xl w-full bg-white rounded-2xl shadow-xl p-8">
-        <h1 className="text-3xl font-bold text-center mb-4 text-red-600">
-          🧹 Clear Session Data
+        <h1 className="text-3xl font-bold text-center mb-4 text-red-600 flex items-center justify-center gap-2">
+          <Trash2 className="w-8 h-8" /> Clear Session Data
         </h1>
         
         <p className="text-center text-gray-600 mb-6">
@@ -96,8 +92,8 @@ export default function ClearSessionPage() {
         </p>
 
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-          <p className="text-sm text-yellow-800 font-semibold mb-2">
-            ⚠️ Warning: This will:
+          <p className="text-sm text-yellow-800 font-semibold mb-2 flex items-center gap-1.5">
+            <AlertTriangle className="w-4 h-4 shrink-0" /> Warning: This will:
           </p>
           <ul className="text-sm text-yellow-800 space-y-1 list-disc list-inside">
             <li>Sign you out from Supabase</li>
@@ -124,9 +120,13 @@ export default function ClearSessionPage() {
             <p className="text-gray-500 text-sm">No actions yet...</p>
           ) : (
             <div className="space-y-1">
-              {status.map((msg, i) => (
-                <p key={i} className="text-sm font-mono">
-                  {msg}
+              {status.map((entry, i) => (
+                <p key={i} className="text-sm font-mono flex items-center gap-1.5">
+                  {entry.type === "loading" && <RefreshCw className="w-3.5 h-3.5 text-blue-500 animate-spin shrink-0" />}
+                  {entry.type === "success" && <CircleCheck className="w-3.5 h-3.5 text-green-500 shrink-0" />}
+                  {entry.type === "info" && <Info className="w-3.5 h-3.5 text-blue-400 shrink-0" />}
+                  {entry.type === "error" && <XCircle className="w-3.5 h-3.5 text-red-500 shrink-0" />}
+                  {entry.message}
                 </p>
               ))}
             </div>

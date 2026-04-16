@@ -26,7 +26,6 @@ import {
   TrendingUp,
   Lock,
   LogOut,
-  CheckCircle,
 } from "lucide-react";
 import { useSecureLogout } from "@/hooks/use-secure-logout";
 
@@ -138,8 +137,8 @@ export default function ProfilePageClient({
     <div className="flex flex-row-reverse gap-[48px] px-3 sm:px-6">
       <div className="flex-1 pb-10">
         {/* Profile Header */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mb-6">
-          <div className="relative w-20 h-20 sm:w-24 sm:h-24 shrink-0">
+        <div className="flex flex-row items-center gap-4 sm:gap-6 mb-6">
+          <div className="relative w-16 h-16 sm:w-24 sm:h-24 shrink-0">
             <Image
               src={avatarUrl}
               alt="Avatar"
@@ -151,11 +150,11 @@ export default function ProfilePageClient({
               onError={() => setAvatarUrl(normalizeAvatarUrl(null))}
             />
           </div>
-          <div className="text-center sm:text-left flex-1 min-w-0">
+          <div className="text-left flex-1 min-w-0">
             <h1 className="text-xl sm:text-2xl font-bold text-gray-900 truncate">
               {profile.userName}
             </h1>
-            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 mt-2">
+            <div className="flex flex-wrap items-center justify-start gap-3 mt-2">
               <div className="flex items-center gap-1.5 text-sm text-amber-600">
                 <Zap className="h-4 w-4" />
                 <span className="font-semibold">{profile.istikrar} gün</span>
@@ -181,7 +180,7 @@ export default function ProfilePageClient({
           <button
             className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs sm:text-sm font-semibold transition-all ${
               activeTab === "analytics"
-                ? "bg-white text-blue-700 shadow-sm"
+                ? "bg-white text-green-700 shadow-sm"
                 : "text-gray-500 hover:text-gray-700"
             }`}
             onClick={() => setActiveTab("analytics")}
@@ -192,7 +191,7 @@ export default function ProfilePageClient({
           <button
             className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs sm:text-sm font-semibold transition-all ${
               activeTab === "settings"
-                ? "bg-white text-blue-700 shadow-sm"
+                ? "bg-white text-green-700 shadow-sm"
                 : "text-gray-500 hover:text-gray-700"
             }`}
             onClick={() => setActiveTab("settings")}
@@ -263,7 +262,7 @@ export default function ProfilePageClient({
                           <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                             <div
                               className={`h-full rounded-full transition-all ${
-                                pct === 100 ? "bg-green-500" : "bg-blue-500"
+                                pct === 100 ? "bg-green-600" : "bg-green-500"
                               }`}
                               style={{ width: `${pct}%` }}
                             />
@@ -381,12 +380,12 @@ export default function ProfilePageClient({
                 Rastgele Avatar Oluştur
               </Button>
               {!canChangeAvatar && (
-                <LockedHint days={STREAK_REQUIREMENTS.AVATAR_CHANGE} label="Avatar değiştirmek" />
+                <LockedHint days={STREAK_REQUIREMENTS.AVATAR_CHANGE} label="Avatar değiştirmek" streak={profile.istikrar} />
               )}
             </div>
 
             {/* Username */}
-            <FieldGroup label="Kullanıcı Adı" locked={!canChangeUsername} days={STREAK_REQUIREMENTS.USERNAME_CHANGE} lockLabel="Kullanıcı adı değiştirmek">
+            <FieldGroup label="Kullanıcı Adı" locked={!canChangeUsername} days={STREAK_REQUIREMENTS.USERNAME_CHANGE} lockLabel="Kullanıcı adı değiştirmek" streak={profile.istikrar}>
               <input
                 className={`w-full rounded-lg border p-2.5 text-sm focus:outline-none focus:ring-1 ${
                   !canChangeUsername
@@ -401,7 +400,7 @@ export default function ProfilePageClient({
             </FieldGroup>
 
             {/* Daily Target */}
-            <FieldGroup label="Günlük Hedef" locked={!canChangeDailyGoal} days={STREAK_REQUIREMENTS.DAILY_GOAL_CHANGE} lockLabel="Günlük hedef değiştirmek">
+            <FieldGroup label="Günlük Hedef" locked={!canChangeDailyGoal} days={STREAK_REQUIREMENTS.DAILY_GOAL_CHANGE} lockLabel="Günlük hedef değiştirmek" streak={profile.istikrar}>
               <select
                 className={`w-full rounded-lg border p-2.5 text-sm focus:outline-none focus:ring-1 ${
                   !canChangeDailyGoal
@@ -419,7 +418,7 @@ export default function ProfilePageClient({
             </FieldGroup>
 
             {/* School */}
-            <FieldGroup label="Okul" locked={!canSelectSchool} days={STREAK_REQUIREMENTS.SCHOOL_SELECTION} lockLabel="Okul seçmek">
+            <FieldGroup label="Okul" locked={!canSelectSchool} days={STREAK_REQUIREMENTS.SCHOOL_SELECTION} lockLabel="Okul seçmek" streak={profile.istikrar}>
               <div className={!canSelectSchool ? "opacity-50 pointer-events-none" : ""}>
                 <ProfileSchoolSelector
                   schools={allSchools}
@@ -438,23 +437,6 @@ export default function ProfilePageClient({
             >
               {pending ? "Kaydediliyor..." : "Kaydet"}
             </Button>
-
-            {/* Feature Unlock Status */}
-            <div className="rounded-xl border bg-gradient-to-br from-amber-50 to-orange-50 p-4 space-y-3">
-              <div className="flex items-center justify-between mb-1">
-                <h3 className="text-xs font-semibold text-amber-700 uppercase tracking-wide flex items-center gap-1.5">
-                  <Zap className="h-3.5 w-3.5" />
-                  Özellik Kilitleri
-                </h3>
-                <span className="text-sm font-bold text-amber-600 bg-amber-100 px-2.5 py-0.5 rounded-full">
-                  {profile.istikrar} gün
-                </span>
-              </div>
-              <UnlockRow label="Kullanıcı Adı" unlocked={canChangeUsername} req={STREAK_REQUIREMENTS.USERNAME_CHANGE} streak={profile.istikrar} />
-              <UnlockRow label="Günlük Hedef" unlocked={canChangeDailyGoal} req={STREAK_REQUIREMENTS.DAILY_GOAL_CHANGE} streak={profile.istikrar} />
-              <UnlockRow label="Avatar" unlocked={canChangeAvatar} req={STREAK_REQUIREMENTS.AVATAR_CHANGE} streak={profile.istikrar} />
-              <UnlockRow label="Okul Seçimi" unlocked={canSelectSchool} req={STREAK_REQUIREMENTS.SCHOOL_SELECTION} streak={profile.istikrar} />
-            </div>
 
             {/* Account */}
             <div className="pt-4 border-t border-gray-200">
@@ -540,50 +522,38 @@ function SubjectBar({ subject }: { subject: { subject: string; accuracy: number;
   );
 }
 
-function FieldGroup({ label, locked, days, lockLabel, children }: {
+function FieldGroup({ label, locked, days, lockLabel, streak = 0, children }: {
   label: string;
   locked: boolean;
   days: number;
   lockLabel: string;
+  streak?: number;
   children: React.ReactNode;
 }) {
   return (
     <div className="space-y-1.5">
       <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">{label}</label>
       {children}
-      {locked && <LockedHint days={days} label={lockLabel} />}
+      {locked && <LockedHint days={days} label={lockLabel} streak={streak} />}
     </div>
   );
 }
 
-function LockedHint({ days, label }: { days: number; label: string }) {
+function LockedHint({ days, label, streak = 0 }: { days: number; label: string; streak?: number }) {
+  const pct = Math.min(Math.round((streak / days) * 100), 100);
   return (
-    <p className="flex items-center gap-1 text-xs text-amber-600">
-      <Lock className="h-3 w-3" />
-      {label} için {days} günlük istikrar gerekli
-    </p>
-  );
-}
-
-function UnlockRow({ label, unlocked, req, streak = 0 }: { label: string; unlocked: boolean; req: number; streak?: number }) {
-  const pct = unlocked ? 100 : Math.min(Math.round((streak / req) * 100), 100);
-  return (
-    <div className="space-y-1">
-      <div className="flex items-center justify-between text-xs">
-        <span className="text-gray-700 font-medium">{label}</span>
-        {unlocked ? (
-          <span className="text-green-600 font-semibold flex items-center gap-1">
-            <CheckCircle className="h-3 w-3" /> Açık
-          </span>
-        ) : (
-          <span className="text-amber-600 font-medium">{streak}/{req} gün</span>
-        )}
+    <div className="space-y-1 mt-1">
+      <p className="flex items-center justify-between text-xs text-amber-600">
+        <span className="flex items-center gap-1">
+          <Lock className="h-3 w-3" />
+          {label} için {days} günlük istikrar gerekli
+        </span>
+        <span className="font-semibold">{streak}/{days}</span>
+      </p>
+      <div className="h-1.5 bg-amber-100 rounded-full overflow-hidden">
+        <div className="h-full bg-amber-500 rounded-full transition-all" style={{ width: `${pct}%` }} />
       </div>
-      {!unlocked && (
-        <div className="h-1.5 bg-amber-200/50 rounded-full overflow-hidden">
-          <div className="h-full bg-amber-500 rounded-full transition-all" style={{ width: `${pct}%` }} />
-        </div>
-      )}
     </div>
   );
 }
+

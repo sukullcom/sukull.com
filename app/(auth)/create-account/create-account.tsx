@@ -111,7 +111,7 @@ export function CreateAccountForm() {
             Hesap oluşturuluyor...
           </>
         ) : (
-          'E-posta İle Kayıt Ol'
+          'E-posta ile Kayıt Ol'
         )}
       </Button>
 

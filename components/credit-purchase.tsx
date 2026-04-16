@@ -378,7 +378,7 @@ export default function CreditPurchase() {
           <Button 
             onClick={handlePayment}
             disabled={loading}
-            variant="primary"
+            variant="super"
             className="w-full"
             size="lg"
           >

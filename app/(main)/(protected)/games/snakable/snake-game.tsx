@@ -6,6 +6,7 @@ import { addPointsToUser } from "@/actions/challenge-progress";
 import Confetti from "react-confetti";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { BookOpen, FileText, Target, Gamepad2, Trophy, Sparkles, Lightbulb, Check } from "lucide-react";
 
 interface Position {
   x: number;
@@ -1504,14 +1505,14 @@ const SnakeGame = () => {
                         onClick={() => setGameMode('words')}
                         className="px-6 py-3"
                       >
-                        📚 Kelime Modu
+                        <BookOpen className="w-5 h-5" /> Kelime Modu
                       </Button>
                       <Button
                         variant={gameMode === 'sentences' ? 'super' : 'secondary'}
                         onClick={() => setGameMode('sentences')}
                         className="px-6 py-3"
                       >
-                        📝 Cümle Modu
+                        <FileText className="w-5 h-5" /> Cümle Modu
                       </Button>
                     </div>
                     <p className="text-sm text-gray-600 mb-6">
@@ -1526,7 +1527,7 @@ const SnakeGame = () => {
                   
                   {/* Beginner Topics */}
                   <div className="mb-6">
-                    <h3 className="text-md font-semibold text-green-600 mb-2">🟢 Başlangıç Seviyesi</h3>
+                    <h3 className="text-md font-semibold text-green-600 mb-2"><span className="inline-block w-2.5 h-2.5 rounded-full bg-green-500" /> Başlangıç Seviyesi</h3>
                     <div className="grid grid-cols-2 gap-2 mb-4">
                       {topics.filter(topic => topic.level === 'beginner').map((topic) => (
                         <Button
@@ -1549,7 +1550,7 @@ const SnakeGame = () => {
 
                   {/* Intermediate Topics */}
                   <div className="mb-6">
-                    <h3 className="text-md font-semibold text-yellow-600 mb-2">🟡 Orta Seviye</h3>
+                    <h3 className="text-md font-semibold text-yellow-600 mb-2"><span className="inline-block w-2.5 h-2.5 rounded-full bg-yellow-500" /> Orta Seviye</h3>
                     <div className="grid grid-cols-2 gap-2 mb-4">
                       {topics.filter(topic => topic.level === 'intermediate').map((topic) => (
                         <Button
@@ -1573,7 +1574,7 @@ const SnakeGame = () => {
 
                   {/* Advanced Topics */}
                   <div className="mb-6">
-                    <h3 className="text-md font-semibold text-red-600 mb-2">🔴 İleri Seviye</h3>
+                    <h3 className="text-md font-semibold text-red-600 mb-2"><span className="inline-block w-2.5 h-2.5 rounded-full bg-red-500" /> İleri Seviye</h3>
                     <div className="grid grid-cols-2 gap-2 mb-4">
                       {topics.filter(topic => topic.level === 'advanced').map((topic) => (
                         <Button
@@ -1596,7 +1597,7 @@ const SnakeGame = () => {
                   </div>
 
                   <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-                    <h3 className="font-semibold text-sm mb-2">🎯 Puanlama Sistemi:</h3>
+                    <h3 className="font-semibold text-sm mb-2"><Target className="w-4 h-4 inline" /> Puanlama Sistemi:</h3>
                     <ul className="text-xs text-gray-600 space-y-1">
                       <li>• Kelime başına: {SCORING_SYSTEM.GAMES.SNAKE.BASE_WORD} puan (seviye çarpanı ile)</li>
                       <li>• Ardışık kelime bonusu: +{SCORING_SYSTEM.GAMES.SNAKE.STREAK_BONUS} puan</li>
@@ -1616,15 +1617,15 @@ const SnakeGame = () => {
                     Seçilen Konu: <strong>{selectedTopic.name}</strong>
                   </p>
                   <p className="text-md mb-2">
-                    Mod: <strong>{gameMode === 'words' ? '📚 Kelime Modu' : '📝 Cümle Modu'}</strong>
+                    Mod: <strong>{gameMode === 'words' ? <><BookOpen className="w-4 h-4 inline" /> Kelime Modu</> : <><FileText className="w-4 h-4 inline" /> Cümle Modu</>}</strong>
                   </p>
                   <p className="text-sm text-gray-600 mb-2">
                     Seviye: <span className={`font-semibold ${
                       selectedTopic.level === 'beginner' ? 'text-green-600' :
                       selectedTopic.level === 'intermediate' ? 'text-yellow-600' : 'text-red-600'
                     }`}>
-                      {selectedTopic.level === 'beginner' ? '🟢 Başlangıç' :
-                       selectedTopic.level === 'intermediate' ? '🟡 Orta' : '🔴 İleri'}
+                      {selectedTopic.level === 'beginner' ? <><span className="inline-block w-2.5 h-2.5 rounded-full bg-green-500" /> Başlangıç</> :
+                       selectedTopic.level === 'intermediate' ? <><span className="inline-block w-2.5 h-2.5 rounded-full bg-yellow-500" /> Orta</> : <><span className="inline-block w-2.5 h-2.5 rounded-full bg-red-500" /> İleri</>}
                     </span>
                   </p>
                   <p className="text-sm text-gray-600 mb-4">
@@ -1663,7 +1664,7 @@ const SnakeGame = () => {
                         setLetterIndex(1);
                       }}
                     >
-                      🎮 Oyuna Başla
+                      <Gamepad2 className="w-5 h-5" /> Oyuna Başla
                     </Button>
                   </div>
                 </>
@@ -1680,14 +1681,14 @@ const SnakeGame = () => {
             <div className="text-center">
               <Confetti width={width} height={height} recycle={false} />
               <h2 className="text-3xl font-bold mb-4">
-                {mistakeCount === 0 && totalWordsCompleted === words.length ? "🏆 Mükemmel! Tüm Kelimeler Tamamlandı!" : 
-                 mistakeCount === 0 ? "🎯 Harika! Hata Yapmadın!" : 
-                 "🎮 Oyun Bitti!"}
+                {mistakeCount === 0 && totalWordsCompleted === words.length ? <><Trophy className="w-6 h-6 inline" /> Mükemmel! Tüm Kelimeler Tamamlandı!</> : 
+                 mistakeCount === 0 ? <><Target className="w-6 h-6 inline" /> Harika! Hata Yapmadın!</> : 
+                 <><Gamepad2 className="w-6 h-6 inline" /> Oyun Bitti!</>}
               </h2>
               {totalScore > 0 && (
                 <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4 mb-4">
                   <p className="text-center text-green-800 font-semibold">
-                    🎉 {totalScore} puan kazandınız!
+                    <Sparkles className="w-5 h-5 inline" /> {totalScore} puan kazandınız!
                   </p>
                   <p className="text-center text-green-600 text-sm mt-1">
                     {totalWordsCompleted} kelime tamamladınız • Puanlar hesabınıza eklendi
@@ -1697,7 +1698,7 @@ const SnakeGame = () => {
               {totalScore === 0 && totalWordsCompleted === 0 && (
                 <div className="bg-yellow-50 border-2 border-yellow-200 rounded-lg p-4 mb-4">
                   <p className="text-center text-yellow-800 font-semibold">
-                    💡 Puan kazanmak için kelime tamamlamalısınız
+                    <Lightbulb className="w-4 h-4 inline" /> Puan kazanmak için kelime tamamlamalısınız
                   </p>
                   <p className="text-center text-yellow-600 text-sm mt-1">
                     Bir dahaki sefere harfleri toplayarak kelimeler oluşturun!
@@ -1740,7 +1741,7 @@ const SnakeGame = () => {
               {gameMode === 'sentences' && currentSentence && (
                 <div className="mb-4 p-4 bg-blue-50 rounded-lg border-2 border-blue-200">
                   <div className="text-center mb-3">
-                    <p className="text-sm text-gray-600 mb-1">📝 Hedef Cümle:</p>
+                    <p className="text-sm text-gray-600 mb-1"><FileText className="w-4 h-4 inline" /> Hedef Cümle:</p>
                     <p className="text-lg font-bold text-blue-800">{currentSentence.english}</p>
                     <p className="text-sm text-gray-600">{currentSentence.turkish}</p>
                   </div>
@@ -1824,7 +1825,7 @@ const SnakeGame = () => {
 
               {wordCompletedFreeze ? (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-75">
-                  <h2 className="text-3xl font-bold mb-4">✓</h2>
+                  <h2 className="text-3xl font-bold mb-4"><Check className="w-8 h-8 inline" /></h2>
                   <p className="text-lg">Kelime tamamlandı!</p>
                   <p className="text-sm text-blue-600 font-semibold">Puan kazanıldı!</p>
                   <p className="text-xs text-gray-500">Oyun sonunda hesabınıza eklenecek</p>

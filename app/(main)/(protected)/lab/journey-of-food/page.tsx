@@ -159,7 +159,7 @@ const FoodSimulationPage = () => {
       <div className="flex justify-between w-full max-w-4xl">
         {/* Turn Back Button */}
         <Button variant="default" onClick={() => router.push("/lab")}>
-          Gerİ Dön
+          Geri Dön
         </Button>
       </div>
       <h1 className="text-3xl font-bold mb-8 text-neutral-700">
@@ -207,18 +207,18 @@ const FoodSimulationPage = () => {
         </div>
         <div className="flex justify-between mt-6">
           <Button
-            variant="danger"
+            variant="default"
             onClick={prevStep}
             disabled={currentStep === 0}
           >
-            Öncekİ
+            Önceki
           </Button>
           <Button
-            variant="danger"
+            variant="primary"
             onClick={nextStep}
             disabled={currentStep === steps.length - 1}
           >
-            Sonrakİ
+            Sonraki
           </Button>
         </div>
       </div>
@@ -244,7 +244,7 @@ const FoodSimulationPage = () => {
                   </p>
                 </div>
               </div>
-              <Button variant="danger" onClick={restartGame}>
+              <Button variant="primary" onClick={restartGame}>
                 Tekrar Oyna
               </Button>
             </div>

@@ -1,6 +1,6 @@
 import { Progress } from "./ui/progress";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { User, Target, Users, ImageIcon, School, CheckCircle, Lock, Info } from 'lucide-react';
+import { User, Target, Users, ImageIcon, School, CheckCircle, Lock, Info, BookOpen, RefreshCw, Heart, Flame, Shield, Trophy } from 'lucide-react';
 import { getAllStreakRules } from "@/utils/streak-requirements";
 
 type QuestsProps = {
@@ -111,37 +111,37 @@ export const Quests = ({ currentStreak }: QuestsProps) => {
         <CardContent className="px-4 pb-4 pt-0">
           <div className="grid gap-2 text-xs text-blue-700">
             <div className="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
-              <span>📚</span>
+              <BookOpen className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
               <p>
                 <span className="font-semibold">Ders Puanları:</span> Doğru +10, yanlış −1 puan ve −1 can. Tamamlama +5, hatasız +15 bonus.
               </p>
             </div>
             <div className="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
-              <span>🔄</span>
+              <RefreshCw className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
               <p>
                 <span className="font-semibold">Pratik:</span> Tamamladığın dersleri tekrarla, doğru başına +5 puan. Can kaybetmezsin.
               </p>
             </div>
             <div className="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
-              <span>❤️</span>
+              <Heart className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
               <p>
                 <span className="font-semibold">Can:</span> 100 puanla doldur veya her 4 saatte 1 adet otomatik yenilenir.
               </p>
             </div>
             <div className="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
-              <span>🔥</span>
+              <Flame className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
               <p>
                 <span className="font-semibold">İstikrar Bonusu:</span> 3 gün +10, 7 gün +30, 15 gün +75, 30 gün +150, 60 gün +300 puan.
               </p>
             </div>
             <div className="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
-              <span>🛡️</span>
+              <Shield className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
               <p>
                 <span className="font-semibold">İstikrar Koruma:</span> Mağazadan al, 1 gün hedef kaçırsan bile istikrarın bozulmasın.
               </p>
             </div>
             <div className="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
-              <span>🏆</span>
+              <Trophy className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
               <p>
                 <span className="font-semibold">Kalıcı Kilit Açma:</span> Bir kez açılan özellik, istikrarın düşse de açık kalır.
               </p>

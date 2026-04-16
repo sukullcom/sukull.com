@@ -71,7 +71,7 @@ export const CompletionModal = () => {
           <div className="flex flex-col gap-y-4 w-full">
             <Button
               variant="primary"
-              className="w-full bg-green-600 hover:bg-green-700"
+              className="w-full"
               size="lg"
               onClick={handleContinue}
               type="button"

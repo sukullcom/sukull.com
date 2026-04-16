@@ -135,7 +135,7 @@ export default function GamePage() {
       }
 
       // If no predefined transcript, show error
-      setError(`❌ Bu video desteklenmiyor!
+      setError(`Bu video desteklenmiyor!
 
 Sadece aşağıdaki hazır videolar desteklenmektedir:
 • Rick Astley - Never Gonna Give You Up

@@ -126,7 +126,7 @@ const LabsPage = async () => {
                         title={lab.name}
                         href={lab.development ? "#" : `/${lab.id}`}
                         buttonText={
-                          lab.development ? "Gelİştİrme\nAşamasında" : "İncele"
+                          lab.development ? "Geliştirme\nAşamasında" : "İncele"
                         }
                         variant={lab.development ? "locked" : "super"}
                         disabled={lab.development}

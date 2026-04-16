@@ -1,5 +1,7 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { AlertTriangle, Search, Lightbulb, RefreshCw, Home } from 'lucide-react';
+import { AlertTriangle, Search, Lightbulb, RefreshCw, Home } from 'lucide-react';
 
 interface AuthErrorPageProps {
   searchParams: { 
@@ -54,7 +56,7 @@ export default function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-135px)] gap-6 p-4 max-w-2xl mx-auto">
       <div className="text-center">
-        <h1 className="text-2xl font-bold text-red-600 mb-2">⚠️ {errorDetails.title}</h1>
+        <h1 className="text-2xl font-bold text-red-600 mb-2 flex items-center justify-center gap-2"><AlertTriangle className="w-6 h-6" /> {errorDetails.title}</h1>
         <p className="text-gray-600 mb-4">{errorDetails.description}</p>
         
         {/* Error code details for debugging */}
@@ -71,7 +73,7 @@ export default function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
 
       {/* Possible causes */}
       <div className="w-full bg-blue-50 p-4 rounded-lg">
-        <h3 className="font-semibold text-blue-800 mb-2">🔍 Olası Nedenler:</h3>
+        <h3 className="font-semibold text-blue-800 mb-2 flex items-center gap-1.5"><Search className="w-4 h-4" /> Olası Nedenler:</h3>
         <ul className="list-disc list-inside text-sm text-blue-700 space-y-1">
           {errorDetails.possibleCauses.map((cause, index) => (
             <li key={index}>{cause}</li>
@@ -81,7 +83,7 @@ export default function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
 
       {/* Solutions */}
       <div className="w-full bg-green-50 p-4 rounded-lg">
-        <h3 className="font-semibold text-green-800 mb-2">💡 Çözüm Önerileri:</h3>
+        <h3 className="font-semibold text-green-800 mb-2 flex items-center gap-1.5"><Lightbulb className="w-4 h-4" /> Çözüm Önerileri:</h3>
         <ul className="list-disc list-inside text-sm text-green-700 space-y-1">
           {errorDetails.solutions.map((solution, index) => (
             <li key={index}>{solution}</li>
@@ -92,10 +94,10 @@ export default function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
       {/* Action buttons */}
       <div className="flex flex-col sm:flex-row gap-3 w-full">
         <Button asChild className="flex-1">
-          <Link prefetch={false} href="/login">🔄 Tekrar Giriş Yap</Link>
+          <Link prefetch={false} href="/login" className="flex items-center justify-center gap-2"><RefreshCw className="w-4 h-4" /> Tekrar Giriş Yap</Link>
         </Button>
         <Button asChild variant="primaryOutline" className="flex-1">
-          <Link prefetch={false} href="/">🏠 Ana Sayfaya Dön</Link>
+          <Link prefetch={false} href="/" className="flex items-center justify-center gap-2"><Home className="w-4 h-4" /> Ana Sayfaya Dön</Link>
         </Button>
       </div>
 

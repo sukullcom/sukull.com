@@ -3,7 +3,9 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Icons } from '@/components/icons';
+import { XCircle } from 'lucide-react';
 import { Suspense } from 'react';
+import { XCircle } from 'lucide-react';
 
 function ConfirmContent() {
   const [status, setStatus] = useState<'redirecting' | 'error'>('redirecting');
@@ -40,7 +42,7 @@ function ConfirmContent() {
       )}
       {status === 'error' && (
         <>
-          <div className="text-5xl">❌</div>
+          <XCircle className="w-12 h-12 text-red-500 mx-auto" />
           <h1 className="text-xl font-bold text-red-600">Doğrulama hatası</h1>
           <p className="text-gray-500">{errorMessage}</p>
         </>

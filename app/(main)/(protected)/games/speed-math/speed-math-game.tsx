@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { addPointsToUser } from "@/actions/challenge-progress";
 import { SCORING_SYSTEM } from "@/constants";
 import { toast } from "sonner";
-import { ArrowLeft, Zap, Trophy, Timer, Target } from "lucide-react";
+import { ArrowLeft, Zap, Trophy, Timer, Target, Check, X } from "lucide-react";
 import Link from "next/link";
 
 type Difficulty = "Kolay" | "Orta" | "Zor" | "Uzman";
@@ -238,7 +238,7 @@ export default function SpeedMathGame() {
         </Link>
 
         <div className="text-center">
-          <div className="text-5xl mb-3">⚡</div>
+          <div className="mb-3"><Zap className="w-12 h-12 text-yellow-500 mx-auto" /></div>
           <h1 className="text-2xl font-bold text-neutral-800">
             Hız Matematiği
           </h1>
@@ -282,7 +282,7 @@ export default function SpeedMathGame() {
   if (gameState === "finished") {
     return (
       <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-6 py-8">
-        <div className="text-5xl mb-2">🏆</div>
+        <div className="mb-2"><Trophy className="w-12 h-12 text-amber-500 mx-auto" /></div>
         <h1 className="text-2xl font-bold text-neutral-800">Süre Doldu!</h1>
 
         <div className="w-full grid grid-cols-2 gap-3">
@@ -416,8 +416,8 @@ export default function SpeedMathGame() {
 
       {/* Stats bar */}
       <div className="w-full flex justify-center gap-4 text-sm text-neutral-500 mt-2">
-        <span className="text-green-600">✓ {correctCount}</span>
-        <span className="text-red-500">✗ {wrongCount}</span>
+        <span className="text-green-600"><Check className="w-4 h-4 inline" /> {correctCount}</span>
+        <span className="text-red-500"><X className="w-4 h-4 inline" /> {wrongCount}</span>
         <span className="text-neutral-600">{difficulty}</span>
       </div>
     </div>

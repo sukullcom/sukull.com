@@ -288,7 +288,7 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
         <div className="flex gap-4">
           <Button 
             onClick={onCancel}
-            variant="secondary"
+            variant="default"
             className="flex-1"
             disabled={loading}
           >
@@ -297,7 +297,7 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
           <Button 
             onClick={handlePayment}
             disabled={loading}
-            variant="primary"
+            variant="super"
             className="flex-1"
             size="lg"
           >

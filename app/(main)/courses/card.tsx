@@ -15,19 +15,19 @@ type Props = {
 };
 
 const CATEGORY_STYLES: Record<string, { activeBorder: string; badge: string }> = {
-  matematik:  { activeBorder: "border-blue-500 bg-blue-50/40",    badge: "bg-blue-100 text-blue-700" },
+  matematik:  { activeBorder: "border-blue-500 bg-blue-50/40",     badge: "bg-blue-100 text-blue-700" },
   turkce:     { activeBorder: "border-orange-500 bg-orange-50/40", badge: "bg-orange-100 text-orange-700" },
   fen:        { activeBorder: "border-emerald-500 bg-emerald-50/40", badge: "bg-emerald-100 text-emerald-700" },
-  fizik:      { activeBorder: "border-purple-500 bg-purple-50/40",  badge: "bg-purple-100 text-purple-700" },
-  kimya:      { activeBorder: "border-amber-500 bg-amber-50/40",   badge: "bg-amber-100 text-amber-700" },
+  fizik:      { activeBorder: "border-cyan-500 bg-cyan-50/40",     badge: "bg-cyan-100 text-cyan-700" },
+  kimya:      { activeBorder: "border-violet-500 bg-violet-50/40", badge: "bg-violet-100 text-violet-700" },
   biyoloji:   { activeBorder: "border-lime-500 bg-lime-50/40",     badge: "bg-lime-100 text-lime-700" },
-  tarih:      { activeBorder: "border-yellow-500 bg-yellow-50/40", badge: "bg-yellow-100 text-yellow-700" },
-  cografya:   { activeBorder: "border-teal-500 bg-teal-50/40",    badge: "bg-teal-100 text-teal-700" },
-  felsefe:    { activeBorder: "border-pink-500 bg-pink-50/40",     badge: "bg-pink-100 text-pink-700" },
-  dinkulturu: { activeBorder: "border-cyan-500 bg-cyan-50/40",    badge: "bg-cyan-100 text-cyan-700" },
-  sosyal:     { activeBorder: "border-orange-500 bg-orange-50/40", badge: "bg-orange-100 text-orange-700" },
-  ingilizce:  { activeBorder: "border-rose-500 bg-rose-50/40",    badge: "bg-rose-100 text-rose-700" },
-  diger:      { activeBorder: "border-gray-500 bg-gray-50/40",    badge: "bg-gray-100 text-gray-700" },
+  tarih:      { activeBorder: "border-amber-500 bg-amber-50/40",   badge: "bg-amber-100 text-amber-700" },
+  cografya:   { activeBorder: "border-teal-500 bg-teal-50/40",     badge: "bg-teal-100 text-teal-700" },
+  felsefe:    { activeBorder: "border-slate-500 bg-slate-50/40",   badge: "bg-slate-100 text-slate-700" },
+  dinkulturu: { activeBorder: "border-slate-500 bg-slate-50/40",   badge: "bg-slate-100 text-slate-700" },
+  sosyal:     { activeBorder: "border-amber-500 bg-amber-50/40",   badge: "bg-amber-100 text-amber-700" },
+  ingilizce:  { activeBorder: "border-rose-500 bg-rose-50/40",     badge: "bg-rose-100 text-rose-700" },
+  diger:      { activeBorder: "border-gray-500 bg-gray-50/40",     badge: "bg-gray-100 text-gray-700" },
 };
 
 export const Card = memo(

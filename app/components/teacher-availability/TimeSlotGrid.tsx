@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { format, addMinutes } from "date-fns";
 import { tr } from "date-fns/locale";
 import { Button } from "@/components/ui/button";
+import { Lightbulb } from "lucide-react";
 import { toast } from "sonner";
 
 // Add this interface with a different name
@@ -578,7 +579,7 @@ export default function TimeSlotGrid({
       {isEditing && !readOnly && (
         <div className="mb-3 p-2 bg-blue-50 rounded-md text-xs">
           <p className="font-medium text-blue-800">
-            <span className="mr-2">💡</span>
+            <Lightbulb className="w-4 h-4 mr-2 inline shrink-0" />
             İpucu: Fare ile sürükleyerek birden fazla zaman dilimini aynı anda seçebilirsiniz. 
             Tek tıklama ile de zaman dilimlerini seçebilirsiniz.
           </p>

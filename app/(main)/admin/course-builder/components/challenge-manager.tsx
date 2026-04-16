@@ -927,7 +927,7 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
             </div>
             {selectedLessonId && (
               <div className="text-sm text-blue-700 flex items-center space-x-1">
-                <span>📊 Viewing</span>
+                <span>Viewing</span>
                 <span className="font-medium">{challenges.length}</span>
                 <span>challenges</span>
               </div>
@@ -1303,7 +1303,7 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
               )}
 
               <div className="flex justify-end space-x-2">
-                <Button variant="primary" onClick={() => setIsEditOpen(false)}>
+                <Button variant="ghost" onClick={() => setIsEditOpen(false)}>
                   Cancel
                 </Button>
                 <Button onClick={handleEditChallenge} disabled={isLoading || !editChallengeType}>

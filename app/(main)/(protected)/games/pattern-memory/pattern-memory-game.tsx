@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { addPointsToUser } from "@/actions/challenge-progress";
 import { SCORING_SYSTEM } from "@/constants";
 import { toast } from "sonner";
-import { ArrowLeft, Trophy, Zap } from "lucide-react";
+import { ArrowLeft, Trophy, Zap, Target } from "lucide-react";
 import Link from "next/link";
 
 type Mode = "colors" | "numbers" | "mixed";
@@ -188,7 +188,7 @@ export default function PatternMemoryGame() {
         </Link>
 
         <div className="text-center">
-          <div className="text-5xl mb-3">🎯</div>
+          <div className="mb-3"><Target className="w-12 h-12 text-orange-500 mx-auto" /></div>
           <h1 className="text-2xl font-bold text-neutral-800">
             Sıralama Ustası
           </h1>
@@ -230,7 +230,7 @@ export default function PatternMemoryGame() {
   if (gameState === "finished") {
     return (
       <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-6 py-8">
-        <div className="text-5xl mb-2">🏆</div>
+        <div className="mb-2"><Trophy className="w-12 h-12 text-amber-500 mx-auto" /></div>
         <h1 className="text-2xl font-bold text-neutral-800">Oyun Bitti!</h1>
 
         <div className="w-full grid grid-cols-2 gap-3">

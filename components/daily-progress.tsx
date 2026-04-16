@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { getCurrentDayProgress } from "@/actions/daily-streak";
 import Image from "next/image";
-import { RefreshCw, AlertCircle } from "lucide-react";
+import { RefreshCw, AlertCircle, Sparkles, Flame } from "lucide-react";
 
 interface DailyProgressData {
   pointsEarnedToday: number;
@@ -154,7 +154,7 @@ export function DailyProgress() {
       <div className="text-sm opacity-90">
         {achieved ? (
           <div className="flex items-center gap-2">
-            <span>🎉</span>
+            <Sparkles className="w-4 h-4 shrink-0" />
             <span>Günlük hedefe ulaştın!</span>
           </div>
         ) : (
@@ -167,7 +167,7 @@ export function DailyProgress() {
       {currentStreak > 0 && (
         <div className="mt-3 text-sm bg-white/10 rounded-lg p-2">
           <div className="flex items-center gap-2">
-            <span>🔥</span>
+            <Flame className="w-4 h-4 shrink-0" />
             <span>
               {currentStreak === 1
                 ? "İlk gün! Devam et!"

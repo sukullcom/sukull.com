@@ -105,7 +105,7 @@ export function ResetPasswordForm() {
         variant="secondary"
       >
         {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-        Şİfreyİ Sıfırla
+        Şifreyi Sıfırla
       </Button>
     </form>
   );

@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Target, Users, Code, Shield, Info } from "lucide-react";
+import { Target, Users, Code, Shield, Info, Flame, Lightbulb, CheckCircle, Lock } from "lucide-react";
 import { getAllStreakRules } from "@/utils/streak-requirements";
 
 interface StreakRulesProps {
@@ -37,7 +37,8 @@ export function StreakRules({
     return {
       isAchieved,
       badgeVariant: (isAchieved ? "default" : "secondary") as "default" | "secondary",
-      badgeText: isAchieved ? "✅ Ulaşıldı" : `🔒 ${requiredDays - currentStreak} gün kaldı`
+      badgeText: isAchieved ? "Ulaşıldı" : `${requiredDays - currentStreak} gün kaldı`,
+      badgeIcon: isAchieved ? <CheckCircle className="w-3 h-3" /> : <Lock className="w-3 h-3" />
     };
   };
 
@@ -53,7 +54,7 @@ export function StreakRules({
         {/* Current Streak Display */}
         <div className="flex items-center justify-between p-3 bg-orange-100 rounded-lg">
           <div className="flex items-center gap-2">
-            <span className="text-2xl">🔥</span>
+            <Flame className="w-6 h-6 text-orange-500" />
             <div>
               <p className="font-semibold text-orange-800 text-sm">Mevcut İstikrarın</p>
               <p className="text-xs text-orange-600">Günlük hedefini tamamladığın gün sayısı</p>
@@ -96,7 +97,7 @@ export function StreakRules({
                       <span className={`${
                         status.isAchieved ? "text-green-600" : "text-gray-600"
                       }`}>
-                        {status.badgeText}
+                        <span className="flex items-center gap-1">{status.badgeIcon} {status.badgeText}</span>
                       </span>
                     </div>
                   </div>
@@ -111,7 +112,7 @@ export function StreakRules({
 
         {/* Tips */}
         <div className="bg-orange-100 p-3 rounded-lg">
-          <h5 className="text-xs font-semibold text-orange-700 mb-2">💡 İpucu</h5>
+          <h5 className="text-xs font-semibold text-orange-700 mb-2 flex items-center gap-1"><Lightbulb className="w-3.5 h-3.5" /> İpucu</h5>
           <p className="text-xs text-orange-600 leading-relaxed">
             Her gün belirlediğin puan hedefine ulaşarak istikrarını artır. 
             İstikrarın sıfırlanmasını önlemek için günlük hedefini kaçırma!
@@ -122,7 +123,7 @@ export function StreakRules({
         {currentStreak > 0 && (
           <div className="bg-orange-100 p-3 rounded-lg">
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-lg">🎯</span>
+              <Target className="w-4 h-4 text-orange-600" />
               <h5 className="text-xs font-semibold text-orange-700">İlerleme Durumu</h5>
             </div>
             <div className="space-y-1">

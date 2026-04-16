@@ -31,6 +31,10 @@ import {
   X,
   Lock,
   Sparkles,
+  CircleCheck,
+  Calendar,
+  Heart,
+  Target,
 } from "lucide-react";
 import { StudyBuddySchoolSelector } from "@/components/study-buddy-school-selector";
 
@@ -1106,18 +1110,18 @@ export default function StudyBuddyPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-blue-200 overflow-hidden">
-            <div className="bg-gradient-to-r from-blue-500 to-sky-500 px-4 py-3">
+          <Card className="border-green-200 overflow-hidden">
+            <div className="bg-gradient-to-r from-emerald-500 to-green-500 px-4 py-3">
               <div className="flex items-center gap-2 text-white">
                 <BookOpen className="h-5 w-5" />
                 <span className="font-bold text-sm">İpuçları</span>
               </div>
             </div>
             <CardContent className="p-4 text-sm text-gray-600 space-y-2">
-              <p>✅ Belirli hedefler koyun</p>
-              <p>📅 Düzenli çalışma programları oluşturun</p>
-              <p>💪 Birbirinizi motive edin</p>
-              <p>🎯 Başarılarınızı paylaşın</p>
+              <p><CircleCheck className="w-4 h-4 inline text-green-500 shrink-0" /> Belirli hedefler koyun</p>
+              <p><Calendar className="w-4 h-4 inline text-blue-500 shrink-0" /> Düzenli çalışma programları oluşturun</p>
+              <p><Heart className="w-4 h-4 inline text-rose-500 shrink-0" /> Birbirinizi motive edin</p>
+              <p><Target className="w-4 h-4 inline text-orange-500 shrink-0" /> Başarılarınızı paylaşın</p>
             </CardContent>
           </Card>
         </div>
@@ -1369,8 +1373,8 @@ export default function StudyBuddyPage() {
               ) : (
                 <>
                   {showEditPostForm && editingPost && (
-                    <Card className="border-blue-300 overflow-hidden">
-                      <div className="bg-gradient-to-r from-blue-500 to-sky-500 px-4 py-3 flex items-center justify-between">
+                    <Card className="border-green-300 overflow-hidden">
+                      <div className="bg-gradient-to-r from-green-500 to-emerald-500 px-4 py-3 flex items-center justify-between">
                         <div className="flex items-center gap-2 text-white">
                           <Edit className="h-4 w-4" />
                           <span className="font-bold text-sm">Gönderi Düzenle</span>
@@ -1395,7 +1399,7 @@ export default function StudyBuddyPage() {
                         <div className="space-y-1.5">
                           <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Çalışma Amacı</label>
                           <select
-                            className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500/20"
+                            className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20"
                             value={editPostPurpose}
                             onChange={(e) => setEditPostPurpose(e.target.value)}
                           >
@@ -1410,7 +1414,7 @@ export default function StudyBuddyPage() {
                         <div className="space-y-1.5">
                           <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Açıklama</label>
                           <textarea
-                            className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500/20 min-h-[90px] resize-none"
+                            className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20 min-h-[90px] resize-none"
                             value={editPostReason}
                             onChange={(e) => setEditPostReason(e.target.value)}
                             placeholder="Neden çalışma arkadaşı arıyorsun?"

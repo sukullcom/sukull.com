@@ -50,7 +50,7 @@ export function ForgotPasswordForm() {
         variant="secondary"
       >
         {isLoading && <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />}
-        Şİfre Sıfırlama E-postası Gönder
+        Şifre Sıfırlama E-postası Gönder
       </Button>
 
       <p className="text-center text-sm mt-6">

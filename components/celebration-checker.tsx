@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";
+import { Target, Flame, Unlock } from "lucide-react";
 import { SCORING_SYSTEM } from "@/constants";
 
 type Props = {
@@ -68,7 +69,7 @@ export function CelebrationChecker({
       setTimeout(() => {
         toast.success(`Günlük hedefini tutturdun! (${pointsEarnedToday}/${dailyTarget} puan)`, {
           duration: 4000,
-          icon: "🎯",
+          icon: <Target className="h-4 w-4 text-green-600" />,
         });
       }, 500);
     }
@@ -82,7 +83,7 @@ export function CelebrationChecker({
       setTimeout(() => {
         toast.success(
           `${milestone.label} istikrar! +${milestone.bonus} bonus puan kazandın!`,
-          { duration: 6000, icon: "🔥" }
+          { duration: 6000, icon: <Flame className="h-4 w-4 text-orange-500" /> }
         );
       }, 1500);
     }
@@ -95,7 +96,7 @@ export function CelebrationChecker({
       setTimeout(() => {
         toast.success(`Yeni özellik açıldı: ${unlock.label}!`, {
           duration: 5000,
-          icon: "🔓",
+          icon: <Unlock className="h-4 w-4 text-green-600" />,
         });
       }, 3000);
     }

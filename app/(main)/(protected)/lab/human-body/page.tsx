@@ -29,7 +29,7 @@ const videos = [
   {
     title: "Sindirim Sistemi",
     videoId: "asc9xFbbOSo",
-    topic: "Sİndİrİm Sİstemİ",
+    topic: "Sindirim Sistemi",
     extraInfo: `
       Sindirim sistemi, yiyeceklerin parçalanarak vücudun enerji ve besin maddesi ihtiyacını karşılamak için
       gerekli bileşenlerin emilmesini sağlayan bir sistemdir. Ağızda başlayan bu süreç, yemek borusu, mide,
@@ -61,34 +61,34 @@ const videos = [
     `,
     hangmanWords: [
       { word: "aorta", hint: "Vücuda kan taşıyan ana atardamar" },
-      { word: "atrİyum", hint: "Kalbin kan alan odacıklarından biri" },
-      { word: "ventrİkül", hint: "Kanı pompalayan kalp odacığı" },
+      { word: "atriyum", hint: "Kalbin kan alan odacıklarından biri" },
+      { word: "ventrikül", hint: "Kanı pompalayan kalp odacığı" },
       { word: "kapakçık", hint: "Kan akışını yönlendiren yapı" },
     ],
   },
   {
     title: "Sinir Sistemi",
     videoId: "n1JNj1UvZXQ",
-    topic: "Sİnİr Sİstemİ",
+    topic: "Sinir Sistemi",
     extraInfo: `
       Sinir sistemi, vücudun kontrol ve iletişim merkezidir. Merkezi sinir sistemi (beyin ve omurilik) ve çevresel
       sinir sistemi (sinirler ve gangliyonlar) olarak ikiye ayrılır. Duyusal bilgileri toplar, işler ve motor yanıtları
       koordine eder. Refleksler gibi hızlı tepkiler de sinir sistemi sayesinde gerçekleşir.
     `,
     hangmanWords: [
-      { word: "beyİn", hint: "Vücudun kontrol merkezi" },
+      { word: "beyin", hint: "Vücudun kontrol merkezi" },
       {
-        word: "omurİlİk",
+        word: "omurilik",
         hint: "Sinir sisteminin bir parçası, sinyaller taşır",
       },
       { word: "nöron", hint: "Sinir hücresi" },
-      { word: "sİnaps", hint: "Nöronlar arasındaki bağlantı noktası" },
+      { word: "sinaps", hint: "Nöronlar arasındaki bağlantı noktası" },
     ],
   },
   {
     title: "Üriner Sistem",
     videoId: "oOksWYHki-s",
-    topic: "Ürİner Sİstem",
+    topic: "Üriner Sistem",
     extraInfo: `
       Üriner sistem, vücuttan sıvı atıkları uzaklaştıran bir sistemdir. Böbrekler, idrar üretiminde ana rol oynar ve
       atık ürünlerin kandan filtre edilmesini sağlar. Üretilen idrar, üreterler aracılığıyla mesaneye taşınır ve buradan
@@ -367,7 +367,7 @@ const VideoPage = () => {
       <div className="flex justify-between w-full max-w-4xl">
         {/* Turn Back Button */}
         <Button variant="default" onClick={() => router.push("/lab")}>
-          Gerİ Dön
+          Geri Dön
         </Button>
       </div>
       <h1 className="text-3xl font-bold text-neutral-800 mb-8">
@@ -379,8 +379,8 @@ const VideoPage = () => {
             key={video.videoId}
             variant={
               selectedVideo.videoId === video.videoId
-                ? "danger"
-                : "dangerOutline"
+                ? "primary"
+                : "primaryOutline"
             }
             onClick={() => setSelectedVideo(video)}
           >

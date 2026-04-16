@@ -18,7 +18,8 @@ import {
   Clock,
   TrendingUp,
   ChevronRight,
-  Sparkles
+  Sparkles,
+  Check
 } from "lucide-react";
 
 export default async function PrivateLessonPage() {
@@ -112,19 +113,19 @@ export default async function PrivateLessonPage() {
               <ul className="space-y-3 mb-6">
                 <li className="flex items-start gap-2">
                   <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
-                    <span className="text-green-600 text-xs">✓</span>
+                    <Check className="w-4 h-4 text-green-500 shrink-0" />
                   </div>
                   <span className="text-gray-600">Kendi ders saatlerini belirle</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
-                    <span className="text-green-600 text-xs">✓</span>
+                    <Check className="w-4 h-4 text-green-500 shrink-0" />
                   </div>
                   <span className="text-gray-600">Ücretlerini kendin belirle</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
-                    <span className="text-green-600 text-xs">✓</span>
+                    <Check className="w-4 h-4 text-green-500 shrink-0" />
                   </div>
                   <span className="text-gray-600">Düzenli ek gelir elde edin</span>
                 </li>
@@ -160,19 +161,19 @@ export default async function PrivateLessonPage() {
               <ul className="space-y-3 mb-6">
                 <li className="flex items-start gap-2">
                   <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mt-0.5">
-                    <span className="text-blue-600 text-xs">✓</span>
+                    <Check className="w-4 h-4 text-green-500 shrink-0" />
                   </div>
                   <span className="text-gray-600">Alanında uzman öğretmenler</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mt-0.5">
-                    <span className="text-blue-600 text-xs">✓</span>
+                    <Check className="w-4 h-4 text-green-500 shrink-0" />
                   </div>
                   <span className="text-gray-600">Birebir kişiselleştirilmiş eğitim</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mt-0.5">
-                    <span className="text-blue-600 text-xs">✓</span>
+                    <Check className="w-4 h-4 text-green-500 shrink-0" />
                   </div>
                   <span className="text-gray-600">Esnek ders programları</span>
                 </li>

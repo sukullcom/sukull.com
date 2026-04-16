@@ -147,7 +147,7 @@ export const Items = ({
         <Button
           onClick={() => !hasInfiniteHearts && setShowSubscriptionDialog(true)}
           disabled={false}
-          variant={hasInfiniteHearts ? "secondary" : "primary"}
+          variant={hasInfiniteHearts ? "secondary" : "super"}
         >
           {hasInfiniteHearts ? "Aktif" : "100₺/ay"}
         </Button>

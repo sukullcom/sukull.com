@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { addPointsToUser } from "@/actions/challenge-progress";
 import { SCORING_SYSTEM } from "@/constants";
 import { toast } from "sonner";
-import { ArrowLeft, Trophy, RotateCcw, Clock, MousePointer } from "lucide-react";
+import { ArrowLeft, Trophy, RotateCcw, Clock, MousePointer, Brain, PartyPopper } from "lucide-react";
 import Link from "next/link";
 
 type Difficulty = "Kolay" | "Orta" | "Zor";
@@ -228,7 +228,7 @@ export default function MemoryMatchGame() {
         </Link>
 
         <div className="text-center">
-          <div className="text-5xl mb-3">🧠</div>
+          <div className="mb-3"><Brain className="w-12 h-12 text-purple-500 mx-auto" /></div>
           <h1 className="text-2xl font-bold text-neutral-800">
             Hafıza Kartları
           </h1>
@@ -287,7 +287,7 @@ export default function MemoryMatchGame() {
   if (gameState === "finished") {
     return (
       <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-6 py-8">
-        <div className="text-5xl mb-2">🎉</div>
+        <div className="mb-2"><PartyPopper className="w-12 h-12 text-amber-500 mx-auto" /></div>
         <h1 className="text-2xl font-bold text-neutral-800">Tebrikler!</h1>
 
         <div className="w-full grid grid-cols-2 gap-3">

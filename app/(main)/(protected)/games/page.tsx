@@ -3,12 +3,13 @@ import CustomCard from "@/components/custom-card";
 import { getUserProgress } from "@/db/queries";
 import Image from "next/image";
 import { redirect } from "next/navigation";
+import { Zap, Brain, CircleCheck, Target } from "lucide-react";
 
 interface GameData {
   id: string;
   name: string;
   imageSrc?: string;
-  emoji?: string;
+  icon?: React.ReactNode;
 }
 
 const gamesData: GameData[] = [
@@ -25,22 +26,22 @@ const gamesData: GameData[] = [
   {
     id: "speed-math",
     name: "Hız Matematiği",
-    emoji: "⚡",
+    icon: <Zap className="w-14 h-14 text-yellow-500" />,
   },
   {
     id: "memory-match",
     name: "Hafıza Kartları",
-    emoji: "🧠",
+    icon: <Brain className="w-14 h-14 text-purple-500" />,
   },
   {
     id: "true-false",
     name: "Doğru mu Yanlış mı?",
-    emoji: "✅",
+    icon: <CircleCheck className="w-14 h-14 text-green-500" />,
   },
   {
     id: "pattern-memory",
     name: "Sıralama Ustası",
-    emoji: "🎯",
+    icon: <Target className="w-14 h-14 text-orange-500" />,
   },
 ];
 
@@ -68,7 +69,7 @@ const GamesPage = async () => {
                 <CustomCard
                   key={game.id}
                   imageSrc={game.imageSrc}
-                  emoji={game.emoji}
+                  icon={game.icon}
                   title={game.name}
                   href={`/games/${game.id}`}
                   buttonText="Oyna"

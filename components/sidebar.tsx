@@ -35,7 +35,7 @@ export const Sidebar = ({ className }: Props) => {
         </div>
       </Link>
       <div className="flex flex-col gap-y-2 flex-1 overflow-y-auto">
-        <SidebarItem label="Çalışma Masası" href="/learn" iconSrc={learnIcon} />
+        <SidebarItem label="Dersler" href="/learn" iconSrc={learnIcon} />
         <SidebarItem
           label="Özel Ders"
           href="/private-lesson"
@@ -43,11 +43,11 @@ export const Sidebar = ({ className }: Props) => {
         />
         <SidebarItem label="Oyunlar" href="/games" iconSrc={gameIcon} />
         <SidebarItem
-          label="Puan Tabloları"
+          label="Puan Tablosu"
           href="/leaderboard"
           iconSrc={leaderboardIcon}
         />
-        <SidebarItem label="Çantam" href="/shop" iconSrc={shopIcon} />
+        <SidebarItem label="Mağaza" href="/shop" iconSrc={shopIcon} />
         <SidebarItem label="Çalışma Arkadaşı" href="/study-buddy" iconSrc="/study_buddy.svg" />
         <SidebarItem label="Profil" href="/profile" iconSrc="/mascot_normal.svg" />
       </div>

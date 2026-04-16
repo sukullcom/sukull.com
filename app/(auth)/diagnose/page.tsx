@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { Button } from "@/components/ui/button";
+import { Search, Cookie, HardDrive, Lock, Globe, ClipboardList, AlertTriangle } from "lucide-react";
 
 export default function DiagnosePage() {
   const [diagnostics, setDiagnostics] = useState<Record<string, string | number | boolean | string[] | null>>({});
@@ -51,8 +52,8 @@ export default function DiagnosePage() {
   return (
     <div className="min-h-screen bg-gray-50 p-4">
       <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8">
-        <h1 className="text-3xl font-bold text-center mb-4">
-          🔍 Browser Diagnostics
+        <h1 className="text-3xl font-bold text-center mb-4 flex items-center justify-center gap-2">
+          <Search className="w-7 h-7" /> Browser Diagnostics
         </h1>
         
         <p className="text-center text-gray-600 mb-6">
@@ -68,19 +69,19 @@ export default function DiagnosePage() {
 
         <div className="space-y-4">
           <DiagnosticSection
-            title="🍪 Cookies"
+            title={<span className="flex items-center gap-1.5"><Cookie className="w-4 h-4" /> Cookies</span>}
             data={{
-              'Cookies Enabled': diagnostics.cookiesEnabled ? '✅ Yes' : '❌ No',
-              'Has Cookies': diagnostics.hasCookies ? '✅ Yes' : '❌ No',
+              'Cookies Enabled': diagnostics.cookiesEnabled ? 'Yes' : 'No',
+              'Has Cookies': diagnostics.hasCookies ? 'Yes' : 'No',
               'Supabase Cookies': Array.isArray(diagnostics.supabaseCookies) && diagnostics.supabaseCookies.length > 0
-                ? `✅ ${diagnostics.supabaseCookies.length} found` 
-                : '❌ None found',
+                ? `${diagnostics.supabaseCookies.length} found` 
+                : 'None found',
               'Cookie String Length': typeof diagnostics.cookies === 'string' ? diagnostics.cookies.length : 0,
             }}
           />
 
           <DiagnosticSection
-            title="💾 Storage"
+            title={<span className="flex items-center gap-1.5"><HardDrive className="w-4 h-4" /> Storage</span>}
             data={{
               'localStorage Keys': diagnostics.localStorageCount || 0,
               'sessionStorage Keys': diagnostics.sessionStorageCount || 0,
@@ -88,9 +89,9 @@ export default function DiagnosePage() {
           />
 
           <DiagnosticSection
-            title="🔐 Supabase Session"
+            title={<span className="flex items-center gap-1.5"><Lock className="w-4 h-4" /> Supabase Session</span>}
             data={{
-              'Has Session': diagnostics.supabaseSession ? '✅ Yes' : '❌ No',
+              'Has Session': diagnostics.supabaseSession ? 'Yes' : 'No',
               'User ID': diagnostics.userId || 'None',
               'User Email': diagnostics.userEmail || 'None',
               'Error': diagnostics.supabaseError || 'None',
@@ -98,12 +99,12 @@ export default function DiagnosePage() {
           />
 
           <DiagnosticSection
-            title="🌐 Browser Info"
+            title={<span className="flex items-center gap-1.5"><Globe className="w-4 h-4" /> Browser Info</span>}
             data={{
               'User Agent': diagnostics.userAgent,
-              'Cookies Enabled': diagnostics.cookiesEnabled ? '✅ Yes' : '❌ No',
+              'Cookies Enabled': diagnostics.cookiesEnabled ? 'Yes' : 'No',
               'Do Not Track': diagnostics.doNotTrack || 'Not set',
-              'Storage Access API': diagnostics.storageAccessAPI ? '✅ Available' : '❌ Not available',
+              'Storage Access API': diagnostics.storageAccessAPI ? 'Available' : 'Not available',
             }}
           />
 
@@ -121,27 +122,27 @@ export default function DiagnosePage() {
           )}
 
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h3 className="font-semibold mb-2 text-blue-800">
-              📋 Interpretation:
+            <h3 className="font-semibold mb-2 text-blue-800 flex items-center gap-1.5">
+              <ClipboardList className="w-4 h-4" /> Interpretation:
             </h3>
             <ul className="text-sm text-blue-800 space-y-2">
               <li>
                 <strong>Cookies Enabled:</strong>{' '}
                 {diagnostics.cookiesEnabled 
-                  ? '✅ Good - Cookies are allowed'
-                  : '❌ Problem - Enable cookies in browser settings'}
+                  ? 'Good - Cookies are allowed'
+                  : 'Problem - Enable cookies in browser settings'}
               </li>
               <li>
                 <strong>Supabase Cookies:</strong>{' '}
                 {Array.isArray(diagnostics.supabaseCookies) && diagnostics.supabaseCookies.length > 0
-                  ? '✅ Good - Supabase cookies are present'
-                  : '❌ Problem - No Supabase cookies (login will fail)'}
+                  ? 'Good - Supabase cookies are present'
+                  : 'Problem - No Supabase cookies (login will fail)'}
               </li>
               <li>
                 <strong>Has Session:</strong>{' '}
                 {diagnostics.supabaseSession
-                  ? '✅ Good - You are logged in'
-                  : '⚠️ Not logged in (expected if you just cleared session)'}
+                  ? 'Good - You are logged in'
+                  : 'Not logged in (expected if you just cleared session)'}
               </li>
             </ul>
           </div>
@@ -168,7 +169,7 @@ export default function DiagnosePage() {
   );
 }
 
-function DiagnosticSection({ title, data }: { title: string; data: Record<string, string | number | boolean | string[] | null> }) {
+function DiagnosticSection({ title, data }: { title: React.ReactNode; data: Record<string, string | number | boolean | string[] | null> }) {
   return (
     <div className="bg-gray-50 rounded-lg p-4">
       <h3 className="font-semibold mb-3">{title}</h3>

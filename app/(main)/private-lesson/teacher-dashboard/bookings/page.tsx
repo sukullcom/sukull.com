@@ -7,6 +7,7 @@ import { useLessonStatusUpdater } from "@/hooks/use-lesson-status-updater";
 import { CancelLessonModal } from "@/components/modals/cancel-lesson-modal";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { toast } from "sonner";
+import { Check } from "lucide-react";
 
 interface Booking {
   id: number;
@@ -389,8 +390,8 @@ export default function TeacherBookingsPage() {
                               </span>
                             </Button>
                             {booking.teacherJoinedAt && (
-                              <p className="text-xs text-green-600 text-center font-medium">
-                                ✓ Katılımın kaydedildi
+                              <p className="text-xs text-green-600 text-center font-medium flex items-center justify-center gap-1">
+                                <Check className="w-4 h-4 inline" /> Katılımın kaydedildi
                               </p>
                             )}
                           </div>

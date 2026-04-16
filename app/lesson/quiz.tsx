@@ -16,6 +16,7 @@ import { useHeartsModal } from "@/store/use-hearts-modal";
 import { usePracticeModal } from "@/store/use-practice-modal";
 import { MathRenderer } from "@/components/ui/math-renderer";
 import { SCORING_SYSTEM } from "@/constants";
+import { Target } from "lucide-react";
 
 type Props = {
   initialPercentage: number;
@@ -222,7 +223,7 @@ export const Quiz = ({
               )}
               {lessonBonuses && lessonBonuses.perfectBonus > 0 && (
                 <div className="flex justify-between items-center px-4 py-2 bg-emerald-50 rounded-lg border border-emerald-200">
-                  <span className="text-emerald-700 font-medium">🎯 Hatasız ders bonusu!</span>
+                  <span className="text-emerald-700 font-medium"><Target className="w-4 h-4 inline" /> Hatasız ders bonusu!</span>
                   <span className="font-bold text-emerald-600">
                     +{lessonBonuses.perfectBonus}
                   </span>
