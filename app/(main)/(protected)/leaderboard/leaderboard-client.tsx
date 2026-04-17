@@ -183,12 +183,8 @@ export const LeaderboardClient = ({
               <div
                 key={u.userId}
                 className={cn(
-                  "flex items-center w-full px-3 py-2.5 rounded-xl mb-1.5 transition-colors",
-                  isMe
-                    ? "bg-blue-50 border-l-4 border-blue-500"
-                    : rank % 2 === 0
-                      ? "bg-gray-50"
-                      : "bg-white",
+                  "flex items-center w-full px-3 py-2.5 border-b border-gray-100 transition-colors",
+                  isMe && "bg-blue-50 border-l-4 border-l-blue-500",
                 )}
               >
                 <span className="w-8 text-center font-bold text-sm text-neutral-400 shrink-0">
@@ -225,12 +221,8 @@ export const LeaderboardClient = ({
             <div
               key={s.schoolId}
               className={cn(
-                "flex items-center w-full px-3 py-2.5 rounded-xl mb-1.5 transition-colors",
-                isMine
-                  ? "bg-emerald-50 border-l-4 border-emerald-500"
-                  : rank % 2 === 0
-                    ? "bg-gray-50"
-                    : "bg-white",
+                "flex items-center w-full px-3 py-2.5 border-b border-gray-100 transition-colors",
+                isMine && "bg-emerald-50 border-l-4 border-l-emerald-500",
               )}
             >
               <span className="w-8 text-center font-bold text-sm text-neutral-400 shrink-0">
@@ -283,17 +275,17 @@ export const LeaderboardClient = ({
     <div className="w-full overflow-hidden">
       {/* Tab Bar */}
       <div
-        className="flex bg-gray-100 rounded-xl p-1 gap-0.5 mb-5 overflow-x-auto scrollbar-hide"
+        className="flex border-2 border-gray-200 rounded-2xl p-1 gap-0.5 mb-5 overflow-x-auto scrollbar-hide"
       >
         {TABS.map(({ id, label, icon: Icon }) => (
           <button
             key={id}
             onClick={() => setActiveTab(id)}
             className={cn(
-              "flex items-center justify-center gap-1 sm:gap-1.5 flex-1 px-2.5 sm:px-3 py-2.5 rounded-lg text-xs sm:text-sm font-semibold whitespace-nowrap transition-all shrink-0",
+              "flex items-center justify-center gap-1 sm:gap-1.5 flex-1 px-2.5 sm:px-3 py-2.5 rounded-xl text-xs sm:text-sm whitespace-nowrap transition-all shrink-0",
               activeTab === id
-                ? "bg-white text-green-700 shadow-sm"
-                : "text-gray-500 hover:text-gray-700",
+                ? "bg-gray-100 text-gray-800 font-bold"
+                : "text-gray-500 hover:text-gray-700 font-medium",
             )}
           >
             <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />

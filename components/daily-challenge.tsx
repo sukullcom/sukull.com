@@ -84,11 +84,11 @@ export function DailyChallenge() {
 
   if (loading) {
     return (
-      <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 p-4 rounded-xl">
+      <div className="border-2 border-gray-200 rounded-2xl p-4">
         <div className="animate-pulse">
-          <div className="h-4 bg-amber-200/50 rounded mb-2 w-2/3"></div>
-          <div className="h-3 bg-amber-200/50 rounded mb-3 w-full"></div>
-          <div className="h-2 bg-amber-200/50 rounded w-full"></div>
+          <div className="h-4 bg-gray-200 rounded mb-2 w-2/3"></div>
+          <div className="h-3 bg-gray-200 rounded mb-3 w-full"></div>
+          <div className="h-2 bg-gray-200 rounded w-full"></div>
         </div>
       </div>
     );
@@ -104,7 +104,7 @@ export function DailyChallenge() {
 
   if (challenge.rewardClaimed) {
     return (
-      <div className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 p-4 rounded-xl">
+      <div className="border-2 border-green-400 rounded-2xl p-4">
         <div className="flex items-center gap-2 text-green-700">
           <CheckCircle className="w-5 h-5" />
           <span className="font-bold text-sm">Günün Görevi Tamamlandı!</span>
@@ -127,19 +127,19 @@ export function DailyChallenge() {
           style={{ position: "fixed", top: 0, left: 0, zIndex: 9999 }}
         />
       )}
-      <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 p-4 rounded-xl">
+      <div className="border-2 border-gray-200 rounded-2xl p-4">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            <Trophy className="w-5 h-5 text-amber-600" />
-            <h3 className="font-bold text-sm text-gray-800">Günün Görevi</h3>
+            <Trophy className="w-5 h-5 text-amber-500" />
+            <h3 className="font-bold text-sm text-gray-700">Günün Görevi</h3>
           </div>
           <div className="flex items-center gap-1.5">
             {timeBonus?.label && (
-              <span className="text-[10px] font-semibold bg-yellow-200 text-yellow-800 px-1.5 py-0.5 rounded-full">
+              <span className="text-[10px] font-semibold bg-yellow-50 text-yellow-700 px-1.5 py-0.5 rounded-full border border-yellow-200">
                 {timeBonus.label}
               </span>
             )}
-            <span className="text-xs font-medium text-amber-600 bg-amber-100 px-2 py-0.5 rounded-full">
+            <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
               {dayName}
             </span>
           </div>
@@ -151,13 +151,13 @@ export function DailyChallenge() {
         <p className="text-xs text-gray-500 mb-3">{challenge.description}</p>
 
         <div className="mb-2">
-          <div className="flex justify-between text-xs text-gray-600 mb-1">
+          <div className="flex justify-between text-xs text-gray-500 mb-1">
             <span>
               {challenge.progress} / {challenge.target} {challenge.unit}
             </span>
             <span>{Math.round(progressPercent)}%</span>
           </div>
-          <div className="w-full bg-amber-100 rounded-full h-2">
+          <div className="w-full bg-gray-200 rounded-full h-2">
             <div
               className={`h-2 rounded-full transition-all duration-500 ease-out ${
                 challenge.completed ? "bg-green-500" : "bg-amber-500"
@@ -181,7 +181,7 @@ export function DailyChallenge() {
             Ödülü Al (+{challenge.bonusPoints} puan)
           </button>
         ) : (
-          <div className="flex items-center gap-1.5 mt-1 text-xs text-amber-700">
+          <div className="flex items-center gap-1.5 mt-1 text-xs text-gray-500">
             <Clock className="w-3.5 h-3.5" />
             <span>Bonus: +{challenge.bonusPoints} puan</span>
           </div>

@@ -1,5 +1,4 @@
 import { Progress } from "./ui/progress";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { User, Target, Users, ImageIcon, School, CheckCircle, Lock, Info, BookOpen, RefreshCw, Heart, Flame, Shield, Trophy } from 'lucide-react';
 import { getAllStreakRules } from "@/utils/streak-requirements";
 
@@ -47,7 +46,7 @@ export const Quests = ({ currentStreak }: QuestsProps) => {
 
   return (
     <div className="w-full space-y-6">
-      <h2 className="text-center font-bold text-neutral-800 text-xl">
+      <h2 className="text-left font-bold text-gray-700 text-base">
         Özellik Kilitleri
       </h2>
 
@@ -58,15 +57,15 @@ export const Quests = ({ currentStreak }: QuestsProps) => {
           return (
             <div
               key={index}
-              className={`flex items-center gap-4 p-4 rounded-xl border transition-colors ${
+              className={`flex items-center gap-4 p-4 rounded-2xl border-2 transition-colors ${
                 status.isUnlocked
-                  ? "bg-green-50 border-green-200"
-                  : "bg-white border-gray-200"
+                  ? "border-green-400"
+                  : "border-gray-200"
               }`}
             >
               <div
                 className={`shrink-0 p-2.5 rounded-full ${
-                  status.isUnlocked ? "bg-green-100" : "bg-gray-100"
+                  status.isUnlocked ? "bg-green-50" : "bg-gray-50"
                 }`}
               >
                 {getIcon(rule.feature)}
@@ -98,57 +97,52 @@ export const Quests = ({ currentStreak }: QuestsProps) => {
         })}
       </div>
 
-      {/* Tips */}
-      <Card className="border-blue-100 bg-blue-50/50">
-        <CardHeader className="pb-2 pt-4 px-4">
-          <div className="flex items-center gap-2">
-            <Info className="h-4 w-4 text-blue-500" />
-            <CardTitle className="text-blue-700 text-sm font-semibold">
-              Sistem İpuçları
-            </CardTitle>
+      <div className="border-2 border-gray-200 rounded-2xl p-4">
+        <div className="flex items-center gap-2 mb-3">
+          <Info className="h-4 w-4 text-gray-500" />
+          <h3 className="text-gray-700 text-sm font-bold">
+            Sistem İpuçları
+          </h3>
+        </div>
+        <div className="grid gap-2 text-xs text-gray-600">
+          <div className="flex items-start gap-2 p-2.5 bg-gray-50 rounded-xl">
+            <BookOpen className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
+            <p>
+              <span className="font-semibold">Ders Puanları:</span> Doğru +10, yanlış −1 puan ve −1 can. Tamamlama +5, hatasız +15 bonus.
+            </p>
           </div>
-        </CardHeader>
-        <CardContent className="px-4 pb-4 pt-0">
-          <div className="grid gap-2 text-xs text-blue-700">
-            <div className="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
-              <BookOpen className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
-              <p>
-                <span className="font-semibold">Ders Puanları:</span> Doğru +10, yanlış −1 puan ve −1 can. Tamamlama +5, hatasız +15 bonus.
-              </p>
-            </div>
-            <div className="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
-              <RefreshCw className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
-              <p>
-                <span className="font-semibold">Pratik:</span> Tamamladığın dersleri tekrarla, doğru başına +5 puan. Can kaybetmezsin.
-              </p>
-            </div>
-            <div className="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
-              <Heart className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
-              <p>
-                <span className="font-semibold">Can:</span> 100 puanla doldur veya her 4 saatte 1 adet otomatik yenilenir.
-              </p>
-            </div>
-            <div className="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
-              <Flame className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
-              <p>
-                <span className="font-semibold">İstikrar Bonusu:</span> 3 gün +10, 7 gün +30, 15 gün +75, 30 gün +150, 60 gün +300 puan.
-              </p>
-            </div>
-            <div className="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
-              <Shield className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
-              <p>
-                <span className="font-semibold">İstikrar Koruma:</span> Mağazadan al, 1 gün hedef kaçırsan bile istikrarın bozulmasın.
-              </p>
-            </div>
-            <div className="flex items-start gap-2 p-2.5 bg-white/60 rounded-lg">
-              <Trophy className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-              <p>
-                <span className="font-semibold">Kalıcı Kilit Açma:</span> Bir kez açılan özellik, istikrarın düşse de açık kalır.
-              </p>
-            </div>
+          <div className="flex items-start gap-2 p-2.5 bg-gray-50 rounded-xl">
+            <RefreshCw className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
+            <p>
+              <span className="font-semibold">Pratik:</span> Tamamladığın dersleri tekrarla, doğru başına +5 puan. Can kaybetmezsin.
+            </p>
           </div>
-        </CardContent>
-      </Card>
+          <div className="flex items-start gap-2 p-2.5 bg-gray-50 rounded-xl">
+            <Heart className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
+            <p>
+              <span className="font-semibold">Can:</span> 100 puanla doldur veya her 4 saatte 1 adet otomatik yenilenir.
+            </p>
+          </div>
+          <div className="flex items-start gap-2 p-2.5 bg-gray-50 rounded-xl">
+            <Flame className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
+            <p>
+              <span className="font-semibold">İstikrar Bonusu:</span> 3 gün +10, 7 gün +30, 15 gün +75, 30 gün +150, 60 gün +300 puan.
+            </p>
+          </div>
+          <div className="flex items-start gap-2 p-2.5 bg-gray-50 rounded-xl">
+            <Shield className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
+            <p>
+              <span className="font-semibold">İstikrar Koruma:</span> Mağazadan al, 1 gün hedef kaçırsan bile istikrarın bozulmasın.
+            </p>
+          </div>
+          <div className="flex items-start gap-2 p-2.5 bg-gray-50 rounded-xl">
+            <Trophy className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+            <p>
+              <span className="font-semibold">Kalıcı Kilit Açma:</span> Bir kez açılan özellik, istikrarın düşse de açık kalır.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

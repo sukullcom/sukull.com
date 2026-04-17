@@ -41,17 +41,14 @@ export function DailyProgress() {
   }, []);
 
   useEffect(() => {
-    // Initial load
     loadProgress();
     setTimeBonus(getTimeBonusInfo());
     
-    // Refresh progress every 15 seconds (reduced from 30 for more responsiveness)
     const interval = setInterval(() => {
       loadProgress();
       setTimeBonus(getTimeBonusInfo());
     }, 15000);
     
-    // Add visibility change listener to refresh when user returns to tab
     const handleVisibilityChange = () => {
       if (!document.hidden) {
         loadProgress(true);
@@ -62,11 +59,9 @@ export function DailyProgress() {
       loadProgress(true);
     };
     
-    // Add event listeners
     document.addEventListener('visibilitychange', handleVisibilityChange);
     window.addEventListener('focus', handleFocus);
     
-    // Cleanup
     return () => {
       clearInterval(interval);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
@@ -74,18 +69,17 @@ export function DailyProgress() {
     };
   }, [loadProgress]);
 
-  // Manual refresh handler
   const handleManualRefresh = useCallback(() => {
     loadProgress(true);
   }, [loadProgress]);
 
   if (loading) {
     return (
-      <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-4 rounded-xl text-white">
+      <div className="border-2 border-gray-200 rounded-2xl p-4">
         <div className="animate-pulse">
-          <div className="h-4 bg-white/30 rounded mb-2"></div>
-          <div className="h-6 bg-white/30 rounded mb-2"></div>
-          <div className="h-4 bg-white/30 rounded"></div>
+          <div className="h-4 bg-gray-200 rounded mb-2"></div>
+          <div className="h-6 bg-gray-200 rounded mb-2"></div>
+          <div className="h-4 bg-gray-200 rounded"></div>
         </div>
       </div>
     );
@@ -94,17 +88,17 @@ export function DailyProgress() {
   if (!progressData) {
     if (hasError) {
       return (
-        <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-4 rounded-xl text-white shadow-lg">
+        <div className="border-2 border-gray-200 rounded-2xl p-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 text-sm opacity-90">
+            <div className="flex items-center gap-2 text-sm text-gray-500">
               <AlertCircle className="h-4 w-4" />
               <span>İlerleme yüklenemedi</span>
             </div>
             <button
               onClick={() => loadProgress(true)}
-              className="p-1 hover:bg-white/20 rounded-full transition-colors"
+              className="p-1 hover:bg-gray-100 rounded-full transition-colors"
             >
-              <RefreshCw className={`w-4 h-4 ${isRefreshing ? "animate-spin" : ""}`} />
+              <RefreshCw className={`w-4 h-4 text-gray-400 ${isRefreshing ? "animate-spin" : ""}`} />
             </button>
           </div>
         </div>
@@ -116,9 +110,9 @@ export function DailyProgress() {
   const { pointsEarnedToday, dailyTarget, achieved, currentStreak, progressPercentage } = progressData;
 
   return (
-    <div className="bg-gradient-to-r from-blue-500 to-purple-600 p-4 rounded-xl text-white shadow-lg">
+    <div className="border-2 border-gray-200 rounded-2xl p-4">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-lg font-bold">Günlük İlerleme</h3>
+        <h3 className="text-base font-bold text-gray-700">Günlük İlerleme</h3>
         <div className="flex items-center gap-2">
           <Image
             src={achieved ? "/istikrar.svg" : "/istikrarsiz.svg"}
@@ -127,41 +121,40 @@ export function DailyProgress() {
             height={24}
             className="w-6 h-6"
           />
-          <span className="text-sm font-medium">
+          <span className="text-sm font-medium text-gray-600">
             {currentStreak} gün
           </span>
-          {/* Manual refresh button */}
           <button
             onClick={handleManualRefresh}
             disabled={isRefreshing}
-            className="ml-2 p-1 hover:bg-white/20 rounded-full transition-colors"
+            className="ml-1 p-1 hover:bg-gray-100 rounded-full transition-colors"
             title="Yenile"
           >
             <RefreshCw 
-              className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`}
+              className={`w-4 h-4 text-gray-400 ${isRefreshing ? 'animate-spin' : ''}`}
             />
           </button>
         </div>
       </div>
 
       <div className="mb-3">
-        <div className="flex justify-between text-sm mb-1">
+        <div className="flex justify-between text-sm mb-1 text-gray-500">
           <span>{pointsEarnedToday} / {dailyTarget} puan</span>
           <span>{Math.max(0, Math.round(progressPercentage))}%</span>
         </div>
-        <div className="w-full bg-white/20 rounded-full h-2">
+        <div className="w-full bg-gray-200 rounded-full h-2.5">
           <div
-            className="bg-white h-2 rounded-full transition-all duration-500 ease-out"
+            className={`h-2.5 rounded-full transition-all duration-500 ease-out ${achieved ? "bg-green-500" : "bg-blue-500"}`}
             style={{ width: `${Math.max(0, Math.min(progressPercentage, 100))}%` }}
           ></div>
         </div>
       </div>
 
-      <div className="text-sm opacity-90">
+      <div className="text-sm text-gray-500">
         {achieved ? (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-green-600">
             <Sparkles className="w-4 h-4 shrink-0" />
-            <span>Günlük hedefe ulaştın!</span>
+            <span className="font-medium">Günlük hedefe ulaştın!</span>
           </div>
         ) : (
           <span>
@@ -171,9 +164,9 @@ export function DailyProgress() {
       </div>
 
       {currentStreak > 0 && (
-        <div className="mt-3 text-sm bg-white/10 rounded-lg p-2">
-          <div className="flex items-center gap-2">
-            <Flame className="w-4 h-4 shrink-0" />
+        <div className="mt-3 text-sm bg-gray-50 rounded-xl p-2.5">
+          <div className="flex items-center gap-2 text-gray-600">
+            <Flame className="w-4 h-4 shrink-0 text-orange-500" />
             <span>
               {currentStreak === 1
                 ? "İlk gün! Devam et!"
@@ -184,8 +177,8 @@ export function DailyProgress() {
       )}
 
       {timeBonus?.label && (
-        <div className="mt-2 text-sm bg-yellow-400/20 rounded-lg p-2">
-          <div className="flex items-center gap-2">
+        <div className="mt-2 text-sm bg-yellow-50 rounded-xl p-2.5">
+          <div className="flex items-center gap-2 text-yellow-700">
             <Sunrise className="w-4 h-4 shrink-0" />
             <span className="font-medium">{timeBonus.label} aktif</span>
           </div>
@@ -193,4 +186,4 @@ export function DailyProgress() {
       )}
     </div>
   );
-} 
+}

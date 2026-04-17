@@ -1082,48 +1082,42 @@ export default function StudyBuddyPage() {
     <div className="flex flex-row-reverse gap-[48px] px-3 sm:px-6">
       <StickyWrapper>
         <div className="space-y-4">
-          <Card className="border-green-200 overflow-hidden">
-            <div className="bg-gradient-to-r from-green-500 to-emerald-500 px-4 py-3">
-              <div className="flex items-center gap-2 text-white">
-                <Users className="h-5 w-5" />
-                <span className="font-bold text-sm">Özet</span>
-              </div>
+          <div className="border-2 border-gray-200 rounded-2xl p-4 space-y-3">
+            <div className="flex items-center gap-2 mb-1">
+              <Users className="h-4 w-4 text-green-500" />
+              <span className="font-bold text-sm text-gray-700">Özet</span>
             </div>
-            <CardContent className="p-4 space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Gönderi</span>
-                <Badge variant="secondary" className="bg-green-100 text-green-700 font-bold">
-                  {totalFilteredPosts}
-                </Badge>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-600">Aktif Sohbet</span>
-                <Badge variant="secondary" className="bg-green-100 text-green-700 font-bold">
-                  {chats.length}
-                </Badge>
-              </div>
-              <Separator />
-              <div className="text-xs text-gray-500 space-y-1">
-                <p>Aylık gönderi: {POST_LIMITS.MAX_PER_MONTH}</p>
-                <p>Günlük mesaj: {MESSAGE_LIMITS.MAX_PER_DAY}</p>
-              </div>
-            </CardContent>
-          </Card>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-gray-600">Gönderi</span>
+              <Badge variant="secondary" className="bg-gray-100 text-gray-700 font-bold">
+                {totalFilteredPosts}
+              </Badge>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-gray-600">Aktif Sohbet</span>
+              <Badge variant="secondary" className="bg-gray-100 text-gray-700 font-bold">
+                {chats.length}
+              </Badge>
+            </div>
+            <Separator />
+            <div className="text-xs text-gray-500 space-y-1">
+              <p>Aylık gönderi: {POST_LIMITS.MAX_PER_MONTH}</p>
+              <p>Günlük mesaj: {MESSAGE_LIMITS.MAX_PER_DAY}</p>
+            </div>
+          </div>
 
-          <Card className="border-green-200 overflow-hidden">
-            <div className="bg-gradient-to-r from-emerald-500 to-green-500 px-4 py-3">
-              <div className="flex items-center gap-2 text-white">
-                <BookOpen className="h-5 w-5" />
-                <span className="font-bold text-sm">İpuçları</span>
-              </div>
+          <div className="border-2 border-gray-200 rounded-2xl p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <BookOpen className="h-4 w-4 text-gray-500" />
+              <span className="font-bold text-sm text-gray-700">İpuçları</span>
             </div>
-            <CardContent className="p-4 text-sm text-gray-600 space-y-2">
+            <div className="text-sm text-gray-600 space-y-2">
               <p><CircleCheck className="w-4 h-4 inline text-green-500 shrink-0" /> Belirli hedefler koyun</p>
               <p><Calendar className="w-4 h-4 inline text-blue-500 shrink-0" /> Düzenli çalışma programları oluşturun</p>
               <p><Heart className="w-4 h-4 inline text-rose-500 shrink-0" /> Birbirinizi motive edin</p>
               <p><Target className="w-4 h-4 inline text-orange-500 shrink-0" /> Başarılarınızı paylaşın</p>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         </div>
       </StickyWrapper>
 
@@ -1160,12 +1154,12 @@ export default function StudyBuddyPage() {
           )}
 
           {/* Tab Navigation */}
-          <div className="flex bg-gray-100 rounded-xl p-1 gap-1">
+          <div className="flex border-2 border-gray-200 rounded-2xl p-1 gap-1">
             <button
-              className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs sm:text-sm font-semibold transition-all ${
+              className={`flex-1 flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs sm:text-sm transition-all ${
                 activeTab === "allPosts"
-                  ? "bg-white text-green-700 shadow-sm"
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "bg-gray-100 text-gray-800 font-bold"
+                  : "text-gray-500 hover:text-gray-700 font-medium"
               }`}
               onClick={() => setActiveTab("allPosts")}
             >
@@ -1174,10 +1168,10 @@ export default function StudyBuddyPage() {
               <span className="sm:hidden">Gönderiler</span>
             </button>
             <button
-              className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs sm:text-sm font-semibold transition-all ${
+              className={`flex-1 flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs sm:text-sm transition-all ${
                 activeTab === "myPosts"
-                  ? "bg-white text-green-700 shadow-sm"
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "bg-gray-100 text-gray-800 font-bold"
+                  : "text-gray-500 hover:text-gray-700 font-medium"
               }`}
               onClick={() => setActiveTab("myPosts")}
             >
@@ -1186,10 +1180,10 @@ export default function StudyBuddyPage() {
               <span className="sm:hidden">Benim</span>
             </button>
             <button
-              className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs sm:text-sm font-semibold transition-all ${
+              className={`flex-1 flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs sm:text-sm transition-all ${
                 activeTab === "chats"
-                  ? "bg-white text-green-700 shadow-sm"
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "bg-gray-100 text-gray-800 font-bold"
+                  : "text-gray-500 hover:text-gray-700 font-medium"
               }`}
               onClick={() => setActiveTab("chats")}
             >

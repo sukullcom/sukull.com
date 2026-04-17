@@ -176,12 +176,12 @@ export default function ProfilePageClient({
         </div>
 
         {/* Tabs */}
-        <div className="flex bg-gray-100 rounded-xl p-1 gap-1 mb-6">
+        <div className="flex border-2 border-gray-200 rounded-2xl p-1 gap-1 mb-6">
           <button
-            className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs sm:text-sm font-semibold transition-all ${
+            className={`flex-1 flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs sm:text-sm transition-all ${
               activeTab === "analytics"
-                ? "bg-white text-green-700 shadow-sm"
-                : "text-gray-500 hover:text-gray-700"
+                ? "bg-gray-100 text-gray-800 font-bold"
+                : "text-gray-500 hover:text-gray-700 font-medium"
             }`}
             onClick={() => setActiveTab("analytics")}
           >
@@ -189,10 +189,10 @@ export default function ProfilePageClient({
             Analiz
           </button>
           <button
-            className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2.5 text-xs sm:text-sm font-semibold transition-all ${
+            className={`flex-1 flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs sm:text-sm transition-all ${
               activeTab === "settings"
-                ? "bg-white text-green-700 shadow-sm"
-                : "text-gray-500 hover:text-gray-700"
+                ? "bg-gray-100 text-gray-800 font-bold"
+                : "text-gray-500 hover:text-gray-700 font-medium"
             }`}
             onClick={() => setActiveTab("settings")}
           >

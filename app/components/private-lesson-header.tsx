@@ -86,17 +86,17 @@ export default function PrivateLessonHeader() {
 
   return (
     <div className="mb-4 sm:mb-6 px-3 sm:px-0">
-      <div className="flex bg-gray-100 rounded-xl p-1 gap-0.5 overflow-x-auto scrollbar-hide">
+      <div className="flex border-2 border-gray-200 rounded-2xl p-1 gap-0.5 overflow-x-auto scrollbar-hide">
         {navItems.map((item) => {
           const active = isActive(item.path);
           const Icon = item.icon;
           return (
             <button
               key={item.path}
-              className={`flex-1 flex items-center justify-center gap-1.5 rounded-lg py-2.5 px-2 text-xs sm:text-sm font-semibold transition-all whitespace-nowrap min-w-0 ${
+              className={`flex-1 flex items-center justify-center gap-1.5 rounded-xl py-2.5 px-2 text-xs sm:text-sm transition-all whitespace-nowrap min-w-0 ${
                 active
-                  ? "bg-white text-green-700 shadow-sm"
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "bg-gray-100 text-gray-800 font-bold"
+                  : "text-gray-500 hover:text-gray-700 font-medium"
               }`}
               onClick={() => router.push(item.path)}
             >

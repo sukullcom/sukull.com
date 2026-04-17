@@ -13,22 +13,25 @@ const cards = [
     key: "user" as const,
     label: "Öğrenci Sıran",
     icon: Trophy,
-    gradient: "from-blue-500 to-indigo-600",
-    shadow: "shadow-blue-200",
+    iconColor: "text-blue-500",
+    bgIcon: "text-blue-100",
+    valueColor: "text-blue-600",
   },
   {
     key: "school" as const,
     label: "Okul Sırası",
     icon: School,
-    gradient: "from-emerald-500 to-teal-600",
-    shadow: "shadow-emerald-200",
+    iconColor: "text-emerald-500",
+    bgIcon: "text-emerald-100",
+    valueColor: "text-emerald-600",
   },
   {
     key: "inSchool" as const,
     label: "Okuldaki Sıran",
     icon: Users,
-    gradient: "from-amber-500 to-orange-600",
-    shadow: "shadow-amber-200",
+    iconColor: "text-amber-500",
+    bgIcon: "text-amber-100",
+    valueColor: "text-amber-600",
   },
 ];
 
@@ -45,16 +48,19 @@ export const RankCards = ({
 
   return (
     <div className="grid grid-cols-3 gap-2 sm:gap-3 w-full max-w-lg mx-auto mb-6 px-1">
-      {cards.map(({ key, label, icon: Icon, gradient, shadow }) => (
+      {cards.map(({ key, label, icon: Icon, iconColor, bgIcon, valueColor }) => (
         <div
           key={key}
-          className={`relative overflow-hidden rounded-2xl bg-gradient-to-br ${gradient} p-3 sm:p-4 text-white shadow-lg ${shadow} transition-transform hover:scale-105`}
+          className="relative overflow-hidden border-2 border-gray-200 rounded-2xl p-3 sm:p-4"
         >
-          <Icon className="absolute -top-1 -right-1 h-10 w-10 sm:h-12 sm:w-12 opacity-15" />
-          <p className="text-[10px] sm:text-[11px] font-medium opacity-90 leading-tight">
+          <Icon className={`absolute -top-1 -right-1 h-10 w-10 sm:h-12 sm:w-12 ${bgIcon}`} />
+          <div className={`${iconColor} mb-1`}>
+            <Icon className="h-4 w-4" />
+          </div>
+          <p className="text-[10px] sm:text-[11px] font-medium text-gray-500 leading-tight">
             {label}
           </p>
-          <p className="text-xl sm:text-3xl font-extrabold mt-1">
+          <p className={`text-xl sm:text-3xl font-extrabold mt-1 ${valueColor}`}>
             {values[key] ?? "—"}
           </p>
         </div>
