@@ -5,7 +5,6 @@ import { useSearchParams } from 'next/navigation';
 import { Icons } from '@/components/icons';
 import { XCircle } from 'lucide-react';
 import { Suspense } from 'react';
-import { XCircle } from 'lucide-react';
 
 function ConfirmContent() {
   const [status, setStatus] = useState<'redirecting' | 'error'>('redirecting');

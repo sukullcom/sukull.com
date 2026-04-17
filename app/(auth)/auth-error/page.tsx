@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { AlertTriangle, Search, Lightbulb, RefreshCw, Home } from 'lucide-react';
-import { AlertTriangle, Search, Lightbulb, RefreshCw, Home } from 'lucide-react';
 
 interface AuthErrorPageProps {
   searchParams: { 
