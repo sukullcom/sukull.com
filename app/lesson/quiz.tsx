@@ -16,7 +16,8 @@ import { useHeartsModal } from "@/store/use-hearts-modal";
 import { usePracticeModal } from "@/store/use-practice-modal";
 import { MathRenderer } from "@/components/ui/math-renderer";
 import { SCORING_SYSTEM } from "@/constants";
-import { Target } from "lucide-react";
+import { getTimeBonusInfo } from "@/lib/time-bonus";
+import { Target, Sunrise } from "lucide-react";
 
 type Props = {
   initialPercentage: number;
@@ -115,6 +116,7 @@ export const Quiz = ({
     perfectBonus: number;
   } | null>(null);
 
+  const [timeBonusInfo] = useState(() => getTimeBonusInfo());
   const isPracticeMode = initialPercentage === 100;
 
   const [percentage, setPercentage] = useState(() =>
@@ -226,6 +228,17 @@ export const Quiz = ({
                   <span className="text-emerald-700 font-medium"><Target className="w-4 h-4 inline" /> Hatasız ders bonusu!</span>
                   <span className="font-bold text-emerald-600">
                     +{lessonBonuses.perfectBonus}
+                  </span>
+                </div>
+              )}
+              {timeBonusInfo.multiplier > 1 && (
+                <div className="flex justify-between items-center px-4 py-2 bg-yellow-50 rounded-lg border border-yellow-200">
+                  <span className="text-yellow-700 font-medium">
+                    <Sunrise className="w-4 h-4 inline mr-1" />
+                    {timeBonusInfo.label}
+                  </span>
+                  <span className="font-bold text-yellow-600">
+                    x{timeBonusInfo.multiplier}
                   </span>
                 </div>
               )}

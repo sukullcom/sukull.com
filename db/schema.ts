@@ -420,6 +420,29 @@ export const userDailyStreakRelations = relations(userDailyStreak, ({ one }) => 
   }),
 }));
 
+// Daily Challenges
+export const userDailyChallenges = pgTable("user_daily_challenges", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull(),
+  date: text("date").notNull(),
+  challengeDay: integer("challenge_day").notNull(),
+  progress: integer("progress").notNull().default(0),
+  target: integer("target").notNull(),
+  completed: boolean("completed").notNull().default(false),
+  rewardClaimed: boolean("reward_claimed").notNull().default(false),
+  bonusPoints: integer("bonus_points").notNull().default(0),
+  metadata: jsonb("metadata").$type<Record<string, unknown>>().default({}),
+}, (table) => ({
+  userDateIdx: uniqueIndex("user_daily_challenges_user_date_idx").on(table.userId, table.date),
+}));
+
+export const userDailyChallengesRelations = relations(userDailyChallenges, ({ one }) => ({
+  user: one(users, {
+    fields: [userDailyChallenges.userId],
+    references: [users.id],
+  }),
+}));
+
 // Teacher Availability
 export const teacherAvailability = pgTable("teacher_availability", {
   id: serial("id").primaryKey(),

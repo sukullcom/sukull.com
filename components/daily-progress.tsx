@@ -2,8 +2,9 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { getCurrentDayProgress } from "@/actions/daily-streak";
+import { getTimeBonusInfo, type TimeBonusInfo } from "@/lib/time-bonus";
 import Image from "next/image";
-import { RefreshCw, AlertCircle, Sparkles, Flame } from "lucide-react";
+import { RefreshCw, AlertCircle, Sparkles, Flame, Sunrise } from "lucide-react";
 
 interface DailyProgressData {
   pointsEarnedToday: number;
@@ -18,6 +19,7 @@ export function DailyProgress() {
   const [loading, setLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [timeBonus, setTimeBonus] = useState<TimeBonusInfo | null>(null);
 
   const loadProgress = useCallback(async (showRefreshIndicator = false) => {
     try {
@@ -41,9 +43,13 @@ export function DailyProgress() {
   useEffect(() => {
     // Initial load
     loadProgress();
+    setTimeBonus(getTimeBonusInfo());
     
     // Refresh progress every 15 seconds (reduced from 30 for more responsiveness)
-    const interval = setInterval(() => loadProgress(), 15000);
+    const interval = setInterval(() => {
+      loadProgress();
+      setTimeBonus(getTimeBonusInfo());
+    }, 15000);
     
     // Add visibility change listener to refresh when user returns to tab
     const handleVisibilityChange = () => {
@@ -173,6 +179,15 @@ export function DailyProgress() {
                 ? "İlk gün! Devam et!"
                 : `${currentStreak} gün üst üste hedefini tamamladın!`}
             </span>
+          </div>
+        </div>
+      )}
+
+      {timeBonus?.label && (
+        <div className="mt-2 text-sm bg-yellow-400/20 rounded-lg p-2">
+          <div className="flex items-center gap-2">
+            <Sunrise className="w-4 h-4 shrink-0" />
+            <span className="font-medium">{timeBonus.label} aktif</span>
           </div>
         </div>
       )}

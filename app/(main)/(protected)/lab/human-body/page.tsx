@@ -234,12 +234,12 @@ const HangmanGame = ({
     if (isWordGuessed) {
       // Correct word completion
       const wordPoints = SCORING_SYSTEM.GAMES.LAB.HUMAN_BODY.CORRECT_WORD;
-      await addPointsToUser(wordPoints);
+      await addPointsToUser(wordPoints, { gameType: "human-body" });
       setTotalPoints((prev) => prev + wordPoints);
     } else if (remainingAttempts === 0) {
       // Failed to guess the word
       const penalty = SCORING_SYSTEM.GAMES.LAB.HUMAN_BODY.FAILED_WORD;
-      await addPointsToUser(penalty);
+      await addPointsToUser(penalty, { gameType: "human-body" });
       setTotalPoints((prev) => Math.max(0, prev + penalty)); // Don't go below 0
     }
 
@@ -247,7 +247,7 @@ const HangmanGame = ({
       // Game completed - add completion bonus if needed
       if (isWordGuessed) {
         const completionBonus = SCORING_SYSTEM.GAMES.LAB.HUMAN_BODY.COMPLETION_BONUS;
-        await addPointsToUser(completionBonus);
+        await addPointsToUser(completionBonus, { gameType: "human-body" });
         setTotalPoints((prev) => prev + completionBonus);
       }
       setGameFinished(true);

@@ -191,7 +191,7 @@ export default function SpeedMathGame() {
   useEffect(() => {
     if (gameState === "finished" && !pointsSubmitted && score > 0) {
       setPointsSubmitted(true);
-      addPointsToUser(score).catch(() =>
+      addPointsToUser(score, { gameType: "speed-math" }).catch(() =>
         toast.error("Puanlar kaydedilemedi")
       );
     }

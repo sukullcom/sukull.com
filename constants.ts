@@ -159,3 +159,80 @@ export const quests = [
   { title: "100.000 Puan Topla", value: 100000 },
   { title: "1.000.000 Puan Topla", value: 1000000 },
 ];
+
+export type DailyChallengeType =
+  | "questions_count"
+  | "distinct_subjects"
+  | "game_score"
+  | "perfect_lessons"
+  | "questions_marathon"
+  | "distinct_games"
+  | "exceed_target";
+
+export type DailyChallengeDefinition = {
+  id: DailyChallengeType;
+  title: string;
+  description: string;
+  target: number;
+  bonusPoints: number;
+  unit: string;
+};
+
+export const DAILY_CHALLENGES: DailyChallengeDefinition[] = [
+  {
+    id: "questions_count",
+    title: "Soru Avcısı",
+    description: "18 soru çöz",
+    target: 18,
+    bonusPoints: 50,
+    unit: "soru",
+  },
+  {
+    id: "distinct_subjects",
+    title: "Çok Yönlü",
+    description: "3 farklı dersten soru çöz",
+    target: 3,
+    bonusPoints: 40,
+    unit: "ders",
+  },
+  {
+    id: "game_score",
+    title: "Oyun Ustası",
+    description: "Bir oyun oyna ve 50+ puan kazan",
+    target: 50,
+    bonusPoints: 40,
+    unit: "puan",
+  },
+  {
+    id: "perfect_lessons",
+    title: "Kusursuz",
+    description: "2 dersi hatasız tamamla",
+    target: 2,
+    bonusPoints: 60,
+    unit: "ders",
+  },
+  {
+    id: "questions_marathon",
+    title: "Maraton",
+    description: "24 soru çöz",
+    target: 24,
+    bonusPoints: 75,
+    unit: "soru",
+  },
+  {
+    id: "distinct_games",
+    title: "Oyun Gezgini",
+    description: "3 farklı oyun oyna",
+    target: 3,
+    bonusPoints: 50,
+    unit: "oyun",
+  },
+  {
+    id: "exceed_target",
+    title: "Hedefini Aş",
+    description: "Günlük hedefinin 1.5 katını tamamla",
+    target: 150,
+    bonusPoints: 60,
+    unit: "%",
+  },
+];

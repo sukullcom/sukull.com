@@ -100,7 +100,7 @@ export default function LyricsGame({ lyrics, difficulty = "Kolay" }: LyricsGameP
     
     try {
       const finalScore = calculateFinalScore();
-      await addPointsToUser(finalScore);
+      await addPointsToUser(finalScore, { gameType: "subscribe" });
       openCompletionModal(finalScore);
     } catch (error) {
       console.error("Error adding points:", error);

@@ -1069,7 +1069,7 @@ const SnakeGame = () => {
     if (finalScore > 0) {
       try {
         console.log(`🎮 Snake Game: Attempting to submit ${finalScore} points...`);
-        const result = await addPointsToUser(finalScore);
+        const result = await addPointsToUser(finalScore, { gameType: "snakable" });
         
         if (result && result.success) {
           console.log(`🎉 Snake Game: Successfully submitted ${result.pointsAdded} points! New total: ${result.newTotal}`);

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Search, Cookie, HardDrive, Lock, Globe, ClipboardList, AlertTriangle } from "lucide-react";
+import { Search, Cookie, HardDrive, Lock, Globe, ClipboardList } from "lucide-react";
 
 export default function DiagnosePage() {
   const [diagnostics, setDiagnostics] = useState<Record<string, string | number | boolean | string[] | null>>({});

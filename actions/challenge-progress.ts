@@ -2,12 +2,14 @@
 
 import db from "@/db/drizzle";
 import { getUserProgress, checkSubscriptionStatus } from "@/db/queries";
-import { challengeProgress, challenges, lessons, schools, userProgress } from "@/db/schema";
+import { challengeProgress, challenges, courses, lessons, units, schools, userProgress } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { getServerUser } from "@/lib/auth";
 import { updateDailyStreak } from "./daily-streak";
 import { SCORING_SYSTEM } from "@/constants";
+import { applyTimeBonus } from "@/lib/time-bonus";
+import { updateChallengeProgress } from "./daily-challenges";
 
 export const upsertChallengeProgress = async (challengeId: number) => {
   const user = await getServerUser();
@@ -46,7 +48,31 @@ export const upsertChallengeProgress = async (challengeId: number) => {
     return { error: "hearts" };
   }
 
+  // Resolve subject name for daily challenge tracking
+  let subjectName: string | undefined;
+  try {
+    const lesson = await db.query.lessons.findFirst({
+      where: eq(lessons.id, lessonId),
+      columns: { unitId: true },
+    });
+    if (lesson) {
+      const unit = await db.query.units.findFirst({
+        where: eq(units.id, lesson.unitId),
+        columns: { courseId: true },
+      });
+      if (unit) {
+        const course = await db.query.courses.findFirst({
+          where: eq(courses.id, unit.courseId),
+          columns: { title: true },
+        });
+        subjectName = course?.title;
+      }
+    }
+  } catch { /* best-effort */ }
+
   if (isPractice) {
+    const { total: practicePoints } = applyTimeBonus(SCORING_SYSTEM.LESSON_CHALLENGE_PRACTICE);
+
     await db
       .update(challengeProgress)
       .set({
@@ -59,16 +85,19 @@ export const upsertChallengeProgress = async (challengeId: number) => {
     await db
       .update(userProgress)
       .set({
-        points: currentUserProgress.points + SCORING_SYSTEM.LESSON_CHALLENGE_PRACTICE,
+        points: currentUserProgress.points + practicePoints,
       })
       .where(eq(userProgress.userId, userId));
 
     await updateDailyStreak();
+    await updateChallengeProgress(userId, "question_answered", { subject: subjectName });
 
     revalidatePath("/learn");
     revalidatePath(`/lesson/${lessonId}`);
     return;
   }
+
+  const { total: firstPoints } = applyTimeBonus(SCORING_SYSTEM.LESSON_CHALLENGE_FIRST);
 
   const now = new Date();
   await db.insert(challengeProgress).values({
@@ -83,10 +112,11 @@ export const upsertChallengeProgress = async (challengeId: number) => {
 
   await db
     .update(userProgress)
-    .set({ points: currentUserProgress.points + SCORING_SYSTEM.LESSON_CHALLENGE_FIRST })
+    .set({ points: currentUserProgress.points + firstPoints })
     .where(eq(userProgress.userId, userId));
 
   await updateDailyStreak();
+  await updateChallengeProgress(userId, "question_answered", { subject: subjectName });
 
   if (currentUserProgress.schoolId) {
     try {
@@ -108,7 +138,10 @@ export const upsertChallengeProgress = async (challengeId: number) => {
   revalidatePath(`/lesson/${lessonId}`);
 };
 
-export async function addPointsToUser(pointsToAdd: number) {
+export async function addPointsToUser(
+  pointsToAdd: number,
+  meta?: { gameType?: string },
+) {
   if (!pointsToAdd || pointsToAdd <= 0) {
     throw new Error("Invalid points amount");
   }
@@ -123,7 +156,8 @@ export async function addPointsToUser(pointsToAdd: number) {
   });
   if (!currentUserProgress) throw new Error("User progress not found");
 
-  const newPoints = (currentUserProgress.points || 0) + pointsToAdd;
+  const { total: adjustedPoints } = applyTimeBonus(pointsToAdd);
+  const newPoints = (currentUserProgress.points || 0) + adjustedPoints;
 
   await db
     .update(userProgress)
@@ -131,6 +165,11 @@ export async function addPointsToUser(pointsToAdd: number) {
     .where(eq(userProgress.userId, userId));
 
   await updateDailyStreak();
+
+  if (meta?.gameType) {
+    await updateChallengeProgress(userId, "game_played", { gameType: meta.gameType });
+    await updateChallengeProgress(userId, "game_points", { gameType: meta.gameType, points: adjustedPoints });
+  }
 
   if (currentUserProgress.schoolId) {
     try {
@@ -151,7 +190,7 @@ export async function addPointsToUser(pointsToAdd: number) {
   revalidatePath("/learn");
   revalidatePath("/lesson");
 
-  return { success: true, pointsAdded: pointsToAdd, newTotal: newPoints };
+  return { success: true, pointsAdded: adjustedPoints, newTotal: newPoints };
 }
 
 export const reduceHearts = async (challengeId: number) => {
@@ -265,7 +304,8 @@ export async function awardLessonCompletionBonus(
 
   const completionBonus = SCORING_SYSTEM.LESSON_COMPLETION_BONUS;
   const perfectBonus = wrongCount === 0 ? SCORING_SYSTEM.PERFECT_LESSON_BONUS : 0;
-  const totalBonus = completionBonus + perfectBonus;
+  const baseTotal = completionBonus + perfectBonus;
+  const { total: totalBonus } = applyTimeBonus(baseTotal);
 
   if (totalBonus > 0) {
     await db
@@ -274,6 +314,7 @@ export async function awardLessonCompletionBonus(
       .where(eq(userProgress.userId, userId));
 
     await updateDailyStreak();
+    await updateChallengeProgress(userId, "lesson_completed_perfect", { wrongCount });
     revalidatePath("/learn");
   }
 

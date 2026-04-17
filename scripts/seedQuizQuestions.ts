@@ -1,13 +1,8 @@
 // scripts/seedQuizQuestions.ts
 
 import "dotenv/config";
-import { drizzle } from "drizzle-orm/neon-http";
-import { neon } from "@neondatabase/serverless";
+import db from "../db/drizzle";
 import * as schema from "../db/schema";
-
-// 1) Connect to DB
-const sql = neon(process.env.DATABASE_URL!);
-const db = drizzle(sql, { schema });
 
 // 2) Decide which "field" we are seeding.
 //    e.g. run: `ts-node scripts/seedQuizQuestions.ts teacher_math`

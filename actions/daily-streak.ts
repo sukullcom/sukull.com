@@ -6,6 +6,7 @@ import { userProgress, userDailyStreak } from "@/db/schema";
 import { eq, and, gte, lt, asc, sql } from "drizzle-orm";
 import { getServerUser } from "@/lib/auth";
 import { calculateStreakBonus } from "@/constants";
+import { updateChallengeProgress } from "./daily-challenges";
 
 // ─── Turkey Time Helpers (UTC+3, fixed offset) ───────────────────────────────
 
@@ -148,6 +149,9 @@ export async function updateDailyStreak() {
     const today = getTurkeyToday();
     const pointsEarnedToday = progress.points - (progress.previousTotalPoints ?? 0);
     const dailyTarget = progress.dailyTarget || 50;
+    const percentage = Math.round((pointsEarnedToday / dailyTarget) * 100);
+
+    await updateChallengeProgress(userId, "daily_target_progress", { percentage });
 
     if (pointsEarnedToday < dailyTarget) return false;
 

@@ -106,7 +106,7 @@ export default function PatternMemoryGame() {
   useEffect(() => {
     if (gameState === "finished" && !pointsSubmitted && score > 0) {
       setPointsSubmitted(true);
-      addPointsToUser(score).catch(() => toast.error("Puanlar kaydedilemedi"));
+      addPointsToUser(score, { gameType: "pattern-memory" }).catch(() => toast.error("Puanlar kaydedilemedi"));
     }
   }, [gameState, pointsSubmitted, score]);
 

@@ -164,7 +164,7 @@ export default function MemoryMatchGame() {
   useEffect(() => {
     if (gameState === "finished" && !pointsSubmitted && score > 0) {
       setPointsSubmitted(true);
-      addPointsToUser(score).catch(() => toast.error("Puanlar kaydedilemedi"));
+      addPointsToUser(score, { gameType: "memory-match" }).catch(() => toast.error("Puanlar kaydedilemedi"));
     }
   }, [gameState, pointsSubmitted, score]);
 

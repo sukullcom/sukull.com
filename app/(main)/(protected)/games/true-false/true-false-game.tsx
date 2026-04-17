@@ -231,7 +231,7 @@ export default function TrueFalseGame() {
   useEffect(() => {
     if (gameState === "finished" && !pointsSubmitted && score > 0) {
       setPointsSubmitted(true);
-      addPointsToUser(score).catch(() => toast.error("Puanlar kaydedilemedi"));
+      addPointsToUser(score, { gameType: "true-false" }).catch(() => toast.error("Puanlar kaydedilemedi"));
     }
   }, [gameState, pointsSubmitted, score]);
 
