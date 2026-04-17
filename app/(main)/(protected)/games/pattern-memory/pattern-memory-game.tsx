@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 import { addPointsToUser } from "@/actions/challenge-progress";
 import { SCORING_SYSTEM } from "@/constants";
 import { toast } from "sonner";
-import { ArrowLeft, Trophy, Zap, Target } from "lucide-react";
+import { ArrowLeft, Trophy, Zap, Target, Timer } from "lucide-react";
 import Link from "next/link";
 
-type Mode = "colors" | "numbers" | "mixed";
+type Mode = "colors" | "numbers" | "mixed" | "timed";
 
 const CONFIG = SCORING_SYSTEM.GAMES.PATTERN_MEMORY;
 
@@ -23,7 +23,10 @@ const MODE_LABELS: Record<Mode, string> = {
   colors: "Renkler",
   numbers: "Rakamlar",
   mixed: "Karışık",
+  timed: "Zamanlı",
 };
+
+const TIMED_INPUT_MS = 2000;
 
 type GameState = "menu" | "showing" | "input" | "success" | "finished";
 
@@ -37,9 +40,12 @@ export default function PatternMemoryGame() {
   const [score, setScore] = useState(0);
   const [bestLevel, setBestLevel] = useState(0);
   const [pointsSubmitted, setPointsSubmitted] = useState(false);
+  const [, setTimedDeadline] = useState<number | null>(null);
+  const [timedProgress, setTimedProgress] = useState(100);
 
   const showingRef = useRef(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timedIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const gridNumbers = useRef<number[]>([]);
 
@@ -113,8 +119,42 @@ export default function PatternMemoryGame() {
   useEffect(() => {
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (timedIntervalRef.current) clearInterval(timedIntervalRef.current);
     };
   }, []);
+
+  useEffect(() => {
+    if (mode !== "timed" || gameState !== "input") {
+      setTimedDeadline(null);
+      setTimedProgress(100);
+      if (timedIntervalRef.current) clearInterval(timedIntervalRef.current);
+      return;
+    }
+
+    const deadline = Date.now() + TIMED_INPUT_MS;
+    setTimedDeadline(deadline);
+    setTimedProgress(100);
+
+    timedIntervalRef.current = setInterval(() => {
+      const remaining = deadline - Date.now();
+      if (remaining <= 0) {
+        if (timedIntervalRef.current) clearInterval(timedIntervalRef.current);
+        setTimedProgress(0);
+        const modeMult = CONFIG.MODE_MULTIPLIER[mode];
+        const finalScore = Math.round(score * modeMult);
+        setScore(finalScore);
+        setBestLevel(level);
+        setGameState("finished");
+      } else {
+        setTimedProgress((remaining / TIMED_INPUT_MS) * 100);
+      }
+    }, 50);
+
+    return () => {
+      if (timedIntervalRef.current) clearInterval(timedIntervalRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gameState, mode, sequence.length]);
 
   const handleButtonPress = (buttonId: number) => {
     if (gameState !== "input" || showingRef.current) return;
@@ -127,6 +167,7 @@ export default function PatternMemoryGame() {
 
     const idx = newInput.length - 1;
     if (newInput[idx] !== sequence[idx]) {
+      if (timedIntervalRef.current) clearInterval(timedIntervalRef.current);
       const modeMult = CONFIG.MODE_MULTIPLIER[mode];
       const finalScore = Math.round(score * modeMult);
       setScore(finalScore);
@@ -135,7 +176,29 @@ export default function PatternMemoryGame() {
       return;
     }
 
+    if (mode === "timed" && timedIntervalRef.current) {
+      clearInterval(timedIntervalRef.current);
+      const deadline = Date.now() + TIMED_INPUT_MS;
+      setTimedDeadline(deadline);
+      setTimedProgress(100);
+      timedIntervalRef.current = setInterval(() => {
+        const remaining = deadline - Date.now();
+        if (remaining <= 0) {
+          if (timedIntervalRef.current) clearInterval(timedIntervalRef.current);
+          setTimedProgress(0);
+          const modeMult = CONFIG.MODE_MULTIPLIER[mode];
+          const finalScore = Math.round(score * modeMult);
+          setScore(finalScore);
+          setBestLevel(level);
+          setGameState("finished");
+        } else {
+          setTimedProgress((remaining / TIMED_INPUT_MS) * 100);
+        }
+      }, 50);
+    }
+
     if (newInput.length === sequence.length) {
+      if (timedIntervalRef.current) clearInterval(timedIntervalRef.current);
       const levelPoints = Math.round(
         CONFIG.BASE_POINTS_PER_LEVEL * Math.pow(CONFIG.LEVEL_MULTIPLIER, level - 1)
       );
@@ -205,7 +268,7 @@ export default function PatternMemoryGame() {
               onClick={() => setMode(m)}
               className={`w-full p-3 rounded-xl border-2 text-left transition-all ${
                 mode === m
-                  ? "border-violet-500 bg-violet-50 text-violet-700"
+                  ? "border-indigo-500 bg-indigo-50 text-indigo-700"
                   : "border-neutral-200 hover:border-neutral-300 text-neutral-600"
               }`}
             >
@@ -218,8 +281,9 @@ export default function PatternMemoryGame() {
         </div>
 
         <Button
+          variant="super"
           onClick={startGame}
-          className="w-full py-6 text-lg font-bold bg-violet-500 hover:bg-violet-600"
+          className="w-full py-6 text-lg"
         >
           Başla
         </Button>
@@ -234,10 +298,10 @@ export default function PatternMemoryGame() {
         <h1 className="text-2xl font-bold text-neutral-800">Oyun Bitti!</h1>
 
         <div className="w-full grid grid-cols-2 gap-3">
-          <div className="bg-violet-50 rounded-xl p-4 text-center border border-violet-200">
-            <Trophy className="h-6 w-6 text-violet-500 mx-auto mb-1" />
-            <p className="text-2xl font-bold text-violet-600">{score}</p>
-            <p className="text-xs text-violet-500">Toplam Puan</p>
+          <div className="bg-orange-50 rounded-xl p-4 text-center border border-orange-200">
+            <Trophy className="h-6 w-6 text-orange-500 mx-auto mb-1" />
+            <p className="text-2xl font-bold text-orange-600">{score}</p>
+            <p className="text-xs text-orange-500">Toplam Puan</p>
           </div>
           <div className="bg-amber-50 rounded-xl p-4 text-center border border-amber-200">
             <Zap className="h-6 w-6 text-amber-500 mx-auto mb-1" />
@@ -253,13 +317,14 @@ export default function PatternMemoryGame() {
 
         <div className="flex gap-3 w-full">
           <Button
+            variant="super"
             onClick={startGame}
-            className="flex-1 py-5 font-bold bg-violet-500 hover:bg-violet-600"
+            className="flex-1 py-5"
           >
             Tekrar Oyna
           </Button>
           <Link href="/games" className="flex-1">
-            <Button variant="secondaryOutline" className="w-full py-5 font-bold">
+            <Button variant="superOutline" className="w-full py-5">
               Oyunlara Dön
             </Button>
           </Link>
@@ -273,13 +338,25 @@ export default function PatternMemoryGame() {
       {/* Header */}
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Trophy className="h-5 w-5 text-violet-500" />
-          <span className="font-bold text-lg text-violet-600">{score}</span>
+          <Trophy className="h-5 w-5 text-orange-500" />
+          <span className="font-bold text-lg text-orange-600">{score}</span>
         </div>
-        <div className="bg-violet-100 rounded-full px-4 py-1">
-          <span className="font-bold text-violet-700">Seviye {level}</span>
+        <div className="bg-orange-100 rounded-full px-4 py-1">
+          <span className="font-bold text-orange-700">Seviye {level}</span>
         </div>
       </div>
+
+      {/* Timed mode progress bar */}
+      {mode === "timed" && gameState === "input" && (
+        <div className="w-full h-2 bg-neutral-200 rounded-full overflow-hidden">
+          <div
+            className={`h-full transition-all duration-100 ease-linear rounded-full ${
+              timedProgress <= 30 ? "bg-red-500" : timedProgress <= 60 ? "bg-amber-500" : "bg-orange-500"
+            }`}
+            style={{ width: `${timedProgress}%` }}
+          />
+        </div>
+      )}
 
       {/* Status */}
       <div className="text-center">
@@ -289,8 +366,15 @@ export default function PatternMemoryGame() {
           </p>
         )}
         {gameState === "input" && (
-          <p className="text-lg font-semibold text-violet-600">
-            Sıranı tekrarla! ({playerInput.length}/{sequence.length})
+          <p className="text-lg font-semibold text-orange-600">
+            {mode === "timed" ? (
+              <span className="flex items-center justify-center gap-1">
+                <Timer className="h-5 w-5" />
+                Hızlı ol! ({playerInput.length}/{sequence.length})
+              </span>
+            ) : (
+              <>Sıranı tekrarla! ({playerInput.length}/{sequence.length})</>
+            )}
           </p>
         )}
         {gameState === "success" && (
@@ -313,8 +397,8 @@ export default function PatternMemoryGame() {
         {sequence.map((_, idx) => (
           <div
             key={idx}
-            className={`h-2 w-2 rounded-full ${
-              idx < playerInput.length ? "bg-violet-500" : "bg-neutral-300"
+            className={`h-2.5 w-2.5 rounded-full ${
+              idx < playerInput.length ? "bg-orange-500" : "bg-neutral-300"
             }`}
           />
         ))}

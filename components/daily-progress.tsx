@@ -2,9 +2,9 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { getCurrentDayProgress } from "@/actions/daily-streak";
-import { getTimeBonusInfo, type TimeBonusInfo } from "@/lib/time-bonus";
+import { getTimeBonusInfo, getRemainingHoursInDay, type TimeBonusInfo } from "@/lib/time-bonus";
 import Image from "next/image";
-import { RefreshCw, AlertCircle, Sparkles, Flame, Sunrise } from "lucide-react";
+import { RefreshCw, AlertCircle, Sparkles, Flame, Sunrise, Clock } from "lucide-react";
 
 interface DailyProgressData {
   pointsEarnedToday: number;
@@ -20,6 +20,7 @@ export function DailyProgress() {
   const [hasError, setHasError] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [timeBonus, setTimeBonus] = useState<TimeBonusInfo | null>(null);
+  const [remainingHours, setRemainingHours] = useState<number | null>(null);
 
   const loadProgress = useCallback(async (showRefreshIndicator = false) => {
     try {
@@ -43,10 +44,12 @@ export function DailyProgress() {
   useEffect(() => {
     loadProgress();
     setTimeBonus(getTimeBonusInfo());
+    setRemainingHours(getRemainingHoursInDay());
     
     const interval = setInterval(() => {
       loadProgress();
       setTimeBonus(getTimeBonusInfo());
+      setRemainingHours(getRemainingHoursInDay());
     }, 15000);
     
     const handleVisibilityChange = () => {
@@ -181,6 +184,15 @@ export function DailyProgress() {
           <div className="flex items-center gap-2 text-yellow-700">
             <Sunrise className="w-4 h-4 shrink-0" />
             <span className="font-medium">{timeBonus.label} aktif</span>
+          </div>
+        </div>
+      )}
+
+      {remainingHours !== null && (
+        <div className="mt-2 text-sm bg-gray-50 rounded-xl p-2.5">
+          <div className="flex items-center gap-2 text-gray-500">
+            <Clock className="w-4 h-4 shrink-0" />
+            <span>Kalan: {remainingHours} saat</span>
           </div>
         </div>
       )}

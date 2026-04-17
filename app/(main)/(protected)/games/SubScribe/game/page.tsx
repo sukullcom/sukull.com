@@ -8,6 +8,8 @@ import LyricsGame from "../lyrics-game";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { CompletionModal } from "@/components/modals/completion-modal";
 import { getPredefinedTranscript } from "../predefined-transcripts";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 interface TranscriptLine {
   startTime: number;
@@ -170,10 +172,16 @@ Lütfen ana sayfaya dönüp hazır videolardan birini seçin.`);
   if (!transcript.length) return <p>No transcript available for this video.</p>;
 
   return (
-    <div className="game-page" style={{maxWidth: "750px", margin: "auto" }}>
+    <div className="w-full max-w-3xl mx-auto py-4 px-4">
+      <Link
+        href="/games/SubScribe"
+        className="inline-flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-700 transition mb-4"
+      >
+        <ArrowLeft className="h-4 w-4" /> Geri
+      </Link>
       {videoId && <VideoPlayer videoId={videoId} />}
-      {error && <p className="error-message">{error}</p>}
-      <LyricsGame lyrics={lyrics} difficulty={difficulty as "Kolay" | "Orta" | "Zor"} />
+      {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
+      <LyricsGame lyrics={lyrics} difficulty={difficulty as "Kolay" | "Orta" | "Zor" | "Aşırı Zor"} />
       <CompletionModal />
     </div>
   );

@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { ArrowLeft, Trophy, RotateCcw, Clock, MousePointer, Brain, PartyPopper } from "lucide-react";
 import Link from "next/link";
 
-type Difficulty = "Kolay" | "Orta" | "Zor";
+type Difficulty = "Kolay" | "Orta" | "Zor" | "Uzman";
 type Category = "ingilizce" | "matematik" | "genel";
 
 const CONFIG = SCORING_SYSTEM.GAMES.MEMORY_MATCH;
@@ -17,6 +17,7 @@ const GRID_CONFIG: Record<Difficulty, { pairs: number; cols: number }> = {
   Kolay: { pairs: 6, cols: 3 },
   Orta: { pairs: 8, cols: 4 },
   Zor: { pairs: 10, cols: 4 },
+  Uzman: { pairs: 12, cols: 4 },
 };
 
 interface CardPair {
@@ -245,7 +246,7 @@ export default function MemoryMatchGame() {
               onClick={() => setCategory(cat)}
               className={`w-full p-3 rounded-xl border-2 text-left transition-all ${
                 category === cat
-                  ? "border-sky-500 bg-sky-50 text-sky-700"
+                  ? "border-indigo-500 bg-indigo-50 text-indigo-700"
                   : "border-neutral-200 hover:border-neutral-300 text-neutral-600"
               }`}
             >
@@ -256,13 +257,13 @@ export default function MemoryMatchGame() {
 
         <div className="w-full space-y-2">
           <p className="text-sm font-semibold text-neutral-600">Zorluk</p>
-          {(["Kolay", "Orta", "Zor"] as Difficulty[]).map((d) => (
+          {(["Kolay", "Orta", "Zor", "Uzman"] as Difficulty[]).map((d) => (
             <button
               key={d}
               onClick={() => setDifficulty(d)}
               className={`w-full p-3 rounded-xl border-2 text-left transition-all ${
                 difficulty === d
-                  ? "border-sky-500 bg-sky-50 text-sky-700"
+                  ? "border-indigo-500 bg-indigo-50 text-indigo-700"
                   : "border-neutral-200 hover:border-neutral-300 text-neutral-600"
               }`}
             >
@@ -275,8 +276,9 @@ export default function MemoryMatchGame() {
         </div>
 
         <Button
+          variant="super"
           onClick={startGame}
-          className="w-full py-6 text-lg font-bold bg-sky-500 hover:bg-sky-600"
+          className="w-full py-6 text-lg"
         >
           Başla
         </Button>
@@ -291,10 +293,10 @@ export default function MemoryMatchGame() {
         <h1 className="text-2xl font-bold text-neutral-800">Tebrikler!</h1>
 
         <div className="w-full grid grid-cols-2 gap-3">
-          <div className="bg-sky-50 rounded-xl p-4 text-center border border-sky-200">
-            <Trophy className="h-6 w-6 text-sky-500 mx-auto mb-1" />
-            <p className="text-2xl font-bold text-sky-600">{score}</p>
-            <p className="text-xs text-sky-500">Toplam Puan</p>
+          <div className="bg-purple-50 rounded-xl p-4 text-center border border-purple-200">
+            <Trophy className="h-6 w-6 text-purple-500 mx-auto mb-1" />
+            <p className="text-2xl font-bold text-purple-600">{score}</p>
+            <p className="text-xs text-purple-500">Toplam Puan</p>
           </div>
           <div className="bg-green-50 rounded-xl p-4 text-center border border-green-200">
             <Clock className="h-6 w-6 text-green-500 mx-auto mb-1" />
@@ -317,13 +319,14 @@ export default function MemoryMatchGame() {
 
         <div className="flex gap-3 w-full">
           <Button
+            variant="super"
             onClick={startGame}
-            className="flex-1 py-5 font-bold bg-sky-500 hover:bg-sky-600"
+            className="flex-1 py-5"
           >
             Tekrar Oyna
           </Button>
           <Link href="/games" className="flex-1">
-            <Button variant="secondaryOutline" className="w-full py-5 font-bold">
+            <Button variant="superOutline" className="w-full py-5">
               Oyunlara Dön
             </Button>
           </Link>
@@ -348,7 +351,7 @@ export default function MemoryMatchGame() {
             {moves}
           </span>
         </div>
-        <span className="font-bold text-sky-600">
+        <span className="font-bold text-purple-600">
           {matchedPairs}/{totalPairs} çift
         </span>
       </div>
@@ -356,7 +359,7 @@ export default function MemoryMatchGame() {
       {/* Progress */}
       <div className="w-full h-2 bg-neutral-200 rounded-full overflow-hidden">
         <div
-          className="h-full bg-sky-500 rounded-full transition-all duration-300"
+          className="h-full bg-purple-500 rounded-full transition-all duration-300"
           style={{ width: `${(matchedPairs / totalPairs) * 100}%` }}
         />
       </div>
@@ -379,7 +382,7 @@ export default function MemoryMatchGame() {
               }`}
             >
               {/* Back (hidden) */}
-              <div className="absolute inset-0 rounded-xl bg-sky-500 border-2 border-sky-600 flex items-center justify-center [backface-visibility:hidden] cursor-pointer hover:bg-sky-400 active:scale-95 transition-colors">
+              <div className="absolute inset-0 rounded-xl bg-purple-500 border-2 border-purple-600 flex items-center justify-center [backface-visibility:hidden] cursor-pointer hover:bg-purple-400 active:scale-95 transition-colors">
                 <span className="text-2xl text-white font-bold">?</span>
               </div>
               {/* Front (shown when flipped) */}
@@ -387,7 +390,7 @@ export default function MemoryMatchGame() {
                 className={`absolute inset-0 rounded-xl border-2 flex items-center justify-center p-1 text-center [backface-visibility:hidden] [transform:rotateY(180deg)] ${
                   card.isMatched
                     ? "bg-green-50 border-green-400"
-                    : "bg-white border-sky-300"
+                    : "bg-white border-purple-300"
                 }`}
               >
                 <span className={`text-xs sm:text-sm font-semibold leading-tight ${

@@ -9,8 +9,16 @@ import { ArrowLeft, Trophy, Heart, Zap, CheckCircle, XCircle, Flag } from "lucid
 import Link from "next/link";
 
 type Category = "matematik" | "ingilizce" | "bilim" | "genel";
+type Difficulty = "Kolay" | "Orta" | "Zor" | "Uzman";
 
 const CONFIG = SCORING_SYSTEM.GAMES.TRUE_FALSE;
+
+const DIFFICULTY_SETTINGS: Record<Difficulty, { lives: number; baseTime: number; timeDecrease: number }> = {
+  Kolay: { lives: 3, baseTime: 4, timeDecrease: 0.03 },
+  Orta: { lives: 3, baseTime: 3, timeDecrease: 0.05 },
+  Zor: { lives: 2, baseTime: 2.5, timeDecrease: 0.08 },
+  Uzman: { lives: 1, baseTime: 2, timeDecrease: 0.12 },
+};
 
 interface Statement {
   text: string;
@@ -160,6 +168,7 @@ type GameState = "menu" | "playing" | "finished";
 export default function TrueFalseGame() {
   const [gameState, setGameState] = useState<GameState>("menu");
   const [category, setCategory] = useState<Category>("matematik");
+  const [difficulty, setDifficulty] = useState<Difficulty>("Kolay");
   const [statement, setStatement] = useState<Statement | null>(null);
   const [lives, setLives] = useState<number>(CONFIG.LIVES);
   const [score, setScore] = useState(0);
@@ -174,9 +183,10 @@ export default function TrueFalseGame() {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const feedbackTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  const ds = DIFFICULTY_SETTINGS[difficulty];
   const currentTimeLimit = Math.max(
     CONFIG.MIN_TIME_SECONDS,
-    CONFIG.BASE_TIME_SECONDS - questionNumber * CONFIG.TIME_DECREASE_PER_QUESTION
+    ds.baseTime - questionNumber * ds.timeDecrease
   );
 
   const nextQuestion = useCallback(() => {
@@ -184,14 +194,14 @@ export default function TrueFalseGame() {
     setFeedback(null);
     const limit = Math.max(
       CONFIG.MIN_TIME_SECONDS,
-      CONFIG.BASE_TIME_SECONDS - (questionNumber + 1) * CONFIG.TIME_DECREASE_PER_QUESTION
+      ds.baseTime - (questionNumber + 1) * ds.timeDecrease
     );
     setTimeLeft(limit);
     setQuestionNumber((prev) => prev + 1);
-  }, [category, questionNumber]);
+  }, [category, questionNumber, ds]);
 
   const startGame = () => {
-    setLives(CONFIG.LIVES);
+    setLives(ds.lives);
     setScore(0);
     setStreak(0);
     setMaxStreak(0);
@@ -260,6 +270,7 @@ export default function TrueFalseGame() {
 
     if (isCorrect) {
       setFeedback("correct");
+      const diffMult = CONFIG.DIFFICULTY_MULTIPLIER[difficulty] ?? 1;
       const speedBonus = speedRatio > 0.5 ? CONFIG.SPEED_BONUS : 0;
       let points = CONFIG.CORRECT_ANSWER + speedBonus;
       const newStreak = streak + 1;
@@ -269,7 +280,7 @@ export default function TrueFalseGame() {
       if (newStreak > 0 && newStreak % CONFIG.STREAK_BONUS_THRESHOLD === 0) {
         points += CONFIG.STREAK_BONUS;
       }
-      setScore((prev) => prev + points);
+      setScore((prev) => prev + Math.round(points * diffMult));
     } else {
       setFeedback("wrong");
       setStreak(0);
@@ -322,7 +333,7 @@ export default function TrueFalseGame() {
               onClick={() => setCategory(cat)}
               className={`w-full p-3 rounded-xl border-2 text-left transition-all ${
                 category === cat
-                  ? "border-emerald-500 bg-emerald-50 text-emerald-700"
+                  ? "border-indigo-500 bg-indigo-50 text-indigo-700"
                   : "border-neutral-200 hover:border-neutral-300 text-neutral-600"
               }`}
             >
@@ -331,9 +342,33 @@ export default function TrueFalseGame() {
           ))}
         </div>
 
+        <div className="w-full space-y-2">
+          <p className="text-sm font-semibold text-neutral-600">Zorluk</p>
+          {(["Kolay", "Orta", "Zor", "Uzman"] as Difficulty[]).map((d) => {
+            const s = DIFFICULTY_SETTINGS[d];
+            return (
+              <button
+                key={d}
+                onClick={() => setDifficulty(d)}
+                className={`w-full p-3 rounded-xl border-2 text-left transition-all ${
+                  difficulty === d
+                    ? "border-indigo-500 bg-indigo-50 text-indigo-700"
+                    : "border-neutral-200 hover:border-neutral-300 text-neutral-600"
+                }`}
+              >
+                <span className="font-semibold">{d}</span>
+                <span className="text-xs ml-2 opacity-70">
+                  ({s.lives} can, {s.baseTime}sn, ×{CONFIG.DIFFICULTY_MULTIPLIER[d]} puan)
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
         <Button
+          variant="super"
           onClick={startGame}
-          className="w-full py-6 text-lg font-bold bg-emerald-500 hover:bg-emerald-600"
+          className="w-full py-6 text-lg"
         >
           Başla
         </Button>
@@ -371,16 +406,17 @@ export default function TrueFalseGame() {
 
         <div className="flex gap-3 w-full">
           <Button
+            variant="super"
             onClick={() => {
               setStatement(null);
               startGame();
             }}
-            className="flex-1 py-5 font-bold bg-emerald-500 hover:bg-emerald-600"
+            className="flex-1 py-5"
           >
             Tekrar Oyna
           </Button>
           <Link href="/games" className="flex-1">
-            <Button variant="secondaryOutline" className="w-full py-5 font-bold">
+            <Button variant="superOutline" className="w-full py-5">
               Oyunlara Dön
             </Button>
           </Link>
@@ -396,7 +432,7 @@ export default function TrueFalseGame() {
       {/* Header */}
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center gap-1">
-          {Array.from({ length: CONFIG.LIVES }).map((_, i) => (
+          {Array.from({ length: ds.lives }).map((_, i) => (
             <Heart
               key={i}
               className={`h-6 w-6 ${

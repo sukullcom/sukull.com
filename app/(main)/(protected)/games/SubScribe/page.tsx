@@ -3,25 +3,17 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { LoadingSpinner } from "@/components/loading-spinner";
-import { InfinityIcon, CircleCheck, Music, BookOpen, Microscope, Lightbulb } from "lucide-react";
-
-interface UserProgress {
-  hearts: number;
-  points: number;
-  hasInfiniteHearts: boolean | null;
-}
+import { ArrowLeft, CircleCheck, Music, BookOpen, Microscope, Lightbulb } from "lucide-react";
+import Link from "next/link";
 
 export default function VideoSelectionPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [loadingMessage, setLoadingMessage] = useState("");
-  const [userProgress, setUserProgress] = useState<UserProgress | null>(null);
-  const [progressLoading, setProgressLoading] = useState(true);
 
-  // Predefined videos with thumbnails
   const predefinedVideos = [
     {
       title: "Slow Productivity (Cal Newport)",
@@ -39,38 +31,6 @@ export default function VideoSelectionPage() {
       thumbnail: "/mascot_orange.svg"
     },
   ];
-
-  // Fetch user progress on component mount
-  useEffect(() => {
-    const fetchUserProgress = async () => {
-      try {
-        const response = await fetch('/api/user/progress', {
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        
-        
-        if (response.status === 401) {
-          // Authentication expired, redirect to login
-          window.location.href = '/login';
-          return;
-        }
-        
-        if (response.ok) {
-          const data = await response.json();
-          setUserProgress(data);
-        }
-      } catch (error) {
-        console.error('Error fetching user progress:', error);
-      } finally {
-        setProgressLoading(false);
-      }
-    };
-
-    fetchUserProgress();
-  }, []);
 
   const handleSelectPredefined = (videoId: string) => {
     setIsLoading(true);
@@ -90,45 +50,16 @@ export default function VideoSelectionPage() {
     );
   }
 
-  // Show loading while fetching user progress
-  if (progressLoading) {
-    return (
-      <div className="h-screen flex flex-col items-center justify-center">
-        <LoadingSpinner size="lg" />
-        <p className="mt-4 text-muted-foreground text-center max-w-md">
-          Kullanıcı bilgileri yükleniyor...
-        </p>
-      </div>
-    );
-  }
-
   return (
-    <div style={{ padding: "20px", maxWidth: "700px", margin: "auto" }}>
-      {/* Hearts Display */}
-      {userProgress && (
-        <div className="mb-6 p-4 bg-gradient-to-r from-rose-50 to-pink-50 border border-rose-200 rounded-lg">
-          <div className="flex items-center justify-center gap-3">
-            <Image src="/heart.svg" alt="Hearts" width={24} height={24} />
-            <span className="font-semibold text-rose-600">
-              {userProgress.hasInfiniteHearts ? (
-                <div className="flex items-center gap-2">
-                  <InfinityIcon className="h-5 w-5" />
-                  <span>Sınırsız Kalp</span>
-                </div>
-              ) : (
-                `${userProgress.hearts}/5 Kalp`
-              )}
-            </span>
-            {!userProgress.hasInfiniteHearts && userProgress.hearts === 0 && (
-              <span className="text-sm text-rose-500 ml-2">
-                (Özel video için kalp gerekli)
-              </span>
-            )}
-          </div>
-        </div>
-      )}
+    <div className="w-full max-w-lg mx-auto flex flex-col gap-6 py-8 px-4">
+      <Link
+        href="/games"
+        className="self-start flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-700 transition"
+      >
+        <ArrowLeft className="h-4 w-4" /> Oyunlara Dön
+      </Link>
 
-      <h1 className="text-xl font-bold mb-4">SubScribe</h1>
+      <h1 className="text-xl font-bold text-neutral-800">SubScribe</h1>
       <p className="mb-4 text-gray-700">
         Aşağıdaki videolardan birini seçerek başlayın. Her video özel olarak hazırlanmış yüksek kaliteli transcript&apos;lere sahiptir!
       </p>
@@ -149,13 +80,12 @@ export default function VideoSelectionPage() {
       <p className="text-sm text-gray-600 mb-4">
         <CircleCheck className="w-4 h-4 inline text-green-500" /> Bu videolar çalışma garantili, yüksek kaliteli transcript&apos;lere sahip ve <span className="font-semibold text-green-600">tamamen ücretsiz!</span>
       </p>
-      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+      <div className="flex flex-col gap-3">
         {predefinedVideos.map((v) => (
           <button
             key={v.videoId}
             onClick={() => handleSelectPredefined(v.videoId)}
-            className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-white text-left flex items-center gap-4 hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed border-green-200 hover:border-green-300"
-            style={{ cursor: isLoading ? "not-allowed" : "pointer" }}
+            className="border-2 border-neutral-200 rounded-xl p-4 bg-white text-left flex items-center gap-4 hover:border-indigo-300 hover:bg-indigo-50/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={isLoading}
           >
             <Image
@@ -163,17 +93,11 @@ export default function VideoSelectionPage() {
               alt={v.title}
               width={80}
               height={60}
-              style={{
-                objectFit: "cover",
-                borderRadius: "8px"
-              }}
+              className="object-cover rounded-lg"
             />
             <div className="flex-1">
-              <h3 style={{ margin: 0, fontSize: "18px", fontWeight: "bold" }}>{v.title}</h3>
-              <p style={{ margin: 0, fontSize: "14px", color: "#555" }}>Oyna</p>
-              <div className="flex items-center gap-1 mt-1">
-                <span className="text-xs font-medium text-green-600"><CircleCheck className="w-3 h-3 inline" /> Ücretsiz</span>
-              </div>
+              <h3 className="text-lg font-bold text-neutral-800">{v.title}</h3>
+              <p className="text-sm text-neutral-500">Oyna</p>
             </div>
           </button>
         ))}

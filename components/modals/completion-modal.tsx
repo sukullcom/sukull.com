@@ -28,7 +28,7 @@ export const CompletionModal = () => {
     e.stopPropagation();
     close();
     // Redirect to SubScribe home page using relative path
-    router.push('/games/SubScribe');
+    router.push('/games');
   };
 
   const handleModalClose = (open: boolean) => {

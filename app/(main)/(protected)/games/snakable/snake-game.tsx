@@ -6,7 +6,7 @@ import { addPointsToUser } from "@/actions/challenge-progress";
 import Confetti from "react-confetti";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { BookOpen, FileText, Target, Gamepad2, Trophy, Sparkles, Lightbulb, Check } from "lucide-react";
+import { ArrowLeft, BookOpen, FileText, Target, Gamepad2, Trophy, Sparkles, Lightbulb, Check } from "lucide-react";
 
 interface Position {
   x: number;
@@ -1010,85 +1010,48 @@ const SnakeGame = () => {
 
   // Handle game completion with security measures
   const handleGameCompletion = useCallback(async () => {
-    console.log("🎮 Snake Game: handleGameCompletion called");
-    console.log("🎮 Snake Game: selectedTopic:", selectedTopic?.name);
-    console.log("🎮 Snake Game: sessionStartTime:", sessionStartTime);
-    console.log("🎮 Snake Game: pointsSubmitted:", pointsSubmitted);
-    console.log("🎮 Snake Game: totalScore:", totalScore);
-    console.log("🎮 Snake Game: totalWordsCompleted:", totalWordsCompleted);
-    
     if (!selectedTopic || !sessionStartTime || pointsSubmitted) {
-      console.log("🎮 Snake Game: Exiting early from handleGameCompletion");
       setGameOver(true);
       setGameFinished(true);
       return;
     }
     
-    // Only proceed if user actually earned points or completed at least one word
     if (totalScore <= 0 && totalWordsCompleted === 0) {
-      console.log("🎮 Snake Game: No points earned or words completed - ending game without point submission");
       setGameOver(true);
       setGameFinished(true);
       return;
     }
     
-    // Prevent multiple submissions
     setPointsSubmitted(true);
     
-    // Anti-farming check: Only block points if no words were completed AND session was too short
     const sessionDuration = Date.now() - sessionStartTime.getTime();
     if (sessionDuration < minPlayTime && totalWordsCompleted === 0) {
-      console.log("Game too short and no words completed - no points awarded");
       setGameOver(true);
       setGameFinished(true);
       return;
     }
     
-    // If user completed at least one word, they deserve their points regardless of time
-    if (totalWordsCompleted > 0) {
-      console.log(`✅ User completed ${totalWordsCompleted} words - awarding points regardless of session duration`);
-    }
-    
-    // Add perfect game bonus if applicable
     let finalScore = totalScore;
     if (mistakeCount === 0 && totalWordsCompleted > 0) {
       const perfectBonus = SCORING_SYSTEM.GAMES.SNAKE.PERFECT_GAME_BONUS;
       finalScore += perfectBonus;
       setTotalScore(finalScore);
-      console.log(`Perfect game bonus: +${perfectBonus} points`);
     }
     
-    // Anti-exploitation: Cap maximum points per session
     const maxPointsPerSession = gameMode === 'sentences' ? 200 : 150;
     finalScore = Math.min(finalScore, maxPointsPerSession);
     
-    console.log(`Final score to submit: ${finalScore} points`);
-    console.log(`Words completed: ${totalWordsCompleted}, Sentences: ${totalSentencesCompleted}, Mistakes: ${mistakeCount}`);
-    
-    // Submit accumulated points only once at game end
     if (finalScore > 0) {
       try {
-        console.log(`🎮 Snake Game: Attempting to submit ${finalScore} points...`);
-        const result = await addPointsToUser(finalScore, { gameType: "snakable" });
-        
-        if (result && result.success) {
-          console.log(`🎉 Snake Game: Successfully submitted ${result.pointsAdded} points! New total: ${result.newTotal}`);
-        } else {
-          console.log("⚠️ Snake Game: Points submission returned unexpected result:", result);
-        }
-              } catch (error: unknown) {
-          console.error("❌ Snake Game: Error submitting final score:", error);
-          console.error("❌ Snake Game: Error details:", error instanceof Error ? error.message : String(error));
-          // Still complete the game even if points submission fails
+        await addPointsToUser(finalScore, { gameType: "snakable" });
+      } catch {
+        // Still complete the game even if points submission fails
       }
-    } else {
-      console.log("🎮 Snake Game: No points to submit (finalScore: 0)");
     }
     
-    // Final state update
     setGameOver(true);
     setGameFinished(true);
-  }, [selectedTopic, sessionStartTime, totalWordsCompleted, totalSentencesCompleted, mistakeCount, gameMode, pointsSubmitted, minPlayTime, totalScore]);
+  }, [selectedTopic, sessionStartTime, totalWordsCompleted, mistakeCount, gameMode, pointsSubmitted, minPlayTime, totalScore]);
 
   // Enhanced move snake function
   const moveSnake = useCallback(async () => {
@@ -1111,10 +1074,8 @@ const SnakeGame = () => {
       snake.some((segment) => segment.x === newHead.x && segment.y === newHead.y)
     ) {
       setMistakeCount(prev => prev + 1);
-      setConsecutiveWords(0); // Reset streak on mistake
+      setConsecutiveWords(0);
       
-      // End game - points will be submitted by useEffect
-      console.log("🐍 Snake collision detected - ending game");
       setGameOver(true);
       setGameFinished(true);
       return;
@@ -1153,8 +1114,6 @@ const SnakeGame = () => {
           }
           
           const wordPoints = Math.round(basePoints * difficultyMultiplier) + streakBonus + sentenceBonus;
-          
-          console.log(`Word completed: ${word.english} - ${wordPoints} points earned!`);
 
           // Add points to accumulated score (will be submitted at game end)
           setTotalWordsCompleted(prev => prev + 1);
@@ -1172,11 +1131,8 @@ const SnakeGame = () => {
               const sentenceCompletionBonus = SCORING_SYSTEM.GAMES.SNAKE.SENTENCE_COMPLETION_BONUS;
               setTotalSentencesCompleted(prev => prev + 1);
               setTotalScore(prev => prev + sentenceCompletionBonus);
-              console.log(`Sentence completed! +${sentenceCompletionBonus} bonus points earned!`);
               
-              // Check if last sentence
               if (currentSentenceIndex + 1 >= (sentences?.length || 0)) {
-                console.log("🎯 All sentences completed - ending game");
                 setGameOver(true);
                 setGameFinished(true);
               } else {
@@ -1189,7 +1145,6 @@ const SnakeGame = () => {
           } else {
             // Word mode - check if last word in topic
             if (currentWordIndex + 1 >= words.length) {
-              console.log("🎯 All words completed - ending game");
               setGameOver(true);
               setGameFinished(true);
             } else {
@@ -1204,9 +1159,8 @@ const SnakeGame = () => {
       } else {
         // Wrong letter - end game
         setMistakeCount(prev => prev + 1);
-        setConsecutiveWords(0); // Reset streak
+        setConsecutiveWords(0);
         
-        console.log("🐍 Wrong letter selected - ending game");
         setGameOver(true);
         setGameFinished(true);
         return;
@@ -1322,7 +1276,6 @@ const SnakeGame = () => {
         attempts++;
         
         if (attempts > maxAttempts) {
-          console.log("Could not find suitable position after many attempts");
           break;
         }
       } while (
@@ -1397,12 +1350,8 @@ const SnakeGame = () => {
     return () => clearTimeout(timer);
   }, [wordCompletedFreeze, startNewWord]);
 
-  // Automatically submit points when game ends
   useEffect(() => {
     if (gameFinished && !pointsSubmitted) {
-      console.log("🎮 Game finished detected - automatically submitting points");
-      console.log("🎮 totalScore:", totalScore);
-      console.log("🎮 totalWordsCompleted:", totalWordsCompleted);
       handleGameCompletion();
     }
   }, [gameFinished, pointsSubmitted, handleGameCompletion, totalScore, totalWordsCompleted]);
@@ -1460,7 +1409,7 @@ const SnakeGame = () => {
         grid.push(
           <div
             key={`${x}-${y}`}
-            className={`w-8 h-8 border ${
+            className={`w-9 h-9 border ${
               isSnake ? "bg-green-500" : foodItem ? "bg-red-500" : ""
             }`}
           >
@@ -1488,8 +1437,20 @@ const SnakeGame = () => {
       {eatAudioEl}
 
       <div className="relative w-full flex flex-col items-center">
-        <div className="flex flex-col items-center mt-10">
-          <h1 className="text-2xl font-bold mb-4">Kelime ve Yılan Oyunu</h1>
+        <div className="w-full max-w-lg mx-auto flex flex-col items-center mt-10">
+          {!gameStarted && countdown === null && !gameFinished && (
+            <Link
+              href="/games"
+              className="self-start flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-700 transition mb-4"
+            >
+              <ArrowLeft className="h-4 w-4" /> Oyunlara Dön
+            </Link>
+          )}
+
+          <div className="text-center mb-2">
+            <Gamepad2 className="w-12 h-12 text-green-500 mx-auto mb-2" />
+            <h1 className="text-2xl font-bold text-neutral-800">Kelime ve Yılan Oyunu</h1>
+          </div>
 
           {!gameStarted && countdown === null ? (
             // Start Screen
@@ -1532,13 +1493,13 @@ const SnakeGame = () => {
                       {topics.filter(topic => topic.level === 'beginner').map((topic) => (
                         <Button
                           key={topic.name}
-                          variant="secondary"
+                          variant="secondaryOutline"
                           onClick={() => setSelectedTopic(topic)}
                           disabled={gameMode === 'sentences' && (!topic.sentences || topic.sentences.length === 0)}
                         >
                           <div className="flex flex-col items-center">
                             <span>{topic.name}</span>
-                            <span className="text-xs text-white/80">
+                            <span className="text-xs text-neutral-500">
                               ×{SCORING_SYSTEM.GAMES.SNAKE.DIFFICULTY_MULTIPLIER[topic.level]} • 
                               {gameMode === 'words' ? `${topic.words.length} kelime` : `${topic.sentences?.length || 0} cümle`}
                             </span>
@@ -1555,14 +1516,13 @@ const SnakeGame = () => {
                       {topics.filter(topic => topic.level === 'intermediate').map((topic) => (
                         <Button
                           key={topic.name}
-                          variant="primary"
+                          variant="secondaryOutline"
                           onClick={() => setSelectedTopic(topic)}
-                          className="relative"
                           disabled={gameMode === 'sentences' && (!topic.sentences || topic.sentences.length === 0)}
                         >
                           <div className="flex flex-col items-center">
                             <span>{topic.name}</span>
-                            <span className="text-xs text-white/80">
+                            <span className="text-xs text-neutral-500">
                               ×{SCORING_SYSTEM.GAMES.SNAKE.DIFFICULTY_MULTIPLIER[topic.level]} • 
                               {gameMode === 'words' ? `${topic.words.length} kelime` : `${topic.sentences?.length || 0} cümle`}
                             </span>
@@ -1579,14 +1539,13 @@ const SnakeGame = () => {
                       {topics.filter(topic => topic.level === 'advanced').map((topic) => (
                         <Button
                           key={topic.name}
-                          variant="danger"
+                          variant="secondaryOutline"
                           onClick={() => setSelectedTopic(topic)}
-                          className="relative"
                           disabled={gameMode === 'sentences' && (!topic.sentences || topic.sentences.length === 0)}
                         >
                           <div className="flex flex-col items-center">
                             <span>{topic.name}</span>
-                            <span className="text-xs text-white/80">
+                            <span className="text-xs text-neutral-500">
                               ×{SCORING_SYSTEM.GAMES.SNAKE.DIFFICULTY_MULTIPLIER[topic.level]} • 
                               {gameMode === 'words' ? `${topic.words.length} kelime` : `${topic.sentences?.length || 0} cümle`}
                             </span>
@@ -1681,7 +1640,11 @@ const SnakeGame = () => {
             <div className="text-center">
               <Confetti width={width} height={height} recycle={false} />
               <h2 className="text-3xl font-bold mb-4">
-                {mistakeCount === 0 && totalWordsCompleted === words.length ? <><Trophy className="w-6 h-6 inline" /> Mükemmel! Tüm Kelimeler Tamamlandı!</> : 
+                {mistakeCount === 0 && (
+                  gameMode === 'sentences' 
+                    ? totalSentencesCompleted === (sentences?.length || 0)
+                    : totalWordsCompleted === words.length
+                ) ? <><Trophy className="w-6 h-6 inline" /> Mükemmel! {gameMode === 'sentences' ? 'Tüm Cümleler' : 'Tüm Kelimeler'} Tamamlandı!</> : 
                  mistakeCount === 0 ? <><Target className="w-6 h-6 inline" /> Harika! Hata Yapmadın!</> : 
                  <><Gamepad2 className="w-6 h-6 inline" /> Oyun Bitti!</>}
               </h2>
@@ -1730,7 +1693,7 @@ const SnakeGame = () => {
                   Tekrar Oyna
                 </Button>
                 <Link href="/games">
-                  <Button variant="secondary">Oyunlara Dön</Button>
+                  <Button variant="superOutline">Oyunlara Dön</Button>
                 </Link>
               </div>
             </div>
@@ -1773,33 +1736,33 @@ const SnakeGame = () => {
                 </div>
               )}
 
-              <div className="mb-4 flex flex-wrap justify-center gap-4 text-center">
-                <div className="bg-white rounded-lg shadow p-3">
-                  <p className="text-sm text-gray-600">
-                    {gameMode === 'sentences' ? 'Şuanki Kelime' : 'Kelime'}
-                  </p>
-                  <p className="font-bold">{word?.english}</p>
-                  {gameMode === 'sentences' && (
-                    <p className="text-xs text-gray-500">{word?.turkish}</p>
+              <div className="mb-4 bg-white rounded-xl border border-gray-200 px-4 py-2.5 flex items-center justify-between gap-3 text-sm">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-gray-500">Kelime:</span>
+                  <span className="font-bold">{word?.english}</span>
+                  {gameMode === 'sentences' && word?.turkish && (
+                    <span className="text-xs text-gray-400">({word.turkish})</span>
                   )}
                 </div>
-                <div className="bg-white rounded-lg shadow p-3">
-                  <p className="text-sm text-gray-600">Kazanılan Puan</p>
-                  <p className="font-bold text-blue-600">{totalScore}</p>
-                  <p className="text-xs text-gray-500">Oyun sonunda eklenir</p>
+                <span className="text-gray-300">|</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-gray-500">Puan:</span>
+                  <span className="font-bold text-blue-600">{totalScore}</span>
                 </div>
-                <div className="bg-white rounded-lg shadow p-3">
-                  <p className="text-sm text-gray-600">Seri</p>
-                  <p className="font-bold text-purple-600">{consecutiveWords}</p>
+                <span className="text-gray-300">|</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-gray-500">Seri:</span>
+                  <span className="font-bold text-purple-600">{consecutiveWords}</span>
                 </div>
-                <div className="bg-white rounded-lg shadow p-3">
-                  <p className="text-sm text-gray-600">İlerleme</p>
-                  <p className="font-bold">
+                <span className="text-gray-300">|</span>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-gray-500">İlerleme:</span>
+                  <span className="font-bold">
                     {gameMode === 'sentences' 
-                      ? `${totalSentencesCompleted}/${sentences?.length || 0} cümle`
-                      : `${currentWordIndex + 1}/${words.length} kelime`
+                      ? `${totalSentencesCompleted}/${sentences?.length || 0}`
+                      : `${currentWordIndex + 1}/${words.length}`
                     }
-                  </p>
+                  </span>
                 </div>
               </div>
 

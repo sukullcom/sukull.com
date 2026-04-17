@@ -16,6 +16,8 @@ interface LyricLineProps {
   onWordComplete: (isCorrect: boolean) => void;
 }
 
+type BorderState = "idle" | "correct" | "wrong";
+
 export default function LyricLine({ line, onWordComplete }: LyricLineProps) {
   const [userInputs, setUserInputs] = useState<string[]>(() =>
     line.words.map(() => "")
@@ -26,8 +28,8 @@ export default function LyricLine({ line, onWordComplete }: LyricLineProps) {
   const [inputDisabled, setInputDisabled] = useState<boolean[]>(() =>
     line.words.map(() => false)
   );
-  const [borderColors, setBorderColors] = useState<string[]>(() =>
-    line.words.map(() => "#ccc")
+  const [borderStates, setBorderStates] = useState<BorderState[]>(() =>
+    line.words.map(() => "idle")
   );
 
   useEffect(() => {
@@ -48,25 +50,22 @@ export default function LyricLine({ line, onWordComplete }: LyricLineProps) {
       newArr[index] = value.replace(/[^a-zA-Z]/g, "");
       return newArr;
     });
-    // Reset processed and border
     setIsProcessed((prev) => {
       const arr = [...prev];
       arr[index] = false;
       return arr;
     });
-    setBorderColors((prev) => {
+    setBorderStates((prev) => {
       const arr = [...prev];
-      arr[index] = "#ccc";
+      arr[index] = "idle";
       return arr;
     });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
-    // Prevent form submission on Enter key
     if (e.key === 'Enter') {
       e.preventDefault();
       e.stopPropagation();
-      // Optionally move to next input or check word
       const correctWord = line.words[index].word.trim();
       const userWord = userInputs[index].trim();
       if (userWord.length === correctWord.replace(/[^a-zA-Z]/g, '').length) {
@@ -78,69 +77,43 @@ export default function LyricLine({ line, onWordComplete }: LyricLineProps) {
   const checkWord = (index: number) => {
     const correctWord = line.words[index].word.trim().toLowerCase();
     const userWord = userInputs[index].trim().toLowerCase();
-    
-    // Remove punctuation from correct word for comparison
+
     const cleanCorrectWord = correctWord.replace(/[^a-zA-Z]/g, '');
     const cleanUserWord = userWord.replace(/[^a-zA-Z]/g, '');
-    
+
     const isComplete = cleanCorrectWord === cleanUserWord;
 
     if (isComplete) {
       onWordComplete(true);
-      setIsProcessed((prev) => {
-        const arr = [...prev];
-        arr[index] = true;
-        return arr;
-      });
-      setInputDisabled((prev) => {
-        const arr = [...prev];
-        arr[index] = true;
-        return arr;
-      });
-      setBorderColors((prev) => {
-        const arr = [...prev];
-        arr[index] = "green";
-        return arr;
-      });
+      setIsProcessed((prev) => { const arr = [...prev]; arr[index] = true; return arr; });
+      setInputDisabled((prev) => { const arr = [...prev]; arr[index] = true; return arr; });
+      setBorderStates((prev) => { const arr = [...prev]; arr[index] = "correct"; return arr; });
     } else {
       onWordComplete(false);
-      setIsProcessed((prev) => {
-        const arr = [...prev];
-        arr[index] = true;
-        return arr;
-      });
-      setBorderColors((prev) => {
-        const arr = [...prev];
-        arr[index] = "red";
-        return arr;
-      });
-      // Reset after 1 second
+      setIsProcessed((prev) => { const arr = [...prev]; arr[index] = true; return arr; });
+      setBorderStates((prev) => { const arr = [...prev]; arr[index] = "wrong"; return arr; });
       setTimeout(() => {
-        setUserInputs((prev) => {
-          const arr = [...prev];
-          arr[index] = "";
-          return arr;
-        });
-        setIsProcessed((prev) => {
-          const arr = [...prev];
-          arr[index] = false;
-          return arr;
-        });
-        setBorderColors((prev) => {
-          const arr = [...prev];
-          arr[index] = "#ccc";
-          return arr;
-        });
+        setUserInputs((prev) => { const arr = [...prev]; arr[index] = ""; return arr; });
+        setIsProcessed((prev) => { const arr = [...prev]; arr[index] = false; return arr; });
+        setBorderStates((prev) => { const arr = [...prev]; arr[index] = "idle"; return arr; });
       }, 1000);
     }
   };
 
+  const getBorderClass = (state: BorderState) => {
+    switch (state) {
+      case "correct": return "border-2 border-green-500 bg-green-50";
+      case "wrong": return "border-2 border-red-500 bg-white";
+      default: return "border-2 border-gray-300 bg-white";
+    }
+  };
+
   return (
-    <div className="lyric-line" style={{ marginBottom: "10px" }}>
+    <div className="mb-2.5 leading-relaxed">
       {line.words.map((w, i) => {
         const decodedWord = decode(w.word);
         const cleanWord = decodedWord.replace(/[^a-zA-Z]/g, '');
-        
+
         if (w.missing) {
           return (
             <input
@@ -150,26 +123,15 @@ export default function LyricLine({ line, onWordComplete }: LyricLineProps) {
               value={userInputs[i]}
               onChange={(e) => handleInputChange(i, e.target.value)}
               onKeyDown={(e) => handleKeyDown(e, i)}
-              style={{
-                border: `2px solid ${borderColors[i]}`,
-                padding: "5px",
-                margin: "0 5px",
-                minWidth: `${Math.max(cleanWord.length * 20, 60)}px`,
-                fontFamily: "monospace",
-                fontSize: "18px",
-                outline: "none",
-                textAlign: "center",
-                backgroundColor: inputDisabled[i] ? "#e0ffe0" : "#fff",
-                borderRadius: "4px",
-                transition: "border-color 0.3s",
-              }}
+              className={`inline-block mx-1 px-1.5 py-1 rounded text-center font-mono text-lg outline-none transition-colors ${getBorderClass(borderStates[i])}`}
+              style={{ minWidth: `${Math.max(cleanWord.length * 18, 56)}px` }}
               disabled={inputDisabled[i]}
-              placeholder={cleanWord.length > 0 ? `${cleanWord.length} letters` : ""}
+              placeholder={cleanWord.length > 0 ? `${cleanWord.length} harf` : ""}
             />
           );
         } else {
           return (
-            <span key={`word-${i}-${decodedWord}`} style={{ margin: "0 5px" }}>
+            <span key={`word-${i}-${decodedWord}`} className="mx-1">
               {decodedWord}
             </span>
           );

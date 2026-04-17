@@ -24,6 +24,16 @@ export function getTimeBonusInfo(): TimeBonusInfo {
   return { multiplier: 1.0, label: null, slot: "normal" };
 }
 
+export function getRemainingHoursInDay(): number {
+  const now = new Date();
+  const utcHour = now.getUTCHours();
+  const utcMinute = now.getUTCMinutes();
+  const turkeyHour = (utcHour + TURKEY_UTC_OFFSET) % 24;
+  const turkeyMinute = utcMinute;
+  const remainingMinutes = (24 - turkeyHour) * 60 - turkeyMinute;
+  return Math.max(0, Math.ceil(remainingMinutes / 60));
+}
+
 export function applyTimeBonus(basePoints: number): {
   total: number;
   bonus: number;

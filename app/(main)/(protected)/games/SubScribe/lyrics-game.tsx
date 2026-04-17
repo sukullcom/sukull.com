@@ -5,13 +5,14 @@ import { useCompletionModal } from "@/store/use-completion-modal";
 import LyricLine from "./lyrics-line";
 import Image from "next/image";
 import { Sparkles, CircleCheck, Trophy } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface LyricWord {
   word: string;
   missing: boolean;
 }
 
-type DifficultyLevel = "Kolay" | "Orta" | "Zor";
+type DifficultyLevel = "Kolay" | "Orta" | "Zor" | "Aşırı Zor";
 
 interface LyricsGameProps {
   lyrics: Array<{
@@ -139,14 +140,15 @@ export default function LyricsGame({ lyrics, difficulty = "Kolay" }: LyricsGameP
             Final puan: {previewFinalScore}
           </span>
         </div>
-        <button
+        <Button
           onClick={handleFinish}
-          className="py-2 px-4 rounded-lg text-sm font-medium bg-green-600 hover:bg-green-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+          variant="super"
           type="button"
           disabled={isProcessingFinish}
+          className="px-6"
         >
           {isProcessingFinish ? "İşleniyor..." : "Bitir"}
-        </button>
+        </Button>
       </div>
     );
   } else {
@@ -172,10 +174,9 @@ export default function LyricsGame({ lyrics, difficulty = "Kolay" }: LyricsGameP
           <div className="text-right flex items-center gap-4">{actionElement}</div>
         </div>
         
-        {/* Game stats */}
         <div className="flex justify-between text-sm text-gray-600 bg-gray-50 rounded p-2">
           <div className="flex gap-4">
-            <span>Zorluk: {difficulty} (1 puan/kelime)</span>
+            <span>Zorluk: {difficulty} (x{SCORING_SYSTEM.GAMES.SUBSCRIBE.DIFFICULTY_MULTIPLIER[difficulty]} puan)</span>
             <span>Hata: {mistakeCount}</span>
             <span>Deneme: {totalWordsAttempted}</span>
           </div>

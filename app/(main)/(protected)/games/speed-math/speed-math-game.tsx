@@ -257,7 +257,7 @@ export default function SpeedMathGame() {
               onClick={() => setDifficulty(d)}
               className={`w-full p-3 rounded-xl border-2 text-left transition-all ${
                 difficulty === d
-                  ? "border-amber-500 bg-amber-50 text-amber-700"
+                  ? "border-indigo-500 bg-indigo-50 text-indigo-700"
                   : "border-neutral-200 hover:border-neutral-300 text-neutral-600"
               }`}
             >
@@ -270,8 +270,9 @@ export default function SpeedMathGame() {
         </div>
 
         <Button
+          variant="super"
           onClick={startGame}
-          className="w-full py-6 text-lg font-bold bg-amber-500 hover:bg-amber-600"
+          className="w-full py-6 text-lg"
         >
           Başla
         </Button>
@@ -309,13 +310,14 @@ export default function SpeedMathGame() {
 
         <div className="flex gap-3 w-full">
           <Button
+            variant="super"
             onClick={startGame}
-            className="flex-1 py-5 font-bold bg-amber-500 hover:bg-amber-600"
+            className="flex-1 py-5"
           >
             Tekrar Oyna
           </Button>
           <Link href="/games" className="flex-1">
-            <Button variant="secondaryOutline" className="w-full py-5 font-bold">
+            <Button variant="superOutline" className="w-full py-5">
               Oyunlara Dön
             </Button>
           </Link>

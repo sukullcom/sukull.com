@@ -3,7 +3,7 @@ import CustomCard from "@/components/custom-card";
 import { getUserProgress } from "@/db/queries";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { Zap, Brain, CircleCheck, Target } from "lucide-react";
+import { Zap, Brain, CircleCheck, Target, Grid3X3, Palette } from "lucide-react";
 
 interface GameData {
   id: string;
@@ -42,6 +42,16 @@ const gamesData: GameData[] = [
     id: "pattern-memory",
     name: "Sıralama Ustası",
     icon: <Target className="w-14 h-14 text-orange-500" />,
+  },
+  {
+    id: "memory-matrix",
+    name: "Hafıza Matrisi",
+    icon: <Grid3X3 className="w-14 h-14 text-cyan-500" />,
+  },
+  {
+    id: "color-stroop",
+    name: "Renk Tuzağı",
+    icon: <Palette className="w-14 h-14 text-rose-500" />,
   },
 ];
 
