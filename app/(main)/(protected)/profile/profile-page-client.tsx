@@ -352,6 +352,7 @@ export default function ProfilePageClient({
             )}
           </div>
         )}
+        
 
         {/* Settings Tab */}
         {activeTab === "settings" && (
