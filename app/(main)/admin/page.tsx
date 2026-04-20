@@ -14,6 +14,7 @@ import {
   XCircle,
   ArrowRight,
   LayoutDashboard,
+  BarChart3,
 } from "lucide-react";
 
 export default async function AdminDashboardPage() {
@@ -59,6 +60,7 @@ export default async function AdminDashboardPage() {
   };
 
   const navLinks = [
+    { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
     { href: "/admin/teacher-applications", label: "Öğretmen Başvuruları", icon: School, badge: stats.teacherPending },
     { href: "/admin/student-applications", label: "Öğrenci Başvuruları", icon: GraduationCap, badge: stats.studentPending },
     { href: "/admin/course-builder", label: "Kurs Oluşturucu", icon: BookOpen },

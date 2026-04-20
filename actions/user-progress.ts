@@ -12,6 +12,7 @@ import { getServerUser } from '@/lib/auth';
 import { users } from '@/utils/users';
 import { updateDailyStreak } from "./daily-streak";
 import { normalizeAvatarUrl } from '@/utils/avatar';
+import { logActivity } from '@/lib/activity-logger';
 
 export const updateTotalPointsForSchools = async () => {
   try {
@@ -195,9 +196,12 @@ export const refillHearts = async () => {
     .set({
       hearts: 5,
       points: currentUserProgress.points - POINTS_TO_REFILL,
+      previousTotalPoints: (currentUserProgress.previousTotalPoints ?? 0) - POINTS_TO_REFILL,
       lastHeartRegenAt: new Date(),
     })
     .where(eq(userProgress.userId, currentUserProgress.userId));
+
+  logActivity({ userId: currentUserProgress.userId, eventType: "shop_purchase", page: "/shop", metadata: { item: "hearts_refill", cost: POINTS_TO_REFILL } });
 
   revalidatePath('/shop');
   revalidatePath('/learn');
@@ -319,9 +323,12 @@ export async function purchaseStreakFreeze() {
     .update(userProgress)
     .set({
       points: progress.points - cost,
+      previousTotalPoints: (progress.previousTotalPoints ?? 0) - cost,
       streakFreezeCount: (progress.streakFreezeCount ?? 0) + 1,
     })
     .where(eq(userProgress.userId, progress.userId));
+
+  logActivity({ userId: progress.userId, eventType: "shop_purchase", page: "/shop", metadata: { item: "streak_freeze", cost } });
 
   revalidatePath('/shop');
   revalidatePath('/learn');

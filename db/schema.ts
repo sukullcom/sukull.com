@@ -636,3 +636,17 @@ export const userSubscriptionsRelations = relations(userSubscriptions, ({ one })
     references: [users.id],
   }),
 }));
+
+// Activity tracking for analytics
+export const activityLog = pgTable("activity_log", {
+  id: serial("id").primaryKey(),
+  userId: text("user_id").notNull(),
+  eventType: text("event_type").notNull(),
+  page: text("page"),
+  metadata: text("metadata"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => ({
+  userIdx: index("idx_activity_log_user").on(table.userId),
+  eventTypeIdx: index("idx_activity_log_event_type").on(table.eventType),
+  createdAtIdx: index("idx_activity_log_created_at").on(table.createdAt),
+}));

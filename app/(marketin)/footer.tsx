@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button'
-import Image from 'next/image'
+import { BookOpen, Gamepad2, Users, Trophy, GraduationCap } from 'lucide-react'
 import React from 'react'
 
 export const Footer = () => {
@@ -7,54 +7,24 @@ export const Footer = () => {
     <footer className='h-auto w-full border-t-2 border-slate-200 py-3 px-2'>
         <div className='max-w-screen-lg mx-auto flex flex-wrap items-center justify-center gap-2 sm:justify-evenly'>
             <Button size="lg" variant="ghost" className='flex-shrink-0'>
-                <Image
-                    src="/mascot_blue.svg"
-                    alt="Matematik dersi"
-                    height={32}
-                    width={40}
-                    className='mr-2 rounded-md'
-                />
-                Matematik
+                <BookOpen className="h-5 w-5 mr-2 text-sky-500" />
+                Dersler
             </Button>
             <Button size="lg" variant="ghost" className='flex-shrink-0'>
-                <Image
-                    src="/mascot_orange.svg"
-                    alt="Fen Bilimleri dersi"
-                    height={32}
-                    width={40}
-                    className='mr-2 rounded-md'
-                />
-                Fen Bilimleri
+                <Gamepad2 className="h-5 w-5 mr-2 text-violet-500" />
+                Beyin Oyunları
             </Button>
             <Button size="lg" variant="ghost" className='flex-shrink-0'>
-                <Image
-                    src="/mascot_pink.svg"
-                    alt="Türkçe dersi"
-                    height={32}
-                    width={40}
-                    className='mr-2 rounded-md'
-                />
-                Türkçe
+                <Trophy className="h-5 w-5 mr-2 text-amber-500" />
+                Sıralama
             </Button>
             <Button size="lg" variant="ghost" className='flex-shrink-0'>
-                <Image
-                    src="/mascot_sad.svg"
-                    alt="İngilizce dersi"
-                    height={32}
-                    width={40}
-                    className='mr-2 rounded-md'
-                />
-                İngilizce
+                <Users className="h-5 w-5 mr-2 text-emerald-500" />
+                Çalışma Arkadaşı
             </Button>
             <Button size="lg" variant="ghost" className='flex-shrink-0'>
-                <Image
-                    src="/mascot_bad.svg"
-                    alt="Daha fazla ders"
-                    height={32}
-                    width={40}
-                    className='mr-2 rounded-md'
-                />
-                ve daha fazlası...
+                <GraduationCap className="h-5 w-5 mr-2 text-rose-500" />
+                Özel Ders
             </Button>
         </div>
     </footer>

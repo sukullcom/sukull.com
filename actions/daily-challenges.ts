@@ -248,6 +248,9 @@ export async function claimChallengeReward() {
       .set({ rewardClaimed: true })
       .where(eq(userDailyChallenges.id, row.id));
 
+    const { updateDailyStreak } = await import("./daily-streak");
+    await updateDailyStreak();
+
     revalidatePath("/learn");
     return { success: true, bonusPoints: row.bonusPoints };
   } catch (error) {

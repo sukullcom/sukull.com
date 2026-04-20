@@ -102,6 +102,23 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  // Fire-and-forget activity logging for protected page views
+  if (!pathname.startsWith('/admin') && process.env.INTERNAL_API_KEY) {
+    const origin = req.nextUrl.origin;
+    fetch(`${origin}/api/activity-log`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-internal-key": process.env.INTERNAL_API_KEY,
+      },
+      body: JSON.stringify({
+        userId: user.id,
+        eventType: "page_view",
+        page: pathname,
+      }),
+    }).catch(() => {});
+  }
+
   return response;
 }
 

@@ -12,10 +12,10 @@ const nunito = Nunito({ subsets: ["latin", "latin-ext"] });
 export const metadata: Metadata = {
   metadataBase: new URL("https://sukull.com"),
   title: {
-    default: "Sukull - Etkileşimli Öğrenme Platformu",
+    default: "Sukull - Öğrenmeyi Eğlenceli Hale Getiren Platform",
     template: "%s | Sukull",
   },
-  description: "Matematik, Fen Bilimleri, Türkçe, İngilizce ve daha fazlası — etkileşimli dersler, oyunlar ve pratiklerle öğren.",
+  description: "Derslerini tamamla, beyin oyunlarıyla pratik yap, arkadaşlarınla yarış ve özel derslerle ilerle. Sukull ile öğrenmek hiç bu kadar keyifli olmamıştı.",
   icons: {
     icon: [
       { url: "/mascot_normal.svg", type: "image/svg+xml" },
@@ -27,14 +27,14 @@ export const metadata: Metadata = {
     locale: "tr_TR",
     url: "https://sukull.com",
     siteName: "Sukull",
-    title: "Sukull - Etkileşimli Öğrenme Platformu",
-    description: "Matematik, Fen Bilimleri, Türkçe, İngilizce ve daha fazlası — etkileşimli dersler, oyunlar ve pratiklerle öğren.",
+    title: "Sukull - Öğrenmeyi Eğlenceli Hale Getiren Platform",
+    description: "Derslerini tamamla, beyin oyunlarıyla pratik yap, arkadaşlarınla yarış ve özel derslerle ilerle. Sukull ile öğrenmek hiç bu kadar keyifli olmamıştı.",
     images: [{ url: "/hero.svg", width: 1200, height: 630, alt: "Sukull" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sukull - Etkileşimli Öğrenme Platformu",
-    description: "Matematik, Fen Bilimleri, Türkçe, İngilizce ve daha fazlası — etkileşimli dersler, oyunlar ve pratiklerle öğren.",
+    title: "Sukull - Öğrenmeyi Eğlenceli Hale Getiren Platform",
+    description: "Derslerini tamamla, beyin oyunlarıyla pratik yap, arkadaşlarınla yarış ve özel derslerle ilerle. Sukull ile öğrenmek hiç bu kadar keyifli olmamıştı.",
     images: ["/hero.svg"],
   },
   robots: {

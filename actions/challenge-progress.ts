@@ -10,6 +10,7 @@ import { updateDailyStreak } from "./daily-streak";
 import { SCORING_SYSTEM } from "@/constants";
 import { applyTimeBonus } from "@/lib/time-bonus";
 import { updateChallengeProgress } from "./daily-challenges";
+import { logActivity } from "@/lib/activity-logger";
 
 export const upsertChallengeProgress = async (challengeId: number) => {
   const user = await getServerUser();
@@ -169,6 +170,7 @@ export async function addPointsToUser(
   if (meta?.gameType) {
     await updateChallengeProgress(userId, "game_played", { gameType: meta.gameType });
     await updateChallengeProgress(userId, "game_points", { gameType: meta.gameType, points: adjustedPoints });
+    logActivity({ userId, eventType: "game_end", page: `/games/${meta.gameType}`, metadata: { gameType: meta.gameType, points: adjustedPoints } });
   }
 
   if (currentUserProgress.schoolId) {
@@ -315,6 +317,7 @@ export async function awardLessonCompletionBonus(
 
     await updateDailyStreak();
     await updateChallengeProgress(userId, "lesson_completed_perfect", { wrongCount });
+    logActivity({ userId, eventType: "lesson_complete", metadata: { lessonId, wrongCount, bonus: totalBonus } });
     revalidatePath("/learn");
   }
 
