@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { getCurrentDayProgress } from "@/actions/daily-streak";
 import { getTimeBonusInfo, getRemainingHoursInDay, type TimeBonusInfo } from "@/lib/time-bonus";
+import { PROGRESS_UPDATED_EVENT } from "@/lib/progress-events";
 import Image from "next/image";
 import { RefreshCw, AlertCircle, Sparkles, Flame, Sunrise, Clock } from "lucide-react";
 
@@ -45,13 +46,18 @@ export function DailyProgress() {
     loadProgress();
     setTimeBonus(getTimeBonusInfo());
     setRemainingHours(getRemainingHoursInDay());
-    
+
+    // Low-frequency safety-net poll: 60s (was 15s).
+    // Real-time updates now come from the PROGRESS_UPDATED_EVENT dispatched
+    // by lesson/game/shop actions, so this interval only catches edge cases
+    // (e.g. updates made in another tab or by a background job).
     const interval = setInterval(() => {
+      if (document.hidden) return;
       loadProgress();
       setTimeBonus(getTimeBonusInfo());
       setRemainingHours(getRemainingHoursInDay());
-    }, 15000);
-    
+    }, 60000);
+
     const handleVisibilityChange = () => {
       if (!document.hidden) {
         loadProgress(true);
@@ -61,14 +67,22 @@ export function DailyProgress() {
     const handleFocus = () => {
       loadProgress(true);
     };
-    
+
+    const handleProgressUpdated = () => {
+      loadProgress(true);
+      setTimeBonus(getTimeBonusInfo());
+      setRemainingHours(getRemainingHoursInDay());
+    };
+
     document.addEventListener('visibilitychange', handleVisibilityChange);
     window.addEventListener('focus', handleFocus);
-    
+    window.addEventListener(PROGRESS_UPDATED_EVENT, handleProgressUpdated);
+
     return () => {
       clearInterval(interval);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('focus', handleFocus);
+      window.removeEventListener(PROGRESS_UPDATED_EVENT, handleProgressUpdated);
     };
   }, [loadProgress]);
 

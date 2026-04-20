@@ -3,6 +3,11 @@
 import { useEffect, useState, useCallback } from "react";
 import { getTodayChallenge, claimChallengeReward } from "@/actions/daily-challenges";
 import { getTimeBonusInfo, type TimeBonusInfo } from "@/lib/time-bonus";
+import {
+  CHALLENGE_UPDATED_EVENT,
+  PROGRESS_UPDATED_EVENT,
+  emitProgressUpdated,
+} from "@/lib/progress-events";
 import { toast } from "sonner";
 import { Trophy, Gift, CheckCircle, Clock, Loader2 } from "lucide-react";
 import Confetti from "react-confetti";
@@ -45,10 +50,13 @@ export function DailyChallenge() {
     loadChallenge();
     setTimeBonus(getTimeBonusInfo());
 
+    // Low-frequency safety-net poll: 60s (was 15s).
+    // Real-time updates come from CHALLENGE_UPDATED_EVENT and PROGRESS_UPDATED_EVENT.
     const interval = setInterval(() => {
+      if (document.hidden) return;
       loadChallenge();
       setTimeBonus(getTimeBonusInfo());
-    }, 15000);
+    }, 60000);
 
     const handleVisibilityChange = () => {
       if (!document.hidden) {
@@ -56,11 +64,21 @@ export function DailyChallenge() {
         setTimeBonus(getTimeBonusInfo());
       }
     };
+
+    const handleUpdated = () => {
+      loadChallenge();
+      setTimeBonus(getTimeBonusInfo());
+    };
+
     document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener(CHALLENGE_UPDATED_EVENT, handleUpdated);
+    window.addEventListener(PROGRESS_UPDATED_EVENT, handleUpdated);
 
     return () => {
       clearInterval(interval);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener(CHALLENGE_UPDATED_EVENT, handleUpdated);
+      window.removeEventListener(PROGRESS_UPDATED_EVENT, handleUpdated);
     };
   }, [loadChallenge]);
 
@@ -74,6 +92,7 @@ export function DailyChallenge() {
         toast.success(`Tebrikler! +${result.bonusPoints} bonus puan kazandın!`);
         setTimeout(() => setShowConfetti(false), 4000);
         await loadChallenge();
+        emitProgressUpdated({ source: "challenge-claim", bonusPoints: result.bonusPoints });
       }
     } catch {
       toast.error("Ödül alınamadı");
