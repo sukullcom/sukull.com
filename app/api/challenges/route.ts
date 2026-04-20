@@ -7,7 +7,7 @@ import { sql } from "drizzle-orm"
 
 export const GET = async (req: Request) => {
     if (!(await isAdmin())) {
-        return new NextResponse("Unauthorized", { status: 401 })
+        return new NextResponse("Bu işlem için yetkiniz yok.", { status: 401 })
     }
     
     // Parse pagination parameters
@@ -44,7 +44,7 @@ export const GET = async (req: Request) => {
 
 export const POST = async (req: Request) => {
     if (!(await isAdmin())) {
-        return new NextResponse("Unauthorized", { status: 401 })
+        return new NextResponse("Bu işlem için yetkiniz yok.", { status: 401 })
     }
     const body = await req.json()
 

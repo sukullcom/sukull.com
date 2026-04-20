@@ -7,7 +7,7 @@ export async function POST() {
     // Check if user is admin
     const admin = await isAdmin();
     if (!admin) {
-      return NextResponse.json({ error: "Admin access required" }, { status: 403 });
+      return NextResponse.json({ error: "Bu işlem için yönetici yetkisi gereklidir." }, { status: 403 });
     }
 
     console.log("🧪 Manual daily reset triggered by admin");
@@ -38,7 +38,7 @@ export async function POST() {
     return NextResponse.json(
       { 
         success: false, 
-        error: "Internal server error",
+        error: "Sunucu tarafında bir hata oluştu.",
         message: error instanceof Error ? error.message : "Unknown error"
       },
       { status: 500 }
@@ -49,7 +49,7 @@ export async function POST() {
 export async function GET() {
   const admin = await isAdmin();
   if (!admin) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
+    return NextResponse.json({ error: "Bulunamadı." }, { status: 404 });
   }
   return NextResponse.json({
     message: "Daily reset test endpoint",

@@ -9,7 +9,7 @@ import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 
 import { auth } from "@/utils/auth";
-import type { AuthError } from "@supabase/supabase-js";
+import { getAuthError } from "@/utils/auth-errors";
 
 export function ResetPasswordForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -59,8 +59,8 @@ export function ResetPasswordForm() {
       toast.success("Şifreniz başarıyla sıfırlandı.");
       router.push("/login");
     } catch (error) {
-      const authError = error as AuthError;
-      toast.error(authError.message || "Şifre sıfırlama hatası. Lütfen tekrar deneyiniz.");
+      const { message } = getAuthError(error);
+      toast.error(message);
     } finally {
       setIsLoading(false);
     }

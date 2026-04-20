@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 import { users } from '@/utils/users'
+import { getAuthError } from '@/utils/auth-errors'
 
 export async function login(formData: FormData) {
   const supabase = await createClient()
@@ -18,11 +19,11 @@ export async function login(formData: FormData) {
   })
 
   if (error) {
-    return { error: error.message }
+    const { message } = getAuthError(error)
+    return { error: message }
   }
 
   if (data.user) {
-    // Ensure user profile exists
     try {
       await users.captureUserDetails(data.user)
     } catch (e) {
@@ -33,4 +34,3 @@ export async function login(formData: FormData) {
   revalidatePath('/', 'layout')
   redirect(next)
 }
-

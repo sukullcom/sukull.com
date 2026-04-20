@@ -15,7 +15,7 @@ import { normalizeAvatarUrl } from '@/utils/avatar';
  */
 export async function getProfileDataOnServer() {
   const user = await getServerUser();
-  if (!user) throw new Error("Unauthorized");
+  if (!user) throw new Error("Giriş yapmanız gerekiyor.");
   const userId = user.id;
 
   await checkStreakContinuity(userId);
@@ -79,15 +79,14 @@ export async function updateProfileAction(
   newDailyTarget: number // Günlük hedeflenen puan
 ) {
   const user = await getServerUser();
-  if (!user) throw new Error("Not authenticated");
+  if (!user) throw new Error("Giriş yapmanız gerekiyor.");
   const userId = user.id;
 
-  // Grab existing user_progress row
   const progressRow = await db.query.userProgress.findFirst({
     where: eq(userProgress.userId, userId),
   });
   if (!progressRow) {
-    throw new Error("No user_progress row found for this user.");
+    throw new Error("Profil bilgisi bulunamadı. Lütfen sayfayı yenileyip tekrar deneyiniz.");
   }
 
   // Update all fields - profile is never locked
@@ -192,7 +191,7 @@ export async function updateUserProfile(data: {
 }) {
   try {
     const user = await getServerUser();
-    if (!user) throw new Error("Unauthorized");
+    if (!user) throw new Error("Giriş yapmanız gerekiyor.");
     
     const userId = user.id;
     
@@ -205,7 +204,7 @@ export async function updateUserProfile(data: {
         where: eq(schools.id, data.schoolId),
       });
       
-      if (!school) throw new Error("School not found");
+      if (!school) throw new Error("Seçtiğiniz okul bulunamadı.");
       
       updateData.schoolId = data.schoolId;
     }
@@ -217,7 +216,7 @@ export async function updateUserProfile(data: {
     if (data.dailyTarget) {
       // Ensure daily target is a reasonable value
       if (data.dailyTarget < 10 || data.dailyTarget > 1000) {
-        throw new Error("Daily target must be between 10 and 1000");
+        throw new Error("Günlük hedef 10 ile 1000 puan arasında olmalıdır.");
       }
       
       updateData.dailyTarget = data.dailyTarget;

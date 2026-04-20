@@ -9,7 +9,7 @@ export const GET = async (
   { params }: { params: { challengeOptionId: number } }
 ) => {
   if (!(await isAdmin())) {
-    return new NextResponse("Unauthorized", { status: 403 });
+    return new NextResponse("Bu işlem için yetkiniz yok.", { status: 403 });
   }
 
   const data = await db.query.challengeOptions.findFirst({
@@ -24,7 +24,7 @@ export const PUT = async (
   { params }: { params: { challengeOptionId: number } }
 ) => {
   if (!(await isAdmin())) {
-    return new NextResponse("Unauthorized", { status: 403 });
+    return new NextResponse("Bu işlem için yetkiniz yok.", { status: 403 });
   }
 
   const body = await req.json();
@@ -44,7 +44,7 @@ export const DELETE = async (
   { params }: { params: { challengeOptionId: number } }
 ) => {
   if (!(await isAdmin())) {
-    return new NextResponse("Unauthorized", { status: 403 });
+    return new NextResponse("Bu işlem için yetkiniz yok.", { status: 403 });
   }
 
   const data = await db

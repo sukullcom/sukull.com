@@ -8,7 +8,7 @@ export async function GET() {
     // Get the current user
     const user = await getServerUser();
     if (!user) {
-      return NextResponse.json({ error: "Authentication required" }, { status: 401 });
+      return NextResponse.json({ error: "Giriş yapmanız gerekiyor." }, { status: 401 });
     }
 
     // ✅ IMPROVED: Use optimized batch query instead of N+1
@@ -20,6 +20,6 @@ export async function GET() {
     });
   } catch (error) {
     console.error("Error fetching student bookings:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json({ error: "Sunucu tarafında bir hata oluştu." }, { status: 500 });
   }
 } 

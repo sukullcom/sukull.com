@@ -9,10 +9,9 @@ import { getServerUser } from "@/lib/auth";
 import { checkStreakRequirement, getStreakRequirementMessage } from "@/utils/streak-requirements";
 
 export async function GET(req: Request) {
-  // Add authentication check
   const user = await getServerUser();
   if (!user) {
-    return NextResponse.json({ error: "Authentication required" }, { status: 401 });
+    return NextResponse.json({ error: "Giriş yapmanız gerekiyor." }, { status: 401 });
   }
 
   const { searchParams } = new URL(req.url);
@@ -26,7 +25,7 @@ export async function GET(req: Request) {
     const snippets = await getAllSnippets({ 
       search, 
       language, 
-      limit: Math.min(limit, 50), // Max 50 per request
+      limit: Math.min(limit, 50),
       offset 
     });
     
@@ -35,12 +34,12 @@ export async function GET(req: Request) {
       pagination: {
         page,
         limit,
-        hasMore: snippets.length === limit, // Simple check if there might be more
+        hasMore: snippets.length === limit,
       }
     });
   } catch (error) {
     console.error("Error in GET /api/snippets:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json({ error: "Sunucu tarafında bir hata oluştu." }, { status: 500 });
   }
 }
 
@@ -48,12 +47,11 @@ export async function POST(req: Request) {
   try {
     const user = await getServerUser();
     if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ error: "Giriş yapmanız gerekiyor." }, { status: 401 });
     }
 
     const userId = user.id;
 
-    // Validate user exists and has enough streak
     const userP = await db.query.userProgress.findFirst({
       where: eq(userProgress.userId, userId),
       columns: {
@@ -66,7 +64,7 @@ export async function POST(req: Request) {
 
     if (!userP) {
       return NextResponse.json(
-        { error: "User not found in user_progress table." },
+        { error: "Kullanıcı ilerleme bilgisi bulunamadı." },
         { status: 400 }
       );
     }
@@ -80,11 +78,10 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check snippet limit
     const count = await getUserSnippetCount(userId);
     if (count >= 3) {
       return NextResponse.json(
-        { error: "You have already shared 3 snippets." },
+        { error: "En fazla 3 kod parçası paylaşabilirsiniz." },
         { status: 403 }
       );
     }
@@ -92,39 +89,37 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { title, description, code, language } = body;
 
-    // Enhanced input validation
     if (!title?.trim() || !description?.trim() || !code?.trim() || !language?.trim()) {
       return NextResponse.json(
-        { error: "All fields (title, description, code, language) are required." },
+        { error: "Tüm alanların (başlık, açıklama, kod, dil) doldurulması gerekiyor." },
         { status: 400 }
       );
     }
 
-    // Length validation
     if (title.trim().length > 100) {
       return NextResponse.json(
-        { error: "Title must be 100 characters or less." },
+        { error: "Başlık en fazla 100 karakter olabilir." },
         { status: 400 }
       );
     }
 
     if (description.trim().length > 500) {
       return NextResponse.json(
-        { error: "Description must be 500 characters or less." },
+        { error: "Açıklama en fazla 500 karakter olabilir." },
         { status: 400 }
       );
     }
 
     if (code.trim().length > 10000) {
       return NextResponse.json(
-        { error: "Code must be 10,000 characters or less." },
+        { error: "Kod en fazla 10.000 karakter olabilir." },
         { status: 400 }
       );
     }
 
     await createSnippet({
       userId,
-      userName: userP.userName || "Anonymous",
+      userName: userP.userName || "Anonim",
       code: code.trim(),
       title: title.trim(),
       description: description.trim(),
@@ -134,6 +129,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("Error in POST /api/snippets:", err);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json({ error: "Sunucu tarafında bir hata oluştu." }, { status: 500 });
   }
 }

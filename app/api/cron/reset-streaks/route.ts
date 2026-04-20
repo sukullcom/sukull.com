@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
     if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
       console.log("Unauthorized cron attempt:", authHeader);
       return NextResponse.json(
-        { error: "Unauthorized" },
+        { error: "Bu işlem için yetkiniz yok." },
         { status: 401 }
       );
     }
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       { 
         success: false, 
-        error: "Internal server error",
+        error: "Sunucu tarafında bir hata oluştu.",
         message: error instanceof Error ? error.message : "Unknown error",
         timestamp: new Date().toISOString()
       },

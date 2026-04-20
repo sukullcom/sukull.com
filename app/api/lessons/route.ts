@@ -185,7 +185,7 @@ export const GET = secureApi.admin(async (request) => {
     }
   } catch (error) {
     console.error(`Error in lessons API (action: ${action}):`, error);
-    return ApiResponses.serverError("Internal server error");
+    return ApiResponses.serverError("Sunucu tarafında bir hata oluştu.");
   }
 });
 
@@ -232,7 +232,7 @@ export const POST = secureApi.admin(async (request) => {
     }
   } catch (error) {
     console.error(`Error in lessons POST:`, error);
-    return ApiResponses.serverError("Internal server error");
+    return ApiResponses.serverError("Sunucu tarafında bir hata oluştu.");
   }
 });
 
@@ -313,7 +313,7 @@ export const PUT = secureApi.admin(async (request) => {
     }
   } catch (error) {
     console.error(`Error in lessons PUT:`, error);
-    return ApiResponses.serverError("Internal server error");
+    return ApiResponses.serverError("Sunucu tarafında bir hata oluştu.");
   }
 });
 
@@ -389,6 +389,6 @@ export const DELETE = secureApi.admin(async (request) => {
     }
   } catch (error) {
     console.error(`Error in lessons DELETE:`, error);
-    return ApiResponses.serverError("Internal server error");
+    return ApiResponses.serverError("Sunucu tarafında bir hata oluştu.");
   }
 });

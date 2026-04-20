@@ -21,12 +21,12 @@ export default async function CoursesPage() {
 
     return (
       <div className="h-full max-w-[960px] px-4 sm:px-6 mx-auto py-6">
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <h1 className="text-2xl sm:text-3xl font-extrabold text-neutral-800">
-            Sınıfını seç, öğrenmeye başla
+            Ne öğrenmek istersin?
           </h1>
           <p className="text-neutral-400 text-sm mt-2">
-            Sınıfını bul ve istediğin dersi seç
+            Okul derslerinden veya sınav hazırlığından başla
           </p>
         </div>
         <List courses={courses} activeCourseId={userProgress?.activeCourseId} />

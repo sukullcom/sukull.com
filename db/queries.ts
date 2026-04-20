@@ -584,7 +584,7 @@ export async function approveTeacherApplication(id: number) {
   const application = await getTeacherApplicationById(id);
   if (!application) {
     console.log(`[DB] Application ${id} not found`);
-    throw new Error("Application not found");
+    throw new Error("Başvuru bulunamadı.");
   }
 
   console.log(`[DB] Found application for user ${application.userId}`);
@@ -610,7 +610,7 @@ export async function approveTeacherApplication(id: number) {
 
   if (roleUpdateResult.length === 0) {
     console.error(`[DB] No user found with ID ${application.userId} for role update`);
-    throw new Error(`User not found for role update: ${application.userId}`);
+    throw new Error(`Rol güncellemesi için kullanıcı bulunamadı: ${application.userId}`);
   }
 
   console.log(`[DB] Successfully updated user ${application.userId} to teacher role`);
@@ -624,7 +624,7 @@ export async function approveTeacherApplicationWithFields(id: number, selectedFi
   const application = await getTeacherApplicationById(id);
   if (!application) {
     console.log(`[DB] Application ${id} not found`);
-    throw new Error("Application not found");
+    throw new Error("Başvuru bulunamadı.");
   }
 
   console.log(`[DB] Found application for user ${application.userId}`);
@@ -650,7 +650,7 @@ export async function approveTeacherApplicationWithFields(id: number, selectedFi
 
   if (roleUpdateResult.length === 0) {
     console.error(`[DB] No user found with ID ${application.userId} for role update`);
-    throw new Error(`User not found for role update: ${application.userId}`);
+    throw new Error(`Rol güncellemesi için kullanıcı bulunamadı: ${application.userId}`);
   }
 
   // Add teacher fields
@@ -1268,7 +1268,7 @@ export async function approveStudentApplication(applicationId: number) {
   
   if (!application) {
     console.log(`[DB] Student application ${applicationId} not found`);
-    throw new Error("Application not found");
+    throw new Error("Başvuru bulunamadı.");
   }
 
   console.log(`[DB] Found student application for user ${application.userId}`);
@@ -1296,7 +1296,7 @@ export async function approveStudentApplication(applicationId: number) {
 
     if (roleUpdateResult.length === 0) {
       console.error(`[DB] No user found with ID ${application.userId} for student role update`);
-      throw new Error(`User not found for role update: ${application.userId}`);
+      throw new Error(`Rol güncellemesi için kullanıcı bulunamadı: ${application.userId}`);
     }
     
     console.log(`[DB] Successfully updated user ${application.userId} to student role`);

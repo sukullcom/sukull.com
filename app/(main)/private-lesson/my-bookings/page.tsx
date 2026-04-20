@@ -163,7 +163,7 @@ export default function MyBookingsPage() {
         const response = await fetch("/api/private-lesson/student-bookings");
         
         if (!response.ok) {
-          throw new Error("Failed to fetch bookings");
+          throw new Error("Rezervasyonlar yüklenemedi.");
         }
         
         const data = await response.json();

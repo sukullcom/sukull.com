@@ -9,7 +9,7 @@ export const GET = async (
   { params }: { params: { challengeId: string } }
 ) => {
   if (!(await isAdmin())) {
-    return new NextResponse("Unauthorized", { status: 401 })
+    return new NextResponse("Bu işlem için yetkiniz yok.", { status: 401 })
   }
 
   const challengeId = parseInt(params.challengeId);
@@ -38,7 +38,7 @@ export const PUT = async (
   { params }: { params: { challengeId: string } }
 ) => {
   if (!(await isAdmin())) {
-    return new NextResponse("Unauthorized", { status: 401 })
+    return new NextResponse("Bu işlem için yetkiniz yok.", { status: 401 })
   }
 
   const challengeId = parseInt(params.challengeId);
@@ -58,7 +58,7 @@ export const DELETE = async (
   { params }: { params: { challengeId: string } }
 ) => {
   if (!(await isAdmin())) {
-    return new NextResponse("Unauthorized", { status: 401 })
+    return new NextResponse("Bu işlem için yetkiniz yok.", { status: 401 })
   }
 
   const challengeId = parseInt(params.challengeId);

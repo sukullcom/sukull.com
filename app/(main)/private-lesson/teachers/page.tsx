@@ -43,7 +43,7 @@ export default function TeachersPage() {
           router.push("/private-lesson");
           return;
         }
-        throw new Error("Failed to fetch teachers");
+        throw new Error("Öğretmenler yüklenemedi.");
       }
       const data = await response.json();
       setAllTeachers(data.teachers || []);

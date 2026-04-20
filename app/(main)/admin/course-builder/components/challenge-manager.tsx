@@ -685,7 +685,7 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                   <Label htmlFor="lesson">Lesson</Label>
                   <Select value={newChallenge.lessonId.toString()} onValueChange={handleLessonChange}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a lesson" />
+                      <SelectValue placeholder="Bir ders seçin" />
                     </SelectTrigger>
                     <SelectContent>
                       {lessons.map((lesson) => (
@@ -914,7 +914,7 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                 onValueChange={(value) => setSelectedLessonId(parseInt(value))}
               >
                 <SelectTrigger className="bg-white">
-                  <SelectValue placeholder="Choose a lesson to view its challenges" />
+                  <SelectValue placeholder="Zorluklarını görmek için bir ders seçin" />
                 </SelectTrigger>
                 <SelectContent>
                   {lessons.map((lesson) => (
@@ -1124,7 +1124,7 @@ export function ChallengeManager({ courseId, courseName, onChallengeCreated }: C
                   <Label htmlFor="lesson">Lesson</Label>
                   <Select value={editChallenge.lessonId.toString()} onValueChange={handleEditLessonChange}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a lesson" />
+                      <SelectValue placeholder="Bir ders seçin" />
                     </SelectTrigger>
                     <SelectContent>
                       {lessons.map((lesson) => (
@@ -1586,7 +1586,7 @@ function DragDropForm({ options, updateOption, removeOption, addOption, setOptio
             <div key={fullIndex} className="flex items-center space-x-2 p-3 border rounded-lg bg-green-50">
               <span className="text-sm font-medium w-20">Zone {dragData.zoneId}:</span>
               <Input
-                placeholder="Zone label"
+                placeholder="Alan etiketi"
                 value={zone.text}
                 onChange={(e) => updateOption(fullIndex, "text", e.target.value)}
                 className="flex-1"

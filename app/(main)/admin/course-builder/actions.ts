@@ -8,7 +8,7 @@ import { isAdmin } from "@/lib/admin";
 
 async function requireAdmin() {
   const admin = await isAdmin();
-  if (!admin) throw new Error("Unauthorized");
+  if (!admin) throw new Error("Bu işlem için yetkiniz yok.");
 }
 
 // Course Actions

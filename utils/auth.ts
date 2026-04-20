@@ -20,7 +20,7 @@ export const auth = {
       .single()
 
     if (existingUser) {
-      throw new Error('This email is already registered. Try signing in instead.')
+      throw new Error('Bu e-posta adresi zaten kayıtlı. Bunun yerine giriş yapmayı deneyiniz.')
     }
 
     if (checkErr && checkErr.code !== 'PGRST116') {
@@ -46,7 +46,7 @@ export const auth = {
     }
     
     if (!data.user) {
-      throw new Error('Failed to create user account.');
+      throw new Error('Kullanıcı hesabı oluşturulamadı. Lütfen tekrar deneyiniz.');
     }
 
     // 3) Only capture user details if this is not an email confirmation signup

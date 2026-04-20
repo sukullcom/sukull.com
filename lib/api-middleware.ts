@@ -32,7 +32,7 @@ export function withAuth(handler: AuthenticatedHandler) {
       
       if (!user) {
         return NextResponse.json(
-          { error: "Authentication required" }, 
+          { error: "Giriş yapmanız gerekiyor." }, 
           { status: 401 }
         );
       }
@@ -49,7 +49,7 @@ export function withAuth(handler: AuthenticatedHandler) {
     } catch (error) {
       console.error("Authentication middleware error:", error);
       return NextResponse.json(
-        { error: "Internal server error" }, 
+        { error: "Sunucu tarafında bir hata oluştu." }, 
         { status: 500 }
       );
     }
@@ -232,7 +232,7 @@ export const ApiResponses = {
   badRequest: (message: string = "Bad request") => 
     NextResponse.json({ error: message }, { status: 400 }),
   
-  unauthorized: (message: string = "Authentication required") => 
+  unauthorized: (message: string = "Giriş yapmanız gerekiyor.") => 
     NextResponse.json({ error: message }, { status: 401 }),
   
   forbidden: (message: string = "Forbidden") => 
@@ -241,6 +241,6 @@ export const ApiResponses = {
   notFound: (message: string = "Not found") => 
     NextResponse.json({ error: message }, { status: 404 }),
   
-  serverError: (message: string = "Internal server error") => 
+  serverError: (message: string = "Sunucu tarafında bir hata oluştu.") => 
     NextResponse.json({ error: message }, { status: 500 }),
 }; 

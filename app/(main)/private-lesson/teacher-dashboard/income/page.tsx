@@ -80,7 +80,7 @@ export default function TeacherIncomePage() {
       const reviewResponse = await fetch("/api/private-lesson/teacher-reviews");
       
       if (!incomeResponse.ok || !reviewResponse.ok) {
-        throw new Error("Failed to fetch data");
+        throw new Error("Veriler yüklenemedi.");
       }
       
       const income = await incomeResponse.json();

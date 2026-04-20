@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
     // ✅ UNIFIED AUTH: Single authentication check instead of duplicated across routes
     const user = await getServerUser();
     if (!user) {
-      return NextResponse.json({ error: "Authentication required" }, { status: 401 });
+      return NextResponse.json({ error: "Giriş yapmanız gerekiyor." }, { status: 401 });
     }
 
     const { searchParams } = new URL(request.url);
@@ -85,12 +85,12 @@ export async function GET(request: NextRequest) {
 
       default: {
         return NextResponse.json({ 
-          error: "Invalid action parameter. Supported actions: credits, progress, streak, profile, stats" 
+          error: "Geçersiz istek parametresi." 
         }, { status: 400 });
       }
     }
   } catch (error) {
     console.error(`Error in user API (action: ${request.url}):`, error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json({ error: "Sunucu tarafında bir hata oluştu." }, { status: 500 });
   }
 } 

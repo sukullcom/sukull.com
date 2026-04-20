@@ -10,7 +10,7 @@ export async function POST() {
     const admin = await isAdmin();
     
     if (!admin) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      return NextResponse.json({ message: "Bu işlem için yetkiniz yok." }, { status: 401 });
     }
 
     console.log("Starting teacher fields migration...");

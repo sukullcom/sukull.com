@@ -15,20 +15,20 @@ import { logActivity } from "@/lib/activity-logger";
 export const upsertChallengeProgress = async (challengeId: number) => {
   const user = await getServerUser();
   if (!user) {
-    throw new Error("Unauthorized");
+    throw new Error("Giriş yapmanız gerekiyor.");
   }
   const userId = user.id;
 
   const currentUserProgress = await getUserProgress();
   if (!currentUserProgress) {
-    throw new Error("User progress not found");
+    throw new Error("İlerleme bilgisi bulunamadı.");
   }
 
   const challenge = await db.query.challenges.findFirst({
     where: eq(challenges.id, challengeId),
   });
   if (!challenge) {
-    throw new Error("Challenge not found");
+    throw new Error("Zorluk bulunamadı.");
   }
   const lessonId = challenge.lessonId;
 
@@ -144,18 +144,18 @@ export async function addPointsToUser(
   meta?: { gameType?: string },
 ) {
   if (!pointsToAdd || pointsToAdd <= 0) {
-    throw new Error("Invalid points amount");
+    throw new Error("Geçersiz puan miktarı.");
   }
 
   const user = await getServerUser();
-  if (!user) throw new Error("Unauthorized");
+  if (!user) throw new Error("Giriş yapmanız gerekiyor.");
   const userId = user.id;
 
   const currentUserProgress = await db.query.userProgress.findFirst({
     where: eq(userProgress.userId, userId),
     columns: { points: true, schoolId: true, previousTotalPoints: true, userId: true },
   });
-  if (!currentUserProgress) throw new Error("User progress not found");
+  if (!currentUserProgress) throw new Error("İlerleme bilgisi bulunamadı.");
 
   const { total: adjustedPoints } = applyTimeBonus(pointsToAdd);
   const newPoints = (currentUserProgress.points || 0) + adjustedPoints;
@@ -197,14 +197,14 @@ export async function addPointsToUser(
 
 export const reduceHearts = async (challengeId: number) => {
   const user = await getServerUser();
-  if (!user) throw new Error("Unauthorized");
+  if (!user) throw new Error("Giriş yapmanız gerekiyor.");
   const userId = user.id;
   const currentUserProgress = await getUserProgress();
-  if (!currentUserProgress) throw new Error("User progress not found");
+  if (!currentUserProgress) throw new Error("İlerleme bilgisi bulunamadı.");
   const challenge = await db.query.challenges.findFirst({
     where: eq(challenges.id, challengeId),
   });
-  if (!challenge) throw new Error("Challenge not found");
+  if (!challenge) throw new Error("Zorluk bulunamadı.");
   const lessonId = challenge.lessonId;
   const existingCP = await db.query.challengeProgress.findFirst({
     where: and(

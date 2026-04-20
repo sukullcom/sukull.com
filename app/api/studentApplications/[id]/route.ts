@@ -7,7 +7,7 @@ export const PATCH = async (
   { params }: { params: { id: string } }
 ) => {
   if (!(await isAdmin())) {
-    return new NextResponse("Unauthorized", { status: 401 })
+    return new NextResponse("Bu işlem için yetkiniz yok.", { status: 401 })
   }
 
   try {
@@ -15,25 +15,25 @@ export const PATCH = async (
     const { action } = await req.json()
 
     if (!id || isNaN(parseInt(id))) {
-      return NextResponse.json({ message: "Invalid application ID" }, { status: 400 })
+      return NextResponse.json({ message: "Geçersiz başvuru kimliği." }, { status: 400 })
     }
 
     const applicationId = parseInt(id)
 
     if (action === "approve") {
       await approveStudentApplication(applicationId)
-      return NextResponse.json({ message: "Application approved successfully" })
+      return NextResponse.json({ message: "Başvuru başarıyla onaylandı." })
     } else if (action === "reject") {
       await rejectStudentApplication(applicationId)
-      return NextResponse.json({ message: "Application rejected successfully" })
+      return NextResponse.json({ message: "Başvuru reddedildi." })
     } else {
-      return NextResponse.json({ message: "Invalid action" }, { status: 400 })
+      return NextResponse.json({ message: "Geçersiz işlem." }, { status: 400 })
     }
   } catch (error) {
     console.error("Error updating student application:", error)
     return NextResponse.json(
-      { message: "An error occurred while updating the application" },
+      { message: "Başvuru güncellenirken bir hata oluştu." },
       { status: 500 }
     )
   }
-} 
+}

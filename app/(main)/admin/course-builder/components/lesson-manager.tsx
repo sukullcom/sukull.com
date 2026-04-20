@@ -255,7 +255,7 @@ export function LessonManager({ courseId, courseName }: LessonManagerProps) {
                 <Label htmlFor="unit">Unit</Label>
                 <Select value={newLesson.unitId.toString()} onValueChange={handleUnitChange}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a unit" />
+                    <SelectValue placeholder="Bir ünite seçin" />
                   </SelectTrigger>
                   <SelectContent>
                     {units.map((unit) => (
@@ -272,7 +272,7 @@ export function LessonManager({ courseId, courseName }: LessonManagerProps) {
                   id="title"
                   value={newLesson.title}
                   onChange={(e) => setNewLesson({ ...newLesson, title: e.target.value })}
-                  placeholder="Enter lesson title"
+                  placeholder="Ders başlığını girin"
                 />
               </div>
               <div>
@@ -325,7 +325,7 @@ export function LessonManager({ courseId, courseName }: LessonManagerProps) {
                 id="edit-title"
                 value={editLesson.title}
                 onChange={(e) => setEditLesson({ ...editLesson, title: e.target.value })}
-                placeholder="Enter lesson title"
+                placeholder="Ders başlığını girin"
                 className="mt-1"
               />
             </div>

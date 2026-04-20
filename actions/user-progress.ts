@@ -55,7 +55,7 @@ export const updateTotalPointsForSchools = async () => {
 
 export const upsertUserSchool = async (schoolId: number) => {
   const user = await getServerUser();
-  if (!user) throw new Error('Unauthorized');
+  if (!user) throw new Error('Giriş yapmanız gerekiyor.');
   const userId = user.id;
   const existingUserProgress = await getUserProgress();
   
@@ -118,12 +118,12 @@ async function updateSchoolPoints(schoolId: number) {
 
 export const upsertUserProgress = async (courseId: number) => {
   const user = await getServerUser();
-  if (!user) throw new Error('Unauthorized');
+  if (!user) throw new Error('Giriş yapmanız gerekiyor.');
   const userId = user.id;
   const course = await getCourseById(courseId);
-  if (!course) throw new Error('Course not found');
+  if (!course) throw new Error('Ders bulunamadı.');
   if (!course.units.length || !course.units[0].lessons.length) {
-    throw new Error('Course is empty');
+    throw new Error('Bu ders henüz içerik barındırmıyor.');
   }
   const profile = await users.getUser(userId).catch(() => null);
   const providedName = profile?.name || user.user_metadata?.full_name || 'User';
@@ -150,12 +150,12 @@ export const upsertUserProgress = async (courseId: number) => {
 /** @deprecated Ders sırasında kullanmayın; kavram ustalığı ve challenge_progress için `challenge-progress.reduceHearts` kullanın. */
 export const reduceHearts = async (challengeId: number) => {
   const user = await getServerUser();
-  if (!user) throw new Error('Unauthorized');
+  if (!user) throw new Error('Giriş yapmanız gerekiyor.');
   const userId = user.id;
   const currentUserProgress = await getUserProgress();
-  if (!currentUserProgress) throw new Error('User progress not found');
+  if (!currentUserProgress) throw new Error('İlerleme bilgisi bulunamadı.');
   const challenge = await db.query.challenges.findFirst({ where: eq(challenges.id, challengeId) });
-  if (!challenge) throw new Error('Challenge not found');
+  if (!challenge) throw new Error('Zorluk bulunamadı.');
   const lessonId = challenge.lessonId;
   const existingCP = await db.query.challengeProgress.findFirst({
     where: and(eq(challengeProgress.userId, userId), eq(challengeProgress.challengeId, challengeId)),
@@ -187,9 +187,9 @@ export const reduceHearts = async (challengeId: number) => {
 
 export const refillHearts = async () => {
   const currentUserProgress = await getUserProgress();
-  if (!currentUserProgress) throw new Error('User progress not found');
-  if (currentUserProgress.hearts === 5) throw new Error('Hearts are already full');
-  if (currentUserProgress.points < POINTS_TO_REFILL) throw new Error('Not enough points');
+  if (!currentUserProgress) throw new Error('İlerleme bilgisi bulunamadı.');
+  if (currentUserProgress.hearts === 5) throw new Error('Canların zaten tam dolu.');
+  if (currentUserProgress.points < POINTS_TO_REFILL) throw new Error('Yeterli puanınız yok.');
 
   await db
     .update(userProgress)
@@ -281,10 +281,10 @@ export async function resetDailyStreaks() {
 
 export const reduceHeartsForSubScribe = async () => {
   const user = await getServerUser();
-  if (!user) throw new Error('Unauthorized');
+  if (!user) throw new Error('Giriş yapmanız gerekiyor.');
   
   const currentUserProgress = await getUserProgress();
-  if (!currentUserProgress) throw new Error('User progress not found');
+  if (!currentUserProgress) throw new Error('İlerleme bilgisi bulunamadı.');
   
   // Check if user has infinite hearts subscription
   const hasInfiniteHearts = await checkSubscriptionStatus(user.id);

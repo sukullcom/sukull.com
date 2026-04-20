@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
       case 'districts': {
         // Get districts for selected city
         if (!city) {
-          return NextResponse.json({ error: 'City is required' }, { status: 400 });
+          return NextResponse.json({ error: 'İl bilgisi gereklidir.' }, { status: 400 });
         }
 
         const districts = await db
@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
       case 'categories': {
         // Get categories for selected city and district
         if (!city || !district) {
-          return NextResponse.json({ error: 'City and district are required' }, { status: 400 });
+          return NextResponse.json({ error: 'İl ve ilçe bilgisi gereklidir.' }, { status: 400 });
         }
 
         const categories = await db
@@ -78,7 +78,7 @@ export async function GET(request: NextRequest) {
         // Get schools for selected filters (supports both filtered and search functionality)
         if (!city || !district || !category) {
           return NextResponse.json({ 
-            error: 'City, district, and category are required' 
+            error: 'İl, ilçe ve kategori bilgisi gereklidir.' 
           }, { status: 400 });
         }
 
@@ -155,11 +155,11 @@ export async function GET(request: NextRequest) {
       }
 
       default:
-        return NextResponse.json({ error: 'Invalid action parameter. Use: cities, districts, categories, schools, search, or leaderboard' }, { status: 400 });
+        return NextResponse.json({ error: 'Geçersiz istek parametresi.' }, { status: 400 });
     }
   } catch (error) {
     console.error('Schools API error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: 'Sunucu tarafında bir hata oluştu.' }, { status: 500 });
   }
 }
 
@@ -206,6 +206,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ leaderboards });
   } catch (error) {
     console.error('All leaderboards error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json({ error: 'Sunucu tarafında bir hata oluştu.' }, { status: 500 });
   }
 } 

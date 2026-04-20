@@ -5,7 +5,7 @@ export async function GET(request: Request) {
   // Add authentication check
   const user = await getServerUser();
   if (!user) {
-    return NextResponse.json({ error: "Authentication required" }, { status: 401 });
+    return NextResponse.json({ error: "Giriş yapmanız gerekiyor." }, { status: 401 });
   }
 
   // Get the URL from the query string
@@ -62,6 +62,6 @@ export async function GET(request: Request) {
     });
   } catch (error) {
     console.error('Error fetching avatar:', error);
-    return new NextResponse('Error fetching avatar', { status: 500 });
+    return new NextResponse('Avatar yüklenirken bir hata oluştu.', { status: 500 });
   }
 } 

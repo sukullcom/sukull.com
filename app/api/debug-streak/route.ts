@@ -9,7 +9,7 @@ export async function GET() {
     // Check if user is admin
     const admin = await isAdmin();
     if (!admin) {
-      return NextResponse.json({ error: "Admin access required" }, { status: 403 });
+      return NextResponse.json({ error: "Bu işlem için yönetici yetkisi gereklidir." }, { status: 403 });
     }
 
     console.log("🔍 Debugging user progress and previous_total_points...");
@@ -66,7 +66,7 @@ export async function GET() {
     return NextResponse.json(
       { 
         success: false, 
-        error: "Internal server error",
+        error: "Sunucu tarafında bir hata oluştu.",
         message: error instanceof Error ? error.message : "Unknown error"
       },
       { status: 500 }

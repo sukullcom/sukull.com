@@ -11,7 +11,7 @@ export async function POST() {
   try {
     const user = await getServerUser();
     if (!user) {
-      return NextResponse.json({ error: "Authentication required" }, { status: 401 });
+      return NextResponse.json({ error: "Giriş yapmanız gerekiyor." }, { status: 401 });
     }
 
     // Check if streak should be reset
@@ -25,7 +25,7 @@ export async function POST() {
   } catch (error) {
     console.error("Error checking streak continuity:", error);
     return NextResponse.json(
-      { error: "Failed to check streak continuity" },
+      { error: "İstikrar bilgisi kontrol edilirken bir hata oluştu." },
       { status: 500 }
     );
   }

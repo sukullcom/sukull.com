@@ -8,7 +8,7 @@ export async function POST() {
   try {
     const admin = await isAdmin();
     if (!admin) {
-      return NextResponse.json({ error: "Admin access required" }, { status: 403 });
+      return NextResponse.json({ error: "Bu işlem için yönetici yetkisi gereklidir." }, { status: 403 });
     }
 
     const sequenceChallenges = await db.query.challenges.findMany({

@@ -7,7 +7,7 @@ export async function GET() {
     // Get the current user
     const user = await getServerUser();
     if (!user) {
-      return NextResponse.json({ teacher: false, error: "Authentication required" }, { status: 401 });
+      return NextResponse.json({ teacher: false, error: "Giriş yapmanız gerekiyor." }, { status: 401 });
     }
 
     // Check if user is a teacher using the existing function
@@ -19,6 +19,6 @@ export async function GET() {
     });
   } catch (error) {
     console.error("Error checking teacher status:", error);
-    return NextResponse.json({ teacher: false, error: "Internal server error" }, { status: 500 });
+    return NextResponse.json({ teacher: false, error: "Sunucu tarafında bir hata oluştu." }, { status: 500 });
   }
 } 
