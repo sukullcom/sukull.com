@@ -34,6 +34,7 @@ const getInitialState = () => {
 };
 
 interface CodeEditorStore extends CodeEditorState {
+  monaco: Monaco | null;
   setLanguage: (language: string) => void;
   setTheme: (theme: string) => void;
   setFontSize: (fontSize: number) => void;

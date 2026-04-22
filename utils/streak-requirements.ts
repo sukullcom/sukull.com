@@ -7,6 +7,7 @@ export const STREAK_REQUIREMENTS = {
   AVATAR_CHANGE: 14,
   SCHOOL_SELECTION: 14,
   PROFILE_EDITING: 14,
+  CODE_SNIPPET_SHARING: 7,
 } as const;
 
 export const STREAK_REQUIREMENT_MESSAGES = {
@@ -16,6 +17,7 @@ export const STREAK_REQUIREMENT_MESSAGES = {
   SCHOOL_SELECTION: `Okulunuzu seçmek için ${STREAK_REQUIREMENTS.SCHOOL_SELECTION} gün istikrarın olması gerekiyor.`,
   STUDY_BUDDY_FEATURES: `Çalışma arkadaşı özelliklerini kullanmak için ${STREAK_REQUIREMENTS.STUDY_BUDDY_FEATURES} gün istikrarın olması gerekiyor.`,
   PROFILE_EDITING: `Profil bilgilerini değiştirmek için ${STREAK_REQUIREMENTS.PROFILE_EDITING} gün istikrarın olması gerekiyor.`,
+  CODE_SNIPPET_SHARING: `Kod parçası paylaşmak için ${STREAK_REQUIREMENTS.CODE_SNIPPET_SHARING} gün istikrarın olması gerekiyor.`,
 } as const;
 
 export type StreakRequirementType = keyof typeof STREAK_REQUIREMENTS;
@@ -24,8 +26,7 @@ export type StreakRequirementType = keyof typeof STREAK_REQUIREMENTS;
 export interface UserAchievements {
   profileEditingUnlocked?: boolean;
   studyBuddyUnlocked?: boolean;
-  // Temporarily disabled - lab functionality (Sukull Code Editor)
-  // codeShareUnlocked?: boolean;
+  codeShareUnlocked?: boolean;
 }
 
 /**
@@ -51,10 +52,9 @@ export function checkStreakRequirement(
       case 'STUDY_BUDDY_FEATURES':
         if (achievements.studyBuddyUnlocked) return true;
         break;
-      // Temporarily disabled - lab functionality (Sukull Code Editor)
-      // case 'CODE_SNIPPET_SHARING':
-      //   if (achievements.codeShareUnlocked) return true;
-      //   break;
+      case 'CODE_SNIPPET_SHARING':
+        if (achievements.codeShareUnlocked) return true;
+        break;
     }
   }
   

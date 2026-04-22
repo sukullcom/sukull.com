@@ -6,6 +6,7 @@ import { CustomToaster } from "@/components/ui/custom-toaster";
 import { ExitModal } from "@/components/modals/exit-modal";
 import { HeartsModal } from "@/components/modals/hearts-modal";
 import { PracticeModal } from "@/components/modals/practice-modal";
+import { GlobalErrorListener } from "@/components/global-error-listener";
 
 const nunito = Nunito({ subsets: ["latin", "latin-ext"] });
 
@@ -107,6 +108,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         )}
       </head>
       <body className={`${nunito.className} antialiased`}>
+        <GlobalErrorListener />
         <CustomToaster />
         <ExitModal />
         <HeartsModal />

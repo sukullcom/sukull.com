@@ -24,51 +24,12 @@ interface ToasterProps {
   duration?: number;
 }
 
-// Changed to CustomToaster to match the import in layout.tsx
-export function CustomToaster({ 
-  customToast,
+export function CustomToaster({
   position = 'top-center',
   closeButton = true,
   richColors = true,
-  duration = 3000
+  duration = 3000,
 }: ToasterProps) {
-  // Default toast messages in Turkish
-  const defaultToastMessages = {
-    success: {
-      title: "Başarılı",
-      description: "İşlem başarıyla tamamlandı.",
-      variant: "default",
-      duration: 3000,
-    },
-    error: {
-      title: "Hata",
-      description: "Bir hata oluştu. Lütfen tekrar deneyin.",
-      variant: "destructive",
-      duration: 3000,
-    },
-    warning: {
-      title: "Uyarı",
-      description: "Dikkatli olmalısınız.",
-      variant: "default",
-      duration: 3000,
-    },
-    info: {
-      title: "Bilgi",
-      description: "Bilgilendirme mesajı.",
-      variant: "default",
-      duration: 3000,
-    },
-  }
-
-  const messages = customToast?.messages
-    ? {
-        success: { ...defaultToastMessages.success, ...customToast.messages.success },
-        error: { ...defaultToastMessages.error, ...customToast.messages.error },
-        warning: { ...defaultToastMessages.warning, ...customToast.messages.warning },
-        info: { ...defaultToastMessages.info, ...customToast.messages.info },
-      }
-    : defaultToastMessages
-
   return (
     <Sonner
       position={position}

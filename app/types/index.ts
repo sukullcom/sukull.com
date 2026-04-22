@@ -4,7 +4,7 @@ import { Key, ReactNode } from "react";
 export interface MonacoEditor {
   getValue(): string;
   setValue(value: string): void;
-  getModel(): unknown;
+  getModel(): { getValue(): string } | null;
 }
 
 export interface Theme {

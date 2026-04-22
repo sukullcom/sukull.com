@@ -2,14 +2,54 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/middleware'
 
+const isProd = process.env.NODE_ENV === 'production';
+
+/**
+ * Content Security Policy.
+ *
+ * `'unsafe-inline'` / `'unsafe-eval'` remain on `script-src` because (a) Next.js
+ * injects an inline hydration script, (b) Monaco editor evaluates worker code,
+ * and (c) some third-party widgets (YouTube, Google Ads) inject scripts at
+ * runtime. Tightening to nonce-based CSP is tracked as a separate follow-up.
+ *
+ * The directives below are the safe, non-breaking hardenings applied now:
+ *   • `base-uri 'self'`        → blocks base-tag injection
+ *   • `form-action 'self'`     → forms can only submit same-origin
+ *   • `frame-ancestors 'none'` → belt-and-braces with X-Frame-Options
+ *   • `object-src 'none'`      → no Flash / Java plugins
+ *   • `upgrade-insecure-requests` in production only
+ *
+ * Dev-only hosts (`http://localhost:3001`, `ws://localhost:*`) are stripped in
+ * production so the prod policy does not advertise dev infrastructure.
+ */
+const cspDirectives: string[] = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googleapis.com https://cdn.jsdelivr.net https://www.youtube.com https://s.ytimg.com https://googleads.g.doubleclick.net",
+  "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
+  "img-src 'self' data: https: blob: https://*.ytimg.com https://*.ggpht.com https://*.googleusercontent.com",
+  "font-src 'self' data: https://cdn.jsdelivr.net",
+  isProd
+    ? "connect-src 'self' https://*.railway.app https://api.supabase.io https://*.supabase.co wss://*.supabase.co https://www.googleapis.com https://emkc.org https://*.youtube.com https://googleads.g.doubleclick.net"
+    : "connect-src 'self' http://localhost:* ws://localhost:* https://*.railway.app https://api.supabase.io https://*.supabase.co wss://*.supabase.co https://www.googleapis.com https://emkc.org https://*.youtube.com https://googleads.g.doubleclick.net",
+  "media-src 'self' blob: https://*.googlevideo.com",
+  "worker-src 'self' blob: https://cdn.jsdelivr.net",
+  "frame-src 'self' https://www.youtube.com https://youtube.com",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+  "object-src 'none'",
+];
+if (isProd) {
+  cspDirectives.push("upgrade-insecure-requests");
+}
+
 const securityHeaders = {
   'X-Frame-Options': 'DENY',
   'X-Content-Type-Options': 'nosniff',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'X-XSS-Protection': '1; mode=block',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
-  'Content-Security-Policy':
-    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googleapis.com https://cdn.jsdelivr.net https://www.youtube.com https://s.ytimg.com https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https: blob: https://*.ytimg.com https://*.ggpht.com https://*.googleusercontent.com; font-src 'self' data: https://cdn.jsdelivr.net; connect-src 'self' https://*.railway.app http://localhost:3001 https://api.supabase.io https://*.supabase.co wss://*.supabase.co https://www.googleapis.com https://emkc.org https://*.youtube.com https://googleads.g.doubleclick.net; media-src 'self' blob: https://*.googlevideo.com; worker-src 'self' blob: https://cdn.jsdelivr.net; frame-src 'self' https://www.youtube.com https://youtube.com;",
+  'Content-Security-Policy': cspDirectives.join('; '),
 };
 
 const publicPaths = [
@@ -78,12 +118,31 @@ export async function middleware(req: NextRequest) {
     return response;
   }
 
-  // Only call getUser() for page-level navigation that actually needs auth gating
+  // Fast-path: detect whether ANY Supabase auth cookie is present (sb-*-auth-token).
+  // When absent we can confidently short-circuit without a network roundtrip to
+  // Supabase Auth (~30-80ms per request saved). The real JWT validation still
+  // happens in server components via supabase.auth.getUser(), which is cached.
+  const hasAuthCookie = req.cookies
+    .getAll()
+    .some((c) => c.name.startsWith('sb-') && c.name.endsWith('-auth-token'));
+
+  // No cookie at all → definitely not logged in.
+  if (!hasAuthCookie) {
+    const response = NextResponse.next({ request: req });
+    applyHeaders(response, pathname);
+    if (isPublic) return response;
+
+    const url = req.nextUrl.clone();
+    url.pathname = '/login';
+    url.searchParams.set('next', pathname);
+    return NextResponse.redirect(url);
+  }
+
+  // Cookie present — verify with Supabase (this is the only network call left).
   const { supabase, response } = createClient(req);
   applyHeaders(response, pathname);
 
   if (isPublic) {
-    // Already on a public path; check if logged-in user should be redirected away
     const { data: { user } } = await supabase.auth.getUser();
     if (user && publicPaths.some(p => pathname === p)) {
       if (pathname === '/reset-password' || pathname === '/clear-session') return response;
@@ -93,7 +152,7 @@ export async function middleware(req: NextRequest) {
     return response;
   }
 
-  // Protected page — must have a session
+  // Protected page — must have a valid session
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
     const url = req.nextUrl.clone();

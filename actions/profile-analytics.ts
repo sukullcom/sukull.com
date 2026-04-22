@@ -206,7 +206,7 @@ export async function getProfileAnalytics(): Promise<ProfileAnalyticsData | null
     const subjectMap = new Map<string, { total: number; completed: number; correct: number; incorrect: number }>();
     const coursesStarted = new Set<number>();
 
-    for (const [courseId, totals] of totalsMap) {
+    for (const [courseId, totals] of Array.from(totalsMap)) {
       const progress = courseMap.get(courseId);
       if (!progress) continue;
 

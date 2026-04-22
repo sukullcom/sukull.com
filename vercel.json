@@ -7,7 +7,7 @@
   "regions": ["fra1"],
   "crons": [
     {
-      "path": "/api/private-lesson/update-lesson-statuses",
+      "path": "/api/cron/daily",
       "schedule": "0 3 * * *"
     }
   ],

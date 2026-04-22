@@ -165,12 +165,12 @@ export const calculateGamePoints = (
   let points = baseScore;
 
   if (difficulty && 'DIFFICULTY_MULTIPLIER' in gameConfig) {
-    const multiplier = (gameConfig.DIFFICULTY_MULTIPLIER as Record<string, number>)[difficulty] || 1.0;
+    const multiplier = ((gameConfig as unknown as { DIFFICULTY_MULTIPLIER: Record<string, number> }).DIFFICULTY_MULTIPLIER)[difficulty] || 1.0;
     points = Math.round(points * multiplier);
   }
 
   if (bonusType && bonusType in gameConfig) {
-    points += (gameConfig as Record<string, number>)[bonusType];
+    points += (gameConfig as unknown as Record<string, number>)[bonusType];
   }
 
   return Math.max(0, points);

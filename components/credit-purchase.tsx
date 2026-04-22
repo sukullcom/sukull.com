@@ -35,13 +35,14 @@ export default function CreditPurchase() {
   const [expireYear, setExpireYear] = useState('')
   const [cvc, setCvc] = useState('')
   const [holderName, setHolderName] = useState('')
-  
+
   // Billing address state
   const [contactName, setContactName] = useState('')
   const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
   const [city, setCity] = useState('')
   const [zipCode, setZipCode] = useState('')
+  const [identityNumber, setIdentityNumber] = useState('')
 
   const supabase = createClient()
 
@@ -80,9 +81,23 @@ export default function CreditPurchase() {
       return
     }
 
+    const tc = identityNumber.replace(/\D/g, '')
+    if (tc.length !== 11) {
+      toast.error('Geçersiz TC kimlik numarası. 11 haneli olmalıdır.')
+      setLoading(false)
+      return
+    }
+
+    const idempotencyKey =
+      typeof crypto !== 'undefined' && 'randomUUID' in crypto
+        ? crypto.randomUUID()
+        : `cred_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`
+
     const paymentData = {
       creditsAmount: selectedPackage.credits,
       totalPrice: selectedPackage.price,
+      identityNumber: tc,
+      idempotencyKey,
       paymentCard: {
         cardHolderName: holderName,
         cardNumber: cardNumber.replace(/\s/g, ''), // Remove spaces
@@ -126,7 +141,7 @@ export default function CreditPurchase() {
       const result = await response.json()
 
       if (result.success) {
-        toast.success(`Ödeme başarılı! ${selectedPackage.credits} kredi hesabınıza eklendi.`)
+        toast.success(result.message || `Ödeme başarılı! ${selectedPackage.credits} kredi hesabınıza eklendi.`)
         // Refresh credits
         await fetchUserCredits()
         // Clear form
@@ -140,8 +155,9 @@ export default function CreditPurchase() {
         setAddress('')
         setCity('')
         setZipCode('')
+        setIdentityNumber('')
       } else {
-        toast.error('Ödeme başarısız: ' + (result.message || 'Bilinmeyen hata'))
+        toast.error(result.message || 'Ödeme işlenemedi. Lütfen tekrar deneyin.')
       }
     } catch (error: unknown) {
       console.error('Payment error:', error)
@@ -330,7 +346,24 @@ export default function CreditPurchase() {
                   onChange={(e) => setContactName(e.target.value)}
                 />
               </div>
-              
+
+              <div>
+                <label className="block text-sm font-medium mb-1">TC Kimlik Numarası</label>
+                <Input
+                  type="text"
+                  inputMode="numeric"
+                  placeholder="11 haneli TC kimlik numarası"
+                  value={identityNumber}
+                  onChange={(e) =>
+                    setIdentityNumber(e.target.value.replace(/\D/g, '').slice(0, 11))
+                  }
+                  maxLength={11}
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Ödeme yasası gereği zorunludur; saklanmaz, sadece bankanıza iletilir.
+                </p>
+              </div>
+
               <div>
                 <label className="block text-sm font-medium mb-1">Telefon</label>
                 <Input

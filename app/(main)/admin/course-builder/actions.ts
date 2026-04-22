@@ -6,6 +6,8 @@ import { courses, units, lessons, challenges, challengeOptions } from "@/db/sche
 import { eq, sql } from "drizzle-orm";
 import { isAdmin } from "@/lib/admin";
 
+type ChallengeOptionInsert = typeof challengeOptions.$inferInsert;
+
 async function requireAdmin() {
   const admin = await isAdmin();
   if (!admin) throw new Error("Bu işlem için yetkiniz yok.");
@@ -349,9 +351,16 @@ export async function createChallengeOptions(
 ) {
   try {
     await requireAdmin();
-    const challengeOptionsData = options.map(option => ({
+    const challengeOptionsData: ChallengeOptionInsert[] = options.map((option) => ({
       challengeId,
-      ...option,
+      text: option.text ?? "",
+      correct: option.correct,
+      imageSrc: option.imageSrc,
+      audioSrc: option.audioSrc,
+      correctOrder: option.correctOrder,
+      pairId: option.pairId,
+      isBlank: option.isBlank,
+      dragData: option.dragData,
     }));
 
     const createdOptions = await db
@@ -387,10 +396,9 @@ export async function updateChallengeOptions(
     // Delete existing options for this challenge
     await db.delete(challengeOptions).where(eq(challengeOptions.challengeId, challengeId));
 
-    // Insert new options
-    const challengeOptionsData = options.map(option => ({
+    const challengeOptionsData: ChallengeOptionInsert[] = options.map((option) => ({
       challengeId,
-      text: option.text,
+      text: option.text ?? "",
       correct: option.correct,
       imageSrc: option.imageSrc,
       audioSrc: option.audioSrc,
@@ -516,19 +524,18 @@ export async function importCourseFromJSON(jsonData: {
           totalChallenges++;
 
           if (challengeData.options && challengeData.options.length > 0) {
-            await db.insert(challengeOptions).values(
-              challengeData.options.map((opt) => ({
-                challengeId: challenge.id,
-                text: opt.text,
-                correct: opt.correct,
-                imageSrc: opt.imageSrc,
-                audioSrc: opt.audioSrc,
-                correctOrder: opt.correctOrder ?? opt.sequenceOrder,
-                pairId: opt.pairId,
-                isBlank: opt.isBlank,
-                dragData: opt.dragData,
-              }))
-            );
+            const rows: ChallengeOptionInsert[] = challengeData.options.map((opt) => ({
+              challengeId: challenge.id,
+              text: opt.text ?? "",
+              correct: opt.correct,
+              imageSrc: opt.imageSrc,
+              audioSrc: opt.audioSrc,
+              correctOrder: opt.correctOrder ?? opt.sequenceOrder,
+              pairId: opt.pairId,
+              isBlank: opt.isBlank,
+              dragData: opt.dragData,
+            }));
+            await db.insert(challengeOptions).values(rows);
           }
         }
       }
@@ -680,19 +687,18 @@ export async function appendToCourse(
           addedChallenges++;
 
           if (chData.options && chData.options.length > 0) {
-            await db.insert(challengeOptions).values(
-              chData.options.map((opt) => ({
-                challengeId: challenge.id,
-                text: opt.text,
-                correct: opt.correct,
-                imageSrc: opt.imageSrc,
-                audioSrc: opt.audioSrc,
-                correctOrder: opt.correctOrder ?? opt.sequenceOrder,
-                pairId: opt.pairId,
-                isBlank: opt.isBlank,
-                dragData: opt.dragData,
-              }))
-            );
+            const rows: ChallengeOptionInsert[] = chData.options.map((opt) => ({
+              challengeId: challenge.id,
+              text: opt.text ?? "",
+              correct: opt.correct,
+              imageSrc: opt.imageSrc,
+              audioSrc: opt.audioSrc,
+              correctOrder: opt.correctOrder ?? opt.sequenceOrder,
+              pairId: opt.pairId,
+              isBlank: opt.isBlank,
+              dragData: opt.dragData,
+            }));
+            await db.insert(challengeOptions).values(rows);
           }
         }
       }

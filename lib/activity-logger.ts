@@ -16,7 +16,7 @@ export async function logActivity({ userId, eventType, page, metadata }: LogOpti
       userId,
       eventType,
       page: page || null,
-      metadata: metadata ? JSON.stringify(metadata) : null,
+      metadata: metadata ?? null,
     });
   } catch {
     // Fire-and-forget: don't break the main flow

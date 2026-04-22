@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import { AlertTriangle, ArrowLeft, RefreshCw } from "lucide-react";
+import { reportClientError } from "@/lib/report-error";
 
 export default function AnalyticsError({
   error,
@@ -13,6 +14,11 @@ export default function AnalyticsError({
 }) {
   useEffect(() => {
     console.error("Analytics page error:", error);
+    reportClientError({
+      error,
+      location: "admin/analytics",
+      metadata: error.digest ? { digest: error.digest } : undefined,
+    });
   }, [error]);
 
   return (

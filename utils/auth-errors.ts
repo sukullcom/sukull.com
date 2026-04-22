@@ -19,21 +19,22 @@ export type AuthErrorType =
   | 'DatabaseError'
   | 'Default';
 
-type AnyAuthLikeError =
+export type AnyAuthLikeError =
   | SupabaseAuthError
   | PostgrestError
   | (Error & { code?: string; status?: number; error_description?: string })
   | { message?: string; code?: string; status?: number; error_description?: string }
   | string
   | null
-  | undefined;
+  | undefined
+  | unknown;
 
 /**
  * Translate Supabase/Postgrest/auth errors into friendly Turkish messages.
  * Never surfaces raw English messages to users.
  */
 export const getAuthError = (
-  error: AnyAuthLikeError
+  error: unknown
 ): { type: AuthErrorType; message: string } => {
   // Normalise a message string out of whatever we got
   let rawMessage = '';

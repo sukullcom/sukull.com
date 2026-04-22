@@ -17,6 +17,7 @@ import {
 } from "@/db/schema";
 import { and, eq, gte, sql, desc, count, inArray } from "drizzle-orm";
 import { getServerUser } from "@/lib/auth";
+import { logErrorAsync } from "@/lib/error-logger";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -45,6 +46,12 @@ async function safeQuery<T>(
     return await fn();
   } catch (err) {
     console.error(`[admin-analytics] query '${name}' failed:`, err);
+    logErrorAsync({
+      source: "server-action",
+      error: err,
+      location: `admin-analytics/${name}`,
+      level: "warn",
+    });
     return fallback;
   }
 }
@@ -67,6 +74,11 @@ async function safeAction<T>(
     return await fn();
   } catch (err) {
     console.error(`[admin-analytics] action '${name}' failed:`, err);
+    logErrorAsync({
+      source: "server-action",
+      error: err,
+      location: `admin-analytics/${name}`,
+    });
     return fallback;
   }
 }

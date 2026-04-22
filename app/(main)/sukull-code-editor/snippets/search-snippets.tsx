@@ -7,7 +7,7 @@ export default function SearchSnippets() {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
   const handleSearch = () => {
     // Construct new query param

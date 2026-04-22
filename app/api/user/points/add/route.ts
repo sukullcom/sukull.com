@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
 import { addPointsToUser } from "@/actions/challenge-progress";
 import { MAX_POINTS_ADD_PER_REQUEST } from "@/lib/api-limits";
+import { checkRateLimit, rateLimitHeaders, RATE_LIMITS } from "@/lib/rate-limit-db";
 
 /**
  * POST /api/user/points/add
@@ -17,6 +18,17 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "Kimlik doğrulama gerekli" },
         { status: 401 }
+      );
+    }
+
+    const rl = await checkRateLimit({
+      key: `points-add:user:${user.id}`,
+      ...RATE_LIMITS.pointsAdd,
+    });
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: "Çok fazla istek. Lütfen biraz bekleyin." },
+        { status: 429, headers: rateLimitHeaders(rl) }
       );
     }
 

@@ -347,7 +347,7 @@ export function LessonManager({ courseId, courseName }: LessonManagerProps) {
             
             <div className="flex justify-end space-x-2 pt-2">
               <Button 
-                variant="outline" 
+                variant="primaryOutline" 
                 onClick={() => setIsEditOpen(false)}
                 disabled={isLoading}
               >

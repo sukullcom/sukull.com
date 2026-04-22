@@ -32,6 +32,7 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [zipCode, setZipCode] = useState('');
+  const [identityNumber, setIdentityNumber] = useState('');
 
   const handlePayment = async () => {
     if (loading) return;
@@ -51,7 +52,21 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
       return;
     }
 
+    const tc = identityNumber.replace(/\D/g, '');
+    if (tc.length !== 11) {
+      toast.error('Geçersiz TC kimlik numarası. 11 haneli olmalıdır.');
+      setLoading(false);
+      return;
+    }
+
+    const idempotencyKey =
+      typeof crypto !== 'undefined' && 'randomUUID' in crypto
+        ? crypto.randomUUID()
+        : `sub_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+
     const paymentData = {
+      identityNumber: tc,
+      idempotencyKey,
       paymentCard: {
         cardHolderName: holderName,
         cardNumber: cardNumber.replace(/\s/g, ''), // Remove spaces
@@ -95,19 +110,16 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
       const result = await response.json();
 
       if (result.success) {
-        toast.success('Sonsuz can aboneliği başarıyla aktifleştirildi! Artık sınırsız kalp kullanabilirsiniz.');
+        toast.success(result.message || 'Sonsuz can aboneliği başarıyla aktifleştirildi!');
         // Refresh the page to update the subscription status
         router.refresh();
         onSuccess?.();
       } else {
-        toast.error('Abonelik ödemesi başarısız: ' + (result.message || 'Bilinmeyen hata'));
+        toast.error(result.message || 'Abonelik ödemesi başarısız oldu. Lütfen tekrar deneyin.');
       }
     } catch (error: unknown) {
       console.error('Subscription payment error:', error);
-      const errorMessage = error instanceof Error 
-        ? error.message 
-        : 'Abonelik ödemesi sırasında hata oluştu';
-      toast.error(errorMessage);
+      toast.error('Abonelik ödemesi sırasında bir hata oluştu. Lütfen tekrar deneyin.');
     } finally {
       setLoading(false);
     }
@@ -240,7 +252,24 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
                 onChange={(e) => setContactName(e.target.value)}
               />
             </div>
-            
+
+            <div>
+              <label className="block text-sm font-medium mb-1">TC Kimlik Numarası</label>
+              <Input
+                type="text"
+                inputMode="numeric"
+                placeholder="11 haneli TC kimlik numarası"
+                value={identityNumber}
+                onChange={(e) =>
+                  setIdentityNumber(e.target.value.replace(/\D/g, '').slice(0, 11))
+                }
+                maxLength={11}
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Ödeme yasası gereği zorunludur; saklanmaz, sadece bankanıza iletilir.
+              </p>
+            </div>
+
             <div>
               <label className="block text-sm font-medium mb-1">Telefon</label>
               <Input

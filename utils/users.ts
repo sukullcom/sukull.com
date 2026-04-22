@@ -92,11 +92,11 @@ export const users = {
       const newUser = {
         id: authUser.id,
         email,
-        name,
+        name: name ?? email.split('@')[0] ?? 'User',
         avatar,
         provider,
         description: '',
-        links: [],
+        links: [] as unknown[],
       }
       return this.createUser(newUser)
     } catch (error) {

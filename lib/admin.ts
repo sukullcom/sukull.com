@@ -26,7 +26,8 @@ export const isAdmin = async () => {
     ? adminEmails.includes(user.email.toLowerCase())
     : false;
 
-  if (emailMatch && userRecord && userRecord.role !== "admin") {
+  if (emailMatch && userRecord) {
+    // At this point role is guaranteed non-admin (earlier early-return handles admins)
     await db.update(users)
       .set({ role: "admin", updated_at: new Date() })
       .where(eq(users.id, user.id));

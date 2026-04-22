@@ -9,9 +9,10 @@ import {
   text,
   timestamp,
   json,
-  uniqueIndex, 
+  uniqueIndex,
   jsonb,
-  index
+  index,
+  primaryKey,
 } from "drizzle-orm/pg-core";
 
 // Define your IUserLink type (for TypeScript)
@@ -37,7 +38,10 @@ export const users = pgTable("users", {
   meetLink: text("meet_link"),                // Google Meet link for teachers
   created_at: timestamp("created_at").defaultNow().notNull(),
   updated_at: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  emailIdx: index("idx_users_email").on(table.email),
+  roleIdx: index("idx_users_role").on(table.role),
+}));
 
 // Courses
 export const courses = pgTable("courses", {
@@ -60,7 +64,9 @@ export const units = pgTable("units", {
     .references(() => courses.id, { onDelete: "cascade" })
     .notNull(),
   order: integer("order").notNull(),
-});
+}, (table) => ({
+  courseIdx: index("idx_units_course_id").on(table.courseId),
+}));
 
 export const unitRelations = relations(units, ({ many, one }) => ({
   course: one(courses, {
@@ -78,7 +84,9 @@ export const lessons = pgTable("lessons", {
     .references(() => units.id, { onDelete: "cascade" })
     .notNull(),
   order: integer("order").notNull(),
-});
+}, (table) => ({
+  unitIdx: index("idx_lessons_unit_id").on(table.unitId),
+}));
 
 export const lessonsRelations = relations(lessons, ({ one, many }) => ({
   unit: one(units, {
@@ -115,7 +123,9 @@ export const challenges = pgTable("challenges", {
   tags: text("tags"),
   timeLimit: integer("time_limit"),
   metadata: text("metadata"),
-});
+}, (table) => ({
+  lessonIdx: index("idx_challenges_lesson_id").on(table.lessonId),
+}));
 
 export const challengesRelations = relations(challenges, ({ one, many }) => ({
   lesson: one(lessons, {
@@ -141,7 +151,9 @@ export const challengeOptions = pgTable("challenge_options", {
   pairId: integer("pair_id"), // For MATCH_PAIRS challenges
   isBlank: boolean("is_blank").default(false), // For FILL_BLANK challenges
   dragData: text("drag_data"), // For DRAG_DROP challenges (JSON string)
-});
+}, (table) => ({
+  challengeIdx: index("idx_challenge_options_challenge_id").on(table.challengeId),
+}));
 
 export const challengeOptionsRelations = relations(challengeOptions, ({ one, many }) => ({
   challenges: one(challenges, {
@@ -162,7 +174,10 @@ export const challengeProgress = pgTable("challenge_progress", {
   incorrectCount: integer("incorrect_count").notNull().default(0),
   lastAttemptedAt: timestamp("last_attempted_at"),
   firstCompletedAt: timestamp("first_completed_at"),
-});
+}, (table) => ({
+  userIdx: index("idx_challenge_progress_user_id").on(table.userId),
+  userChallengeIdx: index("idx_challenge_progress_user_challenge").on(table.userId, table.challengeId),
+}));
 
 export const challengeProgressRelations = relations(challengeProgress, ({ one, many }) => ({
   challenges: one(challenges, {
@@ -222,7 +237,11 @@ export const userProgress = pgTable("user_progress", {
   // Premium subscription fields
   hasInfiniteHearts: boolean("has_infinite_hearts").default(false).notNull(), // Whether user has active infinite hearts subscription
   subscriptionExpiresAt: timestamp("subscription_expires_at"), // When the current subscription expires
-});
+}, (table) => ({
+  schoolIdx: index("idx_user_progress_school_id").on(table.schoolId),
+  activeCourseIdx: index("idx_user_progress_active_course").on(table.activeCourseId),
+  pointsIdx: index("idx_user_progress_points").on(table.points),
+}));
 
 export const userProgressRelations = relations(userProgress, ({ one }) => ({
   activeCourse: one(courses, {
@@ -283,54 +302,15 @@ export const teacherApplications = pgTable("teacher_applications", {
   status: applicationStatusEnum("status").default("pending").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  userIdx: index("idx_teacher_apps_user").on(table.userId),
+  statusIdx: index("idx_teacher_apps_status").on(table.status),
+}));
 
 export const teacherApplicationsRelations = relations(teacherApplications, ({ one }) => ({
   user: one(users, {
     fields: [teacherApplications.userId],
     references: [users.id],
-  }),
-}));
-
-// DEPRECATED: English Group Applications (İngilizce Konuşma Grubu Başvuruları)
-// This feature is no longer used but the table is kept for database compatibility
-export const englishGroupApplications = pgTable("english_group_applications", {
-  id: serial("id").primaryKey(),
-  participantName: text("participant_name").notNull(),
-  participantSurname: text("participant_surname").notNull(),
-  participantPhoneNumber: text("participant_phone_number").notNull(),
-  participantEmail: text("participant_email").notNull(),
-  quizResult: integer("quiz_result").notNull().default(0),
-  classification: text("classification").default(""),
-});
-
-export const englishGroupApplicationsRelations = relations(englishGroupApplications, ({}) => ({}));
-
-// DEPRECATED: Quiz Questions and Options
-// These tables are no longer used but kept for database compatibility
-export const quizQuestions = pgTable("quiz_questions", {
-  id: serial("id").primaryKey(),
-  field: text("field").notNull(),
-  questionText: text("question_text").notNull(),
-});
-
-export const quizQuestionsRelations = relations(quizQuestions, ({ many }) => ({
-  options: many(quizOptions),
-}));
-
-export const quizOptions = pgTable("quiz_options", {
-  id: serial("id").primaryKey(),
-  questionId: integer("question_id")
-    .references(() => quizQuestions.id, { onDelete: "cascade" })
-    .notNull(),
-  text: text("text").notNull(),
-  isCorrect: boolean("is_correct").notNull().default(false),
-});
-
-export const quizOptionsRelations = relations(quizOptions, ({ one }) => ({
-  question: one(quizQuestions, {
-    fields: [quizOptions.questionId],
-    references: [quizQuestions.id],
   }),
 }));
 
@@ -361,7 +341,10 @@ export const studyBuddyPosts = pgTable("study_buddy_posts", {
   purpose: text("purpose").notNull(),
   reason: text("reason").notNull(),
   created_at: timestamp("created_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  userIdx: index("idx_study_buddy_posts_user").on(table.user_id),
+  createdIdx: index("idx_study_buddy_posts_created").on(table.created_at),
+}));
 
 // Study Buddy Chats
 // We store participants as JSON (an array of user IDs)
@@ -383,7 +366,9 @@ export const studyBuddyMessages = pgTable("study_buddy_messages", {
   sender: text("sender").notNull(),
   content: text("content").notNull(),
   created_at: timestamp("created_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  chatCreatedIdx: index("idx_study_buddy_messages_chat_created").on(table.chat_id, table.created_at),
+}));
 
 // Optionally, you can define relations for these new tables:
 export const studyBuddyPostsRelations = relations(studyBuddyPosts, ({ one }) => ({
@@ -412,6 +397,7 @@ export const userDailyStreak = pgTable("user_daily_streak", {
   achieved: boolean("achieved").notNull().default(false),
 }, (table) => [
   uniqueIndex("user_daily_streak_user_date_idx").on(table.userId, table.date),
+  index("idx_user_daily_streak_user").on(table.userId, table.date),
 ]);
 export const userDailyStreakRelations = relations(userDailyStreak, ({ one }) => ({
   user: one(users, {
@@ -512,7 +498,11 @@ export const lessonReviews = pgTable("lesson_reviews", {
   comment: text("comment"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  bookingIdx: uniqueIndex("idx_lesson_reviews_booking").on(table.bookingId),
+  teacherIdx: index("idx_lesson_reviews_teacher").on(table.teacherId),
+  studentIdx: index("idx_lesson_reviews_student").on(table.studentId),
+}));
 
 export const lessonReviewsRelations = relations(lessonReviews, ({ one }) => ({
   booking: one(lessonBookings, {
@@ -541,7 +531,10 @@ export const teacherFields = pgTable("teacher_fields", {
   isActive: boolean("is_active").notNull().default(true),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  teacherIdx: index("idx_teacher_fields_teacher").on(table.teacherId),
+  activeIdx: index("idx_teacher_fields_active").on(table.teacherId, table.isActive),
+}));
 
 export const teacherFieldsRelations = relations(teacherFields, ({ one }) => ({
   teacher: one(users, {
@@ -584,6 +577,7 @@ export const creditTransactions = pgTable("credit_transactions", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 }, (table) => ({
   userIdIdx: index("idx_credit_tx_user_id").on(table.userId),
+  userCreatedIdx: index("idx_credit_tx_user_created").on(table.userId, table.createdAt),
 }));
 
 export const creditTransactionsRelations = relations(creditTransactions, ({ one }) => ({
@@ -604,7 +598,9 @@ export const paymentLogs = pgTable("payment_logs", {
   errorCode: text("error_code"),
   errorMessage: text("error_message"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  userCreatedIdx: index("idx_payment_logs_user").on(table.userId, table.createdAt),
+}));
 
 export const paymentLogsRelations = relations(paymentLogs, ({ one }) => ({
   user: one(users, {
@@ -643,10 +639,45 @@ export const activityLog = pgTable("activity_log", {
   userId: text("user_id").notNull(),
   eventType: text("event_type").notNull(),
   page: text("page"),
-  metadata: text("metadata"),
+  metadata: jsonb("metadata").$type<Record<string, unknown>>(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 }, (table) => ({
   userIdx: index("idx_activity_log_user").on(table.userId),
   eventTypeIdx: index("idx_activity_log_event_type").on(table.eventType),
   createdAtIdx: index("idx_activity_log_created_at").on(table.createdAt),
+}));
+
+// Daily rollup of activity_log (populated by `cleanup_activity_log()` in the
+// daily cron). Survives TTL pruning of raw rows so long-term analytics work.
+export const activityLogDaily = pgTable("activity_log_daily", {
+  day: timestamp("day", { mode: "date" }).notNull(),
+  eventType: text("event_type").notNull(),
+  page: text("page"),
+  eventCount: integer("event_count").notNull().default(0),
+  uniqueUsers: integer("unique_users").notNull().default(0),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+  pk: primaryKey({ columns: [table.day, table.eventType, table.page] }),
+  dayIdx: index("activity_log_daily_day_idx").on(table.day),
+  eventIdx: index("activity_log_daily_event_idx").on(table.eventType, table.day),
+}));
+
+// Lightweight Postgres-native error tracking (see migration 0023).
+export const errorLog = pgTable("error_log", {
+  id: serial("id").primaryKey(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  source: text("source").notNull(),
+  location: text("location"),
+  level: text("level").notNull().default("error"),
+  message: text("message").notNull(),
+  stack: text("stack"),
+  userId: text("user_id"),
+  requestId: text("request_id"),
+  metadata: jsonb("metadata").$type<Record<string, unknown>>(),
+  userAgent: text("user_agent"),
+  url: text("url"),
+}, (table) => ({
+  createdAtIdx: index("error_log_created_at_idx").on(table.createdAt),
+  sourceLevelIdx: index("error_log_source_level_idx").on(table.source, table.level, table.createdAt),
+  userIdIdx: index("error_log_user_id_idx").on(table.userId),
 }));

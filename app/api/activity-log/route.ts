@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
       userId,
       eventType,
       page: page || null,
-      metadata: metadata ? JSON.stringify(metadata) : null,
+      metadata: metadata ?? null,
     });
 
     return NextResponse.json({ ok: true });

@@ -1,6 +1,6 @@
 "use client";
 
-import { courses, userProgress } from "@/db/schema";
+import { courses as coursesTable, userProgress } from "@/db/schema";
 import { Card } from "./card";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTransition, useCallback, useEffect, useRef, useMemo, useState } from "react";
@@ -9,8 +9,10 @@ import { toast } from "sonner";
 import { extractSubject } from "@/lib/subject-colors";
 import { Globe, BookOpen, GraduationCap, Lock } from "lucide-react";
 
+type Course = typeof coursesTable.$inferSelect;
+
 type Props = {
-  courses: (typeof courses.$inferSelect)[];
+  courses: Course[];
   activeCourseId?: (typeof userProgress.$inferSelect)["activeCourseId"];
 };
 
@@ -20,7 +22,7 @@ type SectionGroup = {
   icon: React.ReactNode;
   color: string;
   gradient: string;
-  courses: (typeof courses.$inferSelect)[];
+  courses: Course[];
 };
 
 const GRADE_META: Record<number, { icon: React.ReactNode; color: string; gradient: string }> = {
@@ -162,9 +164,9 @@ export const List = ({ courses, activeCourseId }: Props) => {
   );
 
   const { gradeGroups, topicGroups, examGroups } = useMemo(() => {
-    const grades: Record<number, (typeof courses.$inferSelect)[]> = {};
-    const topics: Record<string, (typeof courses.$inferSelect)[]> = {};
-    const exams: Record<string, (typeof courses.$inferSelect)[]> = {};
+    const grades: Record<number, Course[]> = {};
+    const topics: Record<string, Course[]> = {};
+    const exams: Record<string, Course[]> = {};
 
     courses.forEach((course) => {
       const examKey = detectExam(course.title);
@@ -313,7 +315,7 @@ export const List = ({ courses, activeCourseId }: Props) => {
     description: string;
     color: string;
     gradient: string;
-    courses: (typeof courses.$inferSelect)[];
+    courses: Course[];
   }) => (
     <section key={group.key}>
       <div className="flex items-center gap-3 mb-4">

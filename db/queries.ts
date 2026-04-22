@@ -8,11 +8,9 @@ import {
   units,
   userProgress,
   schools,
-  quizQuestions,
   privateLessonApplications,
   teacherApplications,
   snippets,
-  englishGroupApplications,
   users,
   teacherAvailability,
   lessonBookings,
@@ -247,11 +245,13 @@ export const getLesson = cache(async (id?: number) => {
           lessonId: true,
           type: true,
           question: true,
-          explanation: true, // Include explanation field
-          questionImageSrc: true, // Explicitly include questionImageSrc
+          explanation: true,
+          questionImageSrc: true,
           order: true,
           timeLimit: true,
           metadata: true,
+          difficulty: true,
+          tags: true,
         },
         with: {
           challengeOptions: true,
@@ -758,75 +758,6 @@ export async function isTeacher(userId: string) {
   return user?.role === "teacher";
 }
 
-// DEPRECATED: Function to get quiz questions by field
-// This function is no longer used but kept for compatibility
-export const getQuizQuestionsByField = cache(async (field: string) => {
-  const questions = await db.query.quizQuestions.findMany({
-    where: eq(quizQuestions.field, field),
-    with: {
-      options: true,
-    },
-  });
-  return questions;
-});
-
-// DEPRECATED: Save English Group application (İngilizce Konuşma Grubu)
-// This function is no longer used but kept for compatibility
-export async function saveEnglishGroupApplication(data: {
-  participantName: string;
-  participantSurname: string;
-  participantPhoneNumber: string;
-  participantEmail: string;
-  quizResult: number;
-  classification?: string;
-}) {
-  const result = await db
-    .insert(englishGroupApplications)
-    .values(data)
-    .returning({ id: englishGroupApplications.id });
-  return result; // array of inserted rows, typically length=1
-}
-
-// DEPRECATED: CEFR Classification function
-// This function is no longer used but kept for compatibility
-export function getCEFRClassification(score: number): string {
-  // For a 50-question quiz, example:
-  //  0..10 => A1
-  //  11..20 => A2
-  //  21..30 => B1
-  //  31..40 => B2
-  //  41..45 => C1
-  //  46..50 => C2
-  if (score <= 10) return "A1";
-  if (score <= 20) return "A2";
-  if (score <= 30) return "B1";
-  if (score <= 40) return "B2";
-  if (score <= 45) return "C1";
-  return "C2";
-}
-
-// DEPRECATED: English group => store classification
-// This function is no longer used but kept for compatibility
-export async function updateEnglishGroupClassification(id: number, quizResult: number) {
-  const classification = getCEFRClassification(quizResult);
-
-  // Define a type for the return value
-  interface UpdateResult {
-    rowCount: number;
-  }
-
-  // Example: update that row with quizResult & classification
-  const result = await db
-    .update(englishGroupApplications)
-    .set({
-      quizResult,
-      classification,
-    })
-    .where(eq(englishGroupApplications.id, id));
-  
-  // Add rowCount property
-  return { rowCount: 1 } as UpdateResult;
-}
 // CREATE a snippet
 export const createSnippet = async (data: {
   userId: string;

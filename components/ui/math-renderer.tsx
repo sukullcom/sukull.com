@@ -74,7 +74,7 @@ export const MathRenderer: React.FC<MathRendererProps> = ({ children, className 
     // Now handle inline math in the remaining text ($...$) and \(...\)
     if (remaining) {
       const inlineMathRegex = /(\$[^$\n]+\$|\\\([^)]+\\\))/g;
-      const remainingParts = [];
+      const remainingParts: Array<{ type: 'text' | 'inline-math' | 'block-math'; content: string; key: string }> = [];
       let lastInlineIndex = 0;
       let inlineMatch;
 

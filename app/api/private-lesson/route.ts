@@ -130,7 +130,7 @@ export const GET = secureApi.auth(async (request, user) => {
         let filteredTeachers = teachers;
         
         if (subject || grade) {
-          filteredTeachers = teachers.filter(teacher => {
+          filteredTeachers = teachers.filter((teacher: { fields: string[] }) => {
             if (subject && !teacher.fields.some((field: string) => 
               field.toLowerCase().includes(subject.toLowerCase())
             )) {

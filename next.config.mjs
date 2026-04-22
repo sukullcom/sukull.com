@@ -101,10 +101,10 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined,
 };

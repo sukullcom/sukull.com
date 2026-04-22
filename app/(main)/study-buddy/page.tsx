@@ -480,7 +480,7 @@ export default function StudyBuddyPage() {
         query = query.eq("purpose", filterPurpose);
       }
       
-      const { data: postsData, error: postsError, count } = await query;
+      const { data: postsData, error: postsError } = await query;
       
       if (postsError) {
         console.error("Error loading posts:", postsError);
@@ -727,7 +727,7 @@ export default function StudyBuddyPage() {
         created_at: new Date().toISOString()
       };
 
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("study_buddy_posts")
         .insert([newPost])
         .select();
@@ -808,7 +808,7 @@ export default function StudyBuddyPage() {
       }
 
       // Create new chat
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("study_buddy_chats")
         .insert({
           participants: [currentUser.id, post.user_id],

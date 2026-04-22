@@ -15,6 +15,7 @@ import {
   ArrowRight,
   LayoutDashboard,
   BarChart3,
+  AlertTriangle,
 } from "lucide-react";
 
 export default async function AdminDashboardPage() {
@@ -65,6 +66,7 @@ export default async function AdminDashboardPage() {
     { href: "/admin/student-applications", label: "Öğrenci Başvuruları", icon: GraduationCap, badge: stats.studentPending },
     { href: "/admin/course-builder", label: "Kurs Oluşturucu", icon: BookOpen },
     { href: "/admin/fix-student-roles", label: "Kullanıcı Yönetimi", icon: UsersRound },
+    { href: "/admin/errors", label: "Hata Kayıtları", icon: AlertTriangle },
   ];
 
   const metricCards = [
