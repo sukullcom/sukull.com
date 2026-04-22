@@ -1,6 +1,4 @@
-import { redirect } from "next/navigation";
 import Link from "next/link";
-import { getServerUser } from "@/lib/auth";
 import db from "@/db/drizzle";
 import { users, teacherApplications, privateLessonApplications } from "@/db/schema";
 import { eq, count, sql } from "drizzle-orm";
@@ -19,14 +17,8 @@ import {
 } from "lucide-react";
 
 export default async function AdminDashboardPage() {
-  const user = await getServerUser();
-  if (!user) redirect("/login");
-
-  const userRecord = await db.query.users.findFirst({
-    where: eq(users.id, user.id),
-    columns: { role: true },
-  });
-  if (userRecord?.role !== "admin") redirect("/unauthorized");
+  // Auth + admin gate is enforced in app/(main)/admin/layout.tsx via isAdmin(),
+  // which also auto-syncs ADMIN_EMAILS → users.role. No need to duplicate here.
 
   const [
     [totalUsersRow],

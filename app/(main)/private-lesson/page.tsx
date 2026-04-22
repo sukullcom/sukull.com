@@ -180,7 +180,7 @@ export default async function PrivateLessonPage() {
               </ul>
               <Button 
                 asChild
-                variant="primary"
+                variant="secondary"
                 size="lg"
               >
                 <a href="/private-lesson/get">

@@ -1,8 +1,6 @@
-import { redirect } from "next/navigation";
 import Link from "next/link";
-import { getServerUser } from "@/lib/auth";
 import db from "@/db/drizzle";
-import { users, errorLog } from "@/db/schema";
+import { errorLog } from "@/db/schema";
 import { eq, desc, sql, gte } from "drizzle-orm";
 import { AlertTriangle, ArrowLeft, Filter } from "lucide-react";
 
@@ -19,15 +17,7 @@ export default async function AdminErrorsPage({
 }: {
   searchParams: Promise<SearchParams>;
 }) {
-  const user = await getServerUser();
-  if (!user) redirect("/login");
-
-  const userRecord = await db.query.users.findFirst({
-    where: eq(users.id, user.id),
-    columns: { role: true },
-  });
-  if (userRecord?.role !== "admin") redirect("/unauthorized");
-
+  // Auth + admin gate handled by app/(main)/admin/layout.tsx.
   const params = await searchParams;
   const hours = Math.max(1, Math.min(720, Number(params.hours ?? 24)));
   const sinceDate = new Date(Date.now() - hours * 60 * 60 * 1000);
