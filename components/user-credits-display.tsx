@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { CreditCard, Plus, RefreshCw } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
+import { clientLogger } from '@/lib/client-logger'
 
 interface UserCreditsDisplayProps {
   showPurchaseButton?: boolean
@@ -41,7 +42,7 @@ export default function UserCreditsDisplay({
       const response = await axios.get('/api/user/credits')
       setCredits(response.data)
     } catch (err) {
-      console.error('Error fetching credits:', err)
+      clientLogger.error({ message: 'fetch user credits failed', error: err, location: 'user-credits-display' })
       setError(true)
     } finally {
       setLoading(false)

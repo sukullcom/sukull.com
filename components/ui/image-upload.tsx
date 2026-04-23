@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { toast } from "sonner";
 import { deleteImageFromStorage } from "@/utils/image-cleanup";
+import { clientLogger } from "@/lib/client-logger";
 
 interface ImageUploadProps {
   value?: string;
@@ -35,7 +36,7 @@ export function ImageUpload({
       if (value) {
         const deleteSuccess = await deleteImageFromStorage(value);
         if (!deleteSuccess) {
-          console.warn('Failed to delete old image, continuing with upload');
+          clientLogger.warn('failed to delete old image, continuing with upload');
         }
       }
 
@@ -56,7 +57,7 @@ export function ImageUpload({
         toast.error(result.error || 'Resim yüklenemedi');
       }
     } catch (error) {
-      console.error('Upload error:', error);
+      clientLogger.error({ message: 'image upload failed', error, location: 'image-upload/upload' });
       toast.error('Resim yüklenemedi');
     } finally {
       setIsUploading(false);
@@ -118,7 +119,7 @@ export function ImageUpload({
         toast.warning('Resim formdan kaldırıldı, ancak depolamadan silinirken hata oluştu');
       }
     } catch (error) {
-      console.error('Delete request error:', error);
+      clientLogger.error({ message: 'image delete request failed', error, location: 'image-upload/delete' });
       // Still clear the URL from the form even if deletion failed
       onChange('');
       toast.warning('Resim formdan kaldırıldı, ancak depolamadan silinirken hata oluştu');

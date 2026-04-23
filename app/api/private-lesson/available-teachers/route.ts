@@ -65,7 +65,8 @@ export const GET = secureApi.auth(async (_request: NextRequest, user) => {
 
     return ApiResponses.success({ teachers: teachersWithRatings });
   } catch (error) {
-    console.error("Error fetching available teachers:", error);
+    (await (await import("@/lib/logger")).getRequestLogger({ labels: { route: "api/private-lesson/available-teachers" } }))
+      .error({ message: "fetch available teachers failed", error, location: "api/private-lesson/available-teachers" });
     return ApiResponses.serverError("Öğretmenler yüklenirken bir hata oluştu");
   }
 });

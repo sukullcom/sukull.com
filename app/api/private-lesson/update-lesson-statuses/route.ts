@@ -92,7 +92,8 @@ export async function POST(request: NextRequest) {
       results,
     });
   } catch (error) {
-    console.error("Error updating lesson statuses:", error);
+    (await (await import("@/lib/logger")).getRequestLogger({ labels: { route: "api/private-lesson/update-lesson-statuses" } }))
+      .error({ message: "update lesson statuses failed", error, location: "api/private-lesson/update-lesson-statuses" });
     return NextResponse.json({
       message: "Ders durumları güncellenirken bir hata oluştu"
     }, { status: 500 });

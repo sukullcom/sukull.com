@@ -60,12 +60,18 @@ CRON_SECRET=your-secret-key-here
 
 ## Testing the Setup
 
-**Manual test (as admin):**
+The standalone `/api/test-points` endpoint was removed. To trigger a
+reset on demand (requires admin auth or `CRON_SECRET`), hit the
+consolidated daily cron endpoint:
+
 ```bash
-curl -X POST https://your-domain.com/api/test-points
+# As admin (with a Vercel cron header) or with the shared secret:
+curl -X POST \
+  -H "Authorization: Bearer YOUR_CRON_SECRET" \
+  https://your-domain.com/api/cron/daily
 ```
 
-**Cron endpoint test:**
+**Reset-streaks-only endpoint:**
 ```bash
 curl -X POST -H "Authorization: Bearer YOUR_CRON_SECRET" https://your-domain.com/api/cron/reset-streaks
 ```
@@ -119,7 +125,7 @@ This will show:
 **If streaks become incorrect again:**
 1. Check if cron job is running (logs should show daily execution)
 2. Verify timezone is correct (should be 21:00 UTC = 00:00 Turkey Time)
-3. Run manual reset: `POST /api/test-points`
+3. Run manual reset: `POST /api/cron/daily` (with `CRON_SECRET`)
 4. Check debug endpoint to verify fix
 
 **Remember:** This issue will recur if the daily reset stops running!

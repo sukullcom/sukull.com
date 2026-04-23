@@ -18,7 +18,8 @@ export async function GET() {
       studentId: isStudent ? user.id : null 
     });
   } catch (error) {
-    console.error("Error checking student status:", error);
+    (await (await import("@/lib/logger")).getRequestLogger({ labels: { route: "api/private-lesson/check-student-status" } }))
+      .error({ message: "check student status failed", error, location: "api/private-lesson/check-student-status" });
     return NextResponse.json({ student: false, error: "Sunucu tarafında bir hata oluştu." }, { status: 500 });
   }
 } 

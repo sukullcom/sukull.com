@@ -1,19 +1,21 @@
 import { NextResponse } from "next/server";
-import { isAdmin } from "@/lib/admin";
+import { getAdminActor } from "@/lib/admin";
+import { logAdminActionAsync } from "@/lib/admin-audit";
 import db from "@/db/drizzle";
 import { teacherFields, teacherApplications, users } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
+import { getRequestLogger } from "@/lib/logger";
 
 export async function POST() {
+  const log = await getRequestLogger({ labels: { route: "api/admin/migrate-teacher-fields" } });
   try {
-    // Check if the user is an admin
-    const admin = await isAdmin();
-    
-    if (!admin) {
+    const actor = await getAdminActor();
+
+    if (!actor) {
       return NextResponse.json({ message: "Bu işlem için yetkiniz yok." }, { status: 401 });
     }
 
-    console.log("Starting teacher fields migration...");
+    log.info("starting teacher fields migration");
 
     // Get all approved teacher applications
     const approvedApplications = await db.query.teacherApplications.findMany({
@@ -28,7 +30,7 @@ export async function POST() {
       }
     });
 
-    console.log(`Found ${approvedApplications.length} approved teacher applications`);
+    log.info("found approved teacher applications", { count: approvedApplications.length });
 
     // Get all existing teacher fields to avoid duplicates
     const existingFields = await db.query.teacherFields.findMany({
@@ -57,7 +59,7 @@ export async function POST() {
       });
 
       if (!user) {
-        console.log(`Skipping application for user ${application.userId} - user not found or not a teacher`);
+        log.debug("skip: user not found or not teacher", { userId: application.userId });
         skippedCount++;
         continue;
       }
@@ -65,7 +67,7 @@ export async function POST() {
       // Check if we already have a field for this teacher with this display name
       const fieldKey = `${application.userId}-${application.field}`;
       if (existingFieldsMap.has(fieldKey)) {
-        console.log(`Skipping application for user ${application.userId} - field already exists`);
+        log.debug("skip: field already exists", { userId: application.userId });
         skippedCount++;
         continue;
       }
@@ -93,15 +95,26 @@ export async function POST() {
           updatedAt: application.updatedAt || new Date(),
         });
 
-        console.log(`Migrated field for teacher ${application.userId}: ${application.field}`);
+        log.debug("migrated teacher field", { userId: application.userId, field: application.field });
         migratedCount++;
       } catch (error) {
-        console.error(`Error migrating field for teacher ${application.userId}:`, error);
+        log.error({ message: "migrate field failed", error, location: "migrate-teacher-fields/loop", fields: { userId: application.userId } });
         skippedCount++;
       }
     }
 
-    console.log(`Migration completed. Migrated: ${migratedCount}, Skipped: ${skippedCount}`);
+    log.info("migration completed", { migrated: migratedCount, skipped: skippedCount });
+
+    logAdminActionAsync({
+      actorId: actor.id,
+      actorEmail: actor.email,
+      action: "admin.migrate_teacher_fields",
+      metadata: {
+        migrated: migratedCount,
+        skipped: skippedCount,
+        total: approvedApplications.length,
+      },
+    });
 
     return NextResponse.json({
       success: true,
@@ -114,7 +127,7 @@ export async function POST() {
     });
 
   } catch (error) {
-    console.error("Error during migration:", error);
+    log.error({ message: "migration failed", error, location: "api/admin/migrate-teacher-fields/POST" });
     return NextResponse.json({ 
       success: false,
       message: "Migration failed", 

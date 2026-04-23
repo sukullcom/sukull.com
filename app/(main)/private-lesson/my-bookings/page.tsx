@@ -10,6 +10,7 @@ import { Star } from "lucide-react";
 import { toast } from "sonner";
 import UserCreditsDisplay from "@/components/user-credits-display";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { clientLogger } from "@/lib/client-logger";
 
 interface Booking {
   id: number;
@@ -182,7 +183,7 @@ export default function MyBookingsPage() {
         setBookings(bookingsWithTeacher);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching bookings:", error);
+        clientLogger.error({ message: "fetch bookings failed", error, location: "my-bookings/page/fetchBookings" });
         setError("Derslerin yüklenirken bir hata oluştu. Lütfen daha sonra tekrar dene.");
         setLoading(false);
       }
@@ -267,7 +268,7 @@ export default function MyBookingsPage() {
       // Show success toast instead of alert
       toast.success('Ders başarıyla iptal edildi ve kredin iade edildi');
     } catch (error) {
-      console.error("Error cancelling lesson:", error);
+      clientLogger.error({ message: "cancel lesson failed", error, location: "my-bookings/page/cancel" });
       setCancelModal(prev => ({ ...prev, isLoading: false }));
       toast.error('Ders iptal edilemedi. Lütfen daha sonra tekrar deneyin');
     }

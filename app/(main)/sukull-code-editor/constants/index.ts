@@ -1,4 +1,4 @@
-import { Theme } from "@/app/types";
+import { Theme } from "@/types";
 import { Monaco } from "@monaco-editor/react";
 import { BuiltinTheme } from "monaco-editor";
 

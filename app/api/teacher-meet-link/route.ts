@@ -3,6 +3,7 @@ import { isTeacher } from "@/db/queries";
 import db from "@/db/drizzle";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { getRequestLogger } from "@/lib/logger";
 
 // ✅ GET TEACHER MEET LINK
 export const GET = secureApi.auth(async (request, user) => {
@@ -23,7 +24,10 @@ export const GET = secureApi.auth(async (request, user) => {
       meetLink: teacherProfile?.meetLink || ""
     });
   } catch (error) {
-    console.error("Error fetching meet link:", error);
+    {
+      const log = await getRequestLogger({ labels: { route: "api/teacher-meet-link", op: "GET" } });
+      log.error({ message: "fetch meet link failed", error, location: "api/teacher-meet-link/GET" });
+    }
     return ApiResponses.serverError("Meet bağlantısı yüklenirken bir hata oluştu");
   }
 });
@@ -57,7 +61,10 @@ export const POST = secureApi.auth(async (request, user) => {
       meetLink: meetLink || ""
     });
   } catch (error) {
-    console.error("Google Meet bağlantısı güncellenirken bir hata oluştu:", error);
+    {
+      const log = await getRequestLogger({ labels: { route: "api/teacher-meet-link", op: "PUT" } });
+      log.error({ message: "update meet link failed", error, location: "api/teacher-meet-link/PUT" });
+    }
     return ApiResponses.serverError("Google Meet bağlantısı güncellenirken bir hata oluştu");
   }
 }); 

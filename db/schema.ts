@@ -1,6 +1,7 @@
 // db/schema.ts
 import { relations } from "drizzle-orm";
 import {
+  bigserial,
   boolean,
   integer,
   pgEnum,
@@ -155,7 +156,7 @@ export const challengeOptions = pgTable("challenge_options", {
   challengeIdx: index("idx_challenge_options_challenge_id").on(table.challengeId),
 }));
 
-export const challengeOptionsRelations = relations(challengeOptions, ({ one, many }) => ({
+export const challengeOptionsRelations = relations(challengeOptions, ({ one }) => ({
   challenges: one(challenges, {
     fields: [challengeOptions.challengeId],
     references: [challenges.id],
@@ -179,7 +180,7 @@ export const challengeProgress = pgTable("challenge_progress", {
   userChallengeIdx: index("idx_challenge_progress_user_challenge").on(table.userId, table.challengeId),
 }));
 
-export const challengeProgressRelations = relations(challengeProgress, ({ one, many }) => ({
+export const challengeProgressRelations = relations(challengeProgress, ({ one }) => ({
   challenges: one(challenges, {
     fields: [challengeProgress.challengeId],
     references: [challenges.id],
@@ -664,7 +665,7 @@ export const activityLogDaily = pgTable("activity_log_daily", {
 
 // Lightweight Postgres-native error tracking (see migration 0023).
 export const errorLog = pgTable("error_log", {
-  id: serial("id").primaryKey(),
+  id: bigserial("id", { mode: "number" }).primaryKey(),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   source: text("source").notNull(),
   location: text("location"),
@@ -680,4 +681,24 @@ export const errorLog = pgTable("error_log", {
   createdAtIdx: index("error_log_created_at_idx").on(table.createdAt),
   sourceLevelIdx: index("error_log_source_level_idx").on(table.source, table.level, table.createdAt),
   userIdIdx: index("error_log_user_id_idx").on(table.userId),
+}));
+
+// Admin audit trail (see migration 0024). Every privileged admin action
+// lands here: role changes, application approvals, course edits, etc.
+export const adminAudit = pgTable("admin_audit", {
+  id: bigserial("id", { mode: "number" }).primaryKey(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  actorId: text("actor_id").notNull(),
+  actorEmail: text("actor_email"),
+  action: text("action").notNull(),
+  targetType: text("target_type"),
+  targetId: text("target_id"),
+  ip: text("ip"),
+  userAgent: text("user_agent"),
+  metadata: jsonb("metadata").$type<Record<string, unknown>>().notNull().default({}),
+}, (table) => ({
+  createdAtIdx: index("admin_audit_created_at_idx").on(table.createdAt),
+  actorCreatedIdx: index("admin_audit_actor_created_idx").on(table.actorId, table.createdAt),
+  actionCreatedIdx: index("admin_audit_action_created_idx").on(table.action, table.createdAt),
+  targetIdx: index("admin_audit_target_idx").on(table.targetType, table.targetId),
 }));

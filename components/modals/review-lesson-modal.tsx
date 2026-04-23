@@ -13,6 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { clientLogger } from "@/lib/client-logger";
 import { toast } from "sonner";
 
 interface ReviewData {
@@ -84,7 +85,7 @@ export const ReviewLessonModal = ({
       setComment("");
       onClose();
     } catch (error) {
-      console.error("Error submitting review:", error);
+      clientLogger.error({ message: "submit review failed", error, location: "review-lesson-modal" });
       toast.error(error instanceof Error ? error.message : "Bir hata oluştu");
     } finally {
       setIsSubmitting(false);

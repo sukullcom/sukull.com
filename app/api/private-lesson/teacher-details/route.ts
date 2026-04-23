@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
+import { getRequestLogger } from "@/lib/logger";
 import db from "@/db/drizzle";
 import { users, teacherApplications } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -57,7 +58,10 @@ export async function GET() {
     
     return NextResponse.json(teacherProfile);
   } catch (error) {
-    console.error("Error getting teacher profile:", error);
+    {
+      const log = await getRequestLogger({ labels: { route: "api/private-lesson/teacher-details", op: "GET" } });
+      log.error({ message: "get teacher profile failed", error, location: "api/private-lesson/teacher-details/GET" });
+    }
     return NextResponse.json({ 
       message: "Eğitmen profili yüklenirken bir hata oluştu"
     }, { status: 500 });
@@ -92,7 +96,10 @@ export async function PATCH(request: Request) {
       updated: true
     });
   } catch (error) {
-    console.error("Error updating teacher profile:", error);
+    {
+      const log = await getRequestLogger({ labels: { route: "api/private-lesson/teacher-details", op: "PUT" } });
+      log.error({ message: "update teacher profile failed", error, location: "api/private-lesson/teacher-details/PUT" });
+    }
     return NextResponse.json({ 
       message: "Profil güncellenirken bir hata oluştu"
     }, { status: 500 });

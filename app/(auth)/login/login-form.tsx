@@ -9,6 +9,7 @@ import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { OAuthSignIn } from "@/components/auth/oauth-signin";
 import { login } from "./actions";
+import { clientLogger } from "@/lib/client-logger";
 
 export function LoginForm() {
   const [isPending, startTransition] = useTransition();
@@ -58,7 +59,7 @@ export function LoginForm() {
         }
         // If no error, server action will redirect
       } catch (error) {
-        console.error('Login error:', error);
+        clientLogger.error({ message: 'login submit failed', error, location: 'auth/login-form' });
         toast.error('Giriş yapılırken bir hata oluştu');
         setIsSubmitting(false);
       }

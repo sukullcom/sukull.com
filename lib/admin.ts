@@ -1,17 +1,54 @@
-import { getServerUser } from "./auth";
-import db from "@/db/drizzle";
-import { users } from "@/db/schema";
+import { cache } from "react";
 import { eq } from "drizzle-orm";
 
+import db from "@/db/drizzle";
+import { users } from "@/db/schema";
+
+import { getServerUser } from "./auth";
+
+/**
+ * Admin role resolution.
+ *
+ * ## Why React `cache()`?
+ *
+ * `isAdmin()` is called from admin layouts, route handlers and multiple
+ * server actions within a single request. Without memoisation we'd hit
+ * `users` with one SELECT per caller; on the admin dashboard that's 4–6
+ * round-trips per navigation. `cache()` dedupes the fetch for the lifetime
+ * of one request (React 19 / Next 15 semantics).
+ *
+ * ## Why the read is now side-effect-free
+ *
+ * The previous implementation performed a `users.role = 'admin'` UPDATE
+ * *inside the read* when the caller's email matched `ADMIN_EMAILS` but the
+ * row had a non-admin role. That turned every anonymous-ish admin page
+ * view into a write, and — more importantly — made `isAdmin()` an
+ * unobservable mutation point. If `ADMIN_EMAILS` ever leaked, a single
+ * visit to any admin-gated route would permanently escalate that user's
+ * DB role.
+ *
+ * We now split the concerns:
+ *   - `isAdmin()` — cached, pure read of `users.role`.
+ *   - `syncAdminRoleFromEmail()` — explicit write. Called exactly once
+ *     per successful auth callback (see `app/api/auth/callback/route.ts`)
+ *     *and* exposed as a manual button for admins to refresh after an
+ *     `ADMIN_EMAILS` env-var change.
+ */
+
 const adminEmails = process.env.ADMIN_EMAILS
-  ? process.env.ADMIN_EMAILS.split(",").map(email => email.trim().toLowerCase())
+  ? process.env.ADMIN_EMAILS.split(",").map((email) => email.trim().toLowerCase())
   : [];
 
 /**
- * Unified admin check: uses DB role as source of truth,
- * auto-syncs from ADMIN_EMAILS when they diverge.
+ * Returns `true` when the current user has `role = 'admin'` in the
+ * database, `false` for any other value, and `null` when nobody is signed
+ * in. React-cached so repeated callers within the same request share one
+ * DB round-trip.
+ *
+ * This is a pure read: it does **not** promote or demote; for that use
+ * `syncAdminRoleFromEmail()` at an explicit sync point.
  */
-export const isAdmin = async () => {
+export const isAdmin = cache(async (): Promise<boolean | null> => {
   const user = await getServerUser();
   if (!user) return null;
 
@@ -20,53 +57,74 @@ export const isAdmin = async () => {
     columns: { role: true },
   });
 
-  if (userRecord?.role === "admin") return true;
-
-  const emailMatch = user.email
-    ? adminEmails.includes(user.email.toLowerCase())
-    : false;
-
-  if (emailMatch && userRecord) {
-    // At this point role is guaranteed non-admin (earlier early-return handles admins)
-    await db.update(users)
-      .set({ role: "admin", updated_at: new Date() })
-      .where(eq(users.id, user.id));
-    return true;
-  }
-
-  return false;
-};
+  return userRecord?.role === "admin";
+});
 
 /**
- * Synchronizes admin role in the database with the ADMIN_EMAILS list
- * @returns true if the user's role was updated, false otherwise
+ * Returns the current user iff they are an admin. Mirrors `isAdmin()` but
+ * exposes id/email so callers (e.g. audit logging) can attribute actions
+ * without an extra Supabase round-trip. Also React-cached per request.
  */
-export const syncAdminRole = async () => {
-  const user = await getServerUser();
-  if (!user || !user.email) return false;
-  
-  const isUserAdmin = adminEmails.includes(user.email.toLowerCase());
-  
-  // Get current user record
-  const userRecord = await db.query.users.findFirst({
-    where: eq(users.id, user.id),
+export const getAdminActor = cache(
+  async (): Promise<{ id: string; email: string | null } | null> => {
+    const admin = await isAdmin();
+    if (!admin) return null;
+
+    const user = await getServerUser();
+    if (!user) return null;
+
+    return { id: user.id, email: user.email ?? null };
+  },
+);
+
+/**
+ * Idempotent role reconciliation against the `ADMIN_EMAILS` env var.
+ *
+ * Called at:
+ *   - auth callback (once per login / email verification)
+ *   - `/admin/sync` (manual refresh button for env changes)
+ *
+ * **Never** called from a read-path. Returns whether an UPDATE was issued.
+ *
+ * Pass the Supabase auth user explicitly to avoid a second `getServerUser()`
+ * round-trip at callback time, where we already have it in scope.
+ */
+export async function syncAdminRoleFromEmail(authUser: {
+  id: string;
+  email: string | null | undefined;
+}): Promise<boolean> {
+  if (!authUser?.email) return false;
+
+  const shouldBeAdmin = adminEmails.includes(authUser.email.toLowerCase());
+
+  const current = await db.query.users.findFirst({
+    where: eq(users.id, authUser.id),
+    columns: { role: true },
   });
-  
-  // If user's admin status in the database doesn't match their email status
-  if (userRecord && (
-    (isUserAdmin && userRecord.role !== "admin") || 
-    (!isUserAdmin && userRecord.role === "admin")
-  )) {
-    // Update the role in the database
-    await db.update(users)
-      .set({ 
-        role: isUserAdmin ? "admin" : "user",
-        updated_at: new Date()
-      })
-      .where(eq(users.id, user.id));
-    
-    return true; // Role was updated
-  }
-  
-  return false; // No update needed
-};
+  if (!current) return false;
+
+  const isCurrentlyAdmin = current.role === "admin";
+  if (shouldBeAdmin === isCurrentlyAdmin) return false;
+
+  await db
+    .update(users)
+    .set({
+      role: shouldBeAdmin ? "admin" : "user",
+      updated_at: new Date(),
+    })
+    .where(eq(users.id, authUser.id));
+
+  return true;
+}
+
+/**
+ * Legacy alias. Callers that previously relied on `syncAdminRole()` —
+ * which pulled the current user via `getServerUser()` — keep working
+ * unchanged. New code should prefer `syncAdminRoleFromEmail` and pass the
+ * user explicitly.
+ */
+export async function syncAdminRole(): Promise<boolean> {
+  const user = await getServerUser();
+  if (!user) return false;
+  return syncAdminRoleFromEmail({ id: user.id, email: user.email });
+}

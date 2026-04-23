@@ -3,6 +3,8 @@
  * Provides memory caching with TTL and LRU eviction
  */
 
+import { clientLogger } from '@/lib/client-logger';
+
 type CacheEntry<T> = {
   value: T;
   expiry: number;
@@ -99,7 +101,12 @@ class AppCache {
       this.set(key, value, ttl);
       return value;
     } catch (error) {
-      console.error(`Error computing cached value for key ${key}:`, error);
+      clientLogger.error({
+        message: 'cache compute failed',
+        error,
+        location: 'utils/cache/getOrCompute',
+        fields: { key },
+      });
       throw error;
     }
   }

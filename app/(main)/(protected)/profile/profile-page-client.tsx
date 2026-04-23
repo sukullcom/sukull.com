@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ProfileSchoolSelector } from "./profile-school-selector";
 import { AvatarGenerator } from "random-avatar-generator";
 import Image from "next/image";
-import { School } from "@/app/types";
+import { School } from "@/types";
 import { normalizeAvatarUrl } from "@/utils/avatar";
 import StreakCalendarAdvanced from "@/components/streak-calendar";
 import {

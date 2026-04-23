@@ -1,181 +1,172 @@
-# Deployment Guide for Sukull.com - Hybrid Architecture
+# Sukull — Deployment Guide
 
-## Architecture Overview
+Sukull, iki servisli (split) bir deploy kullanır:
 
-Since Iyzico's SDK doesn't work properly in serverless environments like Vercel, we're using a **hybrid approach**:
+- **Vercel** — Next.js uygulaması (`sukull.com`)
+- **Railway** — bağımsız Node.js ödeme sunucusu (Iyzico SDK serverless'te güvenilir
+  çalışmadığı için izole edildi)
 
-- **Next.js App**: Deployed on Vercel (sukull.com)
-- **Payment Server**: Deployed on Railway/Render (separate Node.js server)
+```
+┌─────────────────┐  API calls   ┌────────────────────┐
+│ Vercel          │ ───────────► │ Railway            │
+│ Next.js app     │              │ payment-server     │
+│ sukull.com      │              │ (Node + Iyzico SDK)│
+└─────────────────┘              └────────────────────┘
+          │                                │
+          ▼                                ▼
+    ┌─────────────┐              ┌────────────────┐
+    │ Supabase    │              │   Iyzico API   │
+    │ (Postgres   │              └────────────────┘
+    │  + Auth)    │
+    └─────────────┘
+```
 
-## Part 1: Deploy Payment Server (Railway/Render)
+## 1. Repo yapısı
 
-### Option A: Railway Deployment (Recommended)
+```
+sukull.com/
+├── app/                    → Next.js routes (Vercel)
+├── components/             → Next.js UI (Vercel)
+├── lib/, hooks/, utils/    → Next.js (Vercel)
+├── payment-server/         → Express ödeme sunucusu (Railway)
+│   ├── server.js
+│   └── package.json
+├── supabase/migrations/    → SQL migrasyonları (manuel veya drizzle-kit)
+├── vercel.json             → Vercel config (cron dahil)
+└── railway.json            → Railway config (payment-server için)
+```
 
-1. **Create Railway Account**: Go to [railway.app](https://railway.app)
+Her iki servis de aynı repodan deploy edilir; Railway sadece `payment-server/`
+altındaki kodu çalıştırır (`railway.json` içinde `buildCommand`/`startCommand`
+tanımlıdır).
 
-2. **Create New Project**: Connect your GitHub repository
+## 2. Supabase hazırlığı
 
-3. **Configure Environment Variables**:
+1. Supabase projesi oluştur.
+2. **Project Settings → Database → Connection String**'den üç URL'i al:
+   - `postgresql://...pooler.supabase.com:6543/postgres` → `DATABASE_URL`
+     (transaction pooler; runtime için)
+   - `postgresql://...pooler.supabase.com:5432/postgres` → `DIRECT_URL`
+     (session pooler; sadece `drizzle-kit` migrasyonları için)
+3. Migrasyonları uygula:
+
+   ```bash
+   # Yerel makineden, .env içinde DIRECT_URL dolu olduğundan emin ol
+   npx drizzle-kit push
    ```
-   IYZICO_API_KEY=your_production_api_key
-   IYZICO_SECRET_KEY=your_production_secret_key
-   IYZICO_BASE_URL=https://api.iyzipay.com
-   DATABASE_URL=your_production_database_url
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+
+   Alternatif: `supabase/migrations/*.sql` dosyalarını Supabase SQL Editor'e
+   sırayla yapıştır.
+
+## 3. Payment Server (Railway)
+
+1. [railway.app](https://railway.app) üzerinden yeni proje → GitHub repo'ya bağla.
+2. Environment Variables:
+
+   ```bash
+   NODE_ENV=production
    PORT=3001
+
+   DATABASE_URL=postgres://...pooler.supabase.com:6543/postgres
+   NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+   SUPABASE_SERVICE_ROLE_KEY=...
+
+   IYZICO_API_KEY=...
+   IYZICO_SECRET_KEY=...
+   IYZICO_BASE_URL=https://api.iyzipay.com
+
    NEXT_PUBLIC_APP_URL=https://sukull.com
    ```
 
-4. **Deploy Settings**:
-   - Start Command: `node payment-server.js`
-   - Build Command: `npm install`
-   - Health Check: `/health`
-
-5. **Get Deployment URL**: Railway will provide a URL like `https://your-app.railway.app`
-
-### Option B: Render Deployment
-
-1. **Create Render Account**: Go to [render.com](https://render.com)
-
-2. **Create Web Service**: Connect your GitHub repository
-
-3. **Configure Settings**:
-   - Environment: `Node`
-   - Build Command: `npm install`
-   - Start Command: `node payment-server.js`
-   - Port: `3001`
-
-4. **Add Environment Variables** (same as Railway above)
-
-5. **Deploy and Get URL**: Render will provide a URL like `https://your-app.onrender.com`
-
-## Part 2: Deploy Next.js App (Vercel)
-
-### 1. Vercel Deployment
-
-1. **Connect Repository**: Connect your GitHub repo to Vercel
-
-2. **Configure Environment Variables**:
+3. `railway.json` zaten şu değerlerle yapılandırılmış:
+   - Build: `cd payment-server && npm ci --omit=dev`
+   - Start: `cd payment-server && node server.js`
+4. Deploy sonrası sağlık kontrolü:
    ```
-   # Payment Server Configuration
-   NEXT_PUBLIC_PAYMENT_SERVER_URL=https://your-payment-server.railway.app
-   
-   # Database Configuration
-   DATABASE_URL=your_production_database_url
-   
-   # Authentication (Supabase)
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-   
-   # App Configuration
+   GET https://<your-app>.up.railway.app/health
+   ```
+   `{"success":true,"services":{"supabase":true,"database":true,"iyzico":true}}`
+   dönmeli.
+
+## 4. Next.js App (Vercel)
+
+1. Vercel'de **Import Project** ile GitHub repo'yu bağla.
+2. Environment Variables (Production):
+
+   ```bash
+   # Supabase
+   NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+   SUPABASE_SERVICE_ROLE_KEY=...
+
+   # Database (transaction pooler)
+   DATABASE_URL=postgres://...pooler.supabase.com:6543/postgres
+
+   # Payment server (Railway URL'i)
+   NEXT_PUBLIC_PAYMENT_SERVER_URL=https://<your-app>.up.railway.app
+
+   # Admin listesi (virgülle ayrılmış e-postalar)
+   ADMIN_EMAILS=admin1@example.com,admin2@example.com
+
+   # Cron secret (manual tetikleme ve opsiyonel ekstra koruma için)
+   CRON_SECRET=<uzun-random-string>
+
+   # App
    NEXT_PUBLIC_APP_URL=https://sukull.com
    NODE_ENV=production
    ```
 
-3. **Domain Configuration**:
-   - Add `sukull.com` and `www.sukull.com` in Vercel dashboard
-   - Update DNS records to point to Vercel
+3. **Domain**: Vercel dashboard → Domains → `sukull.com` ve `www.sukull.com`
+   ekle, DNS'i Vercel'e yönlendir.
+4. **Cron jobs**: `vercel.json` içinde tanımlı (`/api/cron/daily`). Hobby
+   planında günde 1 kez çalışır; Pro plana geçince sıklığı ayarlayabilirsin.
 
-## Part 3: Configure CORS
+## 5. Geliştirme
 
-Update the payment server CORS configuration to allow requests from your production domain:
+```bash
+# Her ikisi birden
+npm run dev:full
 
-In `payment-server.js`, ensure CORS is configured for production:
-
-```javascript
-app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:3001', 
-    'http://localhost:3002',
-    'https://sukull.com',
-    'https://www.sukull.com'
-  ],
-  credentials: true
-}));
+# Veya ayrı terminaller
+npm run dev              # Next.js → localhost:3000
+npm run payment-server   # Express → localhost:3001
 ```
 
-## Development Setup
+`.env.local` örneği:
 
-### Local Development (2 servers)
-
-1. **Start Next.js App**:
-   ```bash
-   npm run dev
-   ```
-
-2. **Start Payment Server** (separate terminal):
-   ```bash
-   npm run payment-server
-   ```
-
-3. **Or start both together**:
-   ```bash
-   npm run dev:full
-   ```
-
-### Environment Variables (.env.local)
-
-```
-# For local development
+```bash
 NEXT_PUBLIC_PAYMENT_SERVER_URL=http://localhost:3001
-
-# Database
-DATABASE_URL=your_local_database_url
-
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-
-# Iyzico (for payment server)
-IYZICO_API_KEY=sandbox-qaeSUyqS2RrU6OvZcbtkd9BrIydQa8st
-IYZICO_SECRET_KEY=sandbox-X3n0IAtXd8Nce2uP6zxVyUoPUD9CsWoM
+DATABASE_URL=postgres://...pooler.supabase.com:6543/postgres
+DIRECT_URL=postgres://...pooler.supabase.com:5432/postgres
+NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+SUPABASE_SERVICE_ROLE_KEY=...
+IYZICO_API_KEY=sandbox-...
+IYZICO_SECRET_KEY=sandbox-...
 IYZICO_BASE_URL=https://sandbox-api.iyzipay.com
+ADMIN_EMAILS=you@example.com
 ```
 
-## Production Architecture
+## 6. CORS (payment-server)
 
-```
-┌─────────────────┐    ┌─────────────────┐
-│   sukull.com    │    │  Payment Server │
-│   (Vercel)      │◄──►│  (Railway)      │
-│   Next.js App   │    │  Node.js + SDK  │
-└─────────────────┘    └─────────────────┘
-         │                       │
-         ▼                       ▼
-┌─────────────────┐    ┌─────────────────┐
-│    Database     │    │     Iyzico     │
-│   (Supabase)    │    │      API       │
-└─────────────────┘    └─────────────────┘
-```
+`payment-server/server.js` `NEXT_PUBLIC_APP_URL` ortam değişkenini origin
+beyaz listesine ekler. Production'da sadece `https://sukull.com` ve
+`https://www.sukull.com` erişebilir.
 
-## Benefits of This Approach
+## 7. Test checklist
 
-✅ **Iyzico SDK Compatibility**: Node.js server ensures full SDK functionality
-✅ **Vercel Performance**: Next.js app benefits from Vercel's edge network
-✅ **Scalability**: Both services can scale independently  
-✅ **Security**: Payment logic isolated in dedicated server
-✅ **Cost Effective**: Railway/Render affordable for payment server
+- [ ] Migrasyonlar uygulandı (`npx drizzle-kit push` başarılı)
+- [ ] Railway `/health` yeşil
+- [ ] Vercel build geçti, `sukull.com` açılıyor
+- [ ] Admin hesap girişi → `/admin` erişilebiliyor
+- [ ] Öğrenci hesabı → test ödeme başarılı (sandbox)
+- [ ] Günlük cron manuel tetikleme:
+      `curl -H "Authorization: Bearer $CRON_SECRET" https://sukull.com/api/cron/daily`
 
-## Testing Checklist
+## 8. İzleme
 
-- [ ] Local development with both servers
-- [ ] Payment server deployed and accessible
-- [ ] Next.js app deployed on Vercel
-- [ ] Environment variables configured
-- [ ] CORS configured properly
-- [ ] Domain DNS configured
-- [ ] Test payments in production
-- [ ] Monitor both services
-
-## Monitoring URLs
-
-- **Main App**: https://sukull.com
-- **Payment Server Health**: https://your-payment-server.railway.app/health
-- **Vercel Dashboard**: Track Next.js app performance
-- **Railway/Render Dashboard**: Monitor payment server
-
-This hybrid approach ensures **reliable payment processing** while maintaining **optimal performance** for your main application! 🚀 
+- **Vercel Logs** → Next.js runtime hataları
+- **Railway Logs** → ödeme sunucusu hataları
+- **`/admin/errors`** → uygulama genelindeki Postgres-backed hata kayıtları
+- **`/admin/audit`** → yönetici eylemlerinin forensic izi
+- **`/admin/analytics`** → kullanım istatistikleri

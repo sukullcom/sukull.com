@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { CodeEditorState, MonacoEditor } from "@/app/types";
+import { CodeEditorState, MonacoEditor } from "@/types";
 import { LANGUAGE_CONFIG } from "@/app/(main)/sukull-code-editor/constants";
 import { Monaco } from "@monaco-editor/react";
 

@@ -1,3 +1,5 @@
+import { clientLogger } from '@/lib/client-logger';
+
 /**
  * Utility function to delete an image from Supabase storage
  * @param imageUrl - The full URL of the image to delete
@@ -16,7 +18,11 @@ export async function deleteImageFromStorage(imageUrl: string): Promise<boolean>
     const result = await response.json();
     return result.success || false;
   } catch (error) {
-    console.error('Error deleting image from storage:', error);
+    clientLogger.error({
+      message: 'deleteImageFromStorage failed',
+      error,
+      location: 'utils/image-cleanup/deleteImageFromStorage',
+    });
     return false;
   }
 }
@@ -42,7 +48,11 @@ export function extractFilenameFromUrl(imageUrl: string): string | null {
     
     return null;
   } catch (error) {
-    console.error('Error extracting filename from URL:', error);
+    clientLogger.error({
+      message: 'extractFilenameFromUrl failed',
+      error,
+      location: 'utils/image-cleanup/extractFilenameFromUrl',
+    });
     return null;
   }
 }
@@ -63,7 +73,7 @@ export function isValidCourseImageUrl(imageUrl: string): boolean {
     const filename = extractFilenameFromUrl(imageUrl);
     
     return containsStoragePath && filename !== null;
-  } catch (error) {
+  } catch {
     return false;
   }
 } 

@@ -1,15 +1,38 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isAdmin } from "@/lib/admin";
-import { 
-  getAvailableFieldOptions, 
-  approveTeacherApplication, 
-  approveTeacherApplicationWithFields, 
+import { getAdminActor, isAdmin } from "@/lib/admin";
+import { logAdminActionAsync } from "@/lib/admin-audit";
+import { getRequestLogger } from "@/lib/logger";
+import {
+  getAvailableFieldOptions,
+  approveTeacherApplication,
+  approveTeacherApplicationWithFields,
   rejectTeacherApplication,
-  getAllTeacherApplications,
-  getAllStudentApplications,
+  getTeacherApplicationsPaginated,
+  getStudentApplicationsPaginated,
   approveStudentApplication,
-  rejectStudentApplication
+  rejectStudentApplication,
+  type ApplicationStatusFilter,
 } from "@/db/queries";
+
+/**
+ * Parse `?page`, `?pageSize`, `?status`, `?q` into the shape expected by
+ * the paginated query helpers. Clamping lives in the helpers themselves
+ * (`normalizePagination`) so API callers can't request a 10K-row window.
+ */
+function parsePaginationParams(searchParams: URLSearchParams) {
+  const page = Number(searchParams.get("page") ?? "1");
+  const pageSize = Number(searchParams.get("pageSize") ?? "20");
+  const rawStatus = searchParams.get("status");
+  const status: ApplicationStatusFilter | undefined =
+    rawStatus === "pending" ||
+    rawStatus === "approved" ||
+    rawStatus === "rejected" ||
+    rawStatus === "all"
+      ? rawStatus
+      : undefined;
+  const q = searchParams.get("q") ?? undefined;
+  return { page, pageSize, status, q };
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -28,13 +51,31 @@ export async function GET(request: NextRequest) {
       }
 
       case 'teacher-applications': {
-        const applications = await getAllTeacherApplications();
-        return NextResponse.json({ applications });
+        // Paginated: response shape is
+        //   { applications, total, statusCounts, page, pageSize }
+        // The legacy `{ applications }`-only shape is preserved as a
+        // subset so older clients still work until they are updated.
+        const pagination = parsePaginationParams(searchParams);
+        const result = await getTeacherApplicationsPaginated(pagination);
+        return NextResponse.json({
+          applications: result.rows,
+          total: result.total,
+          statusCounts: result.statusCounts,
+          page: result.page,
+          pageSize: result.pageSize,
+        });
       }
 
       case 'student-applications': {
-        const applications = await getAllStudentApplications();
-        return NextResponse.json({ applications });
+        const pagination = parsePaginationParams(searchParams);
+        const result = await getStudentApplicationsPaginated(pagination);
+        return NextResponse.json({
+          applications: result.rows,
+          total: result.total,
+          statusCounts: result.statusCounts,
+          page: result.page,
+          pageSize: result.pageSize,
+        });
       }
 
       default: {
@@ -44,7 +85,8 @@ export async function GET(request: NextRequest) {
       }
     }
   } catch (error) {
-    console.error(`Error in admin GET ${request.url}:`, error);
+    const log = await getRequestLogger({ labels: { route: "api/admin", op: "GET" } });
+    log.error({ message: "admin GET failed", error, location: "api/admin/GET", fields: { url: request.url } });
     return NextResponse.json({ message: "Bir hata oluştu." }, { status: 500 });
   }
 }
@@ -75,6 +117,18 @@ export async function POST(request: NextRequest) {
           result = await approveTeacherApplication(applicationId);
         }
 
+        const actor = await getAdminActor();
+        if (actor) {
+          logAdminActionAsync({
+            actorId: actor.id,
+            actorEmail: actor.email,
+            action: "teacher_application.approve",
+            targetType: "teacher_application",
+            targetId: applicationId,
+            metadata: { fields: fields ?? null },
+          });
+        }
+
         return NextResponse.json({ message: "Öğretmen başvurusu başarıyla onaylandı.", result });
       }
 
@@ -86,6 +140,18 @@ export async function POST(request: NextRequest) {
         }
 
         await rejectTeacherApplication(applicationId);
+
+        const actor = await getAdminActor();
+        if (actor) {
+          logAdminActionAsync({
+            actorId: actor.id,
+            actorEmail: actor.email,
+            action: "teacher_application.reject",
+            targetType: "teacher_application",
+            targetId: applicationId,
+          });
+        }
+
         return NextResponse.json({ message: "Öğretmen başvurusu reddedildi." });
       }
 
@@ -97,6 +163,18 @@ export async function POST(request: NextRequest) {
         }
 
         await approveStudentApplication(applicationId);
+
+        const actor = await getAdminActor();
+        if (actor) {
+          logAdminActionAsync({
+            actorId: actor.id,
+            actorEmail: actor.email,
+            action: "student_application.approve",
+            targetType: "student_application",
+            targetId: applicationId,
+          });
+        }
+
         return NextResponse.json({ message: "Öğrenci başvurusu başarıyla onaylandı." });
       }
 
@@ -108,6 +186,18 @@ export async function POST(request: NextRequest) {
         }
 
         await rejectStudentApplication(applicationId);
+
+        const actor = await getAdminActor();
+        if (actor) {
+          logAdminActionAsync({
+            actorId: actor.id,
+            actorEmail: actor.email,
+            action: "student_application.reject",
+            targetType: "student_application",
+            targetId: applicationId,
+          });
+        }
+
         return NextResponse.json({ message: "Öğrenci başvurusu reddedildi." });
       }
 
@@ -118,7 +208,8 @@ export async function POST(request: NextRequest) {
       }
     }
   } catch (error) {
-    console.error(`Error in admin POST ${request.url}:`, error);
+    const log = await getRequestLogger({ labels: { route: "api/admin", op: "POST" } });
+    log.error({ message: "admin POST failed", error, location: "api/admin/POST", fields: { url: request.url } });
     return NextResponse.json({ message: "Bir hata oluştu." }, { status: 500 });
   }
 }
@@ -147,15 +238,42 @@ export async function PATCH(request: NextRequest) {
       } else {
         await approveTeacherApplication(applicationId);
       }
+
+      const actor = await getAdminActor();
+      if (actor) {
+        logAdminActionAsync({
+          actorId: actor.id,
+          actorEmail: actor.email,
+          action: "teacher_application.approve",
+          targetType: "teacher_application",
+          targetId: applicationId,
+          metadata: { selectedFields: selectedFields ?? null, via: "PATCH" },
+        });
+      }
+
       return NextResponse.json({ message: "Başvuru başarıyla onaylandı." });
     } else if (action === "reject") {
       await rejectTeacherApplication(applicationId);
+
+      const actor = await getAdminActor();
+      if (actor) {
+        logAdminActionAsync({
+          actorId: actor.id,
+          actorEmail: actor.email,
+          action: "teacher_application.reject",
+          targetType: "teacher_application",
+          targetId: applicationId,
+          metadata: { via: "PATCH" },
+        });
+      }
+
       return NextResponse.json({ message: "Başvuru reddedildi." });
     } else {
       return NextResponse.json({ message: "Geçersiz işlem." }, { status: 400 });
     }
   } catch (error) {
-    console.error("Error in admin PATCH:", error);
+    const log = await getRequestLogger({ labels: { route: "api/admin", op: "PATCH" } });
+    log.error({ message: "admin PATCH failed", error, location: "api/admin/PATCH" });
     return NextResponse.json({ message: "Bir hata oluştu." }, { status: 500 });
   }
 }

@@ -1,22 +1,40 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import db from "@/db/drizzle";
 import { courses, units, lessons, challenges, challengeOptions } from "@/db/schema";
 import { eq, sql } from "drizzle-orm";
-import { isAdmin } from "@/lib/admin";
+import { getAdminActor } from "@/lib/admin";
+import { logAdminActionAsync } from "@/lib/admin-audit";
+import { CACHE_TAGS } from "@/lib/cache-tags";
+import { logger } from "@/lib/logger";
+
+const log = logger.child({ labels: { module: "admin/course-builder" } });
 
 type ChallengeOptionInsert = typeof challengeOptions.$inferInsert;
 
-async function requireAdmin() {
-  const admin = await isAdmin();
-  if (!admin) throw new Error("Bu işlem için yetkiniz yok.");
+async function requireAdmin(): Promise<{ id: string; email: string | null }> {
+  const actor = await getAdminActor();
+  if (!actor) throw new Error("Bu işlem için yetkiniz yok.");
+  return actor;
+}
+
+/**
+ * Invalidate both the admin ISR path AND the Next data-cache tag for courses.
+ * Called after every course-builder mutation so:
+ *   • `/admin/course-builder` re-renders with fresh admin-facing data
+ *   • `getCourses()` / `getCourseById()` across the whole app see new state
+ *     on the next request (without waiting for the 6h TTL)
+ */
+function invalidateCourseCaches() {
+  revalidatePath("/admin/course-builder");
+  revalidateTag(CACHE_TAGS.courses);
 }
 
 // Course Actions
 export async function createCourse(data: { title: string; imageSrc: string }) {
   try {
-    await requireAdmin();
+    const actor = await requireAdmin();
     const [course] = await db
       .insert(courses)
       .values({
@@ -25,18 +43,26 @@ export async function createCourse(data: { title: string; imageSrc: string }) {
       })
       .returning();
 
-    revalidatePath("/admin/course-builder");
+    logAdminActionAsync({
+      actorId: actor.id,
+      actorEmail: actor.email,
+      action: "course.create",
+      targetType: "course",
+      targetId: course?.id,
+      metadata: { title: data.title },
+    });
+
+    invalidateCourseCaches();
     return { success: true, course };
   } catch (error) {
-    console.error("Error creating course:", error);
-    console.error("Error details:", error instanceof Error ? error.message : String(error));
+    log.error({ message: "createCourse failed", error, location: "createCourse", fields: { title: data.title } });
     return { success: false, error: `Failed to create course: ${error instanceof Error ? error.message : String(error)}` };
   }
 }
 
 export async function updateCourse(courseId: number, data: { title: string; imageSrc: string }) {
   try {
-    await requireAdmin();
+    const actor = await requireAdmin();
     const [course] = await db
       .update(courses)
       .set({
@@ -46,23 +72,38 @@ export async function updateCourse(courseId: number, data: { title: string; imag
       .where(eq(courses.id, courseId))
       .returning();
 
-    revalidatePath("/admin/course-builder");
+    logAdminActionAsync({
+      actorId: actor.id,
+      actorEmail: actor.email,
+      action: "course.update",
+      targetType: "course",
+      targetId: courseId,
+      metadata: { title: data.title },
+    });
+
+    invalidateCourseCaches();
     return { success: true, course };
   } catch (error) {
-    console.error("Error updating course:", error);
-    console.error("Error details:", error instanceof Error ? error.message : String(error));
+    log.error({ message: "updateCourse failed", error, location: "updateCourse", fields: { courseId } });
     return { success: false, error: `Failed to update course: ${error instanceof Error ? error.message : String(error)}` };
   }
 }
 
 export async function deleteCourse(courseId: number) {
   try {
-    await requireAdmin();
+    const actor = await requireAdmin();
     await db.delete(courses).where(eq(courses.id, courseId));
-    revalidatePath("/admin/course-builder");
+    logAdminActionAsync({
+      actorId: actor.id,
+      actorEmail: actor.email,
+      action: "course.delete",
+      targetType: "course",
+      targetId: courseId,
+    });
+    invalidateCourseCaches();
     return { success: true };
   } catch (error) {
-    console.error("Error deleting course:", error);
+    log.error({ message: "deleteCourse failed", error, location: "deleteCourse", fields: { courseId } });
     return { success: false, error: "Failed to delete course" };
   }
 }
@@ -75,17 +116,25 @@ export async function createUnit(data: {
   order: number; 
 }) {
   try {
-    await requireAdmin();
+    const actor = await requireAdmin();
     const [unit] = await db
       .insert(units)
       .values(data)
       .returning();
 
-    revalidatePath("/admin/course-builder");
+    logAdminActionAsync({
+      actorId: actor.id,
+      actorEmail: actor.email,
+      action: "unit.create",
+      targetType: "unit",
+      targetId: unit?.id,
+      metadata: { courseId: data.courseId, title: data.title },
+    });
+
+    invalidateCourseCaches();
     return { success: true, unit };
   } catch (error) {
-    console.error("Error creating unit:", error);
-    console.error("Error details:", error instanceof Error ? error.message : String(error));
+    log.error({ message: "createUnit failed", error, location: "createUnit", fields: { courseId: data.courseId, title: data.title } });
     return { success: false, error: `Failed to create unit: ${error instanceof Error ? error.message : String(error)}` };
   }
 }
@@ -96,7 +145,7 @@ export async function updateUnit(unitId: number, data: {
   order: number; 
 }) {
   try {
-    await requireAdmin();
+    const actor = await requireAdmin();
     const [unit] = await db
       .update(units)
       .set({
@@ -107,23 +156,38 @@ export async function updateUnit(unitId: number, data: {
       .where(eq(units.id, unitId))
       .returning();
 
-    revalidatePath("/admin/course-builder");
+    logAdminActionAsync({
+      actorId: actor.id,
+      actorEmail: actor.email,
+      action: "unit.update",
+      targetType: "unit",
+      targetId: unitId,
+      metadata: { title: data.title },
+    });
+
+    invalidateCourseCaches();
     return { success: true, unit };
   } catch (error) {
-    console.error("Error updating unit:", error);
-    console.error("Error details:", error instanceof Error ? error.message : String(error));
+    log.error({ message: "updateUnit failed", error, location: "updateUnit", fields: { unitId } });
     return { success: false, error: `Failed to update unit: ${error instanceof Error ? error.message : String(error)}` };
   }
 }
 
 export async function deleteUnit(unitId: number) {
   try {
-    await requireAdmin();
+    const actor = await requireAdmin();
     await db.delete(units).where(eq(units.id, unitId));
-    revalidatePath("/admin/course-builder");
+    logAdminActionAsync({
+      actorId: actor.id,
+      actorEmail: actor.email,
+      action: "unit.delete",
+      targetType: "unit",
+      targetId: unitId,
+    });
+    invalidateCourseCaches();
     return { success: true };
   } catch (error) {
-    console.error("Error deleting unit:", error);
+    log.error({ message: "deleteUnit failed", error, location: "deleteUnit", fields: { unitId } });
     return { success: false, error: "Failed to delete unit" };
   }
 }
@@ -135,17 +199,25 @@ export async function createLesson(data: {
   order: number; 
 }) {
   try {
-    await requireAdmin();
+    const actor = await requireAdmin();
     const [lesson] = await db
       .insert(lessons)
       .values(data)
       .returning();
 
-    revalidatePath("/admin/course-builder");
+    logAdminActionAsync({
+      actorId: actor.id,
+      actorEmail: actor.email,
+      action: "lesson.create",
+      targetType: "lesson",
+      targetId: lesson?.id,
+      metadata: { unitId: data.unitId, title: data.title },
+    });
+
+    invalidateCourseCaches();
     return { success: true, lesson };
   } catch (error) {
-    console.error("Error creating lesson:", error);
-    console.error("Error details:", error instanceof Error ? error.message : String(error));
+    log.error({ message: "createLesson failed", error, location: "createLesson", fields: { unitId: data.unitId, title: data.title } });
     return { success: false, error: `Failed to create lesson: ${error instanceof Error ? error.message : String(error)}` };
   }
 }
@@ -155,7 +227,7 @@ export async function updateLesson(lessonId: number, data: {
   order: number; 
 }) {
   try {
-    await requireAdmin();
+    const actor = await requireAdmin();
     const [lesson] = await db
       .update(lessons)
       .set({
@@ -165,23 +237,38 @@ export async function updateLesson(lessonId: number, data: {
       .where(eq(lessons.id, lessonId))
       .returning();
 
-    revalidatePath("/admin/course-builder");
+    logAdminActionAsync({
+      actorId: actor.id,
+      actorEmail: actor.email,
+      action: "lesson.update",
+      targetType: "lesson",
+      targetId: lessonId,
+      metadata: { title: data.title },
+    });
+
+    invalidateCourseCaches();
     return { success: true, lesson };
   } catch (error) {
-    console.error("Error updating lesson:", error);
-    console.error("Error details:", error instanceof Error ? error.message : String(error));
+    log.error({ message: "updateLesson failed", error, location: "updateLesson", fields: { lessonId } });
     return { success: false, error: `Failed to update lesson: ${error instanceof Error ? error.message : String(error)}` };
   }
 }
 
 export async function deleteLesson(lessonId: number) {
   try {
-    await requireAdmin();
+    const actor = await requireAdmin();
     await db.delete(lessons).where(eq(lessons.id, lessonId));
-    revalidatePath("/admin/course-builder");
+    logAdminActionAsync({
+      actorId: actor.id,
+      actorEmail: actor.email,
+      action: "lesson.delete",
+      targetType: "lesson",
+      targetId: lessonId,
+    });
+    invalidateCourseCaches();
     return { success: true };
   } catch (error) {
-    console.error("Error deleting lesson:", error);
+    log.error({ message: "deleteLesson failed", error, location: "deleteLesson", fields: { lessonId } });
     return { success: false, error: "Failed to delete lesson" };
   }
 }
@@ -200,7 +287,7 @@ export async function createChallenge(data: {
   questionImageSrc?: string;
 }) {
   try {
-    await requireAdmin();
+    const actor = await requireAdmin();
     const [challenge] = await db
       .insert(challenges)
       .values({
@@ -217,11 +304,19 @@ export async function createChallenge(data: {
       })
       .returning();
 
-    revalidatePath("/admin/course-builder");
+    logAdminActionAsync({
+      actorId: actor.id,
+      actorEmail: actor.email,
+      action: "challenge.create",
+      targetType: "challenge",
+      targetId: challenge?.id,
+      metadata: { lessonId: data.lessonId, type: data.type },
+    });
+
+    invalidateCourseCaches();
     return { success: true, challenge };
   } catch (error) {
-    console.error("Error creating challenge:", error);
-    console.error("Error details:", error instanceof Error ? error.message : String(error));
+    log.error({ message: "createChallenge failed", error, location: "createChallenge", fields: { lessonId: data.lessonId, type: data.type } });
     return { success: false, error: `Failed to create challenge: ${error instanceof Error ? error.message : String(error)}` };
   }
 }
@@ -239,7 +334,7 @@ export async function updateChallenge(challengeId: number, data: {
   questionImageSrc?: string;
 }) {
   try {
-    await requireAdmin();
+    const actor = await requireAdmin();
     const [challenge] = await db
       .update(challenges)
       .set({
@@ -257,23 +352,38 @@ export async function updateChallenge(challengeId: number, data: {
       .where(eq(challenges.id, challengeId))
       .returning();
 
-    revalidatePath("/admin/course-builder");
+    logAdminActionAsync({
+      actorId: actor.id,
+      actorEmail: actor.email,
+      action: "challenge.update",
+      targetType: "challenge",
+      targetId: challengeId,
+      metadata: { type: data.type },
+    });
+
+    invalidateCourseCaches();
     return { success: true, challenge };
   } catch (error) {
-    console.error("Error updating challenge:", error);
-    console.error("Error details:", error instanceof Error ? error.message : String(error));
+    log.error({ message: "updateChallenge failed", error, location: "updateChallenge", fields: { challengeId } });
     return { success: false, error: `Failed to update challenge: ${error instanceof Error ? error.message : String(error)}` };
   }
 }
 
 export async function deleteChallenge(challengeId: number) {
   try {
-    await requireAdmin();
+    const actor = await requireAdmin();
     await db.delete(challenges).where(eq(challenges.id, challengeId));
-    revalidatePath("/admin/course-builder");
+    logAdminActionAsync({
+      actorId: actor.id,
+      actorEmail: actor.email,
+      action: "challenge.delete",
+      targetType: "challenge",
+      targetId: challengeId,
+    });
+    invalidateCourseCaches();
     return { success: true };
   } catch (error) {
-    console.error("Error deleting challenge:", error);
+    log.error({ message: "deleteChallenge failed", error, location: "deleteChallenge", fields: { challengeId } });
     return { success: false, error: "Failed to delete challenge" };
   }
 }
@@ -327,10 +437,10 @@ export async function cloneChallenge(challengeId: number, targetLessonId?: numbe
       );
     }
 
-    revalidatePath("/admin/course-builder");
+    invalidateCourseCaches();
     return { success: true, challenge: cloned };
   } catch (error) {
-    console.error("Error cloning challenge:", error);
+    log.error({ message: "cloneChallenge failed", error, location: "cloneChallenge" });
     return { success: false, error: `Failed to clone challenge: ${error instanceof Error ? error.message : String(error)}` };
   }
 }
@@ -368,11 +478,10 @@ export async function createChallengeOptions(
       .values(challengeOptionsData)
       .returning();
 
-    revalidatePath("/admin/course-builder");
+    invalidateCourseCaches();
     return { success: true, options: createdOptions };
   } catch (error) {
-    console.error("Error creating challenge options for challenge", challengeId, ":", error);
-    console.error("Error details:", error instanceof Error ? error.message : String(error));
+    log.error({ message: "createChallengeOptions failed", error, location: "createChallengeOptions", fields: { challengeId } });
     return { success: false, error: `Failed to create challenge options: ${error instanceof Error ? error.message : String(error)}` };
   }
 }
@@ -413,11 +522,10 @@ export async function updateChallengeOptions(
       .values(challengeOptionsData)
       .returning();
 
-    revalidatePath("/admin/course-builder");
+    invalidateCourseCaches();
     return { success: true, options: createdOptions };
   } catch (error) {
-    console.error("Error updating challenge options for challenge", challengeId, ":", error);
-    console.error("Error details:", error instanceof Error ? error.message : String(error));
+    log.error({ message: "updateChallengeOptions failed", error, location: "updateChallengeOptions", fields: { challengeId } });
     return { success: false, error: `Failed to update challenge options: ${error instanceof Error ? error.message : String(error)}` };
   }
 }
@@ -426,10 +534,10 @@ export async function deleteChallengeOption(optionId: number) {
   try {
     await requireAdmin();
     await db.delete(challengeOptions).where(eq(challengeOptions.id, optionId));
-    revalidatePath("/admin/course-builder");
+    invalidateCourseCaches();
     return { success: true };
   } catch (error) {
-    console.error("Error deleting challenge option:", error);
+    log.error({ message: "deleteChallengeOption failed", error, location: "deleteChallengeOption" });
     return { success: false, error: "Failed to delete challenge option" };
   }
 }
@@ -541,14 +649,14 @@ export async function importCourseFromJSON(jsonData: {
       }
     }
 
-    revalidatePath("/admin/course-builder");
+    invalidateCourseCaches();
     return {
       success: true,
       course,
       stats: { units: totalUnits, lessons: totalLessons, challenges: totalChallenges },
     };
   } catch (error) {
-    console.error("Error importing course:", error);
+    log.error({ message: "importCourse failed", error, location: "importCourse" });
     return { success: false, error: `Import failed: ${error instanceof Error ? error.message : String(error)}` };
   }
 }
@@ -704,7 +812,7 @@ export async function appendToCourse(
       }
     }
 
-    revalidatePath("/admin/course-builder");
+    invalidateCourseCaches();
     return {
       success: true,
       stats: {
@@ -715,7 +823,7 @@ export async function appendToCourse(
       },
     };
   } catch (error) {
-    console.error("Error appending to course:", error);
+    log.error({ message: "appendToCourse failed", error, location: "appendToCourse" });
     return {
       success: false,
       error: `İçerik ekleme hatası: ${error instanceof Error ? error.message : String(error)}`,
@@ -734,8 +842,7 @@ export async function getUnitsForCourse(courseId: number) {
 
     return { success: true, units: courseUnits };
   } catch (error) {
-    console.error("Error fetching units for course", courseId, ":", error);
-    console.error("Error details:", error instanceof Error ? error.message : String(error));
+    log.error({ message: "fetch units failed", error, location: "getUnitsForCourse", fields: { courseId } });
     return { success: false, error: `Failed to fetch units: ${error instanceof Error ? error.message : String(error)}` };
   }
 }
@@ -767,8 +874,7 @@ export async function getLessonsForCourse(courseId: number) {
 
     return { success: true, lessons: courseLessons };
   } catch (error) {
-    console.error("Error fetching lessons for course", courseId, ":", error);
-    console.error("Error details:", error instanceof Error ? error.message : String(error));
+    log.error({ message: "fetch lessons failed", error, location: "getLessonsForCourse", fields: { courseId } });
     return { success: false, error: `Failed to fetch lessons: ${error instanceof Error ? error.message : String(error)}` };
   }
 }
@@ -806,8 +912,7 @@ export async function getChallengesForCourse(courseId: number) {
 
     return { success: true, challenges: courseChallenges };
   } catch (error) {
-    console.error("Error fetching challenges for course", courseId, ":", error);
-    console.error("Error details:", error instanceof Error ? error.message : String(error));
+    log.error({ message: "fetch challenges (course) failed", error, location: "getChallengesForCourse", fields: { courseId } });
     return { success: false, error: `Failed to fetch challenges: ${error instanceof Error ? error.message : String(error)}` };
   }
 }
@@ -831,8 +936,7 @@ export async function getChallengesForLesson(lessonId: number) {
 
     return { success: true, challenges: lessonChallenges };
   } catch (error) {
-    console.error("Error fetching challenges for lesson", lessonId, ":", error);
-    console.error("Error details:", error instanceof Error ? error.message : String(error));
+    log.error({ message: "fetch challenges (lesson) failed", error, location: "getChallengesForLesson", fields: { lessonId } });
     return { success: false, error: `Failed to fetch challenges: ${error instanceof Error ? error.message : String(error)}` };
   }
 } 

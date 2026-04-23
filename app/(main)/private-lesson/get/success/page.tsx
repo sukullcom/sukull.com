@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { FeedWrapper } from "@/components/feed-wrapper";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Confetti from "react-confetti";
+import Confetti from "@/components/lazy-confetti";
 import Image from "next/image";
 import { 
   CheckCircle2, 

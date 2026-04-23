@@ -30,7 +30,8 @@ export const PATCH = async (
       return NextResponse.json({ message: "Geçersiz işlem." }, { status: 400 })
     }
   } catch (error) {
-    console.error("Error updating student application:", error)
+    ;(await (await import("@/lib/logger")).getRequestLogger({ labels: { route: "api/studentApplications" } }))
+      .error({ message: "legacy student application update failed", error, location: "api/studentApplications/[id]" })
     return NextResponse.json(
       { message: "Başvuru güncellenirken bir hata oluştu." },
       { status: 500 }

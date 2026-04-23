@@ -7,6 +7,7 @@ import { Select, SelectItem, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { X, Plus } from "lucide-react";
 import { toast } from "sonner";
+import { clientLogger } from "@/lib/client-logger";
 
 interface FieldOption {
   subject: string;
@@ -47,7 +48,7 @@ export function FieldSelector({ onFieldsChange, isOpen, onClose, applicationId, 
         toast.error("Alan seçenekleri yüklenirken hata oluştu");
       }
     } catch (error) {
-      console.error("Error fetching field options:", error);
+      clientLogger.error({ message: "fetch field options failed", error, location: "admin/teacher-applications/field-selector" });
       toast.error("Alan seçenekleri yüklenirken hata oluştu");
     }
   };
@@ -120,7 +121,7 @@ export function FieldSelector({ onFieldsChange, isOpen, onClose, applicationId, 
         toast.error(`İşlem başarısız: ${errorData.message || "Bilinmeyen hata"}`);
       }
     } catch (error) {
-      console.error("Error approving application:", error);
+      clientLogger.error({ message: "approve application failed", error, location: "admin/teacher-applications/field-selector" });
       toast.error("İşlem başarısız: Bağlantı hatası");
     } finally {
       setLoading(false);

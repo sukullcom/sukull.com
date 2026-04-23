@@ -6,6 +6,7 @@ import LyricLine from "./lyrics-line";
 import Image from "next/image";
 import { Sparkles, CircleCheck, Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { clientLogger } from "@/lib/client-logger";
 
 interface LyricWord {
   word: string;
@@ -104,7 +105,7 @@ export default function LyricsGame({ lyrics, difficulty = "Kolay" }: LyricsGameP
       await addPointsToUser(finalScore, { gameType: "subscribe" });
       openCompletionModal(finalScore);
     } catch (error) {
-      console.error("Error adding points:", error);
+      clientLogger.error({ message: "add points failed (SubScribe)", error, location: "games/SubScribe/lyrics-game" });
       // Show modal even if points submission fails
       const finalScore = calculateFinalScore();
       openCompletionModal(finalScore);

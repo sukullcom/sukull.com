@@ -1,41 +1,55 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { updateTotalPointsForSchools } from '@/actions/user-progress';
+import { getRequestLogger } from '@/lib/logger';
 
 export async function GET(request: NextRequest) {
+  const log = await getRequestLogger({ labels: { module: 'cron', job: 'update-school-points' } });
   try {
     // Verify this is being called from a cron job (optional security check)
     const authHeader = request.headers.get('authorization');
     if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+      log.warn('unauthorized cron attempt', {
+        authPrefix: authHeader ? authHeader.slice(0, 7) : null,
+      });
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    console.log('Starting school points update cron job...');
+    log.info('school points cron started');
     const startTime = Date.now();
-    
+
     const success = await updateTotalPointsForSchools();
-    
-    const endTime = Date.now();
-    const duration = endTime - startTime;
-    
+
+    const duration = Date.now() - startTime;
+
     if (success) {
-      console.log(`School points update completed successfully in ${duration}ms`);
-      return NextResponse.json({ 
-        success: true, 
+      log.info('school points cron completed', { durationMs: duration });
+      return NextResponse.json({
+        success: true,
         message: `School points updated successfully in ${duration}ms`,
         timestamp: new Date().toISOString()
       });
     } else {
-      console.error('School points update failed');
-      return NextResponse.json({ 
-        success: false, 
-        error: 'School points update failed' 
+      log.error({
+        message: 'school points cron reported failure',
+        source: 'cron',
+        location: 'cron/update-school-points',
+        fields: { durationMs: duration },
+      });
+      return NextResponse.json({
+        success: false,
+        error: 'School points update failed'
       }, { status: 500 });
     }
   } catch (error) {
-    console.error('School points cron job error:', error);
-    return NextResponse.json({ 
-      success: false, 
-      error: 'Internal server error' 
+    log.error({
+      message: 'school points cron threw',
+      error,
+      source: 'cron',
+      location: 'cron/update-school-points',
+    });
+    return NextResponse.json({
+      success: false,
+      error: 'Internal server error'
     }, { status: 500 });
   }
 }

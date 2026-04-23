@@ -1,7 +1,5 @@
-import Link from "next/link";
 import Image from "next/image";
 import {
-  ArrowLeft,
   UsersRound,
   Flame,
   TrendingUp,
@@ -132,23 +130,14 @@ export default async function AdminAnalyticsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-3">
-            <LineChartIcon className="h-7 w-7 text-gray-700" />
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-              Analytics Dashboard
-            </h1>
-          </div>
-          <Link
-            href="/admin"
-            className="flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900"
-          >
-            <ArrowLeft className="h-4 w-4" /> Admin&apos;e dön
-          </Link>
-        </div>
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="flex items-center gap-3">
+        <LineChartIcon className="h-7 w-7 text-gray-700" />
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+          Analitik
+        </h1>
+      </div>
 
         {/* Overview Metrics */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-8">
@@ -554,10 +543,9 @@ export default async function AdminAnalyticsPage() {
           </div>
         </div>
 
-        <div className="flex items-center gap-2 text-xs text-gray-400 mt-4">
-          <Shield className="h-3 w-3" />
-          Admin&apos;e özel. Sunucu tarafında render edilir.
-        </div>
+      <div className="flex items-center gap-2 text-xs text-gray-400 mt-4">
+        <Shield className="h-3 w-3" />
+        Admin&apos;e özel. Sunucu tarafında render edilir.
       </div>
     </div>
   );

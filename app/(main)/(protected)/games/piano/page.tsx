@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { clientLogger } from "@/lib/client-logger";
 
 // Define all keys
 const KEYS = [
@@ -150,7 +151,7 @@ export default function PianoPage() {
     (keyChar: string) => {
       const audio = new Audio(`/tunes/${keyChar}.wav`);
       audio.volume = volume;
-      audio.play().catch((err) => console.error("Audio playback error:", err));
+      audio.play().catch((err) => clientLogger.error({ message: "audio playback failed", error: err, location: "games/piano/page" }));
     },
     [volume]
   );

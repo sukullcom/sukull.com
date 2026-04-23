@@ -17,7 +17,9 @@ import {
 } from "@/db/schema";
 import { and, eq, gte, sql, desc, count, inArray } from "drizzle-orm";
 import { getServerUser } from "@/lib/auth";
-import { logErrorAsync } from "@/lib/error-logger";
+import { logger } from "@/lib/logger";
+
+const log = logger.child({ labels: { module: "admin-analytics" } });
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -31,7 +33,12 @@ async function isAdmin(): Promise<boolean> {
     });
     return record?.role === "admin";
   } catch (err) {
-    console.error("[admin-analytics] isAdmin check failed:", err);
+    log.error({
+      message: "isAdmin check failed",
+      error: err,
+      source: "server-action",
+      location: "admin-analytics/isAdmin",
+    });
     return false;
   }
 }
@@ -45,12 +52,14 @@ async function safeQuery<T>(
   try {
     return await fn();
   } catch (err) {
-    console.error(`[admin-analytics] query '${name}' failed:`, err);
-    logErrorAsync({
-      source: "server-action",
+    // `logger.error` already persists to `error_log` via logErrorAsync;
+    // no need to double-log.
+    log.error({
+      message: `admin-analytics query '${name}' failed`,
       error: err,
+      source: "server-action",
       location: `admin-analytics/${name}`,
-      level: "warn",
+      fields: { query: name },
     });
     return fallback;
   }
@@ -59,7 +68,8 @@ async function safeQuery<T>(
 /**
  * Top-level guard wrapping the entire action.
  * Guarantees we NEVER throw out of the module — the page keeps rendering
- * even if auth or DB break, and errors land in the server log (Vercel).
+ * even if auth or DB break, and errors land in the server log and
+ * `error_log` table.
  */
 async function safeAction<T>(
   name: string,
@@ -68,16 +78,17 @@ async function safeAction<T>(
 ): Promise<T> {
   try {
     if (!(await isAdmin())) {
-      console.warn(`[admin-analytics] action '${name}' called by non-admin`);
+      log.warn("admin action called by non-admin", { action: name });
       return fallback;
     }
     return await fn();
   } catch (err) {
-    console.error(`[admin-analytics] action '${name}' failed:`, err);
-    logErrorAsync({
-      source: "server-action",
+    log.error({
+      message: `admin-analytics action '${name}' failed`,
       error: err,
+      source: "server-action",
       location: `admin-analytics/${name}`,
+      fields: { action: name },
     });
     return fallback;
   }

@@ -3,6 +3,7 @@ import { secureApi, ApiResponses } from "@/lib/api-middleware";
 import db from "@/db/drizzle";
 import { lessons, challenges, challengeOptions } from "@/db/schema";
 import { eq, sql } from "drizzle-orm";
+import { getRequestLogger } from "@/lib/logger";
 
 // ✅ CONSOLIDATED LESSONS API: Replaces /api/lessons, /api/challenges, /api/challengeOptions
 export const GET = secureApi.admin(async (request) => {
@@ -184,7 +185,8 @@ export const GET = secureApi.admin(async (request) => {
       }
     }
   } catch (error) {
-    console.error(`Error in lessons API (action: ${action}):`, error);
+    const log = await getRequestLogger({ labels: { route: "api/lessons", op: "GET" } });
+    log.error({ message: "lessons GET failed", error, location: "api/lessons/GET", fields: { action } });
     return ApiResponses.serverError("Sunucu tarafında bir hata oluştu.");
   }
 });
@@ -231,7 +233,8 @@ export const POST = secureApi.admin(async (request) => {
       }
     }
   } catch (error) {
-    console.error(`Error in lessons POST:`, error);
+    const log = await getRequestLogger({ labels: { route: "api/lessons", op: "POST" } });
+    log.error({ message: "lessons POST failed", error, location: "api/lessons/POST", fields: { action } });
     return ApiResponses.serverError("Sunucu tarafında bir hata oluştu.");
   }
 });
@@ -312,7 +315,8 @@ export const PUT = secureApi.admin(async (request) => {
       }
     }
   } catch (error) {
-    console.error(`Error in lessons PUT:`, error);
+    const log = await getRequestLogger({ labels: { route: "api/lessons", op: "PUT" } });
+    log.error({ message: "lessons PUT failed", error, location: "api/lessons/PUT", fields: { action } });
     return ApiResponses.serverError("Sunucu tarafında bir hata oluştu.");
   }
 });
@@ -388,7 +392,8 @@ export const DELETE = secureApi.admin(async (request) => {
       }
     }
   } catch (error) {
-    console.error(`Error in lessons DELETE:`, error);
+    const log = await getRequestLogger({ labels: { route: "api/lessons", op: "DELETE" } });
+    log.error({ message: "lessons DELETE failed", error, location: "api/lessons/DELETE", fields: { action } });
     return ApiResponses.serverError("Sunucu tarafında bir hata oluştu.");
   }
 });

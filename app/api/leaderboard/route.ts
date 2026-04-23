@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getTopUsers } from "@/db/queries";
 import { checkRateLimit, getClientIp, rateLimitHeaders, RATE_LIMITS } from "@/lib/rate-limit-db";
+import { getRequestLogger } from "@/lib/logger";
 
 export async function GET(request: NextRequest) {
   try {
@@ -23,7 +24,13 @@ export async function GET(request: NextRequest) {
     const users = await getTopUsers(limit, offset);
     return NextResponse.json({ users });
   } catch (error) {
-    console.error("Leaderboard API error:", error);
+    const log = await getRequestLogger({ labels: { module: "leaderboard" } });
+    log.error({
+      message: "leaderboard GET failed",
+      error,
+      source: "api-route",
+      location: "leaderboard/GET",
+    });
     return NextResponse.json({ error: "Sunucu tarafında bir hata oluştu." }, { status: 500 });
   }
 }

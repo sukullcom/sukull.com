@@ -37,6 +37,7 @@ import {
   Target,
 } from "lucide-react";
 import { StudyBuddySchoolSelector } from "@/components/study-buddy-school-selector";
+import { clientLogger } from "@/lib/client-logger";
 
 interface StudyBuddyPost {
   id: number;
@@ -232,7 +233,7 @@ export default function StudyBuddyPage() {
         return 0;
       }
     } catch (error) {
-      console.error("Study Buddy - Error fetching user streak:", error);
+      clientLogger.error({ message: "fetch user streak failed", error, location: "study-buddy/fetchUserStreak" });
       setUserStreak(0);
       setUserAchievements({
         profileEditingUnlocked: false,
@@ -256,7 +257,7 @@ export default function StudyBuddyPage() {
         
         setLoadingUser(false);
       } catch (error) {
-        console.error("Error loading session:", error);
+        clientLogger.error({ message: "load session failed", error, location: "study-buddy/loadSession" });
         setLoadingUser(false);
       }
     };
@@ -379,7 +380,7 @@ export default function StudyBuddyPage() {
 
       return true;
     } catch (error) {
-      console.error("Error checking message limits:", error);
+      clientLogger.error({ message: "check message limits failed", error, location: "study-buddy/checkMessageLimits" });
       return true; // Allow message if check fails
     }
   }, [currentUser, lastMessageTime, recentMessages, showWarning, supabase]);
@@ -413,7 +414,7 @@ export default function StudyBuddyPage() {
 
       return true;
     } catch (error) {
-      console.error("Error checking post limits:", error);
+      clientLogger.error({ message: "check post limits failed", error, location: "study-buddy/checkPostLimits" });
       return true; // Allow post if check fails
     }
   }, [currentUser, lastPostTime, showWarning, supabase]);
@@ -451,7 +452,7 @@ export default function StudyBuddyPage() {
 
       return true;
     } catch (error) {
-      console.error("Error checking chat limits:", error);
+      clientLogger.error({ message: "check chat limits failed", error, location: "study-buddy/checkChatLimits" });
       return true; // Allow chat if check fails
     }
   }, [currentUser, showWarning, supabase]);
@@ -483,7 +484,7 @@ export default function StudyBuddyPage() {
       const { data: postsData, error: postsError } = await query;
       
       if (postsError) {
-        console.error("Error loading posts:", postsError);
+        clientLogger.error({ message: "load posts failed", error: postsError, location: "study-buddy/loadAllPosts" });
         turkishToast.error(warningMessages.ERROR_LOADING_POSTS);
         return;
       }
@@ -546,7 +547,7 @@ export default function StudyBuddyPage() {
         }
       }
     } catch (error) {
-      console.error("Error in loadAllPosts:", error);
+      clientLogger.error({ message: "loadAllPosts exception", error, location: "study-buddy/loadAllPosts" });
       turkishToast.error(warningMessages.ERROR_LOADING_POSTS);
     } finally {
       setLoadingPosts(false);
@@ -567,7 +568,7 @@ export default function StudyBuddyPage() {
         .order("created_at", { ascending: false });
   
       if (error) {
-        console.error("Error loading my posts:", error);
+        clientLogger.error({ message: "load my posts failed", error, location: "study-buddy/loadMyPosts" });
         turkishToast.error("Gönderileriniz yüklenirken bir hata oluştu.");
         return;
       }
@@ -597,7 +598,7 @@ export default function StudyBuddyPage() {
       
       setMyPosts(enrichedPosts);
     } catch (error) {
-      console.error("Error in loadMyPosts:", error);
+      clientLogger.error({ message: "loadMyPosts exception", error, location: "study-buddy/loadMyPosts" });
       turkishToast.error("Gönderileriniz yüklenirken bir hata oluştu.");
     } finally {
       setLoadingMyPosts(false);
@@ -617,7 +618,7 @@ export default function StudyBuddyPage() {
           .order("last_updated", { ascending: false });
 
       if (error) {
-        console.error("Error loading chats:", error);
+        clientLogger.error({ message: "load chats failed", error, location: "study-buddy/loadChats" });
         turkishToast.error(warningMessages.ERROR_LOADING_CHATS);
         return;
       }
@@ -655,7 +656,7 @@ export default function StudyBuddyPage() {
       
       setChats(enrichedChats);
     } catch (error) {
-      console.error("Error in loadChats:", error);
+      clientLogger.error({ message: "loadChats exception", error, location: "study-buddy/loadChats" });
       turkishToast.error(warningMessages.ERROR_LOADING_CHATS);
       } finally {
         setLoadingChats(false);
@@ -674,13 +675,13 @@ export default function StudyBuddyPage() {
         .order("created_at", { ascending: true });
   
       if (error) {
-        console.error("Error loading messages:", error);
+        clientLogger.error({ message: "load messages failed", error, location: "study-buddy/loadMessages" });
         return;
       }
 
       setMessages(data || []);
     } catch (error) {
-      console.error("Error in loadMessages:", error);
+      clientLogger.error({ message: "loadMessages exception", error, location: "study-buddy/loadMessages" });
     }
   }, [selectedChat, supabase]);
 
@@ -733,7 +734,7 @@ export default function StudyBuddyPage() {
         .select();
 
     if (error) {
-      console.error("Error creating post:", error);
+      clientLogger.error({ message: "create post failed", error, location: "study-buddy/createPost" });
         if (error.code === "23502") { // not_null_violation
           setCreationError("Zorunlu alanlar eksik. Lütfen tüm alanları doldurun.");
         } else if (error.code === "23514") { // check_violation
@@ -755,7 +756,7 @@ export default function StudyBuddyPage() {
       await loadAllPosts();
       await loadMyPosts();
     } catch (error) {
-      console.error("Error in handleCreatePost:", error);
+      clientLogger.error({ message: "handleCreatePost exception", error, location: "study-buddy/handleCreatePost" });
       setCreationError(warningMessages.ERROR_CREATING_POST);
     }
   }, [currentUser, postPurpose, postReason, validatePostSpam, showWarning, supabase, loadAllPosts, loadMyPosts, userStreak, userAchievements]);
@@ -819,7 +820,7 @@ export default function StudyBuddyPage() {
         .single();
 
       if (error) {
-        console.error("Error creating chat:", error);
+        clientLogger.error({ message: "create chat failed", error, location: "study-buddy/handleOpenChat" });
         showWarning(warningMessages.ERROR_CREATING_CHAT);
         return;
       }
@@ -829,7 +830,7 @@ export default function StudyBuddyPage() {
       
       turkishToast.success("Sohbet başlatıldı!");
     } catch (error) {
-      console.error("Error in handleOpenChat:", error);
+      clientLogger.error({ message: "handleOpenChat exception", error, location: "study-buddy/handleOpenChat" });
       showWarning(warningMessages.ERROR_CREATING_CHAT);
     }
   }, [currentUser, validateChatSpam, showWarning, supabase, loadChats, userStreak, userAchievements]);
@@ -861,7 +862,7 @@ export default function StudyBuddyPage() {
         });
 
       if (messageError) {
-        console.error("Error sending message:", messageError);
+        clientLogger.error({ message: "send message failed", error: messageError, location: "study-buddy/handleSendMessage/insert" });
         showWarning(warningMessages.ERROR_SENDING_MESSAGE);
             return;
           }
@@ -876,7 +877,7 @@ export default function StudyBuddyPage() {
         .eq("id", selectedChat.id);
 
       if (chatError) {
-        console.error("Error updating chat:", chatError);
+        clientLogger.error({ message: "update chat failed", error: chatError, location: "study-buddy/handleSendMessage/updateChat" });
       }
 
       // Update local states
@@ -906,7 +907,7 @@ export default function StudyBuddyPage() {
       // Load new messages
       await loadMessages();
     } catch (error) {
-      console.error("Error in handleSendMessage:", error);
+      clientLogger.error({ message: "handleSendMessage exception", error, location: "study-buddy/handleSendMessage" });
       showWarning(warningMessages.ERROR_SENDING_MESSAGE);
     }
   }, [currentUser, selectedChat, newMessage, validateMessageSpam, showWarning, supabase, loadMessages, userStreak, userAchievements]);
@@ -925,7 +926,7 @@ export default function StudyBuddyPage() {
         .eq("user_id", currentUser.id); // Extra security check
 
         if (error) {
-        console.error("Error deleting post:", error);
+        clientLogger.error({ message: "delete post failed", error, location: "study-buddy/handleDeletePost" });
         turkishToast.error("Gönderi silinirken bir hata oluştu.");
           return;
         }
@@ -936,7 +937,7 @@ export default function StudyBuddyPage() {
       await loadAllPosts();
       await loadMyPosts();
       } catch (error) {
-      console.error("Error in handleDeletePost:", error);
+      clientLogger.error({ message: "handleDeletePost exception", error, location: "study-buddy/handleDeletePost" });
       turkishToast.error("Gönderi silinirken bir hata oluştu.");
     }
   }, [currentUser, supabase, loadAllPosts, loadMyPosts, showWarning]);
@@ -954,7 +955,7 @@ export default function StudyBuddyPage() {
         .order("created_at", { ascending: true });
 
       if (error) {
-        console.error("Error loading messages:", error);
+        clientLogger.error({ message: "load messages (select chat) failed", error, location: "study-buddy/handleSelectChat/loadMessages" });
         return;
       }
 
@@ -965,7 +966,7 @@ export default function StudyBuddyPage() {
         messageEndRef.current?.scrollIntoView({ behavior: "auto" });
       }, 0);
     } catch (error) {
-      console.error("Error in handleSelectChat:", error);
+      clientLogger.error({ message: "handleSelectChat exception", error, location: "study-buddy/handleSelectChat" });
     }
   }, [supabase]);
 
@@ -1003,7 +1004,7 @@ export default function StudyBuddyPage() {
         .eq("user_id", currentUser.id); // Security check
       
       if (error) {
-        console.error("Error updating post:", error);
+        clientLogger.error({ message: "update post failed", error, location: "study-buddy/handleEditSubmit" });
         setCreationError("Gönderi güncellenirken bir hata oluştu.");
         return;
       }
@@ -1019,7 +1020,7 @@ export default function StudyBuddyPage() {
       await loadAllPosts();
       await loadMyPosts();
     } catch (error) {
-      console.error("Error in handleEditSubmit:", error);
+      clientLogger.error({ message: "handleEditSubmit exception", error, location: "study-buddy/handleEditSubmit" });
       setCreationError("Gönderi güncellenirken bir hata oluştu.");
     }
   }, [currentUser, editingPost, editPostPurpose, editPostReason, supabase, loadAllPosts, loadMyPosts]);

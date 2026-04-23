@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { toast } from 'sonner'
 import { Loader2, CreditCard, MapPin } from 'lucide-react'
 import { createClient } from '@/utils/supabase/client'
+import { clientLogger } from '@/lib/client-logger'
 
 interface CreditPackage {
   id: string
@@ -56,7 +57,7 @@ export default function CreditPurchase() {
       const response = await axios.get('/api/user/credits')
       setUserCredits(response.data)
     } catch (error) {
-      console.error('Error fetching credits:', error)
+      clientLogger.error({ message: 'fetch credits failed', error, location: 'credit-purchase/fetchCredits' })
       toast.error('Kredi bilgileri yüklenirken hata oluştu')
     } finally {
       setLoadingCredits(false)
@@ -160,7 +161,7 @@ export default function CreditPurchase() {
         toast.error(result.message || 'Ödeme işlenemedi. Lütfen tekrar deneyin.')
       }
     } catch (error: unknown) {
-      console.error('Payment error:', error)
+      clientLogger.error({ message: 'credit payment failed', error, location: 'credit-purchase/payment' })
       toast.error('Ödeme sırasında bir hata oluştu. Lütfen tekrar dene.')
     } finally {
       setLoading(false)

@@ -2,6 +2,7 @@
 import { createClient } from '@/utils/supabase/client'
 import type { User } from '@supabase/supabase-js'
 import { normalizeAvatarUrl } from '@/utils/avatar'
+import { clientLogger } from '@/lib/client-logger'
 
 const supabase = createClient()
 
@@ -28,12 +29,22 @@ export const users = {
     try {
       const { data, error } = await supabase.from('users').insert([user]).single()
       if (error) {
-        console.error('Error creating user:', error);
+        clientLogger.error({
+          message: 'user insert failed',
+          error,
+          location: 'utils/users/createUser',
+          fields: { userId: user.id },
+        });
         throw error;
       }
       return data
     } catch (error) {
-      console.error('Error creating user:', error);
+      clientLogger.error({
+        message: 'user insert threw',
+        error,
+        location: 'utils/users/createUser',
+        fields: { userId: user.id },
+      });
       throw error;
     }
   },
@@ -100,7 +111,11 @@ export const users = {
       }
       return this.createUser(newUser)
     } catch (error) {
-      console.error('Error capturing user details:', error);
+      clientLogger.error({
+        message: 'captureUserDetails failed',
+        error,
+        location: 'utils/users/captureUserDetails',
+      });
       throw error;
     }
   },

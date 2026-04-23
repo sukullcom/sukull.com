@@ -3,6 +3,7 @@
 import { NextResponse } from "next/server";
 import { getSnippetById } from "@/db/queries";
 import { getServerUser } from "@/lib/auth";
+import { getRequestLogger } from "@/lib/logger";
 
 export async function GET(
   request: Request,
@@ -26,7 +27,10 @@ export async function GET(
 
     return NextResponse.json(snippet);
   } catch (error) {
-    console.error("Error in GET /api/snippets/[id]:", error);
+    {
+      const log = await getRequestLogger({ labels: { route: "api/snippets/[id]" } });
+      log.error({ message: "snippet by id failed", error, location: "api/snippets/[id]/GET" });
+    }
     return NextResponse.json({ error: "Sunucu tarafında bir hata oluştu." }, { status: 500 });
   }
 }

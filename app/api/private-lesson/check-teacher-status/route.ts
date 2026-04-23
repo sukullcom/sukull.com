@@ -18,7 +18,8 @@ export async function GET() {
       teacherId: teacherStatus ? user.id : null 
     });
   } catch (error) {
-    console.error("Error checking teacher status:", error);
+    (await (await import("@/lib/logger")).getRequestLogger({ labels: { route: "api/private-lesson/check-teacher-status" } }))
+      .error({ message: "check teacher status failed", error, location: "api/private-lesson/check-teacher-status" });
     return NextResponse.json({ teacher: false, error: "Sunucu tarafında bir hata oluştu." }, { status: 500 });
   }
 } 

@@ -1,25 +1,23 @@
 import { NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
-import { batchQueries } from "@/db/optimized-queries";
+import { getStudentBookings } from "@/db/queries";
 
-// ✅ OPTIMIZED: Uses single query with joins instead of N+1 queries
 export async function GET() {
   try {
-    // Get the current user
     const user = await getServerUser();
     if (!user) {
       return NextResponse.json({ error: "Giriş yapmanız gerekiyor." }, { status: 401 });
     }
 
-    // ✅ IMPROVED: Use optimized batch query instead of N+1
-    const bookings = await batchQueries.getStudentBookingsWithTeacherData(user.id);
+    const bookings = await getStudentBookings(user.id);
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       bookings,
       count: bookings.length
     });
   } catch (error) {
-    console.error("Error fetching student bookings:", error);
+    (await (await import("@/lib/logger")).getRequestLogger({ labels: { route: "api/private-lesson/student-bookings" } }))
+      .error({ message: "fetch student bookings failed", error, location: "api/private-lesson/student-bookings" });
     return NextResponse.json({ error: "Sunucu tarafında bir hata oluştu." }, { status: 500 });
   }
-} 
+}

@@ -1,18 +1,20 @@
 import { createClient } from '@/utils/supabase/server';
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { getRequestLogger } from '@/lib/logger';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 export async function POST() {
+  const log = await getRequestLogger({ labels: { route: 'api/auth/logout' } });
   try {
     const supabase = await createClient();
     
     const { error } = await supabase.auth.signOut();
     
     if (error && error.message !== 'Auth session missing!') {
-      console.error('Server logout error:', error);
+      log.error({ message: 'server logout failed', error, location: 'api/auth/logout' });
     }
     
     const cookieStore = await cookies();
@@ -37,7 +39,7 @@ export async function POST() {
     
     return response;
   } catch (error) {
-    console.error('Logout error:', error);
+    log.error({ message: 'logout exception', error, location: 'api/auth/logout' });
     return NextResponse.json(
       { error: 'Logout failed' },
       { status: 500 }

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { addPointsToUser } from "@/actions/challenge-progress";
-import Confetti from "react-confetti";
+import Confetti from "@/components/lazy-confetti";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { SCORING_SYSTEM } from "@/constants";

@@ -10,6 +10,7 @@ import { Star } from "lucide-react";
 import { toast } from "sonner";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import UserCreditsDisplay from "@/components/user-credits-display";
+import { clientLogger } from "@/lib/client-logger";
 
 interface Teacher {
   id: string;
@@ -124,7 +125,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
         setAvailability(processedAvailability);
       }
     } catch (error) {
-      console.error("Error refreshing availability:", error);
+      clientLogger.error({ message: "refresh availability failed", error, location: "teachers/[id]/page/refreshAvailability" });
     }
   };
 
@@ -182,7 +183,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
         throw new Error(errorData.error || "Ders rezerve edilemedi");
       }
     } catch (error) {
-      console.error("Error booking lesson:", error);
+      clientLogger.error({ message: "book lesson failed", error, location: "teachers/[id]/page/bookLesson" });
       toast.error(error instanceof Error ? error.message : "Ders rezerve edilirken bir hata oluştu");
       
       // Refresh availability in case slot was booked by someone else
@@ -216,7 +217,7 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
             return;
           }
         } catch (authError) {
-          console.error("Auth check failed:", authError);
+          clientLogger.error({ message: "auth check failed", error: authError, location: "teachers/[id]/page/authCheck" });
           toast.error("Kimlik doğrulama hatası. Lütfen giriş yapın.");
           router.push("/login");
           return;
@@ -308,13 +309,13 @@ export default function TeacherDetailPage({ params }: { params: { id: string } }
             }
           }
         } catch (reviewError) {
-          console.error("Error fetching reviews:", reviewError);
+          clientLogger.error({ message: "fetch reviews failed", error: reviewError, location: "teachers/[id]/page/fetchReviews" });
           // Continue without reviews
         }
         
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching teacher details:", error);
+        clientLogger.error({ message: "fetch teacher details failed", error, location: "teachers/[id]/page/fetchTeacherDetails" });
         setError("Öğretmen bilgileri yüklenirken bir hata oluştu");
         setLoading(false);
       }

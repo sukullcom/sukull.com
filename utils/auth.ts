@@ -1,4 +1,5 @@
 import { createClient } from '@/utils/supabase/client'
+import { clientLogger } from '@/lib/client-logger'
 import { users } from './users'
 
 const supabase = createClient()
@@ -41,7 +42,12 @@ export const auth = {
     })
     
     if (error) {
-      console.error('Signup error:', error);
+      clientLogger.error({
+        message: 'signup failed',
+        error,
+        location: 'utils/auth/signUp',
+        fields: { email },
+      });
       throw error;
     }
     
@@ -56,11 +62,15 @@ export const auth = {
       try {
         await users.captureUserDetails(data.user, username)
       } catch (profileError) {
-        console.error('Could not capture user details:', profileError)
+        clientLogger.error({
+          message: 'capture user details failed during signup',
+          error: profileError,
+          location: 'utils/auth/signUp/captureUserDetails',
+          fields: { userId: data.user.id },
+        })
       }
     } else {
-      // User needs to confirm email first
-      console.log('Email confirmation required for user:', data.user.email);
+      clientLogger.info('email confirmation required', { email: data.user.email })
     }
     
     return data
@@ -113,13 +123,17 @@ export const auth = {
       
       return { success: true };
     } catch (error) {
-      console.error('Error during logout:', error);
+      clientLogger.error({
+        message: 'logout failed',
+        error,
+        location: 'utils/auth/signOut',
+      });
       throw error;
     }
   },
 
   async resetPasswordRequest(email: string) {
-    const { data: userData, error } = await supabase
+    const { data: userData } = await supabase
       .from('users')
       .select('provider')
       .eq('email', email)
@@ -147,7 +161,7 @@ export const auth = {
 
   async resendVerificationEmail(email: string) {
     // Check if user exists and is an email provider user
-    const { data: userData, error } = await supabase
+    const { data: userData } = await supabase
       .from('users')
       .select('provider')
       .eq('email', email)
@@ -170,7 +184,12 @@ export const auth = {
     })
 
     if (resendError) {
-      console.error('Resend verification error:', resendError);
+      clientLogger.error({
+        message: 'resend verification failed',
+        error: resendError,
+        location: 'utils/auth/resendVerificationEmail',
+        fields: { email },
+      });
       throw resendError;
     }
 

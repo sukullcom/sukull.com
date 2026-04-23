@@ -75,7 +75,8 @@ export async function POST(request: NextRequest) {
       meetLink: booking.meetLink,
     });
   } catch (error) {
-    console.error("Derse katılım hatası:", error);
+    (await (await import("@/lib/logger")).getRequestLogger({ labels: { route: "api/private-lesson/teacher-join-lesson" } }))
+      .error({ message: "teacher join lesson failed", error, location: "api/private-lesson/teacher-join-lesson" });
     return NextResponse.json({ message: "Bir hata oluştu" }, { status: 500 });
   }
 }

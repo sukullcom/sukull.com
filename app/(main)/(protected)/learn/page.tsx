@@ -5,45 +5,37 @@ import {
   getCourseProgress,
   getLessonPercentage,
   getUnits,
-  getUserProgress,
 } from "@/db/queries";
 import { getCurrentDayProgress } from "@/actions/daily-streak";
-import { redirect } from "next/navigation";
 import { Unit } from "./unit";
 import { lessons, units as unitsSchema } from "@/db/schema";
 import { CelebrationChecker } from "@/components/celebration-checker";
 import { getSubjectColor } from "@/lib/subject-colors";
+import { getProtectedContext } from "@/lib/protected-route";
 
 const LearnPage = async () => {
-  const userProgressData = getUserProgress();
-  const courseProgressData = getCourseProgress();
-  const lessonPercentageData = getLessonPercentage();
-  const unitsData = getUnits();
-  const dayProgressData = getCurrentDayProgress();
+  // (protected) layout user + userProgress + activeCourse garantisi verir.
+  // cache() sayesinde ek DB hit yok.
+  const { activeCourse } = await getProtectedContext();
 
-  const [userProgress, units, courseProgress, lessonPercentage, dayProgress] =
+  const [units, courseProgress, lessonPercentage, dayProgress] =
     await Promise.all([
-      userProgressData,
-      unitsData,
-      courseProgressData,
-      lessonPercentageData,
-      dayProgressData,
+      getUnits(),
+      getCourseProgress(),
+      getLessonPercentage(),
+      getCurrentDayProgress(),
     ]);
 
-  if (!userProgress || !userProgress.activeCourse) {
-    redirect("/courses?message=select-course");
-  }
-
   if (!courseProgress) {
-    return;
+    return null;
   }
 
-  const subjectColor = getSubjectColor(userProgress.activeCourse.title);
+  const subjectColor = getSubjectColor(activeCourse.title);
 
   return (
     <div className="flex flex-row-reverse gap-[48px] px-3 sm:px-6">
       <FeedWrapper>
-        <Header title={userProgress.activeCourse.title} />
+        <Header title={activeCourse.title} />
         {dayProgress && (
           <CelebrationChecker
             currentStreak={dayProgress.currentStreak}

@@ -20,7 +20,8 @@ export async function GET() {
     
     return NextResponse.json(incomeData);
   } catch (error) {
-    console.error("Error fetching teacher income:", error);
+    (await (await import("@/lib/logger")).getRequestLogger({ labels: { route: "api/private-lesson/teacher-income" } }))
+      .error({ message: "fetch teacher income failed", error, location: "api/private-lesson/teacher-income" });
     return NextResponse.json({ 
       message: "Gelir verileri yüklenirken bir hata oluştu" 
     }, { status: 500 });

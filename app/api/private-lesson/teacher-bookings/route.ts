@@ -21,7 +21,8 @@ export const GET = secureApi.auth(async (request, user) => {
       count: bookings.length
     });
   } catch (error) {
-    console.error("Error fetching teacher bookings:", error);
+    (await (await import("@/lib/logger")).getRequestLogger({ labels: { route: "api/private-lesson/teacher-bookings" } }))
+      .error({ message: "fetch teacher bookings failed", error, location: "api/private-lesson/teacher-bookings" });
     return ApiResponses.serverError("Rezervasyonlar yüklenirken bir hata oluştu");
   }
 }); 

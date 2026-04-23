@@ -8,6 +8,7 @@ import { CancelLessonModal } from "@/components/modals/cancel-lesson-modal";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { toast } from "sonner";
 import { Check } from "lucide-react";
+import { clientLogger } from "@/lib/client-logger";
 
 interface Booking {
   id: number;
@@ -172,7 +173,7 @@ export default function TeacherBookingsPage() {
       setTeacherMeetLink(data.teacherMeetLink);
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching bookings:", error);
+      clientLogger.error({ message: "fetch teacher bookings failed", error, location: "teacher-dashboard/bookings/page" });
       setError("Dersler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar dene.");
       setLoading(false);
     }

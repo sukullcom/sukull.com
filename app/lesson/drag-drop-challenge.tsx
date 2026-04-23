@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { MathRenderer } from "@/components/ui/math-renderer";
+import { clientLogger } from "@/lib/client-logger";
 
 type Props = {
   options: (typeof challengeOptions.$inferSelect)[];
@@ -69,7 +70,7 @@ export const DragDropChallenge = ({
             });
           }
         } catch {
-          console.error("Failed to parse drag data");
+          clientLogger.error({ message: "failed to parse drag data", location: "lesson/drag-drop-challenge" });
         }
       }
     });

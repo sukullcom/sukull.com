@@ -1,7 +1,8 @@
 import { secureApi, ApiResponses } from "@/lib/api-middleware";
 import { NextResponse } from "next/server";
-import { batchQueries, aggregationQueries, cachedQueries } from "@/db/optimized-queries";
-import { 
+import { revalidateTag } from "next/cache";
+import { getRequestLogger } from "@/lib/logger";
+import {
   isTeacher,
   submitLessonReview,
   isApprovedStudent,
@@ -9,8 +10,12 @@ import {
   getTeacherFields,
   bookLesson,
   hasAvailableCredits,
-  getTeacherReviews
+  getTeacherReviews,
+  getStudentBookings,
+  getTeacherStats,
+  getTeachersWithRatingsOptimized,
 } from "@/db/queries";
+import { CACHE_TAGS } from "@/lib/cache-tags";
 import db from "@/db/drizzle";
 import { lessonBookings, users, teacherApplications } from "@/db/schema";
 import { eq, and, ne } from "drizzle-orm";
@@ -44,9 +49,8 @@ export const GET = secureApi.auth(async (request, user) => {
       }
 
       case 'student-bookings': {
-        // Use optimized query instead of N+1
-        const bookings = await batchQueries.getStudentBookingsWithTeacherData(user.id);
-        return ApiResponses.success({ 
+        const bookings = await getStudentBookings(user.id);
+        return ApiResponses.success({
           bookings,
           count: bookings.length
         });
@@ -67,9 +71,10 @@ export const GET = secureApi.auth(async (request, user) => {
         if (!userIsTeacher) {
           return ApiResponses.forbidden("Gelir verilerine yalnızca eğitmenler erişebilir");
         }
-        
-        // Use optimized aggregation query
-        const incomeData = await aggregationQueries.getTeacherStatsOptimized(user.id);
+
+        // Dashboard aggregate — cached per-teacher for 60s with explicit
+        // invalidation on booking / review writes (see POST handlers).
+        const incomeData = await getTeacherStats(user.id);
         return ApiResponses.success(incomeData);
       }
 
@@ -122,11 +127,12 @@ export const GET = secureApi.auth(async (request, user) => {
       }
 
       case 'available-teachers': {
-        // Use cached optimized query
-        const teachers = await cachedQueries.getTeachersWithRatings();
+        // Cached via `unstable_cache` tagged with CACHE_TAGS.teachers;
+        // invalidated from review submission below.
+        const teachers = await getTeachersWithRatingsOptimized();
         const subject = searchParams.get('subject');
         const grade = searchParams.get('grade');
-        
+
         let filteredTeachers = teachers;
         
         if (subject || grade) {
@@ -155,7 +161,13 @@ export const GET = secureApi.auth(async (request, user) => {
       }
     }
   } catch (error) {
-    console.error(`Error in private-lesson GET ${action}:`, error);
+    const log = await getRequestLogger({ userId: user.id, labels: { module: "private-lesson", method: "GET", action: action ?? "" } });
+    log.error({
+      message: `private-lesson GET failed`,
+      error,
+      source: "api-route",
+      location: `private-lesson/GET/${action ?? "unknown"}`,
+    });
     return ApiResponses.serverError("İstek işlenirken bir hata oluştu");
   }
 });
@@ -193,8 +205,14 @@ export const POST = secureApi.auth(async (request, user) => {
           rating,
           comment
         );
-        
-        return ApiResponses.created({ 
+
+        // See `submit-review/route.ts` for the rationale — review
+        // submission flips the booking to completed, so both the public
+        // teachers listing and the per-teacher dashboard need busting.
+        revalidateTag(CACHE_TAGS.teachers);
+        revalidateTag(CACHE_TAGS.teacherStats(teacherId));
+
+        return ApiResponses.created({
           message: "Değerlendirmeniz başarıyla gönderildi",
           review: review[0]
         });
@@ -247,7 +265,9 @@ export const POST = secureApi.auth(async (request, user) => {
         }
 
         await refundCredit(user.id);
-        
+
+        revalidateTag(CACHE_TAGS.teacherStats(booking.teacherId));
+
         return ApiResponses.success({ message: "Ders iptal edildi ve kredi iade edildi" });
       }
 
@@ -289,8 +309,10 @@ export const POST = secureApi.auth(async (request, user) => {
         try {
           // Book the lesson (this function handles credit deduction and validation)
           const booking = await bookLesson(user.id, teacherId, startDate, endDate);
-          
-          return ApiResponses.created({ 
+
+          revalidateTag(CACHE_TAGS.teacherStats(teacherId));
+
+          return ApiResponses.created({
             message: "Ders rezervasyonu başarıyla tamamlandı",
             booking: booking[0]
           });
@@ -312,12 +334,18 @@ export const POST = secureApi.auth(async (request, user) => {
       }
     }
   } catch (error) {
-    console.error(`Error in private-lesson POST ${action}:`, error);
-    
+    const log = await getRequestLogger({ userId: user.id, labels: { module: "private-lesson", method: "POST", action: action ?? "" } });
+    log.error({
+      message: `private-lesson POST failed`,
+      error,
+      source: "api-route",
+      location: `private-lesson/POST/${action ?? "unknown"}`,
+    });
+
     if (error instanceof Error) {
       return ApiResponses.badRequest(error.message);
     }
-    
+
     return ApiResponses.serverError("İstek işlenirken bir hata oluştu");
   }
 }); 

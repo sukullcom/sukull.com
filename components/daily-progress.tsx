@@ -6,6 +6,7 @@ import { getTimeBonusInfo, getRemainingHoursInDay, type TimeBonusInfo } from "@/
 import { PROGRESS_UPDATED_EVENT } from "@/lib/progress-events";
 import Image from "next/image";
 import { RefreshCw, AlertCircle, Sparkles, Flame, Sunrise, Clock } from "lucide-react";
+import { clientLogger } from "@/lib/client-logger";
 
 interface DailyProgressData {
   pointsEarnedToday: number;
@@ -32,7 +33,7 @@ export function DailyProgress() {
       setProgressData(data);
       setHasError(false);
     } catch (error) {
-      console.error("Error loading daily progress:", error);
+      clientLogger.error({ message: "load daily progress failed", error, location: "daily-progress" });
       setHasError(true);
     } finally {
       setLoading(false);
@@ -47,25 +48,30 @@ export function DailyProgress() {
     setTimeBonus(getTimeBonusInfo());
     setRemainingHours(getRemainingHoursInDay());
 
-    // Low-frequency safety-net poll: 60s (was 15s).
-    // Real-time updates now come from the PROGRESS_UPDATED_EVENT dispatched
-    // by lesson/game/shop actions, so this interval only catches edge cases
-    // (e.g. updates made in another tab or by a background job).
-    const interval = setInterval(() => {
-      if (document.hidden) return;
-      loadProgress();
-      setTimeBonus(getTimeBonusInfo());
-      setRemainingHours(getRemainingHoursInDay());
-    }, 60000);
-
+    /**
+     * Refresh strategy (no setInterval):
+     *   • `visibilitychange` — user switches back to the tab
+     *   • `focus` — user clicks into the tab
+     *   • `PROGRESS_UPDATED_EVENT` — dispatched by lesson/game/shop actions
+     *
+     * The previous 60s safety-net poll was removed: at 10K MAU that costs
+     * ~10K requests/min just for this widget. Event-driven refresh covers
+     * every case except a cross-tab / background-job update while THIS tab
+     * is focused with no navigation — a vanishingly rare scenario. If the
+     * user switches tabs or refocuses, they'll see fresh data immediately.
+     */
     const handleVisibilityChange = () => {
       if (!document.hidden) {
         loadProgress(true);
+        setTimeBonus(getTimeBonusInfo());
+        setRemainingHours(getRemainingHoursInDay());
       }
     };
 
     const handleFocus = () => {
       loadProgress(true);
+      setTimeBonus(getTimeBonusInfo());
+      setRemainingHours(getRemainingHoursInDay());
     };
 
     const handleProgressUpdated = () => {
@@ -79,7 +85,6 @@ export function DailyProgress() {
     window.addEventListener(PROGRESS_UPDATED_EVENT, handleProgressUpdated);
 
     return () => {
-      clearInterval(interval);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('focus', handleFocus);
       window.removeEventListener(PROGRESS_UPDATED_EVENT, handleProgressUpdated);

@@ -1,8 +1,7 @@
-import Link from "next/link";
 import db from "@/db/drizzle";
 import { errorLog } from "@/db/schema";
 import { eq, desc, sql, gte } from "drizzle-orm";
-import { AlertTriangle, ArrowLeft, Filter } from "lucide-react";
+import { AlertTriangle, Filter } from "lucide-react";
 
 type SearchParams = {
   source?: string;
@@ -48,20 +47,11 @@ export default async function AdminErrorsPage({
   const totalInWindow = summaryRows.reduce((sum, r) => sum + r.count, 0);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <AlertTriangle className="h-6 w-6 text-red-600" />
-            <h1 className="text-2xl font-bold text-gray-900">Hata Kayıtları</h1>
-          </div>
-          <Link
-            href="/admin"
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border bg-white text-sm text-gray-700 hover:bg-gray-50"
-          >
-            <ArrowLeft className="h-4 w-4" /> Admin
-          </Link>
-        </div>
+    <div className="space-y-6">
+      <div className="flex items-center gap-3">
+        <AlertTriangle className="h-6 w-6 text-red-600" />
+        <h1 className="text-2xl font-bold text-gray-900">Hata Kayıtları</h1>
+      </div>
 
         <form className="flex flex-wrap items-end gap-3 mb-6 p-4 bg-white border rounded-xl">
           <div>
@@ -197,7 +187,6 @@ export default async function AdminErrorsPage({
             )}
           </div>
         </div>
-      </div>
     </div>
   );
 }

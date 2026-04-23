@@ -56,6 +56,10 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ ok: true });
   } catch (err) {
+    // Intentional console.error: this is the error-reporting endpoint itself
+    // failing. We cannot re-enter the same pipeline (would recurse). The
+    // Postgres error_log is also likely the root cause (network/DB issue),
+    // so console is the safest last-resort sink.
     console.error("[api/errors] failed:", err);
     return NextResponse.json({ ok: false }, { status: 500 });
   }

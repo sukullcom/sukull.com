@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import GoogleMeetLinkManager from "./meet-link";
 import { toast } from "sonner";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { clientLogger } from "@/lib/client-logger";
 
 type TeacherProfile = {
   id: string;
@@ -70,11 +71,11 @@ export default function TeacherDashboardPage() {
           // User is not a teacher
           setIsTeacher(false);
         } else {
-          console.error("Failed to fetch profile");
+          clientLogger.error({ message: "failed to fetch teacher profile (non-ok response)", location: "teacher-dashboard/page/fetchProfile" });
           setIsTeacher(false);
         }
       } catch (error) {
-        console.error("Error fetching profile:", error);
+        clientLogger.error({ message: "fetch teacher profile failed", error, location: "teacher-dashboard/page/fetchProfile" });
         setIsTeacher(false);
       } finally {
         setLoading(false);
@@ -117,7 +118,7 @@ export default function TeacherDashboardPage() {
         toast.error("Profil kaydedilemedi");
       }
     } catch (error) {
-      console.error("Error saving profile:", error);
+      clientLogger.error({ message: "save teacher profile failed", error, location: "teacher-dashboard/page/saveProfile" });
       toast.error("Bir hata oluştu");
     } finally {
       setSaving(false);

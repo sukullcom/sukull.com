@@ -1,6 +1,8 @@
-import { NextResponse } from "next/server";
-import { getServerUser } from "@/lib/auth";
+import { NextRequest, NextResponse } from "next/server";
+import { secureApi } from "@/lib/api-middleware";
+import { RATE_LIMITS } from "@/lib/rate-limit-db";
 import { getTeacherAvailabilityForCurrentWeek, getTeacherFields, isApprovedStudent } from "@/db/queries";
+import { getRequestLogger } from "@/lib/logger";
 import { and, eq, gte, lte, not } from "drizzle-orm";
 import db from "@/db/drizzle";
 import { lessonBookings, users, userProgress, teacherApplications } from "@/db/schema";
@@ -30,28 +32,27 @@ interface BookingSlot {
   updatedAt: Date;
 }
 
-export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+/**
+ * Teacher detail endpoint fan-outs to 4 separate queries (user + profile +
+ * application + fields + availability + bookings). Expensive per call,
+ * and a student browsing teachers can legitimately hit 10-30/min while
+ * comparing. 60/min/user balances UX with DB protection.
+ */
+export const GET = secureApi.authRateLimited(
+  { bucket: "teacher-details-get", keyKind: "user", ...RATE_LIMITS.teacherDetails },
+  async (_request: NextRequest, user, params) => {
   try {
-    // Add a protective check for invalid teacher ID
-    if (!params.id) {
+    const id = (params?.id as string | undefined) ?? "";
+    if (!id) {
       return NextResponse.json({ message: "Eğitmen kimliği gerekli" }, { status: 400 });
-    }
-    
-    const user = await getServerUser();
-    
-    if (!user) {
-      return NextResponse.json({ message: "Giriş yapmanız gerekiyor" }, { status: 401 });
     }
 
     const approved = await isApprovedStudent(user.id);
     if (!approved) {
       return NextResponse.json({ message: "Öğretmen bilgilerini görüntülemek için onaylı öğrenci olmanız gerekiyor" }, { status: 403 });
     }
-    
-    const teacherId = params.id;
+
+    const teacherId = id;
     
     const teacher = await db.query.users.findFirst({
       where: eq(users.id, teacherId),
@@ -119,7 +120,10 @@ export async function GET(
         return slot.startTime > now;
       });
     } catch (availabilityError) {
-      console.error("Error fetching availability:", availabilityError);
+      {
+        const log = await getRequestLogger({ labels: { route: "api/private-lesson/teacher-details/[id]", op: "availability-inner" } });
+        log.error({ message: "fetch availability inner failed", error: availabilityError, location: "api/private-lesson/teacher-details/[id]/availability" });
+      }
       // Continue without availability data
     }
     
@@ -149,57 +153,60 @@ export async function GET(
       
       bookedSlots = bookingSlotsData as BookingSlot[];
     } catch (bookingsError) {
-      console.error("Error fetching booked slots:", bookingsError);
+      {
+        const log = await getRequestLogger({ labels: { route: "api/private-lesson/teacher-details/[id]", op: "bookings" } });
+        log.error({ message: "fetch booked slots failed", error: bookingsError, location: "api/private-lesson/teacher-details/[id]/bookings" });
+      }
       // Continue without booked slots data
     }
     
-    return NextResponse.json({ 
-      teacher: teacherWithDetails, 
-      availability, 
-      bookedSlots
+    return NextResponse.json({
+      teacher: teacherWithDetails,
+      availability,
+      bookedSlots,
     });
   } catch (error) {
-    console.error("Error getting teacher details:", error);
-    return NextResponse.json({ 
-      message: "Bir hata oluştu"
-    }, { status: 500 });
+    {
+      const log = await getRequestLogger({ labels: { route: "api/private-lesson/teacher-details/[id]", op: "GET" } });
+      log.error({ message: "get teacher details failed", error, location: "api/private-lesson/teacher-details/[id]/GET" });
+    }
+    return NextResponse.json({ message: "Bir hata oluştu" }, { status: 500 });
   }
-}
+  },
+);
 
-export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
-  try {
-    const user = await getServerUser();
-    
-    if (!user) {
-      return NextResponse.json({ message: "Giriş yapmanız gerekiyor" }, { status: 401 });
+/**
+ * PATCH updates the teacher's own bio. Own-resource writes — generous
+ * authRead bucket is plenty since the UI saves on blur/submit only.
+ */
+export const PATCH = secureApi.authRateLimited(
+  { bucket: "teacher-details-patch", keyKind: "user", ...RATE_LIMITS.writeBurst },
+  async (request: NextRequest, user, params) => {
+    try {
+      const id = (params?.id as string | undefined) ?? "";
+      if (user.id !== id) {
+        return NextResponse.json(
+          { message: "Yalnızca kendi profilinizi güncelleyebilirsiniz" },
+          { status: 403 },
+        );
+      }
+
+      const data = await request.json();
+
+      if (data.bio !== undefined) {
+        await db.update(users).set({ description: data.bio }).where(eq(users.id, user.id));
+      }
+
+      return NextResponse.json({ message: "Profil başarıyla güncellendi", updated: true });
+    } catch (error) {
+      {
+        const log = await getRequestLogger({ labels: { route: "api/private-lesson/teacher-details/[id]", op: "PUT" } });
+        log.error({ message: "update teacher profile failed", error, location: "api/private-lesson/teacher-details/[id]/PUT" });
+      }
+      return NextResponse.json(
+        { message: "Profil güncellenirken bir hata oluştu" },
+        { status: 500 },
+      );
     }
-    
-    if (user.id !== params.id) {
-      return NextResponse.json({ message: "Yalnızca kendi profilinizi güncelleyebilirsiniz" }, { status: 403 });
-    }
-    
-    // Parse the request body
-    const data = await request.json();
-    
-    // Update bio (saved as description in the users table)
-    if (data.bio !== undefined) {
-      await db
-        .update(users)
-        .set({ description: data.bio })
-        .where(eq(users.id, user.id));
-    }
-    
-    return NextResponse.json({ 
-      message: "Profil başarıyla güncellendi",
-      updated: true
-    });
-  } catch (error) {
-    console.error("Error updating teacher profile:", error);
-    return NextResponse.json({ 
-      message: "Profil güncellenirken bir hata oluştu"
-    }, { status: 500 });
-  }
-} 
+  },
+);

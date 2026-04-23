@@ -5,6 +5,7 @@
 
 import { createClient } from './client';
 import { appCache, schoolsCache, usersCache } from '../cache';
+import { clientLogger } from '@/lib/client-logger';
 
 // Constants
 const BATCH_SIZE = 100; // Maximum number of items to fetch in a single query
@@ -35,7 +36,9 @@ export async function fetchWithRetry<T>(
       
       if (error) {
         lastError = error;
-        console.warn(`Query error (attempt ${attempt + 1}/${RETRY_ATTEMPTS}):`, error);
+        clientLogger.warn(`supabase query error (attempt ${attempt + 1}/${RETRY_ATTEMPTS})`, {
+          error: error instanceof Error ? error.message : String(error),
+        });
         
         // Wait before retrying
         if (attempt < RETRY_ATTEMPTS - 1) {
@@ -47,7 +50,9 @@ export async function fetchWithRetry<T>(
       return data as T;
     } catch (error) {
       lastError = error;
-      console.warn(`Query exception (attempt ${attempt + 1}/${RETRY_ATTEMPTS}):`, error);
+      clientLogger.warn(`supabase query threw (attempt ${attempt + 1}/${RETRY_ATTEMPTS})`, {
+        error: error instanceof Error ? error.message : String(error),
+      });
       
       // Wait before retrying
       if (attempt < RETRY_ATTEMPTS - 1) {

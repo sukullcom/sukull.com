@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import Image from "next/image";
 import { ResultCard } from "./result-card";
 import { useRouter } from "next/navigation";
-import Confetti from "react-confetti";
+import Confetti from "@/components/lazy-confetti";
 import { useHeartsModal } from "@/store/use-hearts-modal";
 import { usePracticeModal } from "@/store/use-practice-modal";
 import { MathRenderer } from "@/components/ui/math-renderer";

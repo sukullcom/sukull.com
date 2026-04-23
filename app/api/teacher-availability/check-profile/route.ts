@@ -63,7 +63,8 @@ export async function GET() {
       isComplete: true
     });
   } catch (error) {
-    console.error("Error checking teacher profile:", error);
+    (await (await import("@/lib/logger")).getRequestLogger({ labels: { route: "api/teacher-availability/check-profile" } }))
+      .error({ message: "check teacher profile failed", error, location: "api/teacher-availability/check-profile" });
     return NextResponse.json({ message: "Bir hata oluştu" }, { status: 500 });
   }
 }

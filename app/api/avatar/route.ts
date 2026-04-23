@@ -1,14 +1,36 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getServerUser } from '@/lib/auth';
+import {
+  checkRateLimit,
+  getClientIp,
+  rateLimitHeaders,
+  RATE_LIMITS,
+} from '@/lib/rate-limit-db';
+import { getRequestLogger } from '@/lib/logger';
 
-export async function GET(request: Request) {
-  // Add authentication check
+/**
+ * Avatar proxy — forwards to avataaars.io and caches the SVG downstream.
+ * Even though the response is cheap, every call also does an egress fetch,
+ * so we cap per-IP to prevent runaway clients from turning this into a
+ * scripted avatar-generator bot.
+ */
+export async function GET(request: NextRequest) {
   const user = await getServerUser();
   if (!user) {
     return NextResponse.json({ error: "Giriş yapmanız gerekiyor." }, { status: 401 });
   }
 
-  // Get the URL from the query string
+  const rl = await checkRateLimit({
+    key: `avatar:ip:${getClientIp(request)}`,
+    ...RATE_LIMITS.avatar,
+  });
+  if (!rl.allowed) {
+    return NextResponse.json(
+      { error: 'Çok fazla istek.' },
+      { status: 429, headers: rateLimitHeaders(rl) },
+    );
+  }
+
   const { searchParams } = new URL(request.url);
   
   // Extract all the avatar parameters
@@ -61,7 +83,10 @@ export async function GET(request: Request) {
       },
     });
   } catch (error) {
-    console.error('Error fetching avatar:', error);
+    {
+      const log = await getRequestLogger({ labels: { route: 'api/avatar' } });
+      log.error({ message: 'fetch avatar failed', error, location: 'api/avatar' });
+    }
     return new NextResponse('Avatar yüklenirken bir hata oluştu.', { status: 500 });
   }
 } 

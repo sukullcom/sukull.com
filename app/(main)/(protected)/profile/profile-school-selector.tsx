@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { clientLogger } from "@/lib/client-logger";
 
 type School = { 
   id: number; 
@@ -55,7 +56,7 @@ export const ProfileSchoolSelector = ({
       setCities(data.cities || []);
     } catch (err) {
       setError('Şehirler yüklenirken hata oluştu');
-      console.error('Error loading cities:', err);
+      clientLogger.error({ message: 'load cities failed', error: err, location: 'profile/profile-school-selector' });
     } finally {
       setLoading(false);
     }
@@ -71,7 +72,7 @@ export const ProfileSchoolSelector = ({
       setDistricts(data.districts || []);
     } catch (err) {
       setError('İlçeler yüklenirken hata oluştu');
-      console.error('Error loading districts:', err);
+      clientLogger.error({ message: 'load districts failed', error: err, location: 'profile/profile-school-selector' });
     } finally {
       setLoading(false);
     }
@@ -89,7 +90,7 @@ export const ProfileSchoolSelector = ({
       setCategories(data.categories || []);
     } catch (err) {
       setError('Kategoriler yüklenirken hata oluştu');
-      console.error('Error loading categories:', err);
+      clientLogger.error({ message: 'load categories failed', error: err, location: 'profile/profile-school-selector' });
     } finally {
       setLoading(false);
     }
@@ -111,7 +112,7 @@ export const ProfileSchoolSelector = ({
       setSchools(data.schools || []);
     } catch (err) {
       setError('Okullar yüklenirken hata oluştu');
-      console.error('Error loading schools:', err);
+      clientLogger.error({ message: 'load schools failed', error: err, location: 'profile/profile-school-selector' });
     } finally {
       setLoading(false);
     }

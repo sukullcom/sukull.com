@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { SCORING_SYSTEM } from "@/constants";
 import { addPointsToUser } from "@/actions/challenge-progress";
-import Confetti from "react-confetti";
+import Confetti from "@/components/lazy-confetti";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowLeft, BookOpen, FileText, Target, Gamepad2, Trophy, Sparkles, Lightbulb, Check } from "lucide-react";

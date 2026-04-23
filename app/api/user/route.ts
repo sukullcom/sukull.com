@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
 import { getUserCredits, getUserProgress } from "@/db/queries";
 import { getStreakCount } from "@/actions/daily-streak";
+import { getRequestLogger } from "@/lib/logger";
 
 // ✅ CONSOLIDATED USER API: Replaces /api/user/credits, /api/user/progress, and /api/user/streak
 export async function GET(request: NextRequest) {
@@ -90,7 +91,10 @@ export async function GET(request: NextRequest) {
       }
     }
   } catch (error) {
-    console.error(`Error in user API (action: ${request.url}):`, error);
+    {
+      const log = await getRequestLogger({ labels: { route: "api/user" } });
+      log.error({ message: "user API failed", error, location: "api/user/GET", fields: { url: request.url } });
+    }
     return NextResponse.json({ error: "Sunucu tarafında bir hata oluştu." }, { status: 500 });
   }
 } 

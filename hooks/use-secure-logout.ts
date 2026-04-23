@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { toast } from 'sonner';
 import { auth } from '@/utils/auth';
+import { clientLogger } from '@/lib/client-logger';
 
 export function useSecureLogout() {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -47,7 +48,7 @@ export function useSecureLogout() {
       }
 
     } catch (error) {
-      console.error('Logout error:', error);
+      clientLogger.error({ message: 'client logout failed', error, location: 'use-secure-logout' });
       
       if (showToast) {
         toast.error('Çıkış yapılırken bir hata oluştu', { id: 'logout' });

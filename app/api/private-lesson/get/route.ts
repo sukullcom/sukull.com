@@ -3,6 +3,7 @@ import { getServerUser } from "@/lib/auth";
 import db from "@/db/drizzle";
 import { privateLessonApplications } from "@/db/schema";
 import { eq, and, desc } from "drizzle-orm";
+import { getRequestLogger } from "@/lib/logger";
 
 export async function GET() {
   try {
@@ -27,7 +28,10 @@ export async function GET() {
       createdAt: application.createdAt,
     });
   } catch (error) {
-    console.error("Başvuru durumu kontrol hatası:", error);
+    {
+      const log = await getRequestLogger({ labels: { route: "api/private-lesson/get", op: "status" } });
+      log.error({ message: "private-lesson status failed", error, location: "api/private-lesson/get/GET" });
+    }
     return NextResponse.json({ error: "Bir hata oluştu" }, { status: 500 });
   }
 }
@@ -101,7 +105,10 @@ export async function POST(request: NextRequest) {
     }, { status: 201 });
 
   } catch (error) {
-    console.error("Başvuru gönderme hatası:", error);
+    {
+      const log = await getRequestLogger({ labels: { route: "api/private-lesson/get", op: "submit" } });
+      log.error({ message: "private-lesson submit failed", error, location: "api/private-lesson/get/POST" });
+    }
     return NextResponse.json(
       { error: "Başvurunuz gönderilirken bir hata oluştu. Lütfen tekrar deneyin." },
       { status: 500 }

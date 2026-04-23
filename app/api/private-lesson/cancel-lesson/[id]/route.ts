@@ -1,10 +1,13 @@
 import { NextResponse } from "next/server";
+import { revalidateTag } from "next/cache";
 import { getServerUser } from "@/lib/auth";
 import db from "@/db/drizzle";
 import { lessonBookings } from "@/db/schema";
 import { eq, and, ne } from "drizzle-orm";
 import { refundCredit } from "@/db/queries";
 import { LESSON_CONFIG } from "@/lib/lesson-config";
+import { CACHE_TAGS } from "@/lib/cache-tags";
+import { getRequestLogger } from "@/lib/logger";
 
 export async function POST(
   request: Request,
@@ -70,13 +73,20 @@ export async function POST(
 
     await refundCredit(booking.studentId);
 
+    // Defensive: the current stats query counts DISTINCT booking ids
+    // regardless of status, so a cancel doesn't shift totalLessons today.
+    // If the formula ever tightens (e.g. "exclude cancelled"), this bust
+    // already exists to prevent a regression.
+    revalidateTag(CACHE_TAGS.teacherStats(booking.teacherId));
+
     if (isTeacher) {
       return NextResponse.json({ message: "Ders başarıyla iptal edildi. Öğrencinin kredisi iade edildi." });
     }
     
     return NextResponse.json({ message: "Ders başarıyla iptal edildi ve krediniz iade edildi" });
   } catch (error) {
-    console.error("Ders iptal hatası:", error);
+    (await getRequestLogger({ labels: { route: "api/private-lesson/cancel-lesson" } }))
+      .error({ message: "cancel lesson failed", error, location: "api/private-lesson/cancel-lesson/POST" });
     return NextResponse.json({ message: "Ders iptal edilirken bir hata oluştu" }, { status: 500 });
   }
 }

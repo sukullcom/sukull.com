@@ -6,6 +6,7 @@ import { Star, TrendingUp, Calendar, Users, DollarSign } from "lucide-react";
 import { toast } from "sonner";
 import { useLessonStatusUpdater } from "@/hooks/use-lesson-status-updater";
 import { LoadingSpinner } from "@/components/loading-spinner";
+import { clientLogger } from "@/lib/client-logger";
 
 interface MonthlyIncomeData {
   lessons: number;
@@ -89,7 +90,7 @@ export default function TeacherIncomePage() {
       setIncomeData(income);
       setReviewData(reviews);
     } catch (error) {
-      console.error("Error fetching teacher data:", error);
+      clientLogger.error({ message: "fetch teacher data failed", error, location: "teacher-dashboard/income/page" });
       setError("Veriler yüklenirken bir hata oluştu");
       toast.error("Veriler yüklenirken bir hata oluştu");
     } finally {

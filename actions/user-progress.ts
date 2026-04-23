@@ -11,15 +11,16 @@ import { redirect } from 'next/navigation';
 import { getServerUser } from '@/lib/auth';
 import { users } from '@/utils/users';
 import { updateDailyStreak } from "./daily-streak";
-import { normalizeAvatarUrl } from '@/utils/avatar';
 import { logActivity } from '@/lib/activity-logger';
+import { getRequestLogger, logger } from '@/lib/logger';
 
 export const updateTotalPointsForSchools = async () => {
+  const log = await getRequestLogger({ labels: { action: 'updateTotalPointsForSchools' } });
   try {
-    console.log('Starting optimized school points update...');
-    
+    log.info('school points full-recompute started');
+
     // Use a more efficient approach with a single UPDATE query using a CTE
-    const result = await db.execute(sql`
+    await db.execute(sql`
       WITH school_points AS (
         SELECT 
           school_id,
@@ -44,11 +45,16 @@ export const updateTotalPointsForSchools = async () => {
         WHERE school_id IS NOT NULL
       );
     `);
-    
-    console.log('School points update completed successfully');
+
+    log.info('school points full-recompute completed');
     return true;
   } catch (error) {
-    console.error("Error updating school totals:", error);
+    log.error({
+      message: 'school points full-recompute failed',
+      error,
+      source: 'server-action',
+      location: 'user-progress/updateTotalPointsForSchools',
+    });
     return false;
   }
 };
@@ -111,7 +117,13 @@ async function updateSchoolPoints(schoolId: number) {
       
     return true;
   } catch (error) {
-    console.error(`Error updating points for school ${schoolId}:`, error);
+    logger.error({
+      message: 'single-school points update failed',
+      error,
+      source: 'server-action',
+      location: 'user-progress/updateSchoolPoints',
+      fields: { schoolId },
+    });
     return false;
   }
 }
@@ -236,7 +248,13 @@ export async function addUserPoints(points: number) {
     });
     return updatedProgress;
   } catch (error) {
-    console.error("Error adding user points:", error);
+    logger.error({
+      message: 'addUserPoints failed',
+      error,
+      source: 'server-action',
+      location: 'user-progress/addUserPoints',
+      fields: { points },
+    });
     return null;
   }
 }
@@ -260,7 +278,13 @@ export async function addSchoolPoints(schoolId: number, points: number) {
     
     return result.length > 0;
   } catch (error) {
-    console.error("Error adding school points:", error);
+    logger.error({
+      message: 'addSchoolPoints failed',
+      error,
+      source: 'server-action',
+      location: 'user-progress/addSchoolPoints',
+      fields: { schoolId, points },
+    });
     return false;
   }
 }
@@ -274,7 +298,12 @@ export async function resetDailyStreaks() {
     const { performDailyReset } = await import("./daily-streak");
     return await performDailyReset();
   } catch (error) {
-    console.error("Error resetting daily streaks:", error);
+    logger.error({
+      message: 'resetDailyStreaks wrapper failed',
+      error,
+      source: 'server-action',
+      location: 'user-progress/resetDailyStreaks',
+    });
     return false;
   }
 }

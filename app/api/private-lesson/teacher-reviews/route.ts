@@ -20,7 +20,8 @@ export async function GET() {
     
     return NextResponse.json(reviewData);
   } catch (error) {
-    console.error("Error fetching teacher reviews:", error);
+    (await (await import("@/lib/logger")).getRequestLogger({ labels: { route: "api/private-lesson/teacher-reviews" } }))
+      .error({ message: "fetch teacher reviews failed", error, location: "api/private-lesson/teacher-reviews" });
     return NextResponse.json({ 
       message: "Değerlendirme verileri yüklenirken bir hata oluştu" 
     }, { status: 500 });

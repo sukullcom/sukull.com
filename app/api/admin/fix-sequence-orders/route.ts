@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
-import { isAdmin } from "@/lib/admin";
+import { getAdminActor } from "@/lib/admin";
+import { logAdminActionAsync } from "@/lib/admin-audit";
 import db from "@/db/drizzle";
 import { challenges, challengeOptions } from "@/db/schema";
 import { eq, asc } from "drizzle-orm";
 
 export async function POST() {
   try {
-    const admin = await isAdmin();
-    if (!admin) {
+    const actor = await getAdminActor();
+    if (!actor) {
       return NextResponse.json({ error: "Bu işlem için yönetici yetkisi gereklidir." }, { status: 403 });
     }
 
@@ -42,6 +43,17 @@ export async function POST() {
       fixedChallenges++;
     }
 
+    logAdminActionAsync({
+      actorId: actor.id,
+      actorEmail: actor.email,
+      action: "admin.fix_sequence_orders",
+      metadata: {
+        totalSequenceChallenges: sequenceChallenges.length,
+        fixedChallenges,
+        fixedOptions,
+      },
+    });
+
     return NextResponse.json({
       success: true,
       totalSequenceChallenges: sequenceChallenges.length,
@@ -49,7 +61,8 @@ export async function POST() {
       fixedOptions,
     });
   } catch (error) {
-    console.error("Fix sequence orders error:", error);
+    (await (await import("@/lib/logger")).getRequestLogger({ labels: { route: "api/admin/fix-sequence-orders" } }))
+      .error({ message: "fix sequence orders failed", error, location: "api/admin/fix-sequence-orders" });
     return NextResponse.json(
       { error: "Failed to fix sequence orders" },
       { status: 500 }

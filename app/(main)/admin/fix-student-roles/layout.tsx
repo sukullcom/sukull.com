@@ -1,20 +1,16 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Fix Student Roles | Admin",
-  description: "Admin tool to fix user roles for approved students",
+  title: "Öğrenci Rolü Onarımı | Admin",
+  description:
+    "Onaylanmış öğrenci başvurularına rağmen rolü senkronize olmayan kullanıcıları onarır.",
 };
 
-// The parent admin/layout.tsx already enforces the admin gate via isAdmin().
-// This file only contributes metadata — no need to re-check auth here.
+// Auth gate app/(main)/admin/layout.tsx'te uygulanıyor; burada sadece metadata var.
 export default function AdminFixStudentRolesLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="h-full">
-      <div className="h-full">{children}</div>
-    </div>
-  );
+  return <>{children}</>;
 }

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import Link from "next/link";
+import { clientLogger } from "@/lib/client-logger";
 
 export default function GoogleMeetLinkManager() {
   const [meetLink, setMeetLink] = useState("");
@@ -24,7 +25,7 @@ export default function GoogleMeetLinkManager() {
           toast.error("Bağlantı yüklenirken bir hata oluştu");
         }
       } catch (error) {
-        console.error("Error fetching meet link:", error);
+        clientLogger.error({ message: "fetch meet link failed", error, location: "teacher-dashboard/meet-link" });
         toast.error("Bağlantı yüklenirken bir hata oluştu");
       } finally {
         setLoading(false);
@@ -54,7 +55,7 @@ export default function GoogleMeetLinkManager() {
         toast.error(`Hata: ${data.message || "Bir hata oluştu"}`);
       }
     } catch (error) {
-      console.error("Error saving meet link:", error);
+      clientLogger.error({ message: "save meet link failed", error, location: "teacher-dashboard/meet-link" });
       toast.error("Bağlantı kaydedilirken bir hata oluştu");
     } finally {
       setSaving(false);

@@ -8,6 +8,7 @@ import { getServerUser } from "@/lib/auth";
 import db from "@/db/drizzle";
 import { schools } from "@/db/schema";
 import { sql } from "drizzle-orm";
+import { getRequestLogger } from "@/lib/logger";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { RankCards } from "./rank-cards";
@@ -90,7 +91,12 @@ const LeaderboardPage = async () => {
       </div>
     );
   } catch (error) {
-    console.error("Error in leaderboard page:", error);
+    const log = await getRequestLogger({ labels: { module: "leaderboard/page" } });
+    log.error({
+      message: "leaderboard page failed",
+      error,
+      location: "app/(main)/(protected)/leaderboard/page",
+    });
     return (
       <div className="flex flex-col items-center justify-center py-20 px-6 text-center">
         <p className="text-neutral-600">

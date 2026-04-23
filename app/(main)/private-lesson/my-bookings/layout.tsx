@@ -1,44 +1,20 @@
 import { Metadata } from "next";
-import { redirect } from "next/navigation";
-import { getServerUser } from "@/lib/auth";
-import { isApprovedStudent } from "@/db/queries";
+import { requireApprovedStudent } from "@/lib/auth";
 
 export const metadata: Metadata = {
-  title: "My Bookings | Sukull",
-  description: "Manage your private lesson bookings",
+  title: "Rezervasyonlarım | Sukull",
+  description: "Özel ders rezervasyonlarını yönet.",
 };
 
+/**
+ * Sadece onaylı öğrenciler bu alanı görebilir. Onay yoksa `/private-lesson/get`
+ * başvuru sayfasına yönlendirilir.
+ */
 export default async function MyBookingsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  try {
-    // Get authenticated user - redirects to login if not authenticated
-    const user = await getServerUser();
-    
-    if (!user) {
-      redirect("/login");
-    }
-    
-    // Check if user is an approved student
-    const isStudent = await isApprovedStudent(user.id);
-    
-    if (!isStudent) {
-      // If authenticated but not a student, redirect to apply for student status
-      redirect("/private-lesson/get");
-    }
-    
-    return (
-      <div className="h-full">
-        <div className="container h-full py-4">
-          {children}
-        </div>
-      </div>
-    );
-  } catch (error) {
-    // Handle any other errors
-    console.error("Access error:", error);
-    redirect("/unauthorized");
-  }
-} 
+  await requireApprovedStudent();
+  return <>{children}</>;
+}

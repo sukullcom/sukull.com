@@ -6,6 +6,9 @@ import { eq, and } from "drizzle-orm";
 import { getServerUser } from "@/lib/auth";
 import { DAILY_CHALLENGES, type DailyChallengeType } from "@/constants";
 import { revalidatePath } from "next/cache";
+import { logger } from "@/lib/logger";
+
+const log = logger.child({ labels: { module: "actions/daily-challenges" } });
 
 const TURKEY_UTC_OFFSET = 3;
 
@@ -77,7 +80,12 @@ export async function getTodayChallenge() {
       metadata: {} as Record<string, unknown>,
     };
   } catch (error) {
-    console.error("Error getting today's challenge:", error);
+    log.error({
+      message: "getTodayChallenge failed",
+      error,
+      source: "server-action",
+      location: "daily-challenges/getTodayChallenge",
+    });
     return null;
   }
 }
@@ -209,7 +217,13 @@ export async function updateChallengeProgress(
       })
       .where(eq(userDailyChallenges.id, row.id));
   } catch (error) {
-    console.error("Error updating challenge progress:", error);
+    log.error({
+      message: "updateChallengeProgress failed",
+      error,
+      source: "server-action",
+      location: "daily-challenges/updateChallengeProgress",
+      fields: { userId, type },
+    });
   }
 }
 
@@ -254,7 +268,12 @@ export async function claimChallengeReward() {
     revalidatePath("/learn");
     return { success: true, bonusPoints: row.bonusPoints };
   } catch (error) {
-    console.error("Error claiming challenge reward:", error);
+    log.error({
+      message: "claimChallengeReward failed",
+      error,
+      source: "server-action",
+      location: "daily-challenges/claimChallengeReward",
+    });
     return { success: false };
   }
 }

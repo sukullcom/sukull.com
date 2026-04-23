@@ -4,6 +4,7 @@
 
 import React from "react";
 import ReactPlayer from "react-player/youtube";
+import { clientLogger } from "@/lib/client-logger";
 
 interface VideoPlayerProps {
   videoId: string;
@@ -31,7 +32,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ videoId }) => {
           },
         }}
         onError={(error) => {
-          console.log('Video player error (non-critical):', error);
+          clientLogger.debug('video player error (non-critical)', { error });
         }}
       />
     </div>

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 import { addMonths, startOfMonth, endOfMonth, getDay, format } from "date-fns";
 import { tr } from "date-fns/locale";
+import { clientLogger } from "@/lib/client-logger";
 
 interface DailyRecord {
   id: number;
@@ -60,7 +61,7 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
 
       setRecords(formattedRecs);
     } catch (err) {
-      console.error("Failed to fetch daily streak records:", err);
+      clientLogger.error({ message: "fetch daily streak records failed", error: err, location: "streak-calendar" });
       setRecords([]);
     } finally {
       setLoading(false);

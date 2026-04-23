@@ -5,6 +5,7 @@ import { eq, lt, and, isNotNull, isNull, sql } from "drizzle-orm";
 import { LESSON_CONFIG } from "@/lib/lesson-config";
 import { performDailyReset, applyDailyStreakBonuses } from "@/actions/daily-streak";
 import { updateTotalPointsForSchools } from "@/actions/user-progress";
+import { getRequestLogger } from "@/lib/logger";
 
 export const maxDuration = 60; // Vercel Hobby limit is 60s
 
@@ -27,7 +28,14 @@ async function runStep(name: string, fn: () => Promise<unknown>): Promise<StepRe
       details,
     };
   } catch (error) {
-    console.error(`[cron/daily] "${name}" step failed:`, error);
+    const log = await getRequestLogger({ labels: { module: "cron", job: "daily", step: name } });
+    log.error({
+      message: `cron/daily step "${name}" failed`,
+      error,
+      source: "cron",
+      location: `cron/daily/${name}`,
+      fields: { durationMs: Date.now() - start },
+    });
     return {
       name,
       success: false,
@@ -115,7 +123,13 @@ async function runDaily(request: NextRequest) {
         try {
           await applyDailyStreakBonuses();
         } catch (bonusError) {
-          console.error("[cron/daily] streak bonuses failed:", bonusError);
+          const log = await getRequestLogger({ labels: { module: "cron", job: "daily", step: "streak-bonuses" } });
+          log.error({
+            message: "streak bonuses application failed",
+            error: bonusError,
+            source: "cron",
+            location: "cron/daily/streak-bonuses",
+          });
         }
       }
       return result;
@@ -162,8 +176,8 @@ async function runDaily(request: NextRequest) {
   );
 
   steps.push(
-    await runStep("cleanup-error-log", async () => {
-      const result = await db.execute(sql`SELECT cleanup_error_log(30) AS deleted`);
+    await runStep("cleanup-admin-audit", async () => {
+      const result = await db.execute(sql`SELECT cleanup_admin_audit(365) AS deleted`);
       const row =
         (result as unknown as { rows?: Array<Record<string, unknown>> }).rows?.[0] ??
         (result as unknown as Array<Record<string, unknown>>)[0];

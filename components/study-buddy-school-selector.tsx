@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import { clientLogger } from "@/lib/client-logger";
 
 type School = { 
   id: number; 
@@ -55,7 +56,7 @@ export const StudyBuddySchoolSelector = ({
       setCities(data.cities || []);
     } catch (err) {
       setError('Şehirler yüklenirken hata oluştu');
-      console.error('Error loading cities:', err);
+      clientLogger.error({ message: 'load cities failed', error: err, location: 'study-buddy-school-selector/loadCities' });
     } finally {
       setLoading(false);
     }
@@ -71,7 +72,7 @@ export const StudyBuddySchoolSelector = ({
       setDistricts(data.districts || []);
     } catch (err) {
       setError('İlçeler yüklenirken hata oluştu');
-      console.error('Error loading districts:', err);
+      clientLogger.error({ message: 'load districts failed', error: err, location: 'study-buddy-school-selector/loadDistricts' });
     } finally {
       setLoading(false);
     }
@@ -89,7 +90,7 @@ export const StudyBuddySchoolSelector = ({
       setCategories(data.categories || []);
     } catch (err) {
       setError('Kategoriler yüklenirken hata oluştu');
-      console.error('Error loading categories:', err);
+      clientLogger.error({ message: 'load categories failed', error: err, location: 'study-buddy-school-selector/loadCategories' });
     } finally {
       setLoading(false);
     }
@@ -112,7 +113,7 @@ export const StudyBuddySchoolSelector = ({
       setShowSchools(true);
     } catch (err) {
       setError('Okullar yüklenirken hata oluştu');
-      console.error('Error loading schools:', err);
+      clientLogger.error({ message: 'load schools failed', error: err, location: 'study-buddy-school-selector/loadSchools' });
     } finally {
       setLoading(false);
     }

@@ -7,6 +7,7 @@ import { eq } from "drizzle-orm";
 import { getServerUser } from "@/lib/auth";
 import { checkStreakContinuity } from "./daily-streak";
 import { normalizeAvatarUrl } from '@/utils/avatar';
+import { getRequestLogger } from "@/lib/logger";
 
 /**
  * Fetch profile data (user_progress) for the currently authenticated user.
@@ -176,7 +177,13 @@ export async function getUserProfile() {
       startDate,
     };
   } catch (error) {
-    console.error("Error getting user profile:", error);
+    const log = await getRequestLogger({ labels: { action: "getUserProfile" } });
+    log.error({
+      message: "getUserProfile failed",
+      error,
+      source: "server-action",
+      location: "profile/getUserProfile",
+    });
     return null;
   }
 }
@@ -231,7 +238,13 @@ export async function updateUserProfile(data: {
     
     return true;
   } catch (error) {
-    console.error("Error updating user profile:", error);
+    const log = await getRequestLogger({ labels: { action: "updateUserProfile" } });
+    log.error({
+      message: "updateUserProfile failed",
+      error,
+      source: "server-action",
+      location: "profile/updateUserProfile",
+    });
     return false;
   }
 }

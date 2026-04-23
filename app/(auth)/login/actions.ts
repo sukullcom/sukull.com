@@ -7,6 +7,9 @@ import { createClient } from '@/utils/supabase/server'
 import { users } from '@/utils/users'
 import { getAuthError } from '@/utils/auth-errors'
 import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit-db'
+import { logger } from '@/lib/logger'
+
+const log = logger.child({ labels: { module: 'auth/login' } })
 
 function getIpFromHeaders(h: Headers): string {
   return (
@@ -51,7 +54,12 @@ export async function login(formData: FormData) {
     try {
       await users.captureUserDetails(data.user)
     } catch (e) {
-      console.error('Error capturing user details:', e)
+      log.error({
+        message: 'capture user details failed on login',
+        error: e,
+        location: 'auth/login/captureUserDetails',
+        userId: data.user.id,
+      })
     }
   }
 

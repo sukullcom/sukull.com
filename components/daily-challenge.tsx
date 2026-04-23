@@ -10,7 +10,8 @@ import {
 } from "@/lib/progress-events";
 import { toast } from "sonner";
 import { Trophy, Gift, CheckCircle, Clock, Loader2 } from "lucide-react";
-import Confetti from "react-confetti";
+import Confetti from "@/components/lazy-confetti";
+import { clientLogger } from "@/lib/client-logger";
 
 const DAY_NAMES = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"];
 
@@ -40,7 +41,7 @@ export function DailyChallenge() {
       const data = await getTodayChallenge();
       setChallenge(data as ChallengeData | null);
     } catch (error) {
-      console.error("Error loading daily challenge:", error);
+      clientLogger.error({ message: "load daily challenge failed", error, location: "daily-challenge" });
     } finally {
       setLoading(false);
     }
@@ -50,14 +51,12 @@ export function DailyChallenge() {
     loadChallenge();
     setTimeBonus(getTimeBonusInfo());
 
-    // Low-frequency safety-net poll: 60s (was 15s).
-    // Real-time updates come from CHALLENGE_UPDATED_EVENT and PROGRESS_UPDATED_EVENT.
-    const interval = setInterval(() => {
-      if (document.hidden) return;
-      loadChallenge();
-      setTimeBonus(getTimeBonusInfo());
-    }, 60000);
-
+    /**
+     * Event-driven refresh (no setInterval). The 60s safety-net was dropped
+     * for cost: widget is present on every protected layout; at 10K MAU
+     * that was ~10K needless requests/min. Events below cover the real
+     * update surface (lesson/game/shop completions + tab focus).
+     */
     const handleVisibilityChange = () => {
       if (!document.hidden) {
         loadChallenge();
@@ -75,7 +74,6 @@ export function DailyChallenge() {
     window.addEventListener(PROGRESS_UPDATED_EVENT, handleUpdated);
 
     return () => {
-      clearInterval(interval);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener(CHALLENGE_UPDATED_EVENT, handleUpdated);
       window.removeEventListener(PROGRESS_UPDATED_EVENT, handleUpdated);

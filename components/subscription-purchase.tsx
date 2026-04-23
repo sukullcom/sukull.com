@@ -8,6 +8,7 @@ import { CreditCard, Loader2, InfinityIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
+import { clientLogger } from '@/lib/client-logger';
 
 type SubscriptionPurchaseProps = {
   onSuccess?: () => void;
@@ -118,7 +119,7 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
         toast.error(result.message || 'Abonelik ödemesi başarısız oldu. Lütfen tekrar deneyin.');
       }
     } catch (error: unknown) {
-      console.error('Subscription payment error:', error);
+      clientLogger.error({ message: 'subscription payment failed', error, location: 'subscription-purchase/payment' });
       toast.error('Abonelik ödemesi sırasında bir hata oluştu. Lütfen tekrar deneyin.');
     } finally {
       setLoading(false);

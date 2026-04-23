@@ -1,4 +1,4 @@
-// app/marketin/header.tsx
+// app/(auth)/header.tsx
 "use client";
 
 import Image from "next/image";

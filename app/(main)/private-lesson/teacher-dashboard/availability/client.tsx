@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import TimeSlotGrid from '@/app/components/teacher-availability/TimeSlotGrid';
+import TimeSlotGrid from '@/components/teacher-availability/TimeSlotGrid';
 import { toast } from 'sonner';
+import { clientLogger } from '@/lib/client-logger';
 
 type AvailabilityPageClientProps = {
   initialAvailability: Array<{
@@ -45,7 +46,7 @@ export default function AvailabilityPageClient({
           setMissingFields([]);
         }
       } catch (error) {
-        console.error('Error checking profile completion:', error);
+        clientLogger.error({ message: 'check profile completion failed', error, location: 'teacher-dashboard/availability/client' });
       }
     };
 
@@ -73,7 +74,7 @@ export default function AvailabilityPageClient({
           }
         }
       } catch (error) {
-        console.error('Error fetching latest availability:', error);
+        clientLogger.error({ message: 'fetch latest availability failed', error, location: 'teacher-dashboard/availability/client' });
         toast.error('Müsait zamanların yüklenirken bir hata oluştu.');
       }
     };

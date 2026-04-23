@@ -2,10 +2,14 @@ import { createClient } from '@/utils/supabase/server';
 import { users } from '@/utils/users';
 import { NextResponse } from 'next/server';
 
+import { getRequestLogger } from '@/lib/logger';
+import { syncAdminRoleFromEmail } from '@/lib/admin';
+
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
 export async function GET(request: Request) {
+  const log = await getRequestLogger({ labels: { module: 'auth-callback' } });
   try {
     const requestUrl = new URL(request.url);
     const code = requestUrl.searchParams.get('code');
@@ -15,7 +19,7 @@ export async function GET(request: Request) {
     const next = requestUrl.searchParams.get('next');
 
     if (error) {
-      console.error('Auth callback error:', error);
+      log.warn('auth callback received error param', { error });
       const errorUrl = new URL('/auth-error', requestUrl.origin);
       errorUrl.searchParams.set('error', error);
       return NextResponse.redirect(errorUrl);
@@ -31,7 +35,13 @@ export async function GET(request: Request) {
       });
 
       if (verifyError) {
-        console.error('Token verification error:', verifyError.message);
+        log.error({
+          message: 'token verification failed',
+          error: verifyError,
+          source: 'api-route',
+          location: 'auth/callback/verifyOtp',
+          fields: { type },
+        });
         const errorUrl = new URL('/auth-error', requestUrl.origin);
         errorUrl.searchParams.set('error', verifyError.message);
         return NextResponse.redirect(errorUrl);
@@ -41,7 +51,12 @@ export async function GET(request: Request) {
       const { data, error: authError } = await supabase.auth.exchangeCodeForSession(code);
 
       if (authError) {
-        console.error('Code exchange error:', authError.message);
+        log.error({
+          message: 'code exchange failed',
+          error: authError,
+          source: 'api-route',
+          location: 'auth/callback/exchangeCode',
+        });
         const errorUrl = new URL('/auth-error', requestUrl.origin);
         errorUrl.searchParams.set('error', authError.message);
         return NextResponse.redirect(errorUrl);
@@ -67,7 +82,29 @@ export async function GET(request: Request) {
           const usernameFromMetadata = authUser.user_metadata?.username;
           await users.captureUserDetails(authUser, usernameFromMetadata);
         } catch (err) {
-          console.error('Error capturing user details:', err);
+          log.error({
+            message: 'capture user details failed',
+            error: err,
+            source: 'api-route',
+            location: 'auth/callback/captureUserDetails',
+            userId: authUser?.id ?? null,
+          });
+        }
+
+        // Admin role reconciliation. Runs once per successful auth
+        // callback so `isAdmin()` remains a pure cached read on every
+        // subsequent request. Failure here must not block login — the
+        // user is already authenticated; we just log and move on.
+        try {
+          await syncAdminRoleFromEmail({ id: authUser.id, email: authUser.email });
+        } catch (err) {
+          log.error({
+            message: 'admin role sync failed',
+            error: err,
+            source: 'api-route',
+            location: 'auth/callback/syncAdminRole',
+            userId: authUser.id,
+          });
         }
       }
       
@@ -78,15 +115,20 @@ export async function GET(request: Request) {
     
     return NextResponse.redirect(new URL(redirectTo, requestUrl.origin));
   } catch (error) {
-    console.error('Auth callback unexpected error:', error);
-    
+    log.error({
+      message: 'auth callback unexpected error',
+      error,
+      source: 'api-route',
+      location: 'auth/callback',
+    });
+
     let origin: string;
     try {
       origin = new URL(request.url).origin;
     } catch {
       origin = process.env.NEXT_PUBLIC_APP_URL || 'https://sukull.com';
     }
-    
+
     const errorUrl = new URL('/auth-error', origin);
     errorUrl.searchParams.set('error', 'Kimlik doğrulama başarısız');
     return NextResponse.redirect(errorUrl);

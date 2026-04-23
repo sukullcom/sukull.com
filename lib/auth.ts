@@ -4,6 +4,7 @@ import db from '@/db/drizzle'
 import { users } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 import { redirect } from 'next/navigation'
+import { isApprovedStudent } from '@/db/queries'
 
 export async function getServerUser() {
   try {
@@ -63,4 +64,29 @@ export async function requireAdmin() {
  */
 export async function requireTeacher() {
   await requireRole("teacher")
+}
+
+/**
+ * Özel ders sistemi için "onaylı öğrenci" guard'ı. Akış:
+ *   1. Oturum yoksa → /login
+ *   2. Onaylı öğrenci değilse → /private-lesson/get (başvuru sayfası)
+ *
+ * Kullanıcının rolü "student" ise ya da `private_lesson_applications`
+ * tablosunda approved=true bir başvurusu varsa onaylı sayılır
+ * (bkz. db/queries.ts → isApprovedStudent).
+ *
+ * Dönüş: doğrulanmış Supabase user. Page/layout bunu doğrudan kullanabilir.
+ */
+export async function requireApprovedStudent() {
+  const user = await getServerUser()
+  if (!user) {
+    redirect("/login")
+  }
+
+  const approved = await isApprovedStudent(user.id)
+  if (!approved) {
+    redirect("/private-lesson/get")
+  }
+
+  return user
 }

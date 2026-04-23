@@ -91,7 +91,7 @@ const { logout, isLoggingOut } = useSecureLogout();
 All logout buttons now use the secure hook:
 - ✅ `components/sidebar.tsx`
 - ✅ `components/bottom-navigator.tsx` 
-- ✅ `app/(marketin)/header.tsx`
+- ✅ `app/(marketing)/header.tsx`
 
 **UI Improvements:**
 - Loading states during logout

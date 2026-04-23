@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
+import { getRequestLogger } from "@/lib/logger";
 import db from "@/db/drizzle";
 import { teacherApplications } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
@@ -27,7 +28,10 @@ export async function GET() {
       createdAt: application.createdAt,
     });
   } catch (error) {
-    console.error("Teacher application status check error:", error);
+    {
+      const log = await getRequestLogger({ labels: { route: "api/private-lesson/give", op: "status" } });
+      log.error({ message: "teacher app status failed", error, location: "api/private-lesson/give/GET" });
+    }
     return NextResponse.json({ error: "Bir hata oluştu" }, { status: 500 });
   }
 }
@@ -120,7 +124,10 @@ export async function POST(request: NextRequest) {
     }, { status: 201 });
 
   } catch (error) {
-    console.error("Error submitting teacher application:", error);
+    {
+      const log = await getRequestLogger({ labels: { route: "api/private-lesson/give", op: "submit" } });
+      log.error({ message: "submit teacher app failed", error, location: "api/private-lesson/give/POST" });
+    }
     return NextResponse.json(
       { error: "Başvurunuz gönderilirken bir hata oluştu" },
       { status: 500 }

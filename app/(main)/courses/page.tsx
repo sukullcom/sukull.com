@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getCourses, getUserProgress } from "@/db/queries";
 import { List } from "./list";
 import { getServerUser } from "@/lib/auth";
+import { getRequestLogger } from "@/lib/logger";
 
 // Add ISR for the courses page
 export const revalidate = 3600; // Revalidate once per hour
@@ -33,7 +34,8 @@ export default async function CoursesPage() {
       </div>
     );
   } catch (error) {
-    console.error("Error in courses page:", error);
+    (await getRequestLogger({ labels: { module: "courses/page" } }))
+      .error({ message: "courses page failed", error, location: "app/(main)/courses/page" });
     return (
       <div className="flex flex-col items-center justify-center py-20 px-6 text-center">
         <h1 className="text-xl font-bold mb-3 text-neutral-800">Bir Hata Oluştu</h1>

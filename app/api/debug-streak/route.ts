@@ -12,7 +12,8 @@ export async function GET() {
       return NextResponse.json({ error: "Bu işlem için yönetici yetkisi gereklidir." }, { status: 403 });
     }
 
-    console.log("🔍 Debugging user progress and previous_total_points...");
+    (await (await import("@/lib/logger")).getRequestLogger({ labels: { route: "api/debug-streak" } }))
+      .debug("debugging user progress and previous_total_points");
     
     // Get sample of users to check their current state
     const users = await db.query.userProgress.findMany({
@@ -62,7 +63,8 @@ export async function GET() {
       }
     });
   } catch (error) {
-    console.error("Error in debug-streak:", error);
+    (await (await import("@/lib/logger")).getRequestLogger({ labels: { route: "api/debug-streak" } }))
+      .error({ message: "debug-streak failed", error, location: "api/debug-streak" });
     return NextResponse.json(
       { 
         success: false, 

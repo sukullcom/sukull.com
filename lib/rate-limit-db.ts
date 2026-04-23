@@ -1,6 +1,9 @@
 import "server-only";
 import { sql } from "drizzle-orm";
 import db from "@/db/drizzle";
+import { logger } from "@/lib/logger";
+
+const log = logger.child({ labels: { module: "rate-limit-db" } });
 
 export type RateLimitResult = {
   allowed: boolean;
@@ -53,7 +56,13 @@ export async function checkRateLimit({
       retryAfter,
     };
   } catch (error) {
-    console.error("[rate-limit-db] check_rate_limit failed:", error);
+    log.error({
+      message: "check_rate_limit failed",
+      error,
+      source: "middleware",
+      location: "rate-limit-db/checkRateLimit",
+      fields: { key, max, windowSeconds },
+    });
     return fallbackAllow(max, windowSeconds);
   }
 }
@@ -92,24 +101,62 @@ export function rateLimitHeaders(result: RateLimitResult): Record<string, string
 
 /**
  * Preset buckets for common auth and write-heavy endpoints.
+ *
+ * Naming convention:
+ *   • Verbs for writes (booking, snippet, review)
+ *   • Plural nouns for reads (schools, teachers)
+ *
+ * Budget philosophy:
+ *   • Auth buckets are narrow (brute-force protection, not UX)
+ *   • User writes are generous enough for power users but cap abuse
+ *   • Public reads are generous (cache does most of the work) but not infinite
  */
 export const RATE_LIMITS = {
-  // Auth — IP-scoped
+  // --- Auth — IP-scoped ---
   login: { max: 8, windowSeconds: 15 * 60 },
   register: { max: 5, windowSeconds: 60 * 60 },
   resetPassword: { max: 5, windowSeconds: 60 * 60 },
   resendVerification: { max: 3, windowSeconds: 15 * 60 },
 
-  // Writes — user-scoped
+  // --- Writes — user-scoped ---
   pointsAdd: { max: 120, windowSeconds: 60 },       // ~2/s per user, generous for active play
   imageUpload: { max: 10, windowSeconds: 60 * 60 }, // 10 per hour
+  /** Booking a lesson: money + calendar slot. Abuse-resistant. */
+  booking: { max: 10, windowSeconds: 60 },
+  /** Submitting a lesson review: one per completed booking ideally. */
+  reviewSubmit: { max: 10, windowSeconds: 60 * 60 },
+  /** Creating or editing a code snippet. Internal "max 3 total" still applies. */
+  snippetWrite: { max: 20, windowSeconds: 60 * 60 },
+  /** Teacher availability editor. */
+  teacherAvailability: { max: 60, windowSeconds: 60 },
+  /** Private-lesson application submission (student/teacher). */
+  applicationSubmit: { max: 5, windowSeconds: 60 * 60 },
+  /**
+   * Account deletion (GDPR / KVKK right-to-be-forgotten).
+   *
+   * Destructive and irreversible — we cap at 3 attempts per 24h so a
+   * rogue client-side handler can't keep hammering the endpoint while
+   * the first call is still tearing down cascades. A genuine user
+   * needs exactly one successful call.
+   */
+  accountDelete: { max: 3, windowSeconds: 24 * 60 * 60 },
 
-  // Reads — user-scoped, protects DB from loops
+  // --- Reads — user-scoped ---
   leaderboard: { max: 60, windowSeconds: 60 },
+  /** Per-teacher detail page (with availability + bookings). Multi-join query. */
+  teacherDetails: { max: 60, windowSeconds: 60 },
+  /** Generic authenticated read bucket when no specific preset fits. */
+  read: { max: 120, windowSeconds: 60 },
 
-  // Generic write endpoints
+  // --- Public reads — IP-scoped ---
+  /** Schools search/cities/districts/categories. Heavy GROUP BY aggregations. */
+  schoolsRead: { max: 60, windowSeconds: 60 },
+  /** Random avatar generation — cheap but trivially loopable. */
+  avatar: { max: 120, windowSeconds: 60 },
+
+  // --- Generic write endpoints ---
   writeBurst: { max: 30, windowSeconds: 60 },
 
-  // Client-side error reports — per IP, keep noise out but allow real crashes
+  // --- Client-side error reports — per IP, keep noise out but allow real crashes ---
   errorReport: { max: 30, windowSeconds: 60 },
 } as const;

@@ -1,11 +1,79 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { unstable_cache } from 'next/cache';
 import db from '@/db/drizzle';
 import { schools } from '@/db/schema';
 import { eq, and, ilike, desc, sql } from 'drizzle-orm';
+import { CACHE_TAGS, CACHE_TTL } from '@/lib/cache-tags';
+import { secureApi } from '@/lib/api-middleware';
+import { RATE_LIMITS } from '@/lib/rate-limit-db';
+import { getRequestLogger } from '@/lib/logger';
 
 type SchoolType = 'university' | 'high_school' | 'secondary_school' | 'elementary_school';
 
-export async function GET(request: NextRequest) {
+/**
+ * Schools master-data aggregations.
+ *
+ * Cities/districts/categories change only when the admin re-imports the
+ * master school list (rare; at most monthly). Caching these for 24h
+ * collapses thousands of daily GROUP BY scans into ~1 query per day.
+ *
+ * Invalidated by `revalidateTag(CACHE_TAGS.schoolsMaster)` after the
+ * import script completes.
+ */
+const getCitiesAggregate = unstable_cache(
+  async () =>
+    db
+      .select({
+        city: schools.city,
+        count: sql<number>`count(*)::int`,
+      })
+      .from(schools)
+      .groupBy(schools.city)
+      .orderBy(schools.city),
+  ['schools-cities'],
+  { tags: [CACHE_TAGS.schoolsMaster], revalidate: CACHE_TTL.schoolsMaster },
+);
+
+const getDistrictsAggregate = unstable_cache(
+  async (cityUpper: string) =>
+    db
+      .select({
+        district: schools.district,
+        count: sql<number>`count(*)::int`,
+      })
+      .from(schools)
+      .where(eq(schools.city, cityUpper))
+      .groupBy(schools.district)
+      .orderBy(schools.district),
+  ['schools-districts'],
+  { tags: [CACHE_TAGS.schoolsMaster], revalidate: CACHE_TTL.schoolsMaster },
+);
+
+const getCategoriesAggregate = unstable_cache(
+  async (cityUpper: string, districtUpper: string) =>
+    db
+      .select({
+        category: schools.category,
+        type: schools.type,
+        count: sql<number>`count(*)::int`,
+      })
+      .from(schools)
+      .where(and(eq(schools.city, cityUpper), eq(schools.district, districtUpper)))
+      .groupBy(schools.category, schools.type)
+      .orderBy(schools.category),
+  ['schools-categories'],
+  { tags: [CACHE_TAGS.schoolsMaster], revalidate: CACHE_TTL.schoolsMaster },
+);
+
+/**
+ * Public read endpoint — IP-scoped limit. The `unstable_cache` layer above
+ * absorbs the happy path; this limiter protects against adversarial query
+ * combinations (unique city/district/search permutations) that bypass the
+ * cache keyspace and trigger fresh `LIKE %..%` scans.
+ */
+export const GET = secureApi.rateLimited(
+  { bucket: 'schools-get', keyKind: 'ip', ...RATE_LIMITS.schoolsRead },
+  async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url);
     const action = searchParams.get('action') || searchParams.get('step'); // Support both 'action' and 'step' for backward compatibility
@@ -18,58 +86,26 @@ export async function GET(request: NextRequest) {
 
     switch (action) {
       case 'cities': {
-        // Get all cities with school counts
-        const cities = await db
-          .select({
-            city: schools.city,
-            count: sql<number>`count(*)::int`
-          })
-          .from(schools)
-          .groupBy(schools.city)
-          .orderBy(schools.city);
-
+        const cities = await getCitiesAggregate();
         return NextResponse.json({ cities });
       }
 
       case 'districts': {
-        // Get districts for selected city
         if (!city) {
           return NextResponse.json({ error: 'İl bilgisi gereklidir.' }, { status: 400 });
         }
-
-        const districts = await db
-          .select({
-            district: schools.district,
-            count: sql<number>`count(*)::int`
-          })
-          .from(schools)
-          .where(eq(schools.city, city.toUpperCase()))
-          .groupBy(schools.district)
-          .orderBy(schools.district);
-
+        const districts = await getDistrictsAggregate(city.toUpperCase());
         return NextResponse.json({ districts });
       }
 
       case 'categories': {
-        // Get categories for selected city and district
         if (!city || !district) {
           return NextResponse.json({ error: 'İl ve ilçe bilgisi gereklidir.' }, { status: 400 });
         }
-
-        const categories = await db
-          .select({
-            category: schools.category,
-            type: schools.type,
-            count: sql<number>`count(*)::int`
-          })
-          .from(schools)
-          .where(and(
-            eq(schools.city, city.toUpperCase()),
-            eq(schools.district, district.toUpperCase())
-          ))
-          .groupBy(schools.category, schools.type)
-          .orderBy(schools.category);
-
+        const categories = await getCategoriesAggregate(
+          city.toUpperCase(),
+          district.toUpperCase(),
+        );
         return NextResponse.json({ categories });
       }
 
@@ -158,13 +194,19 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: 'Geçersiz istek parametresi.' }, { status: 400 });
     }
   } catch (error) {
-    console.error('Schools API error:', error);
+    {
+      const log = await getRequestLogger({ labels: { route: 'api/schools', op: 'search' } });
+      log.error({ message: 'schools search failed', error, location: 'api/schools' });
+    }
     return NextResponse.json({ error: 'Sunucu tarafında bir hata oluştu.' }, { status: 500 });
   }
-}
+  },
+);
 
 // Handle POST for comprehensive leaderboard (all school types)
-export async function POST(request: NextRequest) {
+export const POST = secureApi.rateLimited(
+  { bucket: 'schools-post', keyKind: 'ip', ...RATE_LIMITS.schoolsRead },
+  async (request: NextRequest) => {
   try {
     const { city, limit = 10 } = await request.json();
 
@@ -205,7 +247,11 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ leaderboards });
   } catch (error) {
-    console.error('All leaderboards error:', error);
+    {
+      const log = await getRequestLogger({ labels: { route: 'api/schools', op: 'leaderboards' } });
+      log.error({ message: 'all leaderboards failed', error, location: 'api/schools/leaderboards' });
+    }
     return NextResponse.json({ error: 'Sunucu tarafında bir hata oluştu.' }, { status: 500 });
   }
-} 
+  },
+);

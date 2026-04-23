@@ -1,4 +1,5 @@
 import { useEffect, useCallback } from 'react';
+import { clientLogger } from '@/lib/client-logger';
 
 /**
  * Triggers a one-shot lesson status refresh when a teacher dashboard page mounts,
@@ -25,7 +26,7 @@ export function useLessonStatusUpdater() {
         }
       }
     } catch (error) {
-      console.error('Error updating lesson statuses:', error);
+      clientLogger.error({ message: 'update lesson statuses failed', error, location: 'use-lesson-status-updater' });
     }
   }, []);
 

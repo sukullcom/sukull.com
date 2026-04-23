@@ -1,12 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { performDailyReset, applyDailyStreakBonuses } from "@/actions/daily-streak";
 
+import { getRequestLogger } from "@/lib/logger";
+
 export async function POST(request: NextRequest) {
+  const log = await getRequestLogger({ labels: { module: "cron", job: "reset-streaks" } });
   try {
-    // Verify the request is authorized
     const authHeader = request.headers.get("authorization");
     if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-      console.log("Unauthorized cron attempt:", authHeader);
+      // Do not log the header value — it may reveal whether a token is
+      // present/malformed to an attacker. A prefix is enough to distinguish
+      // genuine misconfiguration from someone probing the endpoint.
+      log.warn("unauthorized cron attempt", {
+        authPrefix: authHeader ? authHeader.slice(0, 7) : null,
+      });
       return NextResponse.json(
         { error: "Bu işlem için yetkiniz yok." },
         { status: 401 }
@@ -14,23 +21,25 @@ export async function POST(request: NextRequest) {
     }
 
     const startTime = new Date();
-    console.log("Daily reset job started at:", startTime.toISOString());
-    
+    log.info("daily reset started", { startedAt: startTime.toISOString() });
+
     const result = await performDailyReset();
 
-    // Apply streak bonuses after reset (rewards for maintaining streaks)
     if (result.success) {
       await applyDailyStreakBonuses();
     }
-    
+
     const endTime = new Date();
     const duration = endTime.getTime() - startTime.getTime();
-    
+
     if (result.success) {
-      console.log(`Daily reset job completed successfully in ${duration}ms`);
+      log.info("daily reset completed", {
+        durationMs: duration,
+        summary: result.summary,
+      });
       return NextResponse.json(
-        { 
-          success: true, 
+        {
+          success: true,
           message: "Daily reset completed successfully",
           timestamp: endTime.toISOString(),
           duration: `${duration}ms`,
@@ -39,10 +48,16 @@ export async function POST(request: NextRequest) {
         { status: 200 }
       );
     } else {
-      console.error("Daily reset job failed:", result.error);
+      log.error({
+        message: "daily reset failed",
+        error: result.error,
+        source: "cron",
+        location: "cron/reset-streaks/performDailyReset",
+        fields: { durationMs: duration },
+      });
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           message: "Daily reset failed",
           error: result.error,
           timestamp: endTime.toISOString(),
@@ -52,10 +67,15 @@ export async function POST(request: NextRequest) {
       );
     }
   } catch (error) {
-    console.error("Error in daily streak reset job:", error);
+    log.error({
+      message: "daily streak reset threw",
+      error,
+      source: "cron",
+      location: "cron/reset-streaks",
+    });
     return NextResponse.json(
-      { 
-        success: false, 
+      {
+        success: false,
         error: "Sunucu tarafında bir hata oluştu.",
         message: error instanceof Error ? error.message : "Unknown error",
         timestamp: new Date().toISOString()

@@ -12,6 +12,7 @@ import {
 } from "@/db/schema";
 import { eq, count } from "drizzle-orm";
 import { getServerUser } from "@/lib/auth";
+import { getRequestLogger } from "@/lib/logger";
 
 export interface CourseAnalytics {
   courseId: number;
@@ -308,7 +309,13 @@ export async function getProfileAnalytics(): Promise<ProfileAnalyticsData | null
       },
     };
   } catch (error) {
-    console.error("Error fetching profile analytics:", error);
+    const log = await getRequestLogger({ labels: { action: "getProfileAnalytics" } });
+    log.error({
+      message: "getProfileAnalytics failed",
+      error,
+      source: "server-action",
+      location: "profile-analytics/getProfileAnalytics",
+    });
     return null;
   }
 }
