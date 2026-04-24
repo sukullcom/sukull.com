@@ -30,6 +30,17 @@ function buildStaticEntries(): Entry[] {
     { url: `${BASE_URL}/private-lesson/give`, changeFrequency: "monthly", priority: 0.4 },
     { url: `${BASE_URL}/login`, changeFrequency: "monthly", priority: 0.3 },
     { url: `${BASE_URL}/create-account`, changeFrequency: "monthly", priority: 0.3 },
+    // Yasal sayfalar — e-ticaret mevzuatı gereği footer'dan erişilebilir
+    // olmalı ve crawler'lar tarafından dizine eklenmeleri beklenir.
+    // Trust & legal compliance SEO sinyali de sağlar.
+    { url: `${BASE_URL}/yasal`, changeFrequency: "monthly", priority: 0.4 },
+    { url: `${BASE_URL}/yasal/kvkk`, changeFrequency: "yearly", priority: 0.4 },
+    { url: `${BASE_URL}/yasal/gizlilik`, changeFrequency: "yearly", priority: 0.4 },
+    { url: `${BASE_URL}/yasal/cerez`, changeFrequency: "yearly", priority: 0.4 },
+    { url: `${BASE_URL}/yasal/kullanim-sartlari`, changeFrequency: "yearly", priority: 0.4 },
+    { url: `${BASE_URL}/yasal/mesafeli-satis`, changeFrequency: "yearly", priority: 0.4 },
+    { url: `${BASE_URL}/yasal/on-bilgilendirme`, changeFrequency: "yearly", priority: 0.4 },
+    { url: `${BASE_URL}/yasal/cayma-iade`, changeFrequency: "yearly", priority: 0.4 },
   ];
 
   if (isLabEnabled()) {

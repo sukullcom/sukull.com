@@ -1,10 +1,32 @@
 "use client";
 
 import { useState, useTransition, useCallback, useMemo } from "react";
+import dynamic from "next/dynamic";
 import { toast } from "sonner";
 import { updateProfileAction } from "@/actions/profile";
+
+// Lazy-load the KVKK / account-deletion dialog. It's only reachable from
+// inside the Settings tab and pulls in a Radix dialog + confirm-input
+// state machine — code-splitting keeps it out of the initial profile JS.
+const DangerZone = dynamic(() => import("./danger-zone").then((m) => m.DangerZone), {
+  ssr: false,
+  loading: () => null,
+});
+
+// `ProfileSchoolSelector` is only rendered inside the Settings tab, which
+// is not the default view. Deferring its ~10 kB of JS plus its downstream
+// network fetch for the schools catalog keeps the initial Analytics tab
+// render path lean — users who only glance at their stats never pay for it.
+const ProfileSchoolSelector = dynamic(
+  () => import("./profile-school-selector").then((m) => m.ProfileSchoolSelector),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-11 w-full animate-pulse rounded-lg bg-slate-100" aria-hidden />
+    ),
+  },
+);
 import { Button } from "@/components/ui/button";
-import { ProfileSchoolSelector } from "./profile-school-selector";
 import { AvatarGenerator } from "random-avatar-generator";
 import Image from "next/image";
 import { School } from "@/types";
@@ -451,6 +473,10 @@ export default function ProfilePageClient({
                 {isLoggingOut ? "Çıkış yapılıyor..." : "Çıkış Yap"}
               </button>
             </div>
+
+            {/* KVKK / GDPR: permanent account deletion. Separated from the
+                regular logout button to emphasise irreversibility. */}
+            <DangerZone username={username} />
           </div>
         )}
       </div>

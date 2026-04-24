@@ -18,6 +18,10 @@ export function CreateAccountForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  // Legal consent. Required by KVKK + Mesafeli Sözleşmeler Yönetmeliği:
+  // the user must explicitly acknowledge the terms before account
+  // creation, not be opt-in by default. Checkbox gates submit.
+  const [legalAccepted, setLegalAccepted] = useState(false);
 
   const router = useRouter();
 
@@ -33,6 +37,12 @@ export function CreateAccountForm() {
     }
     if (!username.trim()) {
       toast.error("Lütfen bir kullanıcı adı giriniz");
+      return;
+    }
+    if (!legalAccepted) {
+      toast.error(
+        "Devam etmek için Kullanım Şartları, Gizlilik Politikası ve KVKK Aydınlatma Metni'ni kabul etmelisiniz.",
+      );
       return;
     }
 
@@ -93,11 +103,57 @@ export function CreateAccountForm() {
         required
       />
 
+      {/* Legal consent — KVKK + Mesafeli sözleşme gereği açık rıza */}
+      <label className="flex items-start gap-2 text-xs text-slate-600 leading-snug cursor-pointer">
+        <input
+          id="legalAccepted"
+          type="checkbox"
+          checked={legalAccepted}
+          onChange={(e) => setLegalAccepted(e.target.checked)}
+          disabled={isLoading}
+          className="mt-0.5 h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
+          required
+          aria-describedby="legal-consent-description"
+        />
+        <span id="legal-consent-description">
+          <Link
+            prefetch={false}
+            href="/yasal/kullanim-sartlari"
+            target="_blank"
+            rel="noopener"
+            className="text-green-600 font-medium hover:underline"
+          >
+            Kullanım Şartları
+          </Link>
+          ,{" "}
+          <Link
+            prefetch={false}
+            href="/yasal/gizlilik"
+            target="_blank"
+            rel="noopener"
+            className="text-green-600 font-medium hover:underline"
+          >
+            Gizlilik Politikası
+          </Link>
+          {" "}ve{" "}
+          <Link
+            prefetch={false}
+            href="/yasal/kvkk"
+            target="_blank"
+            rel="noopener"
+            className="text-green-600 font-medium hover:underline"
+          >
+            KVKK Aydınlatma Metni
+          </Link>
+          {"'ni okudum, kabul ediyorum."}
+        </span>
+      </label>
+
       {/* Sign up button */}
       <Button
         className="w-full transition-all"
         type="submit"
-        disabled={isLoading}
+        disabled={isLoading || !legalAccepted}
         variant="secondary"
         style={{ 
           opacity: isLoading ? 0.6 : 1, 

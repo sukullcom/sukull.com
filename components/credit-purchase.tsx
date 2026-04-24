@@ -45,6 +45,13 @@ export default function CreditPurchase() {
   const [zipCode, setZipCode] = useState('')
   const [identityNumber, setIdentityNumber] = useState('')
 
+  // Legal acknowledgement — required before "Öde" unlocks. Distinct
+  // state flags for each document so we can tell which one was missed
+  // (e.g. for localized inline error messages) and so the checkbox
+  // state survives re-renders of the parent.
+  const [agreeDistanceSales, setAgreeDistanceSales] = useState(false)
+  const [agreePreInfo, setAgreePreInfo] = useState(false)
+
   const supabase = createClient()
 
   // Load user credits on component mount
@@ -66,6 +73,16 @@ export default function CreditPurchase() {
 
   const handlePayment = async () => {
     if (loading) return
+
+    // Yasal onay — butonu zaten `disabled` yapıyoruz ama hem klavye
+    // tetiklemelerine karşı hem de future refactor'larda bir güvenlik
+    // ağı olarak sunucuya gitmeden önce burada da blokluyoruz.
+    if (!agreeDistanceSales || !agreePreInfo) {
+      toast.error(
+        "Devam edebilmek için Mesafeli Satış Sözleşmesi ve Ön Bilgilendirme Formu'nu onaylamanız gerekir.",
+      )
+      return
+    }
 
     setLoading(true)
 
@@ -127,7 +144,63 @@ export default function CreditPurchase() {
       // Use environment variable for payment server URL, fallback based on environment
       const paymentServerUrl = process.env.NEXT_PUBLIC_PAYMENT_SERVER_URL || 
         (process.env.NODE_ENV === 'production' ? 'https://sukullcom-production.up.railway.app' : 'http://localhost:3001')
-      
+
+      // --- 3-D Secure path -------------------------------------------------
+      // When the flag is on, initialize a 3DS session and hand the browser
+      // off to the issuer bank. The bank will POST back to our
+      // /api/payment/3ds/callback route once the user completes OTP auth;
+      // credit settlement happens on the result page.
+      const use3ds = process.env.NEXT_PUBLIC_PAYMENT_USE_3DS === 'true'
+
+      if (use3ds) {
+        // The callback URL must include credits + price so the result page
+        // can finalize without re-prompting. The server cross-checks the
+        // idempotency record, so a tampered query string cannot inflate
+        // what the user actually receives.
+        const callbackUrl = new URL('/api/payment/3ds/callback', window.location.origin)
+        const resultQuery = new URLSearchParams({
+          credits: String(selectedPackage.credits),
+          totalPrice: String(selectedPackage.price),
+        }).toString()
+        callbackUrl.search = resultQuery
+
+        const initUrl = `${paymentServerUrl}${paymentServerUrl.endsWith('/') ? '' : '/'}api/payment/3ds/initialize-credit`
+        const initResponse = await fetch(initUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({ ...paymentData, callbackUrl: callbackUrl.toString() }),
+        })
+        const initJson = await initResponse.json()
+        if (!initResponse.ok || !initJson.success || !initJson.threeDSHtmlContent) {
+          toast.error(initJson.message || '3D Secure başlatılamadı. Lütfen tekrar deneyin.')
+          return
+        }
+
+        // Decode and hand off to the bank. `document.write` is the
+        // Iyzico-documented approach — the returned HTML contains a
+        // self-submitting form that expects to own the top-level window.
+        let decoded: string
+        try {
+          decoded = atob(initJson.threeDSHtmlContent)
+        } catch {
+          toast.error('3D Secure yanıtı bozuk. Lütfen tekrar deneyin.')
+          return
+        }
+        document.open()
+        document.write(decoded)
+        document.close()
+        // Intentional: loading stays true; the page is about to be replaced.
+        return
+      }
+
+      // --- Legacy non-3DS path --------------------------------------------
+      // Kept working until 3DS is rolled out to 100 % of traffic. Remove
+      // after the cut-over and the card-testing rate-limit metrics confirm
+      // no regressions.
+
       // Call the payment server (ensure no double slash)
       const apiUrl = `${paymentServerUrl}${paymentServerUrl.endsWith('/') ? '' : '/'}api/payment/create`
       const response = await fetch(apiUrl, {
@@ -408,12 +481,58 @@ export default function CreditPurchase() {
             </CardContent>
           </Card>
 
+          {/* Legal acknowledgement — mesafeli satış mevzuatı gereği
+              ödeme öncesinde tüketicinin sözleşmeleri okuyup onayladığı
+              teyit edilmeli. İki ayrı checkbox kullanmak, Ticaret
+              Bakanlığı yönetmeliğinin "her belge için açık onay" ifadesiyle
+              uyumludur. */}
+          <div className="mt-6 rounded-xl border border-slate-200 bg-white p-4 text-sm">
+            <label className="flex items-start gap-2">
+              <input
+                type="checkbox"
+                checked={agreeDistanceSales}
+                onChange={(e) => setAgreeDistanceSales(e.target.checked)}
+                className="mt-1 h-4 w-4 rounded border-slate-300 text-green-600 focus:ring-green-500"
+              />
+              <span className="text-slate-700">
+                <a
+                  href="/yasal/mesafeli-satis"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-green-700 underline hover:text-green-800"
+                >
+                  Mesafeli Satış Sözleşmesi
+                </a>
+                {"'ni okudum ve kabul ediyorum."}
+              </span>
+            </label>
+            <label className="mt-3 flex items-start gap-2">
+              <input
+                type="checkbox"
+                checked={agreePreInfo}
+                onChange={(e) => setAgreePreInfo(e.target.checked)}
+                className="mt-1 h-4 w-4 rounded border-slate-300 text-green-600 focus:ring-green-500"
+              />
+              <span className="text-slate-700">
+                <a
+                  href="/yasal/on-bilgilendirme"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-green-700 underline hover:text-green-800"
+                >
+                  Ön Bilgilendirme Formu
+                </a>
+                {"'nu okudum, bilgilendirildim ve onaylıyorum."}
+              </span>
+            </label>
+          </div>
+
           {/* Payment Button */}
-          <Button 
+          <Button
             onClick={handlePayment}
-            disabled={loading}
+            disabled={loading || !agreeDistanceSales || !agreePreInfo}
             variant="super"
-            className="w-full"
+            className="mt-4 w-full"
             size="lg"
           >
             {loading ? (
@@ -425,7 +544,7 @@ export default function CreditPurchase() {
               `${selectedPackage.price.toLocaleString('tr-TR')} ₺ Öde`
             )}
           </Button>
-          
+
           <p className="text-xs text-gray-500 text-center mt-4">
             Ödemeniz güvenli bir şekilde iyzico altyapısı ile işlenmektedir.
           </p>

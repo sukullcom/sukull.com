@@ -2,6 +2,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/middleware'
 import { getDisabledRoutePrefixes } from '@/lib/feature-flags'
+import {
+  deriveSessionCacheKey,
+  getCachedSession,
+  setCachedSession,
+  tryExtractTokenExpiry,
+} from '@/utils/supabase/session-cache'
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -140,13 +146,16 @@ function classifyCachePolicy(pathname: string, isAuthenticatedRoute: boolean): C
   }
 
   // Truly anonymous, user-agnostic SSR output. `/` renders the marketing
-  // landing; `/courses` renders the public catalog list. Neither embeds
-  // per-user data.
+  // landing; `/courses` renders the public catalog list; `/yasal/*` are
+  // static legal documents. None embed per-user data — all can be served
+  // from shared caches without leaking identity.
   if (
     !isAuthenticatedRoute &&
     (pathname === '/' ||
       pathname === '/courses' ||
       pathname.startsWith('/courses/') ||
+      pathname === '/yasal' ||
+      pathname.startsWith('/yasal/') ||
       pathname === '/unauthorized' ||
       pathname === '/robots.txt' ||
       pathname === '/sitemap.xml')
@@ -250,13 +259,31 @@ export async function middleware(req: NextRequest) {
     return response;
   }
 
+  // Always-public marketing/legal pages. These must be reachable for both
+  // anonymous visitors (SEO + KVKK / mesafeli satış compliance) AND for
+  // signed-in users (footer links from /learn, /shop, etc.) without ever
+  // redirecting. We short-circuit before the auth cookie check so Supabase
+  // isn't hit for a static document view.
+  if (
+    pathname === '/yasal' ||
+    pathname.startsWith('/yasal/') ||
+    pathname === '/courses' ||
+    pathname.startsWith('/courses/')
+  ) {
+    const response = NextResponse.next({ request: { headers: forwardedHeaders } });
+    applyHeaders(response, pathname, requestId, false);
+    return response;
+  }
+
   // Fast-path: detect whether ANY Supabase auth cookie is present (sb-*-auth-token).
   // When absent we can confidently short-circuit without a network roundtrip to
   // Supabase Auth (~30-80ms per request saved). The real JWT validation still
   // happens in server components via supabase.auth.getUser(), which is cached.
-  const hasAuthCookie = req.cookies
-    .getAll()
-    .some((c) => c.name.startsWith('sb-') && c.name.endsWith('-auth-token'));
+  const allCookies = req.cookies.getAll();
+  const authCookies = allCookies.filter(
+    (c) => c.name.startsWith('sb-') && c.name.includes('-auth-token'),
+  );
+  const hasAuthCookie = authCookies.length > 0;
 
   // No cookie at all → definitely not logged in.
   if (!hasAuthCookie) {
@@ -272,9 +299,44 @@ export async function middleware(req: NextRequest) {
     return redirect;
   }
 
-  // Cookie present — verify with Supabase (this is the only network call left).
-  // `isPublic` already tells us whether this is an auth-form / landing route;
-  // anything else reaching this branch renders per-user content.
+  // --- Hot-path cache lookup -------------------------------------------------
+  // If we've successfully verified this exact auth cookie within the cache TTL
+  // (default 60 s), trust the cached user id and skip the `getUser()` network
+  // call entirely. On sign-out / refresh the cookie value changes so the key
+  // changes, which means this cache is self-invalidating. See
+  // `session-cache.ts` for the correctness argument.
+  const sessionCacheKey = deriveSessionCacheKey(authCookies);
+  const cachedSession = sessionCacheKey ? getCachedSession(sessionCacheKey) : null;
+
+  if (cachedSession) {
+    // Cache hit: we still need a working response object, but we can skip the
+    // network round-trip. `createClient` is cheap (no I/O); we construct it so
+    // cookie refresh writes still flow through if supabase.auth does anything
+    // further down (e.g. activity logging). For public routes we don't need
+    // the Supabase client at all.
+    if (isPublic) {
+      const response = NextResponse.next({ request: { headers: forwardedHeaders } });
+      applyHeaders(response, pathname, requestId, false);
+      if (publicPaths.some((p) => pathname === p)) {
+        if (pathname === '/reset-password' || pathname === '/clear-session') return response;
+        if (pathname === '/login' && req.nextUrl.searchParams.get('logout') === 'true') return response;
+        const redirect = NextResponse.redirect(new URL('/learn', req.url));
+        redirect.headers.set(REQUEST_ID_HEADER, requestId);
+        return redirect;
+      }
+      return response;
+    }
+
+    const response = NextResponse.next({ request: { headers: forwardedHeaders } });
+    applyHeaders(response, pathname, requestId, true);
+    // Activity logging needs the user id; piggyback on the cached value.
+    maybeLogActivity(req, response, pathname, cachedSession.userId, requestId);
+    return response;
+  }
+
+  // --- Cold-path verification -----------------------------------------------
+  // Cookie present but not in cache → perform the full Supabase verification
+  // (single network call) and populate the cache for the next 60 s.
   const { supabase, response } = createClient(req, { [REQUEST_ID_HEADER]: requestId });
   applyHeaders(response, pathname, requestId, !isPublic);
 
@@ -286,6 +348,11 @@ export async function middleware(req: NextRequest) {
       const redirect = NextResponse.redirect(new URL('/learn', req.url));
       redirect.headers.set(REQUEST_ID_HEADER, requestId);
       return redirect;
+    }
+    // Cache the positive verification to accelerate subsequent requests.
+    if (user && sessionCacheKey) {
+      const tokenExpiresAt = tryExtractTokenExpiry(authCookies[0]?.value ?? '');
+      setCachedSession(sessionCacheKey, user.id, { tokenExpiresAt });
     }
     return response;
   }
@@ -301,6 +368,13 @@ export async function middleware(req: NextRequest) {
     return redirect;
   }
 
+  // Cache the positive verification for this cookie (auto-invalidates on
+  // sign-out since the cookie value changes).
+  if (sessionCacheKey) {
+    const tokenExpiresAt = tryExtractTokenExpiry(authCookies[0]?.value ?? '');
+    setCachedSession(sessionCacheKey, user.id, { tokenExpiresAt });
+  }
+
   // NOTE: We intentionally do NOT inject `x-user-id` on the forwarded
   // request here. The Supabase client in `createClient()` already built
   // a response with cookie mutations; re-issuing `NextResponse.next(...)`
@@ -308,85 +382,95 @@ export async function middleware(req: NextRequest) {
   // code that needs the user id should call `getServerUser()` (cached
   // per request) or pass it explicitly to `getRequestLogger({ userId })`.
 
-  /**
-   * Activity logging (page_view events) feeds admin DAU/WAU/MAU analytics.
-   *
-   * Cost model @10K MAU: every self-fetch is a second Vercel function
-   * invocation + a DB INSERT. We cannot log every page view — we must
-   * aggressively dedupe.
-   *
-   * Two-layer dedupe strategy:
-   *   1. **Daily cookie (`sk_dau`)** — once per user per 24h any logged path
-   *      counts toward DAU/MAU. Single tiny cookie, no server roundtrip.
-   *   2. **Per-path cookie (`sk_pv`)** — prevents double-counting the same
-   *      path within 4 hours (was: 5 minutes). Covers the majority of
-   *      refresh/back-forward noise.
-   *
-   * Only a small **allowlist** of pages is logged; admin, settings, debug
-   * and similar maintenance paths don't feed the analytics signal.
-   *
-   * Combined effect: ~90% reduction in self-fetches vs. the previous design.
-   */
-  if (LOGGED_PATH_PREFIXES.some((p) => pathname.startsWith(p)) && process.env.INTERNAL_API_KEY) {
-    const PATH_DEDUPE_MS = 4 * 60 * 60 * 1000; // 4 hours
-    const DAU_DEDUPE_MS = 24 * 60 * 60 * 1000; // 24 hours
-    const now = Date.now();
+  maybeLogActivity(req, response, pathname, user.id, requestId);
+  return response;
+}
 
-    const pathCookie = req.cookies.get('sk_pv')?.value;
-    const dauCookie = req.cookies.get('sk_dau')?.value;
+/**
+ * Activity logging (page_view events) feeds admin DAU/WAU/MAU analytics.
+ *
+ * Cost model @10 K MAU: every self-fetch is a second Vercel function
+ * invocation + a DB INSERT. We cannot log every page view — we must
+ * aggressively dedupe.
+ *
+ * Two-layer dedupe strategy:
+ *   1. **Daily cookie (`sk_dau`)** — once per user per 24 h any logged path
+ *      counts toward DAU/MAU. Single tiny cookie, no server roundtrip.
+ *   2. **Per-path cookie (`sk_pv`)** — prevents double-counting the same
+ *      path within 4 hours. Covers the majority of refresh/back-forward
+ *      noise.
+ *
+ * Only a small **allowlist** of pages (see `LOGGED_PATH_PREFIXES`) feeds
+ * the analytics signal; admin, settings, debug and similar maintenance
+ * paths are intentionally excluded.
+ *
+ * Called from both the cache-hit and cold-verify branches — extracting to
+ * a helper keeps the two paths byte-identical and prevents drift where one
+ * path forgets to log a page view.
+ */
+function maybeLogActivity(
+  req: NextRequest,
+  response: NextResponse,
+  pathname: string,
+  userId: string,
+  requestId: string,
+): void {
+  if (!LOGGED_PATH_PREFIXES.some((p) => pathname.startsWith(p))) return;
+  if (!process.env.INTERNAL_API_KEY) return;
 
-    let pathFresh = false;
-    if (pathCookie) {
-      const [lastPath, lastTsStr] = pathCookie.split('|');
-      const lastTs = Number(lastTsStr);
-      pathFresh = lastPath === pathname && Number.isFinite(lastTs) && now - lastTs < PATH_DEDUPE_MS;
-    }
+  const PATH_DEDUPE_MS = 4 * 60 * 60 * 1000;
+  const DAU_DEDUPE_MS = 24 * 60 * 60 * 1000;
+  const now = Date.now();
 
-    const dauFresh = dauCookie ? now - Number(dauCookie) < DAU_DEDUPE_MS : false;
+  const pathCookie = req.cookies.get('sk_pv')?.value;
+  const dauCookie = req.cookies.get('sk_dau')?.value;
 
-    if (!pathFresh || !dauFresh) {
-      // Path cookie: used across refreshes
-      if (!pathFresh) {
-        response.cookies.set('sk_pv', `${pathname}|${now}`, {
-          httpOnly: true,
-          sameSite: 'lax',
-          secure: process.env.NODE_ENV === 'production',
-          maxAge: 60 * 60 * 4, // 4h
-          path: '/',
-        });
-      }
-      // DAU cookie: used to rate-limit overall log volume to 1×/day/user
-      if (!dauFresh) {
-        response.cookies.set('sk_dau', String(now), {
-          httpOnly: true,
-          sameSite: 'lax',
-          secure: process.env.NODE_ENV === 'production',
-          maxAge: 60 * 60 * 24, // 24h
-          path: '/',
-        });
-      }
-
-      const origin = req.nextUrl.origin;
-      // Detached fetch: failures are silently swallowed so we never slow the
-      // user-facing response even if the log sink is unavailable.
-      fetch(`${origin}/api/activity-log`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-internal-key': process.env.INTERNAL_API_KEY,
-          [REQUEST_ID_HEADER]: requestId,
-        },
-        body: JSON.stringify({
-          userId: user.id,
-          eventType: 'page_view',
-          page: pathname,
-        }),
-        keepalive: true,
-      }).catch(() => {});
-    }
+  let pathFresh = false;
+  if (pathCookie) {
+    const [lastPath, lastTsStr] = pathCookie.split('|');
+    const lastTs = Number(lastTsStr);
+    pathFresh = lastPath === pathname && Number.isFinite(lastTs) && now - lastTs < PATH_DEDUPE_MS;
   }
 
-  return response;
+  const dauFresh = dauCookie ? now - Number(dauCookie) < DAU_DEDUPE_MS : false;
+  if (pathFresh && dauFresh) return;
+
+  if (!pathFresh) {
+    response.cookies.set('sk_pv', `${pathname}|${now}`, {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 60 * 60 * 4,
+      path: '/',
+    });
+  }
+  if (!dauFresh) {
+    response.cookies.set('sk_dau', String(now), {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 60 * 60 * 24,
+      path: '/',
+    });
+  }
+
+  const origin = req.nextUrl.origin;
+  // Detached fetch: failures are silently swallowed so we never slow the
+  // user-facing response even if the log sink is unavailable.
+  fetch(`${origin}/api/activity-log`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-internal-key': process.env.INTERNAL_API_KEY,
+      [REQUEST_ID_HEADER]: requestId,
+    },
+    body: JSON.stringify({
+      userId,
+      eventType: 'page_view',
+      page: pathname,
+    }),
+    keepalive: true,
+  }).catch(() => {});
 }
 
 /**

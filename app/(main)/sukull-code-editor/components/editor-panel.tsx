@@ -1,12 +1,26 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Editor from "@monaco-editor/react";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { RotateCcwIcon, ShareIcon, TypeIcon, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { defineMonacoThemes, LANGUAGE_CONFIG } from "../constants";
 import { useCodeEditorStore } from "@/store/useCodeEditorStore";
+
+// Monaco is ~1.3 MB gzipped of browser JS (the language workers pull in even
+// more). Loading it on SSR is impossible (`window` is referenced during
+// module init) and paying that cost at import time would balloon the editor
+// route's First Load JS. Deferring to a dynamic import with `ssr: false`
+// keeps the shell snappy while the user sees a small placeholder.
+const Editor = dynamic(() => import("@monaco-editor/react"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-[600px] w-full items-center justify-center rounded-lg bg-[#1e1e2e] text-slate-300">
+      Kod editörü yükleniyor…
+    </div>
+  ),
+});
 
 function EditorPanel() {
   const searchParams = useSearchParams();

@@ -28,11 +28,6 @@ function getTurkeyDateFromTimestamp(ts: Date | string): Date {
   return new Date(Date.UTC(shifted.getUTCFullYear(), shifted.getUTCMonth(), shifted.getUTCDate()));
 }
 
-function getTurkeyTodayString(): string {
-  const t = getTurkeyToday();
-  return t.toISOString().split("T")[0];
-}
-
 // ─── Core: Per-User New-Day Check ────────────────────────────────────────────
 // Called once per user interaction. Handles baseline reset + streak continuity.
 

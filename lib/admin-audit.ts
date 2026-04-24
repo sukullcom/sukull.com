@@ -53,6 +53,9 @@ export type AdminAuditAction =
   | "admin.migrate_teacher_fields"
   | "admin.fix_sequence_orders"
   | "admin.field_options.update"
+  // Self-service user ops — not strictly "admin" but every destructive
+  // user action is persisted here so ops has one audit surface.
+  | "account.delete"
   // Catch-all for one-off scripts; prefer a typed key when possible.
   | "admin.other";
 
