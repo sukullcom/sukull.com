@@ -22,10 +22,11 @@ function getTurkeyToday(): Date {
   return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
 }
 
+/** Turkey takvim günü. `getTurkeyNow()` ile yazılmış zaman damgaları (last_streak_check) için
+ *  aynı mantık: çift +3h uygulamamak (aksi halde o gün başka \"gün\" sayılır, baseline sıfırlanır, 0/50 görünür). */
 function getTurkeyDateFromTimestamp(ts: Date | string): Date {
   const d = new Date(ts);
-  const shifted = new Date(d.getTime() + 3 * 60 * 60 * 1000);
-  return new Date(Date.UTC(shifted.getUTCFullYear(), shifted.getUTCMonth(), shifted.getUTCDate()));
+  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
 }
 
 // ─── Core: Per-User New-Day Check ────────────────────────────────────────────
@@ -248,13 +249,32 @@ export async function getCurrentDayProgress() {
     });
     if (!progress) return null;
 
-    const pointsEarnedToday = Math.max(
+    const rawEarned = Math.max(
       progress.points - (progress.previousTotalPoints ?? 0),
       0
     );
     const dailyTarget = progress.dailyTarget || 50;
-    const achieved = pointsEarnedToday >= dailyTarget;
-    const progressPercentage = Math.min((pointsEarnedToday / dailyTarget) * 100, 100);
+
+    const today = getTurkeyToday();
+    const tomorrow = new Date(today);
+    tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
+    const todayStreakRow = await db.query.userDailyStreak.findFirst({
+      where: and(
+        eq(userDailyStreak.userId, userId),
+        gte(userDailyStreak.date, today),
+        lt(userDailyStreak.date, tomorrow)
+      ),
+    });
+    const recordSaysAchieved = todayStreakRow?.achieved === true;
+
+    const pointsEarnedToday = recordSaysAchieved
+      ? Math.max(rawEarned, dailyTarget)
+      : rawEarned;
+    const achieved = recordSaysAchieved || rawEarned >= dailyTarget;
+    const progressOfTarget = dailyTarget
+      ? (pointsEarnedToday / dailyTarget) * 100
+      : 0;
+    const progressPercentage = Math.min(Math.max(0, progressOfTarget), 100);
 
     return {
       pointsEarnedToday,
@@ -262,7 +282,9 @@ export async function getCurrentDayProgress() {
       achieved,
       currentStreak: progress.istikrar ?? 0,
       progressPercentage,
-      potentialStreakBonus: calculateStreakBonus((progress.istikrar ?? 0) + (achieved ? 1 : 0)),
+      potentialStreakBonus: calculateStreakBonus(
+        (progress.istikrar ?? 0) + (achieved ? 1 : 0)
+      ),
       totalPoints: progress.points,
     };
   } catch (error) {

@@ -130,6 +130,11 @@ export function DailyProgress() {
   }
 
   const { pointsEarnedToday, dailyTarget, achieved, currentStreak, progressPercentage } = progressData;
+  const overTarget = dailyTarget > 0 && pointsEarnedToday > dailyTarget;
+  const targetPercentOfGoal =
+    dailyTarget > 0
+      ? Math.max(0, Math.round((pointsEarnedToday / dailyTarget) * 100))
+      : 0;
 
   return (
     <div className="border-2 border-gray-200 rounded-2xl p-4">
@@ -161,13 +166,23 @@ export function DailyProgress() {
 
       <div className="mb-3">
         <div className="flex justify-between text-sm mb-1 text-gray-500">
-          <span>{pointsEarnedToday} / {dailyTarget} puan</span>
-          <span>{Math.max(0, Math.round(progressPercentage))}%</span>
+          <span>
+            {pointsEarnedToday} / {dailyTarget} puan
+            {achieved && (
+              <span className="sr-only">(günlük puan hedefi tamamlandı)</span>
+            )}
+          </span>
+          <span
+            className={overTarget ? "text-green-600 font-medium" : undefined}
+            title="Günlük hedefe göre yüzde"
+          >
+            {targetPercentOfGoal}%
+          </span>
         </div>
         <div className="w-full bg-gray-200 rounded-full h-2.5">
           <div
             className={`h-2.5 rounded-full transition-all duration-500 ease-out ${achieved ? "bg-green-500" : "bg-blue-500"}`}
-            style={{ width: `${Math.max(0, Math.min(progressPercentage, 100))}%` }}
+            style={{ width: `${Math.max(0, Math.min(achieved ? 100 : progressPercentage, 100))}%` }}
           ></div>
         </div>
       </div>
@@ -176,11 +191,16 @@ export function DailyProgress() {
         {achieved ? (
           <div className="flex items-center gap-2 text-green-600">
             <Sparkles className="w-4 h-4 shrink-0" />
-            <span className="font-medium">Günlük hedefe ulaştın!</span>
+            <span className="font-medium">
+              {overTarget
+                ? `Bugünkü toplam ${pointsEarnedToday} puan; günlük hedef (${dailyTarget}) aşıldı!`
+                : "Günlük hedefe ulaştın!"}
+            </span>
           </div>
         ) : (
           <span>
-            Hedefe ulaşmak için {dailyTarget - pointsEarnedToday} puan daha kazanmalısın
+            Hedefe ulaşmak için{" "}
+            {Math.max(0, dailyTarget - pointsEarnedToday)} puan daha kazanmalısın
           </span>
         )}
       </div>
