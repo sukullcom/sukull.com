@@ -7,6 +7,7 @@
  * always run inside a DB transaction.
  */
 import { and, desc, eq, or, sql } from "drizzle-orm";
+import { queryResultRows } from "@/lib/query-result";
 import db from "@/db/drizzle";
 import { listings, users } from "@/db/schema";
 import type {
@@ -179,7 +180,7 @@ export async function getListingWithOffers(
     WHERE lo.listing_id = ${id}
     ORDER BY lo.created_at ASC
   `);
-  const rows = offers as unknown as Array<Record<string, unknown>>;
+  const rows = queryResultRows<Record<string, unknown>>(offers);
 
   return {
     ...base,

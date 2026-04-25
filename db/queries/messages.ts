@@ -4,7 +4,7 @@
  * by spending one credit (`unlockMessageThread`). After that the same
  * chat row is reused forever — no per-message charge.
  */
-import { and, desc, eq, sql } from "drizzle-orm";
+import { and, eq, inArray, sql } from "drizzle-orm";
 import db from "@/db/drizzle";
 import {
   creditUsage,
@@ -14,6 +14,7 @@ import {
   userCredits,
   users,
 } from "@/db/schema";
+import { queryResultRows } from "@/lib/query-result";
 
 // ---------------------------------------------------------------------------
 // Reads
@@ -42,7 +43,7 @@ async function listConversationsFor(userId: string): Promise<ConversationRow[]> 
   // plus the other participant's profile. study_buddy_chats only has
   // 2-person threads in our UI so we simplify by taking the first
   // non-self id.
-  const rows = await db.execute(sql`
+  const raw = await db.execute(sql`
     SELECT
       c.id,
       c.participants,
@@ -54,16 +55,19 @@ async function listConversationsFor(userId: string): Promise<ConversationRow[]> 
     LIMIT 200
   `);
 
-  const chats = rows as unknown as Array<{
+  const chats = queryResultRows<{
     id: number;
-    participants: string[];
+    participants: string[] | null;
     last_message: string | null;
-    last_updated: string;
-  }>;
+    last_updated: string | Date;
+  }>(raw);
 
   const otherIds = new Set<string>();
   for (const chat of chats) {
-    for (const p of chat.participants ?? []) {
+    const participants = Array.isArray(chat.participants)
+      ? chat.participants
+      : [];
+    for (const p of participants) {
       if (p !== userId) otherIds.add(p);
     }
   }
@@ -71,17 +75,15 @@ async function listConversationsFor(userId: string): Promise<ConversationRow[]> 
 
   const profiles = otherIdList.length
     ? await db.query.users.findMany({
-        where: sql`${users.id} IN (${sql.join(
-          otherIdList.map((id) => sql`${id}`),
-          sql`, `,
-        )})`,
+        where: inArray(users.id, otherIdList),
         columns: { id: true, name: true, avatar: true },
       })
     : [];
   const profileMap = new Map(profiles.map((p) => [p.id, p]));
 
   return chats.map((c) => {
-    const otherId = (c.participants ?? []).find((p) => p !== userId) ?? "";
+    const participants = Array.isArray(c.participants) ? c.participants : [];
+    const otherId = participants.find((p) => p !== userId) ?? "";
     const profile = profileMap.get(otherId);
     return {
       chatId: c.id,
@@ -89,7 +91,7 @@ async function listConversationsFor(userId: string): Promise<ConversationRow[]> 
       otherUserName: profile?.name ?? "",
       otherUserAvatar: profile?.avatar ?? null,
       lastMessage: c.last_message ?? "",
-      lastUpdated: new Date(c.last_updated).toISOString(),
+      lastUpdated: new Date(c.last_updated as string | number | Date).toISOString(),
     };
   });
 }
@@ -230,7 +232,7 @@ async function ensureChat(
       AND jsonb_array_length(participants) = 2
     LIMIT 1
   `);
-  const rows = existing as unknown as Array<{ id: number }>;
+  const rows = queryResultRows<{ id: number }>(existing);
   if (rows[0]?.id) return Number(rows[0].id);
 
   const [created] = await tx

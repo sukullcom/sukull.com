@@ -14,6 +14,7 @@ import { and, eq, sql } from "drizzle-orm";
 import db from "@/db/drizzle";
 import { teacherApplications, teacherFields, users } from "@/db/schema";
 import { CACHE_TAGS, CACHE_TTL } from "@/lib/cache-tags";
+import { queryResultRows } from "@/lib/query-result";
 
 // ---------------------------------------------------------------------------
 // Directory — "rehber" listing on /private-lesson/teachers
@@ -68,7 +69,7 @@ const _getTeachersDirectoryCached = unstable_cache(
       ORDER BY u.name ASC
     `);
 
-    const rows = result as unknown as Array<Record<string, unknown>>;
+    const rows = queryResultRows<Record<string, unknown>>(result);
     return rows.map((row) => ({
       id: row.id as string,
       name: row.name as string,

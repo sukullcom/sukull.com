@@ -15,6 +15,7 @@ import { schools, userProgress } from "@/db/schema";
 import { getServerUser } from "@/lib/auth";
 import { normalizeAvatarUrl } from "@/utils/avatar";
 import { CACHE_TAGS, CACHE_TTL } from "@/lib/cache-tags";
+import { queryResultRows } from "@/lib/query-result";
 
 export const getTopTenUsers = cache(async () => {
   const user = await getServerUser();
@@ -137,8 +138,7 @@ export const getUserRank = cache(async () => {
   `);
 
   const userRank =
-    Number((userRankResult as unknown as Array<{ rank: unknown }>)[0]?.rank) ||
-    1;
+    Number(queryResultRows<{ rank: unknown }>(userRankResult)[0]?.rank) || 1;
 
   if (!schoolId) {
     return {
@@ -159,7 +159,7 @@ export const getUserRank = cache(async () => {
 
   const userRankInSchool =
     Number(
-      (userRankInSchoolResult as unknown as Array<{ rank: unknown }>)[0]?.rank,
+      queryResultRows<{ rank: unknown }>(userRankInSchoolResult)[0]?.rank,
     ) || 1;
 
   const userSchoolData = await db.query.schools.findFirst({
@@ -190,7 +190,7 @@ export const getUserRank = cache(async () => {
 
   const schoolRank =
     Number(
-      (schoolRankResult as unknown as Array<{ rank: unknown }>)[0]?.rank,
+      queryResultRows<{ rank: unknown }>(schoolRankResult)[0]?.rank,
     ) || 1;
 
   const currentSchoolData = await db.query.schools.findFirst({
