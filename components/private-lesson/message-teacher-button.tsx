@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { MessageCircle, Loader2 } from "lucide-react";
 import { clientLogger } from "@/lib/client-logger";
+import { ConfirmActionDialog } from "@/components/confirm-action-dialog";
 
 type Props = {
   teacherId: string;
@@ -52,21 +53,11 @@ export function MessageTeacherButton({
 }: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [creditDialogOpen, setCreditDialogOpen] = useState(false);
 
-  const handleClick = async () => {
+  const doUnlock = async () => {
     if (loading) return;
-
-    if (alreadyUnlocked && existingChatId) {
-      router.push(`/private-lesson/messages/${existingChatId}`);
-      return;
-    }
-
-    const label = teacherName ? `"${teacherName}"` : "bu öğretmen";
-    const ok = window.confirm(
-      `${label} ile mesajlaşmayı açmak için 1 kredi kullanılacak. Bir kez ödenir, mesajlaşma kalıcı olarak açık kalır. Devam edilsin mi?`,
-    );
-    if (!ok) return;
-
+    setCreditDialogOpen(false);
     setLoading(true);
     try {
       const res = await fetch("/api/private-lesson/messages/unlock", {
@@ -96,7 +87,7 @@ export function MessageTeacherButton({
       clientLogger.error({
         message: "unlock message thread failed",
         error,
-        location: "MessageTeacherButton/handleClick",
+        location: "MessageTeacherButton/doUnlock",
       });
       toast.error("Bir hata oluştu");
     } finally {
@@ -104,21 +95,52 @@ export function MessageTeacherButton({
     }
   };
 
+  const handleOpenClick = () => {
+    if (loading) return;
+    if (alreadyUnlocked && existingChatId) {
+      router.push(`/private-lesson/messages/${existingChatId}`);
+      return;
+    }
+    setCreditDialogOpen(true);
+  };
+
+  const label = teacherName ? `“${teacherName}”` : "bu öğretmen";
+  const messageDescription = (
+    <>
+      {label} ile mesajlaşmayı açmak için{" "}
+      <span className="font-semibold">1 kredi</span> kullanılır. Bir kez
+      ödenir; açık kalan sohbet için tekrar ücret alınmaz.
+    </>
+  );
+
   return (
-    <Button
-      type="button"
-      onClick={handleClick}
-      disabled={loading}
-      variant={variant}
-      size={size}
-      className={`${fullWidth ? "w-full" : ""} ${className ?? ""}`}
-    >
-      {loading ? (
-        <Loader2 className="h-4 w-4 animate-spin" />
-      ) : (
-        <MessageCircle className="h-4 w-4 mr-2" />
-      )}
-      {alreadyUnlocked ? "Sohbete Git" : "Mesaj Gönder"}
-    </Button>
+    <>
+      <Button
+        type="button"
+        onClick={handleOpenClick}
+        disabled={loading}
+        variant={variant}
+        size={size}
+        className={`${fullWidth ? "w-full" : ""} ${className ?? ""}`}
+      >
+        {loading ? (
+          <Loader2 className="h-4 w-4 animate-spin" />
+        ) : (
+          <MessageCircle className="h-4 w-4 mr-2" />
+        )}
+        {alreadyUnlocked ? "Sohbete Git" : "Mesaj Gönder"}
+      </Button>
+      <ConfirmActionDialog
+        open={creditDialogOpen}
+        onOpenChange={setCreditDialogOpen}
+        title="Mesajı aç?"
+        description={messageDescription}
+        confirmLabel="Evet, 1 kredi kullan"
+        cancelLabel="Vazgeç"
+        confirmVariant="primary"
+        pending={loading}
+        onConfirm={doUnlock}
+      />
+    </>
   );
 }

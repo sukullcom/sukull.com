@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Check, X, Loader2, MessageCircle } from "lucide-react";
 import { normalizeAvatarUrl } from "@/utils/avatar";
 import { clientLogger } from "@/lib/client-logger";
+import { ConfirmActionDialog } from "@/components/confirm-action-dialog";
 
 type Offer = {
   id: number;
@@ -38,20 +39,21 @@ export function OfferList({
 }) {
   const router = useRouter();
   const [pending, setPending] = useState<Record<number, boolean>>({});
+  const [confirm, setConfirm] = useState<{
+    offerId: number;
+    action: "accept" | "reject";
+  } | null>(null);
 
-  const mutate = async (
-    offerId: number,
-    action: "accept" | "reject",
-  ) => {
+  const openConfirm = (offerId: number, action: "accept" | "reject") => {
     if (pending[offerId]) return;
+    setConfirm({ offerId, action });
+  };
 
-    const confirmText =
-      action === "accept"
-        ? "Bu teklifi kabul ediyor musun? İlanın kapanacak ve diğer teklifler reddedilecek."
-        : "Bu teklifi reddediyor musun?";
-    if (!window.confirm(confirmText)) return;
-
+  const runMutate = async () => {
+    if (!confirm) return;
+    const { offerId, action } = confirm;
     setPending((p) => ({ ...p, [offerId]: true }));
+    setConfirm(null);
     try {
       const res = await fetch(`/api/private-lesson/offers/${offerId}`, {
         method: "PATCH",
@@ -71,7 +73,7 @@ export function OfferList({
       clientLogger.error({
         message: "mutate offer failed",
         error,
-        location: "OfferList/mutate",
+        location: "OfferList/runMutate",
       });
       toast.error("Bir hata oluştu");
     } finally {
@@ -89,8 +91,25 @@ export function OfferList({
     return rank[a.status] - rank[b.status];
   });
 
+  const isAccept = confirm?.action === "accept";
+
   return (
     <div className="space-y-3">
+      <ConfirmActionDialog
+        open={confirm != null}
+        onOpenChange={(o) => !o && setConfirm(null)}
+        title={isAccept ? "Teklifi kabul ediyor musun?" : "Bu teklifi reddediyor musun?"}
+        description={
+          isAccept
+            ? "İlanın kapanacak ve bu öğretmenin dışındaki tüm beklemedeki teklifler reddedilecek. Bu eylem geri alınamaz."
+            : "Öğretmen, teklifin reddedildiğini görecek. İstediğin zaman başka bir teklif seçebilirsin."
+        }
+        confirmLabel={isAccept ? "Evet, kabul et" : "Evet, reddet"}
+        cancelLabel="Vazgeç"
+        confirmVariant={isAccept ? "primary" : "danger"}
+        onConfirm={runMutate}
+        imageSrc={isAccept ? "/mascot_orange.svg" : "/mascot_sad.svg"}
+      />
       {sorted.map((offer) => (
         <div
           key={offer.id}
@@ -140,7 +159,7 @@ export function OfferList({
                   <Button
                     size="sm"
                     variant="primary"
-                    onClick={() => mutate(offer.id, "accept")}
+                    onClick={() => openConfirm(offer.id, "accept")}
                     disabled={Boolean(pending[offer.id])}
                   >
                     {pending[offer.id] ? (
@@ -153,7 +172,7 @@ export function OfferList({
                   <Button
                     size="sm"
                     variant="primaryOutline"
-                    onClick={() => mutate(offer.id, "reject")}
+                    onClick={() => openConfirm(offer.id, "reject")}
                     disabled={Boolean(pending[offer.id])}
                   >
                     <X className="h-3.5 w-3.5 mr-1" />

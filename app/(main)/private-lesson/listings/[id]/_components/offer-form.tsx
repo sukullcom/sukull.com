@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Loader2, Handshake } from "lucide-react";
 import { clientLogger } from "@/lib/client-logger";
+import { ConfirmActionDialog } from "@/components/confirm-action-dialog";
 
 /**
  * Teacher-facing form to submit a bid on a student listing.
@@ -30,19 +31,19 @@ export function OfferForm({
   const [price, setPrice] = useState("");
   const [note, setNote] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [creditDialogOpen, setCreditDialogOpen] = useState(false);
 
   const priceNum = Number(price);
   const priceOk = Number.isFinite(priceNum) && priceNum > 0;
 
+  const handleOpenConfirm = () => {
+    if (!priceOk || submitting) return;
+    setCreditDialogOpen(true);
+  };
+
   const handleSubmit = async () => {
     if (!priceOk || submitting) return;
-
-    const hint = formatBudgetHint(budgetMin, budgetMax, priceNum);
-    const ok = window.confirm(
-      `Teklif göndermek 1 kredi kullanacak ve geri alınmaz. ${hint ? hint + " " : ""}Devam edilsin mi?`,
-    );
-    if (!ok) return;
-
+    setCreditDialogOpen(false);
     setSubmitting(true);
     try {
       const res = await fetch(
@@ -90,6 +91,22 @@ export function OfferForm({
       setSubmitting(false);
     }
   };
+
+  const creditHint = formatBudgetHint(budgetMin, budgetMax, priceNum);
+  const creditDescription = (
+    <>
+      Teklif göndermek <span className="font-semibold">1 kredi</span> kullanacak; ödendikten sonra
+      kredi iade edilmez.
+      {creditHint ? (
+        <>
+          {" "}
+          <br />
+          <br />
+          <span className="text-amber-800">{creditHint}</span>
+        </>
+      ) : null}
+    </>
+  );
 
   return (
     <div className="bg-white border rounded-xl p-5">
@@ -142,7 +159,7 @@ export function OfferForm({
         </div>
 
         <Button
-          onClick={handleSubmit}
+          onClick={handleOpenConfirm}
           disabled={!priceOk || submitting}
           variant="primary"
           size="lg"
@@ -158,6 +175,17 @@ export function OfferForm({
           )}
         </Button>
       </div>
+      <ConfirmActionDialog
+        open={creditDialogOpen}
+        onOpenChange={setCreditDialogOpen}
+        title="Kullanımı onayla"
+        description={creditDescription}
+        confirmLabel="Evet, 1 kredi kullan"
+        cancelLabel="Vazgeç"
+        confirmVariant="primary"
+        pending={submitting}
+        onConfirm={handleSubmit}
+      />
     </div>
   );
 }

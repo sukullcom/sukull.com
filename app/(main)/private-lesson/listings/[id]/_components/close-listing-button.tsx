@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { ConfirmActionDialog } from "@/components/confirm-action-dialog";
 import { Loader2, XCircle } from "lucide-react";
 import { clientLogger } from "@/lib/client-logger";
 
@@ -16,15 +17,9 @@ import { clientLogger } from "@/lib/client-logger";
 export function CloseListingButton({ listingId }: { listingId: number }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
-  const handleClick = async () => {
-    if (
-      !window.confirm(
-        "İlanı kapatmak istediğine emin misin? Kapatıldıktan sonra yeni teklif gelmez.",
-      )
-    )
-      return;
-
+  const doClose = async () => {
     setLoading(true);
     try {
       const res = await fetch(`/api/private-lesson/listings/${listingId}`, {
@@ -38,12 +33,13 @@ export function CloseListingButton({ listingId }: { listingId: number }) {
         return;
       }
       toast.success("İlan kapatıldı");
+      setDialogOpen(false);
       router.refresh();
     } catch (error) {
       clientLogger.error({
         message: "close listing failed",
         error,
-        location: "CloseListingButton/handleClick",
+        location: "CloseListingButton/doClose",
       });
       toast.error("Bir hata oluştu");
     } finally {
@@ -52,18 +48,33 @@ export function CloseListingButton({ listingId }: { listingId: number }) {
   };
 
   return (
-    <Button
-      onClick={handleClick}
-      disabled={loading}
-      variant="dangerOutline"
-      size="sm"
-    >
-      {loading ? (
-        <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" />
-      ) : (
-        <XCircle className="h-3.5 w-3.5 mr-1" />
-      )}
-      İlanı Kapat
-    </Button>
+    <>
+      <Button
+        onClick={() => setDialogOpen(true)}
+        disabled={loading}
+        variant="dangerOutline"
+        size="sm"
+      >
+        {loading ? (
+          <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" />
+        ) : (
+          <XCircle className="h-3.5 w-3.5 mr-1" />
+        )}
+        İlanı Kapat
+      </Button>
+      <ConfirmActionDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        title="İlanı kapat?"
+        description="Kapatıldıktan sonra bu ilan için yeni teklif gelmez. Mevcut tekliflere aynı ekrandan devam edebilirsin."
+        confirmLabel="Evet, kapat"
+        cancelLabel="Vazgeç"
+        confirmVariant="danger"
+        pending={loading}
+        onConfirm={doClose}
+        imageSrc="/mascot_sad.svg"
+        imageAlt="Onay"
+      />
+    </>
   );
 }
