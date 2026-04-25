@@ -683,7 +683,9 @@ export const activityLog = pgTable("activity_log", {
 export const activityLogDaily = pgTable("activity_log_daily", {
   day: timestamp("day", { mode: "date" }).notNull(),
   eventType: text("event_type").notNull(),
-  page: text("page"),
+  // `page` bileşik primary key’in parçasıdır; Postgres PK sütunlarında NULL’a
+  // izin vermez (drizzle push aksi halde DROP NOT NULL’da 42P16 atar).
+  page: text("page").notNull().default(""),
   eventCount: integer("event_count").notNull().default(0),
   uniqueUsers: integer("unique_users").notNull().default(0),
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
