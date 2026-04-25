@@ -18,7 +18,7 @@ function OAuthButtons({ isLoading, onLoadingChange, redirectUrl }: Props) {
   const [internalLoading, setInternalLoading] = useState(false);
   const [providerLoading, setProviderLoading] = useState<boolean>(false);
   const searchParams = useSearchParams();
-  const nextUrl = redirectUrl || searchParams.get("next") || "/courses";
+  const nextUrl = redirectUrl || searchParams?.get("next") || "/courses";
   const loading = isLoading ?? internalLoading;
   const setLoading = onLoadingChange ?? setInternalLoading;
 

@@ -116,14 +116,14 @@ export const List = ({ courses, activeCourseId }: Props) => {
   const [pending, startTransition] = useTransition();
   const toastShownRef = useRef(false);
 
-  const urlTab = (searchParams.get("tab") as TabKey | null) ?? "school";
+  const urlTab = (searchParams?.get("tab") as TabKey | null) ?? "school";
   const [activeTab, setActiveTab] = useState<TabKey>(
     urlTab === "exams" ? "exams" : "school"
   );
 
   // Keep URL in sync so the tab choice can be shared/bookmarked.
   useEffect(() => {
-    const current = searchParams.get("tab");
+    const current = searchParams?.get("tab");
     if (activeTab === "school" && current) {
       const newUrl = new URL(window.location.href);
       newUrl.searchParams.delete("tab");
@@ -136,7 +136,7 @@ export const List = ({ courses, activeCourseId }: Props) => {
   }, [activeTab, searchParams]);
 
   useEffect(() => {
-    const message = searchParams.get("message");
+    const message = searchParams?.get("message");
     if (message === "select-course" && !toastShownRef.current) {
       toast.info("Öğrenmeye başlamak için önce bir ders seçmelisiniz!");
       toastShownRef.current = true;

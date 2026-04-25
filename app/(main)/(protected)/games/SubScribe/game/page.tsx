@@ -101,9 +101,9 @@ function generateLyricsLines(transcript: TranscriptLine[], ratio: number): Lyric
 
 export default function GamePage() {
   const searchParams = useSearchParams();
-  const videoId = searchParams.get("videoId");
-  const ratio = parseFloat(searchParams.get("ratio") || "0.5");
-  const difficulty = searchParams.get("difficulty") || "Orta";
+  const videoId = searchParams?.get("videoId");
+  const ratio = parseFloat(searchParams?.get("ratio") || "0.5");
+  const difficulty = searchParams?.get("difficulty") || "Orta";
   const [transcript, setTranscript] = useState<TranscriptLine[]>([]);
   const [lyrics, setLyrics] = useState<LyricLine[]>([]);
   const [loading, setLoading] = useState(true);

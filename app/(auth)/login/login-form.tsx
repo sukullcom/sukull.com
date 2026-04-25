@@ -21,8 +21,8 @@ export function LoginForm() {
 
   // Check for email verification success and logout
   useEffect(() => {
-    const verified = searchParams.get('verified');
-    const logout = searchParams.get('logout');
+    const verified = searchParams?.get('verified');
+    const logout = searchParams?.get('logout');
     
     if (verified === 'true') {
       toast.success("E-postanız başarıyla doğrulandı! Artık giriş yapabilirsiniz.");
@@ -46,7 +46,7 @@ export function LoginForm() {
     setIsSubmitting(true);
     
     const formData = new FormData(e.currentTarget);
-    const next = searchParams.get('next') || '/courses';
+    const next = searchParams?.get('next') || '/courses';
     formData.append('next', next);
     
     startTransition(async () => {

@@ -33,7 +33,7 @@ const difficulties = [
 export default function SelectDifficultyPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const videoId = searchParams.get("videoId");
+  const videoId = searchParams?.get("videoId");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>("");
 

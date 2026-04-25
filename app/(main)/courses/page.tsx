@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { getCourses, getUserProgress } from "@/db/queries";
 import { List } from "./list";
@@ -30,7 +31,15 @@ export default async function CoursesPage() {
             Okul derslerinden veya sınav hazırlığından başla
           </p>
         </div>
-        <List courses={courses} activeCourseId={userProgress?.activeCourseId} />
+        <Suspense
+          fallback={
+            <div className="flex flex-col items-center justify-center py-16 text-neutral-500 text-sm">
+              Ders listesi yükleniyor…
+            </div>
+          }
+        >
+          <List courses={courses} activeCourseId={userProgress?.activeCourseId} />
+        </Suspense>
       </div>
     );
   } catch (error) {

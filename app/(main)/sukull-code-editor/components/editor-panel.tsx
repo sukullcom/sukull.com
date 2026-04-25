@@ -24,7 +24,7 @@ const Editor = dynamic(() => import("@monaco-editor/react"), {
 
 function EditorPanel() {
   const searchParams = useSearchParams();
-  const snippetId = searchParams.get("snippetId");
+  const snippetId = searchParams?.get("snippetId");
 
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
   const [shareTitle, setShareTitle] = useState("");

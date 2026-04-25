@@ -11,9 +11,9 @@ function ConfirmContent() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const tokenHash = searchParams.get("token_hash");
-    const type = searchParams.get("type");
-    const next = searchParams.get("next");
+    const tokenHash = searchParams?.get("token_hash");
+    const type = searchParams?.get("type");
+    const next = searchParams?.get("next");
 
     if (!tokenHash || !type) {
       setStatus("error");

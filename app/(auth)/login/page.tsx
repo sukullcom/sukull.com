@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Image from "next/image";
 import { LoginForm } from "./login-form";
 
@@ -36,7 +37,15 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
             </div>
           )}
           
-          <LoginForm />
+          <Suspense
+            fallback={
+              <div className="w-full h-32 flex items-center justify-center text-neutral-400 text-sm">
+                Yükleniyor…
+              </div>
+            }
+          >
+            <LoginForm />
+          </Suspense>
         </div>
       </div>
     </div>
