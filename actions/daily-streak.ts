@@ -54,6 +54,7 @@ async function ensureNewDayForUser(userId: string) {
     .set({
       previousTotalPoints: progress.points,
       lastStreakCheck: now,
+      dailyPointsEarned: 0,
     })
     .where(eq(userProgress.userId, userId));
 
@@ -146,7 +147,14 @@ export async function updateDailyStreak() {
     if (!progress) return false;
 
     const today = getTurkeyToday();
-    const pointsEarnedToday = progress.points - (progress.previousTotalPoints ?? 0);
+    const rawEarned = Math.max(
+      0,
+      progress.points - (progress.previousTotalPoints ?? 0),
+    );
+    const pointsEarnedToday = Math.max(
+      rawEarned,
+      progress.dailyPointsEarned ?? 0,
+    );
     const dailyTarget = progress.dailyTarget || 50;
     const percentage = Math.round((pointsEarnedToday / dailyTarget) * 100);
 
@@ -253,6 +261,7 @@ export async function getCurrentDayProgress() {
       progress.points - (progress.previousTotalPoints ?? 0),
       0
     );
+    const dailyTracked = progress.dailyPointsEarned ?? 0;
     const dailyTarget = progress.dailyTarget || 50;
 
     const today = getTurkeyToday();
@@ -267,10 +276,11 @@ export async function getCurrentDayProgress() {
     });
     const recordSaysAchieved = todayStreakRow?.achieved === true;
 
+    const fromDeltaOrTracker = Math.max(rawEarned, dailyTracked);
     const pointsEarnedToday = recordSaysAchieved
-      ? Math.max(rawEarned, dailyTarget)
-      : rawEarned;
-    const achieved = recordSaysAchieved || rawEarned >= dailyTarget;
+      ? Math.max(fromDeltaOrTracker, dailyTarget)
+      : fromDeltaOrTracker;
+    const achieved = recordSaysAchieved || fromDeltaOrTracker >= dailyTarget;
     const progressOfTarget = dailyTarget
       ? (pointsEarnedToday / dailyTarget) * 100
       : 0;
@@ -361,7 +371,7 @@ export async function performDailyReset() {
     // 1. Baseline: set previous_total_points = points for every user.
     //    Existing behaviour — kept as-is, already set-based.
     await db.execute(
-      sql`UPDATE user_progress SET previous_total_points = points, last_streak_check = ${now}`
+      sql`UPDATE user_progress SET previous_total_points = points, last_streak_check = ${now}, daily_points_earned = 0`
     );
 
     // 2. Insert a placeholder "missed" row for every streak-holding user
@@ -540,6 +550,7 @@ export async function initializeUserStreak(userId: string) {
         istikrar: 0,
         previousTotalPoints: progress.points,
         lastStreakCheck: getTurkeyNow(),
+        dailyPointsEarned: 0,
       })
       .where(eq(userProgress.userId, userId));
 

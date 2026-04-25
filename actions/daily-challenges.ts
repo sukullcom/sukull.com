@@ -247,14 +247,18 @@ export async function claimChallengeReward() {
 
     const progress = await db.query.userProgress.findFirst({
       where: eq(userProgress.userId, user.id),
-      columns: { points: true },
+      columns: { points: true, dailyPointsEarned: true },
     });
 
     if (!progress) return { success: false };
 
+    const bonus = row.bonusPoints;
     await db
       .update(userProgress)
-      .set({ points: progress.points + row.bonusPoints })
+      .set({
+        points: progress.points + bonus,
+        dailyPointsEarned: (progress.dailyPointsEarned ?? 0) + bonus,
+      })
       .where(eq(userProgress.userId, user.id));
 
     await db

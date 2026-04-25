@@ -228,6 +228,8 @@ export const userProgress = pgTable("user_progress", {
   dailyTarget: integer("daily_target").notNull().default(50), // Kullanıcının belirlediği günlük hedeflenen puan
   lastStreakCheck: timestamp("last_streak_check"), // En son streak kontrol tarihi
   previousTotalPoints: integer("previous_total_points").default(0), // Son kontrol anındaki toplam puan
+  /** Türkiye gününe göre, bugünkü puan oyun/ödül/ceza toplamı; gece/ensureNewDay ile 0'lanır (istikrar bonusu buraya eklenmez). */
+  dailyPointsEarned: integer("daily_points_earned").notNull().default(0),
   lastHeartRegenAt: timestamp("last_heart_regen_at"), // Son otomatik can yenilenme zamanı
   streakFreezeCount: integer("streak_freeze_count").notNull().default(0), // Satın alınan streak freeze sayısı
 

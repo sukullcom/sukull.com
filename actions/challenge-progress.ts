@@ -30,6 +30,14 @@ class PointsValidationError extends Error {
   }
 }
 
+/** Puan oyunu/ödül/ceza hareketi; günlük toplam sayaç 0'ın altına inmez. */
+function pointsAndDailyDeltaSQL(delta: number) {
+  return {
+    points: sql`${userProgress.points} + ${delta}`,
+    dailyPointsEarned: sql`GREATEST(0, COALESCE(${userProgress.dailyPointsEarned}, 0) + ${delta})`,
+  } as const;
+}
+
 export const upsertChallengeProgress = async (challengeId: number) => {
   // Argument hardening: the action is reachable from the client with
   // arbitrary arguments; guard against non-integers before hitting the DB.
@@ -135,7 +143,7 @@ export const upsertChallengeProgress = async (challengeId: number) => {
 
       await tx
         .update(userProgress)
-        .set({ points: sql`${userProgress.points} + ${practicePoints}` })
+        .set(pointsAndDailyDeltaSQL(practicePoints))
         .where(eq(userProgress.userId, userId));
     });
 
@@ -173,7 +181,7 @@ export const upsertChallengeProgress = async (challengeId: number) => {
 
     await tx
       .update(userProgress)
-      .set({ points: sql`${userProgress.points} + ${firstPoints}` })
+      .set(pointsAndDailyDeltaSQL(firstPoints))
       .where(eq(userProgress.userId, userId));
 
     if (schoolId) {
@@ -258,7 +266,7 @@ export async function addPointsToUser(
   await db.transaction(async (tx) => {
     const [updated] = await tx
       .update(userProgress)
-      .set({ points: sql`${userProgress.points} + ${adjustedPoints}` })
+      .set(pointsAndDailyDeltaSQL(adjustedPoints))
       .where(eq(userProgress.userId, userId))
       .returning({ points: userProgress.points });
     newTotal = updated?.points;
@@ -330,10 +338,12 @@ export const reduceHearts = async (challengeId: number) => {
   const now = new Date();
   const startRegenTimer = !currentUserProgress.lastHeartRegenAt;
 
+  const penalty = SCORING_SYSTEM.LESSON_CHALLENGE_PENALTY;
   await db.transaction(async (tx) => {
     const setClause: Record<string, unknown> = {
       hearts: sql`GREATEST(${userProgress.hearts} - 1, 0)`,
-      points: sql`${userProgress.points} + ${SCORING_SYSTEM.LESSON_CHALLENGE_PENALTY}`,
+      points: sql`${userProgress.points} + ${penalty}`,
+      dailyPointsEarned: sql`GREATEST(0, COALESCE(${userProgress.dailyPointsEarned}, 0) + ${penalty})`,
     };
     if (startRegenTimer) setClause.lastHeartRegenAt = now;
 
@@ -414,7 +424,7 @@ export async function awardLessonCompletionBonus(
     await db.transaction(async (tx) => {
       await tx
         .update(userProgress)
-        .set({ points: sql`${userProgress.points} + ${totalBonus}` })
+        .set(pointsAndDailyDeltaSQL(totalBonus))
         .where(eq(userProgress.userId, userId));
 
       if (schoolId) {

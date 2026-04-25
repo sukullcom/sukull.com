@@ -185,11 +185,13 @@ export const reduceHearts = async (challengeId: number) => {
   
   if (currentUserProgress.hearts === 0) return { error: 'hearts' };
 
+  const daily = currentUserProgress.dailyPointsEarned ?? 0;
   await db
     .update(userProgress)
     .set({
       hearts: Math.max(currentUserProgress.hearts - 1, 0),
       points: currentUserProgress.points - 2,
+      dailyPointsEarned: Math.max(0, daily - 2),
     })
     .where(eq(userProgress.userId, userId));
 
@@ -236,9 +238,13 @@ export async function addUserPoints(points: number) {
     if (!progress) return null;
 
     const newPoints = progress.points + points;
+    const newDaily = (progress.dailyPointsEarned ?? 0) + points;
     await db
       .update(userProgress)
-      .set({ points: newPoints })
+      .set({
+        points: newPoints,
+        dailyPointsEarned: Math.max(0, newDaily),
+      })
       .where(eq(userProgress.userId, userId));
 
     await updateDailyStreak();

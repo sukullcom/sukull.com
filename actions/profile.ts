@@ -154,10 +154,11 @@ export async function getUserProfile() {
     if (!progress) return null;
     
     // Format the current streak
+    const rawToday = progress.points - (progress.previousTotalPoints || 0);
     const streak = {
       current: progress.istikrar,
       target: progress.dailyTarget,
-      progress: progress.points - (progress.previousTotalPoints || 0),
+      progress: Math.max(rawToday, progress.dailyPointsEarned ?? 0),
     };
     
     // Calculate user registration date (for streak calendar)
