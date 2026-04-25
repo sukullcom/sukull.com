@@ -289,8 +289,17 @@ export async function addPointsToUser(
     logActivity({ userId, eventType: "game_end", page: `/games/${meta.gameType}`, metadata: { gameType: meta.gameType, points: adjustedPoints } });
   }
 
-  revalidatePath("/learn");
-  revalidatePath("/lesson");
+  // Oyun puanları: /learn + tüm ders ağaçlarını invalid etmek, App Router'ın
+  // oyun ekranını (client state) aynı isimde RSCyle yenilemesine yol açıp
+  // "bitiş ekranı" yerine liste/menüye fırlamaya neden olabiliyor.
+  // Sadece görev/sıralama gibi tüketim sayfaları.
+  if (meta?.gameType) {
+    revalidatePath("/leaderboard");
+    revalidatePath("/quests");
+  } else {
+    revalidatePath("/learn");
+    revalidatePath("/lesson");
+  }
 
   return { success: true, pointsAdded: adjustedPoints, newTotal: newTotal ?? null };
 }
