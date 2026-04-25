@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { addPointsToUser } from "@/actions/challenge-progress";
+import { awardGamePoints } from "@/lib/client-points";
 import { SCORING_SYSTEM } from "@/constants";
 import { toast } from "sonner";
 import { ArrowLeft, Trophy, Zap, Target, Timer } from "lucide-react";
@@ -112,7 +112,7 @@ export default function PatternMemoryGame() {
   useEffect(() => {
     if (gameState === "finished" && !pointsSubmitted && score > 0) {
       setPointsSubmitted(true);
-      addPointsToUser(score, { gameType: "pattern-memory" }).catch(() => toast.error("Puanlar kaydedilemedi"));
+      awardGamePoints(score, "pattern-memory").catch(() => toast.error("Puanlar kaydedilemedi"));
     }
   }, [gameState, pointsSubmitted, score]);
 

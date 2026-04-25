@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { addPointsToUser } from "@/actions/challenge-progress";
+import { awardGamePoints } from "@/lib/client-points";
 import { SCORING_SYSTEM } from "@/constants";
 import { useCompletionModal } from "@/store/use-completion-modal";
 import LyricLine from "./lyrics-line";
@@ -102,7 +102,7 @@ export default function LyricsGame({ lyrics, difficulty = "Kolay" }: LyricsGameP
     
     try {
       const finalScore = calculateFinalScore();
-      await addPointsToUser(finalScore, { gameType: "subscribe" });
+      await awardGamePoints(finalScore, "subscribe");
       openCompletionModal(finalScore);
     } catch (error) {
       clientLogger.error({ message: "add points failed (SubScribe)", error, location: "games/SubScribe/lyrics-game" });

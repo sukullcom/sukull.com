@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Confetti from "@/components/lazy-confetti";
 import { Button } from "@/components/ui/button";
-import { addPointsToUser } from "@/actions/challenge-progress";
+import { awardGamePoints } from "@/lib/client-points";
 import { useRouter } from "next/navigation";
 import { SCORING_SYSTEM } from "@/constants";
 
@@ -105,7 +105,7 @@ const FoodSimulationPage = () => {
         const matchPoints = SCORING_SYSTEM.GAMES.LAB.JOURNEY_OF_FOOD.CORRECT_MATCH;
         setMatchedCards((prev) => [...prev, firstCard.title]);
         setTotalPoints((prev) => prev + matchPoints);
-        await addPointsToUser(matchPoints, { gameType: "journey-of-food" });
+        await awardGamePoints(matchPoints, "journey-of-food");
         correctAudioRef.current?.play();
         setHighlightedCard(null);
         
@@ -114,7 +114,7 @@ const FoodSimulationPage = () => {
           // All matches completed - add completion bonus
           const completionBonus = SCORING_SYSTEM.GAMES.LAB.JOURNEY_OF_FOOD.COMPLETION_BONUS;
           setTotalPoints((prev) => prev + completionBonus);
-          await addPointsToUser(completionBonus, { gameType: "journey-of-food" });
+          await awardGamePoints(completionBonus, "journey-of-food");
           setGameFinished(true);
         }
       } else {
@@ -122,7 +122,7 @@ const FoodSimulationPage = () => {
         const penalty = SCORING_SYSTEM.GAMES.LAB.JOURNEY_OF_FOOD.INCORRECT_PENALTY;
         setHighlightedCard(cardId);
         setTotalPoints((prev) => Math.max(0, prev + penalty)); // Don't go below 0
-        await addPointsToUser(penalty, { gameType: "journey-of-food" });
+        await awardGamePoints(penalty, "journey-of-food");
         incorrectAudioRef.current?.play();
         setTimeout(() => {
           setHighlightedCard(null);

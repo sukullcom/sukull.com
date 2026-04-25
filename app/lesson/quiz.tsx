@@ -17,6 +17,7 @@ import { usePracticeModal } from "@/store/use-practice-modal";
 import { MathRenderer } from "@/components/ui/math-renderer";
 import { SCORING_SYSTEM } from "@/constants";
 import { getTimeBonusInfo } from "@/lib/time-bonus";
+import { emitProgressUpdated } from "@/lib/progress-events";
 import { Target, Sunrise } from "lucide-react";
 
 type Props = {
@@ -155,6 +156,9 @@ export const Quiz = ({
           setLessonBonuses(bonuses);
           const bonusTotal = bonuses.completionBonus + bonuses.perfectBonus;
           setLessonPoints((prev) => prev + bonusTotal);
+          if (bonusTotal > 0) {
+            emitProgressUpdated({ source: "lesson-complete", points: bonusTotal });
+          }
         });
       }
     }
@@ -348,8 +352,16 @@ export const Quiz = ({
 
             if (isPracticeMode) {
               setLessonPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_PRACTICE);
+              emitProgressUpdated({
+                source: "quiz-correct-practice",
+                points: SCORING_SYSTEM.LESSON_CHALLENGE_PRACTICE,
+              });
             } else {
               setLessonPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_FIRST);
+              emitProgressUpdated({
+                source: "quiz-correct-first",
+                points: SCORING_SYSTEM.LESSON_CHALLENGE_FIRST,
+              });
             }
           })
           .catch(() => toast.error("Bir şeyler yanlış gitti. Lütfen tekrar deneyin."));

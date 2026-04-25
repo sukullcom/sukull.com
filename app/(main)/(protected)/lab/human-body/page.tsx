@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { addPointsToUser } from "@/actions/challenge-progress";
+import { awardGamePoints } from "@/lib/client-points";
 import Confetti from "@/components/lazy-confetti";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -234,12 +234,12 @@ const HangmanGame = ({
     if (isWordGuessed) {
       // Correct word completion
       const wordPoints = SCORING_SYSTEM.GAMES.LAB.HUMAN_BODY.CORRECT_WORD;
-      await addPointsToUser(wordPoints, { gameType: "human-body" });
+      await awardGamePoints(wordPoints, "human-body");
       setTotalPoints((prev) => prev + wordPoints);
     } else if (remainingAttempts === 0) {
       // Failed to guess the word
       const penalty = SCORING_SYSTEM.GAMES.LAB.HUMAN_BODY.FAILED_WORD;
-      await addPointsToUser(penalty, { gameType: "human-body" });
+      await awardGamePoints(penalty, "human-body");
       setTotalPoints((prev) => Math.max(0, prev + penalty)); // Don't go below 0
     }
 
@@ -247,7 +247,7 @@ const HangmanGame = ({
       // Game completed - add completion bonus if needed
       if (isWordGuessed) {
         const completionBonus = SCORING_SYSTEM.GAMES.LAB.HUMAN_BODY.COMPLETION_BONUS;
-        await addPointsToUser(completionBonus, { gameType: "human-body" });
+        await awardGamePoints(completionBonus, "human-body");
         setTotalPoints((prev) => prev + completionBonus);
       }
       setGameFinished(true);

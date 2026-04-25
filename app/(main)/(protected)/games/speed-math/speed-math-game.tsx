@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { addPointsToUser } from "@/actions/challenge-progress";
+import { awardGamePoints } from "@/lib/client-points";
 import { SCORING_SYSTEM } from "@/constants";
 import { toast } from "sonner";
 import { ArrowLeft, Zap, Trophy, Timer, Target, Check, X } from "lucide-react";
@@ -191,7 +191,7 @@ export default function SpeedMathGame() {
   useEffect(() => {
     if (gameState === "finished" && !pointsSubmitted && score > 0) {
       setPointsSubmitted(true);
-      addPointsToUser(score, { gameType: "speed-math" }).catch(() =>
+      awardGamePoints(score, "speed-math").catch(() =>
         toast.error("Puanlar kaydedilemedi")
       );
     }

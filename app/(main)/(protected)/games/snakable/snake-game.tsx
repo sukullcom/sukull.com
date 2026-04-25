@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef, useCallback } from "react";
 import { SCORING_SYSTEM } from "@/constants";
-import { addPointsToUser } from "@/actions/challenge-progress";
+import { awardGamePoints } from "@/lib/client-points";
 import Confetti from "@/components/lazy-confetti";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -1043,7 +1043,7 @@ const SnakeGame = () => {
     
     if (finalScore > 0) {
       try {
-        await addPointsToUser(finalScore, { gameType: "snakable" });
+        await awardGamePoints(finalScore, "snakable");
       } catch {
         // Still complete the game even if points submission fails
       }

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { addPointsToUser } from "@/actions/challenge-progress";
+import { awardGamePoints } from "@/lib/client-points";
 import { SCORING_SYSTEM } from "@/constants";
 import { toast } from "sonner";
 import { ArrowLeft, Trophy, Zap, Grid3X3, Eye, MousePointerClick } from "lucide-react";
@@ -100,7 +100,7 @@ export default function MemoryMatrixGame() {
       const diffMult = CONFIG.DIFFICULTY_MULTIPLIER[difficulty];
       const finalScore = Math.round(score * diffMult);
       setScore(finalScore);
-      addPointsToUser(finalScore, { gameType: "memory-matrix" }).catch(() =>
+      awardGamePoints(finalScore, "memory-matrix").catch(() =>
         toast.error("Puanlar kaydedilemedi"),
       );
     }

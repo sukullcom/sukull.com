@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { addPointsToUser } from "@/actions/challenge-progress";
+import { awardGamePoints } from "@/lib/client-points";
 import { SCORING_SYSTEM } from "@/constants";
 import { toast } from "sonner";
 import { ArrowLeft, Trophy, Heart, Zap, CheckCircle, XCircle, Flag } from "lucide-react";
@@ -241,7 +241,7 @@ export default function TrueFalseGame() {
   useEffect(() => {
     if (gameState === "finished" && !pointsSubmitted && score > 0) {
       setPointsSubmitted(true);
-      addPointsToUser(score, { gameType: "true-false" }).catch(() => toast.error("Puanlar kaydedilemedi"));
+      awardGamePoints(score, "true-false").catch(() => toast.error("Puanlar kaydedilemedi"));
     }
   }, [gameState, pointsSubmitted, score]);
 

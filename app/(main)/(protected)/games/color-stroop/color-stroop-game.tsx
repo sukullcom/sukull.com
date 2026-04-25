@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { addPointsToUser } from "@/actions/challenge-progress";
+import { awardGamePoints } from "@/lib/client-points";
 import { SCORING_SYSTEM } from "@/constants";
 import { toast } from "sonner";
 import { ArrowLeft, Trophy, Heart, Zap, Palette, Flag, CheckCircle } from "lucide-react";
@@ -183,7 +183,7 @@ export default function ColorStroopGame() {
   useEffect(() => {
     if (gameState === "finished" && !pointsSubmitted && score > 0) {
       setPointsSubmitted(true);
-      addPointsToUser(score, { gameType: "stroop" }).catch(() =>
+      awardGamePoints(score, "stroop").catch(() =>
         toast.error("Puanlar kaydedilemedi")
       );
     }
