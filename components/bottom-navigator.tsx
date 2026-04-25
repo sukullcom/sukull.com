@@ -46,74 +46,76 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
   return (
     <div
       className={cn(
-        "fixed bottom-0 left-0 right-0 flex h-[60px] items-center justify-around border-t-2 border-slate-200 bg-white px-4 pb-[env(safe-area-inset-bottom,0px)] pt-0.5 min-h-[60px] lg:hidden z-50",
+        "fixed bottom-0 left-0 right-0 z-50 flex flex-col border-t-2 border-slate-200 bg-white px-4 pt-0.5 pb-[max(0.5rem,env(safe-area-inset-bottom,0px))] lg:hidden",
         className
       )}
     >
-      {navItems.map((item) => {
-        const isActive = pathname.startsWith(item.href);
-        return (
-          <Link
-            key={item.href}
-            prefetch={false}
-            href={item.href}
+      <div className="flex h-[var(--app-bottom-nav-row,3.75rem)] w-full min-h-0 items-center justify-around">
+        {navItems.map((item) => {
+          const isActive = pathname.startsWith(item.href);
+          return (
+            <Link
+              key={item.href}
+              prefetch={false}
+              href={item.href}
+              className="flex flex-col items-center justify-center gap-0.5"
+            >
+              <Image
+                src={item.iconSrc}
+                alt=""
+                height={isActive ? 36 : 32}
+                width={isActive ? 36 : 32}
+              />
+              <div
+                className={cn(
+                  "h-[3px] w-3 rounded-full transition-colors",
+                  isActive ? "bg-green-500" : "bg-transparent"
+                )}
+              />
+            </Link>
+          );
+        })}
+
+        <div className="relative" ref={dropdownRef}>
+          <button
+            type="button"
+            onClick={() => setDropdownOpen(!isDropdownOpen)}
             className="flex flex-col items-center justify-center gap-0.5"
           >
-            <Image
-              src={item.iconSrc}
-              alt=""
-              height={isActive ? 36 : 32}
-              width={isActive ? 36 : 32}
-            />
+            <Image src="/more.svg" alt="Menu" height={32} width={32} />
             <div
               className={cn(
                 "h-[3px] w-3 rounded-full transition-colors",
-                isActive ? "bg-green-500" : "bg-transparent"
+                isDropdownOpen ? "bg-green-500" : "bg-transparent"
               )}
             />
-          </Link>
-        );
-      })}
-
-      {/* More dropdown */}
-      <div className="relative" ref={dropdownRef}>
-        <button
-          onClick={() => setDropdownOpen(!isDropdownOpen)}
-          className="flex flex-col items-center justify-center gap-0.5"
-        >
-          <Image src="/more.svg" alt="Menu" height={32} width={32} />
-          <div
-            className={cn(
-              "h-[3px] w-3 rounded-full transition-colors",
-              isDropdownOpen ? "bg-green-500" : "bg-transparent"
-            )}
-          />
-        </button>
-        {isDropdownOpen && (
-          <div className="absolute bottom-14 right-0 w-44 bg-white shadow-lg rounded-lg border border-gray-200 z-50">
-            <ul>
-              {dropdownItems.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    prefetch={false}
-                    href={item.href}
-                    className="flex items-center px-4 py-2.5 hover:bg-gray-100"
-                    onClick={() => setDropdownOpen(false)}
-                  >
-                    <Image
-                      src={item.iconSrc}
-                      alt={item.label}
-                      height={24}
-                      width={24}
-                      className="mr-2"
-                    />
-                    <span className="text-sm">{item.label}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+          </button>
+          {isDropdownOpen && (
+            <div className="absolute bottom-full right-0 mb-2 w-44 bg-white shadow-lg rounded-lg border border-gray-200 z-50">
+              <ul>
+                {dropdownItems.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      prefetch={false}
+                      href={item.href}
+                      className="flex items-center px-4 py-2.5 hover:bg-gray-100"
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      <Image
+                        src={item.iconSrc}
+                        alt={item.label}
+                        height={24}
+                        width={24}
+                        className="mr-2"
+                      />
+                      <span className="text-sm">{item.label}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

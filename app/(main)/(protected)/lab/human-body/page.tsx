@@ -407,7 +407,6 @@ const VideoPage = () => {
         </div>
         <HangmanGame words={selectedVideo.hangmanWords} />
       </div>
-      <div className="h-16" /> {/* Spacer for bottom navigator */}
     </div>
   );
 };

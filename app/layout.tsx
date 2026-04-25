@@ -16,6 +16,8 @@ export const viewport: Viewport = {
   themeColor: "#84cc16",
   width: "device-width",
   initialScale: 1,
+  /** iOS: env(safe-area-inset-*) değerlerinin geçerli olması için */
+  viewportFit: "cover",
 };
 
 export const metadata: Metadata = {

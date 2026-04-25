@@ -11,6 +11,14 @@ body,
   @apply h-full;
 }
 
+/* Mobil alt gezinme (BottomNavigator) ile aynı yükseklik — içerik kaymasın / kesilmesin */
+:root {
+  --app-bottom-nav-row: 3.75rem; /* 60px: ikon satırı */
+  --app-bottom-inset: calc(
+    var(--app-bottom-nav-row) + max(0.5rem, env(safe-area-inset-bottom, 0px)) + 0.5rem
+  );
+}
+
 
 @layer utilities {
   .text-balance {
