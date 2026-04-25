@@ -70,8 +70,15 @@ export function OfferForm({
         return;
       }
 
-      toast.success("Teklif gönderildi! 1 kredi kullanıldı.");
-      router.refresh();
+      const chatId = typeof data.chatId === "number" ? data.chatId : null;
+      toast.success(
+        "Teklif gönderildi! Sohbet açıldı; öğrenci onayı beklemeden mesaj atabilirsin.",
+      );
+      if (chatId) {
+        router.push(`/private-lesson/messages/${chatId}`);
+      } else {
+        router.refresh();
+      }
     } catch (error) {
       clientLogger.error({
         message: "submit offer failed",
@@ -91,9 +98,9 @@ export function OfferForm({
         <h2 className="font-semibold text-gray-900">Teklif Ver</h2>
       </div>
       <p className="text-xs text-gray-500 mb-4">
-        1 kredi kullanarak bu ilana teklif gönderebilirsin. Bir ilana en fazla 4
-        öğretmen teklif verebilir. Teklifin kabul edilirse öğrencinin iletişim
-        bilgilerine ulaşabilirsin.
+        1 kredi ile teklif gönderirsin. Öğrenci kabul/ret beklemeden sohbet ve
+        (kayıtlıysa) telefon bilgisine yönlendirilirsin. İlana en fazla 4
+        teklif düşer.
       </p>
 
       <div className="space-y-3">

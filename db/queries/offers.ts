@@ -15,6 +15,7 @@ import {
   listings,
   userCredits,
 } from "@/db/schema";
+import { ensureUnlockedThreadForOfferTx } from "@/db/queries/messages";
 
 export const MAX_OFFERS_PER_LISTING = 4;
 
@@ -73,7 +74,7 @@ export async function hasTeacherOfferedOnListing(
 // ---------------------------------------------------------------------------
 
 export type CreateOfferResult =
-  | { ok: true; offer: OfferRow }
+  | { ok: true; offer: OfferRow; chatId: number }
   | {
       ok: false;
       code:
@@ -175,7 +176,12 @@ export async function createOffer(input: {
         refId: String(input.listingId),
       });
 
-      return { ok: true as const, offer: toOfferRow(offer) };
+      const { chatId } = await ensureUnlockedThreadForOfferTx(tx, {
+        studentId: listing.studentId,
+        teacherId: input.teacherId,
+      });
+
+      return { ok: true as const, offer: toOfferRow(offer), chatId };
     });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);

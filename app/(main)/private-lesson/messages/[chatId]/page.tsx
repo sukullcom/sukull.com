@@ -8,6 +8,7 @@ import { normalizeAvatarUrl } from "@/utils/avatar";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { ChatThread } from "./_components/chat-thread";
+import { PrivateLessonContactStrip } from "@/components/private-lesson/private-lesson-contact-strip";
 
 export const dynamic = "force-dynamic";
 
@@ -61,7 +62,7 @@ export default async function MessageThreadPage({
     .limit(500);
 
   return (
-    <div className="max-w-3xl mx-auto px-3 sm:px-6 pb-6">
+    <div className="max-w-3xl mx-auto px-3 sm:px-6 pb-24 sm:pb-8 lg:pb-6 min-h-0">
       <Link
         href="/private-lesson/messages"
         className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800 my-3"
@@ -69,8 +70,11 @@ export default async function MessageThreadPage({
         <ArrowLeft className="h-4 w-4" /> Mesajlar
       </Link>
 
-      <div className="bg-white border rounded-xl overflow-hidden flex flex-col h-[calc(100vh-8rem)]">
-        <div className="border-b bg-gray-50 px-4 py-3 flex items-center gap-3">
+      <div
+        className="bg-white border rounded-xl overflow-hidden flex flex-col min-h-0
+        h-[min(720px,calc(100dvh-12rem))] w-full"
+      >
+        <div className="border-b bg-gray-50 px-4 py-3 flex items-center gap-3 shrink-0">
           <Image
             src={normalizeAvatarUrl(otherProfile?.avatar ?? undefined)}
             alt={otherProfile?.name ?? "Kullanıcı"}
@@ -96,6 +100,8 @@ export default async function MessageThreadPage({
             </Link>
           )}
         </div>
+
+        <PrivateLessonContactStrip chatId={chatId} />
 
         <ChatThread
           chatId={chatId}

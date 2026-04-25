@@ -32,6 +32,7 @@ export function NewListingForm() {
   const [budgetMin, setBudgetMin] = useState("");
   const [budgetMax, setBudgetMax] = useState("");
   const [preferredHours, setPreferredHours] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
 
   const canSubmit =
     subject.trim().length > 0 &&
@@ -66,6 +67,7 @@ export function NewListingForm() {
           budgetMin: bMin,
           budgetMax: bMax,
           preferredHours: preferredHours.trim() || null,
+          contactPhone: contactPhone.trim() || null,
         }),
       });
       const data = await res.json().catch(() => ({}));
@@ -181,6 +183,27 @@ export function NewListingForm() {
             </button>
           ))}
         </div>
+      </div>
+
+      <div>
+        <label className="block text-xs font-medium text-gray-600 mb-1">
+          İletişim telefonu (teklif veren öğretmenlerle paylaşılır){" "}
+          <span className="text-gray-400 font-normal">— isteğe bağlı</span>
+        </label>
+        <input
+          type="tel"
+          inputMode="tel"
+          autoComplete="tel"
+          value={contactPhone}
+          onChange={(e) => setContactPhone(e.target.value)}
+          maxLength={30}
+          placeholder="Örn. 05xx xxx xx xx"
+          className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20"
+        />
+        <p className="text-[10px] text-gray-400 mt-1">
+          Doldurursan profilinde de güncellenir. Teklif atan öğretmen ve açık
+          sohbet ekranında gösterilir.
+        </p>
       </div>
 
       {(lessonMode === "in_person" || lessonMode === "both") && (

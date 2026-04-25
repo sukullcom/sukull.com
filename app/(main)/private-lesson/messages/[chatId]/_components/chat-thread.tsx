@@ -122,10 +122,10 @@ export function ChatThread({
   };
 
   return (
-    <>
+    <div className="flex min-h-0 flex-1 flex-col">
       <div
         ref={scrollerRef}
-        className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-2 bg-gray-50/60"
+        className="min-h-0 flex-1 overflow-y-auto p-3 sm:p-4 space-y-2 bg-gray-50/60"
       >
         {messages.length === 0 ? (
           <div className="h-full flex items-center justify-center text-sm text-gray-400">
@@ -166,7 +166,7 @@ export function ChatThread({
         )}
       </div>
 
-      <div className="border-t bg-white p-3 flex gap-2 items-end">
+      <div className="border-t bg-white p-3 flex gap-2 items-end shrink-0">
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
@@ -194,6 +194,6 @@ export function ChatThread({
           )}
         </button>
       </div>
-    </>
+    </div>
   );
 }

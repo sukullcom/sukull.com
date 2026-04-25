@@ -245,6 +245,47 @@ async function ensureChat(
   return created.id;
 }
 
+/**
+ * When a teacher spends 1 credit on a listing offer, we open the same
+ * student–teacher 1:1 thread as a paid message unlock (no second credit).
+ * The student can reply without accepting the offer; either side can use
+ * the thread immediately.
+ */
+export async function ensureUnlockedThreadForOfferTx(
+  tx: TxClient,
+  input: { studentId: string; teacherId: string },
+): Promise<{ chatId: number }> {
+  if (input.studentId === input.teacherId) {
+    throw new Error("self_pair_forbidden");
+  }
+
+  const chatId = await ensureChat(tx, input.studentId, input.teacherId);
+
+  const existing = await tx.query.messageUnlocks.findFirst({
+    where: and(
+      eq(messageUnlocks.studentId, input.studentId),
+      eq(messageUnlocks.teacherId, input.teacherId),
+    ),
+  });
+
+  if (existing) {
+    if (existing.chatId == null) {
+      await tx
+        .update(messageUnlocks)
+        .set({ chatId })
+        .where(eq(messageUnlocks.id, existing.id));
+    }
+    return { chatId };
+  }
+
+  await tx.insert(messageUnlocks).values({
+    studentId: input.studentId,
+    teacherId: input.teacherId,
+    chatId,
+  });
+  return { chatId };
+}
+
 // ---------------------------------------------------------------------------
 // Message write helper
 // ---------------------------------------------------------------------------

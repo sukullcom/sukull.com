@@ -35,6 +35,8 @@ export const users = pgTable("users", {
   avatar: text("avatar").default(""),
   provider: text("provider").notNull(),       // e.g., 'google' or 'email'
   links: json("links").$type<IUserLink[]>().notNull().default([]),
+  /** Shown to the other party after private-lesson unlock or listing offer. */
+  phone: text("phone"),
   role: userRoleEnum("role").default("user").notNull(),
   created_at: timestamp("created_at").defaultNow().notNull(),
   updated_at: timestamp("updated_at").defaultNow().notNull(),

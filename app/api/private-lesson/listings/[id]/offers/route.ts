@@ -177,7 +177,10 @@ export async function POST(
       return NextResponse.json({ error: message }, { status });
     }
 
-    return NextResponse.json({ offer: result.offer }, { status: 201 });
+    return NextResponse.json(
+      { offer: result.offer, chatId: result.chatId },
+      { status: 201 },
+    );
   } catch (error) {
     const log = await getRequestLogger({
       labels: {

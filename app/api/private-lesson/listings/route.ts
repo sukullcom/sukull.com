@@ -20,6 +20,9 @@ import {
 } from "@/lib/rate-limit-db";
 import { createListing, getOpenListings } from "@/db/queries";
 import type { ListingLessonMode } from "@/db/queries/listings";
+import db from "@/db/drizzle";
+import { users } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 const VALID_LESSON_MODES: ListingLessonMode[] = ["online", "in_person", "both"];
 
@@ -149,6 +152,14 @@ export async function POST(request: NextRequest) {
       preferredHours: strOrNull(body.preferredHours),
     });
 
+    const contactPhone = normalizeContactPhone(body.contactPhone);
+    if (contactPhone) {
+      await db
+        .update(users)
+        .set({ phone: contactPhone, updated_at: new Date() })
+        .where(eq(users.id, user.id));
+    }
+
     return NextResponse.json({ listing: row }, { status: 201 });
   } catch (error) {
     const log = await getRequestLogger({
@@ -188,4 +199,12 @@ function clampInt(
   const n = Number.parseInt(raw, 10);
   if (!Number.isFinite(n)) return fallback;
   return Math.max(min, Math.min(max, n));
+}
+
+/** Keeps + and digits; min length so random junk is not stored. */
+function normalizeContactPhone(v: unknown): string | null {
+  if (typeof v !== "string") return null;
+  const digits = v.replace(/[^\d+]/g, "").replace(/^\+{2,}/, "+");
+  if (digits.length < 10 || digits.length > 20) return null;
+  return digits;
 }
