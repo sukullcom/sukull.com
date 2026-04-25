@@ -49,7 +49,10 @@ export default function GiveLessonPage() {
     targetLevels: "",
     availableHours: "",
     lessonMode: "",
-    hourlyRate: "",
+    hourlyRateOnline: "",
+    hourlyRateInPerson: "",
+    city: "",
+    district: "",
     bio: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -136,12 +139,19 @@ export default function GiveLessonPage() {
       formData.targetLevels,
       formData.availableHours,
       formData.lessonMode,
-      formData.hourlyRate,
+      formData.hourlyRateOnline,
+      formData.hourlyRateInPerson,
+      formData.city,
+      formData.district,
       formData.bio,
     ];
-    const requiredCompleted = requiredFields.filter(f => f !== "").length;
-    const optionalCompleted = optionalFields.filter(f => f !== "").length;
-    return Math.round(((requiredCompleted + optionalCompleted * 0.5) / (requiredFields.length + optionalFields.length * 0.5)) * 100);
+    const requiredCompleted = requiredFields.filter((f) => f !== "").length;
+    const optionalCompleted = optionalFields.filter((f) => f !== "").length;
+    return Math.round(
+      ((requiredCompleted + optionalCompleted * 0.5) /
+        (requiredFields.length + optionalFields.length * 0.5)) *
+        100,
+    );
   };
 
   if (loading) {
@@ -437,36 +447,92 @@ export default function GiveLessonPage() {
                 </div>
               </div>
 
-              {/* Lesson Mode & Rate */}
+              {/* Lesson Mode */}
+              <div className="space-y-2">
+                <Label htmlFor="lessonMode" className="flex items-center gap-2">
+                  <Monitor className="w-4 h-4" />
+                  Ders Şekli
+                </Label>
+                <Select
+                  value={formData.lessonMode}
+                  onValueChange={(value) => handleSelectChange("lessonMode", value)}
+                >
+                  <SelectValue placeholder="Ders şekli seç" />
+                  <SelectItem value="online">Online</SelectItem>
+                  <SelectItem value="in_person">Yüz yüze</SelectItem>
+                  <SelectItem value="both">Online & yüz yüze</SelectItem>
+                </Select>
+              </div>
+
+              {/* Hourly Rates (split) */}
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="lessonMode" className="flex items-center gap-2">
-                    <Monitor className="w-4 h-4" />
-                    Ders Şekli
+                  <Label htmlFor="hourlyRateOnline" className="flex items-center gap-2">
+                    <Wallet className="w-4 h-4" />
+                    Online Saatlik Ücret (₺)
                   </Label>
-                  <Select value={formData.lessonMode} onValueChange={(value) => handleSelectChange("lessonMode", value)}>
-                    <SelectValue placeholder="Ders şekli seç" />
-                    <SelectItem value="Online">Online</SelectItem>
-                    <SelectItem value="Yüz yüze">Yüz yüze</SelectItem>
-                    <SelectItem value="Her ikisi de">Her ikisi de</SelectItem>
-                  </Select>
+                  <Input
+                    id="hourlyRateOnline"
+                    name="hourlyRateOnline"
+                    type="number"
+                    min={0}
+                    max={100000}
+                    step={10}
+                    placeholder="Örn. 300"
+                    value={formData.hourlyRateOnline}
+                    onChange={handleChange}
+                  />
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="hourlyRate" className="flex items-center gap-2">
+                  <Label htmlFor="hourlyRateInPerson" className="flex items-center gap-2">
                     <Wallet className="w-4 h-4" />
-                    Ücret Beklentisi (Saat başı)
+                    Yüz Yüze Saatlik Ücret (₺)
                   </Label>
-                  <Select value={formData.hourlyRate} onValueChange={(value) => handleSelectChange("hourlyRate", value)}>
-                    <SelectValue placeholder="Ücret aralığı seç" />
-                    <SelectItem value="0-200 TL">0-200 TL</SelectItem>
-                    <SelectItem value="200-400 TL">200-400 TL</SelectItem>
-                    <SelectItem value="400-600 TL">400-600 TL</SelectItem>
-                    <SelectItem value="600+ TL">600+ TL</SelectItem>
-                    <SelectItem value="Görüşülür">Görüşülür</SelectItem>
-                  </Select>
+                  <Input
+                    id="hourlyRateInPerson"
+                    name="hourlyRateInPerson"
+                    type="number"
+                    min={0}
+                    max={100000}
+                    step={10}
+                    placeholder="Örn. 450"
+                    value={formData.hourlyRateInPerson}
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
+
+              {/* Location (for in-person / both) */}
+              {(formData.lessonMode === "in_person" ||
+                formData.lessonMode === "both") && (
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="city">Şehir</Label>
+                    <Input
+                      id="city"
+                      name="city"
+                      type="text"
+                      placeholder="Örn. İstanbul"
+                      value={formData.city}
+                      onChange={handleChange}
+                      maxLength={60}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="district">İlçe / Semt</Label>
+                    <Input
+                      id="district"
+                      name="district"
+                      type="text"
+                      placeholder="Örn. Kadıköy"
+                      value={formData.district}
+                      onChange={handleChange}
+                      maxLength={60}
+                    />
+                  </div>
+                </div>
+              )}
 
               {/* Bio */}
               <div className="space-y-2">

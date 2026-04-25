@@ -1,23 +1,15 @@
 /**
- * Teacher and student application queries.
+ * Teacher application & role-check queries.
  *
- * This module covers two admin-workflow surfaces that share the same shape:
- *   - `teacher_applications` (onboarding a new teacher)
- *   - `private_lesson_applications` (onboarding a new student)
- * plus the teacher-fields / role-check helpers used by the approval flow.
- *
- * The paginated listings (`*Paginated`) are the preferred entry points for
- * admin dashboards; the legacy `getAll*Applications` functions are kept for
- * backwards compatibility but stream the entire table.
+ * The 0026 marketplace refactor removed the separate student
+ * application flow: anyone logged in can now open a listing or message
+ * a teacher (credits-gated), so there is no `student` role distinct
+ * from regular users. The only admin-workflow surface left here is
+ * `teacher_applications`.
  */
 import { and, eq, ilike, or, sql } from "drizzle-orm";
 import db from "@/db/drizzle";
-import {
-  privateLessonApplications,
-  teacherApplications,
-  teacherFields,
-  users,
-} from "@/db/schema";
+import { teacherApplications, teacherFields, users } from "@/db/schema";
 import { logger } from "@/lib/logger";
 
 const log = logger.child({ labels: { module: "db/queries/applications" } });
@@ -69,7 +61,7 @@ function normalizePagination(input: AdminPaginationInput): {
 // Teacher applications
 // ---------------------------------------------------------------------------
 
-export async function saveTeacherApplication(applicationData: {
+export type SaveTeacherApplicationInput = {
   userId: string;
   field: string;
   quizResult?: number;
@@ -78,14 +70,28 @@ export async function saveTeacherApplication(applicationData: {
   teacherSurname?: string;
   teacherPhoneNumber?: string;
   teacherEmail?: string;
-}) {
-  const updatedData = {
-    ...applicationData,
-    quizResult: 0,
-    passed: true,
-  };
+  education?: string;
+  experienceYears?: string;
+  targetLevels?: string;
+  availableHours?: string;
+  lessonMode?: string; // 'online' | 'in_person' | 'both'
+  hourlyRate?: string; // legacy combined field
+  hourlyRateOnline?: number | null;
+  hourlyRateInPerson?: number | null;
+  city?: string;
+  district?: string;
+  bio?: string;
+  classification?: string;
+};
 
-  return await db.insert(teacherApplications).values(updatedData);
+export async function saveTeacherApplication(
+  applicationData: SaveTeacherApplicationInput,
+) {
+  return await db.insert(teacherApplications).values({
+    ...applicationData,
+    quizResult: applicationData.quizResult ?? 0,
+    passed: applicationData.passed ?? true,
+  });
 }
 
 export async function getAllTeacherApplications() {
@@ -95,50 +101,9 @@ export async function getAllTeacherApplications() {
     ],
   });
 
-  return applications.map((app) => ({
-    id: app.id,
-    userId: app.userId,
-    teacherName: app.teacherName || "N/A",
-    teacherSurname: app.teacherSurname || "N/A",
-    teacherEmail: app.teacherEmail || "N/A",
-    teacherPhoneNumber: app.teacherPhoneNumber || "N/A",
-    field: app.field,
-    education: app.education || null,
-    experienceYears: app.experienceYears || null,
-    targetLevels: app.targetLevels || null,
-    availableHours: app.availableHours || null,
-    lessonMode: app.lessonMode || null,
-    hourlyRate: app.hourlyRate || null,
-    bio: app.bio || null,
-    quizResult: app.quizResult,
-    passed: app.passed,
-    classification: app.classification,
-    status: app.status,
-    createdAt: app.createdAt
-      ? app.createdAt.toISOString()
-      : new Date().toISOString(),
-    updatedAt: app.updatedAt
-      ? app.updatedAt.toISOString()
-      : new Date().toISOString(),
-  }));
+  return applications.map(mapTeacherApplicationRow);
 }
 
-/* ------------------------------------------------------------------
- * Paginated admin listings
- *
- * Why this exists:
- *   The legacy `getAll*Applications()` functions stream the ENTIRE
- *   table to the client, which worked at 10s of applications but
- *   becomes a multi-MB payload + full scan + full-table memory
- *   pressure once applications cross 1K. These paginated variants
- *   push filtering & counting into the DB and return only the
- *   requested window plus aggregate counts.
- *
- * Shape contract (both variants):
- *   { rows, total, statusCounts, page, pageSize }
- * where `statusCounts` always covers { all, pending, approved, rejected }
- * so the UI can render the filter badges without a second round-trip.
- * ------------------------------------------------------------------ */
 export async function getTeacherApplicationsPaginated(
   input: AdminPaginationInput,
 ): Promise<AdminPaginatedResult<ReturnType<typeof mapTeacherApplicationRow>>> {
@@ -221,6 +186,10 @@ function mapTeacherApplicationRow(
     availableHours: app.availableHours || null,
     lessonMode: app.lessonMode || null,
     hourlyRate: app.hourlyRate || null,
+    hourlyRateOnline: app.hourlyRateOnline ?? null,
+    hourlyRateInPerson: app.hourlyRateInPerson ?? null,
+    city: app.city || null,
+    district: app.district || null,
     bio: app.bio || null,
     quizResult: app.quizResult,
     passed: app.passed,
@@ -459,233 +428,25 @@ export async function getAvailableFieldOptions() {
 export async function isTeacher(userId: string) {
   const user = await db.query.users.findFirst({
     where: eq(users.id, userId),
+    columns: { role: true },
   });
 
   return user?.role === "teacher";
 }
 
-export async function isApprovedStudent(userId: string) {
-  const userRecord = await db.query.users.findFirst({
+/**
+ * Back-compat shim for callers that still imported `isApprovedStudent`.
+ *
+ * The marketplace refactor removed the "approved student" gate — any
+ * logged-in user can use the platform directly. This helper now simply
+ * returns `true` for every authenticated user so legacy call sites
+ * keep compiling; new code should not call it.
+ */
+export async function isApprovedStudent(userId: string): Promise<boolean> {
+  if (!userId) return false;
+  const user = await db.query.users.findFirst({
     where: eq(users.id, userId),
-    columns: { role: true },
+    columns: { id: true },
   });
-
-  if (userRecord?.role === "student") {
-    return true;
-  }
-
-  const application = await db.query.privateLessonApplications.findFirst({
-    where: and(
-      eq(privateLessonApplications.userId, userId),
-      eq(privateLessonApplications.approved, true),
-    ),
-  });
-
-  return !!application;
-}
-
-// ---------------------------------------------------------------------------
-// Student (private lesson) applications
-// ---------------------------------------------------------------------------
-
-export const saveStudentApplication = async (applicationData: {
-  studentName: string;
-  studentSurname: string;
-  studentPhoneNumber: string;
-  studentEmail: string;
-  field: string;
-  studentNeeds?: string;
-}) => {
-  const data = await db
-    .insert(privateLessonApplications)
-    .values(applicationData);
-  return data;
-};
-
-export async function getAllStudentApplications() {
-  const applications = await db.query.privateLessonApplications.findMany({
-    orderBy: (privateLessonApplications, { desc }) => [
-      desc(privateLessonApplications.createdAt),
-    ],
-  });
-
-  return applications.map((app) => ({
-    id: app.id,
-    studentName: app.studentName,
-    studentSurname: app.studentSurname,
-    studentEmail: app.studentEmail,
-    studentPhoneNumber: app.studentPhoneNumber,
-    subject: app.field,
-    studentLevel: app.studentLevel || null,
-    lessonDuration: app.lessonDuration || null,
-    availableHours: app.availableHours || null,
-    budget: app.budget || null,
-    lessonMode: app.lessonMode || null,
-    status: app.status || "pending",
-    approved: app.approved || false,
-    userId: app.userId,
-    studentNeeds: app.studentNeeds,
-    createdAt: app.createdAt || new Date().toISOString(),
-  }));
-}
-
-export async function getStudentApplicationsPaginated(
-  input: AdminPaginationInput,
-): Promise<AdminPaginatedResult<ReturnType<typeof mapStudentApplicationRow>>> {
-  const { page, pageSize, offset, status, q } = normalizePagination(input);
-
-  const searchPredicate =
-    q.length > 0
-      ? or(
-          ilike(privateLessonApplications.studentName, `%${q}%`),
-          ilike(privateLessonApplications.studentSurname, `%${q}%`),
-          ilike(privateLessonApplications.studentEmail, `%${q}%`),
-          ilike(privateLessonApplications.field, `%${q}%`),
-        )
-      : undefined;
-
-  // `status` is plain text here (not enum); null rows are treated as pending.
-  const statusPredicate =
-    status === "all"
-      ? undefined
-      : status === "pending"
-        ? or(
-            eq(privateLessonApplications.status, "pending"),
-            sql`${privateLessonApplications.status} IS NULL`,
-          )
-        : eq(privateLessonApplications.status, status);
-
-  const combinedWhere =
-    searchPredicate && statusPredicate
-      ? and(searchPredicate, statusPredicate)
-      : (searchPredicate ?? statusPredicate);
-
-  const [rows, statusAgg, totalRow] = await Promise.all([
-    db.query.privateLessonApplications.findMany({
-      where: combinedWhere,
-      orderBy: (t, { desc }) => [desc(t.createdAt)],
-      limit: pageSize,
-      offset,
-    }),
-    db
-      .select({
-        status: privateLessonApplications.status,
-        count: sql<number>`count(*)::int`,
-      })
-      .from(privateLessonApplications)
-      .where(searchPredicate)
-      .groupBy(privateLessonApplications.status),
-    db
-      .select({ count: sql<number>`count(*)::int` })
-      .from(privateLessonApplications)
-      .where(combinedWhere),
-  ]);
-
-  const statusCounts: Record<ApplicationStatusFilter, number> = {
-    all: 0,
-    pending: 0,
-    approved: 0,
-    rejected: 0,
-  };
-  for (const row of statusAgg) {
-    const rawStatus = (row.status ?? "pending") as ApplicationStatus;
-    const key: ApplicationStatus =
-      rawStatus === "approved" || rawStatus === "rejected"
-        ? rawStatus
-        : "pending";
-    statusCounts[key] += row.count;
-    statusCounts.all += row.count;
-  }
-
-  return {
-    rows: rows.map(mapStudentApplicationRow),
-    total: totalRow[0]?.count ?? 0,
-    statusCounts,
-    page,
-    pageSize,
-  };
-}
-
-function mapStudentApplicationRow(
-  app: typeof privateLessonApplications.$inferSelect,
-) {
-  return {
-    id: app.id,
-    studentName: app.studentName,
-    studentSurname: app.studentSurname,
-    studentEmail: app.studentEmail,
-    studentPhoneNumber: app.studentPhoneNumber,
-    subject: app.field,
-    studentLevel: app.studentLevel || null,
-    lessonDuration: app.lessonDuration || null,
-    availableHours: app.availableHours || null,
-    budget: app.budget || null,
-    lessonMode: app.lessonMode || null,
-    status: (app.status || "pending") as ApplicationStatus,
-    approved: app.approved || false,
-    userId: app.userId,
-    studentNeeds: app.studentNeeds,
-    createdAt: app.createdAt
-      ? app.createdAt instanceof Date
-        ? app.createdAt.toISOString()
-        : String(app.createdAt)
-      : new Date().toISOString(),
-  };
-}
-
-export async function approveStudentApplication(applicationId: number) {
-  log.debug("approve student application", { applicationId });
-
-  const application = await db.query.privateLessonApplications.findFirst({
-    where: eq(privateLessonApplications.id, applicationId),
-  });
-
-  if (!application) {
-    log.debug("student application not found", { applicationId });
-    throw new Error("Başvuru bulunamadı.");
-  }
-
-  await db
-    .update(privateLessonApplications)
-    .set({
-      approved: true,
-      status: "approved",
-    })
-    .where(eq(privateLessonApplications.id, applicationId));
-
-  if (application.userId) {
-    const roleUpdateResult = await db
-      .update(users)
-      .set({ role: "student" })
-      .where(eq(users.id, application.userId))
-      .returning({ id: users.id, role: users.role });
-
-    if (roleUpdateResult.length === 0) {
-      log.error({
-        message: "no user found for student role update",
-        source: "server-action",
-        location: "applications/approveStudentApplication",
-        fields: { applicationId, userId: application.userId },
-      });
-      throw new Error(
-        `Rol güncellemesi için kullanıcı bulunamadı: ${application.userId}`,
-      );
-    }
-
-    log.debug("student role updated", { userId: application.userId });
-  } else {
-    log.warn("student application has no userId; role update skipped", {
-      applicationId,
-    });
-  }
-}
-
-export async function rejectStudentApplication(applicationId: number) {
-  await db
-    .update(privateLessonApplications)
-    .set({
-      approved: false,
-      status: "rejected",
-    })
-    .where(eq(privateLessonApplications.id, applicationId));
+  return !!user;
 }

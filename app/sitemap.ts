@@ -26,7 +26,7 @@ function buildStaticEntries(): Entry[] {
     { url: `${BASE_URL}/games`, changeFrequency: "weekly", priority: 0.5 },
     { url: `${BASE_URL}/private-lesson`, changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE_URL}/private-lesson/teachers`, changeFrequency: "daily", priority: 0.7 },
-    { url: `${BASE_URL}/private-lesson/get`, changeFrequency: "monthly", priority: 0.4 },
+    { url: `${BASE_URL}/private-lesson/listings`, changeFrequency: "daily", priority: 0.7 },
     { url: `${BASE_URL}/private-lesson/give`, changeFrequency: "monthly", priority: 0.4 },
     { url: `${BASE_URL}/login`, changeFrequency: "monthly", priority: 0.3 },
     { url: `${BASE_URL}/create-account`, changeFrequency: "monthly", priority: 0.3 },

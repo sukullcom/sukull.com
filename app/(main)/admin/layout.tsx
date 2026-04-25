@@ -1,12 +1,12 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { and, count, eq, gte, sql } from "drizzle-orm";
+import { and, count, eq, gte } from "drizzle-orm";
 import { getServerUser } from "@/lib/auth";
 import { isAdmin } from "@/lib/admin";
 import db from "@/db/drizzle";
 import {
   teacherApplications,
-  privateLessonApplications,
+  listings,
   errorLog,
 } from "@/db/schema";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
@@ -66,15 +66,15 @@ async function loadBadges(): Promise<AdminNavBadges> {
   try {
     const since24h = new Date(Date.now() - 24 * 60 * 60 * 1000);
 
-    const [teacherRow, studentRow, errorsRow] = await Promise.all([
+    const [teacherRow, openListingsRow, errorsRow] = await Promise.all([
       db
         .select({ value: count() })
         .from(teacherApplications)
         .where(eq(teacherApplications.status, "pending")),
       db
         .select({ value: count() })
-        .from(privateLessonApplications)
-        .where(sql`${privateLessonApplications.status} = 'pending'`),
+        .from(listings)
+        .where(eq(listings.status, "open")),
       db
         .select({ value: count() })
         .from(errorLog)
@@ -83,7 +83,7 @@ async function loadBadges(): Promise<AdminNavBadges> {
 
     return {
       teacherPending: Number(teacherRow[0]?.value ?? 0),
-      studentPending: Number(studentRow[0]?.value ?? 0),
+      openListings: Number(openListingsRow[0]?.value ?? 0),
       errors24h: Number(errorsRow[0]?.value ?? 0),
     };
   } catch (err) {

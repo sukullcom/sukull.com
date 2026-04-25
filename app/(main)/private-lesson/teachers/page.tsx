@@ -1,191 +1,230 @@
-"use client";
-
-import { useEffect, useState, useCallback, useMemo } from "react";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Star } from "lucide-react";
-import { LoadingSpinner } from "@/components/loading-spinner";
+import Link from "next/link";
+import { getServerUser } from "@/lib/auth";
+import { getTeachersDirectory, getMessageUnlock } from "@/db/queries";
+import { MessageTeacherButton } from "@/components/private-lesson/message-teacher-button";
 import UserCreditsDisplay from "@/components/user-credits-display";
 import { normalizeAvatarUrl } from "@/utils/avatar";
+import { MapPin, Banknote, Monitor, Users, GraduationCap } from "lucide-react";
+import { TeachersDirectoryFilters } from "./_components/teachers-directory-filters";
 
-interface Teacher {
-  id: string;
-  name: string;
-  email: string;
-  bio?: string;
-  avatar?: string;
+export const dynamic = "force-dynamic";
+
+type SearchParams = {
   field?: string;
-  fields?: string[];
-  averageRating?: number;
-  totalReviews?: number;
-}
+  lessonMode?: string;
+  city?: string;
+};
 
-const FIELD_OPTIONS = [
-  "Matematik", "Fizik", "Kimya", "Biyoloji", "Tarih", "Coğrafya",
-  "Edebiyat", "İngilizce", "Almanca", "Fransızca", "Felsefe",
-  "Müzik", "Resim", "Bilgisayar Bilimleri", "Ekonomi",
-];
+export default async function TeachersDirectoryPage({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  const user = await getServerUser();
+  if (!user) redirect("/login");
 
-export default function TeachersPage() {
-  const router = useRouter();
-  const [allTeachers, setAllTeachers] = useState<Teacher[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [selectedField, setSelectedField] = useState<string>("all");
+  const teachers = await getTeachersDirectory();
 
-  const fetchTeachers = useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await fetch("/api/private-lesson/available-teachers");
-      if (!response.ok) {
-        if (response.status === 403) {
-          router.push("/private-lesson");
-          return;
-        }
-        throw new Error("Öğretmenler yüklenemedi.");
-      }
-      const data = await response.json();
-      setAllTeachers(data.teachers || []);
-    } catch {
-      setError("Öğretmenler yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.");
-    } finally {
-      setLoading(false);
+  // We pre-compute the student→teacher unlock map so the "Mesaj Gönder"
+  // button can skip the confirm dialog for threads already paid for.
+  // For very large directories this is an O(N) set of unlock lookups,
+  // but the student typically has < 10 unlocked threads total so the
+  // branch is cheap in practice.
+  const unlockChecks = await Promise.all(
+    teachers.map((t) => getMessageUnlock(user.id, t.id)),
+  );
+  const unlockMap = new Map<string, { chatId: number | null }>();
+  teachers.forEach((t, i) => {
+    const row = unlockChecks[i];
+    if (row) unlockMap.set(t.id, { chatId: row.chatId ?? null });
+  });
+
+  const fieldFilter = searchParams.field?.toLowerCase() ?? "";
+  const lessonModeFilter = searchParams.lessonMode ?? "";
+  const cityFilter = searchParams.city?.toLowerCase() ?? "";
+
+  const filtered = teachers.filter((t) => {
+    if (fieldFilter) {
+      const haystack = [t.field, ...(t.fields ?? [])]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      if (!haystack.includes(fieldFilter)) return false;
     }
-  }, [router]);
-
-  useEffect(() => {
-    fetchTeachers();
-  }, [fetchTeachers]);
-
-  const filteredTeachers = useMemo(() => {
-    if (selectedField === "all") return allTeachers;
-    return allTeachers.filter((t) =>
-      t.fields?.some((f) => f.toLowerCase().includes(selectedField.toLowerCase())) ||
-      t.field?.toLowerCase().includes(selectedField.toLowerCase())
-    );
-  }, [allTeachers, selectedField]);
-
-  if (loading) {
-    return (
-      <div className="py-12">
-        <LoadingSpinner size="lg" />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
-        <p className="text-gray-500 mb-4">{error}</p>
-        <Button variant="default" onClick={() => router.push("/private-lesson")}>
-          Geri Dön
-        </Button>
-      </div>
-    );
-  }
+    if (lessonModeFilter) {
+      if (
+        t.lessonMode &&
+        t.lessonMode !== "both" &&
+        t.lessonMode !== lessonModeFilter
+      ) {
+        return false;
+      }
+    }
+    if (cityFilter) {
+      if (!t.city || !t.city.toLowerCase().includes(cityFilter)) return false;
+    }
+    return true;
+  });
 
   return (
-    <div className="max-w-4xl mx-auto px-3 sm:px-6 pb-10">
+    <div className="max-w-5xl mx-auto px-3 sm:px-6 pb-10">
       <UserCreditsDisplay className="mb-4" />
 
-      {/* Filter */}
-      <div className="flex flex-wrap gap-2 mb-6">
-        <button
-          onClick={() => setSelectedField("all")}
-          className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
-            selectedField === "all"
-              ? "bg-green-500 text-white"
-              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-          }`}
-        >
-          Tümü
-        </button>
-        {FIELD_OPTIONS.map((field) => (
-          <button
-            key={field}
-            onClick={() => setSelectedField(field)}
-            className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
-              selectedField === field
-                ? "bg-green-500 text-white"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-            }`}
-          >
-            {field}
-          </button>
-        ))}
+      <div className="mb-6">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 bg-green-100 rounded-lg">
+            <GraduationCap className="h-5 w-5 text-green-700" />
+          </div>
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+            Öğretmenler
+          </h1>
+        </div>
+        <p className="text-sm text-gray-600">
+          Onaylı öğretmenlerin listesi. Saatlik ücretlerini görebilir, 1 kredi
+          ile mesajlaşmayı açabilirsin — tek seferlik ödeme, sohbet kalıcıdır.
+        </p>
       </div>
 
-      {filteredTeachers.length === 0 ? (
-        <div className="text-center py-16">
-          <p className="text-gray-400">
-            {selectedField === "all"
-              ? "Şu anda müsait öğretmen bulunmuyor."
-              : `"${selectedField}" alanında öğretmen bulunmuyor.`}
+      <TeachersDirectoryFilters
+        initialField={searchParams.field ?? ""}
+        initialLessonMode={lessonModeFilter}
+        initialCity={searchParams.city ?? ""}
+      />
+
+      {filtered.length === 0 ? (
+        <div className="text-center py-16 rounded-xl border border-dashed border-gray-200 bg-white">
+          <Users className="mx-auto h-10 w-10 text-gray-300 mb-3" />
+          <p className="text-gray-500">
+            Filtrelere uyan öğretmen bulunamadı.
           </p>
         </div>
       ) : (
-        <div className="space-y-3">
-          {filteredTeachers.map((teacher) => (
-            <div
-              key={teacher.id}
-              className="bg-white border rounded-xl p-4 flex items-center gap-4 hover:border-green-300 hover:shadow-sm transition-all cursor-pointer"
-              onClick={() => router.push(`/private-lesson/teachers/${teacher.id}`)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => e.key === "Enter" && router.push(`/private-lesson/teachers/${teacher.id}`)}
-            >
-              <Image
-                src={normalizeAvatarUrl(teacher.avatar)}
-                alt={teacher.name}
-                width={56}
-                height={56}
-                unoptimized={teacher.avatar?.startsWith("http")}
-                className="rounded-full object-cover w-12 h-12 sm:w-14 sm:h-14 shrink-0"
-              />
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-gray-900 text-sm sm:text-base truncate">
-                  {teacher.name}
-                </h3>
-                {teacher.fields && teacher.fields.length > 0 && (
-                  <div className="flex flex-wrap gap-1 mt-1">
-                    {teacher.fields.map((f, i) => (
-                      <span key={i} className="text-[10px] sm:text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">
-                        {f}
-                      </span>
-                    ))}
-                  </div>
-                )}
-                {teacher.averageRating && teacher.averageRating > 0 ? (
-                  <div className="flex items-center gap-1.5 mt-1.5">
-                    <div className="flex">
-                      {Array.from({ length: 5 }, (_, i) => (
-                        <Star
-                          key={i}
-                          className={`h-3 w-3 ${
-                            i < Math.round(teacher.averageRating!)
-                              ? "fill-amber-400 text-amber-400"
-                              : "text-gray-200"
-                          }`}
-                        />
-                      ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {filtered.map((t) => {
+            const unlock = unlockMap.get(t.id);
+            const alreadyUnlocked = Boolean(unlock);
+            return (
+              <div
+                key={t.id}
+                className="bg-white border rounded-xl p-4 hover:border-green-300 hover:shadow-sm transition-all"
+              >
+                <div className="flex items-start gap-3">
+                  <Link
+                    href={`/private-lesson/teachers/${t.id}`}
+                    className="shrink-0"
+                  >
+                    <Image
+                      src={normalizeAvatarUrl(t.avatar ?? undefined)}
+                      alt={t.name}
+                      width={56}
+                      height={56}
+                      unoptimized={t.avatar?.startsWith("http") ?? false}
+                      className="rounded-full object-cover w-14 h-14"
+                    />
+                  </Link>
+                  <div className="flex-1 min-w-0">
+                    <Link
+                      href={`/private-lesson/teachers/${t.id}`}
+                      className="font-semibold text-gray-900 hover:text-green-700 transition-colors line-clamp-1"
+                    >
+                      {t.name}
+                    </Link>
+                    {t.fields.length > 0 ? (
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        {t.fields.slice(0, 3).map((f, i) => (
+                          <span
+                            key={i}
+                            className="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium"
+                          >
+                            {f}
+                          </span>
+                        ))}
+                        {t.fields.length > 3 && (
+                          <span className="text-[10px] text-gray-400">
+                            +{t.fields.length - 3}
+                          </span>
+                        )}
+                      </div>
+                    ) : t.field ? (
+                      <div className="text-xs text-gray-500 mt-0.5">
+                        {t.field}
+                      </div>
+                    ) : null}
+
+                    <div className="mt-2 space-y-1">
+                      {(t.hourlyRateOnline || t.hourlyRateInPerson) && (
+                        <div className="flex items-center gap-2 text-xs text-gray-700">
+                          <Banknote className="h-3.5 w-3.5 text-gray-400" />
+                          <span className="font-medium">
+                            {formatRates(
+                              t.hourlyRateOnline,
+                              t.hourlyRateInPerson,
+                            )}
+                          </span>
+                        </div>
+                      )}
+                      {t.lessonMode && (
+                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                          <Monitor className="h-3.5 w-3.5 text-gray-400" />
+                          {formatLessonMode(t.lessonMode)}
+                        </div>
+                      )}
+                      {(t.city || t.district) && (
+                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                          <MapPin className="h-3.5 w-3.5 text-gray-400" />
+                          {[t.district, t.city].filter(Boolean).join(", ")}
+                        </div>
+                      )}
                     </div>
-                    <span className="text-xs font-medium text-gray-600">
-                      {teacher.averageRating.toFixed(1)}
-                    </span>
-                    <span className="text-[10px] text-gray-400">
-                      ({teacher.totalReviews})
-                    </span>
                   </div>
-                ) : (
-                  <p className="text-[10px] text-gray-400 mt-1">Henüz değerlendirme yok</p>
-                )}
+                </div>
+
+                <div className="mt-4 flex gap-2">
+                  <Link
+                    href={`/private-lesson/teachers/${t.id}`}
+                    className="flex-1 inline-flex items-center justify-center text-sm font-medium text-gray-700 border rounded-lg px-3 py-2 hover:bg-gray-50 transition-colors"
+                  >
+                    Profili Gör
+                  </Link>
+                  {t.id !== user.id && (
+                    <MessageTeacherButton
+                      teacherId={t.id}
+                      teacherName={t.name}
+                      alreadyUnlocked={alreadyUnlocked}
+                      existingChatId={unlock?.chatId ?? null}
+                      size="default"
+                      variant="primary"
+                      className="flex-1"
+                    />
+                  )}
+                </div>
               </div>
-              <span className="text-gray-300 text-lg shrink-0">›</span>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
   );
+}
+
+function formatRates(online: number | null, inPerson: number | null): string {
+  const parts: string[] = [];
+  if (online != null) parts.push(`Online ${online}₺/saat`);
+  if (inPerson != null) parts.push(`Yüz yüze ${inPerson}₺/saat`);
+  return parts.length > 0 ? parts.join(" • ") : "Ücret belirtilmemiş";
+}
+
+function formatLessonMode(mode: string): string {
+  switch (mode) {
+    case "online":
+      return "Sadece online";
+    case "in_person":
+      return "Sadece yüz yüze";
+    case "both":
+      return "Online & yüz yüze";
+    default:
+      return mode;
+  }
 }

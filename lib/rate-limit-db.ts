@@ -121,16 +121,19 @@ export const RATE_LIMITS = {
   // --- Writes — user-scoped ---
   pointsAdd: { max: 120, windowSeconds: 60 },       // ~2/s per user, generous for active play
   imageUpload: { max: 10, windowSeconds: 60 * 60 }, // 10 per hour
-  /** Booking a lesson: money + calendar slot. Abuse-resistant. */
-  booking: { max: 10, windowSeconds: 60 },
-  /** Submitting a lesson review: one per completed booking ideally. */
-  reviewSubmit: { max: 10, windowSeconds: 60 * 60 },
   /** Creating or editing a code snippet. Internal "max 3 total" still applies. */
   snippetWrite: { max: 20, windowSeconds: 60 * 60 },
-  /** Teacher availability editor. */
-  teacherAvailability: { max: 60, windowSeconds: 60 },
-  /** Private-lesson application submission (student/teacher). */
+  /** Teacher application submission. */
   applicationSubmit: { max: 5, windowSeconds: 60 * 60 },
+  /** Student listing creation / edit. */
+  listingWrite: { max: 20, windowSeconds: 60 * 60 },
+  /** Teacher offering on a student listing. Money-adjacent (kredi düşer). */
+  listingOffer: { max: 30, windowSeconds: 60 * 60 },
+  /**
+   * Student spending a credit to open a chat with a teacher. Abuse
+   * here would spam the teacher side; keep conservative.
+   */
+  messageUnlock: { max: 20, windowSeconds: 60 * 60 },
   /**
    * Account deletion (GDPR / KVKK right-to-be-forgotten).
    *
@@ -143,7 +146,7 @@ export const RATE_LIMITS = {
 
   // --- Reads — user-scoped ---
   leaderboard: { max: 60, windowSeconds: 60 },
-  /** Per-teacher detail page (with availability + bookings). Multi-join query. */
+  /** Per-teacher detail page. */
   teacherDetails: { max: 60, windowSeconds: 60 },
   /** Generic authenticated read bucket when no specific preset fits. */
   read: { max: 120, windowSeconds: 60 },

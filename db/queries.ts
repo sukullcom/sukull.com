@@ -2,16 +2,10 @@
  * Back-compat facade for `@/db/queries`.
  *
  * The actual implementation lives in `db/queries/<domain>.ts`. This file
- * exists so 100+ call sites that import from `@/db/queries` keep working
- * without a codemod. New code SHOULD import from the domain files directly
- * (e.g. `@/db/queries/user`, `@/db/queries/private-lesson`) — it documents
- * intent and reduces accidental cross-domain coupling.
- *
- * If you're here to add a new query:
- *   1. Put it in the right domain file under `db/queries/`.
- *   2. Add a matching `export` line in this file so existing callers can
- *      still reach it via `@/db/queries`.
- *   3. Prefer the new path for any new callers you touch.
+ * exists so existing call sites that import from `@/db/queries` keep
+ * working without a codemod. New code SHOULD import from the domain
+ * files directly (e.g. `@/db/queries/user`, `@/db/queries/listings`) —
+ * it documents intent and reduces accidental cross-domain coupling.
  */
 
 // ---------------------------------------------------------------------------
@@ -67,13 +61,14 @@ export {
 export { getSchools } from "./queries/schools";
 
 // ---------------------------------------------------------------------------
-// Applications: teacher + student onboarding, role checks, teacher fields
+// Applications: teacher onboarding, role checks, teacher fields
 // ---------------------------------------------------------------------------
 export type {
   ApplicationStatus,
   ApplicationStatusFilter,
   AdminPaginationInput,
   AdminPaginatedResult,
+  SaveTeacherApplicationInput,
 } from "./queries/applications";
 export {
   saveTeacherApplication,
@@ -89,40 +84,46 @@ export {
   getAvailableFieldOptions,
   isTeacher,
   isApprovedStudent,
-  saveStudentApplication,
-  getAllStudentApplications,
-  getStudentApplicationsPaginated,
-  approveStudentApplication,
-  rejectStudentApplication,
 } from "./queries/applications";
 
 // ---------------------------------------------------------------------------
-// Teacher: availability, profile, ratings, stats, income
+// Teacher directory (public rehber + profile page)
 // ---------------------------------------------------------------------------
-export {
-  getTeacherAvailability,
-  upsertTeacherAvailability,
-  getCurrentTeacherAvailability,
-  getTeacherAvailabilityForCurrentWeek,
-  getAvailableTeachers,
-  getTeacherDetails,
-  getTeacherIncome,
-  getTeacherReviews,
-  getTeachersWithRatingsOptimized,
-  getTeacherStats,
-  getTeachersWithRatings,
-} from "./queries/teacher";
+export { getTeachersDirectory, getTeacherProfile } from "./queries/teacher";
+export type { TeacherDirectoryRow } from "./queries/teacher";
 
 // ---------------------------------------------------------------------------
-// Private lesson: booking flow + review submission
+// Marketplace: listings + offers + message unlocks
 // ---------------------------------------------------------------------------
 export {
-  bookLesson,
-  getStudentBookings,
-  getTeacherBookings,
-  updateBookingStatus,
-  submitLessonReview,
-} from "./queries/private-lesson";
+  getOpenListings,
+  getListingById,
+  getListingWithOffers,
+  getMyListings,
+  createListing,
+  closeListing,
+  getListingsOfferCount,
+} from "./queries/listings";
+export type { ListingRow, ListingWithOffersRow } from "./queries/listings";
+
+export {
+  getOffersForListing,
+  getMyOffers,
+  hasTeacherOfferedOnListing,
+  createOffer,
+  withdrawOffer,
+  acceptOffer,
+  rejectOffer,
+  MAX_OFFERS_PER_LISTING,
+} from "./queries/offers";
+export type { OfferRow } from "./queries/offers";
+
+export {
+  getMessageUnlock,
+  unlockMessageThread,
+  listStudentConversations,
+  listTeacherConversations,
+} from "./queries/messages";
 
 // ---------------------------------------------------------------------------
 // Snippets: code-editor snippets

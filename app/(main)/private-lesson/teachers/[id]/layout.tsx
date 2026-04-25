@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTeacherDetails, getTeacherFields } from "@/db/queries";
+import { getTeacherProfile, getTeacherFields } from "@/db/queries";
 
 /**
  * Dinamik per-teacher metadata. Client page SEO'yu sadece sağlayamaz çünkü
@@ -10,7 +10,7 @@ import { getTeacherDetails, getTeacherFields } from "@/db/queries";
 export async function generateMetadata(
   { params }: { params: { id: string } },
 ): Promise<Metadata> {
-  const teacher = await getTeacherDetails(params.id);
+  const teacher = await getTeacherProfile(params.id);
 
   if (!teacher) {
     return {
@@ -27,8 +27,8 @@ export async function generateMetadata(
 
   const name = teacher.name ?? "Sukull Öğretmeni";
   const title = `${name} | Özel Ders | Sukull`;
-  const description = teacher.description
-    ? teacher.description.slice(0, 160)
+  const description = teacher.bio
+    ? teacher.bio.slice(0, 160)
     : `${name} ile ${fieldText} alanında birebir özel ders al.`;
 
   return {

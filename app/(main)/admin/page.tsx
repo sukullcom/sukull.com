@@ -24,6 +24,12 @@ import {
  * Auth + admin gate: app/(main)/admin/layout.tsx katmanında.
  * Hata yakalayıcı: app/(main)/admin/error.tsx.
  */
+// The Suspense islands below hit the live marketplace tables; we must
+// never prerender this at build time (both because the data is
+// per-request and because the build pipeline typically runs before
+// migrations land in prod).
+export const dynamic = "force-dynamic";
+
 export default function AdminDashboardPage() {
   return (
     <div className="space-y-8">

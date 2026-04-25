@@ -36,7 +36,6 @@ export const users = pgTable("users", {
   provider: text("provider").notNull(),       // e.g., 'google' or 'email'
   links: json("links").$type<IUserLink[]>().notNull().default([]),
   role: userRoleEnum("role").default("user").notNull(),
-  meetLink: text("meet_link"),                // Google Meet link for teachers
   created_at: timestamp("created_at").defaultNow().notNull(),
   updated_at: timestamp("updated_at").defaultNow().notNull(),
 }, (table) => ({
@@ -255,30 +254,6 @@ export const userProgressRelations = relations(userProgress, ({ one }) => ({
   }),
 }));
 
-// Private Lesson Applications (Öğrenci Başvuruları)
-export const privateLessonApplications = pgTable("private_lesson_applications", {
-  id: serial("id").primaryKey(),
-  studentName: text("student_name").notNull(),
-  studentSurname: text("student_surname").notNull(),
-  studentPhoneNumber: text("student_phone_number").notNull(),
-  studentEmail: text("student_email").notNull(),
-  field: text("field").notNull(),
-  studentNeeds: text("student_needs"),
-  studentLevel: text("student_level"),
-  lessonDuration: text("lesson_duration"),
-  availableHours: text("available_hours"),
-  budget: text("budget"),
-  lessonMode: text("lesson_mode"),
-  userId: text("user_id"),
-  status: text("status").default("pending"),
-  approved: boolean("approved").default(false),
-  createdAt: timestamp("created_at").defaultNow(),
-}, (table) => ({
-  userIdIdx: index("idx_student_apps_user_id").on(table.userId),
-}));
-
-export const privateLessonApplicationsRelations = relations(privateLessonApplications, ({}) => ({}));
-
 // Teacher Applications (Öğretmen Başvuruları)
 export const applicationStatusEnum = pgEnum("status", ["pending", "approved", "rejected"]);
 
@@ -296,8 +271,12 @@ export const teacherApplications = pgTable("teacher_applications", {
   experienceYears: text("experience_years"),
   targetLevels: text("target_levels"),
   availableHours: text("available_hours"),
-  lessonMode: text("lesson_mode"),
-  hourlyRate: text("hourly_rate"),
+  lessonMode: text("lesson_mode"), // 'online' | 'in_person' | 'both'
+  hourlyRate: text("hourly_rate"), // legacy combined rate (kept for back-compat)
+  hourlyRateOnline: integer("hourly_rate_online"), // ₺ per hour, online lessons
+  hourlyRateInPerson: integer("hourly_rate_in_person"), // ₺ per hour, face-to-face lessons
+  city: text("city"),
+  district: text("district"),
   bio: text("bio"),
   classification: text("classification"),
   status: applicationStatusEnum("status").default("pending").notNull(),
@@ -430,95 +409,142 @@ export const userDailyChallengesRelations = relations(userDailyChallenges, ({ on
   }),
 }));
 
-// Teacher Availability
-export const teacherAvailability = pgTable("teacher_availability", {
+// Private-lesson marketplace: student listings ("İlan")
+//
+// A student opens a listing describing what they need; approved teachers
+// can browse open listings and spend credits to offer. A listing caps at
+// MAX_OFFERS_PER_LISTING (4) active offers — enforced at the action layer
+// plus a DB-level check via a trigger (see migration 0026).
+export const listingStatusEnum = pgEnum("listing_status", [
+  "open",
+  "closed",
+  "expired",
+]);
+
+export const listingLessonModeEnum = pgEnum("listing_lesson_mode", [
+  "online",
+  "in_person",
+  "both",
+]);
+
+export const listings = pgTable("listings", {
   id: serial("id").primaryKey(),
-  teacherId: text("teacher_id").notNull().references(() => users.id, { onDelete: "cascade" }),
-  startTime: timestamp("start_time").notNull(),
-  endTime: timestamp("end_time").notNull(),
-  dayOfWeek: integer("day_of_week").notNull(),
-  weekStartDate: timestamp("week_start_date").notNull(),
+  studentId: text("student_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  subject: text("subject").notNull(),
+  grade: text("grade"),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  lessonMode: listingLessonModeEnum("lesson_mode").notNull().default("online"),
+  city: text("city"),
+  district: text("district"),
+  budgetMin: integer("budget_min"), // ₺ per hour lower bound (optional)
+  budgetMax: integer("budget_max"), // ₺ per hour upper bound (optional)
+  preferredHours: text("preferred_hours"), // free-form: "hafta içi akşam"
+  status: listingStatusEnum("status").notNull().default("open"),
+  offerCount: integer("offer_count").notNull().default(0), // denormalized for cheap reads
+  expiresAt: timestamp("expires_at"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 }, (table) => ({
-  teacherWeekIdx: index("idx_availability_teacher_week").on(table.teacherId, table.weekStartDate),
+  studentIdx: index("idx_listings_student").on(table.studentId),
+  statusCreatedIdx: index("idx_listings_status_created").on(table.status, table.createdAt),
+  subjectStatusIdx: index("idx_listings_subject_status").on(table.subject, table.status),
 }));
 
-export const teacherAvailabilityRelations = relations(teacherAvailability, ({ one }) => ({
+export const listingsRelations = relations(listings, ({ one, many }) => ({
+  student: one(users, {
+    fields: [listings.studentId],
+    references: [users.id],
+  }),
+  offers: many(listingOffers),
+}));
+
+// Listing offers — a teacher's bid on a student's listing. Max 4 per listing.
+export const offerStatusEnum = pgEnum("offer_status", [
+  "pending",
+  "withdrawn",
+  "accepted",
+  "rejected",
+]);
+
+export const listingOffers = pgTable("listing_offers", {
+  id: serial("id").primaryKey(),
+  listingId: integer("listing_id").notNull().references(() => listings.id, { onDelete: "cascade" }),
+  teacherId: text("teacher_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  priceProposal: integer("price_proposal").notNull(), // ₺ per hour
+  note: text("note"),
+  status: offerStatusEnum("status").notNull().default("pending"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+}, (table) => ({
+  // One pending offer per teacher per listing
+  listingTeacherIdx: uniqueIndex("idx_listing_offers_listing_teacher").on(table.listingId, table.teacherId),
+  teacherIdx: index("idx_listing_offers_teacher").on(table.teacherId),
+  listingStatusIdx: index("idx_listing_offers_listing_status").on(table.listingId, table.status),
+}));
+
+export const listingOffersRelations = relations(listingOffers, ({ one }) => ({
+  listing: one(listings, {
+    fields: [listingOffers.listingId],
+    references: [listings.id],
+  }),
   teacher: one(users, {
-    fields: [teacherAvailability.teacherId],
+    fields: [listingOffers.teacherId],
     references: [users.id],
   }),
 }));
 
-// Lesson Bookings
-export const lessonBookings = pgTable("lesson_bookings", {
+// Message unlocks — once a student spends a credit to message a teacher, the
+// thread stays open permanently. Unique per (student, teacher) pair.
+export const messageUnlocks = pgTable("message_unlocks", {
   id: serial("id").primaryKey(),
   studentId: text("student_id").notNull().references(() => users.id, { onDelete: "cascade" }),
   teacherId: text("teacher_id").notNull().references(() => users.id, { onDelete: "cascade" }),
-  startTime: timestamp("start_time").notNull(),
-  endTime: timestamp("end_time").notNull(),
-  status: text("status").notNull().default("pending"),
-  meetLink: text("meet_link"),
-  notes: text("notes"),
-  teacherJoinedAt: timestamp("teacher_joined_at"),
-  completedAt: timestamp("completed_at"),
-  earningsAmount: integer("earnings_amount"),
+  chatId: integer("chat_id"), // optional back-ref to studyBuddyChats.id
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 }, (table) => ({
-  teacherSlotIdx: index("idx_bookings_teacher_slot").on(table.teacherId, table.startTime, table.endTime),
-  studentIdx: index("idx_bookings_student").on(table.studentId),
-  statusIdx: index("idx_bookings_status").on(table.status),
+  pairIdx: uniqueIndex("idx_message_unlocks_pair").on(table.studentId, table.teacherId),
+  teacherIdx: index("idx_message_unlocks_teacher").on(table.teacherId),
 }));
 
-export const lessonBookingsRelations = relations(lessonBookings, ({ one }) => ({
+export const messageUnlocksRelations = relations(messageUnlocks, ({ one }) => ({
   student: one(users, {
-    fields: [lessonBookings.studentId],
+    fields: [messageUnlocks.studentId],
     references: [users.id],
-    relationName: "student_bookings",
+    relationName: "message_unlocks_student",
   }),
   teacher: one(users, {
-    fields: [lessonBookings.teacherId],
+    fields: [messageUnlocks.teacherId],
     references: [users.id],
-    relationName: "teacher_bookings",
-  }),
-  review: one(lessonReviews, {
-    fields: [lessonBookings.id],
-    references: [lessonReviews.bookingId],
+    relationName: "message_unlocks_teacher",
   }),
 }));
 
-// Lesson Reviews
-export const lessonReviews = pgTable("lesson_reviews", {
+// Credit usage log — every time we deduct from userCredits we write a row
+// here so we can audit, refund, and report ("how many credits were spent
+// on listing offers this month?"). userCredits stays a single balance.
+export const creditUsageReasonEnum = pgEnum("credit_usage_reason", [
+  "message_unlock",
+  "listing_offer",
+]);
+
+export const creditUsage = pgTable("credit_usage", {
   id: serial("id").primaryKey(),
-  bookingId: integer("booking_id").notNull().references(() => lessonBookings.id, { onDelete: "cascade" }),
-  studentId: text("student_id").notNull().references(() => users.id, { onDelete: "cascade" }),
-  teacherId: text("teacher_id").notNull().references(() => users.id, { onDelete: "cascade" }),
-  rating: integer("rating").notNull(), // 1-5 stars
-  comment: text("comment"),
+  userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  reason: creditUsageReasonEnum("reason").notNull(),
+  creditsUsed: integer("credits_used").notNull().default(1),
+  refType: text("ref_type"), // 'listing' | 'teacher' etc.
+  refId: text("ref_id"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 }, (table) => ({
-  bookingIdx: uniqueIndex("idx_lesson_reviews_booking").on(table.bookingId),
-  teacherIdx: index("idx_lesson_reviews_teacher").on(table.teacherId),
-  studentIdx: index("idx_lesson_reviews_student").on(table.studentId),
+  userCreatedIdx: index("idx_credit_usage_user_created").on(table.userId, table.createdAt),
+  reasonIdx: index("idx_credit_usage_reason").on(table.reason, table.createdAt),
 }));
 
-export const lessonReviewsRelations = relations(lessonReviews, ({ one }) => ({
-  booking: one(lessonBookings, {
-    fields: [lessonReviews.bookingId],
-    references: [lessonBookings.id],
-  }),
-  student: one(users, {
-    fields: [lessonReviews.studentId],
+export const creditUsageRelations = relations(creditUsage, ({ one }) => ({
+  user: one(users, {
+    fields: [creditUsage.userId],
     references: [users.id],
-    relationName: "student_reviews",
-  }),
-  teacher: one(users, {
-    fields: [lessonReviews.teacherId],
-    references: [users.id],
-    relationName: "teacher_reviews",
   }),
 }));
 

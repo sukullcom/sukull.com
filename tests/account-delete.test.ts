@@ -104,7 +104,6 @@ vi.mock("@/db/schema", () => ({
   activityLog: { userId: "…" },
   challengeProgress: { userId: "…" },
   errorLog: { userId: "…" },
-  privateLessonApplications: { userId: "…" },
   snippets: { userId: "…" },
   studyBuddyChats: { participants: "…" },
   studyBuddyMessages: { sender: "…" },

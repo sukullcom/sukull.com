@@ -8,7 +8,9 @@ import {
   activityLog,
   challengeProgress,
   errorLog,
-  privateLessonApplications,
+  listingOffers,
+  listings,
+  messageUnlocks,
   schools,
   snippets,
   studyBuddyChats,
@@ -146,9 +148,18 @@ export async function deleteMyAccount(
       await tx.delete(userDailyStreak).where(eq(userDailyStreak.userId, userId));
       await tx.delete(userDailyChallenges).where(eq(userDailyChallenges.userId, userId));
       await tx.delete(snippets).where(eq(snippets.userId, userId));
-      await tx.delete(privateLessonApplications).where(eq(privateLessonApplications.userId, userId));
       await tx.delete(teacherApplications).where(eq(teacherApplications.userId, userId));
       await tx.delete(activityLog).where(eq(activityLog.userId, userId));
+      // Marketplace: listings & offers authored by this user. Student-
+      // side listings and teacher-side offers both erase here; the
+      // user's outgoing messages are handled via study-buddy below.
+      await tx.delete(listingOffers).where(eq(listingOffers.teacherId, userId));
+      await tx.delete(listings).where(eq(listings.studentId, userId));
+      await tx.execute(sql`
+        DELETE FROM ${messageUnlocks}
+        WHERE ${messageUnlocks.studentId} = ${userId}
+           OR ${messageUnlocks.teacherId} = ${userId}
+      `);
       // Note: `activity_log_daily` is pre-aggregated across users (no
       // per-user column) — nothing to erase there without degrading
       // the historical analytics rollup.
@@ -190,8 +201,8 @@ export async function deleteMyAccount(
 
       // 6. Finally delete the profile row. FK cascades take care of
       //    user_credits, credit_transactions, payment_logs,
-      //    user_subscriptions, teacher_availability, lesson_bookings,
-      //    lesson_reviews, teacher_fields.
+      //    user_subscriptions, teacher_fields, credit_usage, any
+      //    remaining listings/offers/message_unlocks rows.
       await tx.delete(users).where(eq(users.id, userId));
 
       // Defensive: if any row survived the above (shouldn't happen,

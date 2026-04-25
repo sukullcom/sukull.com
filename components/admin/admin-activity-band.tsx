@@ -11,14 +11,17 @@ type ActivityItem = {
 };
 
 export async function AdminActivityBand() {
-  const [recentTeachers, recentStudents] = await Promise.all([
+  const [recentTeachers, recentListings] = await Promise.all([
     db.query.teacherApplications.findMany({
       orderBy: (t, { desc }) => [desc(t.createdAt)],
       limit: 6,
     }),
-    db.query.privateLessonApplications.findMany({
+    db.query.listings.findMany({
       orderBy: (t, { desc }) => [desc(t.createdAt)],
       limit: 6,
+      with: {
+        student: { columns: { name: true } },
+      },
     }),
   ]);
 
@@ -38,16 +41,14 @@ export async function AdminActivityBand() {
         }))}
       />
       <ActivityPanel
-        title="Son Öğrenci Başvuruları"
-        viewAllHref="/admin/student-applications"
-        items={recentStudents.map((app) => ({
-          id: app.id,
-          href: `/admin/student-applications#${app.id}`,
-          title:
-            `${app.studentName ?? ""} ${app.studentSurname ?? ""}`.trim() ||
-            "İsimsiz",
-          subtitle: `${app.field ?? "—"} · ${formatDate(app.createdAt)}`,
-          status: app.status ?? "pending",
+        title="Son İlanlar"
+        viewAllHref="/admin/listings"
+        items={recentListings.map((listing) => ({
+          id: listing.id,
+          href: `/admin/listings#${listing.id}`,
+          title: listing.title || "Başlıksız ilan",
+          subtitle: `${listing.subject ?? "—"} · ${listing.student?.name ?? "—"} · ${formatDate(listing.createdAt)}`,
+          status: listing.status,
         }))}
       />
     </div>
@@ -137,11 +138,17 @@ function StatusBadge({ status }: { status: string }) {
     pending: "bg-yellow-100 text-yellow-800",
     approved: "bg-green-100 text-green-800",
     rejected: "bg-red-100 text-red-800",
+    open: "bg-blue-100 text-blue-800",
+    closed: "bg-gray-100 text-gray-700",
+    expired: "bg-gray-100 text-gray-500",
   };
   const labels: Record<string, string> = {
     pending: "Beklemede",
     approved: "Onaylı",
     rejected: "Reddedildi",
+    open: "Açık",
+    closed: "Kapalı",
+    expired: "Süresi Dolmuş",
   };
   return (
     <span

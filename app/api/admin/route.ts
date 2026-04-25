@@ -8,9 +8,6 @@ import {
   approveTeacherApplicationWithFields,
   rejectTeacherApplication,
   getTeacherApplicationsPaginated,
-  getStudentApplicationsPaginated,
-  approveStudentApplication,
-  rejectStudentApplication,
   type ApplicationStatusFilter,
 } from "@/db/queries";
 
@@ -57,18 +54,6 @@ export async function GET(request: NextRequest) {
         // subset so older clients still work until they are updated.
         const pagination = parsePaginationParams(searchParams);
         const result = await getTeacherApplicationsPaginated(pagination);
-        return NextResponse.json({
-          applications: result.rows,
-          total: result.total,
-          statusCounts: result.statusCounts,
-          page: result.page,
-          pageSize: result.pageSize,
-        });
-      }
-
-      case 'student-applications': {
-        const pagination = parsePaginationParams(searchParams);
-        const result = await getStudentApplicationsPaginated(pagination);
         return NextResponse.json({
           applications: result.rows,
           total: result.total,
@@ -153,52 +138,6 @@ export async function POST(request: NextRequest) {
         }
 
         return NextResponse.json({ message: "Öğretmen başvurusu reddedildi." });
-      }
-
-      case 'approve-student': {
-        const { applicationId } = body;
-        
-        if (!applicationId) {
-          return NextResponse.json({ message: "Başvuru kimliği gereklidir." }, { status: 400 });
-        }
-
-        await approveStudentApplication(applicationId);
-
-        const actor = await getAdminActor();
-        if (actor) {
-          logAdminActionAsync({
-            actorId: actor.id,
-            actorEmail: actor.email,
-            action: "student_application.approve",
-            targetType: "student_application",
-            targetId: applicationId,
-          });
-        }
-
-        return NextResponse.json({ message: "Öğrenci başvurusu başarıyla onaylandı." });
-      }
-
-      case 'reject-student': {
-        const { applicationId } = body;
-        
-        if (!applicationId) {
-          return NextResponse.json({ message: "Başvuru kimliği gereklidir." }, { status: 400 });
-        }
-
-        await rejectStudentApplication(applicationId);
-
-        const actor = await getAdminActor();
-        if (actor) {
-          logAdminActionAsync({
-            actorId: actor.id,
-            actorEmail: actor.email,
-            action: "student_application.reject",
-            targetType: "student_application",
-            targetId: applicationId,
-          });
-        }
-
-        return NextResponse.json({ message: "Öğrenci başvurusu reddedildi." });
       }
 
       default: {

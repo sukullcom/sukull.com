@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import db from "@/db/drizzle";
-import { lessonBookings } from "@/db/schema";
-import { eq, lt, and, isNotNull, isNull, sql } from "drizzle-orm";
-import { LESSON_CONFIG } from "@/lib/lesson-config";
+import { listings } from "@/db/schema";
+import { and, eq, lt, sql } from "drizzle-orm";
 import { performDailyReset, applyDailyStreakBonuses } from "@/actions/daily-streak";
 import { updateTotalPointsForSchools } from "@/actions/user-progress";
 import { getRequestLogger } from "@/lib/logger";
@@ -45,60 +44,30 @@ async function runStep(name: string, fn: () => Promise<unknown>): Promise<StepRe
   }
 }
 
-async function updateLessonStatuses() {
+/**
+ * Marketplace housekeeping. A listing quietly expires after
+ * `LISTING_TTL_DAYS` of inactivity so the teacher feed stays fresh —
+ * students can always re-post. No bidders / students are charged for
+ * expiring; it's purely a status flip.
+ */
+const LISTING_TTL_DAYS = 30;
+
+async function expireStaleListings() {
+  const cutoff = new Date(Date.now() - LISTING_TTL_DAYS * 24 * 60 * 60 * 1000);
   const now = new Date();
-  let totalUpdated = 0;
-  const actions: Array<{ action: string; count: number }> = [];
 
-  const confirmed = await db
-    .update(lessonBookings)
-    .set({ status: "confirmed", updatedAt: now })
-    .where(and(eq(lessonBookings.status, "pending"), lt(lessonBookings.startTime, now)))
-    .returning({ id: lessonBookings.id });
-  if (confirmed.length) {
-    totalUpdated += confirmed.length;
-    actions.push({ action: "confirmed", count: confirmed.length });
-  }
+  const expired = await db
+    .update(listings)
+    .set({ status: "expired", updatedAt: now })
+    .where(
+      and(
+        eq(listings.status, "open"),
+        lt(listings.createdAt, cutoff),
+      ),
+    )
+    .returning({ id: listings.id });
 
-  const completedPaid = await db
-    .update(lessonBookings)
-    .set({
-      status: "completed",
-      completedAt: now,
-      earningsAmount: LESSON_CONFIG.TEACHER_EARNINGS_PER_LESSON,
-      updatedAt: now,
-    })
-    .where(and(
-      eq(lessonBookings.status, "confirmed"),
-      lt(lessonBookings.endTime, now),
-      isNotNull(lessonBookings.teacherJoinedAt),
-    ))
-    .returning({ id: lessonBookings.id });
-  if (completedPaid.length) {
-    totalUpdated += completedPaid.length;
-    actions.push({ action: "completed_with_earnings", count: completedPaid.length });
-  }
-
-  const completedUnpaid = await db
-    .update(lessonBookings)
-    .set({
-      status: "completed",
-      completedAt: now,
-      earningsAmount: 0,
-      updatedAt: now,
-    })
-    .where(and(
-      eq(lessonBookings.status, "confirmed"),
-      lt(lessonBookings.endTime, now),
-      isNull(lessonBookings.teacherJoinedAt),
-    ))
-    .returning({ id: lessonBookings.id });
-  if (completedUnpaid.length) {
-    totalUpdated += completedUnpaid.length;
-    actions.push({ action: "completed_no_earnings", count: completedUnpaid.length });
-  }
-
-  return { totalUpdated, actions };
+  return { expiredCount: expired.length };
 }
 
 async function runDaily(request: NextRequest) {
@@ -143,7 +112,7 @@ async function runDaily(request: NextRequest) {
     }),
   );
 
-  steps.push(await runStep("update-lesson-statuses", updateLessonStatuses));
+  steps.push(await runStep("expire-stale-listings", expireStaleListings));
 
   steps.push(
     await runStep("cleanup-rate-limits", async () => {

@@ -7,9 +7,9 @@ export const metadata: Metadata = {
 };
 
 /**
- * Sadece onaylı öğrenciler bu alanı görebilir. Onay yoksa `/private-lesson/get`
- * başvuru sayfasına yönlendirilir. Ortak wrapper `private-lesson/layout.tsx`
- * katmanında zaten uygulanıyor, burada ek container kullanmıyoruz.
+ * Oturum gereksinimini `requireApprovedStudent` sağlıyor. Marketplace
+ * sonrası öğrenci onay adımı kaldırıldığı için bu fonksiyon artık sadece
+ * girişi zorunlu kılıyor; adı geriye dönük uyumluluk için duruyor.
  */
 export default async function TeachersLayout({
   children,

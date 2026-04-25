@@ -1,557 +1,227 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, notFound } from "next/navigation";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ReservationModal } from "@/components/modals/reservation-modal";
-import { Star } from "lucide-react";
-import { toast } from "sonner";
-import { LoadingSpinner } from "@/components/loading-spinner";
+import Link from "next/link";
+import { getServerUser } from "@/lib/auth";
+import { getTeacherProfile, getMessageUnlock } from "@/db/queries";
+import { MessageTeacherButton } from "@/components/private-lesson/message-teacher-button";
 import UserCreditsDisplay from "@/components/user-credits-display";
-import { clientLogger } from "@/lib/client-logger";
+import { normalizeAvatarUrl } from "@/utils/avatar";
+import {
+  Banknote,
+  Monitor,
+  MapPin,
+  BookOpen,
+  Clock,
+  GraduationCap,
+  Users,
+  ArrowLeft,
+} from "lucide-react";
 
-interface Teacher {
-  id: string;
-  name: string;
-  email: string;
-  bio?: string;
-  meetLink?: string;
-  avatar?: string;
-  field?: string;
-  fields?: string[];
-  averageRating?: number;
-  totalReviews?: number;
-}
+export const dynamic = "force-dynamic";
 
-interface AvailabilityData {
-  id: number;
-  teacherId: string;
-  startTime: string;
-  endTime: string;
-  dayOfWeek: number;
-  weekStartDate: string;
-  createdAt: string;
-  updatedAt: string;
-}
+export default async function TeacherDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const user = await getServerUser();
+  if (!user) redirect("/login");
 
-interface BookedSlotData {
-  id: number;
-  studentId: string;
-  teacherId: string;
-  startTime: string;
-  endTime: string;
-  status: string;
-  meetLink?: string | null;
-  notes?: string | null;
-  createdAt: string;
-  updatedAt: string;
-}
+  const teacher = await getTeacherProfile(params.id);
+  if (!teacher) notFound();
 
-interface TimeSlot {
-  startTime: Date;
-  endTime: Date;
-  dayOfWeek: number;
-  isBooked?: boolean;
-}
-
-interface SelectedSlot {
-  dayOfWeek: number;
-  startTime: Date;
-  endTime: Date;
-}
-
-interface Review {
-  id: number;
-  rating: number;
-  comment: string | null;
-  createdAt: string;
-}
-
-export default function TeacherDetailPage({ params }: { params: { id: string } }) {
-  const router = useRouter();
-  const [teacher, setTeacher] = useState<Teacher | null>(null);
-  const [availability, setAvailability] = useState<TimeSlot[]>([]);
-  const [selectedSlot, setSelectedSlot] = useState<SelectedSlot | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [booking, setBooking] = useState(false);
-  const [pendingSlots, setPendingSlots] = useState<Set<string>>(new Set());
-  const [showReservationModal, setShowReservationModal] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [reviews, setReviews] = useState<Review[]>([]);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Helper function to create unique slot identifier
-  const getSlotId = (slot: TimeSlot) => {
-    return `${slot.dayOfWeek}-${slot.startTime.getTime()}-${slot.endTime.getTime()}`;
-  };
-
-  // Function to refresh availability after booking attempt
-  const refreshAvailability = async () => {
-    try {
-      const availabilityResponse = await fetch(`/api/private-lesson/teacher-details/${params.id}`, {
-        credentials: 'include'
-      });
-      if (availabilityResponse.ok) {
-        const data = await availabilityResponse.json();
-        
-        const availabilityData = Array.isArray(data.availability) ? data.availability : [];
-        const bookedSlotsData = Array.isArray(data.bookedSlots) ? data.bookedSlots : [];
-        
-        const processedAvailability = availabilityData.map((slot: AvailabilityData) => {
-          const timeSlot: TimeSlot = {
-            startTime: new Date(slot.startTime),
-            endTime: new Date(slot.endTime),
-            dayOfWeek: slot.dayOfWeek,
-            isBooked: false
-          };
-          
-          const isBooked = bookedSlotsData.some((bookedSlot: BookedSlotData) => {
-            const bookedStart = new Date(bookedSlot.startTime);
-            const bookedEnd = new Date(bookedSlot.endTime);
-            return timeSlot.startTime.getTime() === bookedStart.getTime() &&
-                   timeSlot.endTime.getTime() === bookedEnd.getTime();
-          });
-          
-          timeSlot.isBooked = isBooked;
-          return timeSlot;
-        });
-        
-        setAvailability(processedAvailability);
-      }
-    } catch (error) {
-      clientLogger.error({ message: "refresh availability failed", error, location: "teachers/[id]/page/refreshAvailability" });
-    }
-  };
-
-  const handleSlotSelect = (slot: TimeSlot) => {
-    if (slot.isBooked) {
-      toast.error("Bu zaman dilimi zaten rezerve edilmiş. Lütfen başka bir zaman seçin.");
-      return;
-    }
-    
-    const slotId = getSlotId(slot);
-    if (pendingSlots.has(slotId)) {
-      toast.error("Bu zaman dilimi şu anda işlem görüyor. Lütfen bekleyin.");
-      return;
-    }
-    
-    setSelectedSlot({
-      dayOfWeek: slot.dayOfWeek,
-      startTime: slot.startTime,
-      endTime: slot.endTime,
-    });
-    setShowReservationModal(true);
-  };
-
-  const handleBookLesson = async () => {
-    if (!selectedSlot || !teacher) return;
-    
-    const slotId = getSlotId(selectedSlot as TimeSlot);
-    
-    // Mark slot as pending to prevent race conditions
-    setPendingSlots(prev => new Set(prev).add(slotId));
-    setBooking(true);
-    
-    try {
-      const response = await fetch("/api/private-lesson/book-lesson", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          teacherId: teacher.id,
-          startTime: selectedSlot.startTime.toISOString(),
-          endTime: selectedSlot.endTime.toISOString(),
-        }),
-      });
-
-      if (response.ok) {
-        toast.success("Ders başarıyla rezerve edildi!");
-        setShowReservationModal(false);
-        setSelectedSlot(null);
-        
-        // Refresh availability to show the booked slot
-        await refreshAvailability();
-      } else {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Ders rezerve edilemedi");
-      }
-    } catch (error) {
-      clientLogger.error({ message: "book lesson failed", error, location: "teachers/[id]/page/bookLesson" });
-      toast.error(error instanceof Error ? error.message : "Ders rezerve edilirken bir hata oluştu");
-      
-      // Refresh availability in case slot was booked by someone else
-      await refreshAvailability();
-    } finally {
-      setBooking(false);
-      // Remove from pending slots
-      setPendingSlots(prev => {
-        const newSet = new Set(prev);
-        newSet.delete(slotId);
-        return newSet;
-      });
-    }
-  };
-
-  useEffect(() => {
-    const fetchTeacherDetails = async () => {
-      try {
-        setLoading(true);
-        
-        // Check authentication status first
-        try {
-          const authResponse = await fetch('/api/auth/status', {
-            credentials: 'include'
-          });
-          const authData = await authResponse.json();
-          
-          if (!authData.authenticated) {
-            toast.error("Öğretmen detaylarını görüntülemek için giriş yapmalısın");
-            router.push("/login");
-            return;
-          }
-        } catch (authError) {
-          clientLogger.error({ message: "auth check failed", error: authError, location: "teachers/[id]/page/authCheck" });
-          toast.error("Kimlik doğrulama hatası. Lütfen giriş yapın.");
-          router.push("/login");
-          return;
-        }
-        
-        // Fetch teacher details and availability
-        const response = await fetch(`/api/private-lesson/teacher-details/${params.id}`, {
-          credentials: 'include'
-        });
-        
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => ({}));
-          
-          // Handle different error status codes
-          if (response.status === 401) {
-            toast.error("Öğretmen detaylarını görüntülemek için giriş yapmalısın");
-            router.push("/login");
-            return;
-          } else if (response.status === 403) {
-            toast.error("Sadece onaylanmış öğrenciler öğretmen detaylarını görüntüleyebilir");
-            router.push("/private-lesson");
-            return;
-          } else if (response.status === 404) {
-            setError("Öğretmen bulunamadı");
-          } else {
-            const errorMessage = errorData.error || errorData.message || response.statusText;
-            setError(`Öğretmen detayları alınamadı: ${errorMessage}`);
-          }
-          throw new Error(`Öğretmen detayları alınamadı: ${response.statusText}`);
-        }
-        
-        const data = await response.json();
-        
-        if (!data.teacher) {
-          setError("Geçersiz öğretmen bilgisi");
-          setLoading(false);
-          return;
-        }
-        
-        setTeacher(data.teacher);
-        
-        // Ensure availability is always an array
-        const availabilityData = Array.isArray(data.availability) ? data.availability : [];
-        
-        // Get booked slots data - ensure it's always an array
-        const bookedSlotsData = Array.isArray(data.bookedSlots) ? data.bookedSlots : [];
-        
-        // Convert availability data and mark booked slots instead of filtering them out
-        const processedAvailability = availabilityData
-          .map((slot: AvailabilityData) => {
-            const timeSlot: TimeSlot = {
-              ...slot,
-              startTime: new Date(slot.startTime),
-              endTime: new Date(slot.endTime),
-              isBooked: false
-            };
-            
-            // Check if this slot is booked
-            const isBooked = bookedSlotsData.some((bookedSlot: BookedSlotData) => {
-              const bookedStart = new Date(bookedSlot.startTime);
-              const bookedEnd = new Date(bookedSlot.endTime);
-              const startMatches = timeSlot.startTime.getTime() === bookedStart.getTime();
-              const endMatches = timeSlot.endTime.getTime() === bookedEnd.getTime();
-              
-              return startMatches && endMatches;
-            });
-            
-            timeSlot.isBooked = isBooked;
-            return timeSlot;
-          });
-        
-        setAvailability(processedAvailability);
-        
-        // Fetch teacher reviews
-        try {
-          const reviewsResponse = await fetch(`/api/private-lesson/teacher-details/${params.id}/reviews`, {
-            credentials: 'include'
-          });
-          if (reviewsResponse.ok) {
-            const reviewsData = await reviewsResponse.json();
-            setReviews(reviewsData.reviews || []);
-            // Update teacher with review stats if available
-            if (reviewsData.averageRating !== undefined) {
-              setTeacher(prev => prev ? {
-                ...prev,
-                averageRating: reviewsData.averageRating,
-                totalReviews: reviewsData.totalReviews
-              } : prev);
-            }
-          }
-        } catch (reviewError) {
-          clientLogger.error({ message: "fetch reviews failed", error: reviewError, location: "teachers/[id]/page/fetchReviews" });
-          // Continue without reviews
-        }
-        
-        setLoading(false);
-      } catch (error) {
-        clientLogger.error({ message: "fetch teacher details failed", error, location: "teachers/[id]/page/fetchTeacherDetails" });
-        setError("Öğretmen bilgileri yüklenirken bir hata oluştu");
-        setLoading(false);
-      }
-    };
-
-    if (mounted) {
-      fetchTeacherDetails();
-    }
-  }, [params.id, router, mounted]);
-
-  const getDayName = (dayOfWeek: number): string => {
-    const days = ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"];
-    return days[dayOfWeek] || "Bilinmeyen";
-  };
-
-  const formatTime = (date: Date): string => {
-    return date.toLocaleTimeString("tr-TR", {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
-  const sortDaysByCurrentDay = (dayNumbers: string[]): string[] => {
-    const currentDay = new Date().getDay();
-    return dayNumbers.sort((a, b) => {
-      const dayA = parseInt(a);
-      const dayB = parseInt(b);
-      
-      const adjustedA = dayA >= currentDay ? dayA - currentDay : dayA + 7 - currentDay;
-      const adjustedB = dayB >= currentDay ? dayB - currentDay : dayB + 7 - currentDay;
-      
-      return adjustedA - adjustedB;
-    });
-  };
-
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star
-        key={i}
-        className={`h-4 w-4 ${
-          i < rating
-            ? "fill-yellow-400 text-yellow-400"
-            : "text-gray-300"
-        }`}
-      />
-    ));
-  };
-
-  if (!mounted || loading) {
-    return (
-      <div className="py-12">
-        <LoadingSpinner size="lg" />
-      </div>
-    );
-  }
-
-  if (error || !teacher) {
-    return (
-      <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
-        <p className="text-gray-500 mb-4">{error || "Öğretmen bulunamadı"}</p>
-        <Button variant="default" onClick={() => router.push("/private-lesson/teachers")}>
-          Öğretmenlere Dön
-        </Button>
-      </div>
-    );
-  }
-
-  // Group availability by day
-  const availabilityByDay: { [key: number]: TimeSlot[] } = {};
-  
-  availability.forEach(slot => {
-    if (!availabilityByDay[slot.dayOfWeek]) {
-      availabilityByDay[slot.dayOfWeek] = [];
-    }
-    availabilityByDay[slot.dayOfWeek].push(slot);
-  });
-
-  // Sort days to start with the current day
-  const sortedDays = sortDaysByCurrentDay(Object.keys(availabilityByDay));
+  const unlock = await getMessageUnlock(user.id, teacher.id);
+  const isSelf = user.id === teacher.id;
 
   return (
-    <div className="max-w-5xl mx-auto px-3 sm:px-6 pb-10">
+    <div className="max-w-4xl mx-auto px-3 sm:px-6 pb-10">
       <UserCreditsDisplay className="mb-4" />
-      
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Teacher profile */}
-        <Card className="md:col-span-1 bg-white shadow-md hover:shadow-lg transition-shadow">
-          <CardHeader className="pb-2">
-            <div className="flex justify-center mb-4">
-              <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-primary/20">
-                <Image
-                  src={teacher.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(teacher.name)}`}
-                  alt={teacher.name}
-                  fill
-                  unoptimized
-                  className="object-cover"
-                />
-              </div>
+
+      <Link
+        href="/private-lesson/teachers"
+        className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800 mb-4"
+      >
+        <ArrowLeft className="h-4 w-4" /> Öğretmenler
+      </Link>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="md:col-span-1">
+          <div className="bg-white border rounded-xl p-5 text-center">
+            <div className="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto rounded-full overflow-hidden mb-3">
+              <Image
+                src={normalizeAvatarUrl(teacher.avatar ?? undefined)}
+                alt={teacher.name ?? "Öğretmen"}
+                fill
+                unoptimized={teacher.avatar?.startsWith("http") ?? false}
+                className="object-cover"
+              />
             </div>
-            <CardTitle className="text-center text-2xl">{teacher.name}</CardTitle>
-            
-            {/* Display fields as badges */}
-            {(teacher.fields && teacher.fields.length > 0) ? (
-              <div className="flex flex-wrap gap-1 justify-center mt-3">
-                {teacher.fields.map((field, index) => (
+            <h1 className="text-lg sm:text-xl font-semibold text-gray-900">
+              {teacher.name}
+            </h1>
+
+            {teacher.fields.length > 0 && (
+              <div className="flex flex-wrap gap-1 justify-center mt-2">
+                {teacher.fields.map((f, i) => (
                   <span
-                    key={index}
-                    className="inline-block px-3 py-1 text-sm bg-primary/10 text-primary rounded-full font-medium"
+                    key={i}
+                    className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium"
                   >
-                    {field}
+                    {f.displayName}
                   </span>
                 ))}
               </div>
-            ) : teacher.field ? (
-              <CardDescription className="text-center font-medium text-primary text-base mt-1">
-                {teacher.field}
-              </CardDescription>
-            ) : null}
-          </CardHeader>
-          <CardContent className="pt-4">
-            <div className="space-y-4">
-              <div className="p-4 rounded-lg">
-                <h3 className="font-medium text-lg mb-2 text-gray-800">Biyografi</h3>
-                <p className="text-gray-700 leading-relaxed">
-                  {teacher.bio || "Bu öğretmen henüz kendisi hakkında bilgi paylaşmamış."}
-                </p>
-              </div>
-              
-              {/* Reviews Section */}
-              <div className="p-4 rounded-lg border-t">
-                <h3 className="font-medium text-lg mb-3 text-gray-800">Değerlendirmeler</h3>
-                
-                {reviews.length > 0 ? (
-                  <div className="flex flex-col items-center gap-2 py-3">
-                    <div className="text-3xl font-bold text-gray-800">
-                      {(teacher.averageRating || 0).toFixed(1)}
-                    </div>
-                    <div className="flex gap-0.5">
-                      {renderStars(Math.round(teacher.averageRating || 0))}
-                    </div>
-                    <span className="text-sm text-gray-500">
-                      {teacher.totalReviews || reviews.length} değerlendirme
-                    </span>
-                  </div>
-                ) : (
-                  <div className="text-center py-4 text-gray-500">
-                    <p>Henüz değerlendirme yok</p>
-                  </div>
+            )}
+
+            {!isSelf && (
+              <div className="mt-4">
+                <MessageTeacherButton
+                  teacherId={teacher.id}
+                  teacherName={teacher.name ?? undefined}
+                  alreadyUnlocked={Boolean(unlock)}
+                  existingChatId={unlock?.chatId ?? null}
+                  fullWidth
+                  variant="primary"
+                  size="lg"
+                />
+                {!unlock && (
+                  <p className="text-[11px] text-gray-500 mt-2">
+                    Tek sefer 1 kredi — sohbet kalıcıdır.
+                  </p>
                 )}
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            )}
+          </div>
 
-        {/* Availability and booking */}
-        <div className="md:col-span-2 space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Müsait Zamanlar</CardTitle>
-              <CardDescription>
-                Aşağıdaki zamanlardan birini seçerek ders rezerve edebilirsin
-              </CardDescription>
-              {/* Legend */}
-              <div className="flex flex-wrap items-center gap-3 sm:gap-6 text-sm mt-2">
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 border-2 border-green-200 bg-white rounded"></div>
-                  <span className="text-gray-600">Müsait</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-yellow-100 border border-yellow-200 rounded"></div>
-                  <span className="text-gray-600">Rezerve Ediliyor</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-gray-200 border border-gray-300 rounded"></div>
-                  <span className="text-gray-600">Dolu</span>
+          <div className="bg-white border rounded-xl p-5 mt-4 space-y-3 text-sm">
+            {(teacher.hourlyRateOnline != null ||
+              teacher.hourlyRateInPerson != null) && (
+              <div className="flex items-start gap-3">
+                <Banknote className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
+                <div>
+                  <div className="font-medium text-gray-800 mb-1">
+                    Saatlik Ücret
+                  </div>
+                  <div className="text-gray-600 space-y-0.5">
+                    {teacher.hourlyRateOnline != null && (
+                      <div>Online: {teacher.hourlyRateOnline}₺</div>
+                    )}
+                    {teacher.hourlyRateInPerson != null && (
+                      <div>Yüz yüze: {teacher.hourlyRateInPerson}₺</div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </CardHeader>
-            <CardContent>
-              {availability.length === 0 ? (
-                <p className="text-center py-8 text-gray-500">
-                  Bu öğretmenin şu an müsait zamanı bulunmuyor.
-                </p>
-              ) : (
-                <div className="space-y-4">
-                  {sortedDays.map((dayStr) => {
-                    const dayNumber = parseInt(dayStr);
-                    const daySlots = availabilityByDay[dayNumber] || [];
-                    
-                    return (
-                      <div key={dayNumber} className="border rounded-lg p-4">
-                        <h3 className="font-semibold text-lg mb-3 text-gray-800">
-                          {getDayName(dayNumber)}
-                        </h3>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                          {daySlots.map((slot, index) => (
-                            <Button
-                              key={index}
-                              variant="primaryOutline"
-                              size="sm"
-                              onClick={() => handleSlotSelect(slot)}
-                              disabled={slot.isBooked || pendingSlots.has(getSlotId(slot))}
-                              className={`text-sm py-2 transition-all ${
-                                slot.isBooked 
-                                  ? "bg-gray-200 text-gray-500 cursor-not-allowed border-gray-300 opacity-70 hover:bg-gray-200 hover:text-gray-500 hover:border-gray-300" 
-                                  : pendingSlots.has(getSlotId(slot))
-                                  ? "bg-yellow-100 text-yellow-700 cursor-wait border-yellow-300 opacity-80 hover:bg-yellow-100"
-                                  : "bg-white text-green-700 border-green-200 hover:bg-green-50 hover:border-green-300 cursor-pointer"
-                              }`}
-                            >
-                              {formatTime(slot.startTime)}
-                            </Button>
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  })}
+            )}
+
+            {teacher.lessonMode && (
+              <div className="flex items-start gap-3">
+                <Monitor className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
+                <div>
+                  <div className="font-medium text-gray-800">Ders Tipi</div>
+                  <div className="text-gray-600">
+                    {formatLessonMode(teacher.lessonMode)}
+                  </div>
                 </div>
-              )}
-            </CardContent>
-          </Card>
+              </div>
+            )}
+
+            {(teacher.city || teacher.district) && (
+              <div className="flex items-start gap-3">
+                <MapPin className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
+                <div>
+                  <div className="font-medium text-gray-800">Konum</div>
+                  <div className="text-gray-600">
+                    {[teacher.district, teacher.city]
+                      .filter(Boolean)
+                      .join(", ")}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {teacher.experienceYears != null && (
+              <div className="flex items-start gap-3">
+                <Clock className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
+                <div>
+                  <div className="font-medium text-gray-800">Deneyim</div>
+                  <div className="text-gray-600">
+                    {teacher.experienceYears} yıl
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {teacher.education && (
+              <div className="flex items-start gap-3">
+                <GraduationCap className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
+                <div>
+                  <div className="font-medium text-gray-800">Eğitim</div>
+                  <div className="text-gray-600 whitespace-pre-wrap">
+                    {teacher.education}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {teacher.targetLevels && (
+              <div className="flex items-start gap-3">
+                <Users className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
+                <div>
+                  <div className="font-medium text-gray-800">Hedef Seviye</div>
+                  <div className="text-gray-600 whitespace-pre-wrap">
+                    {teacher.targetLevels}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="md:col-span-2 space-y-4">
+          <section className="bg-white border rounded-xl p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <BookOpen className="h-4 w-4 text-gray-500" />
+              <h2 className="font-semibold text-gray-900">Hakkında</h2>
+            </div>
+            <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
+              {teacher.bio?.trim() ||
+                "Bu öğretmen henüz kendisi hakkında bilgi paylaşmamış."}
+            </p>
+          </section>
+
+          {teacher.availableHours && (
+            <section className="bg-white border rounded-xl p-5">
+              <div className="flex items-center gap-2 mb-3">
+                <Clock className="h-4 w-4 text-gray-500" />
+                <h2 className="font-semibold text-gray-900">
+                  Müsait Olduğu Saatler
+                </h2>
+              </div>
+              <p className="text-sm text-gray-700 whitespace-pre-wrap">
+                {teacher.availableHours}
+              </p>
+              <p className="text-[11px] text-gray-400 mt-2">
+                Not: Bilgi amaçlıdır. Rezervasyon öğretmenle doğrudan mesajlaşma
+                üzerinden yapılır.
+              </p>
+            </section>
+          )}
         </div>
       </div>
-
-      {/* Reservation Modal */}
-      <ReservationModal
-        isOpen={showReservationModal}
-        onClose={() => {
-          setShowReservationModal(false);
-          setSelectedSlot(null);
-        }}
-        onConfirm={handleBookLesson}
-        teacherName={teacher.name}
-        selectedSlot={selectedSlot}
-        isLoading={booking}
-      />
     </div>
   );
+}
+
+function formatLessonMode(mode: string): string {
+  switch (mode) {
+    case "online":
+      return "Sadece online";
+    case "in_person":
+      return "Sadece yüz yüze";
+    case "both":
+      return "Online & yüz yüze";
+    default:
+      return mode;
+  }
 }

@@ -40,6 +40,10 @@ type TeacherApplication = {
   availableHours: string | null;
   lessonMode: string | null;
   hourlyRate: string | null;
+  hourlyRateOnline: number | null;
+  hourlyRateInPerson: number | null;
+  city: string | null;
+  district: string | null;
   bio: string | null;
   quizResult: number;
   passed: boolean;
@@ -274,10 +278,37 @@ export default function TeacherApplicationsPage() {
                     <InfoRow icon={Calendar} label="Müsaitlik" value={app.availableHours} />
                   )}
                   {app.lessonMode && (
-                    <InfoRow icon={Monitor} label="Ders Şekli" value={app.lessonMode} />
+                    <InfoRow
+                      icon={Monitor}
+                      label="Ders Şekli"
+                      value={formatLessonMode(app.lessonMode)}
+                    />
                   )}
-                  {app.hourlyRate && (
-                    <InfoRow icon={Wallet} label="Ücret" value={app.hourlyRate} />
+                  {app.hourlyRateOnline != null && (
+                    <InfoRow
+                      icon={Wallet}
+                      label="Online Ücret"
+                      value={`${app.hourlyRateOnline} ₺/saat`}
+                    />
+                  )}
+                  {app.hourlyRateInPerson != null && (
+                    <InfoRow
+                      icon={Wallet}
+                      label="Yüz Yüze Ücret"
+                      value={`${app.hourlyRateInPerson} ₺/saat`}
+                    />
+                  )}
+                  {!app.hourlyRateOnline &&
+                    !app.hourlyRateInPerson &&
+                    app.hourlyRate && (
+                      <InfoRow icon={Wallet} label="Ücret" value={app.hourlyRate} />
+                    )}
+                  {(app.city || app.district) && (
+                    <InfoRow
+                      icon={Monitor}
+                      label="Konum"
+                      value={[app.city, app.district].filter(Boolean).join(" / ")}
+                    />
                   )}
                 </div>
 
@@ -363,6 +394,19 @@ export default function TeacherApplicationsPage() {
       />
     </div>
   );
+}
+
+function formatLessonMode(mode: string): string {
+  switch (mode) {
+    case "online":
+      return "Online";
+    case "in_person":
+      return "Yüz yüze";
+    case "both":
+      return "Online & yüz yüze";
+    default:
+      return mode;
+  }
 }
 
 function InfoRow({

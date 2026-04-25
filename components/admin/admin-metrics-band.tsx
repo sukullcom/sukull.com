@@ -2,10 +2,11 @@ import db from "@/db/drizzle";
 import {
   users,
   teacherApplications,
-  privateLessonApplications,
+  listings,
+  listingOffers,
 } from "@/db/schema";
-import { eq, count, sql } from "drizzle-orm";
-import { UsersRound, Clock, CheckCircle, XCircle } from "lucide-react";
+import { eq, count } from "drizzle-orm";
+import { UsersRound, Clock, CheckCircle, XCircle, Megaphone, Handshake } from "lucide-react";
 
 export async function AdminMetricsBand() {
   const [
@@ -13,9 +14,8 @@ export async function AdminMetricsBand() {
     [teacherPendingRow],
     [teacherApprovedRow],
     [teacherRejectedRow],
-    [studentPendingRow],
-    [studentApprovedRow],
-    [studentRejectedRow],
+    [openListingsRow],
+    [pendingOffersRow],
   ] = await Promise.all([
     db.select({ value: count() }).from(users),
     db
@@ -32,16 +32,12 @@ export async function AdminMetricsBand() {
       .where(eq(teacherApplications.status, "rejected")),
     db
       .select({ value: count() })
-      .from(privateLessonApplications)
-      .where(sql`${privateLessonApplications.status} = 'pending'`),
+      .from(listings)
+      .where(eq(listings.status, "open")),
     db
       .select({ value: count() })
-      .from(privateLessonApplications)
-      .where(sql`${privateLessonApplications.status} = 'approved'`),
-    db
-      .select({ value: count() })
-      .from(privateLessonApplications)
-      .where(sql`${privateLessonApplications.status} = 'rejected'`),
+      .from(listingOffers)
+      .where(eq(listingOffers.status, "pending")),
   ]);
 
   const stats = {
@@ -49,9 +45,8 @@ export async function AdminMetricsBand() {
     teacherPending: teacherPendingRow?.value ?? 0,
     teacherApproved: teacherApprovedRow?.value ?? 0,
     teacherRejected: teacherRejectedRow?.value ?? 0,
-    studentPending: studentPendingRow?.value ?? 0,
-    studentApproved: studentApprovedRow?.value ?? 0,
-    studentRejected: studentRejectedRow?.value ?? 0,
+    openListings: openListingsRow?.value ?? 0,
+    pendingOffers: pendingOffersRow?.value ?? 0,
   };
 
   const metricCards = [
@@ -74,20 +69,20 @@ export async function AdminMetricsBand() {
       color: "bg-green-50 text-green-700 border-green-200",
     },
     {
-      label: "Bekleyen Öğrenci",
-      value: stats.studentPending,
-      icon: Clock,
+      label: "Açık İlan",
+      value: stats.openListings,
+      icon: Megaphone,
       color: "bg-orange-50 text-orange-700 border-orange-200",
     },
     {
-      label: "Onaylı Öğrenci",
-      value: stats.studentApproved,
-      icon: CheckCircle,
+      label: "Bekleyen Teklif",
+      value: stats.pendingOffers,
+      icon: Handshake,
       color: "bg-emerald-50 text-emerald-700 border-emerald-200",
     },
     {
-      label: "Reddedilen (Toplam)",
-      value: stats.teacherRejected + stats.studentRejected,
+      label: "Reddedilen Öğretmen",
+      value: stats.teacherRejected,
       icon: XCircle,
       color: "bg-red-50 text-red-700 border-red-200",
     },

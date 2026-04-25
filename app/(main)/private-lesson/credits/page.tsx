@@ -1,29 +1,25 @@
 import { Metadata } from "next";
 import { getServerUser } from "@/lib/auth";
-import { isApprovedStudent } from "@/db/queries";
 import { redirect } from "next/navigation";
 import CreditPurchase from "@/components/credit-purchase";
 
 export const metadata: Metadata = {
   title: "Kredi Satın Al | Sukull",
-  description: "Özel derslerini ayırtabilmek için ders kredisi satın al",
+  description:
+    "Özel ders pazarında mesaj kilidi açmak, teklif göndermek ve diğer etkileşimler için kredi satın al.",
 };
 
-const StudentCreditsPage = async () => {
+/**
+ * Credits page is the same for students and teachers — both sides
+ * spend credits (students to unlock messaging, teachers to submit
+ * offers). The old "approved student" gate was removed with the
+ * marketplace refactor, so any authenticated user can top up.
+ */
+const CreditsPage = async () => {
   const user = await getServerUser();
-  
-  if (!user) {
-    redirect("/login");
-  }
-  
-  // Check if user is an approved student
-  const isStudent = await isApprovedStudent(user.id);
-  
-  if (!isStudent) {
-    redirect("/private-lesson");
-  }
+  if (!user) redirect("/login");
 
   return <CreditPurchase />;
 };
 
-export default StudentCreditsPage; 
+export default CreditsPage;

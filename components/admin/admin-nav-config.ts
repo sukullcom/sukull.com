@@ -2,11 +2,10 @@ import {
   AlertTriangle,
   BarChart3,
   BookOpen,
-  GraduationCap,
   LayoutDashboard,
+  Megaphone,
   School,
   ShieldCheck,
-  Wrench,
   type LucideIcon,
 } from "lucide-react";
 
@@ -15,12 +14,16 @@ export type AdminNavItem = {
   label: string;
   icon: LucideIcon;
   /** Eğer bir sayı döndürülürse sidebar'da küçük rozet olarak gösterilir. */
-  badgeKey?: "teacherPending" | "studentPending" | "errors24h";
+  badgeKey?: "teacherPending" | "openListings" | "errors24h";
 };
 
 /**
  * Admin panelinin tek doğruluk kaynağı olan route listesi.
  * Hem sidebar hem breadcrumb hem de dashboard navigation bunu okur.
+ *
+ * Marketplace refactor'undan sonra "Öğrenci Başvuruları" ve
+ * "Öğrenci Rolü Onarımı" sekmeleri kaldırıldı; yerine açık öğrenci
+ * ilanları rozetiyle birlikte genel "İlanlar" sekmesi geldi.
  */
 export const ADMIN_NAV: AdminNavItem[] = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
@@ -32,13 +35,12 @@ export const ADMIN_NAV: AdminNavItem[] = [
     badgeKey: "teacherPending",
   },
   {
-    href: "/admin/student-applications",
-    label: "Öğrenci Başvuruları",
-    icon: GraduationCap,
-    badgeKey: "studentPending",
+    href: "/admin/listings",
+    label: "Özel Ders İlanları",
+    icon: Megaphone,
+    badgeKey: "openListings",
   },
   { href: "/admin/course-builder", label: "Kurs Oluşturucu", icon: BookOpen },
-  { href: "/admin/fix-student-roles", label: "Öğrenci Rolü Onarımı", icon: Wrench },
   {
     href: "/admin/errors",
     label: "Hata Kayıtları",

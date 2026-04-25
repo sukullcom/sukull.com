@@ -8,11 +8,13 @@ export const metadata: Metadata = {
 };
 
 /**
- * Server component: `PrivateLessonHeader` kendi içinde `"use client"`
- * olduğundan client akışı korunur ama bu wrapper sunucuda render edilir —
- * metadata eklenebilir ve gereksiz client bundle'a girmez.
+ * `PrivateLessonHeader` is now a server component that reads the
+ * user's role directly from the DB. Making this layout async lets
+ * us await it without flashing a loading shimmer, and keeps the
+ * nav off the client bundle except for the tiny active-link
+ * highlighter (`PrivateLessonNav`).
  */
-export default function PrivateLessonLayout({
+export default async function PrivateLessonLayout({
   children,
 }: {
   children: React.ReactNode;

@@ -1,80 +1,94 @@
 import { getServerUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { FeedWrapper } from "@/components/feed-wrapper";
 import { Badge } from "@/components/ui/badge";
 import db from "@/db/drizzle";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { isApprovedStudent } from "@/db/queries";
 import Image from "next/image";
-import { 
-  GraduationCap, 
-  Users, 
-  BookOpen, 
+import {
+  GraduationCap,
+  Users,
+  BookOpen,
   Trophy,
   Star,
-  Clock,
-  TrendingUp,
-  ChevronRight,
   Sparkles,
-  Check
+  Check,
+  Megaphone,
+  MessageCircle,
+  Wallet,
+  ChevronRight,
 } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
+/**
+ * Public entry for the private-lesson area. After the marketplace
+ * refactor the former "apply as student" flow is gone: any logged-in
+ * user can browse teachers and post demand listings. Teachers still
+ * go through a review, so the landing behaviour now is:
+ *   - not logged in  -> /login
+ *   - teacher role   -> /private-lesson/teacher-dashboard
+ *   - everyone else  -> marketing page with two CTAs (browse / post)
+ */
 export default async function PrivateLessonPage() {
   const user = await getServerUser();
-  
-  // Redirect to login if not logged in
-  if (!user) {
-    redirect("/login");
-  }
-  
-  // Check user role directly from the database
+  if (!user) redirect("/login");
+
   const userRecord = await db.query.users.findFirst({
     where: eq(users.id, user.id),
+    columns: { role: true },
   });
-  
-  // Check if user is a teacher by role
+
   if (userRecord?.role === "teacher") {
-    redirect("/private-lesson/teacher-dashboard/bookings");
+    redirect("/private-lesson/teacher-dashboard");
   }
-  
-  // If not a teacher by role, check if they have an approved student application
-  const isStudent = await isApprovedStudent(user.id);
-  
-  if (isStudent) {
-    redirect("/private-lesson/my-bookings");
-  }
-  
-  // Only show this UI if user is neither a teacher nor a student
+
   return (
     <div className="flex-1 mx-auto w-full flex flex-row max-w-[1200px] px-3 lg:px-0">
       <FeedWrapper>
-        {/* Hero Section */}
+        {/* Hero */}
         <div className="mb-8">
           <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 shadow-lg">
             <CardContent className="p-5 sm:p-8">
               <div className="flex flex-col lg:flex-row items-center gap-6 sm:gap-8">
                 <div className="flex-1">
                   <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
-                    Özel Ders Platformu
+                    Özel Ders Pazarı
                   </h1>
                   <p className="text-lg text-gray-600 mb-6">
-                    Alanında uzman öğretmenlerle birebir özel ders al veya bilgini paylaşarak öğretmen ol.
+                    Alanında uzman öğretmenlere ulaş ya da ilan aç, teklifler
+                    sana gelsin. Tek tıkla iletişime geç, krediyle ödeme yap.
                   </p>
                   <div className="flex flex-wrap gap-2 sm:gap-4">
-                    <Badge variant="secondary" className="px-2 sm:px-3 py-1 text-xs sm:text-sm">
+                    <Badge
+                      variant="secondary"
+                      className="px-2 sm:px-3 py-1 text-xs sm:text-sm"
+                    >
                       <Star className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                      4.9/5 Memnuniyet
+                      Doğrulanmış Öğretmenler
                     </Badge>
-                    <Badge variant="secondary" className="px-2 sm:px-3 py-1 text-xs sm:text-sm">
+                    <Badge
+                      variant="secondary"
+                      className="px-2 sm:px-3 py-1 text-xs sm:text-sm"
+                    >
                       <Users className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                      1000+ Öğretmen
+                      Hızlı Eşleşme
                     </Badge>
-                    <Badge variant="secondary" className="px-2 sm:px-3 py-1 text-xs sm:text-sm">
+                    <Badge
+                      variant="secondary"
+                      className="px-2 sm:px-3 py-1 text-xs sm:text-sm"
+                    >
                       <Trophy className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                      10.000+ Ders
+                      Kredi Tabanlı Adil Sistem
                     </Badge>
                   </div>
                 </div>
@@ -93,58 +107,9 @@ export default async function PrivateLessonPage() {
           </Card>
         </div>
 
-        {/* Main Options */}
+        {/* Primary student CTAs */}
         <div className="grid md:grid-cols-2 gap-6 mb-8">
-          {/* Teacher Option */}
-          <Card className="group hover:shadow-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer border-2 hover:border-green-300">
-            <CardHeader className="pb-4">
-              <div className="flex items-center justify-between mb-2">
-                <div className="p-3 bg-green-100 rounded-full group-hover:bg-green-200 transition-colors">
-                  <GraduationCap className="w-8 h-8 text-green-600" />
-                </div>
-                <ChevronRight className="w-6 h-6 text-gray-400 group-hover:text-green-600 transition-colors" />
-              </div>
-              <CardTitle className="text-xl sm:text-2xl">Öğretmen Ol</CardTitle>
-              <CardDescription className="text-base">
-                Bilgi ve deneyimini paylaşarak öğrencilere yardımcı ol
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-3 mb-6">
-                <li className="flex items-start gap-2">
-                  <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
-                    <Check className="w-4 h-4 text-green-500 shrink-0" />
-                  </div>
-                  <span className="text-gray-600">Kendi ders saatlerini belirle</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
-                    <Check className="w-4 h-4 text-green-500 shrink-0" />
-                  </div>
-                  <span className="text-gray-600">Ücretlerini kendin belirle</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5">
-                    <Check className="w-4 h-4 text-green-500 shrink-0" />
-                  </div>
-                  <span className="text-gray-600">Düzenli ek gelir elde edin</span>
-                </li>
-              </ul>
-              <Button 
-                asChild
-                variant="secondary"
-                size="lg"
-              >
-                <a href="/private-lesson/give">
-                  <GraduationCap className="w-4 h-4 mr-2" />
-                  Öğretmen Başvurusu Yap
-                </a>
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Student Option */}
-          <Card className="group hover:shadow-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer border-2 hover:border-blue-300">
+          <Card className="group hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-2 hover:border-blue-300">
             <CardHeader className="pb-4">
               <div className="flex items-center justify-between mb-2">
                 <div className="p-3 bg-blue-100 rounded-full group-hover:bg-blue-200 transition-colors">
@@ -152,86 +117,154 @@ export default async function PrivateLessonPage() {
                 </div>
                 <ChevronRight className="w-6 h-6 text-gray-400 group-hover:text-blue-600 transition-colors" />
               </div>
-              <CardTitle className="text-xl sm:text-2xl">Öğrenci Ol</CardTitle>
+              <CardTitle className="text-xl sm:text-2xl">
+                Öğretmen Bul
+              </CardTitle>
               <CardDescription className="text-base">
-                Uzman öğretmenlerden özel ders alarak başarını artır
+                Alanında onaylı öğretmenleri listele, filtreleyip mesaj gönder.
               </CardDescription>
             </CardHeader>
             <CardContent>
               <ul className="space-y-3 mb-6">
-                <li className="flex items-start gap-2">
-                  <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mt-0.5">
-                    <Check className="w-4 h-4 text-green-500 shrink-0" />
-                  </div>
-                  <span className="text-gray-600">Alanında uzman öğretmenler</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mt-0.5">
-                    <Check className="w-4 h-4 text-green-500 shrink-0" />
-                  </div>
-                  <span className="text-gray-600">Birebir kişiselleştirilmiş eğitim</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center mt-0.5">
-                    <Check className="w-4 h-4 text-green-500 shrink-0" />
-                  </div>
-                  <span className="text-gray-600">Esnek ders programları</span>
-                </li>
+                <Feature label="Branş, şehir, online/yüz yüze filtreleri" />
+                <Feature label="Saatlik ücret açıkça görünür" />
+                <Feature label="Mesaj kilidi tek seferlik 1 kredi" />
               </ul>
-              <Button 
-                asChild
-                variant="primary"
-                size="lg"
-              >
-                <a href="/private-lesson/get">
+              <Button asChild variant="primary" size="lg">
+                <a href="/private-lesson/teachers">
                   <BookOpen className="w-4 h-4 mr-2" />
-                  Öğrenci Başvurusu Yap
+                  Öğretmen Listesine Git
+                </a>
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="group hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-2 hover:border-yellow-300">
+            <CardHeader className="pb-4">
+              <div className="flex items-center justify-between mb-2">
+                <div className="p-3 bg-yellow-100 rounded-full group-hover:bg-yellow-200 transition-colors">
+                  <Megaphone className="w-8 h-8 text-yellow-600" />
+                </div>
+                <ChevronRight className="w-6 h-6 text-gray-400 group-hover:text-yellow-600 transition-colors" />
+              </div>
+              <CardTitle className="text-xl sm:text-2xl">
+                İlan Aç
+              </CardTitle>
+              <CardDescription className="text-base">
+                Ne öğrenmek istediğini yaz, öğretmenler sana teklif gönderir.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-3 mb-6">
+                <Feature label="Öğrenciler için ilan açmak tamamen ücretsiz" />
+                <Feature label="Her ilana en fazla 4 teklif" />
+                <Feature label="İstediğin teklifi kabul et, istediğinle iletişime geç" />
+              </ul>
+              <Button asChild variant="secondary" size="lg">
+                <a href="/private-lesson/listings/new">
+                  <Megaphone className="w-4 h-4 mr-2" />
+                  İlanımı Oluştur
                 </a>
               </Button>
             </CardContent>
           </Card>
         </div>
 
-        {/* Features Section */}
+        {/* Teacher CTA */}
+        <Card className="shadow-lg mb-8 bg-gradient-to-br from-green-50 to-emerald-100 border-green-200">
+          <CardContent className="p-6 flex flex-col sm:flex-row items-center gap-4">
+            <div className="p-3 bg-white rounded-full shrink-0">
+              <GraduationCap className="w-8 h-8 text-green-600" />
+            </div>
+            <div className="flex-1 text-center sm:text-left">
+              <h2 className="text-xl font-bold text-gray-800 mb-1">
+                Ders vermek istiyor musun?
+              </h2>
+              <p className="text-sm text-gray-600">
+                Kısa bir başvuru formuyla profilini oluştur, onaylandıktan sonra
+                öğrenciler sana mesaj gönderebilir ve ilanlara teklif verebilirsin.
+              </p>
+            </div>
+            <Button asChild variant="primary" size="lg">
+              <a href="/private-lesson/give">
+                <GraduationCap className="w-4 h-4 mr-2" />
+                Öğretmen Ol
+              </a>
+            </Button>
+          </CardContent>
+        </Card>
+
+        {/* How it works */}
         <Card className="shadow-lg">
           <CardHeader>
-            <CardTitle className="text-2xl text-center">Neden bizi tercih etmelisin?</CardTitle>
+            <CardTitle className="text-2xl text-center">
+              Nasıl çalışır?
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 bg-purple-100 rounded-full flex items-center justify-center">
-                  <Clock className="w-8 h-8 text-purple-600" />
-                </div>
-                <h3 className="font-semibold mb-2">Esnek Zamanlama</h3>
-                <p className="text-sm text-gray-600">
-                  Kendi programına uygun ders saatlerini seç
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 bg-orange-100 rounded-full flex items-center justify-center">
-                  <TrendingUp className="w-8 h-8 text-orange-600" />
-                </div>
-                <h3 className="font-semibold mb-2">Hızlı İlerleme</h3>
-                <p className="text-sm text-gray-600">
-                  Birebir eğitimle daha hızlı öğrenin ve gelişin
-                </p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
-                  <Trophy className="w-8 h-8 text-green-600" />
-                </div>
-                <h3 className="font-semibold mb-2">Garantili Kalite</h3>
-                <p className="text-sm text-gray-600">
-                  Onaylı ve deneyimli öğretmenlerle çalışın
-                </p>
-              </div>
+              <HowItem
+                icon={BookOpen}
+                color="blue"
+                title="1. Keşfet"
+                desc="Öğretmen listesinden ya da açık ilanlar üzerinden aradığını bul."
+              />
+              <HowItem
+                icon={MessageCircle}
+                color="green"
+                title="2. İletişime geç"
+                desc="Krediyle öğretmen mesaj kilidini aç ya da ilanına gelen teklifleri değerlendir."
+              />
+              <HowItem
+                icon={Wallet}
+                color="yellow"
+                title="3. Anlaş"
+                desc="Fiyatı, yeri, saati doğrudan konuş. Platform aradan çekilir."
+              />
             </div>
           </CardContent>
         </Card>
       </FeedWrapper>
+    </div>
+  );
+}
 
-      
+function Feature({ label }: { label: string }) {
+  return (
+    <li className="flex items-start gap-2">
+      <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5 shrink-0">
+        <Check className="w-4 h-4 text-green-500" />
+      </div>
+      <span className="text-gray-600">{label}</span>
+    </li>
+  );
+}
+
+function HowItem({
+  icon: Icon,
+  color,
+  title,
+  desc,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  color: "blue" | "green" | "yellow";
+  title: string;
+  desc: string;
+}) {
+  const bg: Record<typeof color, string> = {
+    blue: "bg-blue-100 text-blue-600",
+    green: "bg-green-100 text-green-600",
+    yellow: "bg-yellow-100 text-yellow-600",
+  };
+  return (
+    <div className="text-center">
+      <div
+        className={`w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center ${bg[color]}`}
+      >
+        <Icon className="w-8 h-8" />
+      </div>
+      <h3 className="font-semibold mb-2">{title}</h3>
+      <p className="text-sm text-gray-600">{desc}</p>
     </div>
   );
 }

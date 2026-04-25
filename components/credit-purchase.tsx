@@ -17,11 +17,18 @@ interface CreditPackage {
   popular?: boolean
 }
 
+// Quantity-based discount packages. Per-credit price falls as you
+// buy more; the `popular` flag biases the initial selection toward
+// the 4-pack which has the best early discount.
+//
+// These are placeholders — pricing is a business lever, not a
+// contract. If you want to change them, update here and in the
+// payment server's price list so checkout validates.
 const creditPackages: CreditPackage[] = [
-  { id: '1', credits: 1, price: 500 },
-  { id: '4', credits: 4, price: 2000, popular: true },
-  { id: '8', credits: 8, price: 3800 },
-  { id: '12', credits: 12, price: 5400 }
+  { id: '1', credits: 1, price: 40 },
+  { id: '4', credits: 4, price: 140, popular: true },
+  { id: '10', credits: 10, price: 300 },
+  { id: '25', credits: 25, price: 650 },
 ]
 
 export default function CreditPurchase() {
@@ -260,8 +267,15 @@ export default function CreditPurchase() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
       <div className="text-center mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Ders Kredisi Satın Al</h1>
-        <p className="text-gray-600">Özel derslerinizi ayırtabilmek için kredi satın alın</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+          Kredi Satın Al
+        </h1>
+        <p className="text-gray-600 max-w-xl mx-auto">
+          Krediler hem öğrenciler hem öğretmenler için geçerlidir. Öğrenciler
+          bir öğretmene mesaj göndermek için <b>1 kredi</b>, öğretmenler bir
+          ilana teklif vermek için <b>1 kredi</b> harcar. Daha büyük paket
+          aldıkça kredi başına fiyat düşer.
+        </p>
       </div>
 
       {/* Current Credits Display */}
@@ -269,8 +283,12 @@ export default function CreditPurchase() {
         <CardContent className="p-4 sm:p-6">
           <div className="flex items-center justify-between gap-4">
             <div className="min-w-0">
-              <h3 className="text-base sm:text-lg font-semibold text-gray-900">Mevcut Kredileriniz</h3>
-              <p className="text-sm text-gray-600">Kullanılabilir ders kredisi</p>
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900">
+                Mevcut Kredin
+              </h3>
+              <p className="text-sm text-gray-600">
+                Kullanılabilir kredi bakiyesi
+              </p>
             </div>
             <div className="text-right flex-shrink-0">
               {loadingCredits ? (
@@ -312,8 +330,17 @@ export default function CreditPurchase() {
                     {pkg.price.toLocaleString('tr-TR')} ₺
                   </div>
                   <div className="text-xs text-gray-500">
-                    {(pkg.price / pkg.credits).toLocaleString('tr-TR')} ₺/kredi
+                    {(pkg.price / pkg.credits).toLocaleString('tr-TR', {
+                      maximumFractionDigits: 2,
+                    })}{' '}
+                    ₺/kredi
                   </div>
+                  {pkg.id !== '1' && (
+                    <div className="text-[10px] text-green-600 font-medium mt-1">
+                      %{Math.round((1 - pkg.price / pkg.credits / 40) * 100)}{' '}
+                      indirim
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             ))}
@@ -328,7 +355,9 @@ export default function CreditPurchase() {
           <Card className="mb-6 bg-gray-50">
             <CardContent className="p-4">
               <div className="flex justify-between items-center">
-                <span className="font-medium">{selectedPackage.credits} Ders Kredisi</span>
+                <span className="font-medium">
+                  {selectedPackage.credits} Kredi
+                </span>
                 <span className="text-xl font-bold text-blue-600">
                   {selectedPackage.price.toLocaleString('tr-TR')} ₺
                 </span>

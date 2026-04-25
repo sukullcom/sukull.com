@@ -86,6 +86,9 @@ export interface ApiResponse<T> {
   status?: number;
 }
 
+// Lightweight user shape used by misc UI (profile page, avatars).
+// Marketplace/DB-level user data comes from Drizzle types directly,
+// so we keep this purely for presentation fields.
 export interface User {
   id: string;
   name: string;
@@ -93,73 +96,6 @@ export interface User {
   avatar?: string;
   description?: string;
   role?: string;
-  meetLink?: string;
-}
-
-export interface Booking {
-  id: number;
-  studentId: string;
-  teacherId: string;
-  startTime: string;
-  endTime: string;
-  status: string;
-  meetLink?: string;
-  field?: string;
-  createdAt: string;
-  updatedAt: string;
-  notes?: string;
-  student?: User;
-  teacher?: User;
-  studentName?: string;
-  studentEmail?: string;
-  studentUsername?: string;
-}
-
-export interface TeacherApplication {
-  id: number;
-  userId: string;
-  field: string;
-  quizResult: number;
-  passed: boolean;
-  teacherName?: string;
-  teacherSurname?: string;
-  teacherPhoneNumber?: string;
-  teacherEmail?: string;
-  classification?: string;
-  status: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface TeacherField {
-  id: number;
-  teacherId: string;
-  subject: string;
-  grade: string;
-  displayName: string;
-  isActive: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface FieldOption {
-  subject: string;
-  grade: string;
-  displayName: string;
-}
-
-export interface StudentApplication {
-  id: number;
-  studentName: string;
-  studentSurname: string;
-  studentPhoneNumber: string;
-  studentEmail: string;
-  field: string;
-  studentNeeds?: string;
-  userId?: string;
-  status: string;
-  approved: boolean;
-  createdAt: string;
 }
 
 export interface School {
@@ -171,14 +107,6 @@ export interface School {
   kind: string | null;
   type: string;
   totalPoints: number;
-}
-
-export interface TimeSlot {
-  startTime: Date;
-  endTime: Date;
-  dayOfWeek: number;
-  isBooked?: boolean;
-  isSelected?: boolean;
 }
 
 export interface ToastConfig {

@@ -54,10 +54,6 @@ const nextConfig = {
         source: '/api/admin/teacher-applications',
         destination: '/api/admin?action=teacher-applications',
       },
-      {
-        source: '/api/admin/student-applications',
-        destination: '/api/admin?action=student-applications',
-      },
     ];
   },
   async headers() {
