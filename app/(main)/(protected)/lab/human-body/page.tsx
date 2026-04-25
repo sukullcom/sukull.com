@@ -276,7 +276,7 @@ const HangmanGame = ({
 
   if (gameFinished) {
     return (
-      <div className="relative overflow-hidden w-full h-screen p-4">
+      <div className="relative overflow-hidden w-full h-[var(--app-main-inner-minh)] p-4">
         <Confetti
           width={width}
           height={height}
@@ -363,7 +363,7 @@ const VideoPage = () => {
   const router = useRouter(); // Initialize router
 
   return (
-    <div className="min-h-screen p-6 flex flex-col items-center">
+    <div className="app-main-content-minh p-6 flex flex-col items-center">
       <div className="flex justify-between w-full max-w-4xl">
         {/* Turn Back Button */}
         <Button variant="default" onClick={() => router.push("/lab")}>

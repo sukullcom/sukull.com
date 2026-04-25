@@ -22,7 +22,7 @@ export default async function CoursesPage() {
     ]);
 
     return (
-      <div className="h-full max-w-[960px] px-4 sm:px-6 mx-auto py-6">
+      <div className="w-full max-w-[960px] px-4 sm:px-6 mx-auto py-6">
         <div className="text-center mb-6">
           <h1 className="text-2xl sm:text-3xl font-extrabold text-neutral-800">
             Ne öğrenmek istersin?

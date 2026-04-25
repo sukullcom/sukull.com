@@ -30,9 +30,9 @@ const CodeEditorClient = () => {
     <div
       className={`absolute ${
         isSidebarOpen ? "left-64" : "left-0"
-      } top-[50px] bottom-[64px] right-0 bg-white`}
+      } top-[50px] right-0 bottom-0 max-lg:bottom-[var(--app-bottom-inset)] bg-white`}
     >
-      <div className="min-h-screen">
+      <div className="h-full min-h-0 overflow-y-auto">
         <div className="max-w-[1800px] mx-auto p-4">
           <Header />
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

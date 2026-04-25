@@ -131,7 +131,7 @@ export default function SnippetsPage() {
   });
 
   return (
-    <div className="rounded-2xl min-h-screen bg-[#111827] text-sm sm:text-base p-2 mx-2 mb-4 border-2 border-gray-400 ">
+    <div className="rounded-2xl app-main-content-minh bg-[#111827] text-sm sm:text-base p-2 mx-2 mb-4 border-2 border-gray-400 ">
       <div className="relative max-w-7xl mx-auto px-4 py-8 sm:py-12">
         {/* Hero */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 px-2">

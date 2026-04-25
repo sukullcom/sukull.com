@@ -52,7 +52,7 @@ export default function SelectDifficultyPage() {
   // Show loading spinner when navigating to game
   if (isLoading) {
     return (
-      <div className="h-screen flex flex-col items-center justify-center">
+      <div className="app-main-content-minh w-full flex flex-col items-center justify-center">
         <LoadingSpinner size="lg" />
         <p className="mt-4 text-muted-foreground text-center max-w-md">
           {selectedDifficulty} zorluk seviyesi ile oyun yükleniyor...

@@ -1503,7 +1503,7 @@ export default function StudyBuddyPage() {
               {/* Chat Messages */}
               <div className={`col-span-1 md:col-span-2 ${!selectedChat ? 'hidden md:block' : ''}`}>
                 {selectedChat ? (
-                  <Card className="h-[calc(100vh-12rem)] md:h-[calc(100vh-14rem)] flex flex-col overflow-hidden">
+                  <Card className="h-[calc(100dvh-12rem-var(--app-bottom-inset))] md:h-[calc(100dvh-14rem-var(--app-bottom-inset))] lg:h-[calc(100dvh-14rem)] flex flex-col overflow-hidden">
                     <div className="border-b bg-white px-3 sm:px-4 py-3 flex items-center justify-between shrink-0">
                       <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                         <button
@@ -1595,7 +1595,7 @@ export default function StudyBuddyPage() {
                     </div>
                   </Card>
                 ) : (
-                  <Card className="h-64 md:h-[calc(100vh-14rem)] flex items-center justify-center">
+                  <Card className="h-64 md:min-h-[16rem] md:h-[calc(100dvh-14rem-var(--app-bottom-inset))] lg:h-[calc(100dvh-14rem)] flex items-center justify-center">
                     <div className="text-center px-4">
                       <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
                         <MessageCircle className="h-8 w-8 text-gray-400" />

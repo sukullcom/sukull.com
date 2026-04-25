@@ -20,7 +20,7 @@ export default async function PrivateLessonLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col min-h-[calc(100vh-4rem)] min-h-0">
+    <div className="flex flex-col min-h-0 w-full">
       <div className="max-w-5xl mx-auto w-full pt-4 sm:pt-6">
         <PrivateLessonHeader />
       </div>

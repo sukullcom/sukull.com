@@ -11,18 +11,38 @@ body,
   @apply h-full;
 }
 
-/* Mobil alt gezinme (BottomNavigator) ile aynı yükseklik — içerik kaymasın / kesilmesin */
+/* Sabit alt menü (BottomNavigator) ile aynı rezerv — tüm sitede tek sayı kaynağı */
 :root {
+  --app-mobile-header-h: 3.125rem; /* 50px — (main) + MobileHeader */
   --app-bottom-nav-row: 3.75rem; /* 60px: ikon satırı */
+  /* Ekstra tampon: Android/Chrome + tap hedefi; safe-area ayrıca eklenecek */
   --app-bottom-inset: calc(
-    var(--app-bottom-nav-row) + max(0.5rem, env(safe-area-inset-bottom, 0px)) + 0.5rem
+    var(--app-bottom-nav-row) + max(0.5rem, env(safe-area-inset-bottom, 0px)) + 1rem
   );
+  /* min-h / tam yük sayfalar — masaüstü: tüm dvh. Mobil aşağıdaki @media’da ezeriz. */
+  --app-main-inner-minh: 100dvh;
+}
+@media (max-width: 1023px) {
+  :root {
+    /* (main) + pt-6: header, alt menü, güvenli alan düşülmüş kullanılabilir yükseklik */
+    --app-main-inner-minh: max(
+      0px,
+      calc(
+        100dvh - var(--app-mobile-header-h) - var(--app-bottom-inset) - 1.5rem
+      )
+    );
+  }
 }
 
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  /** (main) içinde: min-h-screen / h-screen yerine — değer --app-main-inner-minh */
+  .app-main-content-minh {
+    min-height: var(--app-main-inner-minh);
   }
 }
 

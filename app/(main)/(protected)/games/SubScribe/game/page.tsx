@@ -160,7 +160,7 @@ Lütfen ana sayfaya dönüp hazır videolardan birini seçin.`);
 
   if (loading) {
     return (
-      <div className="h-screen flex flex-col items-center justify-center">
+      <div className="app-main-content-minh w-full flex flex-col items-center justify-center">
         <LoadingSpinner size="lg" />
         <p className="mt-4 text-muted-foreground text-center max-w-md">
           Transcript yükleniyor ve oyun hazırlanıyor...

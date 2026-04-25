@@ -238,7 +238,7 @@ export default function PianoPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#fafafb] flex flex-col items-center p-4">
+    <div className="app-main-content-minh bg-[#fafafb] flex flex-col items-center p-4">
       <div className="bg-[#141414] rounded-2xl p-6 w-full max-w-4xl">
         {/* Header */}
         <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-[#B2B2B2] gap-4">
