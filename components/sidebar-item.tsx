@@ -3,11 +3,15 @@
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 
 type Props = {
   label: string;
-  iconSrc: string;
+  // Accept both forms `next/image`'s `src` prop supports: a string
+  // URL/path (`"/study_buddy.svg"`) and a `StaticImageData` produced
+  // by `import icon from "@/public/foo.svg"`. The latter gives Next
+  // the width/height at build time so the layout doesn't reflow.
+  iconSrc: string | StaticImageData;
   href: string;
 };
 
