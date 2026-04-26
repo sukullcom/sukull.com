@@ -117,7 +117,12 @@ const DEFAULT_ERROR_COPY: ErrorDetails = {
 };
 
 export default function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
-  const { error: errorMessage, error_code } = searchParams;
+  // `searchParams.error` is the legacy free-text payload that older
+  // deploys of the callback route may still emit; we intentionally
+  // ignore its value (it can contain raw upstream messages we don't
+  // want to render) and rely solely on the documented `error_code`
+  // → copy mapping below.
+  const { error_code } = searchParams;
 
   const errorDetails = (error_code && ERROR_COPY[error_code]) || DEFAULT_ERROR_COPY;
 
