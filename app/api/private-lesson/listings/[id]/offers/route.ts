@@ -43,6 +43,20 @@ export async function GET(
       );
     }
 
+    // Listings + offers are fan-out reads — every teacher who considers
+    // bidding pulls this. Per-user cap protects the DB from a single
+    // actor iterating all open listings in a loop.
+    const rl = await checkRateLimit({
+      key: `listingsRead:user:${user.id}`,
+      ...RATE_LIMITS.listingsRead,
+    });
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: "Çok sık istek. Biraz sonra tekrar deneyin." },
+        { status: 429, headers: rateLimitHeaders(rl) },
+      );
+    }
+
     const id = Number.parseInt(params.id, 10);
     if (!Number.isFinite(id) || id <= 0) {
       return NextResponse.json({ error: "Geçersiz ilan" }, { status: 400 });
@@ -123,9 +137,14 @@ export async function POST(
       );
     }
 
+    // Money flow: each offer attempt debits 1 credit inside the
+    // transaction downstream. Fail-closed on limiter outage keeps a
+    // stuck retry loop from spending a teacher's balance while the DB
+    // is already in trouble.
     const rl = await checkRateLimit({
       key: `listingOffer:user:${user.id}`,
       ...RATE_LIMITS.listingOffer,
+      onStoreError: "closed",
     });
     if (!rl.allowed) {
       return NextResponse.json(

@@ -87,9 +87,15 @@ export async function deleteMyAccount(
   }
   const userId = authUser.id;
 
+  // Irreversible destructive flow. If the limiter store is unreachable
+  // we would rather tell the user to retry in a minute (fail-closed)
+  // than accept an unbounded burst of delete attempts that could
+  // cascade through the erasure transaction while the DB is already
+  // under pressure.
   const limit = await checkRateLimit({
     key: `account-delete:user:${userId}`,
     ...RATE_LIMITS.accountDelete,
+    onStoreError: "closed",
   });
   if (!limit.allowed) {
     return { ok: false, code: "rate_limited" };

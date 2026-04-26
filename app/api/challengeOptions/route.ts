@@ -3,20 +3,15 @@ import { NextResponse } from "next/server"
 import db from "@/db/drizzle"
 import { challengeOptions } from "@/db/schema"
 import { isAdmin } from "@/lib/admin"
+import { parseRangeHeader } from "@/lib/pagination"
 import { sql } from "drizzle-orm"
 
 export const GET = async (req: Request) => {
     if (!(await isAdmin())) {
         return new NextResponse("Bu işlem için yetkiniz yok.", { status: 401 })
     }
-    
-    // Parse pagination parameters
-    const rangeHeader = req.headers.get('Range') || 'items=0-9';
-    const [, rangeValue] = rangeHeader.split('=');
-    const [startStr, endStr] = rangeValue.split('-');
-    const start = parseInt(startStr, 10);
-    const end = parseInt(endStr, 10);
-    const limit = end - start + 1;
+
+    const { start, end, limit } = parseRangeHeader(req.headers.get('Range'));
     
     // Get total count
     const [{ count: totalCount }] = await db.select({
@@ -46,11 +41,51 @@ export const POST = async (req: Request) => {
     if (!(await isAdmin())) {
         return new NextResponse("Bu işlem için yetkiniz yok.", { status: 401 })
     }
-    const body = await req.json()
+    const body = (await req.json().catch(() => ({}))) as Record<string, unknown>;
 
-    const data = await db.insert(challengeOptions).values({
-        ...body,
-    }).returning()
+    // Explicit allow-list: admin tokens are high-value and `values({ ...body })`
+    // would silently accept any column Drizzle knows about — including
+    // fields introduced by future migrations that weren't considered
+    // here (defence-in-depth against "schema grew → admin form shipped
+    // an extra field I didn't mean to expose").
+    const challengeId = Number(body.challengeId);
+    if (!Number.isFinite(challengeId) || challengeId <= 0) {
+        return NextResponse.json(
+            { error: "challengeId is required and must be a positive number." },
+            { status: 400 },
+        );
+    }
+    const text = typeof body.text === "string" ? body.text : null;
+    if (!text || text.length === 0) {
+        return NextResponse.json(
+            { error: "text is required." },
+            { status: 400 },
+        );
+    }
+
+    const values = {
+        challengeId,
+        text,
+        correct: Boolean(body.correct),
+        imageSrc: typeof body.imageSrc === "string" ? body.imageSrc : null,
+        audioSrc: typeof body.audioSrc === "string" ? body.audioSrc : null,
+        correctOrder:
+            body.correctOrder === null || body.correctOrder === undefined
+                ? null
+                : Number.isFinite(Number(body.correctOrder))
+                    ? Math.trunc(Number(body.correctOrder))
+                    : null,
+        pairId:
+            body.pairId === null || body.pairId === undefined
+                ? null
+                : Number.isFinite(Number(body.pairId))
+                    ? Math.trunc(Number(body.pairId))
+                    : null,
+        isBlank: typeof body.isBlank === "boolean" ? body.isBlank : false,
+        dragData: typeof body.dragData === "string" ? body.dragData : null,
+    };
+
+    const data = await db.insert(challengeOptions).values(values).returning();
 
     return NextResponse.json(data[0])
 }

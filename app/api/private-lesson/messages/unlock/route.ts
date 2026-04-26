@@ -28,9 +28,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Money flow: opening an unlock spends 1 credit. If the rate-limit
+    // backing store is unreachable we prefer to refuse the write (503
+    // via retry) over accepting an unbounded burst that could drain
+    // many users' credits during a DB incident.
     const rl = await checkRateLimit({
       key: `messageUnlock:user:${user.id}`,
       ...RATE_LIMITS.messageUnlock,
+      onStoreError: "closed",
     });
     if (!rl.allowed) {
       return NextResponse.json(

@@ -20,19 +20,34 @@ export type RateLimitOptions = {
   max: number;
   /** Window size in seconds. */
   windowSeconds: number;
+  /**
+   * What to do when the backing store is unavailable (DB down, pool
+   * exhausted, etc). Defaults to `"open"` so that a 60-second Postgres
+   * blip does not lock every logged-in user out.
+   *
+   * Set to `"closed"` on endpoints where the cost of an unbounded
+   * request flood outweighs the availability hit — in practice that
+   * means money flows (payments, credit spend) and destructive writes
+   * (account deletion). On those paths, returning 503 during a DB
+   * outage is strictly safer than accepting the write.
+   */
+  onStoreError?: "open" | "closed";
 };
 
 /**
  * Distributed rate limiter backed by the Postgres `check_rate_limit` function.
  * Atomic under concurrent requests and survives across serverless invocations.
  *
- * On DB errors this returns `{ allowed: true }` (fail-open) so that a
- * transient DB outage never locks all users out. Errors are logged.
+ * On DB errors this returns `{ allowed: true }` by default (fail-open)
+ * so a transient DB outage never locks all users out. Callers that
+ * guard money flows or destructive actions can opt into fail-closed
+ * via `onStoreError: "closed"`. Errors are always logged.
  */
 export async function checkRateLimit({
   key,
   max,
   windowSeconds,
+  onStoreError = "open",
 }: RateLimitOptions): Promise<RateLimitResult> {
   try {
     const result = await db.execute(
@@ -44,7 +59,9 @@ export async function checkRateLimit({
       (result as unknown as Array<Record<string, unknown>>)[0];
 
     if (!row) {
-      return fallbackAllow(max, windowSeconds);
+      return onStoreError === "closed"
+        ? fallbackDeny(windowSeconds)
+        : fallbackAllow(max, windowSeconds);
     }
 
     const resetAt = new Date(row.reset_at as string);
@@ -61,9 +78,11 @@ export async function checkRateLimit({
       error,
       source: "middleware",
       location: "rate-limit-db/checkRateLimit",
-      fields: { key, max, windowSeconds },
+      fields: { key, max, windowSeconds, onStoreError },
     });
-    return fallbackAllow(max, windowSeconds);
+    return onStoreError === "closed"
+      ? fallbackDeny(windowSeconds)
+      : fallbackAllow(max, windowSeconds);
   }
 }
 
@@ -71,6 +90,21 @@ function fallbackAllow(max: number, windowSeconds: number): RateLimitResult {
   return {
     allowed: true,
     remaining: max,
+    resetAt: new Date(Date.now() + windowSeconds * 1000),
+    retryAfter: windowSeconds,
+  };
+}
+
+/**
+ * Used only when `onStoreError: "closed"` is set and the limiter
+ * backing store is unreachable. Callers see a 429-shaped result and
+ * are told to retry after the full window, which is the safest
+ * behaviour for destructive / money-moving endpoints.
+ */
+function fallbackDeny(windowSeconds: number): RateLimitResult {
+  return {
+    allowed: false,
+    remaining: 0,
     resetAt: new Date(Date.now() + windowSeconds * 1000),
     retryAfter: windowSeconds,
   };
@@ -150,6 +184,42 @@ export const RATE_LIMITS = {
   teacherDetails: { max: 60, windowSeconds: 60 },
   /** Generic authenticated read bucket when no specific preset fits. */
   read: { max: 120, windowSeconds: 60 },
+  /**
+   * Marketplace listing reads (list, detail, offers).
+   *
+   * These GETs hit uncached joins across `private_lesson_listings`,
+   * `private_lesson_offers`, and the teacher profile table. At 10k MAU
+   * an unthrottled POSTMan loop can easily drive the slow-query shelf
+   * above its p99 budget. 90/min is generous for a legitimate user
+   * flipping between filters but caps scrapers.
+   */
+  listingsRead: { max: 90, windowSeconds: 60 },
+  /**
+   * Message / chat reads (conversation list, transcript, contact reveal).
+   *
+   * The `[chatId]` transcript endpoint pulls up to 500 rows per call,
+   * and the contact-reveal endpoint returns PII after unlock — both
+   * warrant a per-user ceiling even behind membership checks. 120/min
+   * supports legitimate realtime polling (every ~2 s) but rejects the
+   * "scrape every chat I was ever added to" pattern.
+   */
+  messagesRead: { max: 120, windowSeconds: 60 },
+  /**
+   * Consolidated `/api/user?action=…` reader.
+   *
+   * Clients poll this for credits + progress + streak changes after
+   * mutations. We keep it generous (3/s sustained) but bounded so a
+   * runaway useEffect can't pin a single user's connection slot.
+   */
+  userApiRead: { max: 180, windowSeconds: 60 },
+  /**
+   * Lightweight per-user probes that get called on every login or
+   * navigation (streak continuity check, "do I have a teacher
+   * application?" lookup). They're not expensive individually but a
+   * client-side loop could make them the cheapest way to DoS the
+   * transaction pooler. 60/min is ~10× the realistic rate.
+   */
+  lightProbe: { max: 60, windowSeconds: 60 },
 
   // --- Public reads — IP-scoped ---
   /** Schools search/cities/districts/categories. Heavy GROUP BY aggregations. */

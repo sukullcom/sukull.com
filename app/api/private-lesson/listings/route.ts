@@ -11,13 +11,9 @@
  * /listings/[id]/offers.
  */
 import { NextRequest, NextResponse } from "next/server";
-import { getServerUser } from "@/lib/auth";
 import { getRequestLogger } from "@/lib/logger";
-import {
-  checkRateLimit,
-  RATE_LIMITS,
-  rateLimitHeaders,
-} from "@/lib/rate-limit-db";
+import { RATE_LIMITS } from "@/lib/rate-limit-db";
+import { secureApi } from "@/lib/api-middleware";
 import { createListing, getOpenListings } from "@/db/queries";
 import type { ListingLessonMode } from "@/db/queries/listings";
 import db from "@/db/drizzle";
@@ -26,69 +22,57 @@ import { eq } from "drizzle-orm";
 
 const VALID_LESSON_MODES: ListingLessonMode[] = ["online", "in_person", "both"];
 
-export async function GET(request: NextRequest) {
-  try {
-    const user = await getServerUser();
-    if (!user) {
-      return NextResponse.json(
-        { error: "Giriş yapmanız gerekiyor" },
-        { status: 401 },
-      );
+export const GET = secureApi.authRateLimited(
+  {
+    bucket: "listings-list",
+    keyKind: "user",
+    ...RATE_LIMITS.listingsRead,
+  },
+  async (request) => {
+    try {
+      const { searchParams } = new URL(request.url);
+      const subject = searchParams.get("subject") ?? undefined;
+      const city = searchParams.get("city") ?? undefined;
+      const rawMode = searchParams.get("lessonMode");
+      const lessonMode =
+        rawMode && (VALID_LESSON_MODES as string[]).includes(rawMode)
+          ? (rawMode as ListingLessonMode)
+          : undefined;
+      const limit = clampInt(searchParams.get("limit"), 1, 100, 20);
+      const offset = clampInt(searchParams.get("offset"), 0, 10_000, 0);
+
+      const rows = await getOpenListings({
+        subject,
+        city,
+        lessonMode,
+        limit,
+        offset,
+      });
+
+      return NextResponse.json({ listings: rows });
+    } catch (error) {
+      const log = await getRequestLogger({
+        labels: { route: "api/private-lesson/listings", op: "list" },
+      });
+      log.error({
+        message: "list listings failed",
+        error,
+        source: "api-route",
+        location: "api/private-lesson/listings/GET",
+      });
+      return NextResponse.json({ error: "İlanlar alınamadı" }, { status: 500 });
     }
+  },
+);
 
-    const { searchParams } = new URL(request.url);
-    const subject = searchParams.get("subject") ?? undefined;
-    const city = searchParams.get("city") ?? undefined;
-    const rawMode = searchParams.get("lessonMode");
-    const lessonMode =
-      rawMode && (VALID_LESSON_MODES as string[]).includes(rawMode)
-        ? (rawMode as ListingLessonMode)
-        : undefined;
-    const limit = clampInt(searchParams.get("limit"), 1, 100, 20);
-    const offset = clampInt(searchParams.get("offset"), 0, 10_000, 0);
-
-    const rows = await getOpenListings({
-      subject,
-      city,
-      lessonMode,
-      limit,
-      offset,
-    });
-
-    return NextResponse.json({ listings: rows });
-  } catch (error) {
-    const log = await getRequestLogger({
-      labels: { route: "api/private-lesson/listings", op: "list" },
-    });
-    log.error({
-      message: "list listings failed",
-      error,
-      location: "api/private-lesson/listings/GET",
-    });
-    return NextResponse.json({ error: "İlanlar alınamadı" }, { status: 500 });
-  }
-}
-
-export async function POST(request: NextRequest) {
-  try {
-    const user = await getServerUser();
-    if (!user) {
-      return NextResponse.json(
-        { error: "Giriş yapmanız gerekiyor" },
-        { status: 401 },
-      );
-    }
-
-    const rl = await checkRateLimit({
-      key: `listingWrite:user:${user.id}`,
-      ...RATE_LIMITS.listingWrite,
-    });
-    if (!rl.allowed) {
-      return NextResponse.json(
-        { error: "Çok sık ilan oluşturuyorsunuz. Biraz sonra tekrar deneyin." },
-        { status: 429, headers: rateLimitHeaders(rl) },
-      );
-    }
+export const POST = secureApi.authRateLimited(
+  {
+    bucket: "listings-create",
+    keyKind: "user",
+    ...RATE_LIMITS.listingWrite,
+  },
+  async (request: NextRequest, user) => {
+    try {
 
     const body = (await request.json().catch(() => ({}))) as Record<
       string,
@@ -160,22 +144,24 @@ export async function POST(request: NextRequest) {
         .where(eq(users.id, user.id));
     }
 
-    return NextResponse.json({ listing: row }, { status: 201 });
-  } catch (error) {
-    const log = await getRequestLogger({
-      labels: { route: "api/private-lesson/listings", op: "create" },
-    });
-    log.error({
-      message: "create listing failed",
-      error,
-      location: "api/private-lesson/listings/POST",
-    });
-    return NextResponse.json(
-      { error: "İlan oluşturulamadı" },
-      { status: 500 },
-    );
-  }
-}
+      return NextResponse.json({ listing: row }, { status: 201 });
+    } catch (error) {
+      const log = await getRequestLogger({
+        labels: { route: "api/private-lesson/listings", op: "create" },
+      });
+      log.error({
+        message: "create listing failed",
+        error,
+        source: "api-route",
+        location: "api/private-lesson/listings/POST",
+      });
+      return NextResponse.json(
+        { error: "İlan oluşturulamadı" },
+        { status: 500 },
+      );
+    }
+  },
+);
 
 function str(v: unknown): string {
   return typeof v === "string" ? v.trim() : "";

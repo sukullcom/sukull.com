@@ -19,9 +19,14 @@ export async function GET(request: Request) {
     const next = requestUrl.searchParams.get('next');
 
     if (error) {
+      // Supabase-upstream error codes (`bad_oauth_state`,
+      // `access_denied`, etc.) are stable identifiers — safe to
+      // forward verbatim. The free-form message in `error_description`
+      // is stripped to keep the referrer chain clean; the code is
+      // enough for the auth-error page to render a helpful message.
       log.warn('auth callback received error param', { error });
       const errorUrl = new URL('/auth-error', requestUrl.origin);
-      errorUrl.searchParams.set('error', error);
+      errorUrl.searchParams.set('error_code', error);
       return NextResponse.redirect(errorUrl);
     }
 
@@ -42,8 +47,13 @@ export async function GET(request: Request) {
           location: 'auth/callback/verifyOtp',
           fields: { type },
         });
+        // Use a stable error code in the URL instead of the raw
+        // `verifyError.message`. Supabase messages can include internal
+        // hints (e.g. "Token has expired or is invalid") that end up in
+        // browser history / Referer headers. The landing page
+        // `/auth-error` maps codes back to user-facing copy.
         const errorUrl = new URL('/auth-error', requestUrl.origin);
-        errorUrl.searchParams.set('error', verifyError.message);
+        errorUrl.searchParams.set('error_code', 'otp_verify_failed');
         return NextResponse.redirect(errorUrl);
       }
       authUser = data.user;
@@ -58,13 +68,13 @@ export async function GET(request: Request) {
           location: 'auth/callback/exchangeCode',
         });
         const errorUrl = new URL('/auth-error', requestUrl.origin);
-        errorUrl.searchParams.set('error', authError.message);
+        errorUrl.searchParams.set('error_code', 'code_exchange_failed');
         return NextResponse.redirect(errorUrl);
       }
       authUser = data.user;
     } else {
       const errorUrl = new URL('/auth-error', requestUrl.origin);
-      errorUrl.searchParams.set('error', 'Doğrulama parametresi bulunamadı');
+      errorUrl.searchParams.set('error_code', 'missing_params');
       return NextResponse.redirect(errorUrl);
     }
 
@@ -130,7 +140,7 @@ export async function GET(request: Request) {
     }
 
     const errorUrl = new URL('/auth-error', origin);
-    errorUrl.searchParams.set('error', 'Kimlik doğrulama başarısız');
+    errorUrl.searchParams.set('error_code', 'callback_unexpected');
     return NextResponse.redirect(errorUrl);
   }
 }

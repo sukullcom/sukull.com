@@ -40,6 +40,21 @@ export async function GET(
       );
     }
 
+    // Transcript reads return up to 500 messages per call, so an
+    // unthrottled client can exfiltrate a long chat history quickly.
+    // Ceiling is aligned with `messagesRead` (120/min) — 2 s realtime
+    // polling plus headroom. Membership is still enforced below.
+    const rl = await checkRateLimit({
+      key: `messagesRead:user:${user.id}`,
+      ...RATE_LIMITS.messagesRead,
+    });
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: "Çok sık istek. Biraz sonra tekrar deneyin." },
+        { status: 429, headers: rateLimitHeaders(rl) },
+      );
+    }
+
     const chatId = Number.parseInt(params.chatId, 10);
     if (!Number.isFinite(chatId) || chatId <= 0) {
       return NextResponse.json({ error: "Geçersiz sohbet" }, { status: 400 });

@@ -3,6 +3,11 @@ import { getServerUser } from "@/lib/auth";
 import { getUserCredits, getUserProgress } from "@/db/queries";
 import { getStreakCount } from "@/actions/daily-streak";
 import { getRequestLogger } from "@/lib/logger";
+import {
+  checkRateLimit,
+  RATE_LIMITS,
+  rateLimitHeaders,
+} from "@/lib/rate-limit-db";
 
 // ✅ CONSOLIDATED USER API: Replaces /api/user/credits, /api/user/progress, and /api/user/streak
 export async function GET(request: NextRequest) {
@@ -11,6 +16,22 @@ export async function GET(request: NextRequest) {
     const user = await getServerUser();
     if (!user) {
       return NextResponse.json({ error: "Giriş yapmanız gerekiyor." }, { status: 401 });
+    }
+
+    // The consolidated reader is called from almost every client page
+    // after progress-changing mutations (useEffect in Header, quiz
+    // footer, etc.). A runaway effect could otherwise saturate the DB
+    // on just one user's session. 180/min = 3 req/s sustained is
+    // comfortably above the realistic polling rate.
+    const rl = await checkRateLimit({
+      key: `userApiRead:user:${user.id}`,
+      ...RATE_LIMITS.userApiRead,
+    });
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: "Çok sık istek. Biraz sonra tekrar deneyin." },
+        { status: 429, headers: rateLimitHeaders(rl) },
+      );
     }
 
     const { searchParams } = new URL(request.url);

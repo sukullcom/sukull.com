@@ -12,6 +12,89 @@ import {
 const isProd = process.env.NODE_ENV === 'production';
 
 /**
+ * One-shot boot warning for operational env vars whose absence causes
+ * silent-but-important feature loss (no crash, no error log — things
+ * just quietly stop working).
+ *
+ * `INTERNAL_API_KEY` is the canonical example: when unset,
+ * `maybeLogActivity` short-circuits and analytics (`activity_log`,
+ * DAU/WAU/MAU dashboards, school-leaderboard activity weighting) go
+ * silent without any visible symptom until someone notices empty
+ * charts a week later. Emitting a single WARN at module load is
+ * cheap (Vercel shows it in Functions → Logs on first cold start
+ * per deploy) and gives us a clear signal to reach for the deploy
+ * checklist in `docs/RUNBOOK.md`.
+ */
+if (isProd && !process.env.INTERNAL_API_KEY) {
+  console.warn(
+    '[middleware] INTERNAL_API_KEY is not set in production — ' +
+      'page-view analytics (activity_log) will be disabled silently. ' +
+      'See docs/RUNBOOK.md §2.1.',
+  );
+}
+
+/**
+ * Cross-origin allow-list for `/api/*` responses.
+ *
+ * The Fetch spec mandates that `Access-Control-Allow-Origin` carry a
+ * single origin (or the literal `*`). A comma-joined list — which
+ * Next's static `headers()` config would have produced — is silently
+ * rejected by every modern browser, so `fetch` from any cross-origin
+ * caller (future mobile client, preview deploys on sukull-*.vercel.app,
+ * marketing subdomains) would fail with an opaque CORS error.
+ *
+ * We therefore reflect the incoming request's Origin back iff it's in
+ * this list. Same-origin traffic has no Origin header on navigations
+ * (which is why the old static value worked for the main site — it
+ * was never actually exercised cross-origin), so this change is a
+ * strict superset of the previous behaviour.
+ *
+ * Keep this aligned with `payment-server/server.js → ALLOWED_ORIGINS`.
+ */
+const API_ALLOWED_ORIGINS = new Set<string>(
+  [
+    'https://sukull.com',
+    'https://www.sukull.com',
+    process.env.NEXT_PUBLIC_APP_URL,
+    !isProd ? 'http://localhost:3000' : null,
+  ].filter((v): v is string => typeof v === 'string' && v.length > 0),
+);
+
+function pickAllowedOrigin(req: NextRequest): string | null {
+  const origin = req.headers.get('origin');
+  if (!origin) return null;
+  return API_ALLOWED_ORIGINS.has(origin) ? origin : null;
+}
+
+function applyApiCors(req: NextRequest, response: NextResponse): void {
+  const allowed = pickAllowedOrigin(req);
+  // Always advertise `Vary: Origin` so intermediate caches don't serve
+  // one caller's CORS headers to another.
+  const prevVary = response.headers.get('Vary');
+  response.headers.set('Vary', prevVary ? `${prevVary}, Origin` : 'Origin');
+
+  if (allowed) {
+    response.headers.set('Access-Control-Allow-Origin', allowed);
+    response.headers.set('Access-Control-Allow-Credentials', 'true');
+    response.headers.set(
+      'Access-Control-Allow-Methods',
+      'GET, POST, PUT, PATCH, DELETE, OPTIONS',
+    );
+    // Echo what the preflight asked for (if any), falling back to the
+    // common set. This keeps bespoke headers like `x-request-id` /
+    // `x-internal-key` working without maintaining two lists.
+    const requested = req.headers.get('access-control-request-headers');
+    response.headers.set(
+      'Access-Control-Allow-Headers',
+      requested && requested.length > 0
+        ? requested
+        : 'Content-Type, Authorization, x-request-id',
+    );
+    response.headers.set('Access-Control-Max-Age', '600');
+  }
+}
+
+/**
  * Content Security Policy.
  *
  * `'unsafe-inline'` / `'unsafe-eval'` remain on `script-src` because (a) Next.js
@@ -173,6 +256,7 @@ function applyHeaders(
   pathname: string,
   requestId: string,
   isAuthenticatedRoute: boolean,
+  req?: NextRequest,
 ) {
   for (const [k, v] of SECURITY_HEADERS_ENTRIES) {
     response.headers.set(k, v);
@@ -185,6 +269,12 @@ function applyHeaders(
     case 'api':
       response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
       response.headers.set('Pragma', 'no-cache');
+      // API responses that originated from a cross-origin fetch need
+      // the per-request CORS echo. When `req` isn't provided (caller
+      // never crosses origins — e.g. `/api/auth/*` reached only via
+      // same-site redirect), we still emit `Vary: Origin` defensively
+      // so intermediaries treat variants correctly.
+      if (req) applyApiCors(req, response);
       break;
     case 'auth-form':
       // Never cache auth forms. `private` keeps well-behaved CDNs out; `no-store`
@@ -245,17 +335,29 @@ export async function middleware(req: NextRequest) {
     publicPaths.some((p) => pathname === p || pathname.startsWith(p)) ||
     isAuthApi;
 
+  // CORS preflight: answer OPTIONS on /api/* immediately without
+  // running any auth flow. Route handlers historically forgot to
+  // export `OPTIONS`, which caused Next.js to respond 405 and the
+  // browser to fail the real request. Handling the preflight here
+  // gives us a single, audited answer for every API route.
+  if (isApiRoute && req.method === 'OPTIONS') {
+    const preflight = new NextResponse(null, { status: 204 });
+    applyApiCors(req, preflight);
+    preflight.headers.set(REQUEST_ID_HEADER, requestId);
+    return preflight;
+  }
+
   // API routes (except /api/auth/) don't need auth check — they handle it themselves.
   // Public paths and home also don't need getUser(). Skip the Supabase call entirely.
   if (isApiRoute && !isAuthApi) {
     const response = NextResponse.next({ request: { headers: forwardedHeaders } });
-    applyHeaders(response, pathname, requestId, false);
+    applyHeaders(response, pathname, requestId, false, req);
     return response;
   }
 
   if (pathname === '/') {
     const { response } = createClient(req, { [REQUEST_ID_HEADER]: requestId });
-    applyHeaders(response, pathname, requestId, false);
+    applyHeaders(response, pathname, requestId, false, req);
     return response;
   }
 
@@ -271,7 +373,7 @@ export async function middleware(req: NextRequest) {
     pathname.startsWith('/courses/')
   ) {
     const response = NextResponse.next({ request: { headers: forwardedHeaders } });
-    applyHeaders(response, pathname, requestId, false);
+    applyHeaders(response, pathname, requestId, false, req);
     return response;
   }
 
@@ -288,7 +390,7 @@ export async function middleware(req: NextRequest) {
   // No cookie at all → definitely not logged in.
   if (!hasAuthCookie) {
     const response = NextResponse.next({ request: { headers: forwardedHeaders } });
-    applyHeaders(response, pathname, requestId, false);
+    applyHeaders(response, pathname, requestId, false, req);
     if (isPublic) return response;
 
     const url = req.nextUrl.clone();
@@ -316,7 +418,7 @@ export async function middleware(req: NextRequest) {
     // the Supabase client at all.
     if (isPublic) {
       const response = NextResponse.next({ request: { headers: forwardedHeaders } });
-      applyHeaders(response, pathname, requestId, false);
+      applyHeaders(response, pathname, requestId, false, req);
       if (publicPaths.some((p) => pathname === p)) {
         if (pathname === '/reset-password' || pathname === '/clear-session') return response;
         if (pathname === '/login' && req.nextUrl.searchParams.get('logout') === 'true') return response;
@@ -328,9 +430,10 @@ export async function middleware(req: NextRequest) {
     }
 
     const response = NextResponse.next({ request: { headers: forwardedHeaders } });
-    applyHeaders(response, pathname, requestId, true);
-    // Activity logging needs the user id; piggyback on the cached value.
-    maybeLogActivity(req, response, pathname, cachedSession.userId, requestId);
+    applyHeaders(response, pathname, requestId, true, req);
+    // Activity logging: the endpoint re-derives the userId from the
+    // forwarded session cookie, so no need to pass it here.
+    maybeLogActivity(req, response, pathname, requestId);
     return response;
   }
 
@@ -338,7 +441,7 @@ export async function middleware(req: NextRequest) {
   // Cookie present but not in cache → perform the full Supabase verification
   // (single network call) and populate the cache for the next 60 s.
   const { supabase, response } = createClient(req, { [REQUEST_ID_HEADER]: requestId });
-  applyHeaders(response, pathname, requestId, !isPublic);
+  applyHeaders(response, pathname, requestId, !isPublic, req);
 
   if (isPublic) {
     const { data: { user } } = await supabase.auth.getUser();
@@ -382,7 +485,7 @@ export async function middleware(req: NextRequest) {
   // code that needs the user id should call `getServerUser()` (cached
   // per request) or pass it explicitly to `getRequestLogger({ userId })`.
 
-  maybeLogActivity(req, response, pathname, user.id, requestId);
+  maybeLogActivity(req, response, pathname, requestId);
   return response;
 }
 
@@ -412,7 +515,6 @@ function maybeLogActivity(
   req: NextRequest,
   response: NextResponse,
   pathname: string,
-  userId: string,
   requestId: string,
 ): void {
   if (!LOGGED_PATH_PREFIXES.some((p) => pathname.startsWith(p))) return;
@@ -455,6 +557,14 @@ function maybeLogActivity(
   }
 
   const origin = req.nextUrl.origin;
+  // Forward the caller's Supabase auth cookie so the endpoint can
+  // call `getServerUser()` and derive the userId from the verified
+  // session — we intentionally don't pass `userId` in the body
+  // anymore. If INTERNAL_API_KEY ever leaks, an attacker still
+  // needs a valid session cookie to write, which caps the damage
+  // to self-harm (spamming their own activity_log).
+  const cookieHeader = req.headers.get('cookie') ?? '';
+
   // Detached fetch: failures are silently swallowed so we never slow the
   // user-facing response even if the log sink is unavailable.
   fetch(`${origin}/api/activity-log`, {
@@ -462,10 +572,10 @@ function maybeLogActivity(
     headers: {
       'Content-Type': 'application/json',
       'x-internal-key': process.env.INTERNAL_API_KEY,
+      cookie: cookieHeader,
       [REQUEST_ID_HEADER]: requestId,
     },
     body: JSON.stringify({
-      userId,
       eventType: 'page_view',
       page: pathname,
     }),

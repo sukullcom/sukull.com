@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
 import { getRequestLogger } from "@/lib/logger";
+import {
+  checkRateLimit,
+  RATE_LIMITS,
+  rateLimitHeaders,
+} from "@/lib/rate-limit-db";
 import db from "@/db/drizzle";
 import { studyBuddyChats } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -22,6 +27,22 @@ export async function GET(
       return NextResponse.json(
         { error: "Giriş yapmanız gerekiyor" },
         { status: 401 },
+      );
+    }
+
+    // Contact reveal returns PII (email + phone) after the unlock
+    // check below passes. The unlock check *allows* the read forever
+    // once paid, so an attacker with one legitimate unlock could
+    // otherwise scrape the counterparty's contact unboundedly. Per-user
+    // cap makes that pattern visible instead of silent.
+    const rl = await checkRateLimit({
+      key: `messagesRead:user:${user.id}`,
+      ...RATE_LIMITS.messagesRead,
+    });
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: "Çok sık istek. Biraz sonra tekrar deneyin." },
+        { status: 429, headers: rateLimitHeaders(rl) },
       );
     }
 

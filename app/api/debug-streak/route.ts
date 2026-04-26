@@ -3,17 +3,17 @@ import { isAdmin } from "@/lib/admin";
 import db from "@/db/drizzle";
 import { userProgress } from "@/db/schema";
 import { desc } from "drizzle-orm";
+import { getRequestLogger } from "@/lib/logger";
 
 export async function GET() {
+  const log = await getRequestLogger({ labels: { route: "api/debug-streak" } });
   try {
-    // Check if user is admin
     const admin = await isAdmin();
     if (!admin) {
       return NextResponse.json({ error: "Bu işlem için yönetici yetkisi gereklidir." }, { status: 403 });
     }
 
-    (await (await import("@/lib/logger")).getRequestLogger({ labels: { route: "api/debug-streak" } }))
-      .debug("debugging user progress and previous_total_points");
+    log.debug("debugging user progress and previous_total_points");
     
     // Get sample of users to check their current state
     const users = await db.query.userProgress.findMany({
@@ -63,15 +63,22 @@ export async function GET() {
       }
     });
   } catch (error) {
-    (await (await import("@/lib/logger")).getRequestLogger({ labels: { route: "api/debug-streak" } }))
-      .error({ message: "debug-streak failed", error, location: "api/debug-streak" });
+    // NEVER leak `error.message` to the client. Stack traces,
+    // parameter names, and query fragments have all shown up inside
+    // .message historically. The full diagnostic payload lives only in
+    // `error_log`; operators query by x-request-id to retrieve it.
+    log.error({
+      message: "debug-streak failed",
+      error,
+      source: "api-route",
+      location: "api/debug-streak",
+    });
     return NextResponse.json(
-      { 
-        success: false, 
+      {
+        success: false,
         error: "Sunucu tarafında bir hata oluştu.",
-        message: error instanceof Error ? error.message : "Unknown error"
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
-} 
+}

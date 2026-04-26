@@ -11,11 +11,15 @@ const withBundleAnalyzer = withBundleAnalyzerFactory({
   openAnalyzer: false,
 });
 
-const allowedOrigins = [
-  "https://sukull.com",
-  "https://www.sukull.com",
-  process.env.NODE_ENV !== "production" && "http://localhost:3000",
-].filter(Boolean).join(", ");
+// Cross-origin API access is handled at the middleware layer (see
+// `middleware.ts → applyApiCors`). The previous implementation set a
+// static `Access-Control-Allow-Origin` header here by comma-joining
+// multiple origins — that syntax is NOT valid per the Fetch spec: the
+// header accepts a single origin or the literal `*`. Browsers silently
+// rejected the joined value on any real cross-origin request (mobile
+// fetch, future subdomains), so we moved to per-request Origin
+// reflection against an allow-list, which is the same model the
+// payment-server uses.
 
 const nextConfig = {
   reactStrictMode: true,
@@ -56,27 +60,9 @@ const nextConfig = {
       },
     ];
   },
-  async headers() {
-    return [
-      {
-        source: "/api/(.*)",
-        headers: [
-          {
-            key: "Access-Control-Allow-Origin",
-            value: allowedOrigins,
-          },
-          {
-            key: "Access-Control-Allow-Methods",
-            value: "GET, POST, PUT, DELETE, OPTIONS",
-          },
-          {
-            key: "Access-Control-Allow-Headers",
-            value: "Content-Type, Authorization",
-          },
-        ],
-      },
-    ];
-  },
+  // CORS for `/api/*` is set in `middleware.ts` so we can reflect the
+  // request Origin instead of pinning a single static value. See the
+  // note above `nextConfig`.
   images: {
     remotePatterns: [
       {

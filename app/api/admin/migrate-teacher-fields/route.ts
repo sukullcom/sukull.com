@@ -128,10 +128,14 @@ export async function POST() {
 
   } catch (error) {
     log.error({ message: "migration failed", error, location: "api/admin/migrate-teacher-fields/POST" });
-    return NextResponse.json({ 
+    // Do not surface raw `error.message` to the client, even for admin
+    // tools: exception strings frequently leak table names, constraint
+    // names, or internal library versions that help an attacker map
+    // the schema if the admin session is ever replayed. Full details
+    // remain in `error_log` for operators to triage.
+    return NextResponse.json({
       success: false,
-      message: "Migration failed", 
-      error: error instanceof Error ? error.message : "Unknown error"
+      message: "Migration failed. Check server logs for details.",
     }, { status: 500 });
   }
-} 
+}

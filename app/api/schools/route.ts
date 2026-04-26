@@ -7,6 +7,7 @@ import { CACHE_TAGS, CACHE_TTL } from '@/lib/cache-tags';
 import { secureApi } from '@/lib/api-middleware';
 import { RATE_LIMITS } from '@/lib/rate-limit-db';
 import { getRequestLogger } from '@/lib/logger';
+import { clampPositiveInt } from '@/lib/pagination';
 
 type SchoolType = 'university' | 'high_school' | 'secondary_school' | 'elementary_school';
 
@@ -82,7 +83,12 @@ export const GET = secureApi.rateLimited(
     const category = searchParams.get('category');
     const query = searchParams.get('q')?.trim();
     const type = searchParams.get('type');
-    const limit = parseInt(searchParams.get('limit') || '1000');
+    // Defensive clamp: non-numeric / negative / overflow inputs collapse
+    // to the catalogue's public ceiling (1000). Previously a bare
+    // `parseInt` on a missing or garbage value produced NaN which then
+    // flowed into Drizzle's `.limit(NaN)` and surfaced as opaque
+    // Postgres errors under MAU-10K traffic patterns.
+    const limit = clampPositiveInt(searchParams.get('limit'), 1000, 1000);
 
     switch (action) {
       case 'cities': {
@@ -153,13 +159,16 @@ export const GET = secureApi.rateLimited(
               ${schools.name} ASC
             ` : sql`${schools.name} ASC`
           )
-          .limit(Math.min(limit, 1000));
+          .limit(limit);
 
         return NextResponse.json({ schools: schoolResults });
       }
 
       case 'leaderboard': {
-        const offset = parseInt(searchParams.get('offset') || '0');
+        const offset = clampPositiveInt(searchParams.get('offset'), 0, 100_000);
+        // Re-clamp to leaderboard's tighter ceiling (100) since the outer
+        // scope clamps to 1000 for search/schools calls.
+        const lbLimit = Math.min(limit, 100);
         const leaderboardConditions = [];
 
         if (type) {
@@ -184,7 +193,7 @@ export const GET = secureApi.rateLimited(
           .from(schools)
           .where(leaderboardConditions.length > 0 ? and(...leaderboardConditions) : undefined)
           .orderBy(desc(schools.totalPoints), schools.name)
-          .limit(Math.min(limit, 100))
+          .limit(lbLimit)
           .offset(offset);
 
         return NextResponse.json({ schools: leaderboardResults });
@@ -208,7 +217,17 @@ export const POST = secureApi.rateLimited(
   { bucket: 'schools-post', keyKind: 'ip', ...RATE_LIMITS.schoolsRead },
   async (request: NextRequest) => {
   try {
-    const { city, limit = 10 } = await request.json();
+    const body = (await request.json().catch(() => ({}))) as {
+      city?: unknown;
+      limit?: unknown;
+    };
+    const city = typeof body.city === "string" ? body.city : null;
+    // Clamp `limit` defensively: JSON payloads from untrusted clients can
+    // send `null`, strings, or omit the field, any of which would make
+    // `Math.min(limit, 50)` return NaN → Drizzle then emits `LIMIT NaN`
+    // which Postgres rejects at query time. Coerce to a finite integer
+    // in [1, 50] before use.
+    const limit = clampPositiveInt(body.limit, 10, 50);
 
     const leaderboards: Record<SchoolType, unknown[]> = {
       university: [],
@@ -240,7 +259,7 @@ export const POST = secureApi.rateLimited(
         .from(schools)
         .where(and(...whereConditions))
         .orderBy(desc(schools.totalPoints), schools.name)
-        .limit(Math.min(limit, 50));
+        .limit(limit);
 
       leaderboards[schoolType] = results;
     }

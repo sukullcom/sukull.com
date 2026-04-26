@@ -84,14 +84,46 @@ if (
 // ---------------------------------------------------------------------------
 // Postgres
 // ---------------------------------------------------------------------------
+//
+// SSL policy:
+//
+//   - In development we don't enforce TLS at all (local loopback /
+//     docker-compose Postgres). The managed services we target
+//     (Supabase, Railway's bundled Postgres) all require TLS in
+//     production, so this branch only runs locally.
+//
+//   - In production we **prefer** full chain verification: when
+//     `CA_CERT` is supplied (PEM-encoded, typically pasted from the
+//     managed-DB dashboard) we pin to it and leave
+//     `rejectUnauthorized` at Node's default `true`. A forged or
+//     MITM'd certificate fails the handshake rather than being
+//     silently accepted.
+//
+//   - If `CA_CERT` is missing (we still see this in some Railway
+//     environments where a root CA isn't exposed) we fall back to
+//     `rejectUnauthorized: false` — traffic is still encrypted, but
+//     we can't verify the server identity. We log a single WARN on
+//     boot so this is visible in Railway Logs and a renewed
+//     `CA_CERT` fixes it without code changes.
+function buildSslConfig() {
+  if (NODE_ENV !== "production") return false;
+  if (process.env.CA_CERT && process.env.CA_CERT.trim().length > 0) {
+    return { ca: process.env.CA_CERT, rejectUnauthorized: true };
+  }
+  console.warn(
+    "[payment-server] CA_CERT is not set — falling back to " +
+      "rejectUnauthorized: false. Traffic is still encrypted but " +
+      "the server certificate is NOT verified. Set CA_CERT from the " +
+      "managed-DB dashboard to enable full chain verification.",
+  );
+  return { rejectUnauthorized: false };
+}
+
 let pool = null;
 if (process.env.DATABASE_URL) {
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl:
-      NODE_ENV === "production"
-        ? { rejectUnauthorized: false, ca: process.env.CA_CERT }
-        : false,
+    ssl: buildSslConfig(),
     max: 5,
     idleTimeoutMillis: 30_000,
   });

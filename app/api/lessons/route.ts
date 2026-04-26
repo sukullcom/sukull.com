@@ -4,6 +4,12 @@ import db from "@/db/drizzle";
 import { lessons, challenges, challengeOptions } from "@/db/schema";
 import { eq, sql } from "drizzle-orm";
 import { getRequestLogger } from "@/lib/logger";
+import { parseRangeHeader } from "@/lib/pagination";
+import {
+  sanitizeLessonWrite,
+  sanitizeChallengeWrite,
+  sanitizeChallengeOptionWrite,
+} from "@/lib/admin-write-sanitizers";
 
 // ✅ CONSOLIDATED LESSONS API: Replaces /api/lessons, /api/challenges, /api/challengeOptions
 export const GET = secureApi.admin(async (request) => {
@@ -14,14 +20,8 @@ export const GET = secureApi.admin(async (request) => {
   try {
     switch (action) {
       case 'list': {
-        // Original lessons listing functionality
-        const rangeHeader = request.headers.get('Range') || 'items=0-9';
-        const [, rangeValue] = rangeHeader.split('=');
-        const [startStr, endStr] = rangeValue.split('-');
-        const start = parseInt(startStr, 10);
-        const end = parseInt(endStr, 10);
-        const limit = end - start + 1;
-        
+        const { start, end, limit } = parseRangeHeader(request.headers.get('Range'));
+
         const [{ count: totalCount }] = await db.select({
           count: sql<number>`count(*)`
         }).from(lessons);
@@ -75,14 +75,8 @@ export const GET = secureApi.admin(async (request) => {
           });
           return ApiResponses.success(data);
         } else {
-          // Get all challenges with pagination
-          const rangeHeader = request.headers.get('Range') || 'items=0-9';
-          const [, rangeValue] = rangeHeader.split('=');
-          const [startStr, endStr] = rangeValue.split('-');
-          const start = parseInt(startStr, 10);
-          const end = parseInt(endStr, 10);
-          const limit = end - start + 1;
-          
+          const { start, end, limit } = parseRangeHeader(request.headers.get('Range'));
+
           const [{ count: totalCount }] = await db.select({
             count: sql<number>`count(*)`
           }).from(challenges);
@@ -152,14 +146,8 @@ export const GET = secureApi.admin(async (request) => {
 
           return ApiResponses.success(data);
         } else {
-          // Get all challenge options with pagination
-          const rangeHeader = request.headers.get('Range') || 'items=0-9';
-          const [, rangeValue] = rangeHeader.split('=');
-          const [startStr, endStr] = rangeValue.split('-');
-          const start = parseInt(startStr, 10);
-          const end = parseInt(endStr, 10);
-          const limit = end - start + 1;
-          
+          const { start, end, limit } = parseRangeHeader(request.headers.get('Range'));
+
           const [{ count: totalCount }] = await db.select({
             count: sql<number>`count(*)`
           }).from(challengeOptions);
@@ -196,39 +184,68 @@ export const POST = secureApi.admin(async (request) => {
   const action = searchParams.get('action');
 
   try {
-    const body = await request.json();
+    const body = await request.json().catch(() => ({}));
 
+    // Explicit allow-list per action (defence-in-depth). Admin tokens
+    // are high-value; `...body` would silently accept any column a
+    // future migration adds to these tables. See
+    // `lib/admin-write-sanitizers.ts` for the long-form rationale.
     switch (action) {
-      case 'create-lesson': {
-        const data = await db.insert(lessons).values({
-          ...body,
-        }).returning();
-        
+      case 'create-lesson':
+      default: {
+        const parsed = sanitizeLessonWrite(body, "create");
+        if (!parsed.ok) return ApiResponses.badRequest(parsed.error);
+        const data = await db
+          .insert(lessons)
+          .values({
+            title: parsed.values.title!,
+            unitId: parsed.values.unitId!,
+            order: parsed.values.order!,
+          })
+          .returning();
         return ApiResponses.created(data[0]);
       }
 
       case 'create-challenge': {
-        const data = await db.insert(challenges).values({
-          ...body,
-        }).returning();
-        
+        const parsed = sanitizeChallengeWrite(body, "create");
+        if (!parsed.ok) return ApiResponses.badRequest(parsed.error);
+        const v = parsed.values;
+        const data = await db
+          .insert(challenges)
+          .values({
+            lessonId: v.lessonId!,
+            type: v.type! as (typeof challenges.type.enumValues)[number],
+            question: v.question!,
+            questionImageSrc: v.questionImageSrc ?? null,
+            explanation: v.explanation ?? null,
+            order: v.order!,
+            difficulty: (v.difficulty ?? null) as (typeof challenges.difficulty.enumValues)[number] | null,
+            tags: v.tags ?? null,
+            timeLimit: v.timeLimit ?? null,
+            metadata: v.metadata ?? null,
+          })
+          .returning();
         return ApiResponses.created(data[0]);
       }
 
       case 'create-challenge-option': {
-        const data = await db.insert(challengeOptions).values({
-          ...body,
-        }).returning();
-        
-        return ApiResponses.created(data[0]);
-      }
-
-      default: {
-        // Default to lesson creation for backward compatibility
-        const data = await db.insert(lessons).values({
-          ...body,
-        }).returning();
-        
+        const parsed = sanitizeChallengeOptionWrite(body, "create");
+        if (!parsed.ok) return ApiResponses.badRequest(parsed.error);
+        const v = parsed.values;
+        const data = await db
+          .insert(challengeOptions)
+          .values({
+            challengeId: v.challengeId!,
+            text: v.text!,
+            correct: v.correct ?? false,
+            imageSrc: v.imageSrc ?? null,
+            audioSrc: v.audioSrc ?? null,
+            correctOrder: v.correctOrder ?? null,
+            pairId: v.pairId ?? null,
+            isBlank: v.isBlank ?? false,
+            dragData: v.dragData ?? null,
+          })
+          .returning();
         return ApiResponses.created(data[0]);
       }
     }
@@ -256,11 +273,17 @@ export const PUT = secureApi.admin(async (request) => {
       return ApiResponses.badRequest("Invalid ID");
     }
 
+    // Explicit allow-list for every update path — see
+    // `lib/admin-write-sanitizers.ts`. Drizzle's `.set(...)` tolerates
+    // `undefined` for unset columns, so each sanitizer returns a
+    // partial object and untouched columns are preserved.
     switch (action) {
       case 'update-lesson': {
+        const parsed = sanitizeLessonWrite(body, "update");
+        if (!parsed.ok) return ApiResponses.badRequest(parsed.error);
         const data = await db
           .update(lessons)
-          .set({ ...body })
+          .set(parsed.values)
           .where(eq(lessons.id, itemId))
           .returning();
 
@@ -272,9 +295,27 @@ export const PUT = secureApi.admin(async (request) => {
       }
 
       case 'update-challenge': {
+        const parsed = sanitizeChallengeWrite(body, "update");
+        if (!parsed.ok) return ApiResponses.badRequest(parsed.error);
+        const v = parsed.values;
         const data = await db
           .update(challenges)
-          .set({ ...body })
+          .set({
+            ...(v.lessonId !== undefined ? { lessonId: v.lessonId } : {}),
+            ...(v.type !== undefined
+              ? { type: v.type as (typeof challenges.type.enumValues)[number] }
+              : {}),
+            ...(v.question !== undefined ? { question: v.question } : {}),
+            ...(v.questionImageSrc !== undefined ? { questionImageSrc: v.questionImageSrc } : {}),
+            ...(v.explanation !== undefined ? { explanation: v.explanation } : {}),
+            ...(v.order !== undefined ? { order: v.order } : {}),
+            ...(v.difficulty !== undefined
+              ? { difficulty: v.difficulty as (typeof challenges.difficulty.enumValues)[number] | null }
+              : {}),
+            ...(v.tags !== undefined ? { tags: v.tags } : {}),
+            ...(v.timeLimit !== undefined ? { timeLimit: v.timeLimit } : {}),
+            ...(v.metadata !== undefined ? { metadata: v.metadata } : {}),
+          })
           .where(eq(challenges.id, itemId))
           .returning();
 
@@ -286,9 +327,22 @@ export const PUT = secureApi.admin(async (request) => {
       }
 
       case 'update-challenge-option': {
+        const parsed = sanitizeChallengeOptionWrite(body, "update");
+        if (!parsed.ok) return ApiResponses.badRequest(parsed.error);
+        const v = parsed.values;
         const data = await db
           .update(challengeOptions)
-          .set({ ...body })
+          .set({
+            ...(v.challengeId !== undefined ? { challengeId: v.challengeId } : {}),
+            ...(v.text !== undefined ? { text: v.text } : {}),
+            ...(v.correct !== undefined ? { correct: v.correct } : {}),
+            ...(v.imageSrc !== undefined ? { imageSrc: v.imageSrc } : {}),
+            ...(v.audioSrc !== undefined ? { audioSrc: v.audioSrc } : {}),
+            ...(v.correctOrder !== undefined ? { correctOrder: v.correctOrder } : {}),
+            ...(v.pairId !== undefined ? { pairId: v.pairId } : {}),
+            ...(v.isBlank !== undefined ? { isBlank: v.isBlank } : {}),
+            ...(v.dragData !== undefined ? { dragData: v.dragData } : {}),
+          })
           .where(eq(challengeOptions.id, itemId))
           .returning();
 
@@ -301,9 +355,11 @@ export const PUT = secureApi.admin(async (request) => {
 
       default: {
         // Default to lesson update for backward compatibility
+        const parsed = sanitizeLessonWrite(body, "update");
+        if (!parsed.ok) return ApiResponses.badRequest(parsed.error);
         const data = await db
           .update(lessons)
-          .set({ ...body })
+          .set(parsed.values)
           .where(eq(lessons.id, itemId))
           .returning();
 

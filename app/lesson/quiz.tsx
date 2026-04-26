@@ -1,6 +1,6 @@
 "use client";
 
-import { challengeOptions, challenges } from "@/db/schema";
+import { challengeOptions, challenges, userSubscriptions } from "@/db/schema";
 import { useEffect, useRef, useState, useTransition, useMemo } from "react";
 import { Header } from "./header";
 import { QuestionBubble } from "./question-bubble";
@@ -29,7 +29,22 @@ type Props = {
     completed: boolean;
     challengeOptions: (typeof challengeOptions.$inferSelect)[];
   })[];
-  userSubscription: unknown; // TODO: Replace with subscription DB type
+  /**
+   * Active subscription row (or `null` if the user is on the free tier).
+   *
+   * We pin this to the Drizzle row type instead of `any` so bad prop
+   * shapes fail at compile time — historically this was `unknown` and a
+   * silent nullability drift would only surface as a runtime "cannot
+   * read property status of undefined" deep inside the quiz render.
+   *
+   * The in-quiz logic reads almost nothing off this object today —
+   * `hasInfiniteHearts` is computed server-side and passed separately —
+   * but the prop is retained so the call-site contract with
+   * `app/lesson/page.tsx` stays explicit, and so a future "upgrade to
+   * unlock feature X" affordance can read `subscription.status` /
+   * `subscription.endDate` without another round of plumbing.
+   */
+  userSubscription: typeof userSubscriptions.$inferSelect | null;
   hasInfiniteHearts?: boolean;
 };
 

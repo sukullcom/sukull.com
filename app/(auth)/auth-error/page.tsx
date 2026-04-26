@@ -3,54 +3,123 @@ import Link from 'next/link';
 import { AlertTriangle, Search, Lightbulb, RefreshCw, Home } from 'lucide-react';
 
 interface AuthErrorPageProps {
-  searchParams: { 
+  searchParams: {
+    /** @deprecated Legacy field kept only so old links don't 404. New
+     *  callbacks pass `error_code` with a stable, documented code. */
     error?: string;
     error_code?: string;
-    error_description?: string;
   };
 }
 
+type ErrorDetails = {
+  title: string;
+  description: string;
+  possibleCauses: string[];
+  solutions: string[];
+};
+
+// Stable code → user-facing copy. The callback route (and any other
+// surface that redirects here) MUST pass one of these codes via
+// `error_code` rather than the raw Supabase / Postgres error message:
+// that message can include table names, token fragments, or internal
+// hostnames that leak into browser history and Referer headers.
+const ERROR_COPY: Record<string, ErrorDetails> = {
+  bad_oauth_state: {
+    title: 'OAuth Durum Hatası',
+    description:
+      'OAuth kimlik doğrulama süreci sırasında bir durum hatası oluştu.',
+    possibleCauses: [
+      'Oturum süresi dolmuş olabilir',
+      'Tarayıcı çerezleri engellenmiş olabilir',
+      'Sayfa çok uzun süre açık kalmış olabilir',
+      'Teknik bir yapılandırma sorunu',
+    ],
+    solutions: [
+      'Tarayıcınızı yenileyin ve tekrar deneyin',
+      'Çerezleri temizleyin ve gizli pencerede deneyin',
+      'Farklı bir tarayıcı kullanarak deneyin',
+      'Birkaç dakika bekleyip tekrar deneyin',
+    ],
+  },
+  otp_verify_failed: {
+    title: 'Doğrulama Bağlantısı Geçersiz',
+    description:
+      'E-postanızdaki doğrulama bağlantısı süresi dolmuş veya daha önce kullanılmış olabilir.',
+    possibleCauses: [
+      'Bağlantının süresi dolmuş (genelde 1 saat)',
+      'Bağlantı daha önce kullanılmış',
+      'Bağlantı kopyalanırken bozulmuş olabilir',
+    ],
+    solutions: [
+      'Giriş ekranından yeni bir doğrulama bağlantısı isteyin',
+      'E-postayı aynı tarayıcıda açtığınızdan emin olun',
+      'Sorun sürerse destek ekibine ulaşın',
+    ],
+  },
+  code_exchange_failed: {
+    title: 'Oturum Oluşturulamadı',
+    description:
+      'Girişinizi tamamlamak için gerekli güvenlik kodu doğrulanamadı.',
+    possibleCauses: [
+      'Tarayıcı çerezleri temizlendi veya engellendi',
+      'Aynı bağlantıyı iki farklı tarayıcıda açtınız',
+      'Geçici bir sunucu problemi',
+    ],
+    solutions: [
+      'Giriş sayfasından yeniden deneyin',
+      'Gizli pencere kapalıysa çerezlere izin verin',
+      'Birkaç dakika bekleyip tekrar deneyin',
+    ],
+  },
+  missing_params: {
+    title: 'Eksik Doğrulama Parametresi',
+    description:
+      'Kimlik doğrulama bağlantısı eksik veya bozuk bir biçimde açıldı.',
+    possibleCauses: [
+      'E-postadaki bağlantı tam kopyalanmadı',
+      'Bağlantıya dışarıdan erişildi',
+    ],
+    solutions: [
+      'E-postadaki bağlantıyı doğrudan tıklayın',
+      'Giriş sayfasından yeni bir bağlantı talep edin',
+    ],
+  },
+  callback_unexpected: {
+    title: 'Beklenmeyen Bir Hata Oluştu',
+    description:
+      'Giriş işleminiz tamamlanırken beklenmeyen bir sorun yaşandı. Lütfen tekrar deneyin.',
+    possibleCauses: [
+      'Geçici bir sunucu sorunu',
+      'İnternet bağlantısı problemi',
+    ],
+    solutions: [
+      'Sayfayı yenileyin ve tekrar deneyin',
+      'Birkaç dakika bekleyip tekrar deneyin',
+      'Sorun devam ederse destek ekibiyle iletişime geçin',
+    ],
+  },
+};
+
+const DEFAULT_ERROR_COPY: ErrorDetails = {
+  title: 'Kimlik Doğrulama Hatası',
+  description:
+    'Giriş sürecinde bir sorun oluştu. Lütfen tekrar deneyin veya destek ekibine ulaşın.',
+  possibleCauses: [
+    'Geçici bir sunucu sorunu',
+    'İnternet bağlantısı problemi',
+    'Hesap doğrulama sorunu',
+  ],
+  solutions: [
+    'Sayfayı yenileyin ve tekrar deneyin',
+    'İnternet bağlantınızı kontrol edin',
+    'Birkaç dakika bekleyip tekrar deneyin',
+  ],
+};
+
 export default function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
-  const { error: errorMessage, error_code, error_description } = searchParams;
+  const { error: errorMessage, error_code } = searchParams;
 
-  // Parse the error details
-  const getErrorDetails = () => {
-    if (error_code === 'bad_oauth_state') {
-      return {
-        title: 'OAuth Durum Hatası',
-        description: 'OAuth kimlik doğrulama süreci sırasında bir durum hatası oluştu.',
-        possibleCauses: [
-          'Oturum süresi dolmuş olabilir',
-          'Tarayıcı çerezleri engellenmiş olabilir',
-          'Sayfa çok uzun süre açık kalmış olabilir',
-          'Teknik bir yapılandırma sorunu'
-        ],
-        solutions: [
-          'Tarayıcınızı yenileyin ve tekrar deneyin',
-          'Çerezleri temizleyin ve gizli pencerede deneyin',
-          'Farklı bir tarayıcı kullanarak deneyin',
-          'Birkaç dakika bekleyip tekrar deneyin'
-        ]
-      };
-    }
-
-    return {
-      title: 'Kimlik Doğrulama Hatası',
-      description: errorMessage || error_description || 'Bilinmeyen bir hata oluştu',
-      possibleCauses: [
-        'Geçici bir sunucu sorunu',
-        'İnternet bağlantısı problemi',
-        'Hesap doğrulama sorunu'
-      ],
-      solutions: [
-        'Sayfayı yenileyin ve tekrar deneyin',
-        'İnternet bağlantınızı kontrol edin',
-        'Birkaç dakika bekleyip tekrar deneyin'
-      ]
-    };
-  };
-
-  const errorDetails = getErrorDetails();
+  const errorDetails = (error_code && ERROR_COPY[error_code]) || DEFAULT_ERROR_COPY;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-135px)] gap-6 p-4 max-w-2xl mx-auto">
@@ -58,14 +127,13 @@ export default function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
         <h1 className="text-2xl font-bold text-red-600 mb-2 flex items-center justify-center gap-2"><AlertTriangle className="w-6 h-6" /> {errorDetails.title}</h1>
         <p className="text-gray-600 mb-4">{errorDetails.description}</p>
         
-        {/* Error code details for debugging */}
-        {(error_code || errorMessage) && (
+        {/* Only surface a stable error CODE (not the raw server
+            message) so support teams can correlate with `error_log`
+            but browser history / screenshots don't leak backend
+            internals. */}
+        {error_code && (
           <div className="bg-gray-100 p-3 rounded-lg text-sm text-left mb-4">
-            <strong>Teknik Detaylar:</strong>
-            <br />
-            {error_code && <span>Hata Kodu: {error_code}<br /></span>}
-            {errorMessage && <span>Mesaj: {errorMessage}<br /></span>}
-            {error_description && <span>İpucu: {decodeURIComponent(error_description)}</span>}
+            <strong>Hata Kodu:</strong> {error_code}
           </div>
         )}
       </div>

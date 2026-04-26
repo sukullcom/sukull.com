@@ -41,6 +41,22 @@ export async function GET(
       );
     }
 
+    // Per-user read cap. `getListingById` + `getListingWithOffers` run
+    // uncached joins across listings/offers/users; without a ceiling a
+    // logged-in scraper can iterate every id at wire speed. 90/min is
+    // generous for a student refreshing their own offers while bidders
+    // come in, but caps the pathological case.
+    const rl = await checkRateLimit({
+      key: `listingsRead:user:${user.id}`,
+      ...RATE_LIMITS.listingsRead,
+    });
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: "Çok sık istek. Biraz sonra tekrar deneyin." },
+        { status: 429, headers: rateLimitHeaders(rl) },
+      );
+    }
+
     const id = Number.parseInt(params.id, 10);
     if (!Number.isFinite(id) || id <= 0) {
       return NextResponse.json({ error: "Geçersiz ilan" }, { status: 400 });

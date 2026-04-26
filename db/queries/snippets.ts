@@ -37,6 +37,27 @@ export const getUserSnippetCount = cache(async (userId: string) => {
   return result?.count ?? 0;
 });
 
+/**
+ * ## Ownership model: intentionally PUBLIC
+ *
+ * The Sukull Code Editor is a "shared snippets library": every saved
+ * snippet is visible to every signed-in user. `getAllSnippets` already
+ * returns the full catalogue (paginated + searchable) so gating
+ * `getSnippetById` by `userId` would only stop id-enumeration of data
+ * that is already listable by any authenticated user — not a real
+ * confidentiality boundary.
+ *
+ * **If the product ever introduces "private snippets" (link-only,
+ * friends-only, or owner-only), this function MUST be updated to
+ * accept the viewer's `userId` and filter with `and(eq(snippets.id,
+ * id), or(eq(snippets.userId, viewerId), eq(snippets.isPublic, true)))`
+ * — otherwise it becomes a real IDOR.**
+ *
+ * For that to be enforceable at query level, `snippets.isPublic` must
+ * be added to `db/schema.ts` first. Until then, the call sites
+ * (`/api/snippets/[id]` and the editor UI) document the public-pool
+ * stance in their own comments.
+ */
 export const getSnippetById = cache(async (id: number) => {
   if (!id || id <= 0) return null;
 

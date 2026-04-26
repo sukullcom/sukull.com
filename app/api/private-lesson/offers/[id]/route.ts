@@ -42,9 +42,14 @@ export async function PATCH(
       return NextResponse.json({ error: "Geçersiz teklif" }, { status: 400 });
     }
 
+    // Credit-state mutating write (accept closes listing and rejects
+    // rivals; withdraw/reject don't refund but do flip status). We
+    // fail-closed on limiter outage to avoid an unbounded accept/reject
+    // storm while the DB is already struggling.
     const rl = await checkRateLimit({
       key: `listingWrite:user:${user.id}`,
       ...RATE_LIMITS.listingWrite,
+      onStoreError: "closed",
     });
     if (!rl.allowed) {
       return NextResponse.json(

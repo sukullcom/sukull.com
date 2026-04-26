@@ -147,6 +147,7 @@ async function enforceRateLimit(
     key: rateLimitKey(config.bucket, config.keyKind, scopeId),
     max: config.max,
     windowSeconds: config.windowSeconds,
+    onStoreError: config.onStoreError,
   });
 
   if (!rl.allowed) {

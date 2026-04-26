@@ -20,6 +20,22 @@ export async function GET() {
       return NextResponse.json({ error: "Giriş yapmanız gerekiyor" }, { status: 401 });
     }
 
+    // Light probe: this endpoint is polled from the teacher onboarding
+    // flow and from the "Become a teacher" CTA on every page render.
+    // Without a cap a navigation loop (or a client-side `setInterval`
+    // that forgot to clear) can pin the pooler on a single user.
+    // 60/min/user is ~10× the realistic call rate.
+    const rl = await checkRateLimit({
+      key: `applicationStatus:user:${user.id}`,
+      ...RATE_LIMITS.lightProbe,
+    });
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: "Çok sık istek. Biraz sonra tekrar deneyin." },
+        { status: 429, headers: rateLimitHeaders(rl) },
+      );
+    }
+
     const application = await db.query.teacherApplications.findFirst({
       where: (apps) => eq(apps.userId, user.id),
       orderBy: (apps) => [desc(apps.createdAt)],
