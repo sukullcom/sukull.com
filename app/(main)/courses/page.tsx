@@ -4,6 +4,7 @@ import { getCourses, getUserProgress } from "@/db/queries";
 import { List } from "./list";
 import { getServerUser } from "@/lib/auth";
 import { getRequestLogger } from "@/lib/logger";
+import { filterCoursesByLearningPath } from "@/lib/learning-path";
 
 // Add ISR for the courses page
 export const revalidate = 3600; // Revalidate once per hour
@@ -16,10 +17,17 @@ export default async function CoursesPage() {
     }
 
     // Fetch data in parallel for better performance
-    const [courses, userProgress] = await Promise.all([
-      getCourses(),
-      getUserProgress(), // userProgress'i userId üzerinden alacak
-    ]);
+    const [courses, userProgress] = await Promise.all([getCourses(), getUserProgress()]);
+
+    if (!userProgress || !userProgress.onboardingCompletedAt) {
+      redirect("/onboarding");
+    }
+
+    const coursesForList = filterCoursesByLearningPath(
+      courses,
+      userProgress.learningPath ?? "full",
+      userProgress.studentGrade
+    );
 
     return (
       <div className="w-full max-w-[960px] px-4 sm:px-6 mx-auto py-6">
@@ -38,7 +46,7 @@ export default async function CoursesPage() {
             </div>
           }
         >
-          <List courses={courses} activeCourseId={userProgress?.activeCourseId} />
+          <List courses={coursesForList} activeCourseId={userProgress.activeCourseId} />
         </Suspense>
       </div>
     );

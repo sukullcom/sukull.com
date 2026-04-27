@@ -64,37 +64,25 @@ export const upsertUserSchool = async (schoolId: number) => {
   if (!user) throw new Error('Giriş yapmanız gerekiyor.');
   const userId = user.id;
   const existingUserProgress = await getUserProgress();
-  
-  if (existingUserProgress) {
-    const oldSchoolId = existingUserProgress.schoolId;
-    
-    // Update the user's school
-    await db.update(userProgress)
-      .set({ schoolId })
-      .where(eq(userProgress.userId, userId));
-    
-    // If user is changing schools, update points for both old and new schools
-    if (oldSchoolId !== schoolId) {
-      // Update points for the new school
-      await updateSchoolPoints(schoolId);
-      
-      // If there was a previous school, update its points too
-      if (oldSchoolId) {
-        await updateSchoolPoints(oldSchoolId);
-      }
-    }
-  } else {
-    // Create new user progress
-    const profile = await users.getUser(userId).catch(() => null);
-    const userName = profile?.name || user.user_metadata?.full_name || 'User';
-    // Always use default mascot avatar
-    const userImageSrc = '/mascot_purple.svg';
-    
-    await db.insert(userProgress)
-      .values({ userId, schoolId, userName, userImageSrc });
-    
-    // Update only the affected school
+
+  if (!existingUserProgress) {
+    redirect('/onboarding');
+  }
+  if (!existingUserProgress.onboardingCompletedAt) {
+    redirect('/onboarding');
+  }
+
+  const oldSchoolId = existingUserProgress.schoolId;
+
+  await db.update(userProgress)
+    .set({ schoolId })
+    .where(eq(userProgress.userId, userId));
+
+  if (oldSchoolId !== schoolId) {
     await updateSchoolPoints(schoolId);
+    if (oldSchoolId) {
+      await updateSchoolPoints(oldSchoolId);
+    }
   }
 };
 
@@ -140,23 +128,22 @@ export const upsertUserProgress = async (courseId: number) => {
   const profile = await users.getUser(userId).catch(() => null);
   const providedName = profile?.name || user.user_metadata?.full_name || 'User';
   const existing = await getUserProgress();
-  // Use existing avatar if available, otherwise use default mascot (never from OAuth provider)
-  const userImageSrc = existing?.userImageSrc || '/mascot_purple.svg';
-
-  if (existing) {
-    await db
-      .update(userProgress)
-      .set({ activeCourseId: courseId, userName: providedName, userImageSrc })
-      .where(eq(userProgress.userId, userId));
-    revalidatePath('/courses');
-    revalidatePath('/learn');
-    redirect('/learn');
-  } else {
-    await db.insert(userProgress).values({ userId, activeCourseId: courseId, userName: providedName, userImageSrc });
-    revalidatePath('/courses');
-    revalidatePath('/learn');
-    redirect('/learn');
+  if (!existing) {
+    redirect('/onboarding');
   }
+  if (!existing.onboardingCompletedAt) {
+    redirect('/onboarding');
+  }
+
+  const userImageSrc = existing.userImageSrc || '/mascot_purple.svg';
+
+  await db
+    .update(userProgress)
+    .set({ activeCourseId: courseId, userName: providedName, userImageSrc })
+    .where(eq(userProgress.userId, userId));
+  revalidatePath('/courses');
+  revalidatePath('/learn');
+  redirect('/learn');
 };
 
 /** @deprecated Ders sırasında kullanmayın; kavram ustalığı ve challenge_progress için `challenge-progress.reduceHearts` kullanın. */

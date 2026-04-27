@@ -241,6 +241,15 @@ export const userProgress = pgTable("user_progress", {
   // Premium subscription fields
   hasInfiniteHearts: boolean("has_infinite_hearts").default(false).notNull(), // Whether user has active infinite hearts subscription
   subscriptionExpiresAt: timestamp("subscription_expires_at"), // When the current subscription expires
+
+  /**
+   * Öğrenme yolu: `full` = tüm katalog (eski hesaplar); `lgs` = 5–8, `tyt_ayt` = 9–12, `adult` = KPSS/YDT/ALES/YDS bantı
+   */
+  learningPath: text("learning_path"),
+  studentGrade: integer("student_grade"), // 5–12, yetişkin yolunda null
+  onboardingCompletedAt: timestamp("onboarding_completed_at"),
+  learningPathLastSetAt: timestamp("learning_path_last_set_at"),
+  learningPathChangeCount: integer("learning_path_change_count").notNull().default(0),
 }, (table) => ({
   schoolIdx: index("idx_user_progress_school_id").on(table.schoolId),
   activeCourseIdx: index("idx_user_progress_active_course").on(table.activeCourseId),

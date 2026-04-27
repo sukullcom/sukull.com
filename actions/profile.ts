@@ -33,6 +33,11 @@ export async function getProfileDataOnServer() {
       profileEditingUnlocked: true,
       studyBuddyUnlocked: true,
       codeShareUnlocked: true,
+      learningPath: true,
+      studentGrade: true,
+      onboardingCompletedAt: true,
+      learningPathLastSetAt: true,
+      learningPathChangeCount: true,
     },
   });
 
@@ -55,6 +60,11 @@ export async function getProfileDataOnServer() {
       istikrar: 0,
       dailyTarget: 50,
       startDate,
+      learningPath: null as string | null,
+      studentGrade: null as number | null,
+      onboardingCompletedAt: null as Date | null,
+      learningPathLastSetAt: null as Date | null,
+      learningPathChangeCount: 0,
     };
   }
 

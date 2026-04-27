@@ -5,7 +5,7 @@ export const STREAK_REQUIREMENTS = {
   DAILY_GOAL_CHANGE: 7,
   STUDY_BUDDY_FEATURES: 7,
   AVATAR_CHANGE: 14,
-  SCHOOL_SELECTION: 14,
+  SCHOOL_SELECTION: 0, // okul dilediğin an (istikrar yok)
   PROFILE_EDITING: 14,
   CODE_SNIPPET_SHARING: 7,
 } as const;
@@ -14,7 +14,7 @@ export const STREAK_REQUIREMENT_MESSAGES = {
   USERNAME_CHANGE: `Kullanıcı adınızı değiştirmek için ${STREAK_REQUIREMENTS.USERNAME_CHANGE} gün istikrarın olması gerekiyor.`,
   DAILY_GOAL_CHANGE: `Günlük hedefinizi değiştirmek için ${STREAK_REQUIREMENTS.DAILY_GOAL_CHANGE} gün istikrarın olması gerekiyor.`,
   AVATAR_CHANGE: `Avatar resminizi değiştirmek için ${STREAK_REQUIREMENTS.AVATAR_CHANGE} gün istikrarın olması gerekiyor.`,
-  SCHOOL_SELECTION: `Okulunuzu seçmek için ${STREAK_REQUIREMENTS.SCHOOL_SELECTION} gün istikrarın olması gerekiyor.`,
+  SCHOOL_SELECTION: "Okulunuzu istediğiniz zaman seçip güncelleyebilirsiniz.",
   STUDY_BUDDY_FEATURES: `Çalışma arkadaşı özelliklerini kullanmak için ${STREAK_REQUIREMENTS.STUDY_BUDDY_FEATURES} gün istikrarın olması gerekiyor.`,
   PROFILE_EDITING: `Profil bilgilerini değiştirmek için ${STREAK_REQUIREMENTS.PROFILE_EDITING} gün istikrarın olması gerekiyor.`,
   CODE_SNIPPET_SHARING: `Kod parçası paylaşmak için ${STREAK_REQUIREMENTS.CODE_SNIPPET_SHARING} gün istikrarın olması gerekiyor.`,
@@ -155,7 +155,7 @@ export function getAllStreakRules(): Array<{
     {
       feature: "Okul Seçimi",
       requirement: STREAK_REQUIREMENTS.SCHOOL_SELECTION,
-      description: "Okulunuzu seçme/değiştirme"
+      description: "Okulunuzu seçme/değiştirme (kısıtlama yok)",
     },
   ];
 } 

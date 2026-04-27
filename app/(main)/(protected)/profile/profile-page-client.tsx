@@ -50,6 +50,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { useSecureLogout } from "@/hooks/use-secure-logout";
+import { ProfileLearningPath } from "./profile-learning-path";
 
 type ProfileProps = {
   userName: string;
@@ -61,6 +62,11 @@ type ProfileProps = {
   profileEditingUnlocked?: boolean;
   studyBuddyUnlocked?: boolean;
   codeShareUnlocked?: boolean;
+  learningPath?: string | null;
+  studentGrade?: number | null;
+  onboardingCompletedAt?: Date | string | null;
+  learningPathLastSetAt?: Date | string | null;
+  learningPathChangeCount?: number;
 };
 
 export default function ProfilePageClient({
@@ -440,6 +446,16 @@ export default function ProfilePageClient({
               </select>
             </FieldGroup>
 
+            {profile.onboardingCompletedAt && (
+              <ProfileLearningPath
+                initialPath={profile.learningPath ?? null}
+                initialGrade={profile.studentGrade ?? null}
+                learningPathLastSetAt={profile.learningPathLastSetAt ?? null}
+                learningPathChangeCount={profile.learningPathChangeCount ?? 0}
+                onboardingCompletedAt={profile.onboardingCompletedAt}
+              />
+            )}
+
             {/* School */}
             <FieldGroup label="Okul" locked={!canSelectSchool} days={STREAK_REQUIREMENTS.SCHOOL_SELECTION} lockLabel="Okul seçmek" streak={profile.istikrar}>
               <div className={!canSelectSchool ? "opacity-50 pointer-events-none" : ""}>
@@ -567,6 +583,9 @@ function FieldGroup({ label, locked, days, lockLabel, streak = 0, children }: {
 }
 
 function LockedHint({ days, label, streak = 0 }: { days: number; label: string; streak?: number }) {
+  if (days <= 0) {
+    return null;
+  }
   const pct = Math.min(Math.round((streak / days) * 100), 100);
   return (
     <div className="space-y-1 mt-1">
