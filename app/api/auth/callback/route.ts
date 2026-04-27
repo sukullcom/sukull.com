@@ -64,9 +64,9 @@ export async function GET(request: Request) {
         log.error({
           message: 'code exchange failed',
           error: authError,
-          codeExchangeMessage: authError.message,
           source: 'api-route',
           location: 'auth/callback/exchangeCode',
+          fields: { codeExchangeMessage: authError.message },
         });
         const errorUrl = new URL('/auth-error', requestUrl.origin);
         errorUrl.searchParams.set('error_code', 'code_exchange_failed');
