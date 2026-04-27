@@ -57,3 +57,5 @@ const pool = new Pool({
 const db = drizzle(pool, { schema });
 
 export default db;
+/** Ham `pg` sorguları (ör. `check_rate_limit(…::text, …::int)` tipli çağrı). */
+export { pool as pgPool };

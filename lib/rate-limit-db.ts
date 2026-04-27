@@ -1,6 +1,5 @@
 import "server-only";
-import { sql } from "drizzle-orm";
-import db from "@/db/drizzle";
+import { pgPool } from "@/db/drizzle";
 import { logger } from "@/lib/logger";
 
 const log = logger.child({ labels: { module: "rate-limit-db" } });
@@ -50,13 +49,12 @@ export async function checkRateLimit({
   onStoreError = "open",
 }: RateLimitOptions): Promise<RateLimitResult> {
   try {
-    const result = await db.execute(
-      sql`SELECT * FROM check_rate_limit(${key}, ${max}, ${windowSeconds})`,
+    // PG parametrelerini açıkça tiple; aksi hâlde "check_rate_limit(unknown,unknown,unknown)" hatası.
+    const { rows } = await pgPool.query<Record<string, unknown>>(
+      "SELECT * FROM check_rate_limit($1::text, $2::integer, $3::integer)",
+      [key, max, windowSeconds],
     );
-    const row =
-      // drizzle+pg returns `.rows`, drizzle+postgres-js returns array-like
-      (result as unknown as { rows?: Array<Record<string, unknown>> }).rows?.[0] ??
-      (result as unknown as Array<Record<string, unknown>>)[0];
+    const row = rows[0];
 
     if (!row) {
       return onStoreError === "closed"

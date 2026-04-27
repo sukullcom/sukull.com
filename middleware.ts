@@ -330,10 +330,16 @@ export async function middleware(req: NextRequest) {
 
   const isApiRoute = pathname.startsWith('/api/');
   const isAuthApi = pathname.startsWith('/api/auth/');
+  /** Auth gerektirmez: tarayıcı PWA manifest + SEO; aksi hâlde giriş HTML’i JSON sanılır. */
+  const isPublicDocument =
+    pathname === '/manifest.webmanifest' ||
+    pathname === '/robots.txt' ||
+    pathname === '/sitemap.xml';
   const isPublic =
     pathname === '/' ||
     publicPaths.some((p) => pathname === p || pathname.startsWith(p)) ||
-    isAuthApi;
+    isAuthApi ||
+    isPublicDocument;
 
   // CORS preflight: answer OPTIONS on /api/* immediately without
   // running any auth flow. Route handlers historically forgot to

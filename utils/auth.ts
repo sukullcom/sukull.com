@@ -1,4 +1,5 @@
 import { createClient } from '@/utils/supabase/client'
+import { getApiAuthCallbackUrl } from '@/lib/oauth-callback-url'
 import { clientLogger } from '@/lib/client-logger'
 import { users } from './users'
 
@@ -34,7 +35,7 @@ export const auth = {
       email,
       password,
       options: {
-        emailRedirectTo: `${location.origin}/api/auth/callback`,
+        emailRedirectTo: getApiAuthCallbackUrl(),
         data: {
           username: username,
         }
@@ -77,7 +78,7 @@ export const auth = {
   },
 
   async signInWithOAuth(provider: 'google', nextUrl?: string) {
-    const redirectTo = `${location.origin}/api/auth/callback`;
+    const redirectTo = getApiAuthCallbackUrl();
     
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
@@ -179,7 +180,7 @@ export const auth = {
       type: 'signup',
       email: email,
       options: {
-        emailRedirectTo: `${location.origin}/api/auth/callback`,
+        emailRedirectTo: getApiAuthCallbackUrl(),
       }
     })
 
