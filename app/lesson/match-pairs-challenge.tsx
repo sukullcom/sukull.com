@@ -2,18 +2,20 @@
 
 import { challengeOptions, challenges } from "@/db/schema";
 import { cn } from "@/lib/utils";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { MathRenderer } from "@/components/ui/math-renderer";
+import { READY_TO_CHECK } from "./answer-signals";
 
 type Props = {
   options: (typeof challengeOptions.$inferSelect)[];
   onSelect: (id: number) => void;
+  onPairMistake?: () => void;
   status: "correct" | "wrong" | "none";
   selectedOption?: number;
   disabled?: boolean;
   type: (typeof challenges.$inferSelect)["type"];
-  questionImageSrc?: string | null | undefined; // Add question image support
+  questionImageSrc?: string | null | undefined;
 };
 
 type PairCard = {
@@ -26,23 +28,33 @@ type PairCard = {
   isMatched: boolean;
 };
 
+const MISMATCH_MS = 800;
+
 export const MatchPairsChallenge = ({
   options,
   onSelect,
+  onPairMistake,
   status,
   selectedOption,
   disabled,
-  questionImageSrc, // Add questionImageSrc prop
+  questionImageSrc,
 }: Props) => {
   const [cards, setCards] = useState<PairCard[]>([]);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [matchedPairs, setMatchedPairs] = useState<number[]>([]);
   const [isChecking, setIsChecking] = useState(false);
+  const [mismatchingIds, setMismatchingIds] = useState<number[] | null>(null);
+  const [expectedPairCount, setExpectedPairCount] = useState(0);
+  const mismatchTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Initialize cards from options
+  useEffect(() => {
+    return () => {
+      if (mismatchTimeout.current) clearTimeout(mismatchTimeout.current);
+    };
+  }, []);
+
   useEffect(() => {
     const pairCards: PairCard[] = [];
-    
     options.forEach((option) => {
       if (option.pairId !== null && option.pairId !== undefined) {
         pairCards.push({
@@ -51,75 +63,69 @@ export const MatchPairsChallenge = ({
           text: option.text,
           imageSrc: option.imageSrc,
           audioSrc: option.audioSrc,
-          isFlipped: true, // Show all cards face-up initially
+          isFlipped: true,
           isMatched: false,
         });
       }
     });
-
-    // Shuffle the cards for random positioning
     const shuffled = [...pairCards].sort(() => Math.random() - 0.5);
     setCards(shuffled);
+    setExpectedPairCount(new Set(shuffled.map((c) => c.pairId)).size);
   }, [options]);
 
-  // Reset component state when status changes to "none" (for practice mode and next challenge)
   useEffect(() => {
     if (status === "none" && selectedOption === undefined) {
-      // Reset all internal state
       setSelectedCards([]);
       setMatchedPairs([]);
       setIsChecking(false);
-      
-      // Reset all cards to face-up and unmatched state
-      setCards(prev => prev.map(card => ({
-        ...card,
-        isFlipped: true, // Keep all cards face-up
-        isMatched: false
-      })));
+      setMismatchingIds(null);
+      setCards((prev) =>
+        prev.map((card) => ({ ...card, isFlipped: true, isMatched: false })),
+      );
     }
   }, [status, selectedOption]);
 
   const handleCardClick = (cardId: number) => {
     if (disabled || isChecking) return;
-    
-    const card = cards.find(c => c.id === cardId);
+
+    const card = cards.find((c) => c.id === cardId);
     if (!card || card.isMatched || selectedCards.includes(cardId)) return;
 
-    const newSelectedCards = [...selectedCards, cardId];
-    setSelectedCards(newSelectedCards);
+    const newSelected = [...selectedCards, cardId];
+    setSelectedCards(newSelected);
 
-    // Check for matches when 2 cards are selected
-    if (newSelectedCards.length === 2) {
+    if (newSelected.length === 2) {
       setIsChecking(true);
-      
-      const [firstCardId, secondCardId] = newSelectedCards;
-      const firstCard = cards.find(c => c.id === firstCardId);
-      const secondCard = cards.find(c => c.id === secondCardId);
+      const [firstCardId, secondCardId] = newSelected;
+      const firstCard = cards.find((c) => c.id === firstCardId);
+      const secondCard = cards.find((c) => c.id === secondCardId);
 
       if (firstCard && secondCard && firstCard.pairId === secondCard.pairId) {
-        // Correct match!
-        const newMatchedPairs = [...matchedPairs, firstCard.pairId];
-        setMatchedPairs(newMatchedPairs);
-        
-        setCards(prev => prev.map(c => 
-          (c.id === firstCardId || c.id === secondCardId) 
-            ? { ...c, isMatched: true }
-            : c
-        ));
-
-        const totalPairs = new Set(cards.map(c => c.pairId)).size;
-        if (newMatchedPairs.length === totalPairs) {
-          const correctOption = options.find(opt => opt.correct);
-          setTimeout(() => onSelect(correctOption?.id ?? -2), 500);
-        }
-        
+        setCards((prev) =>
+          prev.map((c) =>
+            c.id === firstCardId || c.id === secondCardId
+              ? { ...c, isMatched: true }
+              : c,
+          ),
+        );
+        setMatchedPairs((prev) => {
+          const next = [...prev, firstCard.pairId];
+          if (next.length === expectedPairCount) {
+            queueMicrotask(() => onSelect(READY_TO_CHECK));
+          }
+          return next;
+        });
         setSelectedCards([]);
         setIsChecking(false);
       } else {
-        setTimeout(() => {
+        if (mismatchTimeout.current) clearTimeout(mismatchTimeout.current);
+        setMismatchingIds([firstCardId, secondCardId]);
+        onPairMistake?.();
+        mismatchTimeout.current = setTimeout(() => {
           setSelectedCards([]);
           setIsChecking(false);
-        }, 800);
+          setMismatchingIds(null);
+        }, MISMATCH_MS);
       }
     }
   };
@@ -132,10 +138,8 @@ export const MatchPairsChallenge = ({
     return "grid-cols-4";
   };
 
-  // Function to render question image if it exists
   const renderQuestionImage = () => {
     if (!questionImageSrc) return null;
-    
     return (
       <div className="mb-4 flex justify-center">
         <div className="relative max-w-sm w-full aspect-square">
@@ -155,11 +159,10 @@ export const MatchPairsChallenge = ({
     <div className="space-y-6">
       {renderQuestionImage()}
       <div className="text-center">
-        <h3 className="text-lg font-medium text-gray-700 mb-2">
-          Eşleşen çiftleri bul
-        </h3>
+        <h3 className="text-lg font-medium text-gray-700 mb-2">Eşleşen çiftleri bul</h3>
         <p className="text-sm text-gray-600">
-          Eşleştirmek için iki karta tıkla.
+          İki karta tıkla. Yanlış eşleştirme candan düşer. Tüm çiftler
+          bulununca alttan Kontrol et.
         </p>
       </div>
 
@@ -167,6 +170,7 @@ export const MatchPairsChallenge = ({
         {cards.map((card) => {
           const isSelected = selectedCards.includes(card.id);
           const isMatched = card.isMatched;
+          const isMismatching = mismatchingIds?.includes(card.id) ?? false;
 
           return (
             <div
@@ -179,15 +183,16 @@ export const MatchPairsChallenge = ({
                 "bg-white shadow-md hover:shadow-lg",
                 !disabled && !isMatched && "hover:scale-105",
                 isSelected && "border-blue-400 bg-blue-50 scale-105",
+                isMismatching && "border-rose-500 bg-rose-50",
                 isMatched && "border-green-400 bg-green-50",
                 !isSelected && !isMatched && "border-gray-300",
-                disabled && "cursor-not-allowed opacity-50"
+                disabled && "cursor-not-allowed opacity-50",
               )}
             >
               {card.imageSrc && (
                 <div className="relative w-full h-32 mb-3">
-                  <Image 
-                    src={card.imageSrc} 
+                  <Image
+                    src={card.imageSrc}
                     alt={card.text || "Match pair item"}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -205,12 +210,9 @@ export const MatchPairsChallenge = ({
         })}
       </div>
 
-      {/* Progress indicator */}
-      <div className="text-center">
-        <div className="text-sm text-gray-600">
-          Eşleşen: {matchedPairs.length} / {new Set(cards.map(c => c.pairId)).size} çift
-        </div>
+      <div className="text-center text-sm text-gray-600">
+        Eşleşen: {matchedPairs.length} / {expectedPairCount} çift
       </div>
     </div>
   );
-}; 
+};

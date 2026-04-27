@@ -5,8 +5,8 @@
  * in its own domain module.
  */
 
-/** How long (ms) before a lost heart regenerates. 4 hours. */
-export const HEART_REGEN_INTERVAL_MS = 4 * 60 * 60 * 1000;
+/** Rolling window: free canlar bu süre dolunca 5’e tamamlanır (günlük ücretsiz dolum). */
+export const HEART_REGEN_INTERVAL_MS = 24 * 60 * 60 * 1000;
 
 /** Max hearts a free-plan user can hold. */
 export const HEART_MAX = 5;

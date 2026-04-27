@@ -120,7 +120,9 @@ export const Quests = ({ currentStreak }: QuestsProps) => {
           <div className="flex items-start gap-2 p-2.5 bg-gray-50 rounded-xl">
             <Heart className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
             <p>
-              <span className="font-semibold">Can:</span> 100 puanla doldur veya her 4 saatte 1 adet otomatik yenilenir.
+              <span className="font-semibold">Can:</span> 100 puanla doldur, sonsuz
+              can aboneliği al veya yaklaşık 24 saatte bir ücretsiz tam
+              dolum bekle.
             </p>
           </div>
           <div className="flex items-start gap-2 p-2.5 bg-gray-50 rounded-xl">

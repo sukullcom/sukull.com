@@ -2,6 +2,8 @@
 
 import { challengeOptions, challenges, userSubscriptions } from "@/db/schema";
 import { useEffect, useRef, useState, useTransition, useMemo } from "react";
+import type { SequenceChallengeHandle } from "./sequence-challenge";
+import { ANSWER_CORRECT, ANSWER_WRONG, READY_TO_CHECK } from "./answer-signals";
 import { Header } from "./header";
 import { QuestionBubble } from "./question-bubble";
 import { Challenge } from "./challenge";
@@ -121,6 +123,7 @@ export const Quiz = ({
   const { width, height } = useWindowSize();
   const router = useRouter();
   const [pending, startTransition] = useTransition();
+  const sequenceListRef = useRef<SequenceChallengeHandle | null>(null);
 
   const [lessonId] = useState(initialLessonId);
   const [hearts, setHearts] = useState(initialHearts);
@@ -288,6 +291,31 @@ export const Quiz = ({
   // 6) Normal case: we have an active challenge
   // *******************************
   const { challengeOptions = [], type, timeLimit } = challenge;
+
+  const onPairMistake = () => {
+    if (isPracticeMode) {
+      incorrectControls.play();
+      return;
+    }
+    startTransition(() => {
+      reduceHearts(challenge.id)
+        .then((response) => {
+          if (response?.error === "hearts") {
+            openHeartsModal();
+            return;
+          }
+          incorrectControls.play();
+          setWrongCount((c) => c + 1);
+          if (!response?.error && !hasInfiniteHearts) {
+            setHearts((prev) => Math.max(prev - 1, 0));
+            setLessonPoints(
+              (prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_PENALTY
+            );
+          }
+        })
+        .catch(() => toast.error("Bir şeyler yanlış gitti. Lütfen tekrar deneyin."));
+    });
+  };
   const title =
     type === "ASSIST"
       ? "Doğru cevapladığına emin misin?"
@@ -333,19 +361,28 @@ export const Quiz = ({
       setSelectedOption(undefined);
       return;
     }
-    
-    if (!selectedOption && selectedOption !== -1 && selectedOption !== -2) return;
     if (status === "correct") {
       onNext();
+      return;
+    }
+    if (status !== "none") return;
+
+    if (type === "SEQUENCE" || type === "MATCH_PAIRS") {
+      if (selectedOption !== READY_TO_CHECK) return;
+    } else if (selectedOption === undefined) {
       return;
     }
 
     let isAnswerCorrect: boolean;
 
-    if (selectedOption === -2) {
+    if (selectedOption === ANSWER_CORRECT) {
       isAnswerCorrect = true;
-    } else if (selectedOption === -1) {
+    } else if (selectedOption === ANSWER_WRONG) {
       isAnswerCorrect = false;
+    } else if (type === "SEQUENCE" && selectedOption === READY_TO_CHECK) {
+      isAnswerCorrect = sequenceListRef.current?.isOrderCorrect() === true;
+    } else if (type === "MATCH_PAIRS" && selectedOption === READY_TO_CHECK) {
+      isAnswerCorrect = true;
     } else {
       const correctOption = challengeOptions.find((o) => o.correct);
       if (!correctOption) return;
@@ -447,6 +484,8 @@ export const Quiz = ({
                 questionImageSrc={challenge.questionImageSrc}
                 timeLimit={timeLimit || undefined}
                 onTimeUp={handleTimeUp}
+                onPairMistake={onPairMistake}
+                sequenceListRef={sequenceListRef}
               />
             </div>
           </div>

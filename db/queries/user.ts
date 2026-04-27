@@ -26,7 +26,7 @@ import { HEART_MAX, HEART_REGEN_INTERVAL_MS } from "./shared";
  *     `checkSubscriptionStatus(userId)` read when we already have `data`.
  *   • Heart regen WRITE only fires when hearts actually change or when
  *     we anchor the regen timer for the first time. The common case
- *     (hearts full, or < 4h since last regen) performs zero writes.
+ *     (hearts full, or < 24h since last free regen) performs zero writes.
  */
 export const getUserProgress = cache(async () => {
   const user = await getServerUser();
@@ -79,15 +79,12 @@ export const getUserProgress = cache(async () => {
       data.lastHeartRegenAt = now;
     } else {
       const elapsed = now.getTime() - new Date(data.lastHeartRegenAt).getTime();
-      const heartsToAdd = Math.floor(elapsed / HEART_REGEN_INTERVAL_MS);
-
-      if (heartsToAdd > 0) {
-        const newHearts = Math.min(data.hearts + heartsToAdd, HEART_MAX);
+      if (elapsed >= HEART_REGEN_INTERVAL_MS) {
         await db
           .update(userProgress)
-          .set({ hearts: newHearts, lastHeartRegenAt: now })
+          .set({ hearts: HEART_MAX, lastHeartRegenAt: now })
           .where(eq(userProgress.userId, userId));
-        data.hearts = newHearts;
+        data.hearts = HEART_MAX;
         data.lastHeartRegenAt = now;
       }
     }

@@ -230,7 +230,7 @@ export const userProgress = pgTable("user_progress", {
   previousTotalPoints: integer("previous_total_points").default(0), // Son kontrol anındaki toplam puan
   /** Türkiye gününe göre, bugünkü puan oyun/ödül/ceza toplamı; gece/ensureNewDay ile 0'lanır (istikrar bonusu buraya eklenmez). */
   dailyPointsEarned: integer("daily_points_earned").notNull().default(0),
-  lastHeartRegenAt: timestamp("last_heart_regen_at"), // Son otomatik can yenilenme zamanı
+  lastHeartRegenAt: timestamp("last_heart_regen_at"), // Ücretsiz tam dolum için ankor (yakl. 24s aralık)
   streakFreezeCount: integer("streak_freeze_count").notNull().default(0), // Satın alınan streak freeze sayısı
 
   // One-time achievement unlocks - once achieved, permanently unlocked

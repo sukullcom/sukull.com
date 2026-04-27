@@ -490,26 +490,15 @@ export async function middleware(req: NextRequest) {
 }
 
 /**
- * Activity logging (page_view events) feeds admin DAU/WAU/MAU analytics.
+ * Activity logging (page_view events) feeds a **thin** slice of DAU signal.
  *
- * Cost model @10 K MAU: every self-fetch is a second Vercel function
- * invocation + a DB INSERT. We cannot log every page view — we must
- * aggressively dedupe.
- *
- * Two-layer dedupe strategy:
- *   1. **Daily cookie (`sk_dau`)** — once per user per 24 h any logged path
- *      counts toward DAU/MAU. Single tiny cookie, no server roundtrip.
- *   2. **Per-path cookie (`sk_pv`)** — prevents double-counting the same
- *      path within 4 hours. Covers the majority of refresh/back-forward
- *      noise.
- *
- * Only a small **allowlist** of pages (see `LOGGED_PATH_PREFIXES`) feeds
- * the analytics signal; admin, settings, debug and similar maintenance
- * paths are intentionally excluded.
+ * Cost model: each row is a detached `/api/activity-log` + DB INSERT. We keep
+ * only a single allowlisted hub (`/learn`) and at most **one** `page_view`
+ * per user per 24h (rolling) via `sk_dau`. Engagement (games, ders, mağaza) is
+ * still recorded separately via `logActivity()` in server actions.
  *
  * Called from both the cache-hit and cold-verify branches — extracting to
- * a helper keeps the two paths byte-identical and prevents drift where one
- * path forgets to log a page view.
+ * a helper keeps the two paths byte-identical and prevents drift.
  */
 function maybeLogActivity(
   req: NextRequest,
@@ -520,41 +509,21 @@ function maybeLogActivity(
   if (!LOGGED_PATH_PREFIXES.some((p) => pathname.startsWith(p))) return;
   if (!process.env.INTERNAL_API_KEY) return;
 
-  const PATH_DEDUPE_MS = 4 * 60 * 60 * 1000;
   const DAU_DEDUPE_MS = 24 * 60 * 60 * 1000;
   const now = Date.now();
-
-  const pathCookie = req.cookies.get('sk_pv')?.value;
   const dauCookie = req.cookies.get('sk_dau')?.value;
+  const dauFresh = dauCookie
+    ? now - Number(dauCookie) < DAU_DEDUPE_MS
+    : false;
+  if (dauFresh) return;
 
-  let pathFresh = false;
-  if (pathCookie) {
-    const [lastPath, lastTsStr] = pathCookie.split('|');
-    const lastTs = Number(lastTsStr);
-    pathFresh = lastPath === pathname && Number.isFinite(lastTs) && now - lastTs < PATH_DEDUPE_MS;
-  }
-
-  const dauFresh = dauCookie ? now - Number(dauCookie) < DAU_DEDUPE_MS : false;
-  if (pathFresh && dauFresh) return;
-
-  if (!pathFresh) {
-    response.cookies.set('sk_pv', `${pathname}|${now}`, {
-      httpOnly: true,
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60 * 4,
-      path: '/',
-    });
-  }
-  if (!dauFresh) {
-    response.cookies.set('sk_dau', String(now), {
-      httpOnly: true,
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60 * 24,
-      path: '/',
-    });
-  }
+  response.cookies.set('sk_dau', String(now), {
+    httpOnly: true,
+    sameSite: 'lax',
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 60 * 60 * 24,
+    path: '/',
+  });
 
   const origin = req.nextUrl.origin;
   // Forward the caller's Supabase auth cookie so the endpoint can
@@ -584,21 +553,11 @@ function maybeLogActivity(
 }
 
 /**
- * Only these high-signal paths are logged for DAU/WAU/MAU analytics.
- * Admin, auth, settings, API callbacks and the like are intentionally
- * excluded: they're either maintenance traffic or already logged
- * elsewhere (e.g. game_end, lesson_complete events).
+ * **Single** app-hub heartbeat for cheap DAU. Other routes rely on
+ * `game_end`, `lesson_complete`, `shop_purchase` in `activity_log` instead
+ * of per-path `page_view` rows.
  */
-const LOGGED_PATH_PREFIXES: readonly string[] = [
-  '/learn',
-  '/games',
-  '/lesson',
-  '/private-lesson',
-  '/leaderboard',
-  '/courses',
-  '/study-buddy',
-  '/profile',
-] as const;
+const LOGGED_PATH_PREFIXES: readonly string[] = ['/learn'] as const;
 
 export const config = {
   matcher: [

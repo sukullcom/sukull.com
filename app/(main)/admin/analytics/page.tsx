@@ -457,9 +457,14 @@ export default async function AdminAnalyticsPage() {
             <div className="flex items-center gap-2 mb-4">
               <Target className="h-5 w-5 text-indigo-600" />
               <h2 className="font-semibold text-gray-800">
-                En Çok Ziyaret Edilen Sayfalar (7 gün)
+                Sayfa görüntüleme (page_view, 7 gün)
               </h2>
             </div>
+            <p className="text-xs text-gray-500 mb-3">
+              Yalnızca <code className="text-[11px]">/learn</code> merkezinden,
+              kullanıcı başı günde en fazla bir kez. Oyun, ders tamamlama ve
+              mağaza olayları ayrı (DAU/özet tüm <code className="text-[11px]">activity_log</code>).
+            </p>
             <div className="space-y-2">
               {pageViews.length === 0 ? (
                 <p className="text-sm text-gray-400">Henüz veri yok.</p>

@@ -43,8 +43,9 @@ export const HeartsModal = () => {
             Eyvah, canın bitti!
           </DialogTitle>
           <DialogDescription className="text-center text-base">
-            Merak etme, mağazadan puanlarınla canlarını doldurabilirsin.
-            Ya da biraz bekle, canların 4 saatte bir yenileniyor!
+            Mağazadan puanla doldurabilir veya sonsuz cana bakabilirsin. Ücretsiz
+            olarak, son ücretsiz dolumdan sonra yaklaşık 24 saat içinde tüm
+            canların yine dolar; aynı gün hızlanmak için aşağıdaki düğmeyi kullan.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="mb-4">

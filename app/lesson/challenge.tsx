@@ -4,8 +4,9 @@ import { Card } from "./card";
 import { DragDropChallenge } from "./drag-drop-challenge";
 import { FillBlankChallenge } from "./fill-blank-challenge";
 import { MatchPairsChallenge } from "./match-pairs-challenge";
-import { SequenceChallenge } from "./sequence-challenge";
+import { type SequenceChallengeHandle, SequenceChallenge } from "./sequence-challenge";
 import { TimerChallenge } from "./timer-challenge";
+import type { Ref } from "react";
 import Image from "next/image";
 
 type Props = {
@@ -19,6 +20,8 @@ type Props = {
   questionImageSrc?: string | null | undefined; // Allow all possible values
   timeLimit?: number;
   onTimeUp?: () => void;
+  onPairMistake?: () => void;
+  sequenceListRef?: Ref<SequenceChallengeHandle | null>;
 };
 
 export const Challenge = ({
@@ -32,6 +35,8 @@ export const Challenge = ({
   questionImageSrc,
   timeLimit,
   onTimeUp,
+  onPairMistake,
+  sequenceListRef,
 }: Props) => {
   // Function to render question image if it exists
   const renderQuestionImage = () => {
@@ -87,6 +92,7 @@ export const Challenge = ({
           <MatchPairsChallenge
             options={options}
             onSelect={onSelect}
+            onPairMistake={onPairMistake}
             status={status}
             selectedOption={selectedOption}
             disabled={disabled}
@@ -98,6 +104,7 @@ export const Challenge = ({
       case "SEQUENCE":
         return (
           <SequenceChallenge
+            ref={sequenceListRef}
             options={options}
             onSelect={onSelect}
             status={status}
