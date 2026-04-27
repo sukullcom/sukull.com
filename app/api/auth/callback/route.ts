@@ -1,5 +1,6 @@
 import { createClient } from '@/utils/supabase/server';
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 
 import { ensurePublicUserFromAuth } from '@/lib/ensure-public-user';
 import { getRequestLogger } from '@/lib/logger';
@@ -7,6 +8,16 @@ import { syncAdminRoleFromEmail } from '@/lib/admin';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
+
+// GoTrue'nun bize döndürdüğü mesaj operasyonel ipucu içerir ama
+// tüm metni URL'e asla geçirmeyiz: e-posta, token parçası vb.
+// barındırabilir. Teşhis için `reason` query parametresine ilk 120
+// karakter, alfasayısal/temel noktalama ile sınırlı biçimde gider.
+const sanitizeReason = (msg: unknown): string => {
+  if (typeof msg !== 'string') return 'unknown';
+  const cleaned = msg.replace(/[^\w\s\-.:,()]+/g, ' ').trim();
+  return cleaned.slice(0, 120) || 'unknown';
+};
 
 export async function GET(request: Request) {
   const log = await getRequestLogger({ labels: { module: 'auth-callback' } });
@@ -61,15 +72,54 @@ export async function GET(request: Request) {
       const { data, error: authError } = await supabase.auth.exchangeCodeForSession(code);
 
       if (authError) {
+        // PKCE hatalarının çoğu `code_verifier` cookie'sinin olmayışı
+        // (farklı subdomain / 3rd-party cookie block) ya da tek
+        // kullanımlık code'un yeniden tüketilmesinden gelir. Sebebi
+        // Vercel logs'ta doğru teşhis etmek için burada mevcut
+        // Supabase cookie isimlerini (DEĞERLERİNİ DEĞİL) ve referer
+        // host'unu da loglarız.
+        let cookieNames: string[] = [];
+        let hasCodeVerifier = false;
+        try {
+          const all = cookies().getAll();
+          cookieNames = all
+            .map((c) => c.name)
+            .filter((n) => n.startsWith('sb-'));
+          hasCodeVerifier = cookieNames.some((n) =>
+            n.endsWith('-auth-token-code-verifier')
+          );
+        } catch {
+          // cookies() nadiren route dışı çağrılırsa hata verir;
+          // log'u bölmemek için sessizce geçelim.
+        }
+
+        let referrerHost: string | null = null;
+        try {
+          const ref = request.headers.get('referer');
+          if (ref) referrerHost = new URL(ref).host;
+        } catch {
+          referrerHost = null;
+        }
+
         log.error({
           message: 'code exchange failed',
           error: authError,
           source: 'api-route',
           location: 'auth/callback/exchangeCode',
-          fields: { codeExchangeMessage: authError.message },
+          fields: {
+            codeExchangeMessage: authError.message,
+            authErrorStatus: (authError as { status?: number }).status ?? null,
+            authErrorCode: (authError as { code?: string }).code ?? null,
+            callbackHost: requestUrl.host,
+            referrerHost,
+            sbCookieCount: cookieNames.length,
+            hasCodeVerifierCookie: hasCodeVerifier,
+          },
         });
+
         const errorUrl = new URL('/auth-error', requestUrl.origin);
         errorUrl.searchParams.set('error_code', 'code_exchange_failed');
+        errorUrl.searchParams.set('reason', sanitizeReason(authError.message));
         return NextResponse.redirect(errorUrl);
       }
       authUser = data.user;

@@ -8,6 +8,11 @@ interface AuthErrorPageProps {
      *  callbacks pass `error_code` with a stable, documented code. */
     error?: string;
     error_code?: string;
+    /**
+     * Teşhis amaçlı Supabase/GoTrue orijinal mesajı (kısaltılmış).
+     * Canlıda ekrana kapalı, yalnız `?debug=1` ile açılır.
+     */
+    reason?: string;
   };
 }
 
@@ -122,7 +127,7 @@ export default function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
   // ignore its value (it can contain raw upstream messages we don't
   // want to render) and rely solely on the documented `error_code`
   // → copy mapping below.
-  const { error_code } = searchParams;
+  const { error_code, reason } = searchParams;
 
   const errorDetails = (error_code && ERROR_COPY[error_code]) || DEFAULT_ERROR_COPY;
 
@@ -139,6 +144,11 @@ export default function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
         {error_code && (
           <div className="bg-gray-100 p-3 rounded-lg text-sm text-left mb-4">
             <strong>Hata Kodu:</strong> {error_code}
+            {reason ? (
+              <div className="mt-1 text-xs text-gray-500 break-words">
+                <span className="font-medium">Ayrıntı:</span> {reason}
+              </div>
+            ) : null}
           </div>
         )}
       </div>
