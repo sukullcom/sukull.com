@@ -81,6 +81,28 @@ export function filterCoursesByLearningPath(
   return allCourses;
 }
 
+/**
+ * Sınavlar sekmesinde hangi LGS / TYT / YDT / … bölümlerinin listeleneceği
+ * (içerik olsun/olmasın; başlık sızıntısını engellemek için UI tarafında kullan).
+ */
+export function examKeysForLearningPath(
+  path: string | null | undefined
+): Set<string> | "all" {
+  if (!path || path === "full") {
+    return "all";
+  }
+  if (path === "lgs") {
+    return new Set<string>(["LGS"]);
+  }
+  if (path === "tyt_ayt") {
+    return new Set<string>(["TYT", "AYT"]);
+  }
+  if (path === "adult") {
+    return new Set<string>(["YDT", "KPSS", "ALES", "YDS"]);
+  }
+  return "all";
+}
+
 export const LEARNING_PATH_DAYS_BETWEEN_CHANGES = 30;
 export const LEARNING_PATH_MAX_CHANGES = 5;
 

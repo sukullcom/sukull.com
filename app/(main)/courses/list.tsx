@@ -7,6 +7,7 @@ import { useTransition, useCallback, useEffect, useRef, useMemo, useState } from
 import { upsertUserProgress } from "@/actions/user-progress";
 import { toast } from "sonner";
 import { extractSubject } from "@/lib/subject-colors";
+import { examKeysForLearningPath } from "@/lib/learning-path";
 import { Globe, BookOpen, GraduationCap, Lock } from "lucide-react";
 
 type Course = typeof coursesTable.$inferSelect;
@@ -14,6 +15,8 @@ type Course = typeof coursesTable.$inferSelect;
 type Props = {
   courses: Course[];
   activeCourseId?: (typeof userProgress.$inferSelect)["activeCourseId"];
+  /** Sınavlar sekmesinde sadece bu yola ait kategori başlıkları (LGS, TYT, …) gösterilsin. */
+  learningPath?: string | null;
 };
 
 type SectionGroup = {
@@ -110,7 +113,7 @@ const SUBJECT_STYLES: Record<string, string> = {
 
 type TabKey = "school" | "exams";
 
-export const List = ({ courses, activeCourseId }: Props) => {
+export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [pending, startTransition] = useTransition();
@@ -245,7 +248,12 @@ export const List = ({ courses, activeCourseId }: Props) => {
         };
       });
 
-    const examGroups = EXAMS.map((e) => ({
+    const allowed = examKeysForLearningPath(learningPath);
+    const examDefinitions =
+      allowed === "all"
+        ? EXAMS
+        : EXAMS.filter((e) => allowed.has(e.key));
+    const examGroups = examDefinitions.map((e) => ({
       key: `exam-${e.key}`,
       label: e.label,
       description: e.description,
@@ -255,7 +263,7 @@ export const List = ({ courses, activeCourseId }: Props) => {
     }));
 
     return { gradeGroups, topicGroups, examGroups };
-  }, [courses]);
+  }, [courses, learningPath]);
 
   const totalSchoolCourses = gradeGroups.reduce((n, g) => n + g.courses.length, 0)
     + topicGroups.reduce((n, g) => n + g.courses.length, 0);

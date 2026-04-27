@@ -1,7 +1,7 @@
 import { createClient } from '@/utils/supabase/server';
-import { users } from '@/utils/users';
 import { NextResponse } from 'next/server';
 
+import { ensurePublicUserFromAuth } from '@/lib/ensure-public-user';
 import { getRequestLogger } from '@/lib/logger';
 import { syncAdminRoleFromEmail } from '@/lib/admin';
 
@@ -64,6 +64,7 @@ export async function GET(request: Request) {
         log.error({
           message: 'code exchange failed',
           error: authError,
+          codeExchangeMessage: authError.message,
           source: 'api-route',
           location: 'auth/callback/exchangeCode',
         });
@@ -89,14 +90,16 @@ export async function GET(request: Request) {
     } else {
       if (authUser) {
         try {
-          const usernameFromMetadata = authUser.user_metadata?.username;
-          await users.captureUserDetails(authUser, usernameFromMetadata);
+          const usernameFromMetadata = authUser.user_metadata?.username as
+            | string
+            | undefined;
+          await ensurePublicUserFromAuth(authUser, usernameFromMetadata);
         } catch (err) {
           log.error({
-            message: 'capture user details failed',
+            message: 'ensure public user failed',
             error: err,
             source: 'api-route',
-            location: 'auth/callback/captureUserDetails',
+            location: 'auth/callback/ensurePublicUser',
             userId: authUser?.id ?? null,
           });
         }

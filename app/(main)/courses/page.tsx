@@ -47,7 +47,11 @@ export default async function CoursesPage() {
             </div>
           }
         >
-          <List courses={coursesForList} activeCourseId={userProgress.activeCourseId} />
+          <List
+            courses={coursesForList}
+            activeCourseId={userProgress.activeCourseId}
+            learningPath={userProgress.learningPath ?? "full"}
+          />
         </Suspense>
       </div>
     );
