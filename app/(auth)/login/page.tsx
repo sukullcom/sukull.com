@@ -16,14 +16,14 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
   return (
     <div className="max-w-[988px] mx-auto flex-1 w-full flex flex-col items-center justify-center p-4 gap-8">
       {/* Main login section */}
-      <div className="w-full flex flex-col lg:flex-row items-center justify-center gap-2">
+      <div className="w-full flex flex-col lg:flex-row items-center justify-center gap-2 lg:gap-8">
         {/* ----- Left side image */}
-        <div className="relative aspect-square max-h-[200px] w-full">
+        <div className="relative aspect-square max-h-[200px] w-full lg:max-w-[200px] shrink-0">
             <Image src="/hero.svg" fill alt="Hero" sizes="100vw" />
         </div>
 
         {/* -----Right side form container */}
-        <div className="w-full max-w-md bg-white rounded-3xl border-2 border-gray-200 shadow-xl p-6">
+        <div className="w-full min-w-0 max-w-lg bg-white rounded-3xl border-2 border-gray-200 shadow-xl p-6 sm:p-8">
           <h1 className="text-3xl font-bold text-center mb-6 text-green-500">
             Giriş Yap
           </h1>

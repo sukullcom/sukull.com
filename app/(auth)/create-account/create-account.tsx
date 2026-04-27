@@ -60,13 +60,12 @@ export function CreateAccountForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-      {/* ----- Use the same exact classes as the old design's inputs, or adapt them */}
+    <form onSubmit={handleSubmit} className="flex w-full min-w-0 flex-col space-y-4">
       <input
         id="username"
         type="text"
         placeholder="Kullanıcı Adı"
-        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
+        className="w-full min-w-0 border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         disabled={isLoading}
@@ -76,7 +75,7 @@ export function CreateAccountForm() {
         id="email"
         type="email"
         placeholder="E-posta"
-        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
+        className="w-full min-w-0 border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         disabled={isLoading}
@@ -86,7 +85,7 @@ export function CreateAccountForm() {
         id="password"
         type="password"
         placeholder="Şifre"
-        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
+        className="w-full min-w-0 border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         disabled={isLoading}
@@ -96,7 +95,7 @@ export function CreateAccountForm() {
         id="confirmPassword"
         type="password"
         placeholder="Şifre Tekrar"
-        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
+        className="w-full min-w-0 border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
         disabled={isLoading}
@@ -104,7 +103,7 @@ export function CreateAccountForm() {
       />
 
       {/* Legal consent — KVKK + Mesafeli sözleşme gereği açık rıza */}
-      <label className="flex items-start gap-2 text-xs text-slate-600 leading-snug cursor-pointer">
+      <label className="flex w-full min-w-0 items-start gap-2 text-xs text-slate-600 leading-snug cursor-pointer">
         <input
           id="legalAccepted"
           type="checkbox"

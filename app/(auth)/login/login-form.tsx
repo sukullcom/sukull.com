@@ -67,13 +67,13 @@ export function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+    <form onSubmit={handleSubmit} className="flex w-full min-w-0 flex-col space-y-4">
       <input
         id="email"
         name="email"
         type="email"
         placeholder="E-posta"
-        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
+        className="w-full min-w-0 border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
         disabled={isLoading}
         required
       />
@@ -83,7 +83,7 @@ export function LoginForm() {
         name="password"
         type="password"
         placeholder="Şifre"
-        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
+        className="w-full min-w-0 border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
         disabled={isLoading}
         required
       />
