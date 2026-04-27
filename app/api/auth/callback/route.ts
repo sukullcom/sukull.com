@@ -1,6 +1,5 @@
-import { createClient } from '@/utils/supabase/server';
-import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import { type NextRequest, NextResponse } from 'next/server';
 
 import { ensurePublicUserFromAuth } from '@/lib/ensure-public-user';
 import { getRequestLogger } from '@/lib/logger';
@@ -8,6 +7,9 @@ import { syncAdminRoleFromEmail } from '@/lib/admin';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 // GoTrue'nun bize döndürdüğü mesaj operasyonel ipucu içerir ama
 // tüm metni URL'e asla geçirmeyiz: e-posta, token parçası vb.
@@ -19,7 +21,38 @@ const sanitizeReason = (msg: unknown): string => {
   return cleaned.slice(0, 120) || 'unknown';
 };
 
-export async function GET(request: Request) {
+type PendingCookie = { name: string; value: string; options: CookieOptions };
+
+/**
+ * `next/headers` `cookies()` read API'si Route Handler içinde istek
+ * cookie'leriyle bire bir tutarlı olmayabiliyor; PKCE `code_verifier`
+ * bu yüzden boş kalabiliyor. Supabase önerisi: `NextRequest` üstünden
+ * oku, `Set-Cookie` yazarken dönen `NextResponse` nesnesine uygula.
+ */
+function buildSupabaseForRequest(request: NextRequest) {
+  const pendingCookies: PendingCookie[] = [];
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY');
+  }
+  const supabase = createServerClient(supabaseUrl, supabaseKey, {
+    cookies: {
+      getAll: () => request.cookies.getAll(),
+      setAll: (toSet) => {
+        toSet.forEach(({ name, value, options }) => {
+          pendingCookies.push({ name, value, options: options as CookieOptions });
+        });
+      },
+    },
+  });
+  const applyCookies = (res: NextResponse) => {
+    for (const { name, value, options } of pendingCookies) {
+      res.cookies.set(name, value, options);
+    }
+  };
+  return { supabase, applyCookies };
+}
+
+export async function GET(request: NextRequest) {
   const log = await getRequestLogger({ labels: { module: 'auth-callback' } });
   try {
     const requestUrl = new URL(request.url);
@@ -41,7 +74,7 @@ export async function GET(request: Request) {
       return NextResponse.redirect(errorUrl);
     }
 
-    const supabase = await createClient();
+    const { supabase, applyCookies } = buildSupabaseForRequest(request);
     let authUser = null;
 
     if (tokenHash && type) {
@@ -74,24 +107,12 @@ export async function GET(request: Request) {
       if (authError) {
         // PKCE hatalarının çoğu `code_verifier` cookie'sinin olmayışı
         // (farklı subdomain / 3rd-party cookie block) ya da tek
-        // kullanımlık code'un yeniden tüketilmesinden gelir. Sebebi
-        // Vercel logs'ta doğru teşhis etmek için burada mevcut
-        // Supabase cookie isimlerini (DEĞERLERİNİ DEĞİL) ve referer
-        // host'unu da loglarız.
-        let cookieNames: string[] = [];
-        let hasCodeVerifier = false;
-        try {
-          const all = cookies().getAll();
-          cookieNames = all
-            .map((c) => c.name)
-            .filter((n) => n.startsWith('sb-'));
-          hasCodeVerifier = cookieNames.some((n) =>
-            n.endsWith('-auth-token-code-verifier')
-          );
-        } catch {
-          // cookies() nadiren route dışı çağrılırsa hata verir;
-          // log'u bölmemek için sessizce geçelim.
-        }
+        // kullanımlık code'un yeniden tüketilmesinden gelir.
+        const fromRequest = request.cookies.getAll();
+        const sbNames = fromRequest
+          .map((c) => c.name)
+          .filter((n) => n.startsWith('sb-'));
+        const hasCodeVerifier = sbNames.some((n) => n.endsWith('-code-verifier'));
 
         let referrerHost: string | null = null;
         try {
@@ -112,7 +133,7 @@ export async function GET(request: Request) {
             authErrorCode: (authError as { code?: string }).code ?? null,
             callbackHost: requestUrl.host,
             referrerHost,
-            sbCookieCount: cookieNames.length,
+            sbCookieCount: sbNames.length,
             hasCodeVerifierCookie: hasCodeVerifier,
           },
         });
@@ -176,7 +197,9 @@ export async function GET(request: Request) {
       }
     }
     
-    return NextResponse.redirect(new URL(redirectTo, requestUrl.origin));
+    const res = NextResponse.redirect(new URL(redirectTo, requestUrl.origin));
+    applyCookies(res);
+    return res;
   } catch (error) {
     log.error({
       message: 'auth callback unexpected error',
