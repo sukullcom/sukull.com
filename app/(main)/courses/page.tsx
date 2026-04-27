@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
+import { isRedirectError } from "next/dist/client/components/redirect";
 import { getCourses, getUserProgress } from "@/db/queries";
 import { List } from "./list";
 import { getServerUser } from "@/lib/auth";
@@ -51,6 +52,9 @@ export default async function CoursesPage() {
       </div>
     );
   } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
     (await getRequestLogger({ labels: { module: "courses/page" } }))
       .error({ message: "courses page failed", error, location: "app/(main)/courses/page" });
     return (

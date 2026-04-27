@@ -10,6 +10,7 @@ import { schools } from "@/db/schema";
 import { sql } from "drizzle-orm";
 import { getRequestLogger } from "@/lib/logger";
 import Image from "next/image";
+import { isRedirectError } from "next/dist/client/components/redirect";
 import { redirect } from "next/navigation";
 import { RankCards } from "./rank-cards";
 import { LeaderboardClient } from "./leaderboard-client";
@@ -91,6 +92,9 @@ const LeaderboardPage = async () => {
       </div>
     );
   } catch (error) {
+    if (isRedirectError(error)) {
+      throw error;
+    }
     const log = await getRequestLogger({ labels: { module: "leaderboard/page" } });
     log.error({
       message: "leaderboard page failed",
