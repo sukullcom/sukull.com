@@ -22,11 +22,14 @@ type ProfileSchoolSelectorProps = {
   schools: School[]; // Not used anymore, but kept for compatibility
   initialSchoolId?: number | null;
   onSelect: (schoolId: number) => void;
+  /** Politika veya istikrar kilidi — seçim yapılamaz (toast yerine UI kilitli). */
+  disabled?: boolean;
 };
 
 export const ProfileSchoolSelector = ({
   initialSchoolId = null,
   onSelect,
+  disabled = false,
 }: ProfileSchoolSelectorProps) => {
   const [cities, setCities] = useState<City[]>([]);
   const [districts, setDistricts] = useState<District[]>([]);
@@ -159,10 +162,16 @@ export const ProfileSchoolSelector = ({
 
 
 
-  const handleSchoolClick = useCallback((schoolId: number) => {
-    setSelectedSchoolId(schoolId);
-    onSelect(schoolId);
-  }, [onSelect]);
+  const handleSchoolClick = useCallback(
+    (schoolId: number) => {
+      if (disabled) return;
+      setSelectedSchoolId(schoolId);
+      onSelect(schoolId);
+    },
+    [disabled, onSelect],
+  );
+
+  const selectBusy = loading || disabled;
 
   const getCategoryLabel = (category: string) => {
     switch (category) {
@@ -175,7 +184,10 @@ export const ProfileSchoolSelector = ({
   };
 
   return (
-    <div className="rounded-lg border border-gray-200 p-4 shadow-sm bg-gray-50">
+    <div
+      className={`rounded-lg border border-gray-200 p-4 shadow-sm bg-gray-50 ${disabled ? "opacity-60" : ""}`}
+      aria-disabled={disabled}
+    >
       <h2 className="text-lg font-semibold mb-4 text-neutral-800">
         Okulunu Seç
       </h2>
@@ -194,8 +206,8 @@ export const ProfileSchoolSelector = ({
         <select
           value={selectedCity}
           onChange={handleCityChange}
-          disabled={loading}
-          className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 disabled:bg-gray-100"
+          disabled={selectBusy}
+          className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
         >
           <option value="">Şehir seçin...</option>
           {cities.map((city) => (
@@ -215,8 +227,8 @@ export const ProfileSchoolSelector = ({
       <select
             value={selectedDistrict}
             onChange={handleDistrictChange}
-            disabled={loading}
-            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 disabled:bg-gray-100"
+            disabled={selectBusy}
+            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
       >
             <option value="">İlçe seçin...</option>
             {districts.map((district) => (
@@ -237,8 +249,8 @@ export const ProfileSchoolSelector = ({
           <select
             value={selectedCategory}
             onChange={handleCategoryChange}
-            disabled={loading}
-            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 disabled:bg-gray-100"
+            disabled={selectBusy}
+            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
           >
             <option value="">Okul türü seçin...</option>
             {categories.map((category) => (
@@ -268,11 +280,17 @@ export const ProfileSchoolSelector = ({
                {schools.map((school) => (
               <div
                 key={school.id}
+                role="button"
+                tabIndex={disabled ? -1 : 0}
                 onClick={() => handleSchoolClick(school.id)}
-                   className={`border p-3 rounded-lg cursor-pointer transition-colors ${
-                  selectedSchoolId === school.id
-                    ? "bg-green-50 border-green-600"
-                       : "hover:bg-gray-100 border-gray-200"
+                   className={`border p-3 rounded-lg transition-colors ${
+                  disabled
+                    ? `cursor-not-allowed border-gray-200 ${
+                        selectedSchoolId === school.id ? "bg-green-50/60 border-green-600/50" : "bg-gray-100/80"
+                      }`
+                    : selectedSchoolId === school.id
+                      ? "cursor-pointer bg-green-50 border-green-600"
+                      : "cursor-pointer hover:bg-gray-100 border-gray-200"
                 }`}
               >
                    <p className={`font-medium ${

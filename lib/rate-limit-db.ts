@@ -1,7 +1,7 @@
 import "server-only";
 import { pgPool } from "@/db/drizzle";
 import { logger } from "@/lib/logger";
-import { resolveAllowed } from "@/lib/rate-limit-allowed";
+import { normalizeRateLimitRow, resolveAllowed } from "@/lib/rate-limit-allowed";
 
 const log = logger.child({ labels: { module: "rate-limit-db" } });
 
@@ -11,6 +11,12 @@ export type RateLimitResult = {
   resetAt: Date;
   /** Seconds until the window resets (>= 0). */
   retryAfter: number;
+  /**
+   * Set when the Postgres call failed or returned no row — result is a
+   * synthetic fallback. Useful so callers do not mislabel DB outages as
+   * “quota exceeded”.
+   */
+  storeError?: boolean;
 };
 
 export type RateLimitOptions = {
@@ -54,18 +60,22 @@ export async function checkRateLimit({
   try {
     // PG parametrelerini açıkça tiple; aksi hâlde "check_rate_limit(unknown,unknown,unknown)" hatası.
     const { rows } = await pgPool.query<Record<string, unknown>>(
-      "SELECT * FROM check_rate_limit($1::text, $2::integer, $3::integer)",
+      `SELECT allowed, remaining, reset_at, current_count
+       FROM check_rate_limit($1::text, $2::integer, $3::integer)`,
       [key, max, windowSeconds],
     );
-    const row = rows[0];
+    const rawRow = rows[0];
 
-    if (!row) {
-      return onStoreError === "closed"
-        ? fallbackDeny(windowSeconds)
-        : fallbackAllow(max, windowSeconds);
+    if (!rawRow) {
+      const fallback =
+        onStoreError === "closed"
+          ? fallbackDeny(windowSeconds)
+          : fallbackAllow(max, windowSeconds);
+      return { ...fallback, storeError: true };
     }
 
-    const resetRaw = row.reset_at ?? row.resetAt;
+    const row = normalizeRateLimitRow(rawRow);
+    const resetRaw = row.reset_at;
     const resetAt = new Date(resetRaw as string);
     if (Number.isNaN(resetAt.getTime())) {
       log.warn("check_rate_limit returned invalid reset_at", {
@@ -94,9 +104,11 @@ export async function checkRateLimit({
       location: "rate-limit-db/checkRateLimit",
       fields: { key, max, windowSeconds, onStoreError },
     });
-    return onStoreError === "closed"
-      ? fallbackDeny(windowSeconds)
-      : fallbackAllow(max, windowSeconds);
+    const fallback =
+      onStoreError === "closed"
+        ? fallbackDeny(windowSeconds)
+        : fallbackAllow(max, windowSeconds);
+    return { ...fallback, storeError: true };
   }
 }
 

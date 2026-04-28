@@ -113,10 +113,12 @@ export async function deleteMyAccount(
     }
 
     const limit = await checkRateLimit({
-      // v3: önceki anahtarlarla dolmuş kota / sıra düzeltmesi öncesi sayaçları sıfırla
-      key: `account-delete:v3:user:${userId}`,
+      // v4: yeni kota anahtarı; v3/v2 öncesi zehirli sayaçlar veya pooler hataları ayrıldı
+      key: `account-delete:v4:user:${userId}`,
       ...RATE_LIMITS.accountDelete,
-      onStoreError: "closed",
+      // KVKK silme, kota DB’si geçici çökükken bloklanmamalı ("çok fazla deneme" tuzakları).
+      // Gerçek kota aşımında `allowed: false` yine uygulanır.
+      onStoreError: "open",
     });
     if (!limit.allowed) {
       return { ok: false, code: "rate_limited" };

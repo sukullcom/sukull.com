@@ -102,13 +102,23 @@ export default function ProfilePageClient({
   const generator = useMemo(() => new AvatarGenerator(), []);
   const isExternalAvatar = avatarUrl.startsWith("http");
 
-  const schoolLockUntil = profile.schoolChangeLockedUntil
-    ? new Date(profile.schoolChangeLockedUntil)
-    : null;
-  const schoolChangeBlockedByPolicy =
-    !!schoolLockUntil &&
-    schoolLockUntil.getTime() > Date.now() &&
-    profile.schoolId != null;
+  const schoolLockUntil = useMemo(() => {
+    return profile.schoolChangeLockedUntil
+      ? new Date(profile.schoolChangeLockedUntil)
+      : null;
+  }, [profile.schoolChangeLockedUntil]);
+
+  const schoolChangeBlockedByPolicy = useMemo(() => {
+    return (
+      !!schoolLockUntil &&
+      schoolLockUntil.getTime() > Date.now() &&
+      profile.schoolId != null
+    );
+  }, [schoolLockUntil, profile.schoolId]);
+
+  /** İstikrar veya 6 ay okul politikası — seçici kilitli; toast ile uyarı yerine UI kilitli. */
+  const schoolInteractionLocked =
+    !canSelectSchool || schoolChangeBlockedByPolicy;
 
   const handleRandomAvatar = useCallback(() => {
     if (!canChangeAvatar) {
@@ -158,9 +168,6 @@ export default function ProfilePageClient({
       selectedSchoolId !== profile.schoolId &&
       schoolChangeBlockedByPolicy
     ) {
-      toast.error(
-        `Okul değişikliği için ${schoolLockUntil?.toLocaleDateString("tr-TR")} tarihine kadar beklemelisin.`,
-      );
       return;
     }
 
@@ -182,7 +189,6 @@ export default function ProfilePageClient({
     canSelectSchool,
     profile,
     schoolChangeBlockedByPolicy,
-    schoolLockUntil,
   ]);
 
   const dailyTargetOptions = useMemo(
@@ -488,24 +494,33 @@ export default function ProfilePageClient({
               />
             )}
 
-            {/* School */}
-            <FieldGroup label="Okul" locked={!canSelectSchool} days={STREAK_REQUIREMENTS.SCHOOL_SELECTION} lockLabel="Okul seçmek" streak={profile.istikrar}>
-              <div className={!canSelectSchool ? "opacity-50 pointer-events-none" : ""}>
-                <ProfileSchoolSelector
-                  schools={allSchools}
-                  initialSchoolId={selectedSchoolId}
-                  onSelect={(id) => canSelectSchool && setSelectedSchoolId(id)}
+            {/* Okul: istikrar veya 6 ay kilidi — sınıf kilidiyle aynı görsel (kilit + tarih). */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                Okul
+              </label>
+              <ProfileSchoolSelector
+                schools={allSchools}
+                initialSchoolId={selectedSchoolId}
+                onSelect={(id) => setSelectedSchoolId(id)}
+                disabled={schoolInteractionLocked}
+              />
+              {!canSelectSchool && (
+                <LockedHint
+                  days={STREAK_REQUIREMENTS.SCHOOL_SELECTION}
+                  label="Okul seçmek"
+                  streak={profile.istikrar}
                 />
-              </div>
-              {schoolChangeBlockedByPolicy && schoolLockUntil && (
+              )}
+              {canSelectSchool && schoolChangeBlockedByPolicy && schoolLockUntil && (
                 <p className="text-xs text-rose-600 mt-2 flex items-start gap-1.5">
                   <Lock className="h-3.5 w-3.5 shrink-0 mt-0.5" />
-                  Okul bilgisini bir sonraki kez{" "}
-                  <strong>{schoolLockUntil.toLocaleDateString("tr-TR")}</strong> tarihinden sonra
-                  değiştirebilirsin (6 ay kuralı).
+                  Okul değişikliği için{" "}
+                  <strong>{schoolLockUntil.toLocaleDateString("tr-TR")}</strong> tarihine kadar
+                  beklemelisin (6 ay kuralı).
                 </p>
               )}
-            </FieldGroup>
+            </div>
 
             <Button
               variant="primary"
