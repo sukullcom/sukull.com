@@ -155,6 +155,7 @@ export const upsertChallengeProgress = async (challengeId: number) => {
 
     revalidatePath("/learn");
     revalidatePath(`/lesson/${lessonId}`);
+    revalidatePath("/quests");
     return;
   }
 
@@ -181,7 +182,11 @@ export const upsertChallengeProgress = async (challengeId: number) => {
 
     await tx
       .update(userProgress)
-      .set(pointsAndDailyDeltaSQL(firstPoints))
+      .set({
+        ...pointsAndDailyDeltaSQL(firstPoints),
+        currentAnswerStreak: sql`COALESCE(${userProgress.currentAnswerStreak}, 0) + 1`,
+        maxAnswerStreak: sql`GREATEST(COALESCE(${userProgress.maxAnswerStreak}, 0), COALESCE(${userProgress.currentAnswerStreak}, 0) + 1)`,
+      })
       .where(eq(userProgress.userId, userId));
 
     if (schoolId) {
@@ -197,6 +202,7 @@ export const upsertChallengeProgress = async (challengeId: number) => {
 
   revalidatePath("/learn");
   revalidatePath(`/lesson/${lessonId}`);
+  revalidatePath("/quests");
 };
 
 export async function addPointsToUser(
@@ -336,6 +342,11 @@ export const reduceHearts = async (challengeId: number) => {
       incorrectCount: 1,
       lastAttemptedAt: new Date(),
     });
+    await db
+      .update(userProgress)
+      .set({ currentAnswerStreak: 0 })
+      .where(eq(userProgress.userId, userId));
+    revalidatePath("/quests");
     return;
   }
 
@@ -353,6 +364,7 @@ export const reduceHearts = async (challengeId: number) => {
       hearts: sql`GREATEST(${userProgress.hearts} - 1, 0)`,
       points: sql`${userProgress.points} + ${penalty}`,
       dailyPointsEarned: sql`GREATEST(0, COALESCE(${userProgress.dailyPointsEarned}, 0) + ${penalty})`,
+      currentAnswerStreak: 0,
     };
     if (startRegenTimer) setClause.lastHeartRegenAt = now;
 
@@ -390,6 +402,7 @@ export const reduceHearts = async (challengeId: number) => {
 
   revalidatePath("/learn");
   revalidatePath(`/lesson/${lessonId}`);
+  revalidatePath("/quests");
 };
 
 /**

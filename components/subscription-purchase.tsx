@@ -111,7 +111,7 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
       const result = await response.json();
 
       if (result.success) {
-        toast.success(result.message || 'Sonsuz can aboneliği başarıyla aktifleştirildi!');
+        toast.success(result.message || 'Premium abonelik başarıyla aktifleştirildi!');
         // Refresh the page to update the subscription status
         router.refresh();
         onSuccess?.();
@@ -143,8 +143,10 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
             <InfinityIcon className="absolute -top-1 -right-1 h-4 w-4 text-purple-600" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold">Sonsuz Can Aboneliği</h1>
-            <p className="text-gray-600">Aylık 100₺ ile sınırsız kalp kullanın</p>
+            <h1 className="text-2xl font-bold">Premium abonelik</h1>
+            <p className="text-gray-600">
+              Aylık 100₺ — sonsuz can ve profilde detaylı öğrenme analizi
+            </p>
           </div>
         </div>
 
@@ -153,12 +155,12 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
           <CardContent className="p-6">
             <div className="flex justify-between items-center">
               <div>
-                <h3 className="font-semibold text-lg">Sonsuz Can - Aylık Abonelik</h3>
+                <h3 className="font-semibold text-lg">Premium — Aylık paket</h3>
                 <ul className="text-sm text-gray-600 mt-2 space-y-1">
-                  <li>• Sınırsız kalp kullanımı</li>
-                  <li>• Yanlış cevapta kalp kaybı yok</li>
-                  <li>• Kesintisiz öğrenme deneyimi</li>
-                  <li>• 30 gün geçerli</li>
+                  <li>• Sınırsız kalp (yanlışta can düşmez)</li>
+                  <li>• Profil → Analiz: konu/kurs performansı, zorluk ve soru türü dağılımı</li>
+                  <li>• Kesintisiz çözüm deneyimi</li>
+                  <li>• 30 gün geçerli, yenileme ile uzar</li>
                 </ul>
               </div>
               <div className="text-right">

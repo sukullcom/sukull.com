@@ -130,17 +130,17 @@ export const Items = ({
         </div>
         <div className="flex-1">
           <p className="text-neutral-700 text-base lg:text-xl font-bold">
-            Sonsuz Can
+            Premium (Sonsuz can + analiz)
           </p>
           <p className="text-neutral-500 text-sm">
             {hasInfiniteHearts ? (
               subscriptionExpiresAt ? (
-                `Aktif - ${new Date(subscriptionExpiresAt).toLocaleDateString('tr-TR')} tarihine kadar`
+                `Aktif — ${new Date(subscriptionExpiresAt).toLocaleDateString("tr-TR")} tarihine kadar`
               ) : (
                 "Aktif"
               )
             ) : (
-              "Aylık 100₺ ile sınırsız can kullan"
+              "100₺/ay: sınırsız can ve profilde detaylı analiz (konu, zorluk, özet)"
             )}
           </p>
         </div>
@@ -156,7 +156,7 @@ export const Items = ({
       <Dialog open={showSubscriptionDialog} onOpenChange={setShowSubscriptionDialog}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-white border border-gray-200 shadow-xl">
           <DialogHeader>
-            <DialogTitle>Sonsuz Can Aboneliği</DialogTitle>
+            <DialogTitle>Premium abonelik (sonsuz can + analiz)</DialogTitle>
           </DialogHeader>
           <SubscriptionPurchase
             onSuccess={() => setShowSubscriptionDialog(false)}

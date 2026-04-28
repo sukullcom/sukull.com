@@ -5,6 +5,7 @@ import Image from "next/image";
 import { SidebarItem } from "./sidebar-item";
 import learnIcon from "@/public/desk.svg";
 import leaderboardIcon from "@/public/leaderboard.svg";
+import questsIcon from "@/public/quests.svg";
 import shopIcon from "@/public/bag.svg";
 import gameIcon from "@/public/games.svg";
 import privateLessonIcon from "@/public/private_lesson.svg";
@@ -47,6 +48,7 @@ export const Sidebar = ({ className }: Props) => {
           href="/leaderboard"
           iconSrc={leaderboardIcon}
         />
+        <SidebarItem label="Hedefler" href="/quests" iconSrc={questsIcon} />
         <SidebarItem label="Mağaza" href="/shop" iconSrc={shopIcon} />
         <SidebarItem label="Çalışma Arkadaşı" href="/study-buddy" iconSrc="/study_buddy.svg" />
         <SidebarItem label="Profil" href="/profile" iconSrc="/mascot_normal.svg" />

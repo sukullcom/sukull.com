@@ -1,9 +1,10 @@
 // Re-use the Open Graph image for Twitter (the card spec allows 1200×630).
-// Exporting from a twitter-image file makes Next.js emit the proper
-// `twitter:image` meta tag automatically.
+// `runtime` must be a string literal in this file — Next.js does not follow
+// re-exports for static route segment config (see build warning).
+export const runtime = "edge";
+
 export {
   default,
-  runtime,
   alt,
   size,
   contentType,

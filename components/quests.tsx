@@ -1,6 +1,23 @@
 import { Progress } from "./ui/progress";
-import { User, Target, Users, ImageIcon, School, CheckCircle, Lock, Info, BookOpen, RefreshCw, Heart, Flame, Shield, Trophy } from 'lucide-react';
+import {
+  User,
+  Target,
+  Users,
+  ImageIcon,
+  School,
+  CheckCircle,
+  Lock,
+  Info,
+  BookOpen,
+  RefreshCw,
+  Heart,
+  Flame,
+  Shield,
+  Trophy,
+  Award,
+} from "lucide-react";
 import { getAllStreakRules } from "@/utils/streak-requirements";
+import type { UserBadgeSummary } from "@/actions/user-badges";
 
 type QuestsProps = {
   currentStreak: number;
@@ -9,9 +26,26 @@ type QuestsProps = {
     studyBuddyUnlocked?: boolean;
     codeShareUnlocked?: boolean;
   };
+  /** Yoksa (sidebar özetinde) rozet bölümü gösterilmez. */
+  badgeSummary?: UserBadgeSummary | null;
+  /**
+   * true: Hedefler sayfası — lg ve üzeri sağ sütunda zaten aynı içerik var;
+   *        kilitler + ipuçları yalnızca küçük ekranda (lg altı) gösterilir.
+   */
+  hideLocksAndTipsOnLargeScreens?: boolean;
 };
 
-export const Quests = ({ currentStreak }: QuestsProps) => {
+const CATEGORY_LABEL: Record<string, string> = {
+  istikrar: "İstikrar",
+  performans: "Performans",
+  liderlik: "Liderlik",
+};
+
+export const Quests = ({
+  currentStreak,
+  badgeSummary = null,
+  hideLocksAndTipsOnLargeScreens = false,
+}: QuestsProps) => {
   const rules = getAllStreakRules();
 
   const getIcon = (feature: string) => {
@@ -44,14 +78,17 @@ export const Quests = ({ currentStreak }: QuestsProps) => {
     };
   };
 
+  const locksShell = hideLocksAndTipsOnLargeScreens ? "space-y-6 lg:hidden" : "space-y-6";
+
   return (
     <div className="w-full space-y-6">
-      <h2 className="text-left font-bold text-gray-700 text-base">
-        Özellik Kilitleri
-      </h2>
+      <div className={locksShell}>
+        <h2 className="text-left font-bold text-gray-700 text-base">
+          Özellik Kilitleri
+        </h2>
 
-      <div className="space-y-3">
-        {rules.map((rule, index) => {
+        <div className="space-y-3">
+          {rules.map((rule, index) => {
           const status = getFeatureStatus(rule.requirement);
 
           return (
@@ -94,10 +131,86 @@ export const Quests = ({ currentStreak }: QuestsProps) => {
               </div>
             </div>
           );
-        })}
+          })}
+        </div>
       </div>
 
-      <div className="border-2 border-gray-200 rounded-2xl p-4">
+      {badgeSummary && badgeSummary.badges.length > 0 && (
+        <div className="space-y-3">
+          <h2 className="text-left font-bold text-gray-700 text-base flex items-center gap-2">
+            <Award className="h-5 w-5 text-amber-600" />
+            Rozetler
+          </h2>
+          <p className="text-xs text-gray-500 -mt-1">
+            İstikrar, soru çözümü, seri doğrular ve sıralamalara göre kazanılır.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {badgeSummary.badges.map((b) => {
+              const pct =
+                b.target != null && b.target > 0 && b.progress != null
+                  ? Math.min(100, Math.round((b.progress / b.target) * 100))
+                  : b.unlocked
+                    ? 100
+                    : 0;
+              return (
+                <div
+                  key={b.id}
+                  className={`flex gap-3 rounded-2xl border-2 p-3 transition-colors ${
+                    b.unlocked
+                      ? "border-amber-400 bg-amber-50/60"
+                      : "border-gray-200 bg-white"
+                  }`}
+                >
+                  <div
+                    className={`shrink-0 p-2 rounded-full ${
+                      b.unlocked ? "bg-amber-100" : "bg-gray-100"
+                    }`}
+                  >
+                    <Award
+                      className={`h-5 w-5 ${b.unlocked ? "text-amber-700" : "text-gray-400"}`}
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400">
+                          {CATEGORY_LABEL[b.category] ?? b.category}
+                        </p>
+                        <h3 className="font-semibold text-sm text-gray-900">{b.title}</h3>
+                      </div>
+                      {b.unlocked ? (
+                        <CheckCircle className="h-4 w-4 text-green-600 shrink-0 mt-0.5" />
+                      ) : (
+                        <Lock className="h-4 w-4 text-gray-400 shrink-0 mt-0.5" />
+                      )}
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">{b.description}</p>
+                    {!b.unlocked && b.target != null && b.progress != null && (
+                      <div className="mt-2 space-y-1">
+                        <div className="flex justify-between text-[10px] text-gray-500">
+                          <span>İlerleme</span>
+                          <span>
+                            {b.progress}/{b.target}
+                          </span>
+                        </div>
+                        <Progress value={pct} className="h-1.5" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      <div
+        className={
+          hideLocksAndTipsOnLargeScreens
+            ? "border-2 border-gray-200 rounded-2xl p-4 lg:hidden"
+            : "border-2 border-gray-200 rounded-2xl p-4"
+        }
+      >
         <div className="flex items-center gap-2 mb-3">
           <Info className="h-4 w-4 text-gray-500" />
           <h3 className="text-gray-700 text-sm font-bold">

@@ -255,6 +255,11 @@ export const userProgress = pgTable("user_progress", {
   schoolChangeLockedUntil: timestamp("school_change_locked_until"),
   /** Sınıf (student_grade) değiştirilemez; sonraki izin anı. */
   studentGradeChangeLockedUntil: timestamp("student_grade_change_locked_until"),
+
+  /** Ardışık ilk-denemede-doğru (yanlışta sıfırlanır); rozetler için anlık seri. */
+  currentAnswerStreak: integer("current_answer_streak").notNull().default(0),
+  /** Tüm zamanların en uzun hatasız soru serisi (ilk denemede doğru zinciri). */
+  maxAnswerStreak: integer("max_answer_streak").notNull().default(0),
 }, (table) => ({
   schoolIdx: index("idx_user_progress_school_id").on(table.schoolId),
   activeCourseIdx: index("idx_user_progress_active_course").on(table.activeCourseId),

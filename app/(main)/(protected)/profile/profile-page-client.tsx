@@ -51,6 +51,7 @@ import {
 } from "lucide-react";
 import { useSecureLogout } from "@/hooks/use-secure-logout";
 import { ProfileLearningPath } from "./profile-learning-path";
+import Link from "next/link";
 
 type ProfileProps = {
   userName: string;
@@ -75,10 +76,13 @@ export default function ProfilePageClient({
   profile,
   allSchools,
   analytics,
+  hasAnalyticsAccess,
 }: {
   profile: ProfileProps;
   allSchools: School[];
   analytics: ProfileAnalyticsData | null;
+  /** Aylık abonelik — detaylı profil analizi + sonsuz can */
+  hasAnalyticsAccess: boolean;
 }) {
   const [activeTab, setActiveTab] = useState<"analytics" | "settings">("analytics");
   const [username, setUsername] = useState(profile.userName || "Anonymous");
@@ -269,8 +273,30 @@ export default function ProfilePageClient({
         {/* Analytics Tab */}
         {activeTab === "analytics" && (
           <div className="space-y-6">
+            {!hasAnalyticsAccess && (
+              <div className="rounded-2xl border-2 border-purple-200 bg-gradient-to-br from-purple-50 to-indigo-50 p-5 sm:p-6">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white shadow-sm border border-purple-100">
+                    <Lock className="h-7 w-7 text-purple-600" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-bold text-gray-900 text-lg">Detaylı analiz Premium ile</h3>
+                    <p className="text-sm text-gray-600 mt-1">
+                      Konu ve kurs bazlı performans, zorluk dağılımı ve özet istatistikler aylık abonelikte.
+                      Ayrıca <strong className="text-gray-800">sonsuz can</strong> avantajı da dahil (100₺/ay).
+                    </p>
+                  </div>
+                  <Button variant="super" size="lg" className="shrink-0 w-full sm:w-auto" asChild>
+                    <Link prefetch={false} href="/shop">
+                      Mağazaya git
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            )}
+
             {/* Summary Cards */}
-            {s && (
+            {hasAnalyticsAccess && s && (
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <SummaryCard icon={<BookOpen className="h-5 w-5" />} label="Başlanan Kurs" value={s.totalCoursesStarted} color="blue" />
                 <SummaryCard icon={<Trophy className="h-5 w-5" />} label="Tamamlanan" value={s.totalCoursesCompleted} color="green" />
@@ -280,7 +306,7 @@ export default function ProfilePageClient({
             )}
 
             {/* Subject Performance */}
-            {analytics && analytics.subjectAnalytics.length > 0 && (
+            {hasAnalyticsAccess && analytics && analytics.subjectAnalytics.length > 0 && (
               <div className="bg-white border rounded-xl p-4 sm:p-5">
                 <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
                   <TrendingUp className="h-4 w-4 text-blue-500" />
@@ -295,7 +321,7 @@ export default function ProfilePageClient({
             )}
 
             {/* Course Progress */}
-            {analytics && analytics.courseAnalytics.length > 0 && (
+            {hasAnalyticsAccess && analytics && analytics.courseAnalytics.length > 0 && (
               <div className="bg-white border rounded-xl p-4 sm:p-5">
                 <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
                   <BookOpen className="h-4 w-4 text-green-500" />
@@ -349,7 +375,9 @@ export default function ProfilePageClient({
             )}
 
             {/* Difficulty & Type Breakdown */}
-            {analytics && (analytics.difficultyAnalytics.length > 0 || analytics.typeAnalytics.length > 0) && (
+            {hasAnalyticsAccess &&
+              analytics &&
+              (analytics.difficultyAnalytics.length > 0 || analytics.typeAnalytics.length > 0) && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {analytics.difficultyAnalytics.length > 0 && (
                   <div className="bg-white border rounded-xl p-4">
@@ -407,8 +435,8 @@ export default function ProfilePageClient({
               <StreakCalendarAdvanced startDate={profile.startDate} />
             </div>
 
-            {/* Empty state */}
-            {(!analytics || analytics.courseAnalytics.length === 0) && (
+            {/* Empty state (aboneler, veri yoksa) */}
+            {hasAnalyticsAccess && (!analytics || analytics.courseAnalytics.length === 0) && (
               <div className="bg-white border rounded-xl p-8 text-center">
                 <BarChart3 className="mx-auto h-12 w-12 text-gray-300 mb-3" />
                 <p className="text-sm text-gray-500 font-medium">Henüz analiz verisi yok</p>

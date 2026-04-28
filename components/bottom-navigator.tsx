@@ -32,12 +32,12 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
   const navItems = [
     { href: "/learn", iconSrc: "/desk.svg" },
     { href: "/leaderboard", iconSrc: "/leaderboard.svg" },
-    { href: "/study-buddy", iconSrc: "/study_buddy.svg" },
+    { href: "/private-lesson", iconSrc: "/private_lesson.svg" },
     { href: "/profile", iconSrc: "/mascot_normal.svg" },
   ];
 
   const dropdownItems = [
-    { label: "Özel Ders", href: "/private-lesson", iconSrc: "/private_lesson.svg" },
+    { label: "Çalışma Arkadaşı", href: "/study-buddy", iconSrc: "/study_buddy.svg" },
     { label: "Oyunlar", href: "/games", iconSrc: "/games.svg" },
     { label: "Mağaza", href: "/shop", iconSrc: "/bag.svg" },
     { label: "Hedefler", href: "/quests", iconSrc: "/quests.svg" },
