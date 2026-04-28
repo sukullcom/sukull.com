@@ -54,7 +54,8 @@ export function PrivateLessonNav({ items }: { items: PrivateLessonNavItem[] }) {
 
   return (
     <div className="mb-4 sm:mb-6 px-3 sm:px-0">
-      <div className="flex border-2 border-gray-200 rounded-2xl p-1 gap-0.5 overflow-x-auto scrollbar-hide">
+      {/* flex-1 + truncate mobilde metni tek harfe indiriyordu; shrink-0 + overflow-x ile tam metin + kaydırma */}
+      <div className="flex w-full min-w-0 flex-nowrap gap-0.5 overflow-x-auto overscroll-x-contain scroll-smooth border-2 border-gray-200 rounded-2xl p-1 [-webkit-overflow-scrolling:touch] scrollbar-hide snap-x snap-mandatory">
         {items.map((item) => {
           const active = isActive(item.path);
           const Icon = ICON_MAP[item.icon];
@@ -62,14 +63,14 @@ export function PrivateLessonNav({ items }: { items: PrivateLessonNavItem[] }) {
             <Link
               key={item.path}
               href={item.path}
-              className={`flex-1 flex items-center justify-center gap-1.5 rounded-xl py-2.5 px-2 text-xs sm:text-sm transition-all whitespace-nowrap min-w-0 ${
+              className={`flex shrink-0 snap-start items-center justify-center gap-1.5 rounded-xl py-2.5 px-3 text-xs sm:text-sm transition-all whitespace-nowrap ${
                 active
                   ? "bg-gray-100 text-gray-800 font-bold"
                   : "text-gray-500 hover:text-gray-700 font-medium"
               }`}
             >
               <Icon className="h-4 w-4 shrink-0" />
-              <span className="truncate">{item.name}</span>
+              <span>{item.name}</span>
             </Link>
           );
         })}
