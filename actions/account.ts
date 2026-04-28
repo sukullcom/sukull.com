@@ -113,7 +113,8 @@ export async function deleteMyAccount(
     }
 
     const limit = await checkRateLimit({
-      key: `account-delete:user:${userId}`,
+      // v3: önceki anahtarlarla dolmuş kota / sıra düzeltmesi öncesi sayaçları sıfırla
+      key: `account-delete:v3:user:${userId}`,
       ...RATE_LIMITS.accountDelete,
       onStoreError: "closed",
     });

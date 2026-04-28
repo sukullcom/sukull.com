@@ -1,6 +1,7 @@
 import "server-only";
 import { pgPool } from "@/db/drizzle";
 import { logger } from "@/lib/logger";
+import { resolveAllowed } from "@/lib/rate-limit-allowed";
 
 const log = logger.child({ labels: { module: "rate-limit-db" } });
 
@@ -41,6 +42,8 @@ export type RateLimitOptions = {
  * so a transient DB outage never locks all users out. Callers that
  * guard money flows or destructive actions can opt into fail-closed
  * via `onStoreError: "closed"`. Errors are always logged.
+ *
+ * Satır ayrıştırması `resolveAllowed` içinde — `Boolean(undefined)` tuzaklarından kaçınılır.
  */
 export async function checkRateLimit({
   key,
@@ -62,12 +65,25 @@ export async function checkRateLimit({
         : fallbackAllow(max, windowSeconds);
     }
 
-    const resetAt = new Date(row.reset_at as string);
+    const resetRaw = row.reset_at ?? row.resetAt;
+    const resetAt = new Date(resetRaw as string);
+    if (Number.isNaN(resetAt.getTime())) {
+      log.warn("check_rate_limit returned invalid reset_at", {
+        source: "rate-limit-db",
+        location: "checkRateLimit/resetAt",
+        key,
+        resetRaw,
+      });
+    }
     const retryAfter = Math.max(0, Math.ceil((resetAt.getTime() - Date.now()) / 1000));
+    const allowed = resolveAllowed(row, max);
+    const remaining = Number(row.remaining ?? 0);
     return {
-      allowed: Boolean(row.allowed),
-      remaining: Number(row.remaining ?? 0),
-      resetAt,
+      allowed,
+      remaining,
+      resetAt: Number.isNaN(resetAt.getTime())
+        ? new Date(Date.now() + windowSeconds * 1000)
+        : resetAt,
       retryAfter,
     };
   } catch (error) {
