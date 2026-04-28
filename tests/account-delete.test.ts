@@ -34,6 +34,7 @@ const mocks = vi.hoisted(() => {
   });
   const signOutMock = vi.fn().mockResolvedValue({ error: null });
   const deleteUserMock = vi.fn().mockResolvedValue({ error: null });
+  const userProgressFindFirstMock = vi.fn();
   const loggerChild = {
     debug: vi.fn(),
     info: vi.fn(),
@@ -51,6 +52,7 @@ const mocks = vi.hoisted(() => {
     redirectMock,
     signOutMock,
     deleteUserMock,
+    userProgressFindFirstMock,
     loggerChild,
   };
 });
@@ -91,7 +93,7 @@ vi.mock("@/db/drizzle", () => ({
   default: {
     query: {
       users: { findFirst: mocks.findFirstMock },
-      userProgress: { findFirst: vi.fn().mockResolvedValue(null) },
+      userProgress: { findFirst: mocks.userProgressFindFirstMock },
     },
     transaction: mocks.transactionMock,
   },
@@ -154,6 +156,11 @@ beforeEach(() => {
     email: "u@example.com",
     name: "alice",
   });
+  mocks.userProgressFindFirstMock.mockResolvedValue({
+    userName: "alice",
+    schoolId: null,
+    points: 0,
+  });
 });
 
 describe("deleteMyAccount early-exit branches", () => {
@@ -179,9 +186,7 @@ describe("deleteMyAccount early-exit branches", () => {
     const result = await deleteMyAccount("alice");
 
     expect(result).toEqual({ ok: false, code: "rate_limited" });
-    // Must never reach the DB when throttled — the whole point of the
-    // rate limit is to protect the irreversible write path.
-    expect(mocks.findFirstMock).not.toHaveBeenCalled();
+    expect(mocks.checkRateLimitMock).toHaveBeenCalledTimes(1);
     expect(mocks.transactionMock).not.toHaveBeenCalled();
   });
 
@@ -201,6 +206,7 @@ describe("deleteMyAccount early-exit branches", () => {
     const result = await deleteMyAccount("ALICE"); // wrong case
 
     expect(result).toEqual({ ok: false, code: "confirmation_mismatch" });
+    expect(mocks.checkRateLimitMock).not.toHaveBeenCalled();
     expect(mocks.transactionMock).not.toHaveBeenCalled();
   });
 
@@ -208,6 +214,7 @@ describe("deleteMyAccount early-exit branches", () => {
     const result = await deleteMyAccount("   ");
 
     expect(result).toEqual({ ok: false, code: "confirmation_mismatch" });
+    expect(mocks.checkRateLimitMock).not.toHaveBeenCalled();
     expect(mocks.transactionMock).not.toHaveBeenCalled();
   });
 

@@ -59,22 +59,26 @@ export type DeleteMyAccountResult =
  * CSRF-style forgeries in the narrow window between fetching the profile
  * and submitting the delete. We additionally rate-limit to 3/day in
  * `RATE_LIMITS.accountDelete` so a compromised session can't spam it.
+ * Rate limiting runs **after** confirmation succeeds so wrong phrases do
+ * not consume the daily bucket.
  *
  * ## Order of operations
  *
- *   1. Rate-limit (fail-closed if bucket exceeded).
- *   2. Audit log **before** destruction so we retain evidence even if
+ *   1. Confirm phrase matches profile display name (`user_progress.userName`,
+ *      falling back to `users.name`).
+ *   2. Rate-limit (fail-closed if bucket exceeded).
+ *   3. Audit log **before** destruction so we retain evidence even if
  *      a subsequent step throws.
- *   3. DB transaction — delete every per-user row in tables that don't
+ *   4. DB transaction — delete every per-user row in tables that don't
  *      have an `ON DELETE CASCADE` FK on `users(id)`. For tables that
  *      do cascade (credits, bookings, reviews …) we let Postgres handle
  *      them when we delete the `users` row last.
- *   4. Subtract the user's contributed points from their school's
+ *   5. Subtract the user's contributed points from their school's
  *      `total_points` *inside* the transaction so leaderboards stay
  *      consistent.
- *   5. Anonymize system-owned tables (`error_log` stays for ops, but we
+ *   6. Anonymize system-owned tables (`error_log` stays for ops, but we
  *      NULL out the `user_id` to comply with erasure).
- *   6. Outside the transaction: call Supabase Admin to delete the auth
+ *   7. Outside the transaction: call Supabase Admin to delete the auth
  *      user, then `signOut()` the current session so the redirect below
  *      is unauthenticated.
  */
@@ -87,20 +91,6 @@ export async function deleteMyAccount(
   }
   const userId = authUser.id;
 
-  // Irreversible destructive flow. If the limiter store is unreachable
-  // we would rather tell the user to retry in a minute (fail-closed)
-  // than accept an unbounded burst of delete attempts that could
-  // cascade through the erasure transaction while the DB is already
-  // under pressure.
-  const limit = await checkRateLimit({
-    key: `account-delete:user:${userId}`,
-    ...RATE_LIMITS.accountDelete,
-    onStoreError: "closed",
-  });
-  if (!limit.allowed) {
-    return { ok: false, code: "rate_limited" };
-  }
-
   try {
     const profile = await db.query.users.findFirst({
       where: eq(users.id, userId),
@@ -110,16 +100,26 @@ export async function deleteMyAccount(
       return { ok: false, code: "unknown_user" };
     }
 
+    const progress = await db.query.userProgress.findFirst({
+      where: eq(userProgress.userId, userId),
+      columns: { userName: true, schoolId: true, points: true },
+    });
+
     const typed = (confirmationPhrase ?? "").trim();
-    if (!typed || typed !== profile.name) {
+    // Profil ayarlarında gösterilen ad — Danger Zone ile aynı kaynak.
+    const expectedDisplayName = (progress?.userName ?? profile.name ?? "").trim();
+    if (!typed || typed !== expectedDisplayName) {
       return { ok: false, code: "confirmation_mismatch" };
     }
 
-    // Pre-capture the school impact so we can reverse it atomically.
-    const progress = await db.query.userProgress.findFirst({
-      where: eq(userProgress.userId, userId),
-      columns: { schoolId: true, points: true },
+    const limit = await checkRateLimit({
+      key: `account-delete:user:${userId}`,
+      ...RATE_LIMITS.accountDelete,
+      onStoreError: "closed",
     });
+    if (!limit.allowed) {
+      return { ok: false, code: "rate_limited" };
+    }
 
     // Write the audit row FIRST so operators have a record even if
     // cascades later explode mid-flight and force a manual cleanup.
