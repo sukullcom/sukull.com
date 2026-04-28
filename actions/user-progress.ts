@@ -9,6 +9,7 @@ import { and, eq, sql } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { getServerUser } from '@/lib/auth';
+import { canChangeSchoolSelection, nextLockExpiresAt } from '@/lib/school-grade-lock';
 import { users } from '@/utils/users';
 import { updateDailyStreak } from "./daily-streak";
 import { logActivity } from '@/lib/activity-logger';
@@ -59,10 +60,57 @@ export const updateTotalPointsForSchools = async () => {
   }
 };
 
+/**
+ * Okul değişimi — 6 ay kilidi + okul puan özetleri.
+ * İlk atama (önceden null) serbesttir.
+ */
+export async function applySchoolChangeWithLock(
+  userId: string,
+  nextSchoolId: number | null,
+): Promise<void> {
+  const row = await db.query.userProgress.findFirst({
+    where: eq(userProgress.userId, userId),
+  });
+  if (!row?.onboardingCompletedAt) {
+    throw new Error('Önce öğrenme yolunuzu tamamlayın.');
+  }
+  const now = new Date();
+  const decision = canChangeSchoolSelection(
+    now,
+    row.schoolChangeLockedUntil ?? null,
+    row.schoolId,
+    nextSchoolId,
+  );
+  if (!decision.allowed) {
+    throw new Error(
+      `Okul değişikliği için ${decision.nextAllowedAt.toLocaleDateString('tr-TR')} tarihine kadar beklemelisiniz.`,
+    );
+  }
+  if ((row.schoolId ?? null) === (nextSchoolId ?? null)) {
+    return;
+  }
+
+  const oldSchoolId = row.schoolId;
+
+  await db
+    .update(userProgress)
+    .set({
+      schoolId: nextSchoolId,
+      schoolChangeLockedUntil: nextLockExpiresAt(now),
+    })
+    .where(eq(userProgress.userId, userId));
+
+  if (nextSchoolId) {
+    await updateSchoolPoints(nextSchoolId);
+  }
+  if (oldSchoolId) {
+    await updateSchoolPoints(oldSchoolId);
+  }
+}
+
 export const upsertUserSchool = async (schoolId: number) => {
   const user = await getServerUser();
   if (!user) throw new Error('Giriş yapmanız gerekiyor.');
-  const userId = user.id;
   const existingUserProgress = await getUserProgress();
 
   if (!existingUserProgress) {
@@ -72,18 +120,7 @@ export const upsertUserSchool = async (schoolId: number) => {
     redirect('/onboarding');
   }
 
-  const oldSchoolId = existingUserProgress.schoolId;
-
-  await db.update(userProgress)
-    .set({ schoolId })
-    .where(eq(userProgress.userId, userId));
-
-  if (oldSchoolId !== schoolId) {
-    await updateSchoolPoints(schoolId);
-    if (oldSchoolId) {
-      await updateSchoolPoints(oldSchoolId);
-    }
-  }
+  await applySchoolChangeWithLock(user.id, schoolId);
 };
 
 // Helper function to update a single school's points

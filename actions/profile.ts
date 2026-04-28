@@ -5,6 +5,7 @@ import db from "@/db/drizzle";
 import { userProgress, users, schools } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { getServerUser } from "@/lib/auth";
+import { applySchoolChangeWithLock } from "@/actions/user-progress";
 import { checkStreakContinuity } from "./daily-streak";
 import { normalizeAvatarUrl } from '@/utils/avatar';
 import { getRequestLogger } from "@/lib/logger";
@@ -38,6 +39,8 @@ export async function getProfileDataOnServer() {
       onboardingCompletedAt: true,
       learningPathLastSetAt: true,
       learningPathChangeCount: true,
+      schoolChangeLockedUntil: true,
+      studentGradeChangeLockedUntil: true,
     },
   });
 
@@ -65,6 +68,8 @@ export async function getProfileDataOnServer() {
       onboardingCompletedAt: null as Date | null,
       learningPathLastSetAt: null as Date | null,
       learningPathChangeCount: 0,
+      schoolChangeLockedUntil: null as Date | null,
+      studentGradeChangeLockedUntil: null as Date | null,
     };
   }
 
@@ -100,17 +105,19 @@ export async function updateProfileAction(
     throw new Error("Profil bilgisi bulunamadı. Lütfen sayfayı yenileyip tekrar deneyiniz.");
   }
 
-  // Update all fields - profile is never locked
-    await db
-      .update(userProgress)
-      .set({
-        userName: newName || "Anonim",
-        userImageSrc: normalizeAvatarUrl(newImage),
-        schoolId,
-        dailyTarget: newDailyTarget,
-      profileLocked: false, // Always set to false to ensure profile is never locked
-      })
-      .where(eq(userProgress.userId, userId));
+  if ((schoolId ?? null) !== (progressRow.schoolId ?? null)) {
+    await applySchoolChangeWithLock(userId, schoolId);
+  }
+
+  await db
+    .update(userProgress)
+    .set({
+      userName: newName || "Anonim",
+      userImageSrc: normalizeAvatarUrl(newImage),
+      dailyTarget: newDailyTarget,
+      profileLocked: false,
+    })
+    .where(eq(userProgress.userId, userId));
 
   // Update the "users" table as well
   const existingUserRow = await db.query.users.findFirst({
@@ -212,20 +219,26 @@ export async function updateUserProfile(data: {
     if (!user) throw new Error("Giriş yapmanız gerekiyor.");
     
     const userId = user.id;
-    
-    // Create the update data
-    const updateData: any = {};
-    
-    if (data.schoolId) {
-      // Verify the school exists
-      const school = await db.query.schools.findFirst({
-        where: eq(schools.id, data.schoolId),
-      });
-      
-      if (!school) throw new Error("Seçtiğiniz okul bulunamadı.");
-      
-      updateData.schoolId = data.schoolId;
+
+    const progressRow = await db.query.userProgress.findFirst({
+      where: eq(userProgress.userId, userId),
+    });
+    if (!progressRow) throw new Error("Profil bulunamadı.");
+
+    if (data.schoolId !== undefined) {
+      const nextSchool = data.schoolId ?? null;
+      if ((progressRow.schoolId ?? null) !== nextSchool) {
+        if (data.schoolId != null) {
+          const school = await db.query.schools.findFirst({
+            where: eq(schools.id, data.schoolId),
+          });
+          if (!school) throw new Error("Seçtiğiniz okul bulunamadı.");
+        }
+        await applySchoolChangeWithLock(userId, nextSchool);
+      }
     }
+
+    const updateData: Record<string, unknown> = {};
     
     if (data.userName) {
       updateData.userName = data.userName;

@@ -250,6 +250,11 @@ export const userProgress = pgTable("user_progress", {
   onboardingCompletedAt: timestamp("onboarding_completed_at"),
   learningPathLastSetAt: timestamp("learning_path_last_set_at"),
   learningPathChangeCount: integer("learning_path_change_count").notNull().default(0),
+
+  /** Okul değiştirmek için izin verilen zaman (öncesinde engelli). */
+  schoolChangeLockedUntil: timestamp("school_change_locked_until"),
+  /** Sınıf (student_grade) değiştirilemez; sonraki izin anı. */
+  studentGradeChangeLockedUntil: timestamp("student_grade_change_locked_until"),
 }, (table) => ({
   schoolIdx: index("idx_user_progress_school_id").on(table.schoolId),
   activeCourseIdx: index("idx_user_progress_active_course").on(table.activeCourseId),
@@ -334,9 +339,12 @@ export const studyBuddyPosts = pgTable("study_buddy_posts", {
   purpose: text("purpose").notNull(),
   reason: text("reason").notNull(),
   created_at: timestamp("created_at").defaultNow().notNull(),
+  /** Gönderi oluşturulurken kullanıcının öğrenme yolu (segment filtresi). */
+  learningPath: text("learning_path").notNull().default("full"),
 }, (table) => ({
   userIdx: index("idx_study_buddy_posts_user").on(table.user_id),
   createdIdx: index("idx_study_buddy_posts_created").on(table.created_at),
+  learningPathIdx: index("idx_study_buddy_posts_learning_path").on(table.learningPath),
 }));
 
 // Study Buddy Chats

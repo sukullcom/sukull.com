@@ -4,6 +4,7 @@ import {
   getSchoolPointsByType,
   getUserRank,
 } from "@/db/queries";
+import { leaderboardSchoolTabsForPath } from "@/lib/learning-path";
 import { getServerUser } from "@/lib/auth";
 import db from "@/db/drizzle";
 import { schools } from "@/db/schema";
@@ -21,30 +22,58 @@ const INITIAL_LIMIT = 50;
 
 const LeaderboardPage = async () => {
   try {
-    const [
-      userProgress,
-      user,
-      topUsers,
-      universityData,
-      highSchoolData,
-      secondaryData,
-      elementaryData,
-      userAndSchoolRank,
-      citiesData,
-    ] = await Promise.all([
-      getUserProgress(),
-      getServerUser(),
-      getTopUsers(INITIAL_LIMIT, 0),
-      getSchoolPointsByType("university", INITIAL_LIMIT, 0),
-      getSchoolPointsByType("high_school", INITIAL_LIMIT, 0),
-      getSchoolPointsByType("secondary_school", INITIAL_LIMIT, 0),
-      getSchoolPointsByType("elementary_school", INITIAL_LIMIT, 0),
-      getUserRank(),
-      db
-        .selectDistinct({ city: schools.city })
-        .from(schools)
-        .orderBy(sql`${schools.city} ASC`),
-    ]);
+    const [userProgress, user, topUsers, userAndSchoolRank, citiesData] =
+      await Promise.all([
+        getUserProgress(),
+        getServerUser(),
+        getTopUsers(INITIAL_LIMIT, 0),
+        getUserRank(),
+        db
+          .selectDistinct({ city: schools.city })
+          .from(schools)
+          .orderBy(sql`${schools.city} ASC`),
+      ]);
+
+    const segmentTabs = leaderboardSchoolTabsForPath(userProgress?.learningPath);
+
+    type SchoolKey =
+      | "university"
+      | "high_school"
+      | "secondary_school"
+      | "elementary_school";
+
+    const emptySchools: Record<SchoolKey, Awaited<
+      ReturnType<typeof getSchoolPointsByType>
+    >> = {
+      university: [],
+      high_school: [],
+      secondary_school: [],
+      elementary_school: [],
+    };
+
+    let initialSchools = emptySchools;
+    if (segmentTabs === "all") {
+      const [u, h, s, e] = await Promise.all([
+        getSchoolPointsByType("university", INITIAL_LIMIT, 0),
+        getSchoolPointsByType("high_school", INITIAL_LIMIT, 0),
+        getSchoolPointsByType("secondary_school", INITIAL_LIMIT, 0),
+        getSchoolPointsByType("elementary_school", INITIAL_LIMIT, 0),
+      ]);
+      initialSchools = {
+        university: u,
+        high_school: h,
+        secondary_school: s,
+        elementary_school: e,
+      };
+    } else {
+      const boards = await Promise.all(
+        segmentTabs.map((t) => getSchoolPointsByType(t, INITIAL_LIMIT, 0)),
+      );
+      initialSchools = { ...emptySchools };
+      segmentTabs.forEach((t, i) => {
+        initialSchools[t] = boards[i];
+      });
+    }
 
     if (!userProgress || !userProgress.activeCourse) {
       redirect("/courses?message=select-course");
@@ -78,15 +107,11 @@ const LeaderboardPage = async () => {
 
           <LeaderboardClient
             initialUsers={topUsers}
-            initialSchools={{
-              university: universityData,
-              high_school: highSchoolData,
-              secondary_school: secondaryData,
-              elementary_school: elementaryData,
-            }}
+            initialSchools={initialSchools}
             currentUserId={user?.id ?? null}
             currentSchoolId={userAndSchoolRank?.schoolId ?? null}
             cities={cities}
+            visibleSchoolTabs={segmentTabs}
           />
         </div>
       </div>

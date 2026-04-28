@@ -46,6 +46,7 @@ interface StudyBuddyPost {
   reason: string;
   created_at: string;
   school_id?: number;
+  learning_path?: string;
   userName?: string;
   userAvatar?: string;
   userSchoolName?: string;
@@ -146,6 +147,9 @@ export default function StudyBuddyPage() {
     profileEditingUnlocked: false,
     studyBuddyUnlocked: false,
   });
+
+  /** Öğrenme yolu — gönderi listesi ve yeni gönderi için segment eşlemesi */
+  const [viewerLearningPath, setViewerLearningPath] = useState<string | null>(null);
 
   // Tabs
   const [activeTab, setActiveTab] = useState<"allPosts" | "myPosts" | "chats">("allPosts");
@@ -250,11 +254,21 @@ export default function StudyBuddyPage() {
         const { data: { session } } = await supabase.auth.getSession();
         setCurrentUser(session?.user || null);
         
-        // If user is logged in, get their progress/streak data using server action
         if (session?.user) {
           await fetchUserStreak();
+          try {
+            const r = await fetch("/api/user/segment", { credentials: "include" });
+            if (r.ok) {
+              const j = (await r.json()) as { learningPath?: string | null };
+              setViewerLearningPath(j.learningPath ?? null);
+            }
+          } catch {
+            setViewerLearningPath(null);
+          }
+        } else {
+          setViewerLearningPath(null);
         }
-        
+
         setLoadingUser(false);
       } catch (error) {
         clientLogger.error({ message: "load session failed", error, location: "study-buddy/loadSession" });
@@ -270,8 +284,18 @@ export default function StudyBuddyPage() {
         // Also update streak when auth state changes using server action
         if (session?.user) {
           await fetchUserStreak();
+          try {
+            const r = await fetch("/api/user/segment", { credentials: "include" });
+            if (r.ok) {
+              const j = (await r.json()) as { learningPath?: string | null };
+              setViewerLearningPath(j.learningPath ?? null);
+            }
+          } catch {
+            setViewerLearningPath(null);
+          }
         } else {
           setUserStreak(0);
+          setViewerLearningPath(null);
         }
       }
     );
@@ -476,6 +500,10 @@ export default function StudyBuddyPage() {
         .select("*", { count: "exact" })
         .order("created_at", { ascending: false })
         .range(from, to);
+
+      if (viewerLearningPath && viewerLearningPath !== "full") {
+        query = query.eq("learning_path", viewerLearningPath);
+      }
       
       if (filterPurpose) {
         query = query.eq("purpose", filterPurpose);
@@ -552,7 +580,7 @@ export default function StudyBuddyPage() {
     } finally {
       setLoadingPosts(false);
     }
-  }, [currentUser, filterPurpose, currentPage, supabase]);
+  }, [currentUser, filterPurpose, currentPage, supabase, viewerLearningPath]);
 
   // Load my posts
   const loadMyPosts = useCallback(async () => {
@@ -725,7 +753,8 @@ export default function StudyBuddyPage() {
         user_id: currentUser.id,
         purpose: postPurpose.trim(),
         reason: postReason.trim(),
-        created_at: new Date().toISOString()
+        created_at: new Date().toISOString(),
+        learning_path: viewerLearningPath ?? "full",
       };
 
       const { error } = await supabase
@@ -759,7 +788,7 @@ export default function StudyBuddyPage() {
       clientLogger.error({ message: "handleCreatePost exception", error, location: "study-buddy/handleCreatePost" });
       setCreationError(warningMessages.ERROR_CREATING_POST);
     }
-  }, [currentUser, postPurpose, postReason, validatePostSpam, showWarning, supabase, loadAllPosts, loadMyPosts, userStreak, userAchievements]);
+  }, [currentUser, postPurpose, postReason, validatePostSpam, showWarning, supabase, loadAllPosts, loadMyPosts, userStreak, userAchievements, viewerLearningPath]);
 
   const handleEditPost = useCallback((post: StudyBuddyPost) => {
     setEditingPost(post);
@@ -1036,7 +1065,7 @@ export default function StudyBuddyPage() {
     } else if (activeTab === "chats") {
       loadChats();
     }
-  }, [currentUser, activeTab, loadAllPosts, loadMyPosts, loadChats]);
+  }, [currentUser, activeTab, loadAllPosts, loadMyPosts, loadChats, viewerLearningPath]);
 
   // Effect to load messages when chat is selected
   useEffect(() => {

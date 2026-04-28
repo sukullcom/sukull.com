@@ -106,6 +106,56 @@ export function examKeysForLearningPath(
 export const LEARNING_PATH_DAYS_BETWEEN_CHANGES = 30;
 export const LEARNING_PATH_MAX_CHANGES = 5;
 
+/** Okul tipi sekmeleri (liderlik tablosu okul listeleri). */
+export type LeaderboardSchoolTab =
+  | "university"
+  | "high_school"
+  | "secondary_school"
+  | "elementary_school";
+
+/**
+ * Kullanıcının öğrenme yoluna göre hangi okul tipi tablarının gösterileceği.
+ * `full`: eski hesaplar — hepsi.
+ */
+export function leaderboardSchoolTabsForPath(
+  path: string | null | undefined,
+): LeaderboardSchoolTab[] | "all" {
+  if (!path || path === "full") return "all";
+  if (path === "lgs") return ["secondary_school"];
+  if (path === "tyt_ayt") return ["high_school"];
+  if (path === "adult") return ["university"];
+  return "all";
+}
+
+/** Study Buddy’de gösterilecek gönderi learning_path değerleri (viewer full ise hepsi). */
+export function studyBuddyLearningPathsForViewer(
+  viewerPath: string | null | undefined,
+): string[] | "all" {
+  if (!viewerPath || viewerPath === "full") return "all";
+  return [viewerPath];
+}
+
+export function postMatchesStudyBuddySegment(
+  viewerPath: string | null | undefined,
+  postLearningPath: string | null | undefined,
+): boolean {
+  if (!viewerPath || viewerPath === "full") return true;
+  const p = postLearningPath ?? "full";
+  if (p === "full") return true;
+  return viewerPath === p;
+}
+
+/** Seçilen okul satırı, öğrenme yolu ile uyumlu mu (Sunucu doğrulaması). */
+export function schoolTypeMatchesLearningPath(
+  schoolType: "elementary_school" | "secondary_school" | "high_school" | "university",
+  path: LearningPath,
+): boolean {
+  if (path === "lgs") return schoolType === "secondary_school";
+  if (path === "tyt_ayt") return schoolType === "high_school";
+  if (path === "adult") return schoolType === "university";
+  return true;
+}
+
 export function canChangeLearningPath(
   now: Date,
   onboardingCompletedAt: Date | null,

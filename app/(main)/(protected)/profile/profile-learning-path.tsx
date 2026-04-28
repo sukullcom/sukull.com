@@ -20,6 +20,8 @@ type Props = {
   learningPathLastSetAt: Date | string | null;
   learningPathChangeCount: number;
   onboardingCompletedAt: Date | string | null;
+  /** Sınıf değişimi 6 ay kilidi — dolunca serbest. */
+  studentGradeChangeLockedUntil?: Date | string | null;
 };
 
 const pathLabel: Record<string, string> = {
@@ -35,7 +37,14 @@ function parseD(v: Date | string | null | undefined): Date | null {
   return new Date(v);
 }
 
-export function ProfileLearningPath({ initialPath, initialGrade, learningPathLastSetAt, learningPathChangeCount, onboardingCompletedAt }: Props) {
+export function ProfileLearningPath({
+  initialPath,
+  initialGrade,
+  learningPathLastSetAt,
+  learningPathChangeCount,
+  onboardingCompletedAt,
+  studentGradeChangeLockedUntil,
+}: Props) {
   const router = useRouter();
   const [mode, setMode] = useState<Mode>(
     (initialPath === "lgs" || initialPath === "tyt_ayt" || initialPath === "adult"
@@ -55,6 +64,10 @@ export function ProfileLearningPath({ initialPath, initialGrade, learningPathLas
   }, [onboardingCompletedAt, learningPathLastSetAt, learningPathChangeCount]);
 
   const canEdit = policy.allowed;
+
+  const gradeLockUntil = parseD(studentGradeChangeLockedUntil);
+  const gradePeriodLocked =
+    gradeLockUntil != null && gradeLockUntil.getTime() > Date.now();
 
   const apply = () => {
     if (!canEdit) return;
@@ -96,8 +109,14 @@ export function ProfileLearningPath({ initialPath, initialGrade, learningPathLas
         <p className="text-xs text-amber-700/90 mt-2">
           {initialPath === "full"
             ? "Kataloğu sadeleştirmek için aşağıdan bir yol seçebilirsin (değişiklik, kurallar dahilinde sınırlı sayıda)."
-            : `Yol değişimleri en az ${LEARNING_PATH_DAYS_BETWEEN_CHANGES} gün arayla, toplam en fazla ${LEARNING_PATH_MAX_CHANGES} kez yapılabiliyor. Okulun ise istikrar beklemeden dilediğin gibi değişir.`}
+            : `Yol değişimleri en az ${LEARNING_PATH_DAYS_BETWEEN_CHANGES} gün arayla, toplam en fazla ${LEARNING_PATH_MAX_CHANGES} kez yapılabiliyor. Sınıf değişimi ise en fazla altı ayda bir yapılabilir (ilk seçimden sonra kilit).`}
         </p>
+        {gradePeriodLocked && gradeLockUntil && (
+          <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
+            <Lock className="h-3.5 w-3.5 shrink-0" />
+            Sınıf değişikliği için {gradeLockUntil.toLocaleDateString("tr-TR")} tarihine kadar beklemelisin.
+          </p>
+        )}
         {!canEdit && policy.reason === "cooldown" && policy.nextAllowedAt && (
           <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
             <Lock className="h-3.5 w-3.5 shrink-0" />

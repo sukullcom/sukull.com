@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState, useTransition } from "react";
+import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -15,6 +15,7 @@ import {
   ChevronDown,
   Loader2,
 } from "lucide-react";
+import type { LeaderboardSchoolTab } from "@/lib/learning-path";
 
 type UserEntry = {
   userId: string;
@@ -52,6 +53,8 @@ type LeaderboardClientProps = {
   currentUserId: string | null;
   currentSchoolId: number | null;
   cities: string[];
+  /** Öğrenme yoluna göre gösterilecek okul tipi sekmeleri; `all` = mevcut davranış. */
+  visibleSchoolTabs: LeaderboardSchoolTab[] | "all";
 };
 
 export const LeaderboardClient = ({
@@ -60,7 +63,14 @@ export const LeaderboardClient = ({
   currentUserId,
   currentSchoolId,
   cities,
+  visibleSchoolTabs,
 }: LeaderboardClientProps) => {
+  const tabsToShow = useMemo(() => {
+    if (visibleSchoolTabs === "all") return [...TABS];
+    const allow = new Set<string>(["users", ...visibleSchoolTabs]);
+    return TABS.filter((t) => allow.has(t.id));
+  }, [visibleSchoolTabs]);
+
   const [activeTab, setActiveTab] = useState<TabId>("users");
   const [users, setUsers] = useState(initialUsers);
   const [schoolData, setSchoolData] = useState(initialSchools);
@@ -115,6 +125,13 @@ export const LeaderboardClient = ({
   useEffect(() => {
     setSelectedCity("");
   }, [activeTab]);
+
+  useEffect(() => {
+    const ids = new Set(tabsToShow.map((t) => t.id));
+    if (!ids.has(activeTab)) {
+      setActiveTab("users");
+    }
+  }, [tabsToShow, activeTab]);
 
   const loadMoreUsers = () => {
     startLoadMore(async () => {
@@ -277,7 +294,7 @@ export const LeaderboardClient = ({
       <div
         className="flex border-2 border-gray-200 rounded-2xl p-1 gap-0.5 mb-5 overflow-x-auto scrollbar-hide"
       >
-        {TABS.map(({ id, label, icon: Icon }) => (
+        {tabsToShow.map(({ id, label, icon: Icon }) => (
           <button
             key={id}
             onClick={() => setActiveTab(id)}

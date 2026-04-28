@@ -1,10 +1,15 @@
 "use server";
 
 import db from "@/db/drizzle";
-import { userProgress } from "@/db/schema";
+import { schools, userProgress } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { getServerUser } from "@/lib/auth";
-import { canChangeLearningPath, type LearningPath } from "@/lib/learning-path";
+import {
+  canChangeLearningPath,
+  schoolTypeMatchesLearningPath,
+  type LearningPath,
+} from "@/lib/learning-path";
+import { canChangeStudentGradeSelection, nextLockExpiresAt } from "@/lib/school-grade-lock";
 import { revalidatePath } from "next/cache";
 import { users } from "@/utils/users";
 import { redirect } from "next/navigation";
@@ -32,7 +37,8 @@ export type CompleteOnboardingState = { ok: true } | { ok: false; error: string 
 
 export async function completeLearningPath(
   pathRaw: string,
-  studentGrade: number | null
+  studentGrade: number | null,
+  schoolId: number | null,
 ): Promise<CompleteOnboardingState> {
   const user = await getServerUser();
   if (!user) {
@@ -42,6 +48,31 @@ export async function completeLearningPath(
   if (!v.ok) {
     return { ok: false, error: v.error };
   }
+  if ((v.path === "lgs" || v.path === "tyt_ayt") && schoolId == null) {
+    return { ok: false, error: "Ortaokul ve lise için bir okul seçmelisiniz." };
+  }
+
+  let resolvedSchoolId: number | null = schoolId;
+  if (schoolId != null) {
+    const schoolRow = await db.query.schools.findFirst({
+      where: eq(schools.id, schoolId),
+    });
+    if (!schoolRow) {
+      return { ok: false, error: "Seçilen okul bulunamadı." };
+    }
+    if (!schoolTypeMatchesLearningPath(schoolRow.type, v.path)) {
+      return {
+        ok: false,
+        error:
+          v.path === "lgs"
+            ? "Ortaokul öğrencileri yalnızca ortaokul kayıtlı okulları seçebilir."
+            : v.path === "tyt_ayt"
+              ? "Lise öğrencileri yalnızca lise kayıtlı okulları seçebilir."
+              : "Üniversite / sınav yolu için yalnızca üniversite kayıtlı okulları seçebilirsiniz.",
+      };
+    }
+  }
+
   const userId = user.id;
   const now = new Date();
   const profile = await users.getUser(userId).catch(() => null);
@@ -51,15 +82,21 @@ export async function completeLearningPath(
     return { ok: false, error: "Yolunuz zaten belirlenmiş. Profil üzerinden değiştirebilirsiniz." };
   }
 
+  const schoolLock = resolvedSchoolId != null ? nextLockExpiresAt(now) : null;
+  const gradeLock = v.grade != null ? nextLockExpiresAt(now) : null;
+
   if (existing) {
     await db
       .update(userProgress)
       .set({
         learningPath: v.path,
         studentGrade: v.grade,
+        schoolId: resolvedSchoolId,
         onboardingCompletedAt: now,
         learningPathLastSetAt: now,
         userName: existing.userName || userName,
+        schoolChangeLockedUntil: schoolLock,
+        studentGradeChangeLockedUntil: gradeLock,
       })
       .where(eq(userProgress.userId, userId));
   } else {
@@ -69,9 +106,12 @@ export async function completeLearningPath(
       userImageSrc: "/mascot_purple.svg",
       learningPath: v.path,
       studentGrade: v.grade,
+      schoolId: resolvedSchoolId,
       onboardingCompletedAt: now,
       learningPathLastSetAt: now,
       learningPathChangeCount: 0,
+      schoolChangeLockedUntil: schoolLock,
+      studentGradeChangeLockedUntil: gradeLock,
     });
   }
 
@@ -123,6 +163,23 @@ export async function updateLearningPathFromSettings(
     return { ok: true };
   }
 
+  const gradeChanging = (row.studentGrade ?? null) !== (v.grade ?? null);
+  if (gradeChanging) {
+    const gradeDecision = canChangeStudentGradeSelection(
+      now,
+      row.studentGradeChangeLockedUntil ?? null,
+      row.studentGrade,
+      v.grade,
+    );
+    if (!gradeDecision.allowed) {
+      return {
+        ok: false,
+        error: `Sınıf değişikliği için ${gradeDecision.nextAllowedAt.toLocaleDateString("tr-TR")} tarihine kadar beklemelisiniz.`,
+        nextAllowedAt: gradeDecision.nextAllowedAt.toISOString(),
+      };
+    }
+  }
+
   await db
     .update(userProgress)
     .set({
@@ -130,6 +187,9 @@ export async function updateLearningPathFromSettings(
       studentGrade: v.grade,
       learningPathLastSetAt: now,
       learningPathChangeCount: (row.learningPathChangeCount ?? 0) + 1,
+      ...(gradeChanging
+        ? { studentGradeChangeLockedUntil: nextLockExpiresAt(now) }
+        : {}),
     })
     .where(eq(userProgress.userId, user.id));
 

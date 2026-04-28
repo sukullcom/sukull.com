@@ -67,6 +67,8 @@ type ProfileProps = {
   onboardingCompletedAt?: Date | string | null;
   learningPathLastSetAt?: Date | string | null;
   learningPathChangeCount?: number;
+  schoolChangeLockedUntil?: Date | string | null;
+  studentGradeChangeLockedUntil?: Date | string | null;
 };
 
 export default function ProfilePageClient({
@@ -99,6 +101,14 @@ export default function ProfilePageClient({
 
   const generator = useMemo(() => new AvatarGenerator(), []);
   const isExternalAvatar = avatarUrl.startsWith("http");
+
+  const schoolLockUntil = profile.schoolChangeLockedUntil
+    ? new Date(profile.schoolChangeLockedUntil)
+    : null;
+  const schoolChangeBlockedByPolicy =
+    !!schoolLockUntil &&
+    schoolLockUntil.getTime() > Date.now() &&
+    profile.schoolId != null;
 
   const handleRandomAvatar = useCallback(() => {
     if (!canChangeAvatar) {
@@ -144,6 +154,15 @@ export default function ProfilePageClient({
       toast.error("Lütfen bir okul seçin!");
       return;
     }
+    if (
+      selectedSchoolId !== profile.schoolId &&
+      schoolChangeBlockedByPolicy
+    ) {
+      toast.error(
+        `Okul değişikliği için ${schoolLockUntil?.toLocaleDateString("tr-TR")} tarihine kadar beklemelisin.`,
+      );
+      return;
+    }
 
     startTransition(() => {
       updateProfileAction(username.trim(), avatarUrl, schoolToSave, dailyTarget)
@@ -152,7 +171,19 @@ export default function ProfilePageClient({
           toast.error(err.message || "Profil güncellenirken hata oluştu.");
         });
     });
-  }, [username, avatarUrl, selectedSchoolId, dailyTarget, canChangeUsername, canChangeAvatar, canChangeDailyGoal, canSelectSchool, profile]);
+  }, [
+    username,
+    avatarUrl,
+    selectedSchoolId,
+    dailyTarget,
+    canChangeUsername,
+    canChangeAvatar,
+    canChangeDailyGoal,
+    canSelectSchool,
+    profile,
+    schoolChangeBlockedByPolicy,
+    schoolLockUntil,
+  ]);
 
   const dailyTargetOptions = useMemo(
     () => [25, 50, 75, 100, 150, 200, 250, 300].map((v) => ({ value: v, label: `${v} puan` })),
@@ -453,6 +484,7 @@ export default function ProfilePageClient({
                 learningPathLastSetAt={profile.learningPathLastSetAt ?? null}
                 learningPathChangeCount={profile.learningPathChangeCount ?? 0}
                 onboardingCompletedAt={profile.onboardingCompletedAt}
+                studentGradeChangeLockedUntil={profile.studentGradeChangeLockedUntil ?? null}
               />
             )}
 
@@ -465,6 +497,14 @@ export default function ProfilePageClient({
                   onSelect={(id) => canSelectSchool && setSelectedSchoolId(id)}
                 />
               </div>
+              {schoolChangeBlockedByPolicy && schoolLockUntil && (
+                <p className="text-xs text-rose-600 mt-2 flex items-start gap-1.5">
+                  <Lock className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                  Okul bilgisini bir sonraki kez{" "}
+                  <strong>{schoolLockUntil.toLocaleDateString("tr-TR")}</strong> tarihinden sonra
+                  değiştirebilirsin (6 ay kuralı).
+                </p>
+              )}
             </FieldGroup>
 
             <Button
