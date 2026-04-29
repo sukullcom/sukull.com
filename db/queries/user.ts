@@ -24,6 +24,8 @@ import { HEART_MAX, HEART_REGEN_INTERVAL_MS } from "./shared";
  *     via React's `cache()`).
  *   • Subscription-expired reset is folded in-line: no separate
  *     `checkSubscriptionStatus(userId)` read when we already have `data`.
+ *   • Günlük cron (`expireStaleInfiniteHeartsSubscriptions`) aynı sonlandırmayı
+ *     yedekler; istek dışı okumalarda bile tutarlı kalır.
  *   • Heart regen WRITE only fires when hearts actually change or when
  *     we anchor the regen timer for the first time. The common case
  *     (hearts full, or < 24h since last free regen) performs zero writes.

@@ -103,6 +103,10 @@ NEXT_PUBLIC_APP_URL=https://sukull.com
 # omitted, traffic is still encrypted but the server cert is not
 # verified — the server logs a WARN on boot.
 CA_CERT=<PEM-encoded root certificate>
+
+# Optional: pg pool size (default 12, clamped 1–50). Raise only if
+# Railway RAM allows and you see pool wait in logs.
+# PAYMENT_DB_POOL_MAX=12
 ```
 
 ### 2.3 Secret rotation policy
@@ -189,7 +193,7 @@ invoked by Vercel itself).
 
 | Path                         | Schedule (UTC)    | What it does                                           |
 |------------------------------|-------------------|--------------------------------------------------------|
-| `/api/cron/daily`            | `0 21 * * *`      | Rolls `previous_total_points`, resets missed streaks   |
+| `/api/cron/daily`            | `0 21 * * *`      | Streak reset, okul puanları, ilan süresi, sonsuz can aboneliği sonu, log temizliği |
 | `/api/cron/reset-streaks`    | (subsumed by daily) | Stand-alone streak reset; kept for manual use         |
 
 `0 21 * * *` UTC == `00:00 Turkey Time (UTC+3)` — that alignment is

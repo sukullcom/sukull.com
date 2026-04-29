@@ -3,6 +3,7 @@ import db from "@/db/drizzle";
 import { listings } from "@/db/schema";
 import { and, eq, lt, sql } from "drizzle-orm";
 import { performDailyReset, applyDailyStreakBonuses } from "@/actions/daily-streak";
+import { expireStaleInfiniteHeartsSubscriptions } from "@/actions/subscription-cleanup";
 import { updateTotalPointsForSchools } from "@/actions/user-progress";
 import { getRequestLogger } from "@/lib/logger";
 
@@ -113,6 +114,12 @@ async function runDaily(request: NextRequest) {
   );
 
   steps.push(await runStep("expire-stale-listings", expireStaleListings));
+
+  steps.push(
+    await runStep("expire-infinite-hearts-subscriptions", () =>
+      expireStaleInfiniteHeartsSubscriptions(),
+    ),
+  );
 
   steps.push(
     await runStep("cleanup-rate-limits", async () => {

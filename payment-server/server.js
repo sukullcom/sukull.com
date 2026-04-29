@@ -121,12 +121,17 @@ function buildSslConfig() {
 
 let pool = null;
 if (process.env.DATABASE_URL) {
+  const rawMax = parseInt(process.env.PAYMENT_DB_POOL_MAX || "12", 10);
+  const poolMax = Number.isFinite(rawMax)
+    ? Math.min(50, Math.max(1, rawMax))
+    : 12;
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: buildSslConfig(),
-    max: 5,
+    max: poolMax,
     idleTimeoutMillis: 30_000,
   });
+  console.log(`  db pool max: ${poolMax} (PAYMENT_DB_POOL_MAX)`);
   pool
     .connect()
     .then((c) => {
