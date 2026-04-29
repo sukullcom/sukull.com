@@ -1038,7 +1038,7 @@ const SnakeGame = () => {
       setTotalScore(finalScore);
     }
     
-    const maxPointsPerSession = gameMode === 'sentences' ? 200 : 150;
+    const maxPointsPerSession = gameMode === 'sentences' ? 140 : 105;
     finalScore = Math.min(finalScore, maxPointsPerSession);
     
     if (finalScore > 0) {

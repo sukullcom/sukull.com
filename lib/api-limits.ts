@@ -39,17 +39,18 @@ export const MAX_POINTS_ADD_PER_REQUEST = 250;
  */
 export const GAME_MAX_SCORE_PER_CALL: Readonly<Record<string, number>> = {
   // Classic arcade games — score scales with round length and accuracy.
-  "snakable": 1200,
-  "speed-math": 800,
-  "stroop": 800,
-  "memory-match": 600,
-  "memory-matrix": 800,
-  "pattern-memory": 600,
-  "true-false": 600,
-  "subscribe": 1000, // lyrics game
+  "snakable": 840,
+  "speed-math": 560,
+  "stroop": 560,
+  "memory-match": 420,
+  "memory-matrix": 560,
+  "pattern-memory": 420,
+  "true-false": 420,
+  "subscribe": 700, // lyrics game
+  "word-match": 500,
   // Lab experiences award points per matched concept; scores here are tighter.
-  "human-body": 800,
-  "journey-of-food": 800,
+  "human-body": 560,
+  "journey-of-food": 560,
 };
 
 /** Hard ceiling above which *no* game is allowed to award on a single call. */

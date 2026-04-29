@@ -22,7 +22,7 @@ export const UnitBanner = ({ title, description, activeLessonId, hasContent = tr
 
   return (
     <div
-      className="w-full rounded-xl p-5 text-white flex items-center justify-between min-h-[88px]"
+      className="relative z-30 w-full rounded-xl p-5 text-white flex items-center justify-between min-h-[88px]"
       style={bgStyle}
     >
       <div className="space-y-1 flex-1 min-w-0">

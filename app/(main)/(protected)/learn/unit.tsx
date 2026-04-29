@@ -47,7 +47,7 @@ export const Unit = ({
                 hasContent={hasAnyContent}
                 subjectColor={subjectColor}
             />
-            <div className="flex items-center flex-col relative">
+            <div className="relative z-10 flex flex-col items-center">
                 {lessons.map((lesson, index) => {
                     const hasContent = lesson.challengeCount > 0
                     const isCurrent = hasContent && lesson.id === unitActiveLesson?.id

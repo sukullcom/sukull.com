@@ -3,7 +3,7 @@ import CustomCard from "@/components/custom-card";
 import { getUserProgress } from "@/db/queries";
 import Image from "next/image";
 import { redirect } from "next/navigation";
-import { Zap, Brain, CircleCheck, Target, Grid3X3, Palette } from "lucide-react";
+import { Zap, Brain, CircleCheck, Target, Grid3X3, Palette, Languages } from "lucide-react";
 
 interface GameData {
   id: string;
@@ -52,6 +52,11 @@ const gamesData: GameData[] = [
     id: "color-stroop",
     name: "Renk Tuzağı",
     icon: <Palette className="w-14 h-14 text-rose-500" />,
+  },
+  {
+    id: "word-match",
+    name: "Kelime Eşleştirme",
+    icon: <Languages className="w-14 h-14 text-indigo-500" />,
   },
 ];
 
