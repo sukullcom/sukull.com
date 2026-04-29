@@ -228,7 +228,7 @@ export default function PatternMemoryGame() {
         } ${
           isActive ? color.active + " scale-95 shadow-lg" : color.bg
         } ${
-          isInputPhase ? "cursor-pointer hover:opacity-90 active:scale-90" : "cursor-default"
+          isInputPhase ? "cursor-pointer active:opacity-90 active:scale-90" : "cursor-default"
         }`}
       >
         {showNumber && (

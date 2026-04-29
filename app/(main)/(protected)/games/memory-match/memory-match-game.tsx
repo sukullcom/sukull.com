@@ -382,7 +382,7 @@ export default function MemoryMatchGame() {
               }`}
             >
               {/* Back (hidden) */}
-              <div className="absolute inset-0 rounded-xl bg-purple-500 border-2 border-purple-600 flex items-center justify-center [backface-visibility:hidden] cursor-pointer hover:bg-purple-400 active:scale-95 transition-colors">
+              <div className="absolute inset-0 rounded-xl bg-purple-500 border-2 border-purple-600 flex items-center justify-center [backface-visibility:hidden] cursor-pointer active:bg-purple-400 active:scale-95 transition-colors">
                 <span className="text-2xl text-white font-bold">?</span>
               </div>
               {/* Front (shown when flipped) */}

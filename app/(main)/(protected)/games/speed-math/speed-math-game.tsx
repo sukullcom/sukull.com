@@ -398,7 +398,7 @@ export default function SpeedMathGame() {
                 }
               } else {
                 btnClass +=
-                  "border-neutral-200 hover:border-amber-400 hover:bg-amber-50 text-neutral-700 active:scale-95 cursor-pointer";
+                  "border-neutral-200 text-neutral-700 hover:border-neutral-300 hover:bg-neutral-50 active:scale-95 active:bg-neutral-100 cursor-pointer";
               }
 
               return (

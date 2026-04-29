@@ -19,17 +19,17 @@ interface ColorDef {
   name: string;
   tw: string;
   bg: string;
-  hoverBg: string;
+  activeBg: string;
   borderColor: string;
 }
 
 const ALL_COLORS: ColorDef[] = [
-  { id: "red", name: "KIRMIZI", tw: "text-red-500", bg: "bg-red-500", hoverBg: "hover:bg-red-600", borderColor: "border-red-600" },
-  { id: "blue", name: "MAVİ", tw: "text-blue-500", bg: "bg-blue-500", hoverBg: "hover:bg-blue-600", borderColor: "border-blue-600" },
-  { id: "green", name: "YEŞİL", tw: "text-green-500", bg: "bg-green-500", hoverBg: "hover:bg-green-600", borderColor: "border-green-600" },
-  { id: "yellow", name: "SARI", tw: "text-yellow-500", bg: "bg-yellow-500", hoverBg: "hover:bg-yellow-600", borderColor: "border-yellow-600" },
-  { id: "orange", name: "TURUNCU", tw: "text-orange-500", bg: "bg-orange-500", hoverBg: "hover:bg-orange-600", borderColor: "border-orange-600" },
-  { id: "purple", name: "MOR", tw: "text-purple-500", bg: "bg-purple-500", hoverBg: "hover:bg-purple-600", borderColor: "border-purple-600" },
+  { id: "red", name: "KIRMIZI", tw: "text-red-500", bg: "bg-red-500", activeBg: "active:bg-red-600", borderColor: "border-red-600" },
+  { id: "blue", name: "MAVİ", tw: "text-blue-500", bg: "bg-blue-500", activeBg: "active:bg-blue-600", borderColor: "border-blue-600" },
+  { id: "green", name: "YEŞİL", tw: "text-green-500", bg: "bg-green-500", activeBg: "active:bg-green-600", borderColor: "border-green-600" },
+  { id: "yellow", name: "SARI", tw: "text-yellow-500", bg: "bg-yellow-500", activeBg: "active:bg-yellow-600", borderColor: "border-yellow-600" },
+  { id: "orange", name: "TURUNCU", tw: "text-orange-500", bg: "bg-orange-500", activeBg: "active:bg-orange-600", borderColor: "border-orange-600" },
+  { id: "purple", name: "MOR", tw: "text-purple-500", bg: "bg-purple-500", activeBg: "active:bg-purple-600", borderColor: "border-purple-600" },
 ];
 
 const DIFFICULTY_SETTINGS: Record<Difficulty, {
@@ -406,7 +406,7 @@ export default function ColorStroopGame() {
             {round.options.map(color => {
               const isSelected = selectedId === color.id;
               const isCorrectOption = color.id === round.correctAnswer;
-              let btnClasses = `${color.bg} ${color.hoverBg} text-white border-b-4 ${color.borderColor}`;
+              let btnClasses = `${color.bg} ${color.activeBg} text-white border-b-4 ${color.borderColor}`;
 
               if (feedback !== null) {
                 if (isCorrectOption) {

@@ -176,7 +176,7 @@ export default function MemoryMatrixGame() {
         bg = "bg-green-400 border-green-500";
       } else if (gameState === "input") {
         bg =
-          "bg-gray-100 border-gray-200 hover:bg-gray-200 active:scale-90 cursor-pointer";
+          "bg-gray-100 border-gray-200 active:bg-gray-200 active:scale-90 cursor-pointer";
       } else {
         bg = "bg-gray-100 border-gray-200";
       }
