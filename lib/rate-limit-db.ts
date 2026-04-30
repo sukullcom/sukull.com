@@ -196,12 +196,11 @@ export const RATE_LIMITS = {
   /** Teacher offering on a student listing. Money-adjacent (kredi düşer). */
   listingOffer: { max: 60, windowSeconds: 60 * 60 },
   /**
-   * Student spending a credit to open a chat with a teacher. Abuse caps
-   * still matter, but 20/h was too easy to exhaust in dev (retries after
-   * buying credits) and multi-teacher browsing; 60/h keeps protection while
-   * avoiding false "too many requests" after legitimate 402 bursts.
+   * Yeni mesaj kilidi (öğrenci başına). Var olan kilit satırı için sayaç
+   * artmaz; yalnızca gerçekten yeni açılışlar ve başarısız denemeler
+   * (önceki sürümde RL kilit öncesi tüketiliyordu) için 100/saat.
    */
-  messageUnlock: { max: 60, windowSeconds: 60 * 60 },
+  messageUnlock: { max: 100, windowSeconds: 60 * 60 },
   /**
    * Account deletion (GDPR / KVKK right-to-be-forgotten).
    *

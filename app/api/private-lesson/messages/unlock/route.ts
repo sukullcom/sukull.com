@@ -45,37 +45,57 @@ export async function POST(request: NextRequest) {
     }
 
     /**
-     * Açık kilidi ve chatId varsa doğrudan dön (rate limit tüketme).
-     * Yeni kilitlemede önce kredi kontrolü, sonra rate limit, sonra işlem.
+     * Var olan `message_unlocks` satırı için rate limit tüketme.
+     * chatId boş satırlar (eski veri / teklif sonrası onarım) için de
+     * unlockMessageThread idempotent — aksi halde her tıklama sayaç yakar.
      */
-    const alreadyUnlocked = await getMessageUnlock(user.id, teacherId);
-    if (alreadyUnlocked?.chatId != null) {
+    const existing = await getMessageUnlock(user.id, teacherId);
+    if (existing?.chatId != null) {
       return NextResponse.json({
-        chatId: alreadyUnlocked.chatId,
+        chatId: existing.chatId,
+        alreadyUnlocked: true,
+      });
+    }
+    if (existing) {
+      const repaired = await unlockMessageThread({
+        studentId: user.id,
+        teacherId,
+      });
+      if (!repaired.ok) {
+        const [status, message] = unlockErrorToHttp(repaired.code);
+        return NextResponse.json({ error: message }, { status });
+      }
+      return NextResponse.json({
+        chatId: repaired.chatId,
         alreadyUnlocked: true,
       });
     }
 
-    if (!alreadyUnlocked) {
-      const canPay = await hasAvailableCredits(user.id, 1);
-      if (!canPay) {
-        return NextResponse.json(
-          { error: "Yetersiz kredi. Kredi satın alın ve tekrar deneyin." },
-          { status: 402 },
-        );
-      }
+    const canPay = await hasAvailableCredits(user.id, 1);
+    if (!canPay) {
+      return NextResponse.json(
+        { error: "Yetersiz kredi. Kredi satın alın ve tekrar deneyin." },
+        { status: 402 },
+      );
     }
 
-    // Money flow: opening an unlock spends 1 credit. If the rate-limit
-    // backing store is unreachable we prefer to refuse the write (503
-    // via retry) over accepting an unbounded burst that could drain
-    // many users' credits during a DB incident.
+    // Yalnızca yeni kilit (satır yok) + kredi var iken sayaç artar.
     const rl = await checkRateLimit({
       key: `messageUnlock:user:${user.id}`,
       ...RATE_LIMITS.messageUnlock,
       onStoreError: "closed",
     });
     if (!rl.allowed) {
+      if (rl.storeError) {
+        return NextResponse.json(
+          {
+            error:
+              "Mesaj kilidi şu an doğrulanamıyor (geçici sunucu sorunu). Bir dakika sonra tekrar dene.",
+            retryAfterSeconds: Math.min(rl.retryAfter, 120),
+          },
+          { status: 503, headers: rateLimitHeaders(rl) },
+        );
+      }
       return NextResponse.json(
         {
           error:

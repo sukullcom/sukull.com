@@ -95,6 +95,13 @@ export function MessageTeacherButton({
         );
         return;
       }
+      if (res.status === 503) {
+        toast.error(
+          data.error ||
+            "Geçici bir sorun oluştu. Bir dakika sonra tekrar dene.",
+        );
+        return;
+      }
       if (!res.ok) {
         toast.error(data.error || "Sohbet açılamadı");
         return;

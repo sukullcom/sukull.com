@@ -6,7 +6,7 @@
  * unlocking a chat) live in `./offers.ts` and `./messages.ts` and
  * always run inside a DB transaction.
  */
-import { and, desc, eq, inArray, or, sql } from "drizzle-orm";
+import { and, desc, eq, exists, inArray, or, sql } from "drizzle-orm";
 import { queryResultRows } from "@/lib/query-result";
 import db from "@/db/drizzle";
 import { listings, teacherFields, users } from "@/db/schema";
@@ -95,6 +95,33 @@ export async function getOpenListings(
       return [];
     }
     conditions.push(inArray(listings.subject, subjects));
+    /**
+     * Detay sayfası (`teacherMatchesListingSubjects`) sınıf eşleşmesi de ister;
+     * liste yalnızca subject ile süzülürse eğitmen kartı görür ama /listings/[id]
+     * 404 verir. Aynı kuralı burada uygula.
+     */
+    const viewerId = filters.viewerTeacherId;
+    conditions.push(
+      or(
+        sql`NULLIF(TRIM(COALESCE(${listings.grade}, '')), '') IS NULL`,
+        exists(
+          db
+            .select({ id: teacherFields.id })
+            .from(teacherFields)
+            .where(
+              and(
+                eq(teacherFields.teacherId, viewerId),
+                eq(teacherFields.isActive, true),
+                eq(teacherFields.subject, listings.subject),
+                or(
+                  eq(teacherFields.grade, listings.grade),
+                  inArray(teacherFields.grade, ["Genel", "Tüm seviyeler"]),
+                ),
+              ),
+            ),
+        ),
+      )!,
+    );
   }
 
   if (filters.subject) {

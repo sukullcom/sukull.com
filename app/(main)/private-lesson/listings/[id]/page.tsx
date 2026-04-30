@@ -52,11 +52,17 @@ export default async function ListingDetailPage({
   }
 
   const listingViewerIsTeacher = await isTeacher(user.id);
+  const teacherOffered =
+    listingViewerIsTeacher && !isOwner
+      ? await hasTeacherOfferedOnListing(listingId, user.id)
+      : false;
+
   if (
     base.status === "open" &&
     listingViewerIsTeacher &&
     !isOwner &&
-    !(await teacherMatchesListingSubjects(user.id, base.subject, base.grade))
+    !(await teacherMatchesListingSubjects(user.id, base.subject, base.grade)) &&
+    !teacherOffered
   ) {
     notFound();
   }
@@ -65,9 +71,7 @@ export default async function ListingDetailPage({
   const full = isOwner ? await getListingWithOffers(listingId) : null;
   // Teacher view: surface whether they've already bid so we hide the form.
   const alreadyOffered =
-    !isOwner && listingViewerIsTeacher
-      ? await hasTeacherOfferedOnListing(listingId, user.id)
-      : false;
+    !isOwner && listingViewerIsTeacher ? teacherOffered : false;
 
   return (
     <div className="max-w-4xl mx-auto px-3 sm:px-6 pb-10">
