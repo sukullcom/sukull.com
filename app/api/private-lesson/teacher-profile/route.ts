@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { revalidateTag } from "next/cache";
 import { getRequestLogger } from "@/lib/logger";
-import { RATE_LIMITS, checkRateLimit, rateLimitHeaders } from "@/lib/rate-limit-db";
+import { RATE_LIMITS } from "@/lib/rate-limit-db";
 import { secureApi } from "@/lib/api-middleware";
 import {
   isTeacher,

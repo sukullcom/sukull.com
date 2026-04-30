@@ -14,7 +14,6 @@ import {
   Handshake,
   Megaphone,
   Wallet,
-  Plus,
   Activity,
   Users,
   Settings,
