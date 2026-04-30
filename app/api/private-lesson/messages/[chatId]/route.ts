@@ -6,9 +6,8 @@
  *   in the chat itself — participants include both ends of any unlock.
  *
  * POST /api/private-lesson/messages/[chatId]
- *   Append a message to the thread. Server-side length + rate-limit
- *   checks. No credit is charged per message (the student already
- *   paid once to unlock).
+ *   Append a message to the thread. Same-origin + CSRF (double-submit),
+ *   dedicated `messageSend` rate limit, length checks. No per-message credit.
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
@@ -22,6 +21,8 @@ import db from "@/db/drizzle";
 import { studyBuddyChats, studyBuddyMessages } from "@/db/schema";
 import { asc, eq } from "drizzle-orm";
 import { sendMessageInUnlockedThread } from "@/db/queries/messages";
+import { verifyCsrf } from "@/lib/csrf";
+import { isTrustedApiOrigin } from "@/lib/same-origin-api";
 
 type RouteContext = { params: { chatId: string } };
 
@@ -135,11 +136,16 @@ export async function POST(
       return NextResponse.json({ error: "Geçersiz sohbet" }, { status: 400 });
     }
 
-    // Mild write burst protection — actual per-pair gating already
-    // happens via `message_unlocks`.
+    if (!isTrustedApiOrigin(request) || !verifyCsrf(request)) {
+      return NextResponse.json(
+        { error: "Geçersiz istek veya güvenlik doğrulaması başarısız." },
+        { status: 403 },
+      );
+    }
+
     const rl = await checkRateLimit({
-      key: `writeBurst:user:${user.id}`,
-      ...RATE_LIMITS.writeBurst,
+      key: `messageSend:user:${user.id}`,
+      ...RATE_LIMITS.messageSend,
     });
     if (!rl.allowed) {
       return NextResponse.json(

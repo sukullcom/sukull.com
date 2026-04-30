@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import {
   Dialog,
@@ -13,8 +13,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
-import { CSRF_HEADER_NAME } from "@/lib/csrf-constants";
 import { clientLogger } from "@/lib/client-logger";
+import { mintCsrfToken, csrfHeader } from "@/lib/mint-csrf-client";
 
 const MAX_COMMENT = 500;
 
@@ -39,26 +39,10 @@ export function TeacherReviewModal({
   const [comment, setComment] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  const mintCsrf = useCallback(async (): Promise<string | null> => {
-    try {
-      const res = await fetch("/api/csrf", { method: "GET", credentials: "include" });
-      const data = (await res.json().catch(() => ({}))) as { csrfToken?: string };
-      if (!res.ok || !data.csrfToken) return null;
-      return data.csrfToken;
-    } catch (e) {
-      clientLogger.error({
-        message: "review modal csrf mint failed",
-        error: e,
-        location: "TeacherReviewModal/mintCsrf",
-      });
-      return null;
-    }
-  }, []);
-
   const handleSubmit = async () => {
     setSubmitting(true);
     try {
-      const token = await mintCsrf();
+      const token = await mintCsrfToken();
       if (!token) {
         toast.error("Güvenlik doğrulaması başarısız. Sayfayı yenileyip tekrar dene.");
         return;
@@ -74,7 +58,7 @@ export function TeacherReviewModal({
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
-          [CSRF_HEADER_NAME]: token,
+          ...csrfHeader(token),
         },
         body: JSON.stringify(body),
       });

@@ -2,6 +2,12 @@
 export const REVIEW_MESSAGE_RECENCY_DAYS = 30;
 
 /**
+ * Mesajlaşma yoluyla yorum: her iki tarafın da en az bu kadar mesajı
+ * olmalı (tek taraflı veya “merhaba” + cevap manipülasyonunu sınırlar).
+ */
+export const REVIEW_MESSAGE_MIN_PER_SIDE = 2;
+
+/**
  * Request parsing for teacher review POST bodies (pure; unit-tested).
  */
 export type ParsedReviewBody =

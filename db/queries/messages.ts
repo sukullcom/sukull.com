@@ -11,10 +11,12 @@ import {
   messageUnlocks,
   studyBuddyChats,
   studyBuddyMessages,
+  teacherApplications,
   userCredits,
   users,
 } from "@/db/schema";
 import { queryResultRows } from "@/lib/query-result";
+import { teacherPrivateLessonDisplayName } from "@/lib/teacher-private-lesson-name";
 
 // ---------------------------------------------------------------------------
 // Reads
@@ -81,14 +83,35 @@ async function listConversationsFor(userId: string): Promise<ConversationRow[]> 
     : [];
   const profileMap = new Map(profiles.map((p) => [p.id, p]));
 
+  const apps = otherIdList.length
+    ? await db.query.teacherApplications.findMany({
+        where: and(
+          inArray(teacherApplications.userId, otherIdList),
+          eq(teacherApplications.status, "approved"),
+        ),
+        columns: {
+          userId: true,
+          teacherName: true,
+          teacherSurname: true,
+        },
+      })
+    : [];
+  const appMap = new Map(apps.map((a) => [a.userId, a]));
+
   return chats.map((c) => {
     const participants = Array.isArray(c.participants) ? c.participants : [];
     const otherId = participants.find((p) => p !== userId) ?? "";
     const profile = profileMap.get(otherId);
+    const app = appMap.get(otherId);
+    const otherUserName = teacherPrivateLessonDisplayName(
+      app?.teacherName,
+      app?.teacherSurname,
+      profile?.name,
+    );
     return {
       chatId: c.id,
       otherUserId: otherId,
-      otherUserName: profile?.name ?? "",
+      otherUserName,
       otherUserAvatar: profile?.avatar ?? null,
       lastMessage: c.last_message ?? "",
       lastUpdated: new Date(c.last_updated as string | number | Date).toISOString(),

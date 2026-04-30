@@ -25,6 +25,8 @@ import {
   getListingById,
   getListingWithOffers,
 } from "@/db/queries";
+import { verifyCsrf } from "@/lib/csrf";
+import { isTrustedApiOrigin } from "@/lib/same-origin-api";
 
 type RouteContext = { params: { id: string } };
 
@@ -121,6 +123,13 @@ async function mutate(
     const id = Number.parseInt(params.id, 10);
     if (!Number.isFinite(id) || id <= 0) {
       return NextResponse.json({ error: "Geçersiz ilan" }, { status: 400 });
+    }
+
+    if (!isTrustedApiOrigin(request) || !verifyCsrf(request)) {
+      return NextResponse.json(
+        { error: "Geçersiz istek veya güvenlik doğrulaması başarısız." },
+        { status: 403 },
+      );
     }
 
     const rl = await checkRateLimit({

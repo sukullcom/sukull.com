@@ -21,6 +21,8 @@ import {
   rateLimitHeaders,
 } from "@/lib/rate-limit-db";
 import { acceptOffer, rejectOffer, withdrawOffer } from "@/db/queries";
+import { verifyCsrf } from "@/lib/csrf";
+import { isTrustedApiOrigin } from "@/lib/same-origin-api";
 
 type RouteContext = { params: { id: string } };
 
@@ -34,6 +36,13 @@ export async function PATCH(
       return NextResponse.json(
         { error: "Giriş yapmanız gerekiyor" },
         { status: 401 },
+      );
+    }
+
+    if (!isTrustedApiOrigin(request) || !verifyCsrf(request)) {
+      return NextResponse.json(
+        { error: "Geçersiz istek veya güvenlik doğrulaması başarısız." },
+        { status: 403 },
       );
     }
 

@@ -59,7 +59,8 @@ if (isProd && !process.env.NEXT_PUBLIC_APP_URL) {
  * strict superset of the previous behaviour.
  *
  * Keep this aligned with `payment-server/server.js → ALLOWED_ORIGINS`
- * ve `lib/same-origin-api.ts`.
+ * ve `lib/same-origin-api.ts` (ortak: NEXT_PUBLIC_APP_URL +
+ * ALLOWED_API_ORIGINS virgül listesi).
  */
 function pickAllowedOrigin(req: NextRequest): string | null {
   const origin = req.headers.get('origin');

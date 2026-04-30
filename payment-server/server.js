@@ -36,14 +36,24 @@ console.log(
 );
 
 // ---------------------------------------------------------------------------
-// CORS
+// CORS — Next.js `lib/same-origin-api` ile aynı köken listesi
+// (ALLOWED_API_ORIGINS virgülle ayrılmış ek alan adları).
 // ---------------------------------------------------------------------------
-const ALLOWED_ORIGINS = [
-  "https://sukull.com",
-  "https://www.sukull.com",
-  "http://localhost:3000",
-  process.env.NEXT_PUBLIC_APP_URL,
-].filter(Boolean);
+function buildAllowedOrigins() {
+  const base = [
+    "https://sukull.com",
+    "https://www.sukull.com",
+    "http://localhost:3000",
+    process.env.NEXT_PUBLIC_APP_URL,
+  ].filter(Boolean);
+  const extra = (process.env.ALLOWED_API_ORIGINS || "")
+    .split(",")
+    .map((s) => s.trim())
+    .filter(Boolean);
+  return [...new Set([...base, ...extra])];
+}
+
+const ALLOWED_ORIGINS = buildAllowedOrigins();
 
 const app = express();
 

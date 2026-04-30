@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { ConfirmActionDialog } from "@/components/confirm-action-dialog";
 import { Loader2, XCircle } from "lucide-react";
 import { clientLogger } from "@/lib/client-logger";
+import { csrfHeader, mintCsrfToken } from "@/lib/mint-csrf-client";
 
 /**
  * Student-owned "Kapat" button. Closes the listing so no new offers
@@ -22,9 +23,18 @@ export function CloseListingButton({ listingId }: { listingId: number }) {
   const doClose = async () => {
     setLoading(true);
     try {
+      const token = await mintCsrfToken();
+      if (!token) {
+        toast.error("Güvenlik doğrulaması başarısız. Sayfayı yenileyip tekrar dene.");
+        return;
+      }
       const res = await fetch(`/api/private-lesson/listings/${listingId}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...csrfHeader(token),
+        },
         body: JSON.stringify({ action: "close" }),
       });
       const data = await res.json().catch(() => ({}));

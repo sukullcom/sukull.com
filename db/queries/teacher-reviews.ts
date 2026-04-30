@@ -14,7 +14,10 @@ import {
 import { CACHE_TAGS, CACHE_TTL } from "@/lib/cache-tags";
 import { queryResultRows } from "@/lib/query-result";
 import { getMessageUnlock } from "@/db/queries/messages";
-import { REVIEW_MESSAGE_RECENCY_DAYS } from "@/lib/review-guard";
+import {
+  REVIEW_MESSAGE_MIN_PER_SIDE,
+  REVIEW_MESSAGE_RECENCY_DAYS,
+} from "@/lib/review-guard";
 
 export type TeacherReviewRow = typeof teacherReviews.$inferSelect;
 
@@ -90,7 +93,12 @@ export async function hasTwoWayRecentMessaging(
   if (!r) return { ok: false };
   const last = r.last_msg ? new Date(r.last_msg) : null;
   if (!last || last < since) return { ok: false };
-  if ((r.from_student ?? 0) < 1 || (r.from_teacher ?? 0) < 1) return { ok: false };
+  if (
+    (r.from_student ?? 0) < REVIEW_MESSAGE_MIN_PER_SIDE ||
+    (r.from_teacher ?? 0) < REVIEW_MESSAGE_MIN_PER_SIDE
+  ) {
+    return { ok: false };
+  }
   return { ok: true, chatId };
 }
 

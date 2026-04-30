@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Send, Loader2 } from "lucide-react";
 import { clientLogger } from "@/lib/client-logger";
+import { csrfHeader, mintCsrfToken } from "@/lib/mint-csrf-client";
 
 type Message = {
   id: number;
@@ -94,9 +95,21 @@ export function ChatThread({
     setSending(true);
 
     try {
+      const token = await mintCsrfToken();
+      if (!token) {
+        setMessages((prev) => prev.filter((m) => m.id !== tempId));
+        toast.error("Güvenlik doğrulaması başarısız. Sayfayı yenileyip tekrar dene.");
+        setSending(false);
+        return;
+      }
+
       const res = await fetch(`/api/private-lesson/messages/${chatId}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...csrfHeader(token),
+        },
         body: JSON.stringify({ content: trimmed }),
       });
       const data = await res.json().catch(() => ({}));

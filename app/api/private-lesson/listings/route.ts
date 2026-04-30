@@ -14,6 +14,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getRequestLogger } from "@/lib/logger";
 import { RATE_LIMITS } from "@/lib/rate-limit-db";
 import { secureApi } from "@/lib/api-middleware";
+import { verifyCsrf } from "@/lib/csrf";
+import { isTrustedApiOrigin } from "@/lib/same-origin-api";
 import { createListing, getOpenListings } from "@/db/queries";
 import type { ListingLessonMode } from "@/db/queries/listings";
 import {
@@ -77,6 +79,13 @@ export const POST = secureApi.authRateLimited(
   },
   async (request: NextRequest, user) => {
     try {
+
+    if (!isTrustedApiOrigin(request) || !verifyCsrf(request)) {
+      return NextResponse.json(
+        { error: "Geçersiz istek veya güvenlik doğrulaması başarısız." },
+        { status: 403 },
+      );
+    }
 
     const body = (await request.json().catch(() => ({}))) as Record<
       string,

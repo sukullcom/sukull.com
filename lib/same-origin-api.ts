@@ -2,8 +2,19 @@ import type { NextRequest } from "next/server";
 
 const isProd = process.env.NODE_ENV === "production";
 
+function extraOriginsFromEnv(): string[] {
+  const raw = process.env.ALLOWED_API_ORIGINS?.trim();
+  if (!raw) return [];
+  return raw
+    .split(",")
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
+}
+
 /**
  * Modül yükünde bir kez; her API isteğinde `new Set` maliyeti olmasın.
+ * Ek kökenler: `ALLOWED_API_ORIGINS` (virgülle ayrılmış), örn. staging
+ * `https://*.vercel.app` tek tek eklenir.
  */
 const API_ALLOWED_ORIGINS = new Set<string>(
   [
@@ -11,6 +22,7 @@ const API_ALLOWED_ORIGINS = new Set<string>(
     "https://www.sukull.com",
     process.env.NEXT_PUBLIC_APP_URL,
     !isProd ? "http://localhost:3000" : null,
+    ...extraOriginsFromEnv(),
   ].filter((v): v is string => typeof v === "string" && v.length > 0),
 );
 

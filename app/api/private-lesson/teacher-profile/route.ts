@@ -10,15 +10,27 @@ import {
 } from "@/db/queries";
 import {
   normalizeCapabilities,
-  isValidTeachingSubject,
-  isValidTeachingGrade,
 } from "@/lib/teaching-offerings";
 import { CACHE_TAGS } from "@/lib/cache-tags";
 import { isTrustedApiOrigin } from "@/lib/same-origin-api";
 import { verifyCsrf } from "@/lib/csrf";
+import {
+  assertTeacherProfileBodySize,
+  isValidTurkeyMobileForProfile,
+  sanitizeTeacherProfilePlainText,
+  validateCapabilitiesMatchPrimaryField,
+} from "@/lib/teacher-profile-mutation";
 
 const VALID_LESSON_MODES = ["online", "in_person", "both"] as const;
 type LessonMode = (typeof VALID_LESSON_MODES)[number];
+
+const NO_STORE_HEADERS = {
+  "Cache-Control": "no-store, private, max-age=0",
+} as const;
+
+const MAX_NAME = 80;
+const MAX_BIO = 8000;
+const MAX_MISC = 500;
 
 export const GET = secureApi.authRateLimited(
   {
@@ -26,8 +38,16 @@ export const GET = secureApi.authRateLimited(
     keyKind: "user",
     ...RATE_LIMITS.teacherProfileRead,
   },
-  async (_request, user) => {
+  async (request: NextRequest, user) => {
     try {
+      const origin = request.headers.get("origin");
+      if (origin && !isTrustedApiOrigin(request)) {
+        return NextResponse.json(
+          { error: "Geçersiz istek kaynağı." },
+          { status: 403 },
+        );
+      }
+
       if (!(await isTeacher(user.id))) {
         return NextResponse.json(
           { error: "Bu sayfa yalnızca eğitmenler içindir." },
@@ -38,36 +58,39 @@ export const GET = secureApi.authRateLimited(
       const app = await getTeacherApplicationByUserId(user.id);
       if (!app || app.status !== "approved") {
         return NextResponse.json(
-          { error: "Onaylı eğitmen kaydı bulunamadı." },
-          { status: 404 },
+          { error: "Kayıt bulunamadı." },
+          { status: 404, headers: NO_STORE_HEADERS },
         );
       }
 
       const caps = normalizeCapabilities(app.capabilitiesJson) ?? [];
 
-      return NextResponse.json({
-        application: {
-          teacherName: app.teacherName ?? "",
-          teacherSurname: app.teacherSurname ?? "",
-          teacherPhoneNumber: app.teacherPhoneNumber ?? "",
-          teacherEmail: app.teacherEmail ?? "",
-          field: app.field,
-          capabilities: caps,
-          education: app.education ?? "",
-          experienceYears: app.experienceYears ?? "",
-          targetLevels: app.targetLevels ?? "",
-          availableHours: app.availableHours ?? "",
-          lessonMode: app.lessonMode ?? "",
-          hourlyRateOnline:
-            app.hourlyRateOnline != null ? String(app.hourlyRateOnline) : "",
-          hourlyRateInPerson:
-            app.hourlyRateInPerson != null ? String(app.hourlyRateInPerson) : "",
-          city: app.city ?? "",
-          district: app.district ?? "",
-          bio: app.bio ?? "",
-          status: app.status,
+      return NextResponse.json(
+        {
+          application: {
+            teacherName: app.teacherName ?? "",
+            teacherSurname: app.teacherSurname ?? "",
+            teacherPhoneNumber: app.teacherPhoneNumber ?? "",
+            teacherEmail: app.teacherEmail ?? "",
+            field: app.field,
+            capabilities: caps,
+            education: app.education ?? "",
+            experienceYears: app.experienceYears ?? "",
+            targetLevels: app.targetLevels ?? "",
+            availableHours: app.availableHours ?? "",
+            lessonMode: app.lessonMode ?? "",
+            hourlyRateOnline:
+              app.hourlyRateOnline != null ? String(app.hourlyRateOnline) : "",
+            hourlyRateInPerson:
+              app.hourlyRateInPerson != null ? String(app.hourlyRateInPerson) : "",
+            city: app.city ?? "",
+            district: app.district ?? "",
+            bio: app.bio ?? "",
+            status: app.status,
+          },
         },
-      });
+        { headers: NO_STORE_HEADERS },
+      );
     } catch (error) {
       const log = await getRequestLogger({
         labels: { route: "api/private-lesson/teacher-profile", op: "GET" },
@@ -102,15 +125,30 @@ export const PATCH = secureApi.authRateLimited(
         );
       }
 
+      try {
+        assertTeacherProfileBodySize(request);
+      } catch {
+        return NextResponse.json(
+          { error: "İstek gövdesi çok büyük." },
+          { status: 413 },
+        );
+      }
+
       const body = (await request.json().catch(() => ({}))) as Record<
         string,
         unknown
       >;
 
-      const teacherName = str(body.teacherName);
-      const teacherSurname = str(body.teacherSurname);
+      const teacherName = sanitizeTeacherProfilePlainText(
+        str(body.teacherName),
+        MAX_NAME,
+      );
+      const teacherSurname = sanitizeTeacherProfilePlainText(
+        str(body.teacherSurname),
+        MAX_NAME,
+      );
       const teacherPhoneNumber = str(body.teacherPhoneNumber);
-      const teacherEmail = str(body.teacherEmail);
+      const teacherEmail = str(body.teacherEmail).toLowerCase();
       const field = str(body.field);
       const capabilities = normalizeCapabilities(body.capabilities);
 
@@ -120,27 +158,30 @@ export const PATCH = secureApi.authRateLimited(
           { status: 400 },
         );
       }
-      if (!field || !isValidTeachingSubject(field)) {
-        return NextResponse.json({ error: "Geçersiz ders alanı" }, { status: 400 });
-      }
-      if (capabilities[0].subject !== field) {
+      if (!field || !validateCapabilitiesMatchPrimaryField(field, capabilities)) {
         return NextResponse.json(
-          { error: "Birincil ders alanı ile seçimler uyuşmuyor." },
+          { error: "Ders alanı ile seçilen ders / sınıf çiftleri uyumsuz." },
           { status: 400 },
         );
-      }
-      for (const c of capabilities) {
-        if (!isValidTeachingSubject(c.subject) || !isValidTeachingGrade(c.grade)) {
-          return NextResponse.json(
-            { error: "Geçersiz ders veya sınıf seçimi" },
-            { status: 400 },
-          );
-        }
       }
 
       if (!teacherName || !teacherSurname || !teacherPhoneNumber || !teacherEmail) {
         return NextResponse.json(
           { error: "Ad, soyad, telefon ve e-posta zorunludur." },
+          { status: 400 },
+        );
+      }
+
+      if (!isValidTurkeyMobileForProfile(teacherPhoneNumber)) {
+        return NextResponse.json(
+          { error: "Geçerli bir Türkiye cep telefonu girin." },
+          { status: 400 },
+        );
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(teacherEmail) || teacherEmail.length > 120) {
+        return NextResponse.json(
+          { error: "Geçerli bir e-posta adresi girin." },
           { status: 400 },
         );
       }
@@ -178,26 +219,40 @@ export const PATCH = secureApi.authRateLimited(
         teacherEmail,
         field,
         capabilities,
-        education: strOrNull(body.education),
-        experienceYears: strOrNull(body.experienceYears),
-        targetLevels: strOrNull(body.targetLevels),
-        availableHours: strOrNull(body.availableHours),
+        education: optSan(body.education, MAX_MISC),
+        experienceYears: optSan(body.experienceYears, MAX_MISC),
+        targetLevels: optSan(body.targetLevels, MAX_MISC),
+        availableHours: optSan(body.availableHours, MAX_MISC),
         lessonMode: (lessonMode || null) as LessonMode | null,
         hourlyRateOnline,
         hourlyRateInPerson,
-        city: strOrNull(body.city),
-        district: strOrNull(body.district),
-        bio: strOrNull(body.bio),
+        city: optSan(body.city, MAX_MISC),
+        district: optSan(body.district, MAX_MISC),
+        bio: optSan(body.bio, MAX_BIO),
       });
 
       revalidateTag(CACHE_TAGS.teachers);
       revalidateTag(CACHE_TAGS.teacherStats(user.id));
 
-      return NextResponse.json({ success: true, message: "Profilin güncellendi." });
+      const logOk = await getRequestLogger({
+        labels: { route: "api/private-lesson/teacher-profile", op: "PATCH" },
+      });
+      logOk.info("teacher profile self-updated", {
+        userId: user.id,
+        patchedKeys: Object.keys(body).filter((k) => body[k] !== undefined),
+      });
+
+      return NextResponse.json(
+        { success: true, message: "Profilin güncellendi." },
+        { headers: NO_STORE_HEADERS },
+      );
     } catch (err) {
-      const msg = err instanceof Error ? err.message : "Bilinmeyen hata";
-      if (msg.includes("Onaylı eğitmen kaydı bulunamadı")) {
-        return NextResponse.json({ error: msg }, { status: 404 });
+      const msg = err instanceof Error ? err.message : "";
+      if (
+        msg.includes("Onaylı eğitmen kaydı bulunamadı") ||
+        msg.includes("Eğitmen kaydı güncellenemedi")
+      ) {
+        return NextResponse.json({ error: "Kayıt bulunamadı." }, { status: 404 });
       }
       const log = await getRequestLogger({
         labels: { route: "api/private-lesson/teacher-profile", op: "PATCH" },
@@ -211,9 +266,10 @@ export const PATCH = secureApi.authRateLimited(
 function str(v: unknown): string {
   return typeof v === "string" ? v.trim() : "";
 }
-function strOrNull(v: unknown): string | null {
+function optSan(v: unknown, maxLen: number): string | null {
   const s = str(v);
-  return s.length > 0 ? s : null;
+  if (!s) return null;
+  return sanitizeTeacherProfilePlainText(s, maxLen);
 }
 function numOrNull(v: unknown): number | null {
   if (v === null || v === undefined || v === "") return null;

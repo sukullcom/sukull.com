@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Loader2, Handshake } from "lucide-react";
 import { clientLogger } from "@/lib/client-logger";
+import { csrfHeader, mintCsrfToken } from "@/lib/mint-csrf-client";
 import { ConfirmActionDialog } from "@/components/confirm-action-dialog";
 
 /**
@@ -46,11 +47,20 @@ export function OfferForm({
     setCreditDialogOpen(false);
     setSubmitting(true);
     try {
+      const token = await mintCsrfToken();
+      if (!token) {
+        toast.error("Güvenlik doğrulaması başarısız. Sayfayı yenileyip tekrar dene.");
+        return;
+      }
       const res = await fetch(
         `/api/private-lesson/listings/${listingId}/offers`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            ...csrfHeader(token),
+          },
           body: JSON.stringify({
             priceProposal: Math.round(priceNum),
             note: note.trim() || null,

@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { clientLogger } from "@/lib/client-logger";
+import { csrfHeader, mintCsrfToken } from "@/lib/mint-csrf-client";
 import {
   TEACHING_GRADES,
   TEACHING_SUBJECTS,
@@ -53,9 +54,18 @@ export function NewListingForm() {
 
     setSubmitting(true);
     try {
+      const token = await mintCsrfToken();
+      if (!token) {
+        toast.error("Güvenlik doğrulaması başarısız. Sayfayı yenileyip tekrar dene.");
+        return;
+      }
       const res = await fetch("/api/private-lesson/listings", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...csrfHeader(token),
+        },
         body: JSON.stringify({
           subject,
           grade: grade || null,

@@ -26,6 +26,8 @@ import {
   isTeacher,
   MAX_OFFERS_PER_LISTING,
 } from "@/db/queries";
+import { verifyCsrf } from "@/lib/csrf";
+import { isTrustedApiOrigin } from "@/lib/same-origin-api";
 
 type RouteContext = { params: { id: string } };
 
@@ -128,6 +130,13 @@ export async function POST(
     if (!(await isTeacher(user.id))) {
       return NextResponse.json(
         { error: "Teklif verebilmek için onaylı eğitmen olmalısın" },
+        { status: 403 },
+      );
+    }
+
+    if (!isTrustedApiOrigin(request) || !verifyCsrf(request)) {
+      return NextResponse.json(
+        { error: "Geçersiz istek veya güvenlik doğrulaması başarısız." },
         { status: 403 },
       );
     }

@@ -223,10 +223,15 @@ export async function getListingWithOffers(
       lo.note,
       lo.status,
       lo.created_at,
-      u.name AS teacher_name,
+      COALESCE(
+        NULLIF(TRIM(CONCAT(COALESCE(ta.teacher_name, ''), ' ', COALESCE(ta.teacher_surname, ''))), ''),
+        u.name
+      ) AS teacher_name,
       u.avatar AS teacher_avatar
     FROM listing_offers lo
     JOIN users u ON u.id = lo.teacher_id
+    LEFT JOIN teacher_applications ta
+      ON ta.user_id = lo.teacher_id AND ta.status = 'approved'
     WHERE lo.listing_id = ${id}
     ORDER BY lo.created_at ASC
   `);

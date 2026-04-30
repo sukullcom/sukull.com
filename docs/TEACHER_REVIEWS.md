@@ -1,6 +1,6 @@
 # Teacher review system
 
-One-time **student → teacher** ratings after a **kabul edilmiş ilan teklifi** (`listing_offers.status = 'accepted'`) or after **karşılıklı mesajlaşma** in the private-lesson chat (`study_buddy_messages`), with thread activity in the last **30 days** (see `REVIEW_MESSAGE_RECENCY_DAYS` in `lib/review-guard.ts` / `db/queries/teacher-reviews.ts`).
+One-time **student → teacher** ratings after a **kabul edilmiş ilan teklifi** (`listing_offers.status = 'accepted'`) or after **karşılıklı mesajlaşma** in the private-lesson chat (`study_buddy_messages`): son mesaj **30 gün** içinde olmalı ve **öğrenci ile eğitmenin her birinden en az 2 mesaj** bulunmalı (`REVIEW_MESSAGE_MIN_PER_SIDE`, `REVIEW_MESSAGE_RECENCY_DAYS` in `lib/review-guard.ts` → `db/queries/teacher-reviews.ts`).
 
 ## API (authenticated)
 

@@ -97,12 +97,25 @@ export async function checkRateLimit({
       retryAfter,
     };
   } catch (error) {
+    const errMsg = error instanceof Error ? error.message : String(error);
+    const missingRateLimitFn =
+      errMsg.includes("check_rate_limit") && errMsg.includes("does not exist");
     log.error({
       message: "check_rate_limit failed",
       error,
       source: "middleware",
       location: "rate-limit-db/checkRateLimit",
-      fields: { key, max, windowSeconds, onStoreError },
+      fields: {
+        key,
+        max,
+        windowSeconds,
+        onStoreError,
+        ...(missingRateLimitFn
+          ? {
+              hint: "DB'de check_rate_limit yok — npm run db:apply -- supabase/migrations/0019_add_rate_limits.sql",
+            }
+          : {}),
+      },
     });
     const fallback =
       onStoreError === "closed"
@@ -241,6 +254,12 @@ export const RATE_LIMITS = {
    * "scrape every chat I was ever added to" pattern.
    */
   messagesRead: { max: 120, windowSeconds: 60 },
+  /**
+   * Özel ders sohbetinde mesaj gönderimi (POST transcript). `writeBurst`'tan
+   * ayrı sayılır; bot/spam için kullanıcı başına tavan.
+   */
+  messageSend: { max: 40, windowSeconds: 60 },
+
   /**
    * Consolidated `/api/user?action=…` reader.
    *

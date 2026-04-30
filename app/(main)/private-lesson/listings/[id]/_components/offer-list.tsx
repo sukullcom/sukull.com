@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Check, X, Loader2, MessageCircle } from "lucide-react";
 import { normalizeAvatarUrl } from "@/utils/avatar";
 import { clientLogger } from "@/lib/client-logger";
+import { csrfHeader, mintCsrfToken } from "@/lib/mint-csrf-client";
 import { ConfirmActionDialog } from "@/components/confirm-action-dialog";
 import type { ListingStatus } from "@/db/queries/listings";
 
@@ -56,9 +57,18 @@ export function OfferList({
     setPending((p) => ({ ...p, [offerId]: true }));
     setConfirm(null);
     try {
+      const token = await mintCsrfToken();
+      if (!token) {
+        toast.error("Güvenlik doğrulaması başarısız. Sayfayı yenileyip tekrar dene.");
+        return;
+      }
       const res = await fetch(`/api/private-lesson/offers/${offerId}`, {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...csrfHeader(token),
+        },
         body: JSON.stringify({ action }),
       });
       const data = await res.json().catch(() => ({}));

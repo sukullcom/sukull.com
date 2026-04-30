@@ -14,6 +14,7 @@ import db from "@/db/drizzle";
 import { teacherApplications, teacherFields, users } from "@/db/schema";
 import { CACHE_TAGS, CACHE_TTL } from "@/lib/cache-tags";
 import { queryResultRows } from "@/lib/query-result";
+import { teacherPrivateLessonDisplayName } from "@/lib/teacher-private-lesson-name";
 
 // ---------------------------------------------------------------------------
 // Directory — "rehber" listing on /private-lesson/teachers
@@ -45,7 +46,10 @@ const _getTeachersDirectoryCached = unstable_cache(
     const result = await db.execute(sql`
       SELECT
         u.id,
-        u.name,
+        COALESCE(
+          NULLIF(TRIM(CONCAT(COALESCE(ta.teacher_name, ''), ' ', COALESCE(ta.teacher_surname, ''))), ''),
+          u.name
+        ) AS name,
         u.email,
         u.avatar,
         u.description AS bio,
@@ -64,8 +68,9 @@ const _getTeachersDirectoryCached = unstable_cache(
       WHERE u.role = 'teacher'
       GROUP BY u.id, u.name, u.email, u.avatar, u.description,
                ta.hourly_rate_online, ta.hourly_rate_in_person,
-               ta.lesson_mode, ta.city, ta.district
-      ORDER BY u.name ASC
+               ta.lesson_mode, ta.city, ta.district,
+               ta.teacher_name, ta.teacher_surname
+      ORDER BY name ASC
     `);
 
     const rows = queryResultRows<Record<string, unknown>>(result);
@@ -135,6 +140,8 @@ export async function getTeacherProfile(teacherId: string) {
         hourlyRateInPerson: true,
         city: true,
         district: true,
+        teacherName: true,
+        teacherSurname: true,
       },
     }),
     db.query.teacherFields.findMany({
@@ -148,8 +155,15 @@ export async function getTeacherProfile(teacherId: string) {
 
   if (!user || user.role !== "teacher") return null;
 
+  const displayName = teacherPrivateLessonDisplayName(
+    application?.teacherName,
+    application?.teacherSurname,
+    user.name,
+  );
+
   return {
     ...user,
+    name: displayName,
     bio: application?.bio ?? user.description ?? null,
     field: application?.field ?? null,
     education: application?.education ?? null,
