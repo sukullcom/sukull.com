@@ -32,6 +32,7 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { clientLogger } from "@/lib/client-logger";
+import { CSRF_HEADER_NAME } from "@/lib/csrf-constants";
 
 type ApiApplication = {
   teacherName: string;
@@ -83,6 +84,35 @@ export function TeacherProfileSettingsClient() {
   const [capabilityRows, setCapabilityRows] = useState<CapabilityRow[]>([
     { subject: "", grade: "" },
   ]);
+  const [csrfToken, setCsrfToken] = useState<string | null>(null);
+
+  const mintCsrf = useCallback(async (): Promise<string | null> => {
+    try {
+      const res = await fetch("/api/csrf", { method: "GET", credentials: "include" });
+      const data = (await res.json().catch(() => ({}))) as {
+        csrfToken?: string;
+        error?: string;
+      };
+      if (!res.ok || !data.csrfToken) {
+        if (data.error) toast.error(data.error);
+        return null;
+      }
+      setCsrfToken(data.csrfToken);
+      return data.csrfToken;
+    } catch (err) {
+      clientLogger.error({
+        message: "csrf mint failed",
+        error: err,
+        location: "TeacherProfileSettingsClient/mintCsrf",
+      });
+      return null;
+    }
+  }, []);
+
+  const resolveCsrf = useCallback(async (): Promise<string | null> => {
+    if (csrfToken) return csrfToken;
+    return mintCsrf();
+  }, [csrfToken, mintCsrf]);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -133,8 +163,8 @@ export function TeacherProfileSettingsClient() {
   }, [router]);
 
   useEffect(() => {
-    load();
-  }, [load]);
+    void Promise.all([mintCsrf(), load()]);
+  }, [load, mintCsrf]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -155,9 +185,17 @@ export function TeacherProfileSettingsClient() {
     }
     setSaving(true);
     try {
+      const token = await resolveCsrf();
+      if (!token) {
+        toast.error("Güvenlik doğrulaması başarısız. Sayfayı yenileyip tekrar dene.");
+        return;
+      }
       const res = await fetch("/api/private-lesson/teacher-profile", {
         method: "PATCH",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          [CSRF_HEADER_NAME]: token,
+        },
         body: JSON.stringify({
           ...formData,
           field: caps[0].subject,
@@ -186,9 +224,17 @@ export function TeacherProfileSettingsClient() {
   const handleLeave = async () => {
     setLeaving(true);
     try {
+      const token = await resolveCsrf();
+      if (!token) {
+        toast.error("Güvenlik doğrulaması başarısız. Sayfayı yenileyip tekrar dene.");
+        return;
+      }
       const res = await fetch("/api/private-lesson/teacher-profile/leave", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          [CSRF_HEADER_NAME]: token,
+        },
         body: JSON.stringify({ confirm: true }),
       });
       const data = await res.json().catch(() => ({}));

@@ -5,6 +5,8 @@ import { RATE_LIMITS } from "@/lib/rate-limit-db";
 import { secureApi } from "@/lib/api-middleware";
 import { isTeacher, leaveTeacherProgram } from "@/db/queries";
 import { CACHE_TAGS } from "@/lib/cache-tags";
+import { isTrustedApiOrigin } from "@/lib/same-origin-api";
+import { verifyCsrf } from "@/lib/csrf";
 
 export const POST = secureApi.authRateLimited(
   {
@@ -14,6 +16,15 @@ export const POST = secureApi.authRateLimited(
   },
   async (request: NextRequest, user) => {
     try {
+      if (!isTrustedApiOrigin(request)) {
+        return NextResponse.json({ error: "Geçersiz istek kaynağı" }, { status: 403 });
+      }
+      if (!verifyCsrf(request)) {
+        return NextResponse.json(
+          { error: "Geçersiz veya eksik güvenlik doğrulaması. Sayfayı yenileyip tekrar dene." },
+          { status: 403 },
+        );
+      }
       if (!(await isTeacher(user.id))) {
         return NextResponse.json(
           { error: "Aktif eğitmen kaydı bulunamadı." },

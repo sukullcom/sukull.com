@@ -9,6 +9,7 @@ import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { ChatThread } from "./_components/chat-thread";
 import { PrivateLessonContactStrip } from "@/components/private-lesson/private-lesson-contact-strip";
+import { getCanReviewOverview } from "@/db/queries/teacher-reviews";
 
 export const dynamic = "force-dynamic";
 
@@ -61,6 +62,20 @@ export default async function MessageThreadPage({
     .orderBy(asc(studyBuddyMessages.created_at))
     .limit(500);
 
+  const viewer = await db.query.users.findFirst({
+    where: eq(users.id, user.id),
+    columns: { role: true },
+  });
+  const viewerRole = viewer?.role ?? "user";
+
+  let reviewBanner: { teacherId: string } | null = null;
+  if (otherProfile?.role === "teacher" && viewerRole !== "teacher" && viewerRole !== "admin") {
+    const overview = await getCanReviewOverview(user.id, otherProfile.id);
+    if (overview.canReview) {
+      reviewBanner = { teacherId: otherProfile.id };
+    }
+  }
+
   return (
     <div className="max-w-3xl mx-auto px-3 sm:px-6 pb-6 sm:pb-8 min-h-0">
       <Link
@@ -100,6 +115,17 @@ export default async function MessageThreadPage({
             </Link>
           )}
         </div>
+
+        {reviewBanner && (
+          <div className="border-b bg-amber-50/90 px-4 py-2.5 text-sm text-amber-950">
+            <Link
+              href={`/private-lesson/teachers/${reviewBanner.teacherId}?review=1`}
+              className="font-medium text-amber-900 hover:underline"
+            >
+              Bu eğitmene kısa bir geri bildirim bırak →
+            </Link>
+          </div>
+        )}
 
         <PrivateLessonContactStrip chatId={chatId} />
 

@@ -3,10 +3,9 @@
  * by the public rehber (listing of approved teachers) and by the
  * teacher dashboard.
  *
- * The marketplace refactor (migration 0026) removed the availability,
- * booking and review system. Ratings are intentionally NOT displayed
- * yet — we will add a post-match review mechanism later. For now the
- * directory just shows what the teacher offers and at what rate.
+ * The marketplace refactor (migration 0026) removed the legacy booking
+ * tables; per-teacher ratings now come from `teacher_reviews` (see
+ * migration 0034) and are surfaced on the teacher profile + API.
  */
 import { cache } from "react";
 import { unstable_cache } from "next/cache";

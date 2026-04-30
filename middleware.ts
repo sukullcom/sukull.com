@@ -8,6 +8,7 @@ import {
   setCachedSession,
   tryExtractTokenExpiry,
 } from '@/utils/supabase/session-cache'
+import { getApiAllowedOrigins } from '@/lib/same-origin-api'
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -33,6 +34,14 @@ if (isProd && !process.env.INTERNAL_API_KEY) {
   );
 }
 
+if (isProd && !process.env.NEXT_PUBLIC_APP_URL) {
+  console.warn(
+    '[middleware] NEXT_PUBLIC_APP_URL is not set in production — ' +
+      'preview / özel deploy CORS yansıması eksik kalabilir. ' +
+      'Örn. https://xxx.vercel.app değerini env’e ekleyin.',
+  );
+}
+
 /**
  * Cross-origin allow-list for `/api/*` responses.
  *
@@ -49,21 +58,13 @@ if (isProd && !process.env.INTERNAL_API_KEY) {
  * was never actually exercised cross-origin), so this change is a
  * strict superset of the previous behaviour.
  *
- * Keep this aligned with `payment-server/server.js → ALLOWED_ORIGINS`.
+ * Keep this aligned with `payment-server/server.js → ALLOWED_ORIGINS`
+ * ve `lib/same-origin-api.ts`.
  */
-const API_ALLOWED_ORIGINS = new Set<string>(
-  [
-    'https://sukull.com',
-    'https://www.sukull.com',
-    process.env.NEXT_PUBLIC_APP_URL,
-    !isProd ? 'http://localhost:3000' : null,
-  ].filter((v): v is string => typeof v === 'string' && v.length > 0),
-);
-
 function pickAllowedOrigin(req: NextRequest): string | null {
   const origin = req.headers.get('origin');
   if (!origin) return null;
-  return API_ALLOWED_ORIGINS.has(origin) ? origin : null;
+  return getApiAllowedOrigins().has(origin) ? origin : null;
 }
 
 function applyApiCors(req: NextRequest, response: NextResponse): void {

@@ -14,6 +14,8 @@ import {
   isValidTeachingGrade,
 } from "@/lib/teaching-offerings";
 import { CACHE_TAGS } from "@/lib/cache-tags";
+import { isTrustedApiOrigin } from "@/lib/same-origin-api";
+import { verifyCsrf } from "@/lib/csrf";
 
 const VALID_LESSON_MODES = ["online", "in_person", "both"] as const;
 type LessonMode = (typeof VALID_LESSON_MODES)[number];
@@ -22,7 +24,7 @@ export const GET = secureApi.authRateLimited(
   {
     bucket: "teacher-profile-read",
     keyKind: "user",
-    ...RATE_LIMITS.read,
+    ...RATE_LIMITS.teacherProfileRead,
   },
   async (_request, user) => {
     try {
@@ -84,6 +86,15 @@ export const PATCH = secureApi.authRateLimited(
   },
   async (request: NextRequest, user) => {
     try {
+      if (!isTrustedApiOrigin(request)) {
+        return NextResponse.json({ error: "Geçersiz istek kaynağı" }, { status: 403 });
+      }
+      if (!verifyCsrf(request)) {
+        return NextResponse.json(
+          { error: "Geçersiz veya eksik güvenlik doğrulaması. Sayfayı yenileyip tekrar dene." },
+          { status: 403 },
+        );
+      }
       if (!(await isTeacher(user.id))) {
         return NextResponse.json(
           { error: "Bu işlem için eğitmen olman gerekir." },

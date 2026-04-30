@@ -185,6 +185,8 @@ export const RATE_LIMITS = {
   snippetWrite: { max: 20, windowSeconds: 60 * 60 },
   /** Teacher application submission. */
   applicationSubmit: { max: 5, windowSeconds: 60 * 60 },
+  /** Öğretmen profil GET (sık çağrılabilir; genel read'den biraz daha sıkı). */
+  teacherProfileRead: { max: 60, windowSeconds: 60 },
   /** Teacher profile self-service (onaylı eğitmen). */
   teacherProfileWrite: { max: 15, windowSeconds: 60 * 60 },
   /** Öğretmenlikten ayrılma — yıkıcı, seyrek. */
@@ -214,6 +216,10 @@ export const RATE_LIMITS = {
   teacherDetails: { max: 60, windowSeconds: 60 },
   /** Generic authenticated read bucket when no specific preset fits. */
   read: { max: 120, windowSeconds: 60 },
+  /** GET /api/csrf — double-submit token mint. */
+  csrfMint: { max: 40, windowSeconds: 60 },
+  /** Teacher review POST — 1 / student / teacher / 24h (double-click guard). */
+  teacherReviewDaily: { max: 1, windowSeconds: 24 * 60 * 60 },
   /**
    * Marketplace listing reads (list, detail, offers).
    *

@@ -129,9 +129,22 @@ export {
   listTeacherConversations,
 } from "./queries/messages";
 
-// ---------------------------------------------------------------------------
-// Snippets: code-editor snippets
-// ---------------------------------------------------------------------------
+export {
+  findAcceptedOfferForReview,
+  findLatestAcceptedOfferId,
+  hasTwoWayRecentMessaging,
+  getMessagingReviewEligibility,
+  getCanReviewOverview,
+  getReviewEligibility,
+  findExistingReview,
+  insertTeacherReview,
+  getTeacherReviewAggregate,
+  listTeacherReviewsPage,
+  anonymizeStudentName,
+  assertTeacherExists,
+} from "./queries/teacher-reviews";
+export type { TeacherReviewRow, ReviewEligibility } from "./queries/teacher-reviews";
+export { REVIEW_MESSAGE_RECENCY_DAYS } from "@/lib/review-guard";
 export {
   createSnippet,
   getUserSnippetCount,

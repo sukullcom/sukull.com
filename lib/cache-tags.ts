@@ -31,6 +31,8 @@ export const CACHE_TAGS = {
    * always produces the same string: `teacher-stats:{userId}`.
    */
   teacherStats: (teacherId: string) => `teacher-stats:${teacherId}`,
+  /** Paginated reviews + aggregate rating for a teacher profile. */
+  teacherReviews: (teacherId: string) => `teacher-reviews:${teacherId}`,
 } as const;
 
 /**
@@ -43,7 +45,8 @@ export type CacheTag =
   | (typeof CACHE_TAGS)["teachers"]
   | (typeof CACHE_TAGS)["schoolsMaster"]
   | (typeof CACHE_TAGS)["schools"]
-  | ReturnType<(typeof CACHE_TAGS)["teacherStats"]>;
+  | ReturnType<(typeof CACHE_TAGS)["teacherStats"]>
+  | ReturnType<(typeof CACHE_TAGS)["teacherReviews"]>;
 
 /**
  * Default TTLs in seconds. These are upper bounds — a `revalidateTag()` call
@@ -69,4 +72,6 @@ export const CACHE_TTL = {
    * within a page refresh, long enough to absorb refresh-spamming.
    */
   teacherStats: 60,
+  /** Review list + average; invalidated on new review (same TTL cap). */
+  teacherReviews: 60,
 } as const;

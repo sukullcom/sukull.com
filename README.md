@@ -67,6 +67,11 @@ is the runbook; follow links from there for deeper topics.
 | `docs/SCHOOL_SYSTEM_SETUP.md`              | Schools catalog + per-school leaderboard                             |
 | `docs/LATEX_MATH_SUPPORT.md`               | KaTeX rendering in lesson content                                    |
 | `docs/TURKEY_TIMEZONE_UTC+3_IMPLEMENTATION.md` | How server-side day boundaries stay locked to Turkey time        |
+| `docs/TEACHER_REVIEWS.md`                    | Student→teacher one-time reviews (API, eligibility, cache tags)   |
+
+## Teacher reviews (marketplace)
+
+Students can leave a **single** 1–10 rating (optional comment) per teacher after an **accepted** marketplace offer or **two-way** private-lesson messages within the recency window. See `docs/TEACHER_REVIEWS.md` for endpoints and cache invalidation.
 
 ## Contributing
 

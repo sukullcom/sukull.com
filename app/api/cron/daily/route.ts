@@ -17,6 +17,19 @@ type StepResult = {
   error?: string;
 };
 
+/** Postgres JSON may arrive as string depending on driver. */
+function normalizePgJsonSummary(raw: unknown): unknown {
+  if (raw == null) return null;
+  if (typeof raw === "string") {
+    try {
+      return JSON.parse(raw) as unknown;
+    } catch {
+      return { unparsed: raw };
+    }
+  }
+  return raw;
+}
+
 async function runStep(name: string, fn: () => Promise<unknown>): Promise<StepResult> {
   const start = Date.now();
   try {
@@ -83,6 +96,12 @@ async function runDaily(request: NextRequest) {
     );
   }
 
+  if (process.env.NODE_ENV === "production" && !process.env.CRON_SECRET) {
+    console.warn(
+      "[cron/daily] CRON_SECRET tanımlı değil — x-vercel-cron dışındaki Bearer ile manuel tetikleme çalışmaz.",
+    );
+  }
+
   const overallStart = Date.now();
   const steps: StepResult[] = [];
 
@@ -123,6 +142,7 @@ async function runDaily(request: NextRequest) {
 
   steps.push(
     await runStep("cleanup-rate-limits", async () => {
+      /** Purges expired rows; active windows still enforced in `check_rate_limit`. */
       const result = await db.execute(sql`SELECT cleanup_rate_limits() AS deleted`);
       const row =
         (result as unknown as { rows?: Array<Record<string, unknown>> }).rows?.[0] ??
@@ -137,7 +157,7 @@ async function runDaily(request: NextRequest) {
       const row =
         (result as unknown as { rows?: Array<Record<string, unknown>> }).rows?.[0] ??
         (result as unknown as Array<Record<string, unknown>>)[0];
-      return row?.summary ?? row ?? null;
+      return normalizePgJsonSummary(row?.summary ?? row ?? null);
     }),
   );
 
@@ -163,6 +183,21 @@ async function runDaily(request: NextRequest) {
 
   const overallDurationMs = Date.now() - overallStart;
   const allOk = steps.every((s) => s.success);
+
+  const summaryLog = await getRequestLogger({
+    labels: { module: "cron", job: "daily", op: "summary" },
+  });
+  for (const s of steps) {
+    if (s.success && s.name.startsWith("cleanup-")) {
+      summaryLog.info("cron/daily cleanup step completed", {
+        source: "cron",
+        location: `cron/daily/${s.name}`,
+        step: s.name,
+        durationMs: s.durationMs,
+        details: s.details,
+      });
+    }
+  }
 
   return NextResponse.json(
     {

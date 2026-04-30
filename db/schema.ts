@@ -7,6 +7,7 @@ import {
   pgEnum,
   pgTable,
   serial,
+  smallint,
   text,
   timestamp,
   json,
@@ -313,6 +314,7 @@ export const teacherApplications = pgTable("teacher_applications", {
 }, (table) => ({
   userIdx: index("idx_teacher_apps_user").on(table.userId),
   statusIdx: index("idx_teacher_apps_status").on(table.status),
+  userStatusIdx: index("idx_teacher_apps_user_status").on(table.userId, table.status),
 }));
 
 export const teacherApplicationsRelations = relations(teacherApplications, ({ one }) => ({
@@ -514,9 +516,27 @@ export const listingOffers = pgTable("listing_offers", {
   listingTeacherIdx: uniqueIndex("idx_listing_offers_listing_teacher").on(table.listingId, table.teacherId),
   teacherIdx: index("idx_listing_offers_teacher").on(table.teacherId),
   listingStatusIdx: index("idx_listing_offers_listing_status").on(table.listingId, table.status),
+  teacherStatusIdx: index("idx_listing_offers_teacher_status").on(table.teacherId, table.status),
 }));
 
-export const listingOffersRelations = relations(listingOffers, ({ one }) => ({
+/** Single review per (student, teacher) after accepted offer or two-way messaging. */
+export const teacherReviews = pgTable("teacher_reviews", {
+  id: bigserial("id", { mode: "number" }).primaryKey(),
+  teacherId: text("teacher_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  studentId: text("student_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  offerId: integer("offer_id").references(() => listingOffers.id, { onDelete: "set null" }),
+  rating: smallint("rating").notNull(),
+  comment: text("comment"),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+}, (table) => ({
+  studentTeacherUniq: uniqueIndex("teacher_reviews_student_teacher_uidx").on(
+    table.studentId,
+    table.teacherId,
+  ),
+  teacherRatingIdx: index("idx_teacher_reviews_teacher_rating").on(table.teacherId, table.rating),
+}));
+
+export const listingOffersRelations = relations(listingOffers, ({ one, many }) => ({
   listing: one(listings, {
     fields: [listingOffers.listingId],
     references: [listings.id],
@@ -524,6 +544,24 @@ export const listingOffersRelations = relations(listingOffers, ({ one }) => ({
   teacher: one(users, {
     fields: [listingOffers.teacherId],
     references: [users.id],
+  }),
+  reviews: many(teacherReviews),
+}));
+
+export const teacherReviewsRelations = relations(teacherReviews, ({ one }) => ({
+  offer: one(listingOffers, {
+    fields: [teacherReviews.offerId],
+    references: [listingOffers.id],
+  }),
+  teacherUser: one(users, {
+    fields: [teacherReviews.teacherId],
+    references: [users.id],
+    relationName: "teacher_reviews_teacher_user",
+  }),
+  studentUser: one(users, {
+    fields: [teacherReviews.studentId],
+    references: [users.id],
+    relationName: "teacher_reviews_student_user",
   }),
 }));
 
@@ -684,6 +722,7 @@ export const userSubscriptions = pgTable("user_subscriptions", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 }, (table) => ({
   userStatusIdx: index("idx_subscriptions_user_status").on(table.userId, table.status),
+  statusEndDateIdx: index("idx_subscriptions_status_end_date").on(table.status, table.endDate),
 }));
 
 export const userSubscriptionsRelations = relations(userSubscriptions, ({ one }) => ({

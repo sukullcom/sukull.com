@@ -2,8 +2,17 @@ import { redirect, notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { getServerUser } from "@/lib/auth";
+import db from "@/db/drizzle";
+import { users } from "@/db/schema";
+import { eq } from "drizzle-orm";
 import { getTeacherProfile, getMessageUnlock } from "@/db/queries";
+import {
+  getTeacherReviewAggregate,
+  listTeacherReviewsPage,
+  getCanReviewOverview,
+} from "@/db/queries/teacher-reviews";
 import { MessageTeacherButton } from "@/components/private-lesson/message-teacher-button";
+import { TeacherReviewsSection } from "@/components/teacher-reviews-section";
 import UserCreditsDisplay from "@/components/user-credits-display";
 import { normalizeAvatarUrl } from "@/utils/avatar";
 import {
@@ -21,8 +30,10 @@ export const dynamic = "force-dynamic";
 
 export default async function TeacherDetailPage({
   params,
+  searchParams,
 }: {
   params: { id: string };
+  searchParams?: { review?: string };
 }) {
   const user = await getServerUser();
   if (!user) redirect("/login");
@@ -32,6 +43,23 @@ export default async function TeacherDetailPage({
 
   const unlock = await getMessageUnlock(user.id, teacher.id);
   const isSelf = user.id === teacher.id;
+
+  const [meRow, aggregate, firstReviews] = await Promise.all([
+    db.query.users.findFirst({
+      where: eq(users.id, user.id),
+      columns: { role: true },
+    }),
+    getTeacherReviewAggregate(teacher.id),
+    listTeacherReviewsPage(teacher.id, { limit: 10, cursor: null }),
+  ]);
+  const myRole = meRow?.role ?? "user";
+
+  const reviewGate =
+    !isSelf && myRole !== "teacher" && myRole !== "admin"
+      ? await getCanReviewOverview(user.id, teacher.id)
+      : null;
+
+  const autoOpenReview = searchParams?.review === "1";
 
   return (
     <div className="max-w-4xl mx-auto px-3 sm:px-6 pb-10">
@@ -207,6 +235,21 @@ export default async function TeacherDetailPage({
               </p>
             </section>
           )}
+
+          <TeacherReviewsSection
+            teacherId={teacher.id}
+            teacherName={teacher.name ?? undefined}
+            currentUserRole={myRole}
+            isSelf={isSelf}
+            initialAggregate={{
+              averageRating: aggregate.averageRating,
+              reviewCount: aggregate.reviewCount,
+            }}
+            initialReviews={firstReviews.reviews}
+            initialNextCursor={firstReviews.nextCursor}
+            reviewGate={reviewGate}
+            autoOpenReview={autoOpenReview}
+          />
         </div>
       </div>
     </div>
