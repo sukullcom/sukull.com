@@ -45,11 +45,17 @@ export async function POST(request: NextRequest) {
     }
 
     /**
-     * Kredi / kilitsizlik kontrolünü rate limit'ten ÖNCE yapıyoruz: aksi halde
-     * yetersiz kredili kullanıcı her denemede sayaç tüketir ve 429 mesajı
-     * alır; asıl neden (402) hiç görünmez.
+     * Açık kilidi ve chatId varsa doğrudan dön (rate limit tüketme).
+     * Yeni kilitlemede önce kredi kontrolü, sonra rate limit, sonra işlem.
      */
     const alreadyUnlocked = await getMessageUnlock(user.id, teacherId);
+    if (alreadyUnlocked?.chatId != null) {
+      return NextResponse.json({
+        chatId: alreadyUnlocked.chatId,
+        alreadyUnlocked: true,
+      });
+    }
+
     if (!alreadyUnlocked) {
       const canPay = await hasAvailableCredits(user.id, 1);
       if (!canPay) {
@@ -71,7 +77,11 @@ export async function POST(request: NextRequest) {
     });
     if (!rl.allowed) {
       return NextResponse.json(
-        { error: "Çok sık istek. Biraz sonra tekrar deneyin." },
+        {
+          error:
+            "Kısa sürede çok fazla mesaj kilidi denemesi yapıldı. Lütfen biraz sonra tekrar dene.",
+          retryAfterSeconds: rl.retryAfter,
+        },
         { status: 429, headers: rateLimitHeaders(rl) },
       );
     }

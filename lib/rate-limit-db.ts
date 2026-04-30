@@ -194,12 +194,14 @@ export const RATE_LIMITS = {
   /** Student listing creation / edit. */
   listingWrite: { max: 20, windowSeconds: 60 * 60 },
   /** Teacher offering on a student listing. Money-adjacent (kredi düşer). */
-  listingOffer: { max: 30, windowSeconds: 60 * 60 },
+  listingOffer: { max: 60, windowSeconds: 60 * 60 },
   /**
-   * Student spending a credit to open a chat with a teacher. Abuse
-   * here would spam the teacher side; keep conservative.
+   * Student spending a credit to open a chat with a teacher. Abuse caps
+   * still matter, but 20/h was too easy to exhaust in dev (retries after
+   * buying credits) and multi-teacher browsing; 60/h keeps protection while
+   * avoiding false "too many requests" after legitimate 402 bursts.
    */
-  messageUnlock: { max: 20, windowSeconds: 60 * 60 },
+  messageUnlock: { max: 60, windowSeconds: 60 * 60 },
   /**
    * Account deletion (GDPR / KVKK right-to-be-forgotten).
    *

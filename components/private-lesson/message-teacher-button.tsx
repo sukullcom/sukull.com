@@ -65,13 +65,34 @@ export function MessageTeacherButton({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ teacherId }),
       });
-      const data = await res.json().catch(() => ({}));
+      const data = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        chatId?: number;
+        alreadyUnlocked?: boolean;
+        retryAfterSeconds?: number;
+      };
 
       if (res.status === 402) {
         toast.error(
           data.error || "Yetersiz kredi. Kredi satın alın ve tekrar deneyin.",
         );
         router.push("/private-lesson/credits");
+        return;
+      }
+      if (res.status === 429) {
+        const ra =
+          typeof data.retryAfterSeconds === "number" && Number.isFinite(data.retryAfterSeconds)
+            ? Math.max(0, Math.ceil(data.retryAfterSeconds))
+            : null;
+        const waitHint =
+          ra != null && ra > 0
+            ? ra >= 60
+              ? ` Yaklaşık ${Math.ceil(ra / 60)} dk sonra tekrar dene.`
+              : ` Yaklaşık ${ra} sn sonra tekrar dene.`
+            : "";
+        toast.error(
+          (data.error || "Çok sık deneme yapıldı. Biraz bekleyip tekrar dene.") + waitHint,
+        );
         return;
       }
       if (!res.ok) {
