@@ -17,6 +17,7 @@ import {
   Plus,
   Activity,
   Users,
+  Settings,
 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -142,7 +143,7 @@ export default async function TeacherDashboardPage() {
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
         <QuickLink
           href="/private-lesson/listings"
           icon={Megaphone}
@@ -156,10 +157,10 @@ export default async function TeacherDashboardPage() {
           desc="Öğrencilerden gelen sohbetler."
         />
         <QuickLink
-          href="/private-lesson/credits"
-          icon={Plus}
-          title="Kredi Al"
-          desc="Teklif vermek için kredi satın al."
+          href="/private-lesson/teacher-dashboard/settings"
+          icon={Settings}
+          title="Profil ayarları"
+          desc="Bilgilerini güncelle veya öğretmenlikten ayrıl."
         />
       </div>
 

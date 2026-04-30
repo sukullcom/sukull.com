@@ -20,6 +20,7 @@ export default async function PrivateLessonHeader() {
 
   const teacherItems: PrivateLessonNavItem[] = [
     { name: "Panelim", path: "/private-lesson/teacher-dashboard", icon: "dashboard" },
+    { name: "Profilim", path: "/private-lesson/teacher-dashboard/settings", icon: "settings" },
     { name: "İlanlar", path: "/private-lesson/listings", icon: "megaphone" },
     { name: "Mesajlar", path: "/private-lesson/messages", icon: "message" },
     { name: "Kredi", path: "/private-lesson/credits", icon: "credit" },

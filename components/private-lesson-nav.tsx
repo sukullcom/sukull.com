@@ -8,6 +8,7 @@ import {
   LayoutDashboard,
   Megaphone,
   MessageCircle,
+  Settings,
   Users,
   type LucideIcon,
 } from "lucide-react";
@@ -18,7 +19,8 @@ export type PrivateLessonIconKey =
   | "users"
   | "clipboard"
   | "message"
-  | "credit";
+  | "credit"
+  | "settings";
 
 export type PrivateLessonNavItem = {
   name: string;
@@ -33,6 +35,7 @@ const ICON_MAP: Record<PrivateLessonIconKey, LucideIcon> = {
   clipboard: ClipboardList,
   message: MessageCircle,
   credit: CreditCard,
+  settings: Settings,
 };
 
 /**

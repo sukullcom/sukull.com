@@ -69,6 +69,7 @@ export type {
   AdminPaginationInput,
   AdminPaginatedResult,
   SaveTeacherApplicationInput,
+  SelfServiceTeacherProfilePatch,
 } from "./queries/applications";
 export {
   saveTeacherApplication,
@@ -81,6 +82,8 @@ export {
   getTeacherFields,
   updateTeacherFields,
   getAvailableFieldOptions,
+  updateApprovedTeacherProfile,
+  leaveTeacherProgram,
   isTeacher,
   isApprovedStudent,
 } from "./queries/applications";

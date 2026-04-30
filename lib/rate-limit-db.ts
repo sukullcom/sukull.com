@@ -185,6 +185,10 @@ export const RATE_LIMITS = {
   snippetWrite: { max: 20, windowSeconds: 60 * 60 },
   /** Teacher application submission. */
   applicationSubmit: { max: 5, windowSeconds: 60 * 60 },
+  /** Teacher profile self-service (onaylı eğitmen). */
+  teacherProfileWrite: { max: 15, windowSeconds: 60 * 60 },
+  /** Öğretmenlikten ayrılma — yıkıcı, seyrek. */
+  teacherLeave: { max: 3, windowSeconds: 24 * 60 * 60 },
   /** Student listing creation / edit. */
   listingWrite: { max: 20, windowSeconds: 60 * 60 },
   /** Teacher offering on a student listing. Money-adjacent (kredi düşer). */

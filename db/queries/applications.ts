@@ -15,7 +15,7 @@ import {
   type TeachingCapability,
 } from "@/lib/teaching-offerings";
 import db from "@/db/drizzle";
-import { teacherApplications, teacherFields, users } from "@/db/schema";
+import { teacherApplications, teacherFields, users, listingOffers } from "@/db/schema";
 import { and, eq, or, ilike, sql } from "drizzle-orm";
 import { logger } from "@/lib/logger";
 
@@ -221,6 +221,7 @@ export async function getTeacherApplicationById(id: number) {
 export async function getTeacherApplicationByUserId(userId: string) {
   return await db.query.teacherApplications.findFirst({
     where: eq(teacherApplications.userId, userId),
+    orderBy: (apps, { desc }) => [desc(apps.createdAt)],
   });
 }
 
@@ -374,6 +375,116 @@ export async function updateTeacherFields(
   }
 
   return { success: true };
+}
+
+export type SelfServiceTeacherProfilePatch = {
+  teacherName: string;
+  teacherSurname: string;
+  teacherPhoneNumber: string;
+  teacherEmail: string;
+  field: string;
+  capabilities: TeachingCapability[];
+  education?: string | null;
+  experienceYears?: string | null;
+  targetLevels?: string | null;
+  availableHours?: string | null;
+  lessonMode?: string | null;
+  hourlyRateOnline?: number | null;
+  hourlyRateInPerson?: number | null;
+  city?: string | null;
+  district?: string | null;
+  bio?: string | null;
+};
+
+/**
+ * Onaylı eğitmen başvurusunu günceller ve `teacher_fields` ile yeniden senkronlar.
+ */
+export async function updateApprovedTeacherProfile(
+  userId: string,
+  input: SelfServiceTeacherProfilePatch,
+) {
+  const application = await db.query.teacherApplications.findFirst({
+    where: and(
+      eq(teacherApplications.userId, userId),
+      eq(teacherApplications.status, "approved"),
+    ),
+  });
+  if (!application) {
+    throw new Error("Onaylı eğitmen kaydı bulunamadı.");
+  }
+
+  await db
+    .update(teacherApplications)
+    .set({
+      teacherName: input.teacherName,
+      teacherSurname: input.teacherSurname,
+      teacherPhoneNumber: input.teacherPhoneNumber,
+      teacherEmail: input.teacherEmail,
+      field: input.field,
+      capabilitiesJson: input.capabilities,
+      education: input.education ?? null,
+      experienceYears: input.experienceYears ?? null,
+      targetLevels: input.targetLevels ?? null,
+      availableHours: input.availableHours ?? null,
+      lessonMode: input.lessonMode ?? null,
+      hourlyRateOnline: input.hourlyRateOnline ?? null,
+      hourlyRateInPerson: input.hourlyRateInPerson ?? null,
+      city: input.city ?? null,
+      district: input.district ?? null,
+      bio: input.bio ?? null,
+      updatedAt: new Date(),
+    })
+    .where(eq(teacherApplications.id, application.id));
+
+  const updated = await getTeacherApplicationById(application.id);
+  if (!updated) {
+    throw new Error("Eğitmen kaydı güncellenemedi.");
+  }
+  await syncTeacherFieldsForUser(userId, updated);
+  log.debug("teacher profile self-updated", { userId });
+  return { success: true as const };
+}
+
+/**
+ * Öğretmenlikten ayrılır: bekleyen ilan teklifleri geri çekilir,
+ * `teacher_fields` ve `teacher_applications` silinir; rol `teacher` ise `user` olur.
+ */
+export async function leaveTeacherProgram(userId: string) {
+  const userRow = await db.query.users.findFirst({
+    where: eq(users.id, userId),
+    columns: { role: true },
+  });
+  if (userRow?.role === "admin") {
+    throw new Error("Yönetici hesapları bu akışla öğretmenlikten ayrılamaz.");
+  }
+
+  await db.transaction(async (tx) => {
+    await tx
+      .update(listingOffers)
+      .set({ status: "withdrawn", updatedAt: new Date() })
+      .where(
+        and(
+          eq(listingOffers.teacherId, userId),
+          eq(listingOffers.status, "pending"),
+        ),
+      );
+
+    await tx.delete(teacherFields).where(eq(teacherFields.teacherId, userId));
+
+    await tx
+      .delete(teacherApplications)
+      .where(eq(teacherApplications.userId, userId));
+
+    if (userRow?.role === "teacher") {
+      await tx
+        .update(users)
+        .set({ role: "user", updated_at: new Date() })
+        .where(eq(users.id, userId));
+    }
+  });
+
+  log.info("teacher left program", { userId });
+  return { success: true as const };
 }
 
 export async function getAvailableFieldOptions() {

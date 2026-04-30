@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -211,10 +212,19 @@ export default function GiveLessonPage() {
                 görülebilirsin; açık talep ilanlarına teklif de verebilirsin. Profilini
                 güncel tutmak daha fazla eşleşme sağlar.
               </p>
-              <Button variant="primary" onClick={() => router.push("/private-lesson/teacher-dashboard")}>
-                Eğitmen paneline git
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-2 justify-center">
+                <Button variant="secondary" asChild>
+                  <Link href="/private-lesson/teacher-dashboard/settings">
+                    Profilini güncelle
+                  </Link>
+                </Button>
+                <Button variant="primary" asChild>
+                  <Link href="/private-lesson/teacher-dashboard">
+                    Eğitmen paneline git
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
+                </Button>
+              </div>
             </CardContent>
           </Card>
         </FeedWrapper>
