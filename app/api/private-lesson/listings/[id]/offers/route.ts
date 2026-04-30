@@ -21,6 +21,7 @@ import {
   createOffer,
   getListingById,
   getOffersForListing,
+  hasAvailableCredits,
   hasTeacherOfferedOnListing,
   isTeacher,
   MAX_OFFERS_PER_LISTING,
@@ -131,22 +132,6 @@ export async function POST(
       );
     }
 
-    // Money flow: each offer attempt debits 1 credit inside the
-    // transaction downstream. Fail-closed on limiter outage keeps a
-    // stuck retry loop from spending a teacher's balance while the DB
-    // is already in trouble.
-    const rl = await checkRateLimit({
-      key: `listingOffer:user:${user.id}`,
-      ...RATE_LIMITS.listingOffer,
-      onStoreError: "closed",
-    });
-    if (!rl.allowed) {
-      return NextResponse.json(
-        { error: "Çok sık teklif veriyorsunuz. Biraz sonra tekrar deneyin." },
-        { status: 429, headers: rateLimitHeaders(rl) },
-      );
-    }
-
     const body = (await request.json().catch(() => ({}))) as Record<
       string,
       unknown
@@ -169,12 +154,35 @@ export async function POST(
         ? body.note.trim().slice(0, 500)
         : null;
 
-    // Fast-path hint: double-submit from the same teacher bypassing the
-    // UI (e.g. retry storm). The transaction will re-check this too.
+    // Zaten teklif varsa kredi gerekmez (409). Yeni teklif için kredi
+    // yoksa 402 — rate limit'ten önce; yoksa denemeler 429'a düşer.
     if (await hasTeacherOfferedOnListing(id, user.id)) {
       return NextResponse.json(
         { error: "Bu ilana zaten teklif verdiniz" },
         { status: 409 },
+      );
+    }
+
+    if (!(await hasAvailableCredits(user.id, 1))) {
+      return NextResponse.json(
+        { error: "Teklif vermek için en az 1 kredin olmalı. Kredi satın alıp tekrar dene." },
+        { status: 402 },
+      );
+    }
+
+    // Money flow: each offer attempt debits 1 credit inside the
+    // transaction downstream. Fail-closed on limiter outage keeps a
+    // stuck retry loop from spending a teacher's balance while the DB
+    // is already in trouble.
+    const rl = await checkRateLimit({
+      key: `listingOffer:user:${user.id}`,
+      ...RATE_LIMITS.listingOffer,
+      onStoreError: "closed",
+    });
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: "Çok sık teklif veriyorsunuz. Biraz sonra tekrar deneyin." },
+        { status: 429, headers: rateLimitHeaders(rl) },
       );
     }
 

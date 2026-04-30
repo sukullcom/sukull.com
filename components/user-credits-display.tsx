@@ -62,7 +62,7 @@ export default function UserCreditsDisplay({
               <CreditCard className="h-5 w-5 text-blue-600" />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900">Ders Kredilerim</h3>
+              <h3 className="font-semibold text-gray-900">Kredilerim</h3>
               <p className="text-sm text-gray-600">
                 {loading ? 'Yükleniyor...' : error ? 'Yüklenemedi' : `${credits.availableCredits} kredi kullanılabilir`}
               </p>
@@ -107,7 +107,8 @@ export default function UserCreditsDisplay({
         {!error && !loading && credits.availableCredits === 0 && (
           <div className="mt-3 p-3 bg-orange-50 border border-orange-200 rounded-lg">
             <p className="text-sm text-orange-800">
-              Ders ayırtmak için kredi satın alman gerekiyor.
+              İlan açmak, eğitmenlere teklif göndermek veya bir eğitmenle mesajlaşmayı
+              açmak için kredi kullanılır. Devam etmek için kredi satın alabilirsin.
             </p>
           </div>
         )}

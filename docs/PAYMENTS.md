@@ -4,13 +4,13 @@ This document describes the credit-based payment system implemented using Iyzico
 
 ## Overview
 
-The platform uses a credit-based system where students must purchase "credits" to book private lessons. Each lesson booking consumes 1 credit.
+The platform uses a credit-based system: credits are spent on **private-lesson marketplace** actions (e.g. student message unlock, teacher listing offers) rather than a legacy in-app lesson booking flow.
 
 ### Key Features
 
-- **Credit Purchase**: Students can buy credit packages (1, 4, 8, 12 credits)
+- **Credit Purchase**: Students and teachers can buy credit packages (see `credit-purchase.tsx` / payment-server for current tiers)
 - **Secure Payments**: Integrated with Iyzico (Turkey-based payment provider)
-- **Credit Management**: Automatic credit deduction when booking lessons
+- **Credit Management**: Automatic credit deduction when a paid marketplace action succeeds (message unlock, offer creation, etc.)
 - **Transaction Logging**: Complete audit trail of all payments and transactions
 - **Responsive UI**: Modern payment form with validation
 
@@ -20,7 +20,7 @@ The platform uses a credit-based system where students must purchase "credits" t
 
 1. **user_credits**: Stores total and available credits per user
    - `total_credits`: Total credits ever purchased
-   - `used_credits`: Credits consumed for bookings
+   - `used_credits`: Credits consumed for marketplace actions and similar
    - `available_credits`: Credits available for use
 
 2. **credit_transactions**: Transaction log for credit purchases
@@ -35,7 +35,7 @@ The platform uses a credit-based system where students must purchase "credits" t
 
 - `POST /api/payment/create`: Process credit purchases via Iyzico
 - `GET /api/user/credits`: Fetch user's current credit balance
-- `POST /api/private-lesson/book-lesson`: Book lessons (now requires credits)
+- `POST /api/private-lesson/messages/unlock`, `POST /api/private-lesson/listings/[id]/offers`, etc.: paid flows that deduct credits (see marketplace routes)
 
 ## Configuration
 
@@ -65,7 +65,7 @@ For production, replace sandbox credentials with live Iyzico credentials:
 2. **Select Package**: Choose from 1, 4, 8, or 12 credit packages
 3. **Enter Payment Details**: Fill out card information and billing address
 4. **Complete Purchase**: Click "Öde" to process payment
-5. **Book Lessons**: Use credits to reserve private lessons
+5. **Use credits**: Unlock messaging with a teacher, open student listings as a teacher (offers), and other marketplace actions that cost credits
 
 ### For Developers
 
@@ -128,13 +128,14 @@ npm run dev
 - **Error Handling**: Graceful handling of payment failures
 - **Data Protection**: Sensitive data is not stored locally
 
-## Integration with Lesson Booking
+## Integration with the private-lesson marketplace
 
-The existing lesson booking system has been enhanced to:
-- Check for available credits before allowing bookings
-- Automatically deduct 1 credit upon successful booking
-- Display credit requirements to users
-- Prevent bookings without sufficient credits
+Credit checks run **before** rate limits on the heaviest money-adjacent routes (e.g. message unlock, listing offers) so users see **402 insufficient credits** instead of being blocked by **429** when retrying without balance.
+
+Paid actions generally:
+- Verify the user is authenticated and allowed to perform the action
+- Deduct credits inside a DB transaction where applicable
+- Log usage in `credit_usage` / related tables
 
 ## Troubleshooting
 
@@ -142,7 +143,7 @@ The existing lesson booking system has been enhanced to:
 
 1. **Payment Fails**: Check Iyzico credentials and network connectivity
 2. **Credits Not Added**: Check payment logs for transaction status
-3. **Booking Fails**: Verify user has sufficient credits
+3. **Paid action fails**: Verify the user has sufficient credits and that the marketplace preconditions (listing open, teacher approved, etc.) are met
 
 ### Debug Tools
 

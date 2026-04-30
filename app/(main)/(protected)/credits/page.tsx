@@ -3,7 +3,8 @@ import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Kredi Satın Al | Sukull",
-  description: "Özel derslerinizi ayırtabilmek için ders kredisi satın alın",
+  description:
+    "Özel ders pazarında ilan ve mesajlaşma için kullanılan kredileri satın alın (öğrenci: ilan / mesaj kilidi; eğitmen: teklif).",
 };
 
 const CreditsPage = () => {

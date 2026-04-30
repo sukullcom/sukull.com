@@ -16,7 +16,11 @@ import {
   RATE_LIMITS,
   rateLimitHeaders,
 } from "@/lib/rate-limit-db";
-import { unlockMessageThread } from "@/db/queries";
+import {
+  getMessageUnlock,
+  hasAvailableCredits,
+  unlockMessageThread,
+} from "@/db/queries";
 
 export async function POST(request: NextRequest) {
   try {
@@ -26,6 +30,34 @@ export async function POST(request: NextRequest) {
         { error: "Giriş yapmanız gerekiyor" },
         { status: 401 },
       );
+    }
+
+    const body = (await request.json().catch(() => ({}))) as Record<
+      string,
+      unknown
+    >;
+    const teacherId = typeof body.teacherId === "string" ? body.teacherId.trim() : "";
+    if (!teacherId) {
+      return NextResponse.json(
+        { error: "Eğitmen seçmelisin" },
+        { status: 400 },
+      );
+    }
+
+    /**
+     * Kredi / kilitsizlik kontrolünü rate limit'ten ÖNCE yapıyoruz: aksi halde
+     * yetersiz kredili kullanıcı her denemede sayaç tüketir ve 429 mesajı
+     * alır; asıl neden (402) hiç görünmez.
+     */
+    const alreadyUnlocked = await getMessageUnlock(user.id, teacherId);
+    if (!alreadyUnlocked) {
+      const canPay = await hasAvailableCredits(user.id, 1);
+      if (!canPay) {
+        return NextResponse.json(
+          { error: "Yetersiz kredi. Kredi satın alın ve tekrar deneyin." },
+          { status: 402 },
+        );
+      }
     }
 
     // Money flow: opening an unlock spends 1 credit. If the rate-limit
@@ -41,18 +73,6 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: "Çok sık istek. Biraz sonra tekrar deneyin." },
         { status: 429, headers: rateLimitHeaders(rl) },
-      );
-    }
-
-    const body = (await request.json().catch(() => ({}))) as Record<
-      string,
-      unknown
-    >;
-    const teacherId = typeof body.teacherId === "string" ? body.teacherId.trim() : "";
-    if (!teacherId) {
-      return NextResponse.json(
-        { error: "Eğitmen seçmelisin" },
-        { status: 400 },
       );
     }
 

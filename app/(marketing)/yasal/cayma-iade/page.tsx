@@ -52,7 +52,8 @@ export default function CaymaIadePage() {
 
       <h2>3. Cayma Hakkının Kullanılabildiği Hâller</h2>
       <p>
-        Ders rezervasyonu gibi henüz ifa başlamamış hizmetlerde cayma hakkı
+        Henüz ifası başlamamış ve Mesafeli Sözleşmeler Yönetmeliği kapsamında
+        caymaya konu olabilecek ücretli hizmet alımlarında cayma hakkı
         kullanılabilir. Bu durumda Alıcı, cayma hakkı süresi içinde{" "}
         <a href={`mailto:${contactEmail}`}>{contactEmail}</a> adresine
         e-posta göndererek veya{" "}
@@ -72,17 +73,21 @@ export default function CaymaIadePage() {
           süresi bankanıza bağlıdır ve genellikle 1-7 iş günü alır.
         </li>
         <li>
-          Kullanılmış kısmi hizmetler (ör. tamamlanmış birebir ders)
-          iadeye konu olmaz; yalnızca kullanılmayan kısım iade edilir.
+          Kullanılmış dijital hizmetler (ör. harcanmış kredi ile açılmış mesaj
+          kilidi veya gönderilmiş teklif) iadeye konu olmaz; yalnızca
+          kullanılmayan kısım iade edilir.
         </li>
       </ul>
 
       <h2>5. Özel Durumlar</h2>
-      <h3>5.1 Eğitmen Gelmedi (No-Show)</h3>
+      <h3>5.1 Uyuşmazlık ve destek</h3>
       <p>
-        Eğitmenin derse katılmaması hâlinde ödediğiniz kredi tam olarak
-        hesabınıza iade edilir; ayrıca telafi olarak bir sonraki
-        rezervasyonunuzda geçerli olacak bir kupon tanımlanabilir.
+        Öğrenci ile eğitmen arasında doğrudan kurulan iletişim ve dış
+        platformda gerçekleşen derslere ilişkin anlaşmazlıklarda öncelikle
+        tarafların birbirleriyle iletişimi esastır. Platform kayıtları ve
+        başvurunuza eklediğiniz bilgiler çerçevesinde haklı bulunan
+        taleplerde, destek ekibimiz iade veya kredi düzeltmesini ayrıca
+        değerlendirir.
       </p>
       <h3>5.2 Teknik Hata</h3>
       <p>

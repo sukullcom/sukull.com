@@ -485,7 +485,7 @@ app.post("/api/payment/create", authenticateUser, async (req, res) => {
       basketItems: [
         {
           id: `credit_${creditsAmount}`,
-          name: `${creditsAmount} Ders Kredisi`,
+          name: `${creditsAmount} Sukull Kredisi`,
           category1: "Education",
           category2: "Credits",
           itemType: "VIRTUAL",
@@ -969,7 +969,7 @@ app.post("/api/payment/3ds/initialize-credit", authenticateUser, async (req, res
       basketItems: [
         {
           id: `credit_${creditsAmount}`,
-          name: `${creditsAmount} Ders Kredisi`,
+          name: `${creditsAmount} Sukull Kredisi`,
           category1: "Education",
           category2: "Credits",
           itemType: "VIRTUAL",
