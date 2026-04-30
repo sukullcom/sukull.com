@@ -41,7 +41,7 @@ export default async function TeacherDetailPage({
         href="/private-lesson/teachers"
         className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800 mb-4"
       >
-        <ArrowLeft className="h-4 w-4" /> Öğretmenler
+        <ArrowLeft className="h-4 w-4" /> Eğitmenler
       </Link>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -50,7 +50,7 @@ export default async function TeacherDetailPage({
             <div className="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto rounded-full overflow-hidden mb-3">
               <Image
                 src={normalizeAvatarUrl(teacher.avatar ?? undefined)}
-                alt={teacher.name ?? "Öğretmen"}
+                alt={teacher.name ?? "Eğitmen"}
                 fill
                 unoptimized={teacher.avatar?.startsWith("http") ?? false}
                 className="object-cover"
@@ -186,7 +186,7 @@ export default async function TeacherDetailPage({
             </div>
             <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
               {teacher.bio?.trim() ||
-                "Bu öğretmen henüz kendisi hakkında bilgi paylaşmamış."}
+                "Bu eğitmen henüz kendisi hakkında bilgi paylaşmamış."}
             </p>
           </section>
 
@@ -202,8 +202,8 @@ export default async function TeacherDetailPage({
                 {teacher.availableHours}
               </p>
               <p className="text-[11px] text-gray-400 mt-2">
-                Not: Bilgi amaçlıdır. Rezervasyon öğretmenle doğrudan mesajlaşma
-                üzerinden yapılır.
+                Not: Bilgi amaçlıdır. Randevu ve ücreti eğitmenle doğrudan mesajlaşarak
+                netleştir.
               </p>
             </section>
           )}

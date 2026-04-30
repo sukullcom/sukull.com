@@ -10,6 +10,7 @@ import { Check, X, Loader2, MessageCircle } from "lucide-react";
 import { normalizeAvatarUrl } from "@/utils/avatar";
 import { clientLogger } from "@/lib/client-logger";
 import { ConfirmActionDialog } from "@/components/confirm-action-dialog";
+import type { ListingStatus } from "@/db/queries/listings";
 
 type Offer = {
   id: number;
@@ -35,7 +36,7 @@ export function OfferList({
   listingStatus,
 }: {
   offers: Offer[];
-  listingStatus: "open" | "closed" | "expired";
+  listingStatus: ListingStatus;
 }) {
   const router = useRouter();
   const [pending, setPending] = useState<Record<number, boolean>>({});
@@ -97,12 +98,12 @@ export function OfferList({
     <div className="space-y-3">
       <ConfirmActionDialog
         open={confirm != null}
-        onOpenChange={(o) => !o && setConfirm(null)}
+        onOpenChange={(o: boolean) => !o && setConfirm(null)}
         title={isAccept ? "Teklifi kabul ediyor musun?" : "Bu teklifi reddediyor musun?"}
         description={
           isAccept
-            ? "İlanın kapanacak ve bu öğretmenin dışındaki tüm beklemedeki teklifler reddedilecek. Bu eylem geri alınamaz."
-            : "Öğretmen, teklifin reddedildiğini görecek. İstediğin zaman başka bir teklif seçebilirsin."
+            ? "İlanın kapanacak ve bu eğitmenin dışındaki tüm beklemedeki teklifler reddedilecek. Bu eylem geri alınamaz."
+            : "Eğitmen, teklifin reddedildiğini görecek. İstediğin zaman başka bir teklif seçebilirsin."
         }
         confirmLabel={isAccept ? "Evet, kabul et" : "Evet, reddet"}
         cancelLabel="Vazgeç"
@@ -186,7 +187,7 @@ export function OfferList({
                   className="inline-flex items-center gap-1 text-sm text-green-700 font-medium hover:underline"
                 >
                   <MessageCircle className="h-3.5 w-3.5" />
-                  Öğretmenle iletişime geç
+                  Eğitmenle iletişime geç
                 </Link>
               )}
             </div>

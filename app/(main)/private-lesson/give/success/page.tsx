@@ -50,13 +50,14 @@ export default function TeacherSuccessPage() {
             </div>
             <CardTitle className="text-3xl text-green-600">Harika, başvurun alındı!</CardTitle>
             <CardDescription className="text-lg">
-              Öğretmen olma yolunda ilk adımı attın
+              Eğitmen başvurun alındı; sıradaki adım ekibimizin incelemesi.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="bg-green-50 border border-green-200 rounded-lg p-4">
               <p className="text-gray-700 text-center">
-                Başvurun bize ulaştı! Bilgilerini inceleyip en kısa sürede sana döneceğiz.
+                Başvurunda ilettiğin bilgiler uygunluk teyidi için incelenecek;
+                sonuç en kısa sürede paylaşılacak.
               </p>
             </div>
 
@@ -74,7 +75,8 @@ export default function TeacherSuccessPage() {
                   <div>
                     <p className="font-medium">Başvuru incelemesi</p>
                     <p className="text-sm text-gray-600">
-                      Ekibimiz başvurunu 24-48 saat içinde inceleyecek
+                      Ekibimiz başvurunu ve ilettiğin belgeleri kontrol eder; süre yoğunluğa
+                      göre değişebilir.
                     </p>
                   </div>
                 </div>
@@ -98,7 +100,8 @@ export default function TeacherSuccessPage() {
                   <div>
                     <p className="font-medium">Profil aktivasyonu</p>
                     <p className="text-sm text-gray-600">
-                      Onaylandıktan sonra hemen ders vermeye başlayabilirsin!
+                      Onaylandığında eğitmen rehberinde görünür ve ilanlara teklif
+                      verebilirsin; profilini istediğin zaman güncelleyebilirsin.
                     </p>
                   </div>
                 </div>
@@ -110,19 +113,19 @@ export default function TeacherSuccessPage() {
               <Button
                 variant="primary"
                 size="lg"
-                onClick={() => router.push("/courses")}
+                onClick={() => router.push("/private-lesson")}
                 className="flex-1"
               >
-                Kurslara Göz At
+                Özel derse dön
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
               <Button
                 variant="primaryOutline"
                 size="lg"
-                onClick={() => router.push("/")}
+                onClick={() => router.push("/courses")}
                 className="flex-1"
               >
-                Ana Sayfaya Dön
+                Kurslara göz at
               </Button>
             </div>
           </CardContent>

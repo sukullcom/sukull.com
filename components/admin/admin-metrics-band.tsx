@@ -14,7 +14,7 @@ export async function AdminMetricsBand() {
     [teacherPendingRow],
     [teacherApprovedRow],
     [teacherRejectedRow],
-    [openListingsRow],
+    [listingsPendingReviewRow],
     [pendingOffersRow],
   ] = await Promise.all([
     db.select({ value: count() }).from(users),
@@ -33,7 +33,7 @@ export async function AdminMetricsBand() {
     db
       .select({ value: count() })
       .from(listings)
-      .where(eq(listings.status, "open")),
+      .where(eq(listings.status, "pending_review")),
     db
       .select({ value: count() })
       .from(listingOffers)
@@ -45,7 +45,7 @@ export async function AdminMetricsBand() {
     teacherPending: teacherPendingRow?.value ?? 0,
     teacherApproved: teacherApprovedRow?.value ?? 0,
     teacherRejected: teacherRejectedRow?.value ?? 0,
-    openListings: openListingsRow?.value ?? 0,
+    listingsPendingReview: listingsPendingReviewRow?.value ?? 0,
     pendingOffers: pendingOffersRow?.value ?? 0,
   };
 
@@ -57,20 +57,20 @@ export async function AdminMetricsBand() {
       color: "bg-blue-50 text-blue-700 border-blue-200",
     },
     {
-      label: "Bekleyen Öğretmen",
+      label: "Bekleyen Eğitmen",
       value: stats.teacherPending,
       icon: Clock,
       color: "bg-yellow-50 text-yellow-700 border-yellow-200",
     },
     {
-      label: "Onaylı Öğretmen",
+      label: "Onaylı Eğitmen",
       value: stats.teacherApproved,
       icon: CheckCircle,
       color: "bg-green-50 text-green-700 border-green-200",
     },
     {
-      label: "Açık İlan",
-      value: stats.openListings,
+      label: "İncelemede İlan",
+      value: stats.listingsPendingReview,
       icon: Megaphone,
       color: "bg-orange-50 text-orange-700 border-orange-200",
     },
@@ -81,7 +81,7 @@ export async function AdminMetricsBand() {
       color: "bg-emerald-50 text-emerald-700 border-emerald-200",
     },
     {
-      label: "Reddedilen Öğretmen",
+      label: "Reddedilen Eğitmen",
       value: stats.teacherRejected,
       icon: XCircle,
       color: "bg-red-50 text-red-700 border-red-200",

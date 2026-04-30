@@ -107,11 +107,11 @@ export default async function TeacherDashboardPage() {
 
       <div className="mb-4">
         <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
-          Öğretmen Paneli
+          Eğitmen paneli
         </h1>
         <p className="text-sm text-gray-600">
-          Tekliflerini, krediyle ödediğin mesaj/teklif hareketlerini ve aktif
-          ilanlara erişimini buradan yönet.
+          Tekliflerini, krediyle ödediğin mesaj ve teklif hareketlerini ve açık
+          talep ilanlarına erişimi buradan yönet.
         </p>
       </div>
 

@@ -1,7 +1,7 @@
 /**
  * POST /api/private-lesson/messages/unlock
  *   Student spends 1 credit to open a 1-on-1 chat with a teacher
- *   (listed in the "Öğretmenler" rehber). Idempotent: if the pair
+ *   (eğitmen rehberinde listelenen profiller). Idempotent: if the pair
  *   has already been unlocked, returns the existing chat without
  *   charging again.
  *
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
     const teacherId = typeof body.teacherId === "string" ? body.teacherId.trim() : "";
     if (!teacherId) {
       return NextResponse.json(
-        { error: "Öğretmen seçmelisiniz" },
+        { error: "Eğitmen seçmelisin" },
         { status: 400 },
       );
     }
@@ -97,7 +97,7 @@ function unlockErrorToHttp(
     case "self_unlock_forbidden":
       return [400, "Kendinize mesaj gönderemezsiniz"];
     case "teacher_not_found":
-      return [404, "Öğretmen bulunamadı"];
+      return [404, "Eğitmen bulunamadı"];
     case "insufficient_credits":
       return [402, "Yetersiz kredi. Kredi satın alın ve tekrar deneyin."];
     default:

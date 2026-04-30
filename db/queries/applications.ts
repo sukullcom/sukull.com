@@ -7,9 +7,16 @@
  * from regular users. The only admin-workflow surface left here is
  * `teacher_applications`.
  */
-import { and, eq, ilike, or, sql } from "drizzle-orm";
+import {
+  TEACHING_GRADES,
+  TEACHING_SUBJECTS,
+  capabilityDisplayName,
+  normalizeCapabilities,
+  type TeachingCapability,
+} from "@/lib/teaching-offerings";
 import db from "@/db/drizzle";
 import { teacherApplications, teacherFields, users } from "@/db/schema";
+import { and, eq, or, ilike, sql } from "drizzle-orm";
 import { logger } from "@/lib/logger";
 
 const log = logger.child({ labels: { module: "db/queries/applications" } });
@@ -195,6 +202,7 @@ function mapTeacherApplicationRow(
     passed: app.passed,
     classification: app.classification,
     status: app.status,
+    capabilities: normalizeCapabilities(app.capabilitiesJson) ?? [],
     createdAt: app.createdAt
       ? app.createdAt.toISOString()
       : new Date().toISOString(),
@@ -213,6 +221,58 @@ export async function getTeacherApplicationById(id: number) {
 export async function getTeacherApplicationByUserId(userId: string) {
   return await db.query.teacherApplications.findFirst({
     where: eq(teacherApplications.userId, userId),
+  });
+}
+
+function capabilitiesFromStoredApplication(
+  app: typeof teacherApplications.$inferSelect,
+): TeachingCapability[] {
+  const parsed = normalizeCapabilities(app.capabilitiesJson);
+  if (parsed && parsed.length > 0) return parsed;
+  if (app.field?.trim()) {
+    const g = app.targetLevels?.split(",")[0]?.trim() || "Genel";
+    return [{ subject: app.field.trim(), grade: g }];
+  }
+  return [];
+}
+
+/**
+ * Onay sonrası `teacher_fields` satırlarını başvurudaki capability listesinden üretir.
+ * Admin tarafında ayrı alan seçimi artık gerekmez.
+ */
+export async function syncTeacherFieldsForUser(
+  userId: string,
+  application: typeof teacherApplications.$inferSelect,
+) {
+  const caps = capabilitiesFromStoredApplication(application);
+  if (caps.length === 0) {
+    log.warn("approve: no capabilities derived from application", {
+      userId,
+      applicationId: application.id,
+    });
+    return;
+  }
+
+  await db
+    .update(teacherFields)
+    .set({ isActive: false, updatedAt: new Date() })
+    .where(eq(teacherFields.teacherId, userId));
+
+  await db.insert(teacherFields).values(
+    caps.map((c) => ({
+      teacherId: userId,
+      subject: c.subject,
+      grade: c.grade,
+      displayName: capabilityDisplayName(c),
+      isActive: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })),
+  );
+
+  log.debug("teacher_fields synced from application", {
+    userId,
+    count: caps.length,
   });
 }
 
@@ -252,74 +312,9 @@ export async function approveTeacherApplication(id: number) {
   }
 
   log.debug("teacher role updated", { userId: application.userId });
-  return { success: true };
-}
 
-export async function approveTeacherApplicationWithFields(
-  id: number,
-  selectedFields: Array<{ subject: string; grade: string; displayName: string }>,
-) {
-  log.debug("approve teacher application with fields", {
-    id,
-    fieldCount: selectedFields.length,
-  });
+  await syncTeacherFieldsForUser(application.userId, application);
 
-  const application = await getTeacherApplicationById(id);
-  if (!application) {
-    log.debug("application not found", { id });
-    throw new Error("Başvuru bulunamadı.");
-  }
-
-  await db
-    .update(teacherApplications)
-    .set({
-      status: "approved",
-      updatedAt: new Date(),
-    })
-    .where(eq(teacherApplications.id, id));
-
-  const roleUpdateResult = await db
-    .update(users)
-    .set({ role: "teacher" })
-    .where(eq(users.id, application.userId))
-    .returning({ id: users.id, role: users.role });
-
-  if (roleUpdateResult.length === 0) {
-    log.error({
-      message: "no user found for role update",
-      source: "server-action",
-      location: "applications/approveTeacherApplicationWithFields",
-      fields: { applicationId: id, userId: application.userId },
-    });
-    throw new Error(
-      `Rol güncellemesi için kullanıcı bulunamadı: ${application.userId}`,
-    );
-  }
-
-  if (selectedFields && selectedFields.length > 0) {
-    await db
-      .update(teacherFields)
-      .set({ isActive: false, updatedAt: new Date() })
-      .where(eq(teacherFields.teacherId, application.userId));
-
-    const fieldsToInsert = selectedFields.map((field) => ({
-      teacherId: application.userId,
-      subject: field.subject,
-      grade: field.grade,
-      displayName: field.displayName,
-      isActive: true,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }));
-
-    await db.insert(teacherFields).values(fieldsToInsert);
-    log.debug("teacher fields inserted", {
-      userId: application.userId,
-      count: fieldsToInsert.length,
-    });
-  }
-
-  log.debug("teacher role + fields updated", { userId: application.userId });
   return { success: true };
 }
 
@@ -382,43 +377,10 @@ export async function updateTeacherFields(
 }
 
 export async function getAvailableFieldOptions() {
-  const subjects = [
-    "Matematik",
-    "Fizik",
-    "Kimya",
-    "Biyoloji",
-    "Tarih",
-    "Coğrafya",
-    "Edebiyat",
-    "İngilizce",
-    "Almanca",
-    "Fransızca",
-    "Felsefe",
-    "Müzik",
-    "Resim",
-    "Bilgisayar Bilimleri",
-    "Ekonomi",
-  ];
-
-  const grades = [
-    "1.sınıf",
-    "2.sınıf",
-    "3.sınıf",
-    "4.sınıf",
-    "5.sınıf",
-    "6.sınıf",
-    "7.sınıf",
-    "8.sınıf",
-    "9.sınıf",
-    "10.sınıf",
-    "11.sınıf",
-    "12.sınıf",
-    "Hazırlık",
-    "Üniversite",
-    "Genel",
-  ];
-
-  return { subjects, grades };
+  return {
+    subjects: [...TEACHING_SUBJECTS],
+    grades: [...TEACHING_GRADES],
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -426,7 +388,7 @@ export async function getAvailableFieldOptions() {
 // ---------------------------------------------------------------------------
 
 /**
- * Öğretmen yetkisi: `users.role === 'teacher'` **veya** onaylı başvuru kaydı.
+ * Eğitmen yetkisi: `users.role === 'teacher'` **veya** onaylı başvuru kaydı.
  * Admin onayı normalde rolü de günceller; eski veri veya manuel DB düzenlemelerinde
  * ikisi ayrışabildiği için burada birleşik kontrol kullanılıyor (nav, requireTeacher).
  */

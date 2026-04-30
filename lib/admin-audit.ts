@@ -29,6 +29,9 @@ export type AdminAuditAction =
   | "teacher_application.approve"
   | "teacher_application.reject"
   | "teacher_application.delete"
+  // Listings moderation
+  | "listing.approve"
+  | "listing.reject"
   // Student applications
   | "student_application.approve"
   | "student_application.reject"

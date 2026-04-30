@@ -29,8 +29,9 @@ export default async function MessagesIndexPage() {
           </h1>
         </div>
         <p className="text-sm text-gray-600">
-          Öğretmenlerle açılmış sohbetlerin. Öğrenci olarak sohbet açmak için
-          tek sefer 1 kredi harcanır; sonrasında mesajlaşma ücretsizdir.
+          Eğitmenlerle veya öğrencilerle açılmış sohbetlerin. Öğrenci olarak yeni
+          sohbet açmak için eğitmen rehberinden bir profile tek seferlik 1 kredi
+          kullanılır; sonrasında mesajlaşma ücretsizdir.
         </p>
       </div>
 
@@ -38,14 +39,13 @@ export default async function MessagesIndexPage() {
         <div className="text-center py-16 rounded-xl border border-dashed border-gray-200 bg-white">
           <MessageCircle className="mx-auto h-10 w-10 text-gray-300 mb-3" />
           <p className="text-gray-500 mb-4">
-            Henüz sohbetin yok. Öğretmen rehberinden bir öğretmene ulaşmayı
-            dene.
+            Henüz sohbetin yok. Eğitmen rehberinden bir profile ulaşmayı dene.
           </p>
           <Link
             href="/private-lesson/teachers"
             className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
           >
-            Öğretmenlere Göz At
+            Eğitmen rehberine git
           </Link>
         </div>
       ) : (

@@ -78,12 +78,13 @@ export default async function TeachersDirectoryPage({
             <GraduationCap className="h-5 w-5 text-green-700" />
           </div>
           <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
-            Öğretmenler
+            Eğitmenler
           </h1>
         </div>
         <p className="text-sm text-gray-600">
-          Onaylı öğretmenlerin listesi. Saatlik ücretlerini görebilir, 1 kredi
-          ile mesajlaşmayı açabilirsin — tek seferlik ödeme, sohbet kalıcıdır.
+          Sukull tarafından onaylanmış eğitmenlerin listesi. Saatlik ücretleri
+          görebilir, 1 kredi ile mesajlaşmayı açabilirsin — tek seferlik ödeme,
+          sohbet kalıcıdır.
         </p>
       </div>
 
@@ -97,7 +98,7 @@ export default async function TeachersDirectoryPage({
         <div className="text-center py-16 rounded-xl border border-dashed border-gray-200 bg-white">
           <Users className="mx-auto h-10 w-10 text-gray-300 mb-3" />
           <p className="text-gray-500">
-            Filtrelere uyan öğretmen bulunamadı.
+            Filtrelere uyan eğitmen bulunamadı.
           </p>
         </div>
       ) : (

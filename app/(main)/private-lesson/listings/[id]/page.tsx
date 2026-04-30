@@ -8,7 +8,9 @@ import {
   getListingWithOffers,
   hasTeacherOfferedOnListing,
   MAX_OFFERS_PER_LISTING,
+  teacherMatchesListingSubjects,
 } from "@/db/queries";
+import { isAdmin } from "@/lib/admin";
 import UserCreditsDisplay from "@/components/user-credits-display";
 import { normalizeAvatarUrl } from "@/utils/avatar";
 import {
@@ -39,8 +41,25 @@ export default async function ListingDetailPage({
   const base = await getListingById(listingId);
   if (!base) notFound();
 
-  const listingViewerIsTeacher = await isTeacher(user.id);
   const isOwner = base.studentId === user.id;
+  const admin = await isAdmin();
+  if (
+    (base.status === "pending_review" || base.status === "rejected") &&
+    !isOwner &&
+    !admin
+  ) {
+    notFound();
+  }
+
+  const listingViewerIsTeacher = await isTeacher(user.id);
+  if (
+    base.status === "open" &&
+    listingViewerIsTeacher &&
+    !isOwner &&
+    !(await teacherMatchesListingSubjects(user.id, base.subject, base.grade))
+  ) {
+    notFound();
+  }
 
   // Owner view: full offers payload so they can accept/reject.
   const full = isOwner ? await getListingWithOffers(listingId) : null;
@@ -175,14 +194,14 @@ export default async function ListingDetailPage({
           ) : alreadyOffered ? (
             <div className="bg-white border rounded-xl p-5 text-center">
               <p className="text-sm text-gray-600">
-                Bu ilana zaten teklif verdiniz. Teklifinizi{" "}
+                Bu ilana zaten teklif verdin. Teklifini{" "}
                 <Link
                   href="/private-lesson/teacher-dashboard"
                   className="text-green-700 font-medium hover:underline"
                 >
-                  kontrol panelinden
+                  eğitmen panelinden
                 </Link>{" "}
-                takip edebilirsiniz.
+                takip edebilirsin.
               </p>
             </div>
           ) : base.offerCount >= MAX_OFFERS_PER_LISTING ? (
@@ -203,41 +222,43 @@ export default async function ListingDetailPage({
 
       {!isOwner && !listingViewerIsTeacher && (
         <div className="mt-6 bg-white border rounded-xl p-5 text-center text-sm text-gray-600">
-          İlana teklif vermek için eğitmen hesabına sahip olmanız gerekir.
-          Öğretmenlere{" "}
+          İlana teklif vermek için eğitmen başvurunun onaylanmış olması gerekir.
+          Eğitmen{" "}
           <Link
             href="/private-lesson/teachers"
             className="text-green-700 font-medium hover:underline"
           >
-            rehberden
+            rehberinden
           </Link>{" "}
-          doğrudan mesaj gönderebilirsiniz.
+          doğrudan mesaj gönderebilirsin.
         </div>
       )}
     </div>
   );
 }
 
-function StatusBadge({
-  status,
-}: {
-  status: "open" | "closed" | "expired";
-}) {
-  const styles: Record<typeof status, string> = {
+function StatusBadge({ status }: { status: string }) {
+  const styles: Record<string, string> = {
     open: "bg-blue-100 text-blue-700",
     closed: "bg-gray-100 text-gray-600",
     expired: "bg-gray-100 text-gray-500",
+    pending_review: "bg-amber-100 text-amber-800",
+    rejected: "bg-red-100 text-red-700",
   };
-  const labels: Record<typeof status, string> = {
-    open: "Açık",
+  const labels: Record<string, string> = {
+    open: "Yayında",
     closed: "Kapalı",
-    expired: "Süresi Dolmuş",
+    expired: "Süresi dolmuş",
+    pending_review: "İncelemede",
+    rejected: "Reddedildi",
   };
   return (
     <span
-      className={`shrink-0 text-xs px-2 py-1 rounded-full font-medium ${styles[status]}`}
+      className={`shrink-0 text-xs px-2 py-1 rounded-full font-medium ${
+        styles[status] ?? "bg-gray-100 text-gray-600"
+      }`}
     >
-      {labels[status]}
+      {labels[status] ?? status}
     </span>
   );
 }

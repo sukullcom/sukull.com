@@ -88,7 +88,7 @@ export default async function MessageThreadPage({
               {otherProfile?.name ?? "Kullanıcı"}
             </div>
             <div className="text-[11px] text-gray-400">
-              {otherProfile?.role === "teacher" ? "Öğretmen" : "Öğrenci"}
+              {otherProfile?.role === "teacher" ? "Eğitmen" : "Öğrenci"}
             </div>
           </div>
           {otherProfile?.role === "teacher" && (

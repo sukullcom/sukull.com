@@ -14,7 +14,7 @@ export type AdminNavItem = {
   label: string;
   icon: LucideIcon;
   /** Eğer bir sayı döndürülürse sidebar'da küçük rozet olarak gösterilir. */
-  badgeKey?: "teacherPending" | "openListings" | "errors24h";
+  badgeKey?: "teacherPending" | "listingsPendingReview" | "errors24h";
 };
 
 /**
@@ -30,7 +30,7 @@ export const ADMIN_NAV: AdminNavItem[] = [
   { href: "/admin/analytics", label: "Analitik", icon: BarChart3 },
   {
     href: "/admin/teacher-applications",
-    label: "Öğretmen Başvuruları",
+    label: "Eğitmen Başvuruları",
     icon: School,
     badgeKey: "teacherPending",
   },
@@ -38,7 +38,7 @@ export const ADMIN_NAV: AdminNavItem[] = [
     href: "/admin/listings",
     label: "Özel Ders İlanları",
     icon: Megaphone,
-    badgeKey: "openListings",
+    badgeKey: "listingsPendingReview",
   },
   { href: "/admin/course-builder", label: "Kurs Oluşturucu", icon: BookOpen },
   {

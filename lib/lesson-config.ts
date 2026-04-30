@@ -1,5 +1,5 @@
 export const LESSON_CONFIG = {
-  /** Öğretmenin ders başına kazanacağı tutar (TL) */
+  /** Eğitmenin ders başına kazanacağı tutar (TL) */
   TEACHER_EARNINGS_PER_LESSON: 25,
 
   /** Ders süresi (dakika) */

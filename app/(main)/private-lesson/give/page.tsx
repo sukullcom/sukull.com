@@ -11,7 +11,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectItem, SelectValue } from "@/components/ui/select";
 import { FeedWrapper } from "@/components/feed-wrapper";
 import Image from "next/image";
-import { 
+import {
+  TeachingCapabilityRowsField,
+  type CapabilityRow,
+} from "@/components/private-lesson/teaching-capability-rows-field";
+import {
   ArrowRight,
   BookOpen,
   User,
@@ -27,7 +31,7 @@ import {
   Monitor,
   Calendar,
   Wallet,
-  FileText
+  FileText,
 } from "lucide-react";
 
 type ApplicationStatus = {
@@ -43,7 +47,6 @@ export default function GiveLessonPage() {
     teacherSurname: "",
     teacherPhoneNumber: "",
     teacherEmail: "",
-    field: "",
     education: "",
     experienceYears: "",
     targetLevels: "",
@@ -55,6 +58,9 @@ export default function GiveLessonPage() {
     district: "",
     bio: "",
   });
+  const [capabilityRows, setCapabilityRows] = useState<CapabilityRow[]>([
+    { subject: "", grade: "" },
+  ]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [appStatus, setAppStatus] = useState<ApplicationStatus | null>(null);
   const [loading, setLoading] = useState(true);
@@ -91,14 +97,17 @@ export default function GiveLessonPage() {
   const handleSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.field) {
-      return toast.error("Lütfen bir alan seç.");
+    const caps = capabilityRows.filter((r) => r.subject && r.grade);
+    if (caps.length === 0) {
+      return toast.error("En az bir ders ve sınıf çifti seçmelisin.");
     }
-    
+
     setIsSubmitting(true);
-    
+
     const body = {
       ...formData,
+      field: caps[0].subject,
+      capabilities: caps,
       quizResult: 0,
       passed: true,
     };
@@ -126,8 +135,9 @@ export default function GiveLessonPage() {
   };
 
   const completionPercentage = () => {
+    const hasCaps = capabilityRows.some((r) => r.subject && r.grade);
     const requiredFields = [
-      formData.field,
+      hasCaps ? "ok" : "",
       formData.teacherName,
       formData.teacherSurname,
       formData.teacherPhoneNumber,
@@ -172,10 +182,11 @@ export default function GiveLessonPage() {
           <Card className="shadow-lg border-yellow-200 bg-yellow-50">
             <CardContent className="p-5 sm:p-8 text-center">
               <Clock className="w-12 h-12 sm:w-16 sm:h-16 text-yellow-500 mx-auto mb-4" />
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Başvurun değerlendiriliyor</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Başvurun inceleniyor</h2>
               <p className="text-gray-600 mb-4">
-                <strong>{appStatus.field}</strong> alanındaki eğitmen başvurun inceleniyor.
-                En kısa sürede sana dönüş yapılacak.
+                <strong>{appStatus.field}</strong> alanındaki eğitmen başvurun ekibimiz
+                tarafından değerlendiriliyor. Uygunluk teyidinden sonra sana dönüş
+                yapılacak; bu süreçte öğrenci akışını kullanmaya devam edebilirsin.
               </p>
               <div className="bg-white rounded-lg p-4 border border-yellow-200 inline-block">
                 <p className="text-sm text-gray-500">Başvuru tarihi: {appStatus.createdAt ? new Date(appStatus.createdAt).toLocaleDateString('tr-TR') : '-'}</p>
@@ -194,13 +205,14 @@ export default function GiveLessonPage() {
           <Card className="shadow-lg border-green-200 bg-green-50">
             <CardContent className="p-5 sm:p-8 text-center">
               <CheckCircle className="w-12 h-12 sm:w-16 sm:h-16 text-green-500 mx-auto mb-4" />
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Eğitmen başvurun onaylandı!</h2>
-              <p className="text-gray-600 mb-6">
-                Tebrikler! Artık öğrenciler tarafından görülebilir durumdasın.
-                Profilini güncelleyerek daha fazla öğrenciye ulaşabilirsin.
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Eğitmen başvurun onaylandı</h2>
+              <p className="text-gray-600 mb-4">
+                Tebrikler. Artık eğitmen rehberinde öğrenciler tarafından
+                görülebilirsin; açık talep ilanlarına teklif de verebilirsin. Profilini
+                güncel tutmak daha fazla eşleşme sağlar.
               </p>
-              <Button variant="primary" onClick={() => router.push("/private-lesson")}>
-                Özel Ders Paneline Git
+              <Button variant="primary" onClick={() => router.push("/private-lesson/teacher-dashboard")}>
+                Eğitmen paneline git
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </CardContent>
@@ -236,10 +248,12 @@ export default function GiveLessonPage() {
               <div className="flex items-center justify-between gap-4">
                 <div className="flex-1 min-w-0">
                   <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
-                    Öğretmen Başvurusu
+                    Eğitmen başvurusu
                   </h1>
                   <p className="text-sm sm:text-base text-gray-600">
-                    Bilgi ve deneyimini paylaşarak öğrencilere yardımcı ol
+                    Bilgi ve deneyimini paylaş; onay sonrası rehberde görünürsün.
+                    Kurumda veya birebir zaten ders veriyor olsan da platformda
+                    listelenmek için bu başvuruyu tamamlaman gerekir.
                   </p>
                 </div>
                 <Image
@@ -275,35 +289,18 @@ export default function GiveLessonPage() {
               Başvuru Formu
             </CardTitle>
             <CardDescription>
-              Tüm alanları eksiksiz doldur. Başvurun onaylandıktan sonra öğrenciler tarafından görülebilir olacaksın.
+              Tüm alanları eksiksiz doldur. Başvurun Sukull ekibi tarafından
+              incelenir; onaylandıktan sonra eğitmen rehberinde ve teklif akışında
+              yer alırsın.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmitForm} className="space-y-6">
-              {/* Field Selection */}
               <div className="space-y-2">
-                <Label htmlFor="field" className="flex items-center gap-2">
-                  <BookOpen className="w-4 h-4" />
-                  Ders Alanı <span className="text-red-500">*</span>
-                </Label>
-                <Select value={formData.field} onValueChange={(value) => handleSelectChange("field", value)}>
-                  <SelectValue placeholder="Hangi alanda ders vermek istiyorsun?" />
-                  <SelectItem value="Matematik">Matematik</SelectItem>
-                  <SelectItem value="Fizik">Fizik</SelectItem>
-                  <SelectItem value="Kimya">Kimya</SelectItem>
-                  <SelectItem value="Biyoloji">Biyoloji</SelectItem>
-                  <SelectItem value="Tarih">Tarih</SelectItem>
-                  <SelectItem value="Coğrafya">Coğrafya</SelectItem>
-                  <SelectItem value="Edebiyat">Edebiyat</SelectItem>
-                  <SelectItem value="İngilizce">İngilizce</SelectItem>
-                  <SelectItem value="Almanca">Almanca</SelectItem>
-                  <SelectItem value="Fransızca">Fransızca</SelectItem>
-                  <SelectItem value="Felsefe">Felsefe</SelectItem>
-                  <SelectItem value="Müzik">Müzik</SelectItem>
-                  <SelectItem value="Resim">Resim</SelectItem>
-                  <SelectItem value="Bilgisayar Bilimleri">Bilgisayar Bilimleri</SelectItem>
-                  <SelectItem value="Ekonomi">Ekonomi</SelectItem>
-                </Select>
+                <TeachingCapabilityRowsField
+                  value={capabilityRows}
+                  onChange={setCapabilityRows}
+                />
               </div>
 
               {/* Personal Information */}
@@ -400,7 +397,7 @@ export default function GiveLessonPage() {
                 <div className="space-y-2">
                   <Label htmlFor="experienceYears" className="flex items-center gap-2">
                     <Briefcase className="w-4 h-4" />
-                    Öğretmenlik Deneyimi
+                    Eğitmenlik deneyimi
                   </Label>
                   <Select value={formData.experienceYears} onValueChange={(value) => handleSelectChange("experienceYears", value)}>
                     <SelectValue placeholder="Deneyim süresi seç" />
@@ -543,7 +540,7 @@ export default function GiveLessonPage() {
                 <Textarea
                   id="bio"
                   name="bio"
-                  placeholder="Kendinizi kısaca tanıtın. Öğretmenlik yaklaşımınız, uzmanlık alanlarınız ve öğrencilerinize nasıl yardımcı olabileceğinizi yazın."
+                  placeholder="Kendini kısaca tanıt: çalışma tarzın, uzmanlıkların ve öğrencilere nasıl destek olabileceğin."
                   value={formData.bio}
                   onChange={handleChange}
                   rows={4}
@@ -560,9 +557,13 @@ export default function GiveLessonPage() {
                 <div className="flex gap-3">
                   <Info className="w-5 h-5 text-blue-600 mt-0.5" />
                   <div className="text-sm text-blue-800">
-                    <p className="font-semibold mb-1">Önemli Bilgilendirme</p>
-                    <p>Başvurun onaylandıktan sonra öğrenciler tarafından görülebilir olacaksın. 
-                    Profil bilgilerini daha sonra güncelleyebilirsin.</p>
+                    <p className="font-semibold mb-1">Önemli bilgilendirme</p>
+                    <p>
+                      Başvurun ve profil bilgilerin uygunluk kontrolünden geçer;
+                      yanıltıcı veya eksik bilgi onayın gecikmesine veya reddine yol
+                      açabilir. Onay sonrası öğrenciler seni rehberde görebilir; bilgilerini
+                      sonra da güncelleyebilirsin.
+                    </p>
                   </div>
                 </div>
               </div>

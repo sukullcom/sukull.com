@@ -6,10 +6,10 @@
  * unlocking a chat) live in `./offers.ts` and `./messages.ts` and
  * always run inside a DB transaction.
  */
-import { and, desc, eq, or, sql } from "drizzle-orm";
+import { and, desc, eq, inArray, or, sql } from "drizzle-orm";
 import { queryResultRows } from "@/lib/query-result";
 import db from "@/db/drizzle";
-import { listings, users } from "@/db/schema";
+import { listings, teacherFields, users } from "@/db/schema";
 import type {
   listingLessonModeEnum,
   listingStatusEnum,
@@ -65,6 +65,11 @@ export type ListingFilters = {
   city?: string;
   limit?: number;
   offset?: number;
+  /**
+   * Eğitmen tarafı: yalnızca bu eğitmenin `teacher_fields` kayıtlarındaki
+   * ders alanıyla eşleşen (subject birebir) ilanlar.
+   */
+  viewerTeacherId?: string;
 };
 
 export async function getOpenListings(
@@ -74,6 +79,24 @@ export async function getOpenListings(
   const offset = Math.max(0, filters.offset ?? 0);
 
   const conditions = [eq(listings.status, "open" as const)];
+
+  if (filters.viewerTeacherId) {
+    const tf = await db
+      .selectDistinct({ subject: teacherFields.subject })
+      .from(teacherFields)
+      .where(
+        and(
+          eq(teacherFields.teacherId, filters.viewerTeacherId),
+          eq(teacherFields.isActive, true),
+        ),
+      );
+    const subjects = Array.from(new Set(tf.map((r) => r.subject)));
+    if (subjects.length === 0) {
+      return [];
+    }
+    conditions.push(inArray(listings.subject, subjects));
+  }
+
   if (filters.subject) {
     conditions.push(eq(listings.subject, filters.subject));
   }
@@ -264,6 +287,7 @@ export async function createListing(input: CreateListingInput) {
       budgetMin: input.budgetMin ?? null,
       budgetMax: input.budgetMax ?? null,
       preferredHours: input.preferredHours ?? null,
+      status: "pending_review",
     })
     .returning();
   return row;
@@ -276,6 +300,46 @@ export async function closeListing(listingId: number, studentId: string) {
     .where(and(eq(listings.id, listingId), eq(listings.studentId, studentId)))
     .returning();
   return row ?? null;
+}
+
+/** Admin: incelemeden yayına (eğitmenlere görünür) veya reddet. */
+export async function adminSetListingStatus(
+  listingId: number,
+  next: "open" | "rejected",
+) {
+  const [row] = await db
+    .update(listings)
+    .set({ status: next, updatedAt: new Date() })
+    .where(eq(listings.id, listingId))
+    .returning();
+  return row ?? null;
+}
+
+/**
+ * Eğitmenin ilanı görebilmesi / teklif verebilmesi: yayında ve ders alanı eşleşmesi.
+ */
+export async function teacherMatchesListingSubjects(
+  teacherId: string,
+  listingSubject: string,
+  listingGrade: string | null,
+): Promise<boolean> {
+  const fields = await db.query.teacherFields.findMany({
+    where: and(
+      eq(teacherFields.teacherId, teacherId),
+      eq(teacherFields.isActive, true),
+      eq(teacherFields.subject, listingSubject),
+    ),
+    columns: { grade: true },
+  });
+  if (fields.length === 0) return false;
+  const g = listingGrade?.trim();
+  if (!g) return true;
+  return fields.some(
+    (f) =>
+      f.grade === g ||
+      f.grade === "Genel" ||
+      f.grade === "Tüm seviyeler",
+  );
 }
 
 // ---------------------------------------------------------------------------

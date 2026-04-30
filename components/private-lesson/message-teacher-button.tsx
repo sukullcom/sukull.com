@@ -104,7 +104,7 @@ export function MessageTeacherButton({
     setCreditDialogOpen(true);
   };
 
-  const label = teacherName ? `“${teacherName}”` : "bu öğretmen";
+  const label = teacherName ? `“${teacherName}”` : "bu eğitmen";
   const messageDescription = (
     <>
       {label} ile mesajlaşmayı açmak için{" "}

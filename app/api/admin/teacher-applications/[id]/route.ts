@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import {
   approveTeacherApplication,
-  approveTeacherApplicationWithFields,
   rejectTeacherApplication,
 } from "@/db/queries";
 import { getAdminActor } from "@/lib/admin";
@@ -19,7 +18,7 @@ export async function PATCH(
     }
 
     const { id } = params;
-    const { action, selectedFields } = await request.json();
+    const { action } = await request.json();
 
     if (!id || isNaN(parseInt(id))) {
       return NextResponse.json({ message: "Geçersiz başvuru kimliği" }, { status: 400 });
@@ -28,18 +27,13 @@ export async function PATCH(
     const applicationId = parseInt(id);
 
     if (action === "approve") {
-      if (selectedFields && selectedFields.length > 0) {
-        await approveTeacherApplicationWithFields(applicationId, selectedFields);
-      } else {
-        await approveTeacherApplication(applicationId);
-      }
+      await approveTeacherApplication(applicationId);
       logAdminActionAsync({
         actorId: actor.id,
         actorEmail: actor.email,
         action: "teacher_application.approve",
         targetType: "teacher_application",
         targetId: applicationId,
-        metadata: { selectedFields: selectedFields ?? null },
       });
       return NextResponse.json(
         { message: "Eğitmen başvurusu başarıyla onaylandı" },

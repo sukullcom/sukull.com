@@ -14,8 +14,8 @@ export async function generateMetadata(
 
   if (!teacher) {
     return {
-      title: "Öğretmen Bulunamadı | Sukull",
-      description: "Aradığınız öğretmen bulunamadı.",
+      title: "Eğitmen bulunamadı | Sukull",
+      description: "Aradığın eğitmen profili bulunamadı veya yayından kaldırılmış olabilir.",
       robots: { index: false, follow: false },
     };
   }
@@ -25,7 +25,7 @@ export async function generateMetadata(
     ? fields.map((f) => f.displayName).join(", ")
     : "özel ders";
 
-  const name = teacher.name ?? "Sukull Öğretmeni";
+  const name = teacher.name ?? "Sukull eğitmeni";
   const title = `${name} | Özel Ders | Sukull`;
   const description = teacher.bio
     ? teacher.bio.slice(0, 160)

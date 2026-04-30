@@ -110,21 +110,27 @@ export function ListingCard({
 }
 
 function StatusBadge({ status }: { status: ListingRow["status"] }) {
-  const styles: Record<ListingRow["status"], string> = {
+  const styles: Partial<Record<ListingRow["status"], string>> = {
+    pending_review: "bg-amber-100 text-amber-900",
     open: "bg-blue-100 text-blue-700",
     closed: "bg-gray-100 text-gray-600",
     expired: "bg-gray-100 text-gray-500",
+    rejected: "bg-red-50 text-red-700",
   };
-  const labels: Record<ListingRow["status"], string> = {
+  const labels: Partial<Record<ListingRow["status"], string>> = {
+    pending_review: "İncelemede",
     open: "Açık",
     closed: "Kapalı",
     expired: "Süresi Dolmuş",
+    rejected: "Reddedildi",
   };
   return (
     <span
-      className={`shrink-0 text-[10px] px-2 py-0.5 rounded-full font-medium ${styles[status]}`}
+      className={`shrink-0 text-[10px] px-2 py-0.5 rounded-full font-medium ${
+        styles[status] ?? "bg-gray-100 text-gray-600"
+      }`}
     >
-      {labels[status]}
+      {labels[status] ?? status}
     </span>
   );
 }

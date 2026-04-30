@@ -277,7 +277,7 @@ export const userProgressRelations = relations(userProgress, ({ one }) => ({
   }),
 }));
 
-// Teacher Applications (Öğretmen Başvuruları)
+// Teacher Applications (Eğitmen Başvuruları)
 export const applicationStatusEnum = pgEnum("status", ["pending", "approved", "rejected"]);
 
 export const teacherApplications = pgTable("teacher_applications", {
@@ -302,6 +302,11 @@ export const teacherApplications = pgTable("teacher_applications", {
   district: text("district"),
   bio: text("bio"),
   classification: text("classification"),
+  /** Eğitmenin başvuruda seçtiği ders + sınıf çiftleri; onayda `teacher_fields` üretilir. */
+  capabilitiesJson: jsonb("capabilities_json")
+    .$type<Array<{ subject: string; grade: string }>>()
+    .notNull()
+    .default([]),
   status: applicationStatusEnum("status").default("pending").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -445,6 +450,8 @@ export const listingStatusEnum = pgEnum("listing_status", [
   "open",
   "closed",
   "expired",
+  "pending_review",
+  "rejected",
 ]);
 
 export const listingLessonModeEnum = pgEnum("listing_lesson_mode", [
@@ -466,7 +473,7 @@ export const listings = pgTable("listings", {
   budgetMin: integer("budget_min"), // ₺ per hour lower bound (optional)
   budgetMax: integer("budget_max"), // ₺ per hour upper bound (optional)
   preferredHours: text("preferred_hours"), // free-form: "hafta içi akşam"
-  status: listingStatusEnum("status").notNull().default("open"),
+  status: listingStatusEnum("status").notNull().default("pending_review"),
   offerCount: integer("offer_count").notNull().default(0), // denormalized for cheap reads
   expiresAt: timestamp("expires_at"),
   createdAt: timestamp("created_at").defaultNow().notNull(),

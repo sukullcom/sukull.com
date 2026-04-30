@@ -5,7 +5,6 @@ import { getRequestLogger } from "@/lib/logger";
 import {
   getAvailableFieldOptions,
   approveTeacherApplication,
-  approveTeacherApplicationWithFields,
   rejectTeacherApplication,
   getTeacherApplicationsPaginated,
   type ApplicationStatusFilter,
@@ -89,18 +88,13 @@ export async function POST(request: NextRequest) {
 
     switch (action) {
       case 'approve-teacher': {
-        const { applicationId, fields } = body;
+        const { applicationId } = body;
         
         if (!applicationId) {
           return NextResponse.json({ message: "Başvuru kimliği gereklidir." }, { status: 400 });
         }
 
-        let result;
-        if (fields && fields.length > 0) {
-          result = await approveTeacherApplicationWithFields(applicationId, fields);
-        } else {
-          result = await approveTeacherApplication(applicationId);
-        }
+        let result = await approveTeacherApplication(applicationId);
 
         const actor = await getAdminActor();
         if (actor) {
@@ -110,11 +104,10 @@ export async function POST(request: NextRequest) {
             action: "teacher_application.approve",
             targetType: "teacher_application",
             targetId: applicationId,
-            metadata: { fields: fields ?? null },
           });
         }
 
-        return NextResponse.json({ message: "Öğretmen başvurusu başarıyla onaylandı.", result });
+        return NextResponse.json({ message: "Eğitmen başvurusu başarıyla onaylandı.", result });
       }
 
       case 'reject-teacher': {
@@ -137,7 +130,7 @@ export async function POST(request: NextRequest) {
           });
         }
 
-        return NextResponse.json({ message: "Öğretmen başvurusu reddedildi." });
+        return NextResponse.json({ message: "Eğitmen başvurusu reddedildi." });
       }
 
       default: {
@@ -168,15 +161,11 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ message: "Geçersiz başvuru kimliği." }, { status: 400 });
     }
 
-    const { action, selectedFields } = await request.json();
+    const { action } = await request.json();
     const applicationId = parseInt(id);
 
     if (action === "approve") {
-      if (selectedFields && selectedFields.length > 0) {
-        await approveTeacherApplicationWithFields(applicationId, selectedFields);
-      } else {
-        await approveTeacherApplication(applicationId);
-      }
+      await approveTeacherApplication(applicationId);
 
       const actor = await getAdminActor();
       if (actor) {
@@ -186,7 +175,7 @@ export async function PATCH(request: NextRequest) {
           action: "teacher_application.approve",
           targetType: "teacher_application",
           targetId: applicationId,
-          metadata: { selectedFields: selectedFields ?? null, via: "PATCH" },
+          metadata: { via: "PATCH" },
         });
       }
 

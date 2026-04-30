@@ -16,6 +16,10 @@ import { RATE_LIMITS } from "@/lib/rate-limit-db";
 import { secureApi } from "@/lib/api-middleware";
 import { createListing, getOpenListings } from "@/db/queries";
 import type { ListingLessonMode } from "@/db/queries/listings";
+import {
+  isValidTeachingGrade,
+  isValidTeachingSubject,
+} from "@/lib/teaching-offerings";
 import db from "@/db/drizzle";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -96,6 +100,19 @@ export const POST = secureApi.authRateLimited(
         { status: 400 },
       );
     }
+    if (!isValidTeachingSubject(subject)) {
+      return NextResponse.json(
+        { error: "Konu listeden seçilmelidir." },
+        { status: 400 },
+      );
+    }
+    const gradeRaw = strOrNull(body.grade);
+    if (gradeRaw && !isValidTeachingGrade(gradeRaw)) {
+      return NextResponse.json(
+        { error: "Geçersiz sınıf / seviye." },
+        { status: 400 },
+      );
+    }
     if (title.length > 120) {
       return NextResponse.json(
         { error: "Başlık en fazla 120 karakter olabilir" },
@@ -125,7 +142,7 @@ export const POST = secureApi.authRateLimited(
     const row = await createListing({
       studentId: user.id,
       subject,
-      grade: strOrNull(body.grade),
+      grade: gradeRaw,
       title,
       description,
       lessonMode: lessonMode as ListingLessonMode,
@@ -144,7 +161,7 @@ export const POST = secureApi.authRateLimited(
         .where(eq(users.id, user.id));
     }
 
-      return NextResponse.json({ listing: row }, { status: 201 });
+    return NextResponse.json({ listing: row }, { status: 201 });
     } catch (error) {
       const log = await getRequestLogger({
         labels: { route: "api/private-lesson/listings", op: "create" },

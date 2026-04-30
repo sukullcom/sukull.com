@@ -11,7 +11,7 @@ type Contact = {
 
 /**
  * Shows the counterparty's phone + email after a message_unlocks row
- * exists (öğrenci kredisi veya öğretmenin teklif kredisi).
+ * exists (öğrenci kredisi veya eğitmenin teklif kredisi).
  */
 export function PrivateLessonContactStrip({ chatId }: { chatId: number }) {
   const [data, setData] = useState<Contact | null>(null);
@@ -72,8 +72,8 @@ export function PrivateLessonContactStrip({ chatId }: { chatId: number }) {
         <AlertCircle className="h-3.5 w-3.5 shrink-0 mt-0.5 text-emerald-600" />
         <span>
           Açık mesaj hattı için iletişim bilgileri. Telefonu görmek için
-          profilinde &quot;Telefon&quot; alanını doldurabilirsin; öğretmenler
-          başvurudaki numarasından alınır.
+          profilinde &quot;Telefon&quot; alanını doldurabilirsin; eğitmenler için
+          numara eğitmen başvurusundaki kayıttan alınır.
         </span>
       </p>
       <div className="grid sm:grid-cols-2 gap-2 text-xs">

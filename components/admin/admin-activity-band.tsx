@@ -28,7 +28,7 @@ export async function AdminActivityBand() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
       <ActivityPanel
-        title="Son Öğretmen Başvuruları"
+        title="Son Eğitmen Başvuruları"
         viewAllHref="/admin/teacher-applications"
         items={recentTeachers.map((app) => ({
           id: app.id,

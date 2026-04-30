@@ -66,7 +66,7 @@ async function loadBadges(): Promise<AdminNavBadges> {
   try {
     const since24h = new Date(Date.now() - 24 * 60 * 60 * 1000);
 
-    const [teacherRow, openListingsRow, errorsRow] = await Promise.all([
+    const [teacherRow, listingsPendingRow, errorsRow] = await Promise.all([
       db
         .select({ value: count() })
         .from(teacherApplications)
@@ -74,7 +74,7 @@ async function loadBadges(): Promise<AdminNavBadges> {
       db
         .select({ value: count() })
         .from(listings)
-        .where(eq(listings.status, "open")),
+        .where(eq(listings.status, "pending_review")),
       db
         .select({ value: count() })
         .from(errorLog)
@@ -83,7 +83,7 @@ async function loadBadges(): Promise<AdminNavBadges> {
 
     return {
       teacherPending: Number(teacherRow[0]?.value ?? 0),
-      openListings: Number(openListingsRow[0]?.value ?? 0),
+      listingsPendingReview: Number(listingsPendingRow[0]?.value ?? 0),
       errors24h: Number(errorsRow[0]?.value ?? 0),
     };
   } catch (err) {

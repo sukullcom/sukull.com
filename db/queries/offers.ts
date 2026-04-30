@@ -13,6 +13,7 @@ import {
   creditUsage,
   listingOffers,
   listings,
+  teacherFields,
   userCredits,
 } from "@/db/schema";
 import { ensureUnlockedThreadForOfferTx } from "@/db/queries/messages";
@@ -84,6 +85,7 @@ export type CreateOfferResult =
         | "already_offered"
         | "insufficient_credits"
         | "self_offer_forbidden"
+        | "listing_subject_mismatch"
         | "unknown";
       message?: string;
     };
@@ -113,6 +115,8 @@ export async function createOffer(input: {
           status: true,
           studentId: true,
           offerCount: true,
+          subject: true,
+          grade: true,
         },
       });
       if (!listing) {
@@ -124,6 +128,32 @@ export async function createOffer(input: {
       if (listing.studentId === input.teacherId) {
         return { ok: false as const, code: "self_offer_forbidden" as const };
       }
+
+      const matchFields = await tx.query.teacherFields.findMany({
+        where: and(
+          eq(teacherFields.teacherId, input.teacherId),
+          eq(teacherFields.isActive, true),
+          eq(teacherFields.subject, listing.subject),
+        ),
+        columns: { grade: true },
+      });
+      if (matchFields.length === 0) {
+        return { ok: false as const, code: "listing_subject_mismatch" as const };
+      }
+      const needGrade = Boolean(listing.grade?.trim());
+      if (needGrade) {
+        const g = listing.grade!.trim();
+        const gradeOk = matchFields.some(
+          (f) =>
+            f.grade === g ||
+            f.grade === "Genel" ||
+            f.grade === "Tüm seviyeler",
+        );
+        if (!gradeOk) {
+          return { ok: false as const, code: "listing_subject_mismatch" as const };
+        }
+      }
+
       if (listing.offerCount >= MAX_OFFERS_PER_LISTING) {
         return { ok: false as const, code: "offer_cap_reached" as const };
       }

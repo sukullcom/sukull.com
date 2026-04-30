@@ -126,7 +126,7 @@ export async function POST(
     // Only teachers can submit offers (DB role or onaylı başvuru).
     if (!(await isTeacher(user.id))) {
       return NextResponse.json(
-        { error: "Teklif verebilmek için onaylı eğitmen olmanız gerekiyor" },
+        { error: "Teklif verebilmek için onaylı eğitmen olmalısın" },
         { status: 403 },
       );
     }
@@ -221,9 +221,15 @@ function offerErrorToHttp(
     | "already_offered"
     | "insufficient_credits"
     | "self_offer_forbidden"
+    | "listing_subject_mismatch"
     | "unknown",
 ): [number, string] {
   switch (code) {
+    case "listing_subject_mismatch":
+      return [
+        403,
+        "Bu ilanın konusu veya seviyesi, profilinde verdiğin ders alanlarıyla eşleşmiyor.",
+      ];
     case "listing_not_found":
       return [404, "İlan bulunamadı"];
     case "listing_closed":

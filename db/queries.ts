@@ -77,7 +77,6 @@ export {
   getTeacherApplicationById,
   getTeacherApplicationByUserId,
   approveTeacherApplication,
-  approveTeacherApplicationWithFields,
   rejectTeacherApplication,
   getTeacherFields,
   updateTeacherFields,
@@ -103,6 +102,8 @@ export {
   createListing,
   closeListing,
   getListingsOfferCount,
+  adminSetListingStatus,
+  teacherMatchesListingSubjects,
 } from "./queries/listings";
 export type { ListingRow, ListingWithOffersRow } from "./queries/listings";
 

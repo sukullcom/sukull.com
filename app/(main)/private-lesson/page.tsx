@@ -58,8 +58,8 @@ export default async function PrivateLessonPage() {
                     Özel Ders Pazarı
                   </h1>
                   <p className="text-lg text-gray-600 mb-6">
-                    Alanında uzman öğretmenlere ulaş ya da ilan aç, teklifler
-                    sana gelsin. Tek tıkla iletişime geç, krediyle ödeme yap.
+                    Alanında uzman eğitmenlere ulaş ya da talep ilanı aç; teklifler
+                    sana gelsin. İletişimi krediyle aç, koşulları birlikte netleştirin.
                   </p>
                   <div className="flex flex-wrap gap-2 sm:gap-4">
                     <Badge
@@ -67,7 +67,7 @@ export default async function PrivateLessonPage() {
                       className="px-2 sm:px-3 py-1 text-xs sm:text-sm"
                     >
                       <Star className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                      Doğrulanmış Öğretmenler
+                      Onaylı eğitmenler
                     </Badge>
                     <Badge
                       variant="secondary"
@@ -100,6 +100,15 @@ export default async function PrivateLessonPage() {
           </Card>
         </div>
 
+        <div className="mb-8 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
+          <p className="font-semibold text-slate-800 mb-1">İnceleme ve teyit</p>
+          <p>
+            Talep ilanları ile eğitmen başvuruları Sukull ekibi tarafından kontrol
+            edilir; yanıltıcı, eksik veya kurallara aykırı içerik yayından
+            kaldırılabilir veya başvuru reddedilebilir. Tekrar edilen durumlar için hesap kapatılabilir.
+          </p>
+        </div>
+
         {/* Primary student CTAs */}
         <div className="grid md:grid-cols-2 gap-6 mb-8">
           <Card className="group hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-2 hover:border-blue-300">
@@ -111,22 +120,22 @@ export default async function PrivateLessonPage() {
                 <ChevronRight className="w-6 h-6 text-gray-400 group-hover:text-blue-600 transition-colors" />
               </div>
               <CardTitle className="text-xl sm:text-2xl">
-                Öğretmen Bul
+                Eğitmen bul
               </CardTitle>
               <CardDescription className="text-base">
-                Alanında onaylı öğretmenleri listele, filtreleyip mesaj gönder.
+                Onaylı eğitmenleri listele, filtrele; uygun olanla sohbeti krediyle aç.
               </CardDescription>
             </CardHeader>
             <CardContent>
               <ul className="space-y-3 mb-6">
                 <Feature label="Branş, şehir, online/yüz yüze filtreleri" />
                 <Feature label="Saatlik ücret açıkça görünür" />
-                <Feature label="Mesaj kilidi tek seferlik 1 kredi" />
+                <Feature label="1 kredi eğitmen ile sohbet kilidini açabilirsin" />
               </ul>
               <Button asChild variant="primary" size="lg">
                 <a href="/private-lesson/teachers">
                   <BookOpen className="w-4 h-4 mr-2" />
-                  Öğretmen Listesine Git
+                  Eğitmen rehberine git
                 </a>
               </Button>
             </CardContent>
@@ -144,12 +153,13 @@ export default async function PrivateLessonPage() {
                 İlan Aç
               </CardTitle>
               <CardDescription className="text-base">
-                Ne öğrenmek istediğini yaz, öğretmenler sana teklif gönderir.
+                Ne öğrenmek istediğini yaz; eğitmenler sana teklif gönderir.
               </CardDescription>
             </CardHeader>
             <CardContent>
               <ul className="space-y-3 mb-6">
                 <Feature label="Öğrenciler için ilan açmak tamamen ücretsiz" />
+                <Feature label="İlanların uygunluk kontrolünden geçer; kurallara uymayan içerik kaldırılabilir" />
                 <Feature label="Her ilana en fazla 4 teklif" />
                 <Feature label="İstediğin teklifi kabul et, istediğinle iletişime geç" />
               </ul>
@@ -173,15 +183,20 @@ export default async function PrivateLessonPage() {
               <h2 className="text-xl font-bold text-gray-800 mb-1">
                 Ders vermek istiyor musun?
               </h2>
-              <p className="text-sm text-gray-600">
-                Kısa bir başvuru formuyla profilini oluştur, onaylandıktan sonra
-                öğrenciler sana mesaj gönderebilir ve ilanlara teklif verebilirsin.
+              <p className="text-sm text-gray-600 mb-2">
+                Kısa eğitmen başvurusuyla rehbere gir; onaylandıktan sonra öğrenciler
+                sana mesaj gönderebilir, açık ilanlara teklif verebilirsin.
+              </p>
+              <p className="text-xs text-gray-500">
+                Kurumda veya birebir zaten ders veriyor olsan da, burada listelenmek
+                için bu başvuruyu tamamlaman gerekir; aynı hesaptan öğrenci akışını da
+                kullanmaya devam edebilirsin.
               </p>
             </div>
             <Button asChild variant="primary" size="lg">
               <a href="/private-lesson/give">
                 <GraduationCap className="w-4 h-4 mr-2" />
-                Öğretmen Ol
+                Eğitmen başvurusu
               </a>
             </Button>
           </CardContent>
@@ -200,19 +215,19 @@ export default async function PrivateLessonPage() {
                 icon={BookOpen}
                 color="blue"
                 title="1. Keşfet"
-                desc="Öğretmen listesinden ya da açık ilanlar üzerinden aradığını bul."
+                desc="Eğitmen rehberinden ya da açık ilanlardan aradığını bul."
               />
               <HowItem
                 icon={MessageCircle}
                 color="green"
                 title="2. İletişime geç"
-                desc="Krediyle öğretmen mesaj kilidini aç ya da ilanına gelen teklifleri değerlendir."
+                desc="Krediyle eğitmenle sohbeti aç ya da ilanına gelen teklifleri değerlendir."
               />
               <HowItem
                 icon={Wallet}
                 color="yellow"
                 title="3. Anlaş"
-                desc="Fiyatı, yeri, saati doğrudan konuş. Platform aradan çekilir."
+                desc="Ücret, yer ve saati mesajda netleştirin. Anlaşma tarafların sorumluluğundadır."
               />
             </div>
           </CardContent>

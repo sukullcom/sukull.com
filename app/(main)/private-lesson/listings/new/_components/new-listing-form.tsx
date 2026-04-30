@@ -6,15 +6,15 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { clientLogger } from "@/lib/client-logger";
+import {
+  TEACHING_GRADES,
+  TEACHING_SUBJECTS,
+} from "@/lib/teaching-offerings";
 
 /**
- * Create-listing form. Kept intentionally opinionated:
- *   - `subject` is a free-text field so students aren't boxed into a
- *     static dropdown we'd have to curate per curriculum year.
- *   - `lessonMode` is capped to a known enum so queries can filter on
- *     it cleanly.
- *   - `budgetMin`/`budgetMax` are both optional and validated
- *     client-side; server re-validates.
+ * Talep ilanı oluşturma: `subject` ve isteğe bağlı `grade` yalnızca
+ * eğitmen eşleştirmesi için sabit listeden seçilir. İlan admin onayından
+ * sonra yayına (`open`) alınır.
  */
 export function NewListingForm() {
   const router = useRouter();
@@ -35,7 +35,7 @@ export function NewListingForm() {
   const [contactPhone, setContactPhone] = useState("");
 
   const canSubmit =
-    subject.trim().length > 0 &&
+    subject.length > 0 &&
     title.trim().length > 0 &&
     description.trim().length >= 10 &&
     !submitting;
@@ -57,8 +57,8 @@ export function NewListingForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          subject: subject.trim(),
-          grade: grade.trim() || null,
+          subject,
+          grade: grade || null,
           title: title.trim(),
           description: description.trim(),
           lessonMode,
@@ -75,7 +75,7 @@ export function NewListingForm() {
         toast.error(data.error || "İlan oluşturulamadı");
         return;
       }
-      toast.success("İlan oluşturuldu!");
+      toast.success("İlan gönderildi; yayın için yönetici onayı bekleniyor.");
       router.push(`/private-lesson/listings/${data.listing.id}`);
     } catch (error) {
       clientLogger.error({
@@ -94,32 +94,46 @@ export function NewListingForm() {
       onSubmit={handleSubmit}
       className="bg-white border rounded-xl p-5 space-y-4"
     >
+      <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2.5 text-xs text-amber-950">
+        <strong className="font-semibold">İnceleme:</strong> İlanın önce
+        yönetici onayından geçmesi gerekir. Onay sonrası ilanındaki konuyla
+        eşleşen eğitmenler görebilir ve teklif verebilir.
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-xs font-medium text-gray-600 mb-1">
             Konu *
           </label>
-          <input
-            type="text"
+          <select
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            maxLength={80}
-            placeholder="Örn. Matematik, İngilizce, Fizik"
-            className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20"
-          />
+            className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 bg-white"
+            required
+          >
+            <option value="">Konu seçin</option>
+            {TEACHING_SUBJECTS.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           <label className="block text-xs font-medium text-gray-600 mb-1">
             Sınıf / Seviye
           </label>
-          <input
-            type="text"
+          <select
             value={grade}
             onChange={(e) => setGrade(e.target.value)}
-            maxLength={40}
-            placeholder="Örn. 10. sınıf, YKS, Üniversite"
-            className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20"
-          />
+            className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 bg-white"
+          >
+            <option value="">(İsteğe bağlı)</option>
+            {TEACHING_GRADES.map((g) => (
+              <option key={g} value={g}>
+                {g}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
@@ -149,7 +163,7 @@ export function NewListingForm() {
           onChange={(e) => setDescription(e.target.value)}
           maxLength={2000}
           rows={6}
-          placeholder="Neyi öğrenmek istiyorsun? Hangi konularda zorlanıyorsun? Öğretmenden beklentilerin neler?"
+          placeholder="Neyi öğrenmek istiyorsun? Hangi konularda zorlanıyorsun? Eğitmenden beklentilerin neler?"
           className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 resize-none"
         />
         <div className="text-[10px] text-gray-400 mt-1 text-right">
@@ -187,7 +201,7 @@ export function NewListingForm() {
 
       <div>
         <label className="block text-xs font-medium text-gray-600 mb-1">
-          İletişim telefonu (teklif veren öğretmenlerle paylaşılır){" "}
+          İletişim telefonu (teklif veren eğitmenlerle paylaşılır){" "}
           <span className="text-gray-400 font-normal">— isteğe bağlı</span>
         </label>
         <input
@@ -201,7 +215,7 @@ export function NewListingForm() {
           className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20"
         />
         <p className="text-[10px] text-gray-400 mt-1">
-          Doldurursan profilinde de güncellenir. Teklif atan öğretmen ve açık
+          Doldurursan profilinde de güncellenir. Teklif atan eğitmen ve açık
           sohbet ekranında gösterilir.
         </p>
       </div>
@@ -295,7 +309,7 @@ export function NewListingForm() {
             Oluşturuluyor...
           </>
         ) : (
-          "İlanı Yayınla"
+          "İlanı Gönder"
         )}
       </Button>
     </form>

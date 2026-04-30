@@ -4,7 +4,7 @@ import PrivateLessonHeader from "@/components/private-lesson-header";
 export const metadata: Metadata = {
   title: "Özel Ders | Sukull",
   description:
-    "Alanında uzman öğretmenlerle birebir özel ders rezervasyonu yap ve takvimi yönet.",
+    "Onaylı eğitmenlerle birebir özel ders talebi oluştur, teklif al ve iletişimi yönet.",
 };
 
 /**

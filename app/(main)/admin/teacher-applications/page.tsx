@@ -13,7 +13,6 @@ import {
   BookOpen,
   Mail,
   Phone,
-  Settings,
   Search,
   ChevronLeft,
   ChevronRight,
@@ -25,7 +24,8 @@ import {
   Wallet,
   FileText,
 } from "lucide-react";
-import { FieldSelector } from "./components/field-selector";
+import { capabilityDisplayName } from "@/lib/teaching-offerings";
+import type { TeachingCapability } from "@/lib/teaching-offerings";
 
 type TeacherApplication = {
   id: number;
@@ -34,6 +34,8 @@ type TeacherApplication = {
   teacherEmail: string;
   teacherPhoneNumber: string;
   field: string;
+  /** Başvuru formundan gelen ders + sınıf çiftleri; onayda `teacher_fields` ile senkronlanır. */
+  capabilities: TeachingCapability[];
   education: string | null;
   experienceYears: string | null;
   targetLevels: string | null;
@@ -90,12 +92,6 @@ export default function TeacherApplicationsPage() {
   const [searchQuery, setSearchQuery] = useState(""); // debounced
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [page, setPage] = useState(1);
-  const [fieldSelector, setFieldSelector] = useState<{
-    isOpen: boolean;
-    applicationId: number | null;
-    teacherName: string;
-  }>({ isOpen: false, applicationId: null, teacherName: "" });
-
   // Debounce the search input to one API call ~300ms after typing stops.
   useEffect(() => {
     const t = setTimeout(() => setSearchQuery(searchInput.trim()), SEARCH_DEBOUNCE_MS);
@@ -193,7 +189,7 @@ export default function TeacherApplicationsPage() {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Öğretmen Başvuruları</h1>
+      <h1 className="text-2xl font-bold text-gray-900 mb-6">Eğitmen Başvuruları</h1>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-6">
         <div className="relative flex-1 max-w-sm">
@@ -264,7 +260,7 @@ export default function TeacherApplicationsPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2 text-sm mb-4">
                   <InfoRow icon={Mail} label="E-posta" value={app.teacherEmail} />
                   <InfoRow icon={Phone} label="Telefon" value={app.teacherPhoneNumber} />
-                  <InfoRow icon={BookOpen} label="Alan" value={app.field} />
+                  <InfoRow icon={BookOpen} label="Birincil alan" value={app.field} />
                   {app.education && (
                     <InfoRow icon={GraduationCap} label="Eğitim" value={app.education} />
                   )}
@@ -312,6 +308,20 @@ export default function TeacherApplicationsPage() {
                   )}
                 </div>
 
+                {app.capabilities && app.capabilities.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {app.capabilities.map((c, i) => (
+                      <Badge
+                        key={`${c.subject}-${c.grade}-${i}`}
+                        variant="secondary"
+                        className="text-xs font-normal"
+                      >
+                        {capabilityDisplayName(c)}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+
                 {app.bio && (
                   <div className="flex items-start gap-2 text-sm text-gray-600 mb-4 bg-gray-50 rounded-lg p-3">
                     <FileText className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
@@ -322,26 +332,12 @@ export default function TeacherApplicationsPage() {
                 {app.status === "pending" && (
                   <div className="flex flex-wrap gap-2 pt-3 border-t">
                     <Button
-                      onClick={() =>
-                        setFieldSelector({
-                          isOpen: true,
-                          applicationId: app.id,
-                          teacherName: `${app.teacherName} ${app.teacherSurname}`,
-                        })
-                      }
-                      disabled={updating === app.id}
-                      variant="secondary"
-                      size="sm"
-                    >
-                      <Settings className="h-4 w-4 mr-1.5" /> Alan Seç & Onayla
-                    </Button>
-                    <Button
                       onClick={() => updateStatus(app.id, "approved")}
                       disabled={updating === app.id}
                       variant="primaryOutline"
                       size="sm"
                     >
-                      <Check className="h-4 w-4 mr-1.5" /> Hızlı Onayla
+                      <Check className="h-4 w-4 mr-1.5" /> Onayla
                     </Button>
                     <Button
                       onClick={() => updateStatus(app.id, "rejected")}
@@ -382,16 +378,6 @@ export default function TeacherApplicationsPage() {
           </Button>
         </div>
       )}
-
-      <FieldSelector
-        isOpen={fieldSelector.isOpen}
-        onClose={() =>
-          setFieldSelector({ isOpen: false, applicationId: null, teacherName: "" })
-        }
-        applicationId={fieldSelector.applicationId || 0}
-        teacherName={fieldSelector.teacherName}
-        onFieldsChange={() => {}}
-      />
     </div>
   );
 }

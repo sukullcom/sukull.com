@@ -275,8 +275,8 @@ export default function CreditPurchase() {
           Kredi Satın Al
         </h1>
         <p className="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
-          Krediler hem öğrenciler hem öğretmenler için geçerlidir. Öğrenciler
-          bir öğretmene mesaj göndermek için <b className="text-slate-800">1 kredi</b>, öğretmenler bir
+          Krediler hem öğrenciler hem eğitmenler için geçerlidir. Öğrenciler
+          bir eğitmenle sohbeti açmak için <b className="text-slate-800">1 kredi</b>, eğitmenler bir
           ilana teklif vermek için <b className="text-slate-800">1 kredi</b> harcar. Daha büyük paket
           aldıkça kredi başına fiyat düşer.
         </p>
@@ -289,9 +289,6 @@ export default function CreditPurchase() {
               <h3 className="text-base sm:text-lg font-semibold text-slate-900">
                 Mevcut kredin
               </h3>
-              <p className="text-sm text-slate-600">
-                Kullanılabilir bakiye
-              </p>
             </div>
             <div className="text-right flex-shrink-0">
               {loadingCredits ? (

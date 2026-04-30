@@ -78,9 +78,9 @@ export default function CaymaIadePage() {
       </ul>
 
       <h2>5. Özel Durumlar</h2>
-      <h3>5.1 Öğretmen Gelmedi (No-Show)</h3>
+      <h3>5.1 Eğitmen Gelmedi (No-Show)</h3>
       <p>
-        Öğretmenin derse katılmaması hâlinde ödediğiniz kredi tam olarak
+        Eğitmenin derse katılmaması hâlinde ödediğiniz kredi tam olarak
         hesabınıza iade edilir; ayrıca telafi olarak bir sonraki
         rezervasyonunuzda geçerli olacak bir kupon tanımlanabilir.
       </p>

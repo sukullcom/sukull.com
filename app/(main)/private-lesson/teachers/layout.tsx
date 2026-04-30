@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import { requireApprovedStudent } from "@/lib/auth";
 
 export const metadata: Metadata = {
-  title: "Öğretmenler | Sukull",
-  description: "Alanında uzman öğretmenlerle birebir özel ders al.",
+  title: "Eğitmenler | Sukull",
+  description: "Onaylı eğitmenlerle birebir özel ders talebi oluştur ve iletişim kur.",
 };
 
 /**

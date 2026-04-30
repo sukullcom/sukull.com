@@ -13,7 +13,7 @@ export default async function NewListingPage() {
   if (!user) redirect("/login");
 
   // Teachers shouldn't post demand listings — they make offers instead.
-  // We gate on role only (student/user is fine; teacher is blocked).
+  // Talep ilanı yalnızca öğrenci akışı; eğitmenler teklif verir (ilan açamaz).
   if (await isTeacher(user.id)) {
     redirect("/private-lesson/listings");
   }
@@ -39,7 +39,7 @@ export default async function NewListingPage() {
           </h1>
         </div>
         <p className="text-sm text-gray-600">
-          İhtiyacını detaylıca yaz. Bir ilana en fazla 4 öğretmen teklif
+          İhtiyacını detaylıca yaz. Bir ilana en fazla 4 eğitmen teklif
           gönderebilir; teklif almak senin için ücretsizdir.
         </p>
       </div>

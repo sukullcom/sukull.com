@@ -29,7 +29,9 @@ export default async function MyListingsPage() {
             </h1>
           </div>
           <p className="text-sm text-gray-600">
-            Oluşturduğun talep ilanları ve bu ilanlara gelen teklifler.
+            Oluşturduğun talep ilanları ve bu ilanlara gelen teklifler. İlanların
+            uygunluk kontrolünden geçtiğini unutma; uygunsuz içerik yayından
+            kaldırılabilir.
           </p>
         </div>
         <Link

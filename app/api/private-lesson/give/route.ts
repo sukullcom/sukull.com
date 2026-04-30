@@ -9,6 +9,11 @@ import {
 import db from "@/db/drizzle";
 import { teacherApplications } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
+import {
+  normalizeCapabilities,
+  isValidTeachingSubject,
+  isValidTeachingGrade,
+} from "@/lib/teaching-offerings";
 
 const VALID_LESSON_MODES = ["online", "in_person", "both"] as const;
 type LessonMode = (typeof VALID_LESSON_MODES)[number];
@@ -91,6 +96,31 @@ export async function POST(request: NextRequest) {
     const teacherPhoneNumber = str(body.teacherPhoneNumber);
     const teacherEmail = str(body.teacherEmail);
     const field = str(body.field);
+    const capsRaw = body.capabilities;
+    const capabilities = normalizeCapabilities(capsRaw);
+    if (!capabilities || capabilities.length === 0) {
+      return NextResponse.json(
+        { error: "En az bir ders ve sınıf çifti seçmelisin." },
+        { status: 400 },
+      );
+    }
+    if (!field || !isValidTeachingSubject(field)) {
+      return NextResponse.json({ error: "Geçersiz ders alanı" }, { status: 400 });
+    }
+    if (capabilities[0].subject !== field) {
+      return NextResponse.json(
+        { error: "Birincil ders alanı ile seçimler uyuşmuyor." },
+        { status: 400 },
+      );
+    }
+    for (const c of capabilities) {
+      if (!isValidTeachingSubject(c.subject) || !isValidTeachingGrade(c.grade)) {
+        return NextResponse.json(
+          { error: "Geçersiz ders veya sınıf seçimi" },
+          { status: 400 },
+        );
+      }
+    }
 
     if (
       !teacherName ||
@@ -151,7 +181,7 @@ export async function POST(request: NextRequest) {
       }
       if (existingApplication.status === "approved") {
         return NextResponse.json(
-          { error: "Zaten onaylanmış bir eğitmen hesabınız bulunmaktadır." },
+          { error: "Zaten onaylı bir eğitmen kaydın var." },
           { status: 400 },
         );
       }
@@ -185,6 +215,7 @@ export async function POST(request: NextRequest) {
         bio: strOrNull(body.bio),
         classification: "pending",
         status: "pending",
+        capabilitiesJson: capabilities,
         createdAt: new Date(),
         updatedAt: new Date(),
       })

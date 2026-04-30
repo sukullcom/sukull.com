@@ -5,7 +5,7 @@ import { PrivateLessonNav, type PrivateLessonNavItem } from "./private-lesson-na
 /**
  * Server-rendered navigator for the private-lesson area.
  *
- * Öğretmen erişimi (`users.role === 'teacher'` veya onaylı başvuru) hangi
+ * Eğitmen erişimi (`users.role === 'teacher'` veya onaylı başvuru) hangi
  * sekme setinin gösterileceğini belirler:
  *
  * Active highlighting is delegated to a client child so the top-level
@@ -26,7 +26,7 @@ export default async function PrivateLessonHeader() {
   ];
 
   const studentItems: PrivateLessonNavItem[] = [
-    { name: "Öğretmenler", path: "/private-lesson/teachers", icon: "users" },
+    { name: "Eğitmenler", path: "/private-lesson/teachers", icon: "users" },
     { name: "İlanlarım", path: "/private-lesson/my-listings", icon: "clipboard" },
     { name: "İlan Aç", path: "/private-lesson/listings/new", icon: "megaphone" },
     { name: "Mesajlar", path: "/private-lesson/messages", icon: "message" },

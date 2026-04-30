@@ -22,7 +22,7 @@ type SearchParams = {
  *
  * The per-user CTA in the top-right differs by role:
  *   - student → "Yeni İlan Oluştur"
- *   - teacher → "İlanlarım" (outgoing offers history)
+ *   - eğitmen → "İlanlarım" (giden teklifler)
  */
 export default async function ListingsIndexPage({
   searchParams,
@@ -43,6 +43,7 @@ export default async function ListingsIndexPage({
       | undefined) || undefined,
     city: searchParams.city || undefined,
     limit: 50,
+    viewerTeacherId: viewerIsTeacher ? user.id : undefined,
   });
 
   return (
@@ -61,8 +62,8 @@ export default async function ListingsIndexPage({
           </div>
           <p className="text-sm text-gray-600">
             {viewerIsTeacher
-              ? "Öğrencilerin talep ilanları. Bir ilana teklif vermek 1 krediye mal olur ve bir ilana en fazla 4 teklif verilebilir."
-              : "Öğrencilerin özel ders talepleri. İhtiyacını detaylıca yaz, en fazla 4 öğretmen sana teklif versin."}
+              ? "Yayında olan talep ilanları; yalnızca başvurunda seçtiğin ders konularıyla eşleşen ilanlar listelenir. Teklif vermek 1 kredidir; ilan başına en fazla 4 teklif."
+              : "Öğrencilerin özel ders talepleri. İhtiyacını net yaz; en fazla 4 eğitmen sana teklif gönderebilir."}
           </p>
         </div>
         <div className="flex gap-2 w-full sm:w-auto">
@@ -88,7 +89,7 @@ export default async function ListingsIndexPage({
               href="/private-lesson/teacher-dashboard"
               className="inline-flex items-center justify-center text-sm font-medium text-gray-700 border rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors"
             >
-              Kontrol Paneli
+              Eğitmen paneli
             </Link>
           )}
         </div>

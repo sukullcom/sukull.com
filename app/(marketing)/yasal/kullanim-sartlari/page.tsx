@@ -33,7 +33,7 @@ export default function KullanimSartlariPage() {
 
       <h2>2. Hizmetin Tanımı</h2>
       <p>
-        Sukull; eğitim içeriği, beceri oyunları, öğretmen-öğrenci
+        Sukull; eğitim içeriği, beceri oyunları, eğitmen-öğrenci
         eşleştirme, özel ders rezervasyonu ve ilgili topluluk araçları
         sunan dijital bir eğitim platformudur. Hizmetler ücretsiz ve ücretli
         planlar hâlinde sunulabilir.

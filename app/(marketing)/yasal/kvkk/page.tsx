@@ -65,7 +65,7 @@ export default function KvkkPage() {
           <strong>Kimlik Bilgisi:</strong> Ad, soyad, kullanıcı adı.
         </li>
         <li>
-          <strong>İletişim Bilgisi:</strong> E-posta adresi, (öğretmenler
+          <strong>İletişim Bilgisi:</strong> E-posta adresi, (eğitmenler
           için) telefon numarası.
         </li>
         <li>
