@@ -9,8 +9,17 @@ export type UserBadgeStats = {
   totalChallengesCompleted: number;
   /** Genel sıralama (1 = birinci) */
   globalRank: number | null;
-  /** Okul içi sıralama; okul yoksa null */
+  /**
+   * Aynı okuldaki öğrenciler arasında puana göre sıra (1 = okul birincisi).
+   * Okul yoksa null.
+   */
   schoolRank: number | null;
+  /**
+   * Öğrencinin okulunun, aynı okul tipinde (lise, üniversite…) toplam puana
+   * göre sırası (1 = tip içinde en çok puanlı okul). Okul yoksa veya hesap
+   * yoksa null.
+   */
+  schoolInstitutionRank: number | null;
   hasSchool: boolean;
 };
 
@@ -76,10 +85,78 @@ export function computeUserBadges(stats: UserBadgeStats): BadgeRow[] {
   });
 
   badges.push({
+    id: "rank_global_2",
+    title: "Gümüş Basamak",
+    description: "Genel puanda ikinci sıradasın.",
+    unlocked: stats.globalRank === 2,
+    category: "liderlik",
+  });
+
+  badges.push({
+    id: "rank_global_3",
+    title: "Bronz Basamak",
+    description: "Genel puanda üçüncü sıradasın.",
+    unlocked: stats.globalRank === 3,
+    category: "liderlik",
+  });
+
+  badges.push({
     id: "rank_school_1",
     title: "Okul Yıldızı",
     description: "Kendi okulundaki öğrenciler arasında puanda birincisin.",
     unlocked: stats.hasSchool && stats.schoolRank === 1,
+    category: "liderlik",
+  });
+
+  badges.push({
+    id: "rank_in_school_2",
+    title: "Okulda İkinci",
+    description: "Kendi okulundaki öğrenciler arasında puanda ikincisin.",
+    unlocked: stats.hasSchool && stats.schoolRank === 2,
+    category: "liderlik",
+  });
+
+  badges.push({
+    id: "rank_in_school_3",
+    title: "Okulda Üçüncü",
+    description: "Kendi okulundaki öğrenciler arasında puanda üçüncüsün.",
+    unlocked: stats.hasSchool && stats.schoolRank === 3,
+    category: "liderlik",
+  });
+
+  badges.push({
+    id: "school_among_type_1",
+    title: "Okul Zirvesi",
+    description:
+      "Okulun, aynı tipteki okullar (ör. lise) arasında toplam puanda birinci.",
+    unlocked:
+      stats.hasSchool &&
+      stats.schoolInstitutionRank != null &&
+      stats.schoolInstitutionRank === 1,
+    category: "liderlik",
+  });
+
+  badges.push({
+    id: "school_among_type_2",
+    title: "Okul Gümüşü",
+    description:
+      "Okulun, aynı tipteki okullar arasında toplam puanda ikinci.",
+    unlocked:
+      stats.hasSchool &&
+      stats.schoolInstitutionRank != null &&
+      stats.schoolInstitutionRank === 2,
+    category: "liderlik",
+  });
+
+  badges.push({
+    id: "school_among_type_3",
+    title: "Okul Bronzu",
+    description:
+      "Okulun, aynı tipteki okullar arasında toplam puanda üçüncü.",
+    unlocked:
+      stats.hasSchool &&
+      stats.schoolInstitutionRank != null &&
+      stats.schoolInstitutionRank === 3,
     category: "liderlik",
   });
 

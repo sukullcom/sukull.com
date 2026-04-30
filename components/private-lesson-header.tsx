@@ -1,30 +1,22 @@
 import { getServerUser } from "@/lib/auth";
-import db from "@/db/drizzle";
-import { users } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { isTeacher } from "@/db/queries/applications";
 import { PrivateLessonNav, type PrivateLessonNavItem } from "./private-lesson-nav";
 
 /**
  * Server-rendered navigator for the private-lesson area.
  *
- * Role determines which tab set is shown:
- *   - teacher  -> dashboard, open listings (offer flow), messages, credits
- *   - student / guest -> teachers directory, my listings, new listing,
- *     messages, credits
+ * Öğretmen erişimi (`users.role === 'teacher'` veya onaylı başvuru) hangi
+ * sekme setinin gösterileceğini belirler:
  *
  * Active highlighting is delegated to a client child so the top-level
  * can stay server-side and avoid flashing a loading state while the
- * role is being discovered.
+ * client resolves the active link from the pathname.
  */
 export default async function PrivateLessonHeader() {
   const user = await getServerUser();
   if (!user) return null;
 
-  const row = await db.query.users.findFirst({
-    where: eq(users.id, user.id),
-    columns: { role: true },
-  });
-  const role = row?.role ?? "user";
+  const teacherMode = await isTeacher(user.id);
 
   const teacherItems: PrivateLessonNavItem[] = [
     { name: "Panelim", path: "/private-lesson/teacher-dashboard", icon: "dashboard" },
@@ -41,6 +33,6 @@ export default async function PrivateLessonHeader() {
     { name: "Kredi", path: "/private-lesson/credits", icon: "credit" },
   ];
 
-  const items = role === "teacher" ? teacherItems : studentItems;
+  const items = teacherMode ? teacherItems : studentItems;
   return <PrivateLessonNav items={items} />;
 }

@@ -425,13 +425,28 @@ export async function getAvailableFieldOptions() {
 // Role checks
 // ---------------------------------------------------------------------------
 
+/**
+ * Öğretmen yetkisi: `users.role === 'teacher'` **veya** onaylı başvuru kaydı.
+ * Admin onayı normalde rolü de günceller; eski veri veya manuel DB düzenlemelerinde
+ * ikisi ayrışabildiği için burada birleşik kontrol kullanılıyor (nav, requireTeacher).
+ */
 export async function isTeacher(userId: string) {
   const user = await db.query.users.findFirst({
     where: eq(users.id, userId),
     columns: { role: true },
   });
 
-  return user?.role === "teacher";
+  if (user?.role === "teacher") return true;
+
+  const approved = await db.query.teacherApplications.findFirst({
+    where: and(
+      eq(teacherApplications.userId, userId),
+      eq(teacherApplications.status, "approved"),
+    ),
+    columns: { id: true },
+  });
+
+  return approved != null;
 }
 
 /**

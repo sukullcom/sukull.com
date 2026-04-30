@@ -1,9 +1,7 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getServerUser } from "@/lib/auth";
-import db from "@/db/drizzle";
-import { users } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { isTeacher } from "@/db/queries/applications";
 import UserCreditsDisplay from "@/components/user-credits-display";
 import { ArrowLeft, Megaphone } from "lucide-react";
 import { NewListingForm } from "./_components/new-listing-form";
@@ -16,11 +14,7 @@ export default async function NewListingPage() {
 
   // Teachers shouldn't post demand listings — they make offers instead.
   // We gate on role only (student/user is fine; teacher is blocked).
-  const userRecord = await db.query.users.findFirst({
-    where: eq(users.id, user.id),
-    columns: { role: true },
-  });
-  if (userRecord?.role === "teacher") {
+  if (await isTeacher(user.id)) {
     redirect("/private-lesson/listings");
   }
 

@@ -1,5 +1,6 @@
 import { getServerUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { isTeacher } from "@/db/queries/applications";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,9 +11,6 @@ import {
 } from "@/components/ui/card";
 import { FeedWrapper } from "@/components/feed-wrapper";
 import { Badge } from "@/components/ui/badge";
-import db from "@/db/drizzle";
-import { users } from "@/db/schema";
-import { eq } from "drizzle-orm";
 import Image from "next/image";
 import {
   GraduationCap,
@@ -43,12 +41,7 @@ export default async function PrivateLessonPage() {
   const user = await getServerUser();
   if (!user) redirect("/login");
 
-  const userRecord = await db.query.users.findFirst({
-    where: eq(users.id, user.id),
-    columns: { role: true },
-  });
-
-  if (userRecord?.role === "teacher") {
+  if (await isTeacher(user.id)) {
     redirect("/private-lesson/teacher-dashboard");
   }
 

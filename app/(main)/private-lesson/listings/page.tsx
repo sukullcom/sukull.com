@@ -1,10 +1,7 @@
 import Link from "next/link";
 import { getServerUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import db from "@/db/drizzle";
-import { users } from "@/db/schema";
-import { eq } from "drizzle-orm";
-import { getOpenListings } from "@/db/queries";
+import { getOpenListings, isTeacher } from "@/db/queries";
 import UserCreditsDisplay from "@/components/user-credits-display";
 import { ListingsFilters } from "./_components/listings-filters";
 import { ListingCard } from "./_components/listing-card";
@@ -35,11 +32,7 @@ export default async function ListingsIndexPage({
   const user = await getServerUser();
   if (!user) redirect("/login");
 
-  const userRecord = await db.query.users.findFirst({
-    where: eq(users.id, user.id),
-    columns: { role: true },
-  });
-  const isTeacher = userRecord?.role === "teacher";
+  const viewerIsTeacher = await isTeacher(user.id);
 
   const listings = await getOpenListings({
     subject: searchParams.subject || undefined,
@@ -67,13 +60,13 @@ export default async function ListingsIndexPage({
             </h1>
           </div>
           <p className="text-sm text-gray-600">
-            {isTeacher
+            {viewerIsTeacher
               ? "Öğrencilerin talep ilanları. Bir ilana teklif vermek 1 krediye mal olur ve bir ilana en fazla 4 teklif verilebilir."
               : "Öğrencilerin özel ders talepleri. İhtiyacını detaylıca yaz, en fazla 4 öğretmen sana teklif versin."}
           </p>
         </div>
         <div className="flex gap-2 w-full sm:w-auto">
-          {!isTeacher && (
+          {!viewerIsTeacher && (
             <Link
               href="/private-lesson/listings/new"
               className="inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors flex-1 sm:flex-none"
@@ -82,7 +75,7 @@ export default async function ListingsIndexPage({
               Yeni İlan
             </Link>
           )}
-          {!isTeacher && (
+          {!viewerIsTeacher && (
             <Link
               href="/private-lesson/my-listings"
               className="inline-flex items-center justify-center text-sm font-medium text-gray-700 border rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors flex-1 sm:flex-none"
@@ -90,7 +83,7 @@ export default async function ListingsIndexPage({
               İlanlarım
             </Link>
           )}
-          {isTeacher && (
+          {viewerIsTeacher && (
             <Link
               href="/private-lesson/teacher-dashboard"
               className="inline-flex items-center justify-center text-sm font-medium text-gray-700 border rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors"

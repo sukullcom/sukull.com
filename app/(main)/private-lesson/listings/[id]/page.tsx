@@ -2,9 +2,7 @@ import { redirect, notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { getServerUser } from "@/lib/auth";
-import db from "@/db/drizzle";
-import { users } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { isTeacher } from "@/db/queries/applications";
 import {
   getListingById,
   getListingWithOffers,
@@ -41,18 +39,14 @@ export default async function ListingDetailPage({
   const base = await getListingById(listingId);
   if (!base) notFound();
 
-  const userRecord = await db.query.users.findFirst({
-    where: eq(users.id, user.id),
-    columns: { role: true },
-  });
-  const isTeacher = userRecord?.role === "teacher";
+  const listingViewerIsTeacher = await isTeacher(user.id);
   const isOwner = base.studentId === user.id;
 
   // Owner view: full offers payload so they can accept/reject.
   const full = isOwner ? await getListingWithOffers(listingId) : null;
   // Teacher view: surface whether they've already bid so we hide the form.
   const alreadyOffered =
-    !isOwner && isTeacher
+    !isOwner && listingViewerIsTeacher
       ? await hasTeacherOfferedOnListing(listingId, user.id)
       : false;
 
@@ -170,7 +164,7 @@ export default async function ListingDetailPage({
       )}
 
       {/* Teacher view: teklif ver formu veya durum kartı */}
-      {!isOwner && isTeacher && (
+      {!isOwner && listingViewerIsTeacher && (
         <div className="mt-6">
           {base.status !== "open" ? (
             <div className="bg-white border rounded-xl p-5 text-center">
@@ -207,7 +201,7 @@ export default async function ListingDetailPage({
         </div>
       )}
 
-      {!isOwner && !isTeacher && (
+      {!isOwner && !listingViewerIsTeacher && (
         <div className="mt-6 bg-white border rounded-xl p-5 text-center text-sm text-gray-600">
           İlana teklif vermek için eğitmen hesabına sahip olmanız gerekir.
           Öğretmenlere{" "}

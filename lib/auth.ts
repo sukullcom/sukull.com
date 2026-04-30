@@ -4,6 +4,7 @@ import db from '@/db/drizzle'
 import { users } from '@/db/schema'
 import { eq } from 'drizzle-orm'
 import { redirect } from 'next/navigation'
+import { isTeacher as userHasTeacherAccess } from '@/db/queries/applications'
 
 export async function getServerUser() {
   try {
@@ -28,11 +29,15 @@ export async function getServerUser() {
 export async function checkUserRole(role: "user" | "teacher" | "admin") {
   const user = await getServerUser()
   if (!user) return false
-  
+
+  if (role === "teacher") {
+    return userHasTeacherAccess(user.id)
+  }
+
   const userRecord = await db.query.users.findFirst({
     where: eq(users.id, user.id),
   })
-  
+
   return userRecord?.role === role
 }
 

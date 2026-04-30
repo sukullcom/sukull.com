@@ -47,14 +47,14 @@ export async function getUserBadgeSummary(): Promise<UserBadgeSummary | null> {
 
     const globalRank = rankData?.userRank ?? null;
     let schoolRank: number | null = null;
-    if (rankData) {
-      const r = rankData as {
-        userRankInSchool?: number;
-        schoolRankInSchool?: number | null;
-      };
-      if (typeof r.userRankInSchool === "number") schoolRank = r.userRankInSchool;
-      else if (typeof r.schoolRankInSchool === "number") schoolRank = r.schoolRankInSchool;
+    if (rankData && typeof rankData.userRankInSchool === "number") {
+      schoolRank = rankData.userRankInSchool;
     }
+
+    const schoolInstitutionRank =
+      rankData != null && typeof rankData.schoolRank === "number"
+        ? rankData.schoolRank
+        : null;
 
     const stats: UserBadgeStats = {
       istikrar,
@@ -62,6 +62,7 @@ export async function getUserBadgeSummary(): Promise<UserBadgeSummary | null> {
       totalChallengesCompleted,
       globalRank,
       schoolRank,
+      schoolInstitutionRank,
       hasSchool,
     };
 

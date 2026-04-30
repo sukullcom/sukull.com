@@ -17,14 +17,12 @@ import {
   RATE_LIMITS,
   rateLimitHeaders,
 } from "@/lib/rate-limit-db";
-import db from "@/db/drizzle";
-import { users } from "@/db/schema";
-import { eq } from "drizzle-orm";
 import {
   createOffer,
   getListingById,
   getOffersForListing,
   hasTeacherOfferedOnListing,
+  isTeacher,
   MAX_OFFERS_PER_LISTING,
 } from "@/db/queries";
 
@@ -125,12 +123,8 @@ export async function POST(
       return NextResponse.json({ error: "Geçersiz ilan" }, { status: 400 });
     }
 
-    // Only teachers can submit offers.
-    const userRecord = await db.query.users.findFirst({
-      where: eq(users.id, user.id),
-      columns: { role: true },
-    });
-    if (userRecord?.role !== "teacher") {
+    // Only teachers can submit offers (DB role or onaylı başvuru).
+    if (!(await isTeacher(user.id))) {
       return NextResponse.json(
         { error: "Teklif verebilmek için onaylı eğitmen olmanız gerekiyor" },
         { status: 403 },
