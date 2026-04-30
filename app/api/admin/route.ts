@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
           return NextResponse.json({ message: "Başvuru kimliği gereklidir." }, { status: 400 });
         }
 
-        let result = await approveTeacherApplication(applicationId);
+        const result = await approveTeacherApplication(applicationId);
 
         const actor = await getAdminActor();
         if (actor) {
