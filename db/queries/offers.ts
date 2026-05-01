@@ -13,10 +13,10 @@ import {
   creditUsage,
   listingOffers,
   listings,
-  teacherFields,
   userCredits,
 } from "@/db/schema";
 import { ensureUnlockedThreadForOfferTx } from "@/db/queries/messages";
+import { teacherMatchesListingSubjects } from "@/db/queries/listings";
 
 export const MAX_OFFERS_PER_LISTING = 4;
 
@@ -129,29 +129,13 @@ export async function createOffer(input: {
         return { ok: false as const, code: "self_offer_forbidden" as const };
       }
 
-      const matchFields = await tx.query.teacherFields.findMany({
-        where: and(
-          eq(teacherFields.teacherId, input.teacherId),
-          eq(teacherFields.isActive, true),
-          eq(teacherFields.subject, listing.subject),
-        ),
-        columns: { grade: true },
-      });
-      if (matchFields.length === 0) {
+      const subjectOk = await teacherMatchesListingSubjects(
+        input.teacherId,
+        listing.subject,
+        listing.grade,
+      );
+      if (!subjectOk) {
         return { ok: false as const, code: "listing_subject_mismatch" as const };
-      }
-      const needGrade = Boolean(listing.grade?.trim());
-      if (needGrade) {
-        const g = listing.grade!.trim();
-        const gradeOk = matchFields.some(
-          (f) =>
-            f.grade === g ||
-            f.grade === "Genel" ||
-            f.grade === "Tüm seviyeler",
-        );
-        if (!gradeOk) {
-          return { ok: false as const, code: "listing_subject_mismatch" as const };
-        }
       }
 
       if (listing.offerCount >= MAX_OFFERS_PER_LISTING) {

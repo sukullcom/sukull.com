@@ -67,6 +67,23 @@ export function ListingCard({
             {listing.description}
           </p>
 
+          {showStudent &&
+            variant === "browse" &&
+            listing.offerCount === MAX_OFFERS_PER_LISTING - 1 && (
+              <p className="mt-2 text-xs font-semibold text-red-600">
+                Sadece 1 kontenjan kaldı · {listing.offerCount}/
+                {MAX_OFFERS_PER_LISTING} teklif
+              </p>
+            )}
+          {showStudent &&
+            variant === "browse" &&
+            listing.offerCount === 2 && (
+              <p className="mt-2 text-xs font-medium text-amber-800">
+                Yoğun ilan: 2/{MAX_OFFERS_PER_LISTING} teklif — acele eden
+                kazanır.
+              </p>
+            )}
+
           <div className="grid grid-cols-2 gap-2 mt-3 text-[11px] text-gray-600">
             <div className="flex items-center gap-1.5">
               <Monitor className="h-3 w-3 text-gray-400" />

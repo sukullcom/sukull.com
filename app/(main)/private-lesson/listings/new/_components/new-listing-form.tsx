@@ -11,11 +11,15 @@ import {
   TEACHING_GRADES,
   TEACHING_SUBJECTS,
 } from "@/lib/teaching-offerings";
+import {
+  LISTING_DESCRIPTION_MIN_LEN,
+  LISTING_PREFERRED_HOURS_MIN_LEN,
+} from "@/lib/private-lesson-listings";
+import { isValidTurkeyMobileForProfile } from "@/lib/teacher-profile-mutation";
 
 /**
- * Talep ilanı oluşturma: `subject` ve isteğe bağlı `grade` yalnızca
- * eğitmen eşleştirmesi için sabit listeden seçilir. İlan admin onayından
- * sonra yayına (`open`) alınır.
+ * Talep ilanı: konu, sınıf, bütçe, saatler, açıklama ve cep telefonu
+ * sunucuda zorunludur. İlan admin onayından sonra yayına (`open`) alınır.
  */
 export function NewListingForm() {
   const router = useRouter();
@@ -35,20 +39,36 @@ export function NewListingForm() {
   const [preferredHours, setPreferredHours] = useState("");
   const [contactPhone, setContactPhone] = useState("");
 
+  const needsLocation = lessonMode === "in_person" || lessonMode === "both";
+
   const canSubmit =
     subject.length > 0 &&
+    grade.length > 0 &&
     title.trim().length > 0 &&
-    description.trim().length >= 10 &&
+    description.trim().length >= LISTING_DESCRIPTION_MIN_LEN &&
+    budgetMin.trim().length > 0 &&
+    budgetMax.trim().length > 0 &&
+    preferredHours.trim().length >= LISTING_PREFERRED_HOURS_MIN_LEN &&
+    isValidTurkeyMobileForProfile(contactPhone) &&
+    (!needsLocation || city.trim().length > 0) &&
     !submitting;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!canSubmit) return;
 
-    const bMin = budgetMin ? Number(budgetMin) : null;
-    const bMax = budgetMax ? Number(budgetMax) : null;
-    if (bMin != null && bMax != null && bMin > bMax) {
-      toast.error("Minimum bütçe maksimum bütçeden büyük olamaz");
+    const bMin = Number(budgetMin);
+    const bMax = Number(budgetMax);
+    if (!Number.isFinite(bMin) || !Number.isFinite(bMax)) {
+      toast.error("Bütçe alanlarına geçerli sayılar girin.");
+      return;
+    }
+    if (bMin < 0 || bMax < 0) {
+      toast.error("Bütçe negatif olamaz.");
+      return;
+    }
+    if (bMin > bMax) {
+      toast.error("Minimum bütçe maksimum bütçeden büyük olamaz.");
       return;
     }
 
@@ -68,7 +88,7 @@ export function NewListingForm() {
         },
         body: JSON.stringify({
           subject,
-          grade: grade || null,
+          grade,
           title: title.trim(),
           description: description.trim(),
           lessonMode,
@@ -76,8 +96,8 @@ export function NewListingForm() {
           district: district.trim() || null,
           budgetMin: bMin,
           budgetMax: bMax,
-          preferredHours: preferredHours.trim() || null,
-          contactPhone: contactPhone.trim() || null,
+          preferredHours: preferredHours.trim(),
+          contactPhone: contactPhone.trim(),
         }),
       });
       const data = await res.json().catch(() => ({}));
@@ -86,7 +106,7 @@ export function NewListingForm() {
         return;
       }
       toast.success("İlan gönderildi; yayın için yönetici onayı bekleniyor.");
-      router.push(`/private-lesson/listings/${data.listing.id}`);
+      router.push(`/private-lesson/listings/${data.listing.id}?yeni=1`);
     } catch (error) {
       clientLogger.error({
         message: "create listing failed",
@@ -106,8 +126,18 @@ export function NewListingForm() {
     >
       <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2.5 text-xs text-amber-950">
         <strong className="font-semibold">İnceleme:</strong> İlanın önce
-        yönetici onayından geçmesi gerekir. Onay sonrası ilanındaki konuyla
-        eşleşen eğitmenler görebilir ve teklif verebilir.
+        yönetici onayından geçer. Onay sonrası ilanındaki konuyla eşleşen
+        eğitmenler görebilir ve sana teklif gönderebilir.
+      </div>
+      <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-xs text-slate-800 space-y-1.5">
+        <p>
+          <strong className="font-semibold">İletişim ve gizlilik:</strong>{" "}
+          Girdiğin cep telefonu, profilindeki numara ile birleştirilir ve{" "}
+          <strong>teklif veren eğitmenlerle</strong> (sohbet ve teklif ekranı
+          üzerinden) paylaşılır. Teklif veya mesaj kilidi sonrası karşı
+          tarafın e-posta ve telefon bilgileri de sohbet içinde görünür; kredi
+          harcandıktan sonra iade yapılmaz.
+        </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
@@ -130,14 +160,15 @@ export function NewListingForm() {
         </div>
         <div>
           <label className="block text-xs font-medium text-gray-600 mb-1">
-            Sınıf / Seviye
+            Sınıf / Seviye *
           </label>
           <select
             value={grade}
             onChange={(e) => setGrade(e.target.value)}
             className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 bg-white"
+            required
           >
-            <option value="">(İsteğe bağlı)</option>
+            <option value="">Sınıf / seviye seçin</option>
             {TEACHING_GRADES.map((g) => (
               <option key={g} value={g}>
                 {g}
@@ -158,6 +189,7 @@ export function NewListingForm() {
           maxLength={120}
           placeholder="Kısa ve öz bir başlık"
           className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20"
+          required
         />
         <div className="text-[10px] text-gray-400 mt-1 text-right">
           {title.length}/120
@@ -166,7 +198,7 @@ export function NewListingForm() {
 
       <div>
         <label className="block text-xs font-medium text-gray-600 mb-1">
-          Açıklama *
+          Açıklama * (en az {LISTING_DESCRIPTION_MIN_LEN} karakter)
         </label>
         <textarea
           value={description}
@@ -175,9 +207,16 @@ export function NewListingForm() {
           rows={6}
           placeholder="Neyi öğrenmek istiyorsun? Hangi konularda zorlanıyorsun? Eğitmenden beklentilerin neler?"
           className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 resize-none"
+          required
+          minLength={LISTING_DESCRIPTION_MIN_LEN}
         />
-        <div className="text-[10px] text-gray-400 mt-1 text-right">
-          {description.length}/2000
+        <div className="text-[10px] text-gray-400 mt-1 flex justify-between gap-2">
+          <span className="text-amber-800 min-h-[1em]">
+            {description.trim().length < LISTING_DESCRIPTION_MIN_LEN
+              ? `En az ${LISTING_DESCRIPTION_MIN_LEN} karakter gerekli.`
+              : ""}
+          </span>
+          <span className="shrink-0">{description.length}/2000</span>
         </div>
       </div>
 
@@ -211,8 +250,7 @@ export function NewListingForm() {
 
       <div>
         <label className="block text-xs font-medium text-gray-600 mb-1">
-          İletişim telefonu (teklif veren eğitmenlerle paylaşılır){" "}
-          <span className="text-gray-400 font-normal">— isteğe bağlı</span>
+          Cep telefonu * (05xx…, teklif veren eğitmenlerle paylaşılır)
         </label>
         <input
           type="tel"
@@ -223,18 +261,19 @@ export function NewListingForm() {
           maxLength={30}
           placeholder="Örn. 05xx xxx xx xx"
           className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20"
+          required
         />
-        <p className="text-[10px] text-gray-400 mt-1">
-          Doldurursan profilinde de güncellenir. Teklif atan eğitmen ve açık
-          sohbet ekranında gösterilir.
+        <p className="text-[10px] text-gray-500 mt-1">
+          Türkiye cep numarası zorunludur. Kayıtlı numaran güncellenir; teklif
+          atan eğitmenler ve açık sohbet ekranında kullanılır.
         </p>
       </div>
 
-      {(lessonMode === "in_person" || lessonMode === "both") && (
+      {needsLocation && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs font-medium text-gray-600 mb-1">
-              Şehir
+              Şehir *
             </label>
             <input
               type="text"
@@ -243,6 +282,7 @@ export function NewListingForm() {
               maxLength={60}
               placeholder="Örn. İstanbul"
               className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20"
+              required={needsLocation}
             />
           </div>
           <div>
@@ -264,7 +304,7 @@ export function NewListingForm() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-xs font-medium text-gray-600 mb-1">
-            Saatlik Bütçe Min (₺)
+            Saatlik bütçe min (₺) *
           </label>
           <input
             type="number"
@@ -274,11 +314,12 @@ export function NewListingForm() {
             value={budgetMin}
             onChange={(e) => setBudgetMin(e.target.value)}
             className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20"
+            required
           />
         </div>
         <div>
           <label className="block text-xs font-medium text-gray-600 mb-1">
-            Saatlik Bütçe Max (₺)
+            Saatlik bütçe max (₺) *
           </label>
           <input
             type="number"
@@ -288,13 +329,15 @@ export function NewListingForm() {
             value={budgetMax}
             onChange={(e) => setBudgetMax(e.target.value)}
             className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20"
+            required
           />
         </div>
       </div>
 
       <div>
         <label className="block text-xs font-medium text-gray-600 mb-1">
-          Tercih Edilen Saatler
+          Tercih edilen saatler * (en az {LISTING_PREFERRED_HOURS_MIN_LEN}{" "}
+          karakter)
         </label>
         <input
           type="text"
@@ -303,6 +346,8 @@ export function NewListingForm() {
           maxLength={160}
           placeholder="Örn. Hafta içi akşam 19:00 sonrası"
           className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20"
+          required
+          minLength={LISTING_PREFERRED_HOURS_MIN_LEN}
         />
       </div>
 

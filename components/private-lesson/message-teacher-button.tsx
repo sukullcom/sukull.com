@@ -135,9 +135,20 @@ export function MessageTeacherButton({
   const label = teacherName ? `“${teacherName}”` : "bu eğitmen";
   const messageDescription = (
     <>
-      {label} ile mesajlaşmayı açmak için{" "}
-      <span className="font-semibold">1 kredi</span> kullanılır. Bir kez
-      ödenir; açık kalan sohbet için tekrar ücret alınmaz.
+      <span className="block mb-2">
+        {label} ile mesajlaşmayı açmak için{" "}
+        <span className="font-semibold">1 kredi</span> kullanılır. Ödeme tek
+        seferlidir; aynı sohbet için tekrar ücret alınmaz ve kredi iade edilmez.
+      </span>
+      <span className="block text-gray-700">
+        Onayladığında, sohbet ekranında{" "}
+        <span className="font-semibold">
+          eğitmenin kayıtlı e-posta ve telefon bilgileri
+        </span>{" "}
+        sana gösterilir; senin kayıtlı e-posta ve telefon bilgilerin de eğitmenle
+        paylaşılır. Devam etmeden önce profilindeki iletişim bilgilerinin güncel
+        olduğundan emin ol.
+      </span>
     </>
   );
 

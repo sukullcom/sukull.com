@@ -84,7 +84,8 @@ export default async function TeachersDirectoryPage({
         <p className="text-sm text-gray-600">
           Sukull tarafından onaylanmış eğitmenlerin listesi. Saatlik ücretleri
           görebilir, 1 kredi ile mesajlaşmayı açabilirsin — tek seferlik ödeme,
-          sohbet kalıcıdır.
+          sohbet kalıcıdır ve kredi iade edilmez. Onay sonrası tarafların kayıtlı
+          e-posta ve telefon bilgileri sohbet üzerinden paylaşılır.
         </p>
       </div>
 

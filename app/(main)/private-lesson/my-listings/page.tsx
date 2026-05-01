@@ -4,6 +4,7 @@ import { getServerUser } from "@/lib/auth";
 import { getMyListings } from "@/db/queries";
 import UserCreditsDisplay from "@/components/user-credits-display";
 import { ListingCard } from "../listings/_components/listing-card";
+import { Button } from "@/components/ui/button";
 import { ClipboardList, Plus } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -34,26 +35,30 @@ export default async function MyListingsPage() {
             kaldırılabilir.
           </p>
         </div>
-        <Link
-          href="/private-lesson/listings/new"
-          className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
-        >
-          <Plus className="h-4 w-4" />
-          Yeni İlan
-        </Link>
+        <Button asChild variant="primary" size="sm">
+          <Link
+            href="/private-lesson/listings/new"
+            className="inline-flex items-center gap-2"
+          >
+            <Plus className="h-4 w-4" />
+            Yeni İlan
+          </Link>
+        </Button>
       </div>
 
       {listings.length === 0 ? (
         <div className="text-center py-16 rounded-xl border border-dashed border-gray-200 bg-white">
           <ClipboardList className="mx-auto h-10 w-10 text-gray-300 mb-3" />
           <p className="text-gray-500 mb-4">Henüz bir ilan oluşturmadın.</p>
-          <Link
-            href="/private-lesson/listings/new"
-            className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
-          >
-            <Plus className="h-4 w-4" />
-            İlk İlanını Oluştur
-          </Link>
+          <Button asChild variant="primary" size="sm">
+            <Link
+              href="/private-lesson/listings/new"
+              className="inline-flex items-center gap-2"
+            >
+              <Plus className="h-4 w-4" />
+              İlk İlanını Oluştur
+            </Link>
+          </Button>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

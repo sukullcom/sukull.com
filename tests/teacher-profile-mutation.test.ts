@@ -25,7 +25,7 @@ describe("isValidTurkeyMobileForProfile", () => {
 });
 
 describe("validateCapabilitiesMatchPrimaryField", () => {
-  it("requires every capability subject to match field", () => {
+  it("requires field to match first row; other rows may differ in subject", () => {
     expect(
       validateCapabilitiesMatchPrimaryField("Matematik", [
         { subject: "Matematik", grade: "10.sınıf" },
@@ -34,6 +34,18 @@ describe("validateCapabilitiesMatchPrimaryField", () => {
     ).toBe(true);
     expect(
       validateCapabilitiesMatchPrimaryField("Matematik", [
+        { subject: "Matematik", grade: "8.sınıf" },
+        { subject: "Fizik", grade: "10.sınıf" },
+      ]),
+    ).toBe(true);
+    expect(
+      validateCapabilitiesMatchPrimaryField("Matematik", [
+        { subject: "Fizik", grade: "10.sınıf" },
+      ]),
+    ).toBe(false);
+    expect(
+      validateCapabilitiesMatchPrimaryField("Fizik", [
+        { subject: "Matematik", grade: "8.sınıf" },
         { subject: "Fizik", grade: "10.sınıf" },
       ]),
     ).toBe(false);

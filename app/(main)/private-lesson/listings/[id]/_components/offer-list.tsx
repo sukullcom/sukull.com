@@ -112,7 +112,7 @@ export function OfferList({
         title={isAccept ? "Teklifi kabul ediyor musun?" : "Bu teklifi reddediyor musun?"}
         description={
           isAccept
-            ? "İlanın kapanacak ve bu eğitmenin dışındaki tüm beklemedeki teklifler reddedilecek. Bu eylem geri alınamaz."
+            ? "İlanın kapanacak ve bu eğitmenin dışındaki tüm beklemedeki teklifler reddedilecek; işlem geri alınamaz. Teklif sürecinde açılmış sohbet varsa, tarafların kayıtlı e-posta ve telefon bilgileri sohbet üzerinden görülmeye devam eder."
             : "Eğitmen, teklifin reddedildiğini görecek. İstediğin zaman başka bir teklif seçebilirsin."
         }
         confirmLabel={isAccept ? "Evet, kabul et" : "Evet, reddet"}

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getServerUser } from "@/lib/auth";
 import { listStudentConversations } from "@/db/queries";
 import UserCreditsDisplay from "@/components/user-credits-display";
+import { Button } from "@/components/ui/button";
 import { normalizeAvatarUrl } from "@/utils/avatar";
 import { MessageCircle } from "lucide-react";
 
@@ -31,7 +32,9 @@ export default async function MessagesIndexPage() {
         <p className="text-sm text-gray-600">
           Eğitmenlerle veya öğrencilerle açılmış sohbetlerin. Öğrenci olarak yeni
           sohbet açmak için eğitmen rehberinden bir profile tek seferlik 1 kredi
-          kullanılır; sonrasında mesajlaşma ücretsizdir.
+          kullanılır; onay sonrası tarafların kayıtlı e-posta ve telefon bilgileri
+          sohbet üzerinde paylaşılır. Sonrasında mesajlaşma ücretsizdir; harcanan
+          kredi iade edilmez.
         </p>
       </div>
 
@@ -41,12 +44,9 @@ export default async function MessagesIndexPage() {
           <p className="text-gray-500 mb-4">
             Henüz sohbetin yok. Eğitmen rehberinden bir profile ulaşmayı dene.
           </p>
-          <Link
-            href="/private-lesson/teachers"
-            className="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
-          >
-            Eğitmen rehberine git
-          </Link>
+          <Button asChild variant="primary" size="sm">
+            <Link href="/private-lesson/teachers">Eğitmen rehberine git</Link>
+          </Button>
         </div>
       ) : (
         <div className="bg-white border rounded-xl overflow-hidden">

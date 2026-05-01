@@ -32,14 +32,23 @@ export function assertTeacherProfileBodySize(request: Request): void {
   }
 }
 
+/**
+ * `teacher_applications.field` eski arama / gösterim için “birincil branş”
+ * tutar; asıl liste `capabilitiesJson`. Çoklu farklı ders satırı desteklenir —
+ * yalnızca `field`, listenin ilk satırındaki ders ile aynı olmalı (give POST
+ * ile aynı kural).
+ */
 export function validateCapabilitiesMatchPrimaryField(
   field: string,
   capabilities: TeachingCapability[],
 ): boolean {
+  if (capabilities.length === 0) return false;
   if (!isValidTeachingSubject(field)) return false;
+  if (field !== capabilities[0].subject) return false;
   for (const c of capabilities) {
-    if (c.subject !== field) return false;
-    if (!isValidTeachingGrade(c.grade)) return false;
+    if (!isValidTeachingSubject(c.subject) || !isValidTeachingGrade(c.grade)) {
+      return false;
+    }
   }
   return true;
 }

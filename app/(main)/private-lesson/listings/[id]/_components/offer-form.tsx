@@ -105,15 +105,21 @@ export function OfferForm({
   const creditHint = formatBudgetHint(budgetMin, budgetMax, priceNum);
   const creditDescription = (
     <>
-      Teklif göndermek <span className="font-semibold">1 kredi</span> kullanacak; ödendikten sonra
-      kredi iade edilmez.
+      <span className="block mb-2">
+        Teklif göndermek <span className="font-semibold">1 kredi</span> kullanır.
+        Ödeme sonrası kredi iade edilmez; sohbet açılır ve öğrenci kabulünü
+        beklemeden mesaj yazabilirsin.
+      </span>
+      <span className="block text-gray-700 mb-2">
+        Onayladığında, sohbet üzerinden{" "}
+        <span className="font-semibold">
+          öğrencinin kayıtlı e-posta ve telefon bilgilerine
+        </span>{" "}
+        erişirsin; senin kayıtlı e-posta ve telefon bilgilerin de öğrenciyle
+        paylaşılır. İletişim bilgilerinin doğru olduğundan emin ol.
+      </span>
       {creditHint ? (
-        <>
-          {" "}
-          <br />
-          <br />
-          <span className="text-amber-800">{creditHint}</span>
-        </>
+        <span className="block text-amber-800">{creditHint}</span>
       ) : null}
     </>
   );
@@ -125,9 +131,9 @@ export function OfferForm({
         <h2 className="font-semibold text-gray-900">Teklif Ver</h2>
       </div>
       <p className="text-xs text-gray-500 mb-4">
-        1 kredi ile teklif gönderirsin. Öğrenci kabul/ret beklemeden sohbet ve
-        (kayıtlıysa) telefon bilgisine yönlendirilirsin. İlana en fazla 4
-        teklif düşer.
+        1 kredi ile teklif gönderirsin. Öğrenci kabulünü beklemeden sohbet açılır;
+        tarafların kayıtlı e-posta ve telefon bilgileri sohbet içinde paylaşılır.
+        İlana en fazla 4 teklif düşer; kredi iade edilmez.
       </p>
 
       <div className="space-y-3">

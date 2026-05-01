@@ -114,7 +114,9 @@ export default async function TeacherDetailPage({
                 />
                 {!unlock && (
                   <p className="text-[11px] text-gray-500 mt-2">
-                    Tek sefer 1 kredi — sohbet kalıcıdır.
+                    Tek sefer 1 kredi; kredi iade edilmez. Onayladığında
+                    eğitmenin ve senin kayıtlı iletişim bilgileriniz sohbet
+                    ekranında paylaşılır.
                   </p>
                 )}
               </div>

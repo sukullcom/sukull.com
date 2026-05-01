@@ -20,6 +20,7 @@ import {
   MapPin,
   Clock,
   Users,
+  MessageCircle,
 } from "lucide-react";
 import { OfferForm } from "./_components/offer-form";
 import { OfferList } from "./_components/offer-list";
@@ -27,10 +28,19 @@ import { CloseListingButton } from "./_components/close-listing-button";
 
 export const dynamic = "force-dynamic";
 
+function firstSearchParam(
+  v: string | string[] | undefined,
+): string | undefined {
+  if (v == null) return undefined;
+  return Array.isArray(v) ? v[0] : v;
+}
+
 export default async function ListingDetailPage({
   params,
+  searchParams,
 }: {
   params: { id: string };
+  searchParams?: { yeni?: string | string[] };
 }) {
   const user = await getServerUser();
   if (!user) redirect("/login");
@@ -42,6 +52,8 @@ export default async function ListingDetailPage({
   if (!base) notFound();
 
   const isOwner = base.studentId === user.id;
+  const showNewListingNudge =
+    isOwner && firstSearchParam(searchParams?.yeni) === "1";
   const admin = await isAdmin();
   if (
     (base.status === "pending_review" || base.status === "rejected") &&
@@ -83,6 +95,33 @@ export default async function ListingDetailPage({
       >
         <ArrowLeft className="h-4 w-4" /> İlanlar
       </Link>
+
+      {showNewListingNudge && (
+        <div className="mb-4 rounded-xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-950">
+          <div className="flex gap-2">
+            <MessageCircle className="h-5 w-5 shrink-0 text-sky-700 mt-0.5" />
+            <div className="space-y-2 min-w-0">
+              <p>
+                <span className="font-semibold">İlanın kaydedildi.</span>{" "}
+                Yönetici onayından sonra ilanına uygun eğitmenler teklif
+                verebilir; süre talebe ve yoğunluğa göre değişir.
+              </p>
+              <p>
+                Beklemek istemiyorsan şimdiden{" "}
+                <Link
+                  href="/private-lesson/teachers"
+                  className="font-semibold text-green-800 underline-offset-2 hover:underline"
+                >
+                  eğitmen rehberinden
+                </Link>{" "}
+                konuna uygun birine{" "}
+                <span className="font-semibold">1 kredi</span> ile mesaj
+                kilidini açarak doğrudan iletişim kurabilirsin.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="bg-white border rounded-xl p-5 sm:p-6">
         <div className="flex items-start justify-between gap-3 mb-2">
@@ -215,11 +254,27 @@ export default async function ListingDetailPage({
               </p>
             </div>
           ) : (
-            <OfferForm
-              listingId={base.id}
-              budgetMin={base.budgetMin}
-              budgetMax={base.budgetMax}
-            />
+            <>
+              {base.offerCount === MAX_OFFERS_PER_LISTING - 1 ? (
+                <div className="mb-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-950">
+                  <span className="font-semibold">
+                    Sadece 1 kontenjan kaldı!
+                  </span>{" "}
+                  ({base.offerCount}/{MAX_OFFERS_PER_LISTING} teklif) Şimdi
+                  teklif vermezsen başka bir eğitmen bu fırsatı kapabilir.
+                </div>
+              ) : base.offerCount >= 2 ? (
+                <div className="mb-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2.5 text-sm text-amber-950">
+                  Bu ilanda şimdiden {base.offerCount} teklif var. Kontenjan
+                  dolduğunda yeni teklif kabul edilmez.
+                </div>
+              ) : null}
+              <OfferForm
+                listingId={base.id}
+                budgetMin={base.budgetMin}
+                budgetMax={base.budgetMax}
+              />
+            </>
           )}
         </div>
       )}

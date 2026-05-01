@@ -92,8 +92,10 @@ export default function UserCreditsDisplay({
                   <Button
                     onClick={handlePurchaseCredits}
                     size="sm"
-                    className="flex items-center gap-2"
-                    variant={credits.availableCredits === 0 ? "super" : "superOutline"}
+                    className="flex items-center gap-2 shrink-0"
+                    variant={
+                      credits.availableCredits === 0 ? "primary" : "primaryOutline"
+                    }
                   >
                     <Plus className="h-4 w-4" />
                     <span className="hidden sm:inline">Kredi Al</span>

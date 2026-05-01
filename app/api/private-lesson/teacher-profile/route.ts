@@ -149,7 +149,6 @@ export const PATCH = secureApi.authRateLimited(
       );
       const teacherPhoneNumber = str(body.teacherPhoneNumber);
       const teacherEmail = str(body.teacherEmail).toLowerCase();
-      const field = str(body.field);
       const capabilities = normalizeCapabilities(body.capabilities);
 
       if (!capabilities || capabilities.length === 0) {
@@ -158,9 +157,11 @@ export const PATCH = secureApi.authRateLimited(
           { status: 400 },
         );
       }
-      if (!field || !validateCapabilitiesMatchPrimaryField(field, capabilities)) {
+      /** Birincil branş her zaman ilk satır; gövdedeki `field` ile çelişkiyi önle. */
+      const field = capabilities[0].subject;
+      if (!validateCapabilitiesMatchPrimaryField(field, capabilities)) {
         return NextResponse.json(
-          { error: "Ders alanı ile seçilen ders / sınıf çiftleri uyumsuz." },
+          { error: "Ders ve sınıf seçimleri geçersiz veya tutarsız." },
           { status: 400 },
         );
       }

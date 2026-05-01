@@ -39,8 +39,10 @@ export default async function NewListingPage() {
           </h1>
         </div>
         <p className="text-sm text-gray-600">
-          İhtiyacını detaylıca yaz. Bir ilana en fazla 4 eğitmen teklif
-          gönderebilir; teklif almak senin için ücretsizdir.
+          Tüm zorunlu alanları eksiksiz doldur. Bir ilana en fazla 4 eğitmen teklif
+          gönderebilir; teklif almak senin için ücretsizdir. Teklif veren
+          eğitmenler, kaydettiğin cep telefonuna ve ilgili bilgilere sohbet
+          üzerinden erişebilir.
         </p>
       </div>
 

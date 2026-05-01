@@ -5,6 +5,7 @@ import { getOpenListings, isTeacher } from "@/db/queries";
 import UserCreditsDisplay from "@/components/user-credits-display";
 import { ListingsFilters } from "./_components/listings-filters";
 import { ListingCard } from "./_components/listing-card";
+import { Button } from "@/components/ui/button";
 import { Megaphone, Plus } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -62,35 +63,41 @@ export default async function ListingsIndexPage({
           </div>
           <p className="text-sm text-gray-600">
             {viewerIsTeacher
-              ? "Yayında olan talep ilanları; yalnızca başvurunda seçtiğin ders konularıyla eşleşen ilanlar listelenir. Teklif vermek 1 kredidir; ilan başına en fazla 4 teklif."
+              ? "Yayında olan talep ilanları; yalnızca başvurunda seçtiğin ders konularıyla eşleşen ilanlar listelenir. Teklif vermek 1 kredidir; onay sonrası öğrencinin kayıtlı iletişim bilgileri sohbet üzerinden paylaşılır. İlan başına en fazla 4 teklif."
               : "Öğrencilerin özel ders talepleri. İhtiyacını net yaz; en fazla 4 eğitmen sana teklif gönderebilir."}
           </p>
         </div>
         <div className="flex gap-2 w-full sm:w-auto">
           {!viewerIsTeacher && (
-            <Link
-              href="/private-lesson/listings/new"
-              className="inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors flex-1 sm:flex-none"
+            <Button
+              asChild
+              variant="primary"
+              size="sm"
+              className="flex-1 sm:flex-none"
             >
-              <Plus className="h-4 w-4" />
-              Yeni İlan
-            </Link>
+              <Link
+                href="/private-lesson/listings/new"
+                className="inline-flex items-center justify-center gap-2"
+              >
+                <Plus className="h-4 w-4" />
+                Yeni İlan
+              </Link>
+            </Button>
           )}
           {!viewerIsTeacher && (
-            <Link
-              href="/private-lesson/my-listings"
-              className="inline-flex items-center justify-center text-sm font-medium text-gray-700 border rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors flex-1 sm:flex-none"
+            <Button
+              asChild
+              variant="primaryOutline"
+              size="sm"
+              className="flex-1 sm:flex-none"
             >
-              İlanlarım
-            </Link>
+              <Link href="/private-lesson/my-listings">İlanlarım</Link>
+            </Button>
           )}
           {viewerIsTeacher && (
-            <Link
-              href="/private-lesson/teacher-dashboard"
-              className="inline-flex items-center justify-center text-sm font-medium text-gray-700 border rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors"
-            >
-              Eğitmen paneli
-            </Link>
+            <Button asChild variant="primaryOutline" size="sm">
+              <Link href="/private-lesson/teacher-dashboard">Eğitmen paneli</Link>
+            </Button>
           )}
         </div>
       </div>

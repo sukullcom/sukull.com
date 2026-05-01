@@ -22,6 +22,11 @@ import {
   isValidTeachingGrade,
   isValidTeachingSubject,
 } from "@/lib/teaching-offerings";
+import {
+  LISTING_DESCRIPTION_MIN_LEN,
+  LISTING_PREFERRED_HOURS_MIN_LEN,
+} from "@/lib/private-lesson-listings";
+import { isValidTurkeyMobileForProfile } from "@/lib/teacher-profile-mutation";
 import db from "@/db/drizzle";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -99,7 +104,15 @@ export const POST = secureApi.authRateLimited(
 
     if (!subject || !title || !description || !lessonMode) {
       return NextResponse.json(
-        { error: "Zorunlu alanlar eksik" },
+        { error: "Zorunlu alanlar eksik." },
+        { status: 400 },
+      );
+    }
+    if (description.length < LISTING_DESCRIPTION_MIN_LEN) {
+      return NextResponse.json(
+        {
+          error: `Açıklama en az ${LISTING_DESCRIPTION_MIN_LEN} karakter olmalıdır.`,
+        },
         { status: 400 },
       );
     }
@@ -115,10 +128,10 @@ export const POST = secureApi.authRateLimited(
         { status: 400 },
       );
     }
-    const gradeRaw = strOrNull(body.grade);
-    if (gradeRaw && !isValidTeachingGrade(gradeRaw)) {
+    const gradeRaw = str(body.grade);
+    if (!gradeRaw || !isValidTeachingGrade(gradeRaw)) {
       return NextResponse.json(
-        { error: "Geçersiz sınıf / seviye." },
+        { error: "Sınıf / seviye listeden seçilmelidir." },
         { status: 400 },
       );
     }
@@ -137,13 +150,67 @@ export const POST = secureApi.authRateLimited(
 
     const budgetMin = numOrNull(body.budgetMin);
     const budgetMax = numOrNull(body.budgetMax);
+    if (budgetMin == null || budgetMax == null) {
+      return NextResponse.json(
+        {
+          error:
+            "Saatlik bütçe için hem minimum hem maksimum tutar (₺) girilmelidir.",
+        },
+        { status: 400 },
+      );
+    }
+    if (budgetMin < 0 || budgetMax < 0) {
+      return NextResponse.json(
+        { error: "Bütçe negatif olamaz." },
+        { status: 400 },
+      );
+    }
+    if (budgetMin > budgetMax) {
+      return NextResponse.json(
+        { error: "Minimum bütçe maksimum bütçeden büyük olamaz." },
+        { status: 400 },
+      );
+    }
+
+    const preferredHours = str(body.preferredHours);
+    if (preferredHours.length < LISTING_PREFERRED_HOURS_MIN_LEN) {
+      return NextResponse.json(
+        {
+          error: `Tercih edilen saatler en az ${LISTING_PREFERRED_HOURS_MIN_LEN} karakter olmalıdır.`,
+        },
+        { status: 400 },
+      );
+    }
+
+    const phoneRaw = str(body.contactPhone);
+    if (!isValidTurkeyMobileForProfile(phoneRaw)) {
+      return NextResponse.json(
+        {
+          error:
+            "Geçerli bir Türkiye cep telefonu girilmelidir. Teklif veren eğitmenlerle paylaşılır.",
+        },
+        { status: 400 },
+      );
+    }
+    const contactPhone = normalizeContactPhone(phoneRaw);
+    if (!contactPhone) {
+      return NextResponse.json(
+        { error: "Telefon numarası işlenemedi. Lütfen kontrol edin." },
+        { status: 400 },
+      );
+    }
+
+    const cityTrim = str(body.city);
+    const districtTrim = str(body.district);
     if (
-      budgetMin != null &&
-      budgetMax != null &&
-      budgetMin > budgetMax
+      (lessonMode === "in_person" || lessonMode === "both") &&
+      !cityTrim
     ) {
       return NextResponse.json(
-        { error: "Minimum bütçe maksimum bütçeden büyük olamaz" },
+        {
+          error:
+            "Yüz yüze veya karma ders seçildiğinde şehir alanı zorunludur.",
+        },
         { status: 400 },
       );
     }
@@ -155,20 +222,17 @@ export const POST = secureApi.authRateLimited(
       title,
       description,
       lessonMode: lessonMode as ListingLessonMode,
-      city: strOrNull(body.city),
-      district: strOrNull(body.district),
+      city: cityTrim.length > 0 ? cityTrim : null,
+      district: districtTrim.length > 0 ? districtTrim : null,
       budgetMin,
       budgetMax,
-      preferredHours: strOrNull(body.preferredHours),
+      preferredHours,
     });
 
-    const contactPhone = normalizeContactPhone(body.contactPhone);
-    if (contactPhone) {
-      await db
-        .update(users)
-        .set({ phone: contactPhone, updated_at: new Date() })
-        .where(eq(users.id, user.id));
-    }
+    await db
+      .update(users)
+      .set({ phone: contactPhone, updated_at: new Date() })
+      .where(eq(users.id, user.id));
 
     return NextResponse.json({ listing: row }, { status: 201 });
     } catch (error) {
@@ -191,10 +255,6 @@ export const POST = secureApi.authRateLimited(
 
 function str(v: unknown): string {
   return typeof v === "string" ? v.trim() : "";
-}
-function strOrNull(v: unknown): string | null {
-  const s = str(v);
-  return s.length > 0 ? s : null;
 }
 function numOrNull(v: unknown): number | null {
   if (v === null || v === undefined || v === "") return null;

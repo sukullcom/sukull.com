@@ -153,14 +153,6 @@ export async function unlockMessageThread(input: {
 
   try {
     return await db.transaction(async (tx) => {
-      const teacher = await tx.query.users.findFirst({
-        where: eq(users.id, input.teacherId),
-        columns: { id: true, role: true },
-      });
-      if (!teacher || teacher.role !== "teacher") {
-        return { ok: false as const, code: "teacher_not_found" as const };
-      }
-
       const existing = await tx.query.messageUnlocks.findFirst({
         where: and(
           eq(messageUnlocks.studentId, input.studentId),
@@ -183,6 +175,17 @@ export async function unlockMessageThread(input: {
           chatId,
           alreadyUnlocked: true,
         };
+      }
+
+      const approvedTeaching = await tx.query.teacherApplications.findFirst({
+        where: and(
+          eq(teacherApplications.userId, input.teacherId),
+          eq(teacherApplications.status, "approved"),
+        ),
+        columns: { id: true },
+      });
+      if (!approvedTeaching) {
+        return { ok: false as const, code: "teacher_not_found" as const };
       }
 
       const creditResult = await tx
