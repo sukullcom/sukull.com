@@ -45,6 +45,21 @@ export async function getOffersForListing(
   return rows.map(toOfferRow);
 }
 
+/** Eğitmen görünümü: yalnızca bu eğitmenin teklifleri (en fazla birkaç satır). */
+export async function getOffersForListingByTeacher(
+  listingId: number,
+  teacherId: string,
+): Promise<OfferRow[]> {
+  const rows = await db.query.listingOffers.findMany({
+    where: and(
+      eq(listingOffers.listingId, listingId),
+      eq(listingOffers.teacherId, teacherId),
+    ),
+    orderBy: [asc(listingOffers.createdAt)],
+  });
+  return rows.map(toOfferRow);
+}
+
 export async function getMyOffers(teacherId: string): Promise<OfferRow[]> {
   const rows = await db.query.listingOffers.findMany({
     where: eq(listingOffers.teacherId, teacherId),
@@ -92,7 +107,8 @@ export type CreateOfferResult =
 
 /**
  * Create a teacher offer on a student listing. Runs atomically:
- *   1. Load listing, verify it's open.
+ *   1. Pre-flight listing + subject match (outside the write transaction
+ *      so we hold row locks / transaction time as short as possible).
  *   2. Deduct 1 credit from the teacher's userCredits row (fails if
  *      availableCredits < 1).
  *   3. Insert the offer. The BEFORE trigger on listing_offers enforces
@@ -106,6 +122,39 @@ export async function createOffer(input: {
   priceProposal: number;
   note?: string | null;
 }): Promise<CreateOfferResult> {
+  const listingPre = await db.query.listings.findFirst({
+    where: eq(listings.id, input.listingId),
+    columns: {
+      id: true,
+      status: true,
+      studentId: true,
+      offerCount: true,
+      subject: true,
+      grade: true,
+    },
+  });
+  if (!listingPre) {
+    return { ok: false as const, code: "listing_not_found" as const };
+  }
+  if (listingPre.status !== "open") {
+    return { ok: false as const, code: "listing_closed" as const };
+  }
+  if (listingPre.studentId === input.teacherId) {
+    return { ok: false as const, code: "self_offer_forbidden" as const };
+  }
+  if (listingPre.offerCount >= MAX_OFFERS_PER_LISTING) {
+    return { ok: false as const, code: "offer_cap_reached" as const };
+  }
+
+  const subjectOk = await teacherMatchesListingSubjects(
+    input.teacherId,
+    listingPre.subject,
+    listingPre.grade,
+  );
+  if (!subjectOk) {
+    return { ok: false as const, code: "listing_subject_mismatch" as const };
+  }
+
   try {
     return await db.transaction(async (tx) => {
       const listing = await tx.query.listings.findFirst({
@@ -115,8 +164,6 @@ export async function createOffer(input: {
           status: true,
           studentId: true,
           offerCount: true,
-          subject: true,
-          grade: true,
         },
       });
       if (!listing) {
@@ -127,15 +174,6 @@ export async function createOffer(input: {
       }
       if (listing.studentId === input.teacherId) {
         return { ok: false as const, code: "self_offer_forbidden" as const };
-      }
-
-      const subjectOk = await teacherMatchesListingSubjects(
-        input.teacherId,
-        listing.subject,
-        listing.grade,
-      );
-      if (!subjectOk) {
-        return { ok: false as const, code: "listing_subject_mismatch" as const };
       }
 
       if (listing.offerCount >= MAX_OFFERS_PER_LISTING) {

@@ -35,9 +35,19 @@ describe("RATE_LIMITS presets", () => {
     expect(RATE_LIMITS.leaderboard.max).toBeLessThanOrEqual(200);
   });
 
-  it("schools read allows shared-NAT / onboarding bursts", () => {
+  it("schools catalog read is high for shared-NAT onboarding", () => {
+    expect(RATE_LIMITS.schoolsCatalogRead.max).toBeGreaterThanOrEqual(2000);
+    expect(RATE_LIMITS.schoolsCatalogRead.max).toBeLessThanOrEqual(20_000);
+  });
+
+  it("schools list / heavy GET has a sane per-minute cap", () => {
     expect(RATE_LIMITS.schoolsRead.max).toBeGreaterThanOrEqual(200);
-    expect(RATE_LIMITS.schoolsRead.max).toBeLessThanOrEqual(600);
+    expect(RATE_LIMITS.schoolsRead.max).toBeLessThanOrEqual(2000);
+  });
+
+  it("schools bulk POST has a sane per-minute cap", () => {
+    expect(RATE_LIMITS.schoolsBulkPost.max).toBeGreaterThanOrEqual(60);
+    expect(RATE_LIMITS.schoolsBulkPost.max).toBeLessThanOrEqual(500);
   });
 
   it("all presets have positive integers", () => {

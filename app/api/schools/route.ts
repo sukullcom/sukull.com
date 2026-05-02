@@ -4,8 +4,12 @@ import db from '@/db/drizzle';
 import { schools } from '@/db/schema';
 import { eq, and, ilike, desc, sql } from 'drizzle-orm';
 import { CACHE_TAGS, CACHE_TTL } from '@/lib/cache-tags';
-import { secureApi } from '@/lib/api-middleware';
-import { RATE_LIMITS } from '@/lib/rate-limit-db';
+import {
+  checkRateLimit,
+  getClientIp,
+  rateLimitHeaders,
+  RATE_LIMITS,
+} from '@/lib/rate-limit-db';
 import { getRequestLogger } from '@/lib/logger';
 import { clampPositiveInt } from '@/lib/pagination';
 
@@ -76,18 +80,39 @@ const getCategoriesAggregate = unstable_cache(
   { tags: [CACHE_TAGS.schoolsMaster], revalidate: CACHE_TTL.schoolsMaster },
 );
 
+function rateLimitSchoolsGet(ip: string, action: string | null) {
+  const catalogOnly =
+    action === 'cities' || action === 'districts' || action === 'categories';
+  if (catalogOnly) {
+    return checkRateLimit({
+      key: `schools-catalog:ip:${ip}`,
+      ...RATE_LIMITS.schoolsCatalogRead,
+    });
+  }
+  return checkRateLimit({
+    key: `schools-get:ip:${ip}`,
+    ...RATE_LIMITS.schoolsRead,
+  });
+}
+
 /**
- * Public read endpoint — IP-scoped limit. The `unstable_cache` layer above
- * absorbs the happy path; this limiter protects against adversarial query
- * combinations (unique city/district/search permutations) that bypass the
- * cache keyspace and trigger fresh `LIKE %..%` scans.
+ * Public read endpoint — IP-scoped limits.
+ * Catalog aggregates (city/district/type) use a separate generous bucket so
+ * many users behind one NAT (school Wi‑Fi) can complete onboarding without
+ * exhausting the tighter bucket used for school lists / leaderboard queries.
  */
-export const GET = secureApi.rateLimited(
-  { bucket: 'schools-get', keyKind: 'ip', ...RATE_LIMITS.schoolsRead },
-  async (request: NextRequest) => {
+export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const action = searchParams.get('action') || searchParams.get('step'); // Support both 'action' and 'step' for backward compatibility
+    const action = searchParams.get('action') || searchParams.get('step');
+    const rl = await rateLimitSchoolsGet(getClientIp(request), action);
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: 'Çok fazla istek. Lütfen biraz bekleyin.' },
+        { status: 429, headers: rateLimitHeaders(rl) },
+      );
+    }
+
     const city = searchParams.get('city');
     const district = searchParams.get('district');
     const category = searchParams.get('category');
@@ -224,14 +249,23 @@ export const GET = secureApi.rateLimited(
     }
     return NextResponse.json({ error: 'Sunucu tarafında bir hata oluştu.' }, { status: 500 });
   }
-  },
-);
+}
 
 // Handle POST for comprehensive leaderboard (all school types)
-export const POST = secureApi.rateLimited(
-  { bucket: 'schools-post', keyKind: 'ip', ...RATE_LIMITS.schoolsRead },
-  async (request: NextRequest) => {
+export async function POST(request: NextRequest) {
   try {
+    const ip = getClientIp(request);
+    const rl = await checkRateLimit({
+      key: `schools-bulk:ip:${ip}`,
+      ...RATE_LIMITS.schoolsBulkPost,
+    });
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { error: 'Çok fazla istek. Lütfen biraz bekleyin.' },
+        { status: 429, headers: rateLimitHeaders(rl) },
+      );
+    }
+
     const body = (await request.json().catch(() => ({}))) as {
       city?: unknown;
       limit?: unknown;
@@ -287,5 +321,4 @@ export const POST = secureApi.rateLimited(
     }
     return NextResponse.json({ error: 'Sunucu tarafında bir hata oluştu.' }, { status: 500 });
   }
-  },
-);
+}

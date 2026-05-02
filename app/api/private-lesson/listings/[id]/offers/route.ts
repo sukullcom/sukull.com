@@ -21,6 +21,7 @@ import {
   createOffer,
   getListingById,
   getOffersForListing,
+  getOffersForListingByTeacher,
   hasAvailableCredits,
   hasTeacherOfferedOnListing,
   isTeacher,
@@ -28,6 +29,9 @@ import {
 } from "@/db/queries";
 import { verifyCsrf } from "@/lib/csrf";
 import { isTrustedApiOrigin } from "@/lib/same-origin-api";
+
+/** Vercel / barındırıcı zaman aşımı: teklif + sohbet kilidi tek işlemde uzun sürebilir. */
+export const maxDuration = 60;
 
 type RouteContext = { params: { id: string } };
 
@@ -44,13 +48,18 @@ export async function GET(
       );
     }
 
-    // Listings + offers are fan-out reads — every teacher who considers
-    // bidding pulls this. Per-user cap protects the DB from a single
-    // actor iterating all open listings in a loop.
-    const rl = await checkRateLimit({
-      key: `listingsRead:user:${user.id}`,
-      ...RATE_LIMITS.listingsRead,
-    });
+    const id = Number.parseInt(params.id, 10);
+    if (!Number.isFinite(id) || id <= 0) {
+      return NextResponse.json({ error: "Geçersiz ilan" }, { status: 400 });
+    }
+
+    const [rl, listing] = await Promise.all([
+      checkRateLimit({
+        key: `listingsRead:user:${user.id}`,
+        ...RATE_LIMITS.listingsRead,
+      }),
+      getListingById(id),
+    ]);
     if (!rl.allowed) {
       return NextResponse.json(
         { error: "Çok sık istek. Biraz sonra tekrar deneyin." },
@@ -58,12 +67,6 @@ export async function GET(
       );
     }
 
-    const id = Number.parseInt(params.id, 10);
-    if (!Number.isFinite(id) || id <= 0) {
-      return NextResponse.json({ error: "Geçersiz ilan" }, { status: 400 });
-    }
-
-    const listing = await getListingById(id);
     if (!listing) {
       return NextResponse.json(
         { error: "İlan bulunamadı" },
@@ -81,9 +84,7 @@ export async function GET(
     }
 
     // Teachers only see their own offer (if any).
-    const mine = await getOffersForListing(id).then((rows) =>
-      rows.filter((o) => o.teacherId === user.id),
-    );
+    const mine = await getOffersForListingByTeacher(id, user.id);
     return NextResponse.json({
       offers: mine,
       offerCount: listing.offerCount,

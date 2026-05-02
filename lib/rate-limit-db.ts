@@ -229,7 +229,8 @@ export const RATE_LIMITS = {
   accountDelete: { max: 3, windowSeconds: 24 * 60 * 60 },
 
   // --- Reads — user-scoped ---
-  leaderboard: { max: 60, windowSeconds: 60 },
+  /** Genel kullanıcı sıralaması — paylaşılan IP (kampüs Wi‑Fi) ile okunabilir. */
+  leaderboard: { max: 180, windowSeconds: 60 },
   /** Per-teacher detail page. */
   teacherDetails: { max: 60, windowSeconds: 60 },
   /** Generic authenticated read bucket when no specific preset fits. */
@@ -283,12 +284,21 @@ export const RATE_LIMITS = {
 
   // --- Public reads — IP-scoped ---
   /**
-   * Okul kataloğu (şehir / ilçe / tür / liste). `unstable_cache` + HTTP
-   * Cache-Control ile çoğu trafik DB’ye gitmez; kota yine de tek IP altında
-   * (okul Wi‑Fi, kurumsal NAT, mobil CGNAT) yüzlerce eşzamanlı kayıt/onboarding
-   * için paylaşılır. 60/dk çok düşük kalıp 429 + “donuyor” hissi yaratıyordu.
+   * Okul şehir / ilçe / tür özetleri. `unstable_cache` ile sunucuda ucuz;
+   * onboarding’de her kullanıcı ardışık birkaç çağrı yapar. Ağır sorgu
+   * kovasından ayrı tutulur — paylaşılan IP (okul Wi‑Fi) altında 429
+   * ile “hesap açılamıyor” hissini engellemek için yüksek tavan.
    */
-  schoolsRead: { max: 300, windowSeconds: 60 },
+  schoolsCatalogRead: { max: 5000, windowSeconds: 60 },
+  /**
+   * Okul listesi, isim araması, okul leaderboard GET. Daha maliyetli;
+   * katalog özetlerinden ayrı kova (schools-get) ile sınırlanır.
+   */
+  schoolsRead: { max: 600, windowSeconds: 60 },
+  /**
+   * POST ile dört okul tipi leaderboard — döngüde birden fazla SELECT.
+   */
+  schoolsBulkPost: { max: 180, windowSeconds: 60 },
   /** Random avatar generation — cheap but trivially loopable. */
   avatar: { max: 120, windowSeconds: 60 },
 

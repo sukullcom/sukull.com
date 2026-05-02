@@ -112,6 +112,7 @@ export type { ListingRow, ListingWithOffersRow } from "./queries/listings";
 
 export {
   getOffersForListing,
+  getOffersForListingByTeacher,
   getMyOffers,
   hasTeacherOfferedOnListing,
   createOffer,
