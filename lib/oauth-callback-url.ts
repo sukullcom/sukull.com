@@ -31,3 +31,20 @@ export function getApiAuthCallbackUrl(): string {
   }
   return `${o}/api/auth/callback`;
 }
+
+/**
+ * Server Actions / Route Handlers: e-posta doğrulama `redirectTo` URL’si.
+ * Tarayıcı origin’i yok; `NEXT_PUBLIC_APP_URL` kanonik kök olmalı.
+ */
+export function getServerAuthCallbackUrl(): string {
+  const raw = process.env.NEXT_PUBLIC_APP_URL?.trim();
+  if (raw) {
+    return `${raw.replace(/\/$/, "")}/api/auth/callback`;
+  }
+  if (process.env.NODE_ENV !== "production") {
+    return "http://localhost:3000/api/auth/callback";
+  }
+  throw new Error(
+    "NEXT_PUBLIC_APP_URL is not set — required for server-side signup email redirect",
+  );
+}

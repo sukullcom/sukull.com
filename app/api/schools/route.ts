@@ -12,6 +12,7 @@ import {
 } from '@/lib/rate-limit-db';
 import { getRequestLogger } from '@/lib/logger';
 import { clampPositiveInt } from '@/lib/pagination';
+import { SCHOOL_LEADERBOARD_LIST_MAX } from '@/lib/school-leaderboard-limits';
 
 type SchoolType = 'university' | 'high_school' | 'secondary_school' | 'elementary_school';
 
@@ -205,15 +206,23 @@ export async function GET(request: NextRequest) {
       }
 
       case 'leaderboard': {
-        const offset = clampPositiveInt(searchParams.get('offset'), 0, 100_000);
-        // Re-clamp to leaderboard's tighter ceiling (100) since the outer
-        // scope clamps to 1000 for search/schools calls.
-        const lbLimit = Math.min(limit, 100);
-        const leaderboardConditions = [];
-
-        if (type) {
-          leaderboardConditions.push(eq(schools.type, type as SchoolType));
+        if (
+          !type ||
+          !['university', 'high_school', 'secondary_school', 'elementary_school'].includes(
+            type,
+          )
+        ) {
+          return NextResponse.json(
+            { error: 'Okul tipi (type) gereklidir.' },
+            { status: 400 },
+          );
         }
+        const lbLimit = clampPositiveInt(
+          searchParams.get('limit'),
+          SCHOOL_LEADERBOARD_LIST_MAX,
+          SCHOOL_LEADERBOARD_LIST_MAX,
+        );
+        const leaderboardConditions = [eq(schools.type, type as SchoolType)];
 
         if (city) {
           leaderboardConditions.push(eq(schools.city, city.toUpperCase()));
@@ -231,10 +240,10 @@ export async function GET(request: NextRequest) {
             totalPoints: schools.totalPoints,
           })
           .from(schools)
-          .where(leaderboardConditions.length > 0 ? and(...leaderboardConditions) : undefined)
+          .where(and(...leaderboardConditions))
           .orderBy(desc(schools.totalPoints), schools.name)
           .limit(lbLimit)
-          .offset(offset);
+          .offset(0);
 
         return NextResponse.json({ schools: leaderboardResults });
       }
@@ -271,12 +280,8 @@ export async function POST(request: NextRequest) {
       limit?: unknown;
     };
     const city = typeof body.city === "string" ? body.city : null;
-    // Clamp `limit` defensively: JSON payloads from untrusted clients can
-    // send `null`, strings, or omit the field, any of which would make
-    // `Math.min(limit, 50)` return NaN → Drizzle then emits `LIMIT NaN`
-    // which Postgres rejects at query time. Coerce to a finite integer
-    // in [1, 50] before use.
-    const limit = clampPositiveInt(body.limit, 10, 50);
+    // Coerce to a finite integer in [1, SCHOOL_LEADERBOARD_LIST_MAX] before use.
+    const limit = clampPositiveInt(body.limit, 10, SCHOOL_LEADERBOARD_LIST_MAX);
 
     const leaderboards: Record<SchoolType, unknown[]> = {
       university: [],

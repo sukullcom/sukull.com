@@ -16,6 +16,7 @@ import { getServerUser } from "@/lib/auth";
 import { normalizeAvatarUrl } from "@/utils/avatar";
 import { CACHE_TAGS, CACHE_TTL } from "@/lib/cache-tags";
 import { queryResultRows } from "@/lib/query-result";
+import { SCHOOL_LEADERBOARD_LIST_MAX } from "@/lib/school-leaderboard-limits";
 
 export const getTopTenUsers = cache(async () => {
   const user = await getServerUser();
@@ -71,7 +72,7 @@ export const getSchoolPointsByType = cache(
       | "high_school"
       | "secondary_school"
       | "elementary_school",
-    limit: number = 50,
+    limit: number = SCHOOL_LEADERBOARD_LIST_MAX,
     offset: number = 0,
     city?: string,
   ) => {

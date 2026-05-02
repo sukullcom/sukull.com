@@ -10,6 +10,7 @@ import db from "@/db/drizzle";
 import { schools } from "@/db/schema";
 import { sql } from "drizzle-orm";
 import { getRequestLogger } from "@/lib/logger";
+import { SCHOOL_LEADERBOARD_LIST_MAX } from "@/lib/school-leaderboard-limits";
 import Image from "next/image";
 import { isRedirectError } from "next/dist/client/components/redirect";
 import { redirect } from "next/navigation";
@@ -18,7 +19,7 @@ import { LeaderboardClient } from "./leaderboard-client";
 
 export const revalidate = 300;
 
-const INITIAL_LIMIT = 50;
+const INITIAL_USER_LIMIT = 50;
 
 const LeaderboardPage = async () => {
   try {
@@ -26,7 +27,7 @@ const LeaderboardPage = async () => {
       await Promise.all([
         getUserProgress(),
         getServerUser(),
-        getTopUsers(INITIAL_LIMIT, 0),
+        getTopUsers(INITIAL_USER_LIMIT, 0),
         getUserRank(),
         db
           .selectDistinct({ city: schools.city })
@@ -54,10 +55,10 @@ const LeaderboardPage = async () => {
     let initialSchools = emptySchools;
     if (segmentTabs === "all") {
       const [u, h, s, e] = await Promise.all([
-        getSchoolPointsByType("university", INITIAL_LIMIT, 0),
-        getSchoolPointsByType("high_school", INITIAL_LIMIT, 0),
-        getSchoolPointsByType("secondary_school", INITIAL_LIMIT, 0),
-        getSchoolPointsByType("elementary_school", INITIAL_LIMIT, 0),
+        getSchoolPointsByType("university", SCHOOL_LEADERBOARD_LIST_MAX, 0),
+        getSchoolPointsByType("high_school", SCHOOL_LEADERBOARD_LIST_MAX, 0),
+        getSchoolPointsByType("secondary_school", SCHOOL_LEADERBOARD_LIST_MAX, 0),
+        getSchoolPointsByType("elementary_school", SCHOOL_LEADERBOARD_LIST_MAX, 0),
       ]);
       initialSchools = {
         university: u,
@@ -67,7 +68,7 @@ const LeaderboardPage = async () => {
       };
     } else {
       const boards = await Promise.all(
-        segmentTabs.map((t) => getSchoolPointsByType(t, INITIAL_LIMIT, 0)),
+        segmentTabs.map((t) => getSchoolPointsByType(t, SCHOOL_LEADERBOARD_LIST_MAX, 0)),
       );
       initialSchools = { ...emptySchools };
       segmentTabs.forEach((t, i) => {

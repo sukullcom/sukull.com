@@ -29,8 +29,13 @@ if (isProduction) {
   const usingPooler =
     connectionString.includes('pooler.supabase.com') ||
     connectionString.includes(':6543');
+  const looksLikeDirectDbHost =
+    /db\.[a-z0-9-]+\.supabase\.co/i.test(connectionString) &&
+    !connectionString.includes("pooler.supabase.com");
   if (!usingPooler) {
-    console.warn(
+    const level = looksLikeDirectDbHost ? 'error' : 'warn';
+    const logFn = level === 'error' ? console.error : console.warn;
+    logFn(
       '[db] DATABASE_URL does not appear to use the Supabase transaction pooler ' +
         '(expected host *.pooler.supabase.com and port 6543). In serverless ' +
         'environments this will exhaust Postgres connections under load. ' +

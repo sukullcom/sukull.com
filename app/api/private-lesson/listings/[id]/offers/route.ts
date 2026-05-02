@@ -53,13 +53,10 @@ export async function GET(
       return NextResponse.json({ error: "Geçersiz ilan" }, { status: 400 });
     }
 
-    const [rl, listing] = await Promise.all([
-      checkRateLimit({
-        key: `listingsRead:user:${user.id}`,
-        ...RATE_LIMITS.listingsRead,
-      }),
-      getListingById(id),
-    ]);
+    const rl = await checkRateLimit({
+      key: `listingsRead:user:${user.id}`,
+      ...RATE_LIMITS.listingsRead,
+    });
     if (!rl.allowed) {
       return NextResponse.json(
         { error: "Çok sık istek. Biraz sonra tekrar deneyin." },
@@ -67,6 +64,7 @@ export async function GET(
       );
     }
 
+    const listing = await getListingById(id);
     if (!listing) {
       return NextResponse.json(
         { error: "İlan bulunamadı" },
@@ -166,14 +164,18 @@ export async function POST(
 
     // Zaten teklif varsa kredi gerekmez (409). Yeni teklif için kredi
     // yoksa 402 — rate limit'ten önce; yoksa denemeler 429'a düşer.
-    if (await hasTeacherOfferedOnListing(id, user.id)) {
+    const [alreadyOffered, hasCredits] = await Promise.all([
+      hasTeacherOfferedOnListing(id, user.id),
+      hasAvailableCredits(user.id, 1),
+    ]);
+    if (alreadyOffered) {
       return NextResponse.json(
         { error: "Bu ilana zaten teklif verdiniz" },
         { status: 409 },
       );
     }
 
-    if (!(await hasAvailableCredits(user.id, 1))) {
+    if (!hasCredits) {
       return NextResponse.json(
         { error: "Teklif vermek için en az 1 kredin olmalı. Kredi satın alıp tekrar dene." },
         { status: 402 },
@@ -240,9 +242,15 @@ function offerErrorToHttp(
     | "insufficient_credits"
     | "self_offer_forbidden"
     | "listing_subject_mismatch"
+    | "try_again"
     | "unknown",
 ): [number, string] {
   switch (code) {
+    case "try_again":
+      return [
+        503,
+        "Şu an yoğunluk veya kısa süreli kilit var. Birkaç saniye sonra tekrar dene.",
+      ];
     case "listing_subject_mismatch":
       return [
         403,

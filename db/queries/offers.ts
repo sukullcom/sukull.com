@@ -15,6 +15,7 @@ import {
   listings,
   userCredits,
 } from "@/db/schema";
+import { queryResultRows } from "@/lib/query-result";
 import { ensureUnlockedThreadForOfferTx } from "@/db/queries/messages";
 import { teacherMatchesListingSubjects } from "@/db/queries/listings";
 
@@ -101,6 +102,7 @@ export type CreateOfferResult =
         | "insufficient_credits"
         | "self_offer_forbidden"
         | "listing_subject_mismatch"
+        | "try_again"
         | "unknown";
       message?: string;
     };
@@ -157,18 +159,35 @@ export async function createOffer(input: {
 
   try {
     return await db.transaction(async (tx) => {
-      const listing = await tx.query.listings.findFirst({
-        where: eq(listings.id, input.listingId),
-        columns: {
-          id: true,
-          status: true,
-          studentId: true,
-          offerCount: true,
-        },
-      });
-      if (!listing) {
+      // Sıkı eşzamanlı tekliflerde listing satırı üzerinde kilit beklerken
+      // barındırıcı 504 vermesin diye üst sınır; aşılırsa try_again döner.
+      await tx.execute(sql`SELECT set_config('lock_timeout', '8000', true)`);
+      await tx.execute(sql`SELECT set_config('statement_timeout', '28000', true)`);
+
+      const listingRows = queryResultRows<{
+        id: number;
+        status: string;
+        student_id: string;
+        offer_count: number;
+      }>(
+        await tx.execute(sql`
+          SELECT id, status, student_id, offer_count
+          FROM listings
+          WHERE id = ${input.listingId}
+          FOR UPDATE
+        `),
+      );
+      const row = listingRows[0];
+      if (!row) {
         return { ok: false as const, code: "listing_not_found" as const };
       }
+      const listing = {
+        id: row.id,
+        status: row.status,
+        studentId: row.student_id,
+        offerCount: row.offer_count,
+      };
+
       if (listing.status !== "open") {
         return { ok: false as const, code: "listing_closed" as const };
       }
@@ -237,8 +256,21 @@ export async function createOffer(input: {
     });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
+    const lower = msg.toLowerCase();
     if (msg.includes("LISTING_OFFER_CAP_REACHED")) {
       return { ok: false, code: "offer_cap_reached" };
+    }
+    if (
+      lower.includes("lock timeout") ||
+      lower.includes("canceling statement due to lock timeout")
+    ) {
+      return { ok: false, code: "try_again" };
+    }
+    if (
+      lower.includes("statement timeout") ||
+      lower.includes("canceling statement due to statement timeout")
+    ) {
+      return { ok: false, code: "try_again" };
     }
     return {
       ok: false,

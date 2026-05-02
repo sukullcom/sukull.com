@@ -1,82 +1,10 @@
 import { createClient } from '@/utils/supabase/client'
 import { getApiAuthCallbackUrl } from '@/lib/oauth-callback-url'
 import { clientLogger } from '@/lib/client-logger'
-import { users } from './users'
 
 const supabase = createClient()
 
 export const auth = {
-  /**
-   * signUp
-   * 
-   * @param username - The chosen username
-   * @param email
-   * @param password
-   */
-  async signUp(username: string, email: string, password: string) {
-    // 1) Check if 'users' table already has this email
-    const { data: existingUser, error: checkErr } = await supabase
-      .from('users')
-      .select('id')
-      .eq('email', email)
-      .single()
-
-    if (existingUser) {
-      throw new Error('Bu e-posta adresi zaten kayıtlı. Bunun yerine giriş yapmayı deneyiniz.')
-    }
-
-    if (checkErr && checkErr.code !== 'PGRST116') {
-      // PGRST116 => no rows
-      throw checkErr
-    }
-
-    // 2) Attempt to create a Supabase auth user with email confirmation enabled
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: getApiAuthCallbackUrl(),
-        data: {
-          username: username,
-        }
-      },
-    })
-    
-    if (error) {
-      clientLogger.error({
-        message: 'signup failed',
-        error,
-        location: 'utils/auth/signUp',
-        fields: { email },
-      });
-      throw error;
-    }
-    
-    if (!data.user) {
-      throw new Error('Kullanıcı hesabı oluşturulamadı. Lütfen tekrar deneyiniz.');
-    }
-
-    // 3) Only capture user details if this is not an email confirmation signup
-    // (email confirmation signups will be handled by the callback route)
-    if (data.user.email_confirmed_at) {
-      // User is immediately confirmed (happens in some configurations)
-      try {
-        await users.captureUserDetails(data.user, username)
-      } catch (profileError) {
-        clientLogger.error({
-          message: 'capture user details failed during signup',
-          error: profileError,
-          location: 'utils/auth/signUp/captureUserDetails',
-          fields: { userId: data.user.id },
-        })
-      }
-    } else {
-      clientLogger.info('email confirmation required', { email: data.user.email })
-    }
-    
-    return data
-  },
-
   async signInWithOAuth(provider: 'google', nextUrl?: string) {
     const redirectTo = getApiAuthCallbackUrl();
     

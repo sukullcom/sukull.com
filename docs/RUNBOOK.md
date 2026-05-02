@@ -144,6 +144,13 @@ Never commit `.env*` files. The repo's `.gitignore` already excludes
 them; if one slips into git history, rotate the affected secrets
 **before** rewriting history.
 
+### 2.4 Reklam / trafik zirvesi öncesi (checklist)
+
+- **Vercel**: [Hobby planı ticari kullanım için uygun değildir](https://vercel.com/docs/limits/fair-use-guidelines#commercial-usage); canlı pazarlama için **Pro** (destek, log süresi, adil kullanım) önerilir. [Hobby limitleri](https://vercel.com/docs/accounts/plans/hobby) (CPU-saat, fonksiyon süresi vb.) kampanya anında tükenebilir.
+- **Supabase Auth**: Dashboard → **Authentication → Rate limits** ve (varsa) **özel SMTP** saatlik gönderim tavanı; büyük duyuru öncesi [üretim checklist](https://supabase.com/docs/guides/platform/going-into-prod#availability) ile hizala. E-posta doğrulama linki için **`NEXT_PUBLIC_APP_URL`** üretimde zorunlu; sunucu tarafı kayıt `…/api/auth/callback` adresini bundan üretir (`getServerAuthCallbackUrl`).
+- **Uygulama**: E-posta kaydı `signUpWithEmail` server action ile **IP başına** `RATE_LIMITS.signupIp` (varsayılan **500/saat**, `lib/rate-limit-db.ts`) uygulanır. Doğrulama yeniden gönderme: `resendVerification`. Üretimde e-posta için **özel SMTP (ör. Resend)** + Supabase Dashboard rate limit ayarları ile hizalayın.
+- **Doğrulama**: Staging’de kısa süreli yük testi (ör. çoklu kayıt denemesi) + üretimde ilk kampanya günü **Vercel Functions** ve **Supabase Auth / Postgres** loglarını izle.
+
 ## 3. Deploy
 
 ### 3.1 Next.js (Vercel)

@@ -35,5 +35,5 @@ export default async function PrivateLessonHeader() {
   ];
 
   const items = teacherMode ? teacherItems : studentItems;
-  return <PrivateLessonNav items={items} />;
+  return <PrivateLessonNav items={items} isTeacherMode={teacherMode} />;
 }

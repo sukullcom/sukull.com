@@ -165,6 +165,14 @@ export function getClientIp(request: Request): string {
 }
 
 /**
+ * Server Actions / Route Handler içinde `headers()` ile gelen `Headers`
+ * için IP — `getClientIp` ile aynı öncelik sırası (CF, Fly, vb.).
+ */
+export function getClientIpFromHeaders(h: Headers): string {
+  return getClientIp(new Request("http://localhost", { headers: h }));
+}
+
+/**
  * Convenience: build a 429 JSON response with standard headers.
  * Import NextResponse at the call site to avoid a cross-boundary dep here.
  */
@@ -191,9 +199,14 @@ export function rateLimitHeaders(result: RateLimitResult): Record<string, string
 export const RATE_LIMITS = {
   // --- Auth — IP-scoped ---
   login: { max: 8, windowSeconds: 15 * 60 },
-  register: { max: 5, windowSeconds: 60 * 60 },
+  /**
+   * E-posta ile kayıt (server action). Okul / kampüs NAT altında toplu
+   * kayıt (reklam sonrası) için saatlik tavan yükseltilmiştir; yine de
+   * Supabase Auth rate limit + SMTP kotası ayrıca uygulanır.
+   */
+  signupIp: { max: 500, windowSeconds: 60 * 60 },
   resetPassword: { max: 5, windowSeconds: 60 * 60 },
-  resendVerification: { max: 3, windowSeconds: 15 * 60 },
+  resendVerification: { max: 30, windowSeconds: 15 * 60 },
 
   // --- Writes — user-scoped ---
   pointsAdd: { max: 120, windowSeconds: 60 },       // ~2/s per user, generous for active play
@@ -300,7 +313,7 @@ export const RATE_LIMITS = {
    */
   schoolsBulkPost: { max: 180, windowSeconds: 60 },
   /** Random avatar generation — cheap but trivially loopable. */
-  avatar: { max: 120, windowSeconds: 60 },
+  avatar: { max: 300, windowSeconds: 60 },
 
   // --- Generic write endpoints ---
   writeBurst: { max: 30, windowSeconds: 60 },

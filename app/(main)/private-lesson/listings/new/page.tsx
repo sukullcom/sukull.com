@@ -23,10 +23,10 @@ export default async function NewListingPage() {
       <UserCreditsDisplay className="mb-4" />
 
       <Link
-        href="/private-lesson/listings"
+        href="/private-lesson/my-listings"
         className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4"
       >
-        <ArrowLeft className="h-4 w-4" /> İlanlar
+        <ArrowLeft className="h-4 w-4" /> İlanlarım
       </Link>
 
       <div className="mb-4">

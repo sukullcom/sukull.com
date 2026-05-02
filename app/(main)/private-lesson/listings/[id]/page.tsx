@@ -90,10 +90,15 @@ export default async function ListingDetailPage({
       <UserCreditsDisplay className="mb-4" />
 
       <Link
-        href="/private-lesson/listings"
+        href={
+          listingViewerIsTeacher && !isOwner
+            ? "/private-lesson/listings"
+            : "/private-lesson/my-listings"
+        }
         className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4"
       >
-        <ArrowLeft className="h-4 w-4" /> İlanlar
+        <ArrowLeft className="h-4 w-4" />{" "}
+        {listingViewerIsTeacher && !isOwner ? "İlanlar" : "İlanlarım"}
       </Link>
 
       {showNewListingNudge && (

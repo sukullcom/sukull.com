@@ -1,6 +1,7 @@
 /**
  * GET  /api/private-lesson/listings
- *   Public-ish: any authenticated user can browse open listings.
+ *   Yalnızca onaylı eğitmenler açık talep ilanlarını listeler (branş/sınıf
+ *   eşleşmesi `viewerTeacherId` ile). Öğrenci: 403.
  *   Query params: ?subject=&city=&lessonMode=&limit=&offset=
  *
  * POST /api/private-lesson/listings
@@ -16,7 +17,7 @@ import { RATE_LIMITS } from "@/lib/rate-limit-db";
 import { secureApi } from "@/lib/api-middleware";
 import { verifyCsrf } from "@/lib/csrf";
 import { isTrustedApiOrigin } from "@/lib/same-origin-api";
-import { createListing, getOpenListings } from "@/db/queries";
+import { createListing, getOpenListings, isTeacher } from "@/db/queries";
 import type { ListingLessonMode } from "@/db/queries/listings";
 import {
   isValidTeachingGrade,
@@ -39,8 +40,18 @@ export const GET = secureApi.authRateLimited(
     keyKind: "user",
     ...RATE_LIMITS.listingsRead,
   },
-  async (request) => {
+  async (request, user) => {
     try {
+      if (!(await isTeacher(user.id))) {
+        return NextResponse.json(
+          {
+            error:
+              "Tüm talep ilanlarını yalnızca onaylı eğitmenler görüntüleyebilir.",
+          },
+          { status: 403 },
+        );
+      }
+
       const { searchParams } = new URL(request.url);
       const subject = searchParams.get("subject") ?? undefined;
       const city = searchParams.get("city") ?? undefined;
@@ -58,6 +69,7 @@ export const GET = secureApi.authRateLimited(
         lessonMode,
         limit,
         offset,
+        viewerTeacherId: user.id,
       });
 
       return NextResponse.json({ listings: rows });

@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { clientLogger } from "@/lib/client-logger";
+import { fetchSchoolCatalogJson } from "@/lib/fetch-school-catalog";
 
 type School = { 
   id: number; 
@@ -50,75 +51,88 @@ export const ProfileSchoolSelector = ({
   }, []);
 
   const loadCities = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const response = await fetch('/api/schools?action=cities');
-      if (!response.ok) throw new Error('Şehirler yüklenemedi');
-      const data = await response.json();
-      setCities(data.cities || []);
-    } catch (err) {
-      setError('Şehirler yüklenirken hata oluştu');
-      clientLogger.error({ message: 'load cities failed', error: err, location: 'profile/profile-school-selector' });
-    } finally {
-      setLoading(false);
+    setLoading(true);
+    setError(null);
+    const r = await fetchSchoolCatalogJson<{ cities: City[] }>(
+      "/api/schools?action=cities",
+      "Şehirler",
+    );
+    if (!r.ok) {
+      setError(r.message);
+      clientLogger.error({
+        message: "load cities failed",
+        location: "profile/profile-school-selector",
+        fields: { detail: r.message },
+      });
+    } else {
+      setCities(r.data.cities || []);
     }
+    setLoading(false);
   };
 
   const loadDistricts = async (city: string) => {
-    try {
-      setLoading(true);
-      setError(null);
-      const response = await fetch(`/api/schools?action=districts&city=${encodeURIComponent(city)}`);
-      if (!response.ok) throw new Error('İlçeler yüklenemedi');
-      const data = await response.json();
-      setDistricts(data.districts || []);
-    } catch (err) {
-      setError('İlçeler yüklenirken hata oluştu');
-      clientLogger.error({ message: 'load districts failed', error: err, location: 'profile/profile-school-selector' });
-    } finally {
-      setLoading(false);
+    setLoading(true);
+    setError(null);
+    const r = await fetchSchoolCatalogJson<{ districts: District[] }>(
+      `/api/schools?action=districts&city=${encodeURIComponent(city)}`,
+      "İlçeler",
+    );
+    if (!r.ok) {
+      setError(r.message);
+      clientLogger.error({
+        message: "load districts failed",
+        location: "profile/profile-school-selector",
+        fields: { detail: r.message },
+      });
+    } else {
+      setDistricts(r.data.districts || []);
     }
+    setLoading(false);
   };
 
   const loadCategories = async (city: string, district: string) => {
-    try {
-      setLoading(true);
-      setError(null);
-      const response = await fetch(
-        `/api/schools?action=categories&city=${encodeURIComponent(city)}&district=${encodeURIComponent(district)}`
-      );
-      if (!response.ok) throw new Error('Kategoriler yüklenemedi');
-      const data = await response.json();
-      setCategories(data.categories || []);
-    } catch (err) {
-      setError('Kategoriler yüklenirken hata oluştu');
-      clientLogger.error({ message: 'load categories failed', error: err, location: 'profile/profile-school-selector' });
-    } finally {
-      setLoading(false);
+    setLoading(true);
+    setError(null);
+    const r = await fetchSchoolCatalogJson<{ categories: Category[] }>(
+      `/api/schools?action=categories&city=${encodeURIComponent(city)}&district=${encodeURIComponent(district)}`,
+      "Kategoriler",
+    );
+    if (!r.ok) {
+      setError(r.message);
+      clientLogger.error({
+        message: "load categories failed",
+        location: "profile/profile-school-selector",
+        fields: { detail: r.message },
+      });
+    } else {
+      setCategories(r.data.categories || []);
     }
+    setLoading(false);
   };
 
   const loadSchools = async (city: string, district: string, category: string) => {
-    try {
-      setLoading(true);
-      setError(null);
-      const url = new URL('/api/schools', window.location.origin);
-      url.searchParams.set('action', 'schools');
-      url.searchParams.set('city', city);
-      url.searchParams.set('district', district);
-      url.searchParams.set('category', category);
-
-      const response = await fetch(url);
-      if (!response.ok) throw new Error('Okullar yüklenemedi');
-      const data = await response.json();
-      setSchools(data.schools || []);
-    } catch (err) {
-      setError('Okullar yüklenirken hata oluştu');
-      clientLogger.error({ message: 'load schools failed', error: err, location: 'profile/profile-school-selector' });
-    } finally {
-      setLoading(false);
+    setLoading(true);
+    setError(null);
+    const url = new URL("/api/schools", window.location.origin);
+    url.searchParams.set("action", "schools");
+    url.searchParams.set("city", city);
+    url.searchParams.set("district", district);
+    url.searchParams.set("category", category);
+    const r = await fetchSchoolCatalogJson<{ schools: School[] }>(
+      url.toString(),
+      "Okullar",
+    );
+    if (!r.ok) {
+      setError(r.message);
+      clientLogger.error({
+        message: "load schools failed",
+        location: "profile/profile-school-selector",
+        fields: { detail: r.message },
+      });
+    } else {
+      setSchools(r.data.schools || []);
     }
+    setLoading(false);
   };
 
   const handleCityChange = useCallback(async (event: React.ChangeEvent<HTMLSelectElement>) => {

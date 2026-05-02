@@ -21,8 +21,10 @@ describe("RATE_LIMITS presets", () => {
     expect(RATE_LIMITS.login.windowSeconds).toBeGreaterThanOrEqual(60);
   });
 
-  it("register is stricter than login (higher cost per attempt)", () => {
-    expect(RATE_LIMITS.register.max).toBeLessThanOrEqual(RATE_LIMITS.login.max);
+  it("signup per-IP allows bulk school NAT (aligned with infra caps)", () => {
+    expect(RATE_LIMITS.signupIp.max).toBeGreaterThanOrEqual(100);
+    expect(RATE_LIMITS.signupIp.max).toBeLessThanOrEqual(2000);
+    expect(RATE_LIMITS.signupIp.windowSeconds).toBe(3600);
   });
 
   it("points-add is generous enough for active play", () => {

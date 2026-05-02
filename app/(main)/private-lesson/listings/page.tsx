@@ -6,7 +6,7 @@ import UserCreditsDisplay from "@/components/user-credits-display";
 import { ListingsFilters } from "./_components/listings-filters";
 import { ListingCard } from "./_components/listing-card";
 import { Button } from "@/components/ui/button";
-import { Megaphone, Plus } from "lucide-react";
+import { Megaphone } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -17,13 +17,9 @@ type SearchParams = {
 };
 
 /**
- * Shared browse page for student demand posts. Teachers use it to find
- * listings they want to bid on; students use it to see how other
- * people frame their requests (and it's the jump-off to /listings/new).
- *
- * The per-user CTA in the top-right differs by role:
- *   - student → "Yeni İlan Oluştur"
- *   - eğitmen → "İlanlarım" (giden teklifler)
+ * Talep ilanları — yalnızca onaylı eğitmenler tüm açık ilanları burada görür
+ * ve teklif verebilir. Öğrenciler yönlendirilir; kendi ilanları için
+ * `/private-lesson/my-listings` kullanılır (gizlilik + doğru ürün akışı).
  */
 export default async function ListingsIndexPage({
   searchParams,
@@ -34,6 +30,9 @@ export default async function ListingsIndexPage({
   if (!user) redirect("/login");
 
   const viewerIsTeacher = await isTeacher(user.id);
+  if (!viewerIsTeacher) {
+    redirect("/private-lesson/my-listings");
+  }
 
   const listings = await getOpenListings({
     subject: searchParams.subject || undefined,
@@ -44,7 +43,7 @@ export default async function ListingsIndexPage({
       | undefined) || undefined,
     city: searchParams.city || undefined,
     limit: 50,
-    viewerTeacherId: viewerIsTeacher ? user.id : undefined,
+    viewerTeacherId: user.id,
   });
 
   return (
@@ -62,43 +61,16 @@ export default async function ListingsIndexPage({
             </h1>
           </div>
           <p className="text-sm text-muted-foreground">
-            {viewerIsTeacher
-              ? "Yayında olan talep ilanları; yalnızca başvurunda seçtiğin ders konularıyla eşleşen ilanlar listelenir. Teklif vermek 1 kredidir; onay sonrası öğrencinin kayıtlı iletişim bilgileri sohbet üzerinden paylaşılır. İlan başına en fazla 4 teklif."
-              : "Öğrencilerin özel ders talepleri. İhtiyacını net yaz; en fazla 4 eğitmen sana teklif gönderebilir."}
+            Yayında olan talep ilanları; yalnızca başvurunda seçtiğin ders
+            konularıyla eşleşen ilanlar listelenir. Teklif vermek 1 kredidir; onay
+            sonrası öğrencinin kayıtlı iletişim bilgileri sohbet üzerinden
+            paylaşılır. İlan başına en fazla 4 teklif.
           </p>
         </div>
         <div className="flex gap-2 w-full sm:w-auto">
-          {!viewerIsTeacher && (
-            <Button
-              asChild
-              variant="primary"
-              size="sm"
-              className="flex-1 sm:flex-none"
-            >
-              <Link
-                href="/private-lesson/listings/new"
-                className="inline-flex items-center justify-center gap-2"
-              >
-                <Plus className="h-4 w-4" />
-                Yeni İlan
-              </Link>
-            </Button>
-          )}
-          {!viewerIsTeacher && (
-            <Button
-              asChild
-              variant="primaryOutline"
-              size="sm"
-              className="flex-1 sm:flex-none"
-            >
-              <Link href="/private-lesson/my-listings">İlanlarım</Link>
-            </Button>
-          )}
-          {viewerIsTeacher && (
-            <Button asChild variant="primaryOutline" size="sm">
-              <Link href="/private-lesson/teacher-dashboard">Eğitmen paneli</Link>
-            </Button>
-          )}
+          <Button asChild variant="primaryOutline" size="sm">
+            <Link href="/private-lesson/teacher-dashboard">Eğitmen paneli</Link>
+          </Button>
         </div>
       </div>
 

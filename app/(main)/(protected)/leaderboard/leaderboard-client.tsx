@@ -16,6 +16,11 @@ import {
   Loader2,
 } from "lucide-react";
 import type { LeaderboardSchoolTab } from "@/lib/learning-path";
+import { fetchSchoolCatalogJson } from "@/lib/fetch-school-catalog";
+import { SCHOOL_LEADERBOARD_LIST_MAX } from "@/lib/school-leaderboard-limits";
+import { toast } from "sonner";
+import { clientLogger } from "@/lib/client-logger";
+import { getClientAuthTransientErrorMessage } from "@/lib/auth-flow-client-errors";
 
 type UserEntry = {
   userId: string;
@@ -31,11 +36,14 @@ type SchoolEntry = {
   city?: string;
 };
 
-type SchoolType =
-  | "university"
-  | "high_school"
-  | "secondary_school"
-  | "elementary_school";
+type SchoolsLeaderboardJson = {
+  schools: Array<{
+    id: number;
+    name: string;
+    totalPoints: number;
+    city?: string;
+  }>;
+};
 
 const TABS = [
   { id: "users" as const, label: "Bireysel", icon: User },
@@ -46,6 +54,12 @@ const TABS = [
 ] as const;
 
 type TabId = (typeof TABS)[number]["id"];
+
+type SchoolType =
+  | "university"
+  | "high_school"
+  | "secondary_school"
+  | "elementary_school";
 
 type LeaderboardClientProps = {
   initialUsers: UserEntry[];
@@ -77,12 +91,6 @@ export const LeaderboardClient = ({
   const [selectedCity, setSelectedCity] = useState<string>("");
   const [loadingMore, startLoadMore] = useTransition();
   const [hasMoreUsers, setHasMoreUsers] = useState(initialUsers.length >= 50);
-  const [hasMoreSchools, setHasMoreSchools] = useState<Record<SchoolType, boolean>>({
-    university: initialSchools.university.length >= 50,
-    high_school: initialSchools.high_school.length >= 50,
-    secondary_school: initialSchools.secondary_school.length >= 50,
-    elementary_school: initialSchools.elementary_school.length >= 50,
-  });
   const [cityLoading, startCityLoad] = useTransition();
 
   const isSchoolTab = activeTab !== "users";
@@ -97,25 +105,37 @@ export const LeaderboardClient = ({
           const params = new URLSearchParams({
             action: "leaderboard",
             type: currentSchoolType,
-            limit: "50",
+            limit: String(SCHOOL_LEADERBOARD_LIST_MAX),
           });
           if (city) params.set("city", city);
 
-          const res = await fetch(`/api/schools?${params}`);
-          const data = await res.json();
-          const mapped = (data.schools || []).map((s: { id: number; name: string; totalPoints: number; city?: string }) => ({
+          const r = await fetchSchoolCatalogJson<SchoolsLeaderboardJson>(
+            `/api/schools?${params.toString()}`,
+            "Puan tablosu",
+          );
+          if (!r.ok) {
+            toast.error(r.message);
+            clientLogger.error({
+              message: "leaderboard city filter fetch failed",
+              location: "leaderboard-client/handleCityChange",
+              fields: { detail: r.message, type: currentSchoolType, city },
+            });
+            return;
+          }
+          const mapped = (r.data.schools || []).map((s) => ({
             schoolId: s.id,
             schoolName: s.name,
             totalPoints: s.totalPoints,
             city: s.city,
           }));
           setSchoolData((prev) => ({ ...prev, [currentSchoolType]: mapped }));
-          setHasMoreSchools((prev) => ({
-            ...prev,
-            [currentSchoolType]: mapped.length >= 50,
-          }));
-        } catch {
-          /* silently ignore */
+        } catch (e) {
+          clientLogger.error({
+            message: "leaderboard city filter unexpected error",
+            error: e,
+            location: "leaderboard-client/handleCityChange",
+          });
+          toast.error("Puan tablosu güncellenemedi. Lütfen tekrar deneyin.");
         }
       });
     },
@@ -139,51 +159,25 @@ export const LeaderboardClient = ({
         const res = await fetch(
           `/api/leaderboard?limit=25&offset=${users.length}`,
         );
+        if (!res.ok) {
+          const msg =
+            res.status === 429
+              ? "Çok fazla istek. Lütfen bir dakika sonra tekrar deneyin."
+              : "Liste yüklenemedi. Lütfen tekrar deneyin.";
+          toast.error(msg);
+          return;
+        }
         const data = await res.json();
         const newUsers: UserEntry[] = data.users || [];
         if (newUsers.length < 25) setHasMoreUsers(false);
         setUsers((prev) => [...prev, ...newUsers]);
-      } catch {
-        /* ignore */
-      }
-    });
-  };
-
-  const loadMoreSchools = () => {
-    if (!currentSchoolType) return;
-    const current = schoolData[currentSchoolType];
-    startLoadMore(async () => {
-      try {
-        const params = new URLSearchParams({
-          action: "leaderboard",
-          type: currentSchoolType,
-          limit: "25",
-          offset: String(current.length),
+      } catch (e) {
+        toast.error(getClientAuthTransientErrorMessage(e));
+        clientLogger.error({
+          message: "load more users failed",
+          error: e,
+          location: "leaderboard-client/loadMoreUsers",
         });
-        if (selectedCity) params.set("city", selectedCity);
-
-        const res = await fetch(`/api/schools?${params}`);
-        const data = await res.json();
-        const newSchools: SchoolEntry[] = (data.schools || []).map(
-          (s: { id: number; name: string; totalPoints: number; city?: string }) => ({
-            schoolId: s.id,
-            schoolName: s.name,
-            totalPoints: s.totalPoints,
-            city: s.city,
-          }),
-        );
-        if (newSchools.length < 25) {
-          setHasMoreSchools((prev) => ({
-            ...prev,
-            [currentSchoolType]: false,
-          }));
-        }
-        setSchoolData((prev) => ({
-          ...prev,
-          [currentSchoolType]: [...current, ...newSchools],
-        }));
-      } catch {
-        /* ignore */
       }
     });
   };
@@ -264,9 +258,6 @@ export const LeaderboardClient = ({
             </div>
           );
         })}
-        {currentSchoolType && hasMoreSchools[currentSchoolType] && (
-          <LoadMoreButton loading={loadingMore} onClick={loadMoreSchools} />
-        )}
       </>
     );
   };

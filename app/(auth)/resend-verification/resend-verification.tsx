@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 
 import { auth } from "@/utils/auth";
 import { getAuthError } from "@/utils/auth-errors";
+import { getClientAuthTransientErrorMessage } from "@/lib/auth-flow-client-errors";
 
 export function ResendVerificationForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,8 +25,12 @@ export function ResendVerificationForm() {
       toast.success(response.message);
       router.push("/login");
     } catch (error) {
-      const { message } = getAuthError(error);
-      toast.error(message);
+      const { message, type } = getAuthError(error);
+      if (type === "Default") {
+        toast.error(getClientAuthTransientErrorMessage(error));
+      } else {
+        toast.error(message);
+      }
     } finally {
       setIsLoading(false);
     }

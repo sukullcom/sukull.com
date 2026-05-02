@@ -44,7 +44,13 @@ const ICON_MAP: Record<PrivateLessonIconKey, LucideIcon> = {
  * `usePathname`. Keeps the server/client split clean — server does I/O
  * (user + role), client does UX (pathname/highlight).
  */
-export function PrivateLessonNav({ items }: { items: PrivateLessonNavItem[] }) {
+export function PrivateLessonNav({
+  items,
+  isTeacherMode,
+}: {
+  items: PrivateLessonNavItem[];
+  isTeacherMode: boolean;
+}) {
   const pathname = usePathname() ?? "";
 
   const isActive = (path: string) => {
@@ -52,6 +58,14 @@ export function PrivateLessonNav({ items }: { items: PrivateLessonNavItem[] }) {
     // exact root path, otherwise nested children would always match.
     if (path === "/private-lesson/teacher-dashboard") return pathname === path;
     if (path === "/private-lesson/listings/new") return pathname === path;
+    // Öğrenci: kendi ilan detayı `/listings/[id]` — sekmede "İlanlarım" aktif kalsın.
+    if (
+      !isTeacherMode &&
+      path === "/private-lesson/my-listings" &&
+      /^\/private-lesson\/listings\/\d+$/.test(pathname)
+    ) {
+      return true;
+    }
     return pathname === path || pathname.startsWith(`${path}/`);
   };
 

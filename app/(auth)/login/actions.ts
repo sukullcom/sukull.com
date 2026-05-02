@@ -6,19 +6,10 @@ import { headers } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { users } from '@/utils/users'
 import { getAuthError } from '@/utils/auth-errors'
-import { checkRateLimit, RATE_LIMITS } from '@/lib/rate-limit-db'
+import { checkRateLimit, getClientIpFromHeaders, RATE_LIMITS } from '@/lib/rate-limit-db'
 import { logger } from '@/lib/logger'
 
 const log = logger.child({ labels: { module: 'auth/login' } })
-
-function getIpFromHeaders(h: Headers): string {
-  return (
-    h.get('cf-connecting-ip') ||
-    h.get('x-real-ip') ||
-    h.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-    'unknown'
-  )
-}
 
 export async function login(formData: FormData) {
   const supabase = await createClient()
@@ -28,7 +19,7 @@ export async function login(formData: FormData) {
   const next = formData.get('next') as string || '/courses'
 
   const h = await headers()
-  const ip = getIpFromHeaders(h)
+  const ip = getClientIpFromHeaders(h)
   const emailKey = (email || '').toLowerCase().trim()
   const rl = await checkRateLimit({
     key: `login:ip:${ip}:${emailKey}`,

@@ -77,6 +77,13 @@ export function OfferForm({
         return;
       }
       if (!res.ok) {
+        if (res.status === 503 || res.status === 504) {
+          toast.error(
+            data.error ||
+              "Sunucu zaman aşımı veya yoğunluk. Birkaç saniye sonra tekrar dene.",
+          );
+          return;
+        }
         toast.error(data.error || "Teklif gönderilemedi");
         return;
       }

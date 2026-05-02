@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { OAuthSignIn } from "@/components/auth/oauth-signin";
 import { login } from "./actions";
 import { clientLogger } from "@/lib/client-logger";
+import { getClientAuthTransientErrorMessage } from "@/lib/auth-flow-client-errors";
 
 export function LoginForm() {
   const [isPending, startTransition] = useTransition();
@@ -60,7 +61,7 @@ export function LoginForm() {
         // If no error, server action will redirect
       } catch (error) {
         clientLogger.error({ message: 'login submit failed', error, location: 'auth/login-form' });
-        toast.error('Giriş yapılırken bir hata oluştu');
+        toast.error(getClientAuthTransientErrorMessage(error));
         setIsSubmitting(false);
       }
     });

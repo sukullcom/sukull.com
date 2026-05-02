@@ -26,9 +26,10 @@ The email verification system is now fully implemented and configured. When user
 
 ### 3. Enhanced Components
 
-#### Auth System (`utils/auth.ts`)
-- `signUp()`: Creates account with email confirmation
-- `resendVerificationEmail()`: Allows users to request new verification emails
+#### Auth System
+- **E-posta + şifre kaydı**: `app/(auth)/create-account/actions.ts` → `signUpWithEmail` (server action): IP rate limit, `public.users` e-posta kontrolü (Drizzle), `emailRedirectTo` için `getServerAuthCallbackUrl()` (`NEXT_PUBLIC_APP_URL` + `/api/auth/callback`).
+- `utils/auth.ts`: OAuth, çıkış, şifre sıfırlama, doğrulama e-postası yeniden gönderme (istemci Supabase).
+- `resendVerificationEmail()`: Yeni doğrulama e-postası talebi
 - Enhanced logging for debugging
 
 #### Callback Handler (`app/api/auth/callback/route.ts`)

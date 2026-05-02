@@ -56,7 +56,7 @@ export type ListingWithOffersRow = ListingRow & {
 };
 
 // ---------------------------------------------------------------------------
-// Browsing (teacher side) & filtering
+// Browsing (eğitmen): açık talep ilanları — öğrenci tarafı `/my-listings`.
 // ---------------------------------------------------------------------------
 
 export type ListingFilters = {

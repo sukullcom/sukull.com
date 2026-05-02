@@ -9,8 +9,8 @@ import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { OAuthSignIn } from "@/components/auth/oauth-signin";
 
-import { auth } from "@/utils/auth";
-import { getAuthError } from "@/utils/auth-errors";
+import { signUpWithEmail } from "./actions";
+import { getClientAuthTransientErrorMessage } from "@/lib/auth-flow-client-errors";
 
 export function CreateAccountForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -46,15 +46,31 @@ export function CreateAccountForm() {
       return;
     }
 
+    if (password.length < 8) {
+      toast.error("Şifre en az 8 karakter olmalıdır.");
+      return;
+    }
+
     try {
       setIsLoading(true);
-      await auth.signUp(username, email, password);
-      toast.success("Kayıt işlemi başarılı! E-postanıza doğrulama linki gönderildi. Lütfen e-postanızı kontrol edin ve spam klasörünü de kontrol etmeyi unutmayın.");
+      const fd = new FormData();
+      fd.set("username", username.trim());
+      fd.set("email", email.trim());
+      fd.set("password", password);
+      fd.set("legalAccepted", legalAccepted ? "1" : "0");
+      const result = await signUpWithEmail(fd);
+      if (!result.ok) {
+        toast.error(result.error);
+        setIsLoading(false);
+        return;
+      }
+      toast.success(
+        "Kayıt işlemi başarılı! E-postanıza doğrulama linki gönderildi. Lütfen e-postanızı kontrol edin ve spam klasörünü de kontrol etmeyi unutmayın.",
+      );
       router.push("/login");
-    } catch (error) {
-      const { message } = getAuthError(error);
-      toast.error(message);
-      setIsLoading(false); // Only reset on error
+    } catch (err) {
+      toast.error(getClientAuthTransientErrorMessage(err));
+      setIsLoading(false);
     }
     // Don't reset isLoading on success - let the redirect happen
   };
