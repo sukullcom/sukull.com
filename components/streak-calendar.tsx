@@ -190,7 +190,7 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
     <div className="p-4">
       {/* Navigation header */}
       <div className="flex items-center justify-between mb-4">
-        <Button variant="sidebarOutline" onClick={handlePrevMonth} disabled={isPrevDisabled}>
+        <Button variant="outline" onClick={handlePrevMonth} disabled={isPrevDisabled}>
           {"<"}
         </Button>
         <div className="text-xl font-bold">
@@ -199,7 +199,7 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
         <div className="flex items-center gap-2">
           {/* 🎯 NEW: Manual refresh button */}
           <Button
-            variant="sidebarOutline"
+            variant="outline"
             size="sm"
             onClick={handleRefresh}
             disabled={loading}
@@ -207,7 +207,7 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
           >
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           </Button>
-          <Button variant="sidebarOutline" onClick={handleNextMonth} disabled={isNextDisabled}>
+          <Button variant="outline" onClick={handleNextMonth} disabled={isNextDisabled}>
             {">"}
           </Button>
         </div>

@@ -212,7 +212,7 @@ export const ProfileSchoolSelector = ({
           <option value="">Şehir seçin...</option>
           {cities.map((city) => (
             <option key={city.city} value={city.city}>
-              {city.city} ({city.count} okul)
+              {city.city}
             </option>
           ))}
         </select>
@@ -233,8 +233,8 @@ export const ProfileSchoolSelector = ({
             <option value="">İlçe seçin...</option>
             {districts.map((district) => (
               <option key={district.district} value={district.district}>
-                {district.district} ({district.count} okul)
-          </option>
+                {district.district}
+              </option>
         ))}
       </select>
         </div>
@@ -255,7 +255,7 @@ export const ProfileSchoolSelector = ({
             <option value="">Okul türü seçin...</option>
             {categories.map((category) => (
               <option key={`${category.category}-${category.type}`} value={category.category}>
-                {getCategoryLabel(category.category)} ({category.count} okul)
+                {getCategoryLabel(category.category)}
               </option>
             ))}
           </select>
@@ -305,7 +305,7 @@ export const ProfileSchoolSelector = ({
       
            {schools.length > 0 && (
              <div className="mt-2 text-right text-xs text-muted-foreground">
-               {schools.length} okul gösteriliyor
+               Bu filtreye uyan {schools.length} okul listeleniyor
              </div>
            )}
         </div>

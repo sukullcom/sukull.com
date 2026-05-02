@@ -13,12 +13,14 @@ const buttonVariants = cva(
           "bg-suk-neutral-locked text-suk-neutral-locked-fg hover:bg-suk-neutral-locked/90 border-suk-neutral-locked-border border-b-4 active:border-b-0",
         default:
           "bg-suk-surface-card text-suk-fg-muted border-suk-border border-2 border-b-4 active:border-b-2 hover:bg-suk-surface-muted",
+        /** Birincil eylem — marka yeşili, dolu 3D */
         primary:
           "bg-suk-brand text-suk-brand-fg hover:bg-suk-brand-hover border-suk-brand-border border-b-4 active:border-b-0",
         primaryOutline:
-          "bg-suk-surface-card text-suk-brand hover:bg-suk-surface-muted",
+          "bg-suk-surface-card text-suk-brand border-2 border-suk-brand hover:bg-suk-brand-soft",
+        /** İkincil yeşil — çerçeveli 3D (aynı ekranda tek dolu yeşil: primary) */
         secondary:
-          "bg-suk-brand text-suk-brand-fg hover:bg-suk-brand-hover border-suk-brand-border border-b-4 active:border-b-0",
+          "bg-suk-surface-card text-suk-brand border-2 border-suk-brand border-b-4 border-b-suk-brand-border hover:bg-suk-brand-soft active:border-b-2",
         secondaryOutline:
           "bg-suk-surface-card text-suk-brand hover:bg-suk-surface-muted",
         danger:
@@ -41,6 +43,9 @@ const buttonVariants = cva(
           "bg-suk-payment text-suk-payment-fg hover:bg-suk-payment-hover border-suk-payment-border border-b-4 active:border-b-0",
         paymentOutline:
           "bg-suk-surface-card text-suk-payment-soft-fg border-2 border-suk-payment-ring border-b-4 border-b-suk-payment-border hover:bg-suk-payment-soft active:border-b-2",
+        /** İstikrar / bonus / puan harcama — amber, dikkat (ödeme değil) */
+        warning:
+          "bg-suk-warning text-white hover:brightness-105 border border-black/10 border-b-4 border-b-suk-warning-soft-fg/35 active:border-b-2",
         super:
           "bg-suk-play text-suk-play-fg hover:bg-suk-play-hover border-suk-play-border border-b-4 active:border-b-0",
         superOutline:

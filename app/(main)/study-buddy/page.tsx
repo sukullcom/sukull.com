@@ -1114,7 +1114,7 @@ export default function StudyBuddyPage() {
         <div className="space-y-4">
           <div className="border-2 border-border rounded-2xl p-4 space-y-3">
             <div className="flex items-center gap-2 mb-1">
-              <Users className="h-4 w-4 text-green-500" />
+              <Users className="h-4 w-4 text-suk-brand" />
               <span className="font-bold text-sm text-foreground">Özet</span>
             </div>
             <div className="flex items-center justify-between">
@@ -1142,10 +1142,10 @@ export default function StudyBuddyPage() {
               <span className="font-bold text-sm text-foreground">İpuçları</span>
             </div>
             <div className="text-sm text-muted-foreground space-y-2">
-              <p><CircleCheck className="w-4 h-4 inline text-green-500 shrink-0" /> Belirli hedefler koyun</p>
-              <p><Calendar className="w-4 h-4 inline text-blue-500 shrink-0" /> Düzenli çalışma programları oluşturun</p>
-              <p><Heart className="w-4 h-4 inline text-rose-500 shrink-0" /> Birbirinizi motive edin</p>
-              <p><Target className="w-4 h-4 inline text-orange-500 shrink-0" /> Başarılarınızı paylaşın</p>
+              <p><CircleCheck className="w-4 h-4 inline text-suk-brand shrink-0" /> Belirli hedefler koyun</p>
+              <p><Calendar className="w-4 h-4 inline text-suk-payment shrink-0" /> Düzenli çalışma programları oluşturun</p>
+              <p><Heart className="w-4 h-4 inline text-suk-danger shrink-0" /> Birbirinizi motive edin</p>
+              <p><Target className="w-4 h-4 inline text-suk-warning shrink-0" /> Başarılarınızı paylaşın</p>
             </div>
           </div>
         </div>
@@ -1229,7 +1229,7 @@ export default function StudyBuddyPage() {
               {/* Action Bar */}
               <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 <Button
-                  variant="secondary"
+                  variant="primary"
                   size="sm"
                   className="w-full sm:w-auto"
                   onClick={() => setShowNewPostForm(!showNewPostForm)}
@@ -1256,7 +1256,7 @@ export default function StudyBuddyPage() {
                         <select
                           value={filterPurpose}
                           onChange={(e) => setFilterPurpose(e.target.value)}
-                          className="w-full rounded-lg border border-input p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20"
+                          className="w-full rounded-lg border border-input p-2.5 text-sm focus:border-suk-brand focus:outline-none focus:ring-1 focus:ring-suk-brand/20"
                         >
                           <option value="">Tümü</option>
                           {PURPOSE_OPTIONS.map((opt) => (
@@ -1280,14 +1280,14 @@ export default function StudyBuddyPage() {
 
               {/* New Post Form */}
               {showNewPostForm && (
-                <Card className="border-green-300 overflow-hidden">
-                  <div className="bg-gradient-to-r from-green-500 to-emerald-500 px-4 py-3 flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-white">
+                <Card className="border-suk-brand/35 overflow-hidden">
+                  <div className="bg-gradient-to-r from-suk-brand to-suk-brand-hover px-4 py-3 flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-suk-brand-fg">
                       <Sparkles className="h-4 w-4" />
                       <span className="font-bold text-sm">Yeni Gönderi</span>
                     </div>
                     <button
-                      className="text-white/80 hover:text-white transition-colors"
+                      className="text-suk-brand-fg/80 hover:text-suk-brand-fg transition-colors"
                       onClick={() => setShowNewPostForm(false)}
                     >
                       <X className="h-4 w-4" />
@@ -1302,7 +1302,7 @@ export default function StudyBuddyPage() {
                     <div className="space-y-1.5">
                       <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Çalışma Amacı</label>
                       <select
-                        className="w-full rounded-lg border border-input p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20"
+                        className="w-full rounded-lg border border-input p-2.5 text-sm focus:border-suk-brand focus:outline-none focus:ring-1 focus:ring-suk-brand/20"
                         value={postPurpose}
                         onChange={(e) => setPostPurpose(e.target.value)}
                       >
@@ -1317,7 +1317,7 @@ export default function StudyBuddyPage() {
                     <div className="space-y-1.5">
                       <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Açıklama</label>
                       <textarea
-                        className="w-full rounded-lg border border-input p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20 min-h-[90px] resize-none"
+                        className="w-full rounded-lg border border-input p-2.5 text-sm focus:border-suk-brand focus:outline-none focus:ring-1 focus:ring-suk-brand/20 min-h-[90px] resize-none"
                         value={postReason}
                         onChange={(e) => setPostReason(e.target.value)}
                         placeholder="Neden çalışma arkadaşı arıyorsun?"
@@ -1329,7 +1329,7 @@ export default function StudyBuddyPage() {
                       </div>
                     </div>
                     <Button
-                      variant="secondary"
+                      variant="primary"
                       className="w-full"
                       onClick={handleCreatePost}
                       disabled={!postPurpose || !postReason}
@@ -1397,14 +1397,14 @@ export default function StudyBuddyPage() {
               ) : (
                 <>
                   {showEditPostForm && editingPost && (
-                    <Card className="border-green-300 overflow-hidden">
-                      <div className="bg-gradient-to-r from-green-500 to-emerald-500 px-4 py-3 flex items-center justify-between">
-                        <div className="flex items-center gap-2 text-white">
+                    <Card className="border-suk-brand/35 overflow-hidden">
+                      <div className="bg-gradient-to-r from-suk-brand to-suk-brand-hover px-4 py-3 flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-suk-brand-fg">
                           <Edit className="h-4 w-4" />
                           <span className="font-bold text-sm">Gönderi Düzenle</span>
                         </div>
                         <button
-                          className="text-white/80 hover:text-white transition-colors"
+                          className="text-suk-brand-fg/80 hover:text-suk-brand-fg transition-colors"
                           onClick={() => {
                             setShowEditPostForm(false);
                             setEditingPost(null);
@@ -1423,7 +1423,7 @@ export default function StudyBuddyPage() {
                         <div className="space-y-1.5">
                           <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Çalışma Amacı</label>
                           <select
-                            className="w-full rounded-lg border border-input p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20"
+                            className="w-full rounded-lg border border-input p-2.5 text-sm focus:border-suk-brand focus:outline-none focus:ring-1 focus:ring-suk-brand/20"
                             value={editPostPurpose}
                             onChange={(e) => setEditPostPurpose(e.target.value)}
                           >
@@ -1438,7 +1438,7 @@ export default function StudyBuddyPage() {
                         <div className="space-y-1.5">
                           <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Açıklama</label>
                           <textarea
-                            className="w-full rounded-lg border border-input p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20 min-h-[90px] resize-none"
+                            className="w-full rounded-lg border border-input p-2.5 text-sm focus:border-suk-brand focus:outline-none focus:ring-1 focus:ring-suk-brand/20 min-h-[90px] resize-none"
                             value={editPostReason}
                             onChange={(e) => setEditPostReason(e.target.value)}
                             placeholder="Neden çalışma arkadaşı arıyorsun?"
@@ -1579,13 +1579,13 @@ export default function StudyBuddyPage() {
                           <div
                             className={`max-w-[80%] sm:max-w-[70%] px-3 py-2 ${
                               message.sender === currentUser?.id
-                                ? "bg-green-500 text-white rounded-2xl rounded-br-md"
+                                ? "bg-suk-brand text-suk-brand-fg rounded-2xl rounded-br-md"
                                 : "bg-card border border-border rounded-2xl rounded-bl-md"
                             }`}
                           >
                             <p className="text-sm break-words leading-relaxed">{message.content}</p>
                             <span className={`text-[10px] block mt-0.5 ${
-                              message.sender === currentUser?.id ? "text-green-100" : "text-muted-foreground"
+                              message.sender === currentUser?.id ? "text-suk-brand-fg/80" : "text-muted-foreground"
                             }`}>
                               {new Date(message.created_at).toLocaleTimeString("tr-TR", {
                                 hour: "2-digit",
@@ -1605,7 +1605,7 @@ export default function StudyBuddyPage() {
                           value={newMessage}
                           onChange={(e) => setNewMessage(e.target.value)}
                           placeholder="Mesajınızı yazın..."
-                          className="flex-1 rounded-full border border-input px-4 py-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20"
+                          className="flex-1 rounded-full border border-input px-4 py-2.5 text-sm focus:border-suk-brand focus:outline-none focus:ring-1 focus:ring-suk-brand/20"
                           maxLength={MESSAGE_LIMITS.MAX_LENGTH}
                           onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && handleSendMessage()}
                         />

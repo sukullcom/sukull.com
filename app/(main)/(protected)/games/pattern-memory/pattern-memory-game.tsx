@@ -281,7 +281,7 @@ export default function PatternMemoryGame() {
         </div>
 
         <Button
-          variant="super"
+          variant="primary"
           onClick={startGame}
           className="w-full py-6 text-lg"
         >
@@ -317,14 +317,14 @@ export default function PatternMemoryGame() {
 
         <div className="flex gap-3 w-full">
           <Button
-            variant="super"
+            variant="primary"
             onClick={startGame}
             className="flex-1 py-5"
           >
             Tekrar Oyna
           </Button>
           <Link href="/games" className="flex-1">
-            <Button variant="superOutline" className="w-full py-5">
+            <Button variant="outline" className="w-full py-5">
               Oyunlara Dön
             </Button>
           </Link>

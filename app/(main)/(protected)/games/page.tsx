@@ -88,6 +88,7 @@ const GamesPage = async () => {
                   title={game.name}
                   href={`/games/${game.id}`}
                   buttonText="Oyna"
+                  variant="muted"
                 />
               ))}
             </div>

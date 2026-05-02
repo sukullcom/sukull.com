@@ -118,7 +118,7 @@ export default function LabsPage() {
                       buttonText={
                         lab.development ? "Geliştirme\nAşamasında" : "İncele"
                       }
-                      variant={lab.development ? "locked" : "super"}
+                      variant={lab.development ? "locked" : "primary"}
                       disabled={lab.development}
                     />
                   ))}

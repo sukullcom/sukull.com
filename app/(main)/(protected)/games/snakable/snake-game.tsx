@@ -1462,14 +1462,14 @@ const SnakeGame = () => {
                     <p className="text-lg mb-4">Oyun Modu Seçin:</p>
                     <div className="flex gap-4 justify-center mb-4">
                       <Button
-                        variant={gameMode === 'words' ? 'super' : 'secondary'}
+                        variant={gameMode === 'words' ? 'primary' : 'secondary'}
                         onClick={() => setGameMode('words')}
                         className="px-6 py-3"
                       >
                         <BookOpen className="w-5 h-5" /> Kelime Modu
                       </Button>
                       <Button
-                        variant={gameMode === 'sentences' ? 'super' : 'secondary'}
+                        variant={gameMode === 'sentences' ? 'primary' : 'secondary'}
                         onClick={() => setGameMode('sentences')}
                         className="px-6 py-3"
                       >
@@ -1599,7 +1599,7 @@ const SnakeGame = () => {
                       ← Geri
                     </Button>
                     <Button
-                      variant="super"
+                      variant="primary"
                       onClick={() => {
                         setCountdown(3);
                         if (gameMode === 'words') {
@@ -1689,11 +1689,11 @@ const SnakeGame = () => {
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button variant="super" onClick={playAgain}>
+                <Button variant="primary" onClick={playAgain}>
                   Tekrar Oyna
                 </Button>
                 <Link href="/games">
-                  <Button variant="superOutline">Oyunlara Dön</Button>
+                  <Button variant="outline">Oyunlara Dön</Button>
                 </Link>
               </div>
             </div>
@@ -1797,7 +1797,7 @@ const SnakeGame = () => {
                 <div className="mt-4 flex flex-col items-center">
                   <div className="flex">
                     <Button
-                      variant="super"
+                      variant="primary"
                       onClick={() => handleDirectionChange("UP")}
                       className="m-1 text-3xl w-16 h-16 flex items-center justify-center"
                     >
@@ -1806,21 +1806,21 @@ const SnakeGame = () => {
                   </div>
                   <div className="flex">
                     <Button
-                      variant="super"
+                      variant="primary"
                       onClick={() => handleDirectionChange("LEFT")}
                       className="m-1 text-3xl w-16 h-16 flex items-center justify-center"
                     >
                       ←
                     </Button>
                     <Button
-                      variant="super"
+                      variant="primary"
                       onClick={() => handleDirectionChange("DOWN")}
                       className="m-1 text-3xl w-16 h-16 flex items-center justify-center"
                     >
                       ↓
                     </Button>
                     <Button
-                      variant="super"
+                      variant="primary"
                       onClick={() => handleDirectionChange("RIGHT")}
                       className="m-1 text-3xl w-16 h-16 flex items-center justify-center"
                     >

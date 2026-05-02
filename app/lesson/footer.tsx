@@ -94,7 +94,7 @@ export const Footer = ({ onCheck, onSkipWrong, status, disabled, lessonId, expla
             disabled={disabled}
             onClick={onCheck}
             size="lg"
-            variant={status === "wrong" ? "danger" : "secondary"}
+            variant={status === "wrong" ? "danger" : "primary"}
           >
             {status === "none" && "Kontrol Et"}
             {status === "correct" && "Sonraki"}

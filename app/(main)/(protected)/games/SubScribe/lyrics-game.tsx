@@ -143,7 +143,7 @@ export default function LyricsGame({ lyrics, difficulty = "Kolay" }: LyricsGameP
         </div>
         <Button
           onClick={handleFinish}
-          variant="super"
+          variant="primary"
           type="button"
           disabled={isProcessingFinish}
           className="px-6"

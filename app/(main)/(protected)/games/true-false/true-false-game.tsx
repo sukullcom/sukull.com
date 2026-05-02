@@ -366,7 +366,7 @@ export default function TrueFalseGame() {
         </div>
 
         <Button
-          variant="super"
+          variant="primary"
           onClick={startGame}
           className="w-full py-6 text-lg"
         >
@@ -406,7 +406,7 @@ export default function TrueFalseGame() {
 
         <div className="flex gap-3 w-full">
           <Button
-            variant="super"
+            variant="primary"
             onClick={() => {
               setStatement(null);
               startGame();
@@ -416,7 +416,7 @@ export default function TrueFalseGame() {
             Tekrar Oyna
           </Button>
           <Link href="/games" className="flex-1">
-            <Button variant="superOutline" className="w-full py-5">
+            <Button variant="outline" className="w-full py-5">
               Oyunlara Dön
             </Button>
           </Link>

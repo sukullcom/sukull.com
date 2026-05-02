@@ -241,7 +241,7 @@ export default function MemoryMatrixGame() {
         </div>
 
         <Button
-          variant="super"
+          variant="primary"
           onClick={startGame}
           className="w-full py-6 text-lg"
         >
@@ -295,7 +295,7 @@ export default function MemoryMatrixGame() {
 
         <div className="flex gap-3 w-full">
           <Button
-            variant="super"
+            variant="primary"
             onClick={startGame}
             className="flex-1 py-5"
           >
@@ -303,7 +303,7 @@ export default function MemoryMatrixGame() {
           </Button>
           <Link href="/games" className="flex-1">
             <Button
-              variant="superOutline"
+              variant="outline"
               className="w-full py-5"
             >
               Oyunlara Dön

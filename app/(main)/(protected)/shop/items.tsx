@@ -98,7 +98,7 @@ export const Items = ({
       {/* Streak Freeze */}
       <div className="flex items-center w-full p-4 gap-x-4 border-t-2">
         <div className="flex items-center justify-center w-[60px] h-[60px]">
-          <ShieldCheck className="h-10 w-10 text-suk-payment" />
+          <ShieldCheck className="h-10 w-10 text-suk-warning" />
         </div>
         <div className="flex-1">
           <p className="text-foreground text-base lg:text-xl font-bold">
@@ -107,11 +107,12 @@ export const Items = ({
           <p className="text-muted-foreground text-sm">
             Bir gün hedefini tutturamasan bile istikrarın bozulmasın.
             {localFreezeCount > 0 && (
-              <span className="text-suk-payment font-medium"> ({localFreezeCount} adet mevcut)</span>
+              <span className="text-suk-warning font-medium"> ({localFreezeCount} adet mevcut)</span>
             )}
           </p>
         </div>
         <Button
+          variant="warning"
           onClick={onBuyStreakFreeze}
           disabled={pending || localPoints < freezeCost}
         >
@@ -147,7 +148,7 @@ export const Items = ({
         <Button
           onClick={() => !hasInfiniteHearts && setShowSubscriptionDialog(true)}
           disabled={false}
-          variant={hasInfiniteHearts ? "secondary" : "payment"}
+          variant={hasInfiniteHearts ? "muted" : "payment"}
         >
           {hasInfiniteHearts ? "Aktif" : "100₺/ay"}
         </Button>

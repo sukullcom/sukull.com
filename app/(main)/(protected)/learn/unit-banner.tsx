@@ -43,14 +43,8 @@ export const UnitBanner = ({ title, description, activeLessonId, hasContent = tr
         <Link prefetch={false} href={`/lesson/${activeLessonId}`} className="shrink-0 ml-4">
           <Button
             size="lg"
-            variant="secondary"
-            className="hidden xl:flex border-2 border-b-4 active:border-b-2"
-            style={{
-              backgroundColor: "rgba(255,255,255,0.2)",
-              borderColor: "rgba(255,255,255,0.3)",
-              borderBottomColor: "rgba(255,255,255,0.1)",
-              color: "white",
-            }}
+            variant="ghost"
+            className="hidden xl:flex border-2 border-b-4 border-white/30 border-b-white/15 bg-white/20 text-white hover:bg-white/30 active:border-b-2"
           >
             <NotebookText className="mr-2" />
             Devam Et

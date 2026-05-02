@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import type { VariantProps } from "class-variance-authority";
 import { toast } from "sonner";
 import { MessageCircle, Loader2 } from "lucide-react";
 import { clientLogger } from "@/lib/client-logger";
@@ -11,20 +12,11 @@ import { ConfirmActionDialog } from "@/components/confirm-action-dialog";
 type Props = {
   teacherId: string;
   teacherName?: string;
-  /**
-   * When true, the student has already unlocked messaging with this
-   * teacher. We skip the confirm dialog and just navigate.
-   */
   alreadyUnlocked?: boolean;
   existingChatId?: number | null;
   className?: string;
   size?: "sm" | "default" | "lg";
-  variant?:
-    | "primary"
-    | "primaryOutline"
-    | "secondary"
-    | "super"
-    | "superOutline";
+  variant?: VariantProps<typeof buttonVariants>["variant"];
   /** Full-width on mobile. */
   fullWidth?: boolean;
 };

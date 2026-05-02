@@ -41,7 +41,7 @@ export default function Home() {
             <>
               <Button
                 size="lg"
-                variant="secondary"
+                variant="primary"
                 className="w-full"
                 onClick={() => router.push('/create-account')}
               >
@@ -58,7 +58,7 @@ export default function Home() {
             </>
           )}
           {session && (
-            <Button size="lg" variant="secondary" className="w-full" asChild>
+            <Button size="lg" variant="primary" className="w-full" asChild>
               <Link prefetch={false} href="/learn">
                 Öğrenmeye Devam Et
               </Link>
