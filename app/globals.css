@@ -34,21 +34,21 @@ body,
   --suk-fg-primary: 222 47% 11%;
   --suk-fg-secondary: 215 19% 35%;
   --suk-fg-muted: 215 16% 47%;
-  /* Marka / birincil (eski green-500 ailesi) */
-  --suk-brand: 142 71% 45%;
+  /* Marka / birincil — akla ilk gelen “klasik yeşil” (Tailwind green-500 / zümrüt hattı) */
+  --suk-brand: 142 76% 40%;
   --suk-brand-fg: 0 0% 100%;
-  --suk-brand-hover: 142 72% 41%;
-  --suk-brand-border: 142 72% 29%;
-  --suk-brand-soft: 141 84% 93%;
-  --suk-brand-soft-fg: 143 64% 24%;
-  /* Ödeme / kredi (sky-600 ailesi) */
-  --suk-payment: 200 98% 39%;
+  --suk-brand-hover: 142 76% 35%;
+  --suk-brand-border: 142 76% 28%;
+  --suk-brand-soft: 141 80% 94%;
+  --suk-brand-soft-fg: 143 72% 22%;
+  /* Ödeme / kredi — alışık “klasik mavi” (Tailwind blue-600 / güven mavisi) */
+  --suk-payment: 221 83% 45%;
   --suk-payment-fg: 0 0% 100%;
-  --suk-payment-hover: 201 90% 35%;
-  --suk-payment-border: 201 90% 27%;
-  --suk-payment-soft: 204 100% 97%;
-  --suk-payment-soft-fg: 201 90% 27%;
-  --suk-payment-ring: 199 94% 74%;
+  --suk-payment-hover: 221 83% 40%;
+  --suk-payment-border: 221 83% 32%;
+  --suk-payment-soft: 214 100% 97%;
+  --suk-payment-soft-fg: 221 70% 30%;
+  --suk-payment-ring: 213 94% 78%;
   /* Oyun birincil (indigo-500) */
   --suk-play: 239 84% 67%;
   --suk-play-fg: 0 0% 100%;
@@ -69,9 +69,9 @@ body,
   --suk-warning-soft: 48 100% 96%;
   --suk-warning-soft-fg: 32 81% 29%;
   --suk-warning-border: 45 93% 84%;
-  /* Bilgi / link (sky — metin vurgusu) */
-  --suk-info: 199 89% 48%;
-  --suk-info-soft: 204 100% 97%;
+  /* Bilgi / link — klasik mavi ekseni (blue-500 civarı metin vurgusu) */
+  --suk-info: 217 91% 52%;
+  --suk-info-soft: 214 95% 96%;
   /* Nötr kilit */
   --suk-neutral-locked: 0 0% 83%;
   --suk-neutral-locked-border: 0 0% 64%;
