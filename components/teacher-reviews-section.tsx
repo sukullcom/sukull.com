@@ -112,24 +112,24 @@ export function TeacherReviewsSection({
     reviewGate?.canReview === true;
 
   return (
-    <section className="bg-white border rounded-xl p-5 space-y-4">
+    <section className="bg-card border rounded-xl p-5 space-y-4">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h2 className="font-semibold text-gray-900 flex items-center gap-2">
+          <h2 className="font-semibold text-foreground flex items-center gap-2">
             <Star className="h-4 w-4 text-amber-500" />
             Değerlendirmeler
           </h2>
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-sm text-muted-foreground mt-1">
             {aggregate.reviewCount === 0 ? (
               "Henüz değerlendirme yok."
             ) : (
               <>
                 Ortalama{" "}
-                <span className="font-semibold text-gray-900">
+                <span className="font-semibold text-foreground">
                   {aggregate.averageRating?.toFixed(1) ?? "—"}
                 </span>
                 /10 ·{" "}
-                <span className="font-medium text-gray-900">{aggregate.reviewCount}</span> yorum
+                <span className="font-medium text-foreground">{aggregate.reviewCount}</span> yorum
               </>
             )}
           </p>
@@ -142,22 +142,22 @@ export function TeacherReviewsSection({
       </div>
 
       {reviews.length === 0 ? (
-        <p className="text-sm text-gray-500">İlk değerlendirmeyi sen yazabilirsin.</p>
+        <p className="text-sm text-muted-foreground">İlk değerlendirmeyi sen yazabilirsin.</p>
       ) : (
         <ul className="divide-y divide-gray-100">
           {reviews.map((r) => (
             <li key={r.id} className="py-3 first:pt-0">
               <div className="flex items-center justify-between gap-2">
-                <span className="text-sm font-medium text-gray-900">
+                <span className="text-sm font-medium text-foreground">
                   {r.rating}/10
-                  <span className="text-gray-400 font-normal ml-2">{r.studentLabel}</span>
+                  <span className="text-muted-foreground font-normal ml-2">{r.studentLabel}</span>
                 </span>
-                <time className="text-[11px] text-gray-400 shrink-0" dateTime={r.createdAt}>
+                <time className="text-[11px] text-muted-foreground shrink-0" dateTime={r.createdAt}>
                   {new Date(r.createdAt).toLocaleDateString("tr-TR")}
                 </time>
               </div>
               {r.comment ? (
-                <p className="text-sm text-gray-700 mt-1 whitespace-pre-wrap">{r.comment}</p>
+                <p className="text-sm text-foreground mt-1 whitespace-pre-wrap">{r.comment}</p>
               ) : null}
             </li>
           ))}

@@ -173,7 +173,7 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
     }
     
     return (
-      <div key={index} className="w-10 h-12 flex flex-col items-center justify-center border border-gray-200 rounded-lg p-1 m-1">
+      <div key={index} className="w-10 h-12 flex flex-col items-center justify-center border border-border rounded-lg p-1 m-1">
         <span className="text-xs">{cell.day}</span>
         <Image
           width={20}
@@ -216,7 +216,7 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
       {/* Weekday header */}
       <div className="grid grid-cols-7 gap-1 mb-2">
         {weekdays.map(day => (
-          <div key={day} className="text-center text-xs font-medium text-gray-500 py-1">
+          <div key={day} className="text-center text-xs font-medium text-muted-foreground py-1">
             {day}
           </div>
         ))}
@@ -228,7 +228,7 @@ export default function StreakCalendarAdvanced({ startDate }: StreakCalendarAdva
       </div>
 
       {loading && (
-        <div className="text-center mt-4 text-sm text-gray-500">
+        <div className="text-center mt-4 text-sm text-muted-foreground">
           Yükleniyor...
         </div>
       )}

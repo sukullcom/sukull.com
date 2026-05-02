@@ -21,7 +21,7 @@ type WarningModalProps = {
 export function WarningModal({ open, message, onClose }: WarningModalProps) {
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-md bg-white">
+      <DialogContent className="max-w-md bg-card">
         <DialogHeader>
           <div className="flex items-center w-full justify-center mb-5">
             <Image src="/mascot_sad.svg" alt="Maskot" height={80} width={80} />

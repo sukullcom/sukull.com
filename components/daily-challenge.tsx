@@ -10,6 +10,7 @@ import {
 } from "@/lib/progress-events";
 import { toast } from "sonner";
 import { Trophy, Gift, CheckCircle, Clock, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import Confetti from "@/components/lazy-confetti";
 import { clientLogger } from "@/lib/client-logger";
 
@@ -101,11 +102,11 @@ export function DailyChallenge() {
 
   if (loading) {
     return (
-      <div className="border-2 border-gray-200 rounded-2xl p-4">
+      <div className="rounded-2xl border-2 border-border p-4">
         <div className="animate-pulse">
-          <div className="h-4 bg-gray-200 rounded mb-2 w-2/3"></div>
-          <div className="h-3 bg-gray-200 rounded mb-3 w-full"></div>
-          <div className="h-2 bg-gray-200 rounded w-full"></div>
+          <div className="mb-2 h-4 w-2/3 rounded bg-muted"></div>
+          <div className="mb-3 h-3 w-full rounded bg-muted"></div>
+          <div className="h-2 w-full rounded bg-muted"></div>
         </div>
       </div>
     );
@@ -144,40 +145,40 @@ export function DailyChallenge() {
           style={{ position: "fixed", top: 0, left: 0, zIndex: 9999 }}
         />
       )}
-      <div className="border-2 border-gray-200 rounded-2xl p-4">
-        <div className="flex items-center justify-between mb-2">
+      <div className="rounded-2xl border-2 border-border p-4">
+        <div className="mb-2 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Trophy className="w-5 h-5 text-amber-500" />
-            <h3 className="font-bold text-sm text-gray-700">Günün Görevi</h3>
+            <Trophy className="h-5 w-5 text-suk-warning" />
+            <h3 className="text-sm font-bold text-foreground">Günün Görevi</h3>
           </div>
           <div className="flex items-center gap-1.5">
             {timeBonus?.label && (
-              <span className="text-[10px] font-semibold bg-yellow-50 text-yellow-700 px-1.5 py-0.5 rounded-full border border-yellow-200">
+              <span className="rounded-full border border-suk-warning-border bg-suk-warning-soft px-1.5 py-0.5 text-[10px] font-semibold text-suk-warning-soft-fg">
                 {timeBonus.label}
               </span>
             )}
-            <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
+            <span className="rounded-full bg-muted px-2 py-0.5 text-xs font-medium text-muted-foreground">
               {dayName}
             </span>
           </div>
         </div>
 
-        <p className="text-sm font-semibold text-gray-700 mb-1">
+        <p className="mb-1 text-sm font-semibold text-foreground">
           {challenge.title}
         </p>
-        <p className="text-xs text-gray-500 mb-3">{challenge.description}</p>
+        <p className="mb-3 text-xs text-muted-foreground">{challenge.description}</p>
 
         <div className="mb-2">
-          <div className="flex justify-between text-xs text-gray-500 mb-1">
+          <div className="mb-1 flex justify-between text-xs text-muted-foreground">
             <span>
               {challenge.progress} / {challenge.target} {challenge.unit}
             </span>
             <span>{Math.round(progressPercent)}%</span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
+          <div className="h-2 w-full rounded-full bg-muted">
             <div
               className={`h-2 rounded-full transition-all duration-500 ease-out ${
-                challenge.completed ? "bg-green-500" : "bg-amber-500"
+                challenge.completed ? "bg-suk-brand" : "bg-suk-warning"
               }`}
               style={{ width: `${progressPercent}%` }}
             />
@@ -185,10 +186,13 @@ export function DailyChallenge() {
         </div>
 
         {challenge.completed && !challenge.rewardClaimed ? (
-          <button
+          <Button
+            type="button"
             onClick={handleClaim}
             disabled={claiming}
-            className="w-full mt-2 flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white text-sm font-bold py-2 px-4 rounded-lg transition-colors disabled:opacity-60"
+            variant="primary"
+            size="default"
+            className="w-full mt-2 gap-2"
           >
             {claiming ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -196,9 +200,9 @@ export function DailyChallenge() {
               <Gift className="w-4 h-4" />
             )}
             Ödülü Al (+{challenge.bonusPoints} puan)
-          </button>
+          </Button>
         ) : (
-          <div className="flex items-center gap-1.5 mt-1 text-xs text-gray-500">
+          <div className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
             <Clock className="w-3.5 h-3.5" />
             <span>Bonus: +{challenge.bonusPoints} puan</span>
           </div>

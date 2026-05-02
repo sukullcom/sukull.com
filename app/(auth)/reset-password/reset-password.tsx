@@ -81,7 +81,7 @@ export function ResetPasswordForm() {
         id="password"
         type="password"
         placeholder="Yeni Şifre"
-        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
+        className="w-full min-w-0 rounded-xl border border-border bg-background p-3 focus:outline-none focus:ring-2 focus:ring-ring"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         disabled={isLoading}
@@ -91,7 +91,7 @@ export function ResetPasswordForm() {
         id="confirmPassword"
         type="password"
         placeholder="Yeni Şifre Tekrar"
-        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
+        className="w-full min-w-0 rounded-xl border border-border bg-background p-3 focus:outline-none focus:ring-2 focus:ring-ring"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
         disabled={isLoading}

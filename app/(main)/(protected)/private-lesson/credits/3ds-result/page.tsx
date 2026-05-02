@@ -46,7 +46,10 @@ export default async function ThreeDsResultPage({
     return (
       <ResultShell tone="error" title="Oturum sona ermiş">
         <p>Ödemenizi doğrulamak için önce tekrar giriş yapmanız gerekiyor.</p>
-        <Link href="/login?next=/private-lesson/credits" className="text-green-700 underline">
+        <Link
+          href="/login?next=/private-lesson/credits"
+          className="font-medium text-suk-payment underline decoration-suk-payment/40 underline-offset-2 hover:text-suk-payment-hover"
+        >
           Giriş yap
         </Link>
       </ResultShell>
@@ -63,12 +66,12 @@ export default async function ThreeDsResultPage({
     return (
       <ResultShell tone="error" title="Ödeme doğrulanamadı">
         <p>{searchParams?.message ?? '3D Secure doğrulaması tamamlanamadı.'}</p>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-muted-foreground">
           Kartınızdan ücret çekilmedi. Lütfen tekrar deneyin veya farklı bir kart kullanın.
         </p>
         <Link
           href="/private-lesson/credits"
-          className="inline-flex items-center rounded-xl bg-green-600 px-4 py-2 text-white hover:bg-green-700"
+          className="inline-flex items-center rounded-xl bg-suk-payment px-4 py-2 font-medium text-suk-payment-fg hover:bg-suk-payment-hover"
         >
           Kredi sayfasına dön
         </Link>
@@ -80,7 +83,10 @@ export default async function ThreeDsResultPage({
     return (
       <ResultShell tone="error" title="Beklenmeyen istek">
         <p>Ödeme sonucu bilinmiyor. Lütfen kredi sayfasından tekrar deneyin.</p>
-        <Link href="/private-lesson/credits" className="text-green-700 underline">
+        <Link
+          href="/private-lesson/credits"
+          className="font-medium text-suk-payment underline decoration-suk-payment/40 underline-offset-2 hover:text-suk-payment-hover"
+        >
           Kredi sayfasına dön
         </Link>
       </ResultShell>
@@ -92,7 +98,10 @@ export default async function ThreeDsResultPage({
     return (
       <ResultShell tone="error" title="Ödeme oturumu bulunamadı">
         <p>3D Secure oturumunun süresi doldu ya da çerez bulunamadı. Lütfen tekrar deneyin.</p>
-        <Link href="/private-lesson/credits" className="text-green-700 underline">
+        <Link
+          href="/private-lesson/credits"
+          className="font-medium text-suk-payment underline decoration-suk-payment/40 underline-offset-2 hover:text-suk-payment-hover"
+        >
           Kredi sayfasına dön
         </Link>
       </ResultShell>
@@ -114,7 +123,10 @@ export default async function ThreeDsResultPage({
     return (
       <ResultShell tone="error" title="Oturum uyuşmazlığı">
         <p>Ödeme bağlamı doğrulanamadı. Güvenlik nedeniyle işlem iptal edildi.</p>
-        <Link href="/private-lesson/credits" className="text-green-700 underline">
+        <Link
+          href="/private-lesson/credits"
+          className="font-medium text-suk-payment underline decoration-suk-payment/40 underline-offset-2 hover:text-suk-payment-hover"
+        >
           Kredi sayfasına dön
         </Link>
       </ResultShell>
@@ -135,7 +147,12 @@ export default async function ThreeDsResultPage({
     return (
       <ResultShell tone="error" title="Kimlik doğrulanamadı">
         <p>Oturum belirteci bulunamadı. Lütfen tekrar giriş yapın.</p>
-        <Link href="/login" className="text-green-700 underline">Giriş yap</Link>
+        <Link
+          href="/login"
+          className="font-medium text-suk-payment underline decoration-suk-payment/40 underline-offset-2 hover:text-suk-payment-hover"
+        >
+          Giriş yap
+        </Link>
       </ResultShell>
     );
   }
@@ -178,7 +195,10 @@ export default async function ThreeDsResultPage({
     return (
       <ResultShell tone="error" title="Ödeme sunucusuna ulaşılamadı">
         <p>Ağ hatası nedeniyle ödemeniz tamamlanamadı. Lütfen kısa bir süre sonra kredi sayfasına dönün; çift tahsilat olmaz.</p>
-        <Link href="/private-lesson/credits" className="text-green-700 underline">
+        <Link
+          href="/private-lesson/credits"
+          className="font-medium text-suk-payment underline decoration-suk-payment/40 underline-offset-2 hover:text-suk-payment-hover"
+        >
           Kredi sayfasına dön
         </Link>
       </ResultShell>
@@ -201,7 +221,7 @@ export default async function ThreeDsResultPage({
         </p>
         <Link
           href="/private-lesson"
-          className="inline-flex items-center rounded-xl bg-green-600 px-4 py-2 text-white hover:bg-green-700"
+          className="inline-flex items-center rounded-xl bg-suk-brand px-4 py-2 font-medium text-suk-brand-fg hover:bg-suk-brand-hover"
         >
           Derslere göz at
         </Link>
@@ -212,7 +232,10 @@ export default async function ThreeDsResultPage({
   return (
     <ResultShell tone="error" title="Ödeme tamamlanamadı">
       <p>{finalizeJson.message ?? 'Ödeme doğrulaması sırasında bir sorun oluştu.'}</p>
-      <Link href="/private-lesson/credits" className="text-green-700 underline">
+      <Link
+        href="/private-lesson/credits"
+        className="font-medium text-suk-payment underline decoration-suk-payment/40 underline-offset-2 hover:text-suk-payment-hover"
+      >
         Kredi sayfasına dön
       </Link>
     </ResultShell>
@@ -228,18 +251,22 @@ function ResultShell({
   title: string;
   children: React.ReactNode;
 }) {
-  const borderColor = tone === 'success' ? 'border-green-200' : 'border-red-200';
-  const bg = tone === 'success' ? 'bg-green-50' : 'bg-red-50';
-  const dot = tone === 'success' ? 'bg-green-500' : 'bg-red-500';
+  const borderColor =
+    tone === "success"
+      ? "border-suk-payment-ring/50"
+      : "border-suk-danger-line";
+  const bg =
+    tone === "success" ? "bg-suk-payment-soft" : "bg-suk-danger-soft";
+  const dot = tone === "success" ? "bg-suk-payment" : "bg-suk-danger";
 
   return (
     <main className="mx-auto flex min-h-[60vh] max-w-xl flex-col items-center justify-center gap-4 px-4 py-12">
       <div className={`w-full rounded-2xl border ${borderColor} ${bg} p-8`}>
         <div className="flex items-center gap-3">
           <span className={`h-3 w-3 rounded-full ${dot}`} aria-hidden />
-          <h1 className="text-xl font-semibold text-slate-800">{title}</h1>
+          <h1 className="text-xl font-semibold text-foreground">{title}</h1>
         </div>
-        <div className="mt-4 flex flex-col gap-3 text-slate-700">{children}</div>
+        <div className="mt-4 flex flex-col gap-3 text-foreground/90">{children}</div>
       </div>
     </main>
   );

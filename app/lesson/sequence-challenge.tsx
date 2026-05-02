@@ -163,8 +163,8 @@ export const SequenceChallenge = forwardRef<SequenceChallengeHandle | null, Prop
         <div className="space-y-6">
           {renderQuestionImage()}
           <div className="text-center">
-            <h3 className="text-lg font-medium text-gray-700 mb-2">Öğeleri doğru sıraya koy</h3>
-            <p className="text-sm text-gray-600">Sürekle-bırak veya okları kullan, sonra alttan Kontrol et</p>
+            <h3 className="text-lg font-medium text-foreground mb-2">Öğeleri doğru sıraya koy</h3>
+            <p className="text-sm text-muted-foreground">Sürekle-bırak veya okları kullan, sonra alttan Kontrol et</p>
           </div>
 
           <Droppable droppableId="sequence">
@@ -185,11 +185,11 @@ export const SequenceChallenge = forwardRef<SequenceChallengeHandle | null, Prop
                           {...provided.draggableProps}
                           className={cn(
                             "flex items-center p-6 rounded-lg border-2 transition-all",
-                            "bg-white shadow-sm",
+                            "bg-card shadow-sm",
                             snapshot.isDragging && "shadow-lg rotate-1",
                             itemStatus === "correct" && "border-green-300 bg-green-50",
                             itemStatus === "wrong" && "border-rose-300 bg-rose-50",
-                            itemStatus === "none" && "border-gray-300",
+                            itemStatus === "none" && "border-input",
                             disabled && "opacity-50",
                           )}
                         >
@@ -201,9 +201,9 @@ export const SequenceChallenge = forwardRef<SequenceChallengeHandle | null, Prop
                               disabled && "cursor-not-allowed",
                             )}
                           >
-                            <div className="w-1 h-1 bg-gray-400 rounded-full" />
-                            <div className="w-1 h-1 bg-gray-400 rounded-full" />
-                            <div className="w-1 h-1 bg-gray-400 rounded-full" />
+                            <div className="w-1 h-1 bg-muted-foreground/50 rounded-full" />
+                            <div className="w-1 h-1 bg-muted-foreground/50 rounded-full" />
+                            <div className="w-1 h-1 bg-muted-foreground/50 rounded-full" />
                           </div>
 
                           <div className="mr-4 flex-shrink-0">
@@ -213,7 +213,7 @@ export const SequenceChallenge = forwardRef<SequenceChallengeHandle | null, Prop
                                 "text-base font-bold",
                                 itemStatus === "correct" && "bg-green-100 text-green-700",
                                 itemStatus === "wrong" && "bg-rose-100 text-rose-700",
-                                itemStatus === "none" && "bg-gray-100 text-gray-700",
+                                itemStatus === "none" && "bg-muted text-foreground",
                               )}
                             >
                               {index + 1}
@@ -233,7 +233,7 @@ export const SequenceChallenge = forwardRef<SequenceChallengeHandle | null, Prop
                               </div>
                             )}
                             {item.text && (
-                              <div className="font-medium text-gray-800 text-base">
+                              <div className="font-medium text-foreground text-base">
                                 <MathRenderer>{item.text}</MathRenderer>
                               </div>
                             )}
@@ -246,7 +246,7 @@ export const SequenceChallenge = forwardRef<SequenceChallengeHandle | null, Prop
                               disabled={disabled || index === 0}
                               className={cn(
                                 "w-8 h-8 rounded border text-sm font-bold",
-                                "hover:bg-gray-100 disabled:opacity-30",
+                                "hover:bg-muted disabled:opacity-30",
                                 "disabled:cursor-not-allowed",
                               )}
                             >
@@ -258,7 +258,7 @@ export const SequenceChallenge = forwardRef<SequenceChallengeHandle | null, Prop
                               disabled={disabled || index === orderedItems.length - 1}
                               className={cn(
                                 "w-8 h-8 rounded border text-sm font-bold",
-                                "hover:bg-gray-100 disabled:opacity-30",
+                                "hover:bg-muted disabled:opacity-30",
                                 "disabled:cursor-not-allowed",
                               )}
                             >

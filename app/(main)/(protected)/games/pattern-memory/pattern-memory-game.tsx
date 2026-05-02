@@ -245,31 +245,31 @@ export default function PatternMemoryGame() {
       <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-6 py-8">
         <Link
           href="/games"
-          className="self-start flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-700 transition"
+          className="self-start flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition"
         >
           <ArrowLeft className="h-4 w-4" /> Oyunlara Dön
         </Link>
 
         <div className="text-center">
-          <div className="mb-3"><Target className="w-12 h-12 text-orange-500 mx-auto" /></div>
-          <h1 className="text-2xl font-bold text-neutral-800">
+          <div className="mb-3"><Target className="w-12 h-12 text-suk-warning mx-auto" /></div>
+          <h1 className="text-2xl font-bold text-foreground">
             Sıralama Ustası
           </h1>
-          <p className="text-neutral-500 mt-2">
+          <p className="text-muted-foreground mt-2">
             Renklerin sırasını ezberle ve tekrarla! Her turda sıra uzar.
           </p>
         </div>
 
         <div className="w-full space-y-2">
-          <p className="text-sm font-semibold text-neutral-600">Mod</p>
+          <p className="text-sm font-semibold text-muted-foreground">Mod</p>
           {(Object.keys(MODE_LABELS) as Mode[]).map((m) => (
             <button
               key={m}
               onClick={() => setMode(m)}
               className={`w-full p-3 rounded-xl border-2 text-left transition-all ${
                 mode === m
-                  ? "border-indigo-500 bg-indigo-50 text-indigo-700"
-                  : "border-neutral-200 hover:border-neutral-300 text-neutral-600"
+                  ? "border-suk-payment bg-suk-payment-soft text-suk-payment-soft-fg"
+                  : "border-border hover:border-border/80 text-muted-foreground"
               }`}
             >
               <span className="font-semibold">{MODE_LABELS[m]}</span>
@@ -294,22 +294,22 @@ export default function PatternMemoryGame() {
   if (gameState === "finished") {
     return (
       <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-6 py-8">
-        <div className="mb-2"><Trophy className="w-12 h-12 text-amber-500 mx-auto" /></div>
-        <h1 className="text-2xl font-bold text-neutral-800">Oyun Bitti!</h1>
+        <div className="mb-2"><Trophy className="w-12 h-12 text-suk-warning mx-auto" /></div>
+        <h1 className="text-2xl font-bold text-foreground">Oyun Bitti!</h1>
 
         <div className="w-full grid grid-cols-2 gap-3">
-          <div className="bg-orange-50 rounded-xl p-4 text-center border border-orange-200">
-            <Trophy className="h-6 w-6 text-orange-500 mx-auto mb-1" />
-            <p className="text-2xl font-bold text-orange-600">{score}</p>
-            <p className="text-xs text-orange-500">Toplam Puan</p>
+          <div className="bg-suk-payment-soft rounded-xl p-4 text-center border border-suk-payment-ring">
+            <Trophy className="h-6 w-6 text-suk-payment mx-auto mb-1" />
+            <p className="text-2xl font-bold text-suk-payment-soft-fg">{score}</p>
+            <p className="text-xs text-suk-payment">Toplam Puan</p>
           </div>
-          <div className="bg-amber-50 rounded-xl p-4 text-center border border-amber-200">
-            <Zap className="h-6 w-6 text-amber-500 mx-auto mb-1" />
-            <p className="text-2xl font-bold text-amber-600">Seviye {bestLevel}</p>
-            <p className="text-xs text-amber-500">Ulaşılan Seviye</p>
+          <div className="bg-suk-warning-soft rounded-xl p-4 text-center border border-suk-warning-border">
+            <Zap className="h-6 w-6 text-suk-warning mx-auto mb-1" />
+            <p className="text-2xl font-bold text-suk-warning-soft-fg">Seviye {bestLevel}</p>
+            <p className="text-xs text-suk-warning">Ulaşılan Seviye</p>
           </div>
-          <div className="col-span-2 bg-neutral-50 rounded-xl p-4 text-center border border-neutral-200">
-            <p className="text-lg font-bold text-neutral-700">
+          <div className="col-span-2 bg-muted rounded-xl p-4 text-center border border-border">
+            <p className="text-lg font-bold text-foreground">
               {bestLevel} adımlık sırayı hatırladın!
             </p>
           </div>
@@ -338,20 +338,20 @@ export default function PatternMemoryGame() {
       {/* Header */}
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Trophy className="h-5 w-5 text-orange-500" />
-          <span className="font-bold text-lg text-orange-600">{score}</span>
+          <Trophy className="h-5 w-5 text-suk-payment" />
+          <span className="font-bold text-lg text-suk-payment-soft-fg">{score}</span>
         </div>
-        <div className="bg-orange-100 rounded-full px-4 py-1">
-          <span className="font-bold text-orange-700">Seviye {level}</span>
+        <div className="bg-suk-payment-soft rounded-full px-4 py-1">
+          <span className="font-bold text-suk-payment-soft-fg">Seviye {level}</span>
         </div>
       </div>
 
       {/* Timed mode progress bar */}
       {mode === "timed" && gameState === "input" && (
-        <div className="w-full h-2 bg-neutral-200 rounded-full overflow-hidden">
+        <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
           <div
             className={`h-full transition-all duration-100 ease-linear rounded-full ${
-              timedProgress <= 30 ? "bg-red-500" : timedProgress <= 60 ? "bg-amber-500" : "bg-orange-500"
+              timedProgress <= 30 ? "bg-suk-danger" : timedProgress <= 60 ? "bg-suk-warning" : "bg-suk-payment"
             }`}
             style={{ width: `${timedProgress}%` }}
           />
@@ -361,12 +361,12 @@ export default function PatternMemoryGame() {
       {/* Status */}
       <div className="text-center">
         {gameState === "showing" && (
-          <p className="text-lg font-semibold text-amber-600 animate-pulse">
+          <p className="text-lg font-semibold text-suk-warning animate-pulse">
             İzle...
           </p>
         )}
         {gameState === "input" && (
-          <p className="text-lg font-semibold text-orange-600">
+          <p className="text-lg font-semibold text-suk-payment-soft-fg">
             {mode === "timed" ? (
               <span className="flex items-center justify-center gap-1">
                 <Timer className="h-5 w-5" />
@@ -378,7 +378,7 @@ export default function PatternMemoryGame() {
           </p>
         )}
         {gameState === "success" && (
-          <p className="text-lg font-semibold text-green-600">
+          <p className="text-lg font-semibold text-suk-brand">
             Doğru! Sonraki seviye...
           </p>
         )}
@@ -398,7 +398,7 @@ export default function PatternMemoryGame() {
           <div
             key={idx}
             className={`h-2.5 w-2.5 rounded-full ${
-              idx < playerInput.length ? "bg-orange-500" : "bg-neutral-300"
+              idx < playerInput.length ? "bg-suk-payment" : "bg-muted"
             }`}
           />
         ))}

@@ -73,7 +73,7 @@ export function LoginForm() {
         name="email"
         type="email"
         placeholder="E-posta"
-        className="w-full min-w-0 border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
+        className="w-full min-w-0 rounded-xl border border-border bg-background p-3 transition-opacity focus:outline-none focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60"
         disabled={isLoading}
         required
       />
@@ -83,7 +83,7 @@ export function LoginForm() {
         name="password"
         type="password"
         placeholder="Şifre"
-        className="w-full min-w-0 border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
+        className="w-full min-w-0 rounded-xl border border-border bg-background p-3 transition-opacity focus:outline-none focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60"
         disabled={isLoading}
         required
       />
@@ -114,7 +114,7 @@ export function LoginForm() {
         <Link
           prefetch={false}
           href="/forgot-password"
-          className="text-green-500 font-semibold underline hover:text-green-500"
+          className="font-semibold text-suk-brand underline hover:text-suk-brand-hover"
         >
           Şifremi Unuttum
         </Link>
@@ -125,7 +125,7 @@ export function LoginForm() {
         <Link
           prefetch={false}
           href="/resend-verification"
-          className="text-green-500 font-semibold underline hover:text-green-500"
+          className="font-semibold text-suk-brand underline hover:text-suk-brand-hover"
         >
           Yeniden Gönder
         </Link>
@@ -136,7 +136,7 @@ export function LoginForm() {
         <Link
           prefetch={false}
           href="/create-account"
-          className="text-green-500 font-semibold underline hover:text-green-500"
+          className="font-semibold text-suk-brand underline hover:text-suk-brand-hover"
         >
           Kayıt Ol
         </Link>

@@ -265,7 +265,7 @@ export default function PianoPage() {
                   onChange={(e) => setShowKeys(e.target.checked)}
                   className="opacity-0 w-0 h-0 peer"
                 />
-                <span className="absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-[#4B4B4B] rounded-full before:content-[''] before:absolute before:h-5 before:w-5 before:bg-[#8c8c8c] before:rounded-full before:top-1/2 before:left-1 before:-translate-y-1/2 before:transition-all peer-checked:before:translate-x-6 before:duration-300 peer-checked:before:bg-white"></span>
+                <span className="absolute cursor-pointer top-0 left-0 right-0 bottom-0 bg-[#4B4B4B] rounded-full before:content-[''] before:absolute before:h-5 before:w-5 before:bg-[#8c8c8c] before:rounded-full before:top-1/2 before:left-1 before:-translate-y-1/2 before:transition-all peer-checked:before:translate-x-6 before:duration-300 peer-checked:before:bg-card"></span>
               </label>
             </div>
           </div>
@@ -338,7 +338,7 @@ export default function PianoPage() {
                 "bg-gradient-to-b from-white to-gray-200",
                 "border border-black",
                 "h-[230px] w-[70px]",
-                "text-gray-600",
+                "text-muted-foreground",
               ];
 
               const blackKeyClasses = [
@@ -346,7 +346,7 @@ export default function PianoPage() {
                 "h-[140px] w-[44px]",
                 "mx-[-22px]",
                 "z-20",
-                "text-gray-300",
+                "text-muted-foreground",
               ];
 
               let classes = [

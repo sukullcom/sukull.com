@@ -159,8 +159,8 @@ export const MatchPairsChallenge = ({
     <div className="space-y-6">
       {renderQuestionImage()}
       <div className="text-center">
-        <h3 className="text-lg font-medium text-gray-700 mb-2">Eşleşen çiftleri bul</h3>
-        <p className="text-sm text-gray-600">
+        <h3 className="text-lg font-medium text-foreground mb-2">Eşleşen çiftleri bul</h3>
+        <p className="text-sm text-muted-foreground">
           İki karta tıkla. Yanlış eşleştirme candan düşer. Tüm çiftler
           bulununca alttan Kontrol et.
         </p>
@@ -180,12 +180,12 @@ export const MatchPairsChallenge = ({
                 "aspect-square cursor-pointer transition-all duration-300",
                 "rounded-lg border-2 p-4",
                 "flex flex-col items-center justify-center",
-                "bg-white shadow-md hover:shadow-lg",
+                "bg-card shadow-md hover:shadow-lg",
                 !disabled && !isMatched && "hover:scale-105",
-                isSelected && "border-blue-400 bg-blue-50 scale-105",
-                isMismatching && "border-rose-500 bg-rose-50",
-                isMatched && "border-green-400 bg-green-50",
-                !isSelected && !isMatched && "border-gray-300",
+                isSelected && "border-suk-payment-ring bg-suk-payment-soft scale-105",
+                isMismatching && "border-suk-danger-line bg-suk-danger-soft",
+                isMatched && "border-suk-brand/50 bg-suk-brand-soft",
+                !isSelected && !isMatched && "border-border",
                 disabled && "cursor-not-allowed opacity-50",
               )}
             >
@@ -201,7 +201,7 @@ export const MatchPairsChallenge = ({
                 </div>
               )}
               {card.text && (
-                <div className="text-sm text-center font-medium text-gray-800">
+                <div className="text-sm text-center font-medium text-foreground">
                   <MathRenderer>{card.text}</MathRenderer>
                 </div>
               )}
@@ -210,7 +210,7 @@ export const MatchPairsChallenge = ({
         })}
       </div>
 
-      <div className="text-center text-sm text-gray-600">
+      <div className="text-center text-sm text-muted-foreground">
         Eşleşen: {matchedPairs.length} / {expectedPairCount} çift
       </div>
     </div>

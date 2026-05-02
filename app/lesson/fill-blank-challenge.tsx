@@ -157,7 +157,7 @@ export const FillBlankChallenge = ({
   const renderPart = (part: QuestionPart) => {
     if (!part.isBlank) {
       return (
-        <span key={part.id} className="text-gray-800">
+        <span key={part.id} className="text-foreground">
           <MathRenderer>{part.text}</MathRenderer>
         </span>
       );
@@ -172,10 +172,10 @@ export const FillBlankChallenge = ({
         key={part.id}
         className={cn(
           "inline-flex items-center justify-center mx-1 px-4 py-2 min-w-[80px] min-h-[40px] border-2 rounded-lg transition-all duration-200",
-          !hasSelection && "border-dashed border-gray-300 bg-gray-100 text-gray-400",
-          hasSelection && status === "none" && "border-solid border-sky-400 bg-sky-50 text-sky-700 font-semibold",
-          status === "correct" && "border-solid border-green-500 bg-green-50 text-green-700 font-semibold",
-          status === "wrong" && "border-solid border-rose-500 bg-rose-50 text-rose-700 font-semibold"
+          !hasSelection && "border-dashed border-border bg-muted/60 text-muted-foreground",
+          hasSelection && status === "none" && "border-solid border-suk-payment bg-suk-payment-soft text-suk-payment-soft-fg font-semibold",
+          status === "correct" && "border-solid border-suk-brand bg-suk-brand-soft text-suk-brand-border font-semibold",
+          status === "wrong" && "border-solid border-suk-danger bg-suk-danger-soft text-suk-danger font-semibold"
         )}
       >
         {hasSelection ? (
@@ -208,7 +208,7 @@ export const FillBlankChallenge = ({
     <div className="space-y-6">
       {renderQuestionImage()}
 
-      <div className="text-lg leading-relaxed p-6 bg-gray-50 rounded-lg border">
+      <div className="text-lg leading-relaxed p-6 bg-muted/50 rounded-lg border border-border">
         <div className="flex flex-wrap items-center gap-1">
           {questionParts.map(renderPart)}
         </div>
@@ -227,13 +227,13 @@ export const FillBlankChallenge = ({
               className={cn(
                 "px-5 py-3 rounded-xl border-2 text-base font-medium transition-all duration-200",
                 "active:scale-95",
-                status === "none" && !isSelected && "border-gray-200 bg-white text-gray-700 hover:border-sky-300 hover:bg-sky-50 cursor-pointer",
-                status === "none" && isSelected && "border-sky-500 bg-sky-100 text-sky-700 shadow-sm cursor-pointer",
-                status === "correct" && isSelected && "border-green-500 bg-green-100 text-green-700",
-                status === "correct" && !isSelected && "border-gray-200 bg-gray-50 text-gray-400",
-                status === "wrong" && isSelected && "border-rose-500 bg-rose-100 text-rose-700",
-                status === "wrong" && !isSelected && isCorrectAnswer && "border-green-500 bg-green-100 text-green-700 ring-2 ring-green-300",
-                status === "wrong" && !isSelected && !isCorrectAnswer && "border-gray-200 bg-gray-50 text-gray-400",
+                status === "none" && !isSelected && "border-border bg-card text-foreground hover:border-suk-payment-ring hover:bg-suk-payment-soft cursor-pointer",
+                status === "none" && isSelected && "border-suk-payment bg-suk-payment-soft text-suk-payment-soft-fg shadow-sm cursor-pointer",
+                status === "correct" && isSelected && "border-suk-brand bg-suk-brand-soft text-suk-brand-border",
+                status === "correct" && !isSelected && "border-border bg-muted/60 text-muted-foreground",
+                status === "wrong" && isSelected && "border-suk-danger bg-suk-danger-soft text-suk-danger",
+                status === "wrong" && !isSelected && isCorrectAnswer && "border-suk-brand bg-suk-brand-soft text-suk-brand-border ring-2 ring-suk-brand/30",
+                status === "wrong" && !isSelected && !isCorrectAnswer && "border-border bg-muted/60 text-muted-foreground",
                 (disabled || status !== "none") && "cursor-default"
               )}
             >
@@ -244,7 +244,7 @@ export const FillBlankChallenge = ({
       </div>
 
       {status === "none" && !selectedOption && (
-        <p className="text-sm text-gray-500 text-center">
+        <p className="text-sm text-muted-foreground text-center">
           Boşluğu doldurmak için bir seçenek seçin
         </p>
       )}

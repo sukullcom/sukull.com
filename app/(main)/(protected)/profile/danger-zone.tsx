@@ -85,19 +85,19 @@ export function DangerZone({ username }: DangerZoneProps) {
   };
 
   return (
-    <div className="pt-4 border-t border-gray-200">
-      <h3 className="text-xs font-semibold text-red-600 uppercase tracking-wide mb-3">
+    <div className="border-t border-border pt-4">
+      <h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-destructive">
         Tehlikeli Bölge
       </h3>
 
-      <div className="rounded-xl border border-red-200 bg-red-50/60 p-4">
+      <div className="rounded-xl border border-destructive/25 bg-destructive/5 p-4">
         <div className="flex items-start gap-3">
-          <div className="mt-0.5 rounded-lg bg-red-100 p-2 text-red-600">
+          <div className="mt-0.5 rounded-lg bg-destructive/10 p-2 text-destructive">
             <AlertTriangle className="h-4 w-4" />
           </div>
           <div className="flex-1">
-            <p className="text-sm font-semibold text-red-900">Hesabı Sil</p>
-            <p className="mt-1 text-xs text-red-800/80">
+            <p className="text-sm font-semibold text-destructive">Hesabı Sil</p>
+            <p className="mt-1 text-xs text-destructive/90">
               Hesabınız ve size ait tüm veriler kalıcı olarak silinir. Bu
               işlem geri alınamaz. KVKK kapsamındaki unutulma hakkınız
               doğrultusunda çalışır.
@@ -114,7 +114,7 @@ export function DangerZone({ username }: DangerZoneProps) {
               <DialogTrigger asChild>
                 <button
                   type="button"
-                  className="mt-3 inline-flex items-center gap-2 rounded-lg bg-red-600 px-3 py-2 text-xs font-semibold text-white transition-colors hover:bg-red-700 disabled:opacity-50"
+                  className="mt-3 inline-flex items-center gap-2 rounded-lg bg-destructive px-3 py-2 text-xs font-semibold text-destructive-foreground transition-colors hover:bg-destructive/90 disabled:opacity-50"
                   disabled={pending}
                 >
                   <Trash2 className="h-3.5 w-3.5" />
@@ -124,10 +124,10 @@ export function DangerZone({ username }: DangerZoneProps) {
 
               <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                  <DialogTitle className="text-red-700">
+                  <DialogTitle className="text-destructive">
                     Hesabınızı silmek istediğinize emin misiniz?
                   </DialogTitle>
-                  <DialogDescription className="text-sm text-gray-600">
+                  <DialogDescription className="text-sm text-muted-foreground">
                     Bu işlem geri alınamaz. Kullanıcı adınız, puanlarınız,
                     ders ilerlemeniz, bildirimleriniz, ödeme geçmişiniz ve
                     size ait tüm kişisel kayıtlar kalıcı olarak silinir.
@@ -135,7 +135,7 @@ export function DangerZone({ username }: DangerZoneProps) {
                 </DialogHeader>
 
                 <div className="space-y-3">
-                  <p className="text-sm text-gray-700">
+                  <p className="text-sm text-foreground">
                     Onaylamak için kullanıcı adınızı yazın:
                     <span className="ml-1 font-semibold">{username}</span>
                   </p>

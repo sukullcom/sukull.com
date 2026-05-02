@@ -22,14 +22,14 @@ export default async function MyListingsPage() {
       <div className="flex items-start sm:items-center justify-between gap-3 mb-4 flex-col sm:flex-row">
         <div>
           <div className="flex items-center gap-3 mb-1">
-            <div className="p-2 bg-orange-100 rounded-lg">
-              <ClipboardList className="h-5 w-5 text-orange-700" />
+            <div className="p-2 bg-suk-warning-soft rounded-lg">
+              <ClipboardList className="h-5 w-5 text-suk-warning-soft-fg" />
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+            <h1 className="text-xl sm:text-2xl font-bold text-foreground">
               İlanlarım
             </h1>
           </div>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-muted-foreground">
             Oluşturduğun talep ilanları ve bu ilanlara gelen teklifler. İlanların
             uygunluk kontrolünden geçtiğini unutma; uygunsuz içerik yayından
             kaldırılabilir.
@@ -47,9 +47,9 @@ export default async function MyListingsPage() {
       </div>
 
       {listings.length === 0 ? (
-        <div className="text-center py-16 rounded-xl border border-dashed border-gray-200 bg-white">
-          <ClipboardList className="mx-auto h-10 w-10 text-gray-300 mb-3" />
-          <p className="text-gray-500 mb-4">Henüz bir ilan oluşturmadın.</p>
+        <div className="text-center py-16 rounded-xl border border-dashed border-border bg-card">
+          <ClipboardList className="mx-auto h-10 w-10 text-muted-foreground/40 mb-3" />
+          <p className="text-muted-foreground mb-4">Henüz bir ilan oluşturmadın.</p>
           <Button asChild variant="primary" size="sm">
             <Link
               href="/private-lesson/listings/new"

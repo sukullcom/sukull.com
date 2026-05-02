@@ -54,38 +54,38 @@ export default function VideoSelectionPage() {
     <div className="w-full max-w-lg mx-auto flex flex-col gap-6 py-8 px-4">
       <Link
         href="/games"
-        className="self-start flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-700 transition"
+        className="self-start flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition"
       >
         <ArrowLeft className="h-4 w-4" /> Oyunlara Dön
       </Link>
 
-      <h1 className="text-xl font-bold text-neutral-800">SubScribe</h1>
-      <p className="mb-4 text-gray-700">
+      <h1 className="text-xl font-bold text-foreground">SubScribe</h1>
+      <p className="mb-4 text-muted-foreground">
         Aşağıdaki videolardan birini seçerek başlayın. Her video özel olarak hazırlanmış yüksek kaliteli transcript&apos;lere sahiptir!
       </p>
       
-      <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-        <h3 className="font-semibold text-green-800 mb-2"><CircleCheck className="w-4 h-4 inline text-green-500" /> Mevcut Videolar</h3>
-        <ul className="text-sm text-green-700 space-y-1">
-          <li>• <strong>Rick Astley - Never Gonna Give You Up</strong> - Klasik şarkı <Music className="w-4 h-4 inline text-purple-500" /></li>
-          <li>• <strong>Slow Productivity (Cal Newport)</strong> - Eğitim videosu <BookOpen className="w-4 h-4 inline text-blue-500" /></li>
-          <li>• <strong>Kurzgesagt - Immune System</strong> - Bilim videosu <Microscope className="w-4 h-4 inline text-emerald-500" /></li>
+      <div className="mb-6 p-4 bg-suk-brand-soft border border-suk-brand/30 rounded-lg">
+        <h3 className="font-semibold text-suk-brand-soft-fg mb-2"><CircleCheck className="w-4 h-4 inline text-suk-brand" /> Mevcut Videolar</h3>
+        <ul className="text-sm text-suk-brand-soft-fg space-y-1">
+          <li>• <strong>Rick Astley - Never Gonna Give You Up</strong> - Klasik şarkı <Music className="w-4 h-4 inline text-suk-play" /></li>
+          <li>• <strong>Slow Productivity (Cal Newport)</strong> - Eğitim videosu <BookOpen className="w-4 h-4 inline text-suk-payment" /></li>
+          <li>• <strong>Kurzgesagt - Immune System</strong> - Bilim videosu <Microscope className="w-4 h-4 inline text-suk-brand" /></li>
         </ul>
-        <p className="text-xs text-green-600 mt-2">
-          <Lightbulb className="w-4 h-4 inline text-yellow-500" /> %100 çalışma garantili ve tamamen ücretsiz!
+        <p className="text-xs text-suk-brand mt-2">
+          <Lightbulb className="w-4 h-4 inline text-suk-warning" /> %100 çalışma garantili ve tamamen ücretsiz!
         </p>
       </div>
 
       <h2 className="text-lg font-semibold mb-3">Video Seç</h2>
-      <p className="text-sm text-gray-600 mb-4">
-        <CircleCheck className="w-4 h-4 inline text-green-500" /> Bu videolar çalışma garantili, yüksek kaliteli transcript&apos;lere sahip ve <span className="font-semibold text-green-600">tamamen ücretsiz!</span>
+      <p className="text-sm text-muted-foreground mb-4">
+        <CircleCheck className="w-4 h-4 inline text-suk-brand" /> Bu videolar çalışma garantili, yüksek kaliteli transcript&apos;lere sahip ve <span className="font-semibold text-suk-brand">tamamen ücretsiz!</span>
       </p>
       <div className="flex flex-col gap-3">
         {predefinedVideos.map((v) => (
           <button
             key={v.videoId}
             onClick={() => handleSelectPredefined(v.videoId)}
-            className="border-2 border-neutral-200 rounded-xl p-4 bg-white text-left flex items-center gap-4 hover:border-indigo-300 hover:bg-indigo-50/30 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="border-2 border-border rounded-xl p-4 bg-card text-left flex items-center gap-4 hover:border-suk-payment-ring hover:bg-suk-payment-soft/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={isLoading}
           >
             <Image
@@ -96,8 +96,8 @@ export default function VideoSelectionPage() {
               className="object-cover rounded-lg"
             />
             <div className="flex-1">
-              <h3 className="text-lg font-bold text-neutral-800">{v.title}</h3>
-              <p className="text-sm text-neutral-500">Oyna</p>
+              <h3 className="text-lg font-bold text-foreground">{v.title}</h3>
+              <p className="text-sm text-muted-foreground">Oyna</p>
             </div>
           </button>
         ))}

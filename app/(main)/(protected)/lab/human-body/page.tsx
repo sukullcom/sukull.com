@@ -285,11 +285,11 @@ const HangmanGame = ({
           tweenDuration={10000}
           className="absolute top-0 left-0"
         />
-        <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-white w-full max-w-lg mx-auto text-center items-center">
+        <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-card w-full max-w-lg mx-auto text-center items-center">
           <h2 className="text-2xl font-semibold">Oyun Bitti</h2>
           <div className="flex items-center gap-x-4 w-full justify-center">
-            <div className="bg-white shadow-md rounded-lg p-4">
-              <p className="text-gray-700 text-sm">Toplam Puan</p>
+            <div className="bg-card shadow-md rounded-lg p-4">
+              <p className="text-foreground text-sm">Toplam Puan</p>
               <p className="text-2xl font-bold text-green-600">{totalPoints}</p>
             </div>
           </div>{" "}
@@ -311,22 +311,22 @@ const HangmanGame = ({
   }
 
   return (
-    <div className="border-2 rounded-xl p-6 space-y-2 shadow-lg bg-white w-full relative">
+    <div className="border-2 rounded-xl p-6 space-y-2 shadow-lg bg-card w-full relative">
       {/* Points with Icon */}
       <div className="absolute top-9 right-8 flex items-center space-x-2">
         <Image src="/points.svg" alt="Points Icon" width={24} height={24} className="w-6 h-6" />
-        <span className="text-lg font-bold text-neutral-700">
+        <span className="text-lg font-bold text-foreground">
           {totalPoints}
         </span>
       </div>
       <h2 className="text-2xl font-semibold">Hangman Oyunu</h2>
       <HangmanFigure remainingAttempts={remainingAttempts} />
-      <p className="text-gray-700 font-bold">İpucu: {hint}</p>
+      <p className="text-foreground font-bold">İpucu: {hint}</p>
       <div className="flex space-x-2 text-2xl font-mono">
         {currentWord.split("").map((letter, idx) => (
           <span
             key={idx}
-            className={`border-b-2 border-gray-300 w-6 text-center uppercase ${
+            className={`border-b-2 border-input w-6 text-center uppercase ${
               letter === " " ? "border-none" : ""
             }`}
           >
@@ -370,7 +370,7 @@ const VideoPage = () => {
           Geri Dön
         </Button>
       </div>
-      <h1 className="text-3xl font-bold text-neutral-800 mb-8">
+      <h1 className="text-3xl font-bold text-foreground mb-8">
         Eğitim Videoları
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8 w-full max-w-5xl">
@@ -388,9 +388,9 @@ const VideoPage = () => {
           </Button>
         ))}
       </div>
-      <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-white w-full max-w-5xl mb-8">
+      <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-card w-full max-w-5xl mb-8">
         <h2 className="text-2xl font-semibold">{selectedVideo.title}</h2>
-        <p className="text-gray-700">{selectedVideo.extraInfo}</p>
+        <p className="text-foreground">{selectedVideo.extraInfo}</p>
       </div>
       <div className="flex flex-col lg:flex-row gap-8 w-full max-w-5xl mb-8">
         <div className="w-full lg:w-2/5">

@@ -27,7 +27,7 @@ export default async function ProfilePage() {
       .error({ message: "fetch profile data failed", error, location: "app/(main)/(protected)/profile/page" });
     return (
       <div className="flex items-center justify-center py-20 px-6 text-center">
-        <p className="text-neutral-600">Profil verileri yüklenirken bir hata oluştu. Lütfen sayfayı yenileyin.</p>
+        <p className="text-muted-foreground">Profil verileri yüklenirken bir hata oluştu. Lütfen sayfayı yenileyin.</p>
       </div>
     );
   }

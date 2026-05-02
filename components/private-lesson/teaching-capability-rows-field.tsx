@@ -35,14 +35,14 @@ export function TeachingCapabilityRowsField({ value, onChange }: Props) {
     <div className="space-y-3">
       <div className="flex items-center justify-between gap-2">
         <Label className="text-base font-medium">
-          Verdiğin dersler ve sınıflar <span className="text-red-500">*</span>
+          Verdiğin dersler ve sınıflar <span className="text-destructive">*</span>
         </Label>
         <Button type="button" variant="secondary" size="sm" onClick={addRow}>
           <Plus className="h-4 w-4 mr-1" />
           Satır ekle
         </Button>
       </div>
-      <p className="text-xs text-gray-500">
+      <p className="text-xs text-muted-foreground">
         Birden fazla branş veya sınıf ekleyebilirsin; her satır bir ders + sınıf
         çiftidir. Onay sonrası ilanlar bu alanlarla eşleştirilir.
       </p>
@@ -54,7 +54,7 @@ export function TeachingCapabilityRowsField({ value, onChange }: Props) {
             className="grid grid-cols-1 sm:grid-cols-[1fr_1fr_auto] gap-2 items-end"
           >
             <div className="space-y-1">
-              <span className="text-xs text-gray-500">Ders / alan</span>
+              <span className="text-xs text-muted-foreground">Ders / alan</span>
               <Select
                 value={row.subject}
                 onValueChange={(v) => updateRow(index, { subject: v })}
@@ -68,7 +68,7 @@ export function TeachingCapabilityRowsField({ value, onChange }: Props) {
               </Select>
             </div>
             <div className="space-y-1">
-              <span className="text-xs text-gray-500">Sınıf / seviye</span>
+              <span className="text-xs text-muted-foreground">Sınıf / seviye</span>
               <Select
                 value={row.grade}
                 onValueChange={(v) => updateRow(index, { grade: v })}
@@ -85,7 +85,7 @@ export function TeachingCapabilityRowsField({ value, onChange }: Props) {
               type="button"
               variant="ghost"
               size="sm"
-              className="text-red-600"
+              className="text-destructive"
               onClick={() => removeRow(index)}
               disabled={value.length <= 1}
               aria-label="Satırı sil"

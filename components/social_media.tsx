@@ -45,7 +45,7 @@ export const SocialMediaLinks = () => {
           >
             <Button 
               variant="default" 
-              className="w-full flex items-center justify-start mt-4 gap-4 px-4 py-3 hover:bg-gray-50 transition-colors"
+              className="w-full flex items-center justify-start mt-4 gap-4 px-4 py-3 hover:bg-muted transition-colors"
             >
               <Image
                 src={social.icon}
@@ -55,10 +55,10 @@ export const SocialMediaLinks = () => {
                 className="h-6 w-6"
               />
               <div className="flex-1 text-left">
-                <p className="font-medium text-neutral-700">{social.name}</p>
+                <p className="font-medium text-foreground">{social.name}</p>
                 <p className="text-xs text-muted-foreground">{social.text}</p>
               </div>
-              <span className="text-gray-400">→</span>
+              <span className="text-muted-foreground">→</span>
             </Button>
           </Link>
         ))}

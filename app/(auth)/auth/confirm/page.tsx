@@ -33,16 +33,16 @@ function ConfirmContent() {
     <div className="flex flex-col items-center justify-center gap-4 p-4 max-w-md mx-auto text-center">
       {status === "redirecting" && (
         <>
-          <Icons.spinner className="h-10 w-10 animate-spin text-green-500" />
+          <Icons.spinner className="h-10 w-10 animate-spin text-suk-brand" />
           <h1 className="text-xl font-bold">Doğrulanıyor...</h1>
-          <p className="text-gray-500">Lütfen bekleyin, yönlendiriliyorsunuz.</p>
+          <p className="text-muted-foreground">Lütfen bekleyin, yönlendiriliyorsunuz.</p>
         </>
       )}
       {status === "error" && (
         <>
-          <XCircle className="w-12 h-12 text-red-500 mx-auto" />
-          <h1 className="text-xl font-bold text-red-600">Doğrulama hatası</h1>
-          <p className="text-gray-500">{errorMessage}</p>
+          <XCircle className="mx-auto h-12 w-12 text-destructive" />
+          <h1 className="text-xl font-bold text-destructive">Doğrulama hatası</h1>
+          <p className="text-muted-foreground">{errorMessage}</p>
         </>
       )}
     </div>
@@ -54,8 +54,8 @@ export default function ConfirmPage() {
     <Suspense
       fallback={
         <div className="flex flex-col items-center justify-center gap-4">
-          <Icons.spinner className="h-10 w-10 animate-spin text-green-500" />
-          <p className="text-gray-500">Yükleniyor...</p>
+          <Icons.spinner className="h-10 w-10 animate-spin text-suk-brand" />
+          <p className="text-muted-foreground">Yükleniyor...</p>
         </div>
       }
     >

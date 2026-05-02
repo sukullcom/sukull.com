@@ -51,13 +51,13 @@ export const RankCards = ({
       {cards.map(({ key, label, icon: Icon, iconColor, bgIcon, valueColor }) => (
         <div
           key={key}
-          className="relative overflow-hidden border-2 border-gray-200 rounded-2xl p-3 sm:p-4"
+          className="relative overflow-hidden border-2 border-border rounded-2xl p-3 sm:p-4"
         >
           <Icon className={`absolute -top-1 -right-1 h-10 w-10 sm:h-12 sm:w-12 ${bgIcon}`} />
           <div className={`${iconColor} mb-1`}>
             <Icon className="h-4 w-4" />
           </div>
-          <p className="text-[10px] sm:text-[11px] font-medium text-gray-500 leading-tight">
+          <p className="text-[10px] sm:text-[11px] font-medium text-muted-foreground leading-tight">
             {label}
           </p>
           <p className={`text-xl sm:text-3xl font-extrabold mt-1 ${valueColor}`}>

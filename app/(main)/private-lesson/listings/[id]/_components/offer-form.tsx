@@ -110,7 +110,7 @@ export function OfferForm({
         Ödeme sonrası kredi iade edilmez; sohbet açılır ve öğrenci kabulünü
         beklemeden mesaj yazabilirsin.
       </span>
-      <span className="block text-gray-700 mb-2">
+      <span className="block text-muted-foreground mb-2">
         Onayladığında, sohbet üzerinden{" "}
         <span className="font-semibold">
           öğrencinin kayıtlı e-posta ve telefon bilgilerine
@@ -119,18 +119,18 @@ export function OfferForm({
         paylaşılır. İletişim bilgilerinin doğru olduğundan emin ol.
       </span>
       {creditHint ? (
-        <span className="block text-amber-800">{creditHint}</span>
+        <span className="block text-suk-warning-soft-fg">{creditHint}</span>
       ) : null}
     </>
   );
 
   return (
-    <div className="bg-white border rounded-xl p-5">
+    <div className="bg-card border rounded-xl p-5">
       <div className="flex items-center gap-2 mb-3">
-        <Handshake className="h-5 w-5 text-emerald-600" />
-        <h2 className="font-semibold text-gray-900">Teklif Ver</h2>
+        <Handshake className="h-5 w-5 text-suk-brand" />
+        <h2 className="font-semibold text-foreground">Teklif Ver</h2>
       </div>
-      <p className="text-xs text-gray-500 mb-4">
+      <p className="text-xs text-muted-foreground mb-4">
         1 kredi ile teklif gönderirsin. Öğrenci kabulünü beklemeden sohbet açılır;
         tarafların kayıtlı e-posta ve telefon bilgileri sohbet içinde paylaşılır.
         İlana en fazla 4 teklif düşer; kredi iade edilmez.
@@ -138,7 +138,7 @@ export function OfferForm({
 
       <div className="space-y-3">
         <div>
-          <label className="block text-xs font-medium text-gray-600 mb-1">
+          <label className="block text-xs font-medium text-muted-foreground mb-1">
             Saatlik Fiyat Teklifi (₺) *
           </label>
           <input
@@ -153,12 +153,12 @@ export function OfferForm({
                 ? `Öğrenci bütçesi: ${budgetMin}–${budgetMax}`
                 : "Örn. 400"
             }
-            className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/20"
+            className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-suk-brand focus:ring-1 focus:ring-suk-brand/20"
           />
         </div>
 
         <div>
-          <label className="block text-xs font-medium text-gray-600 mb-1">
+          <label className="block text-xs font-medium text-muted-foreground mb-1">
             Not (opsiyonel)
           </label>
           <textarea
@@ -167,9 +167,9 @@ export function OfferForm({
             maxLength={500}
             rows={3}
             placeholder="Ders yaklaşımın, deneyimin, müsait olduğun saatler vb."
-            className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500/20 resize-none"
+            className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-suk-brand focus:ring-1 focus:ring-suk-brand/20 resize-none"
           />
-          <div className="text-[10px] text-gray-400 mt-1 text-right">
+          <div className="text-[10px] text-muted-foreground mt-1 text-right">
             {note.length}/500
           </div>
         </div>

@@ -140,7 +140,7 @@ export function MessageTeacherButton({
         <span className="font-semibold">1 kredi</span> kullanılır. Ödeme tek
         seferlidir; aynı sohbet için tekrar ücret alınmaz ve kredi iade edilmez.
       </span>
-      <span className="block text-gray-700">
+      <span className="block text-muted-foreground">
         Onayladığında, sohbet ekranında{" "}
         <span className="font-semibold">
           eğitmenin kayıtlı e-posta ve telefon bilgileri

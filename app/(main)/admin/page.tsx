@@ -34,8 +34,8 @@ export default function AdminDashboardPage() {
   return (
     <div className="space-y-8">
       <div className="flex items-center gap-3">
-        <LayoutDashboard className="h-7 w-7 text-gray-700" />
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
+        <LayoutDashboard className="h-7 w-7 text-foreground" />
+        <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
           Admin Dashboard
         </h1>
       </div>
@@ -48,7 +48,7 @@ export default function AdminDashboardPage() {
       </section>
 
       <section aria-label="İş metrikleri">
-        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-500">
+        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
           İş Metrikleri
         </h2>
         <Suspense fallback={<AdminMetricsBandSkeleton />}>
@@ -57,7 +57,7 @@ export default function AdminDashboardPage() {
       </section>
 
       <section aria-label="Son aktiviteler">
-        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-500">
+        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
           Son Aktiviteler
         </h2>
         <Suspense fallback={<AdminActivityBandSkeleton />}>

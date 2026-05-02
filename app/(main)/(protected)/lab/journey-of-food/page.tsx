@@ -162,13 +162,13 @@ const FoodSimulationPage = () => {
           Geri Dön
         </Button>
       </div>
-      <h1 className="text-3xl font-bold mb-8 text-neutral-700">
+      <h1 className="text-3xl font-bold mb-8 text-foreground">
         Yiyeceklerin Yolculuğu
       </h1>
 
       {/* Timeline Card */}
-      <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-white w-full max-w-4xl">
-        <h2 className="text-2xl font-semibold text-center text-neutral-700">
+      <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-card w-full max-w-4xl">
+        <h2 className="text-2xl font-semibold text-center text-foreground">
           Zaman Çizelgesi
         </h2>
         <div className="relative w-full h-4 bg-gray-200 rounded-full overflow-hidden">
@@ -188,16 +188,16 @@ const FoodSimulationPage = () => {
                 layout="intrinsic"
                 width={600}
                 height={400}
-                className="rounded-3xl border-2 border-gray-300 shadow-md mx-auto"
+                className="rounded-3xl border-2 border-input shadow-md mx-auto"
               />
             ) : (
-              <div className="w-[600px] h-[400px] bg-gray-100 flex items-center justify-center rounded-md ">
-                <p className="text-gray-500">Görsel Yok</p>
+              <div className="w-[600px] h-[400px] bg-muted flex items-center justify-center rounded-md ">
+                <p className="text-muted-foreground">Görsel Yok</p>
               </div>
             )}
           </div>
           <div className="lg:w-1/2">
-            <div className="bg-gray-100 text-neutral-700 border-gray-300 border-2 transition-none p-6 rounded-lg shadow-md">
+            <div className="bg-muted text-foreground border-input border-2 transition-none p-6 rounded-lg shadow-md">
               <h2 className="text-2xl font-bold mb-4">
                 {steps[currentStep].title}
               </h2>
@@ -224,10 +224,10 @@ const FoodSimulationPage = () => {
       </div>
 
       {/* Matching Game Card */}
-      <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-white w-full max-w-4xl relative">
+      <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-card w-full max-w-4xl relative">
         <div className="absolute top-4 right-8 flex items-center space-x-2">
           <Image src="/points.svg" alt="Points Icon" width={32} height={32} className="w-8 h-8" />
-          <span className="text-lg font-bold text-neutral-700">
+          <span className="text-lg font-bold text-foreground">
             {totalPoints}
           </span>
         </div>
@@ -237,8 +237,8 @@ const FoodSimulationPage = () => {
             <div className="text-center p-6 space-y-4 mt-4">
               <h2 className="text-2xl font-semibold">Oyun Bitti</h2>
               <div className="flex items-center gap-x-4 w-full justify-center">
-                <div className="bg-white shadow-md rounded-lg p-4">
-                  <p className="text-gray-700 text-sm">Toplam Puan</p>
+                <div className="bg-card shadow-md rounded-lg p-4">
+                  <p className="text-foreground text-sm">Toplam Puan</p>
                   <p className="text-2xl font-bold text-green-600">
                     {totalPoints}
                   </p>
@@ -251,7 +251,7 @@ const FoodSimulationPage = () => {
           </>
         ) : (
           <>
-            <h2 className="text-xl font-bold text-center text-neutral-700">
+            <h2 className="text-xl font-bold text-center text-foreground">
               Eşleştirme Oyunu
             </h2>
             <div className="flex flex-wrap justify-center gap-4">
@@ -263,7 +263,7 @@ const FoodSimulationPage = () => {
                       ? "bg-rose-300 border-rose-500"
                       : highlightedCard === step.animationPath
                       ? "bg-rose-300 border-rose-500"
-                      : "bg-white border-gray-300 hover:border-rose-500 hover:bg-rose-100"
+                      : "bg-card border-input hover:border-rose-500 hover:bg-rose-100"
                   }`}
                   onClick={() => handleCardClick(step.animationPath)}
                 >
@@ -282,12 +282,12 @@ const FoodSimulationPage = () => {
               {steps.map((step) => (
                 <div
                   key={step.title}
-                  className={`p-4 text-neutral-700 border-2 rounded-lg shadow-md w-48 text-center transition-colors ${
+                  className={`p-4 text-foreground border-2 rounded-lg shadow-md w-48 text-center transition-colors ${
                     matchedCards.includes(step.title)
                       ? "bg-rose-300 border-rose-500"
                       : highlightedCard === step.title
                       ? "bg-rose-300 border-rose-500"
-                      : "bg-gray-100 border-gray-300 hover:border-rose-500 hover:bg-rose-100"
+                      : "bg-muted border-input hover:border-rose-500 hover:bg-rose-100"
                   }`}
                   onClick={() => handleCardClick(step.title)}
                 >

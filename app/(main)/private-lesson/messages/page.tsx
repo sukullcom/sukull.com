@@ -22,14 +22,14 @@ export default async function MessagesIndexPage() {
 
       <div className="mb-4">
         <div className="flex items-center gap-3 mb-1">
-          <div className="p-2 bg-purple-100 rounded-lg">
-            <MessageCircle className="h-5 w-5 text-purple-700" />
+          <div className="p-2 bg-suk-brand-soft rounded-lg">
+            <MessageCircle className="h-5 w-5 text-suk-brand" />
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">
             Mesajlar
           </h1>
         </div>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-muted-foreground">
           Eğitmenlerle veya öğrencilerle açılmış sohbetlerin. Öğrenci olarak yeni
           sohbet açmak için eğitmen rehberinden bir profile tek seferlik 1 kredi
           kullanılır; onay sonrası tarafların kayıtlı e-posta ve telefon bilgileri
@@ -39,9 +39,9 @@ export default async function MessagesIndexPage() {
       </div>
 
       {conversations.length === 0 ? (
-        <div className="text-center py-16 rounded-xl border border-dashed border-gray-200 bg-white">
-          <MessageCircle className="mx-auto h-10 w-10 text-gray-300 mb-3" />
-          <p className="text-gray-500 mb-4">
+        <div className="text-center py-16 rounded-xl border border-dashed border-border bg-card">
+          <MessageCircle className="mx-auto h-10 w-10 text-muted-foreground/40 mb-3" />
+          <p className="text-muted-foreground mb-4">
             Henüz sohbetin yok. Eğitmen rehberinden bir profile ulaşmayı dene.
           </p>
           <Button asChild variant="primary" size="sm">
@@ -49,12 +49,12 @@ export default async function MessagesIndexPage() {
           </Button>
         </div>
       ) : (
-        <div className="bg-white border rounded-xl overflow-hidden">
+        <div className="bg-card border rounded-xl overflow-hidden">
           {conversations.map((c, i) => (
             <Link
               key={c.chatId}
               href={`/private-lesson/messages/${c.chatId}`}
-              className={`flex items-center gap-3 p-3 hover:bg-gray-50 transition-colors ${
+              className={`flex items-center gap-3 p-3 hover:bg-muted/50 transition-colors ${
                 i !== conversations.length - 1 ? "border-b" : ""
               }`}
             >
@@ -68,14 +68,14 @@ export default async function MessagesIndexPage() {
               />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-2">
-                  <h3 className="font-semibold text-gray-900 truncate">
+                  <h3 className="font-semibold text-foreground truncate">
                     {c.otherUserName || "Kullanıcı"}
                   </h3>
-                  <span className="text-[11px] text-gray-400 shrink-0">
+                  <span className="text-[11px] text-muted-foreground shrink-0">
                     {formatDate(c.lastUpdated)}
                   </span>
                 </div>
-                <p className="text-sm text-gray-500 truncate">
+                <p className="text-sm text-muted-foreground truncate">
                   {c.lastMessage || "Henüz mesaj yok"}
                 </p>
               </div>

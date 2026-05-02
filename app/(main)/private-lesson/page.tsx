@@ -50,14 +50,14 @@ export default async function PrivateLessonPage() {
       <FeedWrapper>
         {/* Hero */}
         <div className="mb-8">
-          <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 shadow-lg">
+          <Card className="border-suk-brand/30 bg-gradient-to-br from-suk-brand-soft to-suk-brand-soft/60 shadow-lg">
             <CardContent className="p-5 sm:p-8">
-              <div className="flex flex-col lg:flex-row items-center gap-6 sm:gap-8">
+              <div className="flex flex-col items-center gap-6 sm:gap-8 lg:flex-row">
                 <div className="flex-1">
-                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
+                  <h1 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl">
                     Özel Ders Pazarı
                   </h1>
-                  <p className="text-lg text-gray-600 mb-6">
+                  <p className="mb-6 text-lg text-muted-foreground">
                     Alanında uzman eğitmenlere ulaş ya da talep ilanı aç; teklifler
                     sana gelsin. İletişimi krediyle aç, koşulları birlikte netleştirin.
                   </p>
@@ -93,15 +93,15 @@ export default async function PrivateLessonPage() {
                     height={200}
                     className="animate-bounce-slow"
                   />
-                  <Sparkles className="absolute top-0 right-0 w-8 h-8 text-yellow-400 animate-pulse" />
+                  <Sparkles className="absolute right-0 top-0 h-8 w-8 animate-pulse text-suk-warning" />
                 </div>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        <div className="mb-8 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
-          <p className="font-semibold text-slate-800 mb-1">İnceleme ve teyit</p>
+        <div className="mb-8 rounded-xl border border-border bg-muted/60 px-4 py-3 text-sm text-muted-foreground">
+          <p className="mb-1 font-semibold text-foreground">İnceleme ve teyit</p>
           <p>
             Talep ilanları ile eğitmen başvuruları Sukull ekibi tarafından kontrol
             edilir; yanıltıcı, eksik veya kurallara aykırı içerik yayından
@@ -111,13 +111,13 @@ export default async function PrivateLessonPage() {
 
         {/* Primary student CTAs */}
         <div className="grid md:grid-cols-2 gap-6 mb-8">
-          <Card className="group hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-2 hover:border-blue-300">
+          <Card className="group border-2 transition-all duration-300 hover:scale-[1.02] hover:border-suk-brand/45 hover:shadow-xl">
             <CardHeader className="pb-4">
-              <div className="flex items-center justify-between mb-2">
-                <div className="p-3 bg-blue-100 rounded-full group-hover:bg-blue-200 transition-colors">
-                  <BookOpen className="w-8 h-8 text-blue-600" />
+              <div className="mb-2 flex items-center justify-between">
+                <div className="rounded-full bg-suk-brand-soft p-3 transition-colors group-hover:bg-suk-brand-soft/80">
+                  <BookOpen className="h-8 w-8 text-suk-brand" />
                 </div>
-                <ChevronRight className="w-6 h-6 text-gray-400 group-hover:text-blue-600 transition-colors" />
+                <ChevronRight className="h-6 w-6 text-muted-foreground transition-colors group-hover:text-suk-brand" />
               </div>
               <CardTitle className="text-xl sm:text-2xl">
                 Eğitmen bul
@@ -141,13 +141,13 @@ export default async function PrivateLessonPage() {
             </CardContent>
           </Card>
 
-          <Card className="group hover:shadow-xl transition-all duration-300 hover:scale-[1.02] border-2 hover:border-yellow-300">
+          <Card className="group border-2 transition-all duration-300 hover:scale-[1.02] hover:border-suk-warning/50 hover:shadow-xl">
             <CardHeader className="pb-4">
-              <div className="flex items-center justify-between mb-2">
-                <div className="p-3 bg-yellow-100 rounded-full group-hover:bg-yellow-200 transition-colors">
-                  <Megaphone className="w-8 h-8 text-yellow-600" />
+              <div className="mb-2 flex items-center justify-between">
+                <div className="rounded-full bg-suk-warning-soft p-3 transition-colors group-hover:bg-suk-warning-border/40">
+                  <Megaphone className="h-8 w-8 text-suk-warning-soft-fg" />
                 </div>
-                <ChevronRight className="w-6 h-6 text-gray-400 group-hover:text-yellow-600 transition-colors" />
+                <ChevronRight className="h-6 w-6 text-muted-foreground transition-colors group-hover:text-suk-warning-soft-fg" />
               </div>
               <CardTitle className="text-xl sm:text-2xl">
                 İlan Aç
@@ -174,20 +174,20 @@ export default async function PrivateLessonPage() {
         </div>
 
         {/* Teacher CTA */}
-        <Card className="shadow-lg mb-8 bg-gradient-to-br from-green-50 to-emerald-100 border-green-200">
-          <CardContent className="p-6 flex flex-col sm:flex-row items-center gap-4">
-            <div className="p-3 bg-white rounded-full shrink-0">
-              <GraduationCap className="w-8 h-8 text-green-600" />
+        <Card className="mb-8 border-suk-brand/30 bg-gradient-to-br from-suk-brand-soft to-suk-brand-soft/70 shadow-lg">
+          <CardContent className="flex flex-col items-center gap-4 p-6 sm:flex-row">
+            <div className="shrink-0 rounded-full bg-card p-3">
+              <GraduationCap className="h-8 w-8 text-suk-brand" />
             </div>
             <div className="flex-1 text-center sm:text-left">
-              <h2 className="text-xl font-bold text-gray-800 mb-1">
+              <h2 className="mb-1 text-xl font-bold text-foreground">
                 Ders vermek istiyor musun?
               </h2>
-              <p className="text-sm text-gray-600 mb-2">
+              <p className="mb-2 text-sm text-muted-foreground">
                 Kısa eğitmen başvurusuyla rehbere gir; onaylandıktan sonra öğrenciler
                 sana mesaj gönderebilir, açık ilanlara teklif verebilirsin.
               </p>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-muted-foreground/90">
                 Kurumda veya birebir zaten ders veriyor olsan da, burada listelenmek
                 için bu başvuruyu tamamlaman gerekir; aynı hesaptan öğrenci akışını da
                 kullanmaya devam edebilirsin.
@@ -213,19 +213,19 @@ export default async function PrivateLessonPage() {
             <div className="grid md:grid-cols-3 gap-6">
               <HowItem
                 icon={BookOpen}
-                color="blue"
+                color="brand"
                 title="1. Keşfet"
                 desc="Eğitmen rehberinden ya da açık ilanlardan aradığını bul."
               />
               <HowItem
                 icon={MessageCircle}
-                color="green"
+                color="brand"
                 title="2. İletişime geç"
                 desc="Krediyle eğitmenle sohbeti aç ya da ilanına gelen teklifleri değerlendir."
               />
               <HowItem
                 icon={Wallet}
-                color="yellow"
+                color="payment"
                 title="3. Anlaş"
                 desc="Ücret, yer ve saati mesajda netleştirin. Anlaşma tarafların sorumluluğundadır."
               />
@@ -240,10 +240,10 @@ export default async function PrivateLessonPage() {
 function Feature({ label }: { label: string }) {
   return (
     <li className="flex items-start gap-2">
-      <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center mt-0.5 shrink-0">
-        <Check className="w-4 h-4 text-green-500" />
+      <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-suk-brand-soft">
+        <Check className="h-4 w-4 text-suk-brand" />
       </div>
-      <span className="text-gray-600">{label}</span>
+      <span className="text-muted-foreground">{label}</span>
     </li>
   );
 }
@@ -255,14 +255,14 @@ function HowItem({
   desc,
 }: {
   icon: React.ComponentType<{ className?: string }>;
-  color: "blue" | "green" | "yellow";
+  color: "brand" | "payment" | "warning";
   title: string;
   desc: string;
 }) {
   const bg: Record<typeof color, string> = {
-    blue: "bg-blue-100 text-blue-600",
-    green: "bg-green-100 text-green-600",
-    yellow: "bg-yellow-100 text-yellow-600",
+    brand: "bg-suk-brand-soft text-suk-brand",
+    payment: "bg-suk-payment-soft text-suk-payment",
+    warning: "bg-suk-warning-soft text-suk-warning-soft-fg",
   };
   return (
     <div className="text-center">
@@ -272,7 +272,7 @@ function HowItem({
         <Icon className="w-8 h-8" />
       </div>
       <h3 className="font-semibold mb-2">{title}</h3>
-      <p className="text-sm text-gray-600">{desc}</p>
+      <p className="text-sm text-muted-foreground">{desc}</p>
     </div>
   );
 }

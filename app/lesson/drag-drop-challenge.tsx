@@ -218,15 +218,15 @@ export const DragDropChallenge = ({
               className={cn(
                 "min-h-[180px] border-2 border-dashed rounded-xl p-6 transition-all",
                 "flex flex-col items-center justify-center",
-                draggedItem && "border-blue-300 bg-blue-50",
-                isCorrect && "border-green-300 bg-green-100",
-                isWrong && "border-rose-300 bg-rose-100",
-                !placedItem && "border-gray-300"
+                draggedItem && "border-suk-payment-ring/80 bg-suk-payment-soft",
+                isCorrect && "border-suk-brand/50 bg-suk-brand-soft",
+                isWrong && "border-suk-danger-line bg-suk-danger-soft",
+                !placedItem && "border-border"
               )}
               onDragOver={handleDragOver}
               onDrop={(e) => handleDrop(e, zone.id)}
             >
-              <div className="text-base font-medium text-gray-600 mb-3">
+              <div className="text-base font-medium text-muted-foreground mb-3">
                 <MathRenderer>{zone.label}</MathRenderer>
               </div>
               
@@ -234,9 +234,9 @@ export const DragDropChallenge = ({
                 <div
                   className={cn(
                     "p-4 rounded-lg border-2 cursor-move",
-                    isCorrect && "border-green-300 bg-green-50",
-                    isWrong && "border-rose-300 bg-rose-50",
-                    status === "none" && "border-blue-300 bg-blue-50"
+                    isCorrect && "border-suk-brand/50 bg-suk-brand-soft",
+                    isWrong && "border-suk-danger-line bg-suk-danger-soft",
+                    status === "none" && "border-suk-payment-ring/80 bg-suk-payment-soft"
                   )}
                   draggable={!disabled}
                   onDragStart={(e) => handleDragStart(e, placedItem.id)}
@@ -254,14 +254,14 @@ export const DragDropChallenge = ({
                   )}
                   {placedItem.text && placedItem.text.trim() && (
                     <div className="text-center text-base font-medium">
-                      <MathRenderer className="text-gray-800 text-base text-center">
+                      <MathRenderer className="text-foreground text-base text-center">
                         {placedItem.text}
                       </MathRenderer>
                   </div>
                   )}
                 </div>
               ) : (
-                <div className="text-gray-400 text-base text-center">
+                <div className="text-muted-foreground text-base text-center">
                   Öğeyi buraya bırak
                 </div>
               )}
@@ -272,7 +272,7 @@ export const DragDropChallenge = ({
 
       {/* Draggable Items */}
       <div className="space-y-3">
-        <h3 className="text-base font-medium text-gray-700">Öğeleri doğru konumlara sürükle:</h3>
+        <h3 className="text-base font-medium text-foreground">Öğeleri doğru konumlara sürükle:</h3>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {dragItems
             .filter(item => !isItemPlaced(item.id))
@@ -282,7 +282,7 @@ export const DragDropChallenge = ({
                 className={cn(
                   "p-4 rounded-lg border-2 cursor-move transition-all",
                   "hover:shadow-md active:scale-95",
-                  "border-gray-300 bg-white",
+                  "border-input bg-card",
                   draggedItem === item.id && "opacity-50",
                   disabled && "cursor-not-allowed opacity-50"
                 )}
@@ -302,7 +302,7 @@ export const DragDropChallenge = ({
                 )}
                 {item.text && item.text.trim() && (
                   <div className="text-center text-base font-medium">
-                    <MathRenderer className="text-gray-800 text-base text-center">
+                    <MathRenderer className="text-foreground text-base text-center">
                       {item.text}
                     </MathRenderer>
                 </div>

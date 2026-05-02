@@ -26,37 +26,37 @@ const gamesData: GameData[] = [
   {
     id: "speed-math",
     name: "Hız Matematiği",
-    icon: <Zap className="w-14 h-14 text-yellow-500" />,
+    icon: <Zap className="w-14 h-14 text-suk-warning" />,
   },
   {
     id: "memory-match",
     name: "Hafıza Kartları",
-    icon: <Brain className="w-14 h-14 text-purple-500" />,
+    icon: <Brain className="w-14 h-14 text-suk-play" />,
   },
   {
     id: "true-false",
     name: "Doğru mu Yanlış mı?",
-    icon: <CircleCheck className="w-14 h-14 text-green-500" />,
+    icon: <CircleCheck className="w-14 h-14 text-suk-brand" />,
   },
   {
     id: "pattern-memory",
     name: "Sıralama Ustası",
-    icon: <Target className="w-14 h-14 text-orange-500" />,
+    icon: <Target className="w-14 h-14 text-suk-warning" />,
   },
   {
     id: "memory-matrix",
     name: "Hafıza Matrisi",
-    icon: <Grid3X3 className="w-14 h-14 text-cyan-500" />,
+    icon: <Grid3X3 className="w-14 h-14 text-suk-payment" />,
   },
   {
     id: "color-stroop",
     name: "Renk Tuzağı",
-    icon: <Palette className="w-14 h-14 text-rose-500" />,
+    icon: <Palette className="w-14 h-14 text-suk-danger" />,
   },
   {
     id: "word-match",
     name: "Kelime Eşleştirme",
-    icon: <Languages className="w-14 h-14 text-indigo-500" />,
+    icon: <Languages className="w-14 h-14 text-suk-play" />,
   },
 ];
 
@@ -72,7 +72,7 @@ const GamesPage = async () => {
       <FeedWrapper>
         <div className="w-full flex flex-col items-center">
           <Image src="/mascot_blue.svg" alt="Games" height={120} width={120} />
-          <h1 className="text-center font-bold text-neutral-800 text-2xl my-6">
+          <h1 className="text-center font-bold text-foreground text-2xl my-6">
             Oyunlar
           </h1>
           <p className="text-muted-foreground text-center text-lg mb-6">

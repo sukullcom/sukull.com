@@ -42,7 +42,7 @@ function ThemeSelector() {
       <div className="relative">
         <div className="w-48 group relative flex items-center gap-2 px-4 py-2.5 bg-[#1e1e2e]/80 
           rounded-lg border border-gray-800/50 h-[44px]">
-          <Palette className="w-4 h-4 text-gray-400" />
+          <Palette className="w-4 h-4 text-muted-foreground" />
           <div className="flex-1 h-4 bg-gray-700 rounded animate-pulse" />
           <div className="w-4 h-4 rounded-full bg-gray-700 animate-pulse" />
         </div>
@@ -62,9 +62,9 @@ function ThemeSelector() {
         {/* hover state bg decorator */}
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity" />
 
-        <Palette className="w-4 h-4 text-gray-400 group-hover:text-gray-300 transition-colors" />
+        <Palette className="w-4 h-4 text-muted-foreground group-hover:text-muted-foreground transition-colors" />
 
-        <span className="text-gray-300 min-w-[80px] text-left group-hover:text-white transition-colors">
+        <span className="text-muted-foreground min-w-[80px] text-left group-hover:text-white transition-colors">
           {currentTheme?.label}
         </span>
 
@@ -87,7 +87,7 @@ function ThemeSelector() {
             backdrop-blur-xl rounded-xl border border-[#313244] shadow-2xl py-2 z-50"
           >
             <div className="px-2 pb-2 mb-2 border-b border-gray-800/50">
-              <p className="text-xs font-medium text-gray-400 px-2">Select Theme</p>
+              <p className="text-xs font-medium text-muted-foreground px-2">Select Theme</p>
             </div>
 
             {THEMES.map((t, index) => (
@@ -98,7 +98,7 @@ function ThemeSelector() {
                 transition={{ delay: index * 0.1 }}
                 className={`
                 relative group w-full flex items-center gap-3 px-3 py-2.5 hover:bg-[#262637] transition-all duration-200
-                ${theme === t.id ? "bg-blue-500/10 text-blue-400" : "text-gray-300"}
+                ${theme === t.id ? "bg-blue-500/10 text-blue-400" : "text-muted-foreground"}
               `}
                 onClick={() => setTheme(t.id)}
               >
@@ -112,7 +112,7 @@ function ThemeSelector() {
                 <div
                   className={`
                 flex items-center justify-center size-8 rounded-lg
-                ${theme === t.id ? "bg-blue-500/10 text-blue-400" : "bg-gray-800/50 text-gray-400"}
+                ${theme === t.id ? "bg-blue-500/10 text-blue-400" : "bg-gray-800/50 text-muted-foreground"}
                 group-hover:scale-110 transition-all duration-200
               `}
                 >

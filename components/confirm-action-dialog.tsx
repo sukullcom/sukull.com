@@ -48,7 +48,7 @@ export function ConfirmActionDialog({
   imageAlt = "Maskot",
 }: ConfirmActionDialogProps) {
   const confirmBtnVariant = confirmVariant === "danger" ? "danger" : "primary";
-  const cancelBtnVariant = "default";
+  const cancelBtnVariant = "muted";
 
   const run = async () => {
     await onConfirm();
@@ -56,7 +56,7 @@ export function ConfirmActionDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md bg-white">
+      <DialogContent className="max-w-md bg-card border border-border">
         <DialogHeader>
           {imageSrc ? (
             <div className="flex w-full items-center justify-center mb-2">

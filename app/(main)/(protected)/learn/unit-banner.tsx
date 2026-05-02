@@ -15,7 +15,7 @@ export const UnitBanner = ({ title, description, activeLessonId, hasContent = tr
   const isUnitComplete = hasContent && !activeLessonId;
 
   const bgStyle: React.CSSProperties = !hasContent
-    ? { backgroundColor: "#9ca3af" }
+    ? { backgroundColor: "hsl(var(--suk-neutral-locked) / 1)" }
     : isUnitComplete
       ? { backgroundColor: subjectColor.hexDark }
       : { background: `linear-gradient(to bottom right, ${subjectColor.hex}, ${subjectColor.hexDark})` };

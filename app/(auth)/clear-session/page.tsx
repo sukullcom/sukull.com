@@ -81,21 +81,21 @@ export default function ClearSessionPage() {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-      <div className="max-w-2xl w-full bg-white rounded-2xl shadow-xl p-8">
-        <h1 className="text-3xl font-bold text-center mb-4 text-red-600 flex items-center justify-center gap-2">
-          <Trash2 className="w-8 h-8" /> Clear Session Data
+    <div className="flex min-h-screen items-center justify-center bg-muted/50 p-4">
+      <div className="w-full max-w-2xl rounded-2xl bg-card p-8 shadow-xl">
+        <h1 className="mb-4 flex items-center justify-center gap-2 text-center text-3xl font-bold text-destructive">
+          <Trash2 className="h-8 w-8" /> Clear Session Data
         </h1>
         
-        <p className="text-center text-gray-600 mb-6">
+        <p className="mb-6 text-center text-muted-foreground">
           If you&apos;re having login issues in this browser, click the button below to clear ALL session data and start fresh.
         </p>
 
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-          <p className="text-sm text-yellow-800 font-semibold mb-2 flex items-center gap-1.5">
-            <AlertTriangle className="w-4 h-4 shrink-0" /> Warning: This will:
+        <div className="mb-6 rounded-lg border border-suk-warning-border bg-suk-warning-soft p-4">
+          <p className="mb-2 flex items-center gap-1.5 text-sm font-semibold text-suk-warning-soft-fg">
+            <AlertTriangle className="h-4 w-4 shrink-0" /> Warning: This will:
           </p>
-          <ul className="text-sm text-yellow-800 space-y-1 list-disc list-inside">
+          <ul className="list-inside list-disc space-y-1 text-sm text-suk-warning-soft-fg">
             <li>Sign you out from Supabase</li>
             <li>Clear all localStorage</li>
             <li>Clear all sessionStorage</li>
@@ -108,24 +108,32 @@ export default function ClearSessionPage() {
         <Button
           onClick={clearEverything}
           disabled={isClearing}
-          className="w-full mb-6 bg-red-600 hover:bg-red-700 text-white"
+          className="mb-6 w-full bg-destructive text-destructive-foreground hover:bg-destructive/90"
           size="lg"
         >
           {isClearing ? "Clearing..." : "Clear Everything & Fix Login"}
         </Button>
 
-        <div className="bg-gray-50 rounded-lg p-4 max-h-96 overflow-y-auto">
-          <h2 className="font-semibold mb-2">Status:</h2>
+        <div className="max-h-96 overflow-y-auto rounded-lg bg-muted/60 p-4">
+          <h2 className="mb-2 font-semibold">Status:</h2>
           {status.length === 0 ? (
-            <p className="text-gray-500 text-sm">No actions yet...</p>
+            <p className="text-sm text-muted-foreground">No actions yet...</p>
           ) : (
             <div className="space-y-1">
               {status.map((entry, i) => (
-                <p key={i} className="text-sm font-mono flex items-center gap-1.5">
-                  {entry.type === "loading" && <RefreshCw className="w-3.5 h-3.5 text-blue-500 animate-spin shrink-0" />}
-                  {entry.type === "success" && <CircleCheck className="w-3.5 h-3.5 text-green-500 shrink-0" />}
-                  {entry.type === "info" && <Info className="w-3.5 h-3.5 text-blue-400 shrink-0" />}
-                  {entry.type === "error" && <XCircle className="w-3.5 h-3.5 text-red-500 shrink-0" />}
+                <p key={i} className="flex items-center gap-1.5 font-mono text-sm">
+                  {entry.type === "loading" && (
+                    <RefreshCw className="h-3.5 w-3.5 shrink-0 animate-spin text-suk-payment" />
+                  )}
+                  {entry.type === "success" && (
+                    <CircleCheck className="h-3.5 w-3.5 shrink-0 text-suk-brand" />
+                  )}
+                  {entry.type === "info" && (
+                    <Info className="h-3.5 w-3.5 shrink-0 text-suk-payment-soft-fg" />
+                  )}
+                  {entry.type === "error" && (
+                    <XCircle className="h-3.5 w-3.5 shrink-0 text-suk-danger" />
+                  )}
                   {entry.message}
                 </p>
               ))}

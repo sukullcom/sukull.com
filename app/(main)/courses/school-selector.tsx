@@ -41,15 +41,15 @@ export const SchoolSelector = ({ schools, userProgress }: SchoolSelectorProps) =
   };
 
   return (
-    <div className="rounded-lg border border-gray-300 p-4 bg-gray-50 shadow-sm">
-      <h2 className="text-lg font-semibold text-neutral-800 mb-4">Okulunu Seç</h2>
+    <div className="rounded-lg border border-input p-4 bg-muted shadow-sm">
+      <h2 className="text-lg font-semibold text-foreground mb-4">Okulunu Seç</h2>
 
       {/* School Type Dropdown */}
       <select
         onChange={onTypeChange}
         disabled={pending}
         defaultValue=""
-        className="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500"
+        className="w-full p-2 mb-4 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500"
       >
         <option value="">Okul Tipini Seç</option>
         <option value="university">Üniversite</option>
@@ -65,7 +65,7 @@ export const SchoolSelector = ({ schools, userProgress }: SchoolSelectorProps) =
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Okul ismine göre ara..."
-          className="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500"
+          className="w-full p-2 mb-4 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500"
         />
       )}
 
@@ -79,14 +79,14 @@ export const SchoolSelector = ({ schools, userProgress }: SchoolSelectorProps) =
               className={`border p-2 rounded-lg cursor-pointer text-center ${
                 selectedSchoolId === school.id
                   ? "bg-green-50 border-green-600"
-                  : "hover:bg-gray-100"
+                  : "hover:bg-muted"
               }`}
             >
               <p
                 className={`font-medium ${
                   selectedSchoolId === school.id
                     ? "text-green-600"
-                    : "text-neutral-800"
+                    : "text-foreground"
                 }`}
               >
                 {school.name}

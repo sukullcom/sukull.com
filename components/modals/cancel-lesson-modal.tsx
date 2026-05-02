@@ -41,7 +41,7 @@ export const CancelLessonModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md bg-white">
+      <DialogContent className="max-w-md bg-card border border-border">
         <DialogHeader>
           <div className="flex items-center w-full justify-center mb-5">
             <Image src="/mascot_sad.svg" alt="Maskot" height={80} width={80} />
@@ -56,14 +56,14 @@ export const CancelLessonModal = ({
                 <span className="font-medium">{lessonTime}</span> tarihindeki dersini iptal etmek üzeresin.
                 <br />
                 <br />
-                <span className="text-green-600 font-medium">Merak etme, kredin hesabına iade edilecek.</span>
+                <span className="text-suk-brand font-medium">Merak etme, kredin hesabına iade edilecek.</span>
               </>
             ) : (
               <>
                 Bu dersi iptal etmek üzeresin.
                 <br />
                 <br />
-                <span className="text-green-600 font-medium">Merak etme, kredin hesabına iade edilecek.</span>
+                <span className="text-suk-brand font-medium">Merak etme, kredin hesabına iade edilecek.</span>
               </>
             )}
           </DialogDescription>
@@ -71,7 +71,7 @@ export const CancelLessonModal = ({
         <DialogFooter className="mb-4">
           <div className="flex flex-col gap-y-4 w-full">
             <Button
-              variant="default"
+              variant="muted"
               className="w-full"
               size="lg"
               onClick={onClose}
@@ -80,7 +80,7 @@ export const CancelLessonModal = ({
               Hayır, vazgeçtim
             </Button>
             <Button
-              variant="danger"
+              variant="destructive"
               className="w-full"
               size="lg"
               onClick={onConfirm}

@@ -22,7 +22,7 @@ const ProfileSchoolSelector = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="h-11 w-full animate-pulse rounded-lg bg-slate-100" aria-hidden />
+      <div className="h-11 w-full animate-pulse rounded-lg bg-muted" aria-hidden />
     ),
   },
 );
@@ -213,28 +213,28 @@ export default function ProfilePageClient({
               alt="Avatar"
               fill
               sizes="96px"
-              className="rounded-full object-cover border-4 border-white shadow-lg"
+              className="rounded-full border-4 border-card object-cover shadow-lg"
               priority
               unoptimized={isExternalAvatar}
               onError={() => setAvatarUrl(normalizeAvatarUrl(null))}
             />
           </div>
           <div className="text-left flex-1 min-w-0">
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 truncate">
+            <h1 className="truncate text-xl font-bold text-foreground sm:text-2xl">
               {profile.userName}
             </h1>
             <div className="flex flex-wrap items-center justify-start gap-3 mt-2">
-              <div className="flex items-center gap-1.5 text-sm text-amber-600">
+              <div className="flex items-center gap-1.5 text-sm text-suk-warning">
                 <Zap className="h-4 w-4" />
                 <span className="font-semibold">{profile.istikrar} gün</span>
               </div>
               {s && (
                 <>
-                  <div className="flex items-center gap-1.5 text-sm text-blue-600">
+                  <div className="flex items-center gap-1.5 text-sm text-suk-payment">
                     <Trophy className="h-4 w-4" />
                     <span className="font-semibold">{s.totalPoints.toLocaleString("tr-TR")} puan</span>
                   </div>
-                  <div className="flex items-center gap-1.5 text-sm text-green-600">
+                  <div className="flex items-center gap-1.5 text-sm text-suk-brand">
                     <Target className="h-4 w-4" />
                     <span className="font-semibold">%{s.overallAccuracy} doğruluk</span>
                   </div>
@@ -245,12 +245,12 @@ export default function ProfilePageClient({
         </div>
 
         {/* Tabs */}
-        <div className="flex border-2 border-gray-200 rounded-2xl p-1 gap-1 mb-6">
+        <div className="mb-6 flex gap-1 rounded-2xl border-2 border-border p-1">
           <button
-            className={`flex-1 flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs sm:text-sm transition-all ${
+            className={`flex flex-1 items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs transition-all sm:text-sm ${
               activeTab === "analytics"
-                ? "bg-gray-100 text-gray-800 font-bold"
-                : "text-gray-500 hover:text-gray-700 font-medium"
+                ? "bg-muted font-bold text-foreground"
+                : "font-medium text-muted-foreground hover:text-foreground"
             }`}
             onClick={() => setActiveTab("analytics")}
           >
@@ -258,10 +258,10 @@ export default function ProfilePageClient({
             Analiz
           </button>
           <button
-            className={`flex-1 flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs sm:text-sm transition-all ${
+            className={`flex flex-1 items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs transition-all sm:text-sm ${
               activeTab === "settings"
-                ? "bg-gray-100 text-gray-800 font-bold"
-                : "text-gray-500 hover:text-gray-700 font-medium"
+                ? "bg-muted font-bold text-foreground"
+                : "font-medium text-muted-foreground hover:text-foreground"
             }`}
             onClick={() => setActiveTab("settings")}
           >
@@ -274,19 +274,19 @@ export default function ProfilePageClient({
         {activeTab === "analytics" && (
           <div className="space-y-6">
             {!hasAnalyticsAccess && (
-              <div className="rounded-2xl border-2 border-purple-200 bg-gradient-to-br from-purple-50 to-indigo-50 p-5 sm:p-6">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white shadow-sm border border-purple-100">
-                    <Lock className="h-7 w-7 text-purple-600" />
+              <div className="rounded-2xl border-2 border-suk-play/30 bg-gradient-to-br from-suk-play-soft to-suk-payment-soft p-5 sm:p-6">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-suk-play/20 bg-card shadow-sm">
+                    <Lock className="h-7 w-7 text-suk-play" />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-bold text-gray-900 text-lg">Detaylı analiz Premium ile</h3>
-                    <p className="text-sm text-gray-600 mt-1">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-lg font-bold text-foreground">Detaylı analiz Premium ile</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">
                       Konu ve kurs bazlı performans, zorluk dağılımı ve özet istatistikler aylık abonelikte.
-                      Ayrıca <strong className="text-gray-800">sonsuz can</strong> avantajı da dahil (100₺/ay).
+                      Ayrıca <strong className="text-foreground">sonsuz can</strong> avantajı da dahil (100₺/ay).
                     </p>
                   </div>
-                  <Button variant="super" size="lg" className="shrink-0 w-full sm:w-auto" asChild>
+                  <Button variant="payment" size="lg" className="shrink-0 w-full sm:w-auto" asChild>
                     <Link prefetch={false} href="/shop">
                       Mağazaya git
                     </Link>
@@ -307,9 +307,9 @@ export default function ProfilePageClient({
 
             {/* Subject Performance */}
             {hasAnalyticsAccess && analytics && analytics.subjectAnalytics.length > 0 && (
-              <div className="bg-white border rounded-xl p-4 sm:p-5">
-                <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
-                  <TrendingUp className="h-4 w-4 text-blue-500" />
+              <div className="rounded-xl border border-border bg-card p-4 sm:p-5">
+                <h3 className="mb-4 flex items-center gap-2 font-bold text-foreground">
+                  <TrendingUp className="h-4 w-4 text-suk-payment" />
                   Konu Bazlı Performans
                 </h3>
                 <div className="space-y-3">
@@ -322,9 +322,9 @@ export default function ProfilePageClient({
 
             {/* Course Progress */}
             {hasAnalyticsAccess && analytics && analytics.courseAnalytics.length > 0 && (
-              <div className="bg-white border rounded-xl p-4 sm:p-5">
-                <h3 className="font-bold text-gray-800 mb-4 flex items-center gap-2">
-                  <BookOpen className="h-4 w-4 text-green-500" />
+              <div className="rounded-xl border border-border bg-card p-4 sm:p-5">
+                <h3 className="mb-4 flex items-center gap-2 font-bold text-foreground">
+                  <BookOpen className="h-4 w-4 text-suk-brand" />
                   Kurs İlerlemesi
                 </h3>
                 <div className="space-y-3">
@@ -343,26 +343,26 @@ export default function ProfilePageClient({
                         />
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between mb-1">
-                            <span className="text-xs sm:text-sm font-medium text-gray-700 truncate pr-2">
+                            <span className="truncate pr-2 text-xs font-medium text-muted-foreground sm:text-sm">
                               {c.courseTitle}
                             </span>
-                            <span className="text-xs font-bold text-gray-500 shrink-0">
+                            <span className="shrink-0 text-xs font-bold text-muted-foreground/90">
                               %{pct}
                             </span>
                           </div>
-                          <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                          <div className="h-2 overflow-hidden rounded-full bg-muted">
                             <div
                               className={`h-full rounded-full transition-all ${
-                                pct === 100 ? "bg-green-600" : "bg-green-500"
+                                pct === 100 ? "bg-suk-brand-hover" : "bg-suk-brand"
                               }`}
                               style={{ width: `${pct}%` }}
                             />
                           </div>
                           <div className="flex justify-between mt-0.5">
-                            <span className="text-[10px] text-gray-400">
+                            <span className="text-[10px] text-muted-foreground/80">
                               {c.completedChallenges}/{c.totalChallenges} soru
                             </span>
-                            <span className="text-[10px] text-gray-400">
+                            <span className="text-[10px] text-muted-foreground/80">
                               %{c.accuracy} doğruluk
                             </span>
                           </div>
@@ -380,18 +380,18 @@ export default function ProfilePageClient({
               (analytics.difficultyAnalytics.length > 0 || analytics.typeAnalytics.length > 0) && (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {analytics.difficultyAnalytics.length > 0 && (
-                  <div className="bg-white border rounded-xl p-4">
-                    <h3 className="font-bold text-gray-800 mb-3 text-sm">Zorluk Dağılımı</h3>
+                  <div className="rounded-xl border border-border bg-card p-4">
+                    <h3 className="mb-3 text-sm font-bold text-foreground">Zorluk Dağılımı</h3>
                     <div className="space-y-2">
                       {analytics.difficultyAnalytics.map((d) => (
                         <div key={d.difficulty} className="flex items-center justify-between text-sm">
-                          <span className="text-gray-600">{d.difficulty}</span>
+                          <span className="text-muted-foreground">{d.difficulty}</span>
                           <div className="flex items-center gap-2">
-                            <span className="text-xs text-gray-400">{d.total} soru</span>
-                            <span className={`font-bold text-xs px-2 py-0.5 rounded-full ${
-                              d.accuracy >= 80 ? "bg-green-100 text-green-700" :
-                              d.accuracy >= 50 ? "bg-amber-100 text-amber-700" :
-                              "bg-red-100 text-red-700"
+                            <span className="text-xs text-muted-foreground/80">{d.total} soru</span>
+                            <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${
+                              d.accuracy >= 80 ? "bg-suk-brand-soft text-suk-brand-soft-fg" :
+                              d.accuracy >= 50 ? "bg-suk-warning-soft text-suk-warning-soft-fg" :
+                              "bg-suk-danger-soft text-suk-danger"
                             }`}>
                               %{d.accuracy}
                             </span>
@@ -402,18 +402,18 @@ export default function ProfilePageClient({
                   </div>
                 )}
                 {analytics.typeAnalytics.length > 0 && (
-                  <div className="bg-white border rounded-xl p-4">
-                    <h3 className="font-bold text-gray-800 mb-3 text-sm">Soru Türü Dağılımı</h3>
+                  <div className="rounded-xl border border-border bg-card p-4">
+                    <h3 className="mb-3 text-sm font-bold text-foreground">Soru Türü Dağılımı</h3>
                     <div className="space-y-2">
                       {analytics.typeAnalytics.map((t) => (
                         <div key={t.type} className="flex items-center justify-between text-sm">
-                          <span className="text-gray-600 text-xs">{t.type}</span>
+                          <span className="text-xs text-muted-foreground">{t.type}</span>
                           <div className="flex items-center gap-2">
-                            <span className="text-xs text-gray-400">{t.total}</span>
-                            <span className={`font-bold text-xs px-2 py-0.5 rounded-full ${
-                              t.accuracy >= 80 ? "bg-green-100 text-green-700" :
-                              t.accuracy >= 50 ? "bg-amber-100 text-amber-700" :
-                              "bg-red-100 text-red-700"
+                            <span className="text-xs text-muted-foreground/80">{t.total}</span>
+                            <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${
+                              t.accuracy >= 80 ? "bg-suk-brand-soft text-suk-brand-soft-fg" :
+                              t.accuracy >= 50 ? "bg-suk-warning-soft text-suk-warning-soft-fg" :
+                              "bg-suk-danger-soft text-suk-danger"
                             }`}>
                               %{t.accuracy}
                             </span>
@@ -427,9 +427,9 @@ export default function ProfilePageClient({
             )}
 
             {/* Streak Calendar */}
-            <div className="bg-white border rounded-xl p-4 sm:p-5">
-              <h3 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
-                <Zap className="h-4 w-4 text-amber-500" />
+            <div className="rounded-xl border border-border bg-card p-4 sm:p-5">
+              <h3 className="mb-3 flex items-center gap-2 font-bold text-foreground">
+                <Zap className="h-4 w-4 text-suk-warning" />
                 İstikrar Takvimi
               </h3>
               <StreakCalendarAdvanced startDate={profile.startDate} />
@@ -437,10 +437,10 @@ export default function ProfilePageClient({
 
             {/* Empty state (aboneler, veri yoksa) */}
             {hasAnalyticsAccess && (!analytics || analytics.courseAnalytics.length === 0) && (
-              <div className="bg-white border rounded-xl p-8 text-center">
-                <BarChart3 className="mx-auto h-12 w-12 text-gray-300 mb-3" />
-                <p className="text-sm text-gray-500 font-medium">Henüz analiz verisi yok</p>
-                <p className="text-xs text-gray-400 mt-1">Derslerden soru çözdükçe burada istatistiklerini göreceksin.</p>
+              <div className="rounded-xl border border-border bg-card p-8 text-center">
+                <BarChart3 className="mx-auto mb-3 h-12 w-12 text-muted-foreground/50" />
+                <p className="text-sm font-medium text-muted-foreground">Henüz analiz verisi yok</p>
+                <p className="mt-1 text-xs text-muted-foreground/80">Derslerden soru çözdükçe burada istatistiklerini göreceksin.</p>
               </div>
             )}
           </div>
@@ -449,11 +449,11 @@ export default function ProfilePageClient({
 
         {/* Settings Tab */}
         {activeTab === "settings" && (
-          <div className="max-w-xl mx-auto border rounded-xl p-5 sm:p-6 space-y-5 bg-white">
+          <div className="mx-auto max-w-xl space-y-5 rounded-xl border border-border bg-card p-5 sm:p-6">
 
             {/* Avatar */}
             <div className="flex flex-col items-center space-y-3">
-              <div className="w-32 h-32 sm:w-36 sm:h-36 overflow-hidden rounded-full relative border-4 border-gray-100 shadow-md">
+              <div className="relative h-32 w-32 overflow-hidden rounded-full border-4 border-border shadow-md sm:h-36 sm:w-36">
                 <Image
                   src={avatarUrl}
                   alt="Avatar"
@@ -483,8 +483,8 @@ export default function ProfilePageClient({
               <input
                 className={`w-full rounded-lg border p-2.5 text-sm focus:outline-none focus:ring-1 ${
                   !canChangeUsername
-                    ? "border-gray-200 bg-gray-50 text-gray-400 cursor-not-allowed"
-                    : "border-gray-300 focus:border-blue-500 focus:ring-blue-500/20"
+                    ? "cursor-not-allowed border-border bg-muted text-muted-foreground"
+                    : "border-input focus:border-suk-payment focus:ring-suk-payment/25"
                 }`}
                 value={username}
                 onChange={(e) => canChangeUsername && setUsername(e.target.value)}
@@ -498,8 +498,8 @@ export default function ProfilePageClient({
               <select
                 className={`w-full rounded-lg border p-2.5 text-sm focus:outline-none focus:ring-1 ${
                   !canChangeDailyGoal
-                    ? "border-gray-200 bg-gray-50 text-gray-400 cursor-not-allowed"
-                    : "border-gray-300 focus:border-blue-500 focus:ring-blue-500/20"
+                    ? "cursor-not-allowed border-border bg-muted text-muted-foreground"
+                    : "border-input focus:border-suk-payment focus:ring-suk-payment/25"
                 }`}
                 value={dailyTarget}
                 onChange={(e) => canChangeDailyGoal && setDailyTarget(parseInt(e.target.value))}
@@ -524,7 +524,7 @@ export default function ProfilePageClient({
 
             {/* Okul: istikrar veya 6 ay kilidi — sınıf kilidiyle aynı görsel (kilit + tarih). */}
             <div className="space-y-1.5">
-              <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+              <label className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
                 Okul
               </label>
               <ProfileSchoolSelector
@@ -541,7 +541,7 @@ export default function ProfilePageClient({
                 />
               )}
               {canSelectSchool && schoolChangeBlockedByPolicy && schoolLockUntil && (
-                <p className="text-xs text-rose-600 mt-2 flex items-start gap-1.5">
+                <p className="mt-2 flex items-start gap-1.5 text-xs text-suk-danger">
                   <Lock className="h-3.5 w-3.5 shrink-0 mt-0.5" />
                   Okul değişikliği için{" "}
                   <strong>{schoolLockUntil.toLocaleDateString("tr-TR")}</strong> tarihine kadar
@@ -561,12 +561,12 @@ export default function ProfilePageClient({
             </Button>
 
             {/* Account */}
-            <div className="pt-4 border-t border-gray-200">
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Hesap</h3>
+            <div className="border-t border-border pt-4">
+              <h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Hesap</h3>
               <button
                 onClick={() => logout({ showToast: true, redirectTo: "/login" })}
                 disabled={isLoggingOut}
-                className="flex items-center gap-2 w-full px-4 py-3 rounded-xl text-rose-600 bg-rose-50 hover:bg-rose-100 transition-colors text-sm font-medium disabled:opacity-50"
+                className="flex w-full items-center gap-2 rounded-xl border border-suk-danger/25 bg-suk-danger-soft px-4 py-3 text-sm font-medium text-suk-danger transition-colors hover:bg-suk-danger-soft/80 disabled:opacity-50"
               >
                 <LogOut className="h-4 w-4" />
                 {isLoggingOut ? "Çıkış yapılıyor..." : "Çıkış Yap"}
@@ -592,10 +592,10 @@ function SummaryCard({ icon, label, value, color }: {
   color: "blue" | "green" | "purple" | "amber";
 }) {
   const colors = {
-    blue: "bg-blue-50 text-blue-600 border-blue-200",
-    green: "bg-green-50 text-green-600 border-green-200",
-    purple: "bg-purple-50 text-purple-600 border-purple-200",
-    amber: "bg-amber-50 text-amber-600 border-amber-200",
+    blue: "border-suk-payment-ring/40 bg-suk-payment-soft text-suk-payment",
+    green: "border-suk-brand/30 bg-suk-brand-soft text-suk-brand-border",
+    purple: "border-suk-play-line bg-suk-play-soft text-suk-play-soft-fg",
+    amber: "border-suk-warning-border bg-suk-warning-soft text-suk-warning-soft-fg",
   };
   return (
     <div className={`rounded-xl border p-3 sm:p-4 ${colors[color]}`}>
@@ -609,19 +609,19 @@ function SummaryCard({ icon, label, value, color }: {
 }
 
 const SUBJECT_COLORS: Record<string, string> = {
-  "Matematik": "bg-blue-500",
-  "Türkçe": "bg-orange-500",
-  "Fen Bilimleri": "bg-emerald-500",
-  "Fizik": "bg-purple-500",
-  "Kimya": "bg-amber-500",
-  "Biyoloji": "bg-lime-500",
-  "İngilizce": "bg-rose-500",
-  "Tarih": "bg-yellow-500",
-  "Coğrafya": "bg-teal-500",
+  "Matematik": "bg-suk-payment",
+  "Türkçe": "bg-suk-warning",
+  "Fen Bilimleri": "bg-suk-brand",
+  "Fizik": "bg-suk-play",
+  "Kimya": "bg-suk-brand-hover",
+  "Biyoloji": "bg-suk-info",
+  "İngilizce": "bg-suk-danger",
+  "Tarih": "bg-suk-brand-border",
+  "Coğrafya": "bg-suk-payment-hover",
 };
 
 function SubjectBar({ subject }: { subject: { subject: string; accuracy: number; completedChallenges: number; totalChallenges: number } }) {
-  const barColor = SUBJECT_COLORS[subject.subject] || "bg-gray-500";
+  const barColor = SUBJECT_COLORS[subject.subject] || "bg-muted-foreground";
   const pct = subject.totalChallenges > 0
     ? Math.round((subject.completedChallenges / subject.totalChallenges) * 100)
     : 0;
@@ -629,19 +629,19 @@ function SubjectBar({ subject }: { subject: { subject: string; accuracy: number;
   return (
     <div>
       <div className="flex items-center justify-between mb-1">
-        <span className="text-sm font-medium text-gray-700">{subject.subject}</span>
+        <span className="text-sm font-medium text-muted-foreground">{subject.subject}</span>
         <div className="flex items-center gap-2">
-          <span className="text-xs text-gray-400">%{pct} tamamlandı</span>
-          <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
-            subject.accuracy >= 80 ? "bg-green-100 text-green-700" :
-            subject.accuracy >= 50 ? "bg-amber-100 text-amber-700" :
-            "bg-red-100 text-red-700"
+          <span className="text-xs text-muted-foreground/80">%{pct} tamamlandı</span>
+          <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${
+            subject.accuracy >= 80 ? "bg-suk-brand-soft text-suk-brand-soft-fg" :
+            subject.accuracy >= 50 ? "bg-suk-warning-soft text-suk-warning-soft-fg" :
+            "bg-suk-danger-soft text-suk-danger"
           }`}>
             %{subject.accuracy}
           </span>
         </div>
       </div>
-      <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+      <div className="h-2 overflow-hidden rounded-full bg-muted">
         <div className={`h-full rounded-full ${barColor}`} style={{ width: `${pct}%` }} />
       </div>
     </div>
@@ -658,7 +658,7 @@ function FieldGroup({ label, locked, days, lockLabel, streak = 0, children }: {
 }) {
   return (
     <div className="space-y-1.5">
-      <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">{label}</label>
+      <label className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{label}</label>
       {children}
       {locked && <LockedHint days={days} label={lockLabel} streak={streak} />}
     </div>
@@ -672,15 +672,15 @@ function LockedHint({ days, label, streak = 0 }: { days: number; label: string; 
   const pct = Math.min(Math.round((streak / days) * 100), 100);
   return (
     <div className="space-y-1 mt-1">
-      <p className="flex items-center justify-between text-xs text-amber-600">
+      <p className="flex items-center justify-between text-xs text-suk-warning">
         <span className="flex items-center gap-1">
           <Lock className="h-3 w-3" />
           {label} için {days} günlük istikrar gerekli
         </span>
         <span className="font-semibold">{streak}/{days}</span>
       </p>
-      <div className="h-1.5 bg-amber-100 rounded-full overflow-hidden">
-        <div className="h-full bg-amber-500 rounded-full transition-all" style={{ width: `${pct}%` }} />
+      <div className="h-1.5 overflow-hidden rounded-full bg-suk-warning-soft">
+        <div className="h-full rounded-full bg-suk-warning transition-all" style={{ width: `${pct}%` }} />
       </div>
     </div>
   );

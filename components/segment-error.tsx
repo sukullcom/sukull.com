@@ -37,22 +37,22 @@ export function SegmentError({
 
   return (
     <div className="flex items-center justify-center py-10 px-4">
-      <div className="max-w-lg w-full bg-white border border-red-200 rounded-2xl shadow-sm p-6">
+      <div className="max-w-lg w-full bg-card border border-red-200 rounded-2xl shadow-sm p-6">
         <div className="flex items-center gap-3 mb-4">
           <AlertTriangle className="h-6 w-6 text-red-600" />
-          <h1 className="text-lg font-semibold text-gray-900">{title}</h1>
+          <h1 className="text-lg font-semibold text-foreground">{title}</h1>
         </div>
-        <p className="text-sm text-gray-600 mb-4">
+        <p className="text-sm text-muted-foreground mb-4">
           Bir sorun oluştu. Teknik detay aşağıdadır — geliştiriciye iletebilirsin.
         </p>
-        <div className="bg-gray-50 border rounded-lg p-3 text-xs font-mono text-gray-700 mb-4 break-all">
+        <div className="bg-muted border rounded-lg p-3 text-xs font-mono text-foreground mb-4 break-all">
           <div>
-            <span className="text-gray-500">message:</span>{" "}
+            <span className="text-muted-foreground">message:</span>{" "}
             {error.message || "(boş)"}
           </div>
           {error.digest && (
             <div>
-              <span className="text-gray-500">digest:</span> {error.digest}
+              <span className="text-muted-foreground">digest:</span> {error.digest}
             </div>
           )}
         </div>
@@ -65,7 +65,7 @@ export function SegmentError({
           </button>
           <Link
             href={backHref}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border text-sm text-gray-700 hover:bg-gray-50"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border text-sm text-foreground hover:bg-muted"
           >
             <ArrowLeft className="h-4 w-4" /> {backLabel}
           </Link>

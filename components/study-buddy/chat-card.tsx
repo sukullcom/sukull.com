@@ -59,7 +59,7 @@ export function ChatCard({ chat, currentUser, onClick, isSelected }: ChatCardPro
       className={`flex items-center gap-2.5 p-2.5 rounded-lg cursor-pointer transition-colors ${
         isSelected
           ? "bg-green-50 ring-1 ring-green-300"
-          : "hover:bg-gray-50"
+          : "hover:bg-muted"
       }`}
       onClick={onClick}
       role="button"
@@ -75,15 +75,15 @@ export function ChatCard({ chat, currentUser, onClick, isSelected }: ChatCardPro
       />
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between gap-2">
-          <h4 className="font-medium text-sm text-gray-900 truncate">
+          <h4 className="font-medium text-sm text-foreground truncate">
             {typeof otherParticipantData === 'object' && otherParticipantData?.userName || "Kullanıcı"}
           </h4>
-          <span className="text-[10px] text-gray-400 shrink-0">
+          <span className="text-[10px] text-muted-foreground shrink-0">
             {formatTime(chat.last_updated)}
           </span>
         </div>
         {chat.last_message && (
-          <p className="text-xs text-gray-400 truncate mt-0.5">
+          <p className="text-xs text-muted-foreground truncate mt-0.5">
             {chat.last_message}
           </p>
         )}

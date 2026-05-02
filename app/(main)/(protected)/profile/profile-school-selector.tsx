@@ -185,29 +185,29 @@ export const ProfileSchoolSelector = ({
 
   return (
     <div
-      className={`rounded-lg border border-gray-200 p-4 shadow-sm bg-gray-50 ${disabled ? "opacity-60" : ""}`}
+      className={`rounded-lg border border-border bg-muted/40 p-4 shadow-sm ${disabled ? "opacity-60" : ""}`}
       aria-disabled={disabled}
     >
-      <h2 className="text-lg font-semibold mb-4 text-neutral-800">
+      <h2 className="mb-4 text-lg font-semibold text-foreground">
         Okulunu Seç
       </h2>
 
       {error && (
-        <div className="mb-4 p-2 bg-red-100 border border-red-300 text-red-700 rounded">
+        <div className="mb-4 rounded border border-suk-danger/25 bg-suk-danger-soft p-2 text-suk-danger">
           {error}
         </div>
       )}
 
       {/* Step 1: City Selection */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="mb-1 block text-sm font-medium text-muted-foreground">
           1. Şehir Seç
         </label>
         <select
           value={selectedCity}
           onChange={handleCityChange}
           disabled={selectBusy}
-          className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+          className="w-full rounded-lg border border-input bg-background p-2 focus:outline-none focus:ring-2 focus:ring-suk-brand/25 disabled:cursor-not-allowed disabled:bg-muted"
         >
           <option value="">Şehir seçin...</option>
           {cities.map((city) => (
@@ -221,14 +221,14 @@ export const ProfileSchoolSelector = ({
       {/* Step 2: District Selection */}
       {selectedCity && (
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="mb-1 block text-sm font-medium text-muted-foreground">
             2. İlçe Seç (Üniversite için Kampüs seçeneğini seçiniz)
           </label>
       <select
             value={selectedDistrict}
             onChange={handleDistrictChange}
             disabled={selectBusy}
-            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+            className="w-full rounded-lg border border-input bg-background p-2 focus:outline-none focus:ring-2 focus:ring-suk-brand/25 disabled:cursor-not-allowed disabled:bg-muted"
       >
             <option value="">İlçe seçin...</option>
             {districts.map((district) => (
@@ -243,14 +243,14 @@ export const ProfileSchoolSelector = ({
       {/* Step 3: Category Selection */}
       {selectedDistrict && (
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="mb-1 block text-sm font-medium text-muted-foreground">
             3. Okul Türü Seç
           </label>
           <select
             value={selectedCategory}
             onChange={handleCategoryChange}
             disabled={selectBusy}
-            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-lime-500 disabled:bg-gray-100 disabled:cursor-not-allowed"
+            className="w-full rounded-lg border border-input bg-background p-2 focus:outline-none focus:ring-2 focus:ring-suk-brand/25 disabled:cursor-not-allowed disabled:bg-muted"
           >
             <option value="">Okul türü seçin...</option>
             {categories.map((category) => (
@@ -265,14 +265,14 @@ export const ProfileSchoolSelector = ({
              {/* Step 4: School Selection */}
        {selectedCategory && (
          <div className="space-y-2">
-           <div className="text-sm font-medium text-gray-700">
+           <div className="text-sm font-medium text-foreground">
              Okullar:
            </div>
            
            {loading ? (
              <LoadingSpinner size="sm" />
            ) : schools.length === 0 ? (
-             <div className="text-center p-4 text-gray-500">
+             <div className="p-4 text-center text-muted-foreground">
                Aradığınız kriterlere uygun okul bulunamadı.
              </div>
            ) : (
@@ -283,18 +283,18 @@ export const ProfileSchoolSelector = ({
                 role="button"
                 tabIndex={disabled ? -1 : 0}
                 onClick={() => handleSchoolClick(school.id)}
-                   className={`border p-3 rounded-lg transition-colors ${
+                   className={`rounded-lg border p-3 transition-colors ${
                   disabled
-                    ? `cursor-not-allowed border-gray-200 ${
-                        selectedSchoolId === school.id ? "bg-green-50/60 border-green-600/50" : "bg-gray-100/80"
+                    ? `cursor-not-allowed border-border ${
+                        selectedSchoolId === school.id ? "border-suk-brand/50 bg-suk-brand-soft/60" : "bg-muted/80"
                       }`
                     : selectedSchoolId === school.id
-                      ? "cursor-pointer bg-green-50 border-green-600"
-                      : "cursor-pointer hover:bg-gray-100 border-gray-200"
+                      ? "cursor-pointer border-suk-brand bg-suk-brand-soft"
+                      : "cursor-pointer border-border hover:bg-muted"
                 }`}
               >
                    <p className={`font-medium ${
-                     selectedSchoolId === school.id ? "text-green-600" : "text-neutral-800"
+                     selectedSchoolId === school.id ? "text-suk-brand" : "text-foreground"
                    }`}>
                   {school.name}
                 </p>
@@ -304,7 +304,7 @@ export const ProfileSchoolSelector = ({
       )}
       
            {schools.length > 0 && (
-             <div className="text-xs text-right text-gray-500 mt-2">
+             <div className="mt-2 text-right text-xs text-muted-foreground">
                {schools.length} okul gösteriliyor
              </div>
            )}

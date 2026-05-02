@@ -54,16 +54,18 @@ export default function UserCreditsDisplay({
   }
 
   return (
-    <Card className={`bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 ${className}`}>
+    <Card
+      className={`border-suk-payment/25 bg-gradient-to-r from-suk-payment-soft to-suk-play-soft ${className}`}
+    >
       <CardContent className="p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <CreditCard className="h-5 w-5 text-blue-600" />
+            <div className="rounded-lg bg-suk-payment-soft p-2">
+              <CreditCard className="h-5 w-5 text-suk-payment" />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900">Kredilerim</h3>
-              <p className="text-sm text-gray-600">
+              <h3 className="font-semibold text-suk-fg-primary">Kredilerim</h3>
+              <p className="text-sm text-suk-fg-muted">
                 {loading ? 'Yükleniyor...' : error ? 'Yüklenemedi' : `${credits.availableCredits} kredi kullanılabilir`}
               </p>
             </div>
@@ -74,7 +76,7 @@ export default function UserCreditsDisplay({
               <Button
                 onClick={fetchCredits}
                 size="sm"
-                variant="primaryOutline"
+                variant="paymentOutline"
                 className="flex items-center gap-2"
               >
                 <RefreshCw className="h-4 w-4" />
@@ -83,7 +85,7 @@ export default function UserCreditsDisplay({
             ) : (
               <>
                 <div className="text-right">
-                  <div className="text-2xl font-bold text-blue-600">
+                  <div className="text-2xl font-bold text-suk-payment">
                     {loading ? '...' : credits.availableCredits}
                   </div>
                 </div>
@@ -92,10 +94,9 @@ export default function UserCreditsDisplay({
                   <Button
                     onClick={handlePurchaseCredits}
                     size="sm"
+                    variant="payment"
                     className="flex items-center gap-2 shrink-0"
-                    variant={
-                      credits.availableCredits === 0 ? "primary" : "primaryOutline"
-                    }
+                    disabled={loading}
                   >
                     <Plus className="h-4 w-4" />
                     <span className="hidden sm:inline">Kredi Al</span>
@@ -107,8 +108,8 @@ export default function UserCreditsDisplay({
         </div>
         
         {!error && !loading && credits.availableCredits === 0 && (
-          <div className="mt-3 p-3 bg-orange-50 border border-orange-200 rounded-lg">
-            <p className="text-sm text-orange-800">
+          <div className="mt-3 rounded-lg border border-suk-warning-border bg-suk-warning-soft p-3">
+            <p className="text-sm text-suk-warning-soft-fg">
               İlan açmak, eğitmenlere teklif göndermek veya bir eğitmenle mesajlaşmayı
               açmak için kredi kullanılır. Devam etmek için kredi satın alabilirsin.
             </p>

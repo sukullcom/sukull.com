@@ -22,7 +22,7 @@ export function AdminSidebar({ badges = {}, onNavigate }: Props) {
         <Link
           href="/admin"
           onClick={onNavigate}
-          className="flex items-center gap-2 text-lg font-bold text-gray-900"
+          className="flex items-center gap-2 text-lg font-bold text-foreground"
         >
           <span className="inline-block h-2.5 w-2.5 rounded-full bg-lime-500" />
           Sukull Admin
@@ -45,14 +45,14 @@ export function AdminSidebar({ badges = {}, onNavigate }: Props) {
                   "group flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
                   active
                     ? "bg-lime-50 text-lime-700 font-semibold"
-                    : "text-gray-700 hover:bg-gray-100",
+                    : "text-foreground hover:bg-muted",
                 )}
                 aria-current={active ? "page" : undefined}
               >
                 <Icon
                   className={cn(
                     "h-4 w-4 shrink-0",
-                    active ? "text-lime-600" : "text-gray-400 group-hover:text-gray-600",
+                    active ? "text-lime-600" : "text-muted-foreground group-hover:text-muted-foreground",
                   )}
                 />
                 <span className="flex-1 truncate">{label}</span>
@@ -74,11 +74,11 @@ export function AdminSidebar({ badges = {}, onNavigate }: Props) {
         })}
       </ul>
 
-      <div className="mt-auto px-3 pb-2 pt-4 text-[11px] text-gray-400">
+      <div className="mt-auto px-3 pb-2 pt-4 text-[11px] text-muted-foreground">
         <Link
           href="/learn"
           onClick={onNavigate}
-          className="hover:text-gray-600"
+          className="hover:text-muted-foreground"
         >
           ← Uygulamaya dön
         </Link>

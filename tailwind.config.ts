@@ -49,7 +49,82 @@ const config: Config = {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
-  			}
+  			},
+        /**
+         * Sukull semantik renkler — değerler `app/globals.css` içindeki
+         * `--suk-*` değişkenlerinden gelir; palet değişimi tek dosyada yapılır.
+         */
+        suk: {
+          surface: {
+            page: "hsl(var(--suk-surface-page) / <alpha-value>)",
+            muted: "hsl(var(--suk-surface-muted) / <alpha-value>)",
+            card: "hsl(var(--suk-surface-card) / <alpha-value>)",
+          },
+          border: {
+            DEFAULT: "hsl(var(--suk-border) / <alpha-value>)",
+            strong: "hsl(var(--suk-border-strong) / <alpha-value>)",
+          },
+          fg: {
+            primary: "hsl(var(--suk-fg-primary) / <alpha-value>)",
+            secondary: "hsl(var(--suk-fg-secondary) / <alpha-value>)",
+            muted: "hsl(var(--suk-fg-muted) / <alpha-value>)",
+          },
+          brand: {
+            DEFAULT: "hsl(var(--suk-brand) / <alpha-value>)",
+            fg: "hsl(var(--suk-brand-fg) / <alpha-value>)",
+            hover: "hsl(var(--suk-brand-hover) / <alpha-value>)",
+            border: "hsl(var(--suk-brand-border) / <alpha-value>)",
+            soft: {
+              DEFAULT: "hsl(var(--suk-brand-soft) / <alpha-value>)",
+              fg: "hsl(var(--suk-brand-soft-fg) / <alpha-value>)",
+            },
+          },
+          payment: {
+            DEFAULT: "hsl(var(--suk-payment) / <alpha-value>)",
+            fg: "hsl(var(--suk-payment-fg) / <alpha-value>)",
+            hover: "hsl(var(--suk-payment-hover) / <alpha-value>)",
+            border: "hsl(var(--suk-payment-border) / <alpha-value>)",
+            soft: {
+              DEFAULT: "hsl(var(--suk-payment-soft) / <alpha-value>)",
+              fg: "hsl(var(--suk-payment-soft-fg) / <alpha-value>)",
+            },
+            ring: "hsl(var(--suk-payment-ring) / <alpha-value>)",
+          },
+          play: {
+            DEFAULT: "hsl(var(--suk-play) / <alpha-value>)",
+            fg: "hsl(var(--suk-play-fg) / <alpha-value>)",
+            hover: "hsl(var(--suk-play-hover) / <alpha-value>)",
+            border: "hsl(var(--suk-play-border) / <alpha-value>)",
+            soft: {
+              DEFAULT: "hsl(var(--suk-play-soft) / <alpha-value>)",
+              fg: "hsl(var(--suk-play-soft-fg) / <alpha-value>)",
+            },
+            line: "hsl(var(--suk-play-outline-border) / <alpha-value>)",
+          },
+          danger: {
+            DEFAULT: "hsl(var(--suk-danger) / <alpha-value>)",
+            fg: "hsl(var(--suk-danger-fg) / <alpha-value>)",
+            hover: "hsl(var(--suk-danger-hover) / <alpha-value>)",
+            border: "hsl(var(--suk-danger-border) / <alpha-value>)",
+            soft: "hsl(var(--suk-danger-soft) / <alpha-value>)",
+            line: "hsl(var(--suk-danger-outline-border) / <alpha-value>)",
+          },
+          warning: {
+            DEFAULT: "hsl(var(--suk-warning) / <alpha-value>)",
+            soft: "hsl(var(--suk-warning-soft) / <alpha-value>)",
+            "soft-fg": "hsl(var(--suk-warning-soft-fg) / <alpha-value>)",
+            border: "hsl(var(--suk-warning-border) / <alpha-value>)",
+          },
+          neutral: {
+            locked: "hsl(var(--suk-neutral-locked) / <alpha-value>)",
+            "locked-border": "hsl(var(--suk-neutral-locked-border) / <alpha-value>)",
+            "locked-fg": "hsl(var(--suk-neutral-locked-fg) / <alpha-value>)",
+          },
+          info: {
+            DEFAULT: "hsl(var(--suk-info) / <alpha-value>)",
+            soft: "hsl(var(--suk-info-soft) / <alpha-value>)",
+          },
+        },
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

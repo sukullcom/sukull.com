@@ -1112,36 +1112,36 @@ export default function StudyBuddyPage() {
     <div className="flex flex-row-reverse gap-[48px] px-3 sm:px-6">
       <StickyWrapper>
         <div className="space-y-4">
-          <div className="border-2 border-gray-200 rounded-2xl p-4 space-y-3">
+          <div className="border-2 border-border rounded-2xl p-4 space-y-3">
             <div className="flex items-center gap-2 mb-1">
               <Users className="h-4 w-4 text-green-500" />
-              <span className="font-bold text-sm text-gray-700">Özet</span>
+              <span className="font-bold text-sm text-foreground">Özet</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600">Gönderi</span>
-              <Badge variant="secondary" className="bg-gray-100 text-gray-700 font-bold">
+              <span className="text-sm text-muted-foreground">Gönderi</span>
+              <Badge variant="secondary" className="bg-muted text-muted-foreground font-bold">
                 {totalFilteredPosts}
               </Badge>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600">Aktif Sohbet</span>
-              <Badge variant="secondary" className="bg-gray-100 text-gray-700 font-bold">
+              <span className="text-sm text-muted-foreground">Aktif Sohbet</span>
+              <Badge variant="secondary" className="bg-muted text-muted-foreground font-bold">
                 {chats.length}
               </Badge>
             </div>
             <Separator />
-            <div className="text-xs text-gray-500 space-y-1">
+            <div className="text-xs text-muted-foreground space-y-1">
               <p>Aylık gönderi: {POST_LIMITS.MAX_PER_MONTH}</p>
               <p>Günlük mesaj: {MESSAGE_LIMITS.MAX_PER_DAY}</p>
             </div>
           </div>
 
-          <div className="border-2 border-gray-200 rounded-2xl p-4">
+          <div className="border-2 border-border rounded-2xl p-4">
             <div className="flex items-center gap-2 mb-3">
-              <BookOpen className="h-4 w-4 text-gray-500" />
-              <span className="font-bold text-sm text-gray-700">İpuçları</span>
+              <BookOpen className="h-4 w-4 text-muted-foreground" />
+              <span className="font-bold text-sm text-foreground">İpuçları</span>
             </div>
-            <div className="text-sm text-gray-600 space-y-2">
+            <div className="text-sm text-muted-foreground space-y-2">
               <p><CircleCheck className="w-4 h-4 inline text-green-500 shrink-0" /> Belirli hedefler koyun</p>
               <p><Calendar className="w-4 h-4 inline text-blue-500 shrink-0" /> Düzenli çalışma programları oluşturun</p>
               <p><Heart className="w-4 h-4 inline text-rose-500 shrink-0" /> Birbirinizi motive edin</p>
@@ -1162,7 +1162,7 @@ export default function StudyBuddyPage() {
               width={60}
             />
             <div>
-              <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Çalışma Arkadaşları</h1>
+              <h1 className="text-xl sm:text-2xl font-bold text-foreground">Çalışma Arkadaşları</h1>
               <p className="text-sm text-muted-foreground">
                 Benzer hedeflere sahip arkadaşlar bul, birlikte başar
               </p>
@@ -1184,12 +1184,12 @@ export default function StudyBuddyPage() {
           )}
 
           {/* Tab Navigation */}
-          <div className="flex border-2 border-gray-200 rounded-2xl p-1 gap-1">
+          <div className="flex border-2 border-border rounded-2xl p-1 gap-1">
             <button
               className={`flex-1 flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs sm:text-sm transition-all ${
                 activeTab === "allPosts"
-                  ? "bg-gray-100 text-gray-800 font-bold"
-                  : "text-gray-500 hover:text-gray-700 font-medium"
+                  ? "bg-muted text-foreground font-bold"
+                  : "text-muted-foreground hover:text-foreground font-medium"
               }`}
               onClick={() => setActiveTab("allPosts")}
             >
@@ -1200,8 +1200,8 @@ export default function StudyBuddyPage() {
             <button
               className={`flex-1 flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs sm:text-sm transition-all ${
                 activeTab === "myPosts"
-                  ? "bg-gray-100 text-gray-800 font-bold"
-                  : "text-gray-500 hover:text-gray-700 font-medium"
+                  ? "bg-muted text-foreground font-bold"
+                  : "text-muted-foreground hover:text-foreground font-medium"
               }`}
               onClick={() => setActiveTab("myPosts")}
             >
@@ -1212,8 +1212,8 @@ export default function StudyBuddyPage() {
             <button
               className={`flex-1 flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs sm:text-sm transition-all ${
                 activeTab === "chats"
-                  ? "bg-gray-100 text-gray-800 font-bold"
-                  : "text-gray-500 hover:text-gray-700 font-medium"
+                  ? "bg-muted text-foreground font-bold"
+                  : "text-muted-foreground hover:text-foreground font-medium"
               }`}
               onClick={() => setActiveTab("chats")}
             >
@@ -1241,10 +1241,10 @@ export default function StudyBuddyPage() {
 
               {/* Filters (collapsible on mobile) */}
               <details className="group">
-                <summary className="flex items-center gap-2 cursor-pointer text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors list-none">
+                <summary className="flex items-center gap-2 cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground transition-colors list-none">
                   <Filter className="h-4 w-4" />
                   <span>Filtrele</span>
-                  <span className="text-xs text-gray-400 ml-1">
+                  <span className="text-xs text-muted-foreground ml-1">
                     {(filterPurpose || selectedSchoolId) ? "(aktif)" : ""}
                   </span>
                 </summary>
@@ -1252,11 +1252,11 @@ export default function StudyBuddyPage() {
                   <CardContent className="p-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-1.5">
-                        <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Çalışma Amacı</label>
+                        <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Çalışma Amacı</label>
                         <select
                           value={filterPurpose}
                           onChange={(e) => setFilterPurpose(e.target.value)}
-                          className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20"
+                          className="w-full rounded-lg border border-input p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20"
                         >
                           <option value="">Tümü</option>
                           {PURPOSE_OPTIONS.map((opt) => (
@@ -1267,7 +1267,7 @@ export default function StudyBuddyPage() {
                         </select>
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Okul Filtresi</label>
+                        <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Okul Filtresi</label>
                         <StudyBuddySchoolSelector
                           onSchoolSelect={setSelectedSchoolId}
                           selectedSchoolId={selectedSchoolId}
@@ -1295,14 +1295,14 @@ export default function StudyBuddyPage() {
                   </div>
                   <CardContent className="p-4 space-y-4">
                     {creationError && (
-                      <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg border border-red-200">
+                      <div className="text-suk-danger text-sm bg-suk-danger-soft p-3 rounded-lg border border-suk-danger-line">
                         {creationError}
                       </div>
                     )}
                     <div className="space-y-1.5">
-                      <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Çalışma Amacı</label>
+                      <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Çalışma Amacı</label>
                       <select
-                        className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20"
+                        className="w-full rounded-lg border border-input p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20"
                         value={postPurpose}
                         onChange={(e) => setPostPurpose(e.target.value)}
                       >
@@ -1315,15 +1315,15 @@ export default function StudyBuddyPage() {
                       </select>
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Açıklama</label>
+                      <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Açıklama</label>
                       <textarea
-                        className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20 min-h-[90px] resize-none"
+                        className="w-full rounded-lg border border-input p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20 min-h-[90px] resize-none"
                         value={postReason}
                         onChange={(e) => setPostReason(e.target.value)}
                         placeholder="Neden çalışma arkadaşı arıyorsun?"
                         maxLength={POST_LIMITS.MAX_REASON_LENGTH}
                       />
-                      <div className="flex justify-between text-[10px] text-gray-400">
+                      <div className="flex justify-between text-[10px] text-muted-foreground">
                         <span>{postReason.length}/{POST_LIMITS.MAX_REASON_LENGTH}</span>
                         <span>Aylık limit: {POST_LIMITS.MAX_PER_MONTH}</span>
                       </div>
@@ -1347,9 +1347,9 @@ export default function StudyBuddyPage() {
                 ) : displayedPosts.length === 0 ? (
                   <Card>
                     <CardContent className="p-8 text-center">
-                      <Users className="mx-auto h-10 w-10 text-gray-300 mb-3" />
-                      <p className="text-sm text-gray-500">Henüz gönderi bulunmuyor.</p>
-                      <p className="text-xs text-gray-400 mt-1">İlk gönderiyi sen oluştur!</p>
+                      <Users className="mx-auto h-10 w-10 text-muted-foreground mb-3" />
+                      <p className="text-sm text-muted-foreground">Henüz gönderi bulunmuyor.</p>
+                      <p className="text-xs text-muted-foreground mt-1">İlk gönderiyi sen oluştur!</p>
                     </CardContent>
                   </Card>
                 ) : (
@@ -1368,17 +1368,17 @@ export default function StudyBuddyPage() {
               {totalFilteredPosts > POSTS_PER_PAGE && (
                 <div className="flex items-center justify-center gap-2 pt-2">
                   <button
-                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-gray-100 hover:bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-muted hover:bg-muted/80 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                     onClick={goToPrevPage}
                     disabled={currentPage === 0}
                   >
                     ← Önceki
                   </button>
-                  <span className="text-xs font-medium text-gray-500 px-2">
+                  <span className="text-xs font-medium text-muted-foreground px-2">
                     {currentPage + 1} / {Math.ceil(totalFilteredPosts / POSTS_PER_PAGE)}
                   </span>
                   <button
-                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-gray-100 hover:bg-gray-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    className="px-3 py-1.5 rounded-lg text-xs font-medium bg-muted hover:bg-muted/80 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                     onClick={goToNextPage}
                     disabled={currentPage >= Math.ceil(totalFilteredPosts / POSTS_PER_PAGE) - 1}
                   >
@@ -1416,14 +1416,14 @@ export default function StudyBuddyPage() {
                       </div>
                       <CardContent className="p-4 space-y-4">
                         {creationError && (
-                          <div className="text-red-600 text-sm bg-red-50 p-3 rounded-lg border border-red-200">
+                          <div className="text-suk-danger text-sm bg-suk-danger-soft p-3 rounded-lg border border-suk-danger-line">
                             {creationError}
                           </div>
                         )}
                         <div className="space-y-1.5">
-                          <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Çalışma Amacı</label>
+                          <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Çalışma Amacı</label>
                           <select
-                            className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20"
+                            className="w-full rounded-lg border border-input p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20"
                             value={editPostPurpose}
                             onChange={(e) => setEditPostPurpose(e.target.value)}
                           >
@@ -1436,15 +1436,15 @@ export default function StudyBuddyPage() {
                           </select>
                         </div>
                         <div className="space-y-1.5">
-                          <label className="text-xs font-medium text-gray-500 uppercase tracking-wide">Açıklama</label>
+                          <label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Açıklama</label>
                           <textarea
-                            className="w-full rounded-lg border border-gray-300 p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20 min-h-[90px] resize-none"
+                            className="w-full rounded-lg border border-input p-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20 min-h-[90px] resize-none"
                             value={editPostReason}
                             onChange={(e) => setEditPostReason(e.target.value)}
                             placeholder="Neden çalışma arkadaşı arıyorsun?"
                             maxLength={POST_LIMITS.MAX_REASON_LENGTH}
                           />
-                          <div className="text-[10px] text-gray-400">
+                          <div className="text-[10px] text-muted-foreground">
                             {editPostReason.length}/{POST_LIMITS.MAX_REASON_LENGTH}
                           </div>
                         </div>
@@ -1463,9 +1463,9 @@ export default function StudyBuddyPage() {
                   {myPosts.length === 0 ? (
                     <Card>
                       <CardContent className="p-8 text-center">
-                        <Edit className="mx-auto h-10 w-10 text-gray-300 mb-3" />
-                        <p className="text-sm text-gray-500">Henüz bir gönderi oluşturmadınız.</p>
-                        <p className="text-xs text-gray-400 mt-1">
+                        <Edit className="mx-auto h-10 w-10 text-muted-foreground mb-3" />
+                        <p className="text-sm text-muted-foreground">Henüz bir gönderi oluşturmadınız.</p>
+                        <p className="text-xs text-muted-foreground mt-1">
                           &quot;Tüm Gönderiler&quot; sekmesinden yeni gönderi oluşturabilirsiniz.
                         </p>
                       </CardContent>
@@ -1495,10 +1495,10 @@ export default function StudyBuddyPage() {
               {/* Contact List */}
               <div className={`col-span-1 ${selectedChat ? 'hidden md:block' : ''}`}>
                 <Card className="overflow-hidden">
-                  <div className="px-4 py-3 border-b bg-gray-50">
-                    <span className="text-sm font-semibold text-gray-700">Sohbetler</span>
+                  <div className="px-4 py-3 border-b bg-muted/50">
+                    <span className="text-sm font-semibold text-foreground">Sohbetler</span>
                     {chats.length > 0 && (
-                      <span className="text-xs text-gray-400 ml-2">({chats.length})</span>
+                      <span className="text-xs text-muted-foreground ml-2">({chats.length})</span>
                     )}
                   </div>
                   <div className="p-1.5">
@@ -1508,9 +1508,9 @@ export default function StudyBuddyPage() {
                       </div>
                     ) : chats.length === 0 ? (
                       <div className="text-center py-8 px-4">
-                        <MessageCircle className="mx-auto h-8 w-8 text-gray-300 mb-2" />
-                        <p className="text-sm text-gray-400">Henüz sohbetiniz yok.</p>
-                        <p className="text-xs text-gray-400 mt-1">Bir gönderideki &quot;Mesaj Gönder&quot; butonuna tıklayarak başlayın.</p>
+                        <MessageCircle className="mx-auto h-8 w-8 text-muted-foreground mb-2" />
+                        <p className="text-sm text-muted-foreground">Henüz sohbetiniz yok.</p>
+                        <p className="text-xs text-muted-foreground mt-1">Bir gönderideki &quot;Mesaj Gönder&quot; butonuna tıklayarak başlayın.</p>
                       </div>
                     ) : (
                       <div className="space-y-1">
@@ -1533,10 +1533,10 @@ export default function StudyBuddyPage() {
               <div className={`col-span-1 md:col-span-2 ${!selectedChat ? 'hidden md:block' : ''}`}>
                 {selectedChat ? (
                   <Card className="h-[calc(100dvh-12rem-var(--app-bottom-inset))] md:h-[calc(100dvh-14rem-var(--app-bottom-inset))] lg:h-[calc(100dvh-14rem)] flex flex-col overflow-hidden">
-                    <div className="border-b bg-white px-3 sm:px-4 py-3 flex items-center justify-between shrink-0">
+                    <div className="border-b bg-card px-3 sm:px-4 py-3 flex items-center justify-between shrink-0">
                       <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                         <button
-                          className="md:hidden shrink-0 p-1 rounded-lg hover:bg-gray-100 transition-colors"
+                          className="md:hidden shrink-0 p-1 rounded-lg hover:bg-muted transition-colors"
                           onClick={() => setSelectedChat(null)}
                         >
                           <span className="text-lg">←</span>
@@ -1557,16 +1557,16 @@ export default function StudyBuddyPage() {
                         </span>
                       </div>
                       <button
-                        className="hidden md:flex p-1 rounded-lg hover:bg-gray-100 transition-colors"
+                        className="hidden md:flex p-1 rounded-lg hover:bg-muted transition-colors"
                         onClick={() => setSelectedChat(null)}
                       >
-                        <X className="h-4 w-4 text-gray-500" />
+                        <X className="h-4 w-4 text-muted-foreground" />
                       </button>
                     </div>
-                    <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-2.5 bg-gray-50/50">
+                    <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-2.5 bg-muted/50">
                       {messages.length === 0 && (
                         <div className="flex items-center justify-center h-full">
-                          <p className="text-sm text-gray-400">Henüz mesaj yok. İlk mesajını gönder!</p>
+                          <p className="text-sm text-muted-foreground">Henüz mesaj yok. İlk mesajını gönder!</p>
                         </div>
                       )}
                       {messages.map((message) => (
@@ -1580,12 +1580,12 @@ export default function StudyBuddyPage() {
                             className={`max-w-[80%] sm:max-w-[70%] px-3 py-2 ${
                               message.sender === currentUser?.id
                                 ? "bg-green-500 text-white rounded-2xl rounded-br-md"
-                                : "bg-white border border-gray-200 rounded-2xl rounded-bl-md"
+                                : "bg-card border border-border rounded-2xl rounded-bl-md"
                             }`}
                           >
                             <p className="text-sm break-words leading-relaxed">{message.content}</p>
                             <span className={`text-[10px] block mt-0.5 ${
-                              message.sender === currentUser?.id ? "text-green-100" : "text-gray-400"
+                              message.sender === currentUser?.id ? "text-green-100" : "text-muted-foreground"
                             }`}>
                               {new Date(message.created_at).toLocaleTimeString("tr-TR", {
                                 hour: "2-digit",
@@ -1598,26 +1598,26 @@ export default function StudyBuddyPage() {
                       ))}
                       <div ref={messageEndRef} />
                     </div>
-                    <div className="border-t bg-white p-3 shrink-0">
+                    <div className="border-t bg-card p-3 shrink-0">
                       <div className="flex gap-2 items-end">
                         <input
                           type="text"
                           value={newMessage}
                           onChange={(e) => setNewMessage(e.target.value)}
                           placeholder="Mesajınızı yazın..."
-                          className="flex-1 rounded-full border border-gray-300 px-4 py-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20"
+                          className="flex-1 rounded-full border border-input px-4 py-2.5 text-sm focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500/20"
                           maxLength={MESSAGE_LIMITS.MAX_LENGTH}
                           onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && handleSendMessage()}
                         />
                         <button
                           onClick={handleSendMessage}
                           disabled={!newMessage.trim()}
-                          className="shrink-0 w-10 h-10 rounded-full bg-green-500 hover:bg-green-600 disabled:bg-gray-200 text-white disabled:text-gray-400 flex items-center justify-center transition-colors"
+                          className="shrink-0 w-10 h-10 rounded-full bg-suk-brand hover:bg-suk-brand-hover disabled:bg-muted text-suk-brand-fg disabled:text-muted-foreground flex items-center justify-center transition-colors"
                         >
                           <Send className="h-4 w-4" />
                         </button>
                       </div>
-                      <div className="flex justify-between mt-1.5 px-1 text-[10px] text-gray-400">
+                      <div className="flex justify-between mt-1.5 px-1 text-[10px] text-muted-foreground">
                         <span>{newMessage.length}/{MESSAGE_LIMITS.MAX_LENGTH}</span>
                         <span>Günlük limit: {MESSAGE_LIMITS.MAX_PER_DAY}</span>
                       </div>
@@ -1626,11 +1626,11 @@ export default function StudyBuddyPage() {
                 ) : (
                   <Card className="h-64 md:min-h-[16rem] md:h-[calc(100dvh-14rem-var(--app-bottom-inset))] lg:h-[calc(100dvh-14rem)] flex items-center justify-center">
                     <div className="text-center px-4">
-                      <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
-                        <MessageCircle className="h-8 w-8 text-gray-400" />
+                      <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
+                        <MessageCircle className="h-8 w-8 text-muted-foreground" />
                       </div>
-                      <h3 className="font-semibold mb-1 text-sm sm:text-base text-gray-700">Sohbet Seç</h3>
-                      <p className="text-gray-400 text-sm">
+                      <h3 className="font-semibold mb-1 text-sm sm:text-base text-foreground">Sohbet Seç</h3>
+                      <p className="text-muted-foreground text-sm">
                         Soldaki listeden bir sohbet seç
                       </p>
                     </div>

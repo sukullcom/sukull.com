@@ -68,11 +68,11 @@ export function OAuthSignIn(props: Props) {
         instead uses a flex layout to show lines on both sides) 
       */}
       <div className="flex items-center mb-4 space-x-2">
-        <div className="flex-grow border-t border-gray-300" />
+        <div className="flex-grow border-t border-border" />
         <span className="text-xs uppercase text-muted-foreground">
           Veya
         </span>
-        <div className="flex-grow border-t border-gray-300" />
+        <div className="flex-grow border-t border-border" />
       </div>
 
       <Suspense

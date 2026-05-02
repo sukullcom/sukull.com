@@ -97,34 +97,34 @@ export function ProfileLearningPath({
   };
 
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white p-4 space-y-4">
+    <div className="space-y-4 rounded-2xl border border-border bg-card p-4">
       <div>
-        <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Öğrenme yolu</h3>
-        <p className="text-sm text-gray-600">
-          Şu an: <strong className="text-gray-800">{pathLabel[initialPath ?? "full"] ?? "—"}</strong>
+        <h3 className="mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Öğrenme yolu</h3>
+        <p className="text-sm text-muted-foreground">
+          Şu an: <strong className="text-foreground">{pathLabel[initialPath ?? "full"] ?? "—"}</strong>
           {initialPath !== "adult" && initialGrade != null && (
             <span className="ml-1">· {initialGrade}. sınıf</span>
           )}
         </p>
-        <p className="text-xs text-amber-700/90 mt-2">
+        <p className="mt-2 text-xs text-suk-warning-soft-fg">
           {initialPath === "full"
             ? "Kataloğu sadeleştirmek için aşağıdan bir yol seçebilirsin (değişiklik, kurallar dahilinde sınırlı sayıda)."
             : `Yol değişimleri en az ${LEARNING_PATH_DAYS_BETWEEN_CHANGES} gün arayla, toplam en fazla ${LEARNING_PATH_MAX_CHANGES} kez yapılabiliyor. Sınıf değişimi ise en fazla altı ayda bir yapılabilir (ilk seçimden sonra kilit).`}
         </p>
         {gradePeriodLocked && gradeLockUntil && (
-          <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
+          <p className="mt-1 flex items-center gap-1 text-xs text-suk-danger">
             <Lock className="h-3.5 w-3.5 shrink-0" />
             Sınıf değişikliği için {gradeLockUntil.toLocaleDateString("tr-TR")} tarihine kadar beklemelisin.
           </p>
         )}
         {!canEdit && policy.reason === "cooldown" && policy.nextAllowedAt && (
-          <p className="text-xs text-rose-600 mt-1 flex items-center gap-1">
+          <p className="mt-1 flex items-center gap-1 text-xs text-suk-danger">
             <Lock className="h-3.5 w-3.5 shrink-0" />
             Sonraki değişim: {policy.nextAllowedAt.toLocaleString("tr-TR")}
           </p>
         )}
         {!canEdit && policy.reason === "max" && (
-          <p className="text-xs text-rose-600 mt-1">Maksimum değişim sayısına ulaşıldı.</p>
+          <p className="mt-1 text-xs text-suk-danger">Maksimum değişim sayısına ulaşıldı.</p>
         )}
       </div>
 
@@ -144,7 +144,7 @@ export function ProfileLearningPath({
             }}
             className={[
               "w-full flex items-center gap-2 rounded-xl border-2 p-2.5 text-left text-sm font-medium transition",
-              mode === opt.id ? "border-emerald-500 bg-emerald-50/50" : "border-gray-200",
+              mode === opt.id ? "border-suk-brand bg-suk-brand-soft/50" : "border-border",
             ].join(" ")}
           >
             {opt.icon}
@@ -154,7 +154,7 @@ export function ProfileLearningPath({
 
         {mode === "lgs" && (
           <select
-            className="w-full rounded-lg border border-gray-300 p-2 text-sm"
+            className="w-full rounded-lg border border-input p-2 text-sm"
             value={grade}
             onChange={(e) => setGrade(e.target.value === "" ? "" : parseInt(e.target.value, 10))}
           >
@@ -168,7 +168,7 @@ export function ProfileLearningPath({
         )}
         {mode === "tyt_ayt" && (
           <select
-            className="w-full rounded-lg border border-gray-300 p-2 text-sm"
+            className="w-full rounded-lg border border-input p-2 text-sm"
             value={grade}
             onChange={(e) => setGrade(e.target.value === "" ? "" : parseInt(e.target.value, 10))}
           >

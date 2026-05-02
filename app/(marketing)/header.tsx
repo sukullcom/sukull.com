@@ -37,7 +37,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="h-16 sm:h-20 w-full border-b-2 border-slate-200 px-3 sm:px-4">
+    <header className="h-16 w-full border-b-2 border-border px-3 sm:h-20 sm:px-4">
       <div className="lg:max-w-screen-lg mx-auto flex items-center justify-between gap-2 h-full">
         <div className="flex items-center gap-x-2 sm:gap-x-3 min-w-0">
           <Image
@@ -47,11 +47,11 @@ export const Header = () => {
             alt="Mascot"
             className="h-8 w-8 sm:h-10 sm:w-10 shrink-0"
           />
-          <h1 className="text-xl sm:text-2xl font-extrabold text-green-600 tracking-wide truncate">
+          <h1 className="truncate text-xl font-extrabold tracking-wide text-suk-brand sm:text-2xl">
             Sukull
           </h1>
         </div>
-        {loading && <div className="text-xs sm:text-sm text-neutral-500">Yükleniyor...</div>}
+        {loading && <div className="text-xs text-muted-foreground sm:text-sm">Yükleniyor...</div>}
         {!loading && session ? (
           <Button
             variant="ghost"

@@ -67,14 +67,14 @@ export default async function TeacherDetailPage({
 
       <Link
         href="/private-lesson/teachers"
-        className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800 mb-4"
+        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4"
       >
         <ArrowLeft className="h-4 w-4" /> Eğitmenler
       </Link>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-1">
-          <div className="bg-white border rounded-xl p-5 text-center">
+          <div className="bg-card border rounded-xl p-5 text-center">
             <div className="relative w-28 h-28 sm:w-32 sm:h-32 mx-auto rounded-full overflow-hidden mb-3">
               <Image
                 src={normalizeAvatarUrl(teacher.avatar ?? undefined)}
@@ -84,7 +84,7 @@ export default async function TeacherDetailPage({
                 className="object-cover"
               />
             </div>
-            <h1 className="text-lg sm:text-xl font-semibold text-gray-900">
+            <h1 className="text-lg sm:text-xl font-semibold text-foreground">
               {teacher.name}
             </h1>
 
@@ -93,7 +93,7 @@ export default async function TeacherDetailPage({
                 {teacher.fields.map((f, i) => (
                   <span
                     key={i}
-                    className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium"
+                    className="text-xs bg-suk-brand-soft text-suk-brand-border px-2 py-0.5 rounded-full font-medium"
                   >
                     {f.displayName}
                   </span>
@@ -113,7 +113,7 @@ export default async function TeacherDetailPage({
                   size="lg"
                 />
                 {!unlock && (
-                  <p className="text-[11px] text-gray-500 mt-2">
+                  <p className="text-[11px] text-muted-foreground mt-2">
                     Tek sefer 1 kredi; kredi iade edilmez. Onayladığında
                     eğitmenin ve senin kayıtlı iletişim bilgileriniz sohbet
                     ekranında paylaşılır.
@@ -123,16 +123,16 @@ export default async function TeacherDetailPage({
             )}
           </div>
 
-          <div className="bg-white border rounded-xl p-5 mt-4 space-y-3 text-sm">
+          <div className="bg-card border rounded-xl p-5 mt-4 space-y-3 text-sm">
             {(teacher.hourlyRateOnline != null ||
               teacher.hourlyRateInPerson != null) && (
               <div className="flex items-start gap-3">
-                <Banknote className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
+                <Banknote className="h-4 w-4 text-muted-foreground/80 mt-0.5 shrink-0" />
                 <div>
-                  <div className="font-medium text-gray-800 mb-1">
+                  <div className="font-medium text-foreground mb-1">
                     Saatlik Ücret
                   </div>
-                  <div className="text-gray-600 space-y-0.5">
+                  <div className="text-muted-foreground space-y-0.5">
                     {teacher.hourlyRateOnline != null && (
                       <div>Online: {teacher.hourlyRateOnline}₺</div>
                     )}
@@ -146,10 +146,10 @@ export default async function TeacherDetailPage({
 
             {teacher.lessonMode && (
               <div className="flex items-start gap-3">
-                <Monitor className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
+                <Monitor className="h-4 w-4 text-muted-foreground/80 mt-0.5 shrink-0" />
                 <div>
-                  <div className="font-medium text-gray-800">Ders Tipi</div>
-                  <div className="text-gray-600">
+                  <div className="font-medium text-foreground">Ders Tipi</div>
+                  <div className="text-muted-foreground">
                     {formatLessonMode(teacher.lessonMode)}
                   </div>
                 </div>
@@ -158,10 +158,10 @@ export default async function TeacherDetailPage({
 
             {(teacher.city || teacher.district) && (
               <div className="flex items-start gap-3">
-                <MapPin className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
+                <MapPin className="h-4 w-4 text-muted-foreground/80 mt-0.5 shrink-0" />
                 <div>
-                  <div className="font-medium text-gray-800">Konum</div>
-                  <div className="text-gray-600">
+                  <div className="font-medium text-foreground">Konum</div>
+                  <div className="text-muted-foreground">
                     {[teacher.district, teacher.city]
                       .filter(Boolean)
                       .join(", ")}
@@ -172,10 +172,10 @@ export default async function TeacherDetailPage({
 
             {teacher.experienceYears != null && (
               <div className="flex items-start gap-3">
-                <Clock className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
+                <Clock className="h-4 w-4 text-muted-foreground/80 mt-0.5 shrink-0" />
                 <div>
-                  <div className="font-medium text-gray-800">Deneyim</div>
-                  <div className="text-gray-600">
+                  <div className="font-medium text-foreground">Deneyim</div>
+                  <div className="text-muted-foreground">
                     {teacher.experienceYears} yıl
                   </div>
                 </div>
@@ -184,10 +184,10 @@ export default async function TeacherDetailPage({
 
             {teacher.education && (
               <div className="flex items-start gap-3">
-                <GraduationCap className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
+                <GraduationCap className="h-4 w-4 text-muted-foreground/80 mt-0.5 shrink-0" />
                 <div>
-                  <div className="font-medium text-gray-800">Eğitim</div>
-                  <div className="text-gray-600 whitespace-pre-wrap">
+                  <div className="font-medium text-foreground">Eğitim</div>
+                  <div className="text-muted-foreground whitespace-pre-wrap">
                     {teacher.education}
                   </div>
                 </div>
@@ -196,10 +196,10 @@ export default async function TeacherDetailPage({
 
             {teacher.targetLevels && (
               <div className="flex items-start gap-3">
-                <Users className="h-4 w-4 text-gray-400 mt-0.5 shrink-0" />
+                <Users className="h-4 w-4 text-muted-foreground/80 mt-0.5 shrink-0" />
                 <div>
-                  <div className="font-medium text-gray-800">Hedef Seviye</div>
-                  <div className="text-gray-600 whitespace-pre-wrap">
+                  <div className="font-medium text-foreground">Hedef Seviye</div>
+                  <div className="text-muted-foreground whitespace-pre-wrap">
                     {teacher.targetLevels}
                   </div>
                 </div>
@@ -209,29 +209,29 @@ export default async function TeacherDetailPage({
         </div>
 
         <div className="md:col-span-2 space-y-4">
-          <section className="bg-white border rounded-xl p-5">
+          <section className="bg-card border rounded-xl p-5">
             <div className="flex items-center gap-2 mb-3">
-              <BookOpen className="h-4 w-4 text-gray-500" />
-              <h2 className="font-semibold text-gray-900">Hakkında</h2>
+              <BookOpen className="h-4 w-4 text-muted-foreground" />
+              <h2 className="font-semibold text-foreground">Hakkında</h2>
             </div>
-            <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
+            <p className="text-sm text-foreground/90 leading-relaxed whitespace-pre-wrap">
               {teacher.bio?.trim() ||
                 "Bu eğitmen henüz kendisi hakkında bilgi paylaşmamış."}
             </p>
           </section>
 
           {teacher.availableHours && (
-            <section className="bg-white border rounded-xl p-5">
+            <section className="bg-card border rounded-xl p-5">
               <div className="flex items-center gap-2 mb-3">
-                <Clock className="h-4 w-4 text-gray-500" />
-                <h2 className="font-semibold text-gray-900">
+                <Clock className="h-4 w-4 text-muted-foreground" />
+                <h2 className="font-semibold text-foreground">
                   Müsait Olduğu Saatler
                 </h2>
               </div>
-              <p className="text-sm text-gray-700 whitespace-pre-wrap">
+              <p className="text-sm text-foreground/90 whitespace-pre-wrap">
                 {teacher.availableHours}
               </p>
-              <p className="text-[11px] text-gray-400 mt-2">
+              <p className="text-[11px] text-muted-foreground/80 mt-2">
                 Not: Bilgi amaçlıdır. Randevu ve ücreti eğitmenle doğrudan mesajlaşarak
                 netleştir.
               </p>

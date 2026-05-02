@@ -61,7 +61,7 @@ export function AdminActivityBandSkeleton() {
       {[0, 1].map((panel) => (
         <div
           key={panel}
-          className="rounded-xl border bg-white shadow-sm animate-pulse"
+          className="rounded-xl border bg-card shadow-sm animate-pulse"
         >
           <div className="px-5 py-4 border-b">
             <div className="h-4 w-40 bg-gray-200 rounded" />
@@ -93,9 +93,9 @@ function ActivityPanel({
   items: ActivityItem[];
 }) {
   return (
-    <div className="rounded-xl border bg-white shadow-sm">
+    <div className="rounded-xl border bg-card shadow-sm">
       <div className="flex items-center justify-between px-5 py-4 border-b">
-        <h3 className="font-semibold text-gray-800">{title}</h3>
+        <h3 className="font-semibold text-foreground">{title}</h3>
         <Link
           href={viewAllHref}
           className="text-sm text-lime-600 hover:underline"
@@ -105,25 +105,25 @@ function ActivityPanel({
       </div>
       <div className="divide-y">
         {items.length === 0 ? (
-          <p className="text-sm text-gray-400 px-5 py-4">Henüz başvuru yok.</p>
+          <p className="text-sm text-muted-foreground px-5 py-4">Henüz başvuru yok.</p>
         ) : (
           items.map((item) => (
             <Link
               key={item.id}
               href={item.href}
-              className="flex items-center justify-between px-5 py-3 hover:bg-gray-50 transition-colors"
+              className="flex items-center justify-between px-5 py-3 hover:bg-muted transition-colors"
             >
               <div className="min-w-0">
-                <p className="text-sm font-medium text-gray-800 truncate">
+                <p className="text-sm font-medium text-foreground truncate">
                   {item.title}
                 </p>
-                <p className="text-xs text-gray-500 truncate">
+                <p className="text-xs text-muted-foreground truncate">
                   {item.subtitle}
                 </p>
               </div>
               <div className="flex items-center gap-2">
                 <StatusBadge status={item.status} />
-                <ArrowRight className="h-3.5 w-3.5 text-gray-300" />
+                <ArrowRight className="h-3.5 w-3.5 text-muted-foreground" />
               </div>
             </Link>
           ))
@@ -139,8 +139,8 @@ function StatusBadge({ status }: { status: string }) {
     approved: "bg-green-100 text-green-800",
     rejected: "bg-red-100 text-red-800",
     open: "bg-blue-100 text-blue-800",
-    closed: "bg-gray-100 text-gray-700",
-    expired: "bg-gray-100 text-gray-500",
+    closed: "bg-muted text-foreground",
+    expired: "bg-muted text-muted-foreground",
   };
   const labels: Record<string, string> = {
     pending: "Beklemede",

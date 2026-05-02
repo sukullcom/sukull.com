@@ -56,10 +56,10 @@ export const Card = ({
       onClick={handleClick}
       className={cn(
         "h-full border-2 rounded-xl border-b-4 hover:bg-black/5 p-4 lg:p-6 cursor-pointer active:border-b-2",
-        selected && "border-sky-300 bg-sky-100 hover:bg-sky-100",
-        selected && status === "correct" && "border-green-300 bg-green-100",
-        selected && status === "wrong" && "border-rose-300 bg-rose-100",
-        disabled && "pointer-events-none hover:bg-white",
+        selected && "border-suk-payment-ring bg-suk-payment-soft hover:bg-suk-payment-soft",
+        selected && status === "correct" && "border-suk-brand/50 bg-suk-brand-soft",
+        selected && status === "wrong" && "border-suk-danger-line bg-suk-danger-soft",
+        disabled && "pointer-events-none hover:bg-card",
         type === "ASSIST" && "lg:p-3 w-full"
       )}
     >
@@ -84,10 +84,10 @@ export const Card = ({
         >
           <MathRenderer
             className={cn(
-              "text-neutral-600 text-sm lg:text-base text-center",
-              selected && "text-sky-500",
-              selected && status === "correct" && "text-green-500",
-              selected && status === "wrong" && "text-rose-500"
+              "text-muted-foreground text-sm lg:text-base text-center",
+              selected && "text-suk-payment",
+              selected && status === "correct" && "text-suk-brand",
+              selected && status === "wrong" && "text-suk-danger"
             )}
           >
             {text}

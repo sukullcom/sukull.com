@@ -237,23 +237,23 @@ export default function ColorStroopGame() {
       <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-6 py-8">
         <Link
           href="/games"
-          className="self-start flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-700 transition"
+          className="self-start flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition"
         >
           <ArrowLeft className="h-4 w-4" /> Oyunlara Dön
         </Link>
 
         <div className="text-center">
           <div className="mb-3">
-            <Palette className="w-12 h-12 text-rose-500 mx-auto" />
+            <Palette className="w-12 h-12 text-suk-danger mx-auto" />
           </div>
-          <h1 className="text-2xl font-bold text-neutral-800">Renk Tuzağı</h1>
-          <p className="text-neutral-500 mt-2">
+          <h1 className="text-2xl font-bold text-foreground">Renk Tuzağı</h1>
+          <p className="text-muted-foreground mt-2">
             Renk ve kelime arasında doğru olanı seç! Stroop etkisine meydan oku.
           </p>
         </div>
 
         <div className="w-full space-y-2">
-          <p className="text-sm font-semibold text-neutral-600">Zorluk</p>
+          <p className="text-sm font-semibold text-muted-foreground">Zorluk</p>
           {(["Kolay", "Orta", "Zor", "Uzman"] as Difficulty[]).map(d => {
             const s = DIFFICULTY_SETTINGS[d];
             return (
@@ -262,8 +262,8 @@ export default function ColorStroopGame() {
                 onClick={() => setDifficulty(d)}
                 className={`w-full p-3 rounded-xl border-2 text-left transition-all ${
                   difficulty === d
-                    ? "border-indigo-500 bg-indigo-50 text-indigo-700"
-                    : "border-neutral-200 hover:border-neutral-300 text-neutral-600"
+                    ? "border-suk-payment bg-suk-payment-soft text-suk-payment-soft-fg"
+                    : "border-border hover:border-border/80 text-muted-foreground"
                 }`}
               >
                 <span className="font-semibold">{d}</span>
@@ -286,29 +286,29 @@ export default function ColorStroopGame() {
     return (
       <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-6 py-8">
         <div className="mb-2">
-          <Flag className="w-12 h-12 text-neutral-700 mx-auto" />
+          <Flag className="w-12 h-12 text-muted-foreground mx-auto" />
         </div>
-        <h1 className="text-2xl font-bold text-neutral-800">Oyun Bitti!</h1>
+        <h1 className="text-2xl font-bold text-foreground">Oyun Bitti!</h1>
 
         <div className="w-full grid grid-cols-2 gap-3">
-          <div className="bg-emerald-50 rounded-xl p-4 text-center border border-emerald-200">
-            <Trophy className="h-6 w-6 text-emerald-500 mx-auto mb-1" />
-            <p className="text-2xl font-bold text-emerald-600">{score}</p>
-            <p className="text-xs text-emerald-500">Toplam Puan</p>
+          <div className="bg-suk-brand-soft rounded-xl p-4 text-center border border-suk-brand/30">
+            <Trophy className="h-6 w-6 text-suk-brand mx-auto mb-1" />
+            <p className="text-2xl font-bold text-suk-brand-soft-fg">{score}</p>
+            <p className="text-xs text-suk-brand">Toplam Puan</p>
           </div>
-          <div className="bg-green-50 rounded-xl p-4 text-center border border-green-200">
-            <CheckCircle className="h-6 w-6 text-green-500 mx-auto mb-1" />
-            <p className="text-2xl font-bold text-green-600">{correctCount}</p>
-            <p className="text-xs text-green-500">Doğru Cevap</p>
+          <div className="bg-suk-brand-soft rounded-xl p-4 text-center border border-suk-brand/25">
+            <CheckCircle className="h-6 w-6 text-suk-brand mx-auto mb-1" />
+            <p className="text-2xl font-bold text-suk-brand-soft-fg">{correctCount}</p>
+            <p className="text-xs text-suk-brand">Doğru Cevap</p>
           </div>
-          <div className="bg-purple-50 rounded-xl p-4 text-center border border-purple-200">
-            <Zap className="h-6 w-6 text-purple-500 mx-auto mb-1" />
-            <p className="text-2xl font-bold text-purple-600">{maxStreak}</p>
-            <p className="text-xs text-purple-500">En Uzun Seri</p>
+          <div className="bg-suk-play-soft rounded-xl p-4 text-center border border-suk-play-line">
+            <Zap className="h-6 w-6 text-suk-play mx-auto mb-1" />
+            <p className="text-2xl font-bold text-suk-play-soft-fg">{maxStreak}</p>
+            <p className="text-xs text-suk-play">En Uzun Seri</p>
           </div>
-          <div className="bg-amber-50 rounded-xl p-4 text-center border border-amber-200">
-            <p className="text-2xl font-bold text-amber-600">{questionNumber}</p>
-            <p className="text-xs text-amber-500">Toplam Soru</p>
+          <div className="bg-suk-warning-soft rounded-xl p-4 text-center border border-suk-warning-border">
+            <p className="text-2xl font-bold text-suk-warning-soft-fg">{questionNumber}</p>
+            <p className="text-xs text-suk-warning">Toplam Soru</p>
           </div>
         </div>
 
@@ -344,27 +344,27 @@ export default function ColorStroopGame() {
             <Heart
               key={i}
               className={`h-6 w-6 ${
-                i < lives ? "fill-red-500 text-red-500" : "text-neutral-300"
+                i < lives ? "fill-suk-danger text-suk-danger" : "text-muted-foreground"
               }`}
             />
           ))}
         </div>
         <div className="flex items-center gap-3">
           {streak > 0 && (
-            <span className="flex items-center gap-1 text-purple-600 font-bold text-sm">
+            <span className="flex items-center gap-1 text-suk-play font-bold text-sm">
               <Zap className="h-4 w-4" />
               {streak}
             </span>
           )}
-          <span className="font-bold text-lg text-emerald-600">{score}</span>
+          <span className="font-bold text-lg text-suk-brand">{score}</span>
         </div>
       </div>
 
       {/* Timer bar */}
-      <div className="w-full h-3 bg-neutral-200 rounded-full overflow-hidden">
+      <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
         <div
           className={`h-full transition-all duration-100 ease-linear rounded-full ${
-            timerPercent <= 30 ? "bg-red-500" : timerPercent <= 60 ? "bg-amber-500" : "bg-rose-400"
+            timerPercent <= 30 ? "bg-suk-danger" : timerPercent <= 60 ? "bg-suk-warning" : "bg-suk-payment"
           }`}
           style={{ width: `${timerPercent}%` }}
         />
@@ -374,7 +374,7 @@ export default function ColorStroopGame() {
         <>
           {/* Question type */}
           <div className="w-full text-center mt-2">
-            <p className="text-sm font-semibold text-neutral-500 uppercase tracking-wide">
+            <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
               {QUESTION_LABELS[round.questionType]}
             </p>
           </div>
@@ -383,19 +383,19 @@ export default function ColorStroopGame() {
           <div
             className={`w-full p-10 rounded-2xl border-2 text-center transition-colors ${
               feedback === "correct"
-                ? "bg-green-50 border-green-400"
+                ? "bg-suk-brand-soft border-suk-brand"
                 : feedback === "wrong"
-                  ? "bg-red-50 border-red-400"
+                  ? "bg-suk-danger-soft border-suk-danger"
                   : feedback === "timeout"
-                    ? "bg-amber-50 border-amber-400"
-                    : "bg-white border-neutral-200"
+                    ? "bg-suk-warning-soft border-suk-warning-border"
+                    : "bg-card border-border"
             }`}
           >
             <p className={`text-5xl sm:text-6xl font-extrabold select-none ${round.displayColor.tw}`}>
               {round.wordColor.name}
             </p>
             {feedback === "timeout" && (
-              <p className="text-amber-600 text-sm mt-3 font-semibold">Süre doldu!</p>
+              <p className="text-suk-warning-soft-fg text-sm mt-3 font-semibold">Süre doldu!</p>
             )}
           </div>
 
@@ -410,9 +410,9 @@ export default function ColorStroopGame() {
 
               if (feedback !== null) {
                 if (isCorrectOption) {
-                  btnClasses = `${color.bg} text-white ring-4 ring-green-300 border-b-4 ${color.borderColor} scale-105`;
+                  btnClasses = `${color.bg} text-white ring-4 ring-suk-brand/50 border-b-4 ${color.borderColor} scale-105`;
                 } else if (isSelected && !isCorrectOption) {
-                  btnClasses = "bg-neutral-300 text-neutral-500 border-b-4 border-neutral-400 opacity-60";
+                  btnClasses = "bg-muted text-muted-foreground border-b-4 border-border opacity-60";
                 } else {
                   btnClasses = `${color.bg} text-white border-b-4 ${color.borderColor} opacity-40`;
                 }
@@ -436,7 +436,7 @@ export default function ColorStroopGame() {
       )}
 
       {/* Footer */}
-      <p className="text-xs text-neutral-500 mt-2">
+      <p className="text-xs text-muted-foreground mt-2">
         Soru {questionNumber} · {difficulty} · ×{CONFIG.DIFFICULTY_MULTIPLIER[difficulty]} puan
       </p>
     </div>

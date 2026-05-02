@@ -106,10 +106,10 @@ export default async function TeacherDashboardPage() {
       <UserCreditsDisplay className="mb-4" />
 
       <div className="mb-4">
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+        <h1 className="text-xl sm:text-2xl font-bold text-foreground">
           Eğitmen paneli
         </h1>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-muted-foreground">
           Tekliflerini, krediyle ödediğin mesaj ve teklif hareketlerini ve açık
           talep ilanlarına erişimi buradan yönet.
         </p>
@@ -120,25 +120,25 @@ export default async function TeacherDashboardPage() {
           label="Bekleyen Teklif"
           value={buckets.pending ?? 0}
           icon={Handshake}
-          tone="yellow"
+          tone="warning"
         />
         <SummaryCard
           label="Kabul Edilen"
           value={buckets.accepted ?? 0}
           icon={Activity}
-          tone="green"
+          tone="brand"
         />
         <SummaryCard
           label="Reddedilen"
           value={buckets.rejected ?? 0}
           icon={Users}
-          tone="red"
+          tone="danger"
         />
         <SummaryCard
           label="Kullanılabilir Kredi"
           value={available}
           icon={Wallet}
-          tone="blue"
+          tone="payment"
         />
       </div>
 
@@ -163,17 +163,17 @@ export default async function TeacherDashboardPage() {
         />
       </div>
 
-      <section className="bg-white border rounded-xl overflow-hidden mb-6">
-        <div className="px-4 py-3 border-b bg-gray-50 flex items-center justify-between">
-          <h2 className="font-semibold text-gray-900">Son Tekliflerim</h2>
-          <span className="text-xs text-gray-400">Son 10 kayıt</span>
+      <section className="bg-card border rounded-xl overflow-hidden mb-6">
+        <div className="px-4 py-3 border-b bg-muted/50 flex items-center justify-between">
+          <h2 className="font-semibold text-foreground">Son Tekliflerim</h2>
+          <span className="text-xs text-muted-foreground">Son 10 kayıt</span>
         </div>
         {recentOffers.length === 0 ? (
-          <div className="p-8 text-center text-sm text-gray-500">
+          <div className="p-8 text-center text-sm text-muted-foreground">
             Henüz teklif vermemişsin.{" "}
             <Link
               href="/private-lesson/listings"
-              className="text-green-700 font-medium hover:underline"
+              className="text-suk-brand font-medium hover:underline"
             >
               İlanlara göz at
             </Link>{" "}
@@ -185,19 +185,19 @@ export default async function TeacherDashboardPage() {
               <Link
                 key={r.offerId}
                 href={`/private-lesson/listings/${r.listingId}`}
-                className="flex items-center justify-between gap-3 px-4 py-3 hover:bg-gray-50 transition-colors"
+                className="flex items-center justify-between gap-3 px-4 py-3 hover:bg-muted/50 transition-colors"
               >
                 <div className="min-w-0">
-                  <div className="font-medium text-gray-900 truncate">
+                  <div className="font-medium text-foreground truncate">
                     {r.listingTitle ?? "İlan"}
                   </div>
-                  <div className="text-xs text-gray-500">
+                  <div className="text-xs text-muted-foreground">
                     {r.listingSubject ?? ""} •{" "}
                     {new Date(r.createdAt).toLocaleDateString("tr-TR")}
                   </div>
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
-                  <div className="text-sm font-semibold text-gray-800">
+                  <div className="text-sm font-semibold text-foreground">
                     {r.priceProposal}₺
                   </div>
                   <OfferStatusBadge status={r.status} />
@@ -208,12 +208,12 @@ export default async function TeacherDashboardPage() {
         )}
       </section>
 
-      <section className="bg-white border rounded-xl overflow-hidden">
-        <div className="px-4 py-3 border-b bg-gray-50">
-          <h2 className="font-semibold text-gray-900">Son Kredi Harcamaları</h2>
+      <section className="bg-card border rounded-xl overflow-hidden">
+        <div className="px-4 py-3 border-b bg-muted/50">
+          <h2 className="font-semibold text-foreground">Son Kredi Harcamaları</h2>
         </div>
         {recentSpends.length === 0 ? (
-          <div className="p-6 text-center text-sm text-gray-500">
+          <div className="p-6 text-center text-sm text-muted-foreground">
             Henüz kredi harcamadın.
           </div>
         ) : (
@@ -223,14 +223,14 @@ export default async function TeacherDashboardPage() {
                 key={s.id}
                 className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm"
               >
-                <div className="text-gray-700">
+                <div className="text-foreground/90">
                   Teklif gönderimi (ilan #{s.refId ?? "?"})
                 </div>
-                <div className="flex items-center gap-3 text-gray-500">
+                <div className="flex items-center gap-3 text-muted-foreground">
                   <span className="text-xs">
                     {new Date(s.createdAt).toLocaleDateString("tr-TR")}
                   </span>
-                  <span className="font-medium text-red-600">
+                  <span className="font-medium text-suk-danger">
                     -{s.creditsUsed}
                   </span>
                 </div>
@@ -252,13 +252,15 @@ function SummaryCard({
   label: string;
   value: number;
   icon: React.ComponentType<{ className?: string }>;
-  tone: "yellow" | "green" | "red" | "blue";
+  tone: "warning" | "brand" | "danger" | "payment";
 }) {
   const toneClass: Record<typeof tone, string> = {
-    yellow: "bg-yellow-50 text-yellow-700 border-yellow-200",
-    green: "bg-green-50 text-green-700 border-green-200",
-    red: "bg-red-50 text-red-700 border-red-200",
-    blue: "bg-blue-50 text-blue-700 border-blue-200",
+    warning:
+      "bg-suk-warning-soft text-suk-warning-soft-fg border-suk-warning-border",
+    brand: "bg-suk-brand-soft text-suk-brand-border border-suk-brand/25",
+    danger: "bg-suk-danger-soft text-suk-danger border-suk-danger-line",
+    payment:
+      "bg-suk-payment-soft text-suk-payment-soft-fg border-suk-payment-ring/40",
   };
   return (
     <div className={`border rounded-xl p-3 ${toneClass[tone]}`}>
@@ -285,14 +287,14 @@ function QuickLink({
   return (
     <Link
       href={href}
-      className="bg-white border rounded-xl p-4 hover:border-green-300 hover:shadow-sm transition-all flex items-start gap-3"
+      className="bg-card border rounded-xl p-4 hover:border-suk-brand/35 hover:shadow-sm transition-all flex items-start gap-3"
     >
-      <div className="p-2 bg-green-50 rounded-lg shrink-0">
-        <Icon className="h-5 w-5 text-green-700" />
+      <div className="p-2 bg-suk-brand-soft rounded-lg shrink-0">
+        <Icon className="h-5 w-5 text-suk-brand" />
       </div>
       <div className="min-w-0">
-        <div className="font-semibold text-gray-900">{title}</div>
-        <div className="text-xs text-gray-500">{desc}</div>
+        <div className="font-semibold text-foreground">{title}</div>
+        <div className="text-xs text-muted-foreground">{desc}</div>
       </div>
     </Link>
   );
@@ -300,10 +302,10 @@ function QuickLink({
 
 function OfferStatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
-    pending: "bg-yellow-100 text-yellow-700",
-    accepted: "bg-green-100 text-green-700",
-    rejected: "bg-red-100 text-red-700",
-    withdrawn: "bg-gray-100 text-gray-500",
+    pending: "bg-suk-warning-soft text-suk-warning-soft-fg",
+    accepted: "bg-suk-brand-soft text-suk-brand-border",
+    rejected: "bg-suk-danger-soft text-suk-danger",
+    withdrawn: "bg-muted text-muted-foreground",
   };
   const labels: Record<string, string> = {
     pending: "Beklemede",
@@ -314,7 +316,7 @@ function OfferStatusBadge({ status }: { status: string }) {
   return (
     <span
       className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${
-        styles[status] ?? "bg-gray-100 text-gray-600"
+        styles[status] ?? "bg-muted text-muted-foreground"
       }`}
     >
       {labels[status] ?? status}

@@ -20,7 +20,7 @@ export const MobileHeader = async () => {
   }
 
   return (
-    <nav className="lg:hidden h-[50px] flex items-center bg-white border-b fixed top-0 w-full z-50">
+    <nav className="lg:hidden h-[50px] flex items-center bg-background border-b border-border fixed top-0 w-full z-50">
       <UserProgress
         activeCourse={userProgress.activeCourse}
         hearts={userProgress.hearts}

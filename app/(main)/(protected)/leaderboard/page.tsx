@@ -91,7 +91,7 @@ const LeaderboardPage = async () => {
             width={90}
             priority={false}
           />
-          <h1 className="text-center font-bold text-neutral-800 text-2xl mt-4 mb-1">
+          <h1 className="text-center font-bold text-foreground text-2xl mt-4 mb-1">
             Puan Tabloları
           </h1>
           <p className="text-muted-foreground text-center text-sm mb-6 max-w-md">
@@ -128,7 +128,7 @@ const LeaderboardPage = async () => {
     });
     return (
       <div className="flex flex-col items-center justify-center py-20 px-6 text-center">
-        <p className="text-neutral-600">
+        <p className="text-muted-foreground">
           Puan tablolarına erişirken bir hata oluştu. Lütfen sayfayı yenileyin.
         </p>
       </div>

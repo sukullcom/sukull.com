@@ -9,8 +9,8 @@ export default function ForgotPasswordPage() {
         <Image src="/hero.svg" fill alt="Hero" sizes="100vw" />
       </div>
       {/* Right side form container */}
-      <div className="w-full max-w-md bg-white rounded-3xl border-2 border-gray-200 shadow-xl p-6">
-        <h1 className="text-3xl font-bold text-center mb-6 text-green-500">
+      <div className="w-full max-w-md rounded-3xl border-2 border-border bg-card p-6 shadow-xl">
+        <h1 className="mb-6 text-center text-3xl font-bold text-suk-brand">
           Şifremi Unuttum
         </h1>
         <ForgotPasswordForm />

@@ -102,9 +102,9 @@ export default function LyricLine({ line, onWordComplete }: LyricLineProps) {
 
   const getBorderClass = (state: BorderState) => {
     switch (state) {
-      case "correct": return "border-2 border-green-500 bg-green-50";
-      case "wrong": return "border-2 border-red-500 bg-white";
-      default: return "border-2 border-gray-300 bg-white";
+      case "correct": return "border-2 border-suk-brand bg-suk-brand-soft";
+      case "wrong": return "border-2 border-suk-danger bg-card";
+      default: return "border-2 border-border bg-card";
     }
   };
 

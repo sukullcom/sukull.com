@@ -9,19 +9,48 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        locked: "bg-neutral-200 text-primary-foreground hover:bg-neutral-200/90 border-neutral-400 border-b-4 active:border-b-0",
-        default: "bg-white text-black border-slate-200 border-2 border-b-4 active:border-b-2 hover:bg-slate-100 text-slate-500",
-        primary: "bg-green-500 text-primary-foreground hover:bg-green-500/90 border-green-600 border-b-4 active:border-b-0",
-        primaryOutline: "bg-white text-green-500 hover:bg-slate-100",
-        secondary: "bg-green-500 text-primary-foreground hover:bg-green-500/90 border-green-600 border-b-4 active:border-b-0",
-        secondaryOutline: "bg-white text-green-500 hover:bg-slate-100",        
-        danger: "bg-rose-500 text-primary-foreground hover:bg-rose-500/90 border-rose-600 border-b-4 active:border-b-0",
-        dangerOutline: "bg-white text-rose-500 hover:bg-slate-100",        
-        super: "bg-indigo-500 text-primary-foreground hover:bg-indigo-500/90 border-indigo-600 border-b-4 active:border-b-0",
-        superOutline: "bg-white text-indigo-500 hover:bg-slate-100",        
-        ghost: "bg-transparent text-slate-500 border-transparent border-0 hover:bg-slate-100",
-        sidebar: "bg-transparent text-slate-500 border-2 border-transparent hover:bg-slate-100 transition-none",
-        sidebarOutline: "bg-green-500/15 text-green-600 border-green-300 border-2 hover:bg-green-500/20 transition-none",
+        locked:
+          "bg-suk-neutral-locked text-suk-neutral-locked-fg hover:bg-suk-neutral-locked/90 border-suk-neutral-locked-border border-b-4 active:border-b-0",
+        default:
+          "bg-suk-surface-card text-suk-fg-muted border-suk-border border-2 border-b-4 active:border-b-2 hover:bg-suk-surface-muted",
+        primary:
+          "bg-suk-brand text-suk-brand-fg hover:bg-suk-brand-hover border-suk-brand-border border-b-4 active:border-b-0",
+        primaryOutline:
+          "bg-suk-surface-card text-suk-brand hover:bg-suk-surface-muted",
+        secondary:
+          "bg-suk-brand text-suk-brand-fg hover:bg-suk-brand-hover border-suk-brand-border border-b-4 active:border-b-0",
+        secondaryOutline:
+          "bg-suk-surface-card text-suk-brand hover:bg-suk-surface-muted",
+        danger:
+          "bg-suk-danger text-suk-danger-fg hover:bg-suk-danger-hover border-suk-danger-border border-b-4 active:border-b-0",
+        /** shadcn adıyla aynı renk ailesi — `danger` ile özdeş */
+        destructive:
+          "bg-suk-danger text-suk-danger-fg hover:bg-suk-danger-hover border-suk-danger-border border-b-4 active:border-b-0",
+        dangerOutline:
+          "bg-suk-surface-card text-suk-danger border-2 border-suk-danger-line hover:bg-suk-danger-soft",
+        destructiveOutline:
+          "bg-suk-surface-card text-suk-danger border-2 border-suk-danger-line hover:bg-suk-danger-soft",
+        /** İptal / ikincil nötr — `default` ile aynı palet, daha belirgin dolgu */
+        muted:
+          "bg-muted text-foreground border-border border-2 border-b-4 active:border-b-2 hover:bg-muted/85",
+        /** Çerçeveli nötr (gri aile) */
+        outline:
+          "bg-background text-foreground border-border border-2 border-b-4 active:border-b-2 hover:bg-muted",
+        /** Ödeme / kredi / checkout */
+        payment:
+          "bg-suk-payment text-suk-payment-fg hover:bg-suk-payment-hover border-suk-payment-border border-b-4 active:border-b-0",
+        paymentOutline:
+          "bg-suk-surface-card text-suk-payment-soft-fg border-2 border-suk-payment-ring border-b-4 border-b-suk-payment-border hover:bg-suk-payment-soft active:border-b-2",
+        super:
+          "bg-suk-play text-suk-play-fg hover:bg-suk-play-hover border-suk-play-border border-b-4 active:border-b-0",
+        superOutline:
+          "bg-suk-surface-card text-suk-play border-2 border-suk-play-line hover:bg-suk-play-soft",
+        ghost:
+          "bg-transparent text-suk-fg-muted border-transparent border-0 hover:bg-suk-surface-muted",
+        sidebar:
+          "bg-transparent text-suk-fg-muted border-2 border-transparent hover:bg-suk-surface-muted transition-none",
+        sidebarOutline:
+          "bg-suk-brand/15 text-suk-brand-border border-suk-brand/30 border-2 hover:bg-suk-brand/25 transition-none",
       },
       size: {
         default: "h-11 px-4 py-2",

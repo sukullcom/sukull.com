@@ -260,7 +260,7 @@ export function TeacherProfileSettingsClient() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-[320px]">
-        <Loader2 className="h-8 w-8 animate-spin text-green-600" />
+        <Loader2 className="h-8 w-8 animate-spin text-suk-brand" />
       </div>
     );
   }
@@ -270,7 +270,7 @@ export function TeacherProfileSettingsClient() {
       <div className="flex items-center gap-3">
         <Link
           href="/private-lesson/teacher-dashboard"
-          className="text-sm text-gray-600 hover:text-gray-900 inline-flex items-center gap-1"
+          className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4" />
           Panele dön
@@ -278,10 +278,10 @@ export function TeacherProfileSettingsClient() {
       </div>
 
       <div>
-        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+        <h1 className="text-xl font-bold text-foreground sm:text-2xl">
           Eğitmen profili
         </h1>
-        <p className="text-sm text-gray-600 mt-1">
+        <p className="mt-1 text-sm text-muted-foreground">
           Rehberde ve teklif eşleştirmesinde kullanılan bilgileri güncelle. Ders
           alanlarını değiştirirsen ilan listesi otomatik yeni branşlarına göre
           filtrelenir.
@@ -291,7 +291,7 @@ export function TeacherProfileSettingsClient() {
       <Card>
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
-            <GraduationCap className="w-5 h-5 text-green-600" />
+            <GraduationCap className="h-5 w-5 text-suk-brand" />
             Profil bilgileri
           </CardTitle>
           <CardDescription>
@@ -309,7 +309,7 @@ export function TeacherProfileSettingsClient() {
               <div className="space-y-2">
                 <Label htmlFor="teacherName" className="flex items-center gap-2">
                   <User className="w-4 h-4" />
-                  Ad <span className="text-red-500">*</span>
+                  Ad <span className="text-destructive">*</span>
                 </Label>
                 <Input
                   id="teacherName"
@@ -322,7 +322,7 @@ export function TeacherProfileSettingsClient() {
               <div className="space-y-2">
                 <Label htmlFor="teacherSurname" className="flex items-center gap-2">
                   <User className="w-4 h-4" />
-                  Soyad <span className="text-red-500">*</span>
+                  Soyad <span className="text-destructive">*</span>
                 </Label>
                 <Input
                   id="teacherSurname"
@@ -338,7 +338,7 @@ export function TeacherProfileSettingsClient() {
               <div className="space-y-2">
                 <Label htmlFor="teacherPhoneNumber" className="flex items-center gap-2">
                   <Phone className="w-4 h-4" />
-                  Telefon <span className="text-red-500">*</span>
+                  Telefon <span className="text-destructive">*</span>
                 </Label>
                 <Input
                   id="teacherPhoneNumber"
@@ -352,7 +352,7 @@ export function TeacherProfileSettingsClient() {
               <div className="space-y-2">
                 <Label htmlFor="teacherEmail" className="flex items-center gap-2">
                   <Mail className="w-4 h-4" />
-                  E-posta <span className="text-red-500">*</span>
+                  E-posta <span className="text-destructive">*</span>
                 </Label>
                 <Input
                   id="teacherEmail"
@@ -524,10 +524,10 @@ export function TeacherProfileSettingsClient() {
                 onChange={handleChange}
                 className="resize-none"
               />
-              <p className="text-xs text-gray-500">{formData.bio.length}/500</p>
+              <p className="text-xs text-muted-foreground">{formData.bio.length}/500</p>
             </div>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 flex gap-2 text-sm text-blue-900">
+            <div className="flex gap-2 rounded-lg border border-suk-payment-ring/40 bg-suk-payment-soft p-3 text-sm text-suk-payment-soft-fg">
               <Info className="w-4 h-4 shrink-0 mt-0.5" />
               <p>
                 Yanıltıcı veya eksik bilgi hesabının incelenmesine yol açabilir. Bu
@@ -549,13 +549,13 @@ export function TeacherProfileSettingsClient() {
         </CardContent>
       </Card>
 
-      <Card className="border-red-200 bg-red-50/40">
+      <Card className="border-destructive/25 bg-destructive/5">
         <CardHeader>
-          <CardTitle className="text-lg text-red-900 flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5" />
+          <CardTitle className="flex items-center gap-2 text-lg text-destructive">
+            <AlertTriangle className="h-5 w-5" />
             Öğretmenlikten ayrıl
           </CardTitle>
-          <CardDescription className="text-red-800/90">
+          <CardDescription className="text-destructive/90">
             Bekleyen tüm ilan tekliflerin geri çekilir; eğitmen başvuru kaydın ve
             branş kayıtların silinir. Rolün &quot;öğrenci / kullanıcı&quot; olur; tekrar
             eğitmen olmak için yeniden başvurman gerekir. Kabul edilmiş teklif

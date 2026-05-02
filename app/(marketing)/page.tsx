@@ -33,7 +33,7 @@ export default function Home() {
         <Image src="/hero.svg" fill alt="Hero" sizes="100vw" />
       </div>
       <div className="flex flex-col items-center gap-y-8">
-        <h1 className="text-xl lg:text-3xl font-bold text-neutral-600 max-w-[480px] text-center">
+        <h1 className="text-xl lg:text-3xl font-bold text-muted-foreground max-w-[480px] text-center">
           Öğren, yarış, geliş — hepsi tek platformda
         </h1>
         <div className="flex flex-col items-center gap-y-3 max-w-[330px] w-full">

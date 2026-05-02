@@ -16,7 +16,7 @@ export default function AuthLayout({
     <PublicShell
       header={<Header />}
       footer={<Footer />}
-      mainClassName="bg-white"
+      mainClassName="bg-card"
     >
       {children}
     </PublicShell>

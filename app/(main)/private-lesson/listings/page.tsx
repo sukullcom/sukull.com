@@ -54,14 +54,14 @@ export default async function ListingsIndexPage({
       <div className="flex items-start sm:items-center justify-between gap-3 mb-4 flex-col sm:flex-row">
         <div>
           <div className="flex items-center gap-3 mb-1">
-            <div className="p-2 bg-orange-100 rounded-lg">
-              <Megaphone className="h-5 w-5 text-orange-700" />
+            <div className="p-2 bg-suk-warning-soft rounded-lg">
+              <Megaphone className="h-5 w-5 text-suk-warning-soft-fg" />
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+            <h1 className="text-xl sm:text-2xl font-bold text-foreground">
               İlanlar
             </h1>
           </div>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-muted-foreground">
             {viewerIsTeacher
               ? "Yayında olan talep ilanları; yalnızca başvurunda seçtiğin ders konularıyla eşleşen ilanlar listelenir. Teklif vermek 1 kredidir; onay sonrası öğrencinin kayıtlı iletişim bilgileri sohbet üzerinden paylaşılır. İlan başına en fazla 4 teklif."
               : "Öğrencilerin özel ders talepleri. İhtiyacını net yaz; en fazla 4 eğitmen sana teklif gönderebilir."}
@@ -109,9 +109,9 @@ export default async function ListingsIndexPage({
       />
 
       {listings.length === 0 ? (
-        <div className="text-center py-16 rounded-xl border border-dashed border-gray-200 bg-white">
-          <Megaphone className="mx-auto h-10 w-10 text-gray-300 mb-3" />
-          <p className="text-gray-500">
+        <div className="text-center py-16 rounded-xl border border-dashed border-border bg-card">
+          <Megaphone className="mx-auto h-10 w-10 text-muted-foreground/40 mb-3" />
+          <p className="text-muted-foreground">
             {searchParams.subject || searchParams.city || searchParams.lessonMode
               ? "Filtrelere uyan ilan bulunamadı."
               : "Şu anda açık ilan bulunmuyor."}

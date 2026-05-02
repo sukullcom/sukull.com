@@ -30,7 +30,7 @@ const MEDAL_STYLES = [
   {
     ring: "ring-gray-300",
     bg: "bg-gradient-to-b from-gray-50 to-gray-100",
-    text: "text-gray-500",
+    text: "text-muted-foreground",
     badge: "bg-gray-400 text-white",
     height: "h-24 sm:h-28",
     size: "h-12 w-12 sm:h-16 sm:w-16",
@@ -115,7 +115,7 @@ export const Podium = ({ entries, variant }: PodiumProps) => {
               )}
             >
               <p
-                className="text-[11px] sm:text-sm font-semibold text-neutral-800 text-center px-2 leading-tight break-words"
+                className="text-[11px] sm:text-sm font-semibold text-foreground text-center px-2 leading-tight break-words"
                 title={entry.name}
               >
                 {entry.name}

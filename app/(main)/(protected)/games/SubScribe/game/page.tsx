@@ -175,12 +175,12 @@ Lütfen ana sayfaya dönüp hazır videolardan birini seçin.`);
     <div className="w-full max-w-3xl mx-auto py-4 px-4">
       <Link
         href="/games/SubScribe"
-        className="inline-flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-700 transition mb-4"
+        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition mb-4"
       >
         <ArrowLeft className="h-4 w-4" /> Geri
       </Link>
       {videoId && <VideoPlayer videoId={videoId} />}
-      {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
+      {error && <p className="text-suk-danger text-sm mt-2">{error}</p>}
       <LyricsGame lyrics={lyrics} difficulty={difficulty as "Kolay" | "Orta" | "Zor" | "Aşırı Zor"} />
       <CompletionModal />
     </div>

@@ -114,25 +114,25 @@ export const TimerChallenge = ({
       {renderQuestionImage()}
       
       {/* Timer UI */}
-      <div className="bg-white rounded-lg shadow-lg p-6">
+      <div className="bg-card rounded-lg shadow-lg p-6">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-2">
             <Timer 
               className={cn(
                 "w-5 h-5",
-                hasExpired ? "text-red-500" : timeLeft <= 10 ? "text-orange-500" : "text-blue-500"
+                hasExpired ? "text-suk-danger" : timeLeft <= 10 ? "text-suk-warning" : "text-suk-payment"
               )} 
             />
             <span className={cn(
               "font-bold text-lg",
-              hasExpired ? "text-red-500" : timeLeft <= 10 ? "text-orange-500" : "text-blue-500"
+              hasExpired ? "text-suk-danger" : timeLeft <= 10 ? "text-suk-warning" : "text-suk-payment"
             )}>
               {formatTime(timeLeft)}
             </span>
           </div>
           
           {hasExpired && (
-            <div className="flex items-center space-x-1 text-red-500">
+            <div className="flex items-center space-x-1 text-suk-danger">
               <AlertCircle className="w-4 h-4" />
               <span className="text-sm font-medium">Süre doldu!</span>
             </div>
@@ -140,20 +140,20 @@ export const TimerChallenge = ({
       </div>
 
         {/* Timer Progress Bar */}
-        <div className="w-full bg-gray-200 rounded-full h-3 mb-4">
+        <div className="w-full bg-muted rounded-full h-3 mb-4">
           <div 
             className={cn(
               "h-3 rounded-full transition-all duration-1000 ease-linear",
-              progressPercentage > 50 ? "bg-green-500" : 
-              progressPercentage > 20 ? "bg-yellow-500" : 
-              "bg-red-500"
+              progressPercentage > 50 ? "bg-suk-brand" :
+              progressPercentage > 20 ? "bg-suk-warning" :
+              "bg-suk-danger"
             )}
             style={{ width: `${progressPercentage}%` }}
           />
         </div>
         
         {hasExpired && (
-          <div className="text-center text-gray-600 text-sm mb-4">
+          <div className="text-center text-muted-foreground text-sm mb-4">
             Süre sona erdi. Cevabını gözden geçir ve devam et.
         </div>
       )}

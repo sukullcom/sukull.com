@@ -134,18 +134,20 @@ export default function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
   return (
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-135px)] gap-6 p-4 max-w-2xl mx-auto">
       <div className="text-center">
-        <h1 className="text-2xl font-bold text-red-600 mb-2 flex items-center justify-center gap-2"><AlertTriangle className="w-6 h-6" /> {errorDetails.title}</h1>
-        <p className="text-gray-600 mb-4">{errorDetails.description}</p>
+        <h1 className="mb-2 flex items-center justify-center gap-2 text-2xl font-bold text-destructive">
+          <AlertTriangle className="h-6 w-6" /> {errorDetails.title}
+        </h1>
+        <p className="mb-4 text-muted-foreground">{errorDetails.description}</p>
         
         {/* Only surface a stable error CODE (not the raw server
             message) so support teams can correlate with `error_log`
             but browser history / screenshots don't leak backend
             internals. */}
         {error_code && (
-          <div className="bg-gray-100 p-3 rounded-lg text-sm text-left mb-4">
+          <div className="mb-4 rounded-lg bg-muted p-3 text-left text-sm">
             <strong>Hata Kodu:</strong> {error_code}
             {reason ? (
-              <div className="mt-1 text-xs text-gray-500 break-words">
+              <div className="mt-1 break-words text-xs text-muted-foreground">
                 <span className="font-medium">Ayrıntı:</span> {reason}
               </div>
             ) : null}
@@ -154,9 +156,11 @@ export default function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
       </div>
 
       {/* Possible causes */}
-      <div className="w-full bg-blue-50 p-4 rounded-lg">
-        <h3 className="font-semibold text-blue-800 mb-2 flex items-center gap-1.5"><Search className="w-4 h-4" /> Olası Nedenler:</h3>
-        <ul className="list-disc list-inside text-sm text-blue-700 space-y-1">
+      <div className="w-full rounded-lg border border-suk-payment-ring/40 bg-suk-payment-soft p-4">
+        <h3 className="mb-2 flex items-center gap-1.5 font-semibold text-suk-payment-soft-fg">
+          <Search className="h-4 w-4" /> Olası Nedenler:
+        </h3>
+        <ul className="list-inside list-disc space-y-1 text-sm text-suk-payment-soft-fg">
           {errorDetails.possibleCauses.map((cause, index) => (
             <li key={index}>{cause}</li>
           ))}
@@ -164,9 +168,11 @@ export default function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
       </div>
 
       {/* Solutions */}
-      <div className="w-full bg-green-50 p-4 rounded-lg">
-        <h3 className="font-semibold text-green-800 mb-2 flex items-center gap-1.5"><Lightbulb className="w-4 h-4" /> Çözüm Önerileri:</h3>
-        <ul className="list-disc list-inside text-sm text-green-700 space-y-1">
+      <div className="w-full rounded-lg border border-suk-brand/25 bg-suk-brand-soft p-4">
+        <h3 className="mb-2 flex items-center gap-1.5 font-semibold text-suk-brand-soft-fg">
+          <Lightbulb className="h-4 w-4" /> Çözüm Önerileri:
+        </h3>
+        <ul className="list-inside list-disc space-y-1 text-sm text-suk-brand-border">
           {errorDetails.solutions.map((solution, index) => (
             <li key={index}>{solution}</li>
           ))}
@@ -184,7 +190,7 @@ export default function AuthErrorPage({ searchParams }: AuthErrorPageProps) {
       </div>
 
       {/* Additional help */}
-      <div className="text-center text-sm text-gray-500 mt-4">
+      <div className="mt-4 text-center text-sm text-muted-foreground">
         <p>Sorun devam ederse, lütfen destek ekibiyle iletişime geçin.</p>
       </div>
     </div>

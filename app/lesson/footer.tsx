@@ -37,24 +37,24 @@ export const Footer = ({ onCheck, onSkipWrong, status, disabled, lessonId, expla
     <footer
       className={cn(
         "min-h-[100px] border-t-2 flex items-center py-3",
-        status === "correct" && "border-transparent bg-green-100",
-        status === "wrong" && "border-transparent bg-rose-100"
+        status === "correct" && "border-transparent bg-suk-brand-soft",
+        status === "wrong" && "border-transparent bg-suk-danger-soft"
       )}
     >
       <div className="max-w-[1140px] mx-auto w-full min-h-0 flex flex-wrap items-center justify-between gap-3 px-6 lg:px-10">
         {status === "correct" && (
-          <div className="text-green-500 font-bold text-base lg:text-2xl flex items-center">
+          <div className="text-suk-brand font-bold text-base lg:text-2xl flex items-center">
             <CheckCircle className="h-6 w-6 lg:h-10 lg:w-10 mr-4" />
             Doğru cevap!
           </div>
         )}
         {status === "wrong" && (
-          <div className="text-rose-500 font-bold text-base lg:text-2xl flex items-start min-w-0 flex-1 pr-2">
+          <div className="text-suk-danger font-bold text-base lg:text-2xl flex items-start min-w-0 flex-1 pr-2">
             <XCircle className="h-6 w-6 lg:h-10 lg:w-10 mr-3 lg:mr-4 shrink-0 mt-0.5" />
             {explanation ? (
               <div className="flex flex-col min-w-0 font-normal">
-                <span className="text-sm font-medium text-rose-600 mb-1">İpucu:</span>
-                <div className="text-sm lg:text-base leading-relaxed text-rose-800 [&_.katex]:text-rose-900">
+                <span className="text-sm font-medium text-suk-danger mb-1">İpucu:</span>
+                <div className="text-sm lg:text-base leading-relaxed text-suk-danger-border [&_.katex]:text-suk-danger-hover">
                   <MathRenderer>{explanation}</MathRenderer>
                 </div>
               </div>

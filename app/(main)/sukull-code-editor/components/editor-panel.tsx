@@ -16,7 +16,7 @@ import { useCodeEditorStore } from "@/store/useCodeEditorStore";
 const Editor = dynamic(() => import("@monaco-editor/react"), {
   ssr: false,
   loading: () => (
-    <div className="flex h-[600px] w-full items-center justify-center rounded-lg bg-[#1e1e2e] text-slate-300">
+    <div className="flex h-[600px] w-full items-center justify-center rounded-lg bg-[#1e1e2e] text-muted-foreground">
       Kod editörü yükleniyor…
     </div>
   ),
@@ -174,7 +174,7 @@ function EditorPanel() {
             </div>
             <div>
               <h2 className="text-sm font-medium text-white">Kod Editörü</h2>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-muted-foreground">
                 {snippetId
                   ? `Kod Parçalarını Düzenle #${snippetId}`
                   : "Kodunuzu yazıp çalıştırın"}
@@ -185,7 +185,7 @@ function EditorPanel() {
           {/* Right */}
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-3 px-3 py-2 bg-[#1e1e2e] rounded-lg ring-1 ring-white/5">
-              <TypeIcon className="size-4 text-gray-400" />
+              <TypeIcon className="size-4 text-muted-foreground" />
               <div className="flex items-center gap-3">
                 <input
                   type="range"
@@ -197,7 +197,7 @@ function EditorPanel() {
                   }
                   className="w-20 h-1 bg-gray-600 rounded-lg cursor-pointer"
                 />
-                <span className="text-sm font-medium text-gray-400 min-w-[2rem] text-center">
+                <span className="text-sm font-medium text-muted-foreground min-w-[2rem] text-center">
                   {fontSize}
                 </span>
               </div>
@@ -210,7 +210,7 @@ function EditorPanel() {
               className="p-2 bg-[#1e1e2e] hover:bg-[#2a2a3a] rounded-lg ring-1 ring-white/5 transition-colors"
               aria-label="Reset to default code"
             >
-              <RotateCcwIcon className="size-4 text-gray-400" />
+              <RotateCcwIcon className="size-4 text-muted-foreground" />
             </motion.button>
 
             <motion.button
@@ -264,13 +264,13 @@ function EditorPanel() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
           <div className="bg-[#1e1e2e] p-6 rounded-lg w-96 relative">
             <button
-              className="absolute top-2 right-2 text-gray-400 hover:text-gray-200"
+              className="absolute top-2 right-2 text-muted-foreground hover:text-gray-200"
               onClick={closeShareDialog}
             >
               <X className="w-5 h-5" />
             </button>
             <h2 className="text-lg font-bold mb-4 text-white">Kod Paylaş</h2>
-            <p className="text-sm text-gray-400 mb-4">
+            <p className="text-sm text-muted-foreground mb-4">
               Kod paylaşımı yapabilmek için 30 gün istikrarına sahip olmalısınız.
             </p>
 
@@ -286,25 +286,25 @@ function EditorPanel() {
             )}
 
             <div className="mb-3">
-              <label className="block text-sm font-medium text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-muted-foreground mb-1">
                 Başlık
               </label>
               <input
                 type="text"
                 value={shareTitle}
                 onChange={(e) => setShareTitle(e.target.value)}
-                className="w-full rounded p-2 text-gray-900"
+                className="w-full rounded p-2 text-foreground"
                 placeholder="Benim güzel projem"
               />
             </div>
             <div className="mb-3">
-              <label className="block text-sm font-medium text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-muted-foreground mb-1">
                 Açıklama
               </label>
               <textarea
                 value={shareDescription}
                 onChange={(e) => setShareDescription(e.target.value)}
-                className="w-full rounded p-2 text-gray-900"
+                className="w-full rounded p-2 text-foreground"
                 placeholder="Lütfen yazdığınız kodun açıklamasını giriniz..."
               />
             </div>

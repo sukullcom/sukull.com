@@ -22,10 +22,10 @@ export default async function OnboardingPage() {
   return (
     <div className="w-full max-w-2xl mx-auto px-4 py-8 sm:py-12">
       <div className="text-center mb-8">
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-neutral-800">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground">
           Hoş geldin! Önce sana uygun yolu seçelim
         </h1>
-        <p className="text-neutral-500 text-sm mt-2">
+        <p className="text-muted-foreground text-sm mt-2">
           Öğrenci mı, mezun mu hazırlanıyorsun — liste ona göre açılır
         </p>
       </div>

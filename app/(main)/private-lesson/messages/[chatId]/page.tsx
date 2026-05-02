@@ -80,16 +80,15 @@ export default async function MessageThreadPage({
     <div className="max-w-3xl mx-auto px-3 sm:px-6 pb-6 sm:pb-8 min-h-0">
       <Link
         href="/private-lesson/messages"
-        className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800 my-3"
+        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground my-3"
       >
         <ArrowLeft className="h-4 w-4" /> Mesajlar
       </Link>
 
       <div
-        className="bg-white border rounded-xl overflow-hidden flex flex-col min-h-0
-        h-[min(720px,calc(100dvh-12rem-var(--app-bottom-inset)))] lg:h-[min(720px,calc(100dvh-12rem))] w-full"
+        className="flex h-[min(720px,calc(100dvh-12rem-var(--app-bottom-inset)))] min-h-0 w-full flex-col overflow-hidden rounded-xl border border-border bg-card lg:h-[min(720px,calc(100dvh-12rem))]"
       >
-        <div className="border-b bg-gray-50 px-4 py-3 flex items-center gap-3 shrink-0">
+        <div className="flex shrink-0 items-center gap-3 border-b bg-muted/50 px-4 py-3">
           <Image
             src={normalizeAvatarUrl(otherProfile?.avatar ?? undefined)}
             alt={otherProfile?.name ?? "Kullanıcı"}
@@ -99,17 +98,17 @@ export default async function MessageThreadPage({
             className="rounded-full object-cover w-9 h-9"
           />
           <div className="min-w-0">
-            <div className="font-semibold text-gray-900 truncate">
+            <div className="truncate font-semibold text-foreground">
               {otherProfile?.name ?? "Kullanıcı"}
             </div>
-            <div className="text-[11px] text-gray-400">
+            <div className="text-[11px] text-muted-foreground">
               {otherProfile?.role === "teacher" ? "Eğitmen" : "Öğrenci"}
             </div>
           </div>
           {otherProfile?.role === "teacher" && (
             <Link
               href={`/private-lesson/teachers/${otherProfile.id}`}
-              className="ml-auto text-xs text-green-700 hover:underline"
+              className="ml-auto text-xs text-suk-brand-border hover:underline"
             >
               Profili Gör
             </Link>
@@ -117,10 +116,10 @@ export default async function MessageThreadPage({
         </div>
 
         {reviewBanner && (
-          <div className="border-b bg-amber-50/90 px-4 py-2.5 text-sm text-amber-950">
+          <div className="border-b bg-suk-warning-soft/90 px-4 py-2.5 text-sm text-suk-warning-soft-fg">
             <Link
               href={`/private-lesson/teachers/${reviewBanner.teacherId}?review=1`}
-              className="font-medium text-amber-900 hover:underline"
+              className="font-medium text-suk-warning-soft-fg hover:underline"
             >
               Bu eğitmene kısa bir geri bildirim bırak →
             </Link>

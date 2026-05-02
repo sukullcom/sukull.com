@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <div className="min-h-[100dvh] flex items-center justify-center px-4 py-12 bg-white">
+    <div className="min-h-[100dvh] flex items-center justify-center px-4 py-12 bg-card">
       <div className="max-w-md w-full text-center">
         <div className="mb-8 flex justify-center">
           <Image
@@ -26,10 +26,10 @@ export default function NotFound() {
         <p className="text-sm font-semibold tracking-wider text-emerald-600 uppercase mb-2">
           404
         </p>
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-neutral-800 mb-3">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-foreground mb-3">
           Sayfa bulunamadı
         </h1>
-        <p className="text-neutral-600 mb-8">
+        <p className="text-muted-foreground mb-8">
           Aradığın sayfa taşınmış, silinmiş veya hiç var olmamış olabilir.
           Aşağıdaki bağlantılardan devam edebilirsin.
         </p>

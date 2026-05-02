@@ -27,7 +27,7 @@ export const PracticeModal = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={close}>
-      <DialogContent className="max-w-md bg-white">
+      <DialogContent className="max-w-md bg-card">
         <DialogHeader>
           <div className="flex items-center w-full justify-center mb-5">
             <Image src="/heart.svg" alt="Can" height={100} width={100} />

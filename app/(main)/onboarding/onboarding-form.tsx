@@ -16,7 +16,7 @@ const ProfileSchoolSelector = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="h-40 w-full animate-pulse rounded-xl bg-slate-100" aria-hidden />
+      <div className="h-40 w-full animate-pulse rounded-xl bg-muted" aria-hidden />
     ),
   },
 );
@@ -73,11 +73,11 @@ export const OnboardingForm = () => {
 
   return (
     <div className="space-y-8 w-full max-w-md mx-auto">
-      <p className="text-sm text-neutral-600 text-center">
+      <p className="text-sm text-muted-foreground text-center">
         {step === 1 ? (
           <>
             Sana uygun ders ve sınavları gösterebilmemiz için önce yolunu ve sınıfını seç.
-            <span className="block mt-1 text-xs text-neutral-500">
+            <span className="block mt-1 text-xs text-muted-foreground">
               İngilizce içerikleri tüm yollarda açıktır. Sonraki adımda okulunu seçerek okul
               puan tablosuna katılırsın; okul ve sınıf değişiklikleri yılda birkaç kez ve 6 ay kilit
               sonrası yapılabilir.
@@ -86,7 +86,7 @@ export const OnboardingForm = () => {
         ) : (
           <>
             Okulunu seç — puanların bu okula yazılır ve listede yer alırsın.
-            <span className="block mt-1 text-xs text-neutral-500">
+            <span className="block mt-1 text-xs text-muted-foreground">
               {mode === "adult"
                 ? "İstersen atlayabilirsin; daha sonra profilden ekleyebilirsin."
                 : "Ortaokul / lise için okul seçimi zorunludur."}
@@ -130,27 +130,27 @@ export const OnboardingForm = () => {
                   "w-full flex items-start gap-3 rounded-2xl border-2 p-4 text-left transition",
                   mode === opt.id
                     ? "border-emerald-500 bg-emerald-50/60 shadow-sm"
-                    : "border-gray-200 bg-white hover:border-gray-300",
+                    : "border-border bg-card hover:border-input",
                 ].join(" ")}
               >
                 <div
                   className={[
                     "mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl",
-                    mode === opt.id ? "bg-emerald-500 text-white" : "bg-gray-100 text-gray-600",
+                    mode === opt.id ? "bg-emerald-500 text-white" : "bg-muted text-muted-foreground",
                   ].join(" ")}
                 >
                   {opt.icon}
                 </div>
-                <span className="text-sm font-semibold text-neutral-800 pt-1.5">{opt.title}</span>
+                <span className="text-sm font-semibold text-foreground pt-1.5">{opt.title}</span>
               </button>
             ))}
           </div>
 
           {mode === "lgs" && (
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1.5">Sınıfın</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1.5">Sınıfın</label>
               <select
-                className="w-full rounded-xl border border-gray-300 p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+                className="w-full rounded-xl border border-input p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
                 value={grade}
                 onChange={(e) =>
                   setGrade(e.target.value === "" ? "" : parseInt(e.target.value, 10))
@@ -168,9 +168,9 @@ export const OnboardingForm = () => {
 
           {mode === "tyt_ayt" && (
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1.5">Sınıfın</label>
+              <label className="block text-xs font-medium text-muted-foreground mb-1.5">Sınıfın</label>
               <select
-                className="w-full rounded-xl border border-gray-300 p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+                className="w-full rounded-xl border border-input p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
                 value={grade}
                 onChange={(e) =>
                   setGrade(e.target.value === "" ? "" : parseInt(e.target.value, 10))
@@ -204,7 +204,7 @@ export const OnboardingForm = () => {
           <button
             type="button"
             onClick={() => setStep(1)}
-            className="flex items-center gap-1 text-sm text-neutral-600 hover:text-neutral-900"
+            className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="h-4 w-4" />
             Geri

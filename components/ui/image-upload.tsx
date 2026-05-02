@@ -136,7 +136,7 @@ export function ImageUpload({
           "hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
           isDragOver && "border-blue-400 bg-blue-50",
           disabled && "opacity-50 cursor-not-allowed",
-          value ? "border-solid border-gray-300" : "border-gray-300"
+          value ? "border-solid border-input" : "border-input"
         )}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
@@ -176,20 +176,20 @@ export function ImageUpload({
         ) : (
           <div className="flex flex-col items-center justify-center space-y-3">
             {isUploading ? (
-              <Loader2 className="h-8 w-8 animate-spin text-gray-400" />
+              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
             ) : (
               <div className="flex flex-col items-center space-y-2">
-                <div className="h-12 w-12 rounded-full bg-gray-100 flex items-center justify-center">
-                  <ImageIcon className="h-6 w-6 text-gray-400" />
+                <div className="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
+                  <ImageIcon className="h-6 w-6 text-muted-foreground" />
                 </div>
                 <div className="text-center">
-                  <p className="text-sm font-medium text-gray-700">
+                  <p className="text-sm font-medium text-foreground">
                     {placeholder}
                   </p>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-muted-foreground">
                     Sürükleyip bırakın veya seçmek için tıklayın
                   </p>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-xs text-muted-foreground mt-1">
                     JPEG, PNG, SVG, WebP (maksimum 5MB)
                   </p>
                 </div>
@@ -199,10 +199,10 @@ export function ImageUpload({
         )}
 
         {isUploading && (
-          <div className="absolute inset-0 bg-white/80 flex items-center justify-center rounded-lg">
+          <div className="absolute inset-0 bg-card/80 flex items-center justify-center rounded-lg">
             <div className="flex flex-col items-center space-y-2">
               <Loader2 className="h-6 w-6 animate-spin text-blue-600" />
-              <p className="text-sm text-gray-600">Yükleniyor...</p>
+              <p className="text-sm text-muted-foreground">Yükleniyor...</p>
             </div>
           </div>
         )}

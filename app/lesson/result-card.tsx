@@ -30,7 +30,7 @@ export const ResultCard = ({ value, variant, hasInfiniteHearts = false }: Props)
       </div>
       <div
         className={cn(
-          "rounded-2xl bg-white items-center flex justify-center p-6 font-bold text-lg",
+          "rounded-2xl bg-card items-center flex justify-center p-6 font-bold text-lg",
           variant === "hearts" && "text-rose-500",
           variant === "points" && "text-orange-400"
         )}

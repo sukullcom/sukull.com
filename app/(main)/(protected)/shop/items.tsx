@@ -71,10 +71,10 @@ export const Items = ({
       <div className="flex items-center w-full p-4 gap-x-4 border-t-2">
         <Image src="/heart.svg" alt="Can" height={60} width={60} />
         <div className="flex-1">
-          <p className="text-neutral-700 text-base lg:text-xl font-bold">
+          <p className="text-foreground text-base lg:text-xl font-bold">
             Canını doldur
           </p>
-          <p className="text-neutral-500 text-sm">
+          <p className="text-muted-foreground text-sm">
             {POINTS_TO_REFILL} puanla canlarını 5&apos;e tamamla
           </p>
         </div>
@@ -98,16 +98,16 @@ export const Items = ({
       {/* Streak Freeze */}
       <div className="flex items-center w-full p-4 gap-x-4 border-t-2">
         <div className="flex items-center justify-center w-[60px] h-[60px]">
-          <ShieldCheck className="h-10 w-10 text-blue-500" />
+          <ShieldCheck className="h-10 w-10 text-suk-payment" />
         </div>
         <div className="flex-1">
-          <p className="text-neutral-700 text-base lg:text-xl font-bold">
+          <p className="text-foreground text-base lg:text-xl font-bold">
             İstikrar Koruma
           </p>
-          <p className="text-neutral-500 text-sm">
+          <p className="text-muted-foreground text-sm">
             Bir gün hedefini tutturamasan bile istikrarın bozulmasın.
             {localFreezeCount > 0 && (
-              <span className="text-blue-600 font-medium"> ({localFreezeCount} adet mevcut)</span>
+              <span className="text-suk-payment font-medium"> ({localFreezeCount} adet mevcut)</span>
             )}
           </p>
         </div>
@@ -126,13 +126,13 @@ export const Items = ({
       <div className="flex items-center w-full p-4 gap-x-4 border-t-2">
         <div className="relative">
           <Image src="/heart.svg" alt="Can" height={60} width={60} />
-          <InfinityIcon className="absolute -top-1 -right-1 h-6 w-6 text-red-500 bg-white rounded-full p-1" />
+          <InfinityIcon className="absolute -top-1 -right-1 h-6 w-6 text-suk-danger bg-card rounded-full p-1" />
         </div>
         <div className="flex-1">
-          <p className="text-neutral-700 text-base lg:text-xl font-bold">
+          <p className="text-foreground text-base lg:text-xl font-bold">
             Premium (Sonsuz can + analiz)
           </p>
-          <p className="text-neutral-500 text-sm">
+          <p className="text-muted-foreground text-sm">
             {hasInfiniteHearts ? (
               subscriptionExpiresAt ? (
                 `Aktif — ${new Date(subscriptionExpiresAt).toLocaleDateString("tr-TR")} tarihine kadar`
@@ -147,14 +147,14 @@ export const Items = ({
         <Button
           onClick={() => !hasInfiniteHearts && setShowSubscriptionDialog(true)}
           disabled={false}
-          variant={hasInfiniteHearts ? "secondary" : "super"}
+          variant={hasInfiniteHearts ? "secondary" : "payment"}
         >
           {hasInfiniteHearts ? "Aktif" : "100₺/ay"}
         </Button>
       </div>
 
       <Dialog open={showSubscriptionDialog} onOpenChange={setShowSubscriptionDialog}>
-        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-white border border-gray-200 shadow-xl">
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-card border border-border shadow-xl">
           <DialogHeader>
             <DialogTitle>Premium abonelik (sonsuz can + analiz)</DialogTitle>
           </DialogHeader>

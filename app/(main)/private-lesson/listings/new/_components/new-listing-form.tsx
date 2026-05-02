@@ -122,14 +122,14 @@ export function NewListingForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white border rounded-xl p-5 space-y-4"
+      className="bg-card border rounded-xl p-5 space-y-4"
     >
-      <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2.5 text-xs text-amber-950">
+      <div className="rounded-lg border border-suk-warning-border bg-suk-warning-soft px-3 py-2.5 text-xs text-suk-warning-soft-fg">
         <strong className="font-semibold">İnceleme:</strong> İlanın önce
         yönetici onayından geçer. Onay sonrası ilanındaki konuyla eşleşen
         eğitmenler görebilir ve sana teklif gönderebilir.
       </div>
-      <div className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2.5 text-xs text-slate-800 space-y-1.5">
+      <div className="rounded-lg border border-border bg-muted/40 px-3 py-2.5 text-xs text-muted-foreground space-y-1.5">
         <p>
           <strong className="font-semibold">İletişim ve gizlilik:</strong>{" "}
           Girdiğin cep telefonu, profilindeki numara ile birleştirilir ve{" "}
@@ -141,13 +141,13 @@ export function NewListingForm() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium text-gray-600 mb-1">
+          <label className="block text-xs font-medium text-muted-foreground mb-1">
             Konu *
           </label>
           <select
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 bg-white"
+            className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-suk-brand focus:ring-1 focus:ring-suk-brand/20 bg-card"
             required
           >
             <option value="">Konu seçin</option>
@@ -159,13 +159,13 @@ export function NewListingForm() {
           </select>
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-600 mb-1">
+          <label className="block text-xs font-medium text-muted-foreground mb-1">
             Sınıf / Seviye *
           </label>
           <select
             value={grade}
             onChange={(e) => setGrade(e.target.value)}
-            className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 bg-white"
+            className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-suk-brand focus:ring-1 focus:ring-suk-brand/20 bg-card"
             required
           >
             <option value="">Sınıf / seviye seçin</option>
@@ -179,7 +179,7 @@ export function NewListingForm() {
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">
+        <label className="block text-xs font-medium text-muted-foreground mb-1">
           İlan Başlığı *
         </label>
         <input
@@ -188,16 +188,16 @@ export function NewListingForm() {
           onChange={(e) => setTitle(e.target.value)}
           maxLength={120}
           placeholder="Kısa ve öz bir başlık"
-          className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20"
+          className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-suk-brand focus:ring-1 focus:ring-suk-brand/20"
           required
         />
-        <div className="text-[10px] text-gray-400 mt-1 text-right">
+        <div className="text-[10px] text-muted-foreground mt-1 text-right">
           {title.length}/120
         </div>
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">
+        <label className="block text-xs font-medium text-muted-foreground mb-1">
           Açıklama * (en az {LISTING_DESCRIPTION_MIN_LEN} karakter)
         </label>
         <textarea
@@ -206,12 +206,12 @@ export function NewListingForm() {
           maxLength={2000}
           rows={6}
           placeholder="Neyi öğrenmek istiyorsun? Hangi konularda zorlanıyorsun? Eğitmenden beklentilerin neler?"
-          className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20 resize-none"
+          className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-suk-brand focus:ring-1 focus:ring-suk-brand/20 resize-none"
           required
           minLength={LISTING_DESCRIPTION_MIN_LEN}
         />
-        <div className="text-[10px] text-gray-400 mt-1 flex justify-between gap-2">
-          <span className="text-amber-800 min-h-[1em]">
+        <div className="text-[10px] text-muted-foreground mt-1 flex justify-between gap-2">
+          <span className="text-suk-warning-soft-fg min-h-[1em]">
             {description.trim().length < LISTING_DESCRIPTION_MIN_LEN
               ? `En az ${LISTING_DESCRIPTION_MIN_LEN} karakter gerekli.`
               : ""}
@@ -221,7 +221,7 @@ export function NewListingForm() {
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">
+        <label className="block text-xs font-medium text-muted-foreground mb-1">
           Ders Tipi *
         </label>
         <div className="grid grid-cols-3 gap-2">
@@ -238,8 +238,8 @@ export function NewListingForm() {
               onClick={() => setLessonMode(opt.v)}
               className={`py-2 text-sm rounded-lg border transition-colors ${
                 lessonMode === opt.v
-                  ? "border-orange-500 bg-orange-50 text-orange-700 font-medium"
-                  : "border-gray-200 text-gray-600 hover:bg-gray-50"
+                  ? "border-suk-brand bg-suk-brand-soft text-suk-brand-border font-medium"
+                  : "border-border text-muted-foreground hover:bg-muted/50"
               }`}
             >
               {opt.l}
@@ -249,7 +249,7 @@ export function NewListingForm() {
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">
+        <label className="block text-xs font-medium text-muted-foreground mb-1">
           Cep telefonu * (05xx…, teklif veren eğitmenlerle paylaşılır)
         </label>
         <input
@@ -260,10 +260,10 @@ export function NewListingForm() {
           onChange={(e) => setContactPhone(e.target.value)}
           maxLength={30}
           placeholder="Örn. 05xx xxx xx xx"
-          className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20"
+          className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-suk-brand focus:ring-1 focus:ring-suk-brand/20"
           required
         />
-        <p className="text-[10px] text-gray-500 mt-1">
+        <p className="text-[10px] text-muted-foreground mt-1">
           Türkiye cep numarası zorunludur. Kayıtlı numaran güncellenir; teklif
           atan eğitmenler ve açık sohbet ekranında kullanılır.
         </p>
@@ -272,7 +272,7 @@ export function NewListingForm() {
       {needsLocation && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">
+            <label className="block text-xs font-medium text-muted-foreground mb-1">
               Şehir *
             </label>
             <input
@@ -281,12 +281,12 @@ export function NewListingForm() {
               onChange={(e) => setCity(e.target.value)}
               maxLength={60}
               placeholder="Örn. İstanbul"
-              className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20"
+              className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-suk-brand focus:ring-1 focus:ring-suk-brand/20"
               required={needsLocation}
             />
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-600 mb-1">
+            <label className="block text-xs font-medium text-muted-foreground mb-1">
               İlçe / Semt
             </label>
             <input
@@ -295,7 +295,7 @@ export function NewListingForm() {
               onChange={(e) => setDistrict(e.target.value)}
               maxLength={60}
               placeholder="Örn. Kadıköy"
-              className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20"
+              className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-suk-brand focus:ring-1 focus:ring-suk-brand/20"
             />
           </div>
         </div>
@@ -303,7 +303,7 @@ export function NewListingForm() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium text-gray-600 mb-1">
+          <label className="block text-xs font-medium text-muted-foreground mb-1">
             Saatlik bütçe min (₺) *
           </label>
           <input
@@ -313,12 +313,12 @@ export function NewListingForm() {
             step={10}
             value={budgetMin}
             onChange={(e) => setBudgetMin(e.target.value)}
-            className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20"
+            className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-suk-brand focus:ring-1 focus:ring-suk-brand/20"
             required
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-600 mb-1">
+          <label className="block text-xs font-medium text-muted-foreground mb-1">
             Saatlik bütçe max (₺) *
           </label>
           <input
@@ -328,14 +328,14 @@ export function NewListingForm() {
             step={10}
             value={budgetMax}
             onChange={(e) => setBudgetMax(e.target.value)}
-            className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20"
+            className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-suk-brand focus:ring-1 focus:ring-suk-brand/20"
             required
           />
         </div>
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">
+        <label className="block text-xs font-medium text-muted-foreground mb-1">
           Tercih edilen saatler * (en az {LISTING_PREFERRED_HOURS_MIN_LEN}{" "}
           karakter)
         </label>
@@ -345,7 +345,7 @@ export function NewListingForm() {
           onChange={(e) => setPreferredHours(e.target.value)}
           maxLength={160}
           placeholder="Örn. Hafta içi akşam 19:00 sonrası"
-          className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/20"
+          className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-suk-brand focus:ring-1 focus:ring-suk-brand/20"
           required
           minLength={LISTING_PREFERRED_HOURS_MIN_LEN}
         />

@@ -120,11 +120,11 @@ const SUBJECT_COLOR_MAP: Record<string, SubjectColorConfig> = {
 };
 
 const DEFAULT_COLOR: SubjectColorConfig = {
-  bg: "bg-green-500",
-  bgDark: "bg-green-700",
-  gradient: "from-green-500 to-green-600",
-  border: "border-green-600",
-  text: "text-green-500",
+  bg: "bg-suk-brand",
+  bgDark: "bg-suk-brand-hover",
+  gradient: "from-suk-brand to-suk-brand-hover",
+  border: "border-suk-brand-border",
+  text: "text-suk-brand",
   hex: "#22c55e",
   hexDark: "#15803d",
 };

@@ -310,31 +310,31 @@ export default function TrueFalseGame() {
       <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-6 py-8">
         <Link
           href="/games"
-          className="self-start flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-700 transition"
+          className="self-start flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition"
         >
           <ArrowLeft className="h-4 w-4" /> Oyunlara Dön
         </Link>
 
         <div className="text-center">
-          <div className="mb-3"><Zap className="w-12 h-12 text-yellow-500 mx-auto" /></div>
-          <h1 className="text-2xl font-bold text-neutral-800">
+          <div className="mb-3"><Zap className="w-12 h-12 text-suk-warning mx-auto" /></div>
+          <h1 className="text-2xl font-bold text-foreground">
             Doğru mu Yanlış mı?
           </h1>
-          <p className="text-neutral-500 mt-2">
+          <p className="text-muted-foreground mt-2">
             Hızlı düşün, doğru karar ver! Süre giderek kısalıyor.
           </p>
         </div>
 
         <div className="w-full space-y-2">
-          <p className="text-sm font-semibold text-neutral-600">Kategori</p>
+          <p className="text-sm font-semibold text-muted-foreground">Kategori</p>
           {(Object.keys(CATEGORY_LABELS) as Category[]).map((cat) => (
             <button
               key={cat}
               onClick={() => setCategory(cat)}
               className={`w-full p-3 rounded-xl border-2 text-left transition-all ${
                 category === cat
-                  ? "border-indigo-500 bg-indigo-50 text-indigo-700"
-                  : "border-neutral-200 hover:border-neutral-300 text-neutral-600"
+                  ? "border-suk-payment bg-suk-payment-soft text-suk-payment-soft-fg"
+                  : "border-border hover:border-border/80 text-muted-foreground"
               }`}
             >
               <span className="font-semibold">{CATEGORY_LABELS[cat]}</span>
@@ -343,7 +343,7 @@ export default function TrueFalseGame() {
         </div>
 
         <div className="w-full space-y-2">
-          <p className="text-sm font-semibold text-neutral-600">Zorluk</p>
+          <p className="text-sm font-semibold text-muted-foreground">Zorluk</p>
           {(["Kolay", "Orta", "Zor", "Uzman"] as Difficulty[]).map((d) => {
             const s = DIFFICULTY_SETTINGS[d];
             return (
@@ -352,8 +352,8 @@ export default function TrueFalseGame() {
                 onClick={() => setDifficulty(d)}
                 className={`w-full p-3 rounded-xl border-2 text-left transition-all ${
                   difficulty === d
-                    ? "border-indigo-500 bg-indigo-50 text-indigo-700"
-                    : "border-neutral-200 hover:border-neutral-300 text-neutral-600"
+                    ? "border-suk-payment bg-suk-payment-soft text-suk-payment-soft-fg"
+                    : "border-border hover:border-border/80 text-muted-foreground"
                 }`}
               >
                 <span className="font-semibold">{d}</span>
@@ -379,28 +379,28 @@ export default function TrueFalseGame() {
   if (gameState === "finished") {
     return (
       <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-6 py-8">
-        <div className="mb-2"><Flag className="w-12 h-12 text-neutral-700 mx-auto" /></div>
-        <h1 className="text-2xl font-bold text-neutral-800">Oyun Bitti!</h1>
+        <div className="mb-2"><Flag className="w-12 h-12 text-muted-foreground mx-auto" /></div>
+        <h1 className="text-2xl font-bold text-foreground">Oyun Bitti!</h1>
 
         <div className="w-full grid grid-cols-2 gap-3">
-          <div className="bg-emerald-50 rounded-xl p-4 text-center border border-emerald-200">
-            <Trophy className="h-6 w-6 text-emerald-500 mx-auto mb-1" />
-            <p className="text-2xl font-bold text-emerald-600">{score}</p>
-            <p className="text-xs text-emerald-500">Toplam Puan</p>
+          <div className="bg-suk-brand-soft rounded-xl p-4 text-center border border-suk-brand/30">
+            <Trophy className="h-6 w-6 text-suk-brand mx-auto mb-1" />
+            <p className="text-2xl font-bold text-suk-brand-soft-fg">{score}</p>
+            <p className="text-xs text-suk-brand">Toplam Puan</p>
           </div>
-          <div className="bg-green-50 rounded-xl p-4 text-center border border-green-200">
-            <CheckCircle className="h-6 w-6 text-green-500 mx-auto mb-1" />
-            <p className="text-2xl font-bold text-green-600">{correctCount}</p>
-            <p className="text-xs text-green-500">Doğru Cevap</p>
+          <div className="bg-suk-brand-soft rounded-xl p-4 text-center border border-suk-brand/25">
+            <CheckCircle className="h-6 w-6 text-suk-brand mx-auto mb-1" />
+            <p className="text-2xl font-bold text-suk-brand-soft-fg">{correctCount}</p>
+            <p className="text-xs text-suk-brand">Doğru Cevap</p>
           </div>
-          <div className="bg-purple-50 rounded-xl p-4 text-center border border-purple-200">
-            <Zap className="h-6 w-6 text-purple-500 mx-auto mb-1" />
-            <p className="text-2xl font-bold text-purple-600">{maxStreak}</p>
-            <p className="text-xs text-purple-500">En Uzun Seri</p>
+          <div className="bg-suk-play-soft rounded-xl p-4 text-center border border-suk-play-line">
+            <Zap className="h-6 w-6 text-suk-play mx-auto mb-1" />
+            <p className="text-2xl font-bold text-suk-play-soft-fg">{maxStreak}</p>
+            <p className="text-xs text-suk-play">En Uzun Seri</p>
           </div>
-          <div className="bg-amber-50 rounded-xl p-4 text-center border border-amber-200">
-            <p className="text-2xl font-bold text-amber-600">{questionNumber}</p>
-            <p className="text-xs text-amber-500">Toplam Soru</p>
+          <div className="bg-suk-warning-soft rounded-xl p-4 text-center border border-suk-warning-border">
+            <p className="text-2xl font-bold text-suk-warning-soft-fg">{questionNumber}</p>
+            <p className="text-xs text-suk-warning">Toplam Soru</p>
           </div>
         </div>
 
@@ -437,28 +437,28 @@ export default function TrueFalseGame() {
               key={i}
               className={`h-6 w-6 ${
                 i < lives
-                  ? "fill-red-500 text-red-500"
-                  : "text-neutral-300"
+                  ? "fill-suk-danger text-suk-danger"
+                  : "text-muted-foreground"
               }`}
             />
           ))}
         </div>
         <div className="flex items-center gap-3">
           {streak > 0 && (
-            <span className="flex items-center gap-1 text-purple-600 font-bold text-sm">
+            <span className="flex items-center gap-1 text-suk-play font-bold text-sm">
               <Zap className="h-4 w-4" />
               {streak}
             </span>
           )}
-          <span className="font-bold text-lg text-emerald-600">{score}</span>
+          <span className="font-bold text-lg text-suk-brand">{score}</span>
         </div>
       </div>
 
       {/* Timer bar */}
-      <div className="w-full h-3 bg-neutral-200 rounded-full overflow-hidden">
+      <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
         <div
           className={`h-full transition-all duration-100 ease-linear rounded-full ${
-            timerPercent <= 30 ? "bg-red-500" : timerPercent <= 60 ? "bg-amber-500" : "bg-emerald-500"
+            timerPercent <= 30 ? "bg-suk-danger" : timerPercent <= 60 ? "bg-suk-warning" : "bg-suk-brand"
           }`}
           style={{ width: `${timerPercent}%` }}
         />
@@ -469,19 +469,19 @@ export default function TrueFalseGame() {
         <div
           className={`w-full p-8 rounded-2xl border-2 text-center transition-colors mt-4 ${
             feedback === "correct"
-              ? "bg-green-50 border-green-400"
+              ? "bg-suk-brand-soft border-suk-brand"
               : feedback === "wrong"
-                ? "bg-red-50 border-red-400"
+                ? "bg-suk-danger-soft border-suk-danger"
                 : feedback === "timeout"
-                  ? "bg-amber-50 border-amber-400"
-                  : "bg-white border-neutral-200"
+                  ? "bg-suk-warning-soft border-suk-warning-border"
+                  : "bg-card border-border"
           }`}
         >
-          <p className="text-2xl sm:text-3xl font-bold text-neutral-800 leading-relaxed">
+          <p className="text-2xl sm:text-3xl font-bold text-foreground leading-relaxed">
             {statement.text}
           </p>
           {feedback === "timeout" && (
-            <p className="text-amber-600 text-sm mt-2 font-semibold">
+            <p className="text-suk-warning-soft-fg text-sm mt-2 font-semibold">
               Süre doldu!
             </p>
           )}
@@ -495,8 +495,8 @@ export default function TrueFalseGame() {
           disabled={feedback !== null}
           className={`flex-1 p-5 rounded-xl border-2 font-bold text-lg transition-all active:scale-95 ${
             feedback !== null
-              ? "opacity-50 cursor-not-allowed border-neutral-200"
-              : "border-green-300 bg-green-50 text-green-700 active:bg-green-100 active:border-green-400"
+              ? "opacity-50 cursor-not-allowed border-border"
+              : "border-suk-brand/40 bg-suk-brand-soft text-suk-brand-soft-fg active:bg-suk-brand-soft/80 active:border-suk-brand"
           }`}
         >
           <CheckCircle className="h-8 w-8 mx-auto mb-1" />
@@ -507,8 +507,8 @@ export default function TrueFalseGame() {
           disabled={feedback !== null}
           className={`flex-1 p-5 rounded-xl border-2 font-bold text-lg transition-all active:scale-95 ${
             feedback !== null
-              ? "opacity-50 cursor-not-allowed border-neutral-200"
-              : "border-red-300 bg-red-50 text-red-700 active:bg-red-100 active:border-red-400"
+              ? "opacity-50 cursor-not-allowed border-border"
+              : "border-suk-danger/40 bg-suk-danger-soft text-suk-danger active:bg-suk-danger-soft/80 active:border-suk-danger"
           }`}
         >
           <XCircle className="h-8 w-8 mx-auto mb-1" />

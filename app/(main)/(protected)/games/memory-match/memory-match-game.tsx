@@ -223,31 +223,31 @@ export default function MemoryMatchGame() {
       <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-6 py-8">
         <Link
           href="/games"
-          className="self-start flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-700 transition"
+          className="self-start flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition"
         >
           <ArrowLeft className="h-4 w-4" /> Oyunlara Dön
         </Link>
 
         <div className="text-center">
-          <div className="mb-3"><Brain className="w-12 h-12 text-purple-500 mx-auto" /></div>
-          <h1 className="text-2xl font-bold text-neutral-800">
+          <div className="mb-3"><Brain className="w-12 h-12 text-suk-play mx-auto" /></div>
+          <h1 className="text-2xl font-bold text-foreground">
             Hafıza Kartları
           </h1>
-          <p className="text-neutral-500 mt-2">
+          <p className="text-muted-foreground mt-2">
             Eşleşen kartları bul, hafızanı test et!
           </p>
         </div>
 
         <div className="w-full space-y-2">
-          <p className="text-sm font-semibold text-neutral-600">Kategori</p>
+          <p className="text-sm font-semibold text-muted-foreground">Kategori</p>
           {(Object.keys(CARD_POOLS) as Category[]).map((cat) => (
             <button
               key={cat}
               onClick={() => setCategory(cat)}
               className={`w-full p-3 rounded-xl border-2 text-left transition-all ${
                 category === cat
-                  ? "border-indigo-500 bg-indigo-50 text-indigo-700"
-                  : "border-neutral-200 hover:border-neutral-300 text-neutral-600"
+                  ? "border-suk-payment bg-suk-payment-soft text-suk-payment-soft-fg"
+                  : "border-border hover:border-border/80 text-muted-foreground"
               }`}
             >
               <span className="font-semibold">{CATEGORY_LABELS[cat]}</span>
@@ -256,15 +256,15 @@ export default function MemoryMatchGame() {
         </div>
 
         <div className="w-full space-y-2">
-          <p className="text-sm font-semibold text-neutral-600">Zorluk</p>
+          <p className="text-sm font-semibold text-muted-foreground">Zorluk</p>
           {(["Kolay", "Orta", "Zor", "Uzman"] as Difficulty[]).map((d) => (
             <button
               key={d}
               onClick={() => setDifficulty(d)}
               className={`w-full p-3 rounded-xl border-2 text-left transition-all ${
                 difficulty === d
-                  ? "border-indigo-500 bg-indigo-50 text-indigo-700"
-                  : "border-neutral-200 hover:border-neutral-300 text-neutral-600"
+                  ? "border-suk-payment bg-suk-payment-soft text-suk-payment-soft-fg"
+                  : "border-border hover:border-border/80 text-muted-foreground"
               }`}
             >
               <span className="font-semibold">{d}</span>
@@ -289,31 +289,31 @@ export default function MemoryMatchGame() {
   if (gameState === "finished") {
     return (
       <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-6 py-8">
-        <div className="mb-2"><PartyPopper className="w-12 h-12 text-amber-500 mx-auto" /></div>
-        <h1 className="text-2xl font-bold text-neutral-800">Tebrikler!</h1>
+        <div className="mb-2"><PartyPopper className="w-12 h-12 text-suk-warning mx-auto" /></div>
+        <h1 className="text-2xl font-bold text-foreground">Tebrikler!</h1>
 
         <div className="w-full grid grid-cols-2 gap-3">
-          <div className="bg-purple-50 rounded-xl p-4 text-center border border-purple-200">
-            <Trophy className="h-6 w-6 text-purple-500 mx-auto mb-1" />
-            <p className="text-2xl font-bold text-purple-600">{score}</p>
-            <p className="text-xs text-purple-500">Toplam Puan</p>
+          <div className="bg-suk-play-soft rounded-xl p-4 text-center border border-suk-play-line">
+            <Trophy className="h-6 w-6 text-suk-play mx-auto mb-1" />
+            <p className="text-2xl font-bold text-suk-play-soft-fg">{score}</p>
+            <p className="text-xs text-suk-play">Toplam Puan</p>
           </div>
-          <div className="bg-green-50 rounded-xl p-4 text-center border border-green-200">
-            <Clock className="h-6 w-6 text-green-500 mx-auto mb-1" />
-            <p className="text-2xl font-bold text-green-600">
+          <div className="bg-suk-brand-soft rounded-xl p-4 text-center border border-suk-brand/30">
+            <Clock className="h-6 w-6 text-suk-brand mx-auto mb-1" />
+            <p className="text-2xl font-bold text-suk-brand-soft-fg">
               {formatTime(timer)}
             </p>
-            <p className="text-xs text-green-500">Süre</p>
+            <p className="text-xs text-suk-brand">Süre</p>
           </div>
-          <div className="bg-purple-50 rounded-xl p-4 text-center border border-purple-200">
-            <MousePointer className="h-6 w-6 text-purple-500 mx-auto mb-1" />
-            <p className="text-2xl font-bold text-purple-600">{moves}</p>
-            <p className="text-xs text-purple-500">Hamle</p>
+          <div className="bg-suk-play-soft rounded-xl p-4 text-center border border-suk-play-line">
+            <MousePointer className="h-6 w-6 text-suk-play mx-auto mb-1" />
+            <p className="text-2xl font-bold text-suk-play-soft-fg">{moves}</p>
+            <p className="text-xs text-suk-play">Hamle</p>
           </div>
-          <div className="bg-amber-50 rounded-xl p-4 text-center border border-amber-200">
-            <RotateCcw className="h-6 w-6 text-amber-500 mx-auto mb-1" />
-            <p className="text-2xl font-bold text-amber-600">{matchedPairs}</p>
-            <p className="text-xs text-amber-500">Eşleşme</p>
+          <div className="bg-suk-warning-soft rounded-xl p-4 text-center border border-suk-warning-border">
+            <RotateCcw className="h-6 w-6 text-suk-warning mx-auto mb-1" />
+            <p className="text-2xl font-bold text-suk-warning-soft-fg">{matchedPairs}</p>
+            <p className="text-xs text-suk-warning">Eşleşme</p>
           </div>
         </div>
 
@@ -342,24 +342,24 @@ export default function MemoryMatchGame() {
       {/* Header */}
       <div className="w-full flex items-center justify-between text-sm">
         <div className="flex items-center gap-3">
-          <span className="text-neutral-600">
+          <span className="text-muted-foreground">
             <Clock className="h-4 w-4 inline mr-1" />
             {formatTime(timer)}
           </span>
-          <span className="text-neutral-600">
+          <span className="text-muted-foreground">
             <MousePointer className="h-4 w-4 inline mr-1" />
             {moves}
           </span>
         </div>
-        <span className="font-bold text-purple-600">
+        <span className="font-bold text-suk-play-soft-fg">
           {matchedPairs}/{totalPairs} çift
         </span>
       </div>
 
       {/* Progress */}
-      <div className="w-full h-2 bg-neutral-200 rounded-full overflow-hidden">
+      <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
         <div
-          className="h-full bg-purple-500 rounded-full transition-all duration-300"
+          className="h-full bg-suk-play rounded-full transition-all duration-300"
           style={{ width: `${(matchedPairs / totalPairs) * 100}%` }}
         />
       </div>
@@ -382,19 +382,19 @@ export default function MemoryMatchGame() {
               }`}
             >
               {/* Back (hidden) */}
-              <div className="absolute inset-0 rounded-xl bg-purple-500 border-2 border-purple-600 flex items-center justify-center [backface-visibility:hidden] cursor-pointer active:bg-purple-400 active:scale-95 transition-colors">
-                <span className="text-2xl text-white font-bold">?</span>
+              <div className="absolute inset-0 rounded-xl bg-suk-play border-2 border-suk-play-border flex items-center justify-center [backface-visibility:hidden] cursor-pointer active:bg-suk-play-hover active:scale-95 transition-colors">
+                <span className="text-2xl text-suk-play-fg font-bold">?</span>
               </div>
               {/* Front (shown when flipped) */}
               <div
                 className={`absolute inset-0 rounded-xl border-2 flex items-center justify-center p-1 text-center [backface-visibility:hidden] [transform:rotateY(180deg)] ${
                   card.isMatched
-                    ? "bg-green-50 border-green-400"
-                    : "bg-white border-purple-300"
+                    ? "bg-suk-brand-soft border-suk-brand"
+                    : "bg-card border-suk-play-line"
                 }`}
               >
                 <span className={`text-xs sm:text-sm font-semibold leading-tight ${
-                  card.isMatched ? "text-green-600" : "text-neutral-800"
+                  card.isMatched ? "text-suk-brand-soft-fg" : "text-foreground"
                 }`}>
                   {card.content}
                 </span>

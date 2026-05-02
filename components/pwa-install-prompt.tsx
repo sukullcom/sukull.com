@@ -86,13 +86,13 @@ export function PwaInstallPrompt() {
     <div
       role="dialog"
       aria-labelledby="pwa-install-title"
-      className="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-md rounded-2xl border border-lime-200 bg-white p-4 shadow-2xl md:bottom-6 md:right-6 md:left-auto md:mx-0"
+      className="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-md rounded-2xl border border-lime-200 bg-card p-4 shadow-2xl md:bottom-6 md:right-6 md:left-auto md:mx-0"
     >
       <button
         type="button"
         aria-label="Kapat"
         onClick={dismiss}
-        className="absolute right-2 top-2 rounded-full p-1 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+        className="absolute right-2 top-2 rounded-full p-1 text-muted-foreground transition hover:bg-muted hover:text-foreground"
       >
         <X className="h-4 w-4" />
       </button>
@@ -102,10 +102,10 @@ export function PwaInstallPrompt() {
           <Download className="h-5 w-5" />
         </div>
         <div className="flex-1">
-          <h2 id="pwa-install-title" className="text-sm font-bold text-slate-900">
+          <h2 id="pwa-install-title" className="text-sm font-bold text-foreground">
             Sukull&apos;u ana ekrana ekle
           </h2>
-          <p className="mt-1 text-xs text-slate-600">
+          <p className="mt-1 text-xs text-muted-foreground">
             Daha hızlı erişim için Sukull&apos;u uygulama olarak yükle. Çevrimdışı bazı özellikler
             de kullanılabilir hâle gelir.
           </p>

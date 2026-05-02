@@ -204,17 +204,17 @@ export const LeaderboardClient = ({
                   isMe && "bg-blue-50 border-l-4 border-l-blue-500",
                 )}
               >
-                <span className="w-8 text-center font-bold text-sm text-neutral-400 shrink-0">
+                <span className="w-8 text-center font-bold text-sm text-muted-foreground shrink-0">
                   {rank}
                 </span>
                 <Avatar className="h-8 w-8 sm:h-9 sm:w-9 mx-2 shrink-0 border bg-green-500">
                   <AvatarImage src={u.userImageSrc} className="object-cover" />
                   <AvatarFallback>{u.userName.charAt(0)}</AvatarFallback>
                 </Avatar>
-                <p className="font-semibold text-sm text-neutral-800 flex-1 truncate mr-2">
+                <p className="font-semibold text-sm text-foreground flex-1 truncate mr-2">
                   {u.userName}
                 </p>
-                <p className="text-xs sm:text-sm text-neutral-500 shrink-0 font-medium">
+                <p className="text-xs sm:text-sm text-muted-foreground shrink-0 font-medium">
                   {u.points.toLocaleString("tr-TR")} Puan
                 </p>
               </div>
@@ -242,23 +242,23 @@ export const LeaderboardClient = ({
                 isMine && "bg-emerald-50 border-l-4 border-l-emerald-500",
               )}
             >
-              <span className="w-8 text-center font-bold text-sm text-neutral-400 shrink-0">
+              <span className="w-8 text-center font-bold text-sm text-muted-foreground shrink-0">
                 {rank}
               </span>
               <div className="flex items-center justify-center h-8 w-8 sm:h-9 sm:w-9 mx-2 shrink-0 rounded-full bg-emerald-100">
                 <School className="h-4 w-4 text-emerald-600" />
               </div>
               <div className="flex-1 min-w-0 mr-2">
-                <p className="font-semibold text-sm text-neutral-800 truncate">
+                <p className="font-semibold text-sm text-foreground truncate">
                   {s.schoolName}
                 </p>
                 {s.city && (
-                  <p className="text-[11px] text-neutral-400 truncate">
+                  <p className="text-[11px] text-muted-foreground truncate">
                     {s.city}
                   </p>
                 )}
               </div>
-              <p className="text-xs sm:text-sm text-neutral-500 shrink-0 font-medium">
+              <p className="text-xs sm:text-sm text-muted-foreground shrink-0 font-medium">
                 {s.totalPoints.toLocaleString("tr-TR")} Puan
               </p>
             </div>
@@ -292,7 +292,7 @@ export const LeaderboardClient = ({
     <div className="w-full overflow-hidden">
       {/* Tab Bar */}
       <div
-        className="flex border-2 border-gray-200 rounded-2xl p-1 gap-0.5 mb-5 overflow-x-auto scrollbar-hide"
+        className="flex border-2 border-border rounded-2xl p-1 gap-0.5 mb-5 overflow-x-auto scrollbar-hide"
       >
         {tabsToShow.map(({ id, label, icon: Icon }) => (
           <button
@@ -301,8 +301,8 @@ export const LeaderboardClient = ({
             className={cn(
               "flex items-center justify-center gap-1 sm:gap-1.5 flex-1 px-2.5 sm:px-3 py-2.5 rounded-xl text-xs sm:text-sm whitespace-nowrap transition-all shrink-0",
               activeTab === id
-                ? "bg-gray-100 text-gray-800 font-bold"
-                : "text-gray-500 hover:text-gray-700 font-medium",
+                ? "bg-muted text-foreground font-bold"
+                : "text-muted-foreground hover:text-foreground font-medium",
             )}
           >
             <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
@@ -315,12 +315,12 @@ export const LeaderboardClient = ({
       {/* City filter (school tabs only) */}
       {isSchoolTab && cities.length > 0 && (
         <div className="flex items-center gap-2 mb-4">
-          <MapPin className="h-4 w-4 text-neutral-400 shrink-0" />
+          <MapPin className="h-4 w-4 text-muted-foreground shrink-0" />
           <div className="relative flex-1 max-w-xs">
             <select
               value={selectedCity}
               onChange={(e) => handleCityChange(e.target.value)}
-              className="w-full appearance-none rounded-lg border border-gray-200 bg-white px-3 py-2 pr-8 text-sm text-neutral-700 focus:border-green-400 focus:outline-none focus:ring-1 focus:ring-green-400"
+              className="w-full appearance-none rounded-lg border border-border bg-card px-3 py-2 pr-8 text-sm text-foreground focus:border-green-400 focus:outline-none focus:ring-1 focus:ring-green-400"
             >
               <option value="">Tüm Türkiye</option>
               {cities.map((c) => (
@@ -329,7 +329,7 @@ export const LeaderboardClient = ({
                 </option>
               ))}
             </select>
-            <ChevronDown className="pointer-events-none absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400" />
+            <ChevronDown className="pointer-events-none absolute right-2 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           </div>
           {cityLoading && (
             <Loader2 className="h-4 w-4 animate-spin text-green-600" />

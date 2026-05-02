@@ -94,10 +94,10 @@ export default function LegalIndexPage() {
   return (
     <section className="mx-auto w-full max-w-4xl px-4 py-10 sm:py-14">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">
+        <h1 className="text-3xl font-bold text-foreground sm:text-4xl">
           Yasal Bilgiler
         </h1>
-        <p className="mt-2 text-base text-slate-600">
+        <p className="mt-2 text-base text-muted-foreground">
           Sukull'u kullanmanıza ilişkin tüm yasal belgeler. Tebligat, KVKK
           başvurusu ve mesafeli satış koşullarını burada bulabilirsiniz.
         </p>
@@ -108,18 +108,18 @@ export default function LegalIndexPage() {
           <li key={href}>
             <Link
               href={href}
-              className="group block h-full rounded-2xl border border-slate-200 bg-white p-5 transition-colors hover:border-green-400 hover:bg-green-50/40"
+              className="group block h-full rounded-2xl border border-border bg-card p-5 transition-colors hover:border-suk-payment/50 hover:bg-suk-payment-soft/50"
             >
               <div className="flex items-start gap-3">
-                <div className="mt-0.5 rounded-xl bg-slate-100 p-2 text-slate-600 group-hover:bg-green-100 group-hover:text-green-700">
+                <div className="mt-0.5 rounded-xl bg-muted p-2 text-muted-foreground group-hover:bg-suk-brand-soft group-hover:text-suk-brand-soft-fg">
                   <Icon className="h-5 w-5" />
                 </div>
                 <div className="flex-1">
-                  <h2 className="text-base font-semibold text-slate-900 group-hover:text-green-700">
+                  <h2 className="text-base font-semibold text-foreground group-hover:text-suk-brand-soft-fg">
                     {title}
                   </h2>
-                  <p className="mt-1 text-sm text-slate-600">{description}</p>
-                  <p className="mt-2 text-[11px] uppercase tracking-wide text-slate-400">
+                  <p className="mt-1 text-sm text-muted-foreground">{description}</p>
+                  <p className="mt-2 text-[11px] uppercase tracking-wide text-muted-foreground/80">
                     Son güncelleme:{" "}
                     {new Date(LEGAL_UPDATED[updatedAtKey]).toLocaleDateString(
                       "tr-TR",

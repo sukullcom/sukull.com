@@ -303,7 +303,7 @@ export default function WordMatchGame() {
     }
 
     toast.error("Yanlış eşleşme!", {
-      className: "border-red-300 bg-red-50 text-red-900",
+      className: "border-suk-danger/40 bg-suk-danger-soft text-suk-danger",
     });
     setSelection(null);
   };
@@ -312,11 +312,11 @@ export default function WordMatchGame() {
     cn(
       "min-h-[52px] rounded-xl border-2 px-3 py-2 text-center text-sm font-medium transition-all sm:min-h-[56px] sm:text-base",
       cleared
-        ? "cursor-default border-green-300 bg-green-50 text-green-700"
-        : "border-neutral-200 bg-white text-neutral-800 hover:border-neutral-300 hover:bg-neutral-50 active:scale-[0.98]",
+        ? "cursor-default border-suk-brand/40 bg-suk-brand-soft text-suk-brand-soft-fg"
+        : "border-border bg-card text-foreground hover:border-border/80 hover:bg-muted active:scale-[0.98]",
       active &&
         !cleared &&
-        "border-indigo-500 bg-indigo-50 ring-2 ring-indigo-200",
+        "border-suk-payment bg-suk-payment-soft ring-2 ring-suk-payment-ring",
     );
 
   if (phase === "menu") {
@@ -325,32 +325,32 @@ export default function WordMatchGame() {
         <Link
           prefetch={false}
           href="/games"
-          className="self-start flex items-center gap-1 text-sm text-neutral-500 transition hover:text-neutral-700"
+          className="self-start flex items-center gap-1 text-sm text-muted-foreground transition hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4" /> Oyunlara Dön
         </Link>
 
         <div className="text-center">
           <div className="mb-3">
-            <Languages className="mx-auto h-12 w-12 text-indigo-500" />
+            <Languages className="mx-auto h-12 w-12 text-suk-play" />
           </div>
-          <h1 className="text-2xl font-bold text-neutral-800">
+          <h1 className="text-2xl font-bold text-foreground">
             Kelime Eşleştirme
           </h1>
-          <p className="mt-2 text-neutral-500">
+          <p className="mt-2 text-muted-foreground">
             Solda Türkçe, sağda İngilizce. İlk doğru eşleşmede kutular onaylanır;{" "}
-            <strong className="text-neutral-700">ikinci</strong> doğru
+            <strong className="text-foreground">ikinci</strong> doğru
             eşleşmeden sonra iki çift birden yenilenir.{" "}
             {CONFIG.GAME_DURATION_SECONDS} saniyede olabildiğince çift tamamla.
           </p>
-          <p className="mt-3 text-xs text-neutral-500">
+          <p className="mt-3 text-xs text-muted-foreground">
             Doğru eşleşme: +{CONFIG.POINTS_PER_MATCH} × zorluk çarpanı puan ·
             Yanlışta uyarı (puan düşmez).
           </p>
         </div>
 
         <div className="w-full space-y-2">
-          <p className="text-sm font-semibold text-neutral-600">Zorluk</p>
+          <p className="text-sm font-semibold text-muted-foreground">Zorluk</p>
           {(["Kolay", "Orta", "Zor", "Uzman"] as const).map((d) => (
             <button
               key={d}
@@ -358,8 +358,8 @@ export default function WordMatchGame() {
               onClick={() => setDifficulty(d)}
               className={`w-full rounded-xl border-2 p-3 text-left transition-all ${
                 difficulty === d
-                  ? "border-indigo-500 bg-indigo-50 text-indigo-700"
-                  : "border-neutral-200 text-neutral-600 hover:border-neutral-300"
+                  ? "border-suk-payment bg-suk-payment-soft text-suk-payment-soft-fg"
+                  : "border-border text-muted-foreground hover:border-border/80"
               }`}
             >
               <span className="font-semibold">{d}</span>
@@ -386,24 +386,24 @@ export default function WordMatchGame() {
     return (
       <div className="mx-auto flex w-full max-w-lg flex-col items-center gap-6 py-8">
         <div className="mb-2">
-          <Trophy className="mx-auto h-12 w-12 text-amber-500" />
+          <Trophy className="mx-auto h-12 w-12 text-suk-warning" />
         </div>
-        <h1 className="text-2xl font-bold text-neutral-800">Süre Doldu!</h1>
+        <h1 className="text-2xl font-bold text-foreground">Süre Doldu!</h1>
 
         <div className="grid w-full grid-cols-2 gap-3">
-          <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-center">
-            <Trophy className="mx-auto mb-1 h-6 w-6 text-amber-500" />
-            <p className="text-2xl font-bold text-amber-600">{score}</p>
-            <p className="text-xs text-amber-500">Toplam Puan</p>
+          <div className="rounded-xl border border-suk-warning-border bg-suk-warning-soft p-4 text-center">
+            <Trophy className="mx-auto mb-1 h-6 w-6 text-suk-warning" />
+            <p className="text-2xl font-bold text-suk-warning-soft-fg">{score}</p>
+            <p className="text-xs text-suk-warning">Toplam Puan</p>
           </div>
-          <div className="rounded-xl border border-green-200 bg-green-50 p-4 text-center">
-            <Languages className="mx-auto mb-1 h-6 w-6 text-green-500" />
-            <p className="text-2xl font-bold text-green-600">{matches}</p>
-            <p className="text-xs text-green-500">Doğru Eşleşme</p>
+          <div className="rounded-xl border border-suk-brand/30 bg-suk-brand-soft p-4 text-center">
+            <Languages className="mx-auto mb-1 h-6 w-6 text-suk-brand" />
+            <p className="text-2xl font-bold text-suk-brand-soft-fg">{matches}</p>
+            <p className="text-xs text-suk-brand">Doğru Eşleşme</p>
           </div>
-          <div className="col-span-2 rounded-xl border border-indigo-200 bg-indigo-50 p-3 text-center">
-            <p className="text-sm font-semibold text-indigo-800">{difficulty}</p>
-            <p className="text-xs text-indigo-500">Zorluk</p>
+          <div className="col-span-2 rounded-xl border border-suk-payment-ring bg-suk-payment-soft p-3 text-center">
+            <p className="text-sm font-semibold text-suk-payment-soft-fg">{difficulty}</p>
+            <p className="text-xs text-suk-payment">Zorluk</p>
           </div>
         </div>
 
@@ -432,14 +432,14 @@ export default function WordMatchGame() {
     <div className="mx-auto flex w-full max-w-lg flex-col items-center gap-4 py-4">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center gap-2">
-          <Trophy className="h-5 w-5 text-amber-500" />
-          <span className="text-lg font-bold text-indigo-600">{score}</span>
+          <Trophy className="h-5 w-5 text-suk-warning" />
+          <span className="text-lg font-bold text-suk-play-soft-fg">{score}</span>
         </div>
-        <div className="flex items-center gap-2 rounded-full bg-neutral-100 px-3 py-1">
-          <Timer className="h-4 w-4 text-neutral-500" />
+        <div className="flex items-center gap-2 rounded-full bg-muted px-3 py-1">
+          <Timer className="h-4 w-4 text-muted-foreground" />
           <span
             className={`font-mono text-lg font-bold ${
-              secondsLeft <= 10 ? "text-red-500" : "text-neutral-700"
+              secondsLeft <= 10 ? "text-suk-danger" : "text-foreground"
             }`}
           >
             {secondsLeft}s
@@ -447,16 +447,16 @@ export default function WordMatchGame() {
         </div>
       </div>
 
-      <div className="h-2 w-full overflow-hidden rounded-full bg-neutral-200">
+      <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
         <div
           className={`h-full rounded-full transition-all duration-1000 ease-linear ${
-            secondsLeft <= 10 ? "bg-red-500" : "bg-indigo-500"
+            secondsLeft <= 10 ? "bg-suk-danger" : "bg-suk-play"
           }`}
           style={{ width: `${timerPct}%` }}
         />
       </div>
 
-      <div className="flex w-full justify-between text-xs font-medium text-neutral-500 sm:text-sm">
+      <div className="flex w-full justify-between text-xs font-medium text-muted-foreground sm:text-sm">
         <span>Türkçe</span>
         <span>İngilizce</span>
       </div>

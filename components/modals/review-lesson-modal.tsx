@@ -105,7 +105,7 @@ export const ReviewLessonModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md bg-white">
+      <DialogContent className="max-w-md bg-card">
         <DialogHeader>
           <div className="flex items-center w-full justify-center mb-5">
             <Image src="/mascot_orange.svg" alt="Maskot" height={80} width={80} />
@@ -122,7 +122,7 @@ export const ReviewLessonModal = ({
         <div className="space-y-4 py-2">
           {/* Star Rating */}
           <div>
-            <p className="text-sm font-medium text-gray-700 text-center mb-3">
+            <p className="text-sm font-medium text-foreground text-center mb-3">
               Kaç yıldız verirsin?
             </p>
             <div className="flex items-center justify-center gap-1 mb-1">
@@ -139,7 +139,7 @@ export const ReviewLessonModal = ({
                       className={`h-8 w-8 ${
                         starRating <= rating
                           ? "fill-amber-400 text-amber-400"
-                          : "text-gray-300 hover:text-amber-300"
+                          : "text-muted-foreground hover:text-amber-300"
                       }`}
                     />
                   </button>
@@ -147,7 +147,7 @@ export const ReviewLessonModal = ({
               })}
             </div>
             {rating > 0 && (
-              <p className="text-center text-sm font-medium text-gray-600">
+              <p className="text-center text-sm font-medium text-muted-foreground">
                 {getRatingLabel(rating)} ({rating}/5)
               </p>
             )}
@@ -155,7 +155,7 @@ export const ReviewLessonModal = ({
 
           {/* Comment */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
+            <label className="block text-sm font-medium text-foreground mb-1.5">
               Bir şey eklemek ister misin?
             </label>
             <Textarea
@@ -166,7 +166,7 @@ export const ReviewLessonModal = ({
               maxLength={500}
               disabled={isSubmitting}
             />
-            <p className="text-xs text-gray-400 mt-1 text-right">
+            <p className="text-xs text-muted-foreground mt-1 text-right">
               {comment.length}/500
             </p>
           </div>

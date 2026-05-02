@@ -232,23 +232,23 @@ export default function SpeedMathGame() {
       <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-6 py-8">
         <Link
           href="/games"
-          className="self-start flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-700 transition"
+          className="self-start flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition"
         >
           <ArrowLeft className="h-4 w-4" /> Oyunlara Dön
         </Link>
 
         <div className="text-center">
-          <div className="mb-3"><Zap className="w-12 h-12 text-yellow-500 mx-auto" /></div>
-          <h1 className="text-2xl font-bold text-neutral-800">
+          <div className="mb-3"><Zap className="w-12 h-12 text-suk-warning mx-auto" /></div>
+          <h1 className="text-2xl font-bold text-foreground">
             Hız Matematiği
           </h1>
-          <p className="text-neutral-500 mt-2">
+          <p className="text-muted-foreground mt-2">
             60 saniyede mümkün olduğunca çok doğru cevap ver!
           </p>
         </div>
 
         <div className="w-full space-y-3">
-          <p className="text-sm font-semibold text-neutral-600 text-center">
+          <p className="text-sm font-semibold text-muted-foreground text-center">
             Zorluk Seviyesi
           </p>
           {(["Kolay", "Orta", "Zor", "Uzman"] as Difficulty[]).map((d) => (
@@ -257,8 +257,8 @@ export default function SpeedMathGame() {
               onClick={() => setDifficulty(d)}
               className={`w-full p-3 rounded-xl border-2 text-left transition-all ${
                 difficulty === d
-                  ? "border-indigo-500 bg-indigo-50 text-indigo-700"
-                  : "border-neutral-200 hover:border-neutral-300 text-neutral-600"
+                  ? "border-suk-payment bg-suk-payment-soft text-suk-payment-soft-fg"
+                  : "border-border hover:border-border/80 text-muted-foreground"
               }`}
             >
               <span className="font-semibold">{d}</span>
@@ -283,28 +283,28 @@ export default function SpeedMathGame() {
   if (gameState === "finished") {
     return (
       <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-6 py-8">
-        <div className="mb-2"><Trophy className="w-12 h-12 text-amber-500 mx-auto" /></div>
-        <h1 className="text-2xl font-bold text-neutral-800">Süre Doldu!</h1>
+        <div className="mb-2"><Trophy className="w-12 h-12 text-suk-warning mx-auto" /></div>
+        <h1 className="text-2xl font-bold text-foreground">Süre Doldu!</h1>
 
         <div className="w-full grid grid-cols-2 gap-3">
-          <div className="bg-amber-50 rounded-xl p-4 text-center border border-amber-200">
-            <Trophy className="h-6 w-6 text-amber-500 mx-auto mb-1" />
-            <p className="text-2xl font-bold text-amber-600">{score}</p>
-            <p className="text-xs text-amber-500">Toplam Puan</p>
+          <div className="bg-suk-warning-soft rounded-xl p-4 text-center border border-suk-warning-border">
+            <Trophy className="h-6 w-6 text-suk-warning mx-auto mb-1" />
+            <p className="text-2xl font-bold text-suk-warning-soft-fg">{score}</p>
+            <p className="text-xs text-suk-warning">Toplam Puan</p>
           </div>
-          <div className="bg-green-50 rounded-xl p-4 text-center border border-green-200">
-            <Target className="h-6 w-6 text-green-500 mx-auto mb-1" />
-            <p className="text-2xl font-bold text-green-600">{correctCount}</p>
-            <p className="text-xs text-green-500">Doğru Cevap</p>
+          <div className="bg-suk-brand-soft rounded-xl p-4 text-center border border-suk-brand/30">
+            <Target className="h-6 w-6 text-suk-brand mx-auto mb-1" />
+            <p className="text-2xl font-bold text-suk-brand-soft-fg">{correctCount}</p>
+            <p className="text-xs text-suk-brand">Doğru Cevap</p>
           </div>
-          <div className="bg-red-50 rounded-xl p-4 text-center border border-red-200">
-            <p className="text-2xl font-bold text-red-500">{wrongCount}</p>
-            <p className="text-xs text-red-500">Yanlış Cevap</p>
+          <div className="bg-suk-danger-soft rounded-xl p-4 text-center border border-suk-danger/30">
+            <p className="text-2xl font-bold text-suk-danger">{wrongCount}</p>
+            <p className="text-xs text-suk-danger">Yanlış Cevap</p>
           </div>
-          <div className="bg-purple-50 rounded-xl p-4 text-center border border-purple-200">
-            <Zap className="h-6 w-6 text-purple-500 mx-auto mb-1" />
-            <p className="text-2xl font-bold text-purple-600">{maxCombo}×</p>
-            <p className="text-xs text-purple-500">En Yüksek Kombo</p>
+          <div className="bg-suk-play-soft rounded-xl p-4 text-center border border-suk-play-line">
+            <Zap className="h-6 w-6 text-suk-play mx-auto mb-1" />
+            <p className="text-2xl font-bold text-suk-play-soft-fg">{maxCombo}×</p>
+            <p className="text-xs text-suk-play">En Yüksek Kombo</p>
           </div>
         </div>
 
@@ -331,14 +331,14 @@ export default function SpeedMathGame() {
       {/* Header */}
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Trophy className="h-5 w-5 text-amber-500" />
-          <span className="font-bold text-lg text-amber-600">{score}</span>
+          <Trophy className="h-5 w-5 text-suk-warning" />
+          <span className="font-bold text-lg text-suk-warning-soft-fg">{score}</span>
         </div>
-        <div className="flex items-center gap-2 bg-neutral-100 rounded-full px-3 py-1">
-          <Timer className="h-4 w-4 text-neutral-500" />
+        <div className="flex items-center gap-2 bg-muted rounded-full px-3 py-1">
+          <Timer className="h-4 w-4 text-muted-foreground" />
           <span
             className={`font-mono font-bold text-lg ${
-              timeLeft <= 10 ? "text-red-500" : "text-neutral-700"
+              timeLeft <= 10 ? "text-suk-danger" : "text-foreground"
             }`}
           >
             {timeLeft}s
@@ -347,10 +347,10 @@ export default function SpeedMathGame() {
       </div>
 
       {/* Timer bar */}
-      <div className="w-full h-2 bg-neutral-200 rounded-full overflow-hidden">
+      <div className="w-full h-2 bg-muted rounded-full overflow-hidden">
         <div
           className={`h-full transition-all duration-1000 ease-linear rounded-full ${
-            timeLeft <= 10 ? "bg-red-500" : "bg-amber-500"
+            timeLeft <= 10 ? "bg-suk-danger" : "bg-suk-warning"
           }`}
           style={{
             width: `${(timeLeft / CONFIG.GAME_DURATION_SECONDS) * 100}%`,
@@ -360,7 +360,7 @@ export default function SpeedMathGame() {
 
       {/* Combo */}
       {combo > 0 && (
-        <div className="flex items-center gap-1 text-purple-600 font-bold animate-pulse">
+        <div className="flex items-center gap-1 text-suk-play font-bold animate-pulse">
           <Zap className="h-4 w-4" />
           <span>
             {combo} Kombo! (×{comboMultiplier.toFixed(2)})
@@ -372,12 +372,12 @@ export default function SpeedMathGame() {
       {question && (
         <div className="w-full flex flex-col items-center gap-6 mt-4">
           <div
-            className={`text-4xl sm:text-5xl font-bold text-neutral-800 p-8 rounded-2xl border-2 w-full text-center transition-colors ${
+            className={`text-4xl sm:text-5xl font-bold text-foreground p-8 rounded-2xl border-2 w-full text-center transition-colors ${
               isCorrect === true
-                ? "bg-green-50 border-green-300"
+                ? "bg-suk-brand-soft border-suk-brand"
                 : isCorrect === false
-                  ? "bg-red-50 border-red-300"
-                  : "bg-white border-neutral-200"
+                  ? "bg-suk-danger-soft border-suk-danger"
+                  : "bg-card border-border"
             }`}
           >
             {question.text} = ?
@@ -390,15 +390,15 @@ export default function SpeedMathGame() {
 
               if (selectedAnswer !== null) {
                 if (option === question.answer) {
-                  btnClass += "border-green-500 bg-green-50 text-green-700";
+                  btnClass += "border-suk-brand bg-suk-brand-soft text-suk-brand-soft-fg";
                 } else if (option === selectedAnswer) {
-                  btnClass += "border-red-500 bg-red-50 text-red-700";
+                  btnClass += "border-suk-danger bg-suk-danger-soft text-suk-danger";
                 } else {
-                  btnClass += "border-neutral-200 text-neutral-400";
+                  btnClass += "border-border text-muted-foreground";
                 }
               } else {
                 btnClass +=
-                  "border-neutral-200 text-neutral-700 hover:border-neutral-300 hover:bg-neutral-50 active:scale-95 active:bg-neutral-100 cursor-pointer";
+                  "border-border text-foreground hover:border-border/80 hover:bg-muted active:scale-95 active:bg-muted/80 cursor-pointer";
               }
 
               return (
@@ -417,10 +417,10 @@ export default function SpeedMathGame() {
       )}
 
       {/* Stats bar */}
-      <div className="w-full flex justify-center gap-4 text-sm text-neutral-500 mt-2">
-        <span className="text-green-600"><Check className="w-4 h-4 inline" /> {correctCount}</span>
-        <span className="text-red-500"><X className="w-4 h-4 inline" /> {wrongCount}</span>
-        <span className="text-neutral-600">{difficulty}</span>
+      <div className="w-full flex justify-center gap-4 text-sm text-muted-foreground mt-2">
+        <span className="text-suk-brand-soft-fg"><Check className="w-4 h-4 inline" /> {correctCount}</span>
+        <span className="text-suk-danger"><X className="w-4 h-4 inline" /> {wrongCount}</span>
+        <span className="text-foreground">{difficulty}</span>
       </div>
     </div>
   );

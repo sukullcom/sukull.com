@@ -18,7 +18,7 @@ export const Sidebar = ({ className }: Props) => {
   return (
     <div
       className={cn(
-        `flex h-full w-full lg:w-[256px] lg:sticky lg:top-0 px-4 border-r-2 flex-col bg-white lg:h-screen`,
+        `flex h-full w-full lg:w-[256px] lg:sticky lg:top-0 px-4 border-r-2 border-border flex-col bg-background lg:h-screen`,
         className
       )}
     >
@@ -30,7 +30,7 @@ export const Sidebar = ({ className }: Props) => {
             width={40}
             alt="Sukull Mascot"
           />
-          <h1 className="text-2xl font-extrabold text-green-500 tracking-wide">
+          <h1 className="text-2xl font-extrabold text-primary tracking-wide">
             Sukull
           </h1>
         </div>

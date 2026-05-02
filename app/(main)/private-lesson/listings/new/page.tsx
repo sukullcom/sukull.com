@@ -24,21 +24,21 @@ export default async function NewListingPage() {
 
       <Link
         href="/private-lesson/listings"
-        className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800 mb-4"
+        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4"
       >
         <ArrowLeft className="h-4 w-4" /> İlanlar
       </Link>
 
       <div className="mb-4">
         <div className="flex items-center gap-3 mb-1">
-          <div className="p-2 bg-orange-100 rounded-lg">
-            <Megaphone className="h-5 w-5 text-orange-700" />
+          <div className="p-2 bg-suk-warning-soft rounded-lg">
+            <Megaphone className="h-5 w-5 text-suk-warning-soft-fg" />
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">
             Yeni İlan Oluştur
           </h1>
         </div>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-muted-foreground">
           Tüm zorunlu alanları eksiksiz doldur. Bir ilana en fazla 4 eğitmen teklif
           gönderebilir; teklif almak senin için ücretsizdir. Teklif veren
           eğitmenler, kaydettiğin cep telefonuna ve ilgili bilgilere sohbet

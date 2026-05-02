@@ -37,7 +37,7 @@ export function ForgotPasswordForm() {
         id="email"
         type="email"
         placeholder="E-posta"
-        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
+        className="w-full min-w-0 rounded-xl border border-border bg-background p-3 focus:outline-none focus:ring-2 focus:ring-ring"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         disabled={isLoading}
@@ -58,7 +58,7 @@ export function ForgotPasswordForm() {
         <Link
           prefetch={false}
           href="/login"
-          className="text-green-500 font-semibold underline hover:text-green-500"
+          className="font-semibold text-suk-brand underline hover:text-suk-brand-hover"
         >
           Giriş Yap
         </Link>

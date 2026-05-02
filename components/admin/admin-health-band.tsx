@@ -11,7 +11,7 @@ export function AdminHealthBandSkeleton() {
       {Array.from({ length: 4 }).map((_, i) => (
         <div
           key={i}
-          className="rounded-xl border bg-gray-50 border-gray-200 p-4 animate-pulse"
+          className="rounded-xl border bg-muted border-border p-4 animate-pulse"
         >
           <div className="h-5 w-5 mb-2 bg-gray-200 rounded" />
           <div className="h-6 w-16 bg-gray-200 rounded mb-2" />

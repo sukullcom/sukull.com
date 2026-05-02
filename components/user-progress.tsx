@@ -30,7 +30,7 @@ export const UserProgress = ({
             width={24}
             alt="Sukull"
           />
-          <span className="text-sm font-extrabold text-green-500 tracking-wide">
+          <span className="text-sm font-extrabold tracking-wide text-suk-brand">
             Sukull
           </span>
         </div>
@@ -47,7 +47,7 @@ export const UserProgress = ({
         </Button>
       </Link>
       <Link prefetch={false} href="/shop" className="shrink-0">
-        <Button variant="ghost" className="text-orange-500 p-1.5 text-xs">
+        <Button variant="ghost" className="p-1.5 text-xs text-suk-warning">
           <Image
             src="/points.svg"
             height={18}
@@ -59,7 +59,7 @@ export const UserProgress = ({
         </Button>
       </Link>
       <Link prefetch={false} href="/shop" className="shrink-0">
-        <Button variant="ghost" className="text-rose-500 p-1.5 text-xs">
+        <Button variant="ghost" className="p-1.5 text-xs text-suk-danger">
           <Image
             src="/heart.svg"
             height={18}
@@ -75,7 +75,7 @@ export const UserProgress = ({
         </Button>
       </Link>
       <Link prefetch={false} href="/profile" className="shrink-0">
-        <Button variant="ghost" className="text-orange-600 p-1.5 text-xs">
+        <Button variant="ghost" className="p-1.5 text-xs text-suk-brand">
           <Image
             src="/istikrar.svg"
             height={18}

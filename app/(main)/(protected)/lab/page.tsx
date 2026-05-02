@@ -98,7 +98,7 @@ export default function LabsPage() {
             width={120}
             priority={false}
           />
-          <h1 className="text-center font-bold text-neutral-800 text-2xl my-6">
+          <h1 className="text-center font-bold text-foreground text-2xl my-6">
             Laboratuvarlar
           </h1>
           <p className="text-muted-foreground text-center text-lg mb-6">

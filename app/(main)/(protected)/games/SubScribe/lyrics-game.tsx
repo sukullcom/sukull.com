@@ -122,10 +122,10 @@ export default function LyricsGame({ lyrics, difficulty = "Kolay" }: LyricsGameP
   if (remainingMissingWords > 0) {
     actionElement = (
       <div className="text-right">
-        <span className="text-md text-gray-700 block">
+        <span className="text-md text-foreground/90 block">
           Kalan kelime: {remainingMissingWords}
         </span>
-        <span className="text-sm text-blue-600">
+        <span className="text-sm text-suk-payment">
           Tahmini puan: {previewFinalScore}
         </span>
       </div>
@@ -134,10 +134,10 @@ export default function LyricsGame({ lyrics, difficulty = "Kolay" }: LyricsGameP
     actionElement = (
       <div className="text-right">
         <div className="mb-2">
-          <span className="text-sm text-green-600 block">
+          <span className="text-sm text-suk-brand block">
             <Sparkles className="w-4 h-4 inline" /> Tüm kelimeler tamamlandı!
           </span>
-          <span className="text-sm text-blue-600">
+          <span className="text-sm text-suk-payment">
             Final puan: {previewFinalScore}
           </span>
         </div>
@@ -154,8 +154,8 @@ export default function LyricsGame({ lyrics, difficulty = "Kolay" }: LyricsGameP
     );
   } else {
     actionElement = (
-      <div className="flex items-center gap-2 text-green-600 font-semibold">
-        <span><CircleCheck className="w-4 h-4 text-green-500" /></span>
+      <div className="flex items-center gap-2 text-suk-brand font-semibold">
+        <span><CircleCheck className="w-4 h-4 text-suk-brand" /></span>
         <div className="text-right">
           <span className="text-md block">Tamamlandı!</span>
           <span className="text-sm">Final: {previewFinalScore} puan</span>
@@ -166,16 +166,16 @@ export default function LyricsGame({ lyrics, difficulty = "Kolay" }: LyricsGameP
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="sticky top-0 bg-white rounded-xl p-4 border-b border-gray-200">
+      <div className="sticky top-0 bg-card rounded-xl p-4 border-b border-border">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
             <Image src="/points.svg" alt="Points Icon" width={24} height={24} className="w-6 h-6" />
-            <h2 className="text-xl font-semibold">Puan: {points}</h2>
+            <h2 className="text-xl font-semibold text-foreground">Puan: {points}</h2>
           </div>
           <div className="text-right flex items-center gap-4">{actionElement}</div>
         </div>
         
-        <div className="flex justify-between text-sm text-gray-600 bg-gray-50 rounded p-2">
+        <div className="flex justify-between text-sm text-muted-foreground bg-muted/60 rounded p-2">
           <div className="flex gap-4">
             <span>Zorluk: {difficulty} (x{SCORING_SYSTEM.GAMES.SUBSCRIBE.DIFFICULTY_MULTIPLIER[difficulty]} puan)</span>
             <span>Hata: {mistakeCount}</span>
@@ -183,13 +183,13 @@ export default function LyricsGame({ lyrics, difficulty = "Kolay" }: LyricsGameP
           </div>
           <div className="text-right">
             {mistakeCount === 0 && remainingMissingWords === 0 && (
-              <span className="text-green-600 font-semibold"><Trophy className="w-5 h-5 inline text-amber-500" /> Mükemmel!</span>
+              <span className="text-suk-brand font-semibold"><Trophy className="w-5 h-5 inline text-suk-warning" /> Mükemmel!</span>
             )}
           </div>
         </div>
       </div>
 
-      <div className="max-h-96 overflow-y-auto p-4 bg-gray-50 border border-gray-200 rounded-xl scrollbar-thin scrollbar-thumb-lime-500 scrollbar-track-gray-200 pr-2">
+      <div className="max-h-96 overflow-y-auto p-4 bg-muted/50 border border-border rounded-xl scrollbar-thin scrollbar-thumb-suk-brand/40 scrollbar-track-muted pr-2">
         {lyrics.map((line, index) => (
           <LyricLine
             key={`line-${index}-${line.startTime}`}

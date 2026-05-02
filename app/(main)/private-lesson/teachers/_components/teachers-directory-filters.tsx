@@ -60,10 +60,10 @@ export function TeachersDirectoryFilters({
   const hasAny = Boolean(field || lessonMode || city);
 
   return (
-    <div className="mb-4 bg-white border rounded-xl p-3">
+    <div className="mb-4 bg-card border rounded-xl p-3">
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <input
             type="text"
             value={field}
@@ -73,7 +73,7 @@ export function TeachersDirectoryFilters({
               if (e.key === "Enter") push({ field, lessonMode, city });
             }}
             placeholder="Branş (örn. Matematik)"
-            className="w-full pl-9 pr-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500/20"
+            className="w-full pl-9 pr-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-suk-brand focus:ring-1 focus:ring-suk-brand/20"
           />
         </div>
         <select
@@ -82,7 +82,7 @@ export function TeachersDirectoryFilters({
             setLessonMode(e.target.value);
             push({ field, lessonMode: e.target.value, city });
           }}
-          className="px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500/20"
+          className="px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-suk-brand focus:ring-1 focus:ring-suk-brand/20"
         >
           {LESSON_MODES.map((m) => (
             <option key={m.value} value={m.value}>
@@ -99,14 +99,14 @@ export function TeachersDirectoryFilters({
             if (e.key === "Enter") push({ field, lessonMode, city });
           }}
           placeholder="Şehir"
-          className="px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500/20"
+          className="px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-suk-brand focus:ring-1 focus:ring-suk-brand/20"
         />
       </div>
       {hasAny && (
         <button
           type="button"
           onClick={clear}
-          className="mt-2 inline-flex items-center gap-1 text-xs text-gray-500 hover:text-gray-800"
+          className="mt-2 inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
         >
           <X className="h-3 w-3" /> Filtreleri temizle
         </button>

@@ -16,7 +16,7 @@ export function AdminTopbar({ badges }: Props) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b bg-white px-4 sm:px-6">
+    <div className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b bg-card px-4 sm:px-6">
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <Button

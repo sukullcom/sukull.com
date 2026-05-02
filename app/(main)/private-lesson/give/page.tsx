@@ -169,8 +169,8 @@ export default function GiveLessonPage() {
     return (
       <div className="flex-1 mx-auto w-full flex items-center justify-center min-h-[400px]">
         <div className="flex flex-col items-center gap-3">
-          <Loader2 className="h-8 w-8 animate-spin text-green-500" />
-          <p className="text-gray-500">Yükleniyor...</p>
+          <Loader2 className="h-8 w-8 animate-spin text-suk-brand" />
+          <p className="text-muted-foreground">Yükleniyor...</p>
         </div>
       </div>
     );
@@ -180,17 +180,17 @@ export default function GiveLessonPage() {
     return (
       <div className="flex-1 mx-auto w-full flex flex-row max-w-[1200px] px-3 lg:px-0">
         <FeedWrapper>
-          <Card className="shadow-lg border-yellow-200 bg-yellow-50">
-            <CardContent className="p-5 sm:p-8 text-center">
-              <Clock className="w-12 h-12 sm:w-16 sm:h-16 text-yellow-500 mx-auto mb-4" />
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Başvurun inceleniyor</h2>
-              <p className="text-gray-600 mb-4">
+          <Card className="border-suk-warning-border bg-suk-warning-soft shadow-lg">
+            <CardContent className="p-5 text-center sm:p-8">
+              <Clock className="mx-auto mb-4 h-12 w-12 text-suk-warning sm:h-16 sm:w-16" />
+              <h2 className="mb-2 text-xl font-bold text-foreground sm:text-2xl">Başvurun inceleniyor</h2>
+              <p className="mb-4 text-muted-foreground">
                 <strong>{appStatus.field}</strong> alanındaki eğitmen başvurun ekibimiz
                 tarafından değerlendiriliyor. Uygunluk teyidinden sonra sana dönüş
                 yapılacak; bu süreçte öğrenci akışını kullanmaya devam edebilirsin.
               </p>
-              <div className="bg-white rounded-lg p-4 border border-yellow-200 inline-block">
-                <p className="text-sm text-gray-500">Başvuru tarihi: {appStatus.createdAt ? new Date(appStatus.createdAt).toLocaleDateString('tr-TR') : '-'}</p>
+              <div className="inline-block rounded-lg border border-suk-warning-border bg-card p-4">
+                <p className="text-sm text-muted-foreground">Başvuru tarihi: {appStatus.createdAt ? new Date(appStatus.createdAt).toLocaleDateString('tr-TR') : '-'}</p>
               </div>
             </CardContent>
           </Card>
@@ -203,11 +203,11 @@ export default function GiveLessonPage() {
     return (
       <div className="flex-1 mx-auto w-full flex flex-row max-w-[1200px] px-3 lg:px-0">
         <FeedWrapper>
-          <Card className="shadow-lg border-green-200 bg-green-50">
-            <CardContent className="p-5 sm:p-8 text-center">
-              <CheckCircle className="w-12 h-12 sm:w-16 sm:h-16 text-green-500 mx-auto mb-4" />
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2">Eğitmen başvurun onaylandı</h2>
-              <p className="text-gray-600 mb-4">
+          <Card className="border-suk-brand/35 bg-suk-brand-soft shadow-lg">
+            <CardContent className="p-5 text-center sm:p-8">
+              <CheckCircle className="mx-auto mb-4 h-12 w-12 text-suk-brand sm:h-16 sm:w-16" />
+              <h2 className="mb-2 text-xl font-bold text-foreground sm:text-2xl">Eğitmen başvurun onaylandı</h2>
+              <p className="mb-4 text-muted-foreground">
                 Tebrikler. Artık eğitmen rehberinde öğrenciler tarafından
                 görülebilirsin; açık talep ilanlarına teklif de verebilirsin. Profilini
                 güncel tutmak daha fazla eşleşme sağlar.
@@ -236,13 +236,13 @@ export default function GiveLessonPage() {
     <div className="flex-1 mx-auto w-full flex flex-row max-w-[1200px] px-3 lg:px-0">
       <FeedWrapper>
         {appStatus?.hasApplication && appStatus.status === "rejected" && (
-          <Card className="mb-6 shadow-lg border-red-200 bg-red-50">
+          <Card className="mb-6 border-destructive/30 bg-destructive/5 shadow-lg">
             <CardContent className="p-6">
               <div className="flex items-start gap-3">
-                <XCircle className="w-6 h-6 text-red-500 mt-0.5" />
+                <XCircle className="mt-0.5 h-6 w-6 shrink-0 text-destructive" />
                 <div>
-                  <h3 className="font-semibold text-red-800">Önceki başvurun reddedildi</h3>
-                  <p className="text-sm text-red-600 mt-1">
+                  <h3 className="font-semibold text-destructive">Önceki başvurun reddedildi</h3>
+                  <p className="mt-1 text-sm text-destructive/90">
                     Bilgilerini güncelleyerek tekrar başvurabilirsin.
                   </p>
                 </div>
@@ -253,14 +253,14 @@ export default function GiveLessonPage() {
 
         {/* Hero Section */}
         <div className="mb-6">
-          <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 shadow-lg">
+          <Card className="border-suk-brand/35 bg-gradient-to-br from-suk-brand-soft to-suk-brand-soft/70 shadow-lg">
             <CardContent className="p-6">
               <div className="flex items-center justify-between gap-4">
-                <div className="flex-1 min-w-0">
-                  <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">
+                <div className="min-w-0 flex-1">
+                  <h1 className="mb-2 text-2xl font-bold text-foreground sm:text-3xl">
                     Eğitmen başvurusu
                   </h1>
-                  <p className="text-sm sm:text-base text-gray-600">
+                  <p className="text-sm text-muted-foreground sm:text-base">
                     Bilgi ve deneyimini paylaş; onay sonrası rehberde görünürsün.
                     Kurumda veya birebir zaten ders veriyor olsan da platformda
                     listelenmek için bu başvuruyu tamamlaman gerekir.
@@ -277,12 +277,12 @@ export default function GiveLessonPage() {
               {/* Progress Bar */}
               <div className="mt-6">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm text-gray-600">Form Tamamlanma</span>
-                  <span className="text-sm font-semibold text-green-600">{completionPercentage()}%</span>
+                  <span className="text-sm text-muted-foreground">Form Tamamlanma</span>
+                  <span className="text-sm font-semibold text-suk-brand">{completionPercentage()}%</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="h-2 w-full rounded-full bg-muted">
                   <div 
-                    className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                    className="h-2 rounded-full bg-suk-brand transition-all duration-300"
                     style={{ width: `${completionPercentage()}%` }}
                   />
                 </div>
@@ -295,7 +295,7 @@ export default function GiveLessonPage() {
         <Card className="shadow-lg">
           <CardHeader>
             <CardTitle className="text-2xl flex items-center gap-2">
-              <GraduationCap className="w-6 h-6 text-green-500" />
+              <GraduationCap className="h-6 w-6 text-suk-brand" />
               Başvuru Formu
             </CardTitle>
             <CardDescription>
@@ -318,7 +318,7 @@ export default function GiveLessonPage() {
                 <div className="space-y-2">
                   <Label htmlFor="teacherName" className="flex items-center gap-2">
                     <User className="w-4 h-4" />
-                    Adın <span className="text-red-500">*</span>
+                    Adın <span className="text-destructive">*</span>
                   </Label>
                   <Input
                     id="teacherName"
@@ -335,7 +335,7 @@ export default function GiveLessonPage() {
                 <div className="space-y-2">
                   <Label htmlFor="teacherSurname" className="flex items-center gap-2">
                     <User className="w-4 h-4" />
-                    Soyadın <span className="text-red-500">*</span>
+                    Soyadın <span className="text-destructive">*</span>
                   </Label>
                   <Input
                     id="teacherSurname"
@@ -355,7 +355,7 @@ export default function GiveLessonPage() {
                 <div className="space-y-2">
                   <Label htmlFor="teacherPhoneNumber" className="flex items-center gap-2">
                     <Phone className="w-4 h-4" />
-                    Telefon Numarası <span className="text-red-500">*</span>
+                    Telefon Numarası <span className="text-destructive">*</span>
                   </Label>
                   <Input
                     id="teacherPhoneNumber"
@@ -372,7 +372,7 @@ export default function GiveLessonPage() {
                 <div className="space-y-2">
                   <Label htmlFor="teacherEmail" className="flex items-center gap-2">
                     <Mail className="w-4 h-4" />
-                    E-posta Adresi <span className="text-red-500">*</span>
+                    E-posta Adresi <span className="text-destructive">*</span>
                   </Label>
                   <Input
                     id="teacherEmail"
@@ -557,16 +557,16 @@ export default function GiveLessonPage() {
                   maxLength={500}
                   className="resize-none transition-all duration-200 focus:scale-[1.01]"
                 />
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-muted-foreground">
                   {formData.bio.length}/500 karakter
                 </p>
               </div>
 
               {/* Info Alert */}
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <div className="rounded-lg border border-suk-brand/25 bg-suk-brand-soft p-4">
                 <div className="flex gap-3">
-                  <Info className="w-5 h-5 text-blue-600 mt-0.5" />
-                  <div className="text-sm text-blue-800">
+                  <Info className="mt-0.5 h-5 w-5 shrink-0 text-suk-brand" />
+                  <div className="text-sm text-suk-brand-soft-fg">
                     <p className="font-semibold mb-1">Önemli bilgilendirme</p>
                     <p>
                       Başvurun ve profil bilgilerin uygunluk kontrolünden geçer;

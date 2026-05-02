@@ -124,7 +124,7 @@ export function OfferList({
       {sorted.map((offer) => (
         <div
           key={offer.id}
-          className="bg-white border rounded-xl p-4 flex items-start gap-3"
+          className="bg-card border rounded-xl p-4 flex items-start gap-3"
         >
           <Image
             src={normalizeAvatarUrl(offer.teacherAvatar ?? undefined)}
@@ -139,11 +139,11 @@ export function OfferList({
               <div>
                 <Link
                   href={`/private-lesson/teachers/${offer.teacherId}`}
-                  className="font-semibold text-gray-900 hover:text-green-700 transition-colors"
+                  className="font-semibold text-foreground hover:text-suk-brand transition-colors"
                 >
                   {offer.teacherName}
                 </Link>
-                <div className="text-[11px] text-gray-400">
+                <div className="text-[11px] text-muted-foreground">
                   {new Date(offer.createdAt).toLocaleDateString("tr-TR", {
                     day: "2-digit",
                     month: "short",
@@ -154,12 +154,12 @@ export function OfferList({
               <OfferStatusBadge status={offer.status} />
             </div>
 
-            <div className="mt-2 text-lg font-bold text-gray-900">
+            <div className="mt-2 text-lg font-bold text-foreground">
               {offer.priceProposal}₺ / saat
             </div>
 
             {offer.note && (
-              <p className="mt-1.5 text-sm text-gray-700 whitespace-pre-wrap">
+              <p className="mt-1.5 text-sm text-foreground/90 whitespace-pre-wrap">
                 {offer.note}
               </p>
             )}
@@ -194,7 +194,7 @@ export function OfferList({
               {offer.status === "accepted" && (
                 <Link
                   href={`/private-lesson/teachers/${offer.teacherId}`}
-                  className="inline-flex items-center gap-1 text-sm text-green-700 font-medium hover:underline"
+                  className="inline-flex items-center gap-1 text-sm text-suk-brand font-medium hover:underline"
                 >
                   <MessageCircle className="h-3.5 w-3.5" />
                   Eğitmenle iletişime geç
@@ -210,10 +210,10 @@ export function OfferList({
 
 function OfferStatusBadge({ status }: { status: Offer["status"] }) {
   const styles: Record<Offer["status"], string> = {
-    pending: "bg-yellow-100 text-yellow-700",
-    accepted: "bg-green-100 text-green-700",
-    rejected: "bg-red-100 text-red-700",
-    withdrawn: "bg-gray-100 text-gray-500",
+    pending: "bg-suk-warning-soft text-suk-warning-soft-fg",
+    accepted: "bg-suk-brand-soft text-suk-brand-border",
+    rejected: "bg-suk-danger-soft text-suk-danger",
+    withdrawn: "bg-muted text-muted-foreground",
   };
   const labels: Record<Offer["status"], string> = {
     pending: "Beklemede",

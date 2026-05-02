@@ -22,7 +22,7 @@ export function Footer() {
   const { legalName } = LEGAL_COMPANY;
 
   return (
-    <footer className="w-full border-t-2 border-slate-200">
+    <footer className="w-full border-t-2 border-border">
       <div className="max-w-screen-lg mx-auto flex flex-wrap items-center justify-center gap-2 px-2 py-3 sm:justify-evenly">
         <Button size="lg" variant="ghost" className="flex-shrink-0">
           <Image
@@ -76,19 +76,19 @@ export function Footer() {
         </Button>
       </div>
 
-      <div className="border-t border-slate-200 bg-slate-50/50">
-        <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center gap-2 px-4 py-3 text-[11px] text-slate-500 sm:flex-row sm:justify-between">
+      <div className="border-t border-border bg-muted/50">
+        <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center gap-2 px-4 py-3 text-[11px] text-muted-foreground sm:flex-row sm:justify-between">
           <nav aria-label="Yasal" className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
-            <Link href="/yasal/kvkk" className="hover:text-slate-900 hover:underline">
+            <Link href="/yasal/kvkk" className="hover:text-foreground hover:underline">
               KVKK
             </Link>
-            <Link href="/yasal/gizlilik" className="hover:text-slate-900 hover:underline">
+            <Link href="/yasal/gizlilik" className="hover:text-foreground hover:underline">
               Gizlilik
             </Link>
-            <Link href="/yasal/kullanim-sartlari" className="hover:text-slate-900 hover:underline">
+            <Link href="/yasal/kullanim-sartlari" className="hover:text-foreground hover:underline">
               Kullanım Şartları
             </Link>
-            <Link href="/yasal" className="hover:text-slate-900 hover:underline">
+            <Link href="/yasal" className="hover:text-foreground hover:underline">
               Tüm yasal belgeler
             </Link>
           </nav>

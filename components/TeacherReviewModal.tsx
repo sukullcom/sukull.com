@@ -100,10 +100,10 @@ export function TeacherReviewModal({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Eğitmene geri bildirim</DialogTitle>
-          <p className="text-sm text-gray-600 text-left font-normal">
+          <p className="text-sm text-muted-foreground text-left font-normal">
             {teacherName ? (
               <>
-                <span className="font-medium text-gray-900">{teacherName}</span> için
+                <span className="font-medium text-foreground">{teacherName}</span> için
                 tek seferlik değerlendirme. Puan 1–10 arası; yorum isteğe bağlı.
               </>
             ) : (
@@ -114,7 +114,7 @@ export function TeacherReviewModal({
 
         <div className="space-y-3">
           <div>
-            <Label className="text-gray-700">Puan: {rating}/10</Label>
+            <Label className="text-foreground">Puan: {rating}/10</Label>
             <div className="flex flex-wrap gap-1.5 mt-2">
               {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => (
                 <button
@@ -124,7 +124,7 @@ export function TeacherReviewModal({
                   className={`h-9 min-w-[2.25rem] rounded-md border text-sm font-medium transition-colors ${
                     rating === n
                       ? "border-green-600 bg-green-600 text-white"
-                      : "border-gray-200 bg-white text-gray-700 hover:border-green-400"
+                      : "border-border bg-card text-foreground hover:border-green-400"
                   }`}
                 >
                   {n}
@@ -133,7 +133,7 @@ export function TeacherReviewModal({
             </div>
           </div>
           <div>
-            <Label htmlFor="review-comment" className="text-gray-700">
+            <Label htmlFor="review-comment" className="text-foreground">
               Yorum (isteğe bağlı, en fazla {MAX_COMMENT} karakter)
             </Label>
             <Textarea
@@ -145,7 +145,7 @@ export function TeacherReviewModal({
               className="mt-1.5 resize-none"
               placeholder="Kısa bir yorum yazabilirsin…"
             />
-            <div className="text-[11px] text-gray-400 mt-1 text-right">
+            <div className="text-[11px] text-muted-foreground mt-1 text-right">
               {comment.length}/{MAX_COMMENT}
             </div>
           </div>

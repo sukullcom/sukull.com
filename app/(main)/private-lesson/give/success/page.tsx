@@ -43,38 +43,38 @@ export default function TeacherSuccessPage() {
       
       <FeedWrapper>
         {/* Success Card */}
-        <Card className="shadow-xl border-2 border-green-200">
-          <CardHeader className="text-center pb-4">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle2 className="w-10 h-10 text-green-600" />
+        <Card className="border-2 border-suk-brand/35 shadow-xl">
+          <CardHeader className="pb-4 text-center">
+            <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-suk-brand-soft">
+              <CheckCircle2 className="h-10 w-10 text-suk-brand" />
             </div>
-            <CardTitle className="text-3xl text-green-600">Harika, başvurun alındı!</CardTitle>
+            <CardTitle className="text-3xl text-suk-brand-border">Harika, başvurun alındı!</CardTitle>
             <CardDescription className="text-lg">
               Eğitmen başvurun alındı; sıradaki adım ekibimizin incelemesi.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-              <p className="text-gray-700 text-center">
+            <div className="rounded-lg border border-suk-brand/30 bg-suk-brand-soft p-4">
+              <p className="text-center text-foreground">
                 Başvurunda ilettiğin bilgiler uygunluk teyidi için incelenecek;
                 sonuç en kısa sürede paylaşılacak.
               </p>
             </div>
 
             <div className="space-y-4">
-              <h3 className="font-semibold text-lg flex items-center gap-2">
-                <GraduationCap className="w-5 h-5 text-green-600" />
+              <h3 className="flex items-center gap-2 text-lg font-semibold">
+                <GraduationCap className="h-5 w-5 text-suk-brand" />
                 Sırada ne var?
               </h3>
               
               <div className="space-y-3">
                 <div className="flex gap-3">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <FileText className="w-4 h-4 text-blue-600" />
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-suk-brand-soft">
+                    <FileText className="h-4 w-4 text-suk-brand" />
                   </div>
                   <div>
                     <p className="font-medium">Başvuru incelemesi</p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-muted-foreground">
                       Ekibimiz başvurunu ve ilettiğin belgeleri kontrol eder; süre yoğunluğa
                       göre değişebilir.
                     </p>
@@ -82,24 +82,24 @@ export default function TeacherSuccessPage() {
                 </div>
 
                 <div className="flex gap-3">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-4 h-4 text-blue-600" />
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-suk-brand-soft">
+                    <Mail className="h-4 w-4 text-suk-brand" />
                   </div>
                   <div>
                     <p className="font-medium">E-posta bildirimi</p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-muted-foreground">
                       Sonucu e-posta adresine göndereceğiz
                     </p>
                   </div>
                 </div>
 
                 <div className="flex gap-3">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-4 h-4 text-blue-600" />
+                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-suk-brand-soft">
+                    <Clock className="h-4 w-4 text-suk-brand" />
                   </div>
                   <div>
                     <p className="font-medium">Profil aktivasyonu</p>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-muted-foreground">
                       Onaylandığında eğitmen rehberinde görünür ve ilanlara teklif
                       verebilirsin; profilini istediğin zaman güncelleyebilirsin.
                     </p>

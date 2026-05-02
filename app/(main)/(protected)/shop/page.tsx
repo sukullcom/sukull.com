@@ -25,7 +25,7 @@ const ShopPage = async () => {
       <FeedWrapper>
         <div className="w-full flex flex-col items-center">
           <Image src="/mascot_pink.svg" alt="Shop" height={120} width={120} />
-          <h1 className="text-center font-bold text-neutral-800 text-2xl my-6">
+          <h1 className="text-center font-bold text-foreground text-2xl my-6">
             Mağaza
           </h1>
           <p className="text-muted-foreground text-center text-lg mb-6">

@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect } from "react";
+
+import "./globals.css";
+
 import { reportClientError } from "@/lib/report-error";
 
 export default function GlobalError({
@@ -20,74 +23,32 @@ export default function GlobalError({
 
   return (
     <html lang="tr">
-      <body>
-        <div
-          style={{
-            minHeight: "100vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "1.5rem",
-            fontFamily:
-              "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-            background: "#f9fafb",
-          }}
-        >
-          <div
-            style={{
-              maxWidth: 480,
-              width: "100%",
-              background: "#fff",
-              border: "1px solid #fecaca",
-              borderRadius: 16,
-              padding: "1.5rem",
-              boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
-            }}
-          >
-            <h1 style={{ fontSize: 18, fontWeight: 600, margin: "0 0 0.5rem" }}>
+      <body className="min-h-screen bg-background font-sans text-foreground antialiased">
+        <div className="flex min-h-screen items-center justify-center p-6">
+          <div className="w-full max-w-md rounded-2xl border border-destructive/25 bg-card p-6 shadow-sm">
+            <h1 className="text-lg font-semibold tracking-tight text-foreground">
               Beklenmedik bir hata oluştu
             </h1>
-            <p style={{ fontSize: 14, color: "#4b5563", margin: "0 0 1rem" }}>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
               Üzgünüz, bir sorun yaşandı. Tekrar deneyebilir ya da ana sayfaya
               dönebilirsin.
             </p>
-            {error.digest && (
-              <div
-                style={{
-                  fontSize: 12,
-                  fontFamily: "monospace",
-                  color: "#6b7280",
-                  marginBottom: "1rem",
-                }}
-              >
+            {error.digest ? (
+              <p className="mt-3 font-mono text-xs text-muted-foreground">
                 Referans: {error.digest}
-              </div>
-            )}
-            <div style={{ display: "flex", gap: 12 }}>
+              </p>
+            ) : null}
+            <div className="mt-6 flex flex-wrap gap-3">
               <button
+                type="button"
                 onClick={reset}
-                style={{
-                  padding: "0.5rem 0.75rem",
-                  borderRadius: 8,
-                  background: "#111827",
-                  color: "#fff",
-                  border: 0,
-                  fontSize: 14,
-                  cursor: "pointer",
-                }}
+                className="inline-flex items-center justify-center rounded-lg bg-primary px-3 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
               >
                 Tekrar dene
               </button>
               <a
                 href="/"
-                style={{
-                  padding: "0.5rem 0.75rem",
-                  borderRadius: 8,
-                  border: "1px solid #d1d5db",
-                  color: "#374151",
-                  fontSize: 14,
-                  textDecoration: "none",
-                }}
+                className="inline-flex items-center justify-center rounded-lg border border-input bg-background px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted"
               >
                 Ana sayfa
               </a>

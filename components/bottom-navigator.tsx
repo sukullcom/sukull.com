@@ -46,7 +46,7 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
   return (
     <div
       className={cn(
-        "fixed bottom-0 left-0 right-0 z-50 flex flex-col border-t-2 border-slate-200 bg-white px-4 pt-0.5 pb-[max(0.5rem,env(safe-area-inset-bottom,0px))] lg:hidden",
+        "fixed bottom-0 left-0 right-0 z-50 flex flex-col border-t-2 border-border bg-card px-4 pt-0.5 pb-[max(0.5rem,env(safe-area-inset-bottom,0px))] lg:hidden",
         className
       )}
     >
@@ -69,7 +69,7 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
               <div
                 className={cn(
                   "h-[3px] w-3 rounded-full transition-colors",
-                  isActive ? "bg-green-500" : "bg-transparent"
+                  isActive ? "bg-suk-brand" : "bg-transparent"
                 )}
               />
             </Link>
@@ -86,19 +86,19 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
             <div
               className={cn(
                 "h-[3px] w-3 rounded-full transition-colors",
-                isDropdownOpen ? "bg-green-500" : "bg-transparent"
+                isDropdownOpen ? "bg-suk-brand" : "bg-transparent"
               )}
             />
           </button>
           {isDropdownOpen && (
-            <div className="absolute bottom-full right-0 mb-2 w-44 bg-white shadow-lg rounded-lg border border-gray-200 z-50">
+            <div className="absolute bottom-full right-0 z-50 mb-2 w-44 rounded-lg border border-border bg-card shadow-lg">
               <ul>
                 {dropdownItems.map((item) => (
                   <li key={item.href}>
                     <Link
                       prefetch={false}
                       href={item.href}
-                      className="flex items-center px-4 py-2.5 hover:bg-gray-100"
+                      className="flex items-center px-4 py-2.5 hover:bg-muted"
                       onClick={() => setDropdownOpen(false)}
                     >
                       <Image

@@ -24,56 +24,56 @@ export const Footer = () => {
   const { legalName, contactEmail } = LEGAL_COMPANY;
 
   return (
-    <footer className="w-full border-t-2 border-slate-200 bg-white/60">
+    <footer className="w-full border-t-2 border-border bg-card/60">
       <div className="max-w-screen-lg mx-auto flex flex-wrap items-center justify-center gap-2 px-2 py-3 sm:justify-evenly">
         <Button size="lg" variant="ghost" className="flex-shrink-0">
-          <BookOpen className="h-5 w-5 mr-2 text-sky-500" />
+          <BookOpen className="mr-2 h-5 w-5 text-suk-payment" />
           Dersler
         </Button>
         <Button size="lg" variant="ghost" className="flex-shrink-0">
-          <Gamepad2 className="h-5 w-5 mr-2 text-violet-500" />
+          <Gamepad2 className="mr-2 h-5 w-5 text-suk-play" />
           Beyin Oyunları
         </Button>
         <Button size="lg" variant="ghost" className="flex-shrink-0">
-          <Trophy className="h-5 w-5 mr-2 text-amber-500" />
+          <Trophy className="mr-2 h-5 w-5 text-suk-warning" />
           Sıralama
         </Button>
         <Button size="lg" variant="ghost" className="flex-shrink-0">
-          <Users className="h-5 w-5 mr-2 text-emerald-500" />
+          <Users className="mr-2 h-5 w-5 text-suk-brand" />
           Çalışma Arkadaşı
         </Button>
         <Button size="lg" variant="ghost" className="flex-shrink-0">
-          <GraduationCap className="h-5 w-5 mr-2 text-rose-500" />
+          <GraduationCap className="mr-2 h-5 w-5 text-suk-danger" />
           Özel Ders
         </Button>
       </div>
 
-      <div className="border-t border-slate-200 bg-slate-50/60">
-        <div className="mx-auto flex w-full max-w-screen-lg flex-col gap-3 px-4 py-4 text-xs text-slate-600 sm:flex-row sm:items-center sm:justify-between">
+      <div className="border-t border-border bg-muted/60">
+        <div className="mx-auto flex w-full max-w-screen-lg flex-col gap-3 px-4 py-4 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <nav aria-label="Yasal" className="flex flex-wrap items-center gap-x-4 gap-y-1">
-            <Link href="/yasal/kvkk" className="hover:text-slate-900 hover:underline">
+            <Link href="/yasal/kvkk" className="hover:text-foreground hover:underline">
               KVKK
             </Link>
-            <Link href="/yasal/gizlilik" className="hover:text-slate-900 hover:underline">
+            <Link href="/yasal/gizlilik" className="hover:text-foreground hover:underline">
               Gizlilik
             </Link>
-            <Link href="/yasal/cerez" className="hover:text-slate-900 hover:underline">
+            <Link href="/yasal/cerez" className="hover:text-foreground hover:underline">
               Çerez
             </Link>
-            <Link href="/yasal/kullanim-sartlari" className="hover:text-slate-900 hover:underline">
+            <Link href="/yasal/kullanim-sartlari" className="hover:text-foreground hover:underline">
               Kullanım Şartları
             </Link>
-            <Link href="/yasal/mesafeli-satis" className="hover:text-slate-900 hover:underline">
+            <Link href="/yasal/mesafeli-satis" className="hover:text-foreground hover:underline">
               Mesafeli Satış
             </Link>
-            <Link href="/yasal/cayma-iade" className="hover:text-slate-900 hover:underline">
+            <Link href="/yasal/cayma-iade" className="hover:text-foreground hover:underline">
               Cayma &amp; İade
             </Link>
-            <a href={`mailto:${contactEmail}`} className="hover:text-slate-900 hover:underline">
+            <a href={`mailto:${contactEmail}`} className="hover:text-foreground hover:underline">
               İletişim
             </a>
           </nav>
-          <p className="text-[11px] text-slate-500">
+          <p className="text-[11px] text-muted-foreground/90">
             © {year} {legalName}. Tüm hakları saklıdır.
           </p>
         </div>

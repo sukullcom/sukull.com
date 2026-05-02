@@ -38,9 +38,9 @@ export default async function AdminLayout({
     const badges = await loadBadges();
 
     return (
-      <div className="app-main-content-minh bg-gray-50">
+      <div className="app-main-content-minh bg-muted">
         {/* Desktop sidebar (kalıcı) */}
-        <aside className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0 lg:border-r lg:bg-white">
+        <aside className="hidden lg:flex lg:w-64 lg:flex-col lg:fixed lg:inset-y-0 lg:border-r lg:bg-card">
           <AdminSidebar badges={badges} />
         </aside>
 

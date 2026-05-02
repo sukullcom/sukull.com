@@ -167,18 +167,18 @@ export default function MemoryMatrixGame() {
 
       let bg: string;
       if (gameState === "showing" && isTarget) {
-        bg = "bg-cyan-400 border-cyan-500 scale-95";
+        bg = "bg-suk-payment/50 border-suk-payment scale-95";
       } else if (gameState === "finished" && isTarget && !isSelected) {
-        bg = "bg-cyan-200 border-cyan-300 opacity-60";
+        bg = "bg-suk-payment/25 border-suk-payment/50 opacity-60";
       } else if (isWrong) {
-        bg = "bg-red-400 border-red-500 animate-shake";
+        bg = "bg-suk-danger/50 border-suk-danger animate-shake";
       } else if (isSelected && isTarget) {
-        bg = "bg-green-400 border-green-500";
+        bg = "bg-suk-brand/50 border-suk-brand";
       } else if (gameState === "input") {
         bg =
-          "bg-gray-100 border-gray-200 active:bg-gray-200 active:scale-90 cursor-pointer";
+          "bg-muted border-border active:bg-muted/80 active:scale-90 cursor-pointer";
       } else {
-        bg = "bg-gray-100 border-gray-200";
+        bg = "bg-muted border-border";
       }
 
       tiles.push(
@@ -198,25 +198,25 @@ export default function MemoryMatrixGame() {
       <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-6 py-8">
         <Link
           href="/games"
-          className="self-start flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-700 transition"
+          className="self-start flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition"
         >
           <ArrowLeft className="h-4 w-4" /> Oyunlara Dön
         </Link>
 
         <div className="text-center">
           <div className="mb-3">
-            <Grid3X3 className="w-12 h-12 text-cyan-500 mx-auto" />
+            <Grid3X3 className="w-12 h-12 text-suk-payment mx-auto" />
           </div>
-          <h1 className="text-2xl font-bold text-neutral-800">
+          <h1 className="text-2xl font-bold text-foreground">
             Hafıza Matrisi
           </h1>
-          <p className="text-neutral-500 mt-2">
+          <p className="text-muted-foreground mt-2">
             Yanan kareleri hatırla ve işaretlediğini unutma!
           </p>
         </div>
 
         <div className="w-full space-y-2">
-          <p className="text-sm font-semibold text-neutral-600">Zorluk</p>
+          <p className="text-sm font-semibold text-muted-foreground">Zorluk</p>
           {(["Kolay", "Orta", "Zor", "Uzman"] as Difficulty[]).map((d) => {
             const s = DIFFICULTY_SETTINGS[d];
             return (
@@ -225,8 +225,8 @@ export default function MemoryMatrixGame() {
                 onClick={() => setDifficulty(d)}
                 className={`w-full p-3 rounded-xl border-2 text-left transition-all ${
                   difficulty === d
-                    ? "border-indigo-500 bg-indigo-50 text-indigo-700"
-                    : "border-neutral-200 hover:border-neutral-300 text-neutral-600"
+                    ? "border-suk-payment bg-suk-payment-soft text-suk-payment-soft-fg"
+                    : "border-border hover:border-border/80 text-muted-foreground"
                 }`}
               >
                 <span className="font-semibold">{d}</span>
@@ -258,28 +258,28 @@ export default function MemoryMatrixGame() {
     return (
       <div className="w-full max-w-lg mx-auto flex flex-col items-center gap-6 py-8">
         <div className="mb-2">
-          <Trophy className="w-12 h-12 text-amber-500 mx-auto" />
+          <Trophy className="w-12 h-12 text-suk-warning mx-auto" />
         </div>
-        <h1 className="text-2xl font-bold text-neutral-800">Oyun Bitti!</h1>
+        <h1 className="text-2xl font-bold text-foreground">Oyun Bitti!</h1>
 
         <div className="w-full grid grid-cols-2 gap-3">
-          <div className="bg-cyan-50 rounded-xl p-4 text-center border border-cyan-200">
-            <Trophy className="h-6 w-6 text-cyan-500 mx-auto mb-1" />
-            <p className="text-2xl font-bold text-cyan-600">{displayScore}</p>
-            <p className="text-xs text-cyan-500">Toplam Puan</p>
+          <div className="bg-suk-payment-soft rounded-xl p-4 text-center border border-suk-payment-ring">
+            <Trophy className="h-6 w-6 text-suk-payment mx-auto mb-1" />
+            <p className="text-2xl font-bold text-suk-payment-soft-fg">{displayScore}</p>
+            <p className="text-xs text-suk-payment">Toplam Puan</p>
           </div>
-          <div className="bg-amber-50 rounded-xl p-4 text-center border border-amber-200">
-            <Zap className="h-6 w-6 text-amber-500 mx-auto mb-1" />
-            <p className="text-2xl font-bold text-amber-600">
+          <div className="bg-suk-warning-soft rounded-xl p-4 text-center border border-suk-warning-border">
+            <Zap className="h-6 w-6 text-suk-warning mx-auto mb-1" />
+            <p className="text-2xl font-bold text-suk-warning-soft-fg">
               Seviye {bestLevel}
             </p>
-            <p className="text-xs text-amber-500">Ulaşılan Seviye</p>
+            <p className="text-xs text-suk-warning">Ulaşılan Seviye</p>
           </div>
         </div>
 
         {/* Show missed tiles */}
         <div className="w-full">
-          <p className="text-sm text-neutral-500 text-center mb-3">
+          <p className="text-sm text-muted-foreground text-center mb-3">
             Kaçırdığın kareler:
           </p>
           <div
@@ -319,24 +319,24 @@ export default function MemoryMatrixGame() {
       {/* Header */}
       <div className="w-full flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Trophy className="h-5 w-5 text-cyan-500" />
-          <span className="font-bold text-lg text-cyan-600">{score}</span>
+          <Trophy className="h-5 w-5 text-suk-payment" />
+          <span className="font-bold text-lg text-suk-payment-soft-fg">{score}</span>
         </div>
-        <div className="bg-cyan-100 rounded-full px-4 py-1">
-          <span className="font-bold text-cyan-700">Seviye {level}</span>
+        <div className="bg-suk-payment-soft rounded-full px-4 py-1">
+          <span className="font-bold text-suk-payment-soft-fg">Seviye {level}</span>
         </div>
       </div>
 
       {/* Status */}
       <div className="text-center min-h-[32px]">
         {gameState === "showing" && (
-          <div className="flex items-center justify-center gap-2 text-lg font-semibold text-amber-600 animate-pulse">
+          <div className="flex items-center justify-center gap-2 text-lg font-semibold text-suk-warning animate-pulse">
             <Eye className="w-5 h-5" />
             <span>Kareleri ezberle!</span>
           </div>
         )}
         {gameState === "input" && (
-          <div className="flex items-center justify-center gap-2 text-lg font-semibold text-cyan-600">
+          <div className="flex items-center justify-center gap-2 text-lg font-semibold text-suk-payment-soft-fg">
             <MousePointerClick className="w-5 h-5" />
             <span>
               Yanan kareleri seç! ({correctCount}/{targetTiles.size})
@@ -344,7 +344,7 @@ export default function MemoryMatrixGame() {
           </div>
         )}
         {gameState === "success" && (
-          <p className="text-lg font-semibold text-green-600">
+          <p className="text-lg font-semibold text-suk-brand">
             Doğru! Sonraki seviye...
           </p>
         )}
@@ -366,14 +366,14 @@ export default function MemoryMatrixGame() {
           <div
             key={idx}
             className={`h-2.5 w-2.5 rounded-full transition-colors ${
-              idx < correctCount ? "bg-green-500" : "bg-neutral-300"
+              idx < correctCount ? "bg-suk-brand" : "bg-muted"
             }`}
           />
         ))}
       </div>
 
       {/* Grid info */}
-      <p className="text-xs text-neutral-500">
+      <p className="text-xs text-muted-foreground">
         {gridSize}x{gridSize} izgara / {targetTiles.size} kare /{" "}
         {difficulty}
       </p>

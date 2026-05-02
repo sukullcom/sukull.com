@@ -41,7 +41,7 @@ const GRADE_META: Record<number, { icon: React.ReactNode; color: string; gradien
 
 const TOPIC_META: Record<string, { label: string; icon: React.ReactNode; color: string; gradient: string }> = {
   ingilizce: { label: "İngilizce", icon: <Globe className="w-5 h-5 text-white" />, color: "text-rose-700", gradient: "from-rose-400 to-rose-500" },
-  diger:     { label: "Diğer",     icon: <BookOpen className="w-5 h-5 text-white" />, color: "text-gray-700", gradient: "from-gray-500 to-gray-600" },
+  diger:     { label: "Diğer",     icon: <BookOpen className="w-5 h-5 text-white" />, color: "text-foreground", gradient: "from-gray-500 to-gray-600" },
 };
 
 // ─── Exam definitions ──────────────────────────────────────────────────────
@@ -222,7 +222,7 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
 
     const sortedGradeKeys = Object.keys(grades).map(Number).sort((a, b) => a - b);
     const gradeGroups: SectionGroup[] = sortedGradeKeys.map((g) => {
-      const meta = GRADE_META[g] || { icon: <BookOpen className="w-5 h-5 text-white" />, color: "text-gray-700", gradient: "from-gray-500 to-gray-600" };
+      const meta = GRADE_META[g] || { icon: <BookOpen className="w-5 h-5 text-white" />, color: "text-foreground", gradient: "from-gray-500 to-gray-600" };
       return {
         key: `grade-${g}`,
         label: `${g}. Sınıf`,
@@ -284,7 +284,7 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
           <h2 className={`text-lg font-bold ${group.color}`}>
             {group.label}
           </h2>
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-muted-foreground">
             {group.courses.length} ders
           </p>
         </div>
@@ -336,7 +336,7 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
           <h2 className={`text-lg font-bold ${group.color}`}>
             {group.label}
           </h2>
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-muted-foreground">
             {group.description}
             {group.courses.length > 0 && ` · ${group.courses.length} ders`}
           </p>
@@ -360,13 +360,13 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
           ))}
         </div>
       ) : (
-        <div className="flex items-center gap-3 rounded-2xl border-2 border-dashed border-gray-200 bg-gray-50/60 p-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white shadow-sm">
-            <Lock className="h-4 w-4 text-gray-400" />
+        <div className="flex items-center gap-3 rounded-2xl border-2 border-dashed border-border bg-muted/60 p-4">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-card shadow-sm">
+            <Lock className="h-4 w-4 text-muted-foreground" />
           </div>
           <div className="min-w-0">
-            <p className="text-sm font-semibold text-gray-600">Yakında</p>
-            <p className="text-xs text-gray-400 truncate">
+            <p className="text-sm font-semibold text-muted-foreground">Yakında</p>
+            <p className="text-xs text-muted-foreground truncate">
               {group.label} içerikleri hazırlanıyor.
             </p>
           </div>
@@ -377,7 +377,7 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
 
   if (courses.length === 0) {
     return (
-      <div className="text-center py-16 text-gray-400">
+      <div className="text-center py-16 text-muted-foreground">
         <p className="text-lg font-medium">Henüz kurs bulunmuyor</p>
       </div>
     );
@@ -390,7 +390,7 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
         <div
           role="tablist"
           aria-label="Ders kategorileri"
-          className="mx-4 sm:mx-6 inline-flex rounded-2xl bg-gray-100 p-1 shadow-sm"
+          className="mx-4 sm:mx-6 inline-flex rounded-2xl bg-muted p-1 shadow-sm"
         >
           <button
             role="tab"
@@ -399,8 +399,8 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
             className={[
               "flex items-center gap-2 rounded-xl px-3 sm:px-4 py-2 text-sm font-semibold transition-all",
               activeTab === "school"
-                ? "bg-white text-neutral-800 shadow"
-                : "text-neutral-500 hover:text-neutral-700",
+                ? "bg-card text-foreground shadow"
+                : "text-muted-foreground hover:text-foreground",
             ].join(" ")}
           >
             <BookOpen className="h-4 w-4" />
@@ -410,7 +410,7 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
                 "ml-1 rounded-md px-1.5 py-0.5 text-[11px] font-bold",
                 activeTab === "school"
                   ? "bg-green-100 text-green-700"
-                  : "bg-gray-200 text-gray-500",
+                  : "bg-muted text-muted-foreground",
               ].join(" ")}
             >
               {totalSchoolCourses}
@@ -423,8 +423,8 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
             className={[
               "flex items-center gap-2 rounded-xl px-3 sm:px-4 py-2 text-sm font-semibold transition-all",
               activeTab === "exams"
-                ? "bg-white text-neutral-800 shadow"
-                : "text-neutral-500 hover:text-neutral-700",
+                ? "bg-card text-foreground shadow"
+                : "text-muted-foreground hover:text-foreground",
             ].join(" ")}
           >
             <GraduationCap className="h-4 w-4" />
@@ -434,7 +434,7 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
                 "ml-1 rounded-md px-1.5 py-0.5 text-[11px] font-bold",
                 activeTab === "exams"
                   ? "bg-amber-100 text-amber-700"
-                  : "bg-gray-200 text-gray-500",
+                  : "bg-muted text-muted-foreground",
               ].join(" ")}
             >
               {totalExamCourses}

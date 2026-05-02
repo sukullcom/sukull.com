@@ -33,16 +33,16 @@ export default async function CoursesPage() {
     return (
       <div className="w-full max-w-[960px] px-4 sm:px-6 mx-auto py-6">
         <div className="text-center mb-6">
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-neutral-800">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground">
             Ne öğrenmek istersin?
           </h1>
-          <p className="text-neutral-400 text-sm mt-2">
+          <p className="text-muted-foreground text-sm mt-2">
             Okul derslerinden veya sınav hazırlığından başla
           </p>
         </div>
         <Suspense
           fallback={
-            <div className="flex flex-col items-center justify-center py-16 text-neutral-500 text-sm">
+            <div className="flex flex-col items-center justify-center py-16 text-muted-foreground text-sm">
               Ders listesi yükleniyor…
             </div>
           }
@@ -63,8 +63,8 @@ export default async function CoursesPage() {
       .error({ message: "courses page failed", error, location: "app/(main)/courses/page" });
     return (
       <div className="flex flex-col items-center justify-center py-20 px-6 text-center">
-        <h1 className="text-xl font-bold mb-3 text-neutral-800">Bir Hata Oluştu</h1>
-        <p className="text-neutral-500">Dersler yüklenirken bir hata oluştu. Lütfen sayfayı yenileyin.</p>
+        <h1 className="text-xl font-bold mb-3 text-foreground">Bir Hata Oluştu</h1>
+        <p className="text-muted-foreground">Dersler yüklenirken bir hata oluştu. Lütfen sayfayı yenileyin.</p>
       </div>
     );
   }

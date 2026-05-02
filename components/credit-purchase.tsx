@@ -267,34 +267,34 @@ export default function CreditPurchase() {
   return (
     <div className="min-h-0 w-full max-w-6xl mx-auto px-4 py-8 sm:py-10">
       <div
-        className="rounded-3xl border border-slate-200/80 bg-gradient-to-b from-slate-50/90 via-white to-white p-6 sm:p-8 shadow-sm"
+        className="rounded-3xl border border-border/80 bg-gradient-to-b from-suk-surface-muted/90 via-suk-surface-card to-suk-surface-card p-6 sm:p-8 shadow-sm"
         aria-label="Kredi satın alma"
       >
       <div className="text-center mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2 tracking-tight">
+        <h1 className="mb-2 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
           Kredi Satın Al
         </h1>
-        <p className="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
+        <p className="mx-auto max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
           Krediler hem öğrenciler hem eğitmenler için geçerlidir. Öğrenciler
-          bir eğitmenle sohbeti açmak için <b className="text-slate-800">1 kredi</b>, eğitmenler bir
-          ilana teklif vermek için <b className="text-slate-800">1 kredi</b> harcar. Daha büyük paket
+          bir eğitmenle sohbeti açmak için <b className="text-foreground">1 kredi</b>, eğitmenler bir
+          ilana teklif vermek için <b className="text-foreground">1 kredi</b> harcar. Daha büyük paket
           aldıkça kredi başına fiyat düşer.
         </p>
       </div>
 
-      <Card className="mb-6 sm:mb-8 border border-emerald-200/60 bg-gradient-to-r from-emerald-50/90 to-teal-50/40 shadow-none">
+      <Card className="mb-6 border border-suk-payment/25 bg-gradient-to-r from-suk-payment-soft to-suk-play-soft shadow-none sm:mb-8">
         <CardContent className="p-4 sm:p-6">
           <div className="flex items-center justify-between gap-4">
             <div className="min-w-0 text-left">
-              <h3 className="text-base sm:text-lg font-semibold text-slate-900">
+              <h3 className="text-base font-semibold text-foreground sm:text-lg">
                 Mevcut kredin
               </h3>
             </div>
             <div className="text-right flex-shrink-0">
               {loadingCredits ? (
-                <Loader2 className="h-6 w-6 animate-spin text-emerald-600" />
+                <Loader2 className="h-6 w-6 animate-spin text-suk-payment" />
               ) : (
-                <div className="text-2xl sm:text-3xl font-bold tabular-nums text-emerald-700">
+                <div className="text-2xl font-bold tabular-nums text-suk-payment sm:text-3xl">
                   {userCredits.availableCredits}
                 </div>
               )}
@@ -305,44 +305,44 @@ export default function CreditPurchase() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
         <div>
-          <h2 className="text-lg sm:text-xl font-semibold text-slate-900 mb-4">Kredi paketleri</h2>
+          <h2 className="mb-4 text-lg font-semibold text-foreground sm:text-xl">Kredi paketleri</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {creditPackages.map((pkg) => (
               <Card 
                 key={pkg.id}
                 className={`cursor-pointer border transition-all duration-200 ${
                   selectedPackage.id === pkg.id
-                    ? 'ring-2 ring-emerald-500/90 border-emerald-200 bg-emerald-50/50 shadow-sm'
-                    : 'border-slate-200/90 bg-white hover:border-emerald-200/80 hover:shadow-md'
+                    ? "border-suk-payment/50 bg-suk-payment-soft/80 shadow-sm ring-2 ring-suk-payment/50"
+                    : "border-border/90 bg-card hover:border-suk-payment/45 hover:shadow-md"
                 } ${
                   pkg.popular
                     ? selectedPackage.id === pkg.id
-                      ? ''
-                      : 'border-amber-200/70 bg-amber-50/30'
-                    : ''
+                      ? ""
+                      : "border-suk-warning-border bg-suk-warning-soft/50"
+                    : ""
                 }`}
                 onClick={() => setSelectedPackage(pkg)}
               >
                 <CardContent className="p-4 text-center">
                   {pkg.popular && (
-                    <div className="text-[10px] font-semibold tracking-wide text-amber-800/90 mb-1.5 uppercase">
+                    <div className="mb-1.5 text-[10px] font-semibold uppercase tracking-wide text-suk-warning-soft-fg">
                       En popüler
                     </div>
                   )}
-                  <div className="text-2xl font-bold text-slate-900 tabular-nums">{pkg.credits}</div>
-                  <div className="text-sm text-slate-500 mb-1">kredi</div>
-                  <div className="text-lg font-semibold text-slate-900">
+                  <div className="text-2xl font-bold tabular-nums text-foreground">{pkg.credits}</div>
+                  <div className="mb-1 text-sm text-muted-foreground">kredi</div>
+                  <div className="text-lg font-semibold text-foreground">
                     {pkg.price.toLocaleString('tr-TR')}{" "}
-                    <span className="text-slate-600 text-base font-medium">₺</span>
+                    <span className="text-base font-medium text-muted-foreground">₺</span>
                   </div>
-                  <div className="text-xs text-slate-500">
+                  <div className="text-xs text-muted-foreground">
                     {(pkg.price / pkg.credits).toLocaleString('tr-TR', {
                       maximumFractionDigits: 2,
                     })}{" "}
                     ₺/kredi
                   </div>
                   {pkg.id !== '1' && (
-                    <div className="text-[10px] text-emerald-700/90 font-medium mt-1.5">
+                    <div className="mt-1.5 text-[10px] font-medium text-suk-payment-soft-fg">
                       %{Math.round((1 - pkg.price / pkg.credits / 40) * 100)}{" "}
                       indirim
                     </div>
@@ -354,33 +354,33 @@ export default function CreditPurchase() {
         </div>
 
         <div>
-          <h2 className="text-lg sm:text-xl font-semibold text-slate-900 mb-4">Ödeme bilgileri</h2>
+          <h2 className="mb-4 text-lg font-semibold text-foreground sm:text-xl">Ödeme bilgileri</h2>
           
-          <Card className="mb-6 border border-slate-200/90 bg-slate-50/80 shadow-none">
+          <Card className="mb-6 border border-border/90 bg-muted/80 shadow-none">
             <CardContent className="p-4 sm:p-5">
               <div className="flex justify-between items-center gap-2">
-                <span className="font-medium text-slate-800">
+                <span className="font-medium text-foreground">
                   {selectedPackage.credits} kredi
                 </span>
-                <span className="text-xl font-bold text-emerald-700 tabular-nums">
+                <span className="text-xl font-bold tabular-nums text-suk-payment">
                   {selectedPackage.price.toLocaleString('tr-TR')} ₺
                 </span>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="mb-6 border border-slate-200/90 bg-white shadow-sm">
+          <Card className="mb-6 border border-border/90 bg-card shadow-sm">
             <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2 text-base sm:text-lg font-semibold text-slate-900">
-                <CreditCard className="h-5 w-5 text-emerald-600" aria-hidden />
+              <CardTitle className="flex items-center gap-2 text-base font-semibold text-foreground sm:text-lg">
+                <CreditCard className="h-5 w-5 text-suk-payment" aria-hidden />
                 Kart bilgileri
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-600 mb-1.5">Kart sahibi adı</label>
+                <label className="mb-1.5 block text-sm font-medium text-muted-foreground">Kart sahibi adı</label>
                 <Input
-                  className="border-slate-200/90 focus-visible:ring-emerald-500/40"
+                  className="border-border/90 focus-visible:ring-ring/40"
                   type="text"
                   placeholder="AD SOYAD"
                   value={holderName}
@@ -389,9 +389,9 @@ export default function CreditPurchase() {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-slate-600 mb-1.5">Kart numarası</label>
+                <label className="block text-sm font-medium text-muted-foreground mb-1.5">Kart numarası</label>
                 <Input
-                  className="border-slate-200/90 focus-visible:ring-emerald-500/40"
+                  className="border-border/90 focus-visible:ring-ring/40"
                   type="text"
                   placeholder="5890 0400 0000 0016"
                   value={cardNumber}
@@ -402,9 +402,9 @@ export default function CreditPurchase() {
               
               <div className="grid grid-cols-3 gap-3 sm:gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-600 mb-1.5">Ay</label>
+                  <label className="block text-sm font-medium text-muted-foreground mb-1.5">Ay</label>
                   <Input
-                    className="border-slate-200/90 focus-visible:ring-emerald-500/40"
+                    className="border-border/90 focus-visible:ring-ring/40"
                     type="text"
                     placeholder="12"
                     value={expireMonth}
@@ -413,9 +413,9 @@ export default function CreditPurchase() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-600 mb-1.5">Yıl</label>
+                  <label className="block text-sm font-medium text-muted-foreground mb-1.5">Yıl</label>
                   <Input
-                    className="border-slate-200/90 focus-visible:ring-emerald-500/40"
+                    className="border-border/90 focus-visible:ring-ring/40"
                     type="text"
                     placeholder="25"
                     value={expireYear}
@@ -424,9 +424,9 @@ export default function CreditPurchase() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-600 mb-1.5">CVC</label>
+                  <label className="block text-sm font-medium text-muted-foreground mb-1.5">CVC</label>
                   <Input
-                    className="border-slate-200/90 focus-visible:ring-emerald-500/40"
+                    className="border-border/90 focus-visible:ring-ring/40"
                     type="text"
                     placeholder="123"
                     value={cvc}
@@ -438,18 +438,18 @@ export default function CreditPurchase() {
             </CardContent>
           </Card>
 
-          <Card className="mb-6 border border-slate-200/90 bg-white shadow-sm">
+          <Card className="mb-6 border border-border/90 bg-card shadow-sm">
             <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2 text-base sm:text-lg font-semibold text-slate-900">
-                <MapPin className="h-5 w-5 text-emerald-600" aria-hidden />
+              <CardTitle className="flex items-center gap-2 text-base font-semibold text-foreground sm:text-lg">
+                <MapPin className="h-5 w-5 text-suk-payment" aria-hidden />
                 Fatura adresi
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-600 mb-1.5">Ad soyad</label>
+                <label className="block text-sm font-medium text-muted-foreground mb-1.5">Ad soyad</label>
                 <Input
-                  className="border-slate-200/90 focus-visible:ring-emerald-500/40"
+                  className="border-border/90 focus-visible:ring-ring/40"
                   type="text"
                   placeholder="Ahmet Yılmaz"
                   value={contactName}
@@ -458,9 +458,9 @@ export default function CreditPurchase() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-600 mb-1.5">TC Kimlik numarası</label>
+                <label className="block text-sm font-medium text-muted-foreground mb-1.5">TC Kimlik numarası</label>
                 <Input
-                  className="border-slate-200/90 focus-visible:ring-emerald-500/40"
+                  className="border-border/90 focus-visible:ring-ring/40"
                   type="text"
                   inputMode="numeric"
                   placeholder="11 haneli TC kimlik numarası"
@@ -470,15 +470,15 @@ export default function CreditPurchase() {
                   }
                   maxLength={11}
                 />
-                <p className="text-xs text-slate-500 mt-1.5">
+                <p className="mt-1.5 text-xs text-muted-foreground">
                   Ödeme yasası gereği zorunludur; saklanmaz, sadece bankanıza iletilir.
                 </p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-600 mb-1.5">Telefon</label>
+                <label className="block text-sm font-medium text-muted-foreground mb-1.5">Telefon</label>
                 <Input
-                  className="border-slate-200/90 focus-visible:ring-emerald-500/40"
+                  className="border-border/90 focus-visible:ring-ring/40"
                   type="text"
                   placeholder="+90 555 123 4567"
                   value={phone}
@@ -487,9 +487,9 @@ export default function CreditPurchase() {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-slate-600 mb-1.5">Adres</label>
+                <label className="block text-sm font-medium text-muted-foreground mb-1.5">Adres</label>
                 <Input
-                  className="border-slate-200/90 focus-visible:ring-emerald-500/40"
+                  className="border-border/90 focus-visible:ring-ring/40"
                   type="text"
                   placeholder="Mahalle, Sokak, No"
                   value={address}
@@ -499,9 +499,9 @@ export default function CreditPurchase() {
               
               <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-600 mb-1.5">Şehir</label>
+                  <label className="block text-sm font-medium text-muted-foreground mb-1.5">Şehir</label>
                   <Input
-                    className="border-slate-200/90 focus-visible:ring-emerald-500/40"
+                    className="border-border/90 focus-visible:ring-ring/40"
                     type="text"
                     placeholder="İstanbul"
                     value={city}
@@ -509,9 +509,9 @@ export default function CreditPurchase() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-600 mb-1.5">Posta kodu</label>
+                  <label className="block text-sm font-medium text-muted-foreground mb-1.5">Posta kodu</label>
                   <Input
-                    className="border-slate-200/90 focus-visible:ring-emerald-500/40"
+                    className="border-border/90 focus-visible:ring-ring/40"
                     type="text"
                     placeholder="34000"
                     value={zipCode}
@@ -527,20 +527,20 @@ export default function CreditPurchase() {
               teyit edilmeli. İki ayrı checkbox kullanmak, Ticaret
               Bakanlığı yönetmeliğinin "her belge için açık onay" ifadesiyle
               uyumludur. */}
-          <div className="mt-6 rounded-2xl border border-slate-200/90 bg-slate-50/80 p-4 sm:p-5 text-sm text-slate-700">
+          <div className="mt-6 rounded-2xl border border-border/90 bg-muted/80 p-4 text-sm text-foreground sm:p-5">
             <label className="flex items-start gap-3">
               <input
                 type="checkbox"
                 checked={agreeDistanceSales}
                 onChange={(e) => setAgreeDistanceSales(e.target.checked)}
-                className="mt-1 h-4 w-4 shrink-0 rounded border-slate-300 text-emerald-600 focus:ring-2 focus:ring-emerald-500/30"
+                className="mt-1 h-4 w-4 shrink-0 rounded border-input text-suk-payment focus:ring-2 focus:ring-suk-payment/25"
               />
               <span>
                 <a
                   href="/yasal/mesafeli-satis"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-medium text-emerald-800 underline decoration-emerald-300/80 underline-offset-2 hover:text-emerald-900"
+                  className="font-medium text-suk-payment-soft-fg underline decoration-suk-payment/40 underline-offset-2 hover:text-suk-payment"
                 >
                   Mesafeli Satış Sözleşmesi
                 </a>
@@ -552,14 +552,14 @@ export default function CreditPurchase() {
                 type="checkbox"
                 checked={agreePreInfo}
                 onChange={(e) => setAgreePreInfo(e.target.checked)}
-                className="mt-1 h-4 w-4 shrink-0 rounded border-slate-300 text-emerald-600 focus:ring-2 focus:ring-emerald-500/30"
+                className="mt-1 h-4 w-4 shrink-0 rounded border-input text-suk-payment focus:ring-2 focus:ring-suk-payment/25"
               />
               <span>
                 <a
                   href="/yasal/on-bilgilendirme"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-medium text-emerald-800 underline decoration-emerald-300/80 underline-offset-2 hover:text-emerald-900"
+                  className="font-medium text-suk-payment-soft-fg underline decoration-suk-payment/40 underline-offset-2 hover:text-suk-payment"
                 >
                   Ön Bilgilendirme Formu
                 </a>
@@ -571,8 +571,8 @@ export default function CreditPurchase() {
           <Button
             onClick={handlePayment}
             disabled={loading || !agreeDistanceSales || !agreePreInfo}
-            variant="super"
-            className="mt-4 w-full shadow-md shadow-emerald-900/10"
+            variant="payment"
+            className="mt-4 w-full shadow-md shadow-black/10"
             size="lg"
           >
             {loading ? (
@@ -585,7 +585,7 @@ export default function CreditPurchase() {
             )}
           </Button>
 
-          <p className="text-xs text-slate-500 text-center mt-4 leading-relaxed">
+          <p className="mt-4 text-center text-xs leading-relaxed text-muted-foreground">
             Ödeme, kart bilgileri Sukull sunucularında tutulmaksızın Iyzico üzerinden
             işlenir.
           </p>

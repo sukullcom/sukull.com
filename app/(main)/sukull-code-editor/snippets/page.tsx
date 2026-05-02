@@ -139,7 +139,7 @@ export default function SnippetsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full
-              bg-gradient-to-r from-blue-500/10 to-purple-500/10 text-sm text-gray-400 mb-4 sm:mb-6"
+              bg-gradient-to-r from-blue-500/10 to-purple-500/10 text-sm text-muted-foreground mb-4 sm:mb-6"
           >
             <BookOpen className="w-4 h-4" />
             Sukull Kod Kütüphanesi
@@ -159,7 +159,7 @@ export default function SnippetsPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-gray-400 mb-6 sm:mb-8 px-2"
+            className="text-muted-foreground mb-6 sm:mb-8 px-2"
           >
             Sukull topluluğu tarafından derlenmiş kod koleksiyonunu keşfedin
           </motion.p>
@@ -171,7 +171,7 @@ export default function SnippetsPage() {
           <div className="relative group">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-xl blur-xl opacity-0 group-hover:opacity-100 transition-all duration-500" />
             <div className="relative flex items-center">
-              <SearchIcon className="absolute left-4 w-5 h-5 text-gray-400" />
+              <SearchIcon className="absolute left-4 w-5 h-5 text-muted-foreground" />
               <input
                 type="text"
                 value={searchQuery}
@@ -179,7 +179,7 @@ export default function SnippetsPage() {
                 placeholder="Kodları başlık, dil veya yazarına göre arayın..."
                 className="w-full pl-12 pr-4 py-3 sm:py-4 bg-[#1e1e2e]/80 hover:bg-[#1e1e2e] text-white
                   rounded-xl border border-[#313244] hover:border-[#414155] transition-all duration-200
-                  placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                  placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/50"
               />
             </div>
           </div>
@@ -187,8 +187,8 @@ export default function SnippetsPage() {
           {/* Filters Bar */}
           <div className="flex flex-wrap items-center gap-4">
             <div className="flex items-center gap-2 px-4 py-2 bg-[#1e1e2e] rounded-lg ring-1 ring-gray-800">
-              <Tag className="w-4 h-4 text-gray-400" />
-              <span className="text-sm text-gray-400">Diller:</span>
+              <Tag className="w-4 h-4 text-muted-foreground" />
+              <span className="text-sm text-muted-foreground">Diller:</span>
             </div>
 
             {popularLanguages.map((lang) => (
@@ -202,7 +202,7 @@ export default function SnippetsPage() {
                   ${
                     selectedLanguage === lang
                       ? "text-blue-400 bg-blue-500/10 ring-2 ring-blue-500/50"
-                      : "text-gray-400 hover:text-gray-300 bg-[#1e1e2e] hover:bg-[#262637] ring-1 ring-gray-800"
+                      : "text-muted-foreground hover:text-muted-foreground bg-[#1e1e2e] hover:bg-[#262637] ring-1 ring-gray-800"
                   }
                 `}
               >
@@ -222,7 +222,7 @@ export default function SnippetsPage() {
             {selectedLanguage && (
               <button
                 onClick={() => setSelectedLanguage(null)}
-                className="flex items-center gap-1 px-2 py-1 text-xs text-gray-400 hover:text-gray-300 transition-colors"
+                className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:text-muted-foreground transition-colors"
               >
                 <X className="w-3 h-3" />
                 Clear
@@ -230,7 +230,7 @@ export default function SnippetsPage() {
             )}
 
             <div className="ml-auto flex items-center gap-3">
-              <span className="text-xs sm:text-sm text-gray-500">
+              <span className="text-xs sm:text-sm text-muted-foreground">
                 {filteredSnippets.length} kod bulundu
               </span>
 
@@ -241,7 +241,7 @@ export default function SnippetsPage() {
                   className={`p-2 rounded-md transition-all ${
                     view === "grid"
                       ? "bg-blue-500/20 text-blue-400"
-                      : "text-gray-400 hover:text-gray-300 hover:bg-[#262637]"
+                      : "text-muted-foreground hover:text-muted-foreground hover:bg-[#262637]"
                   }`}
                 >
                   <Grid className="w-4 h-4" />
@@ -251,7 +251,7 @@ export default function SnippetsPage() {
                   className={`p-2 rounded-md transition-all ${
                     view === "list"
                       ? "bg-blue-500/20 text-blue-400"
-                      : "text-gray-400 hover:text-gray-300 hover:bg-[#262637]"
+                      : "text-muted-foreground hover:text-muted-foreground hover:bg-[#262637]"
                   }`}
                 >
                   <Layers className="w-4 h-4" />
@@ -325,12 +325,12 @@ export default function SnippetsPage() {
                 className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br 
                   from-blue-500/10 to-purple-500/10 ring-1 ring-white/10 mb-6"
               >
-                <Code className="w-8 h-8 text-gray-400" />
+                <Code className="w-8 h-8 text-muted-foreground" />
               </div>
               <h3 className="text-xl font-medium text-white mb-3">
                 Kod bulunamadı
               </h3>
-              <p className="text-gray-400 mb-6">
+              <p className="text-muted-foreground mb-6">
                 {searchQuery || selectedLanguage
                   ? "Try adjusting your search query or filters"
                   : "Topluluk ile kod paylaşan ilk kişi ol"}
@@ -342,7 +342,7 @@ export default function SnippetsPage() {
                     setSearchQuery("");
                     setSelectedLanguage(null);
                   }}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-[#262637] text-gray-300 hover:text-white rounded-lg 
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-[#262637] text-muted-foreground hover:text-white rounded-lg 
                     transition-colors"
                 >
                   <X className="w-4 h-4" />

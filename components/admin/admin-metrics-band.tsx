@@ -109,7 +109,7 @@ export function AdminMetricsBandSkeleton() {
       {Array.from({ length: 6 }).map((_, i) => (
         <div
           key={i}
-          className="rounded-xl border p-4 bg-gray-50 border-gray-200 animate-pulse"
+          className="rounded-xl border p-4 bg-muted border-border animate-pulse"
         >
           <div className="h-5 w-5 mb-2 bg-gray-200 rounded" />
           <div className="h-7 w-14 bg-gray-200 rounded mb-2" />

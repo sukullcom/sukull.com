@@ -28,15 +28,15 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
           />
         </div>
 
-        <div className="w-full min-w-0 max-w-md bg-white rounded-3xl border-2 border-gray-200 shadow-xl p-6 sm:p-7">
-          <h1 className="text-3xl font-bold text-center mb-6 text-green-500">
+        <div className="w-full min-w-0 max-w-md rounded-3xl border-2 border-border bg-card p-6 shadow-xl sm:p-7">
+          <h1 className="mb-6 text-center text-3xl font-bold text-suk-brand">
             Giriş Yap
           </h1>
           
           {/* Error handling for logout failures */}
           {error === 'logout_failed' && (
-            <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-              <p className="text-sm text-yellow-800">
+            <div className="mb-4 rounded-lg border border-suk-warning-border bg-suk-warning-soft p-3">
+              <p className="text-sm text-suk-warning-soft-fg">
                 Çıkış işleminde bir sorun oluştu, ancak güvenliğiniz için oturumunuz sonlandırıldı.
               </p>
             </div>
@@ -44,7 +44,7 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
           
           <Suspense
             fallback={
-              <div className="w-full h-32 flex items-center justify-center text-neutral-400 text-sm">
+              <div className="flex h-32 w-full items-center justify-center text-sm text-muted-foreground">
                 Yükleniyor…
               </div>
             }

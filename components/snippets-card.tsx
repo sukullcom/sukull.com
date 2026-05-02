@@ -33,8 +33,8 @@ export default function SnippetCard({ snippet }: { snippet: Snippet }) {
         />
       </div>
 
-      <p className="text-sm text-gray-300 mb-2">By {snippet.userName}</p>
-      <p className="text-sm text-gray-400 mb-4 line-clamp-3">
+      <p className="text-sm text-muted-foreground mb-2">By {snippet.userName}</p>
+      <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
         {snippet.description}
       </p>
 

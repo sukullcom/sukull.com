@@ -33,7 +33,7 @@ export function ResendVerificationForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-      <p className="text-sm text-gray-600 text-center mb-4">
+      <p className="mb-4 text-center text-sm text-muted-foreground">
         E-posta doğrulama linki almadınız mı? E-posta adresinizi girin ve yeni bir doğrulama linki gönderelim.
       </p>
       
@@ -41,7 +41,7 @@ export function ResendVerificationForm() {
         id="email"
         type="email"
         placeholder="E-posta"
-        className="border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500"
+        className="w-full min-w-0 rounded-xl border border-border bg-background p-3 focus:outline-none focus:ring-2 focus:ring-ring"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         disabled={isLoading}
@@ -63,7 +63,7 @@ export function ResendVerificationForm() {
         <Link
           prefetch={false}
           href="/login"
-          className="text-green-500 font-semibold underline hover:text-green-500"
+          className="font-semibold text-suk-brand underline hover:text-suk-brand-hover"
         >
           Giriş Yap
         </Link>
@@ -74,7 +74,7 @@ export function ResendVerificationForm() {
         <Link
           prefetch={false}
           href="/create-account"
-          className="text-green-500 font-semibold underline hover:text-green-500"
+          className="font-semibold text-suk-brand underline hover:text-suk-brand-hover"
         >
           Kayıt Ol
         </Link>

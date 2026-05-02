@@ -25,7 +25,7 @@ export function ListingCard({
   return (
     <Link
       href={href}
-      className="block bg-white border rounded-xl p-4 hover:border-orange-300 hover:shadow-sm transition-all"
+      className="block bg-card border rounded-xl p-4 hover:border-suk-brand/35 hover:shadow-sm transition-all"
     >
       <div className="flex items-start gap-3">
         {showStudent && (
@@ -40,37 +40,37 @@ export function ListingCard({
         )}
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2">
-            <h3 className="font-semibold text-gray-900 line-clamp-1">
+            <h3 className="font-semibold text-foreground line-clamp-1">
               {listing.title}
             </h3>
             <StatusBadge status={listing.status} />
           </div>
 
           {showStudent && (
-            <p className="text-xs text-gray-500 mt-0.5">
+            <p className="text-xs text-muted-foreground mt-0.5">
               {listing.studentName}
             </p>
           )}
 
           <div className="flex flex-wrap gap-1 mt-2">
-            <span className="text-[10px] bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full font-medium">
+            <span className="text-[10px] bg-suk-warning-soft text-suk-warning-soft-fg px-2 py-0.5 rounded-full font-medium">
               {listing.subject}
             </span>
             {listing.grade && (
-              <span className="text-[10px] bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full font-medium">
+              <span className="text-[10px] bg-muted text-muted-foreground px-2 py-0.5 rounded-full font-medium">
                 {listing.grade}
               </span>
             )}
           </div>
 
-          <p className="text-sm text-gray-700 mt-2 line-clamp-2">
+          <p className="text-sm text-foreground/90 mt-2 line-clamp-2">
             {listing.description}
           </p>
 
           {showStudent &&
             variant === "browse" &&
             listing.offerCount === MAX_OFFERS_PER_LISTING - 1 && (
-              <p className="mt-2 text-xs font-semibold text-red-600">
+              <p className="mt-2 text-xs font-semibold text-suk-danger">
                 Sadece 1 kontenjan kaldı · {listing.offerCount}/
                 {MAX_OFFERS_PER_LISTING} teklif
               </p>
@@ -78,20 +78,20 @@ export function ListingCard({
           {showStudent &&
             variant === "browse" &&
             listing.offerCount === 2 && (
-              <p className="mt-2 text-xs font-medium text-amber-800">
+              <p className="mt-2 text-xs font-medium text-suk-warning-soft-fg">
                 Yoğun ilan: 2/{MAX_OFFERS_PER_LISTING} teklif — acele eden
                 kazanır.
               </p>
             )}
 
-          <div className="grid grid-cols-2 gap-2 mt-3 text-[11px] text-gray-600">
+          <div className="grid grid-cols-2 gap-2 mt-3 text-[11px] text-muted-foreground">
             <div className="flex items-center gap-1.5">
-              <Monitor className="h-3 w-3 text-gray-400" />
+              <Monitor className="h-3 w-3 text-muted-foreground/70" />
               {formatLessonMode(listing.lessonMode)}
             </div>
             {(listing.city || listing.district) && (
               <div className="flex items-center gap-1.5">
-                <MapPin className="h-3 w-3 text-gray-400" />
+                <MapPin className="h-3 w-3 text-muted-foreground/70" />
                 <span className="truncate">
                   {[listing.district, listing.city].filter(Boolean).join(", ")}
                 </span>
@@ -99,24 +99,24 @@ export function ListingCard({
             )}
             {(listing.budgetMin != null || listing.budgetMax != null) && (
               <div className="flex items-center gap-1.5">
-                <Banknote className="h-3 w-3 text-gray-400" />
+                <Banknote className="h-3 w-3 text-muted-foreground/70" />
                 <span>{formatBudget(listing.budgetMin, listing.budgetMax)}</span>
               </div>
             )}
             {listing.preferredHours && (
               <div className="flex items-center gap-1.5">
-                <Clock className="h-3 w-3 text-gray-400" />
+                <Clock className="h-3 w-3 text-muted-foreground/70" />
                 <span className="truncate">{listing.preferredHours}</span>
               </div>
             )}
           </div>
 
           <div className="mt-3 flex items-center justify-between">
-            <div className="flex items-center gap-1.5 text-xs text-gray-500">
+            <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <Users className="h-3.5 w-3.5" />
               {listing.offerCount} / {MAX_OFFERS_PER_LISTING} teklif
             </div>
-            <span className="text-[11px] text-gray-400">
+            <span className="text-[11px] text-muted-foreground/80">
               {new Date(listing.createdAt).toLocaleDateString("tr-TR")}
             </span>
           </div>
@@ -128,11 +128,11 @@ export function ListingCard({
 
 function StatusBadge({ status }: { status: ListingRow["status"] }) {
   const styles: Partial<Record<ListingRow["status"], string>> = {
-    pending_review: "bg-amber-100 text-amber-900",
-    open: "bg-blue-100 text-blue-700",
-    closed: "bg-gray-100 text-gray-600",
-    expired: "bg-gray-100 text-gray-500",
-    rejected: "bg-red-50 text-red-700",
+    pending_review: "bg-suk-warning-soft text-suk-warning-soft-fg",
+    open: "bg-suk-brand-soft text-suk-brand-border",
+    closed: "bg-muted text-muted-foreground",
+    expired: "bg-muted text-muted-foreground/80",
+    rejected: "bg-suk-danger-soft text-suk-danger",
   };
   const labels: Partial<Record<ListingRow["status"], string>> = {
     pending_review: "İncelemede",
@@ -144,7 +144,7 @@ function StatusBadge({ status }: { status: ListingRow["status"] }) {
   return (
     <span
       className={`shrink-0 text-[10px] px-2 py-0.5 rounded-full font-medium ${
-        styles[status] ?? "bg-gray-100 text-gray-600"
+        styles[status] ?? "bg-muted text-muted-foreground"
       }`}
     >
       {labels[status] ?? status}

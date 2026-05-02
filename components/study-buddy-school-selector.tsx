@@ -190,7 +190,7 @@ export const StudyBuddySchoolSelector = ({
   return (
     <div className={`space-y-3 ${className}`}>
       {error && (
-        <div className="text-red-600 text-sm bg-red-50 p-2 rounded">
+        <div className="rounded-md border border-suk-danger/20 bg-suk-danger-soft p-2 text-sm text-suk-danger">
           {error}
         </div>
       )}
@@ -201,7 +201,7 @@ export const StudyBuddySchoolSelector = ({
           value={selectedCity}
           onChange={handleCityChange}
           disabled={loading}
-          className="w-full rounded-xl border-2 border-gray-200 p-3 focus:border-green-500 focus:outline-none disabled:bg-gray-100"
+          className="w-full rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-suk-brand focus:ring-2 focus:ring-suk-brand/25 disabled:bg-muted"
         >
           <option value="">Şehir seçin...</option>
           {cities.map((city) => (
@@ -219,7 +219,7 @@ export const StudyBuddySchoolSelector = ({
             value={selectedDistrict}
             onChange={handleDistrictChange}
             disabled={loading}
-            className="w-full rounded-xl border-2 border-gray-200 p-3 focus:border-green-500 focus:outline-none disabled:bg-gray-100"
+            className="w-full rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-suk-brand focus:ring-2 focus:ring-suk-brand/25 disabled:bg-muted"
           >
             <option value="">İlçe seçin...</option>
             {districts.map((district) => (
@@ -238,7 +238,7 @@ export const StudyBuddySchoolSelector = ({
             value={selectedCategory}
             onChange={handleCategoryChange}
             disabled={loading}
-            className="w-full rounded-xl border-2 border-gray-200 p-3 focus:border-green-500 focus:outline-none disabled:bg-gray-100"
+            className="w-full rounded-xl border-2 border-border bg-background p-3 outline-none focus:border-suk-brand focus:ring-2 focus:ring-suk-brand/25 disabled:bg-muted"
           >
             <option value="">Okul türü seçin...</option>
             {categories.map((category) => (
@@ -252,18 +252,18 @@ export const StudyBuddySchoolSelector = ({
 
       {/* Schools List */}
       {showSchools && schools.length > 0 && (
-        <div className="max-h-48 overflow-y-auto space-y-2 border rounded-lg p-3 bg-gray-50">
-          <div className="text-sm font-medium text-gray-700 mb-2">
+        <div className="max-h-48 space-y-2 overflow-y-auto rounded-lg border border-border bg-muted/60 p-3">
+          <div className="mb-2 text-sm font-medium text-foreground">
             Okullar ({schools.length} okul):
           </div>
           {schools.map((school) => (
             <div
               key={school.id}
               onClick={() => handleSchoolSelect(school.id)}
-              className={`p-2 rounded cursor-pointer transition-colors text-sm ${
+              className={`cursor-pointer rounded p-2 text-sm transition-colors ${
                 selectedSchoolId === school.id
-                  ? "bg-green-500 text-white"
-                  : "bg-white hover:bg-green-50 border"
+                  ? "bg-suk-brand text-suk-brand-fg"
+                  : "border border-border bg-card hover:bg-suk-brand-soft"
               }`}
             >
               {school.name}
@@ -276,7 +276,7 @@ export const StudyBuddySchoolSelector = ({
       {(selectedCity || selectedDistrict || selectedCategory) && (
         <button
           onClick={handleClearFilter}
-          className="text-sm text-gray-500 hover:text-gray-700 underline"
+          className="text-sm text-muted-foreground underline hover:text-foreground"
         >
           Filtreyi temizle
         </button>

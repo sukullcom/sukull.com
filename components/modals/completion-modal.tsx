@@ -44,7 +44,7 @@ export const CompletionModal = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleModalClose}>
-      <DialogContent className="max-w-md bg-white" onPointerDownOutside={(e) => e.preventDefault()}>
+      <DialogContent className="max-w-md bg-card" onPointerDownOutside={(e) => e.preventDefault()}>
         <DialogHeader>
           <div className="flex items-center w-full justify-center mb-5">
             <Image src="/mascot_normal.svg" alt="Tebrikler" height={100} width={100} />

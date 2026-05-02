@@ -46,7 +46,7 @@ function LanguageSelector({ hasAccess }: { hasAccess: boolean }) {
             <div className="w-full h-full bg-gray-700 rounded animate-pulse" />
           </div>
           <div className="flex-1 h-4 bg-gray-700 rounded animate-pulse" />
-          <ChevronDownIcon className="size-4 text-gray-400" />
+          <ChevronDownIcon className="size-4 text-muted-foreground" />
         </div>
       </div>
     );
@@ -85,7 +85,7 @@ function LanguageSelector({ hasAccess }: { hasAccess: boolean }) {
         </span>
 
         <ChevronDownIcon
-          className={`size-4 text-gray-400 transition-all duration-300 group-hover:text-gray-300
+          className={`size-4 text-muted-foreground transition-all duration-300 group-hover:text-muted-foreground
             ${isOpen ? "rotate-180" : ""}`}
         />
       </motion.button>
@@ -101,7 +101,7 @@ function LanguageSelector({ hasAccess }: { hasAccess: boolean }) {
            rounded-xl border border-[#313244] shadow-2xl py-2 z-50"
           >
             <div className="px-3 pb-2 mb-2 border-b border-gray-800/50">
-              <p className="text-xs font-medium text-gray-400">Select Language</p>
+              <p className="text-xs font-medium text-muted-foreground">Select Language</p>
             </div>
 
             <div className="max-h-[280px] overflow-y-auto overflow-x-hidden">
@@ -119,7 +119,7 @@ function LanguageSelector({ hasAccess }: { hasAccess: boolean }) {
                     <button
                       className={`
                       relative w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200
-                      ${language === lang.id ? "bg-blue-500/10 text-blue-400" : "text-gray-300"}
+                      ${language === lang.id ? "bg-blue-500/10 text-blue-400" : "text-muted-foreground"}
                       ${isLocked ? "opacity-50" : "hover:bg-[#262637]"}
                     `}
                       onClick={() => handleLanguageSelect(lang.id)}
@@ -167,7 +167,7 @@ function LanguageSelector({ hasAccess }: { hasAccess: boolean }) {
                       )}
 
                       {isLocked ? (
-                        <Lock className="w-4 h-4 text-gray-500" />
+                        <Lock className="w-4 h-4 text-muted-foreground" />
                       ) : (
                         language === lang.id && (
                           <Sparkles className="w-4 h-4 text-blue-400 animate-pulse" />

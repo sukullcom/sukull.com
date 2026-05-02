@@ -74,14 +74,14 @@ export default async function TeachersDirectoryPage({
 
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-2">
-          <div className="p-2 bg-green-100 rounded-lg">
-            <GraduationCap className="h-5 w-5 text-green-700" />
+          <div className="p-2 bg-suk-brand-soft rounded-lg">
+            <GraduationCap className="h-5 w-5 text-suk-brand" />
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">
             Eğitmenler
           </h1>
         </div>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-muted-foreground">
           Sukull tarafından onaylanmış eğitmenlerin listesi. Saatlik ücretleri
           görebilir, 1 kredi ile mesajlaşmayı açabilirsin — tek seferlik ödeme,
           sohbet kalıcıdır ve kredi iade edilmez. Onay sonrası tarafların kayıtlı
@@ -96,9 +96,9 @@ export default async function TeachersDirectoryPage({
       />
 
       {filtered.length === 0 ? (
-        <div className="text-center py-16 rounded-xl border border-dashed border-gray-200 bg-white">
-          <Users className="mx-auto h-10 w-10 text-gray-300 mb-3" />
-          <p className="text-gray-500">
+        <div className="text-center py-16 rounded-xl border border-dashed border-border bg-card">
+          <Users className="mx-auto h-10 w-10 text-muted-foreground/40 mb-3" />
+          <p className="text-muted-foreground">
             Filtrelere uyan eğitmen bulunamadı.
           </p>
         </div>
@@ -110,7 +110,7 @@ export default async function TeachersDirectoryPage({
             return (
               <div
                 key={t.id}
-                className="bg-white border rounded-xl p-4 hover:border-green-300 hover:shadow-sm transition-all"
+                className="bg-card border rounded-xl p-4 hover:border-suk-brand/35 hover:shadow-sm transition-all"
               >
                 <div className="flex items-start gap-3">
                   <Link
@@ -129,7 +129,7 @@ export default async function TeachersDirectoryPage({
                   <div className="flex-1 min-w-0">
                     <Link
                       href={`/private-lesson/teachers/${t.id}`}
-                      className="font-semibold text-gray-900 hover:text-green-700 transition-colors line-clamp-1"
+                      className="font-semibold text-foreground hover:text-suk-brand transition-colors line-clamp-1"
                     >
                       {t.name}
                     </Link>
@@ -138,27 +138,27 @@ export default async function TeachersDirectoryPage({
                         {t.fields.slice(0, 3).map((f, i) => (
                           <span
                             key={i}
-                            className="text-[10px] bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium"
+                            className="text-[10px] bg-suk-brand-soft text-suk-brand-border px-2 py-0.5 rounded-full font-medium"
                           >
                             {f}
                           </span>
                         ))}
                         {t.fields.length > 3 && (
-                          <span className="text-[10px] text-gray-400">
+                          <span className="text-[10px] text-muted-foreground">
                             +{t.fields.length - 3}
                           </span>
                         )}
                       </div>
                     ) : t.field ? (
-                      <div className="text-xs text-gray-500 mt-0.5">
+                      <div className="text-xs text-muted-foreground mt-0.5">
                         {t.field}
                       </div>
                     ) : null}
 
                     <div className="mt-2 space-y-1">
                       {(t.hourlyRateOnline || t.hourlyRateInPerson) && (
-                        <div className="flex items-center gap-2 text-xs text-gray-700">
-                          <Banknote className="h-3.5 w-3.5 text-gray-400" />
+                        <div className="flex items-center gap-2 text-xs text-foreground/90">
+                          <Banknote className="h-3.5 w-3.5 text-muted-foreground" />
                           <span className="font-medium">
                             {formatRates(
                               t.hourlyRateOnline,
@@ -168,14 +168,14 @@ export default async function TeachersDirectoryPage({
                         </div>
                       )}
                       {t.lessonMode && (
-                        <div className="flex items-center gap-2 text-xs text-gray-500">
-                          <Monitor className="h-3.5 w-3.5 text-gray-400" />
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <Monitor className="h-3.5 w-3.5 text-muted-foreground" />
                           {formatLessonMode(t.lessonMode)}
                         </div>
                       )}
                       {(t.city || t.district) && (
-                        <div className="flex items-center gap-2 text-xs text-gray-500">
-                          <MapPin className="h-3.5 w-3.5 text-gray-400" />
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <MapPin className="h-3.5 w-3.5 text-muted-foreground" />
                           {[t.district, t.city].filter(Boolean).join(", ")}
                         </div>
                       )}
@@ -186,7 +186,7 @@ export default async function TeachersDirectoryPage({
                 <div className="mt-4 flex gap-2">
                   <Link
                     href={`/private-lesson/teachers/${t.id}`}
-                    className="flex-1 inline-flex items-center justify-center text-sm font-medium text-gray-700 border rounded-lg px-3 py-2 hover:bg-gray-50 transition-colors"
+                    className="flex-1 inline-flex items-center justify-center text-sm font-medium text-foreground border rounded-lg px-3 py-2 hover:bg-muted/60 transition-colors"
                   >
                     Profili Gör
                   </Link>

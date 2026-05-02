@@ -27,13 +27,13 @@ function OutputPanel() {
           <div className="flex items-center justify-center w-6 h-6 rounded-lg bg-[#1e1e2e] ring-1 ring-gray-800/50">
             <Terminal className="w-4 h-4 text-blue-400" />
           </div>
-          <span className="text-sm font-medium text-gray-300">Output</span>
+          <span className="text-sm font-medium text-muted-foreground">Output</span>
         </div>
 
         {hasContent && (
           <button
             onClick={handleCopy}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs text-gray-400 hover:text-gray-300 bg-[#1e1e2e] 
+            className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs text-muted-foreground hover:text-muted-foreground bg-[#1e1e2e] 
             rounded-lg ring-1 ring-gray-800/50 hover:ring-gray-700/50 transition-all"
           >
             {isCopied ? (
@@ -73,10 +73,10 @@ function OutputPanel() {
                 <CheckCircle className="w-5 h-5" />
                 <span className="font-medium">Execution Successful</span>
               </div>
-              <pre className="whitespace-pre-wrap text-gray-300">{output}</pre>
+              <pre className="whitespace-pre-wrap text-muted-foreground">{output}</pre>
             </div>
           ) : (
-            <div className="h-full flex flex-col items-center justify-center text-gray-500">
+            <div className="h-full flex flex-col items-center justify-center text-muted-foreground">
               <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gray-800/50 ring-1 ring-gray-700/50 mb-4">
                 <Clock className="w-6 h-6" />
               </div>

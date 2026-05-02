@@ -215,7 +215,7 @@ export const Quiz = ({
             height={50}
             width={50}
           />
-          <h1 className="text-xl lg:text-3xl font-bold text-neutral-700">
+          <h1 className="text-xl lg:text-3xl font-bold text-foreground">
             Tebrikler! <br />
             Dersi tamamladın.
           </h1>
@@ -224,14 +224,14 @@ export const Quiz = ({
           {!isPracticeMode && (
             <div className="w-full space-y-2 text-sm">
               <div className="flex justify-between items-center px-4 py-2 bg-orange-50 rounded-lg">
-                <span className="text-neutral-600">Doğru cevaplar ({correctCount}/{challenges.length})</span>
+                <span className="text-muted-foreground">Doğru cevaplar ({correctCount}/{challenges.length})</span>
                 <span className="font-bold text-orange-500">
                   +{correctCount * SCORING_SYSTEM.LESSON_CHALLENGE_FIRST}
                 </span>
               </div>
               {wrongCount > 0 && (
                 <div className="flex justify-between items-center px-4 py-2 bg-red-50 rounded-lg">
-                  <span className="text-neutral-600">Yanlış cevaplar ({wrongCount})</span>
+                  <span className="text-muted-foreground">Yanlış cevaplar ({wrongCount})</span>
                   <span className="font-bold text-red-500">
                     {wrongCount * SCORING_SYSTEM.LESSON_CHALLENGE_PENALTY}
                   </span>
@@ -239,7 +239,7 @@ export const Quiz = ({
               )}
               {lessonBonuses && lessonBonuses.completionBonus > 0 && (
                 <div className="flex justify-between items-center px-4 py-2 bg-green-50 rounded-lg">
-                  <span className="text-neutral-600">Ders tamamlama bonusu</span>
+                  <span className="text-muted-foreground">Ders tamamlama bonusu</span>
                   <span className="font-bold text-green-600">
                     +{lessonBonuses.completionBonus}
                   </span>
@@ -268,8 +268,8 @@ export const Quiz = ({
           )}
 
           {isPracticeMode && (
-            <div className="w-full px-4 py-2 bg-blue-50 rounded-lg text-sm">
-              <span className="text-blue-600">Pratik modu — soru başına +{SCORING_SYSTEM.LESSON_CHALLENGE_PRACTICE} puan</span>
+            <div className="w-full px-4 py-2 bg-suk-payment-soft rounded-lg text-sm">
+              <span className="text-suk-payment">Pratik modu — soru başına +{SCORING_SYSTEM.LESSON_CHALLENGE_PRACTICE} puan</span>
             </div>
           )}
 
@@ -461,7 +461,7 @@ export const Quiz = ({
       <div className="flex-1">
         <div className="h-full flex items-center justify-center">
             <div className="lg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col gap-y-12">
-            <h1 className="text-lg lg:text-3xl text-center lg:text-start font-bold text-neutral-700">
+            <h1 className="text-lg lg:text-3xl text-center lg:text-start font-bold text-foreground">
               <MathRenderer>{title}</MathRenderer>
             </h1>
             <div>

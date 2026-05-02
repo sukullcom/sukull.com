@@ -138,10 +138,10 @@ export function ChatThread({
     <div className="flex min-h-0 flex-1 flex-col">
       <div
         ref={scrollerRef}
-        className="min-h-0 flex-1 overflow-y-auto p-3 sm:p-4 space-y-2 bg-gray-50/60"
+        className="min-h-0 flex-1 space-y-2 overflow-y-auto bg-muted/50 p-3 sm:p-4"
       >
         {messages.length === 0 ? (
-          <div className="h-full flex items-center justify-center text-sm text-gray-400">
+          <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
             Henüz mesaj yok. İlk mesajı sen gönder!
           </div>
         ) : (
@@ -155,8 +155,8 @@ export function ChatThread({
                 <div
                   className={`max-w-[80%] sm:max-w-[70%] px-3 py-2 ${
                     mine
-                      ? "bg-green-500 text-white rounded-2xl rounded-br-md"
-                      : "bg-white border border-gray-200 rounded-2xl rounded-bl-md"
+                      ? "rounded-2xl rounded-br-md bg-suk-brand text-suk-brand-fg"
+                      : "rounded-2xl rounded-bl-md border border-border bg-card"
                   }`}
                 >
                   <p className="text-sm break-words whitespace-pre-wrap leading-relaxed">
@@ -164,7 +164,7 @@ export function ChatThread({
                   </p>
                   <span
                     className={`text-[10px] block mt-0.5 ${
-                      mine ? "text-green-100" : "text-gray-400"
+                      mine ? "text-suk-brand-fg/80" : "text-muted-foreground"
                     }`}
                   >
                     {new Date(m.createdAt).toLocaleTimeString("tr-TR", {
@@ -179,7 +179,7 @@ export function ChatThread({
         )}
       </div>
 
-      <div className="border-t bg-white p-3 flex gap-2 items-end shrink-0">
+      <div className="flex shrink-0 items-end gap-2 border-t bg-card p-3">
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
@@ -192,13 +192,13 @@ export function ChatThread({
           rows={1}
           maxLength={MAX_LENGTH}
           placeholder="Mesajını yaz..."
-          className="flex-1 px-4 py-2.5 text-sm border border-gray-300 rounded-2xl focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500/20 resize-none"
+          className="flex-1 resize-none rounded-2xl border border-input px-4 py-2.5 text-sm focus:border-suk-brand focus:outline-none focus:ring-1 focus:ring-suk-brand/25"
         />
         <button
           type="button"
           onClick={handleSend}
           disabled={!content.trim() || sending}
-          className="shrink-0 w-10 h-10 rounded-full bg-green-500 hover:bg-green-600 disabled:bg-gray-200 text-white disabled:text-gray-400 flex items-center justify-center transition-colors"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-suk-brand text-suk-brand-fg transition-colors hover:bg-suk-brand-hover disabled:bg-muted disabled:text-muted-foreground"
         >
           {sending ? (
             <Loader2 className="h-4 w-4 animate-spin" />

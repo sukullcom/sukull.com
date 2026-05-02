@@ -139,24 +139,24 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-4">
           <div className="relative">
-            <CreditCard className="h-8 w-8 text-purple-600" />
-            <InfinityIcon className="absolute -top-1 -right-1 h-4 w-4 text-purple-600" />
+            <CreditCard className="h-8 w-8 text-suk-payment" />
+            <InfinityIcon className="absolute -top-1 -right-1 h-4 w-4 text-suk-payment" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold">Premium abonelik</h1>
-            <p className="text-gray-600">
+            <h1 className="text-2xl font-bold text-foreground">Premium abonelik</h1>
+            <p className="text-muted-foreground">
               Aylık 100₺ — sonsuz can ve profilde detaylı öğrenme analizi
             </p>
           </div>
         </div>
 
         {/* Subscription Package Summary */}
-        <Card className="mb-6 bg-gradient-to-r from-purple-50 to-indigo-50 border-purple-200">
+        <Card className="mb-6 border border-suk-payment-ring/40 bg-gradient-to-r from-suk-payment-soft to-suk-play-soft">
           <CardContent className="p-6">
             <div className="flex justify-between items-center">
               <div>
-                <h3 className="font-semibold text-lg">Premium — Aylık paket</h3>
-                <ul className="text-sm text-gray-600 mt-2 space-y-1">
+                <h3 className="font-semibold text-lg text-foreground">Premium — Aylık paket</h3>
+                <ul className="text-sm text-muted-foreground mt-2 space-y-1">
                   <li>• Sınırsız kalp (yanlışta can düşmez)</li>
                   <li>• Profil → Analiz: konu/kurs performansı, zorluk ve soru türü dağılımı</li>
                   <li>• Kesintisiz çözüm deneyimi</li>
@@ -164,8 +164,8 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
                 </ul>
               </div>
               <div className="text-right">
-                <div className="text-3xl font-bold text-purple-600">100₺</div>
-                <div className="text-sm text-gray-500">Aylık</div>
+                <div className="text-3xl font-bold text-suk-payment">100₺</div>
+                <div className="text-sm text-muted-foreground">Aylık</div>
               </div>
             </div>
           </CardContent>
@@ -268,7 +268,7 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
                 }
                 maxLength={11}
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Ödeme yasası gereği zorunludur; saklanmaz, sadece bankanıza iletilir.
               </p>
             </div>
@@ -320,7 +320,7 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
         <div className="flex gap-4">
           <Button 
             onClick={onCancel}
-            variant="default"
+            variant="muted"
             className="flex-1"
             disabled={loading}
           >
@@ -329,7 +329,7 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
           <Button 
             onClick={handlePayment}
             disabled={loading}
-            variant="super"
+            variant="payment"
             className="flex-1"
             size="lg"
           >
@@ -344,7 +344,7 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
           </Button>
         </div>
         
-        <p className="text-xs text-gray-500 text-center mt-4">
+        <p className="text-xs text-muted-foreground text-center mt-4">
           Ödemeniz güvenli bir şekilde iyzico altyapısı ile işlenmektedir.
         </p>
       </div>

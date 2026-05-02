@@ -91,15 +91,15 @@ export default async function ListingDetailPage({
 
       <Link
         href="/private-lesson/listings"
-        className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-800 mb-4"
+        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4"
       >
         <ArrowLeft className="h-4 w-4" /> İlanlar
       </Link>
 
       {showNewListingNudge && (
-        <div className="mb-4 rounded-xl border border-sky-200 bg-sky-50 px-4 py-3 text-sm text-sky-950">
+        <div className="mb-4 rounded-xl border border-suk-payment-ring/35 bg-suk-payment-soft px-4 py-3 text-sm text-suk-payment-soft-fg">
           <div className="flex gap-2">
-            <MessageCircle className="h-5 w-5 shrink-0 text-sky-700 mt-0.5" />
+            <MessageCircle className="h-5 w-5 shrink-0 text-suk-payment mt-0.5" />
             <div className="space-y-2 min-w-0">
               <p>
                 <span className="font-semibold">İlanın kaydedildi.</span>{" "}
@@ -110,7 +110,7 @@ export default async function ListingDetailPage({
                 Beklemek istemiyorsan şimdiden{" "}
                 <Link
                   href="/private-lesson/teachers"
-                  className="font-semibold text-green-800 underline-offset-2 hover:underline"
+                  className="font-semibold text-suk-brand underline-offset-2 hover:underline"
                 >
                   eğitmen rehberinden
                 </Link>{" "}
@@ -123,15 +123,15 @@ export default async function ListingDetailPage({
         </div>
       )}
 
-      <div className="bg-white border rounded-xl p-5 sm:p-6">
+      <div className="bg-card border rounded-xl p-5 sm:p-6">
         <div className="flex items-start justify-between gap-3 mb-2">
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">
             {base.title}
           </h1>
           <StatusBadge status={base.status} />
         </div>
 
-        <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
           <Image
             src={normalizeAvatarUrl(base.studentAvatar ?? undefined)}
             alt={base.studentName}
@@ -141,59 +141,59 @@ export default async function ListingDetailPage({
             className="rounded-full object-cover w-7 h-7"
           />
           <span>{base.studentName}</span>
-          <span className="text-gray-300">•</span>
+          <span className="text-border">•</span>
           <span>{new Date(base.createdAt).toLocaleDateString("tr-TR")}</span>
         </div>
 
         <div className="flex flex-wrap gap-2 mb-4">
-          <span className="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full font-medium">
+          <span className="text-xs bg-suk-warning-soft text-suk-warning-soft-fg px-2 py-0.5 rounded-full font-medium">
             {base.subject}
           </span>
           {base.grade && (
-            <span className="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full font-medium">
+            <span className="text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded-full font-medium">
               {base.grade}
             </span>
           )}
         </div>
 
         <div className="prose prose-sm max-w-none mb-6">
-          <p className="whitespace-pre-wrap text-gray-800 leading-relaxed">
+          <p className="whitespace-pre-wrap text-foreground/90 leading-relaxed">
             {base.description}
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm border-t pt-4">
           <div className="flex items-center gap-2">
-            <Monitor className="h-4 w-4 text-gray-400" />
-            <span className="text-gray-700">
+            <Monitor className="h-4 w-4 text-muted-foreground" />
+            <span className="text-foreground/90">
               {formatLessonMode(base.lessonMode)}
             </span>
           </div>
           {(base.city || base.district) && (
             <div className="flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-gray-400" />
-              <span className="text-gray-700">
+              <MapPin className="h-4 w-4 text-muted-foreground" />
+              <span className="text-foreground/90">
                 {[base.district, base.city].filter(Boolean).join(", ")}
               </span>
             </div>
           )}
           {(base.budgetMin != null || base.budgetMax != null) && (
             <div className="flex items-center gap-2">
-              <Banknote className="h-4 w-4 text-gray-400" />
-              <span className="text-gray-700">
+              <Banknote className="h-4 w-4 text-muted-foreground" />
+              <span className="text-foreground/90">
                 {formatBudget(base.budgetMin, base.budgetMax)}
               </span>
             </div>
           )}
           {base.preferredHours && (
             <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-gray-400" />
-              <span className="text-gray-700">{base.preferredHours}</span>
+              <Clock className="h-4 w-4 text-muted-foreground" />
+              <span className="text-foreground/90">{base.preferredHours}</span>
             </div>
           )}
           <div className="flex items-center gap-2 col-span-full">
-            <Users className="h-4 w-4 text-gray-400" />
-            <span className="text-gray-700">
+            <Users className="h-4 w-4 text-muted-foreground" />
+            <span className="text-foreground/90">
               {base.offerCount} / {MAX_OFFERS_PER_LISTING} teklif
             </span>
           </div>
@@ -209,13 +209,13 @@ export default async function ListingDetailPage({
       {/* Owner view: gelen teklifler */}
       {isOwner && full && (
         <div className="mt-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-3">
+          <h2 className="text-lg font-semibold text-foreground mb-3">
             Gelen Teklifler ({full.offers.length})
           </h2>
           {full.offers.length === 0 ? (
-            <div className="text-center py-12 rounded-xl border border-dashed border-gray-200 bg-white">
-              <Users className="mx-auto h-8 w-8 text-gray-300 mb-2" />
-              <p className="text-sm text-gray-500">
+            <div className="text-center py-12 rounded-xl border border-dashed border-border bg-card">
+              <Users className="mx-auto h-8 w-8 text-muted-foreground/50 mb-2" />
+              <p className="text-sm text-muted-foreground">
                 Henüz bu ilana teklif gelmedi.
               </p>
             </div>
@@ -229,18 +229,18 @@ export default async function ListingDetailPage({
       {!isOwner && listingViewerIsTeacher && (
         <div className="mt-6">
           {base.status !== "open" ? (
-            <div className="bg-white border rounded-xl p-5 text-center">
-              <p className="text-sm text-gray-600">
+            <div className="bg-card border rounded-xl p-5 text-center">
+              <p className="text-sm text-muted-foreground">
                 Bu ilan artık teklif kabul etmiyor.
               </p>
             </div>
           ) : alreadyOffered ? (
-            <div className="bg-white border rounded-xl p-5 text-center">
-              <p className="text-sm text-gray-600">
+            <div className="bg-card border rounded-xl p-5 text-center">
+              <p className="text-sm text-muted-foreground">
                 Bu ilana zaten teklif verdin. Teklifini{" "}
                 <Link
                   href="/private-lesson/teacher-dashboard"
-                  className="text-green-700 font-medium hover:underline"
+                  className="text-suk-brand font-medium hover:underline"
                 >
                   eğitmen panelinden
                 </Link>{" "}
@@ -248,15 +248,15 @@ export default async function ListingDetailPage({
               </p>
             </div>
           ) : base.offerCount >= MAX_OFFERS_PER_LISTING ? (
-            <div className="bg-white border rounded-xl p-5 text-center">
-              <p className="text-sm text-gray-600">
+            <div className="bg-card border rounded-xl p-5 text-center">
+              <p className="text-sm text-muted-foreground">
                 Bu ilan maksimum teklif sayısına ulaştı.
               </p>
             </div>
           ) : (
             <>
               {base.offerCount === MAX_OFFERS_PER_LISTING - 1 ? (
-                <div className="mb-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-950">
+                <div className="mb-3 rounded-lg border border-suk-danger-line bg-suk-danger-soft px-3 py-2.5 text-sm text-suk-danger">
                   <span className="font-semibold">
                     Sadece 1 kontenjan kaldı!
                   </span>{" "}
@@ -264,7 +264,7 @@ export default async function ListingDetailPage({
                   teklif vermezsen başka bir eğitmen bu fırsatı kapabilir.
                 </div>
               ) : base.offerCount >= 2 ? (
-                <div className="mb-3 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2.5 text-sm text-amber-950">
+                <div className="mb-3 rounded-lg border border-suk-warning-border bg-suk-warning-soft px-3 py-2.5 text-sm text-suk-warning-soft-fg">
                   Bu ilanda şimdiden {base.offerCount} teklif var. Kontenjan
                   dolduğunda yeni teklif kabul edilmez.
                 </div>
@@ -280,12 +280,12 @@ export default async function ListingDetailPage({
       )}
 
       {!isOwner && !listingViewerIsTeacher && (
-        <div className="mt-6 bg-white border rounded-xl p-5 text-center text-sm text-gray-600">
+        <div className="mt-6 bg-card border rounded-xl p-5 text-center text-sm text-muted-foreground">
           İlana teklif vermek için eğitmen başvurunun onaylanmış olması gerekir.
           Eğitmen{" "}
           <Link
             href="/private-lesson/teachers"
-            className="text-green-700 font-medium hover:underline"
+            className="text-suk-brand font-medium hover:underline"
           >
             rehberinden
           </Link>{" "}
@@ -298,11 +298,11 @@ export default async function ListingDetailPage({
 
 function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
-    open: "bg-blue-100 text-blue-700",
-    closed: "bg-gray-100 text-gray-600",
-    expired: "bg-gray-100 text-gray-500",
-    pending_review: "bg-amber-100 text-amber-800",
-    rejected: "bg-red-100 text-red-700",
+    open: "bg-suk-brand-soft text-suk-brand-border",
+    closed: "bg-muted text-muted-foreground",
+    expired: "bg-muted text-muted-foreground/80",
+    pending_review: "bg-suk-warning-soft text-suk-warning-soft-fg",
+    rejected: "bg-suk-danger-soft text-suk-danger",
   };
   const labels: Record<string, string> = {
     open: "Yayında",
@@ -314,7 +314,7 @@ function StatusBadge({ status }: { status: string }) {
   return (
     <span
       className={`shrink-0 text-xs px-2 py-1 rounded-full font-medium ${
-        styles[status] ?? "bg-gray-100 text-gray-600"
+        styles[status] ?? "bg-muted text-muted-foreground"
       }`}
     >
       {labels[status] ?? status}

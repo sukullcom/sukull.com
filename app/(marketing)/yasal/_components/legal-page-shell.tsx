@@ -40,19 +40,19 @@ export function LegalPageShell({
     <article className="mx-auto w-full max-w-3xl px-4 py-10 sm:py-14">
       <Link
         href="/yasal"
-        className="mb-6 inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700"
+        className="mb-6 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
       >
         <ArrowLeft className="h-4 w-4" /> Yasal belgeler
       </Link>
 
-      <header className="mb-8 border-b border-slate-200 pb-6">
-        <h1 className="text-3xl font-bold text-slate-900 sm:text-4xl">
+      <header className="mb-8 border-b border-border pb-6">
+        <h1 className="text-3xl font-bold text-foreground sm:text-4xl">
           {title}
         </h1>
         {lede ? (
-          <p className="mt-3 text-base text-slate-600">{lede}</p>
+          <p className="mt-3 text-base text-muted-foreground">{lede}</p>
         ) : null}
-        <p className="mt-3 text-xs uppercase tracking-wide text-slate-400">
+        <p className="mt-3 text-xs uppercase tracking-wide text-muted-foreground/80">
           Yürürlük tarihi:{" "}
           <time dateTime={updatedAt}>
             {new Date(updatedAt).toLocaleDateString("tr-TR", {
@@ -64,14 +64,14 @@ export function LegalPageShell({
         </p>
       </header>
 
-      <div className="prose prose-slate max-w-none prose-headings:font-semibold prose-h2:text-xl prose-h2:mt-8 prose-h3:mt-6 prose-p:leading-relaxed prose-li:my-1 prose-a:text-green-600">
+      <div className="prose prose-slate max-w-none prose-headings:font-semibold prose-h2:text-xl prose-h2:mt-8 prose-h3:mt-6 prose-p:leading-relaxed prose-li:my-1 prose-a:text-suk-brand">
         {children}
       </div>
 
-      <footer className="mt-12 border-t border-slate-200 pt-6 text-xs text-slate-500">
+      <footer className="mt-12 border-t border-border pt-6 text-xs text-muted-foreground">
         Bu belge bilgilendirme amaçlıdır. Hukuki uyuşmazlık hâlinde tebligat
         ve yetkili merciler hakkında detaylar için{" "}
-        <Link href="/yasal/kullanim-sartlari" className="underline hover:text-slate-700">
+        <Link href="/yasal/kullanim-sartlari" className="underline hover:text-foreground">
           Kullanım Şartları
         </Link>{" "}
         belgesine bakınız.

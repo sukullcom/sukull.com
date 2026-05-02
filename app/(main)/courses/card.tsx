@@ -23,11 +23,11 @@ const CATEGORY_STYLES: Record<string, { activeBorder: string; badge: string }> =
   biyoloji:   { activeBorder: "border-lime-500 bg-lime-50/40",     badge: "bg-lime-100 text-lime-700" },
   tarih:      { activeBorder: "border-amber-500 bg-amber-50/40",   badge: "bg-amber-100 text-amber-700" },
   cografya:   { activeBorder: "border-teal-500 bg-teal-50/40",     badge: "bg-teal-100 text-teal-700" },
-  felsefe:    { activeBorder: "border-slate-500 bg-slate-50/40",   badge: "bg-slate-100 text-slate-700" },
-  dinkulturu: { activeBorder: "border-slate-500 bg-slate-50/40",   badge: "bg-slate-100 text-slate-700" },
+  felsefe:    { activeBorder: "border-slate-500 bg-muted/40",   badge: "bg-muted text-foreground" },
+  dinkulturu: { activeBorder: "border-slate-500 bg-muted/40",   badge: "bg-muted text-foreground" },
   sosyal:     { activeBorder: "border-amber-500 bg-amber-50/40",   badge: "bg-amber-100 text-amber-700" },
   ingilizce:  { activeBorder: "border-rose-500 bg-rose-50/40",     badge: "bg-rose-100 text-rose-700" },
-  diger:      { activeBorder: "border-gray-500 bg-gray-50/40",     badge: "bg-gray-100 text-gray-700" },
+  diger:      { activeBorder: "border-gray-500 bg-muted/40",     badge: "bg-muted text-foreground" },
 };
 
 export const Card = memo(
@@ -49,7 +49,7 @@ export const Card = memo(
           "shrink-0 w-[140px] sm:w-auto",
           "relative border-2 rounded-2xl cursor-pointer flex flex-col items-center p-3 pb-3 transition-all",
           "hover:shadow-md hover:-translate-y-0.5 active:translate-y-0",
-          "bg-white border-gray-200",
+          "bg-card border-border",
           active && style.activeBorder,
           disabled && "pointer-events-none opacity-50"
         )}

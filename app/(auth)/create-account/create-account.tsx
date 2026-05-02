@@ -65,7 +65,7 @@ export function CreateAccountForm() {
         id="username"
         type="text"
         placeholder="Kullanıcı Adı"
-        className="w-full min-w-0 border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
+        className="w-full min-w-0 rounded-xl border border-border bg-background p-3 transition-opacity focus:outline-none focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
         disabled={isLoading}
@@ -75,7 +75,7 @@ export function CreateAccountForm() {
         id="email"
         type="email"
         placeholder="E-posta"
-        className="w-full min-w-0 border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
+        className="w-full min-w-0 rounded-xl border border-border bg-background p-3 transition-opacity focus:outline-none focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         disabled={isLoading}
@@ -85,7 +85,7 @@ export function CreateAccountForm() {
         id="password"
         type="password"
         placeholder="Şifre"
-        className="w-full min-w-0 border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
+        className="w-full min-w-0 rounded-xl border border-border bg-background p-3 transition-opacity focus:outline-none focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         disabled={isLoading}
@@ -95,7 +95,7 @@ export function CreateAccountForm() {
         id="confirmPassword"
         type="password"
         placeholder="Şifre Tekrar"
-        className="w-full min-w-0 border border-gray-200 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-green-500 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed disabled:bg-gray-50"
+        className="w-full min-w-0 rounded-xl border border-border bg-background p-3 transition-opacity focus:outline-none focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
         disabled={isLoading}
@@ -103,14 +103,14 @@ export function CreateAccountForm() {
       />
 
       {/* Legal consent — KVKK + Mesafeli sözleşme gereği açık rıza */}
-      <label className="flex w-full min-w-0 items-start gap-2 text-xs text-slate-600 leading-snug cursor-pointer">
+      <label className="flex w-full min-w-0 cursor-pointer items-start gap-2 text-xs leading-snug text-muted-foreground">
         <input
           id="legalAccepted"
           type="checkbox"
           checked={legalAccepted}
           onChange={(e) => setLegalAccepted(e.target.checked)}
           disabled={isLoading}
-          className="mt-0.5 h-4 w-4 rounded border-gray-300 text-green-600 focus:ring-green-500"
+          className="mt-0.5 h-4 w-4 shrink-0 rounded border-input text-suk-brand focus:ring-2 focus:ring-ring focus:ring-offset-0"
           required
           aria-describedby="legal-consent-description"
         />
@@ -120,7 +120,7 @@ export function CreateAccountForm() {
             href="/yasal/kullanim-sartlari"
             target="_blank"
             rel="noopener"
-            className="text-green-600 font-medium hover:underline"
+            className="font-medium text-suk-brand hover:underline"
           >
             Kullanım Şartları
           </Link>
@@ -130,7 +130,7 @@ export function CreateAccountForm() {
             href="/yasal/gizlilik"
             target="_blank"
             rel="noopener"
-            className="text-green-600 font-medium hover:underline"
+            className="font-medium text-suk-brand hover:underline"
           >
             Gizlilik Politikası
           </Link>
@@ -140,7 +140,7 @@ export function CreateAccountForm() {
             href="/yasal/kvkk"
             target="_blank"
             rel="noopener"
-            className="text-green-600 font-medium hover:underline"
+            className="font-medium text-suk-brand hover:underline"
           >
             KVKK Aydınlatma Metni
           </Link>
@@ -175,7 +175,7 @@ export function CreateAccountForm() {
         <Link
           prefetch={false}
           href="/login"
-          className="text-green-500 font-semibold underline hover:text-green-500"
+          className="font-semibold text-suk-brand underline hover:text-suk-brand-hover"
         >
           Giriş Yap
         </Link>

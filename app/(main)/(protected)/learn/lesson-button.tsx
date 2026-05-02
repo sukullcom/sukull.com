@@ -74,7 +74,7 @@ export const LessonButton = ({
         {current ? (
           <div className="relative isolate h-[102px] w-[102px]">
             <div
-              className="absolute -top-6 left-2.5 z-20 px-3 py-2.5 border-2 font-bold uppercase bg-white rounded-xl animate-bounce tracking-wide shadow-sm"
+              className="absolute -top-6 left-2.5 z-20 px-3 py-2.5 border-2 font-bold uppercase bg-card rounded-xl animate-bounce tracking-wide shadow-sm"
               style={{ color: subjectColor.hex }}
             >
               Başla
@@ -88,7 +88,7 @@ export const LessonButton = ({
                     stroke: subjectColor.hex,
                   },
                   trail: {
-                    stroke: "#e5e7eb",
+                    stroke: "hsl(var(--suk-border) / 1)",
                   },
                 }}
               >
@@ -102,7 +102,7 @@ export const LessonButton = ({
                     className={cn(
                       "h-10 w-10",
                       locked
-                        ? "fill-neutral-400 text-neutral-400 stroke-neutral-400"
+                        ? "fill-neutral-400 text-muted-foreground stroke-neutral-400"
                         : "fill-primary-foreground text-primary-foreground",
                       isCompleted && "fill-none stroke-[4]"
                     )}
@@ -122,7 +122,7 @@ export const LessonButton = ({
               className={cn(
                 "h-10 w-10",
                 locked
-                  ? "fill-neutral-400 text-neutral-400 stroke-neutral-400"
+                  ? "fill-neutral-400 text-muted-foreground stroke-neutral-400"
                   : "fill-primary-foreground text-primary-foreground",
                 isCompleted && "fill-none stroke-[4]"
               )}

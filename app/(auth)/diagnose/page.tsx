@@ -50,13 +50,13 @@ export default function DiagnosePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8">
-        <h1 className="text-3xl font-bold text-center mb-4 flex items-center justify-center gap-2">
-          <Search className="w-7 h-7" /> Browser Diagnostics
+    <div className="min-h-screen bg-muted/50 p-4">
+      <div className="mx-auto max-w-4xl rounded-2xl bg-card p-8 shadow-xl">
+        <h1 className="mb-4 flex items-center justify-center gap-2 text-center text-3xl font-bold text-foreground">
+          <Search className="h-7 w-7" /> Browser Diagnostics
         </h1>
         
-        <p className="text-center text-gray-600 mb-6">
+        <p className="mb-6 text-center text-muted-foreground">
           This page helps diagnose login issues
         </p>
 
@@ -109,7 +109,7 @@ export default function DiagnosePage() {
           />
 
           {Array.isArray(diagnostics.supabaseCookies) && diagnostics.supabaseCookies.length > 0 && (
-            <div className="bg-gray-50 rounded-lg p-4">
+            <div className="rounded-lg bg-muted/60 p-4">
               <h3 className="font-semibold mb-2">Supabase Cookies Found:</h3>
               <div className="space-y-1">
                 {diagnostics.supabaseCookies.map((cookie, i) => (
@@ -121,11 +121,11 @@ export default function DiagnosePage() {
             </div>
           )}
 
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h3 className="font-semibold mb-2 text-blue-800 flex items-center gap-1.5">
-              <ClipboardList className="w-4 h-4" /> Interpretation:
+          <div className="rounded-lg border border-suk-payment-ring/40 bg-suk-payment-soft p-4">
+            <h3 className="mb-2 flex items-center gap-1.5 font-semibold text-suk-payment-soft-fg">
+              <ClipboardList className="h-4 w-4" /> Interpretation:
             </h3>
-            <ul className="text-sm text-blue-800 space-y-2">
+            <ul className="space-y-2 text-sm text-suk-payment-soft-fg">
               <li>
                 <strong>Cookies Enabled:</strong>{' '}
                 {diagnostics.cookiesEnabled 
@@ -171,13 +171,13 @@ export default function DiagnosePage() {
 
 function DiagnosticSection({ title, data }: { title: React.ReactNode; data: Record<string, string | number | boolean | string[] | null> }) {
   return (
-    <div className="bg-gray-50 rounded-lg p-4">
-      <h3 className="font-semibold mb-3">{title}</h3>
+    <div className="rounded-lg bg-muted/60 p-4">
+      <h3 className="mb-3 font-semibold">{title}</h3>
       <div className="space-y-2">
         {Object.entries(data).map(([key, value]) => (
-          <div key={key} className="flex justify-between items-start">
-            <span className="text-sm font-medium text-gray-600">{key}:</span>
-            <span className="text-sm text-gray-900 text-right ml-4 break-all max-w-md">
+          <div key={key} className="flex items-start justify-between">
+            <span className="text-sm font-medium text-muted-foreground">{key}:</span>
+            <span className="ml-4 max-w-md break-all text-right text-sm text-foreground">
               {typeof value === 'object' ? JSON.stringify(value) : String(value)}
             </span>
           </div>
