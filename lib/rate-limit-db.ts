@@ -153,6 +153,10 @@ function fallbackDeny(windowSeconds: number): RateLimitResult {
 export function getClientIp(request: Request): string {
   const cf = request.headers.get("cf-connecting-ip");
   if (cf) return cf.trim();
+  const fly = request.headers.get("fly-client-ip");
+  if (fly) return fly.trim();
+  const trueClient = request.headers.get("true-client-ip");
+  if (trueClient) return trueClient.trim();
   const real = request.headers.get("x-real-ip");
   if (real) return real.trim();
   const fwd = request.headers.get("x-forwarded-for");
@@ -278,8 +282,13 @@ export const RATE_LIMITS = {
   lightProbe: { max: 60, windowSeconds: 60 },
 
   // --- Public reads — IP-scoped ---
-  /** Schools search/cities/districts/categories. Heavy GROUP BY aggregations. */
-  schoolsRead: { max: 60, windowSeconds: 60 },
+  /**
+   * Okul kataloğu (şehir / ilçe / tür / liste). `unstable_cache` + HTTP
+   * Cache-Control ile çoğu trafik DB’ye gitmez; kota yine de tek IP altında
+   * (okul Wi‑Fi, kurumsal NAT, mobil CGNAT) yüzlerce eşzamanlı kayıt/onboarding
+   * için paylaşılır. 60/dk çok düşük kalıp 429 + “donuyor” hissi yaratıyordu.
+   */
+  schoolsRead: { max: 300, windowSeconds: 60 },
   /** Random avatar generation — cheap but trivially loopable. */
   avatar: { max: 120, windowSeconds: 60 },
 

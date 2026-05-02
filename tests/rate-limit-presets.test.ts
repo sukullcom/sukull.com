@@ -35,6 +35,11 @@ describe("RATE_LIMITS presets", () => {
     expect(RATE_LIMITS.leaderboard.max).toBeLessThanOrEqual(200);
   });
 
+  it("schools read allows shared-NAT / onboarding bursts", () => {
+    expect(RATE_LIMITS.schoolsRead.max).toBeGreaterThanOrEqual(200);
+    expect(RATE_LIMITS.schoolsRead.max).toBeLessThanOrEqual(600);
+  });
+
   it("all presets have positive integers", () => {
     for (const [name, preset] of Object.entries(RATE_LIMITS)) {
       expect(Number.isInteger(preset.max), `${name}.max`).toBe(true);
@@ -57,6 +62,14 @@ describe("getClientIp", () => {
       "x-real-ip": "3.3.3.3",
     });
     expect(getClientIp(req)).toBe("1.1.1.1");
+  });
+
+  it("prefers Fly-Client-Ip when CF absent", () => {
+    const req = buildRequest({
+      "fly-client-ip": "5.5.5.5",
+      "x-forwarded-for": "2.2.2.2",
+    });
+    expect(getClientIp(req)).toBe("5.5.5.5");
   });
 
   it("falls back to X-Real-Ip when CF header absent", () => {

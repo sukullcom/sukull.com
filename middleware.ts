@@ -355,6 +355,25 @@ export async function middleware(req: NextRequest) {
     return preflight;
   }
 
+  /**
+   * Eski okul kataloğu URL’i (`?step=`). Redirect iki round-trip + çift kota
+   * riski yaratıyordu; rewrite ile doğrudan `/api/schools` handler’ına düşer.
+   */
+  if (isApiRoute && req.method === 'GET' && pathname === '/api/schools/filtered') {
+    const url = req.nextUrl.clone();
+    url.pathname = '/api/schools';
+    const step = url.searchParams.get('step');
+    url.searchParams.delete('step');
+    if (step) {
+      url.searchParams.set('action', step);
+    }
+    const response = NextResponse.rewrite(url, {
+      request: { headers: forwardedHeaders },
+    });
+    applyHeaders(response, '/api/schools', requestId, false, req);
+    return response;
+  }
+
   // API routes (except /api/auth/) don't need auth check — they handle it themselves.
   // Public paths and home also don't need getUser(). Skip the Supabase call entirely.
   if (isApiRoute && !isAuthApi) {

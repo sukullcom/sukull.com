@@ -11,6 +11,16 @@ import { clampPositiveInt } from '@/lib/pagination';
 
 type SchoolType = 'university' | 'high_school' | 'secondary_school' | 'elementary_school';
 
+/** Tarayıcı önbelleği: aggregate veri nadiren değişir (Next `unstable_cache` + tag ile tutarlı). */
+const SCHOOL_MASTER_AGG_CACHE_CONTROL =
+  'public, max-age=600, stale-while-revalidate=86400';
+
+function jsonSchoolCatalog<T extends Record<string, unknown>>(body: T): NextResponse {
+  const res = NextResponse.json(body);
+  res.headers.set('Cache-Control', SCHOOL_MASTER_AGG_CACHE_CONTROL);
+  return res;
+}
+
 /**
  * Schools master-data aggregations.
  *
@@ -93,7 +103,7 @@ export const GET = secureApi.rateLimited(
     switch (action) {
       case 'cities': {
         const cities = await getCitiesAggregate();
-        return NextResponse.json({ cities });
+        return jsonSchoolCatalog({ cities });
       }
 
       case 'districts': {
@@ -101,7 +111,7 @@ export const GET = secureApi.rateLimited(
           return NextResponse.json({ error: 'İl bilgisi gereklidir.' }, { status: 400 });
         }
         const districts = await getDistrictsAggregate(city.toUpperCase());
-        return NextResponse.json({ districts });
+        return jsonSchoolCatalog({ districts });
       }
 
       case 'categories': {
@@ -112,7 +122,7 @@ export const GET = secureApi.rateLimited(
           city.toUpperCase(),
           district.toUpperCase(),
         );
-        return NextResponse.json({ categories });
+        return jsonSchoolCatalog({ categories });
       }
 
       case 'schools':
@@ -161,7 +171,12 @@ export const GET = secureApi.rateLimited(
           )
           .limit(limit);
 
-        return NextResponse.json({ schools: schoolResults });
+        const res = NextResponse.json({ schools: schoolResults });
+        res.headers.set(
+          'Cache-Control',
+          'public, max-age=120, stale-while-revalidate=3600',
+        );
+        return res;
       }
 
       case 'leaderboard': {

@@ -53,7 +53,7 @@ export const ProfileSchoolSelector = ({
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch('/api/schools/filtered?step=cities');
+      const response = await fetch('/api/schools?action=cities');
       if (!response.ok) throw new Error('Şehirler yüklenemedi');
       const data = await response.json();
       setCities(data.cities || []);
@@ -69,7 +69,7 @@ export const ProfileSchoolSelector = ({
     try {
       setLoading(true);
       setError(null);
-      const response = await fetch(`/api/schools/filtered?step=districts&city=${encodeURIComponent(city)}`);
+      const response = await fetch(`/api/schools?action=districts&city=${encodeURIComponent(city)}`);
       if (!response.ok) throw new Error('İlçeler yüklenemedi');
       const data = await response.json();
       setDistricts(data.districts || []);
@@ -86,7 +86,7 @@ export const ProfileSchoolSelector = ({
       setLoading(true);
       setError(null);
       const response = await fetch(
-        `/api/schools/filtered?step=categories&city=${encodeURIComponent(city)}&district=${encodeURIComponent(district)}`
+        `/api/schools?action=categories&city=${encodeURIComponent(city)}&district=${encodeURIComponent(district)}`
       );
       if (!response.ok) throw new Error('Kategoriler yüklenemedi');
       const data = await response.json();
@@ -103,8 +103,8 @@ export const ProfileSchoolSelector = ({
     try {
       setLoading(true);
       setError(null);
-      const url = new URL('/api/schools/filtered', window.location.origin);
-      url.searchParams.set('step', 'schools');
+      const url = new URL('/api/schools', window.location.origin);
+      url.searchParams.set('action', 'schools');
       url.searchParams.set('city', city);
       url.searchParams.set('district', district);
       url.searchParams.set('category', category);
