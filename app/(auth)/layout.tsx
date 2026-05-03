@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+// Prerender sırasında bileşen ağacı hata veriyor; segment dinamik render.
+export const dynamic = "force-dynamic";
+
 export default function AuthLayout({
   children,
 }: {

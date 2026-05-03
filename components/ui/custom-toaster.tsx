@@ -1,6 +1,12 @@
-'use client';
+"use client";
 
-import { Toaster as Sonner, toast } from 'sonner';
+import dynamic from "next/dynamic";
+import { toast } from "sonner";
+
+const SonnerToaster = dynamic(
+  () => import("sonner").then((mod) => mod.Toaster),
+  { ssr: false },
+);
 
 interface ToastOptions {
   title?: string;
@@ -18,51 +24,61 @@ interface ToasterProps {
       info?: ToastOptions;
     };
   };
-  position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'top-center' | 'bottom-center';
+  position?:
+    | "top-left"
+    | "top-right"
+    | "bottom-left"
+    | "bottom-right"
+    | "top-center"
+    | "bottom-center";
   closeButton?: boolean;
   richColors?: boolean;
   duration?: number;
 }
 
 export function CustomToaster({
-  position = 'top-center',
+  position = "top-center",
   closeButton = true,
   richColors = true,
   duration = 3000,
 }: ToasterProps) {
   return (
-    <Sonner
+    <SonnerToaster
       position={position}
       closeButton={closeButton}
       richColors={richColors}
       duration={duration}
       theme="light"
     />
-  )
+  );
 }
 
-// Also export as Toaster for backward compatibility
-export { CustomToaster as Toaster }
+export { CustomToaster as Toaster };
 
-// Override default toast functions with Turkish default messages
 export const turkishToast = {
   error: (message: string, options?: ToastOptions) => toast.error(message, options),
   success: (message: string, options?: ToastOptions) => toast.success(message, options),
   warning: (message: string, options?: ToastOptions) => toast.warning(message, options),
   info: (message: string, options?: ToastOptions) => toast.info(message, options),
-  
-  // Common messages
-  errorDefault: (options?: ToastOptions) => toast.error('Bir hata oluştu. Lütfen tekrar deneyin.', options),
-  successDefault: (options?: ToastOptions) => toast.success('İşlem başarıyla tamamlandı.', options),
-  warningDefault: (options?: ToastOptions) => toast.warning('Dikkat! Bir sorun oluşabilir.', options),
-  infoDefault: (options?: ToastOptions) => toast.info('Bilginize: İşlem devam ediyor.', options),
-  savedSuccess: (options?: ToastOptions) => toast.success('Başarıyla kaydedildi!', options),
-  updatedSuccess: (options?: ToastOptions) => toast.success('Başarıyla güncellendi!', options),
-  deletedSuccess: (options?: ToastOptions) => toast.success('Başarıyla silindi!', options),
-  networkError: (options?: ToastOptions) => toast.error('Ağ hatası! Lütfen internet bağlantınızı kontrol edin.', options),
-  sessionExpired: (options?: ToastOptions) => toast.error('Oturumunuz sona erdi. Lütfen tekrar giriş yapın.', options),
-  permissionDenied: (options?: ToastOptions) => toast.error('İzin reddedildi. Bu işlemi yapmaya yetkiniz yok.', options),
-  limitReached: (options?: ToastOptions) => toast.warning('Limite ulaştınız! Daha fazla ekleme yapamazsınız.', options),
-  notFound: (options?: ToastOptions) => toast.error('İstediğiniz içerik bulunamadı.', options),
-  dataLoaded: (options?: ToastOptions) => toast.success('Veriler başarıyla yüklendi.', options),
-} 
+
+  errorDefault: (options?: ToastOptions) =>
+    toast.error("Bir hata oluştu. Lütfen tekrar deneyin.", options),
+  successDefault: (options?: ToastOptions) =>
+    toast.success("İşlem başarıyla tamamlandı.", options),
+  warningDefault: (options?: ToastOptions) =>
+    toast.warning("Dikkat! Bir sorun oluşabilir.", options),
+  infoDefault: (options?: ToastOptions) => toast.info("Bilginize: İşlem devam ediyor.", options),
+  savedSuccess: (options?: ToastOptions) => toast.success("Başarıyla kaydedildi!", options),
+  updatedSuccess: (options?: ToastOptions) => toast.success("Başarıyla güncellendi!", options),
+  deletedSuccess: (options?: ToastOptions) => toast.success("Başarıyla silindi!", options),
+  networkError: (options?: ToastOptions) =>
+    toast.error("Ağ hatası! Lütfen internet bağlantınızı kontrol edin.", options),
+  sessionExpired: (options?: ToastOptions) =>
+    toast.error("Oturumunuz sona erdi. Lütfen tekrar giriş yapın.", options),
+  permissionDenied: (options?: ToastOptions) =>
+    toast.error("İzin reddedildi. Bu işlemi yapmaya yetkiniz yok.", options),
+  limitReached: (options?: ToastOptions) =>
+    toast.warning("Limite ulaştınız! Daha fazla ekleme yapamazsınız.", options),
+  notFound: (options?: ToastOptions) => toast.error("İstediğiniz içerik bulunamadı.", options),
+  dataLoaded: (options?: ToastOptions) => toast.success("Veriler başarıyla yüklendi.", options),
+};

@@ -26,8 +26,12 @@ const nextConfig = {
   optimizeFonts: true,
   swcMinify: true,
   experimental: {
-    optimizeCss: true,
-    serverComponentsExternalPackages: ['@supabase/supabase-js'],
+    // `optimizeCss` (critters) has caused prerender failures on Windows
+    // ("Element type is invalid: ... undefined") while still reporting a
+    // successful compile. Keep disabled until we adopt a stable CSS path
+    // on Next 15+ or critters is fixed for our tree.
+    optimizeCss: false,
+    serverComponentsExternalPackages: ["@supabase/supabase-js"],
   },
   /**
    * Legacy endpoint rewrites.
@@ -140,7 +144,7 @@ const nextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    removeConsole: process.env.NODE_ENV === "production",
   },
   eslint: {
     ignoreDuringBuilds: false,
