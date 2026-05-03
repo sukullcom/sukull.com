@@ -1,9 +1,8 @@
--- Add new columns to schools table
-ALTER TABLE schools 
-ADD COLUMN city TEXT,
-ADD COLUMN district TEXT,
-ADD COLUMN category TEXT,
-ADD COLUMN kind TEXT;
+-- Add new columns to schools table (idempotent — tekrar çalıştırılabilir)
+ALTER TABLE schools ADD COLUMN IF NOT EXISTS city TEXT;
+ALTER TABLE schools ADD COLUMN IF NOT EXISTS district TEXT;
+ALTER TABLE schools ADD COLUMN IF NOT EXISTS category TEXT;
+ALTER TABLE schools ADD COLUMN IF NOT EXISTS kind TEXT;
 
 -- Create indexes for better search performance
 CREATE INDEX IF NOT EXISTS idx_schools_city ON schools(city);

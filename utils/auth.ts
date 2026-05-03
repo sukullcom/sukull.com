@@ -62,14 +62,23 @@ export const auth = {
   },
 
   async resetPasswordRequest(email: string) {
-    const { data: userData } = await supabase
-      .from('users')
-      .select('provider')
-      .eq('email', email)
-      .single()
+    const { data, error } = await supabase.rpc("auth_lookup_provider_by_email", {
+      p_email: email,
+    });
+    if (error) {
+      clientLogger.error({
+        message: "auth_lookup_provider_by_email failed",
+        error,
+        location: "utils/auth/resetPasswordRequest",
+        fields: { email },
+      });
+      return { success: true, message: "Hesap mevcutsa şifre sıfırlama bağlantısı gönderilecektir." };
+    }
+    const row = Array.isArray(data) ? data[0] : data;
+    const provider = row && typeof row === "object" && "provider" in row ? (row as { provider: string }).provider : null;
 
     // If user doesn't exist or is not 'email' provider, do a "silent success"
-    if (!userData || userData.provider !== 'email') {
+    if (!provider || provider !== "email") {
       return { success: true, message: 'Hesap mevcutsa şifre sıfırlama bağlantısı gönderilecektir.' }
     }
 
@@ -90,13 +99,25 @@ export const auth = {
 
   async resendVerificationEmail(email: string) {
     // Check if user exists and is an email provider user
-    const { data: userData } = await supabase
-      .from('users')
-      .select('provider')
-      .eq('email', email)
-      .single()
+    const { data, error } = await supabase.rpc("auth_lookup_provider_by_email", {
+      p_email: email,
+    });
+    if (error) {
+      clientLogger.error({
+        message: "auth_lookup_provider_by_email failed",
+        error,
+        location: "utils/auth/resendVerificationEmail",
+        fields: { email },
+      });
+      return {
+        success: true,
+        message: "Hesap mevcutsa doğrulama e-postası gönderilecektir.",
+      };
+    }
+    const row = Array.isArray(data) ? data[0] : data;
+    const provider = row && typeof row === "object" && "provider" in row ? (row as { provider: string }).provider : null;
 
-    if (!userData || userData.provider !== 'email') {
+    if (!provider || provider !== "email") {
       return { 
         success: true, 
         message: 'Hesap mevcutsa doğrulama e-postası gönderilecektir.' 

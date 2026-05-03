@@ -1,4 +1,5 @@
 import {
+  getSchoolCities,
   getTopUsers,
   getUserProgress,
   getSchoolPointsByType,
@@ -6,9 +7,6 @@ import {
 } from "@/db/queries";
 import { leaderboardSchoolTabsForPath } from "@/lib/learning-path";
 import { getServerUser } from "@/lib/auth";
-import db from "@/db/drizzle";
-import { schools } from "@/db/schema";
-import { sql } from "drizzle-orm";
 import { getRequestLogger } from "@/lib/logger";
 import { SCHOOL_LEADERBOARD_LIST_MAX } from "@/lib/school-leaderboard-limits";
 import Image from "next/image";
@@ -23,16 +21,13 @@ const INITIAL_USER_LIMIT = 50;
 
 const LeaderboardPage = async () => {
   try {
-    const [userProgress, user, topUsers, userAndSchoolRank, citiesData] =
+    const [userProgress, user, topUsers, userAndSchoolRank, cities] =
       await Promise.all([
         getUserProgress(),
         getServerUser(),
         getTopUsers(INITIAL_USER_LIMIT, 0),
         getUserRank(),
-        db
-          .selectDistinct({ city: schools.city })
-          .from(schools)
-          .orderBy(sql`${schools.city} ASC`),
+        getSchoolCities(),
       ]);
 
     const segmentTabs = leaderboardSchoolTabsForPath(userProgress?.learningPath);
@@ -79,8 +74,6 @@ const LeaderboardPage = async () => {
     if (!userProgress || !userProgress.activeCourse) {
       redirect("/courses?message=select-course");
     }
-
-    const cities = citiesData.map((c) => c.city);
 
     return (
       <div className="w-full pb-10 px-3 sm:px-6 overflow-x-hidden">

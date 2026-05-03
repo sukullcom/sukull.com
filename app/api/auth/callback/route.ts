@@ -1,4 +1,4 @@
-import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import { createServerClient, type CookieOptions, type SetAllCookies } from '@supabase/ssr';
 import { type NextRequest, NextResponse } from 'next/server';
 
 import { ensurePublicUserFromAuth } from '@/lib/ensure-public-user';
@@ -37,11 +37,11 @@ function buildSupabaseForRequest(request: NextRequest) {
   const supabase = createServerClient(supabaseUrl, supabaseKey, {
     cookies: {
       getAll: () => request.cookies.getAll(),
-      setAll: (toSet) => {
+      setAll: ((toSet) => {
         toSet.forEach(({ name, value, options }) => {
           pendingCookies.push({ name, value, options: options as CookieOptions });
         });
-      },
+      }) satisfies SetAllCookies,
     },
   });
   const applyCookies = (res: NextResponse) => {

@@ -18,6 +18,15 @@ import {
 import { queryResultRows } from "@/lib/query-result";
 import { teacherPrivateLessonDisplayName } from "@/lib/teacher-private-lesson-name";
 
+function isPostgresUniqueViolation(err: unknown): boolean {
+  return (
+    typeof err === "object" &&
+    err !== null &&
+    "code" in err &&
+    (err as { code: string }).code === "23505"
+  );
+}
+
 // ---------------------------------------------------------------------------
 // Reads
 // ---------------------------------------------------------------------------
@@ -261,14 +270,28 @@ async function ensureChat(
   const rows = queryResultRows<{ id: number }>(existing);
   if (rows[0]?.id) return Number(rows[0].id);
 
-  const [created] = await tx
-    .insert(studyBuddyChats)
-    .values({
-      participants: pair,
-      last_message: "",
-    })
-    .returning({ id: studyBuddyChats.id });
-  return created.id;
+  try {
+    const [created] = await tx
+      .insert(studyBuddyChats)
+      .values({
+        participants: pair,
+        last_message: "",
+      })
+      .returning({ id: studyBuddyChats.id });
+    return created.id;
+  } catch (err) {
+    if (!isPostgresUniqueViolation(err)) throw err;
+    const afterRace = await tx.execute(sql`
+      SELECT id
+      FROM study_buddy_chats
+      WHERE participants @> ${JSON.stringify(pair)}::jsonb
+        AND jsonb_array_length(participants) = 2
+      LIMIT 1
+    `);
+    const again = queryResultRows<{ id: number }>(afterRace);
+    if (again[0]?.id) return Number(again[0].id);
+    throw err;
+  }
 }
 
 /**

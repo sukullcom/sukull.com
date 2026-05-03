@@ -30,7 +30,17 @@ async function main(): Promise<void> {
   const [, , filePath] = process.argv;
   if (!filePath) {
     console.error(
-      "Usage: npx tsx scripts/apply-migration.ts <path-to-sql-file>",
+      "Usage: npx tsx scripts/apply-migration.ts <path-to-sql-file>\n\n" +
+        "Examples (from repo root):\n" +
+        "  npm run db:apply -- supabase/migrations/0025_add_admin_search_and_leaderboard_indexes.sql\n" +
+        "  npm run db:apply -- supabase/migrations/0035_schools_city_district_category.sql\n" +
+        "  npm run db:apply -- supabase/migrations/0036_schools_indexes_repair.sql\n" +
+        "  npm run db:apply -- supabase/migrations/0037_study_buddy_chats_unique_two_user_pair.sql\n" +
+        "  npm run db:apply -- supabase/migrations/0038_rls_study_buddy_schools_users.sql\n" +
+        "  npm run db:apply -- supabase/migrations/0040_final_rls_all_tables.sql\n" +
+        "  npm run db:apply -- supabase/migrations/0041_rls_marketplace_credits_snippets_daily.sql\n" +
+        "  (0036–0038: indeks/chat/RLS temeli; 0040: içerik + ilerleme + başvuru + log RLS; 0041: marketplace/kredi/snippets/günlük RLS.)\n\n" +
+        "Requires DIRECT_URL (preferred for DDL) or DATABASE_URL in .env — see script header.",
     );
     process.exit(1);
   }

@@ -3,6 +3,9 @@
  * OAuth / callback API route'unda tarayıcı Supabase client'ına güvenmek
  * PKCE yok, RLS veya context nedeniyle başarısız olabiliyor; bu yüzden
  * sunucu tarafında Drizzle ile eklenir.
+ *
+ * INSERT ... ON CONFLICT DO NOTHING ile çift tıklama / eşzamanlı giriş
+ * yarışlarında unique ihlali oluşmaz (login server action dahil).
  */
 import db from "@/db/drizzle";
 import { users } from "@/db/schema";
@@ -36,8 +39,14 @@ export async function ensurePublicUserFromAuth(
         (authUser.user_metadata?.avatar_url as string) ||
         `https://api.dicebear.com/9.x/bottts/svg?seed=${authUser.id}`;
     } else {
+      const meta = authUser.user_metadata as Record<string, unknown> | undefined;
+      const metaUsername =
+        typeof meta?.username === "string" && meta.username.trim()
+          ? meta.username.trim()
+          : undefined;
       name =
         (authUser.user_metadata?.full_name as string | undefined) ||
+        metaUsername ||
         authUser.email?.split("@")[0] ||
         "User";
     }

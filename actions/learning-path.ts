@@ -1,7 +1,7 @@
 "use server";
 
 import db from "@/db/drizzle";
-import { schools, userProgress } from "@/db/schema";
+import { schools, userProgress, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { getServerUser } from "@/lib/auth";
 import {
@@ -11,7 +11,6 @@ import {
 } from "@/lib/learning-path";
 import { canChangeStudentGradeSelection, nextLockExpiresAt } from "@/lib/school-grade-lock";
 import { revalidatePath } from "next/cache";
-import { users } from "@/utils/users";
 import { redirect } from "next/navigation";
 
 function validatePath(path: string, grade: number | null): { ok: true; path: LearningPath; grade: number | null } | { ok: false; error: string } {
@@ -75,7 +74,10 @@ export async function completeLearningPath(
 
   const userId = user.id;
   const now = new Date();
-  const profile = await users.getUser(userId).catch(() => null);
+  const profile = await db.query.users.findFirst({
+    where: eq(users.id, userId),
+    columns: { name: true },
+  });
   const userName = profile?.name || (user.user_metadata as { full_name?: string })?.full_name || "User";
   const existing = await db.query.userProgress.findFirst({ where: eq(userProgress.userId, userId) });
   if (existing?.onboardingCompletedAt) {

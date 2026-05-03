@@ -4,13 +4,12 @@
 import { POINTS_TO_REFILL, SCORING_SYSTEM } from '@/constants';
 import db from '@/db/drizzle';
 import { getCourseById, getUserProgress, checkSubscriptionStatus } from '@/db/queries';
-import { challengeProgress, challenges, schools, userProgress } from '@/db/schema';
+import { challengeProgress, challenges, schools, userProgress, users } from '@/db/schema';
 import { and, eq, sql } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { getServerUser } from '@/lib/auth';
 import { canChangeSchoolSelection, nextLockExpiresAt } from '@/lib/school-grade-lock';
-import { users } from '@/utils/users';
 import { updateDailyStreak } from "./daily-streak";
 import { logActivity } from '@/lib/activity-logger';
 import { getRequestLogger, logger } from '@/lib/logger';
@@ -162,7 +161,10 @@ export const upsertUserProgress = async (courseId: number) => {
   if (!course.units.length || !course.units[0].lessons.length) {
     throw new Error('Bu ders henüz içerik barındırmıyor.');
   }
-  const profile = await users.getUser(userId).catch(() => null);
+  const profile = await db.query.users.findFirst({
+    where: eq(users.id, userId),
+    columns: { name: true },
+  });
   const providedName = profile?.name || user.user_metadata?.full_name || 'User';
   const existing = await getUserProgress();
   if (!existing) {

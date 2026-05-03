@@ -13,6 +13,17 @@ forgotten `where userId = ?` away from a data leak**. Unlike RLS, the
 compiler and the framework will not catch that mistake; only code
 review + this checklist will.
 
+**PostgREST / browser (`NEXT_PUBLIC_SUPABASE_ANON_KEY`):** Row Level
+Security applies. Hand-written migration
+`supabase/migrations/0038_rls_study_buddy_schools_users.sql` enables RLS
+on `study_buddy_chats`, `study_buddy_messages`, `study_buddy_posts`,
+`schools` (public read), and `users` (self row only for authenticated
+SELECT/INSERT/UPDATE), plus RPCs `fetch_peer_profiles_for_study_buddy`
+and `auth_lookup_provider_by_email`. Apply with `npm run db:apply --
+supabase/migrations/0038_rls_study_buddy_schools_users.sql` before
+shipping client changes that rely on them. Server-side Drizzle (owner
+connection) still bypasses RLS by design.
+
 ---
 
 ## Cadence

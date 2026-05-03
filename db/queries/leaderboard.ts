@@ -1,11 +1,11 @@
 /**
  * Leaderboard queries: top users, school rankings, and the user's own rank.
  *
- * `getTopUsers` is wrapped in `unstable_cache` with a short TTL so that
- * /leaderboard renders from the data cache instead of hitting Postgres on
- * every view. Mutations that change `user_progress.points` do NOT bust
- * this cache on purpose — the TTL bounds staleness to a couple of minutes
- * and we'd otherwise flush on every lesson completion.
+ * `getTopUsers`, `getSchoolPointsByType`, and per-user rank summaries use
+ * `unstable_cache` with short TTLs so hot pages (e.g. /leaderboard) do not
+ * hammer Postgres on every navigation. Point mutations intentionally do not
+ * bust these tags on every completion — TTL bounds staleness; optional
+ * `revalidateTag(CACHE_TAGS.userRank(userId))` exists for stricter freshness.
  */
 import { cache } from "react";
 import { unstable_cache } from "next/cache";
@@ -17,6 +17,25 @@ import { normalizeAvatarUrl } from "@/utils/avatar";
 import { CACHE_TAGS, CACHE_TTL } from "@/lib/cache-tags";
 import { queryResultRows } from "@/lib/query-result";
 import { SCHOOL_LEADERBOARD_LIST_MAX } from "@/lib/school-leaderboard-limits";
+
+/**
+ * Leaderboard city filter list. Caching for 24h as school data is static.
+ */
+const _getSchoolCitiesCached = unstable_cache(
+  async () => {
+    const data = await db
+      .selectDistinct({ city: schools.city })
+      .from(schools)
+      .orderBy(sql`${schools.city} ASC`);
+    return data.map((c) => c.city);
+  },
+  ["school-cities"],
+  { tags: [CACHE_TAGS.schoolsMaster], revalidate: CACHE_TTL.schoolsMaster },
+);
+
+export const getSchoolCities = cache(async () => {
+  return _getSchoolCitiesCached();
+});
 
 export const getTopTenUsers = cache(async () => {
   const user = await getServerUser();
@@ -65,15 +84,17 @@ export const getTopUsers = cache(
   },
 );
 
-export const getSchoolPointsByType = cache(
+type SchoolLeaderboardType =
+  | "university"
+  | "high_school"
+  | "secondary_school"
+  | "elementary_school";
+
+const _getSchoolPointsByTypeCached = unstable_cache(
   async (
-    schoolType:
-      | "university"
-      | "high_school"
-      | "secondary_school"
-      | "elementary_school",
-    limit: number = SCHOOL_LEADERBOARD_LIST_MAX,
-    offset: number = 0,
+    schoolType: SchoolLeaderboardType,
+    limit: number,
+    offset: number,
     city?: string,
   ) => {
     const conditions = [eq(schools.type, schoolType)];
@@ -81,7 +102,7 @@ export const getSchoolPointsByType = cache(
       conditions.push(eq(schools.city, city.toUpperCase()));
     }
 
-    const topSchools = await db
+    return db
       .select({
         schoolId: schools.id,
         schoolName: schools.name,
@@ -93,8 +114,22 @@ export const getSchoolPointsByType = cache(
       .orderBy(desc(schools.totalPoints), asc(schools.name))
       .limit(limit)
       .offset(offset);
+  },
+  ["school-points-by-type"],
+  {
+    tags: [CACHE_TAGS.schoolLeaderboard],
+    revalidate: CACHE_TTL.schoolLeaderboard,
+  },
+);
 
-    return topSchools;
+export const getSchoolPointsByType = cache(
+  async (
+    schoolType: SchoolLeaderboardType,
+    limit: number = SCHOOL_LEADERBOARD_LIST_MAX,
+    offset: number = 0,
+    city?: string,
+  ) => {
+    return _getSchoolPointsByTypeCached(schoolType, limit, offset, city);
   },
 );
 
@@ -114,13 +149,7 @@ export const getElementarySchoolPoints = cache(async () => {
   return getSchoolPointsByType("elementary_school");
 });
 
-export const getUserRank = cache(async () => {
-  const user = await getServerUser();
-  if (!user) {
-    return null;
-  }
-  const userId = user.id;
-
+async function computeUserRankForUser(userId: string) {
   const userProgressData = await db.query.userProgress.findFirst({
     where: eq(userProgress.userId, userId),
     columns: { points: true, schoolId: true },
@@ -208,4 +237,23 @@ export const getUserRank = cache(async () => {
     schoolPoints: currentSchoolData?.totalPoints || 0,
     schoolType,
   };
+}
+
+function getCachedUserRank(userId: string) {
+  return unstable_cache(
+    async () => computeUserRankForUser(userId),
+    ["user-rank", userId],
+    {
+      tags: [CACHE_TAGS.userRank(userId)],
+      revalidate: CACHE_TTL.userRank,
+    },
+  )();
+}
+
+export const getUserRank = cache(async () => {
+  const user = await getServerUser();
+  if (!user) {
+    return null;
+  }
+  return getCachedUserRank(user.id);
 });

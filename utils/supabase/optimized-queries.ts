@@ -6,6 +6,7 @@
 import { createClient } from './client';
 import { appCache, schoolsCache, usersCache } from '../cache';
 import { clientLogger } from '@/lib/client-logger';
+import { fetchPeerProfilesForStudyBuddy } from './fetch-peer-profiles';
 
 // Constants
 const BATCH_SIZE = 100; // Maximum number of items to fetch in a single query
@@ -72,11 +73,8 @@ export async function fetchAllSchools() {
   return schoolsCache.getOrSet('all', async () => {
     const supabase = createClient();
     
-    const result = await fetchWithRetry(() => 
-      supabase
-        .from('schools')
-        .select('id, name, type')
-        .order('name')
+    const result = await fetchWithRetry(async () =>
+      supabase.from('schools').select('id, name, type').order('name'),
     );
     
     return result || [];
@@ -91,16 +89,10 @@ export async function fetchAllSchools() {
 export async function fetchUserById(userId: string) {
   return usersCache.getOrSet(userId, async () => {
     const supabase = createClient();
-    
-    const result = await fetchWithRetry(() => 
-      supabase
-        .from('users')
-        .select('id, name, avatar')
-        .eq('id', userId)
-        .single()
-    );
-    
-    return result || null;
+    const map = await fetchPeerProfilesForStudyBuddy(supabase, [userId]);
+    const row = map.get(userId);
+    if (!row) return null;
+    return { id: row.id, name: row.name, avatar: row.avatar };
   }, CACHE_TTL.MEDIUM); // Cache for 5 minutes
 }
 
@@ -138,18 +130,12 @@ export async function fetchUsersByIds(userIds: string[]) {
   for (let i = 0; i < idsToFetch.length; i += BATCH_SIZE) {
     const batchIds = idsToFetch.slice(i, i + BATCH_SIZE);
     
-    const result = await fetchWithRetry(() => 
-      supabase
-        .from('users')
-        .select('id, name, avatar')
-        .in('id', batchIds)
-    );
-    
-    // Cache individual users and add to result
-    if (result && Array.isArray(result)) {
-      for (const user of result) {
-        usersCache.set(user.id, user, CACHE_TTL.MEDIUM);
-        fetchedUsers[user.id] = user;
+    const map = await fetchPeerProfilesForStudyBuddy(supabase, batchIds);
+    if (map.size > 0) {
+      for (const [id, user] of Array.from(map.entries())) {
+        const row = { id: user.id, name: user.name, avatar: user.avatar };
+        usersCache.set(id, row, CACHE_TTL.MEDIUM);
+        fetchedUsers[id] = row;
       }
     }
   }
@@ -192,11 +178,8 @@ export async function fetchSchoolsByIds(schoolIds: number[]) {
   for (let i = 0; i < idsToFetch.length; i += BATCH_SIZE) {
     const batchIds = idsToFetch.slice(i, i + BATCH_SIZE);
     
-    const result = await fetchWithRetry(() => 
-      supabase
-        .from('schools')
-        .select('id, name, type')
-        .in('id', batchIds)
+    const result = await fetchWithRetry(async () =>
+      supabase.from('schools').select('id, name, type').in('id', batchIds),
     );
     
     // Cache individual schools and add to result

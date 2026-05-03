@@ -9,6 +9,7 @@ import { FeedWrapper } from "@/components/feed-wrapper";
 import { StickyWrapper } from "@/components/sticky-wrapper";
 import { turkishToast } from "@/components/ui/custom-toaster";
 import { createClient } from "@/utils/supabase/client";
+import { fetchPeerProfilesForStudyBuddy } from "@/utils/supabase/fetch-peer-profiles";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { PostCard } from "@/components/study-buddy/post-card";
 import { ChatCard } from "@/components/study-buddy/chat-card";
@@ -546,17 +547,17 @@ export default function StudyBuddyPage() {
       
       // Enrich posts with user data
       if (postsData && postsData.length > 0) {
-        const userIds = Array.from(new Set(postsData.map((post: StudyBuddyPost) => post.user_id)));
-        
-        const { data: usersData } = await supabase
-          .from("users")
-          .select("id, name, avatar")
-          .in("id", userIds);
-          
-        const userMap = (usersData || []).reduce((acc: Record<string, { id: string; name: string; avatar: string }>, user: { id: string; name: string; avatar: string }) => {
-          acc[user.id] = user;
-          return acc;
-        }, {});
+        const userIds = Array.from(
+          new Set((postsData as StudyBuddyPost[]).map((post) => post.user_id)),
+        );
+        const peerMap = await fetchPeerProfilesForStudyBuddy(supabase, userIds);
+        const userMap: Record<string, { id: string; name: string; avatar: string }> = {};
+        for (const id of userIds) {
+          const r = peerMap.get(id);
+          if (r) {
+            userMap[id] = { id: r.id, name: r.name ?? "User", avatar: r.avatar ?? "" };
+          }
+        }
         
         const enrichedPosts = postsData.map((post: StudyBuddyPost) => {
           const user = userMap[post.user_id];
@@ -634,8 +635,8 @@ export default function StudyBuddyPage() {
   }, [currentUser, supabase]);
 
   // Load chats
-  const loadChats = useCallback(async () => {
-      if (!currentUser) return;
+  const loadChats = useCallback(async (): Promise<StudyBuddyChat[] | undefined> => {
+      if (!currentUser) return undefined;
       
     setLoadingChats(true);
       
@@ -648,44 +649,45 @@ export default function StudyBuddyPage() {
       if (error) {
         clientLogger.error({ message: "load chats failed", error, location: "study-buddy/loadChats" });
         turkishToast.error(warningMessages.ERROR_LOADING_CHATS);
-        return;
+        return undefined;
       }
 
-      const userChats = (data || []).filter((chat: StudyBuddyChat) =>
-          chat.participants.includes(currentUser.id)
+      const userChats = ((data ?? []) as StudyBuddyChat[]).filter((chat) =>
+        chat.participants.includes(currentUser.id),
       );
 
       // Enrich chats with participant data
-      const enrichedChats = await Promise.all(
-            userChats.map(async (chat: StudyBuddyChat) => {
-          const participantsData: { [key: string]: { userName: string; avatarUrl: string } } = {};
-          
-          for (const participantId of chat.participants) {
-            if (participantId !== currentUser.id) {
-          const { data: userData } = await supabase
-            .from("users")
-            .select("name, avatar")
-                .eq("id", participantId)
-            .single();
-              
-              participantsData[participantId] = {
-              userName: userData?.name || "User",
-              avatarUrl: normalizeAvatarUrl(userData?.avatar),
-              };
-            }
-          }
-          
-          return {
-            ...chat,
-            participantsData,
-          };
-        })
+      const otherIds = Array.from(
+        new Set(
+          userChats.flatMap((c: StudyBuddyChat) =>
+            c.participants.filter((p: string) => p !== currentUser.id),
+          ),
+        ),
       );
+      const peerMap = await fetchPeerProfilesForStudyBuddy(supabase, otherIds);
+
+      const enrichedChats = userChats.map((chat: StudyBuddyChat) => {
+        const participantsData: {
+          [key: string]: { userName: string; avatarUrl: string };
+        } = {};
+        for (const participantId of chat.participants) {
+          if (participantId !== currentUser.id) {
+            const r = peerMap.get(participantId);
+            participantsData[participantId] = {
+              userName: r?.name || "User",
+              avatarUrl: normalizeAvatarUrl(r?.avatar ?? null),
+            };
+          }
+        }
+        return { ...chat, participantsData };
+      });
       
       setChats(enrichedChats);
+      return enrichedChats;
     } catch (error) {
       clientLogger.error({ message: "loadChats exception", error, location: "study-buddy/loadChats" });
       turkishToast.error(warningMessages.ERROR_LOADING_CHATS);
+      return undefined;
       } finally {
         setLoadingChats(false);
       }
@@ -837,24 +839,40 @@ export default function StudyBuddyPage() {
         return;
       }
 
-      // Create new chat
-      const { error } = await supabase
+      // Create new chat (sorted participants = same canonical form as server `ensureChat`)
+      const participants = [currentUser.id, post.user_id].sort();
+      const { data: inserted, error } = await supabase
         .from("study_buddy_chats")
         .insert({
-          participants: [currentUser.id, post.user_id],
-            last_message: "",
-            last_updated: new Date().toISOString(),
+          participants,
+          last_message: "",
+          last_updated: new Date().toISOString(),
         })
         .select()
         .single();
 
       if (error) {
+        // Rare race: two tabs open chat at once — unique index keeps one row; reuse it.
+        if (error.code === "23505") {
+          const enriched = await loadChats();
+          const recovered = enriched?.find(
+            (chat) =>
+              chat.participants.includes(currentUser.id) &&
+              chat.participants.includes(post.user_id) &&
+              chat.participants.length === 2,
+          );
+          if (recovered) setSelectedChat(recovered);
+          setActiveTab("chats");
+          turkishToast.success("Sohbet başlatıldı!");
+          return;
+        }
         clientLogger.error({ message: "create chat failed", error, location: "study-buddy/handleOpenChat" });
         showWarning(warningMessages.ERROR_CREATING_CHAT);
         return;
       }
 
       setActiveTab("chats");
+      if (inserted) setSelectedChat(inserted);
       await loadChats();
       
       turkishToast.success("Sohbet başlatıldı!");

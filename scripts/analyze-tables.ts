@@ -16,10 +16,9 @@ config({ path: ".env" });
 
 const TABLES = [
   "teacher_applications",
-  "private_lesson_applications",
   "schools",
-  "lesson_bookings",
-  "lesson_reviews",
+  "listings",
+  "listing_offers",
   "user_progress",
 ] as const;
 

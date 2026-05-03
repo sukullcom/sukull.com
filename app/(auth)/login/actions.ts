@@ -4,10 +4,10 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { headers } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
-import { users } from '@/utils/users'
 import { getAuthError } from '@/utils/auth-errors'
 import { checkRateLimit, getClientIpFromHeaders, RATE_LIMITS } from '@/lib/rate-limit-db'
 import { logger } from '@/lib/logger'
+import { ensurePublicUserFromAuth } from '@/lib/ensure-public-user'
 
 const log = logger.child({ labels: { module: 'auth/login' } })
 
@@ -43,12 +43,12 @@ export async function login(formData: FormData) {
 
   if (data.user) {
     try {
-      await users.captureUserDetails(data.user)
+      await ensurePublicUserFromAuth(data.user)
     } catch (e) {
       log.error({
-        message: 'capture user details failed on login',
+        message: 'ensurePublicUserFromAuth failed on login',
         error: e,
-        location: 'auth/login/captureUserDetails',
+        location: 'auth/login/ensurePublicUserFromAuth',
         userId: data.user.id,
       })
     }

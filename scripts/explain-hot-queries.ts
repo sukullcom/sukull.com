@@ -80,21 +80,21 @@ const cases: QueryCase[] = [
     params: ["%ahmet%"],
   },
   {
-    name: "private_lesson_applications: status filter + newest first",
+    name: "listings: status filter + newest first (marketplace)",
     expectIndex: [
-      "idx_student_apps_status_created_at",
-      "idx_student_apps_status",
-      "idx_student_apps_created_at",
+      "idx_listings_status_created",
+      "idx_listings_subject_status",
+      "idx_listings_student",
     ],
     sql: `
       EXPLAIN ANALYZE
-      SELECT id, student_name, student_email, field, status, created_at
-      FROM   private_lesson_applications
-      WHERE  status = $1
+      SELECT id, student_id, title, status, created_at
+      FROM   listings
+      WHERE  status = $1::listing_status
       ORDER  BY created_at DESC
       LIMIT  20
     `,
-    params: ["pending"],
+    params: ["open"],
   },
   {
     name: "schools: type-filtered leaderboard",

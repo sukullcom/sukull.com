@@ -1,5 +1,5 @@
 // db/schema.ts
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import {
   bigserial,
   boolean,
@@ -197,16 +197,66 @@ export const schoolTypeEnum = pgEnum("school_type", [
   "elementary_school",
 ]);
 
-export const schools = pgTable("schools", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  city: text("city").notNull(),
-  district: text("district").notNull(),
-  category: text("category").notNull(), // Primary School, Secondary School, High School, University
-  kind: text("kind"), // Anadolu Lisesi, İmam Hatip, etc. (can be null)
-  totalPoints: integer("total_points").notNull().default(0),
-  type: schoolTypeEnum("type").notNull().default("elementary_school"),
-});
+export const schools = pgTable(
+  "schools",
+  {
+    id: serial("id").primaryKey(),
+    name: text("name").notNull(),
+    city: text("city").notNull(),
+    district: text("district").notNull(),
+    category: text("category").notNull(), // Primary School, Secondary School, High School, University
+    kind: text("kind"), // Anadolu Lisesi, İmam Hatip, etc. (can be null)
+    totalPoints: integer("total_points").notNull().default(0),
+    type: schoolTypeEnum("type").notNull().default("elementary_school"),
+  },
+  (table) => ({
+    /**
+     * Okul arama (/api/schools) ve liderlik: city, district, category, ILIKE name, type+points.
+     * SQL migration’larla aynı isimler (0006, 0025, 0035, 0036) — `drizzle-kit push` veya
+     * `npm run db:apply` sonrası canlıda `pg_indexes` ile doğrulayın. Eski “schools’ta indeks
+     * yok” değerlendirmesi bu dosyanın eski hâline veya migration’ların uygulanmamasına işaret eder.
+     */
+    schoolsCityIdx: index("idx_schools_city").on(table.city),
+    schoolsDistrictIdx: index("idx_schools_district").on(table.district),
+    schoolsCategoryIdx: index("idx_schools_category").on(table.category),
+    schoolsKindIdx: index("idx_schools_kind").on(table.kind),
+    schoolsLocationSearchIdx: index("idx_schools_location_search").on(
+      table.city,
+      table.district,
+    ),
+    schoolsCityDistrictCategoryIdx: index("idx_schools_city_district_category").on(
+      table.city,
+      table.district,
+      table.category,
+    ),
+    schoolsTotalPointsIdx: index("idx_schools_total_points").on(
+      sql`${table.totalPoints} DESC`,
+    ),
+    schoolsTypePointsIdx: index("idx_schools_type_points").on(
+      table.type,
+      sql`${table.totalPoints} DESC`,
+    ),
+    schoolsTypeCityPointsIdx: index("idx_schools_type_city_points").on(
+      table.type,
+      table.city,
+      sql`${table.totalPoints} DESC`,
+    ),
+    schoolsNameTrgmIdx: index("idx_schools_name_trgm").using(
+      "gin",
+      table.name.op("gin_trgm_ops"),
+    ),
+    /** Prefix / pattern LIKE yardımı; ILIKE '%...%' için asıl yük `schoolsNameTrgmIdx`. */
+    schoolsNameIlikeIdx: index("idx_schools_name_ilike").using(
+      "btree",
+      table.name.asc().op("text_pattern_ops"),
+    ),
+    /** 0006 ile aynı ifade; İngilizce tsconfig (okul adları çoğunlukla özel ad). */
+    schoolsNameSearchIdx: index("idx_schools_name_search").using(
+      "gin",
+      sql`to_tsvector('english', ${table.name})`,
+    ),
+  }),
+);
 
 export const schoolsRelations = relations(schools, ({ many }) => ({
   users: many(userProgress),
@@ -225,7 +275,6 @@ export const userProgress = pgTable("user_progress", {
     .references(() => schools.id, { onDelete: "set null" }),
   profileLocked: boolean("profileLocked").default(false).notNull(),
   istikrar: integer("istikrar").notNull().default(0),
-  //lastLessonCompletedAt: timestamp("last_lesson_completed_at"),
   dailyTarget: integer("daily_target").notNull().default(50), // Kullanıcının belirlediği günlük hedeflenen puan
   lastStreakCheck: timestamp("last_streak_check"), // En son streak kontrol tarihi
   previousTotalPoints: integer("previous_total_points").default(0), // Son kontrol anındaki toplam puan
@@ -364,10 +413,22 @@ export const studyBuddyPosts = pgTable("study_buddy_posts", {
 export const studyBuddyChats = pgTable("study_buddy_chats", {
   id: serial("id").primaryKey(),
   participants: jsonb("participants").$type<string[]>().notNull(),
+  /** İki kişilik sohbetlerde lexicographic min/max; DB trigger doldurur — `0037`. */
+  participantSortedA: text("participant_sorted_a"),
+  participantSortedB: text("participant_sorted_b"),
   last_message: text("last_message").default(""),
   last_updated: timestamp("last_updated").defaultNow().notNull(),
 }, (table) => ({
-  participantsIdx: index("participants_idx").using("gin", table.participants)
+  participantsIdx: index("participants_idx").using("gin", table.participants),
+  /**
+   * Tam iki kullanıcı için sıra-bağımsız tek satır (yarış: çift eşzamanlı unlock).
+   * Migration: `0037_study_buddy_chats_unique_two_user_pair.sql` (sütun + trigger + indeks).
+   */
+  twoUserCanonicalPairIdx: uniqueIndex("idx_study_buddy_chats_two_user_canonical_pair")
+    .on(table.participantSortedA, table.participantSortedB)
+    .where(
+      sql`${table.participantSortedA} IS NOT NULL AND ${table.participantSortedB} IS NOT NULL`,
+    ),
 }));
 
 // Study Buddy Messages

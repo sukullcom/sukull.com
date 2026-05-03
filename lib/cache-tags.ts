@@ -25,6 +25,13 @@ export const CACHE_TAGS = {
   schoolsMaster: "schools-master",
   /** Public school listing (search-backed). */
   schools: "schools",
+  /** Okul türü / şehir liderlik listesi (`getSchoolPointsByType`). */
+  schoolLeaderboard: "school-leaderboard",
+  /**
+   * Per-user global + okul içi rank (`getUserRank`).
+   * İsteğe bağlı `revalidateTag(CACHE_TAGS.userRank(userId))` ile anında yenileme.
+   */
+  userRank: (userId: string) => `user-rank:${userId}`,
   /**
    * Per-teacher aggregated stats (total lessons, reviews, income).
    * Passed as a tag factory so the same call at the read and write sides
@@ -45,6 +52,8 @@ export type CacheTag =
   | (typeof CACHE_TAGS)["teachers"]
   | (typeof CACHE_TAGS)["schoolsMaster"]
   | (typeof CACHE_TAGS)["schools"]
+  | (typeof CACHE_TAGS)["schoolLeaderboard"]
+  | ReturnType<(typeof CACHE_TAGS)["userRank"]>
   | ReturnType<(typeof CACHE_TAGS)["teacherStats"]>
   | ReturnType<(typeof CACHE_TAGS)["teacherReviews"]>;
 
@@ -66,6 +75,10 @@ export const CACHE_TTL = {
   schoolsMaster: 60 * 60 * 24,
   /** Schools listing: minor changes between imports. 1h. */
   schools: 60 * 60,
+  /** Okul puan sıralaması: yoğun trafikte DB sort maliyetini düşürür. */
+  schoolLeaderboard: 60 * 3,
+  /** Kullanıcı "kaçıncı sıradayım" COUNT sorguları; kısa TTL. */
+  userRank: 60,
   /**
    * Per-teacher stats: a dashboard query that fans out to two joined
    * tables. 60s is short enough that any missed invalidation self-heals

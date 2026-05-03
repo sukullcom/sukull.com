@@ -45,6 +45,7 @@ export {
 // Leaderboard: rankings + school points
 // ---------------------------------------------------------------------------
 export {
+  getSchoolCities,
   getTopTenUsers,
   getTopUsers,
   getSchoolPointsByType,

@@ -107,7 +107,7 @@ You can customize the verification email template to match your branding.
 ### User Not Appearing in Database
 
 1. **Check Callback Route**: Ensure `/api/auth/callback` is working
-2. **Check User Creation**: Look at `users.captureUserDetails()` function
+2. **Check User Creation**: `ensurePublicUserFromAuth` (callback + `signUpWithEmail` + `login` server action) `public.users` satırını `onConflictDoNothing` ile oluşturur.
 3. **Check Database**: Verify user record is created after verification
 
 ## 📝 Available Routes

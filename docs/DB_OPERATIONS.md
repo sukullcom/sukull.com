@@ -24,9 +24,24 @@ We have two parallel migration styles and that is intentional:
    `npm run db:generate` from diffs to `db/schema.ts`. Tracked in
    `supabase/migrations/meta/_journal.json`.
 2. **Hand-written SQL** (`0003_add_snippets_indexes.sql`,
-   `0018_add_critical_indexes.sql`, `0025_*`, ...) — for things Drizzle can't
-   express cleanly (trigram indexes, `CREATE EXTENSION`, deploy-time SQL
-   functions). **Not** in the journal; applied manually.
+   `0018_add_critical_indexes.sql`, `0025_*`, ...) — extensions, deploy-time
+   functions, or history before a feature landed in `db/schema.ts`. **Not** in
+   the journal; applied manually. `schools` hot-path indexes are defined in
+   `db/schema.ts` (trigram, `text_pattern_ops`, expression GIN) and duplicated
+   idempotently in `0006` / `0025` / `0035` / `0036` for existing databases.
+
+## Schools indexes (verification)
+
+Registration and `/api/schools` filter by `city`, `district`, `category`, and
+`ILIKE` on `name`. After any deploy, confirm indexes exist (names must match
+`db/schema.ts`):
+
+```sql
+SELECT indexname FROM pg_indexes WHERE schemaname = 'public' AND tablename = 'schools' ORDER BY 1;
+```
+
+Expect `idx_schools_city`, `idx_schools_name_trgm`, `idx_schools_type_city_points`, etc.
+If this list is nearly empty, migrations were not applied to that database.
 
 Every hand-written SQL file must be **idempotent** (`IF NOT EXISTS`,
 `IF EXISTS`, `CREATE OR REPLACE`). Re-running it should be a no-op.
@@ -94,10 +109,10 @@ npm run db:studio     # Drizzle Studio UI, localhost:4983
 
 All index migrations so far use plain `CREATE INDEX`. This is fine because:
 
-- `teacher_applications`, `private_lesson_applications` are small (hundreds
-  of rows).
+- `teacher_applications`, `listings`, `listing_offers` are small (hundreds
+  to low thousands of rows).
 - `schools` is ~50K rows; btree index creation takes seconds.
-- `lesson_bookings`, `lesson_reviews`, `user_progress` are still moderate.
+- `user_progress` is still moderate.
 
 If any of these cross ~500K rows, switch future index migrations to
 `CREATE INDEX CONCURRENTLY` (and drop the `IF NOT EXISTS` wrapper; they're

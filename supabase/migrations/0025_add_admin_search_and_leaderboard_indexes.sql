@@ -5,8 +5,10 @@
 -- workload will start sequential-scanning the following tables:
 --
 --   * teacher_applications   -- admin paginated list + ILIKE search
---   * private_lesson_applications -- admin paginated list + ILIKE search
 --   * schools                -- type-filtered leaderboards + name search
+--
+-- Note: private_lesson_applications was indexed here pre-0026; that table is
+-- dropped in 0026_marketplace_refactor.sql (marketplace uses `listings` now).
 --
 -- Safe to run multiple times (IF NOT EXISTS on every statement).
 -- Idempotent; does not rewrite data.
@@ -54,32 +56,6 @@ CREATE INDEX IF NOT EXISTS "idx_teacher_apps_email_trgm"
   ON "teacher_applications" USING gin ("teacher_email" gin_trgm_ops);
 CREATE INDEX IF NOT EXISTS "idx_teacher_apps_field_trgm"
   ON "teacher_applications" USING gin ("field" gin_trgm_ops);
-
--- ===========================================================================
--- private_lesson_applications  (admin paginated list)
--- ===========================================================================
--- Query shape (db/queries.ts :: getStudentApplicationsPaginated):
---   Same as teacher_applications but on student_* columns, status is TEXT
---   (not an enum) and NULL is treated as 'pending'.
-
--- Pre-0025 the only index here was user_id. These three cover the pagination
--- fast paths.
-CREATE INDEX IF NOT EXISTS "idx_student_apps_status"
-  ON "private_lesson_applications" ("status");
-CREATE INDEX IF NOT EXISTS "idx_student_apps_created_at"
-  ON "private_lesson_applications" ("created_at" DESC);
-CREATE INDEX IF NOT EXISTS "idx_student_apps_status_created_at"
-  ON "private_lesson_applications" ("status", "created_at" DESC);
-
--- Trigram indexes for ILIKE '%q%' search.
-CREATE INDEX IF NOT EXISTS "idx_student_apps_name_trgm"
-  ON "private_lesson_applications" USING gin ("student_name" gin_trgm_ops);
-CREATE INDEX IF NOT EXISTS "idx_student_apps_surname_trgm"
-  ON "private_lesson_applications" USING gin ("student_surname" gin_trgm_ops);
-CREATE INDEX IF NOT EXISTS "idx_student_apps_email_trgm"
-  ON "private_lesson_applications" USING gin ("student_email" gin_trgm_ops);
-CREATE INDEX IF NOT EXISTS "idx_student_apps_field_trgm"
-  ON "private_lesson_applications" USING gin ("field" gin_trgm_ops);
 
 -- ===========================================================================
 -- schools  (leaderboard + name search)
