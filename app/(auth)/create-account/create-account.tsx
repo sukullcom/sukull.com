@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { OAuthSignIn } from "@/components/auth/oauth-signin";
+import { PasswordInput } from "@/components/ui/password-input";
 
 import { signUpWithEmail } from "./actions";
 import { getClientAuthTransientErrorMessage } from "@/lib/auth-flow-client-errors";
@@ -97,25 +98,23 @@ export function CreateAccountForm() {
         disabled={isLoading}
         required
       />
-      <input
+      <PasswordInput
         id="password"
-        type="password"
         placeholder="Şifre"
-        className="w-full min-w-0 rounded-xl border border-border bg-background p-3 transition-opacity focus:outline-none focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         disabled={isLoading}
         required
+        autoComplete="new-password"
       />
-      <input
+      <PasswordInput
         id="confirmPassword"
-        type="password"
         placeholder="Şifre Tekrar"
-        className="w-full min-w-0 rounded-xl border border-border bg-background p-3 transition-opacity focus:outline-none focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
         disabled={isLoading}
         required
+        autoComplete="new-password"
       />
 
       {/* Legal consent — KVKK + Mesafeli sözleşme gereği açık rıza */}

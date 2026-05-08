@@ -7,6 +7,7 @@ import { createClient } from "@/utils/supabase/client";
 
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
+import { PasswordInput } from "@/components/ui/password-input";
 
 import { auth } from "@/utils/auth";
 import { getAuthError } from "@/utils/auth-errors";
@@ -77,25 +78,23 @@ export function ResetPasswordForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-      <input
+      <PasswordInput
         id="password"
-        type="password"
         placeholder="Yeni Şifre"
-        className="w-full min-w-0 rounded-xl border border-border bg-background p-3 focus:outline-none focus:ring-2 focus:ring-ring"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         disabled={isLoading}
         required
+        autoComplete="new-password"
       />
-      <input
+      <PasswordInput
         id="confirmPassword"
-        type="password"
         placeholder="Yeni Şifre Tekrar"
-        className="w-full min-w-0 rounded-xl border border-border bg-background p-3 focus:outline-none focus:ring-2 focus:ring-ring"
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
         disabled={isLoading}
         required
+        autoComplete="new-password"
       />
 
       <Button

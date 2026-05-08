@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { OAuthSignIn } from "@/components/auth/oauth-signin";
+import { PasswordInput } from "@/components/ui/password-input";
 import { login } from "./actions";
 import { clientLogger } from "@/lib/client-logger";
 import { getClientAuthTransientErrorMessage } from "@/lib/auth-flow-client-errors";
@@ -79,14 +80,13 @@ export function LoginForm() {
         required
       />
 
-      <input
+      <PasswordInput
         id="password"
         name="password"
-        type="password"
         placeholder="Şifre"
-        className="w-full min-w-0 rounded-xl border border-border bg-background p-3 transition-opacity focus:outline-none focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:bg-muted disabled:opacity-60"
         disabled={isLoading}
         required
+        autoComplete="current-password"
       />
 
       <Button
