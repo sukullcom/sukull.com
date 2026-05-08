@@ -7,14 +7,20 @@
  * INSERT ... ON CONFLICT DO NOTHING ile çift tıklama / eşzamanlı giriş
  * yarışlarında unique ihlali oluşmaz (login server action dahil).
  */
-import db from "@/db/drizzle";
-import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import type { User } from "@supabase/supabase-js";
 
+import { REFERRAL_SYSTEM } from "@/constants";
+import db from "@/db/drizzle";
+import { users } from "@/db/schema";
+import { logActivity } from "@/lib/activity-logger";
+import { normalizeReferralCode } from "@/lib/referral-code";
+import { allocateUniqueReferralCode, recordReferralSignupRewardTx } from "@/lib/referral-grant";
+
 export async function ensurePublicUserFromAuth(
   authUser: User,
-  overrideUsername?: string
+  overrideUsername?: string,
+  pendingReferralFromCookie?: string | null,
 ) {
   const existing = await db.query.users.findFirst({
     where: eq(users.id, authUser.id),
@@ -55,21 +61,85 @@ export async function ensurePublicUserFromAuth(
   const email = authUser.email || "";
   const finalName = (name || email.split("@")[0] || "User") as string;
 
-  await db
-    .insert(users)
-    .values({
-      id: authUser.id,
-      email,
-      name: finalName,
-      avatar,
-      provider,
-      description: "",
-      links: [],
-    })
-    .onConflictDoNothing({ target: users.id });
+  const metaRef =
+    typeof authUser.user_metadata?.referral_code === "string"
+      ? authUser.user_metadata.referral_code
+      : undefined;
+  const refCode = normalizeReferralCode(metaRef || pendingReferralFromCookie || undefined);
 
-  const row = await db.query.users.findFirst({
-    where: eq(users.id, authUser.id),
+  const referralGrant: {
+    current: { referrerId: string; refereeId: string } | null;
+  } = { current: null };
+
+  const row = await db.transaction(async (tx) => {
+    const again = await tx.query.users.findFirst({
+      where: eq(users.id, authUser.id),
+    });
+    if (again) {
+      return again;
+    }
+
+    let referredByUserId: string | null = null;
+    if (refCode) {
+      const referrer = await tx.query.users.findFirst({
+        where: eq(users.referralCode, refCode),
+        columns: { id: true },
+      });
+      if (referrer && referrer.id !== authUser.id) {
+        referredByUserId = referrer.id;
+      }
+    }
+
+    const referralCode = await allocateUniqueReferralCode(tx);
+
+    const inserted = await tx
+      .insert(users)
+      .values({
+        id: authUser.id,
+        email,
+        name: finalName,
+        avatar,
+        provider,
+        description: "",
+        links: [],
+        referralCode,
+        referredByUserId,
+      })
+      .onConflictDoNothing({ target: users.id })
+      .returning({ id: users.id });
+
+    const created = await tx.query.users.findFirst({
+      where: eq(users.id, authUser.id),
+    });
+
+    if (inserted.length > 0 && referredByUserId) {
+      const paid = await recordReferralSignupRewardTx(tx, {
+        referrerUserId: referredByUserId,
+        refereeUserId: authUser.id,
+      });
+      if (paid) {
+        referralGrant.current = {
+          referrerId: referredByUserId,
+          refereeId: authUser.id,
+        };
+      }
+    }
+
+    return created ?? null;
   });
-  return row ?? null;
+
+  const logPayload = referralGrant.current;
+  if (logPayload) {
+    void logActivity({
+      userId: logPayload.referrerId,
+      eventType: "referral_reward",
+      page: "/api/auth/callback",
+      metadata: {
+        refereeUserId: logPayload.refereeId,
+        points: REFERRAL_SYSTEM.REFERRER_POINTS,
+      },
+    });
+  }
+
+  return row;
 }

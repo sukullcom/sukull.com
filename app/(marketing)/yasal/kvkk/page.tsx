@@ -69,8 +69,8 @@ export default function KvkkPage() {
           için) telefon numarası.
         </li>
         <li>
-          <strong>Müşteri İşlem Bilgisi:</strong> Satın alma geçmişi, kredi
-          kullanımı, abonelik durumu.
+          <strong>Müşteri İşlem Bilgisi:</strong> Satın alma geçmişi, dijital hizmet
+          paketi ve kullanım hakkı kullanımı, abonelik durumu.
         </li>
         <li>
           <strong>Eğitim Bilgisi:</strong> Ders ilerlemesi, puan, istikrar

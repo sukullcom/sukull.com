@@ -110,7 +110,7 @@ export default async function TeacherDashboardPage() {
           Eğitmen paneli
         </h1>
         <p className="text-sm text-muted-foreground">
-          Tekliflerini, krediyle ödediğin mesaj ve teklif hareketlerini ve açık
+          Tekliflerini, kullanım hakkınla karşıladığın mesaj ve teklif hareketlerini ve açık
           talep ilanlarına erişimi buradan yönet.
         </p>
       </div>
@@ -135,7 +135,7 @@ export default async function TeacherDashboardPage() {
           tone="danger"
         />
         <SummaryCard
-          label="Kullanılabilir Kredi"
+          label="Kullanılabilir hak"
           value={available}
           icon={Wallet}
           tone="payment"
@@ -210,11 +210,11 @@ export default async function TeacherDashboardPage() {
 
       <section className="bg-card border rounded-xl overflow-hidden">
         <div className="px-4 py-3 border-b bg-muted/50">
-          <h2 className="font-semibold text-foreground">Son Kredi Harcamaları</h2>
+          <h2 className="font-semibold text-foreground">Son kullanım hakkı harcamaları</h2>
         </div>
         {recentSpends.length === 0 ? (
           <div className="p-6 text-center text-sm text-muted-foreground">
-            Henüz kredi harcamadın.
+            Henüz kullanım hakkı harcamadın.
           </div>
         ) : (
           <div className="divide-y">

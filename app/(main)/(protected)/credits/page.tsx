@@ -2,9 +2,9 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Kredi Satın Al | Sukull",
+  title: "Pazaryeri hizmet paketi | Sukull",
   description:
-    "Özel ders pazarında ilan ve mesajlaşma için kullanılan kredileri satın alın (öğrenci: ilan / mesaj kilidi; eğitmen: teklif).",
+    "Özel ders pazarında talep ilanı, mesajlaşma kanalı ve teklif süreçleri için kullanılan dijital platform hizmet paketlerini satın alın.",
 };
 
 const CreditsPage = () => {

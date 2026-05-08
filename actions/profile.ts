@@ -9,6 +9,7 @@ import { applySchoolChangeWithLock } from "@/actions/user-progress";
 import { checkStreakContinuity } from "./daily-streak";
 import { normalizeAvatarUrl } from '@/utils/avatar';
 import { getRequestLogger } from "@/lib/logger";
+import { allocateUniqueReferralCodeStandalone } from "@/lib/referral-grant";
 
 /**
  * Fetch profile data (user_progress) for the currently authenticated user.
@@ -133,12 +134,16 @@ export async function updateProfileAction(
       })
       .where(eq(users.id, userId));
   } else {
+    const referralCode = await allocateUniqueReferralCodeStandalone();
     await db.insert(users).values({
       id: userId,
       email: user.email ?? "",
       name: newName || "User",
       avatar: normalizeAvatarUrl(newImage),
       provider: "email",
+      description: "",
+      links: [],
+      referralCode,
       created_at: new Date(),
       updated_at: new Date(),
     });

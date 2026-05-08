@@ -13,6 +13,8 @@ import { canChangeStudentGradeSelection, nextLockExpiresAt } from "@/lib/school-
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+import { flushDeferredReferralRewardsForReferrer } from "@/lib/referral-grant";
+
 function validatePath(path: string, grade: number | null): { ok: true; path: LearningPath; grade: number | null } | { ok: false; error: string } {
   if (path === "adult") {
     return { ok: true, path: "adult", grade: null };
@@ -117,7 +119,11 @@ export async function completeLearningPath(
     });
   }
 
+  await flushDeferredReferralRewardsForReferrer(userId);
+
   revalidatePath("/courses");
+  revalidatePath("/shop");
+  revalidatePath("/leaderboard");
   revalidatePath("/onboarding");
   revalidatePath("/");
   return { ok: true };

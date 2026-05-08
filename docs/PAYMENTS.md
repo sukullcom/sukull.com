@@ -4,7 +4,9 @@ This document describes the credit-based payment system implemented using Iyzico
 
 ## Overview
 
-The platform uses a credit-based system: credits are spent on **private-lesson marketplace** actions (e.g. student message unlock, teacher listing offers) rather than a legacy in-app lesson booking flow.
+The platform uses a **usage-right (hak) / service package** model backed by numeric balances in `user_credits`: rights are spent on **private-lesson marketplace** actions (e.g. student message unlock, teacher listing offers) rather than a legacy in-app lesson booking flow.
+
+> **Ürün dili:** Kullanıcıya dönük metinlerde “kredi/coin” yerine *hizmet paketi* ve *kullanım hakkı* kullanılır. Bu belgedeki *credit* ifadeleri kod ve veritabanı adlarıyla (`user_credits`, `credit_transactions`) uyumluluk içindir.
 
 ### Key Features
 
@@ -61,11 +63,11 @@ For production, replace sandbox credentials with live Iyzico credentials:
 
 ### For Students
 
-1. **Navigate to Credits Page**: Click "Krediler" in the sidebar
-2. **Select Package**: Choose from 1, 4, 8, or 12 credit packages
+1. **Navigate to packages page**: Open "Paketler" (or the credits route) from the private-lesson area
+2. **Select package**: Choose a tier (e.g. 1, 4, 8, or 12 usage rights per package)
 3. **Enter Payment Details**: Fill out card information and billing address
 4. **Complete Purchase**: Click "Öde" to process payment
-5. **Use credits**: Unlock messaging with a teacher, open student listings as a teacher (offers), and other marketplace actions that cost credits
+5. **Use your rights**: Unlock messaging with a teacher, submit offers on student listings, and other marketplace actions that consume one usage right per paid step (see API routes above)
 
 ### For Developers
 

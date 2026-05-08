@@ -162,7 +162,7 @@ export async function POST(
         ? body.note.trim().slice(0, 500)
         : null;
 
-    // Zaten teklif varsa kredi gerekmez (409). Yeni teklif için kredi
+    // Zaten teklif varsa kullanım hakkı gerekmez (409). Yeni teklif için hak
     // yoksa 402 — rate limit'ten önce; yoksa denemeler 429'a düşer.
     const [alreadyOffered, hasCredits] = await Promise.all([
       hasTeacherOfferedOnListing(id, user.id),
@@ -177,7 +177,7 @@ export async function POST(
 
     if (!hasCredits) {
       return NextResponse.json(
-        { error: "Teklif vermek için en az 1 kredin olmalı. Kredi satın alıp tekrar dene." },
+        { error: "Teklif vermek için en az 1 kullanım hakkın olmalı. Paket satın alıp tekrar dene." },
         { status: 402 },
       );
     }
@@ -265,7 +265,7 @@ function offerErrorToHttp(
     case "already_offered":
       return [409, "Bu ilana zaten teklif verdiniz"];
     case "insufficient_credits":
-      return [402, "Yetersiz kredi. Kredi satın alın ve tekrar deneyin."];
+      return [402, "Yetersiz kullanım hakkı. Hizmet paketi satın alıp tekrar deneyin."];
     case "self_offer_forbidden":
       return [400, "Kendi ilanınıza teklif veremezsiniz"];
     default:

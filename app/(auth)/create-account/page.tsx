@@ -1,7 +1,15 @@
 import Image from "next/image";
+import { normalizeReferralCode } from "@/lib/referral-code";
 import { CreateAccountForm } from "./create-account";
 
-export default function CreateAccountPage() {
+export default function CreateAccountPage({
+  searchParams,
+}: {
+  searchParams?: { ref?: string };
+}) {
+  const referralFromUrl =
+    normalizeReferralCode(searchParams?.ref ?? "") ?? undefined;
+
   return (
     <div className="max-w-[988px] mx-auto flex-1 w-full flex flex-col items-center justify-center p-4 gap-8">
       <div className="w-full flex flex-col lg:flex-row items-center justify-center gap-6 sm:gap-8 lg:gap-10">
@@ -20,7 +28,7 @@ export default function CreateAccountPage() {
           <h1 className="mb-6 text-center text-3xl font-bold text-suk-brand">
             Kayıt Ol
           </h1>
-          <CreateAccountForm />
+          <CreateAccountForm referralCodeFromUrl={referralFromUrl} />
         </div>
       </div>
     </div>

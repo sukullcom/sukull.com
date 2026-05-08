@@ -62,7 +62,7 @@ export default async function ListingsIndexPage({
           </div>
           <p className="text-sm text-muted-foreground">
             Yayında olan talep ilanları; yalnızca başvurunda seçtiğin ders
-            konularıyla eşleşen ilanlar listelenir. Teklif vermek 1 kredidir; onay
+            konularıyla eşleşen ilanlar listelenir. Teklif vermek 1 kullanım hakkıdır; onay
             sonrası öğrencinin kayıtlı iletişim bilgileri sohbet üzerinden
             paylaşılır. İlan başına en fazla 4 teklif.
           </p>

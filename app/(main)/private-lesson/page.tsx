@@ -59,7 +59,7 @@ export default async function PrivateLessonPage() {
                   </h1>
                   <p className="mb-6 text-lg text-muted-foreground">
                     Alanında uzman eğitmenlere ulaş ya da talep ilanı aç; teklifler
-                    sana gelsin. İletişimi krediyle aç, koşulları birlikte netleştirin.
+                    sana gelsin. İletişimi tek seferlik paketle aç, koşulları birlikte netleştirin.
                   </p>
                   <div className="flex flex-wrap gap-2 sm:gap-4">
                     <Badge
@@ -81,7 +81,7 @@ export default async function PrivateLessonPage() {
                       className="px-2 sm:px-3 py-1 text-xs sm:text-sm"
                     >
                       <Trophy className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                      Kredi Tabanlı Adil Sistem
+                      Şeffaf paket ve kullanım hakkı modeli
                     </Badge>
                   </div>
                 </div>
@@ -123,14 +123,14 @@ export default async function PrivateLessonPage() {
                 Eğitmen bul
               </CardTitle>
               <CardDescription className="text-base">
-                Onaylı eğitmenleri listele, filtrele; uygun olanla sohbeti krediyle aç.
+                Onaylı eğitmenleri listele, filtrele; uygun olanla sohbeti kullanım hakkıyla aç.
               </CardDescription>
             </CardHeader>
             <CardContent>
               <ul className="space-y-3 mb-6">
                 <Feature label="Branş, şehir, online/yüz yüze filtreleri" />
                 <Feature label="Saatlik ücret açıkça görünür" />
-                <Feature label="1 kredi eğitmen ile sohbet kilidini açabilirsin" />
+                <Feature label="1 kullanım hakkı ile eğitmenle sohbet kilidini açabilirsin" />
               </ul>
               <Button asChild variant="primary" size="lg">
                 <a href="/private-lesson/teachers">
@@ -221,7 +221,7 @@ export default async function PrivateLessonPage() {
                 icon={MessageCircle}
                 color="brand"
                 title="2. İletişime geç"
-                desc="Krediyle eğitmenle sohbeti aç ya da ilanına gelen teklifleri değerlendir."
+                desc="Kullanım hakkıyla eğitmenle sohbeti aç ya da ilanına gelen teklifleri değerlendir."
               />
               <HowItem
                 icon={Wallet}

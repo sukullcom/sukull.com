@@ -23,7 +23,7 @@ export default async function PrivateLessonHeader() {
     { name: "Profilim", path: "/private-lesson/teacher-dashboard/settings", icon: "settings" },
     { name: "İlanlar", path: "/private-lesson/listings", icon: "megaphone" },
     { name: "Mesajlar", path: "/private-lesson/messages", icon: "message" },
-    { name: "Kredi", path: "/private-lesson/credits", icon: "credit" },
+    { name: "Paketler", path: "/private-lesson/credits", icon: "credit" },
   ];
 
   const studentItems: PrivateLessonNavItem[] = [
@@ -31,7 +31,7 @@ export default async function PrivateLessonHeader() {
     { name: "İlanlarım", path: "/private-lesson/my-listings", icon: "clipboard" },
     { name: "İlan Aç", path: "/private-lesson/listings/new", icon: "megaphone" },
     { name: "Mesajlar", path: "/private-lesson/messages", icon: "message" },
-    { name: "Kredi", path: "/private-lesson/credits", icon: "credit" },
+    { name: "Paketler", path: "/private-lesson/credits", icon: "credit" },
   ];
 
   const items = teacherMode ? teacherItems : studentItems;

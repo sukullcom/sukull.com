@@ -112,12 +112,12 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
       const result = await response.json();
 
       if (result.success) {
-        toast.success(result.message || 'Premium abonelik başarıyla aktifleştirildi!');
+        toast.success(result.message || 'Premium hizmet aboneliği başarıyla aktifleştirildi!');
         // Refresh the page to update the subscription status
         router.refresh();
         onSuccess?.();
       } else {
-        toast.error(result.message || 'Abonelik ödemesi başarısız oldu. Lütfen tekrar deneyin.');
+        toast.error(result.message || 'Abonelik ödemesi tamamlanamadı. Lütfen tekrar deneyin.');
       }
     } catch (error: unknown) {
       clientLogger.error({ message: 'subscription payment failed', error, location: 'subscription-purchase/payment' });
@@ -144,9 +144,9 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
             <InfinityIcon className="absolute -top-1 -right-1 h-4 w-4 text-suk-payment" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Premium abonelik</h1>
+            <h1 className="text-2xl font-bold text-foreground">Premium platform hizmeti (abonelik)</h1>
             <p className="text-muted-foreground">
-              Aylık 100₺ — sonsuz can ve profilde detaylı öğrenme analizi
+              Aylık 100₺ — sınırsız can hakkı ve profilde detaylı öğrenme analizi
             </p>
           </div>
         </div>
@@ -156,7 +156,7 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
           <CardContent className="p-6">
             <div className="flex justify-between items-center">
               <div>
-                <h3 className="font-semibold text-lg text-foreground">Premium — Aylık paket</h3>
+                <h3 className="font-semibold text-lg text-foreground">Premium — Aylık hizmet paketi</h3>
                 <ul className="text-sm text-muted-foreground mt-2 space-y-1">
                   <li>• Sınırsız kalp (yanlışta can düşmez)</li>
                   <li>• Profil → Analiz: konu/kurs performansı, zorluk ve soru türü dağılımı</li>

@@ -40,7 +40,10 @@ export default function KullanimSartlariPage() {
       </p>
       <p>
         <strong>Doğrudan platform hizmeti:</strong> Ders akışları, oyunlar,
-        hesap yönetimi, ödeme altyapısı üzerinden kredi/abonelik tanımlama ve
+        hesap yönetimi; ödeme altyapısı üzerinden satın alınan{" "}
+        <strong>dijital hizmet paketleri</strong> (ör. özel ders pazarında mesaj
+        ve teklif için kullanım hakları) ile{" "}
+        <strong>yinelenen ücretli platform aboneliği</strong> tanımlanması ve
         benzeri özellikler Sukull tarafından işletilen yazılım kapsamında
         sunulur.
       </p>
@@ -57,6 +60,17 @@ export default function KullanimSartlariPage() {
         sağlayıcısı olduğunu belirtir. Taraflar arası uyuşmazlıklarda öncelikle
         birbirleriyle ve gerektiğinde destek kanallarımız ile iletişim
         kurulması esastır.
+      </p>
+      <p>
+        <strong>Özel ders talep ilanı (ilan) ve ödeme kategorisi:</strong> Öğrenciler
+        tarafından açılan talep ilanları, özel ders ihtiyacının tanımlanması ve
+        yalnızca platformda onaylı eğitmenlerin teklif verebilmesi amacıyla sunulan{" "}
+        <strong>dijital aracılık hizmeti</strong> kapsamındadır. Bu süreçte tahsil
+        edilen bedeller; mesajlaşma kanalı ve teklif süreçlerine ilişkin{" "}
+        <strong>platform hizmet paketleri</strong> (sipariş ekranında adet ve bedel
+        olarak gösterilir) üzerinden alınır. Öğretmen–öğrenci arasında kurulacak
+        ders içeriği, ücreti ve usulü tarafların kendi aralarındaki anlaşmasına
+        tabidir.
       </p>
       <p>
         <strong>Abonelik ve yinelenen ödemeler:</strong> Aylık veya dönemsel
@@ -114,8 +128,8 @@ export default function KullanimSartlariPage() {
           gösterilir.
         </li>
         <li>
-          Pazaryeri (ilan, teklif, mesaj kilidi) ve abonelikle ilgili ücretlerin
-          kapsamı, sipariş ekranında ve bu belgenin{" "}
+          Pazaryeri (talep ilanı, teklif, mesajlaşma kanalı) ve ücretli platform
+          aboneliğiyle ilgili bedellerin kapsamı, sipariş ekranında ve bu belgenin{" "}
           <strong>2. maddesinde</strong> özetlendiği hizmet modeli ile uyumlu
           olarak yorumlanır.
         </li>

@@ -73,7 +73,7 @@ export default async function ThreeDsResultPage({
           href="/private-lesson/credits"
           className="inline-flex items-center rounded-xl bg-suk-payment px-4 py-2 font-medium text-suk-payment-fg hover:bg-suk-payment-hover"
         >
-          Kredi sayfasına dön
+          Paketler sayfasına dön
         </Link>
       </ResultShell>
     );
@@ -82,12 +82,12 @@ export default async function ThreeDsResultPage({
   if (status !== 'pending') {
     return (
       <ResultShell tone="error" title="Beklenmeyen istek">
-        <p>Ödeme sonucu bilinmiyor. Lütfen kredi sayfasından tekrar deneyin.</p>
+        <p>Ödeme sonucu bilinmiyor. Lütfen paketler sayfasından tekrar deneyin.</p>
         <Link
           href="/private-lesson/credits"
           className="font-medium text-suk-payment underline decoration-suk-payment/40 underline-offset-2 hover:text-suk-payment-hover"
         >
-          Kredi sayfasına dön
+          Paketler sayfasına dön
         </Link>
       </ResultShell>
     );
@@ -102,7 +102,7 @@ export default async function ThreeDsResultPage({
           href="/private-lesson/credits"
           className="font-medium text-suk-payment underline decoration-suk-payment/40 underline-offset-2 hover:text-suk-payment-hover"
         >
-          Kredi sayfasına dön
+          Paketler sayfasına dön
         </Link>
       </ResultShell>
     );
@@ -127,7 +127,7 @@ export default async function ThreeDsResultPage({
           href="/private-lesson/credits"
           className="font-medium text-suk-payment underline decoration-suk-payment/40 underline-offset-2 hover:text-suk-payment-hover"
         >
-          Kredi sayfasına dön
+          Paketler sayfasına dön
         </Link>
       </ResultShell>
     );
@@ -194,12 +194,12 @@ export default async function ThreeDsResultPage({
     });
     return (
       <ResultShell tone="error" title="Ödeme sunucusuna ulaşılamadı">
-        <p>Ağ hatası nedeniyle ödemeniz tamamlanamadı. Lütfen kısa bir süre sonra kredi sayfasına dönün; çift tahsilat olmaz.</p>
+        <p>Ağ hatası nedeniyle ödemeniz tamamlanamadı. Lütfen kısa bir süre sonra paketler sayfasına dönün; çift tahsilat olmaz.</p>
         <Link
           href="/private-lesson/credits"
           className="font-medium text-suk-payment underline decoration-suk-payment/40 underline-offset-2 hover:text-suk-payment-hover"
         >
-          Kredi sayfasına dön
+          Paketler sayfasına dön
         </Link>
       </ResultShell>
     );
@@ -217,7 +217,7 @@ export default async function ThreeDsResultPage({
       <ResultShell tone="success" title="Ödeme başarılı">
         <p>
           {finalizeJson.message ??
-            `${finalizeJson.data?.creditsAdded ?? creditsAmount} kredi hesabınıza eklendi.`}
+            `${finalizeJson.data?.creditsAdded ?? creditsAmount} adet kullanım hakkı hesabınıza eklendi.`}
         </p>
         <Link
           href="/private-lesson"
@@ -236,7 +236,7 @@ export default async function ThreeDsResultPage({
         href="/private-lesson/credits"
         className="font-medium text-suk-payment underline decoration-suk-payment/40 underline-offset-2 hover:text-suk-payment-hover"
       >
-        Kredi sayfasına dön
+        Paketler sayfasına dön
       </Link>
     </ResultShell>
   );

@@ -1,7 +1,14 @@
 import db from "@/db/drizzle";
 import { activityLog } from "@/db/schema";
 
-type EventType = "page_view" | "game_start" | "game_end" | "lesson_complete" | "shop_purchase" | "login";
+type EventType =
+  | "page_view"
+  | "game_start"
+  | "game_end"
+  | "lesson_complete"
+  | "shop_purchase"
+  | "login"
+  | "referral_reward";
 
 interface LogOptions {
   userId: string;

@@ -39,7 +39,7 @@ async function main(): Promise<void> {
         "  npm run db:apply -- supabase/migrations/0038_rls_study_buddy_schools_users.sql\n" +
         "  npm run db:apply -- supabase/migrations/0040_final_rls_all_tables.sql\n" +
         "  npm run db:apply -- supabase/migrations/0041_rls_marketplace_credits_snippets_daily.sql\n" +
-        "  (0036–0038: indeks/chat/RLS temeli; 0040: içerik + ilerleme + başvuru + log RLS; 0041: marketplace/kredi/snippets/günlük RLS.)\n\n" +
+        "  (0036–0038: indeks/chat/RLS temeli; 0040: içerik + ilerleme + başvuru + log RLS; 0041: marketplace/kullanım hakkı/snippets/günlük RLS.)\n\n" +
         "Requires DIRECT_URL (preferred for DDL) or DATABASE_URL in .env — see script header.",
     );
     process.exit(1);

@@ -129,7 +129,7 @@ export const useCredit = async (userId: string) => {
     .returning();
 
   if (result.length === 0) {
-    throw new Error("Yetersiz kredi");
+    throw new Error("Yetersiz kullanım hakkı");
   }
 };
 
@@ -145,7 +145,7 @@ export const refundCredit = async (userId: string) => {
     .returning();
 
   if (result.length === 0) {
-    throw new Error("Kullanıcı kredi bilgisi bulunamadı");
+    throw new Error("Kullanıcı bakiye bilgisi bulunamadı");
   }
 };
 

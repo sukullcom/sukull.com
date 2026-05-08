@@ -56,14 +56,14 @@ export const CancelLessonModal = ({
                 <span className="font-medium">{lessonTime}</span> tarihindeki dersini iptal etmek üzeresin.
                 <br />
                 <br />
-                <span className="text-suk-brand font-medium">Merak etme, kredin hesabına iade edilecek.</span>
+                <span className="text-suk-brand font-medium">Merak etme, kullanım hakkın hesabına iade edilecek.</span>
               </>
             ) : (
               <>
                 Bu dersi iptal etmek üzeresin.
                 <br />
                 <br />
-                <span className="text-suk-brand font-medium">Merak etme, kredin hesabına iade edilecek.</span>
+                <span className="text-suk-brand font-medium">Merak etme, kullanım hakkın hesabına iade edilecek.</span>
               </>
             )}
           </DialogDescription>

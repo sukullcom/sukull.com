@@ -64,9 +64,9 @@ export default function UserCreditsDisplay({
               <CreditCard className="h-5 w-5 text-suk-payment" />
             </div>
             <div>
-              <h3 className="font-semibold text-suk-fg-primary">Kredilerim</h3>
+              <h3 className="font-semibold text-suk-fg-primary">Kullanım haklarım</h3>
               <p className="text-sm text-suk-fg-muted">
-                {loading ? 'Yükleniyor...' : error ? 'Yüklenemedi' : `${credits.availableCredits} kredi kullanılabilir`}
+                {loading ? 'Yükleniyor...' : error ? 'Yüklenemedi' : `${credits.availableCredits} kullanım hakkı kullanılabilir`}
               </p>
             </div>
           </div>
@@ -99,7 +99,7 @@ export default function UserCreditsDisplay({
                     disabled={loading}
                   >
                     <Plus className="h-4 w-4" />
-                    <span className="hidden sm:inline">Kredi Al</span>
+                    <span className="hidden sm:inline">Paket al</span>
                   </Button>
                 )}
               </>
@@ -111,7 +111,7 @@ export default function UserCreditsDisplay({
           <div className="mt-3 rounded-lg border border-suk-warning-border bg-suk-warning-soft p-3">
             <p className="text-sm text-suk-warning-soft-fg">
               İlan açmak, eğitmenlere teklif göndermek veya bir eğitmenle mesajlaşmayı
-              açmak için kredi kullanılır. Devam etmek için kredi satın alabilirsin.
+              açmak için platform kullanım hakkı gerekir. Devam etmek için hizmet paketi satın alabilirsin.
             </p>
           </div>
         )}

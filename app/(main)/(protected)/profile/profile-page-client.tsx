@@ -283,7 +283,7 @@ export default function ProfilePageClient({
                     <h3 className="text-lg font-bold text-foreground">Detaylı analiz Premium ile</h3>
                     <p className="mt-1 text-sm text-muted-foreground">
                       Konu ve kurs bazlı performans, zorluk dağılımı ve özet istatistikler aylık abonelikte.
-                      Ayrıca <strong className="text-foreground">sonsuz can</strong> avantajı da dahil (100₺/ay).
+                      Ayrıca <strong className="text-foreground">sonsuz can</strong> avantajı da dahil.
                     </p>
                   </div>
                   <Button variant="payment" size="lg" className="shrink-0 w-full sm:w-auto" asChild>

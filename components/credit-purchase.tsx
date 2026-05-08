@@ -73,7 +73,7 @@ export default function CreditPurchase() {
       setUserCredits(response.data)
     } catch (error) {
       clientLogger.error({ message: 'fetch credits failed', error, location: 'credit-purchase/fetchCredits' })
-      toast.error('Kredi bilgileri yüklenirken hata oluştu')
+      toast.error('Hizmet paketi bilgileri yüklenirken hata oluştu')
     } finally {
       setLoadingCredits(false)
     }
@@ -223,7 +223,10 @@ export default function CreditPurchase() {
       const result = await response.json()
 
       if (result.success) {
-        toast.success(result.message || `Ödeme başarılı! ${selectedPackage.credits} kredi hesabınıza eklendi.`)
+        toast.success(
+          result.message ||
+            `Ödeme başarılı! ${selectedPackage.credits} adet kullanım hakkı hesabınıza tanımlandı.`,
+        )
         // Refresh credits
         await fetchUserCredits()
         // Clear form
@@ -269,17 +272,19 @@ export default function CreditPurchase() {
     <div className="min-h-0 w-full max-w-6xl mx-auto px-4 py-8 sm:py-10">
       <div
         className="rounded-3xl border border-border/80 bg-gradient-to-b from-suk-surface-muted/90 via-suk-surface-card to-suk-surface-card p-6 sm:p-8 shadow-sm"
-        aria-label="Kredi satın alma"
+        aria-label="Özel ders pazarı hizmet paketi satın alma"
       >
       <div className="text-center mb-8">
         <h1 className="mb-2 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-          Kredi Satın Al
+          Pazaryeri hizmet paketi
         </h1>
         <p className="mx-auto max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-          Krediler hem öğrenciler hem eğitmenler için geçerlidir. Öğrenciler
-          bir eğitmenle sohbeti açmak için <b className="text-foreground">1 kredi</b>, eğitmenler bir
-          ilana teklif vermek için <b className="text-foreground">1 kredi</b> harcar. Daha büyük paket
-          aldıkça kredi başına fiyat düşer.
+          Satın aldığınız paket, özel ders pazarında <strong>dijital platform hizmeti</strong>{" "}
+          (mesajlaşma kanalı ve teklif süreçleri) için geçerli <b className="text-foreground">kullanım hakları</b>{" "}
+          sağlar. Öğrenciler bir eğitmenle sohbeti açmak için{" "}
+          <b className="text-foreground">1 kullanım hakkı</b>, eğitmenler bir talep ilanına teklif
+          vermek için <b className="text-foreground">1 kullanım hakkı</b> kullanır. Daha büyük paket
+          aldıkça hak başına birim fiyat düşer.
         </p>
       </div>
 
@@ -288,7 +293,7 @@ export default function CreditPurchase() {
           <div className="flex items-center justify-between gap-4">
             <div className="min-w-0 text-left">
               <h3 className="text-base font-semibold text-foreground sm:text-lg">
-                Mevcut kredin
+                Mevcut kullanım hakkın
               </h3>
             </div>
             <div className="text-right flex-shrink-0">
@@ -306,7 +311,7 @@ export default function CreditPurchase() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
         <div>
-          <h2 className="mb-4 text-lg font-semibold text-foreground sm:text-xl">Kredi paketleri</h2>
+          <h2 className="mb-4 text-lg font-semibold text-foreground sm:text-xl">Hizmet paketleri</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
             {creditPackages.map((pkg) => (
               <Card 
@@ -331,7 +336,7 @@ export default function CreditPurchase() {
                     </div>
                   )}
                   <div className="text-2xl font-bold tabular-nums text-foreground">{pkg.credits}</div>
-                  <div className="mb-1 text-sm text-muted-foreground">kredi</div>
+                  <div className="mb-1 text-sm text-muted-foreground">kullanım hakkı</div>
                   <div className="text-lg font-semibold text-foreground">
                     {pkg.price.toLocaleString('tr-TR')}{" "}
                     <span className="text-base font-medium text-muted-foreground">₺</span>
@@ -340,7 +345,7 @@ export default function CreditPurchase() {
                     {(pkg.price / pkg.credits).toLocaleString('tr-TR', {
                       maximumFractionDigits: 2,
                     })}{" "}
-                    ₺/kredi
+                    ₺/hak
                   </div>
                   {pkg.id !== '1' && (
                     <div className="mt-1.5 text-[10px] font-medium text-suk-payment-soft-fg">
@@ -361,7 +366,7 @@ export default function CreditPurchase() {
             <CardContent className="p-4 sm:p-5">
               <div className="flex justify-between items-center gap-2">
                 <span className="font-medium text-foreground">
-                  {selectedPackage.credits} kredi
+                  {selectedPackage.credits} kullanım hakkı
                 </span>
                 <span className="text-xl font-bold tabular-nums text-suk-payment">
                   {selectedPackage.price.toLocaleString('tr-TR')} ₺

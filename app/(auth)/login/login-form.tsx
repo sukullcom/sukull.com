@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useTransition } from "react";
+import { useState, useEffect, useTransition, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import Link from "next/link";
@@ -13,9 +13,14 @@ import { login } from "./actions";
 import { clientLogger } from "@/lib/client-logger";
 import { getClientAuthTransientErrorMessage } from "@/lib/auth-flow-client-errors";
 
-export function LoginForm() {
+type LoginFormProps = {
+  referralFromUrl?: string;
+};
+
+export function LoginForm({ referralFromUrl }: LoginFormProps) {
   const [isPending, startTransition] = useTransition();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const referralCookieSynced = useRef(false);
   const searchParams = useSearchParams();
   
   // Combined loading state - true if EITHER is true
@@ -38,6 +43,16 @@ export function LoginForm() {
       window.history.replaceState({}, '', newUrl.toString());
     }
   }, [searchParams]);
+
+  useEffect(() => {
+    if (!referralFromUrl || referralCookieSynced.current) return;
+    referralCookieSynced.current = true;
+    void fetch("/api/referral/set-cookie", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code: referralFromUrl }),
+    }).catch(() => {});
+  }, [referralFromUrl]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -136,7 +151,11 @@ export function LoginForm() {
         Hesabın yok mu?{" "}
         <Link
           prefetch={false}
-          href="/create-account"
+          href={
+            referralFromUrl
+              ? `/create-account?ref=${encodeURIComponent(referralFromUrl)}`
+              : "/create-account"
+          }
           className="font-semibold text-suk-brand underline hover:text-suk-brand-hover"
         >
           Kayıt Ol

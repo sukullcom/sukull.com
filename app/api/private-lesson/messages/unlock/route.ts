@@ -74,12 +74,12 @@ export async function POST(request: NextRequest) {
     const canPay = await hasAvailableCredits(user.id, 1);
     if (!canPay) {
       return NextResponse.json(
-        { error: "Yetersiz kredi. Kredi satın alın ve tekrar deneyin." },
+        { error: "Yetersiz kullanım hakkı. Hizmet paketi satın alıp tekrar deneyin." },
         { status: 402 },
       );
     }
 
-    // Yalnızca yeni kilit (satır yok) + kredi var iken sayaç artar.
+    // Yalnızca yeni kilit (satır yok) + kullanılabilir hak varken sayaç artar.
     const rl = await checkRateLimit({
       key: `messageUnlock:user:${user.id}`,
       ...RATE_LIMITS.messageUnlock,
@@ -149,7 +149,7 @@ function unlockErrorToHttp(
     case "teacher_not_found":
       return [404, "Eğitmen bulunamadı"];
     case "insufficient_credits":
-      return [402, "Yetersiz kredi. Kredi satın alın ve tekrar deneyin."];
+      return [402, "Yetersiz kullanım hakkı. Hizmet paketi satın alıp tekrar deneyin."];
     default:
       return [500, "İşlem başarısız"];
   }

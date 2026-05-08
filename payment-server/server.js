@@ -465,7 +465,7 @@ app.post("/api/payment/create", authenticateUser, async (req, res) => {
       return res.status(ok ? 200 : 400).json({
         success: ok,
         message: ok
-          ? `Ödeme zaten işlenmişti. ${creditsAmount} kredi hesabınızda.`
+          ? `Ödeme zaten işlenmişti. ${creditsAmount} kullanım hakkı hesabınızda.`
           : GENERIC_PAYMENT_ERROR,
         idempotent: true,
       });
@@ -495,9 +495,9 @@ app.post("/api/payment/create", authenticateUser, async (req, res) => {
       basketItems: [
         {
           id: `credit_${creditsAmount}`,
-          name: `${creditsAmount} Sukull Kredisi`,
+          name: `${creditsAmount} adet özel ders pazarı kullanım hakkı (platform hizmeti)`,
           category1: "Education",
-          category2: "Credits",
+          category2: "DigitalService",
           itemType: "VIRTUAL",
           price: totalPrice.toString(),
         },
@@ -584,7 +584,7 @@ app.post("/api/payment/create", authenticateUser, async (req, res) => {
       await client.query("COMMIT");
       return res.json({
         success: true,
-        message: `Ödeme başarılı! ${creditsAmount} kredi hesabınıza eklendi.`,
+        message: `Ödeme başarılı! ${creditsAmount} kullanım hakkı hesabınıza tanımlandı.`,
         data: { paymentId: paymentResult.paymentId, creditsAdded: creditsAmount },
       });
     }
@@ -706,9 +706,9 @@ app.post("/api/payment/subscribe", authenticateUser, async (req, res) => {
       basketItems: [
         {
           id: "infinite_hearts_subscription",
-          name: "Sonsuz Can - Aylık Abonelik",
-          category1: "Subscription",
-          category2: "Premium",
+          name: "Sukull Premium — aylık platform hizmet paketi (sınırsız can + profil analizi)",
+          category1: "Education",
+          category2: "Subscription",
           itemType: "VIRTUAL",
           price: subscriptionAmount.toString(),
         },
@@ -950,7 +950,7 @@ app.post("/api/payment/3ds/initialize-credit", authenticateUser, async (req, res
         success: false,
         idempotent: true,
         message: ok
-          ? `Ödeme zaten işlenmişti. ${creditsAmount} kredi hesabınızda.`
+          ? `Ödeme zaten işlenmişti. ${creditsAmount} kullanım hakkı hesabınızda.`
           : GENERIC_PAYMENT_ERROR,
       });
     }
@@ -979,9 +979,9 @@ app.post("/api/payment/3ds/initialize-credit", authenticateUser, async (req, res
       basketItems: [
         {
           id: `credit_${creditsAmount}`,
-          name: `${creditsAmount} Sukull Kredisi`,
+          name: `${creditsAmount} adet özel ders pazarı kullanım hakkı (platform hizmeti)`,
           category1: "Education",
-          category2: "Credits",
+          category2: "DigitalService",
           itemType: "VIRTUAL",
           price: totalPrice.toString(),
         },
@@ -1116,7 +1116,7 @@ app.post("/api/payment/3ds/finalize-credit", authenticateUser, async (req, res) 
     const numericCredits = storedCreditsMatch ? Number(storedCreditsMatch[1]) : NaN;
     const numericPrice = Number(storedRequest.paidPrice ?? storedRequest.price);
     if (!Number.isFinite(numericCredits) || numericCredits <= 0) {
-      return res.status(400).json({ success: false, message: "Geçersiz kredi miktarı." });
+      return res.status(400).json({ success: false, message: "Geçersiz paket adedi." });
     }
     if (!Number.isFinite(numericPrice) || numericPrice <= 0) {
       return res.status(400).json({ success: false, message: "Geçersiz ödeme tutarı." });
@@ -1128,7 +1128,7 @@ app.post("/api/payment/3ds/finalize-credit", authenticateUser, async (req, res) 
       return res.json({
         success: true,
         idempotent: true,
-        message: `Ödeme zaten işlenmişti. ${numericCredits} kredi hesabınızda.`,
+        message: `Ödeme zaten işlenmişti. ${numericCredits} kullanım hakkı hesabınızda.`,
       });
     }
     if (priorStatus === "failed") {
@@ -1190,7 +1190,7 @@ app.post("/api/payment/3ds/finalize-credit", authenticateUser, async (req, res) 
         await client.query("COMMIT");
         return res.json({
           success: true,
-          message: `Ödeme başarılı! ${numericCredits} kredi hesabınıza eklendi.`,
+          message: `Ödeme başarılı! ${numericCredits} kullanım hakkı hesabınıza tanımlandı.`,
           data: { paymentId: paymentResult.paymentId, creditsAdded: numericCredits },
         });
       }

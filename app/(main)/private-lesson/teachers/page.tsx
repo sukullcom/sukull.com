@@ -83,8 +83,8 @@ export default async function TeachersDirectoryPage({
         </div>
         <p className="text-sm text-muted-foreground">
           Sukull tarafından onaylanmış eğitmenlerin listesi. Saatlik ücretleri
-          görebilir, 1 kredi ile mesajlaşmayı açabilirsin — tek seferlik ödeme,
-          sohbet kalıcıdır ve kredi iade edilmez. Onay sonrası tarafların kayıtlı
+          görebilir, 1 kullanım hakkı ile mesajlaşmayı açabilirsin — tek seferlik ödeme,
+          sohbet kalıcıdır ve hak iade edilmez. Onay sonrası tarafların kayıtlı
           e-posta ve telefon bilgileri sohbet üzerinden paylaşılır.
         </p>
       </div>

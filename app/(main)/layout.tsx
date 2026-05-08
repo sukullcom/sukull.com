@@ -4,6 +4,7 @@ import { MobileHeader } from "@/components/mobile-header";
 import { Sidebar } from "@/components/sidebar";
 import { BottomNavigator } from "@/components/bottom-navigator";
 import { MainLayoutBottomSpacer } from "@/components/main-layout-bottom-spacer";
+import { ReferralInviteFab } from "@/components/referral-invite-dialog";
 
 export default function MainLayout({ children }: { children: ReactNode }) {
   return (
@@ -19,6 +20,7 @@ export default function MainLayout({ children }: { children: ReactNode }) {
         </main>
       </div>
       <BottomNavigator className="lg:hidden" />
+      <ReferralInviteFab />
     </>
   );
 }

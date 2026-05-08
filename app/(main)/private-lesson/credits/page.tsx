@@ -4,9 +4,9 @@ import { redirect } from "next/navigation";
 import CreditPurchase from "@/components/credit-purchase";
 
 export const metadata: Metadata = {
-  title: "Kredi Satın Al | Sukull",
+  title: "Pazaryeri hizmet paketi | Sukull",
   description:
-    "Özel ders pazarında mesaj kilidi açmak, teklif göndermek ve diğer etkileşimler için kredi satın al.",
+    "Özel ders pazarında mesajlaşma kanalı ve teklif süreçleri için dijital platform hizmet paketi satın alın.",
 };
 
 /**

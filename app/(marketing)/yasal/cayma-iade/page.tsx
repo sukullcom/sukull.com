@@ -37,7 +37,7 @@ export default function CaymaIadePage() {
       <ul>
         <li>
           Elektronik ortamda anında ifa edilen hizmetler (ör. ödeme sonrası
-          hesaba anında tanımlanan kredi paketleri, oyun içi avantajlar,
+          hesaba anında tanımlanan pazaryeri kullanım hakları paketleri, oyun içi avantajlar,
           abonelik aktivasyonu).
         </li>
         <li>
@@ -73,7 +73,7 @@ export default function CaymaIadePage() {
           süresi bankanıza bağlıdır ve genellikle 1-7 iş günü alır.
         </li>
         <li>
-          Kullanılmış dijital hizmetler (ör. harcanmış kredi ile açılmış mesaj
+          Kullanılmış dijital hizmetler (ör. kullanılmış hak ile açılmış mesaj
           kilidi veya gönderilmiş teklif) iadeye konu olmaz; yalnızca
           kullanılmayan kısım iade edilir.
         </li>
@@ -86,7 +86,7 @@ export default function CaymaIadePage() {
         platformda gerçekleşen derslere ilişkin anlaşmazlıklarda öncelikle
         tarafların birbirleriyle iletişimi esastır. Platform kayıtları ve
         başvurunuza eklediğiniz bilgiler çerçevesinde haklı bulunan
-        taleplerde, destek ekibimiz iade veya kredi düzeltmesini ayrıca
+        taleplerde, destek ekibimiz iade veya kullanım hakkı düzeltmesini ayrıca
         değerlendirir.
       </p>
       <h3>5.2 Teknik Hata</h3>

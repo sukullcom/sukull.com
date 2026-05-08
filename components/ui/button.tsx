@@ -48,7 +48,7 @@ const buttonVariants = cva(
         /** Çerçeveli nötr (gri aile) */
         outline:
           "bg-background text-foreground border-border border-2 border-b-4 active:border-b-2 hover:bg-muted",
-        /** Ödeme / kredi / checkout */
+        /** Ödeme / paket satın alma / checkout */
         payment:
           "bg-suk-payment text-suk-payment-fg hover:bg-suk-payment-hover border-suk-payment-border border-b-4 active:border-b-0",
         paymentOutline:

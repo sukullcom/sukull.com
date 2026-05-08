@@ -205,6 +205,8 @@ export const RATE_LIMITS = {
    * Supabase Auth rate limit + SMTP kotası ayrıca uygulanır.
    */
   signupIp: { max: 500, windowSeconds: 60 * 60 },
+  /** Davet çerezi (httpOnly) — paylaşılan IP altında kötüye kullanım sınırı. */
+  referralSetCookieIp: { max: 40, windowSeconds: 60 },
   resetPassword: { max: 5, windowSeconds: 60 * 60 },
   resendVerification: { max: 30, windowSeconds: 15 * 60 },
 
@@ -223,7 +225,7 @@ export const RATE_LIMITS = {
   teacherLeave: { max: 3, windowSeconds: 24 * 60 * 60 },
   /** Student listing creation / edit. */
   listingWrite: { max: 20, windowSeconds: 60 * 60 },
-  /** Teacher offering on a student listing. Money-adjacent (kredi düşer). */
+  /** Teacher offering on a student listing. Money-adjacent (usage credit deducted). */
   listingOffer: { max: 60, windowSeconds: 60 * 60 },
   /**
    * Yeni mesaj kilidi (öğrenci başına). Var olan kilit satırı için sayaç

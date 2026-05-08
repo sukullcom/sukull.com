@@ -66,7 +66,7 @@ export function MessageTeacherButton({
 
       if (res.status === 402) {
         toast.error(
-          data.error || "Yetersiz kredi. Kredi satın alın ve tekrar deneyin.",
+          data.error || "Yetersiz kullanım hakkı. Hizmet paketi satın alıp tekrar deneyin.",
         );
         router.push("/private-lesson/credits");
         return;
@@ -100,7 +100,7 @@ export function MessageTeacherButton({
       }
 
       if (!data.alreadyUnlocked) {
-        toast.success("Sohbet açıldı! 1 kredi kullanıldı.");
+        toast.success("Sohbet açıldı! 1 kullanım hakkı kullanıldı.");
       }
       router.push(`/private-lesson/messages/${data.chatId}`);
     } catch (error) {
@@ -129,8 +129,8 @@ export function MessageTeacherButton({
     <>
       <span className="block mb-2">
         {label} ile mesajlaşmayı açmak için{" "}
-        <span className="font-semibold">1 kredi</span> kullanılır. Ödeme tek
-        seferlidir; aynı sohbet için tekrar ücret alınmaz ve kredi iade edilmez.
+        <span className="font-semibold">1 kullanım hakkı</span> kullanılır. Ödeme tek
+        seferlidir; aynı sohbet için tekrar ücret alınmaz ve hak iade edilmez.
       </span>
       <span className="block text-muted-foreground">
         Onayladığında, sohbet ekranında{" "}
@@ -166,7 +166,7 @@ export function MessageTeacherButton({
         onOpenChange={setCreditDialogOpen}
         title="Mesajı aç?"
         description={messageDescription}
-        confirmLabel="Evet, 1 kredi kullan"
+        confirmLabel="Evet, 1 kullanım hakkı kullan"
         cancelLabel="Vazgeç"
         confirmVariant="primary"
         pending={loading}

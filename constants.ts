@@ -1,5 +1,13 @@
 export const POINTS_TO_REFILL = 100;
 
+/** Arkadaş daveti: yeni hesap oluşunca yönlendirene verilen puan (davet edilen ilk kez). */
+export const REFERRAL_SYSTEM = {
+  REFERRER_POINTS: 300,
+  /** Davet bağlantısındaki `ref` parametresi — kod formatı `SK` + 8 hex. */
+  CODE_PREFIX: "SK",
+  CODE_BODY_LENGTH: 8,
+} as const;
+
 export const SCORING_SYSTEM = {
   LESSON_CHALLENGE_FIRST: 10,
   LESSON_CHALLENGE_PRACTICE: 5,

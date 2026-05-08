@@ -408,7 +408,7 @@ export default async function AdminAnalyticsPage() {
                 color="text-emerald-700 bg-emerald-50 border-emerald-200"
               />
               <StatBox
-                label="Satılan kredi"
+                label="Satılan kullanım hakkı (adet)"
                 value={revenue.totalCreditsPurchased}
                 color="text-teal-700 bg-teal-50 border-teal-200"
               />
@@ -430,7 +430,7 @@ export default async function AdminAnalyticsPage() {
                       {t.userId.slice(0, 8)}...
                     </span>
                     <span className="text-gray-500">
-                      {t.credits} kredi / {t.amount} ₺
+                      {t.credits} hak / {t.amount} ₺
                     </span>
                     <span
                       className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${

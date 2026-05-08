@@ -15,6 +15,7 @@ import { ensurePublicUserFromAuth } from "@/lib/ensure-public-user";
 import { getAuthError } from "@/utils/auth-errors";
 import { createClient } from "@/utils/supabase/server";
 import { logger } from "@/lib/logger";
+import { normalizeReferralCode } from "@/lib/referral-code";
 
 const log = logger.child({ labels: { module: "auth/create-account" } });
 
@@ -105,6 +106,9 @@ export async function signUpWithEmail(
 
   try {
     const supabase = await createClient();
+    const referralMeta = normalizeReferralCode(
+      String(formData.get("referralCode") ?? ""),
+    );
     const { data, error } = await supabase.auth.signUp({
       email: emailRaw,
       password,
@@ -112,6 +116,7 @@ export async function signUpWithEmail(
         emailRedirectTo: getServerAuthCallbackUrl(),
         data: {
           username: usernameRaw,
+          ...(referralMeta ? { referral_code: referralMeta } : {}),
         },
       },
     });

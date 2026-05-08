@@ -74,7 +74,7 @@ export default function OnBilgilendirmePage() {
       <h2>2. Ürün / Hizmet Temel Nitelikleri</h2>
       <p>
         Sepet ve ödeme ekranında ürün/hizmetin adı, kapsamı, ücretli abonelik
-        süresi, kredi tutarı ve KDV dahil toplam bedeli açıkça belirtilir.
+        süresi, paket bedeli (KDV dahil) ve toplam ödeme tutarı açıkça belirtilir.
         Bu bilgiler sözleşmenin ayrılmaz parçasıdır.
       </p>
 
@@ -88,8 +88,8 @@ export default function OnBilgilendirmePage() {
 
       <h2>4. Ödeme ve Teslim Süresi</h2>
       <p>
-        Dijital ürünlerde ödeme onaylandığı anda ifa başlar; krediler veya
-        abonelik hakkı hesabınıza aynı anda yansır.
+        Dijital ürünlerde ödeme onaylandığı anda ifa başlar; satın alınan
+        kullanım hakları veya abonelik kapsamı hesabınıza aynı anda yansır.
       </p>
 
       <h2>5. Cayma Hakkı</h2>

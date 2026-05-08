@@ -114,7 +114,7 @@ export default async function TeacherDetailPage({
                 />
                 {!unlock && (
                   <p className="text-[11px] text-muted-foreground mt-2">
-                    Tek sefer 1 kredi; kredi iade edilmez. Onayladığında
+                    Tek sefer 1 kullanım hakkı; iade edilmez. Onayladığında
                     eğitmenin ve senin kayıtlı iletişim bilgileriniz sohbet
                     ekranında paylaşılır.
                   </p>

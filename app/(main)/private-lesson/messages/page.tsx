@@ -31,10 +31,10 @@ export default async function MessagesIndexPage() {
         </div>
         <p className="text-sm text-muted-foreground">
           Eğitmenlerle veya öğrencilerle açılmış sohbetlerin. Öğrenci olarak yeni
-          sohbet açmak için eğitmen rehberinden bir profile tek seferlik 1 kredi
+          sohbet açmak için eğitmen rehberinden bir profile tek seferlik 1 kullanım hakkı
           kullanılır; onay sonrası tarafların kayıtlı e-posta ve telefon bilgileri
           sohbet üzerinde paylaşılır. Sonrasında mesajlaşma ücretsizdir; harcanan
-          kredi iade edilmez.
+          hak iade edilmez.
         </p>
       </div>
 

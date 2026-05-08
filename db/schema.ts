@@ -15,6 +15,7 @@ import {
   jsonb,
   index,
   primaryKey,
+  type AnyPgColumn,
 } from "drizzle-orm/pg-core";
 
 // Define your IUserLink type (for TypeScript)
@@ -39,11 +40,51 @@ export const users = pgTable("users", {
   /** Shown to the other party after private-lesson unlock or listing offer. */
   phone: text("phone"),
   role: userRoleEnum("role").default("user").notNull(),
+  /** Paylaşılabilir davet kodu (ör. SK + 8 hex). */
+  referralCode: text("referral_code").notNull(),
+  /** Bu hesabı hangi kullanıcının davetiyle açtığı (bir kez, değişmez). */
+  referredByUserId: text("referred_by_user_id").references((): AnyPgColumn => users.id, {
+    onDelete: "set null",
+  }),
   created_at: timestamp("created_at").defaultNow().notNull(),
   updated_at: timestamp("updated_at").defaultNow().notNull(),
 }, (table) => ({
   emailIdx: index("idx_users_email").on(table.email),
   roleIdx: index("idx_users_role").on(table.role),
+  referralCodeKey: uniqueIndex("users_referral_code_key").on(table.referralCode),
+  referredByIdx: index("idx_users_referred_by_user_id").on(table.referredByUserId),
+}));
+
+export const referralRewards = pgTable(
+  "referral_rewards",
+  {
+    id: bigserial("id", { mode: "number" }).primaryKey(),
+    referrerUserId: text("referrer_user_id")
+      .references(() => users.id, { onDelete: "cascade" })
+      .notNull(),
+    refereeUserId: text("referee_user_id")
+      .references(() => users.id, { onDelete: "cascade" })
+      .notNull(),
+    referrerPoints: integer("referrer_points").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    refereeUnique: uniqueIndex("referral_rewards_referee_unique").on(table.refereeUserId),
+    referrerIdx: index("referral_rewards_referrer_idx").on(table.referrerUserId),
+  }),
+);
+
+export const referralRewardsRelations = relations(referralRewards, ({ one }) => ({
+  referrer: one(users, {
+    fields: [referralRewards.referrerUserId],
+    references: [users.id],
+    relationName: "referralAsReferrer",
+  }),
+  referee: one(users, {
+    fields: [referralRewards.refereeUserId],
+    references: [users.id],
+    relationName: "referralAsReferee",
+  }),
 }));
 
 // Courses

@@ -22,7 +22,7 @@ export default function TeslimatVeIadePage() {
     >
       <h2>1. Teslimat</h2>
       <p>
-        Platformda satın alınan <strong>dijital içerik ve krediler</strong>, ödeme onayından sonra
+        Platformda satın alınan <strong>dijital içerik ve pazaryeri hizmet paketleri</strong>, ödeme onayından sonra
         ilgili kullanıcı hesabına elektronik ortamda tanımlanır. Fiziksel ürün gönderimi
         bulunmamaktadır. Özel ders ilanı ve mesajlaşma gibi hizmetler, sözleşmede tanımlanan
         dijital kanallar üzerinden ifa edilir.
@@ -30,7 +30,7 @@ export default function TeslimatVeIadePage() {
 
       <h2>2. Teslim süresi</h2>
       <p>
-        Ödeme altyapısından başarılı onay alındığında, kredi ve benzeri dijital haklar genellikle
+        Ödeme altyapısından başarılı onay alındığında, satın alınan dijital kullanım hakları genellikle
         <strong> anında veya kısa süre içinde</strong> hesaba yansır. Banka / kart sağlayıcı
         gecikmeleri veya teknik kesintiler hâlinde süre uzayabilir; bu durumda{" "}
         <a className="text-suk-brand underline hover:text-suk-brand-hover" href={`mailto:${contactEmail}`}>

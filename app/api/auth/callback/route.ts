@@ -164,7 +164,12 @@ export async function GET(request: NextRequest) {
           const usernameFromMetadata = authUser.user_metadata?.username as
             | string
             | undefined;
-          await ensurePublicUserFromAuth(authUser, usernameFromMetadata);
+          const pendingRef = request.cookies.get("sk_ref")?.value ?? null;
+          await ensurePublicUserFromAuth(
+            authUser,
+            usernameFromMetadata,
+            pendingRef,
+          );
         } catch (err) {
           log.error({
             message: 'ensure public user failed',
@@ -199,6 +204,13 @@ export async function GET(request: NextRequest) {
     
     const res = NextResponse.redirect(new URL(redirectTo, requestUrl.origin));
     applyCookies(res);
+    res.cookies.set("sk_ref", "", {
+      path: "/",
+      maxAge: 0,
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+    });
     return res;
   } catch (error) {
     log.error({

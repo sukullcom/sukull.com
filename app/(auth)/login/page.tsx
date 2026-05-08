@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 import Image from "next/image";
+import { normalizeReferralCode } from "@/lib/referral-code";
 import { LoginForm } from "./login-form";
 
 // Add search params type for error handling
@@ -7,11 +8,16 @@ interface LoginPageProps {
   searchParams: {
     error?: string;
     next?: string;
+    ref?: string;
   };
 }
 
 export default function LoginPage({ searchParams }: LoginPageProps) {
   const { error } = searchParams;
+  const referralFromUrl =
+    normalizeReferralCode(
+      typeof searchParams.ref === "string" ? searchParams.ref : "",
+    ) ?? undefined;
 
   return (
     <div className="max-w-[988px] mx-auto flex-1 w-full flex flex-col items-center justify-center p-4 gap-8">
@@ -49,7 +55,7 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
               </div>
             }
           >
-            <LoginForm />
+            <LoginForm referralFromUrl={referralFromUrl} />
           </Suspense>
         </div>
       </div>

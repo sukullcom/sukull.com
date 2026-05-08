@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -13,7 +13,12 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { signUpWithEmail } from "./actions";
 import { getClientAuthTransientErrorMessage } from "@/lib/auth-flow-client-errors";
 
-export function CreateAccountForm() {
+type CreateAccountFormProps = {
+  referralCodeFromUrl?: string;
+};
+
+export function CreateAccountForm({ referralCodeFromUrl }: CreateAccountFormProps) {
+  const referralCookieSynced = useRef(false);
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState(""); 
   const [email, setEmail] = useState("");
@@ -25,6 +30,16 @@ export function CreateAccountForm() {
   const [legalAccepted, setLegalAccepted] = useState(false);
 
   const router = useRouter();
+
+  useEffect(() => {
+    if (!referralCodeFromUrl || referralCookieSynced.current) return;
+    referralCookieSynced.current = true;
+    void fetch("/api/referral/set-cookie", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code: referralCodeFromUrl }),
+    }).catch(() => {});
+  }, [referralCodeFromUrl]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,6 +74,9 @@ export function CreateAccountForm() {
       fd.set("email", email.trim());
       fd.set("password", password);
       fd.set("legalAccepted", legalAccepted ? "1" : "0");
+      if (referralCodeFromUrl) {
+        fd.set("referralCode", referralCodeFromUrl);
+      }
       const result = await signUpWithEmail(fd);
       if (!result.ok) {
         toast.error(result.error);

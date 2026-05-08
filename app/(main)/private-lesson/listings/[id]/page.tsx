@@ -120,7 +120,7 @@ export default async function ListingDetailPage({
                   eğitmen rehberinden
                 </Link>{" "}
                 konuna uygun birine{" "}
-                <span className="font-semibold">1 kredi</span> ile mesaj
+                <span className="font-semibold">1 kullanım hakkı</span> ile mesaj
                 kilidini açarak doğrudan iletişim kurabilirsin.
               </p>
             </div>

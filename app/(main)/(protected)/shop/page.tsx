@@ -1,4 +1,5 @@
 import { FeedWrapper } from "@/components/feed-wrapper";
+import { ReferralInviteShopCard } from "@/components/referral-invite-dialog";
 import { getUserProgress, checkSubscriptionStatus } from "@/db/queries";
 import { getServerUser } from "@/lib/auth";
 import Image from "next/image";
@@ -31,6 +32,7 @@ const ShopPage = async () => {
           <p className="text-muted-foreground text-center text-lg mb-6">
             Puanlarını harcayarak yeni şeyler satın al.
           </p>
+          <ReferralInviteShopCard />
           <Items
             hearts={userProgress.hearts}
             points={userProgress.points}

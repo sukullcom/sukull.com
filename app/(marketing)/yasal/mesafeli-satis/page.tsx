@@ -76,8 +76,10 @@ export default function MesafeliSatisPage() {
       <h2>2. Sözleşmenin Konusu</h2>
       <p>
         İşbu sözleşmenin konusu, Alıcı'nın Sukull platformu üzerinden
-        elektronik ortamda satın aldığı dijital ürün veya hizmetin (ders
-        kredisi, abonelik, oyun içi avantajlar vb.) niteliği, satış bedeli,
+        elektronik ortamda satın aldığı dijital ürün veya hizmetin (ör. özel
+        ders pazarında mesaj ve teklif için kullanılan{" "}
+        <strong>dijital kullanım hakları paketi</strong>, aylık platform
+        aboneliği, oyun içi avantajlar vb.) niteliği, satış bedeli,
         teslim/ifa süreleri ve tarafların hak ve yükümlülüklerinin
         düzenlenmesidir.
       </p>
@@ -102,8 +104,9 @@ export default function MesafeliSatisPage() {
       <h2>5. Teslim / İfa</h2>
       <p>
         Satın alınan hizmetler dijital niteliktedir. Ödeme onaylandığı anda
-        kredi/abonelik kullanıcı hesabına tanımlanır; kullanıcı derhâl
-        hizmetten yararlanmaya başlayabilir. Aksaklık hâlinde en geç{" "}
+        satın alınan dijital kullanım hakları ve/veya abonelik kapsamı kullanıcı
+        hesabına tanımlanır; kullanıcı derhâl hizmetten yararlanmaya başlayabilir.
+        Aksaklık hâlinde en geç{" "}
         <strong>48 saat</strong> içinde destek ekibimize ulaşabilirsiniz.
       </p>
 

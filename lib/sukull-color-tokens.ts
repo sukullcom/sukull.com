@@ -11,7 +11,7 @@
  * renkleri `suk-*` ile seçilir. Ham `slate-*` / `green-*` yeni kodda kaçınılmalıdır.
  *
  * Özel ders akışı: keşif / eğitmen / birincil CTA ve “yayında” rozetleri `suk-brand`;
- * kredi, mesaj kilidi, ödeme bağlamındaki kutular `suk-payment`; ilan incelemesi ve
+ * hizmet paketi ve kullanım hakkı, mesaj kilidi, ödeme bağlamındaki kutular `suk-payment`; ilan incelemesi ve
  * dikkat çağrıları `suk-warning`; ret / kritik uyarı `suk-danger` veya `destructive`.
  *
  * `components/ui/button`: yıkıcı eylem `danger` veya aynı renkte `destructive` / `destructiveOutline`;

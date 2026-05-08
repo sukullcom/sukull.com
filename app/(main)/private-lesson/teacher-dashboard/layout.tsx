@@ -3,7 +3,7 @@ import { requireTeacher } from "@/lib/auth";
 
 export const metadata: Metadata = {
   title: "Eğitmen paneli | Sukull",
-  description: "Tekliflerini, kredilerini ve mesajlarını yönet.",
+  description: "Tekliflerini, kullanım haklarını ve mesajlarını yönet.",
 };
 
 /**

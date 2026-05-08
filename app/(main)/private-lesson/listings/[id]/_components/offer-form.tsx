@@ -71,7 +71,7 @@ export function OfferForm({
 
       if (res.status === 402) {
         toast.error(
-          data.error || "Yetersiz kredi. Kredi satın alın ve tekrar deneyin.",
+          data.error || "Yetersiz kullanım hakkı. Hizmet paketi satın alıp tekrar deneyin.",
         );
         router.push("/private-lesson/credits");
         return;
@@ -113,8 +113,8 @@ export function OfferForm({
   const creditDescription = (
     <>
       <span className="block mb-2">
-        Teklif göndermek <span className="font-semibold">1 kredi</span> kullanır.
-        Ödeme sonrası kredi iade edilmez; sohbet açılır ve öğrenci kabulünü
+        Teklif göndermek <span className="font-semibold">1 kullanım hakkı</span> kullanır.
+        Ödeme sonrası hak iade edilmez; sohbet açılır ve öğrenci kabulünü
         beklemeden mesaj yazabilirsin.
       </span>
       <span className="block text-muted-foreground mb-2">
@@ -138,9 +138,9 @@ export function OfferForm({
         <h2 className="font-semibold text-foreground">Teklif Ver</h2>
       </div>
       <p className="text-xs text-muted-foreground mb-4">
-        1 kredi ile teklif gönderirsin. Öğrenci kabulünü beklemeden sohbet açılır;
+        1 kullanım hakkı ile teklif gönderirsin. Öğrenci kabulünü beklemeden sohbet açılır;
         tarafların kayıtlı e-posta ve telefon bilgileri sohbet içinde paylaşılır.
-        İlana en fazla 4 teklif düşer; kredi iade edilmez.
+        İlana en fazla 4 teklif düşer; kullanılan hak iade edilmez.
       </p>
 
       <div className="space-y-3">
@@ -194,7 +194,7 @@ export function OfferForm({
               Gönderiliyor...
             </>
           ) : (
-            "Teklifi Gönder (1 kredi)"
+            "Teklifi Gönder (1 kullanım hakkı)"
           )}
         </Button>
       </div>
@@ -203,7 +203,7 @@ export function OfferForm({
         onOpenChange={setCreditDialogOpen}
         title="Kullanımı onayla"
         description={creditDescription}
-        confirmLabel="Evet, 1 kredi kullan"
+        confirmLabel="Evet, 1 kullanım hakkı kullan"
         cancelLabel="Vazgeç"
         confirmVariant="primary"
         pending={submitting}

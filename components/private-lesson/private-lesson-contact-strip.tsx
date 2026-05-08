@@ -11,7 +11,7 @@ type Contact = {
 
 /**
  * Shows the counterparty's phone + email after a message_unlocks row
- * exists (öğrenci kredisi veya eğitmenin teklif kredisi).
+ * exists (öğrenci kullanım hakkı veya eğitmenin teklif için kullandığı hak).
  */
 export function PrivateLessonContactStrip({ chatId }: { chatId: number }) {
   const [data, setData] = useState<Contact | null>(null);

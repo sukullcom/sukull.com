@@ -44,7 +44,7 @@ export default function AboutPage() {
             <li>Okul müfredatına uyumlu ders ve alıştırma akışları</li>
             <li>Oyunlaştırılmış beceri geliştirme ve sıralama</li>
             <li>Onaylı eğitmenlerle özel ders ve mesajlaşma pazaryeri</li>
-            <li>Kredi ve dijital haklar üzerinden esnek ödeme modeli</li>
+            <li>Özel ders pazarı için ücretli platform hizmet paketleri ve abonelik seçenekleri</li>
           </ul>
         </section>
 

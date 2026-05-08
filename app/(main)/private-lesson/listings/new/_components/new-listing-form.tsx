@@ -135,8 +135,8 @@ export function NewListingForm() {
           Girdiğin cep telefonu, profilindeki numara ile birleştirilir ve{" "}
           <strong>teklif veren eğitmenlerle</strong> (sohbet ve teklif ekranı
           üzerinden) paylaşılır. Teklif veya mesaj kilidi sonrası karşı
-          tarafın e-posta ve telefon bilgileri de sohbet içinde görünür; kredi
-          harcandıktan sonra iade yapılmaz.
+          tarafın e-posta ve telefon bilgileri de sohbet içinde görünür; kullanım hakkı
+          kullanıldıktan sonra iade yapılmaz.
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
