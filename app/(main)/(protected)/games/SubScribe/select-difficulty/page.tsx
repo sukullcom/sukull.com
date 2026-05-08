@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { LoadingSpinner } from "@/components/loading-spinner";
 import { SCORING_SYSTEM } from "@/constants";
 import { ArrowLeft } from "lucide-react";
@@ -30,16 +30,26 @@ const difficulties = [
   },
 ];
 
-export default function SelectDifficultyPage() {
+function SelectDifficultyContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const videoId = searchParams?.get("videoId");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>("");
 
+  useEffect(() => {
+    if (!videoId) {
+      router.replace("/");
+    }
+  }, [videoId, router]);
+
   if (!videoId) {
-    router.push("/");
-    return null;
+    return (
+      <div className="app-main-content-minh w-full flex flex-col items-center justify-center">
+        <LoadingSpinner size="lg" />
+        <p className="mt-4 text-sm text-muted-foreground">Yönlendiriliyor…</p>
+      </div>
+    );
   }
 
   const handleSelect = (ratio: number, label: string) => {
@@ -121,5 +131,19 @@ export default function SelectDifficultyPage() {
         })}
       </div>
     </div>
+  );
+}
+
+export default function SelectDifficultyPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="app-main-content-minh w-full flex flex-col items-center justify-center">
+          <LoadingSpinner size="lg" />
+        </div>
+      }
+    >
+      <SelectDifficultyContent />
+    </Suspense>
   );
 }

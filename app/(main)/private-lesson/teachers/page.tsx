@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -89,11 +90,20 @@ export default async function TeachersDirectoryPage({
         </p>
       </div>
 
-      <TeachersDirectoryFilters
-        initialField={searchParams.field ?? ""}
-        initialLessonMode={lessonModeFilter}
-        initialCity={searchParams.city ?? ""}
-      />
+      <Suspense
+        fallback={
+          <div
+            className="mb-4 h-12 w-full max-w-2xl animate-pulse rounded-lg border border-border bg-muted/50"
+            aria-hidden
+          />
+        }
+      >
+        <TeachersDirectoryFilters
+          initialField={searchParams.field ?? ""}
+          initialLessonMode={lessonModeFilter}
+          initialCity={searchParams.city ?? ""}
+        />
+      </Suspense>
 
       {filtered.length === 0 ? (
         <div className="text-center py-16 rounded-xl border border-dashed border-border bg-card">

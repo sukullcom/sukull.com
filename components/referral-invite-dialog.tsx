@@ -23,20 +23,36 @@ type Summary = {
   referrerRewardPoints: number;
 };
 
-async function fetchSummary(): Promise<Summary | null> {
+async function fetchSummary(): Promise<{ data: Summary | null; errorMessage?: string }> {
   const res = await fetch("/api/referral/summary", { credentials: "same-origin" });
-  if (!res.ok) return null;
-  const data = (await res.json()) as unknown;
-  if (
-    data &&
-    typeof data === "object" &&
-    "ok" in data &&
-    (data as { ok?: boolean }).ok === true &&
-    "inviteUrl" in data
-  ) {
-    return data as Summary;
+  const raw = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+
+  if (!res.ok) {
+    if (res.status === 503 && raw.error === "schema_outdated") {
+      return {
+        data: null,
+        errorMessage:
+          "Davet özelliği şu an kullanılamıyor (sunucu güncellemesi gerekli). Daha sonra tekrar dene.",
+      };
+    }
+    if (res.status === 404 && raw.error === "no_profile") {
+      return { data: null, errorMessage: "Profil veya davet kodu bulunamadı." };
+    }
+    if (res.status === 429) {
+      return { data: null, errorMessage: "Çok sık istek yapıldı; bir dakika sonra tekrar dene." };
+    }
+    return { data: null, errorMessage: "Davet bilgisi yüklenemedi." };
   }
-  return null;
+
+  if (
+    raw &&
+    typeof raw === "object" &&
+    raw.ok === true &&
+    typeof raw.inviteUrl === "string"
+  ) {
+    return { data: raw as unknown as Summary };
+  }
+  return { data: null, errorMessage: "Davet bilgisi yüklenemedi." };
 }
 
 function InviteDialogInner({ onClose }: { onClose: () => void }) {
@@ -47,10 +63,10 @@ function InviteDialogInner({ onClose }: { onClose: () => void }) {
     let cancelled = false;
     setLoading(true);
     void fetchSummary()
-      .then((s) => {
+      .then(({ data, errorMessage }) => {
         if (!cancelled) {
-          setSummary(s);
-          if (!s) toast.error("Davet bilgisi yüklenemedi.");
+          setSummary(data);
+          if (!data && errorMessage) toast.error(errorMessage);
         }
       })
       .finally(() => {
@@ -136,20 +152,34 @@ function ReferralDialogWithTrigger({ children }: { children: React.ReactNode }) 
 
 /** Masaüstü: sol alt köşe (alt gezinme çubuğunun üstünde). */
 export function ReferralInviteFab() {
+  const [open, setOpen] = useState(false);
+  /**
+   * Radix Dialog açıkken tetikleyiciyi `DialogTrigger` ile aynı ağaçta tutmak,
+   * üst kapsayıcıya `aria-hidden` uygulanırken butonun odakta kalmasına yol
+   * açabiliyor (tarayıcı uyarısı). Tetikleyici kontrollü `open` ile ayrılır.
+   */
   return (
-    <div className="pointer-events-none fixed bottom-24 left-4 z-[35] hidden lg:block">
-      <ReferralDialogWithTrigger>
+    <>
+      <div className="fixed bottom-24 left-4 z-[35] hidden lg:block">
         <Button
           type="button"
           variant="primary"
           size="icon"
-          className="pointer-events-auto h-12 w-12 rounded-full shadow-lg"
+          className="h-12 w-12 rounded-full shadow-lg"
           aria-label="Arkadaşını davet et"
+          aria-haspopup="dialog"
+          aria-expanded={open}
+          onClick={() => setOpen(true)}
         >
           <Gift className="h-5 w-5" />
         </Button>
-      </ReferralDialogWithTrigger>
-    </div>
+      </div>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent className="max-w-md" onOpenAutoFocus={(e) => e.preventDefault()}>
+          {open ? <InviteDialogInner onClose={() => setOpen(false)} /> : null}
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 

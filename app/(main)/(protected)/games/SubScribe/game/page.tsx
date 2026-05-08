@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { decode } from "html-entities";
 import VideoPlayer from "@/components/video-player";
 import LyricsGame from "../lyrics-game";
@@ -99,7 +99,7 @@ function generateLyricsLines(transcript: TranscriptLine[], ratio: number): Lyric
   return lyricLines;
 }
 
-export default function GamePage() {
+function GamePageContent() {
   const searchParams = useSearchParams();
   const videoId = searchParams?.get("videoId");
   const ratio = parseFloat(searchParams?.get("ratio") || "0.5");
@@ -184,5 +184,22 @@ Lütfen ana sayfaya dönüp hazır videolardan birini seçin.`);
       <LyricsGame lyrics={lyrics} difficulty={difficulty as "Kolay" | "Orta" | "Zor" | "Aşırı Zor"} />
       <CompletionModal />
     </div>
+  );
+}
+
+export default function GamePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="app-main-content-minh w-full flex flex-col items-center justify-center">
+          <LoadingSpinner size="lg" />
+          <p className="mt-4 text-muted-foreground text-center max-w-md">
+            Oyun yükleniyor…
+          </p>
+        </div>
+      }
+    >
+      <GamePageContent />
+    </Suspense>
   );
 }

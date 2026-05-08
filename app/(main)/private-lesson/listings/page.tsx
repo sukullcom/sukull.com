@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { getServerUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
@@ -74,11 +75,20 @@ export default async function ListingsIndexPage({
         </div>
       </div>
 
-      <ListingsFilters
-        initialSubject={searchParams.subject ?? ""}
-        initialLessonMode={searchParams.lessonMode ?? ""}
-        initialCity={searchParams.city ?? ""}
-      />
+      <Suspense
+        fallback={
+          <div
+            className="mb-4 h-12 w-full max-w-2xl animate-pulse rounded-lg border border-border bg-muted/50"
+            aria-hidden
+          />
+        }
+      >
+        <ListingsFilters
+          initialSubject={searchParams.subject ?? ""}
+          initialLessonMode={searchParams.lessonMode ?? ""}
+          initialCity={searchParams.city ?? ""}
+        />
+      </Suspense>
 
       {listings.length === 0 ? (
         <div className="text-center py-16 rounded-xl border border-dashed border-border bg-card">
