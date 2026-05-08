@@ -239,6 +239,7 @@ function classifyCachePolicy(pathname: string, isAuthenticatedRoute: boolean): C
     (pathname === '/' ||
       pathname === '/courses' ||
       pathname.startsWith('/courses/') ||
+      pathname === '/hakkimizda' ||
       pathname === '/yasal' ||
       pathname.startsWith('/yasal/') ||
       pathname === '/unauthorized' ||
@@ -394,6 +395,7 @@ export async function middleware(req: NextRequest) {
   // redirecting. We short-circuit before the auth cookie check so Supabase
   // isn't hit for a static document view.
   if (
+    pathname === '/hakkimizda' ||
     pathname === '/yasal' ||
     pathname.startsWith('/yasal/') ||
     pathname === '/courses' ||

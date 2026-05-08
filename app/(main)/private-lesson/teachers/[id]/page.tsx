@@ -232,8 +232,9 @@ export default async function TeacherDetailPage({
                 {teacher.availableHours}
               </p>
               <p className="text-[11px] text-muted-foreground/80 mt-2">
-                Not: Bilgi amaçlıdır. Randevu ve ücreti eğitmenle doğrudan mesajlaşarak
-                netleştir.
+                Not: Bilgi amaçlıdır. Sukull üzerinden randevu veya rezervasyon
+                yapılmaz; ders düzeni, ücret ve uygun saatler eğitmenle
+                mesajlaşarak taraflar arasında netleşir.
               </p>
             </section>
           )}

@@ -6,6 +6,7 @@ import { BookOpen, Gamepad2, Users, Trophy, GraduationCap } from "lucide-react";
 import React from "react";
 
 import { LEGAL_COMPANY } from "@/lib/legal-info";
+import { PaymentTrustStrip } from "@/components/payment-trust-strip";
 
 /**
  * Marketing (public landing) footer.
@@ -23,7 +24,7 @@ import { LEGAL_COMPANY } from "@/lib/legal-info";
  */
 export const Footer = () => {
   const year = new Date().getFullYear();
-  const { legalName, contactEmail } = LEGAL_COMPANY;
+  const { brandName, contactEmail } = LEGAL_COMPANY;
 
   return (
     <footer className="w-full border-t-2 border-border bg-card/60">
@@ -51,8 +52,11 @@ export const Footer = () => {
       </div>
 
       <div className="border-t border-border bg-muted/60">
-        <div className="mx-auto flex w-full max-w-screen-lg flex-col gap-3 px-4 py-4 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+        <div className="mx-auto flex w-full max-w-screen-lg flex-col gap-4 px-4 py-4 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <nav aria-label="Yasal" className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <Link href="/hakkimizda" className="hover:text-foreground hover:underline">
+              Hakkımızda
+            </Link>
             <Link href="/yasal/kvkk" className="hover:text-foreground hover:underline">
               KVKK
             </Link>
@@ -71,13 +75,19 @@ export const Footer = () => {
             <Link href="/yasal/cayma-iade" className="hover:text-foreground hover:underline">
               Cayma &amp; İade
             </Link>
+            <Link href="/yasal/teslimat-ve-iade" className="hover:text-foreground hover:underline">
+              Teslimat &amp; İade
+            </Link>
             <a href={`mailto:${contactEmail}`} className="hover:text-foreground hover:underline">
               İletişim
             </a>
           </nav>
-          <p className="text-[11px] text-muted-foreground/90">
-            © {year} {legalName}. Tüm hakları saklıdır.
-          </p>
+          <div className="flex w-full flex-col items-center gap-3 sm:max-w-xs sm:items-end">
+            <PaymentTrustStrip variant="compact" />
+            <p className="text-center text-[11px] text-muted-foreground/90 sm:text-right">
+              © {year} {brandName}. Tüm hakları saklıdır.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

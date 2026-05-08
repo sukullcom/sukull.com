@@ -11,6 +11,7 @@ import {
   Receipt,
   RefreshCcw,
   ShieldCheck,
+  Truck,
 } from "lucide-react";
 
 import { LEGAL_UPDATED } from "@/lib/legal-info";
@@ -79,6 +80,14 @@ const LEGAL_LINKS: readonly LegalLink[] = [
       "Satın alma öncesinde okumanız gereken yasal bilgilendirme formu.",
     icon: Receipt,
     updatedAtKey: "onBilgilendirme",
+  },
+  {
+    href: "/yasal/teslimat-ve-iade",
+    title: "Teslimat ve İade Şartları",
+    description:
+      "Dijital ürün ve hizmetlerin teslim şekli; iade ve cayma belgelerine köprü.",
+    icon: Truck,
+    updatedAtKey: "teslimatVeIade",
   },
   {
     href: "/yasal/cayma-iade",

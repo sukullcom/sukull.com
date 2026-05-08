@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 32" role="img" aria-label="Visa">
+  <title>Visa</title>
+  <rect width="100" height="32" rx="4" fill="#1434CB"/>
+  <text x="50" y="22" text-anchor="middle" fill="#fff" font-family="system-ui,Segoe UI,Arial,sans-serif" font-size="15" font-weight="700">VISA</text>
+</svg>

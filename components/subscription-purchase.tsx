@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { createClient } from '@/utils/supabase/client';
 import { useRouter } from 'next/navigation';
 import { clientLogger } from '@/lib/client-logger';
+import { PaymentTrustStrip } from '@/components/payment-trust-strip';
 
 type SubscriptionPurchaseProps = {
   onSuccess?: () => void;
@@ -315,6 +316,10 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
             </div>
           </CardContent>
         </Card>
+
+        <div className="flex flex-col items-center gap-2 py-1">
+          <PaymentTrustStrip variant="compact" />
+        </div>
 
         {/* Action Buttons */}
         <div className="flex gap-4">

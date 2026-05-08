@@ -14,7 +14,17 @@ export const metadata: Metadata = {
 };
 
 export default function OnBilgilendirmePage() {
-  const { legalName, address, contactEmail, mersisNumber } = LEGAL_COMPANY;
+  const {
+    legalName,
+    proprietorName,
+    address,
+    contactEmail,
+    mersisNumber,
+    taxNumber,
+    taxOffice,
+    kepAddress,
+    phone,
+  } = LEGAL_COMPANY;
 
   return (
     <LegalPageShell
@@ -23,20 +33,42 @@ export default function OnBilgilendirmePage() {
       lede="Satın alma işlemini tamamlamadan önce Mesafeli Sözleşmeler Yönetmeliği'nin 5. maddesi gereğince bilgilerinize sunulan formdur."
     >
       <h2>1. Satıcı Bilgileri</h2>
+      <p className="text-sm text-muted-foreground">
+        Aşağıdaki bilgiler, tüketici mevzuatı kapsamında satıcının kimliğinin doğrulanması ve
+        tebligat için gereken asgari unsurları içerir.
+      </p>
       <ul>
         <li>
-          <strong>Unvan:</strong> {legalName}
+          <strong>Ticari unvan:</strong> {legalName}
         </li>
         <li>
-          <strong>MERSIS:</strong> {mersisNumber}
+          <strong>İşleten / yetkili:</strong> {proprietorName}
         </li>
         <li>
-          <strong>Adres:</strong> {address}
+          <strong>MERSİS:</strong> {mersisNumber}
         </li>
         <li>
-          <strong>E-posta:</strong>{" "}
+          <strong>Vergi kimlik numarası (VKN):</strong> {taxNumber}
+        </li>
+        <li>
+          <strong>Vergi dairesi:</strong> {taxOffice}
+        </li>
+        <li>
+          <strong>KEP adresi:</strong>{" "}
+          <span className="break-all">{kepAddress}</span>
+        </li>
+        <li>
+          <strong>Merkez / tebligat adresi:</strong> {address}
+        </li>
+        <li>
+          <strong>E-posta (müşteri iletişimi):</strong>{" "}
           <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
         </li>
+        {phone ? (
+          <li>
+            <strong>Telefon:</strong> {phone}
+          </li>
+        ) : null}
       </ul>
 
       <h2>2. Ürün / Hizmet Temel Nitelikleri</h2>

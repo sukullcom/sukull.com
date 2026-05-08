@@ -160,7 +160,27 @@ export function CreateAccountForm() {
           >
             KVKK Aydınlatma Metni
           </Link>
-          {"'ni okudum, kabul ediyorum."}
+          ,{" "}
+          <Link
+            prefetch={false}
+            href="/yasal/mesafeli-satis"
+            target="_blank"
+            rel="noopener"
+            className="font-medium text-suk-brand hover:underline"
+          >
+            Mesafeli Satış Sözleşmesi
+          </Link>
+          {" ve "}
+          <Link
+            prefetch={false}
+            href="/yasal/teslimat-ve-iade"
+            target="_blank"
+            rel="noopener"
+            className="font-medium text-suk-brand hover:underline"
+          >
+            Teslimat ve İade Şartları
+          </Link>{" "}
+          metinlerini okudum, kabul ediyorum.
         </span>
       </label>
 

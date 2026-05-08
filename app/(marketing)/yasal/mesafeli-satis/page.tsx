@@ -14,7 +14,17 @@ export const metadata: Metadata = {
 };
 
 export default function MesafeliSatisPage() {
-  const { legalName, mersisNumber, address, contactEmail, phone } = LEGAL_COMPANY;
+  const {
+    legalName,
+    proprietorName,
+    mersisNumber,
+    address,
+    contactEmail,
+    phone,
+    taxNumber,
+    taxOffice,
+    kepAddress,
+  } = LEGAL_COMPANY;
 
   return (
     <LegalPageShell
@@ -28,10 +38,22 @@ export default function MesafeliSatisPage() {
       </p>
       <ul>
         <li>
-          <strong>Unvan:</strong> {legalName}
+          <strong>Ticari unvan:</strong> {legalName}
         </li>
         <li>
-          <strong>MERSIS:</strong> {mersisNumber}
+          <strong>İşleten / yetkili:</strong> {proprietorName}
+        </li>
+        <li>
+          <strong>MERSİS:</strong> {mersisNumber}
+        </li>
+        <li>
+          <strong>VKN:</strong> {taxNumber}
+        </li>
+        <li>
+          <strong>Vergi dairesi:</strong> {taxOffice}
+        </li>
+        <li>
+          <strong>KEP:</strong> <span className="break-all">{kepAddress}</span>
         </li>
         <li>
           <strong>Adres:</strong> {address}

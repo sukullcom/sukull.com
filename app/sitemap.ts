@@ -32,6 +32,7 @@ function buildStaticEntries(): Entry[] {
     // Yasal sayfalar — e-ticaret mevzuatı gereği footer'dan erişilebilir
     // olmalı ve crawler'lar tarafından dizine eklenmeleri beklenir.
     // Trust & legal compliance SEO sinyali de sağlar.
+    { url: `${BASE_URL}/hakkimizda`, changeFrequency: "monthly", priority: 0.5 },
     { url: `${BASE_URL}/yasal`, changeFrequency: "monthly", priority: 0.4 },
     { url: `${BASE_URL}/yasal/kvkk`, changeFrequency: "yearly", priority: 0.4 },
     { url: `${BASE_URL}/yasal/gizlilik`, changeFrequency: "yearly", priority: 0.4 },
@@ -40,6 +41,7 @@ function buildStaticEntries(): Entry[] {
     { url: `${BASE_URL}/yasal/mesafeli-satis`, changeFrequency: "yearly", priority: 0.4 },
     { url: `${BASE_URL}/yasal/on-bilgilendirme`, changeFrequency: "yearly", priority: 0.4 },
     { url: `${BASE_URL}/yasal/cayma-iade`, changeFrequency: "yearly", priority: 0.4 },
+    { url: `${BASE_URL}/yasal/teslimat-ve-iade`, changeFrequency: "yearly", priority: 0.4 },
   ];
 
   if (isLabEnabled()) {

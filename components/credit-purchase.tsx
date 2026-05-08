@@ -9,6 +9,7 @@ import { toast } from 'sonner'
 import { Loader2, CreditCard, MapPin } from 'lucide-react'
 import { createClient } from '@/utils/supabase/client'
 import { clientLogger } from '@/lib/client-logger'
+import { PaymentTrustStrip } from '@/components/payment-trust-strip'
 
 interface CreditPackage {
   id: string
@@ -566,6 +567,20 @@ export default function CreditPurchase() {
                 {"'nu okudum, bilgilendirildim ve onaylıyorum."}
               </span>
             </label>
+          </div>
+
+          <div className="mt-5 flex flex-col items-center gap-2">
+            <PaymentTrustStrip variant="compact" />
+            <p className="text-center text-[11px] text-muted-foreground">
+              <a
+                href="/yasal/teslimat-ve-iade"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline decoration-muted-foreground/50 underline-offset-2 hover:text-foreground"
+              >
+                Teslimat ve İade Şartları
+              </a>
+            </p>
           </div>
 
           <Button

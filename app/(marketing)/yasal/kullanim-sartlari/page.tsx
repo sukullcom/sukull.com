@@ -31,12 +31,41 @@ export default function KullanimSartlariPage() {
         imzalanmış kabul edilir.
       </p>
 
-      <h2>2. Hizmetin Tanımı</h2>
+      <h2>2. Hizmetin Tanımı ve Hizmet Modeli</h2>
       <p>
-        Sukull; eğitim içeriği, beceri oyunları, eğitmen–öğrenci
-        eşleştirmesi (talep ilanı, teklif ve mesajlaşma üzerinden özel ders
-        pazarı) ve ilgili topluluk araçları sunan dijital bir eğitim
-        platformudur. Hizmetler ücretsiz ve ücretli planlar hâlinde sunulabilir.
+        Sukull; eğitim içeriği, beceri oyunları, sıralama ve topluluk araçları
+        ile birlikte <strong>özel ders pazaryeri</strong> (talep ilanı, teklif,
+        mesajlaşma kanalı) sunan dijital bir eğitim platformudur. Hizmetler
+        ücretsiz ve ücretli planlar hâlinde sunulabilir.
+      </p>
+      <p>
+        <strong>Doğrudan platform hizmeti:</strong> Ders akışları, oyunlar,
+        hesap yönetimi, ödeme altyapısı üzerinden kredi/abonelik tanımlama ve
+        benzeri özellikler Sukull tarafından işletilen yazılım kapsamında
+        sunulur.
+      </p>
+      <p>
+        <strong>Pazaryeri ve üçüncü taraflar:</strong> Talep ilanı oluşturma,
+        ilanlara teklif verme ve eğitmen–öğrenci arasında mesajlaşma kanalının
+        açılması, sektörde yaygın pazaryeri uygulamalarına benzer şekilde{" "}
+        <strong>öğrenci ile onaylı eğitmen arasındaki iletişimi ve iş birliğini
+        kolaylaştırmaya</strong> yöneliktir. Eğitmenin teklif vermesi veya
+        mesajları yanıtlaması, dersin içeriği veya görüşmenin gerçekleşmesi
+        gibi hususlar <strong>eğitmen ve öğrencinin kendi aralarındaki
+        ilişkiye</strong> bağlıdır; Sukull bu tarafların bağımsız iradeleriyle
+        hareket ettiğini, platformun ise kurallar, güvenlik ve teknik altyapı
+        sağlayıcısı olduğunu belirtir. Taraflar arası uyuşmazlıklarda öncelikle
+        birbirleriyle ve gerektiğinde destek kanallarımız ile iletişim
+        kurulması esastır.
+      </p>
+      <p>
+        <strong>Abonelik ve yinelenen ödemeler:</strong> Aylık veya dönemsel
+        abonelikler, tanımlandığı süre boyunca hesabınıza bağlı dijital erişim
+        veya avantajları ifade eder. Ücret, vergi, yenileme ve iptal koşulları
+        sipariş / abonelik onayı öncesinde ekranda gösterilir; cayma ve iadeye
+        ilişkin genel çerçeve için{" "}
+        <Link href="/yasal/cayma-iade">Cayma Hakkı ve İade Koşulları</Link>{" "}
+        belgesine bakınız.
       </p>
 
       <h2>3. Hesap Açma ve Kullanıcı Yükümlülükleri</h2>
@@ -83,6 +112,12 @@ export default function KullanimSartlariPage() {
         <li>
           Fiyatlar ve vergi tutarları sipariş onayı öncesinde açıkça
           gösterilir.
+        </li>
+        <li>
+          Pazaryeri (ilan, teklif, mesaj kilidi) ve abonelikle ilgili ücretlerin
+          kapsamı, sipariş ekranında ve bu belgenin{" "}
+          <strong>2. maddesinde</strong> özetlendiği hizmet modeli ile uyumlu
+          olarak yorumlanır.
         </li>
         <li>
           Aboneliğin iptali ve iade koşulları için{" "}
@@ -135,9 +170,11 @@ export default function KullanimSartlariPage() {
 
       <h2>11. İletişim ve Tebligat</h2>
       <p>
-        Resmî tebligat adresimiz <strong>{address}</strong>'tir. Elektronik
-        tebligat için KEP adresimiz{" "}
-        <Link href="/yasal/kvkk">KVKK Aydınlatma Metni</Link>'nde yer alır.
+        Resmî tebligat adresimiz <strong>{address}</strong>'tir. KEP adresi ve
+        satıcıya ilişkin diğer resmî bilgiler{" "}
+        <Link href="/yasal/on-bilgilendirme">Ön Bilgilendirme Formu</Link> ve{" "}
+        <Link href="/yasal/mesafeli-satis">Mesafeli Satış Sözleşmesi</Link>{" "}
+        belgelerinde yer alır.
       </p>
     </LegalPageShell>
   );

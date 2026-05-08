@@ -25,23 +25,37 @@
  */
 
 export const LEGAL_COMPANY = {
-  /** Ticari ünvan — "AAA Eğitim Teknolojileri A.Ş." gibi. */
-  legalName: process.env.NEXT_PUBLIC_LEGAL_COMPANY_NAME ?? "TBD – Şirket Unvanı",
+  /**
+   * Ticari ünvan (ticaret sicil / şahıs şirketi unvanı).
+   * Üretimde `NEXT_PUBLIC_LEGAL_COMPANY_NAME` ile güncelleyin.
+   */
+  legalName: process.env.NEXT_PUBLIC_LEGAL_COMPANY_NAME ?? "Numan Kaya",
   /** Marka adı — kullanıcıya görünen kısa ad. */
   brandName: "Sukull",
+  /**
+   * Şahıs işletme / şahıs şirketi işleteni (sözleşme ve “Hakkımızda” metinleri).
+   * Genelde `legalName` ile aynıdır; farklı unvan kullanıyorsanız env ile ayırın.
+   */
+  proprietorName:
+    process.env.NEXT_PUBLIC_LEGAL_PROPRIETOR_NAME ??
+    process.env.NEXT_PUBLIC_LEGAL_COMPANY_NAME ??
+    "Numan Kaya",
   /** MERSIS numarası (16 hane). */
   mersisNumber: process.env.NEXT_PUBLIC_LEGAL_MERSIS_NUMBER ?? "TBD – MERSIS",
   /** Vergi dairesi + vergi numarası. */
   taxOffice: process.env.NEXT_PUBLIC_LEGAL_TAX_OFFICE ?? "TBD – Vergi Dairesi",
-  taxNumber: process.env.NEXT_PUBLIC_LEGAL_TAX_NUMBER ?? "TBD – Vergi No",
+  /** Vergi kimlik numarası (VKN). */
+  taxNumber: process.env.NEXT_PUBLIC_LEGAL_TAX_NUMBER ?? "5331083815",
   /** KEP (Kayıtlı Elektronik Posta) adresi — tebligat için zorunlu. */
   kepAddress: process.env.NEXT_PUBLIC_LEGAL_KEP_ADDRESS ?? "TBD – KEP Adresi",
   /** Tescilli merkez adresi — Ticaret Sicil Gazetesi ile uyumlu. */
-  address: process.env.NEXT_PUBLIC_LEGAL_ADDRESS ?? "TBD – Şirket Adresi",
-  /** Müşteri iletişim e-postası (KVKK başvuruları ve genel destek). */
-  contactEmail: process.env.NEXT_PUBLIC_LEGAL_CONTACT_EMAIL ?? "destek@sukull.com",
+  address:
+    process.env.NEXT_PUBLIC_LEGAL_ADDRESS ??
+    "Cumhuriyet Mah. Açan Sk. Caner Apt No: 6-8 İç Kapı No: 10 Üsküdar / İstanbul",
+  /** Müşteri iletişim e-postası (genel destek; KVKK ile aynı gelen kutuya yönlendirilebilir). */
+  contactEmail: process.env.NEXT_PUBLIC_LEGAL_CONTACT_EMAIL ?? "sukull.com@gmail.com",
   /** KVKK özel başvuru adresi (veri sorumlusu iletişimi). */
-  kvkkEmail: process.env.NEXT_PUBLIC_LEGAL_KVKK_EMAIL ?? "kvkk@sukull.com",
+  kvkkEmail: process.env.NEXT_PUBLIC_LEGAL_KVKK_EMAIL ?? "sukull.com@gmail.com",
   /** Müşteri hizmetleri telefonu (opsiyonel). */
   phone: process.env.NEXT_PUBLIC_LEGAL_PHONE ?? null,
   /** Web sitesi kanonik URL. */
@@ -54,13 +68,14 @@ export const LEGAL_COMPANY = {
  * ve sitemap `lastModified` alanı da bu tarihi yansıtır.
  */
 export const LEGAL_UPDATED = {
-  kvkk: "2026-04-06",
+  kvkk: "2026-05-08",
   gizlilik: "2026-04-06",
   cerez: "2026-04-06",
-  kullanimSartlari: "2026-04-06",
-  mesafeliSatis: "2026-04-06",
-  onBilgilendirme: "2026-04-06",
+  kullanimSartlari: "2026-05-08",
+  mesafeliSatis: "2026-05-08",
+  onBilgilendirme: "2026-05-08",
   caymaIade: "2026-04-06",
+  teslimatVeIade: "2026-05-08",
 } as const;
 
 export type LegalDocumentId = keyof typeof LEGAL_UPDATED;

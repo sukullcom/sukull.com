@@ -6,6 +6,7 @@ import Image from "next/image";
 import React from "react";
 
 import { LEGAL_COMPANY } from "@/lib/legal-info";
+import { PaymentTrustStrip } from "@/components/payment-trust-strip";
 
 /**
  * Auth (login / signup / password-reset) footer.
@@ -21,7 +22,7 @@ import { LEGAL_COMPANY } from "@/lib/legal-info";
  */
 export function Footer() {
   const year = new Date().getFullYear();
-  const { legalName } = LEGAL_COMPANY;
+  const { brandName } = LEGAL_COMPANY;
 
   return (
     <footer className="w-full border-t-2 border-border">
@@ -79,8 +80,11 @@ export function Footer() {
       </div>
 
       <div className="border-t border-border bg-muted/50">
-        <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center gap-2 px-4 py-3 text-[11px] text-muted-foreground sm:flex-row sm:justify-between">
+        <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center gap-3 px-4 py-3 text-[11px] text-muted-foreground sm:flex-row sm:justify-between">
           <nav aria-label="Yasal" className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+            <Link href="/hakkimizda" className="hover:text-foreground hover:underline">
+              Hakkımızda
+            </Link>
             <Link href="/yasal/kvkk" className="hover:text-foreground hover:underline">
               KVKK
             </Link>
@@ -94,7 +98,8 @@ export function Footer() {
               Tüm yasal belgeler
             </Link>
           </nav>
-          <p>© {year} {legalName}</p>
+          <PaymentTrustStrip variant="compact" className="shrink-0" />
+          <p className="shrink-0">© {year} {brandName}. Tüm hakları saklıdır.</p>
         </div>
       </div>
     </footer>
