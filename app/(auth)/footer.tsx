@@ -6,7 +6,6 @@ import Image from "next/image";
 import React from "react";
 
 import { LEGAL_COMPANY } from "@/lib/legal-info";
-import { PaymentTrustStrip } from "@/components/payment-trust-strip";
 
 /**
  * Auth (login / signup / password-reset) footer.
@@ -80,7 +79,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-border bg-muted/50">
-        <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center gap-3 px-4 py-3 text-[11px] text-muted-foreground sm:flex-row sm:justify-between">
+        <div className="mx-auto flex w-full max-w-screen-lg flex-col items-center gap-2 px-4 py-3 text-[11px] text-muted-foreground sm:flex-row sm:justify-between">
           <nav aria-label="Yasal" className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
             <Link href="/hakkimizda" className="hover:text-foreground hover:underline">
               Hakkımızda
@@ -98,7 +97,6 @@ export function Footer() {
               Tüm yasal belgeler
             </Link>
           </nav>
-          <PaymentTrustStrip variant="compact" className="shrink-0" />
           <p className="shrink-0">© {year} {brandName}. Tüm hakları saklıdır.</p>
         </div>
       </div>

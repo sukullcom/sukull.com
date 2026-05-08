@@ -6,7 +6,6 @@ import { BookOpen, Gamepad2, Users, Trophy, GraduationCap } from "lucide-react";
 import React from "react";
 
 import { LEGAL_COMPANY } from "@/lib/legal-info";
-import { PaymentTrustStrip } from "@/components/payment-trust-strip";
 
 /**
  * Marketing (public landing) footer.
@@ -52,7 +51,7 @@ export const Footer = () => {
       </div>
 
       <div className="border-t border-border bg-muted/60">
-        <div className="mx-auto flex w-full max-w-screen-lg flex-col gap-4 px-4 py-4 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+        <div className="mx-auto flex w-full max-w-screen-lg flex-col gap-3 px-4 py-4 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <nav aria-label="Yasal" className="flex flex-wrap items-center gap-x-4 gap-y-1">
             <Link href="/hakkimizda" className="hover:text-foreground hover:underline">
               Hakkımızda
@@ -82,12 +81,9 @@ export const Footer = () => {
               İletişim
             </a>
           </nav>
-          <div className="flex w-full flex-col items-center gap-3 sm:max-w-xs sm:items-end">
-            <PaymentTrustStrip variant="compact" />
-            <p className="text-center text-[11px] text-muted-foreground/90 sm:text-right">
-              © {year} {brandName}. Tüm hakları saklıdır.
-            </p>
-          </div>
+          <p className="text-[11px] text-muted-foreground/90 sm:text-right">
+            © {year} {brandName}. Tüm hakları saklıdır.
+          </p>
         </div>
       </div>
     </footer>
