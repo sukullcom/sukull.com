@@ -49,7 +49,7 @@ export default function Home() {
               </Button>
               <Button
                 size="lg"
-                variant="primaryOutline"
+                variant="linkBrand"
                 className="w-full"
                 onClick={() => router.push('/login')}
               >

@@ -20,11 +20,19 @@ const buttonVariants = cva(
           "bg-suk-brand text-suk-brand-fg hover:bg-suk-brand-hover border-suk-brand-border border-b-4 active:border-b-0",
         primaryOutline:
           "bg-suk-surface-card text-suk-brand border-2 border-suk-brand hover:bg-suk-brand-soft",
-        /** İkincil yeşil — çerçeveli 3D (aynı ekranda tek dolu yeşil: primary) */
+        /** Çerçevesiz ikincil — tam genişlik CTA satırı, çıkış vb. */
+        linkBrand:
+          "bg-transparent text-suk-brand border-0 shadow-none hover:bg-suk-brand-soft",
+        linkDanger:
+          "bg-transparent text-suk-danger border-0 shadow-none hover:bg-suk-danger-soft",
+        /**
+         * İkincil dolu yeşil — görsel olarak `primary` ile aynı kontrast (açık metin).
+         * Aynı ekranda çerçeveli ikinci eylem gerekiyorsa `secondaryOutline` / `primaryOutline` kullanın.
+         */
         secondary:
-          "bg-suk-surface-card text-suk-brand border-2 border-suk-brand border-b-4 border-b-suk-brand-border hover:bg-suk-brand-soft active:border-b-2",
+          "bg-suk-brand text-suk-brand-fg hover:bg-suk-brand-hover border-suk-brand-border border-b-4 active:border-b-0",
         secondaryOutline:
-          "bg-suk-surface-card text-suk-brand hover:bg-suk-surface-muted",
+          "bg-suk-surface-card text-suk-brand border-2 border-suk-brand hover:bg-suk-brand-soft",
         danger:
           "bg-suk-danger text-suk-danger-fg hover:bg-suk-danger-hover border-suk-danger-border border-b-4 active:border-b-0",
         /** shadcn adıyla aynı renk ailesi — `danger` ile özdeş */

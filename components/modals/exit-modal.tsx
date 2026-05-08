@@ -52,7 +52,7 @@ export const ExitModal = () => {
               Tamam, devam ediyorum!
             </Button>
             <Button
-              variant="dangerOutline"
+              variant="linkDanger"
               className="w-full"
               size="lg"
               onClick={() => {
