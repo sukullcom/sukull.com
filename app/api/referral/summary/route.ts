@@ -8,6 +8,28 @@ import { getServerUser } from "@/lib/auth";
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit-db";
 import { logger } from "@/lib/logger";
 
+function collectErrorText(error: unknown, depth = 0): string {
+  if (depth > 6) return "";
+  if (error == null) return "";
+  if (error instanceof Error) {
+    const cause = "cause" in error ? (error as Error & { cause?: unknown }).cause : undefined;
+    return `${error.message}\n${collectErrorText(cause, depth + 1)}`;
+  }
+  return String(error);
+}
+
+function isMissingReferralColumnError(error: unknown): boolean {
+  const text = collectErrorText(error).toLowerCase();
+  if (!text.includes("referral_code")) return false;
+  return (
+    text.includes("does not exist") ||
+    text.includes("42703") ||
+    text.includes("undefined_column") ||
+    /** Drizzle: üst mesajda PG ayrıntısı yoksa bile bu sorgu tipik olarak eksik kolondur. */
+    (text.includes("failed query") && text.includes("referral_code"))
+  );
+}
+
 /**
  * Oturum açmış kullanıcının davet kodu, bağlantısı ve başarılı davet sayısı.
  */
@@ -69,6 +91,22 @@ export async function GET() {
       referrerRewardPoints: REFERRAL_SYSTEM.REFERRER_POINTS,
     });
   } catch (error) {
+    if (isMissingReferralColumnError(error)) {
+      logger.warn("referral summary: DB şeması eksik (referral_code)", {
+        error: error instanceof Error ? error.message : String(error),
+        location: "api/referral/summary/GET",
+        userId: user.id,
+        hint: "npm run db:apply -- supabase/migrations/0042_user_referrals.sql (DIRECT_URL önerilir)",
+      });
+      return NextResponse.json(
+        {
+          ok: false,
+          error: "migration_required",
+          hint: "0042_user_referrals.sql uygulanmalı (users.referral_code + referral_rewards).",
+        },
+        { status: 503 },
+      );
+    }
     logger.error({
       message: "referral summary failed",
       error,

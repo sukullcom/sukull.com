@@ -28,6 +28,13 @@ async function fetchSummary(): Promise<{ data: Summary | null; errorMessage?: st
   const raw = (await res.json().catch(() => ({}))) as Record<string, unknown>;
 
   if (!res.ok) {
+    if (res.status === 503 && raw.error === "migration_required") {
+      return {
+        data: null,
+        errorMessage:
+          "Veritabanında davet kolonları yok. Geliştirici: `npm run db:apply -- supabase/migrations/0042_user_referrals.sql` (tercihen DIRECT_URL).",
+      };
+    }
     if (res.status === 503 && raw.error === "schema_outdated") {
       return {
         data: null,
