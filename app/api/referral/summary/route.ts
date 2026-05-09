@@ -34,10 +34,21 @@ export async function GET() {
       return NextResponse.json({ ok: false, error: "no_profile" }, { status: 404 });
     }
 
-    const [agg] = await db
-      .select({ c: count(referralRewards.id) })
-      .from(referralRewards)
-      .where(eq(referralRewards.referrerUserId, user.id));
+    let successfulInvites = 0;
+    try {
+      const [agg] = await db
+        .select({ c: count(referralRewards.id) })
+        .from(referralRewards)
+        .where(eq(referralRewards.referrerUserId, user.id));
+      successfulInvites = Number(agg?.c ?? 0);
+    } catch (countErr) {
+      // Eksik tablo / geçici DB: davet bağlantısı yine de dönsün; sayaç 0.
+      logger.warn("referral_rewards count failed; returning successfulInvites=0", {
+        error: countErr instanceof Error ? countErr.message : String(countErr),
+        location: "api/referral/summary/GET/count",
+        userId: user.id,
+      });
+    }
 
     const origin =
       process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "") ||
@@ -54,28 +65,16 @@ export async function GET() {
       ok: true,
       code: row.referralCode,
       inviteUrl,
-      successfulInvites: Number(agg?.c ?? 0),
+      successfulInvites,
       referrerRewardPoints: REFERRAL_SYSTEM.REFERRER_POINTS,
     });
   } catch (error) {
-    const msg = error instanceof Error ? error.message : String(error);
-    const missingTable =
-      msg.includes("referral_rewards") && msg.toLowerCase().includes("does not exist");
     logger.error({
       message: "referral summary failed",
       error,
       location: "api/referral/summary/GET",
       userId: user.id,
-      ...(missingTable
-        ? { hint: "Supabase migration 0042_user_referrals.sql uygulanmamış olabilir." }
-        : {}),
     });
-    return NextResponse.json(
-      {
-        ok: false,
-        error: missingTable ? "schema_outdated" : "server_error",
-      },
-      { status: missingTable ? 503 : 500 },
-    );
+    return NextResponse.json({ ok: false, error: "server_error" }, { status: 500 });
   }
 }

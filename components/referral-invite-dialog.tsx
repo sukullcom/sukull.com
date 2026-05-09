@@ -143,7 +143,7 @@ function ReferralDialogWithTrigger({ children }: { children: React.ReactNode }) 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="max-w-md" onOpenAutoFocus={(e) => e.preventDefault()}>
+      <DialogContent className="max-w-md">
         {open ? <InviteDialogInner onClose={() => setOpen(false)} /> : null}
       </DialogContent>
     </Dialog>
@@ -175,7 +175,7 @@ export function ReferralInviteFab() {
         </Button>
       </div>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-md" onOpenAutoFocus={(e) => e.preventDefault()}>
+        <DialogContent className="max-w-md">
           {open ? <InviteDialogInner onClose={() => setOpen(false)} /> : null}
         </DialogContent>
       </Dialog>

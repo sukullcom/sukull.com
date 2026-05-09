@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import PrivateLessonHeader from "@/components/private-lesson-header";
 
 export const metadata: Metadata = {
@@ -22,7 +23,15 @@ export default async function PrivateLessonLayout({
   return (
     <div className="flex flex-col min-h-0 w-full">
       <div className="max-w-5xl mx-auto w-full pt-4 sm:pt-6">
-        <PrivateLessonHeader />
+        <Suspense
+          fallback={
+            <div className="mb-4 sm:mb-6 px-3 sm:px-0" aria-hidden>
+              <div className="h-14 w-full rounded-2xl border-2 border-border bg-muted/40 animate-pulse" />
+            </div>
+          }
+        >
+          <PrivateLessonHeader />
+        </Suspense>
       </div>
       <main className="flex-grow w-full min-h-0 pb-2 lg:pb-0">
         {children}
