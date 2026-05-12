@@ -400,7 +400,16 @@ app.get("/ping", (req, res) =>
 app.get("/", (req, res) =>
   res.json({
     message: "Sukull Payment Server",
-    endpoints: ["/health", "/ping", "/api/payment/create", "/api/payment/subscribe"],
+    endpoints: [
+      "/health",
+      "/ping",
+      "/api/payment/create",
+      "/api/payment/subscribe",
+      "/api/payment/3ds/initialize-credit",
+      "/api/payment/3ds/initialize-subscribe",
+      "/api/payment/3ds/finalize-credit",
+      "/api/payment/3ds/finalize-subscribe",
+    ],
   }),
 );
 
@@ -666,8 +675,6 @@ app.post("/api/payment/subscribe", authenticateUser, async (req, res) => {
       .json({ success: false, message: "Kart bilgileri eksik veya hatalı." });
   }
 
-  const subscriptionAmount = 100;
-
   const client = await pool.connect();
   try {
     const existing = await findIdempotentResult(client, user.id, idempotencyKey);
@@ -687,8 +694,8 @@ app.post("/api/payment/subscribe", authenticateUser, async (req, res) => {
     const request = {
       locale: Iyzipay.LOCALE.TR,
       conversationId,
-      price: subscriptionAmount.toString(),
-      paidPrice: subscriptionAmount.toString(),
+      price: String(INFINITE_HEARTS_PRICE_TRY),
+      paidPrice: String(INFINITE_HEARTS_PRICE_TRY),
       currency: Iyzipay.CURRENCY.TRY,
       installment: "1",
       basketId,
@@ -710,7 +717,7 @@ app.post("/api/payment/subscribe", authenticateUser, async (req, res) => {
           category1: "Education",
           category2: "Subscription",
           itemType: "VIRTUAL",
-          price: subscriptionAmount.toString(),
+          price: String(INFINITE_HEARTS_PRICE_TRY),
         },
       ],
     };
@@ -754,30 +761,10 @@ app.post("/api/payment/subscribe", authenticateUser, async (req, res) => {
     );
 
     if (paymentResult.status === "success") {
-      const now = new Date();
-      const endDate = new Date(now);
-      endDate.setMonth(endDate.getMonth() + 1);
-
-      await client.query(
-        `INSERT INTO user_subscriptions (user_id, subscription_type, status, start_date, end_date, payment_id, amount, currency, created_at, updated_at)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())`,
-        [
-          user.id,
-          "infinite_hearts",
-          "active",
-          now,
-          endDate,
-          paymentResult.paymentId,
-          subscriptionAmount.toString(),
-          "TRY",
-        ],
-      );
-      await client.query(
-        `UPDATE user_progress
-            SET has_infinite_hearts = true,
-                subscription_expires_at = $1
-          WHERE user_id = $2`,
-        [endDate, user.id],
+      const { endDate } = await applyInfiniteHeartsSubscription(
+        client,
+        user.id,
+        paymentResult.paymentId,
       );
       await client.query("COMMIT");
       return res.json({
@@ -807,7 +794,7 @@ app.post("/api/payment/subscribe", authenticateUser, async (req, res) => {
 });
 
 // ===========================================================================
-// 3-D Secure flow (credits)
+// 3-D Secure flow (credits + subscription)
 // ===========================================================================
 //
 // Why a separate endpoint pair exists next to the non-3DS `/api/payment/create`:
@@ -890,6 +877,37 @@ async function settleCreditPurchase(client, { userId, creditsAmount, totalPrice,
       [userId, creditsAmount, creditsAmount],
     );
   }
+}
+
+/** TRY price for infinite_hearts — must match client + Iyzico basket item. */
+const INFINITE_HEARTS_PRICE_TRY = 100;
+
+async function applyInfiniteHeartsSubscription(client, userId, iyzicoPaymentId) {
+  const now = new Date();
+  const endDate = new Date(now);
+  endDate.setMonth(endDate.getMonth() + 1);
+  await client.query(
+    `INSERT INTO user_subscriptions (user_id, subscription_type, status, start_date, end_date, payment_id, amount, currency, created_at, updated_at)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, NOW(), NOW())`,
+    [
+      userId,
+      "infinite_hearts",
+      "active",
+      now,
+      endDate,
+      iyzicoPaymentId,
+      String(INFINITE_HEARTS_PRICE_TRY),
+      "TRY",
+    ],
+  );
+  await client.query(
+    `UPDATE user_progress
+        SET has_infinite_hearts = true,
+            subscription_expires_at = $1
+      WHERE user_id = $2`,
+    [endDate, userId],
+  );
+  return { endDate };
 }
 
 app.post("/api/payment/3ds/initialize-credit", authenticateUser, async (req, res) => {
@@ -1044,6 +1062,158 @@ app.post("/api/payment/3ds/initialize-credit", authenticateUser, async (req, res
     });
   } catch (e) {
     console.error("3ds/initialize-credit fatal:", e);
+    return res.status(500).json({ success: false, message: GENERIC_PAYMENT_ERROR });
+  } finally {
+    client.release();
+  }
+});
+
+// ---------------------------------------------------------------------------
+// POST /api/payment/3ds/initialize-subscribe — Premium (3DS, same pattern as credits)
+// ---------------------------------------------------------------------------
+app.post("/api/payment/3ds/initialize-subscribe", authenticateUser, async (req, res) => {
+  if (!pool || !iyzipay) {
+    return res
+      .status(503)
+      .json({ success: false, message: "Ödeme servisi geçici olarak kullanılamıyor." });
+  }
+
+  const user = req.user;
+
+  const rl = await checkRateLimit(`payment:3ds:init:${user.id}`, 5, 600);
+  if (!rl.allowed) {
+    return res.status(429).json({
+      success: false,
+      message: "Çok fazla ödeme denemesi. Lütfen birkaç dakika sonra tekrar deneyin.",
+    });
+  }
+
+  const {
+    paymentCard: rawCard,
+    billingAddress,
+    identityNumber,
+    idempotencyKey,
+    callbackUrl,
+  } = req.body || {};
+
+  if (!idempotencyKey || typeof idempotencyKey !== "string") {
+    return res.status(400).json({ success: false, message: "Geçersiz istek: idempotency anahtarı eksik." });
+  }
+  if (!billingAddress) {
+    return res.status(400).json({ success: false, message: "Eksik ödeme bilgileri." });
+  }
+  if (!isValidTcKimlik(identityNumber)) {
+    return res.status(400).json({
+      success: false,
+      message: "Geçersiz TC kimlik numarası. Lütfen 11 haneli doğru TC kimlik numarası giriniz.",
+    });
+  }
+  if (typeof callbackUrl !== "string" || !/^https?:\/\//i.test(callbackUrl)) {
+    return res.status(400).json({ success: false, message: "Geçersiz callback adresi." });
+  }
+
+  const card = sanitizeCard(rawCard);
+  if (!hasValidCard(card)) {
+    return res.status(400).json({ success: false, message: "Kart bilgileri eksik veya hatalı." });
+  }
+
+  const client = await pool.connect();
+  try {
+    const existing = await findIdempotentResult(client, user.id, idempotencyKey);
+    if (existing) {
+      const ok = existing.status === "success";
+      return res.status(ok ? 200 : 400).json({
+        success: false,
+        idempotent: true,
+        message: ok ? "Abonelik zaten aktif edilmişti." : GENERIC_PAYMENT_ERROR,
+      });
+    }
+
+    const basketId = `basket_sub_${user.id}_${Date.now()}`;
+    const request = {
+      locale: "tr",
+      conversationId: idempotencyKey,
+      price: String(INFINITE_HEARTS_PRICE_TRY),
+      paidPrice: String(INFINITE_HEARTS_PRICE_TRY),
+      currency: Iyzipay.CURRENCY.TRY,
+      installment: "1",
+      basketId,
+      paymentChannel: Iyzipay.PAYMENT_CHANNEL.WEB,
+      paymentGroup: Iyzipay.PAYMENT_GROUP.SUBSCRIPTION,
+      callbackUrl,
+      paymentCard: card,
+      buyer: buildBuyer({
+        user,
+        address: billingAddress,
+        identityNumber: String(identityNumber).trim(),
+        ip: req.ip,
+      }),
+      shippingAddress: buildAddress(billingAddress),
+      billingAddress: buildAddress(billingAddress),
+      basketItems: [
+        {
+          id: "infinite_hearts_subscription",
+          name: "Sukull Premium — aylık platform hizmet paketi (sınırsız can + profil analizi)",
+          category1: "Education",
+          category2: "Subscription",
+          itemType: "VIRTUAL",
+          price: String(INFINITE_HEARTS_PRICE_TRY),
+        },
+      ],
+    };
+
+    let initResult;
+    try {
+      initResult = await callIyzicoThreeDsInitialize(request);
+    } catch (e) {
+      console.error("Iyzico 3DS init error (subscribe):", e?.message || e);
+      await client.query(
+        `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, error_code, error_message, created_at)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`,
+        [
+          user.id,
+          idempotencyKey,
+          JSON.stringify(safeLogPayload(request)),
+          JSON.stringify({ exception: String(e?.message || e) }),
+          "failed",
+          "network_error_3ds_init_sub",
+          "Iyzico 3DS init failed",
+        ],
+      );
+      return res.status(502).json({ success: false, message: GENERIC_PAYMENT_ERROR });
+    }
+
+    await client.query(
+      `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, error_code, error_message, created_at)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
+       ON CONFLICT (user_id, payment_id) DO NOTHING`,
+      [
+        user.id,
+        idempotencyKey,
+        JSON.stringify(safeLogPayload(request)),
+        JSON.stringify({
+          status: initResult.status || "unknown",
+          paymentId: initResult.paymentId || null,
+          phase: "3ds_initialize_subscribe",
+        }),
+        "pending_3ds",
+        initResult.errorCode || null,
+        initResult.errorMessage || null,
+      ],
+    );
+
+    if (initResult.status !== "success") {
+      return res.status(400).json({ success: false, message: GENERIC_PAYMENT_ERROR });
+    }
+
+    return res.json({
+      success: true,
+      conversationId: idempotencyKey,
+      paymentId: initResult.paymentId,
+      threeDSHtmlContent: initResult.threeDSHtmlContent,
+    });
+  } catch (e) {
+    console.error("3ds/initialize-subscribe fatal:", e);
     return res.status(500).json({ success: false, message: GENERIC_PAYMENT_ERROR });
   } finally {
     client.release();
@@ -1215,6 +1385,150 @@ app.post("/api/payment/3ds/finalize-credit", authenticateUser, async (req, res) 
     }
   } catch (e) {
     console.error("3ds/finalize-credit fatal:", e);
+    return res.status(500).json({ success: false, message: GENERIC_PAYMENT_ERROR });
+  } finally {
+    client.release();
+  }
+});
+
+// ---------------------------------------------------------------------------
+// POST /api/payment/3ds/finalize-subscribe
+// ---------------------------------------------------------------------------
+app.post("/api/payment/3ds/finalize-subscribe", authenticateUser, async (req, res) => {
+  if (!pool || !iyzipay) {
+    return res
+      .status(503)
+      .json({ success: false, message: "Ödeme servisi geçici olarak kullanılamıyor." });
+  }
+
+  const user = req.user;
+
+  const rl = await checkRateLimit(`payment:3ds:finalize:${user.id}`, 10, 600);
+  if (!rl.allowed) {
+    return res.status(429).json({ success: false, message: "Çok fazla deneme. Lütfen sonra tekrar deneyin." });
+  }
+
+  const { paymentId, conversationData, conversationId, status, mdStatus } = req.body || {};
+
+  if (!conversationId || typeof conversationId !== "string") {
+    return res.status(400).json({ success: false, message: "Geçersiz istek." });
+  }
+  if (!paymentId || !conversationData) {
+    return res.status(400).json({ success: false, message: "Geçersiz istek." });
+  }
+  if (status !== "success" || String(mdStatus) !== "1") {
+    return res.status(400).json({ success: false, message: "3D Secure doğrulaması başarısız oldu." });
+  }
+
+  const client = await pool.connect();
+  try {
+    const { rows: initRows } = await client.query(
+      `SELECT status, request_data FROM payment_logs
+        WHERE user_id = $1 AND payment_id = $2
+        ORDER BY created_at DESC
+        LIMIT 1`,
+      [user.id, conversationId],
+    );
+    if (initRows.length === 0) {
+      return res.status(400).json({ success: false, message: "Geçersiz işlem." });
+    }
+    let storedRequest = {};
+    try {
+      storedRequest =
+        typeof initRows[0].request_data === "string"
+          ? JSON.parse(initRows[0].request_data)
+          : initRows[0].request_data || {};
+    } catch {
+      storedRequest = {};
+    }
+    const basketItem = Array.isArray(storedRequest.basketItems) ? storedRequest.basketItems[0] : null;
+    if (!basketItem || basketItem.id !== "infinite_hearts_subscription") {
+      return res.status(400).json({ success: false, message: "Geçersiz abonelik paketi." });
+    }
+    const numericPrice = Number(storedRequest.paidPrice ?? storedRequest.price);
+    if (numericPrice !== INFINITE_HEARTS_PRICE_TRY) {
+      return res.status(400).json({ success: false, message: "Geçersiz ödeme tutarı." });
+    }
+
+    const priorStatus = initRows[0].status;
+    if (priorStatus === "success") {
+      return res.json({
+        success: true,
+        idempotent: true,
+        message: "Abonelik zaten aktif edilmişti.",
+      });
+    }
+    if (priorStatus === "failed") {
+      return res.status(400).json({ success: false, idempotent: true, message: GENERIC_PAYMENT_ERROR });
+    }
+
+    let paymentResult;
+    try {
+      paymentResult = await callIyzicoThreeDsPayment({
+        locale: "tr",
+        conversationId,
+        paymentId,
+        conversationData,
+      });
+    } catch (e) {
+      console.error("Iyzico 3DS finalize error (subscribe):", e?.message || e);
+      await client.query(
+        `UPDATE payment_logs
+            SET response_data = $1,
+                status = 'failed',
+                error_code = 'network_error_3ds_finalize_sub',
+                error_message = 'Iyzico 3DS finalize failed'
+          WHERE user_id = $2 AND payment_id = $3`,
+        [JSON.stringify({ exception: String(e?.message || e) }), user.id, conversationId],
+      );
+      return res.status(502).json({ success: false, message: GENERIC_PAYMENT_ERROR });
+    }
+
+    await client.query("BEGIN");
+    try {
+      await client.query(
+        `UPDATE payment_logs
+            SET response_data = $1,
+                status = $2,
+                error_code = $3,
+                error_message = $4
+          WHERE user_id = $5 AND payment_id = $6`,
+        [
+          JSON.stringify(paymentResult),
+          paymentResult.status === "success" ? "success" : "failed",
+          paymentResult.errorCode || null,
+          paymentResult.errorMessage || null,
+          user.id,
+          conversationId,
+        ],
+      );
+
+      if (paymentResult.status === "success") {
+        const { endDate } = await applyInfiniteHeartsSubscription(
+          client,
+          user.id,
+          paymentResult.paymentId,
+        );
+        await client.query("COMMIT");
+        return res.json({
+          success: true,
+          message: "Sonsuz can aboneliği başarıyla aktifleştirildi!",
+          data: {
+            paymentId: paymentResult.paymentId,
+            subscriptionType: "infinite_hearts",
+            expiresAt: endDate.toISOString(),
+          },
+        });
+      }
+
+      await client.query("COMMIT");
+      return res.status(400).json({ success: false, message: GENERIC_PAYMENT_ERROR });
+    } catch (e) {
+      await client.query("ROLLBACK");
+      throw e;
+    }
+  } catch (e) {
+    console.error("3ds/finalize-subscribe fatal:", e);
     return res.status(500).json({ success: false, message: GENERIC_PAYMENT_ERROR });
   } finally {
     client.release();

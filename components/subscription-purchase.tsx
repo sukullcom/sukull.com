@@ -7,8 +7,8 @@ import { Input } from './ui/input';
 import { CreditCard, Loader2, InfinityIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { createClient } from '@/utils/supabase/client';
-import { useRouter } from 'next/navigation';
 import { clientLogger } from '@/lib/client-logger';
+import { isValidTcKimlik } from '@/lib/tc-kimlik';
 import { PaymentTrustStrip } from '@/components/payment-trust-strip';
 
 type SubscriptionPurchaseProps = {
@@ -18,7 +18,6 @@ type SubscriptionPurchaseProps = {
 
 export default function SubscriptionPurchase({ onSuccess, onCancel }: SubscriptionPurchaseProps) {
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const supabase = createClient();
 
   // Card information state
@@ -55,8 +54,8 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
     }
 
     const tc = identityNumber.replace(/\D/g, '');
-    if (tc.length !== 11) {
-      toast.error('Geçersiz TC kimlik numarası. 11 haneli olmalıdır.');
+    if (!isValidTcKimlik(tc)) {
+      toast.error('Geçersiz TC kimlik numarası. Lütfen 11 haneli doğru numarayı giriniz.');
       setLoading(false);
       return;
     }
@@ -94,31 +93,50 @@ export default function SubscriptionPurchase({ onSuccess, onCancel }: Subscripti
         return;
       }
 
-      // Use the same payment server URL pattern as credit purchase
-      const paymentServerUrl = process.env.NEXT_PUBLIC_PAYMENT_SERVER_URL || 
-        (process.env.NODE_ENV === 'production' ? 'https://sukullcom-production.up.railway.app' : 'http://localhost:3001');
-      
-      // Call the subscription payment endpoint on Railway
-      const apiUrl = `${paymentServerUrl}${paymentServerUrl.endsWith('/') ? '' : '/'}api/payment/subscribe`;
-      const response = await fetch(apiUrl, {
+      const paymentServerUrl =
+        process.env.NEXT_PUBLIC_PAYMENT_SERVER_URL ||
+        (process.env.NODE_ENV === 'production'
+          ? 'https://sukullcom-production.up.railway.app'
+          : 'http://localhost:3001');
+
+      // Canlıda çoğu kart 3DS olmadan reddedilir; kredi akışındaki gibi abonelik de
+      // her zaman 3-D Secure ile başlatılır (initialize → banka OTP → sonuç sayfasında finalize).
+      const callbackUrl = new URL('/api/payment/3ds/callback', window.location.origin);
+      callbackUrl.searchParams.set('flow', 'subscription');
+
+      const initUrl = `${paymentServerUrl}${paymentServerUrl.endsWith('/') ? '' : '/'}api/payment/3ds/initialize-subscribe`;
+      const initResponse = await fetch(initUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`
+          Authorization: `Bearer ${session.access_token}`,
         },
-        body: JSON.stringify(paymentData)
+        body: JSON.stringify({
+          ...paymentData,
+          callbackUrl: callbackUrl.toString(),
+        }),
       });
-
-      const result = await response.json();
-
-      if (result.success) {
-        toast.success(result.message || 'Premium hizmet aboneliği başarıyla aktifleştirildi!');
-        // Refresh the page to update the subscription status
-        router.refresh();
-        onSuccess?.();
-      } else {
-        toast.error(result.message || 'Abonelik ödemesi tamamlanamadı. Lütfen tekrar deneyin.');
+      const initJson = (await initResponse.json()) as {
+        success?: boolean;
+        message?: string;
+        threeDSHtmlContent?: string;
+      };
+      if (!initResponse.ok || !initJson.success || !initJson.threeDSHtmlContent) {
+        toast.error(initJson.message || '3D Secure başlatılamadı. Lütfen tekrar deneyin.');
+        return;
       }
+
+      let decoded: string;
+      try {
+        decoded = atob(initJson.threeDSHtmlContent);
+      } catch {
+        toast.error('3D Secure yanıtı bozuk. Lütfen tekrar deneyin.');
+        return;
+      }
+      document.open();
+      document.write(decoded);
+      document.close();
+      return;
     } catch (error: unknown) {
       clientLogger.error({ message: 'subscription payment failed', error, location: 'subscription-purchase/payment' });
       toast.error('Abonelik ödemesi sırasında bir hata oluştu. Lütfen tekrar deneyin.');

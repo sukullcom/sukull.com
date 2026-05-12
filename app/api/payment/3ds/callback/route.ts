@@ -31,11 +31,14 @@ import { logger } from '@/lib/logger';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const RESULT_PATH = '/private-lesson/credits/3ds-result';
+const CREDITS_3DS_RESULT_PATH = '/private-lesson/credits/3ds-result';
+const SUBSCRIPTION_3DS_RESULT_PATH = '/shop/subscription-3ds-result';
 
 export async function POST(req: NextRequest) {
   const log = logger.child({ labels: { route: 'api/payment/3ds/callback' } });
   const origin = req.nextUrl.origin;
+  const flow = req.nextUrl.searchParams.get('flow');
+  const resultPath = flow === 'subscription' ? SUBSCRIPTION_3DS_RESULT_PATH : CREDITS_3DS_RESULT_PATH;
 
   let form: URLSearchParams;
   try {
@@ -47,7 +50,7 @@ export async function POST(req: NextRequest) {
       error,
       location: 'app/api/payment/3ds/callback/route.ts',
     });
-    return redirectWithResult(origin, {
+    return redirectWithResult(origin, resultPath, {
       status: 'error',
       message: 'Ödeme doğrulama cevabı okunamadı.',
     });
@@ -67,7 +70,7 @@ export async function POST(req: NextRequest) {
       hasConversationData: Boolean(conversationData),
       hasConversationId: Boolean(conversationId),
     });
-    return redirectWithResult(origin, {
+    return redirectWithResult(origin, resultPath, {
       status: 'error',
       conversationId,
       message: '3D Secure sonucu eksik. Lütfen yeniden deneyin.',
@@ -76,7 +79,7 @@ export async function POST(req: NextRequest) {
 
   if (status !== 'success' || mdStatus !== '1') {
     log.info('3ds auth not successful', { status, mdStatus, conversationId });
-    return redirectWithResult(origin, {
+    return redirectWithResult(origin, resultPath, {
       status: 'failure',
       conversationId,
       message: '3D Secure doğrulaması başarısız oldu. Kartınızdan ücret çekilmedi.',
@@ -86,7 +89,7 @@ export async function POST(req: NextRequest) {
   // Bridge cookie: the next page needs to know which conversation we just
   // finalized so it can show a tailored result. We set a short-lived,
   // httpOnly cookie instead of leaking paymentId in the query string.
-  const resultUrl = new URL(RESULT_PATH, origin);
+  const resultUrl = new URL(resultPath, origin);
   resultUrl.searchParams.set('conversationId', conversationId);
   resultUrl.searchParams.set('paymentId', paymentId);
   resultUrl.searchParams.set('status', 'pending');
@@ -101,6 +104,9 @@ export async function POST(req: NextRequest) {
   for (const key of passThrough) {
     const value = req.nextUrl.searchParams.get(key);
     if (value) resultUrl.searchParams.set(key, value);
+  }
+  if (flow === 'subscription') {
+    resultUrl.searchParams.set('flow', 'subscription');
   }
 
   // We do NOT call the payment-server from here directly — the browser
@@ -126,9 +132,10 @@ export async function POST(req: NextRequest) {
 
 function redirectWithResult(
   origin: string,
+  resultPath: string,
   { status, message, conversationId }: { status: 'error' | 'failure'; message: string; conversationId?: string },
 ) {
-  const url = new URL(RESULT_PATH, origin);
+  const url = new URL(resultPath, origin);
   url.searchParams.set('status', status);
   url.searchParams.set('message', message);
   if (conversationId) url.searchParams.set('conversationId', conversationId);
