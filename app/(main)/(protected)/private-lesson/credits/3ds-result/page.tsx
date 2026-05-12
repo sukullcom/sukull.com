@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import { getServerUser } from '@/lib/auth';
 import { logger } from '@/lib/logger';
+import { getPaymentServerBaseUrl } from '@/lib/payment-server-base-url';
 import {
   parsePaymentFinalizeResponse,
   paymentFinalizeFailureUserMessage,
@@ -141,8 +142,7 @@ export default async function ThreeDsResultPage({
   // Forward to the payment-server for Iyzico finalization. We deliberately
   // do this in a server component so the Supabase bearer token can be
   // assembled without exposing it to the client.
-  const paymentServerUrl =
-    process.env.NEXT_PUBLIC_PAYMENT_SERVER_URL ?? 'http://localhost:3001';
+  const paymentServerUrl = getPaymentServerBaseUrl();
 
   // We need a service-role JWT for the payment-server's `authenticateUser`.
   // Getting the browser user's access token on the server requires reading

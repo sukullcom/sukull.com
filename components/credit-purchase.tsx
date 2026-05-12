@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { toast } from 'sonner'
 import { Loader2, CreditCard, MapPin } from 'lucide-react'
 import { createClient } from '@/utils/supabase/client'
+import { getPaymentServerBaseUrl } from '@/lib/payment-server-base-url'
 import { clientLogger } from '@/lib/client-logger'
 import { PaymentTrustStrip } from '@/components/payment-trust-strip'
 
@@ -149,9 +150,7 @@ export default function CreditPurchase() {
         return
       }
 
-      // Use environment variable for payment server URL, fallback based on environment
-      const paymentServerUrl = process.env.NEXT_PUBLIC_PAYMENT_SERVER_URL || 
-        (process.env.NODE_ENV === 'production' ? 'https://sukullcom-production.up.railway.app' : 'http://localhost:3001')
+      const paymentServerUrl = getPaymentServerBaseUrl()
 
       // --- 3-D Secure path -------------------------------------------------
       // When the flag is on, initialize a 3DS session and hand the browser

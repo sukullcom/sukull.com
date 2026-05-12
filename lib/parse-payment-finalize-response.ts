@@ -51,7 +51,12 @@ export function paymentFinalizeFailureUserMessage(
     return `Ödeme sunucusu boş yanıt döndü (HTTP ${res.status}). Ortamda NEXT_PUBLIC_PAYMENT_SERVER_URL doğru mu kontrol edin; sorun sürerse destek ile iletişime geçin.`;
   }
   if (parseResult.parseError === 'invalid_json') {
-    return `Ödeme sunucusu JSON olmayan yanıt döndü (HTTP ${res.status}). Genelde yanlış URL, ağ geçidi veya HTML hata sayfası anlamına gelir.`;
+    let msg = `Ödeme sunucusu JSON olmayan yanıt döndü (HTTP ${res.status}). Genelde yanlış URL, ağ geçidi veya HTML hata sayfası anlamına gelir.`;
+    if (res.status === 404) {
+      msg +=
+        ' HTTP 404 ise adres genelde ana Next sitesidir; ödeme API’si orada yoktur. Railway’de ayrı servisin kök URL’sini NEXT_PUBLIC_PAYMENT_SERVER_URL veya sunucu tarafı için PAYMENT_SERVER_URL ile verin.';
+    }
+    return msg;
   }
 
   return 'Ödeme doğrulaması sırasında bir sorun oluştu.';

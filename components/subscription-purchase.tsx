@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { createClient } from '@/utils/supabase/client';
 import { clientLogger } from '@/lib/client-logger';
 import { isValidTcKimlik } from '@/lib/tc-kimlik';
+import { getPaymentServerBaseUrl } from '@/lib/payment-server-base-url';
 import { PaymentTrustStrip } from '@/components/payment-trust-strip';
 
 type SubscriptionPurchaseProps = {
@@ -93,11 +94,7 @@ export default function SubscriptionPurchase({ onCancel }: SubscriptionPurchaseP
         return;
       }
 
-      const paymentServerUrl =
-        process.env.NEXT_PUBLIC_PAYMENT_SERVER_URL ||
-        (process.env.NODE_ENV === 'production'
-          ? 'https://sukullcom-production.up.railway.app'
-          : 'http://localhost:3001');
+      const paymentServerUrl = getPaymentServerBaseUrl();
 
       // Canlıda çoğu kart 3DS olmadan reddedilir; kredi akışındaki gibi abonelik de
       // her zaman 3-D Secure ile başlatılır (initialize → banka OTP → sonuç sayfasında finalize).

@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import { getServerUser } from '@/lib/auth';
 import { logger } from '@/lib/logger';
+import { getPaymentServerBaseUrl } from '@/lib/payment-server-base-url';
 import {
   parsePaymentFinalizeResponse,
   paymentFinalizeFailureUserMessage,
@@ -121,8 +122,7 @@ export default async function SubscriptionThreeDsResultPage({
     );
   }
 
-  const paymentServerUrl =
-    process.env.NEXT_PUBLIC_PAYMENT_SERVER_URL ?? 'http://localhost:3001';
+  const paymentServerUrl = getPaymentServerBaseUrl();
 
   const accessToken = extractAccessTokenFromSupabaseCookies(cookies().getAll());
   if (!accessToken) {
