@@ -1041,10 +1041,14 @@ app.post("/api/payment/3ds/initialize-credit", authenticateUser, async (req, res
 
     // Record a "pending_3ds" row so the finalize step can verify we actually
     // initialized this conversationId (defense against direct POSTs to finalize).
+    // INSERT ... WHERE NOT EXISTS: works even if the unique index from migration
+    // 0020 / 0043 is missing (PostgreSQL rejects ON CONFLICT without a matching constraint).
     await client.query(
       `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, error_code, error_message, created_at)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
-       ON CONFLICT (user_id, payment_id) DO NOTHING`,
+       SELECT $1, $2, $3, $4, $5, $6, $7, NOW()
+       WHERE NOT EXISTS (
+         SELECT 1 FROM payment_logs pl WHERE pl.user_id = $1 AND pl.payment_id = $2
+       )`,
       [
         user.id,
         idempotencyKey,
@@ -1221,8 +1225,10 @@ app.post("/api/payment/3ds/initialize-subscribe", authenticateUser, async (req, 
 
     await client.query(
       `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, error_code, error_message, created_at)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())
-       ON CONFLICT (user_id, payment_id) DO NOTHING`,
+       SELECT $1, $2, $3, $4, $5, $6, $7, NOW()
+       WHERE NOT EXISTS (
+         SELECT 1 FROM payment_logs pl WHERE pl.user_id = $1 AND pl.payment_id = $2
+       )`,
       [
         user.id,
         idempotencyKey,
