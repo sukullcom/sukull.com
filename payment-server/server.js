@@ -1276,12 +1276,16 @@ app.post("/api/payment/3ds/finalize-credit", authenticateUser, async (req, res) 
     return res.status(429).json({ success: false, message: "Çok fazla deneme. Lütfen sonra tekrar deneyin." });
   }
 
-  const { paymentId, conversationData, conversationId, status, mdStatus } = req.body || {};
+  const body = req.body || {};
+  const conversationId =
+    body.conversationId != null ? String(body.conversationId).trim() : "";
+  const paymentId = body.paymentId != null ? String(body.paymentId).trim() : "";
+  const conversationData =
+    body.conversationData != null ? String(body.conversationData).trim() : "";
+  const status = body.status != null ? String(body.status).trim() : "";
+  const mdStatus = body.mdStatus != null ? String(body.mdStatus).trim() : "";
 
-  if (!conversationId || typeof conversationId !== "string") {
-    return res.status(400).json({ success: false, message: "Geçersiz istek." });
-  }
-  if (!paymentId || !conversationData) {
+  if (!conversationId || !paymentId) {
     return res.status(400).json({ success: false, message: "Geçersiz istek." });
   }
   // `status` and `mdStatus` come from the bank via Iyzico. Only status=success
@@ -1450,12 +1454,16 @@ app.post("/api/payment/3ds/finalize-subscribe", authenticateUser, async (req, re
     return res.status(429).json({ success: false, message: "Çok fazla deneme. Lütfen sonra tekrar deneyin." });
   }
 
-  const { paymentId, conversationData, conversationId, status, mdStatus } = req.body || {};
+  const body = req.body || {};
+  const conversationId =
+    body.conversationId != null ? String(body.conversationId).trim() : "";
+  const paymentId = body.paymentId != null ? String(body.paymentId).trim() : "";
+  const conversationData =
+    body.conversationData != null ? String(body.conversationData).trim() : "";
+  const status = body.status != null ? String(body.status).trim() : "";
+  const mdStatus = body.mdStatus != null ? String(body.mdStatus).trim() : "";
 
-  if (!conversationId || typeof conversationId !== "string") {
-    return res.status(400).json({ success: false, message: "Geçersiz istek." });
-  }
-  if (!paymentId || !conversationData) {
+  if (!conversationId || !paymentId) {
     return res.status(400).json({ success: false, message: "Geçersiz istek." });
   }
   if (status !== "success" || String(mdStatus) !== "1") {

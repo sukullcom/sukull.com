@@ -10,23 +10,17 @@ import { logger } from '@/lib/logger';
  * endpoint with the signed payment state:
  *
  *     paymentId         — Iyzico payment id
- *     conversationData  — opaque, Iyzico-signed blob for finalize
+ *     conversationData  — opaque, Iyzico-signed blob for finalize (optional for some issuers)
  *     conversationId    — the idempotencyKey we supplied at initialize
  *     status            — "success" | "failure"
  *     mdStatus          — "1" on successful 3DS auth, else a failure code
  *
  * Important: this endpoint is invoked by the *bank* redirecting the user's
- * browser, so the POST body arrives as `application/x-www-form-urlencoded`
- * (not JSON). We forward the relevant fields to the payment-server, which
- * alone talks to Iyzico, then 303-redirect the browser to the result page.
+ * browser. The body is usually `application/x-www-form-urlencoded`; some
+ * stacks send `multipart/form-data`. A few redirects use GET with query params.
  *
- * We never expose the payment-server URL to the client beyond what
- * `NEXT_PUBLIC_PAYMENT_SERVER_URL` already reveals; this route runs on our
- * infra and keeps the bearer token hop inside a server-to-server call.
- *
- * Failure modes are all terminal for *this* payment attempt — we do not
- * retry here. Users can always restart from the purchase page (the
- * idempotencyKey guards against duplicate credits).
+ * Iyzico docs: conversationData "might return" on success — we must not
+ * treat its absence as "missing result" if paymentId + conversationId exist.
  */
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -34,45 +28,59 @@ export const dynamic = 'force-dynamic';
 const CREDITS_3DS_RESULT_PATH = '/private-lesson/credits/3ds-result';
 const SUBSCRIPTION_3DS_RESULT_PATH = '/shop/subscription-3ds-result';
 
-export async function POST(req: NextRequest) {
+function pickFormParam(form: URLSearchParams, names: readonly string[]): string {
+  for (const name of names) {
+    const v = form.get(name);
+    if (v != null && String(v).trim() !== '') return String(v).trim();
+  }
+  return '';
+}
+
+async function readCallbackForm(req: NextRequest): Promise<URLSearchParams> {
+  const contentType = req.headers.get('content-type') || '';
+
+  if (contentType.includes('multipart/form-data')) {
+    const fd = await req.formData();
+    const sp = new URLSearchParams();
+    for (const [key, value] of fd.entries()) {
+      if (typeof value === 'string') sp.append(key, value);
+    }
+    return sp;
+  }
+
+  const bodyText = await req.text();
+  return new URLSearchParams(bodyText);
+}
+
+function extractIyzicoCallbackFields(form: URLSearchParams) {
+  return {
+    paymentId: pickFormParam(form, ['paymentId', 'payment_id']),
+    conversationData: pickFormParam(form, ['conversationData', 'conversation_data']),
+    conversationId: pickFormParam(form, ['conversationId', 'conversation_id']),
+    status: pickFormParam(form, ['status']),
+    mdStatus: pickFormParam(form, ['mdStatus', 'md_status']),
+  };
+}
+
+function handleCallback(req: NextRequest, form: URLSearchParams): NextResponse {
   const log = logger.child({ labels: { route: 'api/payment/3ds/callback' } });
   const origin = req.nextUrl.origin;
   const flow = req.nextUrl.searchParams.get('flow');
   const resultPath = flow === 'subscription' ? SUBSCRIPTION_3DS_RESULT_PATH : CREDITS_3DS_RESULT_PATH;
 
-  let form: URLSearchParams;
-  try {
-    const bodyText = await req.text();
-    form = new URLSearchParams(bodyText);
-  } catch (error) {
-    log.error({
-      message: 'failed to parse 3ds callback body',
-      error,
-      location: 'app/api/payment/3ds/callback/route.ts',
-    });
-    return redirectWithResult(origin, resultPath, {
-      status: 'error',
-      message: 'Ödeme doğrulama cevabı okunamadı.',
-    });
-  }
+  const { paymentId, conversationData, conversationId, status, mdStatus } = extractIyzicoCallbackFields(form);
 
-  const paymentId = form.get('paymentId') ?? '';
-  const conversationData = form.get('conversationData') ?? '';
-  const conversationId = form.get('conversationId') ?? '';
-  const status = form.get('status') ?? '';
-  const mdStatus = form.get('mdStatus') ?? '';
-
-  // Guardrails before we even consider forwarding. Any of these failing
-  // indicates a malformed or hostile request; we refuse and log.
-  if (!paymentId || !conversationData || !conversationId) {
-    log.warn('3ds callback missing required fields', {
+  if (!paymentId || !conversationId) {
+    const keys = [...new Set([...form.keys()])].slice(0, 50);
+    log.warn('3ds callback missing paymentId or conversationId', {
       hasPaymentId: Boolean(paymentId),
-      hasConversationData: Boolean(conversationData),
       hasConversationId: Boolean(conversationId),
+      hasConversationData: Boolean(conversationData),
+      formKeys: keys,
     });
     return redirectWithResult(origin, resultPath, {
       status: 'error',
-      conversationId,
+      conversationId: conversationId || undefined,
       message: '3D Secure sonucu eksik. Lütfen yeniden deneyin.',
     });
   }
@@ -86,20 +94,11 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  // Bridge cookie: the next page needs to know which conversation we just
-  // finalized so it can show a tailored result. We set a short-lived,
-  // httpOnly cookie instead of leaking paymentId in the query string.
   const resultUrl = new URL(resultPath, origin);
   resultUrl.searchParams.set('conversationId', conversationId);
   resultUrl.searchParams.set('paymentId', paymentId);
   resultUrl.searchParams.set('status', 'pending');
 
-  // The purchase context (credits, price) is passed through the callback URL
-  // query string at initialize-time; issuer banks preserve the query string
-  // when POST-redirecting back. We forward both to the result page so the
-  // server-side finalize call knows what to settle. The payment-server
-  // re-validates these against its stored idempotency record, so a tampered
-  // value cannot inflate credits.
   const passThrough = ['credits', 'totalPrice'] as const;
   for (const key of passThrough) {
     const value = req.nextUrl.searchParams.get(key);
@@ -109,16 +108,11 @@ export async function POST(req: NextRequest) {
     resultUrl.searchParams.set('flow', 'subscription');
   }
 
-  // We do NOT call the payment-server from here directly — the browser
-  // reaching this URL is unauthenticated from the bank's hop. Finalization
-  // must run with the user's Supabase JWT, which we only have on the
-  // result page. The result page will issue the finalize call and then
-  // render the outcome.
-  //
-  // This also means the bank callback is always "fast" — no downstream
-  // Iyzico API round-trip happens on this hop, avoiding bank timeouts on
-  // slow finalize calls.
-  const stash = JSON.stringify({ paymentId, conversationData, conversationId });
+  const stash = JSON.stringify({
+    paymentId,
+    conversationData: conversationData || '',
+    conversationId,
+  });
   const response = NextResponse.redirect(resultUrl, 303);
   response.cookies.set('sk_3ds_pending', stash, {
     httpOnly: true,
@@ -128,6 +122,35 @@ export async function POST(req: NextRequest) {
     path: '/',
   });
   return response;
+}
+
+export async function POST(req: NextRequest) {
+  const log = logger.child({ labels: { route: 'api/payment/3ds/callback' } });
+  const origin = req.nextUrl.origin;
+  const flow = req.nextUrl.searchParams.get('flow');
+  const resultPath = flow === 'subscription' ? SUBSCRIPTION_3DS_RESULT_PATH : CREDITS_3DS_RESULT_PATH;
+
+  let form: URLSearchParams;
+  try {
+    form = await readCallbackForm(req);
+  } catch (error) {
+    log.error({
+      message: 'failed to parse 3ds callback body',
+      error,
+      location: 'app/api/payment/3ds/callback/route.ts',
+    });
+    return redirectWithResult(origin, resultPath, {
+      status: 'error',
+      message: 'Ödeme doğrulama cevabı okunamadı.',
+    });
+  }
+
+  return handleCallback(req, form);
+}
+
+/** Some acquirer flows redirect GET to merchant callback with query parameters. */
+export async function GET(req: NextRequest) {
+  return handleCallback(req, req.nextUrl.searchParams);
 }
 
 function redirectWithResult(
