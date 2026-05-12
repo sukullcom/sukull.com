@@ -174,6 +174,9 @@ if (process.env.IYZICO_API_KEY && process.env.IYZICO_SECRET_KEY) {
 const GENERIC_PAYMENT_ERROR =
   "Ödeme işlenemedi. Lütfen kart bilgilerinizi ve yeterli bakiyenizi kontrol edip tekrar deneyin.";
 
+/** TRY price for infinite_hearts — must match client + Iyzico basket item. */
+const INFINITE_HEARTS_PRICE_TRY = 100;
+
 function isValidTcKimlik(value) {
   if (typeof value !== "string") return false;
   const digits = value.trim();
@@ -891,9 +894,6 @@ async function settleCreditPurchase(client, { userId, creditsAmount, totalPrice,
   }
 }
 
-/** TRY price for infinite_hearts — must match client + Iyzico basket item. */
-const INFINITE_HEARTS_PRICE_TRY = 100;
-
 async function applyInfiniteHeartsSubscription(client, userId, iyzicoPaymentId) {
   const now = new Date();
   const endDate = new Date(now);
@@ -1151,7 +1151,9 @@ app.post("/api/payment/3ds/initialize-subscribe", authenticateUser, async (req, 
       installment: "1",
       basketId,
       paymentChannel: Iyzipay.PAYMENT_CHANNEL.WEB,
-      paymentGroup: Iyzipay.PAYMENT_GROUP.SUBSCRIPTION,
+      // Tek seferlik dijital hizmet: kredi 3DS ile aynı PRODUCT. SUBSCRIPTION + 3DS
+      // initialize bazı canlı Iyzico hesaplarında 500/hatalı gövde üretebiliyor.
+      paymentGroup: Iyzipay.PAYMENT_GROUP.PRODUCT,
       callbackUrl,
       paymentCard: card,
       buyer: buildBuyer({
@@ -1167,7 +1169,7 @@ app.post("/api/payment/3ds/initialize-subscribe", authenticateUser, async (req, 
           id: "infinite_hearts_subscription",
           name: "Sukull Premium — aylık platform hizmet paketi (sınırsız can + profil analizi)",
           category1: "Education",
-          category2: "Subscription",
+          category2: "DigitalService",
           itemType: "VIRTUAL",
           price: String(INFINITE_HEARTS_PRICE_TRY),
         },
@@ -1190,6 +1192,28 @@ app.post("/api/payment/3ds/initialize-subscribe", authenticateUser, async (req, 
           "failed",
           "network_error_3ds_init_sub",
           "Iyzico 3DS init failed",
+        ],
+      );
+      return res.status(502).json({ success: false, message: GENERIC_PAYMENT_ERROR });
+    }
+
+    if (!initResult || typeof initResult !== "object") {
+      console.error(
+        "Iyzico 3DS init (subscribe): expected object, got",
+        typeof initResult,
+        initResult == null ? "" : String(initResult).slice(0, 200),
+      );
+      await client.query(
+        `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, error_code, error_message, created_at)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`,
+        [
+          user.id,
+          idempotencyKey,
+          JSON.stringify(safeLogPayload(request)),
+          JSON.stringify({ invalidBody: typeof initResult }),
+          "failed",
+          "invalid_3ds_init_response_sub",
+          "Iyzico 3DS init returned unexpected response",
         ],
       );
       return res.status(502).json({ success: false, message: GENERIC_PAYMENT_ERROR });
@@ -1225,7 +1249,7 @@ app.post("/api/payment/3ds/initialize-subscribe", authenticateUser, async (req, 
       threeDSHtmlContent: initResult.threeDSHtmlContent,
     });
   } catch (e) {
-    console.error("3ds/initialize-subscribe fatal:", e);
+    console.error("3ds/initialize-subscribe fatal:", e?.message || e, e?.stack);
     return res.status(500).json({ success: false, message: GENERIC_PAYMENT_ERROR });
   } finally {
     client.release();
