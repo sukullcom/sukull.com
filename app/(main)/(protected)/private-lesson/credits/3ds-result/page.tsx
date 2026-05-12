@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import { getServerUser } from '@/lib/auth';
 import { logger } from '@/lib/logger';
+import { extractAccessTokenFromSupabaseCookies } from '@/lib/supabase-access-token-from-cookies';
 
 export const dynamic = 'force-dynamic';
 
@@ -142,7 +143,7 @@ export default async function ThreeDsResultPage({
   // We need a service-role JWT for the payment-server's `authenticateUser`.
   // Getting the browser user's access token on the server requires reading
   // the sb-*-auth-token cookie and parsing it.
-  const accessToken = extractAccessToken(cookies().getAll());
+  const accessToken = extractAccessTokenFromSupabaseCookies(cookies().getAll());
   if (!accessToken) {
     return (
       <ResultShell tone="error" title="Kimlik doğrulanamadı">
@@ -270,31 +271,4 @@ function ResultShell({
       </div>
     </main>
   );
-}
-
-/**
- * Pulls the access token out of the Supabase `sb-*-auth-token` cookie.
- * The cookie payload is `base64-<base64json>` where the JSON has an
- * `access_token` field. This is the same format `@supabase/ssr` writes.
- */
-function extractAccessToken(
-  cookiesList: Array<{ name: string; value: string }>,
-): string | null {
-  const authCookie = cookiesList.find(
-    (c) => c.name.startsWith('sb-') && c.name.endsWith('-auth-token'),
-  );
-  if (!authCookie) return null;
-
-  try {
-    let payload = authCookie.value;
-    if (payload.startsWith('base64-')) payload = payload.slice('base64-'.length);
-    payload = decodeURIComponent(payload);
-    payload = payload.replace(/-/g, '+').replace(/_/g, '/');
-    while (payload.length % 4 !== 0) payload += '=';
-    const decoded = Buffer.from(payload, 'base64').toString('utf-8');
-    const json = JSON.parse(decoded) as { access_token?: string };
-    return json.access_token ?? null;
-  } catch {
-    return null;
-  }
 }
