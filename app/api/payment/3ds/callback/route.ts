@@ -42,9 +42,9 @@ async function readCallbackForm(req: NextRequest): Promise<URLSearchParams> {
   if (contentType.includes('multipart/form-data')) {
     const fd = await req.formData();
     const sp = new URLSearchParams();
-    for (const [key, value] of fd.entries()) {
+    fd.forEach((value, key) => {
       if (typeof value === 'string') sp.append(key, value);
-    }
+    });
     return sp;
   }
 
@@ -71,7 +71,7 @@ function handleCallback(req: NextRequest, form: URLSearchParams): NextResponse {
   const { paymentId, conversationData, conversationId, status, mdStatus } = extractIyzicoCallbackFields(form);
 
   if (!paymentId || !conversationId) {
-    const keys = [...new Set([...form.keys()])].slice(0, 50);
+    const keys = Array.from(form.keys()).slice(0, 50);
     log.warn('3ds callback missing paymentId or conversationId', {
       hasPaymentId: Boolean(paymentId),
       hasConversationId: Boolean(conversationId),
