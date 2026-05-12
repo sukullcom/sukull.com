@@ -16,7 +16,7 @@ type SubscriptionPurchaseProps = {
   onCancel?: () => void;
 };
 
-export default function SubscriptionPurchase({ onSuccess, onCancel }: SubscriptionPurchaseProps) {
+export default function SubscriptionPurchase({ onCancel }: SubscriptionPurchaseProps) {
   const [loading, setLoading] = useState(false);
   const supabase = createClient();
 
