@@ -153,11 +153,13 @@ export default function CreditPurchase() {
       const paymentServerUrl = getPaymentServerBaseUrl()
 
       // --- 3-D Secure path -------------------------------------------------
-      // When the flag is on, initialize a 3DS session and hand the browser
-      // off to the issuer bank. The bank will POST back to our
-      // /api/payment/3ds/callback route once the user completes OTP auth;
-      // credit settlement happens on the result page.
-      const use3ds = process.env.NEXT_PUBLIC_PAYMENT_USE_3DS === 'true'
+      // Canlıda Iyzico çoğu gerçek kartta non-3DS `create` çağrısını reddeder (5010 vb.);
+      // abonelik zaten her zaman 3DS kullanır. Üretimde kredileri de varsayılan 3DS yapıyoruz.
+      // Geliştirmede veya geçici test için: NEXT_PUBLIC_PAYMENT_USE_3DS=false ile legacy `create`.
+      const use3ds =
+        process.env.NEXT_PUBLIC_PAYMENT_USE_3DS === 'true' ||
+        (process.env.NODE_ENV === 'production' &&
+          process.env.NEXT_PUBLIC_PAYMENT_USE_3DS !== 'false');
 
       if (use3ds) {
         // The callback URL must include credits + price so the result page
