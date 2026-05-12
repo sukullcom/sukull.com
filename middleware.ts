@@ -106,7 +106,8 @@ function applyApiCors(req: NextRequest, response: NextResponse): void {
  *
  * The directives below are the safe, non-breaking hardenings applied now:
  *   • `base-uri 'self'`        → blocks base-tag injection
- *   • `form-action 'self'`     → forms can only submit same-origin
+ *   • `form-action`            → `'self'` + `*.bkm.com.tr` + `*.iyzipay.com`
+ *                                (3-D Secure bank/BKM POST, not same-origin)
  *   • `frame-ancestors 'none'` → belt-and-braces with X-Frame-Options
  *   • `object-src 'none'`      → no Flash / Java plugins
  *   • `upgrade-insecure-requests` in production only
@@ -128,7 +129,9 @@ const cspDirectives: string[] = [
   "frame-src 'self' https://www.youtube.com https://youtube.com",
   "manifest-src 'self'",
   "base-uri 'self'",
-  "form-action 'self'",
+  // 3DS: Iyzico HTML auto-posts the browser to BKM Troy / issuer endpoints
+  // (e.g. goguvenliodeme.bkm.com.tr), not to sukull.com — allow those origins only.
+  "form-action 'self' https://*.bkm.com.tr https://*.iyzipay.com",
   "frame-ancestors 'none'",
   "object-src 'none'",
 ];

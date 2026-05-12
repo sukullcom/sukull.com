@@ -40,7 +40,8 @@ async function main(): Promise<void> {
         "  npm run db:apply -- supabase/migrations/0040_final_rls_all_tables.sql\n" +
         "  npm run db:apply -- supabase/migrations/0041_rls_marketplace_credits_snippets_daily.sql\n" +
         "  npm run db:apply -- supabase/migrations/0042_user_referrals.sql\n" +
-        "  (0036–0038: indeks/chat/RLS temeli; 0040: içerik + ilerleme + başvuru + log RLS; 0041: marketplace; 0042: davet kodu + referral_rewards.)\n\n" +
+        "  npm run db:apply -- supabase/migrations/0043_payment_logs_user_payment_id_unique.sql\n" +
+        "  (0036–0038: indeks/chat/RLS temeli; 0040: içerik + ilerleme + başvuru + log RLS; 0041: marketplace; 0042: davet kodu + referral_rewards; 0043: payment_logs idempotency index.)\n\n" +
         "Requires DIRECT_URL (preferred for DDL) or DATABASE_URL in .env — see script header.",
     );
     process.exit(1);
