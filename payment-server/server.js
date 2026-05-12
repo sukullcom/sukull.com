@@ -635,6 +635,18 @@ app.post("/api/payment/subscribe", authenticateUser, async (req, res) => {
       .json({ success: false, message: "Ödeme servisi geçici olarak kullanılamıyor." });
   }
 
+  // Canlıda Iyzico çoğu kart için 5010 döner: "işlemi 3dsecure olarak gerçekleştirmeniz
+  // gerekmektedir". Yeni web istemcisi `/api/payment/3ds/initialize-subscribe` kullanır.
+  // Eski önbellekli JS hâlâ buraya POST ederse Iyzico yerine net cevap verelim.
+  if (NODE_ENV === "production" && process.env.ALLOW_LEGACY_SUBSCRIBE !== "true") {
+    return res.status(410).json({
+      success: false,
+      code: "SUBSCRIPTION_REQUIRES_3DS_CLIENT",
+      message:
+        "Abonelik ödemesi artık 3D Secure ile yapılıyor. Sayfayı tam yenileyin (Ctrl+Shift+R) veya gizli sekmede açın. Sorun sürerse sukull.com için yeni sürümün yayınlandığını kontrol edin.",
+    });
+  }
+
   const user = req.user;
 
   const rl = await checkRateLimit(`payment:subscribe:${user.id}`, 5, 600);
