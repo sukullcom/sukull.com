@@ -3,6 +3,10 @@ import Link from 'next/link';
 
 import { getServerUser } from '@/lib/auth';
 import { logger } from '@/lib/logger';
+import {
+  parsePaymentFinalizeResponse,
+  paymentFinalizeFailureUserMessage,
+} from '@/lib/parse-payment-finalize-response';
 import { extractAccessTokenFromSupabaseCookies } from '@/lib/supabase-access-token-from-cookies';
 
 export const dynamic = 'force-dynamic';
@@ -206,11 +210,15 @@ export default async function ThreeDsResultPage({
     );
   }
 
-  let finalizeJson: { success?: boolean; message?: string; data?: { creditsAdded?: number } } = {};
-  try {
-    finalizeJson = (await finalizeResponse.json()) as typeof finalizeJson;
-  } catch {
-    finalizeJson = {};
+  const finalizeParsed = await parsePaymentFinalizeResponse(finalizeResponse);
+  const finalizeJson = finalizeParsed.json;
+  if (finalizeParsed.parseError !== 'none') {
+    log.warn('3ds finalize-credit body parse issue', {
+      parseError: finalizeParsed.parseError,
+      httpStatus: finalizeResponse.status,
+      rawPreview: finalizeParsed.rawPreview?.slice(0, 200),
+      userId: user.id,
+    });
   }
 
   if (finalizeResponse.ok && finalizeJson.success) {
@@ -232,7 +240,7 @@ export default async function ThreeDsResultPage({
 
   return (
     <ResultShell tone="error" title="Ödeme tamamlanamadı">
-      <p>{finalizeJson.message ?? 'Ödeme doğrulaması sırasında bir sorun oluştu.'}</p>
+      <p>{paymentFinalizeFailureUserMessage(finalizeResponse, finalizeJson, finalizeParsed)}</p>
       <Link
         href="/private-lesson/credits"
         className="font-medium text-suk-payment underline decoration-suk-payment/40 underline-offset-2 hover:text-suk-payment-hover"

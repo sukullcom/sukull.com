@@ -174,6 +174,16 @@ if (process.env.IYZICO_API_KEY && process.env.IYZICO_SECRET_KEY) {
 const GENERIC_PAYMENT_ERROR =
   "Ödeme işlenemedi. Lütfen kart bilgilerinizi ve yeterli bakiyenizi kontrol edip tekrar deneyin.";
 
+/** Prefer Iyzico's localized reason when present; else generic (+ optional code). */
+function iyzicoFailureUserMessage(result) {
+  if (!result || typeof result !== "object") return GENERIC_PAYMENT_ERROR;
+  const em = result.errorMessage || result.error_message;
+  if (typeof em === "string" && em.trim()) return em.trim();
+  const code = result.errorCode || result.error_code;
+  if (code) return `${GENERIC_PAYMENT_ERROR} (Kod: ${code})`;
+  return GENERIC_PAYMENT_ERROR;
+}
+
 /** TRY price for infinite_hearts — must match client + Iyzico basket item. */
 const INFINITE_HEARTS_PRICE_TRY = 100;
 
@@ -1424,7 +1434,11 @@ app.post("/api/payment/3ds/finalize-credit", authenticateUser, async (req, res) 
         ],
       );
       await client.query("COMMIT");
-      return res.status(400).json({ success: false, message: GENERIC_PAYMENT_ERROR });
+      return res.status(400).json({
+        success: false,
+        message: iyzicoFailureUserMessage(paymentResult),
+        errorCode: paymentResult.errorCode || paymentResult.error_code || null,
+      });
     } catch (e) {
       await client.query("ROLLBACK");
       throw e;
@@ -1572,7 +1586,11 @@ app.post("/api/payment/3ds/finalize-subscribe", authenticateUser, async (req, re
       }
 
       await client.query("COMMIT");
-      return res.status(400).json({ success: false, message: GENERIC_PAYMENT_ERROR });
+      return res.status(400).json({
+        success: false,
+        message: iyzicoFailureUserMessage(paymentResult),
+        errorCode: paymentResult.errorCode || paymentResult.error_code || null,
+      });
     } catch (e) {
       await client.query("ROLLBACK");
       throw e;
