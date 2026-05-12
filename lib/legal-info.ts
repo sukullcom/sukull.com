@@ -22,7 +22,16 @@
  * IMPORTANT: do not import this from Client Components if the values
  * contain anything confidential. Today everything here is public (will
  * appear on a public page anyway), but treat the convention seriously.
+ *
+ * **KEP:** Her işletme için zorunlu değildir. `NEXT_PUBLIC_LEGAL_KEP_ADDRESS`
+ * boş bırakılırsa yasal sayfalarda KEP satırı gösterilmez; iletişim e-posta ve
+ * tebligat adresi üzerinden anlatılır. KEP aldığınızda env’e eklemeniz yeterlidir.
  */
+
+function optionalPublicEnv(value: string | undefined): string | null {
+  const t = value?.trim();
+  return t && t.length > 0 ? t : null;
+}
 
 export const LEGAL_COMPANY = {
   /**
@@ -46,8 +55,11 @@ export const LEGAL_COMPANY = {
   taxOffice: process.env.NEXT_PUBLIC_LEGAL_TAX_OFFICE ?? "TBD – Vergi Dairesi",
   /** Vergi kimlik numarası (VKN). */
   taxNumber: process.env.NEXT_PUBLIC_LEGAL_TAX_NUMBER ?? "5331083815",
-  /** KEP (Kayıtlı Elektronik Posta) adresi — tebligat için zorunlu. */
-  kepAddress: process.env.NEXT_PUBLIC_LEGAL_KEP_ADDRESS ?? "TBD – KEP Adresi",
+  /**
+   * KEP (Kayıtlı Elektronik Posta) — varsa gösterilir; yoksa `null`.
+   * `NEXT_PUBLIC_LEGAL_KEP_ADDRESS` (ör. `...@hs01.kep.tr`).
+   */
+  kepAddress: optionalPublicEnv(process.env.NEXT_PUBLIC_LEGAL_KEP_ADDRESS),
   /** Tescilli merkez adresi — Ticaret Sicil Gazetesi ile uyumlu. */
   address:
     process.env.NEXT_PUBLIC_LEGAL_ADDRESS ??

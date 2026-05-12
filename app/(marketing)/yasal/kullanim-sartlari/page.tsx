@@ -184,8 +184,8 @@ export default function KullanimSartlariPage() {
 
       <h2>11. İletişim ve Tebligat</h2>
       <p>
-        Resmî tebligat adresimiz <strong>{address}</strong>'tir. KEP adresi ve
-        satıcıya ilişkin diğer resmî bilgiler{" "}
+        Resmî tebligat adresimiz <strong>{address}</strong>&apos;tir. Satıcıya ilişkin
+        güncel iletişim ve (varsa) KEP bilgileri{" "}
         <Link href="/yasal/on-bilgilendirme">Ön Bilgilendirme Formu</Link> ve{" "}
         <Link href="/yasal/mesafeli-satis">Mesafeli Satış Sözleşmesi</Link>{" "}
         belgelerinde yer alır.

@@ -35,7 +35,7 @@ export default function OnBilgilendirmePage() {
       <h2>1. Satıcı Bilgileri</h2>
       <p className="text-sm text-muted-foreground">
         Aşağıdaki bilgiler, tüketici mevzuatı kapsamında satıcının kimliğinin doğrulanması ve
-        tebligat için gereken asgari unsurları içerir.
+        iletişim / tebligat için kullanılan bilgileri içerir.
       </p>
       <ul>
         <li>
@@ -53,10 +53,12 @@ export default function OnBilgilendirmePage() {
         <li>
           <strong>Vergi dairesi:</strong> {taxOffice}
         </li>
-        <li>
-          <strong>KEP adresi:</strong>{" "}
-          <span className="break-all">{kepAddress}</span>
-        </li>
+        {kepAddress ? (
+          <li>
+            <strong>KEP adresi:</strong>{" "}
+            <span className="break-all">{kepAddress}</span>
+          </li>
+        ) : null}
         <li>
           <strong>Merkez / tebligat adresi:</strong> {address}
         </li>

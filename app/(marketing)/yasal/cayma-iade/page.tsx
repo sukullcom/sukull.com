@@ -55,10 +55,16 @@ export default function CaymaIadePage() {
         Henüz ifası başlamamış ve Mesafeli Sözleşmeler Yönetmeliği kapsamında
         caymaya konu olabilecek ücretli hizmet alımlarında cayma hakkı
         kullanılabilir. Bu durumda Alıcı, cayma hakkı süresi içinde{" "}
-        <a href={`mailto:${contactEmail}`}>{contactEmail}</a> adresine
-        e-posta göndererek veya{" "}
-        <strong>{kepAddress}</strong> KEP adresi üzerinden yazılı
-        bildirimde bulunabilir.
+        <a href={`mailto:${contactEmail}`}>{contactEmail}</a> adresine e-posta
+        göndererek bildirimde bulunabilir
+        {kepAddress ? (
+          <>
+            {" "}
+            veya <strong className="break-all">{kepAddress}</strong> KEP adresi üzerinden yazılı
+            bildirimde bulunabilir
+          </>
+        ) : null}
+        .
       </p>
 
       <h2>4. İade Süreci</h2>

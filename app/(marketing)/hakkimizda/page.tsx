@@ -55,7 +55,7 @@ export default function AboutPage() {
             tüm vergi sicili detaylarını göstermek zorunlu değildir; o bilgilerin tam ve güncel
             listesi <strong className="text-foreground">mesafeli satış öncesi formları</strong> ve{" "}
             <strong className="text-foreground">sözleşmelerde</strong> yer alır. Aşağıdaki bağlantı
-            üzerinden satıcı bilgilerinize (unvan, adres, MERSİS, vergi, KEP vb.) ulaşılır.
+            üzerinden satıcı bilgilerinize (unvan, adres, MERSİS, vergi, iletişim vb.) ulaşılır.
           </p>
           <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <a

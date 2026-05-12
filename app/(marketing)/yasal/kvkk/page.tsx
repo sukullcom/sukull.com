@@ -44,9 +44,12 @@ export default function KvkkPage() {
         <li>
           <strong>Tescilli Adres:</strong> {address}
         </li>
-        <li>
-          <strong>KEP Adresi:</strong> {kepAddress}
-        </li>
+        {kepAddress ? (
+          <li>
+            <strong>KEP Adresi:</strong>{" "}
+            <span className="break-all">{kepAddress}</span>
+          </li>
+        ) : null}
         <li>
           <strong>KVKK İletişim:</strong>{" "}
           <a href={`mailto:${kvkkEmail}`}>{kvkkEmail}</a>
@@ -167,11 +170,17 @@ export default function KvkkPage() {
 
       <h3>Başvuru Usulü</h3>
       <p>
-        Yukarıdaki haklarınızı kullanmak için <a href={`mailto:${kvkkEmail}`}>{kvkkEmail}</a>{" "}
-        adresine e-posta gönderebilir veya <strong>{kepAddress}</strong> KEP
-        adresimize yazılı başvuruda bulunabilirsiniz. Başvurularınız KVKK'nın
-        13. maddesi uyarınca en geç <strong>30 gün</strong> içinde
-        sonuçlandırılır.
+        Yukarıdaki haklarınızı kullanmak için{" "}
+        <a href={`mailto:${kvkkEmail}`}>{kvkkEmail}</a> adresine e-posta gönderebilirsiniz
+        {kepAddress ? (
+          <>
+            {" "}
+            veya <strong className="break-all">{kepAddress}</strong> KEP adresimize yazılı
+            başvuruda bulunabilirsiniz
+          </>
+        ) : null}
+        . Başvurularınız KVKK&apos;nın 13. maddesi uyarınca en geç{" "}
+        <strong>30 gün</strong> içinde sonuçlandırılır.
       </p>
 
       <h2>7. Güncellemeler</h2>

@@ -52,9 +52,11 @@ export default function MesafeliSatisPage() {
         <li>
           <strong>Vergi dairesi:</strong> {taxOffice}
         </li>
-        <li>
-          <strong>KEP:</strong> <span className="break-all">{kepAddress}</span>
-        </li>
+        {kepAddress ? (
+          <li>
+            <strong>KEP:</strong> <span className="break-all">{kepAddress}</span>
+          </li>
+        ) : null}
         <li>
           <strong>Adres:</strong> {address}
         </li>
