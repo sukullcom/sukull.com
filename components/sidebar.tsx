@@ -3,12 +3,14 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 import { SidebarItem } from "./sidebar-item";
-import learnIcon from "@/public/desk.svg";
+import learnIcon from "@/public/learn.svg";
 import leaderboardIcon from "@/public/leaderboard.svg";
 import questsIcon from "@/public/quests.svg";
-import shopIcon from "@/public/bag.svg";
+import shopIcon from "@/public/shop.svg";
 import gameIcon from "@/public/games.svg";
 import privateLessonIcon from "@/public/private_lesson.svg";
+import studyBuddyIcon from "@/public/study_buddy.svg";
+import profileIcon from "@/public/profile.svg";
 
 type Props = {
   className?: string;
@@ -50,8 +52,8 @@ export const Sidebar = ({ className }: Props) => {
         />
         <SidebarItem label="Hedefler" href="/quests" iconSrc={questsIcon} />
         <SidebarItem label="Mağaza" href="/shop" iconSrc={shopIcon} />
-        <SidebarItem label="Çalışma Arkadaşı" href="/study-buddy" iconSrc="/study_buddy.svg" />
-        <SidebarItem label="Profil" href="/profile" iconSrc="/mascot_normal.svg" />
+        <SidebarItem label="Çalışma Arkadaşı" href="/study-buddy" iconSrc={studyBuddyIcon} />
+        <SidebarItem label="Profil" href="/profile" iconSrc={profileIcon} />
       </div>
     </div>
   );
