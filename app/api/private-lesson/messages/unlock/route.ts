@@ -14,7 +14,7 @@ import { getRequestLogger } from "@/lib/logger";
 import {
   checkRateLimit,
   RATE_LIMITS,
-  rateLimitHeaders,
+  rateLimitClosedDenyPayload,
 } from "@/lib/rate-limit-db";
 import {
   getMessageUnlock,
@@ -86,24 +86,17 @@ export async function POST(request: NextRequest) {
       onStoreError: "closed",
     });
     if (!rl.allowed) {
-      if (rl.storeError) {
-        return NextResponse.json(
-          {
-            error:
-              "Mesaj kilidi şu an doğrulanamıyor (geçici sunucu sorunu). Bir dakika sonra tekrar dene.",
-            retryAfterSeconds: Math.min(rl.retryAfter, 120),
-          },
-          { status: 503, headers: rateLimitHeaders(rl) },
-        );
-      }
-      return NextResponse.json(
+      const deny = rateLimitClosedDenyPayload(
+        rl,
         {
-          error:
+          rateLimited:
             "Kısa sürede çok fazla mesaj kilidi denemesi yapıldı. Lütfen biraz sonra tekrar dene.",
-          retryAfterSeconds: rl.retryAfter,
+          storeUnavailable:
+            "Mesaj kilidi şu an doğrulanamıyor (geçici sunucu sorunu). Bir dakika sonra tekrar dene.",
         },
-        { status: 429, headers: rateLimitHeaders(rl) },
+        { includeRetryAfterOn429: true },
       );
+      return NextResponse.json(deny.body, { status: deny.status, headers: deny.headers });
     }
 
     const result = await unlockMessageThread({

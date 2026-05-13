@@ -6,7 +6,7 @@ import { getRequestLogger } from "@/lib/logger";
 import {
   checkRateLimit,
   getClientIp,
-  rateLimitHeaders,
+  rateLimitClosedDenyPayload,
   type RateLimitOptions,
 } from "@/lib/rate-limit-db";
 
@@ -151,10 +151,12 @@ async function enforceRateLimit(
   });
 
   if (!rl.allowed) {
-    return NextResponse.json(
-      { error: "Çok fazla istek. Lütfen biraz bekleyin." },
-      { status: 429, headers: rateLimitHeaders(rl) },
-    );
+    const deny = rateLimitClosedDenyPayload(rl, {
+      rateLimited: "Çok fazla istek. Lütfen biraz bekleyin.",
+      storeUnavailable:
+        "İstek sınırı şu an doğrulanamıyor (geçici sunucu sorunu). Bir dakika sonra tekrar dene.",
+    });
+    return NextResponse.json(deny.body, { status: deny.status, headers: deny.headers });
   }
   return null;
 }

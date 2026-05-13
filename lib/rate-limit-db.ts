@@ -35,7 +35,9 @@ export type RateLimitOptions = {
    * request flood outweighs the availability hit — in practice that
    * means money flows (payments, credit spend) and destructive writes
    * (account deletion). On those paths, returning 503 during a DB
-   * outage is strictly safer than accepting the write.
+   * outage is strictly safer than accepting the write. When denying
+   * requests, use `rateLimitClosedDenyPayload` so `storeError` maps to
+   * 503, not a misleading 429.
    */
   onStoreError?: "open" | "closed";
 };
@@ -135,10 +137,10 @@ function fallbackAllow(max: number, windowSeconds: number): RateLimitResult {
 }
 
 /**
- * Used only when `onStoreError: "closed"` is set and the limiter
- * backing store is unreachable. Callers see a 429-shaped result and
- * are told to retry after the full window, which is the safest
- * behaviour for destructive / money-moving endpoints.
+ * Used when `onStoreError: "closed"` and Postgres `check_rate_limit` fails
+ * or returns no row. `storeError: true` is set — use
+ * `rateLimitClosedDenyPayload` (or equivalent) so the client gets 503,
+ * not a misleading “quota exceeded” 429.
  */
 function fallbackDeny(windowSeconds: number): RateLimitResult {
   return {
@@ -182,6 +184,47 @@ export function rateLimitHeaders(result: RateLimitResult): Record<string, string
     "X-RateLimit-Reset": String(Math.floor(result.resetAt.getTime() / 1000)),
     "Retry-After": String(result.retryAfter),
   };
+}
+
+/** Metinler `onStoreError: "closed"` ile kullanılan uçlarda kotayı DB hatasından ayırmak için. */
+export type RateLimitClosedDenyMessages = {
+  rateLimited: string;
+  storeUnavailable: string;
+};
+
+export type RateLimitClosedDenyOptions = {
+  storeRetryAfterCapSeconds?: number;
+  /** 429 gövdesine `retryAfterSeconds` ekle (ör. mesaj kilidi). */
+  includeRetryAfterOn429?: boolean;
+};
+
+/**
+ * `checkRateLimit` + `onStoreError: "closed"` iken `!rl.allowed` olduğunda:
+ * gerçek kota → 429, limitör/DB kesintisi (`storeError`) → 503.
+ * Böylece kullanıcıya “çok sık” denip altyapı arızası gizlenmez.
+ */
+export function rateLimitClosedDenyPayload(
+  rl: RateLimitResult,
+  messages: RateLimitClosedDenyMessages,
+  options?: RateLimitClosedDenyOptions,
+): { status: 429 | 503; body: Record<string, unknown>; headers: Record<string, string> } {
+  const headers = rateLimitHeaders(rl);
+  const cap = options?.storeRetryAfterCapSeconds ?? 120;
+  if (rl.storeError) {
+    return {
+      status: 503,
+      body: {
+        error: messages.storeUnavailable,
+        retryAfterSeconds: Math.min(rl.retryAfter, cap),
+      },
+      headers,
+    };
+  }
+  const body: Record<string, unknown> = { error: messages.rateLimited };
+  if (options?.includeRetryAfterOn429) {
+    body.retryAfterSeconds = rl.retryAfter;
+  }
+  return { status: 429, body, headers };
 }
 
 /**

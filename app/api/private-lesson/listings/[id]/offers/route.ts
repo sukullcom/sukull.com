@@ -15,6 +15,7 @@ import { getRequestLogger } from "@/lib/logger";
 import {
   checkRateLimit,
   RATE_LIMITS,
+  rateLimitClosedDenyPayload,
   rateLimitHeaders,
 } from "@/lib/rate-limit-db";
 import {
@@ -192,10 +193,12 @@ export async function POST(
       onStoreError: "closed",
     });
     if (!rl.allowed) {
-      return NextResponse.json(
-        { error: "Çok sık teklif veriyorsunuz. Biraz sonra tekrar deneyin." },
-        { status: 429, headers: rateLimitHeaders(rl) },
-      );
+      const deny = rateLimitClosedDenyPayload(rl, {
+        rateLimited: "Çok sık teklif veriyorsunuz. Biraz sonra tekrar deneyin.",
+        storeUnavailable:
+          "Teklif kotası şu an doğrulanamıyor (geçici sunucu sorunu). Bir dakika sonra tekrar dene.",
+      });
+      return NextResponse.json(deny.body, { status: deny.status, headers: deny.headers });
     }
 
     const result = await createOffer({

@@ -18,6 +18,7 @@ import { getRequestLogger } from "@/lib/logger";
 import {
   checkRateLimit,
   RATE_LIMITS,
+  rateLimitClosedDenyPayload,
   rateLimitHeaders,
 } from "@/lib/rate-limit-db";
 import { acceptOffer, rejectOffer, withdrawOffer } from "@/db/queries";
@@ -61,10 +62,12 @@ export async function PATCH(
       onStoreError: "closed",
     });
     if (!rl.allowed) {
-      return NextResponse.json(
-        { error: "Çok sık istek. Biraz sonra tekrar deneyin." },
-        { status: 429, headers: rateLimitHeaders(rl) },
-      );
+      const deny = rateLimitClosedDenyPayload(rl, {
+        rateLimited: "Çok sık istek. Biraz sonra tekrar deneyin.",
+        storeUnavailable:
+          "İşlem kotası şu an doğrulanamıyor (geçici sunucu sorunu). Bir dakika sonra tekrar dene.",
+      });
+      return NextResponse.json(deny.body, { status: deny.status, headers: deny.headers });
     }
 
     const body = (await request.json().catch(() => ({}))) as Record<
