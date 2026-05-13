@@ -339,11 +339,16 @@ export async function ensureUnlockedThreadForOfferTx(
 // Message write helper
 // ---------------------------------------------------------------------------
 
+export type SendMessageInThreadResult = {
+  message: typeof studyBuddyMessages.$inferSelect;
+  isFirstMessageInChat: boolean;
+};
+
 export async function sendMessageInUnlockedThread(input: {
   senderId: string;
   chatId: number;
   content: string;
-}) {
+}): Promise<SendMessageInThreadResult> {
   return await db.transaction(async (tx) => {
     const chat = await tx.query.studyBuddyChats.findFirst({
       where: eq(studyBuddyChats.id, input.chatId),
@@ -354,6 +359,15 @@ export async function sendMessageInUnlockedThread(input: {
       throw new Error("chat_forbidden");
     }
 
+    const priorRows = queryResultRows<{ c: number }>(
+      await tx.execute(sql`
+        SELECT count(*)::int AS c
+        FROM study_buddy_messages
+        WHERE chat_id = ${input.chatId}
+      `),
+    );
+    const priorCount = priorRows[0]?.c ?? 0;
+
     const [msg] = await tx
       .insert(studyBuddyMessages)
       .values({
@@ -363,11 +377,16 @@ export async function sendMessageInUnlockedThread(input: {
       })
       .returning();
 
+    if (!msg) throw new Error("message_insert_failed");
+
     await tx
       .update(studyBuddyChats)
       .set({ last_message: input.content.slice(0, 160), last_updated: new Date() })
       .where(eq(studyBuddyChats.id, input.chatId));
 
-    return msg;
+    return {
+      message: msg,
+      isFirstMessageInChat: priorCount === 0,
+    };
   });
 }

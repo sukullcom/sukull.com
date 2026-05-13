@@ -23,6 +23,8 @@ import { asc, eq } from "drizzle-orm";
 import { sendMessageInUnlockedThread } from "@/db/queries/messages";
 import { verifyCsrf } from "@/lib/csrf";
 import { isTrustedApiOrigin } from "@/lib/same-origin-api";
+import { notifyPrivateLessonFirstMessageIfApplicable } from "@/lib/private-lesson-first-message-email";
+import { logger } from "@/lib/logger";
 
 type RouteContext = { params: { chatId: string } };
 
@@ -174,11 +176,30 @@ export async function POST(
     }
 
     try {
-      const msg = await sendMessageInUnlockedThread({
+      const result = await sendMessageInUnlockedThread({
         senderId: user.id,
         chatId,
         content,
       });
+      const msg = result.message;
+
+      if (result.isFirstMessageInChat) {
+        void notifyPrivateLessonFirstMessageIfApplicable({
+          chatId,
+          senderId: user.id,
+          messagePreview: content,
+        }).catch((error: unknown) => {
+          logger.warn("private lesson first-message email failed (non-blocking)", {
+            chatId,
+            location: "api/private-lesson/messages/[chatId]/POST",
+            error:
+              error instanceof Error
+                ? { name: error.name, message: error.message }
+                : { raw: String(error) },
+          });
+        });
+      }
+
       return NextResponse.json({
         message: {
           id: msg.id,
