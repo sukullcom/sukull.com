@@ -4,6 +4,8 @@ import { useState, useTransition, useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { toast } from "sonner";
 import { updateProfileAction } from "@/actions/profile";
+import { ConfirmActionDialog } from "@/components/confirm-action-dialog";
+import { SCHOOL_AND_GRADE_LOCK_MONTHS } from "@/lib/school-grade-lock";
 
 // Lazy-load the KVKK / account-deletion dialog. It's only reachable from
 // inside the Settings tab and pulls in a Radix dialog + confirm-input
@@ -89,6 +91,8 @@ export default function ProfilePageClient({
   const [avatarUrl, setAvatarUrl] = useState(normalizeAvatarUrl(profile.userImageSrc));
   const [dailyTarget, setDailyTarget] = useState(profile.dailyTarget || 50);
   const [selectedSchoolId, setSelectedSchoolId] = useState<number | null>(profile.schoolId ?? null);
+  const [selectedSchoolName, setSelectedSchoolName] = useState<string | null>(null);
+  const [schoolConfirmOpen, setSchoolConfirmOpen] = useState(false);
   const [pending, startTransition] = useTransition();
   const { logout, isLoggingOut } = useSecureLogout();
 
@@ -137,6 +141,25 @@ export default function ProfilePageClient({
     }
   }, [generator, canChangeAvatar]);
 
+  /**
+   * Asıl yazma çağrısı. Tüm validation `handleSave`'de yapılır; bu helper
+   * sadece DB'ye yazar ve toast tetikler. Okul değişimi olduğunda araya
+   * onay diyaloğu girer (`handleSave` → setSchoolConfirmOpen → confirm →
+   * `runSave`); diğer alanlar değişiyorsa doğrudan `runSave` çağrılır.
+   */
+  const runSave = useCallback(
+    (schoolToSave: number | null) => {
+      startTransition(() => {
+        updateProfileAction(username.trim(), avatarUrl, schoolToSave, dailyTarget)
+          .then(() => toast.success("Profil güncellendi!"))
+          .catch((err) => {
+            toast.error(err.message || "Profil güncellenirken hata oluştu.");
+          });
+      });
+    },
+    [username, avatarUrl, dailyTarget],
+  );
+
   const handleSave = useCallback(() => {
     if (username.trim() !== profile.userName && !canChangeUsername) {
       toast.error(getStreakRequirementMessage("USERNAME_CHANGE"));
@@ -175,13 +198,19 @@ export default function ProfilePageClient({
       return;
     }
 
-    startTransition(() => {
-      updateProfileAction(username.trim(), avatarUrl, schoolToSave, dailyTarget)
-        .then(() => toast.success("Profil güncellendi!"))
-        .catch((err) => {
-          toast.error(err.message || "Profil güncellenirken hata oluştu.");
-        });
-    });
+    // Okul değişimi (yeni veya farklı okul) için onay diyaloğu — geri alınması
+    // 6 ay sürdüğü için kullanıcının "yanlışlıkla kaydetme" senaryosunu
+    // engelleriz. İlk atama (profile.schoolId == null) için de uyarıyı
+    // gösteriyoruz; "deneme süresi" muafiyeti server tarafında, ama kullanıcı
+    // yine bilinçli onay versin.
+    const schoolChanging =
+      selectedSchoolId !== profile.schoolId && selectedSchoolId !== null;
+    if (schoolChanging) {
+      setSchoolConfirmOpen(true);
+      return;
+    }
+
+    runSave(schoolToSave);
   }, [
     username,
     avatarUrl,
@@ -193,6 +222,7 @@ export default function ProfilePageClient({
     canSelectSchool,
     profile,
     schoolChangeBlockedByPolicy,
+    runSave,
   ]);
 
   const dailyTargetOptions = useMemo(
@@ -530,7 +560,10 @@ export default function ProfilePageClient({
               <ProfileSchoolSelector
                 schools={allSchools}
                 initialSchoolId={selectedSchoolId}
-                onSelect={(id) => setSelectedSchoolId(id)}
+                onSelect={(id, details) => {
+                  setSelectedSchoolId(id);
+                  setSelectedSchoolName(details?.name ?? null);
+                }}
                 disabled={schoolInteractionLocked}
               />
               {!canSelectSchool && (
@@ -579,6 +612,36 @@ export default function ProfilePageClient({
           </div>
         )}
       </div>
+
+      {/* Okul değişimi onay diyaloğu — 6 ay kuralı + seçilen okul net özet. */}
+      <ConfirmActionDialog
+        open={schoolConfirmOpen}
+        onOpenChange={setSchoolConfirmOpen}
+        title={profile.schoolId == null ? "Okul seç" : "Okulu değiştir"}
+        description={
+          <>
+            <span className="block mb-2">
+              {profile.schoolId == null ? "Şu okula geçilecek:" : "Yeni okul:"}{" "}
+              <strong className="text-foreground">
+                {selectedSchoolName ?? "(seçilen okul)"}
+              </strong>
+            </span>
+            <span className="block text-xs text-suk-warning-soft-fg">
+              Lider tablosunun adil kalması için okul değişimi genelde her{" "}
+              {SCHOOL_AND_GRADE_LOCK_MONTHS} ayda bir yapılabilir. Yeni hesaplar
+              için ilk hafta deneme süresi vardır; emin değilsen sonra değiştirebilirsin.
+            </span>
+          </>
+        }
+        confirmLabel={profile.schoolId == null ? "Okulu kaydet" : "Evet, değiştir"}
+        cancelLabel="Vazgeç"
+        confirmVariant="primary"
+        pending={pending}
+        onConfirm={() => {
+          setSchoolConfirmOpen(false);
+          runSave(selectedSchoolId);
+        }}
+      />
     </div>
   );
 }

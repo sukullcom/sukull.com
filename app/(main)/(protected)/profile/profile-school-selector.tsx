@@ -19,10 +19,22 @@ type City = { city: string; count: number };
 type District = { district: string; count: number };
 type Category = { category: string; type: string; count: number };
 
+/**
+ * Seçilen okulun özet bilgisi (parent componentin "Seçildi" kartında
+ * göstermek için kullanması içindir). Sadece okul adı + konum + tür.
+ */
+export type SelectedSchoolSummary = {
+  id: number;
+  name: string;
+  city: string;
+  district: string;
+  category: string;
+};
+
 type ProfileSchoolSelectorProps = {
   schools: School[]; // Not used anymore, but kept for compatibility
   initialSchoolId?: number | null;
-  onSelect: (schoolId: number) => void;
+  onSelect: (schoolId: number, schoolDetails?: SelectedSchoolSummary) => void;
   /** Politika veya istikrar kilidi — seçim yapılamaz (toast yerine UI kilitli). */
   disabled?: boolean;
 };
@@ -180,9 +192,20 @@ export const ProfileSchoolSelector = ({
     (schoolId: number) => {
       if (disabled) return;
       setSelectedSchoolId(schoolId);
-      onSelect(schoolId);
+      const found = schools.find((s) => s.id === schoolId);
+      if (found) {
+        onSelect(schoolId, {
+          id: found.id,
+          name: found.name,
+          city: found.city,
+          district: found.district,
+          category: found.category,
+        });
+      } else {
+        onSelect(schoolId);
+      }
     },
-    [disabled, onSelect],
+    [disabled, onSelect, schools],
   );
 
   const selectBusy = loading || disabled;

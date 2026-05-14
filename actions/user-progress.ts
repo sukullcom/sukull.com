@@ -79,6 +79,10 @@ export async function applySchoolChangeWithLock(
     row.schoolChangeLockedUntil ?? null,
     row.schoolId,
     nextSchoolId,
+    {
+      onboardingCompletedAt: row.onboardingCompletedAt ?? null,
+      totalPoints: row.points ?? 0,
+    },
   );
   if (!decision.allowed) {
     throw new Error(
@@ -90,12 +94,15 @@ export async function applySchoolChangeWithLock(
   }
 
   const oldSchoolId = row.schoolId;
+  // Muafiyet kullanıldıysa kilidi yeniden başlatma (deneme veya düşük puan
+  // muafiyeti boyunca kullanıcı denemeye devam edebilsin).
+  const startNewLock = decision.exemption == null;
 
   await db
     .update(userProgress)
     .set({
       schoolId: nextSchoolId,
-      schoolChangeLockedUntil: nextLockExpiresAt(now),
+      ...(startNewLock ? { schoolChangeLockedUntil: nextLockExpiresAt(now) } : {}),
     })
     .where(eq(userProgress.userId, userId));
 

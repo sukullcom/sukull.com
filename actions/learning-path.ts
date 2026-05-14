@@ -172,12 +172,17 @@ export async function updateLearningPathFromSettings(
   }
 
   const gradeChanging = (row.studentGrade ?? null) !== (v.grade ?? null);
+  let gradeDecisionUsedExemption = false;
   if (gradeChanging) {
     const gradeDecision = canChangeStudentGradeSelection(
       now,
       row.studentGradeChangeLockedUntil ?? null,
       row.studentGrade,
       v.grade,
+      {
+        onboardingCompletedAt: row.onboardingCompletedAt ?? null,
+        totalPoints: row.points ?? 0,
+      },
     );
     if (!gradeDecision.allowed) {
       return {
@@ -186,7 +191,13 @@ export async function updateLearningPathFromSettings(
         nextAllowedAt: gradeDecision.nextAllowedAt.toISOString(),
       };
     }
+    gradeDecisionUsedExemption = gradeDecision.exemption != null;
   }
+
+  // Muafiyet kullanıldıysa yeni kilit başlatma (kullanıcı deneme süresinde
+  // /düşük puanda yine de "yanlış seçim" yapabilir; ardışık değişim hakkı
+  // muafiyet süresince açık kalmalı).
+  const startNewGradeLock = gradeChanging && !gradeDecisionUsedExemption;
 
   await db
     .update(userProgress)
@@ -195,7 +206,7 @@ export async function updateLearningPathFromSettings(
       studentGrade: v.grade,
       learningPathLastSetAt: now,
       learningPathChangeCount: (row.learningPathChangeCount ?? 0) + 1,
-      ...(gradeChanging
+      ...(startNewGradeLock
         ? { studentGradeChangeLockedUntil: nextLockExpiresAt(now) }
         : {}),
     })
