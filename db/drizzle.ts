@@ -44,6 +44,22 @@ if (isProduction) {
   }
 }
 
+/**
+ * Global query / lock timeouts via connection-level `options`.
+ *
+ * Niye `pool.on('connect')` SET değil?
+ *   Supabase transaction pooler (PgBouncer transaction mode) session-level
+ *   `SET` cümlelerini güvenilir tutmaz — her transaction sonunda reset
+ *   edilebilir, bazı sürümlerde "prepared statement does not exist" hatası
+ *   atar. `options=-c key=value` bağlantı kurulurken Postgres'e gönderilir;
+ *   PgBouncer bunu opaque parameter olarak geçirir, pooler reset'ine bağışıktır.
+ *
+ * Üretim için cömert ama sınırlı: 30s sorgu, 10s lock. Uzun çalışan
+ * istisnalar (`offers.ts` transaction'ı vb.) `SET LOCAL` ile session içinde
+ * geçici olarak yükseltir.
+ */
+const POOL_OPTIONS = "-c statement_timeout=30000 -c lock_timeout=10000";
+
 const pool = new Pool({
   connectionString,
   ssl: isProduction
@@ -57,30 +73,7 @@ const pool = new Pool({
   // Disable keepAlive in serverless — idle connections get killed by the
   // platform anyway and keepAlive adds noise to logs on cold starts.
   keepAlive: !isProduction,
-});
-
-/**
- * Global query / lock timeouts.
- *
- * Niye burada? `Pool` üzerinde `options` veya `application_name` ile session
- * GUC set etme yolu yok; her bağlantı için tek seferlik SET çalıştırmak
- * gerekir. `pool.on('connect')` yeni alınan her bağlantıda tetiklenir, böylece:
- *   • Vercel'in 60 sn fonksiyon limitini aşmadan kullanıcının response'unu
- *     "stuck DB query" yüzünden geciktirmemiş oluruz.
- *   • Yanlış index veya kaçak `JOIN` ile gelen pahalı bir sorgu **tüm pool'u
- *     bloke etmesin** — 30 sn sonunda PostgreSQL otomatik iptal eder.
- *   • Lock kuyruğunda asla sonsuza dek beklenmez (`lock_timeout`).
- *
- * Üretim için cömert ama sınırlı: 30s sorgu, 10s lock. Manuel uzun çağrılar
- * (ör. teklif transaction'ı) gerekirse session içinde `SET LOCAL` ile
- * geçici olarak yükseltir; `offers.ts` zaten bu kalıbı kullanıyor.
- */
-pool.on("connect", (client) => {
-  client
-    .query("SET statement_timeout = 30000; SET lock_timeout = 10000;")
-    .catch((err) => {
-      console.warn("[db] failed to set per-connection timeouts:", err?.message || err);
-    });
+  options: POOL_OPTIONS,
 });
 
 const db = drizzle(pool, { schema });
