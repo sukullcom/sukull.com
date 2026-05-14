@@ -484,6 +484,16 @@ app.post("/api/payment/create", authenticateUser, async (req, res) => {
     const existing = await findIdempotentResult(client, user.id, idempotencyKey);
     if (existing) {
       const ok = existing.status === "success";
+      if (existing.status === "processing") {
+        // Aynı anahtarla başka bir istek halen Iyzico tarafında. Önce ona izin
+        // verelim; tekrar denemeyi kibarca beklet — Iyzico tarafı bittiğinde
+        // satır `success` / `failed` olur ve `findIdempotentResult` doğru yanıtı verir.
+        return res.status(409).json({
+          success: false,
+          message: "Aynı ödeme zaten işleniyor. Lütfen birkaç saniye sonra tekrar dene.",
+          idempotent: true,
+        });
+      }
       return res.status(ok ? 200 : 400).json({
         success: ok,
         message: ok
@@ -526,22 +536,41 @@ app.post("/api/payment/create", authenticateUser, async (req, res) => {
       ],
     };
 
+    // Race guard: Iyzico'ya çağrı yapmadan ÖNCE bir "processing" satırı yazıyoruz.
+    // İki paralel istek aynı `idempotencyKey` ile gelirse, ikincisi UNIQUE
+    // (`payment_logs_user_id_payment_id_uniq`) çakışmasında 0 satır günceller
+    // → 409 ile geri çevriliyor. Böylece Iyzico'ya çift POST hiç gitmiyor.
+    const reservation = await client.query(
+      `INSERT INTO payment_logs (user_id, payment_id, request_data, status, created_at)
+       VALUES ($1, $2, $3, 'processing', NOW())
+       ON CONFLICT (user_id, payment_id) DO NOTHING
+       RETURNING id`,
+      [user.id, idempotencyKey, JSON.stringify(safeLogPayload(request))],
+    );
+    if (reservation.rowCount === 0) {
+      return res.status(409).json({
+        success: false,
+        message: "Aynı ödeme zaten işleniyor. Lütfen birkaç saniye sonra tekrar dene.",
+        idempotent: true,
+      });
+    }
+
     let paymentResult;
     try {
       paymentResult = await callIyzicoPayment(request);
     } catch (e) {
       console.error("Iyzico error (credit):", e?.message || e);
       await client.query(
-        `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, error_code, error_message, created_at)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`,
+        `UPDATE payment_logs
+            SET response_data = $1,
+                status = 'failed',
+                error_code = 'network_error',
+                error_message = 'Iyzico request failed'
+          WHERE user_id = $2 AND payment_id = $3`,
         [
+          JSON.stringify({ exception: String(e?.message || e) }),
           user.id,
           idempotencyKey,
-          JSON.stringify(safeLogPayload(request)),
-          JSON.stringify({ exception: String(e?.message || e) }),
-          "failed",
-          "network_error",
-          "Iyzico request failed",
         ],
       );
       return res
@@ -551,16 +580,19 @@ app.post("/api/payment/create", authenticateUser, async (req, res) => {
 
     await client.query("BEGIN");
     await client.query(
-      `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, error_code, error_message, created_at)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`,
+      `UPDATE payment_logs
+          SET response_data = $1,
+              status = $2,
+              error_code = $3,
+              error_message = $4
+        WHERE user_id = $5 AND payment_id = $6`,
       [
-        user.id,
-        idempotencyKey,
-        JSON.stringify(safeLogPayload(request)),
         JSON.stringify(paymentResult),
         paymentResult.status || "failed",
         paymentResult.errorCode || null,
         paymentResult.errorMessage || null,
+        user.id,
+        idempotencyKey,
       ],
     );
 
@@ -629,6 +661,20 @@ app.post("/api/payment/create", authenticateUser, async (req, res) => {
     console.error("payment/create fatal:", e);
     try {
       await client.query("ROLLBACK");
+    } catch {}
+    // Reservation satırı `processing` olarak kalmasın: aksi halde kullanıcı
+    // aynı (yeni) idempotencyKey ile tekrar denerken `processing` görür ve
+    // yanıltıcı 409 alır. Best-effort temizleme; başarısızsa cron TTL
+    // (`pending_3ds` adımına benzer şekilde) ya da manuel temizlik devreye girer.
+    try {
+      await client.query(
+        `UPDATE payment_logs
+            SET status = 'failed',
+                error_code = COALESCE(error_code, 'fatal_exception'),
+                error_message = COALESCE(error_message, 'Sunucu hatası')
+          WHERE user_id = $1 AND payment_id = $2 AND status = 'processing'`,
+        [user.id, idempotencyKey],
+      );
     } catch {}
     return res
       .status(500)
@@ -705,6 +751,13 @@ app.post("/api/payment/subscribe", authenticateUser, async (req, res) => {
     const existing = await findIdempotentResult(client, user.id, idempotencyKey);
     if (existing) {
       const ok = existing.status === "success";
+      if (existing.status === "processing") {
+        return res.status(409).json({
+          success: false,
+          message: "Aynı abonelik işlemi devam ediyor. Lütfen birkaç saniye sonra tekrar dene.",
+          idempotent: true,
+        });
+      }
       return res.status(ok ? 200 : 400).json({
         success: ok,
         message: ok
@@ -747,22 +800,40 @@ app.post("/api/payment/subscribe", authenticateUser, async (req, res) => {
       ],
     };
 
+    // Aynı race guard credit-create akışında olduğu gibi: Iyzico'ya çağrı
+    // ÖNCE reservation satırı yazıyoruz; ikinci paralel istek UNIQUE ile
+    // 409 alır, çift abonelik tahsilatı oluşmaz.
+    const reservation = await client.query(
+      `INSERT INTO payment_logs (user_id, payment_id, request_data, status, created_at)
+       VALUES ($1, $2, $3, 'processing', NOW())
+       ON CONFLICT (user_id, payment_id) DO NOTHING
+       RETURNING id`,
+      [user.id, idempotencyKey, JSON.stringify(safeLogPayload(request))],
+    );
+    if (reservation.rowCount === 0) {
+      return res.status(409).json({
+        success: false,
+        message: "Aynı abonelik işlemi devam ediyor. Lütfen birkaç saniye sonra tekrar dene.",
+        idempotent: true,
+      });
+    }
+
     let paymentResult;
     try {
       paymentResult = await callIyzicoPayment(request);
     } catch (e) {
       console.error("Iyzico error (subscribe):", e?.message || e);
       await client.query(
-        `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, error_code, error_message, created_at)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`,
+        `UPDATE payment_logs
+            SET response_data = $1,
+                status = 'failed',
+                error_code = 'network_error',
+                error_message = 'Iyzico request failed'
+          WHERE user_id = $2 AND payment_id = $3`,
         [
+          JSON.stringify({ exception: String(e?.message || e) }),
           user.id,
           idempotencyKey,
-          JSON.stringify(safeLogPayload(request)),
-          JSON.stringify({ exception: String(e?.message || e) }),
-          "failed",
-          "network_error",
-          "Iyzico request failed",
         ],
       );
       return res
@@ -772,16 +843,19 @@ app.post("/api/payment/subscribe", authenticateUser, async (req, res) => {
 
     await client.query("BEGIN");
     await client.query(
-      `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, error_code, error_message, created_at)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`,
+      `UPDATE payment_logs
+          SET response_data = $1,
+              status = $2,
+              error_code = $3,
+              error_message = $4
+        WHERE user_id = $5 AND payment_id = $6`,
       [
-        user.id,
-        idempotencyKey,
-        JSON.stringify(safeLogPayload(request)),
         JSON.stringify(paymentResult),
         paymentResult.status || "failed",
         paymentResult.errorCode || null,
         paymentResult.errorMessage || null,
+        user.id,
+        idempotencyKey,
       ],
     );
 
@@ -809,6 +883,16 @@ app.post("/api/payment/subscribe", authenticateUser, async (req, res) => {
     console.error("payment/subscribe fatal:", e);
     try {
       await client.query("ROLLBACK");
+    } catch {}
+    try {
+      await client.query(
+        `UPDATE payment_logs
+            SET status = 'failed',
+                error_code = COALESCE(error_code, 'fatal_exception'),
+                error_message = COALESCE(error_message, 'Sunucu hatası')
+          WHERE user_id = $1 AND payment_id = $2 AND status = 'processing'`,
+        [user.id, idempotencyKey],
+      );
     } catch {}
     return res
       .status(500)
@@ -984,6 +1068,16 @@ app.post("/api/payment/3ds/initialize-credit", authenticateUser, async (req, res
   try {
     const existing = await findIdempotentResult(client, user.id, idempotencyKey);
     if (existing) {
+      if (existing.status === "pending_3ds") {
+        // Aynı anahtarla 3DS init zaten başlatılmış. Kullanıcı muhtemelen
+        // sayfayı yeniledi — finalize hâlâ açık, banka tarafı bittiğinde
+        // satır success/failed olur. Yeni init'i reddet, yarışı kapat.
+        return res.status(409).json({
+          success: false,
+          idempotent: true,
+          message: "3D Secure işlemi zaten başlatılmış. Lütfen banka ekranındaki adımı tamamla.",
+        });
+      }
       // A completed (success or final-failure) record exists; do not re-init.
       const ok = existing.status === "success";
       return res.status(ok ? 200 : 400).json({
@@ -1028,51 +1122,65 @@ app.post("/api/payment/3ds/initialize-credit", authenticateUser, async (req, res
       ],
     };
 
+    // Race guard: Iyzico'ya çağrı yapmadan ÖNCE rezervasyon satırı.
+    // UNIQUE(user_id, payment_id) ile aynı anahtarla ikinci paralel init
+    // burada 0 satır insert eder → 409 ile kibarca reddedilir. Banka
+    // tarafına çift OTP/auth çağrısı gitmez.
+    const reservation = await client.query(
+      `INSERT INTO payment_logs (user_id, payment_id, request_data, status, created_at)
+       VALUES ($1, $2, $3, 'processing', NOW())
+       ON CONFLICT (user_id, payment_id) DO NOTHING
+       RETURNING id`,
+      [user.id, idempotencyKey, JSON.stringify(safeLogPayload(request))],
+    );
+    if (reservation.rowCount === 0) {
+      return res.status(409).json({
+        success: false,
+        idempotent: true,
+        message: "Aynı ödeme işlemi devam ediyor. Lütfen birkaç saniye sonra tekrar dene.",
+      });
+    }
+
     let initResult;
     try {
       initResult = await callIyzicoThreeDsInitialize(request);
     } catch (e) {
       console.error("Iyzico 3DS init error:", e?.message || e);
       await client.query(
-        `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, error_code, error_message, created_at)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`,
+        `UPDATE payment_logs
+            SET response_data = $1,
+                status = 'failed',
+                error_code = 'network_error_3ds_init',
+                error_message = 'Iyzico 3DS init failed'
+          WHERE user_id = $2 AND payment_id = $3`,
         [
+          JSON.stringify({ exception: String(e?.message || e) }),
           user.id,
           idempotencyKey,
-          JSON.stringify(safeLogPayload(request)),
-          JSON.stringify({ exception: String(e?.message || e) }),
-          "failed",
-          "network_error_3ds_init",
-          "Iyzico 3DS init failed",
         ],
       );
       return res.status(502).json({ success: false, message: GENERIC_PAYMENT_ERROR });
     }
 
-    // Record a "pending_3ds" row so the finalize step can verify we actually
-    // initialized this conversationId (defense against direct POSTs to finalize).
-    // INSERT ... WHERE NOT EXISTS: works even if the unique index from migration
-    // 0020 / 0043 is missing (PostgreSQL rejects ON CONFLICT without a matching constraint).
+    // Rezervasyon satırı `processing` → `pending_3ds` veya `failed`.
     await client.query(
-      `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, error_code, error_message, created_at)
-       SELECT $1, $2, $3, $4, $5, $6, $7, NOW()
-       WHERE NOT EXISTS (
-         SELECT 1 FROM payment_logs pl WHERE pl.user_id = $1 AND pl.payment_id = $2
-       )`,
+      `UPDATE payment_logs
+          SET response_data = $1,
+              status = $2,
+              error_code = $3,
+              error_message = $4
+        WHERE user_id = $5 AND payment_id = $6`,
       [
-        user.id,
-        idempotencyKey,
-        JSON.stringify(safeLogPayload(request)),
         JSON.stringify({
           status: initResult.status || "unknown",
           paymentId: initResult.paymentId || null,
           phase: "3ds_initialize",
           // Intentionally NOT storing threeDSHtmlContent — it's ephemeral.
         }),
-        "pending_3ds",
+        initResult.status === "success" ? "pending_3ds" : "failed",
         initResult.errorCode || null,
         initResult.errorMessage || null,
-      ],
+      ].concat([user.id, idempotencyKey]),
     );
 
     if (initResult.status !== "success") {
@@ -1088,6 +1196,17 @@ app.post("/api/payment/3ds/initialize-credit", authenticateUser, async (req, res
     });
   } catch (e) {
     console.error("3ds/initialize-credit fatal:", e);
+    // Rezervasyon orphan kalmasın
+    try {
+      await client.query(
+        `UPDATE payment_logs
+            SET status = 'failed',
+                error_code = COALESCE(error_code, 'fatal_exception_3ds_init'),
+                error_message = COALESCE(error_message, 'Sunucu hatası')
+          WHERE user_id = $1 AND payment_id = $2 AND status = 'processing'`,
+        [user.id, idempotencyKey],
+      );
+    } catch {}
     return res.status(500).json({ success: false, message: GENERIC_PAYMENT_ERROR });
   } finally {
     client.release();
@@ -1147,6 +1266,13 @@ app.post("/api/payment/3ds/initialize-subscribe", authenticateUser, async (req, 
   try {
     const existing = await findIdempotentResult(client, user.id, idempotencyKey);
     if (existing) {
+      if (existing.status === "pending_3ds") {
+        return res.status(409).json({
+          success: false,
+          idempotent: true,
+          message: "3D Secure işlemi zaten başlatılmış. Lütfen banka ekranındaki adımı tamamla.",
+        });
+      }
       const ok = existing.status === "success";
       return res.status(ok ? 200 : 400).json({
         success: false,
@@ -1190,22 +1316,38 @@ app.post("/api/payment/3ds/initialize-subscribe", authenticateUser, async (req, 
       ],
     };
 
+    // Race guard (same as 3ds/initialize-credit). Iyzico'ya çağrı ÖNCE reservation.
+    const reservation = await client.query(
+      `INSERT INTO payment_logs (user_id, payment_id, request_data, status, created_at)
+       VALUES ($1, $2, $3, 'processing', NOW())
+       ON CONFLICT (user_id, payment_id) DO NOTHING
+       RETURNING id`,
+      [user.id, idempotencyKey, JSON.stringify(safeLogPayload(request))],
+    );
+    if (reservation.rowCount === 0) {
+      return res.status(409).json({
+        success: false,
+        idempotent: true,
+        message: "Aynı abonelik işlemi devam ediyor. Lütfen birkaç saniye sonra tekrar dene.",
+      });
+    }
+
     let initResult;
     try {
       initResult = await callIyzicoThreeDsInitialize(request);
     } catch (e) {
       console.error("Iyzico 3DS init error (subscribe):", e?.message || e);
       await client.query(
-        `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, error_code, error_message, created_at)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`,
+        `UPDATE payment_logs
+            SET response_data = $1,
+                status = 'failed',
+                error_code = 'network_error_3ds_init_sub',
+                error_message = 'Iyzico 3DS init failed'
+          WHERE user_id = $2 AND payment_id = $3`,
         [
+          JSON.stringify({ exception: String(e?.message || e) }),
           user.id,
           idempotencyKey,
-          JSON.stringify(safeLogPayload(request)),
-          JSON.stringify({ exception: String(e?.message || e) }),
-          "failed",
-          "network_error_3ds_init_sub",
-          "Iyzico 3DS init failed",
         ],
       );
       return res.status(502).json({ success: false, message: GENERIC_PAYMENT_ERROR });
@@ -1218,39 +1360,39 @@ app.post("/api/payment/3ds/initialize-subscribe", authenticateUser, async (req, 
         initResult == null ? "" : String(initResult).slice(0, 200),
       );
       await client.query(
-        `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, error_code, error_message, created_at)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, NOW())`,
+        `UPDATE payment_logs
+            SET response_data = $1,
+                status = 'failed',
+                error_code = 'invalid_3ds_init_response_sub',
+                error_message = 'Iyzico 3DS init returned unexpected response'
+          WHERE user_id = $2 AND payment_id = $3`,
         [
+          JSON.stringify({ invalidBody: typeof initResult }),
           user.id,
           idempotencyKey,
-          JSON.stringify(safeLogPayload(request)),
-          JSON.stringify({ invalidBody: typeof initResult }),
-          "failed",
-          "invalid_3ds_init_response_sub",
-          "Iyzico 3DS init returned unexpected response",
         ],
       );
       return res.status(502).json({ success: false, message: GENERIC_PAYMENT_ERROR });
     }
 
     await client.query(
-      `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, error_code, error_message, created_at)
-       SELECT $1, $2, $3, $4, $5, $6, $7, NOW()
-       WHERE NOT EXISTS (
-         SELECT 1 FROM payment_logs pl WHERE pl.user_id = $1 AND pl.payment_id = $2
-       )`,
+      `UPDATE payment_logs
+          SET response_data = $1,
+              status = $2,
+              error_code = $3,
+              error_message = $4
+        WHERE user_id = $5 AND payment_id = $6`,
       [
-        user.id,
-        idempotencyKey,
-        JSON.stringify(safeLogPayload(request)),
         JSON.stringify({
           status: initResult.status || "unknown",
           paymentId: initResult.paymentId || null,
           phase: "3ds_initialize_subscribe",
         }),
-        "pending_3ds",
+        initResult.status === "success" ? "pending_3ds" : "failed",
         initResult.errorCode || null,
         initResult.errorMessage || null,
+        user.id,
+        idempotencyKey,
       ],
     );
 
@@ -1266,6 +1408,16 @@ app.post("/api/payment/3ds/initialize-subscribe", authenticateUser, async (req, 
     });
   } catch (e) {
     console.error("3ds/initialize-subscribe fatal:", e?.message || e, e?.stack);
+    try {
+      await client.query(
+        `UPDATE payment_logs
+            SET status = 'failed',
+                error_code = COALESCE(error_code, 'fatal_exception_3ds_init_sub'),
+                error_message = COALESCE(error_message, 'Sunucu hatası')
+          WHERE user_id = $1 AND payment_id = $2 AND status = 'processing'`,
+        [user.id, idempotencyKey],
+      );
+    } catch {}
     return res.status(500).json({ success: false, message: GENERIC_PAYMENT_ERROR });
   } finally {
     client.release();
@@ -1387,15 +1539,22 @@ app.post("/api/payment/3ds/finalize-credit", authenticateUser, async (req, res) 
     // 3. Settle inside a transaction so payment_logs / credit_transactions /
     //    user_credits never drift. On any failure we roll back and the user
     //    can safely retry (same conversationId will short-circuit above).
+    //
+    // Race guard: UPDATE `WHERE status = 'pending_3ds' RETURNING id` ile
+    // **atomic transition**. İki paralel finalize çağrısı aynı conversationId
+    // için Iyzico'ya gidip ikisi de success alsa bile burada yalnızca **bir
+    // tanesi** RETURNING'i alır; diğeri 0 satır görür ve settle adımını
+    // atlayarak idempotent yanıt döner — `user_credits`'e çift yazım yok.
     await client.query("BEGIN");
     try {
-      await client.query(
+      const finalUpdate = await client.query(
         `UPDATE payment_logs
             SET response_data = $1,
                 status = $2,
                 error_code = $3,
                 error_message = $4
-          WHERE user_id = $5 AND payment_id = $6`,
+          WHERE user_id = $5 AND payment_id = $6 AND status = 'pending_3ds'
+          RETURNING id`,
         [
           JSON.stringify(paymentResult),
           paymentResult.status === "success" ? "success" : "failed",
@@ -1405,6 +1564,17 @@ app.post("/api/payment/3ds/finalize-credit", authenticateUser, async (req, res) 
           conversationId,
         ],
       );
+
+      if (finalUpdate.rowCount === 0) {
+        // Başka bir paralel finalize çağrısı bu satırı bizden önce kapattı.
+        // Settle adımını atla, idempotent yanıt dön.
+        await client.query("ROLLBACK");
+        return res.json({
+          success: true,
+          idempotent: true,
+          message: `Ödeme zaten işlenmişti. ${numericCredits} kullanım hakkı hesabınızda.`,
+        });
+      }
 
       if (paymentResult.status === "success") {
         await settleCreditPurchase(client, {
@@ -1548,15 +1718,17 @@ app.post("/api/payment/3ds/finalize-subscribe", authenticateUser, async (req, re
       return res.status(502).json({ success: false, message: GENERIC_PAYMENT_ERROR });
     }
 
+    // Race guard — bkz. finalize-credit yorumu.
     await client.query("BEGIN");
     try {
-      await client.query(
+      const finalUpdate = await client.query(
         `UPDATE payment_logs
             SET response_data = $1,
                 status = $2,
                 error_code = $3,
                 error_message = $4
-          WHERE user_id = $5 AND payment_id = $6`,
+          WHERE user_id = $5 AND payment_id = $6 AND status = 'pending_3ds'
+          RETURNING id`,
         [
           JSON.stringify(paymentResult),
           paymentResult.status === "success" ? "success" : "failed",
@@ -1566,6 +1738,16 @@ app.post("/api/payment/3ds/finalize-subscribe", authenticateUser, async (req, re
           conversationId,
         ],
       );
+
+      if (finalUpdate.rowCount === 0) {
+        // Paralel başka finalize satırı kapatmış. Çift abonelik açma yok.
+        await client.query("ROLLBACK");
+        return res.json({
+          success: true,
+          idempotent: true,
+          message: "Abonelik zaten aktif edilmişti.",
+        });
+      }
 
       if (paymentResult.status === "success") {
         const { endDate } = await applyInfiniteHeartsSubscription(

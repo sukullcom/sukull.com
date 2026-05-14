@@ -95,22 +95,22 @@ export default function CreditPurchase() {
 
     setLoading(true)
 
-    // Validate form fields
+    // Tüm ön doğrulama hatalarını topla ki kullanıcı **tek toast** görsün.
+    // Eski sürüm ardışık `toast.error` atıyordu — kart eksik + adres eksik
+    // + TC bozuk durumda üç ayrı toast üst üste binerek karmaşa yaratıyordu.
+    const errors: string[] = []
     if (!holderName.trim() || !cardNumber.trim() || !expireMonth.trim() || !expireYear.trim() || !cvc.trim()) {
-      toast.error('Lütfen tüm kart bilgilerini doldurun')
-      setLoading(false)
-      return
+      errors.push('Kart bilgileri eksik')
     }
-
     if (!contactName.trim() || !phone.trim() || !address.trim() || !city.trim()) {
-      toast.error('Lütfen tüm fatura adresi bilgilerini doldurun')
-      setLoading(false)
-      return
+      errors.push('Fatura adresi eksik')
     }
-
     const tc = identityNumber.replace(/\D/g, '')
     if (tc.length !== 11) {
-      toast.error('Geçersiz TC kimlik numarası. 11 haneli olmalıdır.')
+      errors.push('TC kimlik 11 haneli olmalı')
+    }
+    if (errors.length > 0) {
+      toast.error(`Lütfen şu alanları kontrol et: ${errors.join(', ')}.`)
       setLoading(false)
       return
     }

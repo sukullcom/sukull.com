@@ -220,7 +220,12 @@ export const challengeProgress = pgTable("challenge_progress", {
   firstCompletedAt: timestamp("first_completed_at"),
 }, (table) => ({
   userIdx: index("idx_challenge_progress_user_id").on(table.userId),
-  userChallengeIdx: index("idx_challenge_progress_user_challenge").on(table.userId, table.challengeId),
+  // 0045 ile UNIQUE'e yükseltildi. Adı, eski non-unique idx adına benzer
+  // tutuldu ki migration tarihçesi okunur kalsın.
+  userChallengeUniq: uniqueIndex("idx_challenge_progress_user_challenge_uniq").on(
+    table.userId,
+    table.challengeId,
+  ),
 }));
 
 export const challengeProgressRelations = relations(challengeProgress, ({ one }) => ({
@@ -351,6 +356,13 @@ export const userProgress = pgTable("user_progress", {
   currentAnswerStreak: integer("current_answer_streak").notNull().default(0),
   /** Tüm zamanların en uzun hatasız soru serisi (ilk denemede doğru zinciri). */
   maxAnswerStreak: integer("max_answer_streak").notNull().default(0),
+
+  /**
+   * `applyDailyStreakBonuses` günde tek kez bonus eklesin diye gate kolonu
+   * (0046). Cron iki kez tetiklenirse (Vercel retry, manuel + scheduled
+   * çakışması) çift bonus oluşmaz; UPDATE bu kolonu `CURRENT_DATE` yapar.
+   */
+  lastStreakBonusDate: timestamp("last_streak_bonus_date", { mode: "date" }),
 }, (table) => ({
   schoolIdx: index("idx_user_progress_school_id").on(table.schoolId),
   activeCourseIdx: index("idx_user_progress_active_course").on(table.activeCourseId),
@@ -470,6 +482,13 @@ export const studyBuddyChats = pgTable("study_buddy_chats", {
     .where(
       sql`${table.participantSortedA} IS NOT NULL AND ${table.participantSortedB} IS NOT NULL`,
     ),
+  /**
+   * Sohbet listesinde GIN `@>` containment filtresi + `ORDER BY last_updated DESC`
+   * sıralaması yapılıyor (`db/queries/messages.ts` — `listConversationsFor`). GIN
+   * sıralamayı destekleyemediği için Postgres sort adımı atıyor; bu indeks aynı
+   * tabloda zaman bazlı taramalar için yararlanılan ek sıralı yol. Migration 0047.
+   */
+  lastUpdatedIdx: index("idx_study_buddy_chats_last_updated").on(table.last_updated),
 }));
 
 // Study Buddy Messages

@@ -21,6 +21,8 @@ import {
   hasAvailableCredits,
   unlockMessageThread,
 } from "@/db/queries";
+import { verifyCsrf } from "@/lib/csrf";
+import { isTrustedApiOrigin } from "@/lib/same-origin-api";
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,6 +31,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: "Giriş yapmanız gerekiyor" },
         { status: 401 },
+      );
+    }
+
+    // Spends 1 credit + reveals counterparty PII once unlocked, so we
+    // gate it the same way as offer POST: trusted origin + CSRF double
+    // submit. Other private-lesson mutations follow this exact pattern.
+    if (!isTrustedApiOrigin(request) || !verifyCsrf(request)) {
+      return NextResponse.json(
+        { error: "Geçersiz istek veya güvenlik doğrulaması başarısız." },
+        { status: 403 },
       );
     }
 

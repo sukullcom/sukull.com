@@ -3,12 +3,14 @@
 import { challengeOptions, challenges, userSubscriptions } from "@/db/schema";
 import { useEffect, useRef, useState, useTransition, useMemo } from "react";
 import type { SequenceChallengeHandle } from "./sequence-challenge";
+import type { MatchPairsChallengeHandle } from "./match-pairs-challenge";
 import { ANSWER_CORRECT, ANSWER_WRONG, READY_TO_CHECK } from "./answer-signals";
 import { Header } from "./header";
 import { QuestionBubble } from "./question-bubble";
 import { Challenge } from "./challenge";
 import { Footer } from "./footer";
 import { upsertChallengeProgress, reduceHearts, awardLessonCompletionBonus } from "@/actions/challenge-progress";
+import type { ChallengeAnswer } from "@/lib/validate-challenge-answer";
 import { toast } from "sonner";
 import Image from "next/image";
 import { ResultCard } from "./result-card";
@@ -124,6 +126,7 @@ export const Quiz = ({
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const sequenceListRef = useRef<SequenceChallengeHandle | null>(null);
+  const matchPairsRef = useRef<MatchPairsChallengeHandle | null>(null);
 
   const [lessonId] = useState(initialLessonId);
   const [hearts, setHearts] = useState(initialHearts);
@@ -373,29 +376,67 @@ export const Quiz = ({
       return;
     }
 
+    // Client tarafı `isAnswerCorrect` UI feedback (ses, renkler) için kalır.
+    // Server `userAnswer` payload'unu yeniden doğrular ve gerçek karar verir
+    // (bkz. `lib/validate-challenge-answer.ts`). İstemci yalan söylese bile
+    // server `{ error: "incorrect" }` döner; aşağıda otomatik olarak yanlış
+    // cevap akışına geçeriz.
     let isAnswerCorrect: boolean;
+    let userAnswer: ChallengeAnswer | undefined;
 
     if (selectedOption === ANSWER_CORRECT) {
       isAnswerCorrect = true;
     } else if (selectedOption === ANSWER_WRONG) {
       isAnswerCorrect = false;
     } else if (type === "SEQUENCE" && selectedOption === READY_TO_CHECK) {
+      const ordered = sequenceListRef.current?.getOrderedOptionIds() ?? [];
+      userAnswer = { kind: "sequence", orderedOptionIds: ordered };
       isAnswerCorrect = sequenceListRef.current?.isOrderCorrect() === true;
     } else if (type === "MATCH_PAIRS" && selectedOption === READY_TO_CHECK) {
+      const pairs = matchPairsRef.current?.getMatchedPairs() ?? [];
+      userAnswer = { kind: "match_pairs", pairs };
+      // İstemci tarafı UI yanlış eşleşmelerde anında ceza veriyor; READY_TO_CHECK
+      // yalnızca tüm doğru eşleşmeler tamamlandığında geliyor → client side `true`.
+      // Server yine `pair_id` ile doğrulayacak; bypass mümkün değil.
       isAnswerCorrect = true;
     } else {
       const correctOption = challengeOptions.find((o) => o.correct);
       if (!correctOption) return;
       isAnswerCorrect = correctOption.id === selectedOption;
+      if (typeof selectedOption === "number") {
+        userAnswer = { kind: "select", selectedOptionId: selectedOption };
+      }
     }
+
+    // Server "incorrect" döndüğünde tek bir kodla yanlış cevap akışına geçen
+    // helper. UI feedback'i tutarlı kalır (incorrect.wav, kalp düşmesi, vb.).
+    const applyWrongFlow = async () => {
+      const rh = await reduceHearts(challenge.id).catch(() => undefined);
+      if (rh?.error === "hearts") {
+        openHeartsModal();
+        return;
+      }
+      incorrectControls.play();
+      setStatus("wrong");
+      setWrongCount((c) => c + 1);
+      if (!rh?.error && !hasInfiniteHearts) {
+        setHearts((prev) => Math.max(prev - 1, 0));
+        setLessonPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_PENALTY);
+      }
+    };
 
     if (isAnswerCorrect) {
       startTransition(() => {
-        upsertChallengeProgress(challenge.id)
+        upsertChallengeProgress(challenge.id, userAnswer)
           .then((response) => {
             if (response?.error === "hearts") {
               openHeartsModal();
               return;
+            }
+            if (response?.error === "incorrect") {
+              // Server doğrulaması istemci iddiasıyla uyuşmadı (bypass
+              // girişimi veya istemci bug'ı). Yanlış cevap olarak işle.
+              return applyWrongFlow();
             }
             correctControls.play();
             setStatus("correct");
@@ -420,22 +461,9 @@ export const Quiz = ({
       });
     } else {
       startTransition(() => {
-        reduceHearts(challenge.id)
-          .then((response) => {
-            if (response?.error === "hearts") {
-              openHeartsModal();
-              return;
-            }
-
-            incorrectControls.play();
-            setStatus("wrong");
-            setWrongCount((c) => c + 1);
-            if (!response?.error && !hasInfiniteHearts) {
-              setHearts((prev) => Math.max(prev - 1, 0));
-              setLessonPoints((prev) => prev + SCORING_SYSTEM.LESSON_CHALLENGE_PENALTY);
-            }
-          })
-          .catch(() => toast.error("Bir şeyler yanlış gitti. Lütfen tekrar deneyin."));
+        void applyWrongFlow().catch(() =>
+          toast.error("Bir şeyler yanlış gitti. Lütfen tekrar deneyin."),
+        );
       });
     }
   };
@@ -486,6 +514,7 @@ export const Quiz = ({
                 onTimeUp={handleTimeUp}
                 onPairMistake={onPairMistake}
                 sequenceListRef={sequenceListRef}
+                matchPairsRef={matchPairsRef}
               />
             </div>
           </div>

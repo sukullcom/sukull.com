@@ -7,6 +7,7 @@ import type { VariantProps } from "class-variance-authority";
 import { toast } from "sonner";
 import { MessageCircle, Loader2 } from "lucide-react";
 import { clientLogger } from "@/lib/client-logger";
+import { csrfHeader, mintCsrfToken } from "@/lib/mint-csrf-client";
 import { ConfirmActionDialog } from "@/components/confirm-action-dialog";
 
 type Props = {
@@ -52,9 +53,18 @@ export function MessageTeacherButton({
     setCreditDialogOpen(false);
     setLoading(true);
     try {
+      const token = await mintCsrfToken();
+      if (!token) {
+        toast.error("Güvenlik doğrulaması başarısız. Sayfayı yenileyip tekrar dene.");
+        return;
+      }
       const res = await fetch("/api/private-lesson/messages/unlock", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          ...csrfHeader(token),
+        },
         body: JSON.stringify({ teacherId }),
       });
       const data = (await res.json().catch(() => ({}))) as {

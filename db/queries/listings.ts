@@ -256,7 +256,18 @@ export async function getListingWithOffers(
 // Student-owned listings (my-listings page)
 // ---------------------------------------------------------------------------
 
-export async function getMyListings(studentId: string): Promise<ListingRow[]> {
+/**
+ * Bir öğrencinin tüm ilanları. Çoğu öğrenci 1–10 ilan açar; teorik sınır
+ * yoktu — kötüye kullanım veya migration sonrası kalıntı durumlarda
+ * tek sorgu binlerce satıra patlayabilir. Pragmatik tavan: 200 satır
+ * (son tarih). Çağıran istemek istersem `limit`/`offset` ile sayfalayabilir.
+ */
+export async function getMyListings(
+  studentId: string,
+  options?: { limit?: number; offset?: number },
+): Promise<ListingRow[]> {
+  const limit = Math.min(Math.max(1, options?.limit ?? 200), 500);
+  const offset = Math.max(0, options?.offset ?? 0);
   const rows = await db
     .select({
       id: listings.id,
@@ -281,7 +292,9 @@ export async function getMyListings(studentId: string): Promise<ListingRow[]> {
     .from(listings)
     .leftJoin(users, eq(users.id, listings.studentId))
     .where(eq(listings.studentId, studentId))
-    .orderBy(desc(listings.createdAt));
+    .orderBy(desc(listings.createdAt))
+    .limit(limit)
+    .offset(offset);
 
   return rows.map(toListingRow);
 }

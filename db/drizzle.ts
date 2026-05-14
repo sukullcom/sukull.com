@@ -59,6 +59,30 @@ const pool = new Pool({
   keepAlive: !isProduction,
 });
 
+/**
+ * Global query / lock timeouts.
+ *
+ * Niye burada? `Pool` üzerinde `options` veya `application_name` ile session
+ * GUC set etme yolu yok; her bağlantı için tek seferlik SET çalıştırmak
+ * gerekir. `pool.on('connect')` yeni alınan her bağlantıda tetiklenir, böylece:
+ *   • Vercel'in 60 sn fonksiyon limitini aşmadan kullanıcının response'unu
+ *     "stuck DB query" yüzünden geciktirmemiş oluruz.
+ *   • Yanlış index veya kaçak `JOIN` ile gelen pahalı bir sorgu **tüm pool'u
+ *     bloke etmesin** — 30 sn sonunda PostgreSQL otomatik iptal eder.
+ *   • Lock kuyruğunda asla sonsuza dek beklenmez (`lock_timeout`).
+ *
+ * Üretim için cömert ama sınırlı: 30s sorgu, 10s lock. Manuel uzun çağrılar
+ * (ör. teklif transaction'ı) gerekirse session içinde `SET LOCAL` ile
+ * geçici olarak yükseltir; `offers.ts` zaten bu kalıbı kullanıyor.
+ */
+pool.on("connect", (client) => {
+  client
+    .query("SET statement_timeout = 30000; SET lock_timeout = 10000;")
+    .catch((err) => {
+      console.warn("[db] failed to set per-connection timeouts:", err?.message || err);
+    });
+});
+
 const db = drizzle(pool, { schema });
 
 export default db;

@@ -21,8 +21,12 @@ export function ForgotPasswordForm() {
     try {
       setIsLoading(true);
       const response = await auth.resetPasswordRequest(email);
-      toast.success(response.message);
-      router.push("/login");
+      if (response.success) {
+        toast.success(response.message);
+        router.push("/login");
+      } else {
+        toast.error(response.message);
+      }
     } catch (error) {
       const { message } = getAuthError(error);
       toast.error(message);

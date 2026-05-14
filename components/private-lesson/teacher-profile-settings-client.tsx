@@ -519,12 +519,12 @@ export function TeacherProfileSettingsClient() {
                 id="bio"
                 name="bio"
                 rows={4}
-                maxLength={500}
+                maxLength={1000}
                 value={formData.bio}
                 onChange={handleChange}
                 className="resize-none"
               />
-              <p className="text-xs text-muted-foreground">{formData.bio.length}/500</p>
+              <p className="text-xs text-muted-foreground">{formData.bio.length}/1000</p>
             </div>
 
             <div className="flex gap-2 rounded-lg border border-suk-payment-ring/40 bg-suk-payment-soft p-3 text-sm text-suk-payment-soft-fg">

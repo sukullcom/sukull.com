@@ -126,6 +126,7 @@ export type { OfferRow } from "./queries/offers";
 
 export {
   getMessageUnlock,
+  getMessageUnlocksForStudent,
   unlockMessageThread,
   listStudentConversations,
   listTeacherConversations,

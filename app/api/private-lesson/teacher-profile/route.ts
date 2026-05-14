@@ -29,7 +29,9 @@ const NO_STORE_HEADERS = {
 } as const;
 
 const MAX_NAME = 80;
-const MAX_BIO = 8000;
+// UI ile uyumlu (1000 karakter). Önceki 8000 çok cömerdi — DB şişme ve
+// "küçük öğretmen kartında devasa metin" UX'i için sınırlı.
+const MAX_BIO = 1000;
 const MAX_MISC = 500;
 
 export const GET = secureApi.authRateLimited(

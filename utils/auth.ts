@@ -72,7 +72,14 @@ export const auth = {
         location: "utils/auth/resetPasswordRequest",
         fields: { email },
       });
-      return { success: true, message: "Hesap mevcutsa şifre sıfırlama bağlantısı gönderilecektir." };
+      // RPC kırığında "link gönderildi" iddiası kullanıcıyı oyalar; nötr metin
+      // ile yeniden denemeye yönlendir — enumerasyon riski yok, üst dal zaten
+      // "hesap mevcutsa…" şeklinde dürüst silenced-success kullanıyor.
+      return {
+        success: false,
+        message:
+          "Şu an doğrulama yapamıyoruz. Lütfen biraz sonra tekrar dene.",
+      };
     }
     const row = Array.isArray(data) ? data[0] : data;
     const provider = row && typeof row === "object" && "provider" in row ? (row as { provider: string }).provider : null;
@@ -110,8 +117,9 @@ export const auth = {
         fields: { email },
       });
       return {
-        success: true,
-        message: "Hesap mevcutsa doğrulama e-postası gönderilecektir.",
+        success: false,
+        message:
+          "Şu an doğrulama yapamıyoruz. Lütfen biraz sonra tekrar dene.",
       };
     }
     const row = Array.isArray(data) ? data[0] : data;

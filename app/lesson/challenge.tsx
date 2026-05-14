@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 import { Card } from "./card";
 import { DragDropChallenge } from "./drag-drop-challenge";
 import { FillBlankChallenge } from "./fill-blank-challenge";
-import { MatchPairsChallenge } from "./match-pairs-challenge";
+import { type MatchPairsChallengeHandle, MatchPairsChallenge } from "./match-pairs-challenge";
 import { type SequenceChallengeHandle, SequenceChallenge } from "./sequence-challenge";
 import { TimerChallenge } from "./timer-challenge";
 import type { Ref } from "react";
@@ -22,6 +22,7 @@ type Props = {
   onTimeUp?: () => void;
   onPairMistake?: () => void;
   sequenceListRef?: Ref<SequenceChallengeHandle | null>;
+  matchPairsRef?: Ref<MatchPairsChallengeHandle | null>;
 };
 
 export const Challenge = ({
@@ -37,6 +38,7 @@ export const Challenge = ({
   onTimeUp,
   onPairMistake,
   sequenceListRef,
+  matchPairsRef,
 }: Props) => {
   // Function to render question image if it exists
   const renderQuestionImage = () => {
@@ -90,6 +92,7 @@ export const Challenge = ({
       case "MATCH_PAIRS":
         return (
           <MatchPairsChallenge
+            ref={matchPairsRef}
             options={options}
             onSelect={onSelect}
             onPairMistake={onPairMistake}

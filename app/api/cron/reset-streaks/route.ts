@@ -2,18 +2,17 @@ import { NextRequest, NextResponse } from "next/server";
 import { performDailyReset, applyDailyStreakBonuses } from "@/actions/daily-streak";
 
 import { getRequestLogger } from "@/lib/logger";
+import { verifyCronAuth } from "@/lib/cron-auth";
 
 export async function POST(request: NextRequest) {
   const log = await getRequestLogger({ labels: { module: "cron", job: "reset-streaks" } });
   try {
-    const authHeader = request.headers.get("authorization");
-    if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-      // Do not log the header value — it may reveal whether a token is
-      // present/malformed to an attacker. A prefix is enough to distinguish
-      // genuine misconfiguration from someone probing the endpoint.
-      log.warn("unauthorized cron attempt", {
-        authPrefix: authHeader ? authHeader.slice(0, 7) : null,
-      });
+    // `allowVercelCronHeader: false`: bu uç manuel tetikleme için tasarlandı,
+    // Vercel Cron `daily/route` üzerinden zaten reset-streaks adımını çağırıyor.
+    // Tahmin edilemez `CRON_SECRET` zorunlu — `Bearer undefined` saldırısını kapatır.
+    const auth = verifyCronAuth(request, { allowVercelCronHeader: false });
+    if (!auth.ok) {
+      log.warn("unauthorized cron attempt", { reason: auth.reason });
       return NextResponse.json(
         { error: "Bu işlem için yetkiniz yok." },
         { status: 401 }

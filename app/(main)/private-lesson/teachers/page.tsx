@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { getServerUser } from "@/lib/auth";
-import { getTeachersDirectory, getMessageUnlock } from "@/db/queries";
+import { getTeachersDirectory, getMessageUnlocksForStudent } from "@/db/queries";
 import { MessageTeacherButton } from "@/components/private-lesson/message-teacher-button";
 import UserCreditsDisplay from "@/components/user-credits-display";
 import { normalizeAvatarUrl } from "@/utils/avatar";
@@ -28,19 +28,15 @@ export default async function TeachersDirectoryPage({
 
   const teachers = await getTeachersDirectory();
 
-  // We pre-compute the student→teacher unlock map so the "Mesaj Gönder"
-  // button can skip the confirm dialog for threads already paid for.
-  // For very large directories this is an O(N) set of unlock lookups,
-  // but the student typically has < 10 unlocked threads total so the
-  // branch is cheap in practice.
-  const unlockChecks = await Promise.all(
-    teachers.map((t) => getMessageUnlock(user.id, t.id)),
+  // Öğrenci→öğretmen unlock haritasını **tek sorgu** ile çek.
+  // Önceki sürüm her satır için ayrı `getMessageUnlock` (N+1) yapıyordu;
+  // eğitmen sayısı büyüdükçe sayfa belirgin yavaşlıyor + pool baskısı
+  // oluşturuyordu. Bulk lookup, "Mesaj Gönder" butonunun açılmış sohbete
+  // doğrudan götürme davranışı aynen kalıyor.
+  const unlockMap = await getMessageUnlocksForStudent(
+    user.id,
+    teachers.map((t) => t.id),
   );
-  const unlockMap = new Map<string, { chatId: number | null }>();
-  teachers.forEach((t, i) => {
-    const row = unlockChecks[i];
-    if (row) unlockMap.set(t.id, { chatId: row.chatId ?? null });
-  });
 
   const fieldFilter = searchParams.field?.toLowerCase() ?? "";
   const lessonModeFilter = searchParams.lessonMode ?? "";

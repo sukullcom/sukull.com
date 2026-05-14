@@ -5,7 +5,9 @@ import { and, eq, lt, sql } from "drizzle-orm";
 import { performDailyReset, applyDailyStreakBonuses } from "@/actions/daily-streak";
 import { expireStaleInfiniteHeartsSubscriptions } from "@/actions/subscription-cleanup";
 import { updateTotalPointsForSchools } from "@/actions/user-progress";
+import { reconcilePaymentsCronStep } from "@/actions/payment-reconciliation";
 import { getRequestLogger } from "@/lib/logger";
+import { verifyCronAuth } from "@/lib/cron-auth";
 
 export const maxDuration = 60; // Vercel Hobby limit is 60s
 
@@ -85,20 +87,16 @@ async function expireStaleListings() {
 }
 
 async function runDaily(request: NextRequest) {
-  const authHeader = request.headers.get("authorization");
-  const isVercelCron = request.headers.get("x-vercel-cron") === "1";
-  const hasValidSecret = authHeader === `Bearer ${process.env.CRON_SECRET}`;
-
-  if (!isVercelCron && !hasValidSecret) {
+  const auth = verifyCronAuth(request);
+  if (!auth.ok) {
+    if (auth.reason === "missing_secret" && process.env.NODE_ENV === "production") {
+      console.warn(
+        "[cron/daily] CRON_SECRET tanımlı değil — Vercel Cron başlığı olmadan tetiklenemez.",
+      );
+    }
     return NextResponse.json(
       { success: false, error: "Bu işlem için yetkiniz yok." },
       { status: 401 },
-    );
-  }
-
-  if (process.env.NODE_ENV === "production" && !process.env.CRON_SECRET) {
-    console.warn(
-      "[cron/daily] CRON_SECRET tanımlı değil — x-vercel-cron dışındaki Bearer ile manuel tetikleme çalışmaz.",
     );
   }
 
@@ -178,6 +176,41 @@ async function runDaily(request: NextRequest) {
         (result as unknown as { rows?: Array<Record<string, unknown>> }).rows?.[0] ??
         (result as unknown as Array<Record<string, unknown>>)[0];
       return { deleted: Number(row?.deleted ?? 0) };
+    }),
+  );
+
+  steps.push(
+    await runStep("reconcile-payments", async () => {
+      // Iyzico'da başarılı ama bizde hizmet açılmamış orphan ödemeleri bul.
+      // Detay için: `actions/payment-reconciliation.ts`. Bu adım otomatik
+      // refund veya kredi yazımı yapmaz — sadece operatöre alarm. Manuel
+      // reconcile süreci için admin panelinden listelenebilir.
+      return await reconcilePaymentsCronStep();
+    }),
+  );
+
+  steps.push(
+    await runStep("expire-stale-3ds-payments", async () => {
+      // Kullanıcı 3DS init başlattı ama OTP'yi bitirmedi (sekme kapandı, banka
+      // çağrısı asıldı, vb.) → satır sonsuza dek `pending_3ds` kalırdı.
+      // 30 dk TTL ile `failed` olarak işaretleyip aramayı ve audit'i hızlı
+      // tutuyoruz. Iyzico'da gerçekten tamamlandıysa finalize idempotent
+      // değişikliği `success`'e zaten döndürür.
+      const result = await db.execute<{ user_id: string; payment_id: string }>(sql`
+        UPDATE payment_logs
+           SET status = 'failed',
+               error_code = COALESCE(error_code, 'pending_3ds_expired'),
+               error_message = COALESCE(error_message, '30 dakika içinde tamamlanmadı')
+         WHERE status = 'pending_3ds'
+           AND created_at < NOW() - INTERVAL '30 minutes'
+         RETURNING user_id, payment_id
+      `);
+      const rows =
+        (result as unknown as { rows?: Array<{ user_id: string; payment_id: string }> }).rows ??
+        (Array.isArray(result)
+          ? (result as unknown as Array<{ user_id: string; payment_id: string }>)
+          : []);
+      return { expired: rows.length };
     }),
   );
 

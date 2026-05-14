@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-import { Send, Loader2 } from "lucide-react";
+import { Send, Loader2, WifiOff } from "lucide-react";
 import { clientLogger } from "@/lib/client-logger";
 import { csrfHeader, mintCsrfToken } from "@/lib/mint-csrf-client";
 
@@ -15,6 +15,10 @@ type Message = {
 
 const MAX_LENGTH = 1000;
 const POLL_INTERVAL_MS = 8000;
+/** Eşik aşılınca üstte "bağlantı yenileniyor" şeridi gösterilir. */
+const POLL_OFFLINE_THRESHOLD = 3;
+/** Üst sınır — limitör/DB toparlanırken kotayı yormamak için. */
+const POLL_MAX_INTERVAL_MS = 60_000;
 
 /**
  * Message thread body + compose bar.
@@ -38,6 +42,7 @@ export function ChatThread({
   const [messages, setMessages] = useState<Message[]>(initialMessages);
   const [content, setContent] = useState("");
   const [sending, setSending] = useState(false);
+  const [offline, setOffline] = useState(false);
   const scrollerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -45,33 +50,74 @@ export function ChatThread({
     if (el) el.scrollTop = el.scrollHeight;
   }, [messages.length]);
 
+  /**
+   * Mesaj çekme döngüsü. Backend 503/429 ya da ağ kesintisi verdiğinde
+   * sabit 8 sn ile hammer yapmak yerine üstel backoff'a (en fazla 60 sn)
+   * geçer; başarılı çağrıda yeniden 8 sn'ye düşer. Üç başarısızlıktan
+   * sonra üst şerit kullanıcıya "bağlantı yenileniyor" der; sessiz "donmuş
+   * chat" UX'i ortadan kalkar.
+   */
   useEffect(() => {
     let cancelled = false;
-    const poll = async () => {
-      try {
-        const res = await fetch(
-          `/api/private-lesson/messages/${chatId}`,
-          { cache: "no-store" },
-        );
-        if (!res.ok) return;
-        const data: { messages: Message[] } = await res.json();
-        if (cancelled) return;
-        setMessages((prev) => {
-          if (data.messages.length <= prev.length) return prev;
-          return data.messages;
-        });
-      } catch (error) {
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    let consecutiveFailures = 0;
+
+    const scheduleNext = (delay: number) => {
+      if (cancelled) return;
+      timer = setTimeout(poll, delay);
+    };
+
+    const onFailure = (error: unknown, source: "fetch" | "http") => {
+      consecutiveFailures += 1;
+      if (consecutiveFailures >= POLL_OFFLINE_THRESHOLD) setOffline(true);
+      if (source === "fetch") {
         clientLogger.error({
           message: "poll messages failed",
           error,
           location: "ChatThread/poll",
         });
       }
+      const next = Math.min(
+        POLL_MAX_INTERVAL_MS,
+        POLL_INTERVAL_MS * 2 ** Math.min(consecutiveFailures, 3),
+      );
+      scheduleNext(next);
     };
-    const t = setInterval(poll, POLL_INTERVAL_MS);
+
+    const onSuccess = () => {
+      if (consecutiveFailures > 0) setOffline(false);
+      consecutiveFailures = 0;
+      scheduleNext(POLL_INTERVAL_MS);
+    };
+
+    const poll = async () => {
+      if (cancelled) return;
+      try {
+        const res = await fetch(
+          `/api/private-lesson/messages/${chatId}`,
+          { cache: "no-store" },
+        );
+        if (!res.ok) {
+          onFailure(null, "http");
+          return;
+        }
+        const data: { messages: Message[] } = await res.json();
+        if (cancelled) return;
+        setMessages((prev) => {
+          if (data.messages.length <= prev.length) return prev;
+          return data.messages;
+        });
+        onSuccess();
+      } catch (error) {
+        if (cancelled) return;
+        onFailure(error, "fetch");
+      }
+    };
+
+    scheduleNext(POLL_INTERVAL_MS);
     return () => {
       cancelled = true;
-      clearInterval(t);
+      if (timer) clearTimeout(timer);
     };
   }, [chatId]);
 
@@ -136,6 +182,16 @@ export function ChatThread({
 
   return (
     <div className="flex min-h-0 flex-1 flex-col">
+      {offline ? (
+        <div
+          role="status"
+          aria-live="polite"
+          className="flex items-center justify-center gap-2 border-b bg-suk-warning-soft px-3 py-1.5 text-[11px] font-medium text-suk-warning-soft-fg"
+        >
+          <WifiOff className="h-3.5 w-3.5" />
+          Bağlantı yenileniyor… Yeni mesajlar birkaç saniye gecikebilir.
+        </div>
+      ) : null}
       <div
         ref={scrollerRef}
         className="min-h-0 flex-1 space-y-2 overflow-y-auto bg-muted/50 p-3 sm:p-4"

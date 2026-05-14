@@ -241,7 +241,27 @@ export function rateLimitClosedDenyPayload(
  */
 export const RATE_LIMITS = {
   // --- Auth — IP-scoped ---
+  /**
+   * IP başına giriş denemesi. Paylaşılan NAT (kampüs Wi-Fi) altında bir öğrenci
+   * birden fazla deneme yapabilir; 15 dakikalık tavan brute-force'u sınırlar ama
+   * dürüst kullanıcıyı engellemez. Email-bazlı `loginEmail` ile beraber çalışır:
+   * saldırgan IP rotasyonu yapsa bile aynı e-postaya kapatılır.
+   */
   login: { max: 8, windowSeconds: 15 * 60 },
+  /**
+   * E-posta başına giriş denemesi (savunma derinliği).
+   *
+   * Niye ayrı bir sayaç? `login` (IP-scope) tek başına yetersizdir: saldırgan
+   * proxy/VPN ile her isteğe farklı IP atayabilir, IP sayacı asla dolmaz.
+   * E-posta hedefli brute-force'un (parola sözlüğü saldırısı) tek doğru
+   * savunması, **hedefin kendisine** ayrı bir kova açmaktır.
+   *
+   * 30 dakikada 10 deneme: dürüst kullanıcı (parolayı 2-3 kez yanlış yazma)
+   * için bol; sözlük saldırısı (saniyede yüzlerce deneme) için pratik olarak
+   * imkânsız hale gelir. Eşiğe ulaşan kullanıcı için mesaj nötr — "yanlış
+   * şifre" ile "limite ulaşıldı" ayrımı saldırgana enumeration sinyali vermez.
+   */
+  loginEmail: { max: 10, windowSeconds: 30 * 60 },
   /**
    * E-posta ile kayıt (server action). Okul / kampüs NAT altında toplu
    * kayıt (reklam sonrası) için saatlik tavan yükseltilmiştir; yine de
@@ -250,7 +270,15 @@ export const RATE_LIMITS = {
   signupIp: { max: 500, windowSeconds: 60 * 60 },
   /** Davet çerezi (httpOnly) — paylaşılan IP altında kötüye kullanım sınırı. */
   referralSetCookieIp: { max: 40, windowSeconds: 60 },
+  /**
+   * Şu an doğrudan bir route'tan tüketilmiyor: `utils/auth.ts` client-side
+   * çalışıyor ve Supabase Auth'un kendi rate-limit'i (GoTrue) tek otorite.
+   * E-posta gönderim spam'i veya brute-force için ek uygulama-katmanı kotası
+   * gerekirse, bu çağrıları bir server action veya API route'a sarmalayıp
+   * burada `checkRateLimit` ile bağlanmalı (e-posta key'i + ip key'i).
+   */
   resetPassword: { max: 5, windowSeconds: 60 * 60 },
+  /** Aynı not — bkz. `resetPassword`. */
   resendVerification: { max: 30, windowSeconds: 15 * 60 },
 
   // --- Writes — user-scoped ---

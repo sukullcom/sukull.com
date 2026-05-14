@@ -17,6 +17,15 @@ interface ImageUploadProps {
   placeholder?: string;
 }
 
+/**
+ * Sunucu (`app/api/upload/image/route.ts`) SVG'yi XSS riski nedeniyle
+ * kasıtla reddediyor; UI bunlarla %100 hizalı olmalı, aksi halde kullanıcı
+ * SVG seçip 400 alır ve niye olduğunu anlamaz.
+ */
+const ACCEPTED_MIME = ["image/jpeg", "image/png", "image/webp"];
+const ACCEPTED_EXTENSIONS = new Set(["jpg", "jpeg", "png", "webp"]);
+const MAX_BYTES = 5 * 1024 * 1024;
+
 export function ImageUpload({
   value,
   onChange,
@@ -66,8 +75,17 @@ export function ImageUpload({
 
   const handleFileSelect = useCallback((files: FileList | null) => {
     if (!files || files.length === 0) return;
-    
+
     const file = files[0];
+    const ext = file.name.split(".").pop()?.toLowerCase() ?? "";
+    if (!ACCEPTED_MIME.includes(file.type) || !ACCEPTED_EXTENSIONS.has(ext)) {
+      toast.error("Geçersiz dosya türü. Sadece JPEG, PNG veya WebP yükleyebilirsin.");
+      return;
+    }
+    if (file.size > MAX_BYTES) {
+      toast.error("Dosya çok büyük. En fazla 5 MB yükleyebilirsin.");
+      return;
+    }
     uploadImage(file);
   }, [uploadImage]);
 
@@ -146,7 +164,7 @@ export function ImageUpload({
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/*"
+          accept={ACCEPTED_MIME.join(",")}
           onChange={(e) => handleFileSelect(e.target.files)}
           disabled={disabled || isUploading}
           className="hidden"
@@ -190,7 +208,7 @@ export function ImageUpload({
                     Sürükleyip bırakın veya seçmek için tıklayın
                   </p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    JPEG, PNG, SVG, WebP (maksimum 5MB)
+                    JPEG, PNG, WebP (maksimum 5 MB)
                   </p>
                 </div>
               </div>

@@ -103,6 +103,14 @@ fast way to enumerate all handlers; then grep for `getServerUser` +
       the same transaction (`where userId = ? and id = ?`).
 - [ ] Rate limits are attached to *destructive* / *money-moving*
       actions (`checkRateLimit` with `onStoreError: "closed"`).
+- [ ] Every `onStoreError: "closed"` caller maps `!rl.allowed` via
+      `rateLimitClosedDenyPayload` (or equivalent `rl.storeError` branch),
+      so a limiter / DB outage returns **503**, not a misleading **429**
+      “çok sık deneme” to the user. The helper lives in
+      `lib/rate-limit-db.ts`; current callers: `lib/api-middleware.ts`,
+      `app/api/private-lesson/listings/[id]/offers/route.ts` (POST),
+      `app/api/private-lesson/offers/[id]/route.ts` (PATCH),
+      `app/api/private-lesson/messages/unlock/route.ts`.
 
 ## 4. Middleware & headers
 

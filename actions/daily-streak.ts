@@ -511,11 +511,18 @@ export async function applyDailyStreakBonuses() {
     // Single UPDATE — Postgres evaluates the RHS using OLD values, so the
     // `previous_total_points` expression correctly adds bonus to the
     // pre-update baseline rather than the post-update points.
+    //
+    // Idempotency (0046): `last_streak_bonus_date IS DISTINCT FROM
+    // CURRENT_DATE` aynı gün ikinci tetiklemede 0 satır günceller. Cron
+    // retry, manuel + scheduled çakışması veya kısmi başarı sonrası tekrar
+    // çalıştırma artık **çift bonus** üretmez.
     const result = await db.execute<{ user_id: string }>(sql`
       UPDATE user_progress up
       SET points = up.points + (${STREAK_BONUS_CASE}),
-          previous_total_points = COALESCE(up.previous_total_points, up.points) + (${STREAK_BONUS_CASE})
+          previous_total_points = COALESCE(up.previous_total_points, up.points) + (${STREAK_BONUS_CASE}),
+          last_streak_bonus_date = CURRENT_DATE
       WHERE up.istikrar >= 3
+        AND (up.last_streak_bonus_date IS DISTINCT FROM CURRENT_DATE)
       RETURNING up.user_id
     `);
 

@@ -40,6 +40,39 @@ export async function getMessageUnlock(studentId: string, teacherId: string) {
   });
 }
 
+/**
+ * Bir öğrencinin verilen öğretmen listesindeki tüm unlock satırlarını
+ * **tek sorguyla** çeker. Eğitmen rehberi sayfası (`/private-lesson/teachers`)
+ * her satırda `getMessageUnlock` çağırıyordu (N+1) — N büyüdükçe sayfa
+ * yavaşlıyor ve pool'a baskı yapıyordu. Bu helper aynı semantiği tek
+ * round-trip ile sunar.
+ */
+export async function getMessageUnlocksForStudent(
+  studentId: string,
+  teacherIds: string[],
+): Promise<Map<string, { chatId: number | null }>> {
+  const result = new Map<string, { chatId: number | null }>();
+  if (teacherIds.length === 0) return result;
+
+  const rows = await db
+    .select({
+      teacherId: messageUnlocks.teacherId,
+      chatId: messageUnlocks.chatId,
+    })
+    .from(messageUnlocks)
+    .where(
+      and(
+        eq(messageUnlocks.studentId, studentId),
+        inArray(messageUnlocks.teacherId, teacherIds),
+      ),
+    );
+
+  for (const row of rows) {
+    result.set(row.teacherId, { chatId: row.chatId ?? null });
+  }
+  return result;
+}
+
 export type ConversationRow = {
   chatId: number;
   otherUserId: string;

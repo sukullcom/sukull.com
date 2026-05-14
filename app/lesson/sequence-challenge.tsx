@@ -20,6 +20,11 @@ type Props = {
 
 export type SequenceChallengeHandle = {
   isOrderCorrect: () => boolean;
+  /**
+   * Kullanıcının şu anki sıralamasındaki option id'lerini döndürür.
+   * Server-side validation için `upsertChallengeProgress`'e gönderilir.
+   */
+  getOrderedOptionIds: () => number[];
 };
 
 type SequenceItem = {
@@ -45,6 +50,7 @@ export const SequenceChallenge = forwardRef<SequenceChallengeHandle | null, Prop
         isOrderCorrect: () =>
           orderedItems.length > 0 &&
           orderedItems.every((item, index) => item.correctOrder === index + 1),
+        getOrderedOptionIds: () => orderedItems.map((item) => item.id),
       }),
       [orderedItems],
     );

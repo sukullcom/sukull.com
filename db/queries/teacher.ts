@@ -71,6 +71,10 @@ const _getTeachersDirectoryCached = unstable_cache(
                ta.lesson_mode, ta.city, ta.district,
                ta.teacher_name, ta.teacher_surname
       ORDER BY name ASC
+      -- Defansif tavan: 1000 öğretmen sayısı aşıldığında tek sorgu pool'a
+      -- baskı yapmasın + payload bellek tüketimi sınırlı kalsın. İleride
+      -- proper pagination + indeks sırasıyla cursor'a geçilebilir.
+      LIMIT 1000
     `);
 
     const rows = queryResultRows<Record<string, unknown>>(result);

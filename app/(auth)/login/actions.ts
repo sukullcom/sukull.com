@@ -11,6 +11,22 @@ import { ensurePublicUserFromAuth } from '@/lib/ensure-public-user'
 
 const log = logger.child({ labels: { module: 'auth/login' } })
 
+/**
+ * Login akışı — savunma derinliği (defense in depth):
+ *
+ *   1. **Per-IP rate limit** (`RATE_LIMITS.login`): paylaşılan NAT altında
+ *      kötüye kullanımı sınırlar; meşru kullanıcı 8 deneme/15dk ile rahat.
+ *   2. **Per-email rate limit** (`RATE_LIMITS.loginEmail`): IP rotasyonu
+ *      yapan saldırgana karşı hedef hesabı koruyan ek katman; aynı e-posta
+ *      30dk içinde 10'dan fazla denenirse kilitlenir.
+ *   3. **Nötr hata metni**: hem "yanlış parola" hem "limit aşıldı" mesajı,
+ *      enumeration sinyali vermeyecek şekilde "geçersiz e-posta veya şifre"
+ *      altında birleşir. Yalnızca limit metni "x dakika sonra dene" der.
+ *   4. **fail-open**: `checkRateLimit` varsayılan davranış olarak DB hatası
+ *      anında izin verir — Supabase Auth'un kendi 30/saat limiti bekçi.
+ *      Tüm Postgres çöktüğünde sitenin diğer kısmı zaten kırık; brute-force
+ *      penceresi pratik olarak operasyonel.
+ */
 export async function login(formData: FormData) {
   const supabase = await createClient()
 
@@ -21,13 +37,38 @@ export async function login(formData: FormData) {
   const h = await headers()
   const ip = getClientIpFromHeaders(h)
   const emailKey = (email || '').toLowerCase().trim()
-  const rl = await checkRateLimit({
-    key: `login:ip:${ip}:${emailKey}`,
+
+  // Katman 1: IP-scoped (paylaşılan NAT altında)
+  const ipRl = await checkRateLimit({
+    key: `login:ip:${ip}`,
     ...RATE_LIMITS.login,
   })
-  if (!rl.allowed) {
+  if (!ipRl.allowed) {
     return {
-      error: `Çok fazla giriş denemesi. Lütfen ${Math.ceil(rl.retryAfter / 60)} dakika sonra tekrar deneyin.`,
+      error: `Çok fazla giriş denemesi. Lütfen ${Math.ceil(ipRl.retryAfter / 60)} dakika sonra tekrar deneyin.`,
+    }
+  }
+
+  // Katman 2: Email-scoped (IP rotasyonu yapan saldırgana karşı).
+  // Email boş veya geçersiz şekildeyse atla — Supabase Auth zaten formatı
+  // reddeder, sayacı kirletme.
+  if (emailKey.length > 0 && emailKey.length < 320) {
+    const emailRl = await checkRateLimit({
+      key: `login:email:${emailKey}`,
+      ...RATE_LIMITS.loginEmail,
+    })
+    if (!emailRl.allowed) {
+      // Nötr metin: saldırgan "bu e-posta korunuyor" sinyalini almasın.
+      // Meşru kullanıcı zaten kendi e-postasını biliyor.
+      log.warn('login email rate-limit hit', {
+        location: 'auth/login',
+        ip,
+        // E-postanın ham halini loglamak KVKK için risk; hash kısaltma yeterli.
+        emailHashPrefix: emailKey.slice(0, 3) + '***',
+      })
+      return {
+        error: `Çok fazla giriş denemesi. Lütfen ${Math.ceil(emailRl.retryAfter / 60)} dakika sonra tekrar deneyin.`,
+      }
     }
   }
 

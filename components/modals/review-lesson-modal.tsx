@@ -122,22 +122,30 @@ export const ReviewLessonModal = ({
         <div className="space-y-4 py-2">
           {/* Star Rating */}
           <div>
-            <p className="text-sm font-medium text-foreground text-center mb-3">
+            <p id="lesson-rating-label" className="text-sm font-medium text-foreground text-center mb-3">
               Kaç yıldız verirsin?
             </p>
-            <div className="flex items-center justify-center gap-1 mb-1">
+            <div
+              role="radiogroup"
+              aria-labelledby="lesson-rating-label"
+              className="flex items-center justify-center gap-1 mb-1"
+            >
               {Array.from({ length: 5 }, (_, i) => {
                 const starRating = i + 1;
+                const isActive = starRating <= rating;
                 return (
                   <button
                     key={i}
                     type="button"
+                    role="radio"
+                    aria-checked={rating === starRating}
+                    aria-label={`${starRating} yıldız`}
                     onClick={() => setRating(starRating)}
-                    className="focus:outline-none transition-transform hover:scale-110"
+                    className="focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded transition-transform hover:scale-110"
                   >
                     <Star
                       className={`h-8 w-8 ${
-                        starRating <= rating
+                        isActive
                           ? "fill-amber-400 text-amber-400"
                           : "text-muted-foreground hover:text-amber-300"
                       }`}

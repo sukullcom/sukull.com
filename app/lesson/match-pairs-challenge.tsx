@@ -2,7 +2,7 @@
 
 import { challengeOptions, challenges } from "@/db/schema";
 import { cn } from "@/lib/utils";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useImperativeHandle, forwardRef } from "react";
 import Image from "next/image";
 import { MathRenderer } from "@/components/ui/math-renderer";
 import { READY_TO_CHECK } from "./answer-signals";
@@ -18,6 +18,15 @@ type Props = {
   questionImageSrc?: string | null | undefined;
 };
 
+export type MatchPairsChallengeHandle = {
+  /**
+   * Kullanıcının doğru eşleştirdiği (matched) çiftleri döndürür. UI mantığı
+   * yanlış eşleşmelerde anında can düşürdüğü için bu yalnızca **gerçekten
+   * eşleşen** option id çiftleridir. Server tarafı `pair_id` ile doğrular.
+   */
+  getMatchedPairs: () => Array<[number, number]>;
+};
+
 type PairCard = {
   id: number;
   pairId: number;
@@ -30,7 +39,8 @@ type PairCard = {
 
 const MISMATCH_MS = 800;
 
-export const MatchPairsChallenge = ({
+export const MatchPairsChallenge = forwardRef<MatchPairsChallengeHandle | null, Props>(
+  function MatchPairsChallenge({
   options,
   onSelect,
   onPairMistake,
@@ -38,14 +48,23 @@ export const MatchPairsChallenge = ({
   selectedOption,
   disabled,
   questionImageSrc,
-}: Props) => {
+}, ref) {
   const [cards, setCards] = useState<PairCard[]>([]);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [matchedPairs, setMatchedPairs] = useState<number[]>([]);
+  const [matchedTuples, setMatchedTuples] = useState<Array<[number, number]>>([]);
   const [isChecking, setIsChecking] = useState(false);
   const [mismatchingIds, setMismatchingIds] = useState<number[] | null>(null);
   const [expectedPairCount, setExpectedPairCount] = useState(0);
   const mismatchTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      getMatchedPairs: () => matchedTuples,
+    }),
+    [matchedTuples],
+  );
 
   useEffect(() => {
     return () => {
@@ -77,6 +96,7 @@ export const MatchPairsChallenge = ({
     if (status === "none" && selectedOption === undefined) {
       setSelectedCards([]);
       setMatchedPairs([]);
+      setMatchedTuples([]);
       setIsChecking(false);
       setMismatchingIds(null);
       setCards((prev) =>
@@ -115,6 +135,7 @@ export const MatchPairsChallenge = ({
           }
           return next;
         });
+        setMatchedTuples((prev) => [...prev, [firstCardId, secondCardId]]);
         setSelectedCards([]);
         setIsChecking(false);
       } else {
@@ -215,4 +236,5 @@ export const MatchPairsChallenge = ({
       </div>
     </div>
   );
-};
+  },
+);

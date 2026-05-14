@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { updateTotalPointsForSchools } from '@/actions/user-progress';
 import { getRequestLogger } from '@/lib/logger';
+import { verifyCronAuth } from '@/lib/cron-auth';
 
 export async function GET(request: NextRequest) {
   const log = await getRequestLogger({ labels: { module: 'cron', job: 'update-school-points' } });
   try {
-    // Verify this is being called from a cron job (optional security check)
-    const authHeader = request.headers.get('authorization');
-    if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-      log.warn('unauthorized cron attempt', {
-        authPrefix: authHeader ? authHeader.slice(0, 7) : null,
-      });
+    // Manuel/yardımcı uç. Tahmin edilebilir token bypass'ı için secret zorunlu;
+    // `verifyCronAuth` tanımsız secret'ta otomatik 401 döner.
+    const auth = verifyCronAuth(request, { allowVercelCronHeader: false });
+    if (!auth.ok) {
+      log.warn('unauthorized cron attempt', { reason: auth.reason });
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 

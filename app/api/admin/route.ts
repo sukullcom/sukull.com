@@ -9,6 +9,7 @@ import {
   getTeacherApplicationsPaginated,
   type ApplicationStatusFilter,
 } from "@/db/queries";
+import { detectOrphanPayments } from "@/actions/payment-reconciliation";
 
 /**
  * Parse `?page`, `?pageSize`, `?status`, `?q` into the shape expected by
@@ -60,6 +61,15 @@ export async function GET(request: NextRequest) {
           page: result.page,
           pageSize: result.pageSize,
         });
+      }
+
+      case 'orphan-payments': {
+        // "Iyzico'da başarılı ama bizde hizmet açılmamış" durumları.
+        // Cron her gece tarayıp `error_log`'a yazıyor; bu uç manuel
+        // reconcile için admin paneline canlı liste sağlar.
+        const days = Math.min(Math.max(1, Number(searchParams.get('days') ?? '7')), 30);
+        const orphans = await detectOrphanPayments(days);
+        return NextResponse.json({ orphans, windowDays: days });
       }
 
       default: {
@@ -146,62 +156,8 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function PATCH(request: NextRequest) {
-  try {
-    const admin = await isAdmin();
-    if (!admin) {
-      return NextResponse.json({ message: "Bu işlem için yetkiniz yok." }, { status: 401 });
-    }
-
-    const url = new URL(request.url);
-    const pathParts = url.pathname.split('/');
-    const id = pathParts[pathParts.length - 1];
-
-    if (!id || isNaN(parseInt(id))) {
-      return NextResponse.json({ message: "Geçersiz başvuru kimliği." }, { status: 400 });
-    }
-
-    const { action } = await request.json();
-    const applicationId = parseInt(id);
-
-    if (action === "approve") {
-      await approveTeacherApplication(applicationId);
-
-      const actor = await getAdminActor();
-      if (actor) {
-        logAdminActionAsync({
-          actorId: actor.id,
-          actorEmail: actor.email,
-          action: "teacher_application.approve",
-          targetType: "teacher_application",
-          targetId: applicationId,
-          metadata: { via: "PATCH" },
-        });
-      }
-
-      return NextResponse.json({ message: "Başvuru başarıyla onaylandı." });
-    } else if (action === "reject") {
-      await rejectTeacherApplication(applicationId);
-
-      const actor = await getAdminActor();
-      if (actor) {
-        logAdminActionAsync({
-          actorId: actor.id,
-          actorEmail: actor.email,
-          action: "teacher_application.reject",
-          targetType: "teacher_application",
-          targetId: applicationId,
-          metadata: { via: "PATCH" },
-        });
-      }
-
-      return NextResponse.json({ message: "Başvuru reddedildi." });
-    } else {
-      return NextResponse.json({ message: "Geçersiz işlem." }, { status: 400 });
-    }
-  } catch (error) {
-    const log = await getRequestLogger({ labels: { route: "api/admin", op: "PATCH" } });
-    log.error({ message: "admin PATCH failed", error, location: "api/admin/PATCH" });
-    return NextResponse.json({ message: "Bir hata oluştu." }, { status: 500 });
-  }
-}
+// PATCH /api/admin: removed in favour of `/api/admin/teacher-applications/[id]`
+// (the active route the UI already calls). The old handler parsed the last URL
+// segment expecting a numeric id, but for this route that segment is the
+// literal "admin", so every call returned 400. Kept here as a comment trail
+// for any contributor who hits an old PATCH /api/admin reference.

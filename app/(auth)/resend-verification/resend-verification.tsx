@@ -22,8 +22,12 @@ export function ResendVerificationForm() {
     try {
       setIsLoading(true);
       const response = await auth.resendVerificationEmail(email);
-      toast.success(response.message);
-      router.push("/login");
+      if (response.success) {
+        toast.success(response.message);
+        router.push("/login");
+      } else {
+        toast.error(response.message);
+      }
     } catch (error) {
       const { message, type } = getAuthError(error);
       if (type === "Default") {

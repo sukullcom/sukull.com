@@ -11,6 +11,47 @@ import {
 import { getRequestLogger } from '@/lib/logger';
 
 /**
+ * Görsel dosyaları için magic byte (file signature) tespiti.
+ *
+ * `file.type` ve uzantı istemcide kullanıcı kontrolündedir; saldırgan
+ * `.jpg` uzantılı bir SVG/HTML yükleyip XSS deneyebilir. Burada gerçek
+ * byte imzasını kontrol edip içerik <-> declared MIME tutarlılığı
+ * sağlanır. Sadece desteklediğimiz tipler döner; diğerleri reddedilir.
+ */
+function detectImageKind(buffer: Uint8Array): 'image/jpeg' | 'image/png' | 'image/webp' | null {
+  if (buffer.length < 12) return null;
+  // JPEG: FF D8 FF
+  if (buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff) return 'image/jpeg';
+  // PNG: 89 50 4E 47 0D 0A 1A 0A
+  if (
+    buffer[0] === 0x89 &&
+    buffer[1] === 0x50 &&
+    buffer[2] === 0x4e &&
+    buffer[3] === 0x47 &&
+    buffer[4] === 0x0d &&
+    buffer[5] === 0x0a &&
+    buffer[6] === 0x1a &&
+    buffer[7] === 0x0a
+  ) {
+    return 'image/png';
+  }
+  // WebP: "RIFF" .... "WEBP"
+  if (
+    buffer[0] === 0x52 &&
+    buffer[1] === 0x49 &&
+    buffer[2] === 0x46 &&
+    buffer[3] === 0x46 &&
+    buffer[8] === 0x57 &&
+    buffer[9] === 0x45 &&
+    buffer[10] === 0x42 &&
+    buffer[11] === 0x50
+  ) {
+    return 'image/webp';
+  }
+  return null;
+}
+
+/**
  * Admin-only image upload. Storage quota is a hard cost boundary, so we
  * rate-limit by user-id when available, falling back to IP. 10/hour is
  * comfortably above normal usage (a course builder adds ~5 images per
@@ -79,9 +120,39 @@ export async function POST(request: NextRequest) {
     // Validate file size (5MB max)
     const maxSize = 5 * 1024 * 1024; // 5MB
     if (file.size > maxSize) {
-      return NextResponse.json({ 
-        success: false, 
-        error: 'File too large. Maximum size is 5MB.' 
+      return NextResponse.json({
+        success: false,
+        error: 'Dosya çok büyük. En fazla 5 MB yükleyebilirsin.'
+      }, { status: 400 });
+    }
+
+    // Convert file to buffer
+    const bytes = await file.arrayBuffer();
+    const buffer = new Uint8Array(bytes);
+
+    // Magic byte (file signature) doğrulaması. `file.type` ve uzantı
+    // istemci tarafında spoof edilebilir — JPEG uzantılı bir SVG/HTML/JS
+    // yüklenip `<img>` taglarıyla render edildiğinde XSS riski doğar.
+    // Burada gerçek byte imzasını kontrol ederek bu yolu kapatıyoruz.
+    const matchedKind = detectImageKind(buffer);
+    if (!matchedKind) {
+      return NextResponse.json({
+        success: false,
+        error: 'Geçersiz veya bozuk görsel dosyası.',
+      }, { status: 400 });
+    }
+    if (matchedKind !== file.type) {
+      // Uzantı/MIME ile gerçek içerik uyuşmuyor — saldırı denemesine yakın.
+      const log = await getRequestLogger({ labels: { route: 'api/upload/image', op: 'POST' } });
+      log.warn('upload MIME spoof attempt', {
+        location: 'api/upload/image/POST',
+        declared: file.type,
+        actual: matchedKind,
+        ext: extension,
+      });
+      return NextResponse.json({
+        success: false,
+        error: 'Dosya türü içerikle uyuşmuyor. JPEG, PNG veya WebP yükle.',
       }, { status: 400 });
     }
 
@@ -89,10 +160,6 @@ export async function POST(request: NextRequest) {
     const timestamp = Date.now();
     const filename = `course_${timestamp}.${extension}`;
     const filePath = filename; // Just the filename, since we're already in the course-images bucket
-
-    // Convert file to buffer
-    const bytes = await file.arrayBuffer();
-    const buffer = new Uint8Array(bytes);
 
     // Upload to Supabase Storage
     const supabase = await createClient();
