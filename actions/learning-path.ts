@@ -154,7 +154,11 @@ export async function updateLearningPathFromSettings(
     now,
     onb,
     lastSet,
-    row.learningPathChangeCount ?? 0
+    row.learningPathChangeCount ?? 0,
+    {
+      onboardingCompletedAt: onb,
+      totalPoints: row.points ?? 0,
+    },
   );
   if (!ch.allowed) {
     if (ch.reason === "max") {
@@ -194,6 +198,12 @@ export async function updateLearningPathFromSettings(
     gradeDecisionUsedExemption = gradeDecision.exemption != null;
   }
 
+  // Yol değişim sayacı — muafiyet kullanıldıysa "max 5" sınırına yaklaşmamak
+  // için sayacı artırmıyoruz (deneme süresi içinde 3 kez deneyen yeni
+  // kullanıcı, sonradan kilit dışında 5 değişim hakkını koruyor).
+  const pathUsedExemption = ch.exemption != null;
+  const incrementCount = !pathUsedExemption;
+
   // Muafiyet kullanıldıysa yeni kilit başlatma (kullanıcı deneme süresinde
   // /düşük puanda yine de "yanlış seçim" yapabilir; ardışık değişim hakkı
   // muafiyet süresince açık kalmalı).
@@ -205,7 +215,9 @@ export async function updateLearningPathFromSettings(
       learningPath: v.path,
       studentGrade: v.grade,
       learningPathLastSetAt: now,
-      learningPathChangeCount: (row.learningPathChangeCount ?? 0) + 1,
+      learningPathChangeCount: incrementCount
+        ? (row.learningPathChangeCount ?? 0) + 1
+        : (row.learningPathChangeCount ?? 0),
       ...(startNewGradeLock
         ? { studentGradeChangeLockedUntil: nextLockExpiresAt(now) }
         : {}),

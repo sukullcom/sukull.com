@@ -5,7 +5,12 @@ import dynamic from "next/dynamic";
 import { toast } from "sonner";
 import { updateProfileAction } from "@/actions/profile";
 import { ConfirmActionDialog } from "@/components/confirm-action-dialog";
-import { SCHOOL_AND_GRADE_LOCK_MONTHS } from "@/lib/school-grade-lock";
+import {
+  SCHOOL_AND_GRADE_LOCK_MONTHS,
+  SCHOOL_AND_GRADE_TRIAL_DAYS,
+  SCHOOL_AND_GRADE_LOW_POINTS_THRESHOLD,
+  canChangeSchoolSelection,
+} from "@/lib/school-grade-lock";
 
 // Lazy-load the KVKK / account-deletion dialog. It's only reachable from
 // inside the Settings tab and pulls in a Radix dialog + confirm-input
@@ -62,6 +67,8 @@ type ProfileProps = {
   istikrar: number;
   dailyTarget: number;
   startDate: string;
+  /** Muafiyet hesabı için: <500 puanlı kullanıcılarda kilit yok. */
+  points?: number;
   profileEditingUnlocked?: boolean;
   studyBuddyUnlocked?: boolean;
   codeShareUnlocked?: boolean;
@@ -116,13 +123,51 @@ export default function ProfilePageClient({
       : null;
   }, [profile.schoolChangeLockedUntil]);
 
-  const schoolChangeBlockedByPolicy = useMemo(() => {
-    return (
-      !!schoolLockUntil &&
-      schoolLockUntil.getTime() > Date.now() &&
-      profile.schoolId != null
+  // Server tarafı `applySchoolChangeWithLock` ile aynı muafiyet mantığını
+  // burada da çalıştırıyoruz; aksi halde UI "kilitli" derdi ama kullanıcı
+  // "Kaydet"e basınca server allow ederdi (UI ↔ server tutarsızlığı).
+  const onboardingCompletedAtDate = useMemo(() => {
+    if (!profile.onboardingCompletedAt) return null;
+    return profile.onboardingCompletedAt instanceof Date
+      ? profile.onboardingCompletedAt
+      : new Date(profile.onboardingCompletedAt);
+  }, [profile.onboardingCompletedAt]);
+
+  const schoolPolicyDecision = useMemo(() => {
+    return canChangeSchoolSelection(
+      new Date(),
+      schoolLockUntil,
+      profile.schoolId,
+      // Doğru sonuç için "değişim varmış gibi" kontrol; sadece muafiyet/kilit
+      // bilgisini almak istiyoruz, gerçek hedef id önemli değil.
+      profile.schoolId != null ? -1 : 1,
+      {
+        onboardingCompletedAt: onboardingCompletedAtDate,
+        totalPoints: profile.points ?? 0,
+      },
     );
-  }, [schoolLockUntil, profile.schoolId]);
+  }, [
+    schoolLockUntil,
+    profile.schoolId,
+    onboardingCompletedAtDate,
+    profile.points,
+  ]);
+
+  const schoolChangeBlockedByPolicy =
+    !schoolPolicyDecision.allowed && profile.schoolId != null;
+  const schoolPolicyExemption = schoolPolicyDecision.allowed
+    ? schoolPolicyDecision.exemption ?? null
+    : null;
+
+  // Trial penceresi kaç gün kaldı (UI rozeti için).
+  const schoolTrialDaysLeft = useMemo(() => {
+    if (!onboardingCompletedAtDate) return null;
+    const end = new Date(onboardingCompletedAtDate.getTime());
+    end.setDate(end.getDate() + SCHOOL_AND_GRADE_TRIAL_DAYS);
+    const ms = end.getTime() - Date.now();
+    if (ms <= 0) return null;
+    return Math.max(1, Math.ceil(ms / (24 * 60 * 60 * 1000)));
+  }, [onboardingCompletedAtDate]);
 
   /** İstikrar veya 6 ay okul politikası — seçici kilitli; toast ile uyarı yerine UI kilitli. */
   const schoolInteractionLocked =
@@ -549,6 +594,7 @@ export default function ProfilePageClient({
                 learningPathChangeCount={profile.learningPathChangeCount ?? 0}
                 onboardingCompletedAt={profile.onboardingCompletedAt}
                 studentGradeChangeLockedUntil={profile.studentGradeChangeLockedUntil ?? null}
+                totalPoints={profile.points ?? 0}
               />
             )}
 
@@ -573,12 +619,36 @@ export default function ProfilePageClient({
                   streak={profile.istikrar}
                 />
               )}
+
+              {/* Muafiyet bildirimleri — server ile aynı karar. */}
+              {canSelectSchool &&
+                schoolPolicyExemption === "trial" &&
+                schoolTrialDaysLeft != null && (
+                  <p className="mt-2 flex items-start gap-1.5 rounded-lg border border-suk-brand/30 bg-suk-brand-soft/60 px-2 py-1.5 text-xs text-suk-brand-border">
+                    <span className="mt-0.5">✨</span>
+                    <span>
+                      <strong>Deneme süresi aktif</strong> — {schoolTrialDaysLeft} gün kaldı.
+                      Bu süre boyunca okul değişimi serbest, kilit başlamaz.
+                    </span>
+                  </p>
+                )}
+              {canSelectSchool && schoolPolicyExemption === "low_points" && (
+                <p className="mt-2 flex items-start gap-1.5 rounded-lg border border-suk-brand/30 bg-suk-brand-soft/60 px-2 py-1.5 text-xs text-suk-brand-border">
+                  <span className="mt-0.5">✨</span>
+                  <span>
+                    Puanın {SCHOOL_AND_GRADE_LOW_POINTS_THRESHOLD} altında olduğu sürece
+                    okul değişimi serbest. Eşik geçilince {SCHOOL_AND_GRADE_LOCK_MONTHS} ay
+                    kuralı uygulanır.
+                  </span>
+                </p>
+              )}
+
               {canSelectSchool && schoolChangeBlockedByPolicy && schoolLockUntil && (
                 <p className="mt-2 flex items-start gap-1.5 text-xs text-suk-danger">
                   <Lock className="h-3.5 w-3.5 shrink-0 mt-0.5" />
                   Okul değişikliği için{" "}
                   <strong>{schoolLockUntil.toLocaleDateString("tr-TR")}</strong> tarihine kadar
-                  beklemelisin (6 ay kuralı).
+                  beklemelisin ({SCHOOL_AND_GRADE_LOCK_MONTHS} ay kuralı).
                 </p>
               )}
             </div>

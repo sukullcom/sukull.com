@@ -106,6 +106,10 @@ export function examKeysForLearningPath(
 export const LEARNING_PATH_DAYS_BETWEEN_CHANGES = 30;
 export const LEARNING_PATH_MAX_CHANGES = 5;
 
+/** Okul/sınıf kilitleri ile aynı insan-dostu pencere — bkz. `lib/school-grade-lock.ts`. */
+export const LEARNING_PATH_TRIAL_DAYS = 7;
+export const LEARNING_PATH_LOW_POINTS_THRESHOLD = 500;
+
 /** Okul tipi sekmeleri (liderlik tablosu okul listeleri). */
 export type LeaderboardSchoolTab =
   | "university"
@@ -156,12 +160,40 @@ export function schoolTypeMatchesLearningPath(
   return true;
 }
 
+export type LearningPathExemption = "trial" | "low_points";
+
+export type LearningPathChangeDecision = {
+  allowed: boolean;
+  nextAllowedAt: Date | null;
+  reason: "ok" | "cooldown" | "max" | "incomplete";
+  /** Hangi muafiyetin (varsa) izni verdiği — UI mesajı için. */
+  exemption?: LearningPathExemption;
+};
+
+/**
+ * Öğrenme yolunu değiştirebilir mi?
+ *
+ * Kurallar (`reason` ile bildirilir):
+ *   - `incomplete`: onboarding tamamlanmamış → değiştiremez
+ *   - `max`: 5 değişim hakkı bitmiş → değiştiremez (admin sıfırlamadıkça)
+ *   - `cooldown`: son değişimden 30 gün geçmemiş → muafiyet yoksa hayır
+ *   - `ok`: serbest
+ *
+ * Muafiyetler (`options` ile geçilirse cooldown'ı atlatır; `max` ve
+ * `incomplete` muafiyet kabul etmez — bunlar saldırı/integrity sınırları):
+ *   - `trial`: onboarding'in ilk 7 günü içindeyse cooldown atlanır
+ *   - `low_points`: toplam puan < 500 ise cooldown atlanır
+ */
 export function canChangeLearningPath(
   now: Date,
   onboardingCompletedAt: Date | null,
   lastSetAt: Date | null,
-  changeCount: number
-): { allowed: boolean; nextAllowedAt: Date | null; reason: "ok" | "cooldown" | "max" | "incomplete" } {
+  changeCount: number,
+  options?: {
+    onboardingCompletedAt?: Date | null;
+    totalPoints?: number | null;
+  },
+): LearningPathChangeDecision {
   if (!onboardingCompletedAt) {
     return { allowed: false, nextAllowedAt: null, reason: "incomplete" };
   }
@@ -176,5 +208,22 @@ export function canChangeLearningPath(
   if (now >= min) {
     return { allowed: true, nextAllowedAt: null, reason: "ok" };
   }
+
+  // Cooldown aktif — muafiyet kontrolü
+  const onb = options?.onboardingCompletedAt ?? onboardingCompletedAt;
+  if (onb) {
+    const trialEnd = new Date(onb.getTime());
+    trialEnd.setDate(trialEnd.getDate() + LEARNING_PATH_TRIAL_DAYS);
+    if (now < trialEnd) {
+      return { allowed: true, nextAllowedAt: null, reason: "ok", exemption: "trial" };
+    }
+  }
+  if (
+    typeof options?.totalPoints === "number" &&
+    options.totalPoints < LEARNING_PATH_LOW_POINTS_THRESHOLD
+  ) {
+    return { allowed: true, nextAllowedAt: null, reason: "ok", exemption: "low_points" };
+  }
+
   return { allowed: false, nextAllowedAt: min, reason: "cooldown" };
 }

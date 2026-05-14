@@ -9,8 +9,10 @@ import {
   canChangeLearningPath,
   LEARNING_PATH_DAYS_BETWEEN_CHANGES,
   LEARNING_PATH_MAX_CHANGES,
+  LEARNING_PATH_TRIAL_DAYS,
+  LEARNING_PATH_LOW_POINTS_THRESHOLD,
 } from "@/lib/learning-path";
-import { BookOpen, GraduationCap, Lock, Users } from "lucide-react";
+import { BookOpen, GraduationCap, Lock, Sparkles, Users } from "lucide-react";
 
 type Mode = "lgs" | "tyt_ayt" | "adult" | "full" | "";
 
@@ -22,6 +24,8 @@ type Props = {
   onboardingCompletedAt: Date | string | null;
   /** Sınıf değişimi 6 ay kilidi — dolunca serbest. */
   studentGradeChangeLockedUntil?: Date | string | null;
+  /** Muafiyet hesabı için kullanılır (`<500` puan → cooldown atlanır). */
+  totalPoints?: number;
 };
 
 const pathLabel: Record<string, string> = {
@@ -44,6 +48,7 @@ export function ProfileLearningPath({
   learningPathChangeCount,
   onboardingCompletedAt,
   studentGradeChangeLockedUntil,
+  totalPoints,
 }: Props) {
   const router = useRouter();
   const [mode, setMode] = useState<Mode>(
@@ -59,11 +64,28 @@ export function ProfileLearningPath({
       new Date(),
       parseD(onboardingCompletedAt),
       parseD(learningPathLastSetAt),
-      learningPathChangeCount ?? 0
+      learningPathChangeCount ?? 0,
+      {
+        onboardingCompletedAt: parseD(onboardingCompletedAt),
+        totalPoints: totalPoints ?? 0,
+      },
     );
-  }, [onboardingCompletedAt, learningPathLastSetAt, learningPathChangeCount]);
+  }, [onboardingCompletedAt, learningPathLastSetAt, learningPathChangeCount, totalPoints]);
 
   const canEdit = policy.allowed;
+  const exemption = policy.exemption;
+
+  // Trial penceresi kaç gün kaldı? UI'da "2 gün kaldı" gibi belirgin
+  // hatırlatma → kullanıcı serbest pencereyi gözden kaçırmasın.
+  const trialDaysLeft = useMemo(() => {
+    const onb = parseD(onboardingCompletedAt);
+    if (!onb) return null;
+    const trialEnd = new Date(onb.getTime());
+    trialEnd.setDate(trialEnd.getDate() + LEARNING_PATH_TRIAL_DAYS);
+    const ms = trialEnd.getTime() - Date.now();
+    if (ms <= 0) return null;
+    return Math.max(1, Math.ceil(ms / (24 * 60 * 60 * 1000)));
+  }, [onboardingCompletedAt]);
 
   const gradeLockUntil = parseD(studentGradeChangeLockedUntil);
   const gradePeriodLocked =
@@ -111,7 +133,29 @@ export function ProfileLearningPath({
             ? "Kataloğu sadeleştirmek için aşağıdan bir yol seçebilirsin (değişiklik, kurallar dahilinde sınırlı sayıda)."
             : `Yol değişimleri en az ${LEARNING_PATH_DAYS_BETWEEN_CHANGES} gün arayla, toplam en fazla ${LEARNING_PATH_MAX_CHANGES} kez yapılabiliyor. Sınıf değişimi ise en fazla altı ayda bir yapılabilir (ilk seçimden sonra kilit).`}
         </p>
-        {gradePeriodLocked && gradeLockUntil && (
+
+        {/* Muafiyet aktif — kullanıcı kilit cooldown'una takılmıyor.
+            Trial penceresi geri sayım, low_points ise eşik bilgisi. */}
+        {canEdit && exemption === "trial" && trialDaysLeft != null && (
+          <p className="mt-2 flex items-center gap-1.5 rounded-lg border border-suk-brand/30 bg-suk-brand-soft/60 px-2 py-1.5 text-xs text-suk-brand-border">
+            <Sparkles className="h-3.5 w-3.5 shrink-0" />
+            <span>
+              <strong>Deneme süresi aktif</strong> — {trialDaysLeft} gün kaldı.
+              Bu süre boyunca yol/sınıf değişimleri serbest, cooldown başlamaz.
+            </span>
+          </p>
+        )}
+        {canEdit && exemption === "low_points" && (
+          <p className="mt-2 flex items-center gap-1.5 rounded-lg border border-suk-brand/30 bg-suk-brand-soft/60 px-2 py-1.5 text-xs text-suk-brand-border">
+            <Sparkles className="h-3.5 w-3.5 shrink-0" />
+            <span>
+              Puanın {LEARNING_PATH_LOW_POINTS_THRESHOLD} altında olduğu sürece serbestçe
+              değiştirebilirsin. Eşik geçilince standart {LEARNING_PATH_DAYS_BETWEEN_CHANGES} gün kuralı uygulanır.
+            </span>
+          </p>
+        )}
+
+        {gradePeriodLocked && gradeLockUntil && exemption == null && (
           <p className="mt-1 flex items-center gap-1 text-xs text-suk-danger">
             <Lock className="h-3.5 w-3.5 shrink-0" />
             Sınıf değişikliği için {gradeLockUntil.toLocaleDateString("tr-TR")} tarihine kadar beklemelisin.

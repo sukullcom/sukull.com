@@ -32,6 +32,10 @@ export async function getProfileDataOnServer() {
       schoolId: true,
       istikrar: true,
       dailyTarget: true,
+      // `points` muafiyet hesabı için lazım: <500 puanlı kullanıcı
+      // okul/sınıf/yol kilitlerini atlayabiliyor; UI bunu mesaj olarak
+      // gösterebilmek için skoru bilmeli.
+      points: true,
       profileEditingUnlocked: true,
       studyBuddyUnlocked: true,
       codeShareUnlocked: true,
@@ -63,6 +67,7 @@ export async function getProfileDataOnServer() {
       schoolId: null,
       istikrar: 0,
       dailyTarget: 50,
+      points: 0,
       startDate,
       learningPath: null as string | null,
       studentGrade: null as number | null,
