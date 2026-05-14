@@ -19,7 +19,6 @@ import {
   checkRateLimit,
   RATE_LIMITS,
   rateLimitClosedDenyPayload,
-  rateLimitHeaders,
 } from "@/lib/rate-limit-db";
 import { acceptOffer, rejectOffer, withdrawOffer } from "@/db/queries";
 import { verifyCsrf } from "@/lib/csrf";
