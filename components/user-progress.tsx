@@ -21,67 +21,73 @@ export const UserProgress = ({
   hasInfiniteHearts,
 }: Props) => {
   return (
-    <div className="flex items-center w-full px-2 gap-1">
+    <div className="flex items-center w-full px-2 gap-1.5">
       <Link prefetch={false} href="/learn" className="shrink-0 mr-auto">
         <div className="flex items-center gap-1.5 p-1">
           <Image
             src="/mascot_purple.svg"
-            height={24}
-            width={24}
+            height={28}
+            width={28}
             alt="Sukull"
           />
-          <span className="text-sm font-extrabold tracking-wide text-suk-brand">
+          <span className="text-base font-extrabold tracking-wide text-suk-brand">
             Sukull
           </span>
         </div>
       </Link>
       <Link prefetch={false} href="/courses" className="shrink-0">
-        <Button variant="ghost" className="p-1.5">
+        <Button variant="ghost" className="p-2">
           <Image
             src={normalizeAvatarUrl(activeCourse.imageSrc)}
             alt={activeCourse.title}
             className="rounded-md border"
-            width={26}
-            height={26}
+            width={30}
+            height={30}
           />
         </Button>
       </Link>
       <Link prefetch={false} href="/shop" className="shrink-0">
-        <Button variant="ghost" className="p-1.5 text-xs text-suk-warning">
+        <Button variant="ghost" className="p-2 text-sm font-bold text-suk-warning">
           <Image
             src="/points.svg"
-            height={18}
-            width={18}
+            height={22}
+            width={22}
             alt="Puan"
-            className="mr-0.5"
+            className="mr-1"
           />
           {points}
         </Button>
       </Link>
       <Link prefetch={false} href="/shop" className="shrink-0">
-        <Button variant="ghost" className="p-1.5 text-xs text-suk-danger">
+        <Button variant="ghost" className="p-2 text-sm font-bold text-suk-danger">
           <Image
             src="/heart.svg"
-            height={18}
-            width={18}
+            height={22}
+            width={22}
             alt="Can"
-            className="mr-0.5"
+            className="mr-1"
           />
           {hasInfiniteHearts ? (
-            <InfinityIcon className="h-4 w-4 stroke-[3]" />
+            <InfinityIcon className="h-5 w-5 stroke-[3]" />
           ) : (
             hearts
           )}
         </Button>
       </Link>
+      {/*
+        İstikrar sayacı eskiden `text-suk-brand` (yeşil) idi; üç sayaç (puan,
+        can, istikrar) içinde tek başına farklı bir renk olunca görsel
+        hiyerarşi dağılıyordu. Puan ile aynı `text-suk-warning` (sarı/turuncu)
+        kullanmak Duolingo'nun streak/XP tutarlılığına da yakın.
+      */}
       <Link prefetch={false} href="/profile" className="shrink-0">
-        <Button variant="ghost" className="p-1.5 text-xs text-suk-brand">
+        <Button variant="ghost" className="p-2 text-sm font-bold text-suk-warning">
           <Image
             src="/istikrar.svg"
-            height={18}
-            width={18}
+            height={22}
+            width={22}
             alt="İstikrar"
-            className="mr-0.5"
+            className="mr-1"
           />
           {istikrar}
         </Button>

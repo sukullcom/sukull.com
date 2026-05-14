@@ -164,10 +164,14 @@ export function ReferralInviteFab() {
    * Radix Dialog açıkken tetikleyiciyi `DialogTrigger` ile aynı ağaçta tutmak,
    * üst kapsayıcıya `aria-hidden` uygulanırken butonun odakta kalmasına yol
    * açabiliyor (tarayıcı uyarısı). Tetikleyici kontrollü `open` ile ayrılır.
+   *
+   * Yatay hiza: sidebar `px-4` + logo container `pl-4` → logo soldan 32 px
+   * içerde duruyor. FAB'ı da `left-8` (32 px) yaparak aynı dikey eksene
+   * oturtuyoruz; eskiden `left-4` ile kenara çok yapışıktı.
    */
   return (
     <>
-      <div className="fixed bottom-24 left-4 z-[35] hidden lg:block">
+      <div className="fixed bottom-24 left-8 z-[35] hidden lg:block">
         <Button
           type="button"
           variant="primary"
