@@ -3,7 +3,6 @@ import {
   canChangeLearningPath,
   LEARNING_PATH_DAYS_BETWEEN_CHANGES,
   LEARNING_PATH_LOW_POINTS_THRESHOLD,
-  LEARNING_PATH_MAX_CHANGES,
   LEARNING_PATH_TRIAL_DAYS,
 } from "@/lib/learning-path";
 
@@ -22,15 +21,17 @@ describe("canChangeLearningPath — temel davranış", () => {
     expect(r.reason).toBe("incomplete");
   });
 
-  it("max değişim hakkı tükenmiş → max", () => {
+  it("yüksek changeCount artık hard-cap'lemez (ömür boyu kullanılabilir)", () => {
+    // Eski sürüm 5 değişimde "max" döndürüyordu; kaldırıldı. 30 gün cooldown
+    // bitmişse 100. değişim de serbesttir.
     const r = canChangeLearningPath(
       NOW,
       daysAgo(NOW, 365),
-      daysAgo(NOW, 60),
-      LEARNING_PATH_MAX_CHANGES,
+      daysAgo(NOW, 60), // cooldown bitti
+      100,
     );
-    expect(r.allowed).toBe(false);
-    expect(r.reason).toBe("max");
+    expect(r.allowed).toBe(true);
+    expect(r.reason).toBe("ok");
   });
 
   it("hiç değişim yok → serbest", () => {
@@ -92,21 +93,6 @@ describe("canChangeLearningPath — muafiyetler", () => {
       totalPoints: LEARNING_PATH_LOW_POINTS_THRESHOLD,
     });
     expect(r.allowed).toBe(false);
-  });
-
-  it("max sınırı muafiyet kabul etmez (anti-cheat hard cap)", () => {
-    const r = canChangeLearningPath(
-      NOW,
-      daysAgo(NOW, 365),
-      daysAgo(NOW, 60),
-      LEARNING_PATH_MAX_CHANGES,
-      {
-        onboardingCompletedAt: daysAgo(NOW, 1),
-        totalPoints: 10,
-      },
-    );
-    expect(r.allowed).toBe(false);
-    expect(r.reason).toBe("max");
   });
 
   it("incomplete muafiyet kabul etmez (onboarding olmadan değişim mantıksız)", () => {

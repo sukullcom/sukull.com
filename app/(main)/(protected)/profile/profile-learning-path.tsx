@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   canChangeLearningPath,
   LEARNING_PATH_DAYS_BETWEEN_CHANGES,
-  LEARNING_PATH_MAX_CHANGES,
   LEARNING_PATH_TRIAL_DAYS,
   LEARNING_PATH_LOW_POINTS_THRESHOLD,
 } from "@/lib/learning-path";
@@ -130,8 +129,8 @@ export function ProfileLearningPath({
         </p>
         <p className="mt-2 text-xs text-suk-warning-soft-fg">
           {initialPath === "full"
-            ? "Kataloğu sadeleştirmek için aşağıdan bir yol seçebilirsin (değişiklik, kurallar dahilinde sınırlı sayıda)."
-            : `Yol değişimleri en az ${LEARNING_PATH_DAYS_BETWEEN_CHANGES} gün arayla, toplam en fazla ${LEARNING_PATH_MAX_CHANGES} kez yapılabiliyor. Sınıf değişimi ise en fazla altı ayda bir yapılabilir (ilk seçimden sonra kilit).`}
+            ? "Kataloğu sadeleştirmek için aşağıdan bir yol seçebilirsin."
+            : `Yol değişimleri en az ${LEARNING_PATH_DAYS_BETWEEN_CHANGES} gün arayla yapılabilir. Sınıf değişimi ise en fazla altı ayda bir yapılabilir (ilk seçimden sonra kilit).`}
         </p>
 
         {/* Muafiyet aktif — kullanıcı kilit cooldown'una takılmıyor.
@@ -166,9 +165,6 @@ export function ProfileLearningPath({
             <Lock className="h-3.5 w-3.5 shrink-0" />
             Sonraki değişim: {policy.nextAllowedAt.toLocaleString("tr-TR")}
           </p>
-        )}
-        {!canEdit && policy.reason === "max" && (
-          <p className="mt-1 text-xs text-suk-danger">Maksimum değişim sayısına ulaşıldı.</p>
         )}
       </div>
 

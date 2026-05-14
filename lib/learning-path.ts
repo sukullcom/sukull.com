@@ -104,11 +104,21 @@ export function examKeysForLearningPath(
 }
 
 export const LEARNING_PATH_DAYS_BETWEEN_CHANGES = 30;
-export const LEARNING_PATH_MAX_CHANGES = 5;
 
 /** Okul/sınıf kilitleri ile aynı insan-dostu pencere — bkz. `lib/school-grade-lock.ts`. */
 export const LEARNING_PATH_TRIAL_DAYS = 7;
 export const LEARNING_PATH_LOW_POINTS_THRESHOLD = 500;
+
+/**
+ * NOT (eski hard-cap): Önceki `LEARNING_PATH_MAX_CHANGES = 5` sabiti kaldırıldı.
+ * Anti-cheat zaten **iki katmanda** korunuyor:
+ *   - 30 gün cooldown (puan-üstü hesaplar için sınırlı transfer)
+ *   - <500 puan muafiyeti (henüz değer biriktirmemiş hesap zaten oyunlanmıyor)
+ * "Ömür boyu 5 kez" sınırı meşru hayat değişikliklerinde (üniversite → KPSS,
+ * sınıf atlama, vb.) kullanıcıyı sıkıştırıyordu. `learningPathChangeCount`
+ * kolonu **telemetri** olarak korunuyor (anomali izleme), ama kullanıcı
+ * akışında bir kapı değil.
+ */
 
 /** Okul tipi sekmeleri (liderlik tablosu okul listeleri). */
 export type LeaderboardSchoolTab =
@@ -165,7 +175,7 @@ export type LearningPathExemption = "trial" | "low_points";
 export type LearningPathChangeDecision = {
   allowed: boolean;
   nextAllowedAt: Date | null;
-  reason: "ok" | "cooldown" | "max" | "incomplete";
+  reason: "ok" | "cooldown" | "incomplete";
   /** Hangi muafiyetin (varsa) izni verdiği — UI mesajı için. */
   exemption?: LearningPathExemption;
 };
@@ -175,20 +185,23 @@ export type LearningPathChangeDecision = {
  *
  * Kurallar (`reason` ile bildirilir):
  *   - `incomplete`: onboarding tamamlanmamış → değiştiremez
- *   - `max`: 5 değişim hakkı bitmiş → değiştiremez (admin sıfırlamadıkça)
  *   - `cooldown`: son değişimden 30 gün geçmemiş → muafiyet yoksa hayır
  *   - `ok`: serbest
  *
- * Muafiyetler (`options` ile geçilirse cooldown'ı atlatır; `max` ve
- * `incomplete` muafiyet kabul etmez — bunlar saldırı/integrity sınırları):
+ * Muafiyetler (`options` ile geçilirse cooldown'ı atlatır; `incomplete`
+ * muafiyet kabul etmez — onboarding olmadan değişim mantıksız):
  *   - `trial`: onboarding'in ilk 7 günü içindeyse cooldown atlanır
  *   - `low_points`: toplam puan < 500 ise cooldown atlanır
+ *
+ * `changeCount` parametresi imzayı geriye uyumlu tutmak için duruyor;
+ * artık karar verirken kullanılmıyor (telemetri amaçlı DB'de tutulur).
  */
 export function canChangeLearningPath(
   now: Date,
   onboardingCompletedAt: Date | null,
   lastSetAt: Date | null,
-  changeCount: number,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _changeCount: number,
   options?: {
     onboardingCompletedAt?: Date | null;
     totalPoints?: number | null;
@@ -196,9 +209,6 @@ export function canChangeLearningPath(
 ): LearningPathChangeDecision {
   if (!onboardingCompletedAt) {
     return { allowed: false, nextAllowedAt: null, reason: "incomplete" };
-  }
-  if (changeCount >= LEARNING_PATH_MAX_CHANGES) {
-    return { allowed: false, nextAllowedAt: null, reason: "max" };
   }
   if (!lastSetAt) {
     return { allowed: true, nextAllowedAt: null, reason: "ok" };

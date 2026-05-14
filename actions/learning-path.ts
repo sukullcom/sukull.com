@@ -161,9 +161,6 @@ export async function updateLearningPathFromSettings(
     },
   );
   if (!ch.allowed) {
-    if (ch.reason === "max") {
-      return { ok: false, error: "En fazla beş kez yol değişikliği yapılabiliyor. Destek’ten yardım alabilirsiniz." };
-    }
     if (ch.reason === "cooldown" && ch.nextAllowedAt) {
       return { ok: false, error: "Bir sonraki değişim için 30 gün geçmesi gerekir.", nextAllowedAt: ch.nextAllowedAt.toISOString() };
     }
