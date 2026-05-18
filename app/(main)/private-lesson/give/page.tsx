@@ -267,7 +267,7 @@ export default function GiveLessonPage() {
                   </p>
                 </div>
                 <Image
-                  src="/mascot_pink.svg"
+                  src="/heads/hopeful_orange.svg"
                   alt="mascot"
                   width={100}
                   height={100}

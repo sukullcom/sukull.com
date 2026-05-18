@@ -134,7 +134,7 @@ export default function TeacherSuccessPage() {
         {/* Mascot Image */}
         <div className="flex justify-center mt-8">
           <Image
-            src="/mascot_pink.svg"
+            src="/heads/perfect_pink.svg"
             alt="Mutlu maskot"
             width={150}
             height={150}

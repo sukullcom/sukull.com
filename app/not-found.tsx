@@ -15,7 +15,7 @@ export default function NotFound() {
       <div className="max-w-md w-full text-center">
         <div className="mb-8 flex justify-center">
           <Image
-            src="/mascot_sad.svg"
+            src="/heads/suprised_yellow.svg"
             alt="Sukull"
             width={140}
             height={140}

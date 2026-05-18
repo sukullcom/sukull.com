@@ -21,7 +21,7 @@ const QuestsPage = async () => {
 
       <FeedWrapper>
         <div className="w-full flex flex-col items-center">
-          <Image src="/mascot_orange.svg" alt="Quests" height={120} width={120} />
+          <Image src="/heads/pointing_finger_happy_orange.svg" alt="Quests" height={120} width={120} />
           <div className="my-10 w-full max-w-lg">
             <Quests 
               currentStreak={userProgress.istikrar}
