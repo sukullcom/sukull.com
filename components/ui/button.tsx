@@ -64,8 +64,15 @@ const buttonVariants = cva(
           "bg-transparent text-suk-fg-muted border-transparent border-0 hover:bg-suk-surface-muted",
         sidebar:
           "bg-transparent text-suk-fg-muted border-2 border-transparent hover:bg-suk-surface-muted transition-none",
+        /**
+         * Aktif sidebar öğesi. Background + border tonları `ReferralInviteShopCard`
+         * (mağaza sayfasındaki "Arkadaşını davet et" kartı) ile **birebir aynı yeşil
+         * ailesini** kullanır — site genelinde "bu yüzey yeşil aksanlı / dikkat
+         * çekici" tutumu için tek kalibrasyon. Hover, doygunluğu biraz arttırarak
+         * tıklanabilirlik sinyali verir.
+         */
         sidebarOutline:
-          "bg-suk-brand/15 text-suk-brand-border border-suk-brand/30 border-2 hover:bg-suk-brand/25 transition-none",
+          "bg-suk-brand-soft/40 text-suk-brand-border border-suk-brand/25 border-2 hover:bg-suk-brand-soft/60 transition-none",
       },
       size: {
         default: "h-11 px-4 py-2",
