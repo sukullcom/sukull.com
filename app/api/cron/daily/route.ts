@@ -190,25 +190,37 @@ async function runDaily(request: NextRequest) {
   );
 
   steps.push(
-    await runStep("expire-stale-3ds-payments", async () => {
-      // Kullanıcı 3DS init başlattı ama OTP'yi bitirmedi (sekme kapandı, banka
-      // çağrısı asıldı, vb.) → satır sonsuza dek `pending_3ds` kalırdı.
-      // 30 dk TTL ile `failed` olarak işaretleyip aramayı ve audit'i hızlı
-      // tutuyoruz. Iyzico'da gerçekten tamamlandıysa finalize idempotent
-      // değişikliği `success`'e zaten döndürür.
-      const result = await db.execute<{ user_id: string; payment_id: string }>(sql`
+    await runStep("expire-stale-payment-attempts", async () => {
+      // Yarım kalmış ödeme satırlarını failed işaretle. İki durum:
+      //   • `pending_3ds`: kullanıcı OTP'yi bitirmedi (sekme kapandı, banka
+      //     çağrısı asıldı). 30 dk TTL.
+      //   • `processing`: reservation atıldı ama Iyzico çağrısı/cevabı
+      //     yarıda kesildi (server crash, lambda timeout). 10 dk TTL — bu
+      //     pencere normal Iyzico round-trip + DB commit için 10x bol.
+      // Aksi halde kullanıcı aynı idempotencyKey ile tekrar denerken sonsuza
+      // dek 409 görür ya da `findIdempotentResult` yanıltıcı yanıt verir.
+      const result = await db.execute<{ user_id: string; payment_id: string; prior_status: string }>(sql`
         UPDATE payment_logs
            SET status = 'failed',
-               error_code = COALESCE(error_code, 'pending_3ds_expired'),
-               error_message = COALESCE(error_message, '30 dakika içinde tamamlanmadı')
-         WHERE status = 'pending_3ds'
-           AND created_at < NOW() - INTERVAL '30 minutes'
-         RETURNING user_id, payment_id
+               error_code = COALESCE(
+                 error_code,
+                 CASE status
+                   WHEN 'pending_3ds' THEN 'pending_3ds_expired'
+                   WHEN 'processing'  THEN 'processing_expired'
+                   ELSE 'expired'
+                 END
+               ),
+               error_message = COALESCE(error_message, 'İşlem süresinde tamamlanmadı')
+         WHERE (
+                 (status = 'pending_3ds' AND created_at < NOW() - INTERVAL '30 minutes')
+              OR (status = 'processing'  AND created_at < NOW() - INTERVAL '10 minutes')
+               )
+         RETURNING user_id, payment_id, status AS prior_status
       `);
       const rows =
-        (result as unknown as { rows?: Array<{ user_id: string; payment_id: string }> }).rows ??
+        (result as unknown as { rows?: Array<{ user_id: string; payment_id: string; prior_status: string }> }).rows ??
         (Array.isArray(result)
-          ? (result as unknown as Array<{ user_id: string; payment_id: string }>)
+          ? (result as unknown as Array<{ user_id: string; payment_id: string; prior_status: string }>)
           : []);
       return { expired: rows.length };
     }),

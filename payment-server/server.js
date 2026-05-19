@@ -540,9 +540,14 @@ app.post("/api/payment/create", authenticateUser, async (req, res) => {
     // İki paralel istek aynı `idempotencyKey` ile gelirse, ikincisi UNIQUE
     // (`payment_logs_user_id_payment_id_uniq`) çakışmasında 0 satır günceller
     // → 409 ile geri çevriliyor. Böylece Iyzico'ya çift POST hiç gitmiyor.
+    //
+    // NOT: `response_data` jsonb NOT NULL (migration 0004). Henüz Iyzico cevabı
+    // gelmediği için boş `'{}'::jsonb` ile başlatıyoruz; sonraki UPDATE gerçek
+    // response_data ile değiştirir. Bu kolon kısıtı önceki sürümde gözden kaçtı
+    // ve ilk POST'ta 23502 (NOT NULL violation) → 500 üretiyordu.
     const reservation = await client.query(
-      `INSERT INTO payment_logs (user_id, payment_id, request_data, status, created_at)
-       VALUES ($1, $2, $3, 'processing', NOW())
+      `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, created_at)
+       VALUES ($1, $2, $3, '{}'::jsonb, 'processing', NOW())
        ON CONFLICT (user_id, payment_id) DO NOTHING
        RETURNING id`,
       [user.id, idempotencyKey, JSON.stringify(safeLogPayload(request))],
@@ -802,10 +807,11 @@ app.post("/api/payment/subscribe", authenticateUser, async (req, res) => {
 
     // Aynı race guard credit-create akışında olduğu gibi: Iyzico'ya çağrı
     // ÖNCE reservation satırı yazıyoruz; ikinci paralel istek UNIQUE ile
-    // 409 alır, çift abonelik tahsilatı oluşmaz.
+    // 409 alır, çift abonelik tahsilatı oluşmaz. `response_data` NOT NULL
+    // olduğu için `'{}'::jsonb` placeholder; sonraki UPDATE değiştirir.
     const reservation = await client.query(
-      `INSERT INTO payment_logs (user_id, payment_id, request_data, status, created_at)
-       VALUES ($1, $2, $3, 'processing', NOW())
+      `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, created_at)
+       VALUES ($1, $2, $3, '{}'::jsonb, 'processing', NOW())
        ON CONFLICT (user_id, payment_id) DO NOTHING
        RETURNING id`,
       [user.id, idempotencyKey, JSON.stringify(safeLogPayload(request))],
@@ -1078,6 +1084,15 @@ app.post("/api/payment/3ds/initialize-credit", authenticateUser, async (req, res
           message: "3D Secure işlemi zaten başlatılmış. Lütfen banka ekranındaki adımı tamamla.",
         });
       }
+      if (existing.status === "processing") {
+        // Eşzamanlı başka istek halen Iyzico'da. Kullanıcı birkaç saniye sonra
+        // tekrar dener; satır ya pending_3ds'e ya da failed'e taşınmış olur.
+        return res.status(409).json({
+          success: false,
+          idempotent: true,
+          message: "Aynı ödeme işlemi devam ediyor. Lütfen birkaç saniye sonra tekrar dene.",
+        });
+      }
       // A completed (success or final-failure) record exists; do not re-init.
       const ok = existing.status === "success";
       return res.status(ok ? 200 : 400).json({
@@ -1125,10 +1140,11 @@ app.post("/api/payment/3ds/initialize-credit", authenticateUser, async (req, res
     // Race guard: Iyzico'ya çağrı yapmadan ÖNCE rezervasyon satırı.
     // UNIQUE(user_id, payment_id) ile aynı anahtarla ikinci paralel init
     // burada 0 satır insert eder → 409 ile kibarca reddedilir. Banka
-    // tarafına çift OTP/auth çağrısı gitmez.
+    // tarafına çift OTP/auth çağrısı gitmez. `response_data` NOT NULL
+    // olduğu için `'{}'::jsonb` placeholder; sonraki UPDATE değiştirir.
     const reservation = await client.query(
-      `INSERT INTO payment_logs (user_id, payment_id, request_data, status, created_at)
-       VALUES ($1, $2, $3, 'processing', NOW())
+      `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, created_at)
+       VALUES ($1, $2, $3, '{}'::jsonb, 'processing', NOW())
        ON CONFLICT (user_id, payment_id) DO NOTHING
        RETURNING id`,
       [user.id, idempotencyKey, JSON.stringify(safeLogPayload(request))],
@@ -1273,6 +1289,13 @@ app.post("/api/payment/3ds/initialize-subscribe", authenticateUser, async (req, 
           message: "3D Secure işlemi zaten başlatılmış. Lütfen banka ekranındaki adımı tamamla.",
         });
       }
+      if (existing.status === "processing") {
+        return res.status(409).json({
+          success: false,
+          idempotent: true,
+          message: "Aynı abonelik işlemi devam ediyor. Lütfen birkaç saniye sonra tekrar dene.",
+        });
+      }
       const ok = existing.status === "success";
       return res.status(ok ? 200 : 400).json({
         success: false,
@@ -1317,9 +1340,10 @@ app.post("/api/payment/3ds/initialize-subscribe", authenticateUser, async (req, 
     };
 
     // Race guard (same as 3ds/initialize-credit). Iyzico'ya çağrı ÖNCE reservation.
+    // `response_data` NOT NULL → boş `'{}'::jsonb` ile başlat; UPDATE değiştirir.
     const reservation = await client.query(
-      `INSERT INTO payment_logs (user_id, payment_id, request_data, status, created_at)
-       VALUES ($1, $2, $3, 'processing', NOW())
+      `INSERT INTO payment_logs (user_id, payment_id, request_data, response_data, status, created_at)
+       VALUES ($1, $2, $3, '{}'::jsonb, 'processing', NOW())
        ON CONFLICT (user_id, payment_id) DO NOTHING
        RETURNING id`,
       [user.id, idempotencyKey, JSON.stringify(safeLogPayload(request))],

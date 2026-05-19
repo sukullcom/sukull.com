@@ -38,7 +38,7 @@ export function Footer() {
         </Button>
         <Button size="lg" variant="ghost" className="flex-shrink-0">
           <Image
-            src="/mascot_orange.svg"
+            src="/pointing_finger_happy_orange.svg"
             alt="Fen Bilimleri dersi"
             height={32}
             width={40}
@@ -58,7 +58,7 @@ export function Footer() {
         </Button>
         <Button size="lg" variant="ghost" className="flex-shrink-0">
           <Image
-            src="/mascot_sad.svg"
+            src="/heart_with_hand_light_blue.svg"
             alt="İngilizce dersi"
             height={32}
             width={40}
@@ -68,7 +68,7 @@ export function Footer() {
         </Button>
         <Button size="lg" variant="ghost" className="flex-shrink-0">
           <Image
-            src="/mascot_bad.svg"
+            src="/liked_purple.svg"
             alt="Daha fazla ders"
             height={32}
             width={40}
