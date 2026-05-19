@@ -44,7 +44,9 @@ export const CancelLessonModal = ({
       <DialogContent className="max-w-md bg-card border border-border">
         <DialogHeader>
           <div className="flex items-center w-full justify-center mb-5">
-            <Image src="/mascot_sad.svg" alt="Maskot" height={80} width={80} />
+            {/* İptal — vazgeçişin yumuşak yüzü. "Üzgün" değil "affedici" ton:
+                kullanıcı pişman olur korkusu yaşamasın, basit bir geri çekilme. */}
+            <Image src="/heads/forgiveness_light_blue.svg" alt="Maskot" height={80} width={80} />
           </div>
           <DialogTitle className="text-center font-bold text-2xl">
             Emin misin?

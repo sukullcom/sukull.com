@@ -204,19 +204,26 @@ export const Quiz = ({
           tweenDuration={10000}
         />
         <div className="flex flex-col gap-y-4 lg:gap-y-8 max-w-lg mx-auto text-center items-center justify-center h-full">
+          {/*
+            Ders tamamlandı kutlama anı — Sukull deneyiminin en yüksek
+            duygusal momenti. Marka rengi (mor) + "heyecanlı" duruşla
+            confetti animasyonunun anlamı pekişir. Mobile + desktop
+            varyantları aynı görsel; ekran boyutuna göre yalnızca ölçek
+            farklı.
+          */}
           <Image
-            src="/finish.svg"
-            alt="Tamamlandı"
+            src="/heads/happy_excited_purple.svg"
+            alt="Tebrikler!"
             className="hidden lg:block"
-            height={100}
-            width={100}
+            height={140}
+            width={140}
           />
           <Image
-            src="/finish.svg"
-            alt="Tamamlandı"
+            src="/heads/happy_excited_purple.svg"
+            alt="Tebrikler!"
             className="block lg:hidden"
-            height={50}
-            width={50}
+            height={80}
+            width={80}
           />
           <h1 className="text-xl lg:text-3xl font-bold text-foreground">
             Tebrikler! <br />

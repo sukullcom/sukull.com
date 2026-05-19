@@ -32,7 +32,11 @@ export const ExitModal = () => {
       <DialogContent className="max-w-md bg-card">
         <DialogHeader>
           <div className="flex items-center w-full justify-center mb-5">
-            <Image src="/mascot_sad.svg" alt="Maskot" height={80} width={80} />
+            {/* "Bu kadar yakınken mi bırakıyorsun?" — sorgulayan/dur diyen
+                ton. `showing_with_hand_dark_blue` parmağıyla durduran bir
+                hareket; üzgün değil, "bekle bir saniye" diyen yapıcı bir
+                karşı çıkış. */}
+            <Image src="/heads/showing_with_hand_dark_blue.svg" alt="Maskot" height={80} width={80} />
           </div>
           <DialogTitle className="text-center font-bold text-2xl">
             Dur bir dakika!
