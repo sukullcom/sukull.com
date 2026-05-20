@@ -12,6 +12,11 @@ import {
   LEARNING_PATH_LOW_POINTS_THRESHOLD,
 } from "@/lib/learning-path";
 import { BookOpen, GraduationCap, Lock, Sparkles, Users } from "lucide-react";
+import {
+  formatStudentGradeLabel,
+  isValidTytAytStudentGrade,
+  TYT_AYT_GRADE_OPTIONS,
+} from "@/lib/school-catalog";
 
 type Mode = "lgs" | "tyt_ayt" | "adult" | "full" | "";
 
@@ -100,7 +105,7 @@ export function ProfileLearningPath({
       toast.error("5–8. sınıf seçin.");
       return;
     }
-    if (mode === "tyt_ayt" && (grade === "" || grade < 9 || grade > 12)) {
+    if (mode === "tyt_ayt" && (grade === "" || !isValidTytAytStudentGrade(grade as number))) {
       toast.error("9–12. sınıf seçin.");
       return;
     }
@@ -124,7 +129,7 @@ export function ProfileLearningPath({
         <p className="text-sm text-muted-foreground">
           Şu an: <strong className="text-foreground">{pathLabel[initialPath ?? "full"] ?? "—"}</strong>
           {initialPath !== "adult" && initialGrade != null && (
-            <span className="ml-1">· {initialGrade}. sınıf</span>
+            <span className="ml-1">· {formatStudentGradeLabel(initialGrade)}</span>
           )}
         </p>
         <p className="mt-2 text-xs text-suk-warning-soft-fg">
@@ -180,7 +185,8 @@ export function ProfileLearningPath({
             onClick={() => {
               setMode(opt.id);
               if (opt.id === "lgs" && (grade === "" || grade < 5 || grade > 8)) setGrade("");
-              if (opt.id === "tyt_ayt" && (grade === "" || grade < 9 || grade > 12)) setGrade("");
+              if (opt.id === "tyt_ayt" && (grade === "" || !isValidTytAytStudentGrade(grade as number)))
+                setGrade("");
             }}
             className={[
               "w-full flex items-center gap-2 rounded-xl border-2 p-2.5 text-left text-sm font-medium transition",
@@ -213,9 +219,9 @@ export function ProfileLearningPath({
             onChange={(e) => setGrade(e.target.value === "" ? "" : parseInt(e.target.value, 10))}
           >
             <option value="">Sınıf seç</option>
-            {[9, 10, 11, 12].map((g) => (
-              <option key={g} value={g}>
-                {g}. sınıf
+            {TYT_AYT_GRADE_OPTIONS.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
               </option>
             ))}
           </select>

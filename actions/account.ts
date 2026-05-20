@@ -1,27 +1,11 @@
 "use server";
 
-import { eq, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 
 import db from "@/db/drizzle";
-import {
-  activityLog,
-  challengeProgress,
-  errorLog,
-  listingOffers,
-  listings,
-  messageUnlocks,
-  schools,
-  snippets,
-  studyBuddyChats,
-  studyBuddyMessages,
-  studyBuddyPosts,
-  teacherApplications,
-  userDailyChallenges,
-  userDailyStreak,
-  userProgress,
-  users,
-} from "@/db/schema";
+import { userProgress, users } from "@/db/schema";
+import { purgeUserFromDatabase } from "@/lib/account-purge-db";
 import { getServerUser } from "@/lib/auth";
 import { logAdminAction } from "@/lib/admin-audit";
 import { logger } from "@/lib/logger";
@@ -149,81 +133,9 @@ export async function deleteMyAccount(
       });
     }
 
-    await db.transaction(async (tx) => {
-      // 1. Per-user tables without ON DELETE CASCADE FKs.
-      //    Order matters only where there are FK chains between these
-      //    tables — here each is independent of the others.
-      await tx.delete(challengeProgress).where(eq(challengeProgress.userId, userId));
-      await tx.delete(userDailyStreak).where(eq(userDailyStreak.userId, userId));
-      await tx.delete(userDailyChallenges).where(eq(userDailyChallenges.userId, userId));
-      await tx.delete(snippets).where(eq(snippets.userId, userId));
-      await tx.delete(teacherApplications).where(eq(teacherApplications.userId, userId));
-      await tx.delete(activityLog).where(eq(activityLog.userId, userId));
-      // Marketplace: listings & offers authored by this user. Student-
-      // side listings and teacher-side offers both erase here; the
-      // user's outgoing messages are handled via study-buddy below.
-      await tx.delete(listingOffers).where(eq(listingOffers.teacherId, userId));
-      await tx.delete(listings).where(eq(listings.studentId, userId));
-      await tx.execute(sql`
-        DELETE FROM ${messageUnlocks}
-        WHERE ${messageUnlocks.studentId} = ${userId}
-           OR ${messageUnlocks.teacherId} = ${userId}
-      `);
-      // Note: `activity_log_daily` is pre-aggregated across users (no
-      // per-user column) — nothing to erase there without degrading
-      // the historical analytics rollup.
-
-      // 2. Study-buddy: posts and messages the user authored.
-      //    Chats are shared (two participants). We strip the user's
-      //    outgoing messages but leave the chat shell in place so the
-      //    other participant's side still renders — this matches how
-      //    most messaging products handle deletion and avoids orphaning
-      //    a correspondent's history.
-      await tx.delete(studyBuddyPosts).where(eq(studyBuddyPosts.user_id, userId));
-      await tx.delete(studyBuddyMessages).where(eq(studyBuddyMessages.sender, userId));
-      // Drop any chats that had this user as one of the participants by
-      // matching inside the jsonb array. The cascading FK on messages
-      // handles message cleanup for deleted chats.
-      await tx.execute(sql`
-        DELETE FROM ${studyBuddyChats}
-        WHERE ${studyBuddyChats.participants} @> ${JSON.stringify([userId])}::jsonb
-      `);
-
-      // 3. Points reversal: keep school total consistent.
-      if (progress?.schoolId && (progress.points ?? 0) > 0) {
-        await tx
-          .update(schools)
-          .set({
-            totalPoints: sql`GREATEST(${schools.totalPoints} - ${progress.points}, 0)`,
-          })
-          .where(eq(schools.id, progress.schoolId));
-      }
-
-      // 4. user_progress is referenced by nothing else directly — drop it.
-      await tx.delete(userProgress).where(eq(userProgress.userId, userId));
-
-      // 5. Anonymize error_log entries. We keep the rows because they
-      //    are system-operational (stack traces, correlation IDs) and
-      //    not a personal record — but the user_id column can identify
-      //    the subject, so we null it out.
-      await tx.update(errorLog).set({ userId: null }).where(eq(errorLog.userId, userId));
-
-      // 6. Finally delete the profile row. FK cascades take care of
-      //    user_credits, credit_transactions, payment_logs,
-      //    user_subscriptions, teacher_fields, credit_usage, any
-      //    remaining listings/offers/message_unlocks rows.
-      await tx.delete(users).where(eq(users.id, userId));
-
-      // Defensive: if any row survived the above (shouldn't happen,
-      // but FK ON DELETE could be mis-configured), bail out so the
-      // transaction rolls back rather than leaving a half-deleted user.
-      const lingering = await tx
-        .select({ c: sql<number>`count(*)::int` })
-        .from(users)
-        .where(eq(users.id, userId));
-      if ((lingering[0]?.c ?? 0) > 0) {
-        throw new Error("users row still present after cascade delete");
-      }
+    await purgeUserFromDatabase(db, userId, {
+      schoolId: progress?.schoolId ?? null,
+      points: progress?.points ?? 0,
     });
 
     // Outside the DB transaction: drop the auth-side record so the

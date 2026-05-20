@@ -14,6 +14,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { flushDeferredReferralRewardsForReferrer } from "@/lib/referral-grant";
+import { isValidTytAytStudentGrade } from "@/lib/school-catalog";
 
 function validatePath(path: string, grade: number | null): { ok: true; path: LearningPath; grade: number | null } | { ok: false; error: string } {
   if (path === "adult") {
@@ -26,7 +27,7 @@ function validatePath(path: string, grade: number | null): { ok: true; path: Lea
     return { ok: true, path: "lgs", grade };
   }
   if (path === "tyt_ayt") {
-    if (grade == null || grade < 9 || grade > 12) {
+    if (!isValidTytAytStudentGrade(grade)) {
       return { ok: false, error: "9–12. sınıf seçmelisiniz." };
     }
     return { ok: true, path: "tyt_ayt", grade };

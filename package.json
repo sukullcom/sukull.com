@@ -24,7 +24,9 @@
     "db:analyze": "tsx scripts/analyze-tables.ts",
     "db:explain": "tsx scripts/explain-hot-queries.ts",
     "schools:import": "node ./scripts/import-schools.js",
-    "schools:upload": "tsx ./scripts/upload-schools.ts"
+    "schools:upload": "tsx ./scripts/upload-schools.ts",
+    "launch:purge-users": "tsx scripts/purge-test-users.ts",
+    "launch:post-cleanup": "tsx scripts/apply-migration.ts scripts/launch-post-cleanup.sql"
   },
   "dependencies": {
     "@codemirror/lang-javascript": "^6.2.2",

@@ -13,6 +13,7 @@ import {
 import { getRequestLogger } from '@/lib/logger';
 import { clampPositiveInt } from '@/lib/pagination';
 import { SCHOOL_LEADERBOARD_LIST_MAX } from '@/lib/school-leaderboard-limits';
+import { sortSchoolCategories } from '@/lib/school-catalog';
 
 type SchoolType = 'university' | 'high_school' | 'secondary_school' | 'elementary_school';
 
@@ -144,9 +145,8 @@ export async function GET(request: NextRequest) {
         if (!city || !district) {
           return NextResponse.json({ error: 'İl ve ilçe bilgisi gereklidir.' }, { status: 400 });
         }
-        const categories = await getCategoriesAggregate(
-          city.toUpperCase(),
-          district.toUpperCase(),
+        const categories = sortSchoolCategories(
+          await getCategoriesAggregate(city.toUpperCase(), district.toUpperCase()),
         );
         return jsonSchoolCatalog({ categories });
       }

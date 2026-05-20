@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { clientLogger } from "@/lib/client-logger";
 import { fetchSchoolCatalogJson } from "@/lib/fetch-school-catalog";
+import { getSchoolCategoryLabel, sortSchoolCategories } from "@/lib/school-catalog";
 
 type School = { 
   id: number; 
@@ -102,7 +103,7 @@ export const StudyBuddySchoolSelector = ({
         fields: { detail: r.message },
       });
     } else {
-      setCategories(r.data.categories || []);
+      setCategories(sortSchoolCategories(r.data.categories || []));
     }
     setLoading(false);
   };
@@ -191,16 +192,6 @@ export const StudyBuddySchoolSelector = ({
     onSchoolSelect(null);
   }, [onSchoolSelect]);
 
-  const getCategoryLabel = (category: string) => {
-    switch (category) {
-      case 'Primary School': return 'İlkokul';
-      case 'Secondary School': return 'Ortaokul';
-      case 'High School': return 'Lise';
-      case 'University': return 'Üniversite';
-      default: return category;
-    }
-  };
-
   return (
     <div className={`space-y-3 ${className}`}>
       {error && (
@@ -257,7 +248,7 @@ export const StudyBuddySchoolSelector = ({
             <option value="">Okul türü seçin...</option>
             {categories.map((category) => (
               <option key={`${category.category}-${category.type}`} value={category.category}>
-                {getCategoryLabel(category.category)}
+                {getSchoolCategoryLabel(category.category)}
               </option>
             ))}
           </select>

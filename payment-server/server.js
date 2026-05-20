@@ -158,12 +158,24 @@ if (process.env.DATABASE_URL) {
 // ---------------------------------------------------------------------------
 let iyzipay = null;
 if (process.env.IYZICO_API_KEY && process.env.IYZICO_SECRET_KEY) {
+  const iyzicoUri =
+    process.env.IYZICO_BASE_URL || "https://sandbox-api.iyzipay.com";
+  const isSandboxUri = /sandbox/i.test(iyzicoUri);
+  const apiKeyLooksSandbox = /^sandbox-/i.test(
+    process.env.IYZICO_API_KEY || "",
+  );
+  if (process.env.NODE_ENV === "production" && (isSandboxUri || apiKeyLooksSandbox)) {
+    console.error(
+      "FATAL: Production must use live Iyzico (IYZICO_BASE_URL=https://api.iyzipay.com, live API keys).",
+    );
+    process.exit(1);
+  }
   iyzipay = new Iyzipay({
     apiKey: process.env.IYZICO_API_KEY,
     secretKey: process.env.IYZICO_SECRET_KEY,
-    uri: process.env.IYZICO_BASE_URL || "https://sandbox-api.iyzipay.com",
+    uri: iyzicoUri,
   });
-  console.log("Iyzico initialized");
+  console.log("Iyzico initialized", isSandboxUri ? "(sandbox)" : "(live)");
 } else {
   console.error("IYZICO_API_KEY/IYZICO_SECRET_KEY missing - payments will fail");
 }

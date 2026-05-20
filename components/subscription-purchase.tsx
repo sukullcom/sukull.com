@@ -36,27 +36,35 @@ export default function SubscriptionPurchase({ onCancel }: SubscriptionPurchaseP
   const [zipCode, setZipCode] = useState('');
   const [identityNumber, setIdentityNumber] = useState('');
 
+  const [agreeDistanceSales, setAgreeDistanceSales] = useState(false);
+  const [agreePreInfo, setAgreePreInfo] = useState(false);
+  const [agreeAutoRenew, setAgreeAutoRenew] = useState(false);
+
   const handlePayment = async () => {
     if (loading) return;
 
+    if (!agreeDistanceSales || !agreePreInfo || !agreeAutoRenew) {
+      toast.error(
+        'Devam edebilmek için sözleşmeleri ve otomatik yenileme bilgisini onaylamanız gerekir.',
+      );
+      return;
+    }
+
     setLoading(true);
 
-    // Validate form fields
+    const errors: string[] = [];
     if (!holderName.trim() || !cardNumber.trim() || !expireMonth.trim() || !expireYear.trim() || !cvc.trim()) {
-      toast.error('Lütfen tüm kart bilgilerini doldurun');
-      setLoading(false);
-      return;
+      errors.push('Kart bilgileri eksik');
     }
-
     if (!contactName.trim() || !phone.trim() || !address.trim() || !city.trim()) {
-      toast.error('Lütfen tüm fatura adresi bilgilerini doldurun');
-      setLoading(false);
-      return;
+      errors.push('Fatura adresi eksik');
     }
-
     const tc = identityNumber.replace(/\D/g, '');
     if (!isValidTcKimlik(tc)) {
-      toast.error('Geçersiz TC kimlik numarası. Lütfen 11 haneli doğru numarayı giriniz.');
+      errors.push('TC kimlik geçersiz');
+    }
+    if (errors.length > 0) {
+      toast.error(`Lütfen şu alanları kontrol et: ${errors.join(', ')}.`);
       setLoading(false);
       return;
     }
@@ -332,12 +340,76 @@ export default function SubscriptionPurchase({ onCancel }: SubscriptionPurchaseP
           </CardContent>
         </Card>
 
-        <div className="flex flex-col items-center gap-2 py-1">
+        <div className="mt-6 rounded-2xl border border-border/90 bg-muted/80 p-4 text-sm text-foreground">
+          <label className="flex items-start gap-3">
+            <input
+              type="checkbox"
+              checked={agreeDistanceSales}
+              onChange={(e) => setAgreeDistanceSales(e.target.checked)}
+              className="mt-1 h-4 w-4 shrink-0 rounded border-input text-suk-payment focus:ring-2 focus:ring-suk-payment/25"
+            />
+            <span>
+              <a
+                href="/yasal/mesafeli-satis"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-suk-payment-soft-fg underline decoration-suk-payment/40 underline-offset-2 hover:text-suk-payment"
+              >
+                Mesafeli Satış Sözleşmesi
+              </a>
+              {"'ni okudum ve kabul ediyorum."}
+            </span>
+          </label>
+          <label className="mt-4 flex items-start gap-3">
+            <input
+              type="checkbox"
+              checked={agreePreInfo}
+              onChange={(e) => setAgreePreInfo(e.target.checked)}
+              className="mt-1 h-4 w-4 shrink-0 rounded border-input text-suk-payment focus:ring-2 focus:ring-suk-payment/25"
+            />
+            <span>
+              <a
+                href="/yasal/on-bilgilendirme"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-suk-payment-soft-fg underline decoration-suk-payment/40 underline-offset-2 hover:text-suk-payment"
+              >
+                Ön Bilgilendirme Formu
+              </a>
+              {"'nu okudum, bilgilendirildim ve onaylıyorum."}
+            </span>
+          </label>
+          <label className="mt-4 flex items-start gap-3">
+            <input
+              type="checkbox"
+              checked={agreeAutoRenew}
+              onChange={(e) => setAgreeAutoRenew(e.target.checked)}
+              className="mt-1 h-4 w-4 shrink-0 rounded border-input text-suk-payment focus:ring-2 focus:ring-suk-payment/25"
+            />
+            <span className="text-muted-foreground">
+              Premium aboneliğin <strong className="text-foreground">30 günde bir 100₺</strong>{" "}
+              otomatik yenileneceğini; iptal etmediğim sürece tahsilatın devam edeceğini
+              biliyorum. İptal için profil veya destek kanalından talep edebilirim.
+            </span>
+          </label>
+        </div>
+
+        <div className="mt-4 flex flex-col items-center gap-2">
           <PaymentTrustStrip variant="compact" />
+          <p className="text-center text-[11px] text-muted-foreground">
+            <a
+              href="/yasal/teslimat-ve-iade"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline decoration-muted-foreground/50 underline-offset-2 hover:text-foreground"
+            >
+              Teslimat ve İade Şartları
+            </a>
+          </p>
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-4">
+        <div className="mt-4 flex gap-4">
           <Button 
             onClick={onCancel}
             variant="muted"
@@ -348,7 +420,7 @@ export default function SubscriptionPurchase({ onCancel }: SubscriptionPurchaseP
           </Button>
           <Button 
             onClick={handlePayment}
-            disabled={loading}
+            disabled={loading || !agreeDistanceSales || !agreePreInfo || !agreeAutoRenew}
             variant="payment"
             className="flex-1"
             size="lg"

@@ -20,6 +20,11 @@ import {
 } from "lucide-react";
 import type { SelectedSchoolSummary } from "@/app/(main)/(protected)/profile/profile-school-selector";
 import { SCHOOL_AND_GRADE_TRIAL_DAYS } from "@/lib/school-grade-lock";
+import {
+  formatStudentGradeLabel,
+  isValidTytAytStudentGrade,
+  TYT_AYT_GRADE_OPTIONS,
+} from "@/lib/school-catalog";
 
 const ProfileSchoolSelector = dynamic(
   () =>
@@ -69,7 +74,7 @@ export const OnboardingForm = () => {
       toast.error("5–8 arası sınıf seçin.");
       return;
     }
-    if (mode === "tyt_ayt" && (grade === "" || grade < 9 || grade > 12)) {
+    if (mode === "tyt_ayt" && (grade === "" || !isValidTytAytStudentGrade(grade as number))) {
       toast.error("9–12 arası sınıf seçin.");
       return;
     }
@@ -166,7 +171,7 @@ export const OnboardingForm = () => {
                 onClick={() => {
                   setMode(opt.id);
                   if (opt.id === "lgs" && (grade === "" || grade < 5 || grade > 8)) setGrade("");
-                  if (opt.id === "tyt_ayt" && (grade === "" || grade < 9 || grade > 12))
+                  if (opt.id === "tyt_ayt" && (grade === "" || !isValidTytAytStudentGrade(grade as number)))
                     setGrade("");
                 }}
                 className={[
@@ -220,9 +225,9 @@ export const OnboardingForm = () => {
                 }
               >
                 <option value="">Seçin</option>
-                {[9, 10, 11, 12].map((g) => (
-                  <option key={g} value={g}>
-                    {g}. sınıf
+                {TYT_AYT_GRADE_OPTIONS.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
                   </option>
                 ))}
               </select>
@@ -345,7 +350,7 @@ export const OnboardingForm = () => {
               <ReviewRow
                 icon={<Users className="h-4 w-4" />}
                 label="Sınıf"
-                value={`${grade}. sınıf`}
+                value={formatStudentGradeLabel(grade as number)}
               />
             )}
             <ReviewRow
