@@ -14,7 +14,10 @@ import { getRequestLogger } from '@/lib/logger';
 import { clampPositiveInt } from '@/lib/pagination';
 import { SCHOOL_LEADERBOARD_LIST_MAX } from '@/lib/school-leaderboard-limits';
 import { sortSchoolCategories } from '@/lib/school-catalog';
-import { isValidSchoolCity } from '@/lib/school-data-normalize';
+import {
+  isValidSchoolCity,
+  mergeDistrictAggregates,
+} from '@/lib/school-data-normalize';
 
 type SchoolType = 'university' | 'high_school' | 'secondary_school' | 'elementary_school';
 
@@ -55,8 +58,8 @@ const getCitiesAggregate = unstable_cache(
 );
 
 const getDistrictsAggregate = unstable_cache(
-  async (cityUpper: string) =>
-    db
+  async (cityUpper: string) => {
+    const rows = await db
       .select({
         district: schools.district,
         count: sql<number>`count(*)::int`,
@@ -64,8 +67,10 @@ const getDistrictsAggregate = unstable_cache(
       .from(schools)
       .where(eq(schools.city, cityUpper))
       .groupBy(schools.district)
-      .orderBy(schools.district),
-  ['schools-districts'],
+      .orderBy(schools.district);
+    return mergeDistrictAggregates(rows);
+  },
+  ['schools-districts-v2'],
   { tags: [CACHE_TAGS.schoolsMaster], revalidate: CACHE_TTL.schoolsMaster },
 );
 

@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   fixUniversityCity,
   foldDistrictKey,
+  mergeDistrictAggregates,
   normalizeDistrictName,
   normalizeSchoolCsvRows,
   pickCanonicalDistrict,
@@ -16,6 +17,18 @@ describe("fixUniversityCity", () => {
         "University",
       ),
     ).toBe("İSTANBUL");
+  });
+});
+
+describe("mergeDistrictAggregates", () => {
+  it("birleştirir BAGCILAR ve BAĞCILAR", () => {
+    const merged = mergeDistrictAggregates([
+      { district: "BAGCILAR", count: 3 },
+      { district: "BAĞCILAR", count: 142 },
+    ]);
+    expect(merged).toHaveLength(1);
+    expect(merged[0]?.district).toBe("BAĞCILAR");
+    expect(merged[0]?.count).toBe(145);
   });
 });
 

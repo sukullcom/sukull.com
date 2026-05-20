@@ -61,6 +61,26 @@ export function pickCanonicalDistrict(variants: string[]): string {
   return sorted[0]!;
 }
 
+export type DistrictAggRow = { district: string; count: number };
+
+/** API ilçe listesi: BAGCILAR + BAĞCILAR → tek BAĞCILAR (sayılar birleşir). */
+export function mergeDistrictAggregates(rows: DistrictAggRow[]): DistrictAggRow[] {
+  const groups = new Map<string, { names: string[]; count: number }>();
+  for (const r of rows) {
+    const fold = foldDistrictKey(r.district);
+    const g = groups.get(fold) ?? { names: [], count: 0 };
+    if (!g.names.includes(r.district)) g.names.push(r.district);
+    g.count += Number(r.count);
+    groups.set(fold, g);
+  }
+  return Array.from(groups.values())
+    .map((g) => ({
+      district: normalizeDistrictName(pickCanonicalDistrict(g.names), ""),
+      count: g.count,
+    }))
+    .sort((a, b) => a.district.localeCompare(b.district, "tr"));
+}
+
 export function normalizeDistrictName(district: string, cityUpper: string): string {
   const trimmed = district.trim();
   const upper = trimmed.toLocaleUpperCase("tr-TR");
