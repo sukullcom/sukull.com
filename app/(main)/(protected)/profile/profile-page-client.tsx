@@ -90,7 +90,7 @@ export default function ProfilePageClient({
   profile: ProfileProps;
   allSchools: School[];
   analytics: ProfileAnalyticsData | null;
-  /** Aylık abonelik — detaylı profil analizi + sonsuz can */
+  /** 30 günlük Premium paket — detaylı profil analizi + sonsuz can */
   hasAnalyticsAccess: boolean;
 }) {
   const [activeTab, setActiveTab] = useState<"analytics" | "settings">("analytics");
@@ -357,7 +357,7 @@ export default function ProfilePageClient({
                   <div className="min-w-0 flex-1">
                     <h3 className="text-lg font-bold text-foreground">Detaylı analiz Premium ile</h3>
                     <p className="mt-1 text-sm text-muted-foreground">
-                      Konu ve kurs bazlı performans, zorluk dağılımı ve özet istatistikler aylık abonelikte.
+                      Konu ve kurs bazlı performans, zorluk dağılımı ve özet istatistikler Premium pakette.
                       Ayrıca <strong className="text-foreground">sonsuz can</strong> avantajı da dahil.
                     </p>
                   </div>

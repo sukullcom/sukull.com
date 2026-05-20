@@ -1,22 +1,15 @@
 import { ImageResponse } from "next/og";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
+
+import { loadBrandMascotDataUrl } from "@/lib/load-brand-mascot-data-url";
 
 export const runtime = "nodejs";
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
 
-/** iOS Ana Ekrana Ekle — `icon.tsx` ile aynı kompozisyon, 180×180 */
+/** iOS Ana Ekrana Ekle — `icon.tsx` ile aynı maskot, şeffaf zemin. */
 export default async function AppleIcon() {
-  let mascotSrc: string | null = null;
-  try {
-    const buf = await readFile(
-      path.join(process.cwd(), "public", "favicon.ico"),
-    );
-    mascotSrc = `data:image/x-icon;base64,${buf.toString("base64")}`;
-  } catch {
-    /* yoksay */
-  }
+  const mascotSrc = await loadBrandMascotDataUrl();
+  const imgSize = 168;
 
   return new ImageResponse(
     (
@@ -27,15 +20,15 @@ export default async function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#84cc16",
+          background: "transparent",
         }}
       >
         {mascotSrc ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={mascotSrc}
-            width={130}
-            height={130}
+            width={imgSize}
+            height={imgSize}
             alt=""
             style={{ objectFit: "contain" }}
           />
@@ -44,7 +37,7 @@ export default async function AppleIcon() {
             style={{
               fontSize: 72,
               fontWeight: 900,
-              color: "#ffffff",
+              color: "#7c3aed",
               fontFamily: "system-ui, sans-serif",
             }}
           >

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 import { useSecureLogout } from '@/hooks/use-secure-logout';
+import { BRAND_MASCOT_PATH } from '@/lib/brand-mascot';
 
 const supabaseClient = createClient();
 
@@ -41,11 +42,11 @@ export const Header = () => {
       <div className="lg:max-w-screen-lg mx-auto flex items-center justify-between gap-2 h-full">
         <div className="flex items-center gap-x-2 sm:gap-x-3 min-w-0">
           <Image
-            src="/mascot_purple.svg"
+            src={BRAND_MASCOT_PATH}
             height={40}
             width={40}
-            alt="Mascot"
-            className="h-8 w-8 sm:h-10 sm:w-10 shrink-0"
+            alt="Sukull"
+            className="h-8 w-8 shrink-0 object-contain sm:h-10 sm:w-10"
           />
           <h1 className="truncate text-xl font-extrabold tracking-wide text-suk-brand sm:text-2xl">
             Sukull

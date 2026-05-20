@@ -38,14 +38,13 @@ export default function SubscriptionPurchase({ onCancel }: SubscriptionPurchaseP
 
   const [agreeDistanceSales, setAgreeDistanceSales] = useState(false);
   const [agreePreInfo, setAgreePreInfo] = useState(false);
-  const [agreeAutoRenew, setAgreeAutoRenew] = useState(false);
 
   const handlePayment = async () => {
     if (loading) return;
 
-    if (!agreeDistanceSales || !agreePreInfo || !agreeAutoRenew) {
+    if (!agreeDistanceSales || !agreePreInfo) {
       toast.error(
-        'Devam edebilmek için sözleşmeleri ve otomatik yenileme bilgisini onaylamanız gerekir.',
+        "Devam edebilmek için Mesafeli Satış Sözleşmesi ve Ön Bilgilendirme Formu'nu onaylamanız gerekir.",
       );
       return;
     }
@@ -167,9 +166,9 @@ export default function SubscriptionPurchase({ onCancel }: SubscriptionPurchaseP
             <InfinityIcon className="absolute -top-1 -right-1 h-4 w-4 text-suk-payment" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Premium platform hizmeti (abonelik)</h1>
+            <h1 className="text-2xl font-bold text-foreground">Premium platform hizmeti</h1>
             <p className="text-muted-foreground">
-              Aylık 100₺ — sınırsız can hakkı ve profilde detaylı öğrenme analizi
+              Tek seferlik 100₺ — 30 gün süreyle sınırsız can ve profilde detaylı analiz
             </p>
           </div>
         </div>
@@ -179,17 +178,17 @@ export default function SubscriptionPurchase({ onCancel }: SubscriptionPurchaseP
           <CardContent className="p-6">
             <div className="flex justify-between items-center">
               <div>
-                <h3 className="font-semibold text-lg text-foreground">Premium — Aylık hizmet paketi</h3>
+                <h3 className="font-semibold text-lg text-foreground">Premium — 30 günlük paket</h3>
                 <ul className="text-sm text-muted-foreground mt-2 space-y-1">
                   <li>• Sınırsız kalp (yanlışta can düşmez)</li>
                   <li>• Profil → Analiz: konu/kurs performansı, zorluk ve soru türü dağılımı</li>
                   <li>• Kesintisiz çözüm deneyimi</li>
-                  <li>• 30 gün geçerli, yenileme ile uzar</li>
+                  <li>• 30 gün geçerlidir; otomatik yenileme yoktur, süre bitince tekrar satın alınır</li>
                 </ul>
               </div>
               <div className="text-right">
                 <div className="text-3xl font-bold text-suk-payment">100₺</div>
-                <div className="text-sm text-muted-foreground">Aylık</div>
+                <div className="text-sm text-muted-foreground">30 gün</div>
               </div>
             </div>
           </CardContent>
@@ -379,19 +378,10 @@ export default function SubscriptionPurchase({ onCancel }: SubscriptionPurchaseP
               {"'nu okudum, bilgilendirildim ve onaylıyorum."}
             </span>
           </label>
-          <label className="mt-4 flex items-start gap-3">
-            <input
-              type="checkbox"
-              checked={agreeAutoRenew}
-              onChange={(e) => setAgreeAutoRenew(e.target.checked)}
-              className="mt-1 h-4 w-4 shrink-0 rounded border-input text-suk-payment focus:ring-2 focus:ring-suk-payment/25"
-            />
-            <span className="text-muted-foreground">
-              Premium aboneliğin <strong className="text-foreground">30 günde bir 100₺</strong>{" "}
-              otomatik yenileneceğini; iptal etmediğim sürece tahsilatın devam edeceğini
-              biliyorum. İptal için profil veya destek kanalından talep edebilirim.
-            </span>
-          </label>
+          <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+            Bu ödeme tek seferliktir; kartınızdan otomatik yenileme tahsilatı yapılmaz. Süre
+            sonunda Premium&apos;u sürdürmek için yeniden satın almanız gerekir.
+          </p>
         </div>
 
         <div className="mt-4 flex flex-col items-center gap-2">
@@ -420,7 +410,7 @@ export default function SubscriptionPurchase({ onCancel }: SubscriptionPurchaseP
           </Button>
           <Button 
             onClick={handlePayment}
-            disabled={loading || !agreeDistanceSales || !agreePreInfo || !agreeAutoRenew}
+            disabled={loading || !agreeDistanceSales || !agreePreInfo}
             variant="payment"
             className="flex-1"
             size="lg"

@@ -24,9 +24,7 @@ export function CreateAccountForm({ referralCodeFromUrl }: CreateAccountFormProp
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  // Legal consent. Required by KVKK + Mesafeli Sözleşmeler Yönetmeliği:
-  // the user must explicitly acknowledge the terms before account
-  // creation, not be opt-in by default. Checkbox gates submit.
+  /** Ücretsiz hesap: KVKK + gizlilik + kullanım şartları (mesafeli satış ödeme anında). */
   const [legalAccepted, setLegalAccepted] = useState(false);
 
   const router = useRouter();
@@ -135,7 +133,10 @@ export function CreateAccountForm({ referralCodeFromUrl }: CreateAccountFormProp
         autoComplete="new-password"
       />
 
-      {/* Legal consent — KVKK + Mesafeli sözleşme gereği açık rıza */}
+      <p className="text-xs text-muted-foreground">
+        Ücretsiz hesap açılışıdır; bu adımda ödeme veya abonelik başlatılmaz.
+      </p>
+
       <label className="flex w-full min-w-0 cursor-pointer items-start gap-2 text-xs leading-snug text-muted-foreground">
         <input
           id="legalAccepted"
@@ -177,27 +178,7 @@ export function CreateAccountForm({ referralCodeFromUrl }: CreateAccountFormProp
           >
             KVKK Aydınlatma Metni
           </Link>
-          ,{" "}
-          <Link
-            prefetch={false}
-            href="/yasal/mesafeli-satis"
-            target="_blank"
-            rel="noopener"
-            className="font-medium text-suk-brand hover:underline"
-          >
-            Mesafeli Satış Sözleşmesi
-          </Link>
-          {" ve "}
-          <Link
-            prefetch={false}
-            href="/yasal/teslimat-ve-iade"
-            target="_blank"
-            rel="noopener"
-            className="font-medium text-suk-brand hover:underline"
-          >
-            Teslimat ve İade Şartları
-          </Link>{" "}
-          metinlerini okudum, kabul ediyorum.
+          &apos;ni okudum ve kabul ediyorum.
         </span>
       </label>
 
@@ -234,7 +215,12 @@ export function CreateAccountForm({ referralCodeFromUrl }: CreateAccountFormProp
         </Link>
       </p>
 
-      <OAuthSignIn isLoading={isLoading} onLoadingChange={setIsLoading} redirectUrl="/courses" />
+      <OAuthSignIn
+        isLoading={isLoading}
+        onLoadingChange={setIsLoading}
+        redirectUrl="/courses"
+        termsAccepted={legalAccepted}
+      />
     </form>
   );
 }

@@ -12,9 +12,11 @@ interface Props {
   isLoading?: boolean;
   onLoadingChange?: (loading: boolean) => void;
   redirectUrl?: string;
+  /** Kayıt sayfasında ücretsiz hesap şartları onayı (KVKK / gizlilik / kullanım). */
+  termsAccepted?: boolean;
 }
 
-function OAuthButtons({ isLoading, onLoadingChange, redirectUrl }: Props) {
+function OAuthButtons({ isLoading, onLoadingChange, redirectUrl, termsAccepted = true }: Props) {
   const [internalLoading, setInternalLoading] = useState(false);
   const [providerLoading, setProviderLoading] = useState<boolean>(false);
   const searchParams = useSearchParams();
@@ -23,6 +25,12 @@ function OAuthButtons({ isLoading, onLoadingChange, redirectUrl }: Props) {
   const setLoading = onLoadingChange ?? setInternalLoading;
 
   const handleGoogleSignIn = async () => {
+    if (!termsAccepted) {
+      toast.error(
+        "Google ile devam etmek için Kullanım Şartları, Gizlilik Politikası ve KVKK metinlerini onaylamalısınız.",
+      );
+      return;
+    }
     try {
       setLoading(true);
       setProviderLoading(true);
@@ -39,7 +47,7 @@ function OAuthButtons({ isLoading, onLoadingChange, redirectUrl }: Props) {
     <Button
       variant="default"
       type="button"
-      disabled={loading}
+      disabled={loading || !termsAccepted}
       onClick={handleGoogleSignIn}
       className="w-full transition-opacity"
       style={{ opacity: loading ? 0.6 : 1, cursor: loading ? 'not-allowed' : 'pointer' }}

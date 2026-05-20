@@ -11,6 +11,7 @@ import gameIcon from "@/public/games.svg";
 import privateLessonIcon from "@/public/private_lesson.svg";
 import studyBuddyIcon from "@/public/study_buddy.svg";
 import profileIcon from "@/public/profile.svg";
+import { BRAND_MASCOT_PATH } from "@/lib/brand-mascot";
 
 type Props = {
   className?: string;
@@ -27,10 +28,11 @@ export const Sidebar = ({ className }: Props) => {
       <Link prefetch={false} href="/learn">
         <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3">
           <Image
-            src="/mascot_purple.svg"
+            src={BRAND_MASCOT_PATH}
             height={40}
             width={40}
-            alt="Sukull Mascot"
+            alt="Sukull"
+            className="object-contain"
           />
           <h1 className="text-2xl font-extrabold text-primary tracking-wide">
             Sukull

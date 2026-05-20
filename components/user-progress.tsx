@@ -4,6 +4,7 @@ import Image from "next/image";
 import { InfinityIcon } from "lucide-react";
 import { courses } from "@/db/schema";
 import { normalizeAvatarUrl } from "@/utils/avatar";
+import { BRAND_MASCOT_PATH } from "@/lib/brand-mascot";
 
 type Props = {
   activeCourse: typeof courses.$inferSelect;
@@ -25,10 +26,11 @@ export const UserProgress = ({
       <Link prefetch={false} href="/learn" className="shrink-0 mr-auto">
         <div className="flex items-center gap-1.5 p-1">
           <Image
-            src="/mascot_purple.svg"
+            src={BRAND_MASCOT_PATH}
             height={28}
             width={28}
             alt="Sukull"
+            className="object-contain"
           />
           <span className="text-base font-extrabold tracking-wide text-suk-brand">
             Sukull

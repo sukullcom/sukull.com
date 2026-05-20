@@ -1,8 +1,7 @@
 import type { MetadataRoute } from "next";
 
 /**
- * PWA manifest. İkonlar `app/icon.tsx` / `app/apple-icon.tsx` (PNG, lime zemin).
- * SVG maskot + beyaz `background_color` Android’de çerçeve yapıyordu — kaldırıldı.
+ * PWA manifest. İkonlar `app/icon.tsx` / `app/apple-icon.tsx` (maskot PNG, şeffaf zemin).
  */
 export default function manifest(): MetadataRoute.Manifest {
   return {
@@ -15,7 +14,7 @@ export default function manifest(): MetadataRoute.Manifest {
     scope: "/",
     display: "standalone",
     orientation: "portrait",
-    background_color: "#84cc16",
+    background_color: "#ffffff",
     theme_color: "#84cc16",
     categories: ["education", "productivity", "learning"],
     icons: [

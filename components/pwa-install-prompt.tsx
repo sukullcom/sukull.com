@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { X, Download } from "lucide-react";
+import Image from "next/image";
+import { X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { BRAND_MASCOT_PATH } from "@/lib/brand-mascot";
 
 /**
  * BeforeInstallPromptEvent is not in the TS DOM lib. Declaring the narrow
@@ -98,9 +100,13 @@ export function PwaInstallPrompt() {
       </button>
 
       <div className="flex items-start gap-3">
-        <div className="mt-0.5 flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-lime-100 text-lime-700">
-          <Download className="h-5 w-5" />
-        </div>
+        <Image
+          src={BRAND_MASCOT_PATH}
+          alt=""
+          width={40}
+          height={40}
+          className="mt-0.5 h-10 w-10 flex-none object-contain"
+        />
         <div className="flex-1">
           <h2 id="pwa-install-title" className="text-sm font-bold text-foreground">
             Sukull&apos;u ana ekrana ekle

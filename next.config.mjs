@@ -43,6 +43,11 @@ const nextConfig = {
    */
   async rewrites() {
     return [
+      // Eski tarayıcılar /varsayılan istekler — yeşil kare favicon.ico yerine maskot SVG.
+      {
+        source: '/favicon.ico',
+        destination: '/heads/happy_excited_purple.svg',
+      },
       {
         source: '/api/schools/search',
         destination: '/api/schools?action=search',
