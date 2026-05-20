@@ -75,7 +75,14 @@ npm run launch:purge-users
 # 3) Gerçek silme
 npm run launch:purge-users -- --execute
 
-# 4) Okul puanları + yetim raporu
+# 4) Tablolarda kalan eski test verisi (purge "silinecek yok" dese bile)
+npm run launch:purge-orphans
+npm run launch:purge-orphans -- --execute
+
+# 5) Hâlâ satır varsa — tüm aktivite/ödeme tablolarını boşalt (admin hesapları kalır)
+npm run launch:purge-orphans -- --execute --wipe-all
+
+# 6) Okul puanları + yetim raporu
 npm run launch:post-cleanup
 ```
 

@@ -26,7 +26,14 @@ The school system now supports 45,000+ schools from Turkey with advanced search 
 npm run db:migrate
 ```
 
-### 2. Import School Data
+### 2. Normalize CSV (şehir/ilçe yazımı)
+Kaynak CSV’de üniversite adının şehir sütununa yazılması veya `BAGCILAR` / `BAĞCILAR` gibi çift ilçe varsa önce:
+```bash
+npm run schools:normalize          # dry-run
+npm run schools:normalize -- --write
+```
+
+### 3. Import School Data
 ```bash
 npm run schools:import
 ```

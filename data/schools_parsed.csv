@@ -8231,8 +8231,8 @@ ANTALYA,GAZİPAŞA,Primary School,İlkokul,İstiklal Şehit Süleyman Gür İlko
 ANTALYA,GAZİPAŞA,Secondary School,Ortaokul,Karalar Hüseyinli Ortaokulu
 ANTALYA,GÜNDOĞMUŞ,High School,Anadolu Lisesi,Çok Programlı Anadolu Lisesi
 ANTALYA,GÜNDOĞMUŞ,Primary School,İlkokul,Köprülü Ayşe Güven İlkokulu
-ANTALYA,İBRADI,High School,Anadolu Lisesi,Necla-Yaşar Duru Çok Programlı Anadolu Lisesi
-ANTALYA,İBRADI,Secondary School,Ortaokul,Nefise Yılmaz İpek Ortaokulu
+ANTALYA,İBRADİ,High School,Anadolu Lisesi,Necla-Yaşar Duru Çok Programlı Anadolu Lisesi
+ANTALYA,İBRADİ,Secondary School,Ortaokul,Nefise Yılmaz İpek Ortaokulu
 ANTALYA,KAŞ,High School,Anadolu Lisesi,Emin Kasapoğlu Çok Programlı Anadolu Lisesi
 ANTALYA,KAŞ,High School,Anadolu Lisesi,İsmet Köroğlu Anadolu Lisesi
 ANTALYA,KAŞ,High School,Anadolu Lisesi,Kaş Çok Programlı Anadolu Lisesi
@@ -8647,9 +8647,9 @@ AYDIN,SULTANHİSAR,Primary School,İlkokul,Kabaca İlkokulu
 AYDIN,SULTANHİSAR,High School,Anadolu Lisesi,Yasemin Lütfiye Anadolu Lisesi
 AYDIN,SULTANHİSAR,High School,Anadolu Lisesi,Atça Şehit Mutlu Uçar Anadolu Lisesi
 AYDIN,SULTANHİSAR,Primary School,İlkokul,Uzunlar İlkokulu
-BAKANLIK,Y.Dışı-Azerbaycan,Primary School,Türk İlkokulu,Azerbaycan - Azerbaycan  Bakü Türk İlkokulu
-BAKANLIK,Y.Dışı,High School,Anadolu Lisesi,Kuveyt - Kuveyt Türk Anadolu Lisesi
-BAKANLIK,Y.Dışı-Türkmenistan,High School,Anadolu Lisesi,Türkmenistan-Türkmenistan Aşkabat Türk Anadolu Lisesi
+BAKANLIK,Y.DIŞI-AZERBAYCAN,Primary School,Türk İlkokulu,Azerbaycan - Azerbaycan  Bakü Türk İlkokulu
+BAKANLIK,Y.DIŞI,High School,Anadolu Lisesi,Kuveyt - Kuveyt Türk Anadolu Lisesi
+BAKANLIK,Y.DIŞI-TÜRKMENİSTAN,High School,Anadolu Lisesi,Türkmenistan-Türkmenistan Aşkabat Türk Anadolu Lisesi
 BALIKESİR,AYVALIK,Secondary School,Ortaokul,Çakmak Ortaokulu
 BALIKESİR,AYVALIK,Primary School,İlkokul,Abdülvahit Sağlam İlkokulu
 BALIKESİR,AYVALIK,Primary School,İlkokul,Akçapınar İlkokulu
@@ -10899,8 +10899,7 @@ HAKKARİ,MERKEZ,High School,Mesleki ve Teknik Anadolu Lisesi,15 Temmuz Şehitler
 HAKKARİ,MERKEZ,High School,Mesleki ve Teknik Anadolu Lisesi,Atatürk Mesleki ve Teknik Anadolu Lisesi
 HAKKARİ,MERKEZ,High School,Mesleki ve Teknik Anadolu Lisesi,Mehmet Akif Ersoy Kız Mesleki ve Teknik Anadolu Lisesi
 HAKKARİ,MERKEZ,Secondary School,Ortaokul,Seyyit Taha İmam Hatip Ortaokulu
-HAKKARİ,MERKEZ,Secondary School,Ortaokul,"ŞEHİT EĞİTİM MÜFETTİŞİ SELAHATTİN ŞİMŞEK
- ORTAOKULU"
+HAKKARİ,MERKEZ,Secondary School,Ortaokul,ŞEHİT EĞİTİM MÜFETTİŞİ SELAHATTİN ŞİMŞEK
 HAKKARİ,MERKEZ,Secondary School,Ortaokul,YUNUS EMRE ORTAOKULU
 HAKKARİ,ŞEMDİNLİ,High School,Mesleki ve Teknik Anadolu Lisesi,Mevlana Kız Mesleki ve Teknik Anadolu Lisesi
 HAKKARİ,ŞEMDİNLİ,High School,Anadolu Lisesi,Borsa İstanbul Anadolu Lisesi
@@ -27430,7 +27429,7 @@ SAKARYA,AKYAZI,Primary School,İlkokul,Erdoğdu İlkokulu
 MALATYA,AKÇADAĞ,Secondary School,Ortaokul,Yağmurlu Ortaokulu
 ADANA,SEYHAN,Primary School,İlkokul,Mürseloğlu İlkokulu
 DÜZCE,MERKEZ,Primary School,İlkokul,Ömer Dinçer İlkokulu
-BAKANLIK,Y.Dışı-Türkmenistan,Primary School,Türk İlkokulu,Türkmenistan Aşkabat Türk İlkokulu
+BAKANLIK,Y.DIŞI-TÜRKMENİSTAN,Primary School,Türk İlkokulu,Türkmenistan Aşkabat Türk İlkokulu
 İSTANBUL,BEŞİKTAŞ,Primary School,İlkokul,Rahmi Kirişçioğlu İlkokulu
 ANKARA,YENİMAHALLE,Secondary School,Ortaokul,Şehit Hakan Ünver İmam Hatip Ortaokulu
 KIRKLARELİ,LÜLEBURGAZ,Primary School,İlkokul,Şehit Er Hasan Yeşilçimen İlkokulu
@@ -31256,7 +31255,7 @@ KONYA,BOZKIR,Primary School,İlkokul,Boyalı İlkokulu
 ŞANLIURFA,EYYÜBİYE,Secondary School,Ortaokul,Bakışlar Ortaokulu
 KAHRAMANMARAŞ,ONİKİŞUBAT,Secondary School,Ortaokul,Döngele Ortaokulu
 ANKARA,ETİMESGUT,Secondary School,Ortaokul,Hasan Ali Yücel Ortaokulu
-BAKANLIK,Y.Dışı-Kırgızistan,Primary School,Türk İlkokulu,Kırgızistan Bişkek Türk İlkokulu
+BAKANLIK,Y.DIŞI-KIRGIZİSTAN,Primary School,Türk İlkokulu,Kırgızistan Bişkek Türk İlkokulu
 MALATYA,PÜTÜRGE,Secondary School,Ortaokul,PAZARCIK ORTAOKULU
 VAN,İPEKYOLU,Primary School,İlkokul,Karakoç İlkokulu
 DİYARBAKIR,KOCAKÖY,Secondary School,Ortaokul,Atatürk Ortaokulu
@@ -39462,7 +39461,7 @@ UŞAK,MERKEZ,Primary School,İlkokul,Şefkat İlkokulu
 MERSİN,AKDENİZ,High School,Mesleki ve Teknik Anadolu Lisesi,Sabiha Çiftçi Kız Mesleki ve Teknik Anadolu Lisesi
 MARDİN,ARTUKLU,Primary School,İlkokul,Gülseren-Enver Tüfekçioğlu İlkokulu
 MARDİN,KIZILTEPE,Primary School,İlkokul,Yaylım İlkokulu
-BAKANLIK,Y.Dışı-S.Arabistan,High School,Anadolu Lisesi,Abha Uluslararası Türk Anadolu Lisesi
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,High School,Anadolu Lisesi,Abha Uluslararası Türk Anadolu Lisesi
 AKSARAY,MERKEZ,Primary School,İlkokul,Güller Ceylan Acar İlkokulu
 NİĞDE,MERKEZ,Secondary School,Ortaokul,Yeşilgölcük Şehit Osman Turgut Ortaokulu
 AĞRI,PATNOS,Primary School,İlkokul,Cengiz Topel İlkokulu
@@ -41977,13 +41976,13 @@ BURSA,YILDIRIM,Secondary School,Ortaokul,Şehit Hasan Hüseyin Daşdemir Ortaoku
 İSTANBUL,SARIYER,Primary School,İlkokul,Zekeriyaköy İlkokulu
 TOKAT,YEŞİLYURT,Primary School,İlkokul,Şehit İdris Kurt Ekinli İlkokulu
 ORDU,KORGAN,Primary School,İlkokul,Sarıalıç İlkokulu
-BAKANLIK,Y.Dışı-Azerbaycan,High School,Anadolu Lisesi,Azerbaycan Bakü Türk Anadolu Lisesi
+BAKANLIK,Y.DIŞI-AZERBAYCAN,High School,Anadolu Lisesi,Azerbaycan Bakü Türk Anadolu Lisesi
 AYDIN,YENİPAZAR,Secondary School,Ortaokul,Yenipazar İmam Hatip Ortaokulu
 İSTANBUL,SANCAKTEPE,Secondary School,Ortaokul,60. Yıl Sarıgazi İmam Hatip Ortaokulu
 DİYARBAKIR,SİLVAN,Secondary School,Ortaokul,Çardak Ortaokulu
 AĞRI,TUTAK,Primary School,İlkokul,Şehit Uzman Çavuş Sezayi Atabey İlkokulu
 KOCAELİ,DERİNCE,Secondary School,Ortaokul,15. Kolordu Ortaokulu
-BAKANLIK,Y.Dışı-Azerbaycan,Secondary School,Ortaokul,Azerbaycan - Azerbaycan Bakü Türk Ortaokulu
+BAKANLIK,Y.DIŞI-AZERBAYCAN,Secondary School,Ortaokul,Azerbaycan - Azerbaycan Bakü Türk Ortaokulu
 MUŞ,MERKEZ,Secondary School,Ortaokul,Sungu Mimar Sinan Ortaokulu
 GAZİANTEP,ŞAHİNBEY,Secondary School,Ortaokul,Sırasöğüt Ortaokulu
 İSTANBUL,EYÜPSULTAN,Primary School,İlkokul,Feridun Tümer İlkokulu
@@ -42001,7 +42000,7 @@ MUŞ,MERKEZ,Primary School,İlkokul,Yoncalıöz İlkokulu
 ANKARA,MAMAK,Secondary School,Ortaokul,Ali Şir Nevai Ortaokulu
 MERSİN,YENİŞEHİR,Secondary School,Ortaokul,Mehmet Akif İnan Ortaokulu
 MERSİN,YENİŞEHİR,Primary School,İlkokul,Necdet Ülger İlkokulu
-BAKANLIK,Y.Dışı-Libya,Secondary School,Ortaokul,LİBYA TÜRK ORTAOKULU
+BAKANLIK,Y.DIŞI-LİBYA,Secondary School,Ortaokul,LİBYA TÜRK ORTAOKULU
 ŞANLIURFA,HALİLİYE,Primary School,İlkokul,Kayalı İlkokulu
 AĞRI,ELEŞKİRT,High School,İmam Hatip Lisesi,Recep Tayyip Erdoğan Anadolu İmam Hatip Lisesi
 ZONGULDAK,KİLİMLİ,Secondary School,Ortaokul,Şehit İslam Çakar İmam Hatip Ortaokulu
@@ -42064,7 +42063,7 @@ NİĞDE,MERKEZ,Secondary School,Ortaokul,Şehit Gökhan Altınalana Ortaokulu
 KÜTAHYA,TAVŞANLI,High School,Anadolu Lisesi,Balıköy Anadolu Lisesi
 MALATYA,DOĞANYOL,Primary School,İlkokul,Konurtay İlkokulu
 MALATYA,DOĞANYOL,Secondary School,Ortaokul,Koldere Ortaokulu
-BAKANLIK,Y.Dışı-Kırgızistan,High School,Anadolu Lisesi,Kırgızistan-Kırgız Türk Anadolu Lisesi
+BAKANLIK,Y.DIŞI-KIRGIZİSTAN,High School,Anadolu Lisesi,Kırgızistan-Kırgız Türk Anadolu Lisesi
 AYDIN,EFELER,Secondary School,Ortaokul,Umurlu İmam Hatip Ortaokulu
 BURSA,YILDIRIM,Secondary School,Ortaokul,Ticaret Borsası İmam Hatip Ortaokulu
 ADANA,KOZAN,Secondary School,Ortaokul,Faydalı Dede Mehmet Akçalı Vakfı Ortaokulu
@@ -42217,7 +42216,7 @@ HATAY,DEFNE,Primary School,İlkokul,Çekmece Gültepe 75.Yıl İlkokulu
 DİYARBAKIR,BİSMİL,Primary School,İlkokul,Sinan İlkokulu
 ANKARA,YENİMAHALLE,Secondary School,Ortaokul,Alâeddin Özdenören İmam Hatip Ortaokulu
 İSTANBUL,PENDİK,High School,İmam Hatip Lisesi,Kaynarca Kız Anadolu İmam Hatip Lisesi
-BAKANLIK,Y.Dışı-S.Arabistan,High School,Lise,S.Arabistan - Tebük Uluslararası Türk Lisesi
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,High School,Lise,S.Arabistan - Tebük Uluslararası Türk Lisesi
 HATAY,ERZİN,Primary School,İlkokul,Gökdere Şehit Astsubay Hakan Karataş İlkokulu
 KAHRAMANMARAŞ,DULKADİROĞLU,Primary School,İlkokul,Dereli Şehit Bilal Akgün İlkokulu
 DİYARBAKIR,BİSMİL,Primary School,İlkokul,Dikenli İlkokulu
@@ -42593,8 +42592,8 @@ ANKARA,GÜDÜL,Secondary School,Ortaokul,Güdül İmam Hatip Ortaokulu
 ZONGULDAK,GÖKÇEBEY,Primary School,İlkokul,Bakiler İlkokulu
 ŞANLIURFA,AKÇAKALE,Primary School,İlkokul,Sakça İlkokulu
 KÜTAHYA,MERKEZ,Secondary School,Ortaokul,Ahteri İmam Hatip Ortaokulu
-BAKANLIK,Y.Dışı-S.Arabistan,Secondary School,Ortaokul,RİYAD ULUSLARARASI TÜRK ORTAOKULU
-BAKANLIK,Y.Dışı-S.Arabistan,High School,Anadolu Lisesi,Riyad Uluslararası Türk Anadolu Lisesi
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,Secondary School,Ortaokul,RİYAD ULUSLARARASI TÜRK ORTAOKULU
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,High School,Anadolu Lisesi,Riyad Uluslararası Türk Anadolu Lisesi
 DİYARBAKIR,BAĞLAR,Primary School,İlkokul,Molla Gürani İlkokulu
 AMASYA,TAŞOVA,Secondary School,Ortaokul,Emine Bursalı İmam Hatip Ortaokulu
 KOCAELİ,DİLOVASI,Primary School,İlkokul,Şehit İzzettin İnceoğlu İlkokulu
@@ -43576,8 +43575,7 @@ KÜTAHYA,TAVŞANLI,Secondary School,Ortaokul,FEVZİPAŞA ORTAOKULU
 KÜTAHYA,TAVŞANLI,Primary School,İlkokul,Göbel İlkokulu
 KÜTAHYA,TAVŞANLI,High School,İmam Hatip Lisesi,Tavşanlı Kız Anadolu İmam Hatip Lisesi
 ŞANLIURFA,EYYÜBİYE,Secondary School,Ortaokul,Tekyamaç Ortaokulu
-HATAY,ANTAKYA,Secondary School,Ortaokul,"Şehit Adem Döğüşğen
-Ortaokulu"
+HATAY,ANTAKYA,Secondary School,Ortaokul,Şehit Adem Döğüşğen
 İSTANBUL,EYÜPSULTAN,Secondary School,Ortaokul,Şehit Murat Karakuş Ortaokulu
 MERSİN,TOROSLAR,High School,Mesleki ve Teknik Anadolu Lisesi,Cemile Hamdi Ongun Mesleki ve Teknik Anadolu Lisesi
 GİRESUN,YAĞLIDERE,Secondary School,Ortaokul,Yağlıdere İmam Hatip Ortaokulu
@@ -44025,7 +44023,7 @@ VAN,SARAY,Secondary School,Ortaokul,Duygu Fettah Tamince İmam Hatip Ortaokulu
 ANTALYA,MANAVGAT,Secondary School,Ortaokul,HACI ŞAYESTE-MUSTAFA GÜNEŞ ORTAOKULU
 ORDU,KORGAN,Primary School,İlkokul,Belalan Yolağzı İlkokulu
 VAN,BAŞKALE,Secondary School,Ortaokul,Yavuzlar Ortaokulu
-ANTALYA,İBRADI,Primary School,İlkokul,Mustafa Nazmi Demiröz İlkokulu
+ANTALYA,İBRADİ,Primary School,İlkokul,Mustafa Nazmi Demiröz İlkokulu
 AĞRI,PATNOS,Secondary School,Ortaokul,Yürekveren Ortaokulu
 BİNGÖL,MERKEZ,Primary School,İlkokul,Çukurca Yeni Yerleşim İlkokulu
 İSTANBUL,SİLİVRİ,Secondary School,Ortaokul,Yunus Emre İmam Hatip Ortaokulu
@@ -44046,7 +44044,7 @@ HATAY,DEFNE,Secondary School,Ortaokul,KOÇÖREN NACİYE TINAZTEPE ORTAOKULU
 ORDU,ALTINORDU,Primary School,İlkokul,Yağızlı Şehit Zafer Gülseren İlkokulu
 BİTLİS,ADİLCEVAZ,Primary School,İlkokul,Yarımada Köyü İlkokulu
 BURSA,İZNİK,Primary School,İlkokul,Çakırca İlkokulu
-BAKANLIK,Y.Dışı-Özbekistan,Secondary School,Ortaokul,ÖZBEKİSTAN TAŞKENT TÜRK ORTAOKULU
+BAKANLIK,Y.DIŞI-ÖZBEKİSTAN,Secondary School,Ortaokul,ÖZBEKİSTAN TAŞKENT TÜRK ORTAOKULU
 BİTLİS,HİZAN,Secondary School,Ortaokul,Hizan Merkez Ortaokulu
 ANKARA,ÇANKAYA,Secondary School,Ortaokul,Hilmi-Hatice Aksoy Ortaokulu
 BİTLİS,MERKEZ,Secondary School,Ortaokul,Mustafa Kemal Atatürk Ortaokulu
@@ -44276,7 +44274,7 @@ ZONGULDAK,ÇAYCUMA,Primary School,İlkokul,İsmail Hakkı Tonguç İlkokulu
 MARDİN,ARTUKLU,Primary School,İlkokul,Kabala Şakir Nuhoğlu İlkokulu
 AĞRI,PATNOS,Primary School,İlkokul,Aladağ İlkokulu
 BALIKESİR,ALTIEYLÜL,Secondary School,Ortaokul,Cumhuriyet Ortaokulu
-BAKANLIK,Y.Dışı-Türkmenistan,Secondary School,Ortaokul,Türkmenistan Aşkabat Türk Ortaokulu
+BAKANLIK,Y.DIŞI-TÜRKMENİSTAN,Secondary School,Ortaokul,Türkmenistan Aşkabat Türk Ortaokulu
 ŞANLIURFA,HALİLİYE,Secondary School,Ortaokul,Urfa İmam Hatip Ortaokulu
 ADANA,SAİMBEYLİ,Primary School,İlkokul,Yardibi Ortaoba İlkokulu
 BİTLİS,MERKEZ,Secondary School,Ortaokul,TOKİ Ortaokulu
@@ -44303,7 +44301,7 @@ HATAY,DEFNE,Primary School,İlkokul,Döver İlkokulu
 HAKKARİ,YÜKSEKOVA,Primary School,İlkokul,Armutdüzü Köyü İlkokulu
 KAYSERİ,AKKIŞLA,Secondary School,Ortaokul,Atatürk Ortaokulu
 ANTALYA,MANAVGAT,Primary School,İlkokul,Ulukapı Sülek Şehit Halil İbrahim Mudul İlkokulu
-BAKANLIK,Y.Dışı,High School,Anadolu Lisesi,S.Arabistan - Cidde Uluslararası Türk Anadolu Lisesi
+BAKANLIK,Y.DIŞI,High School,Anadolu Lisesi,S.Arabistan - Cidde Uluslararası Türk Anadolu Lisesi
 ANKARA,YENİMAHALLE,Secondary School,Ortaokul,Ziya Gökalp Ortaokulu
 ŞANLIURFA,HALİLİYE,Primary School,İlkokul,Konak İlkokulu
 ANKARA,ETİMESGUT,Primary School,İlkokul,Bağlıca ilkokulu
@@ -44373,7 +44371,7 @@ SAMSUN,CANİK,Primary School,İlkokul,Gökçepınar İlkokulu
 SİNOP,DURAĞAN,Primary School,İlkokul,Mehmet Akif Ersoy İlkokulu
 İZMİR,ÖDEMİŞ,Primary School,İlkokul,Yeniköy Şehit Cengiz Topel İlkokulu
 VAN,SARAY,Secondary School,Ortaokul,Karahisar Ortaokulu
-BAKANLIK,Y.Dışı-S.Arabistan,Primary School,Türk İlkokulu,S.Arabistan - Dammam Uluslararası Türk İlkokulu
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,Primary School,Türk İlkokulu,S.Arabistan - Dammam Uluslararası Türk İlkokulu
 İSTANBUL,SULTANGAZİ,Secondary School,Ortaokul,125 Yıl Ortaokulu
 KAHRAMANMARAŞ,ONİKİŞUBAT,Primary School,İlkokul,Hacıbudak İlkokulu
 İZMİR,ÖDEMİŞ,Primary School,İlkokul,Demirdere İlkokulu
@@ -45171,7 +45169,7 @@ KONYA,AKŞEHİR,High School,İmam Hatip Lisesi,Şehit Zeynep Sağır Anadolu İm
 KARABÜK,MERKEZ,Secondary School,Ortaokul,Karabük Bahaddin Gazi İmam Hatip Ortaokulu
 ANKARA,ÇUBUK,Primary School,İlkokul,Çubuk Süleyman Şah İlkokulu
 ANKARA,ÇUBUK,Secondary School,Ortaokul,Çubuk Süleyman Şah Ortaokulu
-BAKANLIK,Y.Dışı-Katar,Secondary School,Ortaokul,Katar Türk Ortaokulu
+BAKANLIK,Y.DIŞI-KATAR,Secondary School,Ortaokul,Katar Türk Ortaokulu
 ISPARTA,MERKEZ,Secondary School,Ortaokul,Hızırbey Ortaokulu
 HATAY,SAMANDAĞ,High School,Anadolu Lisesi,Kuşalanı Anadolu Lisesi
 ŞANLIURFA,SİVEREK,Secondary School,Ortaokul,Oluklu Ortaokulu
@@ -48341,11 +48339,11 @@ ADIYAMAN,BESNİ,Primary School,İlkokul,Fatih Sultan Mehmet İlkokulu
 VAN,ÇATAK,Primary School,İlkokul,Şehit İsa Baki İlkokulu
 KOCAELİ,ÇAYIROVA,Primary School,İlkokul,Çayırova Fuat Sezgin İlkokulu
 BAKANLIK,MERKEZE BAĞLI TAŞRA,High School,Lise,Açık Öğretim Lisesi
-BAKANLIK,Y.Dışı-S.Arabistan,Primary School,Türk İlkokulu,Cidde Uluslararası Türk İlkokulu
-BAKANLIK,Y.Dışı-Libya,Primary School,Türk İlkokulu,Libya Türk İlkokulu
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,Primary School,Türk İlkokulu,Cidde Uluslararası Türk İlkokulu
+BAKANLIK,Y.DIŞI-LİBYA,Primary School,Türk İlkokulu,Libya Türk İlkokulu
 İSTANBUL,BEŞİKTAŞ,Secondary School,Ortaokul,Mimar Sinan Üniversitesi Devlet Konservatuarı Müzik ve Bale Ortaokulu
-BAKANLIK,Y.Dışı-S.Arabistan,Primary School,Türk İlkokulu,Tebük Uluslararası Türk İlkokulu
-BAKANLIK,Y.Dışı-Kuveyt,Primary School,Türk İlkokulu,Kuveyt Türk İlkokulu
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,Primary School,Türk İlkokulu,Tebük Uluslararası Türk İlkokulu
+BAKANLIK,Y.DIŞI-KUVEYT,Primary School,Türk İlkokulu,Kuveyt Türk İlkokulu
 ANKARA,ÇANKAYA,Secondary School,Ortaokul,Bilkent Üniversitesi Müzik ve Sahne Sanatları Fakültesi Müzik Hazırlık Ortaokulu
 ESKİŞEHİR,TEPEBAŞI,Secondary School,Ortaokul,Anadolu Üniv. Dev. Kons. Müz. ve Bale Ortaokulu
 ANKARA,ÇANKAYA,High School,Lise,Bilkent Ün. Müzik ve Sahne Sanatları Fakültesi Müzik ve Sahne Sanatları Lisesi
@@ -48355,7 +48353,7 @@ ANTALYA,KONYAALTI,High School,Lise,Akdeniz Üniversitesi Antalya Dev.Kon. Müzik
 ANTALYA,KONYAALTI,Secondary School,Ortaokul,Akdeniz Üniversitesi Antalya Dev.Kon. Müzik ve Bale Ortaokulu
 İSTANBUL,BEŞİKTAŞ,High School,Lise,Mimar Sinan Üniversitesi Devlet Konservatuarı Müzik ve Sahne Sanatları Lisesi
 İSTANBUL,MALTEPE,High School,Lise,İ.Ü. Devlet Konservatuarı Müzik ve Sahne Sanatları Lisesi
-BAKANLIK,Y.Dışı-S.Arabistan,High School,Anadolu Lisesi,Taif Uluslararası Türk Anadolu Lisesi
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,High School,Anadolu Lisesi,Taif Uluslararası Türk Anadolu Lisesi
 MERSİN,YENİŞEHİR,Secondary School,Ortaokul,Mersin Üni. Dev. Kons. Müzik ve Bale Ortaokulu
 BİTLİS,MERKEZ,Primary School,İlkokul,Doğruyol Köyü İlkokulu
 BİTLİS,MERKEZ,Primary School,İlkokul,Çeltikli Şehit Nadir İpek İlkokulu
@@ -48426,7 +48424,7 @@ ERZURUM,KÖPRÜKÖY,Primary School,İlkokul,Yukarı Kızılca İlkokulu
 ERZURUM,KARAYAZI,Primary School,İlkokul,Karaağıl İlkokulu
 GİRESUN,DERELİ,Primary School,İlkokul,Yıldız İlkokulu
 BİNGÖL,MERKEZ,Primary School,İlkokul,İçpınar İlkokulu
-ŞANLIURFA,AKCAKALE,Primary School,İlkokul,Yunus Emre İlkokulu
+ŞANLIURFA,AKÇAKALE,Primary School,İlkokul,Yunus Emre İlkokulu
 AĞRI,MERKEZ,Primary School,İlkokul,Çatalipaşa 3. Boğaziçi İlkokulu
 AĞRI,DİYADİN,Primary School,İlkokul,Taşkesen Cumhuriyet İlkokulu
 ERZURUM,KARAYAZI,Primary School,İlkokul,Üzengili İlkokulu
@@ -48497,7 +48495,7 @@ HAKKARİ,YÜKSEKOVA,Primary School,İlkokul,Keçili Köyü İlkokulu
 ANKARA,ÇANKAYA,Primary School,İlkokul,Karataş İlkokulu
 GAZİANTEP,ŞEHİTKAMİL,Primary School,İlkokul,Altınova İlkokulu
 BİTLİS,AHLAT,Primary School,İlkokul,Yunus Ensari İlkokulu
-AYDIN,INCİRLİOVA,Secondary School,Ortaokul,Acarlar 60.Yıl Ortaokulu
+AYDIN,İNCİRLİOVA,Secondary School,Ortaokul,Acarlar 60.Yıl Ortaokulu
 HAKKARİ,YÜKSEKOVA,Primary School,İlkokul,Onbaşılar Köyü Çamdalı Mezrası İlkokulu
 HAKKARİ,ŞEMDİNLİ,Primary School,İlkokul,Bağlar Köyü Çem Mezrası İlkokulu
 KAYSERİ,AKKIŞLA,Secondary School,Ortaokul,Derviş Çakırtekin Ortaokulu
@@ -48577,7 +48575,7 @@ ADANA,KOZAN,Primary School,İlkokul,Tepecikören Çöbük İlkokulu
 ADANA,KOZAN,Primary School,İlkokul,Kahveli İlkokulu
 ADANA,KOZAN,Primary School,İlkokul,Zerdali İlkokulu
 ADANA,KOZAN,Primary School,İlkokul,Kuytucak Karapınar İlkokulu
-KONYA,HADIM,Primary School,İlkokul,Merkez İlkokulu
+KONYA,HADİM,Primary School,İlkokul,Merkez İlkokulu
 VAN,ÖZALP,Primary School,İlkokul,Yukarı Ayazca İlkokulu
 MUŞ,MERKEZ,Secondary School,Ortaokul,Kepenek Ortaokulu
 KAHRAMANMARAŞ,AFŞİN,Primary School,İlkokul,Kabaağaç Yeniköy Şehit Mesut Polat İlkokulu
@@ -48615,7 +48613,7 @@ ADANA,KOZAN,Primary School,İlkokul,Şehit Öğretmen Ali Yıldırım İlkokulu
 MUŞ,KORKUT,Primary School,İlkokul,Tan İlkokulu
 ŞANLIURFA,CEYLANPINAR,Primary School,İlkokul,Gültepe İlkokulu
 MALATYA,PÖTÜRGE,Primary School,İlkokul,Yamaç Sağırlar İlkokulu
-KONYA,HADIM,Primary School,İlkokul,Aşağı Hadim Ahmet Yavuz İlkokulu
+KONYA,HADİM,Primary School,İlkokul,Aşağı Hadim Ahmet Yavuz İlkokulu
 MUŞ,KORKUT,Primary School,İlkokul,Güven İlkokulu
 ŞANLIURFA,SİVEREK,Primary School,İlkokul,Altınahır İlkokulu
 ŞANLIURFA,SİVEREK,Primary School,İlkokul,Altınlı İlkokulu
@@ -48644,21 +48642,21 @@ MUŞ,MALAZGİRT,Primary School,İlkokul,İyikomşu İlkokulu
 MUŞ,MALAZGİRT,Primary School,İlkokul,Kuruca İlkokulu
 ŞANLIURFA,SİVEREK,Primary School,İlkokul,Gözelek İlkokulu
 ANTALYA,MANAVGAT,Secondary School,Ortaokul,Dr.Hüseyin Vural Özel Eğitim Ortaokulu
-BAKANLIK,Y.Dışı-S.Arabistan,High School,Anadolu Lisesi,Mekke Uluslararası Türk Anadolu Lisesi
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,High School,Anadolu Lisesi,Mekke Uluslararası Türk Anadolu Lisesi
 BATMAN,SASON,Primary School,İlkokul,Gürgenli İlkokulu
-BAKANLIK,Y.Dışı-S.Arabistan,Secondary School,Ortaokul,Medine Uluslararası Türk Ortaokulu
-BAKANLIK,Y.Dışı-S.Arabistan,Secondary School,Ortaokul,Taif Uluslararası Türk Ortaokulu
-BAKANLIK,Y.Disi-İran,Secondary School,Ortaokul,Tahran Türk Ortaokulu
-BAKANLIK,Y.Dışı-S.Arabistan,Secondary School,Ortaokul,Abha Uluslararası Türk Ortaokulu
-BAKANLIK,Y.Dışı-S.Arabistan,Secondary School,Ortaokul,Dammam Uluslararası Türk Ortaokulu
-BAKANLIK,Y.Dışı-Kırgızistan,Secondary School,Ortaokul,Kırgızistan Bişkek Türk Ortaokulu
-BAKANLIK,Y.Dışı-S.Arabistan,Secondary School,Ortaokul,Mekke Uluslararası Türk Ortaokulu
-BAKANLIK,Y.Dışı-Kuveyt,Secondary School,Ortaokul,Kuveyt Türk Ortaokulu
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,Secondary School,Ortaokul,Medine Uluslararası Türk Ortaokulu
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,Secondary School,Ortaokul,Taif Uluslararası Türk Ortaokulu
+BAKANLIK,Y.DİSİ-İRAN,Secondary School,Ortaokul,Tahran Türk Ortaokulu
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,Secondary School,Ortaokul,Abha Uluslararası Türk Ortaokulu
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,Secondary School,Ortaokul,Dammam Uluslararası Türk Ortaokulu
+BAKANLIK,Y.DIŞI-KIRGIZİSTAN,Secondary School,Ortaokul,Kırgızistan Bişkek Türk Ortaokulu
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,Secondary School,Ortaokul,Mekke Uluslararası Türk Ortaokulu
+BAKANLIK,Y.DIŞI-KUVEYT,Secondary School,Ortaokul,Kuveyt Türk Ortaokulu
 VAN,MURADİYE,Primary School,İlkokul,Kuşçu İlkokulu
-BAKANLIK,Y.Dışı-S.Arabistan,Secondary School,Ortaokul,Cidde Uluslararası Türk Ortaokulu
-BAKANLIK,Y.Dışı-S.Arabistan,Secondary School,Ortaokul,Tebük Uluslararası Türk Ortaokulu
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,Secondary School,Ortaokul,Cidde Uluslararası Türk Ortaokulu
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,Secondary School,Ortaokul,Tebük Uluslararası Türk Ortaokulu
 AĞRI,TUTAK,Primary School,İlkokul,Palandöken Köyü Aksu Mezrası İlkokulu
-BAKANLIK,Y.Dışı-Libya,High School,Lise,Libya Türk Lisesi
+BAKANLIK,Y.DIŞI-LİBYA,High School,Lise,Libya Türk Lisesi
 KARAMAN,AYRANCI,Secondary School,Ortaokul,Kıraman Ortaokulu
 TOKAT,ERBAA,Primary School,İlkokul,Engelli İlkokulu
 ŞANLIURFA,SİVEREK,Primary School,İlkokul,İnanlı İlkokulu
@@ -48746,7 +48744,7 @@ MALATYA,YEŞİLYURT,Primary School,İlkokul,Çayırköy İlkokulu
 ERZURUM,TORTUM,Primary School,İlkokul,Pehlivanlı İlkokulu
 BİTLİS,MUTKİ,Primary School,İlkokul,Arpalıseki Köyü Yüksekova Mezrası İlkokulu
 ERZURUM,KARAYAZI,Primary School,İlkokul,Çakmaközü İlkokulu
-KONYA,HADIM,Primary School,İlkokul,Bolat İlkokulu
+KONYA,HADİM,Primary School,İlkokul,Bolat İlkokulu
 AĞRI,TUTAK,Secondary School,Ortaokul,Tutak İmam Hatip Ortaokulu
 ŞANLIURFA,SİVEREK,Primary School,İlkokul,Sapan İlkokulu
 TRABZON,KÖPRÜBAŞI,Primary School,İlkokul,Adnan Kahveci İlkokulu
@@ -48777,7 +48775,7 @@ ERZURUM,KARAYAZI,Primary School,İlkokul,Karşıyaka İlkokulu
 ŞANLIURFA,SİVEREK,Primary School,İlkokul,Büyükgöl İlkokulu
 SAMSUN,İLKADIM,Primary School,İlkokul,19 Mayıs İşitme Engelliler İlkokulu
 TOKAT,TURHAL,Primary School,İlkokul,Üçyol Şehit Halil Gedik İlkokulu
-KONYA,HADIM,Primary School,İlkokul,Eşenler İlkokulu
+KONYA,HADİM,Primary School,İlkokul,Eşenler İlkokulu
 AMASYA,MERZİFON,Primary School,İlkokul,Kayadüzü Işık İlkokulu
 ERZURUM,KARAYAZI,Primary School,İlkokul,Çelikli İlkokulu
 AĞRI,TUTAK,Primary School,İlkokul,Çırpılı İlkokulu
@@ -48796,7 +48794,7 @@ DİYARBAKIR,BİSMİL,Primary School,İlkokul,Güzelköy İlkokulu
 BALIKESİR,HAVRAN,Primary School,İlkokul,Zeynep Banu Çakırdere İlkokulu
 SİVAS,KOYULHİSAR,Primary School,İlkokul,Koyulhisar Münire Mustafa Aydoğdu İlkokulu
 BATMAN,BEŞİRİ,Primary School,İlkokul,Durucak Yolboyu İlkokulu
-BAKANLIK,Y.Dışı-Danimarka,Secondary School,Ortaokul,Danimarka Mina Hindholm Efterskole İmam Hatip Ortaokulu
+BAKANLIK,Y.DIŞI-DANİMARKA,Secondary School,Ortaokul,Danimarka Mina Hindholm Efterskole İmam Hatip Ortaokulu
 SİVAS,ZARA,Primary School,İlkokul,Şehit Teğmen Hacı Bayram Elmas İlkokulu
 KARS,SUSUZ,Primary School,İlkokul,İncesu İlkokulu
 BATMAN,HASANKEYF,Primary School,İlkokul,Büyükdere İlkokulu
@@ -48843,7 +48841,7 @@ VAN,TUŞBA,Primary School,İlkokul,Kozluca İlkokulu
 MALATYA,BATTALGAZİ,Primary School,İlkokul,Fırıncı İlkokulu
 ŞANLIURFA,BOZOVA,Primary School,İlkokul,Yukarı Demircik İlkokulu
 ŞANLIURFA,HALİLİYE,Primary School,İlkokul,Dağyanı (Uluoba) İlkokulu
-BAKANLIK,Y.Dışı-S.Arabistan,Secondary School,Ortaokul,Taif Uluslararası Türk İmam Hatip Ortaokulu
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,Secondary School,Ortaokul,Taif Uluslararası Türk İmam Hatip Ortaokulu
 TEKİRDAĞ,SÜLEYMANPAŞA,Secondary School,Ortaokul,Kumbağ Ortaokulu
 KAHRAMANMARAŞ,ONİKİŞUBAT,Primary School,İlkokul,Beşoluk İlkokulu
 İSTANBUL,ÇEKMEKÖY,Primary School,İlkokul,Alemdağ Emlak Konut İlkokulu
@@ -48866,17 +48864,17 @@ KAHRAMANMARAŞ,ONİKİŞUBAT,Primary School,İlkokul,Ertuğrulgazi Görme Engell
 ŞANLIURFA,HALİLİYE,Primary School,İlkokul,Yedikuyu İlkokulu
 ŞANLIURFA,KARAKÖPRÜ,Primary School,İlkokul,İsolar Abdullah Büyükbudak İlkokulu
 ŞANLIURFA,KARAKÖPRÜ,Secondary School,Ortaokul,Çıralı Ortaokulu
-BAKANLIK,Y.Dışı-S.Arabistan,High School,İmam Hatip Lisesi,Taif Uluslararası Türk Anadolu İmam Hatip Lisesi
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,High School,İmam Hatip Lisesi,Taif Uluslararası Türk Anadolu İmam Hatip Lisesi
 MUŞ,KORKUT,Secondary School,Ortaokul,Kapılı Ortaokulu
 KİLİS,POLATELİ,Primary School,İlkokul,Ömercik İlkokulu
-BAKANLIK,Y.Dışı-S.Arabistan,High School,İmam Hatip Lisesi,Mekke Anadolu İmam Hatip Lisesi
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,High School,İmam Hatip Lisesi,Mekke Anadolu İmam Hatip Lisesi
 ŞANLIURFA,KARAKÖPRÜ,Primary School,İlkokul,Büyük Kargılı İlkokulu
 HATAY,ANTAKYA,Primary School,İlkokul,Oğlakören İlkokulu
-BAKANLIK,Y.Dışı-S.Arabistan,High School,İmam Hatip Lisesi,Cidde Anadolu İmam Hatip Lisesi
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,High School,İmam Hatip Lisesi,Cidde Anadolu İmam Hatip Lisesi
 ŞANLIURFA,KARAKÖPRÜ,Primary School,İlkokul,Akziyaret İlkokulu
 VAN,ÖZALP,Primary School,İlkokul,Mehmet Akif Ersoy İlkokulu
 BAKANLIK,MERKEZE BAĞLI TAŞRA,Secondary School,Ortaokul,Açık Öğretim Ortaokulu
-BAKANLIK,Y.Dışı-Afganistan,Secondary School,Ortaokul,Afganistan Habibe Kadiri Kız Ortaokulu
+BAKANLIK,Y.DIŞI-AFGANİSTAN,Secondary School,Ortaokul,Afganistan Habibe Kadiri Kız Ortaokulu
 ANKARA,ÇUBUK,Primary School,İlkokul,TOKİ İlkokulu
 ŞANLIURFA,KARAKÖPRÜ,Primary School,İlkokul,Karataş İlkokulu
 GAZİANTEP,ŞAHİNBEY,Primary School,İlkokul,Mülk İlkokulu
@@ -48885,15 +48883,15 @@ MARDİN,ARTUKLU,Primary School,İlkokul,Çağdaş Yaşam İlkokulu
 VAN,BAŞKALE,Secondary School,Ortaokul,Ilıcak Ortaokulu
 GAZİANTEP,ŞEHİTKAMİL,Secondary School,Ortaokul,Sülüklü Ortaokulu
 VAN,ÖZALP,Secondary School,Ortaokul,Şemsettin Ortaokulu
-VAN,BAHCESARAY,Primary School,İlkokul,Cuma İlkokulu
+VAN,BAHÇESARAY,Primary School,İlkokul,Cuma İlkokulu
 BİTLİS,MUTKİ,Primary School,İlkokul,Göztepe Köyü Abakay Mezrası İlkokulu
 BİTLİS,ADİLCEVAZ,Secondary School,Ortaokul,Çanakyayla Köyü Ortaokulu
-BAKANLIK,Y.Dışı-Avusturya,High School,İmam Hatip Lisesi,Viyana Türk Anadolu İmam Hatip Lisesi
+BAKANLIK,Y.DIŞI-AVUSTURYA,High School,İmam Hatip Lisesi,Viyana Türk Anadolu İmam Hatip Lisesi
 DENİZLİ,ACIPAYAM,Primary School,İlkokul,Gölcük İlkokulu
 HAKKARİ,YÜKSEKOVA,Secondary School,Ortaokul,Dağlıca Köyü Ortaokulu
 ŞANLIURFA,SİVEREK,Primary School,İlkokul,Subastı İlkokulu
 ŞANLIURFA,VİRANŞEHİR,Primary School,İlkokul,Yeşildurak İlkokulu
-SİİRT,SİRVAN,Primary School,İlkokul,Şehit Jandarma Kıdemli Üsteğmen Kamil Baltacı İlkokulu
+SİİRT,ŞİRVAN,Primary School,İlkokul,Şehit Jandarma Kıdemli Üsteğmen Kamil Baltacı İlkokulu
 BURSA,NİLÜFER,Primary School,İlkokul,Uludağ Üniversitesi Devlet Konservatuvarı Müzik ve Bale İlkokulu
 MALATYA,BATTALGAZİ,Primary School,İlkokul,Merdivenler İlkokulu
 BURSA,NİLÜFER,High School,Lise,Uludağ Üniversitesi Devlet Konservatuvarı Müzik ve Sahne Sanatları Lisesi
@@ -48902,7 +48900,7 @@ KAHRAMANMARAŞ,EKİNÖZÜ,Primary School,İlkokul,Ekinözü Şehit Öğretmen Ay
 HAKKARİ,ÇUKURCA,Primary School,İlkokul,İkinci Hudut Tugayı İlkokulu
 ELAZIĞ,KARAKOÇAN,Primary School,İlkokul,Sarıbaşak İlkokulu
 KONYA,EMİRGAZİ,Secondary School,Ortaokul,Emrulgazi İmam Hatip Ortaokulu
-BAKANLIK,Y.Dışı-S.Arabistan,High School,İmam Hatip Lisesi,Riyad Anadolu İmam Hatip Lisesi
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,High School,İmam Hatip Lisesi,Riyad Anadolu İmam Hatip Lisesi
 MERSİN,YENİŞEHİR,High School,Lise,Mersin Üni. Dev. Kons. Müzik ve Sahne Sanatları Lisesi
 ERZURUM,OLUR,Secondary School,Ortaokul,Sezai Karakoç İmam Hatip Ortaokulu
 MUŞ,KORKUT,Secondary School,Ortaokul,Tan Köyü İmam Hatip Ortaokulu
@@ -48946,7 +48944,7 @@ KAYSERİ,DEVELİ,Primary School,İlkokul,Cemal Nevzer Ercis İşitme Engelliler 
 ADIYAMAN,MERKEZ,Primary School,İlkokul,Zey İlkokulu
 ŞANLIURFA,SİVEREK,Primary School,İlkokul,Güldoruğu İlkokulu
 ŞANLIURFA,VİRANŞEHİR,Primary School,İlkokul,Kap İlkokulu
-VAN,BAHCESARAY,Primary School,İlkokul,Konak İlkokulu
+VAN,BAHÇESARAY,Primary School,İlkokul,Konak İlkokulu
 YOZGAT,SARIKAYA,Primary School,İlkokul,Mehmet Akif Ersoy İlkokulu
 GÜMÜŞHANE,KELKİT,Secondary School,Ortaokul,Gümüşgöze İmam Hatip Ortaokulu
 VAN,İPEKYOLU,Secondary School,Ortaokul,Zübeyde Hanım Özel Eğitim Ortaokulu
@@ -48972,8 +48970,8 @@ VAN,MURADİYE,Primary School,İlkokul,Kandahar İlkokulu
 DİYARBAKIR,KAYAPINAR,Primary School,İlkokul,Rıdvan Süer İlkokulu
 GAZİANTEP,ŞEHİTKAMİL,Secondary School,Ortaokul,Namık Kemal Ortaokulu
 ANKARA,ÇANKAYA,Primary School,İlkokul,Bilkent Üniversitesi Müzik ve Sahne Sanatları Fakültesi İlkokulu
-BAKANLIK,Y.Dışı-Kırgızistan,Secondary School,Ortaokul,Kırgızistan Bişkek Türk İmam Hatip Ortaokulu
-BAKANLIK,Y.Dışı-S.Arabistan,High School,Anadolu Lisesi,Dammam Uluslararası Türk Anadolu Lisesi
+BAKANLIK,Y.DIŞI-KIRGIZİSTAN,Secondary School,Ortaokul,Kırgızistan Bişkek Türk İmam Hatip Ortaokulu
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,High School,Anadolu Lisesi,Dammam Uluslararası Türk Anadolu Lisesi
 KAYSERİ,SARIZ,Primary School,İlkokul,Damızlık Şehit Piyade Onbaşı Ahmet Dursun İlkokulu
 BAYBURT,MERKEZ,Secondary School,Ortaokul,Maden Ortaokulu
 ŞIRNAK,CİZRE,Secondary School,Ortaokul,Kaya Ortaokulu
@@ -49063,15 +49061,15 @@ MUŞ,MERKEZ,Primary School,İlkokul,Kutlugün İlkokulu
 DİYARBAKIR,KULP,Secondary School,Ortaokul,Şehit Burhan Özgen Ortaokulu
 BİTLİS,MERKEZ,Primary School,İlkokul,Yaygın Köyü İlkokulu
 BURSA,YILDIRIM,Secondary School,Ortaokul,Semiha Mustafa Özer İmam Hatip Ortaokulu
-BURSA,YENİSEHİR,Secondary School,Ortaokul,Müyesser İbrahim Sünnetçioğlu İmam Hatip Ortaokulu
+BURSA,YENİŞEHİR,Secondary School,Ortaokul,Müyesser İbrahim Sünnetçioğlu İmam Hatip Ortaokulu
 ŞANLIURFA,KARAKÖPRÜ,Secondary School,Ortaokul,Karaköprü İşitme Engelliler Ortaokulu
 HAKKARİ,YÜKSEKOVA,Primary School,İlkokul,Aksu Köyü İlkokulu
 HAKKARİ,YÜKSEKOVA,Primary School,İlkokul,Bağdaş Köyü Gedikli Mezrası İlkokulu
 HAKKARİ,YÜKSEKOVA,Primary School,İlkokul,Onbaşılar Köyü Ağılcık Mezrası İlkokulu
 ARTVİN,MERKEZ,Primary School,İlkokul,Seyitler TOKİ Şehit Onur İlhan İlkokulu
-ŞIRNAK,IDİL,Primary School,İlkokul,Zeynel Abidin İlkokulu
-VAN,BAHCESARAY,Primary School,İlkokul,Kırıkhan İlkokulu
-BURSA,YENİSEHİR,Secondary School,Ortaokul,Balibey İmam Hatip Ortaokulu
+ŞIRNAK,İDİL,Primary School,İlkokul,Zeynel Abidin İlkokulu
+VAN,BAHÇESARAY,Primary School,İlkokul,Kırıkhan İlkokulu
+BURSA,YENİŞEHİR,Secondary School,Ortaokul,Balibey İmam Hatip Ortaokulu
 KARAMAN,SARIVELİLER,Secondary School,Ortaokul,Mehmet Akif Ersoy Ortaokulu
 MARDİN,ÖMERLİ,Secondary School,Ortaokul,Atatürk İmam Hatip Ortaokulu
 YOZGAT,SARIKAYA,Secondary School,Ortaokul,Karayakup Kınalı Hasan İmam Hatip Ortaokulu
@@ -49079,20 +49077,20 @@ VAN,ÖZALP,Primary School,İlkokul,Hazine İlkokulu
 KAYSERİ,YAHYALI,Secondary School,Ortaokul,Yahyalı Şehit Mustafa Aydın İmam Hatip Ortaokulu
 DİYARBAKIR,ÇINAR,Primary School,İlkokul,Kınalıtarla İlkokulu
 ŞANLIURFA,HARRAN,Secondary School,Ortaokul,Aydınlar İmam Hatip Ortaokulu
-BAKANLIK,Y.Dışı-S.Arabistan,High School,Anadolu Lisesi,Medine Uluslararası Türk Anadolu Lisesi
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,High School,Anadolu Lisesi,Medine Uluslararası Türk Anadolu Lisesi
 ERZURUM,PASİNLER,Primary School,İlkokul,Yukarı Çakmak İlkokulu
 ŞANLIURFA,HARRAN,Secondary School,Ortaokul,Bükdere İmam Hatip Ortaokulu
-BAKANLIK,Y.Dışı-Gürcistan,Secondary School,Ortaokul,Batum Türk Ortaokulu
+BAKANLIK,Y.DIŞI-GÜRCİSTAN,Secondary School,Ortaokul,Batum Türk Ortaokulu
 ADIYAMAN,SAMSAT,Primary School,İlkokul,Örentaş Şehit Yusuf Atal İlkokulu
-BAKANLIK,Y.Dışı-S.Arabistan,Secondary School,Ortaokul,Tebük İmam Hatip Ortaokulu
-BAKANLIK,Y.Dışı-S.Arabistan,High School,İmam Hatip Lisesi,Tebük Anadolu İmam Hatip Lisesi
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,Secondary School,Ortaokul,Tebük İmam Hatip Ortaokulu
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,High School,İmam Hatip Lisesi,Tebük Anadolu İmam Hatip Lisesi
 DİYARBAKIR,YENİŞEHİR,Primary School,İlkokul,Alangör İlkokulu
 MUĞLA,MENTEŞE,Secondary School,Ortaokul,Şehit Piyade Asteğmen Yıldıray Çeltiklioğlu Ortaokulu
 AFYONKARAHİSAR,KIZILÖREN,High School,Anadolu Lisesi,Kızılören Çok Programlı Anadolu Lisesi
-BAKANLIK,Y.Dışı-S.Arabistan,High School,İmam Hatip Lisesi,Medine Anadolu İmam Hatip Lisesi
+BAKANLIK,Y.DIŞI-S.ARABİSTAN,High School,İmam Hatip Lisesi,Medine Anadolu İmam Hatip Lisesi
 MARDİN,SAVUR,Secondary School,Ortaokul,Başkavak İmam Hatip Ortaokulu
 MARDİN,ARTUKLU,Secondary School,Ortaokul,Anafartalar İmam Hatip Ortaokulu
-BAKANLIK,Y.Dışı-Gürcistan,Primary School,Türk İlkokulu,Batum Türk İlkokulu
+BAKANLIK,Y.DIŞI-GÜRCİSTAN,Primary School,Türk İlkokulu,Batum Türk İlkokulu
 MARDİN,YEŞİLLİ,Secondary School,Ortaokul,Bahçebaşı İmam Hatip Ortaokulu
 ANKARA,KEÇİÖREN,Secondary School,Ortaokul,Keçiören Yavuz Sultan Selim İmam Hatip Ortaokulu
 MARDİN,MİDYAT,Secondary School,Ortaokul,Narlı İmam Hatip Ortaokulu
@@ -49137,7 +49135,7 @@ VAN,ÇATAK,Secondary School,Ortaokul,Şehit Sinan Babacan Ortaokulu
 ŞIRNAK,ULUDERE,High School,İmam Hatip Lisesi,Uzungeçit Anadolu İmam Hatip Lisesi
 KOCAELİ,KANDIRA,High School,Mesleki ve Teknik Anadolu Lisesi,Şehit Yavuz Sonat Güzel Mesleki ve Teknik Anadolu Lisesi
 BİNGÖL,MERKEZ,Primary School,İlkokul,Alibirköyü İlkokulu
-ŞIRNAK,IDİL,High School,İmam Hatip Lisesi,Karalar Anadolu İmam Hatip Lisesi
+ŞIRNAK,İDİL,High School,İmam Hatip Lisesi,Karalar Anadolu İmam Hatip Lisesi
 BATMAN,BEŞİRİ,Primary School,İlkokul,Alıçlı İlkokulu
 DİYARBAKIR,YENİŞEHİR,Secondary School,Ortaokul,Mehmet Akif Ersoy İmam Hatip Ortaokulu
 MUŞ,MERKEZ,Primary School,İlkokul,Tandoğan Çay İlkokulu
@@ -49152,10 +49150,10 @@ AĞRI,TAŞLIÇAY,Primary School,İlkokul,Selahaddin Eyyubi İlkokulu
 İSTANBUL,BAKIRKÖY,Secondary School,Ortaokul,Şenlikköy İmam Hatip Ortaokulu
 BATMAN,BEŞİRİ,Primary School,İlkokul,Ilıca Başlamış İlkokulu
 AĞRI,PATNOS,Secondary School,Ortaokul,Aktepe İmam Hatip Ortaokulu
-BAKANLIK,Y.Dışı-Danimarka,High School,İmam Hatip Lisesi,İskandinavya Anadolu İmam Hatip Lisesi
+BAKANLIK,Y.DIŞI-DANİMARKA,High School,İmam Hatip Lisesi,İskandinavya Anadolu İmam Hatip Lisesi
 MANİSA,AKHİSAR,Primary School,İlkokul,Sazoba Nazif Emine Karabulut İlkokulu
 BATMAN,BEŞİRİ,Primary School,İlkokul,Bahçeli İlkokulu
-BAKANLIK,Y.Dışı-Avusturalya,High School,İmam Hatip Lisesi,Avustralya İlim Koleji Anadolu İmam Hatip Lisesi
+BAKANLIK,Y.DIŞI-AVUSTURALYA,High School,İmam Hatip Lisesi,Avustralya İlim Koleji Anadolu İmam Hatip Lisesi
 ŞANLIURFA,CEYLANPINAR,Primary School,İlkokul,Büyük Yıldız İlkokulu
 AĞRI,DOĞUBAYAZIT,Secondary School,Ortaokul,18 Mart İmam Hatip Ortaokulu
 BATMAN,MERKEZ,Primary School,İlkokul,Çevrimova İlkokulu
@@ -49195,9 +49193,9 @@ KIRŞEHİR,MERKEZ,Primary School,İlkokul,Şehit Ömer Halisdemir İlkokulu
 VAN,EDREMİT,Secondary School,Ortaokul,Şehit Kamuran Ercan Ortaokulu
 RİZE,MERKEZ,High School,Lise,Ömer Halaç Özel Eğitim Meslek Lisesi
 TRABZON,ŞALPAZARI,Secondary School,Ortaokul,Gökçeköy Ortaokulu
-BAKANLIK,Y.Dışı-Danimarka,High School,İmam Hatip Lisesi,Danimarka İskandinavya Anadolu İmam Hatip Lisesi
+BAKANLIK,Y.DIŞI-DANİMARKA,High School,İmam Hatip Lisesi,Danimarka İskandinavya Anadolu İmam Hatip Lisesi
 KAYSERİ,TOMARZA,Secondary School,Ortaokul,Şehit Emin Urhan İmam Hatip Ortaokulu
-SİİRT,SİRVAN,Secondary School,Ortaokul,Şehit Uzman Jandarma Hakan AKTÜRK Ortaokulu
+SİİRT,ŞİRVAN,Secondary School,Ortaokul,Şehit Uzman Jandarma Hakan AKTÜRK Ortaokulu
 KONYA,AKŞEHİR,Secondary School,Ortaokul,Doğrugöz Namık Kemal İmam Hatip Ortaokulu
 AFYONKARAHİSAR,DİNAR,Primary School,İlkokul,Yeşilhüyük İlkokulu
 ŞANLIURFA,SİVEREK,Primary School,İlkokul,Seyrantepe İlkokulu
@@ -49216,7 +49214,7 @@ HATAY,KIRIKHAN,Primary School,İlkokul,İncirli İlkokulu
 HATAY,DEFNE,High School,Anadolu Lisesi,İpek Yolu Çok Programlı Anadolu Lisesi
 KAYSERİ,MELİKGAZİ,Primary School,İlkokul,Hakkı Altop İlkokulu
 ADIYAMAN,GERGER,Secondary School,Ortaokul,Çobanpınar imam Hatip Ortaokulu
-ŞIRNAK,IDİL,Primary School,İlkokul,Köşklü İlkokulu
+ŞIRNAK,İDİL,Primary School,İlkokul,Köşklü İlkokulu
 GAZİANTEP,ŞEHİTKAMİL,Secondary School,Ortaokul,Küllü Ortaokulu
 VAN,İPEKYOLU,Secondary School,Ortaokul,Köşebaşı Ortaokulu
 ŞIRNAK,ULUDERE,Secondary School,Ortaokul,Cumhuriyet İmam Hatip Ortaokulu
@@ -49240,7 +49238,7 @@ OSMANİYE,KADİRLİ,Primary School,İlkokul,İlbistanlı Şehit Taner Torun İlk
 ANTALYA,MURATPAŞA,Secondary School,Ortaokul,Güzeloba İmam Hatip Ortaokulu
 VAN,BAŞKALE,Primary School,İlkokul,Davudabad İlkokulu
 KONYA,KULU,Primary School,İlkokul,Şerefli İlkokulu
-BAKANLIK,Y.Dışı-Katar,High School,Anadolu Lisesi,Katar Türk Anadolu Lisesi
+BAKANLIK,Y.DIŞI-KATAR,High School,Anadolu Lisesi,Katar Türk Anadolu Lisesi
 ISPARTA,GELENDOST,High School,Mesleki ve Teknik Anadolu Lisesi,Gelendost Mesleki ve Teknik Anadolu Lisesi
 VAN,SARAY,Secondary School,Ortaokul,Saray Yatılı Bölge Ortaokulu
 BATMAN,MERKEZ,Primary School,İlkokul,Cemil Meriç İlkokulu
@@ -49289,14 +49287,14 @@ KAHRAMANMARAŞ,ANDIRIN,High School,Anadolu Lisesi,Şehit Adem Seyfioğlu Anadolu
 BATMAN,MERKEZ,Primary School,İlkokul,Hüseyin Özay ilkokulu
 İZMİR,KARABAĞLAR,High School,Anadolu Lisesi,Bozyaka Şehit Fethi Bey Anadolu Lisesi
 HAKKARİ,MERKEZ,Secondary School,Ortaokul,Vali M. Lütfullah Bilgin İmam Hatip Ortaokulu
-İSTANBUL,BAGCILAR,High School,Mesleki ve Teknik Anadolu Lisesi,Yavuz Sultan Selim Mesleki ve Teknik Anadolu Lisesi
+İSTANBUL,BAĞCILAR,High School,Mesleki ve Teknik Anadolu Lisesi,Yavuz Sultan Selim Mesleki ve Teknik Anadolu Lisesi
 KARS,KAĞIZMAN,Primary School,İlkokul,Karakale İlkokulu
 VAN,ÇALDIRAN,High School,Anadolu Lisesi,Çaldıran 15 Temmuz Şehitleri Anadolu Lisesi
 ŞANLIURFA,HARRAN,Secondary School,Ortaokul,Şehit Recep Erdoğan Ortaokulu
 ŞANLIURFA,SİVEREK,Secondary School,Ortaokul,Altınahır Ortaokulu
 AĞRI,PATNOS,High School,Anadolu Lisesi,Mimar Sinan Anadolu Lisesi
 KAYSERİ,SARIOĞLAN,Secondary School,Ortaokul,Sarıoğlan İmam Hatip Ortaokulu
-BAKANLIK,Y.Dışı-Fransa,High School,İmam Hatip Lisesi,Yunus Emre Anadolu İmam Hatip Lisesi
+BAKANLIK,Y.DIŞI-FRANSA,High School,İmam Hatip Lisesi,Yunus Emre Anadolu İmam Hatip Lisesi
 HAKKARİ,DERECİK,Primary School,İlkokul,Gelişen Köyü Aralık Mezrası İlkokulu
 HAKKARİ,DERECİK,Primary School,İlkokul,Uslu Köyü Taşlıçay Mezrası İlkokulu
 VAN,EDREMİT,High School,Anadolu Lisesi,Yıldırım Beyazıt Anadolu Lisesi
@@ -49400,7 +49398,7 @@ HAKKARİ,DERECİK,Primary School,İlkokul,Samanlı Mahallesi İlkokulu
 ANKARA,MAMAK,High School,Anadolu Lisesi,Şehit Volkan Gürbüzer Anadolu Lisesi
 ERZURUM,ŞENKAYA,Primary School,İlkokul,Yürekli İlkokulu
 HATAY,DEFNE,Secondary School,Ortaokul,Özbek Ortaokulu
-VAN,BAHCESARAY,Secondary School,Ortaokul,İzzet Görür İmam Hatip Ortaokulu
+VAN,BAHÇESARAY,Secondary School,Ortaokul,İzzet Görür İmam Hatip Ortaokulu
 HAKKARİ,DERECİK,Primary School,İlkokul,Gelişen Köyü İlkokulu
 ADIYAMAN,KAHTA,Primary School,İlkokul,Yolaltı İlkokulu
 KAYSERİ,YAHYALI,Secondary School,Ortaokul,Büyükçakır Fatihler İmam Hatip Ortaokulu
@@ -49447,11 +49445,11 @@ HATAY,ANTAKYA,Primary School,İlkokul,Narlıca Zeytin Dalı İlkokulu
 KAHRAMANMARAŞ,ONİKİŞUBAT,Primary School,İlkokul,Maksutlu İlkokulu
 MARDİN,DERİK,Primary School,İlkokul,Bahçelievler İlkokulu
 SİİRT,MERKEZ,Primary School,İlkokul,Koçlu İlkokulu
-ŞANLIURFA,AKCAKALE,Secondary School,Ortaokul,Alatlar Ortaokulu
+ŞANLIURFA,AKÇAKALE,Secondary School,Ortaokul,Alatlar Ortaokulu
 AĞRI,TAŞLIÇAY,Secondary School,Ortaokul,Çöğürlü Ortaokulu
 OSMANİYE,TOPRAKKALE,Secondary School,Ortaokul,ŞEHİT ÇAĞRI DOĞAN ORTAOKULU
 ŞANLIURFA,HALİLİYE,Secondary School,Ortaokul,Üçkonak Talip Bulutlar Ortaokulu
-ŞANLIURFA,AKCAKALE,Secondary School,Ortaokul,Arida Ortaokulu
+ŞANLIURFA,AKÇAKALE,Secondary School,Ortaokul,Arida Ortaokulu
 ŞANLIURFA,SURUÇ,Primary School,İlkokul,Suruç İlkokulu
 BİTLİS,MUTKİ,Secondary School,Ortaokul,Yenidoğan Köyü Ortaokulu
 ADIYAMAN,MERKEZ,Primary School,İlkokul,Cahit Zarifoğlu İlkokulu
@@ -49461,7 +49459,7 @@ ADIYAMAN,MERKEZ,Primary School,İlkokul,Cahit Zarifoğlu İlkokulu
 ŞANLIURFA,VİRANŞEHİR,Secondary School,Ortaokul,Prof.Dr.Fuat Sezgin Ortaokulu
 ŞANLIURFA,BİRECİK,Secondary School,Ortaokul,Divriği Ortaokulu
 İSTANBUL,BAŞAKŞEHİR,Primary School,İlkokul,Kayaşehir İlkokulu
-ŞANLIURFA,AKCAKALE,Secondary School,Ortaokul,Acıkuyu Ortaokulu
+ŞANLIURFA,AKÇAKALE,Secondary School,Ortaokul,Acıkuyu Ortaokulu
 BİTLİS,AHLAT,Primary School,İlkokul,Tuğrul Bey İlkokulu
 İSTANBUL,ESENYURT,High School,Anadolu Lisesi,Borsa İstanbul Anadolu Lisesi
 BURSA,YILDIRIM,Secondary School,Ortaokul,Mehmet Akif Ersoy Ortaokulu
@@ -49470,10 +49468,10 @@ ERZURUM,ÇAT,Primary School,İlkokul,Çirişli İlkokulu
 VAN,ÖZALP,High School,Anadolu Lisesi,Özalp Anadolu Lisesi
 ŞANLIURFA,EYYÜBİYE,Secondary School,Ortaokul,Atlıgör Ortaokulu
 KONYA,MERAM,High School,İmam Hatip Lisesi,Çelebi Hüsameddin Anadolu İmam Hatip Lisesi
-BURSA,YENİSEHİR,High School,Anadolu Lisesi,İlhan Oğuz Anadolu Lisesi
-ŞANLIURFA,AKCAKALE,Secondary School,Ortaokul,Kardeşler Ortaokulu
+BURSA,YENİŞEHİR,High School,Anadolu Lisesi,İlhan Oğuz Anadolu Lisesi
+ŞANLIURFA,AKÇAKALE,Secondary School,Ortaokul,Kardeşler Ortaokulu
 ANTALYA,SERİK,Secondary School,Ortaokul,Kozağacı İmam Hatip Ortaokulu
-ŞANLIURFA,AKCAKALE,Primary School,İlkokul,Berdi İlkokulu
+ŞANLIURFA,AKÇAKALE,Primary School,İlkokul,Berdi İlkokulu
 SİİRT,PERVARİ,Secondary School,Ortaokul,Keskin Ortaokulu
 ŞANLIURFA,BİRECİK,Secondary School,Ortaokul,Han Ortaokulu
 ŞANLIURFA,EYYÜBİYE,Secondary School,Ortaokul,Bulduk Ortaokulu
@@ -49483,7 +49481,7 @@ ADIYAMAN,MERKEZ,Secondary School,Ortaokul,Gazi Ortaokulu
 ŞANLIURFA,HALİLİYE,Secondary School,Ortaokul,Karpuzlu İmam Hatip Ortaokulu
 DİYARBAKIR,SUR,Secondary School,Ortaokul,KABASAKAL ORTAOKULU
 DİYARBAKIR,ERGANİ,Primary School,İlkokul,Akçakale Yediören İlkokulu
-ŞANLIURFA,AKCAKALE,Secondary School,Ortaokul,Berdi Ortaokulu
+ŞANLIURFA,AKÇAKALE,Secondary School,Ortaokul,Berdi Ortaokulu
 BURSA,İNEGÖL,Secondary School,Ortaokul,Toki Necip Fazıl Kısakürek İmam Hatip Ortaokulu
 BURSA,GEMLİK,Secondary School,Ortaokul,TSO Gazi İmam Hatip Ortaokulu
 AĞRI,PATNOS,Secondary School,Ortaokul,14 Nisan Ortaokulu
@@ -49492,14 +49490,14 @@ KAYSERİ,MELİKGAZİ,Primary School,İlkokul,Şehit Kemal Koçyiğit İlkokulu
 KOCAELİ,DİLOVASI,Primary School,İlkokul,TOKİ Osmangazi İlkokulu
 ŞANLIURFA,BİRECİK,Secondary School,Ortaokul,Yukarı Yeniçağ Ortaokulu
 ŞANLIURFA,HİLVAN,Primary School,İlkokul,Selahaddin-i Eyyubi İlkokulu
-AMASYA,TASOVA,Primary School,İlkokul,Boraboy İlkokulu
+AMASYA,TAŞOVA,Primary School,İlkokul,Boraboy İlkokulu
 HATAY,REYHANLI,Secondary School,Ortaokul,11 Mayıs Şehitleri Ortaokulu
 HAKKARİ,YÜKSEKOVA,Primary School,İlkokul,Akalın Köyü İlkokulu
 ZONGULDAK,EREĞLİ,Secondary School,Ortaokul,Bölücek Kadir-Nevişet Kameroğlu Ortaokulu
 GAZİANTEP,ŞAHİNBEY,Secondary School,Ortaokul,Muhacirosman Ortaokulu
 KAHRAMANMARAŞ,GÖKSUN,Primary School,İlkokul,Aşağıkınıkkoz İlkokulu
 ŞANLIURFA,BİRECİK,Secondary School,Ortaokul,Söğürtlen Ortaokulu
-ŞANLIURFA,AKCAKALE,Secondary School,Ortaokul,Alıncık Ortaokulu
+ŞANLIURFA,AKÇAKALE,Secondary School,Ortaokul,Alıncık Ortaokulu
 HATAY,ARSUZ,Secondary School,Ortaokul,Karahüseyinli İmam Hatip Ortaokulu
 HATAY,REYHANLI,Primary School,İlkokul,Reyhanlı Zeytindalı İlkokulu
 ŞANLIURFA,EYYÜBİYE,Secondary School,Ortaokul,Vergili Hüseyin Yüksel Ortaokulu
@@ -49508,7 +49506,7 @@ HATAY,REYHANLI,Primary School,İlkokul,Reyhanlı Zeytindalı İlkokulu
 DİYARBAKIR,BAĞLAR,Secondary School,Ortaokul,Körtepe Ortaokulu
 ŞANLIURFA,HALİLİYE,Secondary School,Ortaokul,Boydere Yusuf Ali Bekler Ortaokulu
 ŞANLIURFA,SURUÇ,Secondary School,Ortaokul,Şehit Ümit Çelik İmam Hatip Ortaokulu
-ŞIRNAK,IDİL,Primary School,İlkokul,İpekyolu İlkokulu
+ŞIRNAK,İDİL,Primary School,İlkokul,İpekyolu İlkokulu
 ŞANLIURFA,SURUÇ,Secondary School,Ortaokul,Yanaloba Ortaokulu
 ŞANLIURFA,CEYLANPINAR,Secondary School,Ortaokul,Aşağı Çekirge Ortaokulu
 SAMSUN,İLKADIM,Secondary School,Ortaokul,Tepecik 100. Yıl Milli Mücadele Ortaokulu
@@ -49517,7 +49515,7 @@ ADIYAMAN,BESNİ,Secondary School,Ortaokul,Fatih Sultan Mehmet Ortaokulu
 ADIYAMAN,MERKEZ,Primary School,İlkokul,Öğretmenim İlkokulu
 ISPARTA,EĞİRDİR,Primary School,İlkokul,Tepeli Köyü İlkokulu
 ŞANLIURFA,SİVEREK,Secondary School,Ortaokul,Şehit İbrahim İnco Ortaokulu
-ŞANLIURFA,AKCAKALE,Primary School,İlkokul,Erecek İlkokulu
+ŞANLIURFA,AKÇAKALE,Primary School,İlkokul,Erecek İlkokulu
 ŞANLIURFA,EYYÜBİYE,Secondary School,Ortaokul,İkizce Ortaokulu
 ŞANLIURFA,EYYÜBİYE,Primary School,İlkokul,Mehmetçik İlkokulu
 ŞANLIURFA,HALİLİYE,Secondary School,Ortaokul,Üçkuyu Şekerli Ortaokulu
@@ -49542,11 +49540,11 @@ HATAY,ANTAKYA,Primary School,İlkokul,Hatay Borsa İstanbul İlkokulu
 AFYONKARAHİSAR,SİNANPAŞA,High School,Mesleki ve Teknik Anadolu Lisesi,Çiğiltepe Mesleki ve Teknik Anadolu Lisesi
 SİİRT,PERVARİ,Secondary School,Ortaokul,Yapraktepe Güzelbağ Ortaokulu
 ŞANLIURFA,HALİLİYE,Secondary School,Ortaokul,İbrik Ortaokulu
-ŞANLIURFA,AKCAKALE,Secondary School,Ortaokul,Seyitveren Ortaokulu
+ŞANLIURFA,AKÇAKALE,Secondary School,Ortaokul,Seyitveren Ortaokulu
 ŞANLIURFA,VİRANŞEHİR,Secondary School,Ortaokul,Büyük Topça Ortaokulu
 AFYONKARAHİSAR,İHSANİYE,Secondary School,Ortaokul,Bozhüyük İmam Hatip Ortaokulu
 BURSA,OSMANGAZİ,Primary School,İlkokul,Hasan Celal Güzel İlkokulu
-ŞANLIURFA,AKCAKALE,Secondary School,Ortaokul,İkizce Ortaokulu
+ŞANLIURFA,AKÇAKALE,Secondary School,Ortaokul,İkizce Ortaokulu
 ELAZIĞ,MERKEZ,Primary School,İlkokul,Kuşhane İlkokulu
 BOLU,MERKEZ,High School,Anadolu Lisesi,Turgut Özal Anadolu Lisesi
 HATAY,BELEN,Secondary School,Ortaokul,Sultan II. Abdulhamid Han Ortaokulu
@@ -49575,8 +49573,8 @@ GAZİANTEP,ŞEHİTKAMİL,Secondary School,Ortaokul,Mesut Ateşsönmez Ortaokulu
 MARDİN,MİDYAT,Primary School,İlkokul,Çavuşlu Yunus Emre İlkokulu
 ŞANLIURFA,HALİLİYE,Secondary School,Ortaokul,Yenice Kalecik Ortaokulu
 ŞANLIURFA,HALİLİYE,Secondary School,Ortaokul,Keremli Ortaokulu
-ŞANLIURFA,AKCAKALE,Secondary School,Ortaokul,Ciheydim Ortaokulu
-ŞANLIURFA,AKCAKALE,Secondary School,Ortaokul,Erecek Ortaokulu
+ŞANLIURFA,AKÇAKALE,Secondary School,Ortaokul,Ciheydim Ortaokulu
+ŞANLIURFA,AKÇAKALE,Secondary School,Ortaokul,Erecek Ortaokulu
 ŞANLIURFA,HALİLİYE,Primary School,İlkokul,Yeni Zelanda Matariki İlkokulu
 ŞANLIURFA,VİRANŞEHİR,Secondary School,Ortaokul,Esvetoğlu Ortaokulu
 ANKARA,YENİMAHALLE,Secondary School,Ortaokul,Şehit Ali Öztürk Ortaokulu
@@ -49591,7 +49589,7 @@ AĞRI,PATNOS,Primary School,İlkokul,Kucak İlkokulu
 ŞANLIURFA,SURUÇ,Secondary School,Ortaokul,Şakir Şimşek Ortaokulu
 BİTLİS,TATVAN,Primary School,İlkokul,Mevlana İlkokulu
 AYDIN,KÖŞK,Primary School,İlkokul,Şehit İlhan Apaydın İlkokulu
-ŞANLIURFA,AKCAKALE,Secondary School,Ortaokul,Deniz Ortaokulu
+ŞANLIURFA,AKÇAKALE,Secondary School,Ortaokul,Deniz Ortaokulu
 BURSA,OSMANGAZİ,Secondary School,Ortaokul,Şehit Sinan Acar Ortaokulu
 ŞANLIURFA,BİRECİK,Secondary School,Ortaokul,Şehit Mehmet Yılmaz Ortaokulu
 HATAY,DÖRTYOL,Primary School,İlkokul,Şehit Ayhan Kıymacı İlkokulu
@@ -49613,7 +49611,7 @@ BİTLİS,HİZAN,Secondary School,Ortaokul,Kalkanlı Köyü Ortaokulu
 ŞANLIURFA,CEYLANPINAR,Primary School,İlkokul,Şanlı İlkokulu
 ŞANLIURFA,BOZOVA,Secondary School,Ortaokul,Boztepe İmam Hatip Ortaokulu
 HATAY,BELEN,Secondary School,Ortaokul,Yavuz Sultan Selim Ortaokulu
-ŞANLIURFA,AKCAKALE,Secondary School,Ortaokul,Nimet Ortaokulu
+ŞANLIURFA,AKÇAKALE,Secondary School,Ortaokul,Nimet Ortaokulu
 GAZİANTEP,ŞAHİNBEY,Secondary School,Ortaokul,Mavikent Ortaokulu
 DENİZLİ,MERKEZEFENDİ,Secondary School,Ortaokul,Adalet Ortaokulu
 ERZURUM,KARAYAZI,Primary School,İlkokul,Karakale Eldik İlkokulu
@@ -49668,7 +49666,7 @@ ADANA,SEYHAN,Primary School,İlkokul,Şehit İsa İpek İlkokulu
 MALATYA,BATTALGAZİ,Primary School,İlkokul,Battalgazi Görme Engelliler İlkokulu
 MALATYA,YEŞİLYURT,Secondary School,Ortaokul,Türkiye Odalar Borsalar Birliği Malatya Hafız İmam Hatip Ortaokulu
 İSTANBUL,KARTAL,Secondary School,Ortaokul,Öğretmen Selma Akay Ortaokulu
-ŞANLIURFA,AKCAKALE,Primary School,İlkokul,Borsa İstanbul İbn-i Rüşd İlkokulu
+ŞANLIURFA,AKÇAKALE,Primary School,İlkokul,Borsa İstanbul İbn-i Rüşd İlkokulu
 ŞANLIURFA,VİRANŞEHİR,Secondary School,Ortaokul,Şehit İbrahim KETE Ortaokulu
 ESKİŞEHİR,ODUNPAZARI,Secondary School,Ortaokul,Havacılar Ortaokulu
 GAZİANTEP,NURDAĞI,Secondary School,Ortaokul,Şehit Ömer Halisdemir Ortaokulu
@@ -49714,7 +49712,7 @@ KONYA,KADINHANI,High School,Anadolu Lisesi,Ata İçil Anadolu Lisesi
 ŞANLIURFA,SURUÇ,High School,Anadolu Lisesi,Mürşitpınar Anadolu Lisesi
 AYDIN,EFELER,High School,Anadolu Lisesi,Mehmet Akif Ersoy Anadolu Lisesi
 KAHRAMANMARAŞ,ÇAĞLIYANCERİT,Primary School,İlkokul,Engizek Şehit Nurdoğan Zorgün İlkokulu
-İSTANBUL,BAHCELİEVLER,High School,Anadolu Lisesi,Piri Reis Anadolu Lisesi
+İSTANBUL,BAHÇELİEVLER,High School,Anadolu Lisesi,Piri Reis Anadolu Lisesi
 ANTALYA,MANAVGAT,High School,Anadolu Lisesi,Ilıca Gülsüm-Ramazan Öz Anadolu Lisesi
 MUŞ,MERKEZ,Primary School,İlkokul,Aligedik Fındıklı İlkokulu
 HAKKARİ,YÜKSEKOVA,Secondary School,Ortaokul,Onbaşılar Köyü Mahir Beşer Ortaokulu
@@ -49791,7 +49789,7 @@ DİYARBAKIR,BAĞLAR,Secondary School,Ortaokul,Diyarbakır Hafız İmam Hatip Ort
 GAZİANTEP,ŞAHİNBEY,Secondary School,Ortaokul,Boyacı Mahmut Ziylan İmam Hatip Ortaokulu
 KONYA,BEYŞEHİR,High School,Mesleki ve Teknik Anadolu Lisesi,Üzümlü Savunma Sanayi Mesleki ve Teknik Anadolu Lisesi
 BİNGÖL,MERKEZ,High School,Lise,Bingöl Spor Lisesi
-İSTANBUL,KÜÇÜKCEKMECE,High School,Fen Lisesi,Doğan Cüceloğlu Fen lisesi
+İSTANBUL,KÜÇÜKÇEKMECE,High School,Fen Lisesi,Doğan Cüceloğlu Fen lisesi
 GAZİANTEP,ŞAHİNBEY,High School,Lise,Şahinbey Sosyal Bilimler Lisesi
 MUĞLA,MENTEŞE,High School,Anadolu Lisesi,Menteşe Anadolu Lisesi
 SİİRT,MERKEZ,High School,Anadolu Lisesi,Marmara Anadolu Lisesi
@@ -49815,7 +49813,7 @@ BURDUR,MERKEZ,High School,İmam Hatip Lisesi,Recep Tayyip Erdoğan Anadolu İmam
 TOKAT,MERKEZ,High School,Mesleki ve Teknik Anadolu Lisesi,Tokat Gaziosmanpaşa Üniversitesi Tarım Mesleki ve Teknik Anadolu Lisesi
 DENİZLİ,MERKEZEFENDİ,Primary School,İlkokul,Hacı Şakir- Meliha- Nilüfer Öz İlkokulu
 YALOVA,MERKEZ,High School,Lise,Yalova Lisesi
-İSTANBUL,GAZİOSMANPASA,High School,Anadolu Lisesi,Gaziosmanpaşa Süleyman Şah Anadolu Lisesi
+İSTANBUL,GAZİOSMANPAŞA,High School,Anadolu Lisesi,Gaziosmanpaşa Süleyman Şah Anadolu Lisesi
 GAZİANTEP,ŞAHİNBEY,High School,Anadolu Lisesi,Ocaklar Anadolu Lisesi
 GAZİANTEP,ŞAHİNBEY,High School,Anadolu Lisesi,Gaziantep Türk Telekom Anadolu Lisesi
 GAZİANTEP,ŞAHİNBEY,High School,Anadolu Lisesi,Yavuz Sultan Selim Anadolu Lisesi
@@ -49907,7 +49905,7 @@ ADIYAMAN,MERKEZ,High School,Anadolu Lisesi,Şehit Hasan Aydoğdu Anadolu Lisesi
 ÇORUM,SUNGURLU,Secondary School,Ortaokul,Mehmetçik Ortaokulu
 DENİZLİ,PAMUKKALE,High School,İmam Hatip Lisesi,Hacı Yılmaz Emine Urhan Anadolu İmam Hatip Lisesi
 GAZİANTEP,ŞAHİNBEY,High School,İmam Hatip Lisesi,Bedreddin Ayni Anadolu İmam Hatip Lisesi
-İSTANBUL,GAZİOSMANPASA,High School,İmam Hatip Lisesi,Küçükköy Kız Anadolu İmam Hatip Lisesi
+İSTANBUL,GAZİOSMANPAŞA,High School,İmam Hatip Lisesi,Küçükköy Kız Anadolu İmam Hatip Lisesi
 İSTANBUL,ESENLER,High School,İmam Hatip Lisesi,Şehit Muhammed Aksu Kız Anadolu İmam Hatip Lisesi
 İSTANBUL,ESENLER,High School,İmam Hatip Lisesi,Aksoy Kız Anadolu İmam Hatip Lisesi
 İZMİR,KONAK,High School,İmam Hatip Lisesi,Konak Anadolu İmam Hatip Lisesi
@@ -49916,7 +49914,7 @@ DİYARBAKIR,ÇINAR,High School,Anadolu Lisesi,Ovabağ Çok Programlı Anadolu Li
 TRABZON,ORTAHİSAR,High School,İmam Hatip Lisesi,Kanuni Anadolu İmam Hatip Lisesi
 HATAY,ANTAKYA,High School,Anadolu Lisesi,Evliya Çelebi Anadolu Lisesi
 BURSA,MUDANYA,High School,Anadolu Lisesi,Mudanya Güzelyalı Anadolu Lisesi
-İSTANBUL,KÜÇÜKCEKMECE,High School,Anadolu Lisesi,Orhan Gazi Anadolu Lisesi
+İSTANBUL,KÜÇÜKÇEKMECE,High School,Anadolu Lisesi,Orhan Gazi Anadolu Lisesi
 İSTANBUL,SANCAKTEPE,High School,Anadolu Lisesi,Sancaktepe Nurettin Topçu Anadolu Lisesi
 KOCAELİ,GEBZE,High School,İmam Hatip Lisesi,Şehit Ömer Can Açıkgöz Kız Anadolu İmam Hatip Lisesi
 DİYARBAKIR,DİCLE,High School,Anadolu Lisesi,Dede Çok Programlı Anadolu Lisesi
@@ -49939,9 +49937,9 @@ GAZİANTEP,ŞEHİTKAMİL,High School,Anadolu Lisesi,Şehitkamil Anadolu Lisesi
 MARDİN,KIZILTEPE,High School,Anadolu Lisesi,Yenikent Anadolu Lisesi
 İSTANBUL,SULTANBEYLİ,High School,Anadolu Lisesi,Cemil Meriç Anadolu Lisesi
 SAKARYA,KARASU,High School,Mesleki ve Teknik Anadolu Lisesi,Karasu Mesleki ve Teknik Anadolu Lisesi
-BURDUR,ÇELTİKCİ,High School,Anadolu Lisesi,Çeltikçi Şehit Ali Yıldırım Anadolu Lisesi
+BURDUR,ÇELTİKÇİ,High School,Anadolu Lisesi,Çeltikçi Şehit Ali Yıldırım Anadolu Lisesi
 GİRESUN,EYNESİL,Secondary School,Ortaokul,Hacı Mustafa Eren Hafız İmam Hatip Ortaokulu
-İSTANBUL,KÜÇÜKCEKMECE,High School,Lise,Toki Atakent Spor Lisesi
+İSTANBUL,KÜÇÜKÇEKMECE,High School,Lise,Toki Atakent Spor Lisesi
 ZONGULDAK,EREĞLİ,High School,Anadolu Lisesi,Alemdar Anadolu Lisesi
 ÇORUM,MECİTÖZÜ,Primary School,İlkokul,İbek Şehit Osman Aydoğdu İlkokulu
 ÇORUM,MECİTÖZÜ,Secondary School,Ortaokul,İbek Şehit Osman Aydoğdu Ortaokulu
@@ -49962,8 +49960,8 @@ KAYSERİ,MELİKGAZİ,High School,Anadolu Lisesi,Vefa Anadolu Lisesi
 İSTANBUL,BÜYÜKÇEKMECE,High School,Anadolu Lisesi,Fethi Gemuhluoğlu Anadolu Lisesi
 ADANA,YÜREĞİR,Secondary School,Ortaokul,Doğankent Ortaokulu
 BURSA,KARACABEY,Secondary School,Ortaokul,Muhsin Yazıcıoğlu Ortaokulu
-İSTANBUL,KÜÇÜKCEKMECE,Secondary School,Ortaokul,Melikşah Ortaokulu
-İSTANBUL,KÜÇÜKCEKMECE,Secondary School,Ortaokul,Cemil Mutlu Ortaokulu
+İSTANBUL,KÜÇÜKÇEKMECE,Secondary School,Ortaokul,Melikşah Ortaokulu
+İSTANBUL,KÜÇÜKÇEKMECE,Secondary School,Ortaokul,Cemil Mutlu Ortaokulu
 ELAZIĞ,MERKEZ,Primary School,İlkokul,Bahçelievler İlkokulu
 SİVAS,KOYULHİSAR,Secondary School,Ortaokul,Aksu İmam Hatip Ortaokulu
 AFYONKARAHİSAR,MERKEZ,High School,İmam Hatip Lisesi,Hacı Sultan Hüsnü Ulu Kız Anadolu İmam Hatip Lisesi
@@ -49994,7 +49992,7 @@ ELAZIĞ,KOVANCILAR,High School,Anadolu Lisesi,Kovancılar Tuna Anadolu Lisesi
 İSTANBUL,PENDİK,High School,Anadolu Lisesi,Turgut Özal Anadolu Lisesi
 ERZİNCAN,ÜZÜMLÜ,High School,İmam Hatip Lisesi,Şehit Adem Akpınar Anadolu İmam Hatip Lisesi
 İSTANBUL,PENDİK,High School,Lise,Marmara Üniversitesi Abdülkadir Meragi Güzel Sanatlar Lisesi
-İSTANBUL,BAGCILAR,High School,Lise,Bağcılar Hikmet Barutçugil Güzel Sanatlar Lisesi
+İSTANBUL,BAĞCILAR,High School,Lise,Bağcılar Hikmet Barutçugil Güzel Sanatlar Lisesi
 DİYARBAKIR,SUR,High School,Anadolu Lisesi,Bağıvar Anadolu Lisesi
 İSTANBUL,SULTANGAZİ,High School,Anadolu Lisesi,Sultançiftliği Anadolu Lisesi
 KAHRAMANMARAŞ,ELBİSTAN,Secondary School,Ortaokul,Şehit Hüseyin Emre Kul Ortaokulu
@@ -50035,7 +50033,7 @@ DİYARBAKIR,BİSMİL,Primary School,İlkokul,Keberli ilkokulu
 KAYSERİ,PINARBAŞI,Primary School,İlkokul,Tözgün İlkokulu
 ANKARA,KEÇİÖREN,High School,İmam Hatip Lisesi,İmam Buhari Anadolu İmam Hatip Lisesi
 ANKARA,GÖLBAŞI,High School,Mesleki ve Teknik Anadolu Lisesi,Karaali Tarım Mesleki ve Teknik Anadolu Lisesi
-İSTANBUL,KÜÇÜKCEKMECE,High School,Lise,Alaeddin Yavaşça Güzel Sanatlar Lisesi
+İSTANBUL,KÜÇÜKÇEKMECE,High School,Lise,Alaeddin Yavaşça Güzel Sanatlar Lisesi
 AFYONKARAHİSAR,MERKEZ,Primary School,İlkokul,Ahmet Ömer Kocaşaban İlkokulu
 ARDAHAN,MERKEZ,Secondary School,Ortaokul,Şehit Asım Bey Ortaokulu
 ARDAHAN,MERKEZ,Primary School,İlkokul,Şehit Asım Bey İlkokulu
@@ -50051,7 +50049,7 @@ ANKARA,ÇANKAYA,High School,Anadolu Lisesi,Süheyl Ünver Anadolu Lisesi
 ANKARA,ETİMESGUT,High School,Anadolu Lisesi,Halil İnalcık Anadolu Lisesi
 ANKARA,MAMAK,High School,Anadolu Lisesi,Altıağaç Anadolu Lisesi
 ANKARA,SİNCAN,High School,Anadolu Lisesi,Şehit Mehmet Ali Korkmaz Anadolu Lisesi
-İSTANBUL,BAGCILAR,High School,Anadolu Lisesi,Nurettin Topçu Anadolu Lisesi
+İSTANBUL,BAĞCILAR,High School,Anadolu Lisesi,Nurettin Topçu Anadolu Lisesi
 İSTANBUL,BEYLİKDÜZÜ,High School,Anadolu Lisesi,Prof. Dr. İbrahim Savaş Anadolu Lisesi
 İZMİR,BORNOVA,High School,Anadolu Lisesi,Fethiye-Gönül Güzelcan Anadolu Lisesi
 MALATYA,YEŞİLYURT,High School,Anadolu Lisesi,İbni Haldun Anadolu Lisesi
@@ -50081,12 +50079,12 @@ ANKARA,KEÇİÖREN,Primary School,İlkokul,Arif Nihat Asya İlkokulu
 AMASYA,MERKEZ,Primary School,İlkokul,Müftü Mehmed Tevfik İlkokulu
 KAHRAMANMARAŞ,ÇAĞLIYANCERİT,High School,İmam Hatip Lisesi,Şehit Orhan Sürmen Anadolu İmam Hatip Lisesi
 DİYARBAKIR,ÇINAR,Primary School,Türk İlkokulu,Atatürk İlkokulu
-ERZİNCAN,ILIÇ,Primary School,İlkokul,Mehmet Şemsettin Günaltay İlkokulu
+ERZİNCAN,İLİÇ,Primary School,İlkokul,Mehmet Şemsettin Günaltay İlkokulu
 ERZİNCAN,MERKEZ,Secondary School,Ortaokul,Şemseddin Uçar İmam Hatip Ortaokulu
 SİİRT,MERKEZ,Primary School,İlkokul,Yağmurtepe İlkokulu
-ŞANLIURFA,AKCAKALE,Secondary School,Ortaokul,Uğraklı Ortaokulu
-ŞANLIURFA,AKCAKALE,Secondary School,Ortaokul,Aşağı Beydaş Ortaokulu
-ŞANLIURFA,AKCAKALE,Secondary School,Ortaokul,Donandı Ortaokulu
+ŞANLIURFA,AKÇAKALE,Secondary School,Ortaokul,Uğraklı Ortaokulu
+ŞANLIURFA,AKÇAKALE,Secondary School,Ortaokul,Aşağı Beydaş Ortaokulu
+ŞANLIURFA,AKÇAKALE,Secondary School,Ortaokul,Donandı Ortaokulu
 BİTLİS,GÜROYMAK,Secondary School,Ortaokul,Güroymak İmam Hatip Ortaokulu
 BİTLİS,MERKEZ,Secondary School,Ortaokul,Merkez İmam Hatip Ortaokulu
 ŞANLIURFA,HALİLİYE,Secondary School,Ortaokul,Ayşe PARMAKSIZ ORTAOKULU
@@ -50094,11 +50092,11 @@ BİTLİS,MERKEZ,Secondary School,Ortaokul,Merkez İmam Hatip Ortaokulu
 ŞANLIURFA,HALİLİYE,Secondary School,Ortaokul,Güzelköy Ortaokulu
 NEVŞEHİR,KOZAKLI,Primary School,İlkokul,Kozaklı Şehit Şenol Coşkun İlkokulu
 HATAY,KIRIKHAN,Secondary School,Ortaokul,Yunus Emre İmam Hatip Ortaokulu
-ŞIRNAK,IDİL,High School,Anadolu Lisesi,Atakent Anadolu Lisesi
+ŞIRNAK,İDİL,High School,Anadolu Lisesi,Atakent Anadolu Lisesi
 NİĞDE,MERKEZ,Primary School,İlkokul,Halil Kitapçı İlkokulu
 ADANA,SARIÇAM,Secondary School,Ortaokul,Çarkıpare Şehit Ertan Tokuş Ortaokulu
 BURSA,GÜRSU,Secondary School,Ortaokul,Gürsu Recep Tayyip Erdoğan Ortaokulu
-VAN,BAHCESARAY,Primary School,İlkokul,Mehmetçik İlkokulu
+VAN,BAHÇESARAY,Primary School,İlkokul,Mehmetçik İlkokulu
 DİYARBAKIR,ERGANİ,Primary School,İlkokul,Kavaklı İlkokulu
 DİYARBAKIR,ERGANİ,Secondary School,Ortaokul,Kavaklı Ortaokulu
 GAZİANTEP,ŞAHİNBEY,Primary School,İlkokul,Beştepe İlkokulu
@@ -50116,7 +50114,7 @@ SAKARYA,KARASU,Primary School,İlkokul,Şehit Ferhat Sözer İlkokulu
 GAZİANTEP,ŞAHİNBEY,Primary School,İlkokul,Hacı Ayvaz Çelik İlkokulu
 KOCAELİ,GEBZE,Primary School,İlkokul,Emlak Konutları Alparslan İlkokulu
 KOCAELİ,GEBZE,Secondary School,Ortaokul,Emlak Konutları Alparslan Ortaokulu
-VAN,BAHCESARAY,Secondary School,Ortaokul,Atatürk Ortaokulu
+VAN,BAHÇESARAY,Secondary School,Ortaokul,Atatürk Ortaokulu
 ISPARTA,SENİRKENT,Primary School,İlkokul,Garip İlkokulu
 ERZURUM,KARAYAZI,Secondary School,Ortaokul,Bayraktar İmam Hatip Ortaokulu
 HATAY,ALTINÖZÜ,Secondary School,Ortaokul,Altınkaya İmam Hatip Ortaokulu
@@ -50218,8 +50216,7 @@ KAYSERİ,TOMARZA,High School,Anadolu Lisesi,Dadaloğlu Battal Topuz Anadolu Lise
 ŞIRNAK,ULUDERE,Primary School,İlkokul,Şenoba İlkokulu
 HATAY,REYHANLI,Primary School,İlkokul,Şehit Polis Cuma Mercimek İlkokulu
 HATAY,REYHANLI,Secondary School,Ortaokul,Şehit Polis Cuma Mercimek Ortaokulu
-ŞIRNAK,IDİL,Primary School,İlkokul,"Turgut Özal 
-İlkokulu"
+ŞIRNAK,İDİL,Primary School,İlkokul,Turgut Özal
 BATMAN,MERKEZ,High School,Mesleki ve Teknik Anadolu Lisesi,Prof. Dr. Necmettin Erbakan Mesleki ve Teknik Anadolu Lisesi
 DİYARBAKIR,ÇINAR,Secondary School,Ortaokul,Çakırkaya Ortaokulu
 ŞANLIURFA,HİLVAN,Secondary School,Ortaokul,Hilvan Bahçelievler Ortaokulu
@@ -50279,7 +50276,7 @@ MUĞLA,ORTACA,Secondary School,Ortaokul,Dikmekavak Asiye Faruk Özalp Ortaokulu
 ANKARA,BEYPAZARI,High School,Mesleki ve Teknik Anadolu Lisesi,Beypazarı Evliya Çelebi Mesleki Ve Teknik Anadolu Lisesi
 AĞRI,HAMUR,Primary School,İlkokul,Köşk İlkokulu
 DİYARBAKIR,YENİŞEHİR,Secondary School,Ortaokul,Hamravat İmam Hatip Ortaokulu
-VAN,BAHCESARAY,Primary School,İlkokul,Köşk Kemallettin Ayhan İlkokulu
+VAN,BAHÇESARAY,Primary School,İlkokul,Köşk Kemallettin Ayhan İlkokulu
 KONYA,SELÇUKLU,High School,İmam Hatip Lisesi,Mustafa Hotamışlı Anadolu İmam Hatip Lisesi
 İZMİR,DİKİLİ,Primary School,İlkokul,Yaylayurt İlkokulu
 ARTVİN,MERKEZ,High School,Lise,Artvin Spor Lisesi
@@ -50339,7 +50336,7 @@ MARDİN,KIZILTEPE,Secondary School,Ortaokul,Yunus Emre Ortaokulu
 ANTALYA,ALANYA,Secondary School,Ortaokul,Ayşe Melahat Erkin Ortaokulu
 MARDİN,NUSAYBİN,Primary School,İlkokul,Nusaybin İlkokulu
 ADANA,ÇUKUROVA,Primary School,İlkokul,Çukurova İlkokulu
-İSTANBUL,KÜÇÜKCEKMECE,High School,İmam Hatip Lisesi,Beşyol Kız Anadolu İmam Hatip Lisesi
+İSTANBUL,KÜÇÜKÇEKMECE,High School,İmam Hatip Lisesi,Beşyol Kız Anadolu İmam Hatip Lisesi
 KONYA,MERAM,High School,İmam Hatip Lisesi,Mümtaz Koru Anadolu İmam Hatip Lisesi
 DENİZLİ,PAMUKKALE,High School,İmam Hatip Lisesi,Pamukkale Belediyesi Muhammet Serter Anadolu İmam Hatip Lisesi
 KONYA,ILGIN,High School,İmam Hatip Lisesi,Ilgın Kız Anadolu İmam Hatip Lisesi
@@ -50383,7 +50380,7 @@ DİYARBAKIR,LİCE,Primary School,İlkokul,Gökçe İlkokulu
 ŞANLIURFA,HALİLİYE,High School,Anadolu Lisesi,Konuklu Anadolu Lisesi
 ANKARA,MAMAK,Secondary School,Ortaokul,Şehit Hamza Irmak Ortaokulu
 ANKARA,POLATLI,Secondary School,Ortaokul,Şehit Sedat Akça Ortaokulu
-İSTANBUL,BAHCELİEVLER,Primary School,İlkokul,Kudret Saraçoğlu İlkokulu
+İSTANBUL,BAHÇELİEVLER,Primary School,İlkokul,Kudret Saraçoğlu İlkokulu
 İSTANBUL,PENDİK,High School,İmam Hatip Lisesi,İsmail Biçer Anadolu İmam Hatip Lisesi
 AKSARAY,MERKEZ,High School,İmam Hatip Lisesi,Recep Tayyip Erdoğan Anadolu İmam Hatip Lisesi
 DİYARBAKIR,YENİŞEHİR,Primary School,İlkokul,Faik Ali İlkokulu
@@ -50433,13 +50430,13 @@ ANKARA,SİNCAN,Secondary School,Ortaokul,Şehit Beytullah Melih Işık Ortaokulu
 OSMANİYE,MERKEZ,Primary School,İlkokul,Şehit Barış Göl İlkokulu
 OSMANİYE,MERKEZ,Secondary School,Ortaokul,Mevlana Ortaokulu
 ŞIRNAK,SİLOPİ,Primary School,İlkokul,Çalışkan Şehitleri İlkokulu
-ŞIRNAK,IDİL,Secondary School,Ortaokul,Şehit Jandarma Uzman Çavuş Mehmet Sait Barış Ortaokulu
+ŞIRNAK,İDİL,Secondary School,Ortaokul,Şehit Jandarma Uzman Çavuş Mehmet Sait Barış Ortaokulu
 ADANA,SEYHAN,Secondary School,Ortaokul,Şehit Sezgin Sezgin Ortaokulu
 ANKARA,ETİMESGUT,Secondary School,Ortaokul,Şehit Yasin Kendircioğlu Ortaokulu
 ANKARA,ETİMESGUT,Secondary School,Ortaokul,Şehit Yahya Acar Ortaokulu
 ANKARA,ETİMESGUT,Secondary School,Ortaokul,Şehit Mehmet Zengin Ortaokulu
 SAMSUN,CANİK,Primary School,İlkokul,Cahit Zarifoğlu İlkokulu
-ŞIRNAK,IDİL,Primary School,İlkokul,Selahaddin Eyyubi İlkokulu
+ŞIRNAK,İDİL,Primary School,İlkokul,Selahaddin Eyyubi İlkokulu
 KAHRAMANMARAŞ,DULKADİROĞLU,Secondary School,Ortaokul,Güzelyurt Nacarlar Ortaokulu
 TOKAT,MERKEZ,Primary School,İlkokul,Yağmurlu İlkokulu
 ŞIRNAK,BEYTÜŞŞEBAP,High School,Anadolu Lisesi,Mezra Anadolu Lisesi
@@ -50475,8 +50472,8 @@ KARS,SUSUZ,Primary School,İlkokul,Kalecik İlkokulu
 SİİRT,PERVARİ,Secondary School,Ortaokul,Pervari Köprüçay Ortaokulu
 TEKİRDAĞ,ÇERKEZKÖY,Primary School,İlkokul,Osmanlı İlkokulu
 DİYARBAKIR,KAYAPINAR,Primary School,İlkokul,Pirinçlik Karacadağ İlkokulu
-ŞIRNAK,IDİL,High School,İmam Hatip Lisesi,Şehit Mehmet Akı Anadolu İmam Hatip Lisesi
-ŞIRNAK,IDİL,Secondary School,Ortaokul,Pınarbaşı İmam Hatip Ortaokulu
+ŞIRNAK,İDİL,High School,İmam Hatip Lisesi,Şehit Mehmet Akı Anadolu İmam Hatip Lisesi
+ŞIRNAK,İDİL,Secondary School,Ortaokul,Pınarbaşı İmam Hatip Ortaokulu
 MARDİN,KIZILTEPE,High School,Anadolu Lisesi,Dikmen Anadolu Lisesi
 TEKİRDAĞ,KAPAKLI,High School,Anadolu Lisesi,Oktay Sinanoğlu Anadolu Lisesi
 GAZİANTEP,ŞEHİTKAMİL,High School,Anadolu Lisesi,Reha Gündüz Aksoy Anadolu Lisesi
@@ -50531,7 +50528,7 @@ HATAY,DÖRTYOL,Secondary School,Ortaokul,Dörtyol Ortaokulu
 GAZİANTEP,NİZİP,High School,İmam Hatip Lisesi,Rabia Müslüm Tuncel Kız Anadolu İmam Hatip Lisesi
 MANİSA,SALİHLİ,Primary School,İlkokul,Kapancı İlkokulu
 GAZİANTEP,ŞEHİTKAMİL,High School,Lise,Gönüllü Hizmet Vakfı İnal Aydınoğlu Güzel Sanatlar Lisesi
-AMASYA,TASOVA,Primary School,İlkokul,Kavaloluğu İlkokulu
+AMASYA,TAŞOVA,Primary School,İlkokul,Kavaloluğu İlkokulu
 KAHRAMANMARAŞ,ONİKİŞUBAT,Primary School,İlkokul,Üngüt Şehit Ahmet Unkun İlkokulu
 GAZİANTEP,ŞEHİTKAMİL,Secondary School,Ortaokul,Yavuz Sultan Selim İmam Hatip Ortaokulu
 GAZİANTEP,ŞEHİTKAMİL,Secondary School,Ortaokul,Kürşat Tüzmen Ortaokulu
@@ -50568,14 +50565,14 @@ KIRIKKALE,YAHŞİHAN,Primary School,İlkokul,Bayraktepe İlkokulu
 KIRIKKALE,YAHŞİHAN,Secondary School,Ortaokul,Şehit Mustafa Uğurelli Ortaokulu
 SAKARYA,ARİFİYE,Primary School,İlkokul,Arifiye İlkokulu
 ERZİNCAN,TERCAN,Secondary School,Ortaokul,Çadırkaya İmam Hatip Ortaokulu
-VAN,BAHCESARAY,Primary School,İlkokul,Oğuzeli İlkokulu
+VAN,BAHÇESARAY,Primary School,İlkokul,Oğuzeli İlkokulu
 KARS,ARPAÇAY,Primary School,İlkokul,Mescitli İlkokulu
 KARS,ARPAÇAY,Primary School,İlkokul,Gediksatılmış İlkokulu
 İZMİR,BORNOVA,Secondary School,Ortaokul,Ergene Ortaokulu
 ANKARA,KEÇİÖREN,Primary School,İlkokul,Şehit Tolga Akdaş İlkokulu
 GAZİANTEP,ŞEHİTKAMİL,Secondary School,Ortaokul,MEHMET BATALLI ORTAOKULU
 GAZİANTEP,ŞAHİNBEY,Secondary School,Ortaokul,MEHMET ŞİMŞEK ORTAOKULU
-AYDIN,INCİRLİOVA,Primary School,İlkokul,Yazıdere Şehit Adem Akdeniz İlkokulu
+AYDIN,İNCİRLİOVA,Primary School,İlkokul,Yazıdere Şehit Adem Akdeniz İlkokulu
 ANTALYA,ALANYA,Primary School,İlkokul,Çıplaklı İlkokulu
 İSTANBUL,BAŞAKŞEHİR,Secondary School,Ortaokul,İsmail Kemal Demiröz Ortaokulu
 ANKARA,KEÇİÖREN,Secondary School,Ortaokul,Bilim Ortaokulu
@@ -50587,7 +50584,7 @@ NİĞDE,MERKEZ,Secondary School,Ortaokul,Şehit Okan Acar Ortaokulu
 GAZİANTEP,YAVUZELİ,High School,İmam Hatip Lisesi,Yavuzeli Cahit Zarifoğlu Anadolu İmam Hatip Lisesi
 AFYONKARAHİSAR,DİNAR,Secondary School,Ortaokul,Dinar Şehit Şükrü Bayrakcı Hafız İmam Hatip Ortaokulu
 GAZİANTEP,ŞEHİTKAMİL,Primary School,İlkokul,Çamlık İlkokulu
-BURSA,MUSTAFAKEMALPASA,Primary School,İlkokul,Cahit Zarifoğlu İlkokulu
+BURSA,MUSTAFAKEMALPAŞA,Primary School,İlkokul,Cahit Zarifoğlu İlkokulu
 GAZİANTEP,ŞEHİTKAMİL,Primary School,İlkokul,Sefaşehir İlkokulu
 SAKARYA,KAYNARCA,Primary School,İlkokul,Mimar Sinan İlkokulu
 SAKARYA,KAYNARCA,Secondary School,Ortaokul,Atatürk Ortaokulu
@@ -50738,7 +50735,7 @@ AĞRI,DİYADİN,Primary School,İlkokul,Şehit Polis Tufan Kansuva İlkokulu
 OSMANİYE,DÜZİÇİ,Primary School,İlkokul,Düziçi Şehit İbrahim Kurt İlkokulu
 AĞRI,DOĞUBEYAZIT,Primary School,İlkokul,Ağrı Dağı İlkokulu
 AĞRI,DOĞUBEYAZIT,Secondary School,Ortaokul,Ağrı Dağı Ortaokulu
-TRABZON,AKCAABAT,Primary School,İlkokul,Söğütlü Fatih İlkokulu
+TRABZON,AKÇAABAT,Primary School,İlkokul,Söğütlü Fatih İlkokulu
 VAN,ERCİŞ,Secondary School,Ortaokul,İrşad İmam Hatip Ortaokulu
 DİYARBAKIR,BİSMİL,Primary School,İlkokul,Belli İlkokulu
 BİTLİS,HİZAN,Primary School,İlkokul,Sağırkaya Köyü Akçakonak Mezrası İlkokulu
@@ -50808,7 +50805,7 @@ AĞRI,DOĞUBEYAZIT,Secondary School,Ortaokul,Şehit Emniyet Müdürü Zafer KOYU
 KONYA,YUNAK,High School,Anadolu Lisesi,Sülüklü 15 Temmuz Şehitleri Anadolu Lisesi
 NİĞDE,MERKEZ,Secondary School,Ortaokul,Fatma ve Mehmet Karaca İmam Hatip Ortaokulu
 AĞRI,MERKEZ,Primary School,İlkokul,Fatma Hamit İlidi İlkokulu
-BURSA,MUSTAFAKEMALPASA,Primary School,İlkokul,Karyağmaz İlkokulu
+BURSA,MUSTAFAKEMALPAŞA,Primary School,İlkokul,Karyağmaz İlkokulu
 ŞANLIURFA,HİLVAN,Secondary School,Ortaokul,Ovacık İmam Hatip Ortaokulu
 ŞANLIURFA,HİLVAN,Secondary School,Ortaokul,Kuskunlu Mehmet Torgut İmam Hatip Ortaokulu
 İSTANBUL,ÇEKMEKÖY,Primary School,İlkokul,Şehit Üsteğmen Arif Kalafat İlkokulu
@@ -50946,7 +50943,7 @@ TRABZON,TONYA,Primary School,İlkokul,Necmettin Karaduman İlkokulu
 HATAY,ALTINÖZÜ,Primary School,İlkokul,Akamber İlkokulu
 NİĞDE,ÇAMARDI,Primary School,İlkokul,Sulucaova Şehit Bayram Kızıltan İlkokulu
 NİĞDE,MERKEZ,Primary School,İlkokul,Tırhan İlkokulu
-TRABZON,AKCAABAT,Primary School,İlkokul,Demirkapı İlkokulu
+TRABZON,AKÇAABAT,Primary School,İlkokul,Demirkapı İlkokulu
 SİVAS,KOYULHİSAR,Primary School,İlkokul,Gökdere İlkokulu
 KARS,AKYAKA,Primary School,İlkokul,Kalkankale Yukarı Mahalle İlkokulu
 MARDİN,KIZILTEPE,Primary School,İlkokul,Yenikent İlkokulu
@@ -51035,7 +51032,7 @@ ERZURUM,HORASAN,Primary School,İlkokul,Esentepe İlkokulu
 İSTANBUL,BEYOĞLU,Secondary School,Ortaokul,Veysel Vardal Görme Engelliler Ortaokulu
 VAN,TUŞBA,Secondary School,Ortaokul,İbni Sina Ortaokulu
 BARTIN,KURUCAŞİLE,Secondary School,Ortaokul,Kurucaşile İmam Hatip Ortaokulu
-AYDIN,INCİRLİOVA,Primary School,İlkokul,Karagözler İlkokulu
+AYDIN,İNCİRLİOVA,Primary School,İlkokul,Karagözler İlkokulu
 MARDİN,KIZILTEPE,Primary School,İlkokul,Halil Tüfekçioğlu İlkokulu
 GAZİANTEP,ŞEHİTKAMİL,Secondary School,Ortaokul,Yayıktaş Ortaokulu
 KARAMAN,MERKEZ,Primary School,İlkokul,Muratdede İlkokulu
@@ -51134,7 +51131,7 @@ BİTLİS,HİZAN,Primary School,İlkokul,Ballıca Köyü Yukarıaksüt Mezrası �
 MUĞLA,MİLAS,Primary School,İlkokul,Türkevleri İlkokulu
 MALATYA,YEŞİLYURT,Primary School,İlkokul,Kozluk Pınarbaşı İlkokulu
 KAHRAMANMARAŞ,ONİKİŞUBAT,Primary School,İlkokul,Hacınınoğlu İlkokulu
-İSTANBUL,KADİKÖY,High School,Lise,Kadıköy Spor Lisesi
+İSTANBUL,KADIKÖY,High School,Lise,Kadıköy Spor Lisesi
 İSTANBUL,SİLİVRİ,Primary School,İlkokul,Yolçatı İlkokulu
 AFYON,EMİRDAĞ,Primary School,İlkokul,Veysel İlkokulu
 İZMİR,ÇEŞME,Primary School,İlkokul,Ildırı İlkokulu
@@ -51175,7 +51172,7 @@ AKSARAY,MERKEZ,Primary School,İlkokul,Ekecik Gödeler İlkokulu
 AKSARAY,MERKEZ,Primary School,İlkokul,Cankıllı İlkokulu
 AKSARAY,MERKEZ,Primary School,İlkokul,Babakonağı İlkokulu
 AKSARAY,MERKEZ,Primary School,İlkokul,Ekecikyeniköy Ahmet Yıldız İlkokulu
-AMASYA,TASOVA,Primary School,İlkokul,Mercimek İlkokulu
+AMASYA,TAŞOVA,Primary School,İlkokul,Mercimek İlkokulu
 ÇORUM,MERKEZ,Primary School,İlkokul,Çatak İlkokulu
 ÇORUM,MERKEZ,Primary School,İlkokul,Çalıca İlkokulu
 MUĞLA,YATAĞAN,Primary School,İlkokul,Bahçeyaka İlkokulu
@@ -51369,7 +51366,7 @@ SİVAS,GÜRÜN,Primary School,İlkokul,Güneş İlkokulu
 BATMAN,KOZLUK,Primary School,İlkokul,Mustafa Kemal Paşa İlkokulu
 SİVAS,GÜRÜN,Primary School,İlkokul,Kızılören İlkokulu
 BATMAN,BEŞİRİ,Primary School,İlkokul,Bahçeli Yazyurdu İlkokulu
-SİİRT,SİRVAN,Primary School,İlkokul,Söbetaş İlkokulu Müdürlüğü
+SİİRT,ŞİRVAN,Primary School,İlkokul,Söbetaş İlkokulu Müdürlüğü
 BATMAN,BEŞİRİ,Primary School,İlkokul,Oğuz Kışlacık İlkokulu
 BATMAN,KOZLUK,Primary School,İlkokul,Uzunyazı İlkokulu
 BATMAN,SASON,Primary School,İlkokul,Sarıyayla Elek İlkokulu
@@ -51513,8 +51510,8 @@ ADANA,FEKE,Primary School,İlkokul,Çandırlar Bekirhacılı İlkokulu
 SİİRT,KURTALAN,Primary School,İlkokul,Ballıkaya Yuvalı İlkokulu
 BATMAN,MERKEZ,Primary School,İlkokul,Fırat İlkokulu
 NİĞDE,BOR,Primary School,İlkokul,Tepeköy Altınova İlkokulu
-ŞANLIURFA,AKCAKALE,Primary School,İlkokul,Büyüknaneli İlkokulu
-ŞANLIURFA,AKCAKALE,Primary School,İlkokul,Tatlıkuyu İlkokulu
+ŞANLIURFA,AKÇAKALE,Primary School,İlkokul,Büyüknaneli İlkokulu
+ŞANLIURFA,AKÇAKALE,Primary School,İlkokul,Tatlıkuyu İlkokulu
 ŞANLIURFA,BOZOVA,Primary School,İlkokul,Söğütlü İlkokulu
 ŞANLIURFA,BOZOVA,Primary School,İlkokul,Mağaracık İlkokulu
 ŞANLIURFA,KARAKÖPRÜ,Primary School,İlkokul,Kızılhöyük İlkokulu
@@ -51527,7 +51524,7 @@ ERZURUM,NARMAN,Primary School,İlkokul,Çamlıyayla İlkokulu
 İZMİR,TORBALI,Primary School,İlkokul,Tulum İlkokulu
 İZMİR,BORNOVA,Primary School,İlkokul,Mehmet Çetin Taçyıldız İlkokulu
 İSTANBUL,SULTANGAZİ,High School,Mesleki ve Teknik Anadolu Lisesi,Sultangazi Cezeri Mesleki ve Teknik Anadolu Lisesi
-VAN,BAHCESARAY,Primary School,İlkokul,Paşaköy İlkokulu
+VAN,BAHÇESARAY,Primary School,İlkokul,Paşaköy İlkokulu
 ANTALYA,SERİK,High School,Fen Lisesi,Serik Fen Lisesi
 ÇANAKKALE,YENİCE,High School,Fen Lisesi,Yenice Vali Muhterem İnce Fen Lisesi
 ERZURUM,HORASAN,High School,Fen Lisesi,Horasan Fen Lisesi
@@ -51538,7 +51535,7 @@ KONYA,KARAPINAR,High School,Fen Lisesi,Karapınar Murat Kurum Fen Lisesi
 ERZURUM,HINIS,High School,Fen Lisesi,Hınıs Erdoğan Eren Fen Lisesi
 BATMAN,SASON,Primary School,İlkokul,Kavaklı İlkokulu
 İSTANBUL,ÇATALCA,High School,Fen Lisesi,Çatalca Fen Lisesi
-ŞANLIURFA,AKCAKALE,Secondary School,Ortaokul,Adnan Menderes Ortaokulu
+ŞANLIURFA,AKÇAKALE,Secondary School,Ortaokul,Adnan Menderes Ortaokulu
 ŞANLIURFA,KARAKÖPRÜ,Primary School,İlkokul,Külaflı İlkokulu
 BİNGÖL,ADAKLI,Primary School,İlkokul,Kaynakdüzü Karakoç İlkokulu
 BİTLİS,AHLAT,High School,Anadolu Lisesi,Ovakışla Anadolu Lisesi
@@ -51906,8 +51903,7 @@ HATAY,REYHANLI,Primary School,İlkokul,Üçtepe İlkokulu
 HATAY,REYHANLI,Secondary School,Ortaokul,Üçtepe Ortaokulu
 ISPARTA,GÖNEN,High School,Anadolu Lisesi,Gönen Anadolu Lisesi
 DİYARBAKIR,KULP,Primary School,İlkokul,Salkımlı Deştik İlkokulu
-HATAY,ERZİN,High School,İmam Hatip Lisesi,"Şehit Oğuzcan Ekiz Anadolu
-İmam Hatip Lisesi"
+HATAY,ERZİN,High School,İmam Hatip Lisesi,Şehit Oğuzcan Ekiz Anadolu
 KIRKLARELİ,MERKEZ,Primary School,İlkokul,Kırklareli 100.Yıl İlkokulu
 ELAZIĞ,MERKEZ,Secondary School,Ortaokul,100. Yıl Çaydaçıra Ortaokulu
 DİYARBAKIR,YENİŞEHİR,Primary School,İlkokul,Gülgöze  İlkokulu
@@ -52486,6 +52482,7 @@ AĞRI,DOĞUBAYAZIT,High School,Anadolu Lisesi,Doğubayazıt Anadolu Lisesi
 ORDU,GÜLYALI,High School,Anadolu Lisesi,Ayşe Şahin Anadolu Lisesi
 İSTANBUL,TUZLA,High School,Anadolu Lisesi,Tuzla Orhanlı Anadolu Lisesi
 İSTANBUL,TUZLA,High School,Anadolu Lisesi,Kaşif Kalkavan Anadolu Lisesi
+İSTANBUL,TUZLA,High School,Anadolu Lisesi,Tuzla Doğa Koleji
 KAHRAMANMARAŞ,ONİKİŞUBAT,Primary School,İlkokul,Selimiye İlkokulu
 KAHRAMANMARAŞ,ONİKİŞUBAT,Secondary School,Ortaokul,Selimiye Ortaokulu
 ŞANLIURFA,SURUÇ,High School,Lise,Suruç Spor Lisesi
@@ -52745,9 +52742,9 @@ ANKARA,Kampüs,University,Foundation University,İhsan Doğramacı Bilkent Üniv
 İSTANBUL,Kampüs,University,Foundation University,İstanbul Okan Üniversitesi
 İSTANBUL,Kampüs,University,Foundation University,İstanbul Rumeli Üniversitesi
 İSTANBUL,Kampüs,University,Foundation University,İstanbul Sabahattin Zaim Üniversitesi
-İstanbul Sağlık ve Sosyal Bilimler Meslek Yüksekokulu,Kampüs,University,Foundation University,İstanbul Sağlık ve Sosyal Bilimler Meslek Yüksekokulu
+İSTANBUL,Kampüs,University,Foundation University,İstanbul Sağlık ve Sosyal Bilimler Meslek Yüksekokulu
 İSTANBUL,Kampüs,University,Foundation University,İstanbul Sağlık ve Teknoloji Üniversitesi
-İstanbul Şişli Meslek Yüksekokulu,Kampüs,University,Foundation University,İstanbul Şişli Meslek Yüksekokulu
+İSTANBUL,Kampüs,University,Foundation University,İstanbul Şişli Meslek Yüksekokulu
 İSTANBUL,Kampüs,University,Foundation University,İstanbul Ticaret Üniversitesi
 İSTANBUL,Kampüs,University,Foundation University,İstanbul Yeni Yüzyıl Üniversitesi
 İSTANBUL,Kampüs,University,Foundation University,İstinye Üniversitesi
@@ -52780,3 +52777,288 @@ ANKARA,Kampüs,University,Foundation University,Ufuk Üniversitesi
 İZMİR,Kampüs,University,Foundation University,Yaşar Üniversitesi
 İSTANBUL,Kampüs,University,Foundation University,Yeditepe Üniversitesi
 ANKARA,Kampüs,University,Foundation University,Yüksek İhtisas Üniversitesi
+İSTANBUL,ÇEKMEKÖY,Primary School,Özel İlkokul,ÖZEL MEKTEBİM KOLEJİ ÇEKMEKÖY İLKOKULU
+İSTANBUL,ÇEKMEKÖY,Secondary School,Özel Ortaokul,ÖZEL MEKTEBİM KOLEJİ ÇEKMEKÖY ORTAOKULU
+İSTANBUL,ÇEKMEKÖY,High School,Anadolu Lisesi,ÖZEL MEKTEBİM KOLEJİ ÇEKMEKÖY LİSESİ
+İSTANBUL,BEYLİKDÜZÜ,Primary School,Özel İlkokul,ÖZEL BİL KOLEJİ BEYLÜKDÜZÜ MARİNA İLKOKULU
+İSTANBUL,BEYLİKDÜZÜ,Secondary School,Özel Ortaokul,ÖZEL BİL KOLEJİ BEYLÜKDÜZÜ MARİNA ORTAOKULU
+İSTANBUL,BEYLİKDÜZÜ,High School,Anadolu Lisesi,ÖZEL BİL KOLEJİ BEYLÜKDÜZÜ MARİNA LİSESİ
+İSTANBUL,BEYLİKDÜZÜ,Primary School,Özel İlkokul,ÖZEL CERN KOLEJİ BEYLİKDÜZÜ İLKOKULU
+İSTANBUL,BEYLİKDÜZÜ,Secondary School,Özel Ortaokul,ÖZEL CERN KOLEJİ BEYLİKDÜZÜ ORTAOKULU
+İSTANBUL,BEYLİKDÜZÜ,High School,Anadolu Lisesi,ÖZEL CERN KOLEJİ BEYLİKDÜZÜ LİSESİ
+İSTANBUL,ZEYTİNBURNU,Primary School,Özel İlkokul,ÖZEL UĞUR OKULLARI TOPKAPI İLKOKULU
+İSTANBUL,ZEYTİNBURNU,Secondary School,Özel Ortaokul,ÖZEL UĞUR OKULLARI TOPKAPI ORTAOKULU
+İSTANBUL,ZEYTİNBURNU,High School,Anadolu Lisesi,ÖZEL UĞUR OKULLARI TOPKAPI LİSESİ
+İSTANBUL,BEYLİKDÜZÜ,Primary School,Özel İlkokul,ÖZEL KEY KOLEJİ BEYLİKDÜZÜ İLKOKULU
+İSTANBUL,BEYLİKDÜZÜ,Secondary School,Özel Ortaokul,ÖZEL KEY KOLEJİ BEYLİKDÜZÜ ORTAOKULU
+İSTANBUL,BEYLİKDÜZÜ,High School,Anadolu Lisesi,ÖZEL KEY KOLEJİ BEYLİKDÜZÜ LİSESİ
+İSTANBUL,PENDİK,Primary School,Özel İlkokul,ÖZEL YENİYORUM OKULLARI PENDİK İLKOKULU
+İSTANBUL,PENDİK,Secondary School,Özel Ortaokul,ÖZEL YENİYORUM OKULLARI PENDİK ORTAOKULU
+İSTANBUL,ÇEKMEKÖY,Primary School,Özel İlkokul,ÖZEL OKUTGEN KOLEJİ ÇEKMEKÖY İLKOKULU
+İSTANBUL,ÇEKMEKÖY,Secondary School,Özel Ortaokul,ÖZEL OKUTGEN KOLEJİ ÇEKMEKÖY ORTAOKULU
+İSTANBUL,ESENYURT,Primary School,Özel İlkokul,ÖZEL KAVRAM KOLEJİ ESENYURT İLKOKULU
+İSTANBUL,ESENYURT,Secondary School,Özel Ortaokul,ÖZEL KAVRAM KOLEJİ ESENYURT ORTAOKULU
+İSTANBUL,MALTEPE,Primary School,Özel İlkokul,ÖZEL FBA KOLEJİ MALTEPE İLKOKULU
+İSTANBUL,MALTEPE,Secondary School,Özel Ortaokul,ÖZEL FBA KOLEJİ MALTEPE ORTAOKULU
+İSTANBUL,ESENYURT,Primary School,Özel İlkokul,ÖZEL DÜŞÜNÜR KOLEJİ BEYLİKDÜZÜ İLKOKULU
+İSTANBUL,ESENYURT,Secondary School,Özel Ortaokul,ÖZEL DÜŞÜNÜR KOLEJİ BEYLİKDÜZÜ ORTAOKULU
+İSTANBUL,EYÜP,Primary School,Özel İlkokul,ÖZEL ZİNDE OKULLARI EYÜP İLKOKULU
+İSTANBUL,EYÜP,Secondary School,Özel Ortaokul,ÖZEL ZİNDE OKULLARI EYÜP ORTAOKULU
+İSTANBUL,ZEYTİNBURNU,Secondary School,Özel Ortaokul,ÖZEL ZEYTİNBURNU FİNAL OKULLARI MERTER ORTAOKULU
+İSTANBUL,ZEYTİNBURNU,High School,Anadolu Lisesi,ÖZEL ZEYTİNBURNU FİNAL OKULLARI MERTER LİSESİ
+İSTANBUL,ŞİŞLİ,High School,Anadolu Lisesi,ÖZEL CERN KOLEJİ ZİNCİRLİKUYU LİSESİ
+İSTANBUL,MALTEPE,High School,Anadolu Lisesi,ÖZEL SONUÇ ONİKİ KOLEJİ MALTEPE LİSESİ
+İSTANBUL,EYÜP,High School,Fen Lisesi,ÖZEL EYÜP TOPÇULAR NAZMİ ARIKAN FEN BİLİMLERİ ANADOLU LİSESİ FEN LİSESİ
+İSTANBUL,ESENLER,High School,Anadolu Lisesi,ÖZEL ESENLER SINAV ANADOLU LİSESİ ANADOLU LİSESİ
+İSTANBUL,BEYLİKDÜZÜ,Primary School,Özel İlkokul,ÖZEL MBA OKULLARI BEYLİKDÜZÜ 2 İLKOKULU
+İSTANBUL,BEYLİKDÜZÜ,Secondary School,Özel Ortaokul,ÖZEL MBA OKULLARI BEYLİKDÜZÜ 2 ORTAOKULU
+İSTANBUL,BEYLİKDÜZÜ,High School,Anadolu Lisesi,ÖZEL MBA OKULLARI BEYLİKDÜZÜ 2 LİSESİ
+İSTANBUL,ESENYURT,Primary School,Özel İlkokul,ÖZEL NESİBE AYDIN OKULLARI İSTANBUL İLKOKULU
+İSTANBUL,ESENYURT,Secondary School,Özel Ortaokul,ÖZEL NESİBE AYDIN OKULLARI İSTANBUL ORTAOKULU
+İSTANBUL,BEYKOZ,Primary School,Özel İlkokul,ÖZEL CLLC OKULLARI BEYKOZ İLKOKULU
+İSTANBUL,BEYKOZ,Secondary School,Özel Ortaokul,ÖZEL CLLC OKULLARI BEYKOZ ORTAOKULU
+İSTANBUL,ÜMRANİYE,Primary School,Özel İlkokul,ÖZEL FİNKA OKULLARI ŞERİFALİ İLKOKULU
+İSTANBUL,ÜMRANİYE,Secondary School,Özel Ortaokul,ÖZEL FİNKA OKULLARI ŞERİFALİ ORTAOKULU
+İSTANBUL,ESENYURT,Primary School,Özel İlkokul,ÖZEL EVA KOLEJİ ESENYURT İLKOKULU
+İSTANBUL,ESENYURT,Secondary School,Özel Ortaokul,ÖZEL EVA KOLEJİ ESENYURT ORTAOKULU
+İSTANBUL,BAŞAKŞEHİR,Primary School,Özel İlkokul,ÖZEL ÖZVERİ KOLEJİ İKİTELLİ İLKOKULU
+İSTANBUL,BAŞAKŞEHİR,Secondary School,Özel Ortaokul,ÖZEL ÖZVERİ KOLEJİ İKİTELLİ ORTAOKULU
+İSTANBUL,BAŞAKŞEHİR,High School,Anadolu Lisesi,ÖZEL ÖZVERİ KOLEJİ İKİTELLİ LİSESİ
+İSTANBUL,BAŞAKŞEHİR,Primary School,Özel İlkokul,ÖZEL BİRİKİM KOLEJİ BAŞAKŞEHİR İLKOKULU
+İSTANBUL,BAŞAKŞEHİR,Secondary School,Özel Ortaokul,ÖZEL BİRİKİM KOLEJİ BAŞAKŞEHİR ORTAOKULU
+İSTANBUL,BAŞAKŞEHİR,High School,Anadolu Lisesi,ÖZEL BİRİKİM KOLEJİ BAŞAKŞEHİR LİSESİ
+İSTANBUL,EYÜP,Primary School,Özel İlkokul,ÖZEL EYÜPSULTAN LİDER SANCAK KOLEJİ EYÜP PROJE İLKOKULU
+İSTANBUL,EYÜP,Secondary School,Özel Ortaokul,ÖZEL EYÜPSULTAN LİDER SANCAK KOLEJİ EYÜP PROJE ORTAOKULU
+İSTANBUL,EYÜP,High School,Anadolu Lisesi,ÖZEL EYÜPSULTAN LİDER SANCAK KOLEJİ EYÜP PROJE LİSESİ
+İSTANBUL,ÜSKÜDAR,Primary School,Özel İlkokul,ÖZEL BRİTİSH SCHOOL İSTANBUL ÇAMLICA İLKOKULU
+İSTANBUL,ÜSKÜDAR,Secondary School,Özel Ortaokul,ÖZEL BRİTİSH SCHOOL İSTANBUL ÇAMLICA ORTAOKULU
+İSTANBUL,PENDİK,High School,Anadolu Lisesi,ÖZEL TURKUAZ EĞİTİM KOLEJİ ANADOLU LİSESİ PENDİK ANADOLU LİSESİ
+İSTANBUL,KARTAL,Primary School,Özel İlkokul,ÖZEL YENİ KAZANIM OKULLARI KARTAL İLKOKULU
+İSTANBUL,KARTAL,Secondary School,Özel Ortaokul,ÖZEL YENİ KAZANIM OKULLARI KARTAL ORTAOKULU
+İSTANBUL,BAŞAKŞEHİR,Primary School,Özel İlkokul,ÖZEL ALNOOR INTERNATİONAL SCHOOL BAŞAKŞEHİR İLKOKULU
+İSTANBUL,BAŞAKŞEHİR,Secondary School,Özel Ortaokul,ÖZEL ALNOOR INTERNATİONAL SCHOOL BAŞAKŞEHİR ORTAOKULU
+İSTANBUL,BAŞAKŞEHİR,High School,Anadolu Lisesi,ÖZEL ALNOOR INTERNATİONAL SCHOOL BAŞAKŞEHİR LİSESİ
+İSTANBUL,BAĞCILAR,Primary School,Özel İlkokul,ÖZEL MİLESTONE INTERNATİONAL SCHOOL BAĞCILAR İLKOKULU
+İSTANBUL,BAĞCILAR,Secondary School,Özel Ortaokul,ÖZEL MİLESTONE INTERNATİONAL SCHOOL BAĞCILAR ORTAOKULU
+İSTANBUL,BAĞCILAR,High School,Anadolu Lisesi,ÖZEL MİLESTONE INTERNATİONAL SCHOOL BAĞCILAR LİSESİ
+İSTANBUL,ESENYURT,Primary School,Özel İlkokul,ÖZEL AL-MAWAKEB INTERNATİONAL SCHOOLS ESENYURT İLKOKULU
+İSTANBUL,ESENYURT,Secondary School,Özel Ortaokul,ÖZEL AL-MAWAKEB INTERNATİONAL SCHOOLS ESENYURT ORTAOKULU
+İSTANBUL,ESENYURT,High School,Anadolu Lisesi,ÖZEL AL-MAWAKEB INTERNATİONAL SCHOOLS ESENYURT LİSESİ
+İSTANBUL,BAŞAKŞEHİR,Primary School,Özel İlkokul,ÖZEL ANDALUS MODEL SCHOOL BAŞAKŞEHİR İLKOKULU
+İSTANBUL,BAŞAKŞEHİR,Secondary School,Özel Ortaokul,ÖZEL ANDALUS MODEL SCHOOL BAŞAKŞEHİR ORTAOKULU
+İSTANBUL,BAŞAKŞEHİR,High School,Anadolu Lisesi,ÖZEL ANDALUS MODEL SCHOOL BAŞAKŞEHİR LİSESİ
+İSTANBUL,BAĞCILAR,Primary School,Özel İlkokul,ÖZEL AWAEL KOLEJİ BAĞCILAR İLKOKULU
+İSTANBUL,BAĞCILAR,Secondary School,Özel Ortaokul,ÖZEL AWAEL KOLEJİ BAĞCILAR ORTAOKULU
+İSTANBUL,BAĞCILAR,High School,Anadolu Lisesi,ÖZEL AWAEL KOLEJİ BAĞCILAR LİSESİ
+İSTANBUL,BAŞAKŞEHİR,Primary School,Özel İlkokul,ÖZEL BIS SCHOOL BAŞAKŞEHİR İLKOKULU
+İSTANBUL,BAŞAKŞEHİR,Secondary School,Özel Ortaokul,ÖZEL BIS SCHOOL BAŞAKŞEHİR ORTAOKULU
+İSTANBUL,BEŞİKTAŞ,High School,Anadolu Lisesi,ÖZEL UĞUR ANADOLU LİSESİ BEBEK ANADOLU LİSESİ
+İSTANBUL,EYÜP,High School,Anadolu Lisesi,ÖZEL UĞUR OKULLARI KEMERBURGAZ ANADOLU LİSESİ ANADOLU LİSESİ
+İSTANBUL,ARNAVUTKÖY,Primary School,Özel İlkokul,ÖZEL UĞUR OKULLARI ARNAVUTKÖY İLKOKULU
+İSTANBUL,ARNAVUTKÖY,Secondary School,Özel Ortaokul,ÖZEL UĞUR OKULLARI ARNAVUTKÖY ORTAOKULU
+İSTANBUL,ARNAVUTKÖY,High School,Anadolu Lisesi,ÖZEL UĞUR OKULLARI ARNAVUTKÖY LİSESİ
+İSTANBUL,BÜYÜKÇEKMECE,Primary School,Özel İlkokul,ÖZEL ISTANBUL INTERNATİONAL COMMUNİTY SCHOOL MARMARA İLKOKULU
+İSTANBUL,BÜYÜKÇEKMECE,Secondary School,Özel Ortaokul,ÖZEL ISTANBUL INTERNATİONAL COMMUNİTY SCHOOL MARMARA ORTAOKULU
+İSTANBUL,BÜYÜKÇEKMECE,High School,Anadolu Lisesi,ÖZEL ISTANBUL INTERNATİONAL COMMUNİTY SCHOOL MARMARA LİSESİ
+İSTANBUL,BEYLİKDÜZÜ,High School,Anadolu Lisesi,ÖZEL FORM ANADOLU LİSESİ BEYLİKDÜZÜ ANADOLU LİSESİ
+İSTANBUL,EYÜP,Primary School,Özel İlkokul,ÖZEL DOĞA KOLEJİ GÖKTÜRK İLKOKULU
+İSTANBUL,EYÜP,Secondary School,Özel Ortaokul,ÖZEL DOĞA KOLEJİ GÖKTÜRK ORTAOKULU
+İSTANBUL,EYÜP,High School,Anadolu Lisesi,ÖZEL DOĞA KOLEJİ GÖKTÜRK LİSESİ
+İSTANBUL,EYÜP,Primary School,Özel İlkokul,ÖZEL ODTÜ GVO KEMERBURGAZ BİLİM OKULU İLKOKULU
+İSTANBUL,EYÜP,Secondary School,Özel Ortaokul,ÖZEL ODTÜ GVO KEMERBURGAZ BİLİM OKULU ORTAOKULU
+İSTANBUL,EYÜP,High School,Anadolu Lisesi,ÖZEL ODTÜ GVO KEMERBURGAZ BİLİM OKULU LİSESİ
+İSTANBUL,GÜNGÖREN,Secondary School,Özel Ortaokul,ÖZEL FİNAL OKULLARI GÜNGÖREN ORTAOKULU
+İSTANBUL,EYÜP,High School,Fen Lisesi,ÖZEL EYÜP SULTANGAZİ FEN BİLİMLERİ ANADOLU LİSESİ FEN LİSESİ
+İSTANBUL,EYÜP,High School,Anadolu Lisesi,ÖZEL EYÜP BİL KOLEJİ SULTANGAZİ LİSESİ
+İSTANBUL,ZEYTİNBURNU,Primary School,Özel İlkokul,ÖZEL ZEYTİNBURNU MAVİ UMUT OKULLARI KAZLIÇEŞME İLKOKULU
+İSTANBUL,ZEYTİNBURNU,Secondary School,Özel Ortaokul,ÖZEL ZEYTİNBURNU MAVİ UMUT OKULLARI KAZLIÇEŞME ORTAOKULU
+İSTANBUL,BEYLİKDÜZÜ,Primary School,Özel İlkokul,ÖZEL AREV OKULLARI BEYLİKDÜZÜ İLKOKULU
+İSTANBUL,BEYLİKDÜZÜ,Secondary School,Özel Ortaokul,ÖZEL AREV OKULLARI BEYLİKDÜZÜ ORTAOKULU
+İSTANBUL,BEYLİKDÜZÜ,High School,Anadolu Lisesi,ÖZEL AREV OKULLARI BEYLİKDÜZÜ LİSESİ
+İSTANBUL,ÜMRANİYE,Primary School,Özel İlkokul,ÖZEL İSABET OKULLARI ÜMRANİYE İLKOKULU
+İSTANBUL,ÜMRANİYE,Secondary School,Özel Ortaokul,ÖZEL İSABET OKULLARI ÜMRANİYE ORTAOKULU
+İSTANBUL,SARIYER,Primary School,Özel İlkokul,ÖZEL BÜMED MEÇ OKULLARI BAHÇEKÖY İLKOKULU
+İSTANBUL,SARIYER,Secondary School,Özel Ortaokul,ÖZEL BÜMED MEÇ OKULLARI BAHÇEKÖY ORTAOKULU
+İSTANBUL,FATİH,Primary School,Özel İlkokul,ÖZEL İELEV OKULLARI CAĞALOĞLU İLKOKULU
+İSTANBUL,FATİH,Secondary School,Özel Ortaokul,ÖZEL İELEV OKULLARI CAĞALOĞLU ORTAOKULU
+İSTANBUL,ESENYURT,Primary School,Özel İlkokul,ÖZEL OKYANUS KOLEJİ BAHÇEŞEHİR İLKOKULU
+İSTANBUL,ESENYURT,Secondary School,Özel Ortaokul,ÖZEL OKYANUS KOLEJİ BAHÇEŞEHİR ORTAOKULU
+İSTANBUL,ESENYURT,High School,Anadolu Lisesi,ÖZEL OKYANUS KOLEJİ BAHÇEŞEHİR LİSESİ
+İSTANBUL,EYÜP,Primary School,Özel İlkokul,ÖZEL TARİH KOLEJİ EYÜP İLKOKULU
+İSTANBUL,EYÜP,Secondary School,Özel Ortaokul,ÖZEL TARİH KOLEJİ EYÜP ORTAOKULU
+İSTANBUL,ESENYURT,Secondary School,Özel Ortaokul,ÖZEL BEYOĞLU KOLEJİ ESENYURT ORTAOKULU
+İSTANBUL,ESENYURT,High School,Anadolu Lisesi,ÖZEL BEYOĞLU KOLEJİ ESENYURT LİSESİ
+İSTANBUL,EYÜP,Primary School,Özel İlkokul,ÖZEL CEZERİ BİLİM VE TEKNOLOJİ OKULLARI EYÜP İLKOKULU
+İSTANBUL,EYÜP,Secondary School,Özel Ortaokul,ÖZEL CEZERİ BİLİM VE TEKNOLOJİ OKULLARI EYÜP ORTAOKULU
+İSTANBUL,EYÜP,High School,Anadolu Lisesi,ÖZEL CEZERİ BİLİM VE TEKNOLOJİ OKULLARI EYÜP LİSESİ
+İSTANBUL,ZEYTİNBURNU,Primary School,Özel İlkokul,ÖZEL CEVİZLİBAĞ DOĞA KOLEJİ İLKOKULU
+İSTANBUL,ZEYTİNBURNU,Secondary School,Özel Ortaokul,ÖZEL CEVİZLİBAĞ DOĞA KOLEJİ ORTAOKULU
+İSTANBUL,ZEYTİNBURNU,High School,Anadolu Lisesi,ÖZEL CEVİZLİBAĞ DOĞA KOLEJİ LİSESİ
+İSTANBUL,ESENYURT,High School,Anadolu Lisesi,ÖZEL TOPKAPI OKULLARI ESENYURT LİSESİ
+İSTANBUL,ESENYURT,Primary School,Özel İlkokul,ÖZEL İHSAN INTERNATİONAL OKULLARI ESENYURT İLKOKULU
+İSTANBUL,ESENYURT,Secondary School,Özel Ortaokul,ÖZEL İHSAN INTERNATİONAL OKULLARI ESENYURT ORTAOKULU
+İSTANBUL,ESENYURT,High School,Anadolu Lisesi,ÖZEL İHSAN INTERNATİONAL OKULLARI ESENYURT LİSESİ
+İSTANBUL,MALTEPE,Primary School,Özel İlkokul,ÖZEL DRAGOS AMERİKAN KÜLTÜR KOLEJİ İLKOKULU
+İSTANBUL,MALTEPE,Secondary School,Özel Ortaokul,ÖZEL DRAGOS AMERİKAN KÜLTÜR KOLEJİ ORTAOKULU
+İSTANBUL,FATİH,Primary School,Özel İlkokul,ÖZEL BİRİKİM OKULLARI FATİH İLKOKULU
+İSTANBUL,FATİH,Secondary School,Özel Ortaokul,ÖZEL BİRİKİM OKULLARI FATİH ORTAOKULU
+İSTANBUL,FATİH,High School,Anadolu Lisesi,ÖZEL BİRİKİM OKULLARI FATİH LİSESİ
+İSTANBUL,SULTANGAZİ,Primary School,Özel İlkokul,ÖZEL BİLGENÇ KOLEJİ SULTANGAZİ İLKOKULU
+İSTANBUL,SULTANGAZİ,Secondary School,Özel Ortaokul,ÖZEL BİLGENÇ KOLEJİ SULTANGAZİ ORTAOKULU
+İSTANBUL,SANCAKTEPE,Primary School,Özel İlkokul,ÖZEL BİKEV OKULLARI SANCAKTEPE İLKOKULU
+İSTANBUL,SANCAKTEPE,Secondary School,Özel Ortaokul,ÖZEL BİKEV OKULLARI SANCAKTEPE ORTAOKULU
+İSTANBUL,SANCAKTEPE,High School,Anadolu Lisesi,ÖZEL BİKEV OKULLARI SANCAKTEPE LİSESİ
+İSTANBUL,EYÜP,Primary School,Özel İlkokul,ÖZEL HALİÇ ETAP OKULLARI İLKOKULU
+İSTANBUL,EYÜP,Secondary School,Özel Ortaokul,ÖZEL HALİÇ ETAP OKULLARI ORTAOKULU
+İSTANBUL,ESENYURT,Primary School,Özel İlkokul,ÖZEL MBA OKULLARI BEYLİKDÜZÜ İLKOKULU
+İSTANBUL,ESENYURT,Secondary School,Özel Ortaokul,ÖZEL MBA OKULLARI BEYLİKDÜZÜ ORTAOKULU
+İSTANBUL,ESENYURT,High School,Anadolu Lisesi,ÖZEL MBA OKULLARI BEYLİKDÜZÜ LİSESİ
+İSTANBUL,ÜMRANİYE,Primary School,Özel İlkokul,ÖZEL ÇAMLICA PALET OKULLARI ANAOKULU İLKOKULU
+İSTANBUL,ÜMRANİYE,Secondary School,Özel Ortaokul,ÖZEL ÇAMLICA PALET OKULLARI ANAOKULU ORTAOKULU
+İSTANBUL,ÇEKMEKÖY,Primary School,Özel İlkokul,ÖZEL KİLİTTAŞI OKULLARI ÇEKMEKÖY İLKOKULU
+İSTANBUL,ÇEKMEKÖY,Secondary School,Özel Ortaokul,ÖZEL KİLİTTAŞI OKULLARI ÇEKMEKÖY ORTAOKULU
+İSTANBUL,ÇEKMEKÖY,High School,Anadolu Lisesi,ÖZEL KİLİTTAŞI OKULLARI ÇEKMEKÖY LİSESİ
+İSTANBUL,ÜMRANİYE,Primary School,Özel İlkokul,ÖZEL BİLGİÇAĞI KOLEJİ ÜMRANİYE İLKOKULU
+İSTANBUL,ÜMRANİYE,Secondary School,Özel Ortaokul,ÖZEL BİLGİÇAĞI KOLEJİ ÜMRANİYE ORTAOKULU
+İSTANBUL,ÜMRANİYE,Primary School,Özel İlkokul,ÖZEL ENBA OKULLARI ŞERİFALİ İLKOKULU
+İSTANBUL,EYÜP,Primary School,Özel İlkokul,ÖZEL DOĞA KOLEJİ HALİÇ İLKOKULU
+İSTANBUL,EYÜP,Secondary School,Özel Ortaokul,ÖZEL DOĞA KOLEJİ HALİÇ ORTAOKULU
+İSTANBUL,EYÜP,High School,Anadolu Lisesi,ÖZEL DOĞA KOLEJİ HALİÇ LİSESİ
+İSTANBUL,ÇEKMEKÖY,Primary School,Özel İlkokul,ÖZEL İELEV OKULLARI 125. YIL İLKOKULU
+İSTANBUL,ÇEKMEKÖY,Secondary School,Özel Ortaokul,ÖZEL İELEV OKULLARI 125. YIL ORTAOKULU
+İSTANBUL,ÇEKMEKÖY,High School,Anadolu Lisesi,ÖZEL İELEV OKULLARI 125. YIL LİSESİ
+İSTANBUL,ÜMRANİYE,Primary School,Özel İlkokul,ÖZEL BAHÇEŞEHİR KOLEJİ ATAŞEHİR 2 İLKOKULU
+İSTANBUL,ÜMRANİYE,Primary School,Özel İlkokul,ÖZEL 3 ADIM KOLEJİ ÜMRANİYE İLKOKULU
+İSTANBUL,ÜMRANİYE,Secondary School,Özel Ortaokul,ÖZEL 3 ADIM KOLEJİ ÜMRANİYE ORTAOKULU
+İSTANBUL,ŞİŞLİ,Primary School,Özel İlkokul,ÖZEL DYF SCHOOL ŞİŞLİ İLKOKULU
+İSTANBUL,ŞİŞLİ,Secondary School,Özel Ortaokul,ÖZEL DYF SCHOOL ŞİŞLİ ORTAOKULU
+İSTANBUL,SARIYER,Primary School,Özel İlkokul,ÖZEL İLGİ OKULLARI SARIYER ANAOKUL VE İLKOKUL İLKOKULU
+İSTANBUL,SARIYER,Secondary School,Özel Ortaokul,ÖZEL İLGİ OKULLARI SARIYER ORTAOKUL VE LİSE ORTAOKULU
+İSTANBUL,SARIYER,High School,Anadolu Lisesi,ÖZEL İLGİ OKULLARI SARIYER ORTAOKUL VE LİSE LİSESİ
+İSTANBUL,PENDİK,Primary School,Özel İlkokul,ÖZEL MBA OKULLARI KURTKÖY İLKOKULU
+İSTANBUL,PENDİK,Secondary School,Özel Ortaokul,ÖZEL MBA OKULLARI KURTKÖY ORTAOKULU
+İSTANBUL,PENDİK,High School,Anadolu Lisesi,ÖZEL MBA OKULLARI KURTKÖY LİSESİ
+İSTANBUL,PENDİK,Secondary School,Özel Ortaokul,ÖZEL BİREY OKULLARI PENDİK ORTAOKULU
+İSTANBUL,KÜÇÜKÇEKMECE,Primary School,Özel İlkokul,ÖZEL MBA OKULLARI HALKALI İLKOKULU
+İSTANBUL,KÜÇÜKÇEKMECE,Secondary School,Özel Ortaokul,ÖZEL MBA OKULLARI HALKALI ORTAOKULU
+İSTANBUL,KÜÇÜKÇEKMECE,High School,Anadolu Lisesi,ÖZEL MBA OKULLARI HALKALI LİSESİ
+İSTANBUL,KARTAL,Primary School,Özel İlkokul,ÖZEL BAHÇEŞEHİR KOLEJİ DRAGOS İLKOKULU
+İSTANBUL,KARTAL,Secondary School,Özel Ortaokul,ÖZEL BAHÇEŞEHİR KOLEJİ DRAGOS ORTAOKULU
+İSTANBUL,KADIKÖY,Primary School,Özel İlkokul,ÖZEL FİDOL OKULLARI KOŞUYOLU İLKOKULU
+İSTANBUL,KADIKÖY,Primary School,Özel İlkokul,ÖZEL YÖM OKULLARI GÖZTEPE İLKOKULU
+İSTANBUL,EYÜP,Secondary School,Özel Ortaokul,ÖZEL BERİL KOLEJİ YEŞİLPINAR ORTAOKULU
+İSTANBUL,EYÜP,High School,Anadolu Lisesi,ÖZEL BERİL KOLEJİ YEŞİLPINAR LİSESİ
+İSTANBUL,EYÜP,Primary School,Özel İlkokul,ÖZEL BAHÇEŞEHİR KOLEJİ GÖKTÜRK İLKOKULU
+İSTANBUL,EYÜP,Secondary School,Özel Ortaokul,ÖZEL BAHÇEŞEHİR KOLEJİ GÖKTÜRK ORTAOKULU
+İSTANBUL,EYÜP,Secondary School,Özel Ortaokul,ÖZEL FİNAL OKULLARI GÖKTÜRK ORTAOKULU
+İSTANBUL,EYÜP,High School,Anadolu Lisesi,ÖZEL FİNAL OKULLARI GÖKTÜRK LİSESİ
+İSTANBUL,EYÜP,Primary School,Özel İlkokul,ÖZEL BİLTES KOLEJİ GÖKTÜRK İLKOKULU
+İSTANBUL,EYÜP,Secondary School,Özel Ortaokul,ÖZEL BİLTES KOLEJİ GÖKTÜRK ORTAOKULU
+İSTANBUL,EYÜP,Primary School,Özel İlkokul,ÖZEL OKYANUS KOLEJİ KEMERBURGAZ İLKOKULU
+İSTANBUL,EYÜP,Secondary School,Özel Ortaokul,ÖZEL OKYANUS KOLEJİ KEMERBURGAZ ORTAOKULU
+İSTANBUL,EYÜP,High School,Anadolu Lisesi,ÖZEL OKYANUS KOLEJİ KEMERBURGAZ LİSESİ
+İSTANBUL,ESENLER,High School,Anadolu Lisesi,ÖZEL EKSEN OKULLARI ESENLER LİSESİ
+İSTANBUL,ÇEKMEKÖY,Primary School,Özel İlkokul,ÖZEL YENİDOĞU OKULLARI ÇEKMEKÖY İLKOKULU
+İSTANBUL,ÇEKMEKÖY,Secondary School,Özel Ortaokul,ÖZEL YENİDOĞU OKULLARI ÇEKMEKÖY ORTAOKULU
+İSTANBUL,BÜYÜKÇEKMECE,Primary School,Özel İlkokul,ÖZEL OKYANUS KOLEJİ MİMAROBA İLKOKULU
+İSTANBUL,BÜYÜKÇEKMECE,Secondary School,Özel Ortaokul,ÖZEL OKYANUS KOLEJİ MİMAROBA ORTAOKULU
+İSTANBUL,BÜYÜKÇEKMECE,High School,Anadolu Lisesi,ÖZEL OKYANUS KOLEJİ MİMAROBA LİSESİ
+İSTANBUL,BÜYÜKÇEKMECE,Primary School,Özel İlkokul,ÖZEL ALKEV OKULLARI BÜYÜKÇEKMECE İLKOKULU
+İSTANBUL,BÜYÜKÇEKMECE,Secondary School,Özel Ortaokul,ÖZEL ALKEV OKULLARI BÜYÜKÇEKMECE ORTAOKULU
+İSTANBUL,BÜYÜKÇEKMECE,High School,Anadolu Lisesi,ÖZEL ALKEV OKULLARI BÜYÜKÇEKMECE LİSESİ
+İSTANBUL,BEŞİKTAŞ,Primary School,Özel İlkokul,ÖZEL TERAKKİ VAKFI OKULLARI LEVENT İLKOKULU
+İSTANBUL,BEŞİKTAŞ,Secondary School,Özel Ortaokul,ÖZEL TERAKKİ VAKFI OKULLARI LEVENT ORTAOKULU
+İSTANBUL,BEŞİKTAŞ,High School,Anadolu Lisesi,ÖZEL TERAKKİ VAKFI OKULLARI LEVENT LİSESİ
+ANKARA,ETİMESGUT,Primary School,Özel İlkokul,ÖZEL MEKTEBİM KOLEJİ ERYAMAN İLKOKULU
+ANKARA,ETİMESGUT,Secondary School,Özel Ortaokul,ÖZEL MEKTEBİM KOLEJİ ERYAMAN ORTAOKULU
+ANKARA,KEÇİÖREN,Primary School,Özel İlkokul,ÖZEL BİLİŞİM KOLEJİ KEÇİÖREN İLKOKULU
+ANKARA,KEÇİÖREN,Secondary School,Özel Ortaokul,ÖZEL BİLİŞİM KOLEJİ KEÇİÖREN ORTAOKULU
+ANKARA,ETİMESGUT,High School,Mesleki ve Teknik Anadolu Lisesi,ÖZEL ANKATEK KOLEJİ MESLEKİ VE TEKNİK ANADOLU LİSESİ MESLEKİ VE TEKNİK ANADOLU LİSESİ
+ANKARA,MAMAK,Primary School,Özel İlkokul,ÖZEL HÜSEYİNGAZİ BİLİŞİM KOLEJİ MAMAK İLKOKULU
+ANKARA,MAMAK,Secondary School,Özel Ortaokul,ÖZEL HÜSEYİNGAZİ BİLİŞİM KOLEJİ MAMAK ORTAOKULU
+ANKARA,MAMAK,High School,Anadolu Lisesi,ÖZEL HÜSEYİNGAZİ BİLİŞİM KOLEJİ MAMAK LİSESİ
+ANKARA,YENİMAHALLE,Primary School,Özel İlkokul,ÖZEL ERYAMAN AÇI KOLEJİ YENİMAHALLE İLKOKULU
+ANKARA,PURSAKLAR,Primary School,Özel İlkokul,ÖZEL PARLA KOLEJİ PURSAKLAR İLKOKULU
+ANKARA,PURSAKLAR,Secondary School,Özel Ortaokul,ÖZEL PARLA KOLEJİ PURSAKLAR ORTAOKULU
+ANKARA,GÖLBAŞI,Primary School,Özel İlkokul,ÖZEL DATAKENT KOLEJİ GÖLBAŞI İLKOKULU
+ANKARA,GÖLBAŞI,Secondary School,Özel Ortaokul,ÖZEL DATAKENT KOLEJİ GÖLBAŞI ORTAOKULU
+ANKARA,GÖLBAŞI,High School,Anadolu Lisesi,ÖZEL DATAKENT KOLEJİ GÖLBAŞI LİSESİ
+ANKARA,ETİMESGUT,Secondary School,Özel Ortaokul,ÖZEL KAVRAM KOLEJİ ETİMESGUT ORTAOKULU
+ANKARA,ÇANKAYA,Primary School,Özel İlkokul,ÖZEL AMERİKAN KÜLTÜR KOLEJİ BİRLİK İLKOKULU
+ANKARA,ÇANKAYA,Secondary School,Özel Ortaokul,ÖZEL AMERİKAN KÜLTÜR KOLEJİ BİRLİK ORTAOKULU
+ANKARA,KEÇİÖREN,High School,Fen Lisesi,ÖZEL NAZMİ ARIKAN FEN BİLİMLERİ KEÇİÖREN FEN LİSESİ
+ANKARA,ÇUBUK,High School,Anadolu Lisesi,ÖZEL YÜKSELEN KOLEJİ ÇUBUK LİSESİ
+ANKARA,ALTINDAĞ,High School,Anadolu Lisesi,ÖZEL KARAPÜRÇEK FİNAL ANADOLU LİSESİ ANADOLU LİSESİ
+ANKARA,SİNCAN,High School,Anadolu Lisesi,ÖZEL KENT EĞİTİM KOLEJİ SİNCAN LİSESİ
+ANKARA,YENİMAHALLE,Primary School,Özel İlkokul,ÖZEL AÇI KOLEJİ YENİMAHALLE İLKOKULU
+ANKARA,YENİMAHALLE,Secondary School,Özel Ortaokul,ÖZEL AÇI KOLEJİ YENİMAHALLE ORTAOKULU
+ANKARA,YENİMAHALLE,High School,Anadolu Lisesi,ÖZEL AÇI KOLEJİ YENİMAHALLE LİSESİ
+ANKARA,YENİMAHALLE,Primary School,Özel İlkokul,ÖZEL PINAR EĞİTİM KURUMLARI YENİMAHALLE İLKOKULU
+ANKARA,YENİMAHALLE,Secondary School,Özel Ortaokul,ÖZEL PINAR EĞİTİM KURUMLARI YENİMAHALLE ORTAOKULU
+ANKARA,YENİMAHALLE,High School,Anadolu Lisesi,ÖZEL PINAR EĞİTİM KURUMLARI YENİMAHALLE LİSESİ
+ANKARA,ETİMESGUT,Secondary School,Özel Ortaokul,ÖZEL MUALLİM KOLEJİ ETİMESGUT ORTAOKULU
+İZMİR,ÇİĞLİ,Primary School,Özel İlkokul,ÖZEL ERA KOLEJİ MAVİŞEHİR İLKOKULU
+İZMİR,ÇİĞLİ,Secondary School,Özel Ortaokul,ÖZEL ERA KOLEJİ MAVİŞEHİR ORTAOKULU
+İZMİR,ÇİĞLİ,High School,Anadolu Lisesi,ÖZEL ERA KOLEJİ MAVİŞEHİR LİSESİ
+İZMİR,MENEMEN,Primary School,Özel İlkokul,ÖZEL İZBİLİM KOLEJİ MENEMEN İLKOKULU
+İZMİR,MENEMEN,Secondary School,Özel Ortaokul,ÖZEL İZBİLİM KOLEJİ MENEMEN ORTAOKULU
+İZMİR,MENEMEN,High School,Anadolu Lisesi,ÖZEL İZBİLİM KOLEJİ MENEMEN LİSESİ
+İZMİR,TORBALI,Primary School,Özel İlkokul,ÖZEL İZBİLİM KOLEJİ TORBALI İLKOKULU
+İZMİR,TORBALI,Secondary School,Özel Ortaokul,ÖZEL İZBİLİM KOLEJİ TORBALI ORTAOKULU
+İZMİR,SELÇUK,High School,Anadolu Lisesi,ÖZEL SELÇUKLU ÇÖZÜM AKADEMİ ANADOLU LİSESİ ANADOLU LİSESİ
+İZMİR,KONAK,High School,Anadolu Lisesi,ÖZEL KONAK MERSİNLİ BATI KOLEJİ LİSESİ
+İZMİR,BAYRAKLI,Secondary School,Özel Ortaokul,ÖZEL ÇÖZÜM AKADEMİ OKULLARI ORTAOKULU BAYRAKLI ORTAOKULU
+İZMİR,KARABAĞLAR,Primary School,Özel İlkokul,ÖZEL UKEB OKULLARI KARABAĞLAR İLKOKULU
+İZMİR,KARABAĞLAR,Secondary School,Özel Ortaokul,ÖZEL UKEB OKULLARI KARABAĞLAR ORTAOKULU
+İZMİR,MENEMEN,Primary School,Özel İlkokul,ÖZEL 21. YÜZYIL KARŞIYAKA KOLEJİ MENEMEN İLKOKULU
+İZMİR,MENEMEN,Secondary School,Özel Ortaokul,ÖZEL 21. YÜZYIL KARŞIYAKA KOLEJİ MENEMEN ORTAOKULU
+İZMİR,MENEMEN,High School,Anadolu Lisesi,ÖZEL 21. YÜZYIL KARŞIYAKA KOLEJİ MENEMEN LİSESİ
+İZMİR,MENEMEN,Primary School,Özel İlkokul,ÖZEL DALTON KOLEJİ MENEMEN İLKOKULU
+İZMİR,MENEMEN,Secondary School,Özel Ortaokul,ÖZEL DALTON KOLEJİ MENEMEN ORTAOKULU
+İZMİR,MENEMEN,High School,Anadolu Lisesi,ÖZEL DALTON KOLEJİ MENEMEN LİSESİ
+İZMİR,ÇİĞLİ,Primary School,Özel İlkokul,ÖZEL DOĞA KOLEJİ MAVİŞEHİR 3 İLKOKULU
+İZMİR,ÇİĞLİ,Secondary School,Özel Ortaokul,ÖZEL DOĞA KOLEJİ MAVİŞEHİR 3 ORTAOKULU
+İZMİR,ÇİĞLİ,High School,Anadolu Lisesi,ÖZEL DOĞA KOLEJİ MAVİŞEHİR 3 LİSESİ
+İZMİR,KARŞIYAKA,Primary School,Özel İlkokul,ÖZEL DOĞA KOLEJİ İZMİR MAVİŞEHİR 2 İLKOKULU
+İZMİR,KARŞIYAKA,Secondary School,Özel Ortaokul,ÖZEL DOĞA KOLEJİ İZMİR MAVİŞEHİR 2 ORTAOKULU
+İZMİR,TORBALI,Primary School,Özel İlkokul,ÖZEL BAHÇEŞEHİR KOLEJİ GÜNEY İLKOKULU
+İZMİR,TORBALI,Secondary School,Özel Ortaokul,ÖZEL BAHÇEŞEHİR KOLEJİ GÜNEY ORTAOKULU
+İZMİR,TORBALI,High School,Anadolu Lisesi,ÖZEL BAHÇEŞEHİR KOLEJİ GÜNEY LİSESİ
+İZMİR,GAZİEMİR,High School,Anadolu Lisesi,ÖZEL DOĞRU STATÜ OKULLARI GAZİEMİR LİSESİ
+İZMİR,KONAK,Primary School,Özel İlkokul,ÖZEL İTALYAN OKULLARI KONAK İLKOKULU
+İZMİR,KARŞIYAKA,Primary School,Özel İlkokul,ÖZEL DOĞA KOLEJİ MAVİŞEHİR 1 İLKOKULU
+İZMİR,KARŞIYAKA,Secondary School,Özel Ortaokul,ÖZEL DOĞA KOLEJİ MAVİŞEHİR 1 ORTAOKULU
+İZMİR,KARŞIYAKA,High School,Anadolu Lisesi,ÖZEL DOĞA KOLEJİ MAVİŞEHİR 1 LİSESİ
+İZMİR,BORNOVA,Primary School,Özel İlkokul,ÖZEL ZÜBEYDE HANIM EĞİTİM KURUMLARI ÇİÇEKLİKÖY İLKOKULU
+İZMİR,BORNOVA,Secondary School,Özel Ortaokul,ÖZEL ZÜBEYDE HANIM EĞİTİM KURUMLARI ÇİÇEKLİKÖY ORTAOKULU
+İZMİR,BORNOVA,High School,Anadolu Lisesi,ÖZEL ZÜBEYDE HANIM EĞİTİM KURUMLARI ÇİÇEKLİKÖY LİSESİ
+İZMİR,BAYRAKLI,Primary School,Özel İlkokul,ÖZEL BİLSET OKULLARI BAYRAKLI İLKOKULU
+İZMİR,BAYRAKLI,Secondary School,Özel Ortaokul,ÖZEL BİLSET OKULLARI BAYRAKLI ORTAOKULU
+ANTALYA,MURATPAŞA,Primary School,Özel İlkokul,ÖZEL DÜŞÜNÜR KOLEJİ KOÇAŞ İLKOKULU
+ANTALYA,MURATPAŞA,Secondary School,Özel Ortaokul,ÖZEL DÜŞÜNÜR KOLEJİ KOÇAŞ ORTAOKULU
+ANTALYA,MURATPAŞA,High School,Anadolu Lisesi,ÖZEL DÜŞÜNÜR KOLEJİ KOÇAŞ LİSESİ
+ANTALYA,AKSU,High School,Mesleki ve Teknik Anadolu Lisesi,ÖZEL AKSU YEDİSU OKULLARI MESLEKİ VE TEKNİK ANADOLU LİSESİ MESLEKİ VE TEKNİK ANADOLU LİSESİ
+ANTALYA,MURATPAŞA,Secondary School,Özel Ortaokul,ÖZEL IŞIKLAR OKULLARI MURATPAŞA ORTAOKULU
+ANTALYA,MURATPAŞA,High School,Anadolu Lisesi,ÖZEL IŞIKLAR OKULLARI MURATPAŞA LİSESİ
+ANTALYA,KONYAALTI,Primary School,Özel İlkokul,ÖZEL BAŞARI OKULLARI KONYAALTI İLKOKULU
+ANTALYA,KONYAALTI,Secondary School,Özel Ortaokul,ÖZEL BAŞARI OKULLARI KONYAALTI ORTAOKULU
+ANTALYA,KONYAALTI,High School,Anadolu Lisesi,ÖZEL BAŞARI OKULLARI KONYAALTI LİSESİ
+ANTALYA,MURATPAŞA,Primary School,Özel İlkokul,ÖZEL USRE OKULLARI LARA İLKOKULU
+BURSA,NİLÜFER,Primary School,Özel İlkokul,ÖZEL BAHÇEŞEHİR KOLEJİ BALAT İLKOKULU
+BURSA,NİLÜFER,Secondary School,Özel Ortaokul,ÖZEL BAHÇEŞEHİR KOLEJİ BALAT ORTAOKULU
+BURSA,NİLÜFER,Primary School,Özel İlkokul,ÖZEL YOLCULUK OKULLARI BURSA FETİH İLKOKULU
+BURSA,NİLÜFER,Secondary School,Özel Ortaokul,ÖZEL YOLCULUK OKULLARI BURSA FETİH ORTAOKULU
+BURSA,NİLÜFER,High School,Anadolu Lisesi,ÖZEL YOLCULUK OKULLARI BURSA FETİH LİSESİ
+BURSA,YILDIRIM,High School,Mesleki ve Teknik Anadolu Lisesi,ÖZEL DATA KOLEJİ MESLEKİ VE TEKNİK ANADOLU LİSESİ YILDIRIM MESLEKİ VE TEKNİK ANADOLU LİSESİ
+KOCAELİ,DİLOVASI,High School,Anadolu Lisesi,ÖZEL KOCAELİ ENKA OKULLARI LİSESİ
+ADANA,SARIÇAM,Primary School,Özel İlkokul,ÖZEL GİRNE KOLEJİ ADANA İLKOKULU
+ADANA,SARIÇAM,Secondary School,Özel Ortaokul,ÖZEL GİRNE KOLEJİ ADANA ORTAOKULU
+ADANA,SARIÇAM,High School,Anadolu Lisesi,ÖZEL GİRNE KOLEJİ ADANA LİSESİ
+ADANA,SEYHAN,Secondary School,Özel Ortaokul,ÖZEL ERKAN KOLEJİ SEYHAN ORTAOKULU
+ADANA,SEYHAN,Primary School,Özel İlkokul,ÖZEL İSABET OKULLARI SEYHAN İLKOKULU
+ADANA,SEYHAN,Secondary School,Özel Ortaokul,ÖZEL İSABET OKULLARI SEYHAN ORTAOKULU
+MERSİN,TOROSLAR,Primary School,Özel İlkokul,ÖZEL BAHÇEŞEHİR KOLEJİ TOROSLAR İLKOKULU
+MERSİN,TOROSLAR,Secondary School,Özel Ortaokul,ÖZEL BAHÇEŞEHİR KOLEJİ TOROSLAR ORTAOKULU
+MERSİN,TOROSLAR,High School,Anadolu Lisesi,ÖZEL BAHÇEŞEHİR KOLEJİ TOROSLAR LİSESİ
+MERSİN,TARSUS,Primary School,Özel İlkokul,ÖZEL ÖZEL TARSUS SEV OKULLARI İLKOKULU
+MERSİN,TARSUS,Secondary School,Özel Ortaokul,ÖZEL ÖZEL TARSUS SEV OKULLARI ORTAOKULU

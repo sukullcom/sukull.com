@@ -1,0 +1,206 @@
+{
+  "city": "BURSA",
+  "source": "C:\\Users\\savle\\.cursor\\projects\\c-src-FlutterProjects\\uploads\\bursa-kolejleri-3.md",
+  "externalCount": 80,
+  "csvPrivateCount": 318,
+  "matched": 77,
+  "missing": [
+    {
+      "name": "Bahçeşehir Koleji Balat Kampüsü",
+      "district": "Nilüfer",
+      "levels": [
+        "ilkokul",
+        "ortaokul"
+      ],
+      "bestScore": 0,
+      "nearestCsv": null
+    },
+    {
+      "name": "Yolculuk Okulları Bursa Fetih Kampüsü",
+      "district": "Nilüfer",
+      "levels": [
+        "ilkokul",
+        "ortaokul",
+        "lise"
+      ],
+      "bestScore": 0,
+      "nearestCsv": null
+    },
+    {
+      "name": "Data Koleji Mesleki ve Teknik Anadolu Lisesi Yıldırım Kampüsü",
+      "district": "Yıldırım",
+      "levels": [
+        "lise"
+      ],
+      "bestScore": 0,
+      "nearestCsv": null
+    }
+  ],
+  "partial": [
+    {
+      "name": "Özgün Koleji Mudanya Kampüsü",
+      "district": "Mudanya",
+      "levels": [
+        "ilkokul",
+        "ortaokul",
+        "lise"
+      ],
+      "missingLevels": [
+        "ilkokul",
+        "ortaokul"
+      ],
+      "csvMatches": [
+        "ÖZEL BALAT ÖZGÜN KOLEJİ ANADOLU LİSESİ"
+      ]
+    },
+    {
+      "name": "İstanbul Lider Koleji Gemlik Kampüsü",
+      "district": "Gemlik",
+      "levels": [
+        "ilkokul",
+        "ortaokul",
+        "lise"
+      ],
+      "missingLevels": [
+        "ilkokul",
+        "ortaokul"
+      ],
+      "csvMatches": [
+        "ÖZEL GEMLİK KÜLTÜR KOLEJİ ANADOLU LİSESİ",
+        "ÖZEL GEMLİK KÜLTÜR KOLEJİ FEN LİSESİ",
+        "ÖZEL GEMLİK SINAV KOLEJİ ANADOLU LİSESİ"
+      ]
+    },
+    {
+      "name": "Orhangazi Düşünür Koleji Lise Kampüsü",
+      "district": "Orhangazi",
+      "levels": [
+        "ilkokul",
+        "ortaokul",
+        "lise"
+      ],
+      "missingLevels": [
+        "lise"
+      ],
+      "csvMatches": [
+        "ÖZEL DÜŞÜNÜR İLKOKULU",
+        "ÖZEL DÜŞÜNÜR ORTAOKULU"
+      ]
+    },
+    {
+      "name": "Uğur Okulları Özlüce Kampüsü",
+      "district": "Nilüfer",
+      "levels": [
+        "ilkokul",
+        "ortaokul",
+        "lise"
+      ],
+      "missingLevels": [
+        "ilkokul",
+        "lise"
+      ],
+      "csvMatches": [
+        "ÖZEL ÖZLÜCE  ORTAOKULU"
+      ]
+    },
+    {
+      "name": "Okyanus Koleji Yenişehir Kampüsü",
+      "district": "Yenişehir",
+      "levels": [
+        "ilkokul",
+        "ortaokul",
+        "lise"
+      ],
+      "missingLevels": [
+        "lise"
+      ],
+      "csvMatches": [
+        "ÖZEL YENİŞEHİR OKYANUS KOLEJİ İLKOKULU",
+        "ÖZEL YENİŞEHİR OKYANUS KOLEJİ ORTAOKULU"
+      ]
+    },
+    {
+      "name": "Osmangazi İspat Okulları Kampüsü",
+      "district": "Osmangazi",
+      "levels": [
+        "lise"
+      ],
+      "missingLevels": [
+        "lise"
+      ],
+      "csvMatches": [
+        "ÖZEL OSMANGAZİ BİLNET İLKOKULU",
+        "ÖZEL OSMANGAZİ DÜŞÜNÜR İLKOKULU",
+        "ÖZEL OSMANGAZİ SINAV KOLEJİ İLKOKULU"
+      ]
+    },
+    {
+      "name": "Özel İstanbul Lider Koleji Kestel Kampüsü",
+      "district": "Kestel",
+      "levels": [
+        "ilkokul",
+        "ortaokul",
+        "lise"
+      ],
+      "missingLevels": [
+        "ilkokul",
+        "ortaokul"
+      ],
+      "csvMatches": [
+        "ÖZEL  KESTEL SINAV KOLEJİ  ANADOLU  LİSESİ",
+        "ÖZEL  KESTEL SINAV KOLEJİ FEN LİSESİ"
+      ]
+    },
+    {
+      "name": "Osmangazi 3Gen Koleji Kampüsü",
+      "district": "Osmangazi",
+      "levels": [
+        "ilkokul",
+        "ortaokul",
+        "lise"
+      ],
+      "missingLevels": [
+        "lise"
+      ],
+      "csvMatches": [
+        "ÖZEL OSMANGAZİ BİLNET İLKOKULU",
+        "ÖZEL OSMANGAZİ DÜŞÜNÜR İLKOKULU",
+        "ÖZEL OSMANGAZİ SINAV KOLEJİ İLKOKULU"
+      ]
+    },
+    {
+      "name": "Bursa İspat Bademli Eğitim Kurumları Osmangazi Kampüsü",
+      "district": "Osmangazi",
+      "levels": [
+        "ilkokul",
+        "ortaokul",
+        "lise"
+      ],
+      "missingLevels": [
+        "lise"
+      ],
+      "csvMatches": [
+        "ÖZEL BURSA BAHÇEŞEHİR İLKOKULU",
+        "ÖZEL BURSA DOKU KOLEJİ İLKOKULU",
+        "ÖZEL BURSA KARAMAN SINAV KOLEJİ İLKOKULU"
+      ]
+    },
+    {
+      "name": "Osmangazi Sınav Koleji Kampüsü",
+      "district": "Osmangazi",
+      "levels": [
+        "ilkokul",
+        "ortaokul",
+        "lise"
+      ],
+      "missingLevels": [
+        "lise"
+      ],
+      "csvMatches": [
+        "ÖZEL OSMANGAZİ SINAV KOLEJİ İLKOKULU",
+        "ÖZEL OSMANGAZİ SINAV KOLEJİ ORTAOKULU",
+        "ÖZEL OSMANGAZİ BİLNET İLKOKULU"
+      ]
+    }
+  ]
+}

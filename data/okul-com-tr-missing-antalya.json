@@ -1,0 +1,77 @@
+{
+  "city": "ANTALYA",
+  "source": "C:\\Users\\savle\\.cursor\\projects\\c-src-FlutterProjects\\uploads\\antalya-kolejleri-2.md",
+  "externalCount": 82,
+  "csvPrivateCount": 298,
+  "matched": 77,
+  "missing": [
+    {
+      "name": "Düşünür Koleji Koçaş Kampüsü",
+      "district": "Muratpaşa",
+      "levels": [
+        "ilkokul",
+        "ortaokul",
+        "lise"
+      ],
+      "bestScore": 0,
+      "nearestCsv": null
+    },
+    {
+      "name": "Aksu Yedisu Okulları Mesleki ve Teknik Anadolu Lisesi Kampüsü",
+      "district": "Aksu",
+      "levels": [
+        "lise"
+      ],
+      "bestScore": 0,
+      "nearestCsv": null
+    },
+    {
+      "name": "Işıklar Okulları Muratpaşa Kampüsü",
+      "district": "Muratpaşa",
+      "levels": [
+        "ortaokul",
+        "lise"
+      ],
+      "bestScore": 0,
+      "nearestCsv": null
+    },
+    {
+      "name": "Başarı Okulları Konyaaltı Kampüsü",
+      "district": "Konyaaltı",
+      "levels": [
+        "ilkokul",
+        "ortaokul",
+        "lise"
+      ],
+      "bestScore": 0,
+      "nearestCsv": null
+    },
+    {
+      "name": "USRE Okulları Lara Kampüsü",
+      "district": "Muratpaşa",
+      "levels": [
+        "ilkokul"
+      ],
+      "bestScore": 0,
+      "nearestCsv": null
+    }
+  ],
+  "partial": [
+    {
+      "name": "Girne Koleji Alanya Kampüsü",
+      "district": "Alanya",
+      "levels": [
+        "ilkokul",
+        "ortaokul",
+        "lise"
+      ],
+      "missingLevels": [
+        "ilkokul",
+        "ortaokul"
+      ],
+      "csvMatches": [
+        "ÖZEL ALANYA OBA BAHÇEŞEHİR KOLEJİ ANADOLU LİSESİ"
+      ]
+    }
+  ]
+}

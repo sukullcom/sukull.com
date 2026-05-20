@@ -1,0 +1,88 @@
+{
+  "city": "ADANA",
+  "source": "C:\\Users\\savle\\.cursor\\projects\\c-src-FlutterProjects\\uploads\\adana-kolejleri-5.md",
+  "externalCount": 43,
+  "csvPrivateCount": 135,
+  "matched": 40,
+  "missing": [
+    {
+      "name": "Girne Koleji Adana Kampüsü",
+      "district": "Sarıçam",
+      "levels": [
+        "ilkokul",
+        "ortaokul",
+        "lise"
+      ],
+      "bestScore": 0,
+      "nearestCsv": null
+    },
+    {
+      "name": "Erkan Koleji Seyhan Kampüsü",
+      "district": "Seyhan",
+      "levels": [
+        "ortaokul"
+      ],
+      "bestScore": 0,
+      "nearestCsv": null
+    },
+    {
+      "name": "İsabet Okulları Seyhan Kampüsü",
+      "district": "Seyhan",
+      "levels": [
+        "ilkokul",
+        "ortaokul"
+      ],
+      "bestScore": 0,
+      "nearestCsv": null
+    }
+  ],
+  "partial": [
+    {
+      "name": "İstanbul Lider Koleji Ceyhan Kampüsü",
+      "district": "Ceyhan",
+      "levels": [
+        "ilkokul",
+        "ortaokul",
+        "lise"
+      ],
+      "missingLevels": [
+        "ilkokul"
+      ],
+      "csvMatches": [
+        "ÖZEL CEYHAN KOLEJİ ORTAOKULU",
+        "ÖZEL CEYHAN KOLEJİ ANADOLU LİSESİ",
+        "ÖZEL CEYHAN KOLEJİ FEN LİSESİ"
+      ]
+    },
+    {
+      "name": "Adana Kozan Koleji Kampüsü",
+      "district": "Kozan",
+      "levels": [
+        "ilkokul",
+        "ortaokul",
+        "lise"
+      ],
+      "missingLevels": [
+        "lise"
+      ],
+      "csvMatches": [
+        "ÖZEL  KOZAN KOLEJİ İLKOKULU",
+        "ÖZEL  KOZAN KOLEJİ ORTAOKULU"
+      ]
+    },
+    {
+      "name": "Adana Ceyhan Koleji Kampüsü",
+      "district": "Ceyhan",
+      "levels": [
+        "ortaokul",
+        "lise"
+      ],
+      "missingLevels": [
+        "lise"
+      ],
+      "csvMatches": [
+        "ÖZEL CEYHAN KOLEJİ ORTAOKULU"
+      ]
+    }
+  ]
+}

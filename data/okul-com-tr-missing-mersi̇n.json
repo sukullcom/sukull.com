@@ -1,0 +1,31 @@
+{
+  "city": "MERSİN",
+  "source": "C:\\Users\\savle\\.cursor\\projects\\c-src-FlutterProjects\\uploads\\mersin-kolejleri-6.md",
+  "externalCount": 5,
+  "csvPrivateCount": 210,
+  "matched": 3,
+  "missing": [
+    {
+      "name": "Bahçeşehir Koleji Toroslar Kampüsü",
+      "district": "Toroslar",
+      "levels": [
+        "ilkokul",
+        "ortaokul",
+        "lise"
+      ],
+      "bestScore": 0,
+      "nearestCsv": null
+    },
+    {
+      "name": "Özel Tarsus SEV Okulları Kampüsü",
+      "district": "Tarsus",
+      "levels": [
+        "ilkokul",
+        "ortaokul"
+      ],
+      "bestScore": 0,
+      "nearestCsv": null
+    }
+  ],
+  "partial": []
+}

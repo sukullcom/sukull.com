@@ -1,0 +1,3529 @@
+{
+  "csv": "C:\\src\\FlutterProjects\\sukull.com\\data\\schools_parsed.csv",
+  "note": "Anaokulu hariç; sadece anaokul olan kampüsler parse aşamasında elendi.",
+  "generatedAt": "2026-05-20T22:46:08.884Z",
+  "cities": [
+    {
+      "city": "ANKARA",
+      "source": "C:\\Users\\savle\\.cursor\\projects\\c-src-FlutterProjects\\uploads\\ankara-kolejleri-0.md",
+      "externalCount": 271,
+      "csvPrivateCount": 655,
+      "matched": 255,
+      "missing": [
+        {
+          "name": "Mektebim Koleji Eryaman Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Bilişim Koleji Keçiören Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Ankatek Koleji Mesleki ve Teknik Anadolu Lisesi Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Hüseyingazi Bilişim Koleji Mamak Kampüsü",
+          "district": "Mamak",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Eryaman Açı Koleji Yenimahalle Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Parla Koleji Pursaklar Kampüsü",
+          "district": "Pursaklar",
+          "levels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Datakent Koleji Gölbaşı Kampüsü",
+          "district": "Gölbaşı",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Kavram Koleji Etimesgut Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ortaokul"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Amerikan Kültür Koleji Birlik Kampüsü",
+          "district": "Çankaya",
+          "levels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Nazmi Arıkan Fen Bilimleri Keçiören Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Yükselen Koleji Çubuk Kampüsü",
+          "district": "Çubuk",
+          "levels": [
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Karapürçek Final Anadolu Lisesi Kampüsü",
+          "district": "Altındağ",
+          "levels": [
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Kent Eğitim Koleji Sincan Kampüsü",
+          "district": "Sincan",
+          "levels": [
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Açı Koleji Yenimahalle Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Pınar Eğitim Kurumları Yenimahalle Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Muallim Koleji Etimesgut Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ortaokul"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        }
+      ],
+      "partial": [
+        {
+          "name": "İstanbul Lider Koleji Ankara Çankaya Kampüsü",
+          "district": "Çankaya",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ÇANKAYA İLKOKULU",
+            "MEV KOLEJİ ÖZEL ANKARA İLKOKULU",
+            "SINAV KOLEJİ ÖZEL ANKARA İLKOKULU"
+          ]
+        },
+        {
+          "name": "Görkem Koleji Etimesgut Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ETİMESGUT GÖRKEM İLKOKULU",
+            "ÖZEL ETİMESGUT GÖRKEM ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Mektebim Koleji Batıkent Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BATIKENT MEKTEBİM İLKOKULU",
+            "ÖZEL BATIKENT MEKTEBİM ORTAOKULU",
+            "ÖZEL BAHÇEŞEHİR KOLEJİ BATIKENT İLKOKULU"
+          ]
+        },
+        {
+          "name": "Düşünür Koleji Eryaman Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ERYAMAN DÜŞÜNÜR İLKOKULU",
+            "ÖZEL ERYAMAN DÜŞÜNÜR ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Bilinç Koleji Mamak Kampüsü",
+          "district": "Mamak",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BİLİNÇ İLKOKULU",
+            "ÖZEL BİLİNÇ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Etimesgut Mod Eryaman Anadolu Lisesi Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL MOD ERYAMAN ORTAOKULU",
+            "ÖZEL  ETİMESGUT MEKTEBİM İLKOKULU",
+            "ÖZEL ETİMESGUT GÖRKEM İLKOKULU"
+          ]
+        },
+        {
+          "name": "Sincan Kavram Koleji Kampüsü",
+          "district": "Sincan",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL SİNCAN KAVRAM ORTAOKULU",
+            "ÖZEL SİNCAN SİBEL GÜLEÇ ABC İLKOKULU",
+            "ÖZEL SİNCAN FİNAL AKADEMİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Yenimahalle Kariyer Koleji Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL KARİYER  İLKOKULU",
+            "ÖZEL YENİMAHALLE BİLNET İLKOKULU",
+            "ÖZEL YENİMAHALLE FİNAL İLKOKULU"
+          ]
+        },
+        {
+          "name": "Ankara Doruk Okulları Yenimahalle Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ANKARA AÇI KOLEJİ İLKOKULU",
+            "ÖZEL ANKARA FİNAL İLKOKULU",
+            "ÖZEL ANKARA PINAR İLKOKULU"
+          ]
+        },
+        {
+          "name": "Sincan Sınav Anadolu Lisesi Kampüsü",
+          "district": "Sincan",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL SİNCAN SİBEL GÜLEÇ ABC İLKOKULU",
+            "ÖZEL SİNCAN FİNAL AKADEMİ ORTAOKULU",
+            "ÖZEL SİNCAN KAVRAM ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Pursaklar Ankatek Koleji Mesleki ve Teknik Anadolu Lisesi Kampüsü",
+          "district": "Pursaklar",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL PURSAKLAR BİL KOLEJİ İLKOKULU",
+            "ÖZEL PURSAKLAR ÇÖZÜM AKADEMİ İLKOKULU",
+            "ÖZEL PURSAKLAR ON ADIM EĞİTİM BİLİMLERİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Etimesgut Birey Anadolu Lisesi Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL  ETİMESGUT MEKTEBİM İLKOKULU",
+            "ÖZEL ETİMESGUT GÖRKEM İLKOKULU",
+            "ÖZEL ETİMESGUT  MEKTEBİM ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Etimesgut Teknokent Koleji Lise Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL  ETİMESGUT MEKTEBİM İLKOKULU",
+            "ÖZEL ETİMESGUT GÖRKEM İLKOKULU",
+            "ÖZEL ETİMESGUT  MEKTEBİM ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Yenimahalle Sınav Koleji Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL YENİMAHALLE BİLNET İLKOKULU",
+            "ÖZEL YENİMAHALLE FİNAL İLKOKULU",
+            "ÖZEL YENİMAHALLE GİRNE KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Ankara İncek Uğur Okulları Gölbaşı Kampüsü",
+          "district": "Gölbaşı",
+          "levels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "missingLevels": [
+            "ortaokul"
+          ],
+          "csvMatches": [
+            "ÖZEL İNCEK İLKOKULU"
+          ]
+        },
+        {
+          "name": "Yenimahalle Atagen Anadolu Lisesi Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL YENİMAHALLE BİLNET İLKOKULU",
+            "ÖZEL YENİMAHALLE FİNAL İLKOKULU",
+            "ÖZEL YENİMAHALLE GİRNE KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Eryaman Dost Koleji Etimesgut Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ERYAMAN BİLİM DOĞA  İLKOKULU",
+            "ÖZEL ERYAMAN BİLNET İLKOKULU",
+            "ÖZEL ERYAMAN DÜŞÜNÜR İLKOKULU"
+          ]
+        },
+        {
+          "name": "Genetik Koleji Mamak Kampüsü",
+          "district": "Mamak",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL GENETİK İLKOKULU",
+            "ÖZEL GENETİK ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Yönder Okulları Doğukent Kampüsü",
+          "district": "Mamak",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ANKARA DOĞUKENT YÖNDER İLKOKULU",
+            "ÖZEL ANKARA DOĞUKENT YÖNDER ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Yönder Okulları Batıkent 100.Yıl Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BATIKENT YÖNDER İLKOKULU",
+            "ÖZEL BATIKENT YÖNDER ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Başkent Bilim Okulları Sincan Kampüsü",
+          "district": "Sincan",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BAŞKENT BİLİM ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Yenimahalle Uğur Okulları Batıkent Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BATIKENT UĞUR İLKOKULU",
+            "ÖZEL YENİMAHALLE BİLNET İLKOKULU",
+            "ÖZEL YENİMAHALLE FİNAL İLKOKULU"
+          ]
+        },
+        {
+          "name": "İncek Büyük Kolej Gölbaşı Kampüsü",
+          "district": "Gölbaşı",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BÜYÜK KOLEJ İNCEK İLKOKULU",
+            "ÖZEL BÜYÜK KOLEJ İNCEK ORTAOKULU",
+            "ÖZEL İNCEK İLKOKULU"
+          ]
+        },
+        {
+          "name": "Kariyer Koleji Etimesgut Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ETİMESGUT KARİYER ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Batıkent Ortadoğulular Anadolu Lisesi Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BATIKENT  DOĞA  İLKOKULU",
+            "ÖZEL BATIKENT ACAR İLKOKULU",
+            "ÖZEL BATIKENT BİL KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Yenimahalle Kampüs Koleji Lise Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL YENİMAHALLE BİLNET İLKOKULU",
+            "ÖZEL YENİMAHALLE FİNAL İLKOKULU",
+            "ÖZEL YENİMAHALLE GİRNE KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Şentepe Sınav Koleji Anadolu Lisesi Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ŞENTEPE FİNAL ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Batıkent Çakırlar Sınav Koleji Anadolu Lisesi Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BATIKENT  DOĞA  İLKOKULU",
+            "ÖZEL BATIKENT ACAR İLKOKULU",
+            "ÖZEL BATIKENT BİL KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Yenimahalle Sınav Koleji Anadolu Lisesi Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL YENİMAHALLE BİLNET İLKOKULU",
+            "ÖZEL YENİMAHALLE FİNAL İLKOKULU",
+            "ÖZEL YENİMAHALLE GİRNE KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Yenimahalle Şentepe Final Akademi Anadolu Lisesi Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL YENİMAHALLE BİLNET İLKOKULU",
+            "ÖZEL YENİMAHALLE FİNAL İLKOKULU",
+            "ÖZEL YENİMAHALLE GİRNE KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Yenimahalle Meltem Ayhan Okulları Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "lise",
+            "ilkokul",
+            "ortaokul"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL MELTEM AYHAN İLKOKULU",
+            "ÖZEL MELTEM AYHAN ORTAOKULU",
+            "ÖZEL YENİMAHALLE BİLNET İLKOKULU"
+          ]
+        },
+        {
+          "name": "Sincan Darüşşifa Sincan Anadolu Sağlık Meslek Lisesi Kampüsü",
+          "district": "Sincan",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL SİNCAN SİBEL GÜLEÇ ABC İLKOKULU",
+            "ÖZEL SİNCAN FİNAL AKADEMİ ORTAOKULU",
+            "ÖZEL SİNCAN KAVRAM ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Sincan Final Akademi Okulları Kampüsü",
+          "district": "Sincan",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL SİNCAN FİNAL AKADEMİ ORTAOKULU",
+            "ÖZEL SİNCAN SİBEL GÜLEÇ ABC İLKOKULU",
+            "ÖZEL SİNCAN KAVRAM ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Pursaklar Kavaklıdere Koleji Kampüsü",
+          "district": "Pursaklar",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL PURSAKLAR BİL KOLEJİ İLKOKULU",
+            "ÖZEL PURSAKLAR ÇÖZÜM AKADEMİ İLKOKULU",
+            "ÖZEL PURSAKLAR ON ADIM EĞİTİM BİLİMLERİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Mamak Hüseyingazi Sınav Koleji Anadolu Lisesi Kampüsü",
+          "district": "Mamak",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL MAMAK SINAV KOLEJİ İLKOKULU",
+            "ÖZEL MAMAK SINAV KOLEJİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Mamak Sınav Koleji Anadolu Lisesi Kampüsü",
+          "district": "Mamak",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL MAMAK SINAV KOLEJİ İLKOKULU",
+            "ÖZEL MAMAK SINAV KOLEJİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Mamak Cebeci Final Anadolu Lisesi Kampüsü",
+          "district": "Mamak",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL MAMAK SINAV KOLEJİ İLKOKULU",
+            "ÖZEL MAMAK SINAV KOLEJİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Mamak Data Koleji Anadolu Meslek Lisesi Kampüsü",
+          "district": "Mamak",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL MAMAK SINAV KOLEJİ İLKOKULU",
+            "ÖZEL MAMAK SINAV KOLEJİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Ankara Teknokent Mesleki ve Teknik Anadolu Lisesi Kampüsü",
+          "district": "Mamak",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ANKARA DOĞUKENT YÖNDER İLKOKULU",
+            "ÖZEL ANKARA FEN KOLEJİ İLKOKULU",
+            "ÖZEL ANKARA DOĞUKENT YÖNDER ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Keçiören Ufuktepe Seviye Okulları Anadolu Lisesi Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL KEÇİÖREN DOĞA İLKOKULU",
+            "ÖZEL KEÇİÖREN FİNAL İLKOKULU",
+            "ÖZEL KEÇİÖREN KALABA FİNAL İLKOKULU"
+          ]
+        },
+        {
+          "name": "Keçiören Ayvalı Sınav Koleji Anadolu Lisesi Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL KEÇİÖREN DOĞA İLKOKULU",
+            "ÖZEL KEÇİÖREN FİNAL İLKOKULU",
+            "ÖZEL KEÇİÖREN KALABA FİNAL İLKOKULU"
+          ]
+        },
+        {
+          "name": "Keçiören Final Akademi Anadolu Lisesi Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL KEÇİÖREN FİNAL İLKOKULU",
+            "ÖZEL KEÇİÖREN FİNAL ORTAOKULU",
+            "ÖZEL KEÇİÖREN DOĞA İLKOKULU"
+          ]
+        },
+        {
+          "name": "Ovacık Data Koleji Anadolu Meslek Lisesi Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL OVACIK HAYAT İLKOKULU",
+            "ÖZEL OVACIK SINAV KOLEJİ İLKOKULU",
+            "ÖZEL OVACIK SİRAÇ KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Keçiören Ünlü Sınav Anadolu Lisesi Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL KEÇİÖREN SINAV KOLEJİ İLKOKULU",
+            "ÖZEL KEÇİÖREN SINAV KOLEJİ ORTAOKULU",
+            "ÖZEL KEÇİÖREN DOĞA İLKOKULU"
+          ]
+        },
+        {
+          "name": "Gölbaşı Darüşşifa Mogan Mesleki ve Teknik Anadolu Lisesi Kampüsü",
+          "district": "Gölbaşı",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL GÖLBAŞI FİNAL AKADEMİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Gölbaşı Beştepe Koleji Anadolu Lisesi Kampüsü",
+          "district": "Gölbaşı",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL GÖLBAŞI FİNAL AKADEMİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Gölbaşı Yöntem Koleji Kampüsü",
+          "district": "Gölbaşı",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL GÖLBAŞI FİNAL AKADEMİ ORTAOKULU",
+            "ÖZEL YÖNTEM KOLEJİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Gölbaşı Sınav Koleji Anadolu Lisesi Kampüsü",
+          "district": "Gölbaşı",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL GÖLBAŞI FİNAL AKADEMİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Eryaman Odtülüler Anadolu Lisesi Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ERYAMAN BİLİM DOĞA  İLKOKULU",
+            "ÖZEL ERYAMAN BİLNET İLKOKULU",
+            "ÖZEL ERYAMAN DÜŞÜNÜR İLKOKULU"
+          ]
+        },
+        {
+          "name": "Eryaman Ortadoğulular Okulları Etimesgut Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ERYAMAN BİLİM DOĞA  İLKOKULU",
+            "ÖZEL ERYAMAN BİLNET İLKOKULU",
+            "ÖZEL ERYAMAN DÜŞÜNÜR İLKOKULU"
+          ]
+        },
+        {
+          "name": "Elvankent Sınav Anadolu Lisesi Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ELVANKENT SINAV İLKOKULU",
+            "ÖZEL ELVANKENT SINAV ORTAOKULU",
+            "ÖZEL ELVANKENT FİNAL İLKOKULU"
+          ]
+        },
+        {
+          "name": "Etimesgut Sınav Anadolu Lisesi Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL  ETİMESGUT MEKTEBİM İLKOKULU",
+            "ÖZEL ETİMESGUT GÖRKEM İLKOKULU",
+            "ÖZEL ETİMESGUT  MEKTEBİM ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Bağlıca Murat Yıldırım Mesleki Ve Teknik Anadolu Lisesi Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BAĞ İLKOKULU",
+            "ÖZEL BAĞLICA DOĞA İLKOKULU",
+            "ÖZEL BAĞLICA UĞUR İLKOKULU"
+          ]
+        },
+        {
+          "name": "Etimesgut Eryaman Sınav Anadolu Lisesi Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ERYAMAN SINAV KOLEJİ İLKOKULU",
+            "ÖZEL ERYAMAN SINAV KOLEJİ ORTAOKULU",
+            "ÖZEL  ETİMESGUT MEKTEBİM İLKOKULU"
+          ]
+        },
+        {
+          "name": "Bağlıca Data Koleji Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BAĞ İLKOKULU",
+            "ÖZEL BAĞLICA DOĞA İLKOKULU",
+            "ÖZEL BAĞLICA UĞUR İLKOKULU"
+          ]
+        },
+        {
+          "name": "Elmadağ Açı Koleji Kampüsü",
+          "district": "Elmadağ",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ELMADAĞ AÇI İLKOKULU",
+            "ÖZEL ELMADAĞ AÇI ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Keçiören Sınav Koleji Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL KEÇİÖREN SINAV KOLEJİ İLKOKULU",
+            "ÖZEL KEÇİÖREN SINAV KOLEJİ ORTAOKULU",
+            "ÖZEL KEÇİÖREN DOĞA İLKOKULU"
+          ]
+        },
+        {
+          "name": "Doğa Koleji Batıkent Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BATIKENT  DOĞA  İLKOKULU",
+            "ÖZEL BATIKENT  DOĞA  ORTAOKULU",
+            "ÖZEL BAHÇEŞEHİR KOLEJİ BATIKENT İLKOKULU"
+          ]
+        },
+        {
+          "name": "Eryaman Okyanus Koleji Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ERYAMAN OKYANUS İLKOKULU",
+            "ÖZEL ERYAMAN OKYANUS ORTAOKULU",
+            "ÖZEL ERYAMAN BİLİM DOĞA  İLKOKULU"
+          ]
+        },
+        {
+          "name": "Yükselen Koleji Yeni Yaşam Yerleşkesi Kampüsü",
+          "district": "Mamak",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL YÜKSELEN KOLEJİ İLKOKULU",
+            "ÖZEL YÜKSELEN KOLEJİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Ovacık Hayat Koleji Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL OVACIK HAYAT İLKOKULU",
+            "ÖZEL OVACIK HAYAT ORTAOKULU",
+            "ÖZEL OVACIK SINAV KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Çözüm Akademi Okulları Pursaklar Kampüsü",
+          "district": "Pursaklar",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL PURSAKLAR ÇÖZÜM AKADEMİ İLKOKULU",
+            "ÖZEL PURSAKLAR ÇÖZÜM AKADEMİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Bilimsel Kolej Mamak Kampüsü",
+          "district": "Mamak",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BİLİMSEL İLKOKULU",
+            "ÖZEL BİLİMSEL ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Ankara Final Okulları Elvankent Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ANKARA ABC İLKOKULU",
+            "ÖZEL ELVANKENT FİNAL İLKOKULU",
+            "ÖZEL ANKARA ABC ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Etimesgut Kerem Aygün Koleji Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL KEREM AYGÜN İLKOKULU",
+            "ÖZEL KEREM AYGÜN ORTAOKULU",
+            "ÖZEL  ETİMESGUT MEKTEBİM İLKOKULU"
+          ]
+        },
+        {
+          "name": "Muradiye Nene Hatun Okulları Pursaklar Kampüsü",
+          "district": "Pursaklar",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL NENE HATUN İLKOKULU",
+            "ÖZEL NENE HATUN ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Keçiören Biltem Koleji Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL KEÇİÖREN DOĞA İLKOKULU",
+            "ÖZEL KEÇİÖREN FİNAL İLKOKULU",
+            "ÖZEL KEÇİÖREN KALABA FİNAL İLKOKULU"
+          ]
+        },
+        {
+          "name": "Bahçeşehir Koleji Dr. Burhan Kara Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BAHÇEŞEHİR KOLEJİ DR. BURHAN KARA İLKOKULU",
+            "ÖZEL BAHÇEŞEHİR KOLEJİ DR. BURHAN KARA ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Göksu ABC Okulları Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ANKARA ABC İLKOKULU",
+            "ÖZEL ANKARA ABC ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Etimesgut Modern Ortadoğu Koleji Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL  ETİMESGUT MEKTEBİM İLKOKULU",
+            "ÖZEL ERYAMAN MODERN ORTADOĞU İLKOKULU",
+            "ÖZEL ETİMESGUT GÖRKEM İLKOKULU"
+          ]
+        },
+        {
+          "name": "İncek Okyanus Koleji Kampüsü",
+          "district": "Gölbaşı",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL İNCEK OKYANUS İLKOKULU",
+            "ÖZEL İNCEK OKYANUS ORTAOKULU",
+            "ÖZEL İNCEK İLKOKULU"
+          ]
+        },
+        {
+          "name": "İncek Anka Bilim Koleji Kampüsü",
+          "district": "Gölbaşı",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ANKA BİLİM İLKOKULU",
+            "ÖZEL ANKA BİLİM ORTAOKULU",
+            "ÖZEL İNCEK İLKOKULU"
+          ]
+        },
+        {
+          "name": "Maya Okulları İncek Kampüsü",
+          "district": "Gölbaşı",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL İNCEK MAYA İLKOKULU",
+            "ÖZEL İNCEK MAYA ORTAOKULU",
+            "ÖZEL İNCEK İLKOKULU"
+          ]
+        },
+        {
+          "name": "Keçiören Öncü Koleji Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL KEÇİÖREN DOĞA İLKOKULU",
+            "ÖZEL KEÇİÖREN FİNAL İLKOKULU",
+            "ÖZEL KEÇİÖREN KALABA FİNAL İLKOKULU"
+          ]
+        },
+        {
+          "name": "Ankara Çözüm Koleji Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ANKARA ÇÖZÜM KOLEJİ İLKOKULU",
+            "ÖZEL ANKARA ÇÖZÜM KOLEJİ ORTAOKULU",
+            "ÖZEL  ANKARA HAYAT İLKOKULU"
+          ]
+        },
+        {
+          "name": "Keçiören Türk Yurdu Koleji Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL TÜRK YURDU İLKOKULU",
+            "ÖZEL TÜRK YURDU ORTAOKULU",
+            "ÖZEL KEÇİÖREN DOĞA İLKOKULU"
+          ]
+        },
+        {
+          "name": "Ankara Final Okulları Park Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ANKARA AÇI KOLEJİ İLKOKULU",
+            "ÖZEL ANKARA FİNAL İLKOKULU",
+            "ÖZEL ANKARA PINAR İLKOKULU"
+          ]
+        },
+        {
+          "name": "Ankara Biltek Okulları Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ANKARA BİLTEK İLKOKULU",
+            "ÖZEL ANKARA BİLTEK ORTAOKULU",
+            "ÖZEL  ANKARA HAYAT İLKOKULU"
+          ]
+        },
+        {
+          "name": "Keçiören Okyanus Koleji Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL KEÇİÖREN OKYANUS İLKOKULU",
+            "ÖZEL KEÇİÖREN OKYANUS ORTAOKULU",
+            "ÖZEL KEÇİÖREN DOĞA İLKOKULU"
+          ]
+        },
+        {
+          "name": "Ovacık Sınav Koleji Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL OVACIK SINAV KOLEJİ İLKOKULU",
+            "ÖZEL OVACIK SINAV KOLEJİ ORTAOKULU",
+            "ÖZEL OVACIK HAYAT İLKOKULU"
+          ]
+        },
+        {
+          "name": "Deva Koleji Sincan Kampüsü",
+          "district": "Sincan",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL DEVA KOLEJİ İLKOKULU",
+            "ÖZEL DEVA KOLEJİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Etimesgut Final Akademi Okulları Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ETİMESGUT FİNAL AKADEMİ ORTAOKULU",
+            "ÖZEL  ETİMESGUT MEKTEBİM İLKOKULU",
+            "ÖZEL ETİMESGUT GÖRKEM İLKOKULU"
+          ]
+        },
+        {
+          "name": "Elvankent Sınav Koleji Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ELVANKENT SINAV İLKOKULU",
+            "ÖZEL ELVANKENT SINAV ORTAOKULU",
+            "ÖZEL ELVANKENT FİNAL İLKOKULU"
+          ]
+        },
+        {
+          "name": "Çözüm Akademi Okulları Merkez Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ÇÖZÜM AKADEMİ OKULLARI ANKARA MERKEZ KAMPÜSÜ İLKOKULU",
+            "ÖZEL ÇÖZÜM AKADEMİ OKULLARI ANKARA MERKEZ KAMPÜSÜ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "İpucu Koleji Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ELVANKENT İPUCU İLKOKULU",
+            "ÖZEL ELVANKENT İPUCU ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Ankara Zafer Koleji Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ANKARA ABC İLKOKULU",
+            "ÖZEL ZAFER KOLEJİ İLKOKULU",
+            "ÖZEL ANKARA ABC ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Eryaman Liderler Koleji Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL LİDERLER ERYAMAN İLKOKULU",
+            "ÖZEL LİDERLER ERYAMAN ORTAOKULU",
+            "ÖZEL ERYAMAN BİLİM DOĞA  İLKOKULU"
+          ]
+        },
+        {
+          "name": "Etimesgut Darüşşifa Asal Koleji Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL  ETİMESGUT MEKTEBİM İLKOKULU",
+            "ÖZEL DARÜŞŞİFA ERYAMAN ASAL İLKOKULU",
+            "ÖZEL ETİMESGUT GÖRKEM İLKOKULU"
+          ]
+        },
+        {
+          "name": "Muradiye İncek Sevgi Koleji Kampüsü",
+          "district": "Gölbaşı",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL İNCEK İLKOKULU",
+            "ÖZEL SEVGİ İLKOKULU",
+            "ÖZEL SEVGİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Bağlıca Doğa Koleji Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BAĞLICA DOĞA İLKOKULU",
+            "ÖZEL BAĞLICA DOĞA ORTAOKULU",
+            "ÖZEL BAĞ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Bağlıca Final Akademi Okulları Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BAĞLICA FİNAL AKADEMİ ORTAOKULU",
+            "ÖZEL BAĞ İLKOKULU",
+            "ÖZEL BAĞLICA DOĞA İLKOKULU"
+          ]
+        },
+        {
+          "name": "Bağlıca Tema Koleji Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BAĞ İLKOKULU",
+            "ÖZEL BAĞLICA DOĞA İLKOKULU",
+            "ÖZEL BAĞLICA UĞUR İLKOKULU"
+          ]
+        },
+        {
+          "name": "Doğuş Koleji Etimesgut Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "missingLevels": [
+            "ortaokul"
+          ],
+          "csvMatches": [
+            "ÖZEL DOĞUŞ KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Etimesgut 29 Mayıs Okulları Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL  ETİMESGUT MEKTEBİM İLKOKULU",
+            "ÖZEL ETİMESGUT GÖRKEM İLKOKULU",
+            "ÖZEL ETİMESGUT  MEKTEBİM ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Etimesgut Bağ Koleji Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL  ETİMESGUT MEKTEBİM İLKOKULU",
+            "ÖZEL BAĞ İLKOKULU",
+            "ÖZEL ETİMESGUT GÖRKEM İLKOKULU"
+          ]
+        },
+        {
+          "name": "Zehra Okulları Yenimahalle Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ZEHRA İLKOKULU",
+            "ÖZEL ZEHRA ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Ankara Birikim Okulları Yenimahalle Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ANKARA AÇI KOLEJİ İLKOKULU",
+            "ÖZEL ANKARA FİNAL İLKOKULU",
+            "ÖZEL ANKARA PINAR İLKOKULU"
+          ]
+        },
+        {
+          "name": "Sınav Koleji Batıkent Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BATIKENT SINAV İLKOKULU",
+            "ÖZEL BATIKENT SINAV ORTAOKULU",
+            "ÖZEL BAHÇEŞEHİR KOLEJİ BATIKENT İLKOKULU"
+          ]
+        },
+        {
+          "name": "Teknofen Koleji Batıkent Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BAHÇEŞEHİR KOLEJİ BATIKENT İLKOKULU",
+            "ÖZEL TEKNOFEN KOLEJİ İLKOKULU",
+            "ÖZEL BAHÇEŞEHİR KOLEJİ BATIKENT ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Yenimahalle Şener Çakmak Okulları Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ŞENER ÇAKMAK İLKOKULU",
+            "ÖZEL ŞENER ÇAKMAK  ORTAOKULU",
+            "ÖZEL YENİMAHALLE BİLNET İLKOKULU"
+          ]
+        },
+        {
+          "name": "Uğurlu Fen Bilimleri Okulları Batıkent Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL UĞURLU FEN BİLİMLERİ İLKOKULU",
+            "ÖZEL UĞURLU FEN BİLİMLERİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Batıkent Bil Koleji Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BATIKENT BİL KOLEJİ İLKOKULU",
+            "ÖZEL BATIKENT BİL KOLEJİ ORTAOKULU",
+            "ÖZEL BATIKENT  DOĞA  İLKOKULU"
+          ]
+        },
+        {
+          "name": "Metod Koleji Yenimahalle Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL METOD İLKOKULU",
+            "ÖZEL METOD ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Yenimahalle Acar Koleji Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL YENİMAHALLE BİLNET İLKOKULU",
+            "ÖZEL YENİMAHALLE FİNAL İLKOKULU",
+            "ÖZEL YENİMAHALLE GİRNE KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Hedef Akademi Okulları Batıkent Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ANKARA YENİMAHALLE HEDEF AKADEMİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Sınav Koleji Pursaklar Kampüsü",
+          "district": "Pursaklar",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL PURSAKLAR SINAV İLKOKULU",
+            "ÖZEL PURSAKLAR SINAV ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Ted Koleji Polatlı Kampüsü",
+          "district": "Polatlı",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL POLATLI TED KOLEJİ İLKOKULU",
+            "ÖZEL POLATLI TED KOLEJİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Ankara Doğa Koleji Keçiören Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL  ANKARA HAYAT İLKOKULU",
+            "ÖZEL ANKARA BİLTEK İLKOKULU",
+            "ÖZEL ANKARA ÇÖZÜM KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Keçiören Başkent Örnek Koleji Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BAŞKENT ÖRNEK İLKOKULU",
+            "ÖZEL BAŞKENT ÖRNEK ORTAOKULU",
+            "ÖZEL KEÇİÖREN DOĞA İLKOKULU"
+          ]
+        },
+        {
+          "name": "Etlik Sınav Koleji Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ETLİK SINAV ORTAOKULU",
+            "ÖZEL KEÇİÖREN SINAV KOLEJİ İLKOKULU",
+            "ÖZEL OVACIK SINAV KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Keçiören Datakent Koleji Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL KEÇİÖREN DOĞA İLKOKULU",
+            "ÖZEL KEÇİÖREN FİNAL İLKOKULU",
+            "ÖZEL KEÇİÖREN KALABA FİNAL İLKOKULU"
+          ]
+        },
+        {
+          "name": "Keçiören Çağrı Okulları Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ÇAĞRI İLKOKULU",
+            "ÖZEL KEÇİÖREN DOĞA İLKOKULU",
+            "ÖZEL KEÇİÖREN FİNAL İLKOKULU"
+          ]
+        },
+        {
+          "name": "Ankara Meltem Koleji Kampüsü",
+          "district": "Keçiören",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL  ANKARA HAYAT İLKOKULU",
+            "ÖZEL ANKARA BİLTEK İLKOKULU",
+            "ÖZEL ANKARA ÇÖZÜM KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "TED Ankara Koleji Kampüsü",
+          "district": "Gölbaşı",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "TED ANKARA KOLEJİ VAKFI ÖZEL İLKOKULU",
+            "TED ANKARA KOLEJİ VAKFI ÖZEL ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Gölbaşı Safa Okulları Kampüsü",
+          "district": "Gölbaşı",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "ilkokul",
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL GÖLBAŞI FİNAL AKADEMİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Gölbaşı Final Akademi Okulları Kampüsü",
+          "district": "Gölbaşı",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL GÖLBAŞI FİNAL AKADEMİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Nesibe Aydın Okulları Gölbaşı Kampüsü",
+          "district": "Gölbaşı",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL NESİBE AYDIN İLKOKULU",
+            "ÖZEL NESİBE AYDIN ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Ankara Mat Pi Koleji Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ANKARA ABC İLKOKULU",
+            "ÖZEL ANKARA ABC ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Eryaman Sevgi Okulları Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ERYAMAN SEVGİ İLKOKULU",
+            "ÖZEL ERYAMAN SEVGİ ORTAOKULU",
+            "ÖZEL ERYAMAN BİLİM DOĞA  İLKOKULU"
+          ]
+        },
+        {
+          "name": "Eryaman MBA Okulları Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ERYAMAN BİLİM DOĞA  İLKOKULU",
+            "ÖZEL ERYAMAN BİLNET İLKOKULU",
+            "ÖZEL ERYAMAN DÜŞÜNÜR İLKOKULU"
+          ]
+        },
+        {
+          "name": "Altın Eğitim Okulları Etimesgut Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ALTIN EĞİTİM İLKOKULU",
+            "ÖZEL ALTIN EĞİTİM ORTAOKULU",
+            "ÖZEL ETİMESGUT ONADIM EĞİTİM BİLİMLERİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Ankara Etimesgut Doğa Koleji Eryaman Bilim Kampüsü",
+          "district": "Etimesgut",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ANKARA ABC İLKOKULU",
+            "ÖZEL ERYAMAN BİLİM DOĞA  İLKOKULU",
+            "ÖZEL ANKARA ABC ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Atael Koleji Yenimahalle Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ATAEL İLKOKULU",
+            "ÖZEL ATAEL ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Onur Koleji Batıkent Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BAHÇEŞEHİR KOLEJİ BATIKENT İLKOKULU",
+            "ÖZEL ONUR İLKOKULU",
+            "ÖZEL BAHÇEŞEHİR KOLEJİ BATIKENT ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Batıkent Seviye Okulları Yenimahalle Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BATIKENT  DOĞA  İLKOKULU",
+            "ÖZEL BATIKENT ACAR İLKOKULU",
+            "ÖZEL BATIKENT BİL KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Ankara Final Okulları Batıkent Kampüsü",
+          "district": "Yenimahalle",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ANKARA AÇI KOLEJİ İLKOKULU",
+            "ÖZEL ANKARA FİNAL İLKOKULU",
+            "ÖZEL ANKARA PINAR İLKOKULU"
+          ]
+        }
+      ]
+    },
+    {
+      "city": "İZMİR",
+      "source": "C:\\Users\\savle\\.cursor\\projects\\c-src-FlutterProjects\\uploads\\izmir-kolejleri-1.md",
+      "externalCount": 121,
+      "csvPrivateCount": 356,
+      "matched": 104,
+      "missing": [
+        {
+          "name": "Era Koleji Mavişehir Kampüsü",
+          "district": "Çiğli",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "İzbilim Koleji Menemen Kampüsü",
+          "district": "Menemen",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "İzbilim Koleji Torbalı Kampüsü",
+          "district": "Torbalı",
+          "levels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Selçuklu Çözüm Akademi Anadolu Lisesi Kampüsü",
+          "district": "Selçuk",
+          "levels": [
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Konak Mersinli Batı Koleji Kampüsü",
+          "district": "Konak",
+          "levels": [
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Çözüm Akademi Okulları Ortaokulu Bayraklı Kampüsü",
+          "district": "Bayraklı",
+          "levels": [
+            "ortaokul"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "UKEB Okulları Karabağlar Kampüsü",
+          "district": "Karabağlar",
+          "levels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "21. Yüzyıl Karşıyaka Koleji Menemen Kampüsü",
+          "district": "Menemen",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Dalton Koleji Menemen Kampüsü",
+          "district": "Menemen",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Doğa Koleji Mavişehir 3 Kampüsü",
+          "district": "Çiğli",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Doğa Koleji İzmir Mavişehir 2 Kampüsü",
+          "district": "Karşıyaka",
+          "levels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Bahçeşehir Koleji Güney Kampüsü",
+          "district": "Torbalı",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Doğru Statü Okulları Gaziemir Kampüsü",
+          "district": "Gaziemir",
+          "levels": [
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "İtalyan Okulları Konak Kampüsü",
+          "district": "Konak",
+          "levels": [
+            "ilkokul"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Doğa Koleji Mavişehir 1 Kampüsü",
+          "district": "Karşıyaka",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Zübeyde Hanım Eğitim Kurumları Çiçekliköy Kampüsü",
+          "district": "Bornova",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "bestScore": 0.2857142857142857,
+          "nearestCsv": "ÖZEL İZMİR BORNOVA ZÜBEYDE HANIM İLKOKULU"
+        },
+        {
+          "name": "Bilset Okulları Bayraklı Kampüsü",
+          "district": "Bayraklı",
+          "levels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        }
+      ],
+      "partial": [
+        {
+          "name": "Düşünür Koleji Güzelbahçe Kampüsü",
+          "district": "Güzelbahçe",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "MEV KOLEJİ ÖZEL GÜZELBAHÇE İLKOKULU",
+            "ÖZEL GÜZELBAHÇE KOLEJİ İLKOKULU",
+            "MEV KOLEJİ ÖZEL GÜZELBAHÇE ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Rota Koleji Gaziemir Kampüsü",
+          "district": "Gaziemir",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ROTA İLKOKULU",
+            "ÖZEL ROTA ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Gaziemir Kocatürk Okulları İzmir Kampüsü",
+          "district": "Gaziemir",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL GAZİEMİR MEKTEBİM İLKOKULU",
+            "ÖZEL GAZİEMİR MODERN BİLİMLER AKADEMİSİ (MBA) İLKOKULU",
+            "ÖZEL GAZİEMİR OKYANUS İLKOKULU"
+          ]
+        },
+        {
+          "name": "Tire Doğa Koleji Kampüsü",
+          "district": "Tire",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL TİRE DOĞA KOLEJİ İLKOKULU",
+            "ÖZEL TİRE DOĞA KOLEJİ ORTAOKULU",
+            "ÖZEL TİRE ARMADA KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Ödemiş Bahçeşehir Koleji Kampüsü",
+          "district": "Ödemiş",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "ilkokul",
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ÖDEMİŞ SINAV ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Girne Koleji Çiğli Kampüsü",
+          "district": "Çiğli",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "csvMatches": [
+            "ÖZEL ÇİĞLİ GİRNE KOLEJİ ANADOLU LİSESİ"
+          ]
+        },
+        {
+          "name": "Canadian International Schools Menemen Kampüsü",
+          "district": "Menemen",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL CAN İLKOKULU",
+            "ÖZEL CAN ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Odtü Geliştirme Vakfı İzmir Güzelbahçe Kampüsü",
+          "district": "Güzelbahçe",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ODTÜ GELİŞTİRME VAKFI ÖZEL İZMİR İLKOKULU",
+            "ODTÜ GELİŞTİRME VAKFI ÖZEL İZMİR ORTAOKULU",
+            "ÖZEL GÜZELBAHÇE KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Uğur Okulları Güzelbahçe Kampüsü",
+          "district": "Güzelbahçe",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL GÜZELBAHÇE UĞUR İLKOKULU",
+            "ÖZEL GÜZELBAHÇE UĞUR ORTAOKULU",
+            "ÖZEL GÜZELBAHÇE KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Uğur Okulları Narlıdere Kampüsü",
+          "district": "Narlıdere",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL NARLIDERE UĞUR İLKOKULU",
+            "ÖZEL NARLIDERE UĞUR ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Uğur Okulları Gaziemir Kampüsü",
+          "district": "Gaziemir",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL GAZİEMİR UĞUR ORTAOKULU",
+            "ÖZEL EGE EĞİTİM VAKFI OKULLARI GAZİEMİR İLKOKULU",
+            "ÖZEL EGE EĞİTİM VAKFI OKULLARI GAZİEMİR ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Boğaziçi Koleji Urla Kampüsü",
+          "district": "Urla",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL URLA ÖBEK BOĞAZİÇİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Tire Sınav Koleji Lisesi Kampüsü",
+          "district": "Tire",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL TİRE ARMADA KOLEJİ İLKOKULU",
+            "ÖZEL TİRE DOĞA KOLEJİ İLKOKULU",
+            "ÖZEL TİRE KOCATÜRK İLKOKULU"
+          ]
+        },
+        {
+          "name": "Tire Ege Armada Koleji Kampüsü",
+          "district": "Tire",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL TİRE ARMADA KOLEJİ İLKOKULU",
+            "ÖZEL TİRE ARMADA KOLEJİ ORTAOKULU",
+            "ÖZEL TİRE DOĞA KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Tire Boğaziçi Koleji Kampüsü",
+          "district": "Tire",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL TİRE ARMADA KOLEJİ İLKOKULU",
+            "ÖZEL TİRE DOĞA KOLEJİ İLKOKULU",
+            "ÖZEL TİRE KOCATÜRK İLKOKULU"
+          ]
+        },
+        {
+          "name": "Mavişehir Sınav Koleji Anadolu Lisesi Kampüsü",
+          "district": "Karşıyaka",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL MAVİŞEHİR OKYANUS İLKOKULU",
+            "ÖZEL MAVİŞEHİR OKYANUS ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Karabağlar Oğuzhan Özkaya Eğitim Kurumları Kampüsü",
+          "district": "Karabağlar",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL KARABAĞLAR DELTA ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Basek Batı Anadolu Koleji Bornova Kampüsü",
+          "district": "Bornova",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "csvMatches": [
+            "ÖZEL BORNOVA KENT KOLEJİ ANADOLU LİSESİ",
+            "ÖZEL BORNOVA SINAV KOLEJİ ANADOLU LİSESİ",
+            "MEV KOLEJİ ÖZEL İZMİR BORNOVA ANADOLU LİSESİ"
+          ]
+        },
+        {
+          "name": "Modern Çağ Koleji Torbalı Kampüsü",
+          "district": "Torbalı",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL MODERN ÇAĞ İLKOKULU",
+            "ÖZEL MODERN ÇAĞ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Turuncu Koleji Torbalı Kampüsü",
+          "district": "Torbalı",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL TURUNCU İLKOKULU",
+            "ÖZEL TURUNCU ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Doğa Koleji Torbalı Kampüsü",
+          "district": "Torbalı",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL TORBALI DOĞA İLKOKULU",
+            "ÖZEL TORBALI DOĞA ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Sınav Koleji Ödemiş Kampüsü",
+          "district": "Ödemiş",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ÖDEMİŞ SINAV ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Ekin Koleji Menemen Kampüsü",
+          "district": "Menemen",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL EKİN İLKOKULU",
+            "ÖZEL EKİN ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Gelişim Koleji Menemen Kampüsü",
+          "district": "Menemen",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL GELİŞİM İLKOKULU",
+            "ÖZEL GELİŞİM ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Kocatürk Koleji Kemalpaşa Kampüsü",
+          "district": "Kemalpaşa",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL KEMALPAŞA KOCATÜRK  ORTAOKULU",
+            "ÖZEL KOCATÜRK İLKOKULU"
+          ]
+        },
+        {
+          "name": "Çamlaraltı Koleji Konak Kampüsü",
+          "district": "Konak",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ÇAMLARALTI İLKOKULU",
+            "ÖZEL ÇAMLARALTI ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Oğuzhan Özkaya Eğitim Kurumları Güzelbahçe Kampüsü",
+          "district": "Güzelbahçe",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL GÜZELBAHÇE KOLEJİ İLKOKULU",
+            "ÖZEL GÜZELBAHÇE KOLEJİ ORTAOKULU",
+            "ÖZEL İZMİR OĞUZHAN ÖZKAYA İLKOKULU"
+          ]
+        },
+        {
+          "name": "Kent Koleji Güzelbahçe Kampüsü",
+          "district": "Güzelbahçe",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "MEV KOLEJİ ÖZEL GÜZELBAHÇE İLKOKULU",
+            "ÖZEL GÜZELBAHÇE KOLEJİ İLKOKULU",
+            "ÖZEL KENT KOLEJİ  İLKOKULU"
+          ]
+        },
+        {
+          "name": "Güzelbahçe Mev Koleji Kampüsü",
+          "district": "Güzelbahçe",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "MEV KOLEJİ ÖZEL GÜZELBAHÇE İLKOKULU",
+            "MEV KOLEJİ ÖZEL GÜZELBAHÇE ORTAOKULU",
+            "ÖZEL GÜZELBAHÇE BAHÇEŞEHİR KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Bahçeşehir Koleji İzmir Kuzey Kampüsü",
+          "district": "Menemen",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BAHÇEŞEHİR KOLEJİ KUZEY KAMPÜSÜ İLKOKULU",
+            "ÖZEL BAHÇEŞEHİR KOLEJİ KUZEY KAMPÜSÜ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Bahçeşehir Koleji Güzelbahçe Kampüsü",
+          "district": "Güzelbahçe",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL GÜZELBAHÇE BAHÇEŞEHİR KOLEJİ İLKOKULU",
+            "ÖZEL GÜZELBAHÇE BAHÇEŞEHİR KOLEJİ ORTAOKULU",
+            "MEV KOLEJİ ÖZEL GÜZELBAHÇE İLKOKULU"
+          ]
+        },
+        {
+          "name": "Bilgince Eğitim Kurumları Güzelbahçe Kampüsü",
+          "district": "Güzelbahçe",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL GÜZELBAHÇE BİLGİNCE İLKOKULU",
+            "ÖZEL GÜZELBAHÇE KOLEJİ İLKOKULU",
+            "ÖZEL GÜZELBAHÇE BİLGİNCE ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Okyanus Koleji Mavişehir Kampüsü",
+          "district": "Karşıyaka",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL MAVİŞEHİR OKYANUS İLKOKULU",
+            "ÖZEL MAVİŞEHİR OKYANUS ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Kent Koleji Gaziemir Kampüsü",
+          "district": "Gaziemir",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL KENT KOLEJİ İLKOKULU",
+            "ÖZEL KENT KOLEJİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Tekfen Koleji Gaziemir Kampüsü",
+          "district": "Gaziemir",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL TEKFEN KOLEJİ İLKOKULU",
+            "ÖZEL TEKFEN KOLEJİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "TED İzmir Koleji Urla Kampüsü",
+          "district": "Urla",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "TED İZMİR ÖZEL İLKOKULU",
+            "TED İZMİR ÖZEL ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Sahilevleri Egebil Okulları Narlıdere Kampüsü",
+          "district": "Narlıdere",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL SAHİLEVLERİ EGEBİL OKULLARI İLKOKULU",
+            "ÖZEL SAHİLEVLERİ EGEBİL OKULLARI ORTAOKULU"
+          ]
+        },
+        {
+          "name": "İzmir Tevfik Fikret Okulları Konak Kampüsü",
+          "district": "Konak",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL İZMİR S.E.V İLKOKULU",
+            "ÖZEL İZMİR S.E.V ORTAOKULU"
+          ]
+        },
+        {
+          "name": "İSTEK İzmir Kampüsü",
+          "district": "Karşıyaka",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL İZMİR İSTEK İLKOKULU",
+            "ÖZEL İZMİR İSTEK ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Eraslan Okulları Karşıyaka Kampüsü",
+          "district": "Karşıyaka",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ERASLAN İLKOKULU",
+            "ÖZEL ERASLAN ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Delta Koleji Karabağlar Kampüsü",
+          "district": "Karabağlar",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "ilkokul",
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL KARABAĞLAR DELTA ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Gaziemir MBA Okulları Kampüsü",
+          "district": "Gaziemir",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL GAZİEMİR MEKTEBİM İLKOKULU",
+            "ÖZEL GAZİEMİR MODERN BİLİMLER AKADEMİSİ (MBA) İLKOKULU",
+            "ÖZEL GAZİEMİR OKYANUS İLKOKULU"
+          ]
+        },
+        {
+          "name": "29 Mayıs Okulları Bornova Kampüsü",
+          "district": "Bornova",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL YİRMİ DOKUZ MAYIS BORNOVA İLKOKULU",
+            "ÖZEL YİRMİ DOKUZ MAYIS BORNOVA ORTAOKULU"
+          ]
+        }
+      ]
+    },
+    {
+      "city": "ANTALYA",
+      "source": "C:\\Users\\savle\\.cursor\\projects\\c-src-FlutterProjects\\uploads\\antalya-kolejleri-2.md",
+      "externalCount": 82,
+      "csvPrivateCount": 298,
+      "matched": 77,
+      "missing": [
+        {
+          "name": "Düşünür Koleji Koçaş Kampüsü",
+          "district": "Muratpaşa",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Aksu Yedisu Okulları Mesleki ve Teknik Anadolu Lisesi Kampüsü",
+          "district": "Aksu",
+          "levels": [
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Işıklar Okulları Muratpaşa Kampüsü",
+          "district": "Muratpaşa",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Başarı Okulları Konyaaltı Kampüsü",
+          "district": "Konyaaltı",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "USRE Okulları Lara Kampüsü",
+          "district": "Muratpaşa",
+          "levels": [
+            "ilkokul"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        }
+      ],
+      "partial": [
+        {
+          "name": "Girne Koleji Alanya Kampüsü",
+          "district": "Alanya",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "csvMatches": [
+            "ÖZEL ALANYA OBA BAHÇEŞEHİR KOLEJİ ANADOLU LİSESİ"
+          ]
+        }
+      ]
+    },
+    {
+      "city": "BURSA",
+      "source": "C:\\Users\\savle\\.cursor\\projects\\c-src-FlutterProjects\\uploads\\bursa-kolejleri-3.md",
+      "externalCount": 80,
+      "csvPrivateCount": 318,
+      "matched": 77,
+      "missing": [
+        {
+          "name": "Bahçeşehir Koleji Balat Kampüsü",
+          "district": "Nilüfer",
+          "levels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Yolculuk Okulları Bursa Fetih Kampüsü",
+          "district": "Nilüfer",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Data Koleji Mesleki ve Teknik Anadolu Lisesi Yıldırım Kampüsü",
+          "district": "Yıldırım",
+          "levels": [
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        }
+      ],
+      "partial": [
+        {
+          "name": "Özgün Koleji Mudanya Kampüsü",
+          "district": "Mudanya",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "csvMatches": [
+            "ÖZEL BALAT ÖZGÜN KOLEJİ ANADOLU LİSESİ"
+          ]
+        },
+        {
+          "name": "İstanbul Lider Koleji Gemlik Kampüsü",
+          "district": "Gemlik",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "csvMatches": [
+            "ÖZEL GEMLİK KÜLTÜR KOLEJİ ANADOLU LİSESİ",
+            "ÖZEL GEMLİK KÜLTÜR KOLEJİ FEN LİSESİ",
+            "ÖZEL GEMLİK SINAV KOLEJİ ANADOLU LİSESİ"
+          ]
+        },
+        {
+          "name": "Orhangazi Düşünür Koleji Lise Kampüsü",
+          "district": "Orhangazi",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL DÜŞÜNÜR İLKOKULU",
+            "ÖZEL DÜŞÜNÜR ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Uğur Okulları Özlüce Kampüsü",
+          "district": "Nilüfer",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "ilkokul",
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL ÖZLÜCE  ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Okyanus Koleji Yenişehir Kampüsü",
+          "district": "Yenişehir",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL YENİŞEHİR OKYANUS KOLEJİ İLKOKULU",
+            "ÖZEL YENİŞEHİR OKYANUS KOLEJİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Osmangazi İspat Okulları Kampüsü",
+          "district": "Osmangazi",
+          "levels": [
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL OSMANGAZİ BİLNET İLKOKULU",
+            "ÖZEL OSMANGAZİ DÜŞÜNÜR İLKOKULU",
+            "ÖZEL OSMANGAZİ SINAV KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Özel İstanbul Lider Koleji Kestel Kampüsü",
+          "district": "Kestel",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "csvMatches": [
+            "ÖZEL  KESTEL SINAV KOLEJİ  ANADOLU  LİSESİ",
+            "ÖZEL  KESTEL SINAV KOLEJİ FEN LİSESİ"
+          ]
+        },
+        {
+          "name": "Osmangazi 3Gen Koleji Kampüsü",
+          "district": "Osmangazi",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL OSMANGAZİ BİLNET İLKOKULU",
+            "ÖZEL OSMANGAZİ DÜŞÜNÜR İLKOKULU",
+            "ÖZEL OSMANGAZİ SINAV KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Bursa İspat Bademli Eğitim Kurumları Osmangazi Kampüsü",
+          "district": "Osmangazi",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL BURSA BAHÇEŞEHİR İLKOKULU",
+            "ÖZEL BURSA DOKU KOLEJİ İLKOKULU",
+            "ÖZEL BURSA KARAMAN SINAV KOLEJİ İLKOKULU"
+          ]
+        },
+        {
+          "name": "Osmangazi Sınav Koleji Kampüsü",
+          "district": "Osmangazi",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL OSMANGAZİ SINAV KOLEJİ İLKOKULU",
+            "ÖZEL OSMANGAZİ SINAV KOLEJİ ORTAOKULU",
+            "ÖZEL OSMANGAZİ BİLNET İLKOKULU"
+          ]
+        }
+      ]
+    },
+    {
+      "city": "KOCAELİ",
+      "source": "C:\\Users\\savle\\.cursor\\projects\\c-src-FlutterProjects\\uploads\\kocaeli-kolejleri-4.md",
+      "externalCount": 56,
+      "csvPrivateCount": 209,
+      "matched": 55,
+      "missing": [
+        {
+          "name": "Kocaeli Enka Okulları Kampüsü",
+          "district": "Dilovası",
+          "levels": [
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        }
+      ],
+      "partial": [
+        {
+          "name": "Gölcük Es Koleji Kampüsü",
+          "district": "Gölcük",
+          "levels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "missingLevels": [
+            "ortaokul"
+          ],
+          "csvMatches": [
+            "ÖZEL GÖLCÜK AİLEM HAFİF DÜZEYDE ZİHİNSEL ENGELLİLER İLKOKULU"
+          ]
+        },
+        {
+          "name": "Uzmanlar Koleji İzmit Kampüsü",
+          "district": "İzmit",
+          "levels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "missingLevels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "csvMatches": [
+            "ÖZEL İZMİT KOLEJİ ANADOLU LİSESİ"
+          ]
+        },
+        {
+          "name": "Yahyakaptan Doğa Koleji Kampüsü",
+          "district": "İzmit",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL KOCAELİ DOĞA  İLKOKULU",
+            "ÖZEL KOCAELİ DOĞA  ORTAOKULU"
+          ]
+        }
+      ]
+    },
+    {
+      "city": "ADANA",
+      "source": "C:\\Users\\savle\\.cursor\\projects\\c-src-FlutterProjects\\uploads\\adana-kolejleri-5.md",
+      "externalCount": 43,
+      "csvPrivateCount": 135,
+      "matched": 40,
+      "missing": [
+        {
+          "name": "Girne Koleji Adana Kampüsü",
+          "district": "Sarıçam",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Erkan Koleji Seyhan Kampüsü",
+          "district": "Seyhan",
+          "levels": [
+            "ortaokul"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "İsabet Okulları Seyhan Kampüsü",
+          "district": "Seyhan",
+          "levels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        }
+      ],
+      "partial": [
+        {
+          "name": "İstanbul Lider Koleji Ceyhan Kampüsü",
+          "district": "Ceyhan",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "ilkokul"
+          ],
+          "csvMatches": [
+            "ÖZEL CEYHAN KOLEJİ ORTAOKULU",
+            "ÖZEL CEYHAN KOLEJİ ANADOLU LİSESİ",
+            "ÖZEL CEYHAN KOLEJİ FEN LİSESİ"
+          ]
+        },
+        {
+          "name": "Adana Kozan Koleji Kampüsü",
+          "district": "Kozan",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL  KOZAN KOLEJİ İLKOKULU",
+            "ÖZEL  KOZAN KOLEJİ ORTAOKULU"
+          ]
+        },
+        {
+          "name": "Adana Ceyhan Koleji Kampüsü",
+          "district": "Ceyhan",
+          "levels": [
+            "ortaokul",
+            "lise"
+          ],
+          "missingLevels": [
+            "lise"
+          ],
+          "csvMatches": [
+            "ÖZEL CEYHAN KOLEJİ ORTAOKULU"
+          ]
+        }
+      ]
+    },
+    {
+      "city": "MERSİN",
+      "source": "C:\\Users\\savle\\.cursor\\projects\\c-src-FlutterProjects\\uploads\\mersin-kolejleri-6.md",
+      "externalCount": 5,
+      "csvPrivateCount": 210,
+      "matched": 3,
+      "missing": [
+        {
+          "name": "Bahçeşehir Koleji Toroslar Kampüsü",
+          "district": "Toroslar",
+          "levels": [
+            "ilkokul",
+            "ortaokul",
+            "lise"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        },
+        {
+          "name": "Özel Tarsus SEV Okulları Kampüsü",
+          "district": "Tarsus",
+          "levels": [
+            "ilkokul",
+            "ortaokul"
+          ],
+          "bestScore": 0,
+          "nearestCsv": null
+        }
+      ],
+      "partial": []
+    }
+  ],
+  "totals": {
+    "external": 658,
+    "matched": 611,
+    "missing": 47,
+    "partial": 186
+  }
+}

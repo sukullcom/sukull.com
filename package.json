@@ -25,7 +25,11 @@
     "db:explain": "tsx scripts/explain-hot-queries.ts",
     "schools:import": "node ./scripts/import-schools.js",
     "schools:upload": "tsx ./scripts/upload-schools.ts",
+    "schools:normalize": "tsx scripts/normalize-schools-csv.ts",
+    "schools:compare-okul": "tsx scripts/compare-okul-com-tr.ts",
+    "schools:append-missing": "tsx scripts/append-missing-okul-schools.ts",
     "launch:purge-users": "tsx scripts/purge-test-users.ts",
+    "launch:purge-orphans": "tsx scripts/purge-orphan-user-data.ts",
     "launch:post-cleanup": "tsx scripts/apply-migration.ts scripts/launch-post-cleanup.sql"
   },
   "dependencies": {

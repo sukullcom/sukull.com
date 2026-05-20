@@ -1,0 +1,65 @@
+{
+  "city": "KOCAELİ",
+  "source": "C:\\Users\\savle\\.cursor\\projects\\c-src-FlutterProjects\\uploads\\kocaeli-kolejleri-4.md",
+  "externalCount": 56,
+  "csvPrivateCount": 209,
+  "matched": 55,
+  "missing": [
+    {
+      "name": "Kocaeli Enka Okulları Kampüsü",
+      "district": "Dilovası",
+      "levels": [
+        "lise"
+      ],
+      "bestScore": 0,
+      "nearestCsv": null
+    }
+  ],
+  "partial": [
+    {
+      "name": "Gölcük Es Koleji Kampüsü",
+      "district": "Gölcük",
+      "levels": [
+        "ilkokul",
+        "ortaokul"
+      ],
+      "missingLevels": [
+        "ortaokul"
+      ],
+      "csvMatches": [
+        "ÖZEL GÖLCÜK AİLEM HAFİF DÜZEYDE ZİHİNSEL ENGELLİLER İLKOKULU"
+      ]
+    },
+    {
+      "name": "Uzmanlar Koleji İzmit Kampüsü",
+      "district": "İzmit",
+      "levels": [
+        "ilkokul",
+        "ortaokul"
+      ],
+      "missingLevels": [
+        "ilkokul",
+        "ortaokul"
+      ],
+      "csvMatches": [
+        "ÖZEL İZMİT KOLEJİ ANADOLU LİSESİ"
+      ]
+    },
+    {
+      "name": "Yahyakaptan Doğa Koleji Kampüsü",
+      "district": "İzmit",
+      "levels": [
+        "ilkokul",
+        "ortaokul",
+        "lise"
+      ],
+      "missingLevels": [
+        "lise"
+      ],
+      "csvMatches": [
+        "ÖZEL KOCAELİ DOĞA  İLKOKULU",
+        "ÖZEL KOCAELİ DOĞA  ORTAOKULU"
+      ]
+    }
+  ]
+}
