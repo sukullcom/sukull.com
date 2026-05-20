@@ -211,13 +211,13 @@ export function normalizeSchoolCsvRows(rows: SchoolCsvRow[]): NormalizeSchoolCsv
   });
 
   const canonicalByCityFold = new Map<string, string>();
-  for (const [city, byFold] of districtGroups) {
-    for (const [fold, variants] of byFold) {
-      const withOverrides = variants.map((v) => DISTRICT_CANONICAL_OVERRIDES[v] ?? v);
-      const canonical = pickCanonicalDistrict([...new Set(withOverrides)]);
+  Array.from(districtGroups.entries()).forEach(([city, byFold]) => {
+    Array.from(byFold.entries()).forEach(([fold, variants]) => {
+      const withOverrides = variants.map((v: string) => DISTRICT_CANONICAL_OVERRIDES[v] ?? v);
+      const canonical = pickCanonicalDistrict(Array.from(new Set(withOverrides)));
       canonicalByCityFold.set(`${city}\0${fold}`, normalizeDistrictName(canonical, city));
-    }
-  }
+    });
+  });
 
   let districtMerges = 0;
   const pass2 = pass1.map((row) => {
