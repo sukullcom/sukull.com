@@ -14,7 +14,7 @@ body,
 /* Sabit alt menü (BottomNavigator) ile aynı rezerv — tüm sitede tek sayı kaynağı */
 :root {
   --app-mobile-header-h: 3.125rem; /* 50px — (main) + MobileHeader */
-  --app-bottom-nav-row: 3.75rem; /* 60px: ikon satırı */
+  --app-bottom-nav-row: 4.5rem; /* 72px: ikon + etiket (BottomNavigator) */
   /* Ekstra tampon: Android/Chrome + tap hedefi; safe-area ayrıca eklenecek */
   --app-bottom-inset: calc(
     var(--app-bottom-nav-row) + max(0.5rem, env(safe-area-inset-bottom, 0px)) + 1rem

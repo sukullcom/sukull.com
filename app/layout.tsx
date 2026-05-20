@@ -29,11 +29,10 @@ export const metadata: Metadata = {
   description:
     "Derslerini tamamla, beyin oyunlarıyla pratik yap, arkadaşlarınla yarış ve özel derslerle ilerle. Sukull ile öğrenmek hiç bu kadar keyifli olmamıştı.",
   icons: {
-    icon: [{ url: "/mascot_purple.svg", type: "image/svg+xml", sizes: "any" }],
-    apple: [{ url: "/mascot_purple.svg", type: "image/svg+xml", sizes: "180x180" }],
+    icon: [{ url: "/icon", type: "image/png", sizes: "512x512" }],
+    apple: [{ url: "/apple-icon", type: "image/png", sizes: "180x180" }],
   },
-  // Favicon / apple touch: `public/mascot_purple.svg` (see `icons` above).
-  // PWA manifest icons: `app/manifest.ts`.
+  // PNG ikonlar: `app/icon.tsx`, `app/apple-icon.tsx` (lime zemin, çerçevesiz PWA).
   openGraph: {
     type: "website",
     locale: "tr_TR",

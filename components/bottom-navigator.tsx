@@ -10,6 +10,18 @@ type BottomNavigatorProps = {
   className?: string;
 };
 
+type NavItem = {
+  href: string;
+  iconSrc: string;
+  label: string;
+};
+
+/** Sidebar `sidebarOutline` ile aynı yeşil yüzey — mobil alt menü aktif öğe */
+const navItemActiveClass =
+  "bg-suk-brand-soft/40 text-suk-brand-soft-fg border-suk-brand/25 border-2";
+const navItemInactiveClass =
+  "border-2 border-transparent text-muted-foreground";
+
 export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
   const pathname = usePathname();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -29,28 +41,38 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
       document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const navItems = [
-    { href: "/learn", iconSrc: "/learn.svg" },
-    { href: "/leaderboard", iconSrc: "/leaderboard.svg" },
-    { href: "/private-lesson", iconSrc: "/private_lesson.svg" },
-    { href: "/profile", iconSrc: "/profile.svg" },
+  const navItems: NavItem[] = [
+    { href: "/learn", iconSrc: "/learn.svg", label: "Dersler" },
+    { href: "/leaderboard", iconSrc: "/leaderboard.svg", label: "Sıralama" },
+    { href: "/private-lesson", iconSrc: "/private_lesson.svg", label: "Özel Ders" },
+    { href: "/profile", iconSrc: "/profile.svg", label: "Profil" },
   ];
 
-  const dropdownItems = [
+  const dropdownItems: NavItem[] = [
     { label: "Çalışma Arkadaşı", href: "/study-buddy", iconSrc: "/study_buddy.svg" },
     { label: "Oyunlar", href: "/games", iconSrc: "/games.svg" },
     { label: "Mağaza", href: "/shop", iconSrc: "/shop.svg" },
     { label: "Hedefler", href: "/quests", iconSrc: "/quests.svg" },
   ];
 
+  const isMoreActive = dropdownItems.some((item) =>
+    pathname.startsWith(item.href),
+  );
+
+  const itemShellClass = (active: boolean) =>
+    cn(
+      "flex min-w-[3.25rem] max-w-[4.5rem] flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-1.5 py-1 transition-none",
+      active ? navItemActiveClass : navItemInactiveClass,
+    );
+
   return (
     <div
       className={cn(
-        "fixed bottom-0 left-0 right-0 z-50 flex flex-col border-t-2 border-border bg-card px-4 pt-0.5 pb-[max(0.5rem,env(safe-area-inset-bottom,0px))] lg:hidden",
-        className
+        "fixed bottom-0 left-0 right-0 z-50 flex flex-col border-t-2 border-border bg-card px-2 pt-1 pb-[max(0.5rem,env(safe-area-inset-bottom,0px))] lg:hidden",
+        className,
       )}
     >
-      <div className="flex h-[var(--app-bottom-nav-row,3.75rem)] w-full min-h-0 items-center justify-around">
+      <div className="flex h-[var(--app-bottom-nav-row,4.5rem)] w-full min-h-0 items-stretch justify-around gap-0.5">
         {navItems.map((item) => {
           const isActive = pathname.startsWith(item.href);
           return (
@@ -58,60 +80,91 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
               key={item.href}
               prefetch={false}
               href={item.href}
-              className="flex flex-col items-center justify-center gap-0.5"
+              className={itemShellClass(isActive)}
+              aria-current={isActive ? "page" : undefined}
             >
               <Image
                 src={item.iconSrc}
                 alt=""
-                height={isActive ? 36 : 32}
-                width={isActive ? 36 : 32}
+                height={isActive ? 28 : 26}
+                width={isActive ? 28 : 26}
+                className="shrink-0"
               />
-              <div
+              <span
                 className={cn(
-                  "h-[3px] w-3 rounded-full transition-colors",
-                  isActive ? "bg-suk-brand" : "bg-transparent"
+                  "w-full truncate text-center text-[10px] font-semibold leading-tight",
+                  isActive ? "text-suk-brand-soft-fg" : "text-muted-foreground",
                 )}
-              />
+              >
+                {item.label}
+              </span>
             </Link>
           );
         })}
 
-        <div className="relative" ref={dropdownRef}>
+        <div className="relative flex flex-1" ref={dropdownRef}>
           <button
             type="button"
             onClick={() => setDropdownOpen(!isDropdownOpen)}
-            className="flex flex-col items-center justify-center gap-0.5"
+            className={cn(
+              itemShellClass(isMoreActive || isDropdownOpen),
+              "w-full",
+            )}
+            aria-expanded={isDropdownOpen}
+            aria-haspopup="menu"
           >
-            <Image src="/more.svg" alt="Menu" height={32} width={32} />
-            <div
-              className={cn(
-                "h-[3px] w-3 rounded-full transition-colors",
-                isDropdownOpen ? "bg-suk-brand" : "bg-transparent"
-              )}
+            <Image
+              src="/more.svg"
+              alt=""
+              height={26}
+              width={26}
+              className="shrink-0"
             />
+            <span
+              className={cn(
+                "w-full truncate text-center text-[10px] font-semibold leading-tight",
+                isMoreActive || isDropdownOpen
+                  ? "text-suk-brand-soft-fg"
+                  : "text-muted-foreground",
+              )}
+            >
+              Menü
+            </span>
           </button>
           {isDropdownOpen && (
-            <div className="absolute bottom-full right-0 z-50 mb-2 w-44 rounded-lg border border-border bg-card shadow-lg">
+            <div
+              role="menu"
+              className="absolute bottom-full right-0 z-50 mb-2 w-48 rounded-xl border border-border bg-card shadow-lg"
+            >
               <ul>
-                {dropdownItems.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      prefetch={false}
-                      href={item.href}
-                      className="flex items-center px-4 py-2.5 hover:bg-muted"
-                      onClick={() => setDropdownOpen(false)}
-                    >
-                      <Image
-                        src={item.iconSrc}
-                        alt={item.label}
-                        height={24}
-                        width={24}
-                        className="mr-2"
-                      />
-                      <span className="text-sm">{item.label}</span>
-                    </Link>
-                  </li>
-                ))}
+                {dropdownItems.map((item) => {
+                  const isActive = pathname.startsWith(item.href);
+                  return (
+                    <li key={item.href}>
+                      <Link
+                        prefetch={false}
+                        href={item.href}
+                        role="menuitem"
+                        className={cn(
+                          "flex items-center px-4 py-2.5 text-sm transition-none",
+                          isActive
+                            ? "bg-suk-brand-soft/40 text-suk-brand-soft-fg font-semibold"
+                            : "hover:bg-muted text-foreground",
+                        )}
+                        onClick={() => setDropdownOpen(false)}
+                      >
+                        <Image
+                          src={item.iconSrc}
+                          alt=""
+                          height={24}
+                          width={24}
+                          className="mr-2 shrink-0"
+                        />
+                        <span>{item.label}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           )}
