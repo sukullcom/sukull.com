@@ -14,6 +14,7 @@ import { getRequestLogger } from '@/lib/logger';
 import { clampPositiveInt } from '@/lib/pagination';
 import { SCHOOL_LEADERBOARD_LIST_MAX } from '@/lib/school-leaderboard-limits';
 import { sortSchoolCategories } from '@/lib/school-catalog';
+import { isValidSchoolCity } from '@/lib/school-data-normalize';
 
 type SchoolType = 'university' | 'high_school' | 'secondary_school' | 'elementary_school';
 
@@ -38,15 +39,17 @@ function jsonSchoolCatalog<T extends Record<string, unknown>>(body: T): NextResp
  * import script completes.
  */
 const getCitiesAggregate = unstable_cache(
-  async () =>
-    db
+  async () => {
+    const rows = await db
       .select({
         city: schools.city,
         count: sql<number>`count(*)::int`,
       })
       .from(schools)
       .groupBy(schools.city)
-      .orderBy(schools.city),
+      .orderBy(schools.city);
+    return rows.filter((r) => isValidSchoolCity(r.city));
+  },
   ['schools-cities'],
   { tags: [CACHE_TAGS.schoolsMaster], revalidate: CACHE_TTL.schoolsMaster },
 );

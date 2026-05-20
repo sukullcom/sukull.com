@@ -203,6 +203,10 @@ async function importSchools() {
     console.log(`❌ Total errors: ${errors}`);
     
     console.log("✅ School import completed successfully!");
+    console.log(
+      "\nCanlı/Vercel okul listesi önbelleği: deploy sonrası güncellenir veya",
+      "okul master cache tag (schools-master) revalidate edilir.\n",
+    );
     
   } catch (error) {
     console.error("💥 Import failed:", error);

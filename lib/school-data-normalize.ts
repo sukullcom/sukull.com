@@ -122,6 +122,16 @@ export function fixUniversityCity(city: string, schoolName: string, category: st
 /** Üniversitelerde ilçe etiketi (UI’da tek seçenek). */
 export const UNIVERSITY_DISTRICT_LABEL = "Kampüs";
 
+/** Şehir dropdown — il adı değil (eski hatalı import: üniversite adı city sütununda). */
+export function isValidSchoolCity(city: string): boolean {
+  const c = city.trim();
+  if (!c || c.length > 20) return false;
+  if (/YÜKSEKOKULU|YUKSEKOKULU|MESLEK YÜKSEK|MESLEK YUKSEK|ÜNİVERSİTESİ|UNIVERSITESI/i.test(c)) {
+    return false;
+  }
+  return true;
+}
+
 /** Eşleştirme / dedup için marka anahtarı */
 export function normalizeMatchKey(name: string): string {
   let s = name
