@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { BRAND_MASCOT_DISPLAY_PATH } from "@/lib/brand-mascot";
 import { normalizeReferralCode } from "@/lib/referral-code";
 import { CreateAccountForm } from "./create-account";
 
@@ -16,7 +15,7 @@ export default function CreateAccountPage({
       <div className="w-full flex flex-col lg:flex-row items-center justify-center gap-6 sm:gap-8 lg:gap-10">
         <div className="relative mx-auto aspect-square w-40 shrink-0 sm:w-48 lg:w-56">
           <Image
-            src={BRAND_MASCOT_DISPLAY_PATH}
+            src="/hero.svg"
             fill
             alt="Sukull"
             className="object-contain"
