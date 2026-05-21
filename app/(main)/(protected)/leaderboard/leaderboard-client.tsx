@@ -14,6 +14,8 @@ import {
   MapPin,
   ChevronDown,
   Loader2,
+  Info,
+  Users,
 } from "lucide-react";
 import type { LeaderboardSchoolTab } from "@/lib/learning-path";
 import { fetchSchoolCatalogJson } from "@/lib/fetch-school-catalog";
@@ -33,6 +35,11 @@ type SchoolEntry = {
   schoolId: number;
   schoolName: string;
   totalPoints: number;
+  /** Bayesian shrinkage uygulanmış skor — sıralama bu değerle yapılır. */
+  topAvgScore: number;
+  /** Aktif öğrenci sayısı (son 30 gün). Tie-breaker ve gösterim için. */
+  activeStudentCount: number;
+  rawAvgPoints?: number;
   city?: string;
 };
 
@@ -41,6 +48,9 @@ type SchoolsLeaderboardJson = {
     id: number;
     name: string;
     totalPoints: number;
+    topAvgScore: number;
+    rawAvgPoints?: number;
+    activeStudentCount: number;
     city?: string;
   }>;
 };
@@ -126,6 +136,9 @@ export const LeaderboardClient = ({
             schoolId: s.id,
             schoolName: s.name,
             totalPoints: s.totalPoints,
+            topAvgScore: s.topAvgScore,
+            rawAvgPoints: s.rawAvgPoints,
+            activeStudentCount: s.activeStudentCount,
             city: s.city,
           }));
           setSchoolData((prev) => ({ ...prev, [currentSchoolType]: mapped }));
@@ -223,6 +236,19 @@ export const LeaderboardClient = ({
 
     const type = activeTab as SchoolType;
     const items = schoolData[type].slice(3);
+    if (items.length === 0 && schoolData[type].length === 0) {
+      return (
+        <div className="text-center py-10 px-4 text-sm text-muted-foreground">
+          <School className="h-8 w-8 mx-auto mb-2 opacity-40" />
+          <p className="font-medium">Bu kategoride henüz yeterli okul yok.</p>
+          <p className="text-xs mt-1">
+            Liderlik tablosunda görünmek için bir okulda en az{" "}
+            <span className="font-semibold">10 aktif öğrenci</span> olması
+            gerekir.
+          </p>
+        </div>
+      );
+    }
     return (
       <>
         {items.map((s, i) => {
@@ -246,15 +272,23 @@ export const LeaderboardClient = ({
                 <p className="font-semibold text-sm text-foreground truncate">
                   {s.schoolName}
                 </p>
-                {s.city && (
-                  <p className="text-[11px] text-muted-foreground truncate">
-                    {s.city}
-                  </p>
-                )}
+                <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground truncate">
+                  {s.city && <span className="truncate">{s.city}</span>}
+                  {s.city && <span aria-hidden>·</span>}
+                  <span className="inline-flex items-center gap-0.5 shrink-0">
+                    <Users className="h-3 w-3" />
+                    {s.activeStudentCount.toLocaleString("tr-TR")} aktif
+                  </span>
+                </div>
               </div>
-              <p className="text-xs sm:text-sm text-muted-foreground shrink-0 font-medium">
-                {s.totalPoints.toLocaleString("tr-TR")} Puan
-              </p>
+              <div className="text-right shrink-0">
+                <p className="text-xs sm:text-sm font-semibold text-foreground">
+                  {Math.round(s.topAvgScore).toLocaleString("tr-TR")}
+                </p>
+                <p className="text-[10px] text-muted-foreground">
+                  Top: {s.totalPoints.toLocaleString("tr-TR")}
+                </p>
+              </div>
             </div>
           );
         })}
@@ -272,10 +306,12 @@ export const LeaderboardClient = ({
       }));
     }
     const type = activeTab as SchoolType;
+    // Podyumda da Bayesian skoru gösteriyoruz (sıralama buna göre); sayı
+    // okunaklı olsun diye yuvarlıyoruz.
     return schoolData[type].slice(0, 3).map((s) => ({
       id: s.schoolId,
       name: s.schoolName,
-      points: s.totalPoints,
+      points: Math.round(s.topAvgScore),
     }));
   };
 
@@ -302,6 +338,39 @@ export const LeaderboardClient = ({
           </button>
         ))}
       </div>
+
+      {/* Okul sekmelerinde sıralama mantığını şeffafça anlatan bilgi şeridi.
+          Bireysel sekme zaten direkt puan toplamına dayalı; açıklamaya gerek
+          yok. */}
+      {isSchoolTab && (
+        <details className="mb-4 rounded-lg border border-emerald-100 bg-emerald-50/60 px-3 py-2 text-xs text-emerald-900">
+          <summary className="flex cursor-pointer items-center gap-1.5 font-medium select-none">
+            <Info className="h-3.5 w-3.5" />
+            Sıralama nasıl çalışıyor?
+          </summary>
+          <div className="mt-2 space-y-1.5 leading-relaxed">
+            <p>
+              Okullar büyüklüğe göre değil,{" "}
+              <span className="font-semibold">
+                aktif öğrencilerin ortalama puanına
+              </span>{" "}
+              göre sıralanır. Böylece 10 bin öğrencili bir okul, 200 öğrencili
+              bir okulu sırf kalabalık olduğu için ezemez.
+            </p>
+            <p>
+              Az aktif öğrencisi olan okullar, anormal değerlerden etkilenmemek
+              için istatistiksel olarak ortalamaya çekilir (Bayesian smoothing).
+              Liste için en az{" "}
+              <span className="font-semibold">10 aktif öğrenci</span> gerekir.
+            </p>
+            <p>
+              Eşit ortalamada{" "}
+              <span className="font-semibold">aktif öğrenci sayısı</span> üstte
+              olanı belirler. Aktif = son 30 günde ders/oyun tamamlamış.
+            </p>
+          </div>
+        </details>
+      )}
 
       {/* City filter (school tabs only) */}
       {isSchoolTab && cities.length > 0 && (

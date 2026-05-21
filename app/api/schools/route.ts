@@ -13,6 +13,7 @@ import {
 import { getRequestLogger } from '@/lib/logger';
 import { clampPositiveInt } from '@/lib/pagination';
 import { SCHOOL_LEADERBOARD_LIST_MAX } from '@/lib/school-leaderboard-limits';
+import { LEADERBOARD_MIN_ACTIVE_STUDENTS } from '@/lib/leaderboard-constants';
 import { sortSchoolCategories } from '@/lib/school-catalog';
 import {
   isValidSchoolCity,
@@ -273,13 +274,18 @@ export async function GET(request: NextRequest) {
           SCHOOL_LEADERBOARD_LIST_MAX,
           SCHOOL_LEADERBOARD_LIST_MAX,
         );
-        const leaderboardConditions = [eq(schools.type, type as SchoolType)];
+        // Bayesian skor + eşik filtresi (bkz. migration 0053). Direkt
+        // total_points sıralaması büyük okulları haksızca öne çıkarıyordu.
+        const leaderboardConditions = [
+          eq(schools.type, type as SchoolType),
+          sql`${schools.activeStudentCount} >= ${LEADERBOARD_MIN_ACTIVE_STUDENTS}`,
+        ];
 
         if (city) {
           leaderboardConditions.push(eq(schools.city, city.toUpperCase()));
         }
 
-        const leaderboardResults = await db
+        const leaderboardRows = await db
           .select({
             id: schools.id,
             name: schools.name,
@@ -289,12 +295,25 @@ export async function GET(request: NextRequest) {
             kind: schools.kind,
             type: schools.type,
             totalPoints: schools.totalPoints,
+            topAvgScore: schools.topAvgScore,
+            rawAvgPoints: schools.rawAvgPoints,
+            activeStudentCount: schools.activeStudentCount,
           })
           .from(schools)
           .where(and(...leaderboardConditions))
-          .orderBy(desc(schools.totalPoints), schools.name)
+          .orderBy(
+            desc(schools.topAvgScore),
+            desc(schools.activeStudentCount),
+            schools.name,
+          )
           .limit(lbLimit)
           .offset(0);
+
+        const leaderboardResults = leaderboardRows.map((r) => ({
+          ...r,
+          topAvgScore: Number(r.topAvgScore ?? 0),
+          rawAvgPoints: Number(r.rawAvgPoints ?? 0),
+        }));
 
         return NextResponse.json({ schools: leaderboardResults });
       }
@@ -344,13 +363,16 @@ export async function POST(request: NextRequest) {
     const schoolTypes: SchoolType[] = ['university', 'high_school', 'secondary_school', 'elementary_school'];
 
     for (const schoolType of schoolTypes) {
-      const whereConditions = [eq(schools.type, schoolType)];
+      const whereConditions = [
+        eq(schools.type, schoolType),
+        sql`${schools.activeStudentCount} >= ${LEADERBOARD_MIN_ACTIVE_STUDENTS}`,
+      ];
 
       if (city) {
         whereConditions.push(eq(schools.city, city.toUpperCase()));
       }
 
-      const results = await db
+      const rows = await db
         .select({
           id: schools.id,
           name: schools.name,
@@ -360,13 +382,24 @@ export async function POST(request: NextRequest) {
           kind: schools.kind,
           type: schools.type,
           totalPoints: schools.totalPoints,
+          topAvgScore: schools.topAvgScore,
+          rawAvgPoints: schools.rawAvgPoints,
+          activeStudentCount: schools.activeStudentCount,
         })
         .from(schools)
         .where(and(...whereConditions))
-        .orderBy(desc(schools.totalPoints), schools.name)
+        .orderBy(
+          desc(schools.topAvgScore),
+          desc(schools.activeStudentCount),
+          schools.name,
+        )
         .limit(limit);
 
-      leaderboards[schoolType] = results;
+      leaderboards[schoolType] = rows.map((r) => ({
+        ...r,
+        topAvgScore: Number(r.topAvgScore ?? 0),
+        rawAvgPoints: Number(r.rawAvgPoints ?? 0),
+      }));
     }
 
     return NextResponse.json({ leaderboards });

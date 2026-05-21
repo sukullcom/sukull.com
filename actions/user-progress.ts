@@ -12,44 +12,149 @@ import { getServerUser } from '@/lib/auth';
 import { canChangeSchoolSelection, nextLockExpiresAt } from '@/lib/school-grade-lock';
 import { logActivity } from '@/lib/activity-logger';
 import { getRequestLogger, logger } from '@/lib/logger';
+import {
+  LEADERBOARD_ACTIVE_WINDOW_DAYS,
+  LEADERBOARD_MIN_ACTIVE_STUDENTS,
+  LEADERBOARD_PRIOR_STRENGTH,
+} from '@/lib/leaderboard-constants';
+import { CACHE_TAGS } from '@/lib/cache-tags';
+import { revalidateTag } from 'next/cache';
 
+/**
+ * Okul leaderboard skorlarını tam yeniden hesaplar.
+ *
+ * Eski sürüm sadece `total_points = SUM(user_progress.points)` yapıyordu;
+ * bu, **okul büyüklüğüne korelasyonlu** bir liderlik üretiyordu (10K
+ * öğrencili okul, 200 öğrencili dürüst okulu sayısal üstünlükle eziyordu).
+ *
+ * Yeni sürüm üç metriği aynı CTE-zincirinde hesaplar:
+ *
+ *   1. active_student_count  — son `LEADERBOARD_ACTIVE_WINDOW_DAYS` günde
+ *                              `activity_log`'da `lesson_complete` /
+ *                              `game_end` üreten öğrenci sayısı.
+ *   2. raw_avg_points        — aktif öğrencilerin ham puan ortalaması.
+ *   3. top_avg_score         — Bayesian shrinkage ile düzeltilmiş skor:
+ *
+ *        bayes = (raw_avg × n + prior_mean × k) / (n + k)
+ *
+ *      Burada n = active_count, k = LEADERBOARD_PRIOR_STRENGTH,
+ *      prior_mean = aynı okul tipindeki, eşiği geçen okulların raw_avg
+ *      değerlerinin medyanı (outlier'a dayanıklı).
+ *
+ * Tek UPDATE ifadesi — Postgres CTE'leri set bazında çalıştırır; 10K
+ * okul × 100K kullanıcı için saniyeler mertebesinde tamamlanır. İndeks
+ * `idx_schools_leaderboard_score` (partial, active_count >= 10) liste
+ * sorgularını ucuz tutar.
+ *
+ * `total_points` da güncellenir (görüntü için), ama sıralamayı artık
+ * `top_avg_score` belirler.
+ */
 export const updateTotalPointsForSchools = async () => {
   const log = await getRequestLogger({ labels: { action: 'updateTotalPointsForSchools' } });
   try {
-    log.info('school points full-recompute started');
+    log.info('school leaderboard recompute started');
 
-    // Use a more efficient approach with a single UPDATE query using a CTE
+    const windowDays = LEADERBOARD_ACTIVE_WINDOW_DAYS;
+    const priorStrength = LEADERBOARD_PRIOR_STRENGTH;
+    const minActive = LEADERBOARD_MIN_ACTIVE_STUDENTS;
+
     await db.execute(sql`
-      WITH school_points AS (
-        SELECT 
-          school_id,
-          SUM(points::int) as total_points
-        FROM user_progress 
-        WHERE school_id IS NOT NULL
-        GROUP BY school_id
-      )
-      UPDATE schools 
-      SET total_points = COALESCE(sp.total_points, 0)
-      FROM school_points sp
-      WHERE schools.id = sp.school_id;
-    `);
-    
-    // Also reset schools with no users to 0 points
-    await db.execute(sql`
-      UPDATE schools 
-      SET total_points = 0 
-      WHERE id NOT IN (
-        SELECT DISTINCT school_id 
-        FROM user_progress 
-        WHERE school_id IS NOT NULL
-      );
+      WITH
+        -- 1) Son ${sql.raw(String(windowDays))} günde puan üreten öğrenciler.
+        --    activity_log'da lesson_complete / game_end olayı varsa aktif.
+        active_users AS (
+          SELECT DISTINCT al.user_id
+          FROM activity_log al
+          WHERE al.created_at >= NOW() - ${sql.raw(`INTERVAL '${windowDays} days'`)}
+            AND al.event_type IN ('lesson_complete', 'game_end')
+        ),
+        -- 2) Okul başına tüm öğrencilerin toplam puanı (görüntü için
+        --    total_points). Incremental update'lerle (ders sonu vs.)
+        --    semantik tutarlı kalsın.
+        school_total AS (
+          SELECT
+            up.school_id,
+            COALESCE(SUM(up.points)::int, 0) AS total_points
+          FROM user_progress up
+          WHERE up.school_id IS NOT NULL
+          GROUP BY up.school_id
+        ),
+        -- 3) Sadece aktif öğrenciler — sıralama metrikleri buradan üretilir.
+        school_active AS (
+          SELECT
+            up.school_id,
+            up.user_id,
+            up.points
+          FROM user_progress up
+          INNER JOIN active_users au ON au.user_id = up.user_id
+          WHERE up.school_id IS NOT NULL
+        ),
+        -- 4) Aktiviteye göre okul aggregate'i.
+        school_agg AS (
+          SELECT
+            s.id   AS school_id,
+            s.type AS school_type,
+            COALESCE(st.total_points, 0)                  AS total_points,
+            COUNT(sa.user_id)::int                         AS active_count,
+            COALESCE(AVG(sa.points)::numeric(12,2), 0)     AS raw_avg
+          FROM schools s
+          LEFT JOIN school_total  st ON st.school_id = s.id
+          LEFT JOIN school_active sa ON sa.school_id = s.id
+          GROUP BY s.id, s.type, st.total_points
+        ),
+        -- 5) Okul tipi bazında prior_mean = medyan(raw_avg) — eşiği geçenler.
+        --    Eşiği geçen okul yoksa o tip için prior NULL kalır → smoothing
+        --    yapılmaz, raw_avg doğrudan kullanılır.
+        type_prior AS (
+          SELECT
+            school_type,
+            percentile_cont(0.5) WITHIN GROUP (ORDER BY raw_avg) AS prior_mean
+          FROM school_agg
+          WHERE active_count >= ${sql.raw(String(minActive))}
+          GROUP BY school_type
+        ),
+        -- 6) Bayesian shrinkage uygulanmış skor.
+        school_score AS (
+          SELECT
+            sa.school_id,
+            sa.total_points,
+            sa.active_count,
+            sa.raw_avg,
+            CASE
+              WHEN sa.active_count = 0 THEN 0
+              WHEN tp.prior_mean IS NULL THEN sa.raw_avg
+              ELSE (
+                sa.raw_avg * sa.active_count
+                + tp.prior_mean * ${sql.raw(String(priorStrength))}
+              ) / (sa.active_count + ${sql.raw(String(priorStrength))})
+            END::numeric(12,2) AS bayes_score
+          FROM school_agg sa
+          LEFT JOIN type_prior tp ON tp.school_type = sa.school_type
+        )
+      UPDATE schools s
+      SET
+        total_points         = ss.total_points,
+        active_student_count = ss.active_count,
+        raw_avg_points       = ss.raw_avg,
+        top_avg_score        = ss.bayes_score
+      FROM school_score ss
+      WHERE s.id = ss.school_id;
     `);
 
-    log.info('school points full-recompute completed');
+    // unstable_cache verileri eskimesin diye tag'i tetikle. Cron günde
+    // bir koşar; bu tek bir invalidate yeterli.
+    try {
+      revalidateTag(CACHE_TAGS.schoolLeaderboard);
+    } catch {
+      // revalidateTag çağrısı bazen non-request context'te no-op atar;
+      // güvenli şekilde yutuyoruz, sıralama sonraki TTL bitiminde tazelenir.
+    }
+
+    log.info('school leaderboard recompute completed');
     return true;
   } catch (error) {
     log.error({
-      message: 'school points full-recompute failed',
+      message: 'school leaderboard recompute failed',
       error,
       source: 'server-action',
       location: 'user-progress/updateTotalPointsForSchools',

@@ -4,6 +4,7 @@ import {
   bigserial,
   boolean,
   integer,
+  numeric,
   pgEnum,
   pgTable,
   serial,
@@ -289,8 +290,25 @@ export const schools = pgTable(
     district: text("district").notNull(),
     category: text("category").notNull(), // Primary School, Secondary School, High School, University
     kind: text("kind"), // Anadolu Lisesi, İmam Hatip, etc. (can be null)
+    /**
+     * Aktif öğrencilerin (son 30 gün) toplam puanı. Görüntü / admin için
+     * korunuyor; sıralamayı artık `topAvgScore` belirliyor.
+     */
     totalPoints: integer("total_points").notNull().default(0),
     type: schoolTypeEnum("type").notNull().default("elementary_school"),
+    /** Son 30 günde puan üreten öğrenci sayısı (cron her gece yeniler). */
+    activeStudentCount: integer("active_student_count").notNull().default(0),
+    /** Aktif öğrencilerin ham ortalama puanı (regülarize edilmemiş). */
+    rawAvgPoints: numeric("raw_avg_points", { precision: 12, scale: 2 })
+      .notNull()
+      .default("0"),
+    /**
+     * Bayesian shrinkage uygulanmış skor — okul büyüklüğünden bağımsız
+     * adil sıralama. Bkz. migration 0053.
+     */
+    topAvgScore: numeric("top_avg_score", { precision: 12, scale: 2 })
+      .notNull()
+      .default("0"),
   },
   (table) => ({
     /**

@@ -17,6 +17,7 @@ import { normalizeAvatarUrl } from "@/utils/avatar";
 import { CACHE_TAGS, CACHE_TTL } from "@/lib/cache-tags";
 import { queryResultRows } from "@/lib/query-result";
 import { SCHOOL_LEADERBOARD_LIST_MAX } from "@/lib/school-leaderboard-limits";
+import { LEADERBOARD_MIN_ACTIVE_STUDENTS } from "@/lib/leaderboard-constants";
 
 /**
  * Leaderboard city filter list. Caching for 24h as school data is static.
@@ -97,7 +98,13 @@ const _getSchoolPointsByTypeCached = unstable_cache(
     offset: number,
     city?: string,
   ) => {
-    const conditions = [eq(schools.type, schoolType)];
+    // Eşiği geçmeyen okul listeye girmez (Bayesian smoothing zaten skor
+    // üretir ama az aktiviteli okul göstermek istemiyoruz; bkz. migration
+    // 0053). Sıralama: bayes skor → tie-break aktif öğrenci → ad.
+    const conditions = [
+      eq(schools.type, schoolType),
+      sql`${schools.activeStudentCount} >= ${LEADERBOARD_MIN_ACTIVE_STUDENTS}`,
+    ];
     if (city) {
       conditions.push(eq(schools.city, city.toUpperCase()));
     }
@@ -107,15 +114,22 @@ const _getSchoolPointsByTypeCached = unstable_cache(
         schoolId: schools.id,
         schoolName: schools.name,
         totalPoints: schools.totalPoints,
+        topAvgScore: schools.topAvgScore,
+        rawAvgPoints: schools.rawAvgPoints,
+        activeStudentCount: schools.activeStudentCount,
         city: schools.city,
       })
       .from(schools)
       .where(and(...conditions))
-      .orderBy(desc(schools.totalPoints), asc(schools.name))
+      .orderBy(
+        desc(schools.topAvgScore),
+        desc(schools.activeStudentCount),
+        asc(schools.name),
+      )
       .limit(limit)
       .offset(offset);
   },
-  ["school-points-by-type"],
+  ["school-points-by-type-v2"],
   {
     tags: [CACHE_TAGS.schoolLeaderboard],
     revalidate: CACHE_TTL.schoolLeaderboard,
@@ -129,7 +143,20 @@ export const getSchoolPointsByType = cache(
     offset: number = 0,
     city?: string,
   ) => {
-    return _getSchoolPointsByTypeCached(schoolType, limit, offset, city);
+    const rows = await _getSchoolPointsByTypeCached(
+      schoolType,
+      limit,
+      offset,
+      city,
+    );
+    // `numeric` Postgres tipleri Drizzle'da string döner; client tarafı
+    // gerçek sayı bekliyor (toLocaleString, sıralama vs.). Boundary'de
+    // bir kez çevirip tüm UI'da güvenli kullanım sağlıyoruz.
+    return rows.map((r) => ({
+      ...r,
+      topAvgScore: Number(r.topAvgScore ?? 0),
+      rawAvgPoints: Number(r.rawAvgPoints ?? 0),
+    }));
   },
 );
 
@@ -210,22 +237,38 @@ async function computeUserRankForUser(userId: string) {
     };
   }
 
+  // Okul sıralaması artık Bayesian skora göre — büyük okul küçük okulu
+  // sadece sayısal üstünlükle ezmesin. Eşiği geçmeyen okullar da hesabın
+  // dışındadır; kullanıcının okulu eşiğin altındaysa schoolRank null
+  // dönerek "henüz listede değiliz" mesajı verebiliriz.
   const schoolRankResult = await db.execute(sql`
-    SELECT COUNT(*) + 1 as rank
-    FROM schools
-    WHERE type = ${schoolType} AND total_points > (
-      SELECT total_points FROM schools WHERE id = ${schoolId}
-    )
+    SELECT COUNT(*) + 1 AS rank
+    FROM schools target_self
+    JOIN schools other
+      ON other.type = target_self.type
+     AND other.active_student_count >= ${LEADERBOARD_MIN_ACTIVE_STUDENTS}
+     AND (
+       other.top_avg_score > target_self.top_avg_score
+       OR (
+         other.top_avg_score = target_self.top_avg_score
+         AND other.active_student_count > target_self.active_student_count
+       )
+     )
+    WHERE target_self.id = ${schoolId}
+      AND target_self.active_student_count >= ${LEADERBOARD_MIN_ACTIVE_STUDENTS}
   `);
 
-  const schoolRank =
-    Number(
-      queryResultRows<{ rank: unknown }>(schoolRankResult)[0]?.rank,
-    ) || 1;
+  const schoolRankRow = queryResultRows<{ rank: unknown }>(schoolRankResult)[0];
+  const schoolRank = schoolRankRow ? Number(schoolRankRow.rank) || 1 : null;
 
   const currentSchoolData = await db.query.schools.findFirst({
     where: eq(schools.id, schoolId),
-    columns: { totalPoints: true },
+    columns: {
+      totalPoints: true,
+      topAvgScore: true,
+      rawAvgPoints: true,
+      activeStudentCount: true,
+    },
   });
 
   return {
@@ -235,6 +278,9 @@ async function computeUserRankForUser(userId: string) {
     userPoints: points,
     schoolId,
     schoolPoints: currentSchoolData?.totalPoints || 0,
+    schoolBayesScore: Number(currentSchoolData?.topAvgScore ?? 0),
+    schoolRawAvg: Number(currentSchoolData?.rawAvgPoints ?? 0),
+    schoolActiveStudents: currentSchoolData?.activeStudentCount ?? 0,
     schoolType,
   };
 }
