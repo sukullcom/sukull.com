@@ -28,23 +28,27 @@ export const metadata: Metadata = {
   },
   description:
     "Derslerini tamamla, beyin oyunlarıyla pratik yap, arkadaşlarınla yarış ve özel derslerle ilerle. Sukull ile öğrenmek hiç bu kadar keyifli olmamıştı.",
-  // Sıra önemli: tarayıcılar listedeki ilk uygun ikonu kullanır. PNG'yi
-  // (Next.js dinamik `/icon` endpoint, ~50KB) önce sıralıyoruz; ham mascot
-  // SVG'si (~1.4MB) yedek olarak kalsın. Eski `public/favicon.svg`/`.ico`
-  // dosyaları (stylize edilmiş "S" — marka değil) bilinçli olarak
-  // silindi; tarayıcılar artık `<link rel="icon">` etiketlerini takip ediyor.
+  // Tarayıcı listedeki ilk uygun ikonu seçer. Dinamik PNG endpoint'ler
+  // (`/icon` 512×512, `/apple-icon` 180×180) Satori ile PNG kaynaktan
+  // yeniden boyutlandırıldığı için hafif (~50KB). Statik PNG ham dosya
+  // (`/heads/happy_excited_purple.png`, ~724KB) doğrulanabilir bir
+  // fallback olarak kalsın — Satori herhangi bir nedenle hata verirse
+  // tarayıcı yine de doğru maskot ikonunu gösterir. Ham SVG'yi (~1.4MB)
+  // favicon listesinden çıkardık; gereksizce ağırdı.
   icons: {
     icon: [
       { url: "/icon", type: "image/png", sizes: "512x512" },
       { url: "/icon", type: "image/png", sizes: "192x192" },
-      { url: "/heads/happy_excited_purple.svg", type: "image/svg+xml" },
+      { url: "/heads/happy_excited_purple.png", type: "image/png", sizes: "1024x1024" },
     ],
     apple: [{ url: "/apple-icon", type: "image/png", sizes: "180x180" }],
     shortcut: [{ url: "/icon", type: "image/png" }],
   },
-  // Maskot kaynak dosyası: `public/heads/happy_excited_purple.svg`
-  // PNG üreteci (PWA / favicon / splash): `app/icon.tsx`, `app/apple-icon.tsx`
-  // Manifest: `app/manifest.ts`
+  // Maskot kaynak dosyaları:
+  //   PNG (sunucu ikon üretimi + favicon fallback): public/heads/happy_excited_purple.png
+  //   SVG (client `<Image>` bileşenleri):           public/heads/happy_excited_purple.svg
+  // PNG üreteci endpoints: app/icon.tsx, app/apple-icon.tsx
+  // PWA manifest:           app/manifest.ts
   openGraph: {
     type: "website",
     locale: "tr_TR",

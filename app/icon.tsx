@@ -6,7 +6,8 @@ export const runtime = "nodejs";
 export const size = { width: 512, height: 512 };
 export const contentType = "image/png";
 
-/** PWA / sekme ikonu — şeffaf zemin, `happy_excited_purple` maskot. */
+/** PWA / sekme ikonu — şeffaf zemin, `happy_excited_purple` maskot (PNG).
+ *  Kaynak için bkz. `lib/load-brand-mascot-data-url.ts`. */
 export default async function Icon() {
   const mascotSrc = await loadBrandMascotDataUrl();
   const imgSize = 480;

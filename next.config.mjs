@@ -43,10 +43,14 @@ const nextConfig = {
    */
   async rewrites() {
     return [
-      // Eski tarayıcılar /varsayılan istekler — yeşil kare favicon.ico yerine maskot SVG.
+      // Eski tarayıcılar /favicon.ico'ya doğrudan istek atar (metadata
+      // `<link rel="icon">` etiketlerini görmeden). Onları PNG endpoint'e
+      // yönlendiriyoruz — `/icon` Next.js dinamik, Satori ile 512×512 PNG
+      // (~50KB), favicon için ideal. Daha önce 1.4MB ham SVG'ye yönlendirip
+      // gereksiz transfer ve MIME uyumsuzluğu yaratıyorduk.
       {
         source: '/favicon.ico',
-        destination: '/heads/happy_excited_purple.svg',
+        destination: '/icon',
       },
       {
         source: '/api/schools/search',
