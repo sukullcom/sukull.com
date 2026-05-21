@@ -39,6 +39,7 @@ import {
 } from "lucide-react";
 import { StudyBuddySchoolSelector } from "@/components/study-buddy-school-selector";
 import { clientLogger } from "@/lib/client-logger";
+import { csrfHeader, mintCsrfToken } from "@/lib/mint-csrf-client";
 
 interface StudyBuddyPost {
   id: number;
@@ -899,6 +900,11 @@ export default function StudyBuddyPage() {
       const messageContent = newMessage.trim();
       const now = new Date().toISOString();
 
+      // `messages` listesi bu sohbete ait DB durumunu yansıtıyor; insert'ten
+      // önce 0 ise bu kullanıcının attığı ilk mesajdır → karşı tarafa e-posta
+      // tetiklemek için sunucu uç noktasını çağıracağız.
+      const isFirstMessageInChat = messages.length === 0;
+
       // Send the message
       const { error: messageError } = await supabase
         .from("study_buddy_messages")
@@ -913,6 +919,40 @@ export default function StudyBuddyPage() {
         showWarning(warningMessages.ERROR_SENDING_MESSAGE);
             return;
           }
+
+      if (isFirstMessageInChat) {
+        // Fire-and-forget — bildirim best-effort. İdempotency sunucu
+        // tarafında `chat_first_message_notifications.chat_id` PK ile
+        // garanti altında, istemci tarafta ek koruma gerekmiyor.
+        void (async () => {
+          try {
+            const token = await mintCsrfToken();
+            if (!token) return;
+            await fetch(
+              `/api/study-buddy/chats/${selectedChat.id}/notify-first`,
+              {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                  "Content-Type": "application/json",
+                  ...csrfHeader(token),
+                },
+                body: JSON.stringify({
+                  preview: messageContent.slice(0, 280),
+                }),
+              },
+            );
+          } catch (notifyError) {
+            clientLogger.warn("first-message notify failed (non-blocking)", {
+              location: "study-buddy/handleSendMessage/notify-first",
+              error:
+                notifyError instanceof Error
+                  ? { name: notifyError.name, message: notifyError.message }
+                  : { raw: String(notifyError) },
+            });
+          }
+        })();
+      }
 
       // Update chat's last message
       const { error: chatError } = await supabase
@@ -957,7 +997,7 @@ export default function StudyBuddyPage() {
       clientLogger.error({ message: "handleSendMessage exception", error, location: "study-buddy/handleSendMessage" });
       showWarning(warningMessages.ERROR_SENDING_MESSAGE);
     }
-  }, [currentUser, selectedChat, newMessage, validateMessageSpam, showWarning, supabase, loadMessages, userStreak, userAchievements]);
+  }, [currentUser, selectedChat, newMessage, validateMessageSpam, showWarning, supabase, loadMessages, userStreak, userAchievements, messages.length]);
 
   const handleDeletePost = useCallback(async (postId: number) => {
     if (!currentUser) {

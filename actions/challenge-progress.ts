@@ -2,7 +2,17 @@
 
 import db from "@/db/drizzle";
 import { getUserProgress, checkSubscriptionStatus } from "@/db/queries";
-import { challengeOptions, challengeProgress, challenges, courses, lessons, units, schools, userProgress } from "@/db/schema";
+import {
+  challengeOptions,
+  challengeProgress,
+  challenges,
+  courses,
+  lessons,
+  lessonCompletionBonuses,
+  units,
+  schools,
+  userProgress,
+} from "@/db/schema";
 import { and, eq, sql } from "drizzle-orm";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { getServerUser } from "@/lib/auth";
@@ -517,22 +527,63 @@ export const reduceHearts = async (challengeId: number) => {
 };
 
 /**
- * Awards bonus points when a lesson is fully completed.
- * Returns the bonuses that were awarded so the client can display them.
+ * Ders tamamlandığında verilen bonusu hesaplar ve **bir kez** yazar.
+ *
+ * Güvenlik:
+ *   • `lessonId` istemciden gelir, ama bonus yalnızca **gerçekten** o derste
+ *     hem en az bir challenge tamamlanmış (`firstCompletedAt IS NOT NULL`)
+ *     hem de **tüm challenge'lar** tamamlanmışsa verilir.
+ *   • `wrongCount` istemciden alınmaz; `challenge_progress.incorrectCount`
+ *     toplamı üzerinden sunucuda hesaplanır.
+ *   • Idempotency: `lesson_completion_bonuses (user_id, lesson_id)` UNIQUE +
+ *     `INSERT … ON CONFLICT DO NOTHING RETURNING`. Aynı kullanıcı aynı dersi
+ *     ikinci kez bitirse de bonus tekrar verilmez. UI yine **kayıttaki**
+ *     değeri okur — geriye dönük tutarlılık.
+ *   • `pointsAdd` kovasıyla rate limit (`addPointsToUser` ile aynı kova
+ *     anahtarı): saniyede dolaşıma sokulabilecek toplam puan kotası tek
+ *     kova üzerinden yönetilir.
+ *
+ * Dönüş: UI'da gösterilen ödül kırılımı. Idempotent re-call durumunda
+ * `alreadyClaimed: true` ile birlikte **kayıttaki** bonus döner; mevcut
+ * UI tarafı bu durumda yine doğru toplamı görür ama puan tekrar artmaz.
  */
-export async function awardLessonCompletionBonus(
-  lessonId: number,
-  wrongCount: number
-) {
+export async function awardLessonCompletionBonus(lessonId: number) {
+  if (
+    typeof lessonId !== "number" ||
+    !Number.isFinite(lessonId) ||
+    !Number.isInteger(lessonId) ||
+    lessonId <= 0
+  ) {
+    return { completionBonus: 0, perfectBonus: 0, alreadyClaimed: false };
+  }
+
   const user = await getServerUser();
-  if (!user) return { completionBonus: 0, perfectBonus: 0 };
+  if (!user) return { completionBonus: 0, perfectBonus: 0, alreadyClaimed: false };
   const userId = user.id;
 
-  const progress = await db.query.userProgress.findFirst({
-    where: eq(userProgress.userId, userId),
-    columns: { points: true, schoolId: true },
+  const rl = await checkRateLimit({
+    key: `points-add:user:${userId}`,
+    ...RATE_LIMITS.pointsAdd,
   });
-  if (!progress) return { completionBonus: 0, perfectBonus: 0 };
+  if (!rl.allowed) {
+    return { completionBonus: 0, perfectBonus: 0, alreadyClaimed: false };
+  }
+
+  // Idempotency: bonus daha önce verilmişse aynı değerleri döndür.
+  const prior = await db.query.lessonCompletionBonuses.findFirst({
+    where: and(
+      eq(lessonCompletionBonuses.userId, userId),
+      eq(lessonCompletionBonuses.lessonId, lessonId),
+    ),
+    columns: { completionBonus: true, perfectBonus: true },
+  });
+  if (prior) {
+    return {
+      completionBonus: prior.completionBonus,
+      perfectBonus: prior.perfectBonus,
+      alreadyClaimed: true,
+    };
+  }
 
   const lesson = await db.query.lessons.findFirst({
     where: eq(lessons.id, lessonId),
@@ -541,38 +592,103 @@ export async function awardLessonCompletionBonus(
       challenges: { columns: { id: true } },
     },
   });
-  if (!lesson || lesson.challenges.length === 0)
-    return { completionBonus: 0, perfectBonus: 0 };
+  if (!lesson || lesson.challenges.length === 0) {
+    return { completionBonus: 0, perfectBonus: 0, alreadyClaimed: false };
+  }
 
+  const challengeIds = lesson.challenges.map((c) => c.id);
+  const expectedCount = challengeIds.length;
+
+  // Server-side gerçek istatistik: tamamlanma sayısı + yanlış toplamı.
+  const [stats] = await db
+    .select({
+      completedCount: sql<number>`COUNT(*) FILTER (WHERE ${challengeProgress.completed} = true)::int`,
+      wrongTotal: sql<number>`COALESCE(SUM(${challengeProgress.incorrectCount}), 0)::int`,
+    })
+    .from(challengeProgress)
+    .where(
+      and(
+        eq(challengeProgress.userId, userId),
+        sql`${challengeProgress.challengeId} = ANY(${challengeIds})`,
+      ),
+    );
+
+  const completedCount = Number(stats?.completedCount ?? 0);
+  if (completedCount < expectedCount) {
+    // Henüz bitmemiş. Sahte istek veya yarış: bonus yok, kayıt da yok.
+    return { completionBonus: 0, perfectBonus: 0, alreadyClaimed: false };
+  }
+
+  const serverWrongCount = Number(stats?.wrongTotal ?? 0);
   const completionBonus = SCORING_SYSTEM.LESSON_COMPLETION_BONUS;
-  const perfectBonus = wrongCount === 0 ? SCORING_SYSTEM.PERFECT_LESSON_BONUS : 0;
+  const perfectBonus = serverWrongCount === 0 ? SCORING_SYSTEM.PERFECT_LESSON_BONUS : 0;
   const baseTotal = completionBonus + perfectBonus;
   const { total: totalBonus } = applyTimeBonus(baseTotal);
 
-  if (totalBonus > 0) {
-    const schoolId = progress.schoolId;
-    // Atomic user + school increment. Previous implementation was a
-    // read-then-write on `userProgress.points` with no school update at
-    // all, so the global leaderboard drifted after every perfect lesson.
-    await db.transaction(async (tx) => {
-      await tx
-        .update(userProgress)
-        .set(pointsAndDailyDeltaSQL(totalBonus))
-        .where(eq(userProgress.userId, userId));
-
-      if (schoolId) {
-        await tx
-          .update(schools)
-          .set({ totalPoints: sql`${schools.totalPoints} + ${totalBonus}` })
-          .where(eq(schools.id, schoolId));
-      }
-    });
-
-    await updateDailyStreak();
-    await updateChallengeProgress(userId, "lesson_completed_perfect", { wrongCount });
-    logActivity({ userId, eventType: "lesson_complete", metadata: { lessonId, wrongCount, bonus: totalBonus } });
-    revalidatePath("/learn");
+  if (totalBonus <= 0) {
+    return { completionBonus, perfectBonus, alreadyClaimed: false };
   }
 
-  return { completionBonus, perfectBonus };
+  const progress = await db.query.userProgress.findFirst({
+    where: eq(userProgress.userId, userId),
+    columns: { schoolId: true },
+  });
+  const schoolId = progress?.schoolId ?? null;
+
+  // Atomik blok:
+  //   1. Idempotent kayıt: INSERT ... ON CONFLICT DO NOTHING RETURNING.
+  //      0 satır dönerse bu request bonus vermez.
+  //   2. Yalnızca yeni kayıt oluşunca user_progress + schools güncellenir.
+  let inserted = false;
+  await db.transaction(async (tx) => {
+    const ins = await tx
+      .insert(lessonCompletionBonuses)
+      .values({
+        userId,
+        lessonId,
+        wrongCount: serverWrongCount,
+        completionBonus,
+        perfectBonus,
+        totalAwarded: totalBonus,
+      })
+      .onConflictDoNothing({
+        target: [lessonCompletionBonuses.userId, lessonCompletionBonuses.lessonId],
+      })
+      .returning({ id: lessonCompletionBonuses.id });
+
+    if (ins.length === 0) return;
+    inserted = true;
+
+    await tx
+      .update(userProgress)
+      .set(pointsAndDailyDeltaSQL(totalBonus))
+      .where(eq(userProgress.userId, userId));
+
+    if (schoolId) {
+      await tx
+        .update(schools)
+        .set({ totalPoints: sql`${schools.totalPoints} + ${totalBonus}` })
+        .where(eq(schools.id, schoolId));
+    }
+  });
+
+  if (!inserted) {
+    return { completionBonus, perfectBonus, alreadyClaimed: true };
+  }
+
+  await updateDailyStreak();
+  if (serverWrongCount === 0) {
+    await updateChallengeProgress(userId, "lesson_completed_perfect", {
+      wrongCount: serverWrongCount,
+    });
+  }
+  logActivity({
+    userId,
+    eventType: "lesson_complete",
+    metadata: { lessonId, wrongCount: serverWrongCount, bonus: totalBonus },
+  });
+  revalidatePath("/learn");
+  bustPointsCaches(userId, Boolean(schoolId));
+
+  return { completionBonus, perfectBonus, alreadyClaimed: false };
 }

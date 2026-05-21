@@ -176,17 +176,25 @@ export const Quiz = ({
       finishControls.play();
 
       if (!isPracticeMode) {
-        awardLessonCompletionBonus(lessonId, wrongCount).then((bonuses) => {
-          setLessonBonuses(bonuses);
+        awardLessonCompletionBonus(lessonId).then((bonuses) => {
+          setLessonBonuses({
+            completionBonus: bonuses.completionBonus,
+            perfectBonus: bonuses.perfectBonus,
+          });
           const bonusTotal = bonuses.completionBonus + bonuses.perfectBonus;
-          setLessonPoints((prev) => prev + bonusTotal);
-          if (bonusTotal > 0) {
-            emitProgressUpdated({ source: "lesson-complete", points: bonusTotal });
+          // Tekrar girişlerde (alreadyClaimed) puan zaten verildiğinden
+          // istemci sayacı tekrar artırmaz; UI gösterimde bonus yine
+          // görünür ki ders tamamlama duygusu korunsun.
+          if (!bonuses.alreadyClaimed) {
+            setLessonPoints((prev) => prev + bonusTotal);
+            if (bonusTotal > 0) {
+              emitProgressUpdated({ source: "lesson-complete", points: bonusTotal });
+            }
           }
         });
       }
     }
-  }, [lessonFinished, finishControls, lessonId, wrongCount, isPracticeMode]);
+  }, [lessonFinished, finishControls, lessonId, isPracticeMode]);
 
   // *******************************
   // 5) Render finished lesson screen

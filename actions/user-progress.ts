@@ -3,14 +3,13 @@
 
 import { POINTS_TO_REFILL, SCORING_SYSTEM } from '@/constants';
 import db from '@/db/drizzle';
-import { getCourseById, getUserProgress, checkSubscriptionStatus } from '@/db/queries';
-import { challengeProgress, challenges, schools, userProgress, users } from '@/db/schema';
+import { getCourseById, getUserProgress } from '@/db/queries';
+import { schools, userProgress, users } from '@/db/schema';
 import { and, eq, sql } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { getServerUser } from '@/lib/auth';
 import { canChangeSchoolSelection, nextLockExpiresAt } from '@/lib/school-grade-lock';
-import { updateDailyStreak } from "./daily-streak";
 import { logActivity } from '@/lib/activity-logger';
 import { getRequestLogger, logger } from '@/lib/logger';
 
@@ -192,111 +191,53 @@ export const upsertUserProgress = async (courseId: number) => {
   redirect('/learn');
 };
 
-/** @deprecated Ders sırasında kullanmayın; kavram ustalığı ve challenge_progress için `challenge-progress.reduceHearts` kullanın. */
-export const reduceHearts = async (challengeId: number) => {
+/**
+ * Canları doldur — atomik. Önceki sürüm `findFirst` ile puan okuyor sonra JS
+ * aritmetiği ile yazıyordu; iki paralel istek aynı bakiyeyi görebiliyor ve
+ * kullanıcı 100 puan ödeyip 2 refill alabiliyordu. Yeni sürümde tek bir
+ * `UPDATE … WHERE points >= cost AND hearts < 5 RETURNING` — koşul
+ * sağlanmazsa 0 satır döner, çift harcama yok.
+ */
+export const refillHearts = async () => {
   const user = await getServerUser();
   if (!user) throw new Error('Giriş yapmanız gerekiyor.');
   const userId = user.id;
-  const currentUserProgress = await getUserProgress();
-  if (!currentUserProgress) throw new Error('İlerleme bilgisi bulunamadı.');
-  const challenge = await db.query.challenges.findFirst({ where: eq(challenges.id, challengeId) });
-  if (!challenge) throw new Error('Zorluk bulunamadı.');
-  const lessonId = challenge.lessonId;
-  const existingCP = await db.query.challengeProgress.findFirst({
-    where: and(eq(challengeProgress.userId, userId), eq(challengeProgress.challengeId, challengeId)),
-  });
-  const isPractice = !!existingCP;
-  if (isPractice) return { error: 'practice' };
-  
-  // Check if user has infinite hearts subscription
-  const hasInfiniteHearts = await checkSubscriptionStatus(userId);
-  
-  // If user has infinite hearts, don't reduce hearts or points
-  if (hasInfiniteHearts) {
-    return; // No error, just continue without reducing hearts
-  }
-  
-  if (currentUserProgress.hearts === 0) return { error: 'hearts' };
 
-  const daily = currentUserProgress.dailyPointsEarned ?? 0;
-  await db
-    .update(userProgress)
-    .set({
-      hearts: Math.max(currentUserProgress.hearts - 1, 0),
-      points: currentUserProgress.points - 2,
-      dailyPointsEarned: Math.max(0, daily - 2),
-    })
-    .where(eq(userProgress.userId, userId));
-
-  revalidatePath('/learn');
-  revalidatePath(`/lesson/${lessonId}`);
-};
-
-export const refillHearts = async () => {
-  const currentUserProgress = await getUserProgress();
-  if (!currentUserProgress) throw new Error('İlerleme bilgisi bulunamadı.');
-  if (currentUserProgress.hearts === 5) throw new Error('Canların zaten tam dolu.');
-  if (currentUserProgress.points < POINTS_TO_REFILL) throw new Error('Yeterli puanınız yok.');
-
-  await db
+  const cost = POINTS_TO_REFILL;
+  const updated = await db
     .update(userProgress)
     .set({
       hearts: 5,
-      points: currentUserProgress.points - POINTS_TO_REFILL,
-      previousTotalPoints: (currentUserProgress.previousTotalPoints ?? 0) - POINTS_TO_REFILL,
+      points: sql`${userProgress.points} - ${cost}`,
+      previousTotalPoints: sql`COALESCE(${userProgress.previousTotalPoints}, 0) - ${cost}`,
       lastHeartRegenAt: new Date(),
     })
-    .where(eq(userProgress.userId, currentUserProgress.userId));
+    .where(
+      and(
+        eq(userProgress.userId, userId),
+        sql`${userProgress.points} >= ${cost}`,
+        sql`${userProgress.hearts} < 5`,
+      ),
+    )
+    .returning({ points: userProgress.points, hearts: userProgress.hearts });
 
-  logActivity({ userId: currentUserProgress.userId, eventType: "shop_purchase", page: "/shop", metadata: { item: "hearts_refill", cost: POINTS_TO_REFILL } });
+  if (updated.length === 0) {
+    // Hangi koşulun düştüğünü ayrıştırmak için tek bir oku — hata mesajı UX.
+    const cur = await db.query.userProgress.findFirst({
+      where: eq(userProgress.userId, userId),
+      columns: { hearts: true, points: true },
+    });
+    if (!cur) throw new Error('İlerleme bilgisi bulunamadı.');
+    if (cur.hearts >= 5) throw new Error('Canların zaten tam dolu.');
+    if (cur.points < cost) throw new Error('Yeterli puanınız yok.');
+    throw new Error('Canlar şu an doldurulamadı. Lütfen tekrar deneyin.');
+  }
+
+  logActivity({ userId, eventType: "shop_purchase", page: "/shop", metadata: { item: "hearts_refill", cost } });
 
   revalidatePath('/shop');
   revalidatePath('/learn');
 };
-
-/**
- * Updates the user's points and checks streak.
- */
-export async function addUserPoints(points: number) {
-  try {
-    if (points <= 0) return null;
-
-    const user = await getServerUser();
-    if (!user) return null;
-    const userId = user.id;
-
-    const progress = await db.query.userProgress.findFirst({
-      where: eq(userProgress.userId, userId),
-    });
-    if (!progress) return null;
-
-    const newPoints = progress.points + points;
-    const newDaily = (progress.dailyPointsEarned ?? 0) + points;
-    await db
-      .update(userProgress)
-      .set({
-        points: newPoints,
-        dailyPointsEarned: Math.max(0, newDaily),
-      })
-      .where(eq(userProgress.userId, userId));
-
-    await updateDailyStreak();
-
-    const updatedProgress = await db.query.userProgress.findFirst({
-      where: eq(userProgress.userId, userId),
-    });
-    return updatedProgress;
-  } catch (error) {
-    logger.error({
-      message: 'addUserPoints failed',
-      error,
-      source: 'server-action',
-      location: 'user-progress/addUserPoints',
-      fields: { points },
-    });
-    return null;
-  }
-}
 
 /**
  * Updates a school's total points when a user earns points
@@ -347,56 +288,42 @@ export async function resetDailyStreaks() {
   }
 }
 
-export const reduceHeartsForSubScribe = async () => {
-  const user = await getServerUser();
-  if (!user) throw new Error('Giriş yapmanız gerekiyor.');
-  
-  const currentUserProgress = await getUserProgress();
-  if (!currentUserProgress) throw new Error('İlerleme bilgisi bulunamadı.');
-  
-  // Check if user has infinite hearts subscription
-  const hasInfiniteHearts = await checkSubscriptionStatus(user.id);
-  
-  // If user has infinite hearts, don't reduce hearts
-  if (hasInfiniteHearts) {
-    return { success: true, hasInfiniteHearts: true };
-  }
-  
-  if (currentUserProgress.hearts === 0) {
-    return { error: 'hearts', hearts: 0 };
-  }
-
-  const newHearts = Math.max(currentUserProgress.hearts - 1, 0);
-  
-  await db
-    .update(userProgress)
-    .set({
-      hearts: newHearts,
-    })
-    .where(eq(userProgress.userId, user.id));
-
-  revalidatePath('/learn');
-  
-  return { success: true, hearts: newHearts, hasInfiniteHearts: false };
-};
-
+/**
+ * Streak freeze satın al — atomik. Aynı çift-harcama riski (TOCTOU) `refillHearts`
+ * ile aynı modelde kapatılır: tek bir `UPDATE … WHERE points >= cost RETURNING`.
+ */
 export async function purchaseStreakFreeze() {
-  const progress = await getUserProgress();
-  if (!progress) return { error: "Kullanıcı bulunamadı" };
+  const user = await getServerUser();
+  if (!user) return { error: "Giriş yapmanız gerekiyor." };
+  const userId = user.id;
 
   const cost = SCORING_SYSTEM.STREAK_FREEZE_COST;
-  if (progress.points < cost) return { error: "Yeterli puanın yok" };
-
-  await db
+  const updated = await db
     .update(userProgress)
     .set({
-      points: progress.points - cost,
-      previousTotalPoints: (progress.previousTotalPoints ?? 0) - cost,
-      streakFreezeCount: (progress.streakFreezeCount ?? 0) + 1,
+      points: sql`${userProgress.points} - ${cost}`,
+      previousTotalPoints: sql`COALESCE(${userProgress.previousTotalPoints}, 0) - ${cost}`,
+      streakFreezeCount: sql`COALESCE(${userProgress.streakFreezeCount}, 0) + 1`,
     })
-    .where(eq(userProgress.userId, progress.userId));
+    .where(
+      and(
+        eq(userProgress.userId, userId),
+        sql`${userProgress.points} >= ${cost}`,
+      ),
+    )
+    .returning({ id: userProgress.userId });
 
-  logActivity({ userId: progress.userId, eventType: "shop_purchase", page: "/shop", metadata: { item: "streak_freeze", cost } });
+  if (updated.length === 0) {
+    const cur = await db.query.userProgress.findFirst({
+      where: eq(userProgress.userId, userId),
+      columns: { points: true },
+    });
+    if (!cur) return { error: "Kullanıcı bulunamadı" };
+    if (cur.points < cost) return { error: "Yeterli puanın yok" };
+    return { error: "Satın alma şu an tamamlanamadı. Lütfen tekrar deneyin." };
+  }
+
+  logActivity({ userId, eventType: "shop_purchase", page: "/shop", metadata: { item: "streak_freeze", cost } });
 
   revalidatePath('/shop');
   revalidatePath('/learn');

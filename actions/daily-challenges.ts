@@ -2,7 +2,7 @@
 
 import db from "@/db/drizzle";
 import { userDailyChallenges, userProgress } from "@/db/schema";
-import { eq, and } from "drizzle-orm";
+import { eq, and, sql } from "drizzle-orm";
 import { getServerUser } from "@/lib/auth";
 import { DAILY_CHALLENGES, type DailyChallengeType } from "@/constants";
 import { revalidatePath } from "next/cache";
@@ -227,6 +227,21 @@ export async function updateChallengeProgress(
   }
 }
 
+/**
+ * Günlük görev ödülünü talep eder.
+ *
+ * Yarış koruması: önceki sürüm `findFirst` → JS koşulu → UPDATE pattern'ı
+ * iki paralel çağrıda ödülün iki kez yazılmasına izin veriyordu. Yeni hâli
+ * **atomic compare-and-swap**:
+ *
+ *   UPDATE … SET rewardClaimed = true
+ *   WHERE id = ? AND completed = true AND rewardClaimed = false
+ *   RETURNING bonusPoints
+ *
+ * Aynı anda gelen iki istekten yalnızca biri satırı kazanır. Diğeri 0 satır
+ * görür ve ödül vermez. Puan ekleme yalnızca CAS başarılıysa SQL aritmetiği
+ * ile yapılır → TOCTOU yok.
+ */
 export async function claimChallengeReward() {
   try {
     const user = await getServerUser();
@@ -234,43 +249,41 @@ export async function claimChallengeReward() {
 
     const dateStr = getTurkeyDateString();
 
-    const row = await db.query.userDailyChallenges.findFirst({
-      where: and(
-        eq(userDailyChallenges.userId, user.id),
-        eq(userDailyChallenges.date, dateStr),
-      ),
-    });
+    const claimed = await db
+      .update(userDailyChallenges)
+      .set({ rewardClaimed: true })
+      .where(
+        and(
+          eq(userDailyChallenges.userId, user.id),
+          eq(userDailyChallenges.date, dateStr),
+          eq(userDailyChallenges.completed, true),
+          eq(userDailyChallenges.rewardClaimed, false),
+        ),
+      )
+      .returning({ bonusPoints: userDailyChallenges.bonusPoints });
 
-    if (!row || !row.completed || row.rewardClaimed) {
+    if (claimed.length === 0) {
       return { success: false };
     }
 
-    const progress = await db.query.userProgress.findFirst({
-      where: eq(userProgress.userId, user.id),
-      columns: { points: true, dailyPointsEarned: true },
-    });
+    const bonus = Math.max(0, Number(claimed[0].bonusPoints ?? 0));
+    if (bonus <= 0) {
+      return { success: true, bonusPoints: 0 };
+    }
 
-    if (!progress) return { success: false };
-
-    const bonus = row.bonusPoints;
     await db
       .update(userProgress)
       .set({
-        points: progress.points + bonus,
-        dailyPointsEarned: (progress.dailyPointsEarned ?? 0) + bonus,
+        points: sql`${userProgress.points} + ${bonus}`,
+        dailyPointsEarned: sql`GREATEST(0, COALESCE(${userProgress.dailyPointsEarned}, 0) + ${bonus})`,
       })
       .where(eq(userProgress.userId, user.id));
-
-    await db
-      .update(userDailyChallenges)
-      .set({ rewardClaimed: true })
-      .where(eq(userDailyChallenges.id, row.id));
 
     const { updateDailyStreak } = await import("./daily-streak");
     await updateDailyStreak();
 
     revalidatePath("/learn");
-    return { success: true, bonusPoints: row.bonusPoints };
+    return { success: true, bonusPoints: bonus };
   } catch (error) {
     log.error({
       message: "claimChallengeReward failed",

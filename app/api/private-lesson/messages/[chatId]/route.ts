@@ -23,7 +23,7 @@ import { asc, eq } from "drizzle-orm";
 import { sendMessageInUnlockedThread } from "@/db/queries/messages";
 import { verifyCsrf } from "@/lib/csrf";
 import { isTrustedApiOrigin } from "@/lib/same-origin-api";
-import { notifyPrivateLessonFirstMessageIfApplicable } from "@/lib/private-lesson-first-message-email";
+import { notifyFirstMessageIfApplicable } from "@/lib/first-message-email";
 import { logger } from "@/lib/logger";
 
 type RouteContext = { params: { chatId: string } };
@@ -184,7 +184,10 @@ export async function POST(
       const msg = result.message;
 
       if (result.isFirstMessageInChat) {
-        void notifyPrivateLessonFirstMessageIfApplicable({
+        // Best-effort: idempotency `chat_first_message_notifications` PK
+        // ile garanti — paralel istek veya retry'da bile yalnız bir e-posta
+        // gider. Hata kullanıcının mesaj göndermesini engellemesin.
+        void notifyFirstMessageIfApplicable({
           chatId,
           senderId: user.id,
           messagePreview: content,

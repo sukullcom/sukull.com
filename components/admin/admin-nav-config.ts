@@ -5,6 +5,7 @@ import {
   LayoutDashboard,
   Megaphone,
   School,
+  ShieldAlert,
   ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
@@ -47,6 +48,7 @@ export const ADMIN_NAV: AdminNavItem[] = [
     icon: AlertTriangle,
     badgeKey: "errors24h",
   },
+  { href: "/admin/anomalies", label: "Anomali İzleme", icon: ShieldAlert },
   { href: "/admin/audit", label: "Yönetici Günlüğü", icon: ShieldCheck },
 ];
 

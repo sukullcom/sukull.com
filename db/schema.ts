@@ -243,6 +243,35 @@ export const challengeProgressRelations = relations(challengeProgress, ({ one })
   }),
 }));
 
+/**
+ * Ders tamamlama bonusu için idempotency kaydı.
+ * `(userId, lessonId)` UNIQUE — aynı ders için bonus en çok bir kez verilir.
+ * `awardLessonCompletionBonus` `INSERT ... ON CONFLICT DO NOTHING RETURNING`
+ * ile yazar; 0 satır → bonus zaten verilmiş, idempotent çıkış.
+ */
+export const lessonCompletionBonuses = pgTable(
+  "lesson_completion_bonuses",
+  {
+    id: bigserial("id", { mode: "number" }).primaryKey(),
+    userId: text("user_id").notNull(),
+    lessonId: integer("lesson_id")
+      .references(() => lessons.id, { onDelete: "cascade" })
+      .notNull(),
+    wrongCount: integer("wrong_count").notNull().default(0),
+    completionBonus: integer("completion_bonus").notNull().default(0),
+    perfectBonus: integer("perfect_bonus").notNull().default(0),
+    totalAwarded: integer("total_awarded").notNull().default(0),
+    awardedAt: timestamp("awarded_at").notNull().defaultNow(),
+  },
+  (table) => ({
+    userLessonUniq: uniqueIndex("idx_lesson_completion_bonuses_user_lesson").on(
+      table.userId,
+      table.lessonId,
+    ),
+    userIdx: index("idx_lesson_completion_bonuses_user_id").on(table.userId),
+  }),
+);
+
 // Schools
 export const schoolTypeEnum = pgEnum("school_type", [
   "university",
@@ -519,6 +548,28 @@ export const studyBuddyPostsRelations = relations(studyBuddyPosts, ({ one }) => 
     references: [users.id],
   }),
 }));
+
+/**
+ * İlk mesaj e-posta bildirimi idempotency anahtarı.
+ * `chat_id` PRIMARY KEY → aynı sohbet için en çok bir kez e-posta gider.
+ * `notifyFirstMessageIfApplicable` `INSERT … ON CONFLICT DO NOTHING RETURNING`
+ * ile bu satırı yazar; 0 satır → e-posta daha önce yollanmış, no-op.
+ */
+export const chatFirstMessageNotifications = pgTable(
+  "chat_first_message_notifications",
+  {
+    chatId: integer("chat_id")
+      .primaryKey()
+      .references(() => studyBuddyChats.id, { onDelete: "cascade" }),
+    recipientId: text("recipient_id").notNull(),
+    senderId: text("sender_id").notNull(),
+    context: text("context").notNull().default("study-buddy"),
+    notifiedAt: timestamp("notified_at").notNull().defaultNow(),
+  },
+  (table) => ({
+    recipientIdx: index("idx_chat_first_msg_notif_recipient").on(table.recipientId),
+  }),
+);
 
 export const studyBuddyChatsRelations = relations(studyBuddyChats, ({ many }) => ({
   messages: many(studyBuddyMessages),
