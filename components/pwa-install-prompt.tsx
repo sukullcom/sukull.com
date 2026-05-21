@@ -8,9 +8,7 @@ import { Button } from "@/components/ui/button";
 import { BRAND_MASCOT_PATH } from "@/lib/brand-mascot";
 
 /**
- * BeforeInstallPromptEvent is not in the TS DOM lib. Declaring the narrow
- * shape we actually consume keeps the component typed without pulling a
- * third-party typings package.
+ * BeforeInstallPromptEvent is not in the TS DOM lib.
  */
 type BeforeInstallPromptEvent = Event & {
   prompt: () => Promise<void>;
@@ -18,11 +16,19 @@ type BeforeInstallPromptEvent = Event & {
 };
 
 const DISMISS_KEY = "sukull-pwa-install-dismissed-at";
-// Re-show the prompt 30 days after the user dismisses it. Installs are a
-// long-term gain, but nagging every session erodes trust.
+/** «Daha sonra» sonrası kendi banner'ımızı sakla; tarayıcı menüsü engellenmez. */
 const DISMISS_COOLDOWN_MS = 30 * 24 * 60 * 60 * 1000;
 
-function shouldShowAfterDismiss(): boolean {
+function isStandaloneMode(): boolean {
+  if (typeof window === "undefined") return false;
+  return (
+    window.matchMedia("(display-mode: standalone)").matches ||
+    (window.navigator as Navigator & { standalone?: boolean }).standalone === true
+  );
+}
+
+function shouldShowCustomBanner(): boolean {
+  if (isStandaloneMode()) return false;
   try {
     const raw = localStorage.getItem(DISMISS_KEY);
     if (!raw) return true;
@@ -34,36 +40,76 @@ function shouldShowAfterDismiss(): boolean {
   }
 }
 
+/**
+ * Tek global dinleyici — React mount'tan önce gelen `beforeinstallprompt` kaçmasın.
+ * `preventDefault` yalnızca kendi banner'ımızı göstereceğimizde çağrılır; «Daha sonra»
+ * (30 gün) süresince tarayıcının yerleşik yükle teklifi serbest kalır.
+ */
+let capturedDeferred: BeforeInstallPromptEvent | null = null;
+const readySubscribers = new Set<(event: BeforeInstallPromptEvent) => void>();
+let globalListenerAttached = false;
+
+function notifyReady(event: BeforeInstallPromptEvent) {
+  readySubscribers.forEach((cb) => cb(event));
+}
+
+function attachGlobalInstallListener() {
+  if (globalListenerAttached || typeof window === "undefined") return;
+  globalListenerAttached = true;
+
+  window.addEventListener("beforeinstallprompt", (event: Event) => {
+    if (!shouldShowCustomBanner()) return;
+    event.preventDefault();
+    const bip = event as BeforeInstallPromptEvent;
+    capturedDeferred = bip;
+    notifyReady(bip);
+  });
+
+  window.addEventListener("appinstalled", () => {
+    capturedDeferred = null;
+  });
+}
+
+attachGlobalInstallListener();
+
 export function PwaInstallPrompt() {
   const [deferred, setDeferred] = useState<BeforeInstallPromptEvent | null>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Don't offer install if already running in standalone mode.
-    const isStandalone =
-      window.matchMedia("(display-mode: standalone)").matches ||
-      (window.navigator as Navigator & { standalone?: boolean }).standalone === true;
-    if (isStandalone) return;
+    if (isStandaloneMode()) return;
 
-    const handler = (event: Event) => {
-      // Yalnızca kendi banner'ımızı göstereceksek preventDefault: aksi halde tarayıcının
-      // yerleşik «Uygulamayı yükle» davranışı da kaybolur (Daha sonra = 30 gün sessizlik).
-      if (!shouldShowAfterDismiss()) return;
-      event.preventDefault();
-      setDeferred(event as BeforeInstallPromptEvent);
+    const onReady = (event: BeforeInstallPromptEvent) => {
+      setDeferred(event);
       setVisible(true);
     };
 
-    window.addEventListener("beforeinstallprompt", handler);
-    return () => window.removeEventListener("beforeinstallprompt", handler);
+    readySubscribers.add(onReady);
+
+    if (capturedDeferred && shouldShowCustomBanner()) {
+      onReady(capturedDeferred);
+    }
+
+    const onInstalled = () => {
+      capturedDeferred = null;
+      setVisible(false);
+      setDeferred(null);
+    };
+    window.addEventListener("appinstalled", onInstalled);
+
+    return () => {
+      readySubscribers.delete(onReady);
+      window.removeEventListener("appinstalled", onInstalled);
+    };
   }, []);
 
   const dismiss = () => {
     try {
       localStorage.setItem(DISMISS_KEY, String(Date.now()));
     } catch {
-      /* ignore private-mode storage errors */
+      /* private mode */
     }
+    capturedDeferred = null;
     setVisible(false);
     setDeferred(null);
   };
@@ -74,6 +120,7 @@ export function PwaInstallPrompt() {
       await deferred.prompt();
       const { outcome } = await deferred.userChoice;
       if (outcome === "accepted") {
+        capturedDeferred = null;
         setVisible(false);
         setDeferred(null);
       } else {
