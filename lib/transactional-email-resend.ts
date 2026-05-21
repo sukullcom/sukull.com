@@ -1,4 +1,5 @@
 import { logger } from "@/lib/logger";
+import { resolveSenderAddress } from "@/lib/email-sender";
 
 type SendEmailInput = {
   to: string;
@@ -13,7 +14,9 @@ type SendEmailInput = {
  */
 export async function sendEmailViaResend(input: SendEmailInput): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY?.trim();
-  const from = process.env.RESEND_FROM?.trim();
+  // "Sukull <…>" biçimini garantiliyoruz — kullanıcı RESEND_FROM'u sadece
+  // e-posta olarak set etse de istemci "Sukull" görsün diye.
+  const from = resolveSenderAddress(process.env.RESEND_FROM);
   if (!apiKey || !from) {
     // Bu "yapılandırma eksik" durumu üretimde bildirim sessizliğinin en
     // sık nedeni — debug yerine `error` ile `error_log`'a yazıyoruz ki

@@ -25,6 +25,7 @@ import "server-only";
 import nodemailer, { type Transporter } from "nodemailer";
 
 import { logger } from "@/lib/logger";
+import { resolveSenderAddress } from "@/lib/email-sender";
 
 type SendEmailInput = {
   to: string;
@@ -88,7 +89,10 @@ export function isSmtpConfigured(): boolean {
 export async function sendEmailViaSmtp(
   input: SendEmailInput,
 ): Promise<boolean> {
-  const from = process.env.SMTP_FROM?.trim();
+  // SMTP_FROM "iletisim@sukull.com" gibi sade e-posta da olabilir; istemci
+  // tarafında "iletisim" olarak okunmasın diye `resolveSenderAddress` ile
+  // her zaman `Sukull <…>` biçimine getiriyoruz.
+  const from = resolveSenderAddress(process.env.SMTP_FROM);
   const transport = getTransport();
   if (!transport || !from) {
     logger.error({
