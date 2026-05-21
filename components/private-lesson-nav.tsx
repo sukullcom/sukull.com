@@ -83,6 +83,7 @@ export function PrivateLessonNav({
             <Link
               key={item.path}
               href={item.path}
+              prefetch={false}
               className={`flex max-md:flex-none max-md:shrink-0 max-md:snap-start max-md:whitespace-nowrap md:flex-1 md:min-w-0 md:whitespace-normal items-center justify-center gap-1.5 rounded-xl py-2.5 px-2.5 sm:px-3 text-xs sm:text-sm transition-all md:px-2 ${
                 active
                   ? "bg-muted text-foreground font-bold"

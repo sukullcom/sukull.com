@@ -258,12 +258,12 @@ export default function GiveLessonPage() {
               </p>
               <div className="flex flex-col sm:flex-row gap-2 justify-center">
                 <Button variant="secondary" asChild>
-                  <Link href="/private-lesson/teacher-dashboard/settings">
+                  <Link prefetch={false} href="/private-lesson/teacher-dashboard/settings">
                     Profilini güncelle
                   </Link>
                 </Button>
                 <Button variant="primary" asChild>
-                  <Link href="/private-lesson/teacher-dashboard">
+                  <Link prefetch={false} href="/private-lesson/teacher-dashboard">
                     Eğitmen paneline git
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Link>

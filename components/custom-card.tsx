@@ -48,7 +48,7 @@ const CustomCard: React.FC<CardProps> = ({
         ) : null}
         <h3 className="text-xl font-semibold text-center mb-4">{title}</h3>
         <div className="mt-auto w-full">
-          <Link href={disabled ? "#" : href} className="w-full block">
+          <Link prefetch={false} href={disabled ? "#" : href} className="w-full block">
             <Button 
               variant={variant}
               className="w-full whitespace-pre-line"

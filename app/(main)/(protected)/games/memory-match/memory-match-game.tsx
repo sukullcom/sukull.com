@@ -325,7 +325,7 @@ export default function MemoryMatchGame() {
           >
             Tekrar Oyna
           </Button>
-          <Link href="/games" className="flex-1">
+          <Link prefetch={false} href="/games" className="flex-1">
             <Button variant="outline" className="w-full py-5">
               Oyunlara Dön
             </Button>

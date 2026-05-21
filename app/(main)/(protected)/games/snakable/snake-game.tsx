@@ -1692,7 +1692,7 @@ const SnakeGame = () => {
                 <Button variant="primary" onClick={playAgain}>
                   Tekrar Oyna
                 </Button>
-                <Link href="/games">
+                <Link prefetch={false} href="/games">
                   <Button variant="outline">Oyunlara Dön</Button>
                 </Link>
               </div>

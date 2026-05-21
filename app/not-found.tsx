@@ -36,10 +36,14 @@ export default function NotFound() {
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Button asChild variant="secondary" size="lg">
-            <Link href="/learn">Derslere dön</Link>
+            <Link prefetch={false} href="/learn">
+              Derslere dön
+            </Link>
           </Button>
           <Button asChild variant="primaryOutline" size="lg">
-            <Link href="/">Ana sayfa</Link>
+            <Link prefetch={false} href="/">
+              Ana sayfa
+            </Link>
           </Button>
         </div>
       </div>

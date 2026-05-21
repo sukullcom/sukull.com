@@ -435,10 +435,10 @@ export async function middleware(req: NextRequest) {
 
   // --- Hot-path cache lookup -------------------------------------------------
   // If we've successfully verified this exact auth cookie within the cache TTL
-  // (default 60 s), trust the cached user id and skip the `getUser()` network
+  // (default 120 s), trust the cached user id and skip the `getUser()` network
   // call entirely. On sign-out / refresh the cookie value changes so the key
   // changes, which means this cache is self-invalidating. See
-  // `session-cache.ts` for the correctness argument.
+  // `session-cache.ts` for the correctness argument (TTL 120s).
   const sessionCacheKey = deriveSessionCacheKey(authCookies);
   const cachedSession = sessionCacheKey ? getCachedSession(sessionCacheKey) : null;
 
@@ -594,12 +594,16 @@ const LOGGED_PATH_PREFIXES: readonly string[] = ['/learn'] as const;
 export const config = {
   matcher: [
     /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * Feel free to modify this pattern to include more paths.
+     * Edge maliyeti: matcher dışı path'lerde middleware hiç çalışmaz.
+     *
+     * Hariç tutulanlar:
+     *  - _next/static, _next/image, webpack-hmr (dev)
+     *  - Statik dosya uzantıları + /icons/, /heads/ maskotları
+     *  - favicon, manifest, robots, sitemap, /icon, /apple-icon
+     *
+     * NOT: `/_next/data` (RSC flight) dahil — korumalı sayfalarda oturum
+     * kontrolü için middleware gerekir.
      */
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+    "/((?!_next/static|_next/image|_next/webpack-hmr|favicon\\.ico|manifest\\.webmanifest|robots\\.txt|sitemap\\.xml|icon$|apple-icon$|icons/|heads/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|webmanifest)$).*)",
   ],
 }

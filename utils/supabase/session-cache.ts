@@ -13,7 +13,7 @@
  *
  * Caches the `{ userId }` result of a successful `getUser()` call, keyed by
  * the exact value of the Supabase auth cookie(s) the browser sent, for a
- * short (default 60 s) TTL.
+ * short (default 120 s) TTL.
  *
  * ## Why this is safe
  *
@@ -49,7 +49,8 @@ type SessionCacheEntry = {
   tokenExpiresAt?: number;
 };
 
-const DEFAULT_TTL_MS = 60_000;
+/** Edge `getUser()` çağrılarını seyrekleştirir; 120s güvenli (cookie-key cache). */
+const DEFAULT_TTL_MS = 120_000;
 const MAX_ENTRIES = 5_000;
 
 /**

@@ -39,6 +39,7 @@ export function LegalPageShell({
   return (
     <article className="mx-auto w-full max-w-3xl px-4 py-10 sm:py-14">
       <Link
+        prefetch={false}
         href="/yasal"
         className="mb-6 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
       >
@@ -71,7 +72,7 @@ export function LegalPageShell({
       <footer className="mt-12 border-t border-border pt-6 text-xs text-muted-foreground">
         Bu belge bilgilendirme amaçlıdır. Hukuki uyuşmazlık hâlinde tebligat
         ve yetkili merciler hakkında detaylar için{" "}
-        <Link href="/yasal/kullanim-sartlari" className="underline hover:text-foreground">
+        <Link prefetch={false} href="/yasal/kullanim-sartlari" className="underline hover:text-foreground">
           Kullanım Şartları
         </Link>{" "}
         belgesine bakınız.
