@@ -18,17 +18,19 @@ export async function sendEmailViaResend(input: SendEmailInput): Promise<boolean
   // e-posta olarak set etse de istemci "Sukull" görsün diye.
   const from = resolveSenderAddress(process.env.RESEND_FROM);
   if (!apiKey || !from) {
-    // Bu "yapılandırma eksik" durumu üretimde bildirim sessizliğinin en
-    // sık nedeni — debug yerine `error` ile `error_log`'a yazıyoruz ki
-    // admin /admin/notifications panelinde 1 saniyede görsün.
-    logger.error({
-      message: "Resend skipped: RESEND_API_KEY or RESEND_FROM unset",
-      location: "transactional-email-resend/sendEmailViaResend",
-      fields: {
+    // Yapılandırma eksikliği beklenen bir durumdur (SMTP aktifse veya
+    // ortam henüz set edilmediyse). Admin diagnostics sayfası bu bilgiyi
+    // canlı olarak zaten gösteriyor; `error_log`'u her gönderim
+    // denemesinde aynı satırla şişirmemek için `warn`'da bırakıyoruz —
+    // stdout'a düşer, Vercel log drain'inde görünür, DB'ye yazılmaz.
+    logger.warn(
+      "Resend skipped: RESEND_API_KEY or RESEND_FROM unset",
+      {
+        location: "transactional-email-resend/sendEmailViaResend",
         hasApiKey: Boolean(apiKey),
         hasFrom: Boolean(from),
       },
-    });
+    );
     return false;
   }
 

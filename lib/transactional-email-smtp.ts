@@ -95,16 +95,19 @@ export async function sendEmailViaSmtp(
   const from = resolveSenderAddress(process.env.SMTP_FROM);
   const transport = getTransport();
   if (!transport || !from) {
-    logger.error({
-      message: "SMTP skipped: SMTP_HOST/USER/PASS/FROM yapılandırması eksik",
-      location: "transactional-email-smtp/sendEmailViaSmtp",
-      fields: {
+    // Yapılandırma eksikliği beklenen bir durumdur (Resend aktifse veya
+    // ortam henüz set edilmediyse). `error_log`'u şişirmemek için `warn`;
+    // admin /admin/notifications canlı durumu gösteriyor.
+    logger.warn(
+      "SMTP skipped: SMTP_HOST/USER/PASS/FROM yapılandırması eksik",
+      {
+        location: "transactional-email-smtp/sendEmailViaSmtp",
         hasHost: Boolean(process.env.SMTP_HOST?.trim()),
         hasUser: Boolean(process.env.SMTP_USER?.trim()),
         hasPass: Boolean(process.env.SMTP_PASS?.trim()),
         hasFrom: Boolean(from),
       },
-    });
+    );
     return false;
   }
 

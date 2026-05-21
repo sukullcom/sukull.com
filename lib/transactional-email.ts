@@ -60,6 +60,10 @@ export async function sendEmail(input: SendEmailInput): Promise<boolean> {
     case "resend":
       return sendEmailViaResend(input);
     default:
+      // Sağlayıcı tamamen yoksa bu **gerçek** bir hata — DB'ye yazılır
+      // ki admin panelinde de görünür olsun. Burada coalesce zaten 60sn
+      // pencerede tek satıra düşürür; SMTP veya Resend "skipped" warnları
+      // ise stdout'ta kalır.
       logger.error({
         message:
           "Transactional e-posta gönderilemedi: hiçbir sağlayıcı yapılandırılmamış (SMTP_* veya RESEND_* env'leri eksik)",

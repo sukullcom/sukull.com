@@ -10,6 +10,19 @@ import { errorLog } from "@/db/schema";
  *
  * Use this from server actions, API routes, middleware and cron jobs.
  * Client-side errors should POST to `/api/errors` which forwards here.
+ *
+ * ## Coalesce (gürültü kontrolü)
+ * Aynı `source|location|message` parmak izi 60 sn içinde tekrar gelirse
+ * DB insert atlanır; sadece proses içi sayaç artar. TTL dolduktan sonra
+ * gelen ilk satıra `metadata.suppressedCount` eklenir — kaç çağrı
+ * görmezden gelindiği görünür. Vercel serverless'ta her container kendi
+ * sayaçlarını tutar; cross-instance koalesleme rate_limit tablosuna
+ * geçmeye gerek bırakmıyor çünkü tek instance içinde hot loop'lar zaten
+ * volume'un büyük çoğunluğunu üretiyor.
+ *
+ * Üretim ölçeğinde fayda: tek bir bozuk hot-path saniyede 50 hata bassa
+ * bile DB'ye dakikada en fazla 1 satır düşer; insert bant genişliği 99%
+ * azalır, error_log büyümesi yumuşar, cleanup cron'u ucuz kalır.
  */
 
 export type ErrorSource =
@@ -46,9 +59,87 @@ function extractMessage(error: unknown): { message: string; stack?: string } {
   }
 }
 
+// ─── Coalesce (in-process) ────────────────────────────────────────────────
+const COALESCE_TTL_MS = 60_000;
+const COALESCE_MAX_KEYS = 500;
+
+type CoalesceEntry = {
+  /** Bu pencerede ilk insertin yapıldığı an. */
+  firstAt: number;
+  /** Pencere boyunca atlanan tekrar sayısı (ilk insert dâhil değil). */
+  suppressedCount: number;
+};
+
+/**
+ * Insertion-order Map LRU davranışı sergiler: `set(key, …)` aynı anahtarı
+ * sonradan eklerse listenin sonuna geçer; map dolduğunda en eski (ilk)
+ * anahtar pop edilir. Bu bizim ihtiyacımızı karşılar.
+ */
+const coalesceMap = new Map<string, CoalesceEntry>();
+
+function fingerprint(opts: LogErrorOptions, message: string): string {
+  // Parmak izinde userId / requestId yok: aynı bug 10 farklı kullanıcıda
+  // tekrarlanıyorsa hâlâ tek "burst" sayılsın istiyoruz.
+  return `${opts.source}|${opts.location ?? ""}|${opts.level ?? "error"}|${message.slice(0, 200)}`;
+}
+
+/**
+ * Geri dönüş `null` ise insert at; aksi halde insert atla — sadece in-memory
+ * sayaç artırıldı (ileride bir sonraki insert'le birlikte raporlanacak).
+ */
+function tryReserveInsert(opts: LogErrorOptions, message: string): {
+  suppressedCount: number;
+} | null {
+  const key = fingerprint(opts, message);
+  const now = Date.now();
+  const existing = coalesceMap.get(key);
+
+  if (existing && now - existing.firstAt < COALESCE_TTL_MS) {
+    existing.suppressedCount += 1;
+    // LRU davranışı için yeniden insert: en sonda kalsın.
+    coalesceMap.delete(key);
+    coalesceMap.set(key, existing);
+    return null;
+  }
+
+  const previousSuppressed = existing?.suppressedCount ?? 0;
+
+  // Yeni pencere aç. Eski entry varsa onun sayacını yeni insert payload'ına
+  // aktarmak için döndürüyoruz.
+  coalesceMap.set(key, { firstAt: now, suppressedCount: 0 });
+
+  if (coalesceMap.size > COALESCE_MAX_KEYS) {
+    const firstKey = coalesceMap.keys().next().value;
+    if (firstKey !== undefined) coalesceMap.delete(firstKey);
+  }
+
+  return { suppressedCount: previousSuppressed };
+}
+
 export async function logError(opts: LogErrorOptions): Promise<void> {
   try {
     const { message, stack } = extractMessage(opts.error);
+    const reservation = tryReserveInsert(opts, message);
+    if (!reservation) {
+      // Insert atlanıyor; stdout'a kısa bir not bırak ki dev tarafında da
+      // sessiz kalmasın. Üretimde JSON log drainini gereksiz şişirmemek
+      // için tek satır.
+      console.error(
+        `[error-logger] coalesced ${opts.source}|${opts.location ?? "?"}`,
+      );
+      return;
+    }
+
+    const baseMeta = opts.metadata ?? null;
+    const meta: Record<string, unknown> | null =
+      reservation.suppressedCount > 0
+        ? {
+            ...(baseMeta ?? {}),
+            suppressedCount: reservation.suppressedCount,
+            suppressedWindowMs: COALESCE_TTL_MS,
+          }
+        : baseMeta;
+
     await db.insert(errorLog).values({
       source: opts.source,
       location: opts.location ?? null,
@@ -57,7 +148,7 @@ export async function logError(opts: LogErrorOptions): Promise<void> {
       stack: stack ? stack.slice(0, 8000) : null,
       userId: opts.userId ?? null,
       requestId: opts.requestId ?? null,
-      metadata: opts.metadata ?? null,
+      metadata: meta,
       userAgent: opts.userAgent ?? null,
       url: opts.url ?? null,
     });

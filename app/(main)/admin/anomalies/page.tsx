@@ -1,5 +1,11 @@
 import Link from "next/link";
-import { ShieldAlert, TrendingUp, AlertCircle, Coins } from "lucide-react";
+import {
+  ShieldAlert,
+  TrendingUp,
+  AlertCircle,
+  Coins,
+  ScrollText,
+} from "lucide-react";
 import { sql } from "drizzle-orm";
 
 import db from "@/db/drizzle";
@@ -75,6 +81,21 @@ type ProgressIntegrityRow = {
   reason: string;
 };
 
+type LogNoiseRow = {
+  source: string;
+  location: string | null;
+  count: number;
+  uniqueUsers: number;
+  suppressed: number;
+  lastSeenAt: Date | null;
+  sampleMessage: string;
+};
+
+type LogTotalsRow = {
+  total: number;
+  uniqueUsers: number;
+};
+
 export default async function AdminAnomaliesPage({
   searchParams,
 }: {
@@ -85,8 +106,14 @@ export default async function AdminAnomaliesPage({
   const hours: Hours = (HOUR_OPTIONS.find((h) => h === requested) ?? 24) as Hours;
   const sinceDate = new Date(Date.now() - hours * 60 * 60 * 1000);
 
-  const [pointsAnomaliesRes, lessonBonusesRes, creditIntegrityRes, progressIntegrityRes] =
-    await Promise.all([
+  const [
+    pointsAnomaliesRes,
+    lessonBonusesRes,
+    creditIntegrityRes,
+    progressIntegrityRes,
+    logNoiseRes,
+    logTotalsRes,
+  ] = await Promise.all([
       db.execute<PointsAnomalyRow>(sql`
         SELECT
           up.user_id        AS "userId",
@@ -161,12 +188,47 @@ export default async function AdminAnomaliesPage({
         ORDER BY up.points DESC
         LIMIT 50
       `),
+      // Log gürültüsü: kim/neresi error_log'u şişiriyor?
+      // `created_at` üzerinden indekslidir (error_log_created_at_idx);
+      // 24h pencere tarama ucuzdur. metadata.suppressedCount in-process
+      // coalesce sayacı — DB'ye düşmeyen "atlatılan" satırların ağırlığını
+      // burada da görelim.
+      db.execute<LogNoiseRow>(sql`
+        SELECT
+          el.source                                          AS source,
+          el.location                                        AS location,
+          COUNT(*)::int                                      AS count,
+          COUNT(DISTINCT el.user_id)::int                    AS "uniqueUsers",
+          COALESCE(
+            SUM((el.metadata->>'suppressedCount')::int),
+            0
+          )::int                                             AS suppressed,
+          MAX(el.created_at)                                 AS "lastSeenAt",
+          (ARRAY_AGG(el.message ORDER BY el.created_at DESC))[1]
+                                                             AS "sampleMessage"
+        FROM error_log el
+        WHERE el.created_at >= ${sinceDate}
+        GROUP BY el.source, el.location
+        ORDER BY COUNT(*) DESC
+        LIMIT 20
+      `),
+      db.execute<LogTotalsRow>(sql`
+        SELECT
+          COUNT(*)::int                       AS total,
+          COUNT(DISTINCT user_id)::int        AS "uniqueUsers"
+        FROM error_log
+        WHERE created_at >= ${sinceDate}
+      `),
     ]);
 
   const pointsAnomalies = extractRows<PointsAnomalyRow>(pointsAnomaliesRes);
   const lessonBonusRows = extractRows<LessonBonusRow>(lessonBonusesRes);
   const creditIntegrityRows = extractRows<CreditIntegrityRow>(creditIntegrityRes);
   const progressIntegrityRows = extractRows<ProgressIntegrityRow>(progressIntegrityRes);
+  const logNoiseRows = extractRows<LogNoiseRow>(logNoiseRes);
+  const logTotalsRows = extractRows<LogTotalsRow>(logTotalsRes);
+  const logTotal = logTotalsRows[0]?.total ?? 0;
+  const logUniqueUsers = logTotalsRows[0]?.uniqueUsers ?? 0;
 
   const totalSignals =
     pointsAnomalies.length + lessonBonusRows.length + creditIntegrityRows.length + progressIntegrityRows.length;
@@ -305,6 +367,63 @@ export default async function AdminAnomaliesPage({
                   <Td right>{row.availableCredits}</Td>
                   <Td right strong>
                     {row.drift > 0 ? `+${row.drift}` : row.drift}
+                  </Td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </AnomalySection>
+
+      <AnomalySection
+        icon={<ScrollText className="h-5 w-5 text-sky-600" />}
+        title="Log gürültüsü (error_log)"
+        description={`Son ${hours} saatte ${logTotal.toLocaleString("tr-TR")} satır error_log üretildi (${logUniqueUsers.toLocaleString("tr-TR")} farklı kullanıcı). Aşağıda en çok satır üreten (kaynak, konum) çiftleri var — bir satırda "atlatılan" değeri yüksekse o yol coalesce ile %99 sessizleştirilmiş demektir; gerçekte aynı hata orantılı şekilde daha fazla tetikleniyor.`}
+        emptyText="Bu pencerede error_log boş."
+      >
+        {logNoiseRows.length > 0 && (
+          <table className="w-full text-sm">
+            <thead className="bg-muted text-xs uppercase text-muted-foreground">
+              <tr>
+                <Th>Kaynak / Konum</Th>
+                <Th>Örnek mesaj</Th>
+                <Th right>Satır</Th>
+                <Th right>Atlatılan</Th>
+                <Th right>Kullanıcı</Th>
+                <Th right>Son</Th>
+              </tr>
+            </thead>
+            <tbody className="divide-y">
+              {logNoiseRows.map((row, i) => (
+                <tr key={`${row.source}|${row.location ?? ""}|${i}`} className="hover:bg-muted/40">
+                  <td className="px-4 py-2 align-top">
+                    <div className="flex flex-col gap-0.5">
+                      <code className="rounded bg-sky-50 px-1.5 py-0.5 text-[11px] text-sky-800 w-fit">
+                        {row.source}
+                      </code>
+                      <span className="text-xs text-muted-foreground">
+                        {row.location ?? "—"}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="px-4 py-2 align-top">
+                    <span className="text-xs text-foreground line-clamp-2">
+                      {row.sampleMessage || "—"}
+                    </span>
+                  </td>
+                  <Td right strong>
+                    {Number(row.count).toLocaleString("tr-TR")}
+                  </Td>
+                  <Td right>
+                    {row.suppressed > 0
+                      ? `+${Number(row.suppressed).toLocaleString("tr-TR")}`
+                      : "—"}
+                  </Td>
+                  <Td right>{row.uniqueUsers}</Td>
+                  <Td right>
+                    {row.lastSeenAt
+                      ? new Date(row.lastSeenAt).toLocaleString("tr-TR")
+                      : "—"}
                   </Td>
                 </tr>
               ))}
