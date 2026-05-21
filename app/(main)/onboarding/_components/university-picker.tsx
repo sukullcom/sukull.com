@@ -102,10 +102,26 @@ export function UniversityPicker({
             return;
           }
           const id = Number(v);
-          if (!Number.isFinite(id)) return;
+          if (!Number.isFinite(id) || id <= 0) {
+            // Beklenmedik gönderim. Erken bail-out yerine logluyoruz ki
+            // bir daha olursa yakalayalım — sessiz "tıklanmıyor" sürecini
+            // engellemek istiyoruz.
+            clientLogger.error({
+              message: "university picker received non-numeric value",
+              location: "onboarding/UniversityPicker",
+              fields: { received: String(v) },
+            });
+            return;
+          }
           const hit = universities.find((u) => u.id === id);
+          // Yerel state'i HER zaman güncelle — combobox tetikleyici
+          // buton yeni etiketi yansıtır, kullanıcı "tıklanmadı sanki"
+          // hissi yaşamaz.
           setSelectedId(id);
-          onSelect(id, hit
+          // Hit bulunamasa bile (cache/race kenar durumu) parent'a
+          // gerçek bir özet geçiyoruz; aksi halde "Seçildi" kartı
+          // görünmüyor ve form ilerlemiyordu.
+          const summary: SelectedSchoolSummary = hit
             ? {
                 id: hit.id,
                 name: hit.name,
@@ -113,7 +129,14 @@ export function UniversityPicker({
                 district: "Kampüs",
                 category: "University",
               }
-            : undefined);
+            : {
+                id,
+                name: `Üniversite (#${id})`,
+                city: "",
+                district: "Kampüs",
+                category: "University",
+              };
+          onSelect(id, summary);
         }}
         isLoading={loading}
         placeholder="Üniversiteni seç"

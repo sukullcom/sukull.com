@@ -242,7 +242,17 @@ export function SearchableCombobox({
                     role="option"
                     aria-selected={false}
                     className="cursor-pointer border-t px-3 py-2 hover:bg-suk-brand-soft"
-                    onClick={() => commit(query.trim())}
+                    // onMouseDown + preventDefault, search input'tan odak
+                    // koparken oluşan blur'un click event'ini yutmasını
+                    // engeller. Headless-UI / Radix de aynı kalıbı kullanır.
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      commit(query.trim());
+                    }}
+                    onTouchEnd={(e) => {
+                      e.preventDefault();
+                      commit(query.trim());
+                    }}
                   >
                     <span className="text-foreground">
                       &ldquo;{query.trim()}&rdquo; olarak ekle
@@ -260,12 +270,24 @@ export function SearchableCombobox({
                     role="option"
                     aria-selected={isSelected}
                     className={cn(
-                      "flex cursor-pointer items-center gap-2 px-3 py-2",
+                      "flex cursor-pointer items-center gap-2 px-3 py-2 select-none",
                       isActive && "bg-suk-brand-soft",
                       isSelected && "font-medium text-suk-brand-border",
                     )}
                     onMouseEnter={() => setActiveIndex(i)}
-                    onClick={() => commit(o.value)}
+                    // onMouseDown ile commit ediyoruz; click event'i bazı
+                    // tarayıcılarda odak değişimi sırasında düşebiliyor
+                    // ("liste kapanıyor ama seçilmiyor" şikayetinin
+                    // klasik sebebi). onTouchEnd ile mobil tıklama da
+                    // garantiye alındı.
+                    onMouseDown={(e) => {
+                      e.preventDefault();
+                      commit(o.value);
+                    }}
+                    onTouchEnd={(e) => {
+                      e.preventDefault();
+                      commit(o.value);
+                    }}
                   >
                     <Check
                       className={cn(
