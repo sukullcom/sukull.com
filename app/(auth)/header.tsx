@@ -3,7 +3,7 @@
 
 import Image from "next/image";
 
-import { BRAND_MASCOT_PATH } from "@/lib/brand-mascot";
+import { BRAND_MASCOT_DISPLAY_PATH } from "@/lib/brand-mascot";
 
 export const Header = () => {
   return (
@@ -11,7 +11,7 @@ export const Header = () => {
       <div className="lg:max-w-screen-lg mx-auto flex items-center justify-between h-full">
         <div className="pt-8 pl-4 pb-7 flex items-center gap-x-3">
           <Image
-            src={BRAND_MASCOT_PATH}
+            src={BRAND_MASCOT_DISPLAY_PATH}
             height={40}
             width={40}
             alt="Sukull"

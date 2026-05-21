@@ -1,11 +1,15 @@
 /**
  * Site genelinde marka maskotu (favicon, başlık çubuğu, PWA önizleme).
  * Çerçeve veya zemin rengi eklenmez.
- *
- * Client tarafı `<Image src={BRAND_MASCOT_PATH}>` için SVG kullanılır —
- * `next/image` zaten optimize edip uygun formata çeviriyor.
  */
 export const BRAND_MASCOT_PATH = "/heads/happy_excited_purple.svg" as const;
+
+/**
+ * `<Image>` ile güvenilir gösterim — Vercel Image Optimization çok büyük
+ * SVG'leri (hero.svg ~20MB, heads/*.svg ~1.4MB) 400 ile reddeder.
+ * Giriş / auth hero ve küçük logo alanlarında bunu kullanın.
+ */
+export const BRAND_MASCOT_DISPLAY_PATH = "/heads/happy_excited_purple.png" as const;
 
 /** Kaynak PNG — `public/icons/pwa-*.png` ve `app/icon.png` buradan kopyalanır.
  *  PWA/favicon artık statik dosya; Satori (`ImageResponse`) kullanılmıyor. */

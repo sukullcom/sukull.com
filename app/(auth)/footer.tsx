@@ -32,16 +32,18 @@ export function Footer() {
             alt="Matematik dersi"
             height={32}
             width={40}
+            unoptimized
             className="mr-2 rounded-md"
           />
           Matematik
         </Button>
         <Button size="lg" variant="ghost" className="flex-shrink-0">
-          <Image 
-            src="/pointing_finger_happy_orange.svg"
+          <Image
+            src="/heads/pointing_finger_happy_orange.svg"
             alt="Fen Bilimleri dersi"
             height={32}
             width={40}
+            unoptimized
             className="mr-2 rounded-md"
           />
           Fen Bilimleri
@@ -52,26 +54,29 @@ export function Footer() {
             alt="Türkçe dersi"
             height={32}
             width={40}
+            unoptimized
             className="mr-2 rounded-md"
           />
           Türkçe
         </Button>
         <Button size="lg" variant="ghost" className="flex-shrink-0">
           <Image
-            src="/heart_with_hand_light_blue.svg"
+            src="/heads/heart_with_hand_light_blue.svg"
             alt="İngilizce dersi"
             height={32}
             width={40}
+            unoptimized
             className="mr-2 rounded-md"
           />
           İngilizce
         </Button>
         <Button size="lg" variant="ghost" className="flex-shrink-0">
           <Image
-            src="/liked_purple.svg"
+            src="/heads/liked_purple.svg"
             alt="Daha fazla ders"
             height={32}
             width={40}
+            unoptimized
             className="mr-2 rounded-md"
           />
           ve daha fazlası...
