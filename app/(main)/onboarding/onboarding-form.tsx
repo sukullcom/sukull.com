@@ -19,6 +19,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import type { SelectedSchoolSummary } from "@/app/(main)/(protected)/profile/profile-school-selector";
+import { UniversityPicker } from "@/app/(main)/onboarding/_components/university-picker";
 import { SCHOOL_AND_GRADE_TRIAL_DAYS } from "@/lib/school-grade-lock";
 import {
   formatStudentGradeLabel,
@@ -289,14 +290,27 @@ export const OnboardingForm = () => {
             </div>
           )}
 
-          <ProfileSchoolSelector
-            schools={[]}
-            initialSchoolId={schoolId}
-            onSelect={(id, details) => {
-              setSchoolId(id);
-              if (details) setSelectedSchool(details);
-            }}
-          />
+          {mode === "adult" ? (
+            // Üniversite & mezun: şehir / ilçe / kategori adımları gereksiz.
+            // Tek bir aranabilir üniversite seçicisi gösteriyoruz; istek
+            // hâlinde aşağıdaki "Okul seçmeden devam et" butonuyla atlanabilir.
+            <UniversityPicker
+              initialSchoolId={schoolId}
+              onSelect={(id, details) => {
+                setSchoolId(id);
+                if (details) setSelectedSchool(details);
+              }}
+            />
+          ) : (
+            <ProfileSchoolSelector
+              schools={[]}
+              initialSchoolId={schoolId}
+              onSelect={(id, details) => {
+                setSchoolId(id);
+                if (details) setSelectedSchool(details);
+              }}
+            />
+          )}
 
           <div className="flex flex-col gap-2">
             {mode === "adult" && (

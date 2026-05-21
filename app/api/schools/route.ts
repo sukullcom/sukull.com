@@ -88,6 +88,11 @@ const getUniversitiesCatalog = unstable_cache(
   async () => {
     const rows = await db
       .select({
+        // Tek bir üniversite veritabanında birden fazla satır olabiliyor
+        // (kampüs ayrı il/ilçede). Eğitmen başvurusu sadece ada ihtiyaç
+        // duyuyor; onboarding'de ise `userProgress.schoolId` kaydı için
+        // kanonik bir id de döndürüyoruz — MIN(id) yeterli ve stabil.
+        id: sql<number>`MIN(${schools.id})`,
         name: schools.name,
         city: sql<string>`MIN(${schools.city})`,
       })
@@ -97,7 +102,7 @@ const getUniversitiesCatalog = unstable_cache(
       .orderBy(schools.name);
     return rows;
   },
-  ['schools-universities-v1'],
+  ['schools-universities-v2'],
   { tags: [CACHE_TAGS.schoolsMaster], revalidate: CACHE_TTL.schoolsMaster },
 );
 
