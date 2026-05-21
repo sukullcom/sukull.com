@@ -91,7 +91,9 @@ export function TeachersDirectoryFilters({
 
     const loadUniversities = async () => {
       try {
-        const r = await fetch("/api/schools?action=universities", {
+        // CDN cache bust: bkz. UniversityPicker — alias düzeltmesinden
+        // önce cache'lenmiş kırık yanıt yüzünden `v=3`.
+        const r = await fetch("/api/schools?action=universities&v=3", {
           cache: "force-cache",
         });
         if (!r.ok) throw new Error("fail");

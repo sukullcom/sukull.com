@@ -49,7 +49,13 @@ export function UniversityPicker({
 
     (async () => {
       try {
-        const res = await fetch("/api/schools?action=universities", {
+        // CDN cache bust: alias düzeltmesinden ÖNCE cache'lenmiş kırık
+        // yanıt (id alanı eksik, sadece `min`/`city`) Vercel CDN'inde
+        // `max-age=600, stale-while-revalidate=86400` ile takılı kalmıştı.
+        // URL'e `v=` ekleyerek farklı bir cache anahtarı oluşturuyoruz —
+        // CDN miss, origin'e gider, yeni kod çalışır, doğru data döner.
+        // Bir sonraki alias bug'ı / şema değişikliğinde bu sayıyı artır.
+        const res = await fetch("/api/schools?action=universities&v=3", {
           cache: "force-cache",
         });
         if (!res.ok) {
@@ -78,28 +84,56 @@ export function UniversityPicker({
     };
   }, []);
 
-  const options = useMemo<ComboboxOption[]>(
-    () =>
-      universities
-        // Defansif: API yanıtında id eksikse (geçmişte Drizzle alias bug'ı
-        // nedeniyle olmuştu) o satırı listeye HİÇ dahil etme — kullanıcı
-        // bozuk satıra tıklayıp "undefined" commit etmesin.
-        .filter(
-          (u): u is University =>
-            u != null &&
-            typeof u.id === "number" &&
-            Number.isFinite(u.id) &&
-            u.id > 0 &&
-            typeof u.name === "string" &&
-            u.name.length > 0,
-        )
-        .map((u) => ({
-          value: String(u.id),
-          label: u.name,
-          hint: u.city ?? undefined,
-        })),
-    [universities],
-  );
+  const options = useMemo<ComboboxOption[]>(() => {
+    // Defansif normalize: API yanıtında id alanı eksikse veya string olarak
+    // gelirse (driver konfigine göre BIGINT/INTEGER farklı encode olabilir)
+    // sayıya coerce et; mümkün olmayanı eliyoruz. Tarihte Drizzle alias bug'ı
+    // nedeniyle id alanı tamamen kaybolduğu için bu kalkanı bırakıyoruz.
+    const opts: ComboboxOption[] = [];
+    let rejected = 0;
+    for (const u of universities) {
+      if (!u || typeof u.name !== "string" || u.name.length === 0) {
+        rejected++;
+        continue;
+      }
+      const idNum =
+        typeof u.id === "number"
+          ? u.id
+          : typeof u.id === "string"
+            ? Number(u.id)
+            : NaN;
+      if (!Number.isFinite(idNum) || idNum <= 0) {
+        rejected++;
+        continue;
+      }
+      opts.push({
+        value: String(idNum),
+        label: u.name,
+        hint: u.city ?? undefined,
+      });
+    }
+    if (rejected > 0 && universities.length > 0) {
+      // eslint-disable-next-line no-console
+      console.warn("[uni-picker] some rows rejected", {
+        rejected,
+        total: universities.length,
+        sample: universities.slice(0, 2),
+      });
+    }
+    if (opts.length === 0 && universities.length > 0) {
+      // Sebep: API büyük ihtimalle hâlâ eski (alias bug'lu) cache'i
+      // dönüyor. Kullanıcıya yardımcı olmak için bu durumu logla.
+      clientLogger.error({
+        message: "university list non-empty but all rows rejected by client filter",
+        location: "onboarding/UniversityPicker",
+        fields: {
+          total: String(universities.length),
+          sampleKeys: Object.keys(universities[0] ?? {}).join(","),
+        },
+      });
+    }
+    return opts;
+  }, [universities]);
 
   return (
     <div className="space-y-2">

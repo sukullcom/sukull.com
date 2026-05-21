@@ -82,7 +82,9 @@ export default function GiveLessonPage() {
     let active = true;
     (async () => {
       try {
-        const res = await fetch("/api/schools?action=universities", {
+        // CDN cache bust: bkz. UniversityPicker — alias düzeltmesinden
+        // önce cache'lenmiş kırık yanıt yüzünden `v=3`.
+        const res = await fetch("/api/schools?action=universities&v=3", {
           cache: "force-cache",
         });
         if (!res.ok) throw new Error("Üniversite listesi alınamadı");
