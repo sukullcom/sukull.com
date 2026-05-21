@@ -1,23 +1,21 @@
 import type { MetadataRoute } from "next";
 
+import {
+  PWA_ICON_192,
+  PWA_ICON_512,
+  PWA_MANIFEST_ID,
+} from "@/lib/pwa-icons";
+
 /**
- * PWA manifest.
+ * PWA manifest — ikonlar **statik PNG** (`public/icons/`).
  *
- * İkon kaynakları:
- *  • `/icon`        — Next.js dinamik PNG, Satori ile `happy_excited_purple.png`
- *                     dosyasından üretilir. Boyut parametrelendiriliyor (sizes).
- *  • `/apple-icon`  — Aynı kaynak, iOS için 180×180.
- *  • `/heads/happy_excited_purple.png` — Ham PNG (724KB). Satori başarısız
- *    olursa Android/Chrome bu fallback'i kullanabilsin diye listede.
- *
- * Android adaptive icon: `purpose: "maskable"` ile aynı kaynağı sunuyoruz.
- * Satori şeffaf zemin üretiyor; sistem maskesi maskotu çerçeveye oturtur.
- * Mascot büyük çerçevede tamamen görünmez — yine de Chrome adaptive
- * desteği olmazsa "any" kullanır. (İdeal maskable için ortada güvenli
- * bölge bırakan ayrı bir 512×512 kare lazım; gerekirse sonra ekleriz.)
+ * Dinamik `/icon` (Satori) kaldırıldı: 724KB PNG base64 ile bazen
+ * boş / "S" fallback üretiyordu ve CDN+PWA önbelleği eski kalıyordu.
+ * `?v=` + `id` ile yükleme sonrası doğru maskot gelir.
  */
 export default function manifest(): MetadataRoute.Manifest {
   return {
+    id: PWA_MANIFEST_ID,
     name: "Sukull — Öğrenmeyi Eğlenceli Hale Getiren Platform",
     short_name: "Sukull",
     description:
@@ -31,31 +29,15 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#84cc16",
     categories: ["education", "productivity", "learning"],
     icons: [
-      // Birincil PWA ikonu — Android home screen + splash screen burayı okur.
       {
-        src: "/icon",
+        src: PWA_ICON_512,
         sizes: "512x512",
         type: "image/png",
         purpose: "any",
       },
       {
-        src: "/icon",
+        src: PWA_ICON_192,
         sizes: "192x192",
-        type: "image/png",
-        purpose: "any",
-      },
-      // iOS Ana Ekrana Ekle.
-      {
-        src: "/apple-icon",
-        sizes: "180x180",
-        type: "image/png",
-        purpose: "any",
-      },
-      // Fallback: ham PNG. Satori herhangi bir nedenle çalışmazsa
-      // Chrome installer bu dosyaya iner.
-      {
-        src: "/heads/happy_excited_purple.png",
-        sizes: "1024x1024",
         type: "image/png",
         purpose: "any",
       },

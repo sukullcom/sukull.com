@@ -43,14 +43,11 @@ const nextConfig = {
    */
   async rewrites() {
     return [
-      // Eski tarayıcılar /favicon.ico'ya doğrudan istek atar (metadata
-      // `<link rel="icon">` etiketlerini görmeden). Onları PNG endpoint'e
-      // yönlendiriyoruz — `/icon` Next.js dinamik, Satori ile 512×512 PNG
-      // (~50KB), favicon için ideal. Daha önce 1.4MB ham SVG'ye yönlendirip
-      // gereksiz transfer ve MIME uyumsuzluğu yaratıyorduk.
+      // Eski tarayıcılar /favicon.ico'ya doğrudan istek atar.
+      // Statik maskot PNG (Satori yok, önbellek `?v=` ile kırılır).
       {
         source: '/favicon.ico',
-        destination: '/icon',
+        destination: '/icons/pwa-512.png?v=5',
       },
       {
         source: '/api/schools/search',
@@ -162,6 +159,30 @@ const nextConfig = {
     ignoreBuildErrors: false,
   },
   output: process.env.NODE_ENV === 'production' ? 'standalone' : undefined,
+  async headers() {
+    return [
+      // Yüklü PWA manifest'i güncellemek için kısa önbellek.
+      {
+        source: '/manifest.webmanifest',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=0, must-revalidate',
+          },
+        ],
+      },
+      // İkon dosyaları — sürüm query (`?v=5`) değişince yeni dosya gelir.
+      {
+        source: '/icons/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, must-revalidate',
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default withBundleAnalyzer(nextConfig);

@@ -9,6 +9,7 @@ import { PracticeModal } from "@/components/modals/practice-modal";
 import { GlobalErrorListener } from "@/components/global-error-listener";
 import { PwaInstallPrompt } from "@/components/pwa-install-prompt";
 import { DevConsolePatch } from "@/components/dev-console-patch";
+import { PWA_ICON_192, PWA_ICON_512 } from "@/lib/pwa-icons";
 
 const nunito = Nunito({ subsets: ["latin", "latin-ext"] });
 
@@ -28,27 +29,16 @@ export const metadata: Metadata = {
   },
   description:
     "Derslerini tamamla, beyin oyunlarıyla pratik yap, arkadaşlarınla yarış ve özel derslerle ilerle. Sukull ile öğrenmek hiç bu kadar keyifli olmamıştı.",
-  // Tarayıcı listedeki ilk uygun ikonu seçer. Dinamik PNG endpoint'ler
-  // (`/icon` 512×512, `/apple-icon` 180×180) Satori ile PNG kaynaktan
-  // yeniden boyutlandırıldığı için hafif (~50KB). Statik PNG ham dosya
-  // (`/heads/happy_excited_purple.png`, ~724KB) doğrulanabilir bir
-  // fallback olarak kalsın — Satori herhangi bir nedenle hata verirse
-  // tarayıcı yine de doğru maskot ikonunu gösterir. Ham SVG'yi (~1.4MB)
-  // favicon listesinden çıkardık; gereksizce ağırdı.
+  // Statik maskot PNG (`public/icons/`, `?v=` ile önbellek kırma).
+  // `app/icon.png` → Next `/icon`; `app/apple-icon.png` → `/apple-icon`.
   icons: {
     icon: [
-      { url: "/icon", type: "image/png", sizes: "512x512" },
-      { url: "/icon", type: "image/png", sizes: "192x192" },
-      { url: "/heads/happy_excited_purple.png", type: "image/png", sizes: "1024x1024" },
+      { url: PWA_ICON_512, type: "image/png", sizes: "512x512" },
+      { url: PWA_ICON_192, type: "image/png", sizes: "192x192" },
     ],
     apple: [{ url: "/apple-icon", type: "image/png", sizes: "180x180" }],
-    shortcut: [{ url: "/icon", type: "image/png" }],
+    shortcut: [{ url: PWA_ICON_512, type: "image/png" }],
   },
-  // Maskot kaynak dosyaları:
-  //   PNG (sunucu ikon üretimi + favicon fallback): public/heads/happy_excited_purple.png
-  //   SVG (client `<Image>` bileşenleri):           public/heads/happy_excited_purple.svg
-  // PNG üreteci endpoints: app/icon.tsx, app/apple-icon.tsx
-  // PWA manifest:           app/manifest.ts
   openGraph: {
     type: "website",
     locale: "tr_TR",
