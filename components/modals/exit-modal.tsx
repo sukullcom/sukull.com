@@ -36,7 +36,7 @@ export const ExitModal = () => {
                 ton. `showing_with_hand_dark_blue` parmağıyla durduran bir
                 hareket; üzgün değil, "bekle bir saniye" diyen yapıcı bir
                 karşı çıkış. */}
-            <Image src="/heads/showing_with_hand_dark_blue.svg" alt="Maskot" height={80} width={80} />
+            <Image src="/heads/forgiveness_light_blue.svg" alt="Maskot" height={80} width={80} />
           </div>
           <DialogTitle className="text-center font-bold text-2xl">
             Dur bir dakika!

@@ -28,20 +28,28 @@ const useKey = (key: string, callback: () => void) => {
 };
 
 export const Footer = ({ onCheck, onSkipWrong, status, disabled, lessonId, explanation }: Props) => {
-  // Kaldırdık: useMedia("(max-width: 1024px)")
-  // Çünkü SSR'da className mismatch yaratıyordu
-  // OnEnter => onCheck
   useKey("Enter", onCheck);
+
+  const hintText = (explanation ?? "").trim();
+  const showHint = status === "wrong" && hintText.length > 0;
 
   return (
     <footer
       className={cn(
-        "min-h-[100px] border-t-2 flex items-center py-3",
+        "shrink-0 border-t-2 py-3",
+        !showHint && "min-h-[100px] flex items-center",
         status === "correct" && "border-transparent bg-suk-brand-soft",
         status === "wrong" && "border-transparent bg-suk-danger-soft"
       )}
     >
-      <div className="max-w-[1140px] mx-auto w-full min-h-0 flex flex-wrap items-center justify-between gap-3 px-6 lg:px-10">
+      <div
+        className={cn(
+          "mx-auto w-full max-w-[1140px] min-h-0 gap-3 px-6 lg:px-10",
+          showHint
+            ? "flex flex-col items-stretch gap-4 py-1"
+            : "flex flex-wrap items-center justify-between"
+        )}
+      >
         {status === "correct" && (
           <div className="text-suk-brand font-bold text-base lg:text-2xl flex items-center">
             <CheckCircle className="h-6 w-6 lg:h-10 lg:w-10 mr-4" />
@@ -49,13 +57,18 @@ export const Footer = ({ onCheck, onSkipWrong, status, disabled, lessonId, expla
           </div>
         )}
         {status === "wrong" && (
-          <div className="text-suk-danger font-bold text-base lg:text-2xl flex items-start min-w-0 flex-1 pr-2">
+          <div
+            className={cn(
+              "text-suk-danger font-bold text-base lg:text-2xl flex items-start min-w-0",
+              !showHint && "flex-1 pr-2"
+            )}
+          >
             <XCircle className="h-6 w-6 lg:h-10 lg:w-10 mr-3 lg:mr-4 shrink-0 mt-0.5" />
-            {explanation ? (
-              <div className="flex flex-col min-w-0 font-normal">
-                <span className="text-sm font-medium text-suk-danger mb-1">İpucu:</span>
-                <div className="text-sm lg:text-base leading-relaxed text-suk-danger-border [&_.katex]:text-suk-danger-hover">
-                  <MathRenderer>{explanation}</MathRenderer>
+            {showHint ? (
+              <div className="flex min-w-0 flex-1 flex-col font-normal">
+                <span className="mb-1 text-sm font-medium text-suk-danger">İpucu:</span>
+                <div className="text-sm leading-relaxed text-suk-danger-border lg:text-base [&_.katex]:text-suk-danger-hover">
+                  <MathRenderer>{hintText}</MathRenderer>
                 </div>
               </div>
             ) : (
@@ -66,7 +79,7 @@ export const Footer = ({ onCheck, onSkipWrong, status, disabled, lessonId, expla
         {status === "completed" && (
           <Button
             variant="default"
-            size="lg" // sabit "lg"
+            size="lg"
             onClick={() => {
               window.location.href = `/lesson/${lessonId}`;
             }}
@@ -76,8 +89,9 @@ export const Footer = ({ onCheck, onSkipWrong, status, disabled, lessonId, expla
         )}
         <div
           className={cn(
-            "flex flex-col sm:flex-row items-stretch sm:items-center gap-2 ml-auto shrink-0",
-            status === "wrong" && onSkipWrong && "w-full sm:w-auto"
+            "flex flex-col items-stretch gap-2 sm:flex-row sm:items-center",
+            showHint ? "w-full sm:justify-end" : "ml-auto shrink-0",
+            status === "wrong" && onSkipWrong && !showHint && "w-full sm:w-auto"
           )}
         >
           {status === "wrong" && onSkipWrong && (

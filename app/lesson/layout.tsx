@@ -9,5 +9,9 @@ export default function LessonLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div className="flex flex-col h-full w-full">{children}</div>;
+  return (
+    <div className="flex h-dvh max-h-dvh min-h-0 w-full flex-col overflow-hidden">
+      {children}
+    </div>
+  );
 }

@@ -23,6 +23,8 @@ import { SCORING_SYSTEM } from "@/constants";
 import { getTimeBonusInfo } from "@/lib/time-bonus";
 import { emitProgressUpdated } from "@/lib/progress-events";
 import { Target, Sunrise } from "lucide-react";
+import { pickRandomMascotHead } from "@/lib/mascot-heads";
+import { cn } from "@/lib/utils";
 
 type Props = {
   initialPercentage: number;
@@ -146,6 +148,7 @@ export const Quiz = ({
   );
 
   const [challenges] = useState(initialLessonChallenges);
+  const [celebrationHead] = useState(pickRandomMascotHead);
 
   const [activeIndex, setActiveIndex] = useState(() => {
     const idx = challenges.findIndex((c) => !c.completed);
@@ -190,8 +193,7 @@ export const Quiz = ({
   // *******************************
   if (lessonFinished) {
     return (
-      <>
-        {/* Audio DOM elements */}
+      <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
         {finishAudioEl}
         {correctAudioEl}
         {incorrectAudioEl}
@@ -203,27 +205,14 @@ export const Quiz = ({
           numberOfPieces={500}
           tweenDuration={10000}
         />
-        <div className="flex flex-col gap-y-4 lg:gap-y-8 max-w-lg mx-auto text-center items-center justify-center h-full">
-          {/*
-            Ders tamamlandı kutlama anı — Sukull deneyiminin en yüksek
-            duygusal momenti. Marka rengi (mor) + "heyecanlı" duruşla
-            confetti animasyonunun anlamı pekişir. Mobile + desktop
-            varyantları aynı görsel; ekran boyutuna göre yalnızca ölçek
-            farklı.
-          */}
+        <div className="flex min-h-0 flex-1 flex-col items-center justify-center overflow-y-auto px-6 py-8">
+          <div className="flex max-w-lg flex-col items-center gap-y-4 text-center lg:gap-y-8">
           <Image
-            src="/heads/happy_excited_purple.svg"
+            src={celebrationHead}
             alt="Tebrikler!"
-            className="hidden lg:block"
+            className="h-20 w-20 lg:h-[140px] lg:w-[140px]"
             height={140}
             width={140}
-          />
-          <Image
-            src="/heads/happy_excited_purple.svg"
-            alt="Tebrikler!"
-            className="block lg:hidden"
-            height={80}
-            width={80}
           />
           <h1 className="text-xl lg:text-3xl font-bold text-foreground">
             Tebrikler! <br />
@@ -287,13 +276,14 @@ export const Quiz = ({
             <ResultCard variant="points" value={Math.max(0, lessonPoints)} />
             <ResultCard variant="hearts" value={hearts} hasInfiniteHearts={hasInfiniteHearts} />
           </div>
+          </div>
         </div>
         <Footer
           lessonId={lessonId}
           status="completed"
           onCheck={() => router.push("/learn")}
         />
-      </>
+      </div>
     );
   }
 
@@ -484,18 +474,24 @@ export const Quiz = ({
   // *******************************
   // 7) Render the ongoing challenge
   // *******************************
+  const showWrongHint = status === "wrong" && Boolean(challenge.explanation?.trim());
+
   return (
-    <>
-      {/* Always render audio DOM elements */}
+    <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
       {finishAudioEl}
       {correctAudioEl}
       {incorrectAudioEl}
 
       <Header hearts={hearts} percentage={percentage} hasInfiniteHearts={hasInfiniteHearts} />
 
-      <div className="flex-1">
-        <div className="h-full flex items-center justify-center">
-            <div className="lg:min-h-[350px] lg:w-[600px] w-full px-6 lg:px-0 flex flex-col gap-y-12">
+      <div className="min-h-0 flex-1 overflow-y-auto">
+        <div
+          className={cn(
+            "flex min-h-full flex-col justify-start px-6 py-4 lg:px-0 lg:py-8",
+            showWrongHint ? "pb-4" : "pb-6"
+          )}
+        >
+            <div className="lg:min-h-0 lg:w-[600px] mx-auto w-full flex flex-col gap-y-8 lg:gap-y-12">
             <h1 className="text-lg lg:text-3xl text-center lg:text-start font-bold text-foreground">
               <MathRenderer>{title}</MathRenderer>
             </h1>
@@ -535,6 +531,6 @@ export const Quiz = ({
         lessonId={lessonId}
         explanation={challenge.explanation}
       />
-    </>
+    </div>
   );
 };
