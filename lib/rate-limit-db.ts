@@ -283,7 +283,12 @@ export const RATE_LIMITS = {
 
   // --- Writes — user-scoped ---
   pointsAdd: { max: 120, windowSeconds: 60 },       // ~2/s per user, generous for active play
-  imageUpload: { max: 10, windowSeconds: 60 * 60 }, // 10 per hour
+  /**
+   * Admin ders görseli (`/api/upload/image` — yalnızca isAdmin).
+   * Tek oturumda onlarca soru/şık görseli normal; eski 10/saat
+   * course-builder'da "Çok fazla yükleme denemesi" üretiyordu.
+   */
+  imageUpload: { max: 120, windowSeconds: 60 * 60 },
   /** Creating or editing a code snippet. Internal "max 3 total" still applies. */
   snippetWrite: { max: 20, windowSeconds: 60 * 60 },
   /** Teacher application submission. */

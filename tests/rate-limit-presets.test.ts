@@ -32,6 +32,12 @@ describe("RATE_LIMITS presets", () => {
     expect(RATE_LIMITS.pointsAdd.max).toBeGreaterThanOrEqual(60);
   });
 
+  it("image upload allows a full admin course-builder session per hour", () => {
+    expect(RATE_LIMITS.imageUpload.max).toBeGreaterThanOrEqual(60);
+    expect(RATE_LIMITS.imageUpload.max).toBeLessThanOrEqual(300);
+    expect(RATE_LIMITS.imageUpload.windowSeconds).toBe(3600);
+  });
+
   it("leaderboard read has a sane per-minute cap", () => {
     expect(RATE_LIMITS.leaderboard.max).toBeGreaterThanOrEqual(30);
     expect(RATE_LIMITS.leaderboard.max).toBeLessThanOrEqual(200);

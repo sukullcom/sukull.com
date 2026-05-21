@@ -53,9 +53,9 @@ function detectImageKind(buffer: Uint8Array): 'image/jpeg' | 'image/png' | 'imag
 
 /**
  * Admin-only image upload. Storage quota is a hard cost boundary, so we
- * rate-limit by user-id when available, falling back to IP. 10/hour is
- * comfortably above normal usage (a course builder adds ~5 images per
- * session) but blocks runaway scripts.
+ * rate-limit by user-id when available, falling back to IP. 120/hour
+ * covers a full course-builder session (onlarca soru/şık görseli);
+ * non-admin callers get 403 before the limiter runs.
  */
 async function enforceUploadRateLimit(request: NextRequest): Promise<NextResponse | null> {
   const user = await getServerUser();
@@ -66,7 +66,11 @@ async function enforceUploadRateLimit(request: NextRequest): Promise<NextRespons
   });
   if (!rl.allowed) {
     return NextResponse.json(
-      { success: false, error: 'Çok fazla yükleme denemesi. Lütfen biraz bekleyin.' },
+      {
+        success: false,
+        error:
+          'Çok fazla yükleme denemesi (saatlik limit). Bir süre bekleyip tekrar deneyin veya destek ile iletişime geçin.',
+      },
       { status: 429, headers: rateLimitHeaders(rl) },
     );
   }
