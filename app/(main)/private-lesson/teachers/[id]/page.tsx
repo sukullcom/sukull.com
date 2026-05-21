@@ -24,6 +24,7 @@ import {
   GraduationCap,
   Users,
   ArrowLeft,
+  Building2,
 } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -189,6 +190,23 @@ export default async function TeacherDetailPage({
                   <div className="font-medium text-foreground">Eğitim</div>
                   <div className="text-muted-foreground whitespace-pre-wrap">
                     {teacher.education}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {(teacher.university || teacher.universityDepartment) && (
+              <div className="flex items-start gap-3">
+                <Building2 className="h-4 w-4 text-muted-foreground/80 mt-0.5 shrink-0" />
+                <div>
+                  <div className="font-medium text-foreground">Üniversite</div>
+                  <div className="text-muted-foreground">
+                    {teacher.university ?? "—"}
+                    {teacher.universityDepartment && (
+                      <span className="block text-xs">
+                        {teacher.universityDepartment}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>

@@ -18,6 +18,10 @@ import {
 } from "@/components/private-lesson/teaching-capability-rows-field";
 import { TeacherAvailableHoursField } from "@/components/private-lesson/teacher-available-hours-field";
 import {
+  SearchableCombobox,
+  type ComboboxOption,
+} from "@/components/ui/searchable-combobox";
+import {
   ArrowRight,
   BookOpen,
   User,
@@ -33,6 +37,8 @@ import {
   Monitor,
   Wallet,
   FileText,
+  Building2,
+  BookMarked,
 } from "lucide-react";
 
 type ApplicationStatus = {
@@ -49,6 +55,8 @@ export default function GiveLessonPage() {
     teacherPhoneNumber: "",
     teacherEmail: "",
     education: "",
+    university: "",
+    universityDepartment: "",
     experienceYears: "",
     targetLevels: "",
     availableHours: "",
@@ -65,8 +73,40 @@ export default function GiveLessonPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [appStatus, setAppStatus] = useState<ApplicationStatus | null>(null);
   const [loading, setLoading] = useState(true);
+  const [universities, setUniversities] = useState<ComboboxOption[]>([]);
+  const [universitiesLoading, setUniversitiesLoading] = useState(true);
 
   const router = useRouter();
+
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      try {
+        const res = await fetch("/api/schools?action=universities", {
+          cache: "force-cache",
+        });
+        if (!res.ok) throw new Error("Üniversite listesi alınamadı");
+        const data = (await res.json()) as {
+          universities: Array<{ name: string; city: string | null }>;
+        };
+        if (!active) return;
+        setUniversities(
+          (data.universities ?? []).map((u) => ({
+            value: u.name,
+            label: u.name,
+            hint: u.city ?? undefined,
+          })),
+        );
+      } catch {
+        // Sessizce başarısız ol — kullanıcı kendi yazabilsin diye allowFreeText açık.
+      } finally {
+        if (active) setUniversitiesLoading(false);
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
 
   useEffect(() => {
     const checkApplicationStatus = async () => {
@@ -146,6 +186,8 @@ export default function GiveLessonPage() {
     ];
     const optionalFields = [
       formData.education,
+      formData.university,
+      formData.universityDepartment,
       formData.experienceYears,
       formData.targetLevels,
       formData.availableHours,
@@ -417,6 +459,51 @@ export default function GiveLessonPage() {
                     <SelectItem value="5-10 yıl">5-10 yıl</SelectItem>
                     <SelectItem value="10+ yıl">10+ yıl</SelectItem>
                   </Select>
+                </div>
+              </div>
+
+              {/* Üniversite & Bölüm */}
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="university" className="flex items-center gap-2">
+                    <Building2 className="w-4 h-4" />
+                    Mezun Olduğun Üniversite
+                  </Label>
+                  <SearchableCombobox
+                    id="university"
+                    options={universities}
+                    value={formData.university || null}
+                    onChange={(v) =>
+                      handleSelectChange("university", v ?? "")
+                    }
+                    isLoading={universitiesLoading}
+                    placeholder="Üniversiteni listeden seç"
+                    emptyText="Eşleşen üniversite bulunamadı"
+                    leftIcon={<Building2 className="w-4 h-4" />}
+                    allowFreeText
+                  />
+                  <p className="text-[11px] text-muted-foreground">
+                    Yurt dışı veya listede olmayan kurumlar için kendi yazımını da kullanabilirsin.
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="universityDepartment"
+                    className="flex items-center gap-2"
+                  >
+                    <BookMarked className="w-4 h-4" />
+                    Bölüm
+                  </Label>
+                  <Input
+                    id="universityDepartment"
+                    name="universityDepartment"
+                    placeholder="Örn. Matematik Öğretmenliği"
+                    value={formData.universityDepartment}
+                    onChange={handleChange}
+                    maxLength={120}
+                    className="transition-all duration-200 focus:scale-[1.02]"
+                  />
                 </div>
               </div>
 

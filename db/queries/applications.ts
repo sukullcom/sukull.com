@@ -125,6 +125,8 @@ export async function getTeacherApplicationsPaginated(
           ilike(teacherApplications.teacherSurname, `%${q}%`),
           ilike(teacherApplications.teacherEmail, `%${q}%`),
           ilike(teacherApplications.field, `%${q}%`),
+          ilike(teacherApplications.university, `%${q}%`),
+          ilike(teacherApplications.universityDepartment, `%${q}%`),
         )
       : undefined;
 
@@ -190,6 +192,8 @@ function mapTeacherApplicationRow(
     teacherPhoneNumber: app.teacherPhoneNumber || "N/A",
     field: app.field,
     education: app.education || null,
+    university: app.university || null,
+    universityDepartment: app.universityDepartment || null,
     experienceYears: app.experienceYears || null,
     targetLevels: app.targetLevels || null,
     availableHours: app.availableHours || null,

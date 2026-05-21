@@ -7,15 +7,28 @@ import { getTeachersDirectory, getMessageUnlocksForStudent } from "@/db/queries"
 import { MessageTeacherButton } from "@/components/private-lesson/message-teacher-button";
 import UserCreditsDisplay from "@/components/user-credits-display";
 import { normalizeAvatarUrl } from "@/utils/avatar";
-import { MapPin, Banknote, Monitor, Users, GraduationCap } from "lucide-react";
+import {
+  MapPin,
+  Banknote,
+  Monitor,
+  Users,
+  GraduationCap,
+  Building2,
+} from "lucide-react";
 import { TeachersDirectoryFilters } from "./_components/teachers-directory-filters";
+import {
+  matchesAllTokens,
+  normalizeForSearch,
+} from "@/lib/turkish-locale";
 
 export const dynamic = "force-dynamic";
 
 type SearchParams = {
+  q?: string;
   field?: string;
   lessonMode?: string;
   city?: string;
+  university?: string;
 };
 
 export default async function TeachersDirectoryPage({
@@ -38,17 +51,16 @@ export default async function TeachersDirectoryPage({
     teachers.map((t) => t.id),
   );
 
-  const fieldFilter = searchParams.field?.toLowerCase() ?? "";
+  const fieldFilter = searchParams.field ?? "";
   const lessonModeFilter = searchParams.lessonMode ?? "";
-  const cityFilter = searchParams.city?.toLowerCase() ?? "";
+  const cityFilter = searchParams.city ?? "";
+  const universityFilter = searchParams.university ?? "";
+  const freeQuery = searchParams.q ?? "";
 
   const filtered = teachers.filter((t) => {
     if (fieldFilter) {
-      const haystack = [t.field, ...(t.fields ?? [])]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
-      if (!haystack.includes(fieldFilter)) return false;
+      const fields = [t.field, ...(t.fields ?? [])];
+      if (!matchesAllTokens(fieldFilter, fields)) return false;
     }
     if (lessonModeFilter) {
       if (
@@ -60,7 +72,32 @@ export default async function TeachersDirectoryPage({
       }
     }
     if (cityFilter) {
-      if (!t.city || !t.city.toLowerCase().includes(cityFilter)) return false;
+      // Şehir kıyaslamasını Türkçe locale + diakritik-katlama ile yap:
+      // "İstanbul" / "istanbul" / "ISTANBUL" / "Istanbul" hepsi eşleşmeli.
+      const cityHay = normalizeForSearch(t.city);
+      const cityNeedle = normalizeForSearch(cityFilter);
+      if (!cityHay.includes(cityNeedle)) return false;
+    }
+    if (universityFilter) {
+      const uniHay = normalizeForSearch(t.university);
+      const uniNeedle = normalizeForSearch(universityFilter);
+      if (!uniHay.includes(uniNeedle)) return false;
+    }
+    if (freeQuery) {
+      // Genel arama: tek bir kutudan ad, branş, şehir, üniversite, bölüm
+      // alanlarının tümünde token-bazlı arama yap. Kullanıcı "ankara fizik"
+      // yazdığında her iki token da en az bir alanda geçmelidir.
+      const haystacks = [
+        t.name,
+        t.field,
+        ...(t.fields ?? []),
+        t.city,
+        t.district,
+        t.university,
+        t.universityDepartment,
+        t.bio,
+      ];
+      if (!matchesAllTokens(freeQuery, haystacks)) return false;
     }
     return true;
   });
@@ -89,15 +126,19 @@ export default async function TeachersDirectoryPage({
       <Suspense
         fallback={
           <div
-            className="mb-4 h-12 w-full max-w-2xl animate-pulse rounded-lg border border-border bg-muted/50"
+            className="mb-4 h-24 w-full animate-pulse rounded-xl border border-border bg-muted/50"
             aria-hidden
           />
         }
       >
         <TeachersDirectoryFilters
-          initialField={searchParams.field ?? ""}
+          initialQuery={freeQuery}
+          initialField={fieldFilter}
           initialLessonMode={lessonModeFilter}
-          initialCity={searchParams.city ?? ""}
+          initialCity={cityFilter}
+          initialUniversity={universityFilter}
+          resultCount={filtered.length}
+          totalCount={teachers.length}
         />
       </Suspense>
 
@@ -183,6 +224,16 @@ export default async function TeachersDirectoryPage({
                         <div className="flex items-center gap-2 text-xs text-muted-foreground">
                           <MapPin className="h-3.5 w-3.5 text-muted-foreground" />
                           {[t.district, t.city].filter(Boolean).join(", ")}
+                        </div>
+                      )}
+                      {(t.university || t.universityDepartment) && (
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                          <Building2 className="h-3.5 w-3.5 text-muted-foreground" />
+                          <span className="line-clamp-1">
+                            {[t.university, t.universityDepartment]
+                              .filter(Boolean)
+                              .join(" — ")}
+                          </span>
                         </div>
                       )}
                     </div>

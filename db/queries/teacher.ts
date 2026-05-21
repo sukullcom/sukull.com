@@ -34,6 +34,8 @@ export type TeacherDirectoryRow = {
   lessonMode: string | null;
   city: string | null;
   district: string | null;
+  university: string | null;
+  universityDepartment: string | null;
 };
 
 /**
@@ -59,6 +61,8 @@ const _getTeachersDirectoryCached = unstable_cache(
         ta.lesson_mode                           AS lesson_mode,
         ta.city                                  AS city,
         ta.district                              AS district,
+        ta.university                            AS university,
+        ta.university_department                 AS university_department,
         STRING_AGG(DISTINCT tf.display_name, ', ') AS fields_new,
         MAX(ta.field)                              AS field_legacy
       FROM users u
@@ -70,6 +74,7 @@ const _getTeachersDirectoryCached = unstable_cache(
       GROUP BY u.id, u.name, u.email, u.avatar, u.description,
                ta.hourly_rate_online, ta.hourly_rate_in_person,
                ta.lesson_mode, ta.city, ta.district,
+               ta.university, ta.university_department,
                ta.teacher_name, ta.teacher_surname
       ORDER BY name ASC
       -- Defansif tavan: 1000 öğretmen sayısı aşıldığında tek sorgu pool'a
@@ -103,9 +108,12 @@ const _getTeachersDirectoryCached = unstable_cache(
       lessonMode: (row.lesson_mode as string | null) ?? null,
       city: (row.city as string | null) ?? null,
       district: (row.district as string | null) ?? null,
+      university: (row.university as string | null) ?? null,
+      universityDepartment:
+        (row.university_department as string | null) ?? null,
     }));
   },
-  ["teachers-directory-v2"],
+  ["teachers-directory-v3"],
   { tags: [CACHE_TAGS.teachers], revalidate: CACHE_TTL.teachers },
 );
 
@@ -136,6 +144,8 @@ export async function getTeacherProfile(teacherId: string) {
         bio: true,
         field: true,
         education: true,
+        university: true,
+        universityDepartment: true,
         experienceYears: true,
         targetLevels: true,
         availableHours: true,
@@ -172,6 +182,8 @@ export async function getTeacherProfile(teacherId: string) {
     bio: application?.bio ?? user.description ?? null,
     field: application?.field ?? null,
     education: application?.education ?? null,
+    university: application?.university ?? null,
+    universityDepartment: application?.universityDepartment ?? null,
     experienceYears: application?.experienceYears ?? null,
     targetLevels: application?.targetLevels ?? null,
     availableHours: application?.availableHours ?? null,

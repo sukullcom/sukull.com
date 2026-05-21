@@ -7,13 +7,40 @@ import {
   rateLimitHeaders,
 } from "@/lib/rate-limit-db";
 import db from "@/db/drizzle";
-import { teacherApplications } from "@/db/schema";
-import { eq, desc } from "drizzle-orm";
+import { teacherApplications, schools } from "@/db/schema";
+import { eq, desc, sql } from "drizzle-orm";
 import {
   normalizeCapabilities,
   isValidTeachingSubject,
   isValidTeachingGrade,
 } from "@/lib/teaching-offerings";
+
+const UNIVERSITY_MAX_LEN = 200;
+const DEPARTMENT_MAX_LEN = 120;
+
+/**
+ * Üniversite adı `schools.name` (type=university) sözlüğünde var mı? Var ise
+ * doğru "kanonik" yazımı döndür; yok ama serbest metne izin verilen sınır
+ * içinde ise olduğu gibi kabul et (yurt dışı / yeni kurumlar için).
+ */
+async function resolveUniversityName(input: string): Promise<string | null> {
+  const trimmed = input.trim();
+  if (!trimmed) return null;
+  if (trimmed.length > UNIVERSITY_MAX_LEN) return null;
+
+  const row = await db
+    .select({ name: schools.name })
+    .from(schools)
+    .where(
+      sql`${schools.type} = 'university' AND lower(${schools.name}) = lower(${trimmed})`,
+    )
+    .limit(1);
+
+  if (row[0]?.name) return row[0].name;
+  // Listede yoksa olduğu gibi kabul et (allowFreeText senaryosu). 200 karakter
+  // cap'i + sanitization (trim) ile XSS / payload abuse riskini sınırladık.
+  return trimmed;
+}
 
 const VALID_LESSON_MODES = ["online", "in_person", "both"] as const;
 type LessonMode = (typeof VALID_LESSON_MODES)[number];
@@ -164,6 +191,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const rawUniversity = str(body.university);
+    const rawDepartment = str(body.universityDepartment);
+    if (rawUniversity.length > UNIVERSITY_MAX_LEN) {
+      return NextResponse.json(
+        { error: "Üniversite adı çok uzun" },
+        { status: 400 },
+      );
+    }
+    if (rawDepartment.length > DEPARTMENT_MAX_LEN) {
+      return NextResponse.json(
+        { error: "Bölüm adı çok uzun" },
+        { status: 400 },
+      );
+    }
+    const universityResolved = rawUniversity
+      ? await resolveUniversityName(rawUniversity)
+      : null;
+
     const existingApplication = await db.query.teacherApplications.findFirst({
       where: (teacherApplications, { eq }) =>
         eq(teacherApplications.userId, user.id),
@@ -203,6 +248,8 @@ export async function POST(request: NextRequest) {
         teacherPhoneNumber,
         teacherEmail,
         education: strOrNull(body.education),
+        university: universityResolved,
+        universityDepartment: rawDepartment.length > 0 ? rawDepartment : null,
         experienceYears: strOrNull(body.experienceYears),
         targetLevels: strOrNull(body.targetLevels),
         availableHours: strOrNull(body.availableHours),

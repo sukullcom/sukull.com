@@ -431,6 +431,10 @@ export const teacherApplications = pgTable("teacher_applications", {
   teacherPhoneNumber: text("teacher_phone_number"),
   teacherEmail: text("teacher_email"),
   education: text("education"),
+  /** Mezun olunan üniversite (schools tablosundan seçilen ad). */
+  university: text("university"),
+  /** Mezun olunan bölüm — serbest metin (örn. "Bilgisayar Mühendisliği"). */
+  universityDepartment: text("university_department"),
   experienceYears: text("experience_years"),
   targetLevels: text("target_levels"),
   availableHours: text("available_hours"),

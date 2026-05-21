@@ -23,6 +23,8 @@ import {
   Calendar,
   Wallet,
   FileText,
+  Building2,
+  BookMarked,
 } from "lucide-react";
 import { capabilityDisplayName } from "@/lib/teaching-offerings";
 import type { TeachingCapability } from "@/lib/teaching-offerings";
@@ -37,6 +39,8 @@ type TeacherApplication = {
   /** Başvuru formundan gelen ders + sınıf çiftleri; onayda `teacher_fields` ile senkronlanır. */
   capabilities: TeachingCapability[];
   education: string | null;
+  university: string | null;
+  universityDepartment: string | null;
   experienceYears: string | null;
   targetLevels: string | null;
   availableHours: string | null;
@@ -263,6 +267,16 @@ export default function TeacherApplicationsPage() {
                   <InfoRow icon={BookOpen} label="Birincil alan" value={app.field} />
                   {app.education && (
                     <InfoRow icon={GraduationCap} label="Eğitim" value={app.education} />
+                  )}
+                  {app.university && (
+                    <InfoRow icon={Building2} label="Üniversite" value={app.university} />
+                  )}
+                  {app.universityDepartment && (
+                    <InfoRow
+                      icon={BookMarked}
+                      label="Bölüm"
+                      value={app.universityDepartment}
+                    />
                   )}
                   {app.experienceYears && (
                     <InfoRow icon={Briefcase} label="Deneyim" value={app.experienceYears} />

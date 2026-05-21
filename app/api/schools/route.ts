@@ -74,6 +74,33 @@ const getDistrictsAggregate = unstable_cache(
   { tags: [CACHE_TAGS.schoolsMaster], revalidate: CACHE_TTL.schoolsMaster },
 );
 
+/**
+ * Üniversite kataloğu — eğitmen başvurusu + eğitmen filtreleri tarafından
+ * kullanılır. `schools` tablosunda `type='university'` olan satırlardan
+ * (Category = "University" olarak yüklendi — bkz. import scripti) ad
+ * sözlüğü çıkarır. Aynı isim birden fazla satırda olabileceği için
+ * (örn. Kampüs varyantları) name + min(city) ile distinct alıyoruz.
+ *
+ * 24 saatlik cache + `schoolsMaster` tag invalidation — okul listesi
+ * yeniden import edildiğinde otomatik tazelenir.
+ */
+const getUniversitiesCatalog = unstable_cache(
+  async () => {
+    const rows = await db
+      .select({
+        name: schools.name,
+        city: sql<string>`MIN(${schools.city})`,
+      })
+      .from(schools)
+      .where(eq(schools.type, 'university'))
+      .groupBy(schools.name)
+      .orderBy(schools.name);
+    return rows;
+  },
+  ['schools-universities-v1'],
+  { tags: [CACHE_TAGS.schoolsMaster], revalidate: CACHE_TTL.schoolsMaster },
+);
+
 const getCategoriesAggregate = unstable_cache(
   async (cityUpper: string, districtUpper: string) =>
     db
@@ -92,7 +119,10 @@ const getCategoriesAggregate = unstable_cache(
 
 function rateLimitSchoolsGet(ip: string, action: string | null) {
   const catalogOnly =
-    action === 'cities' || action === 'districts' || action === 'categories';
+    action === 'cities' ||
+    action === 'districts' ||
+    action === 'categories' ||
+    action === 'universities';
   if (catalogOnly) {
     return checkRateLimit({
       key: `schools-catalog:ip:${ip}`,
@@ -139,6 +169,14 @@ export async function GET(request: NextRequest) {
       case 'cities': {
         const cities = await getCitiesAggregate();
         return jsonSchoolCatalog({ cities });
+      }
+
+      case 'universities': {
+        // Eğitmen rehberi & başvuru formu için: alfabetik üniversite listesi.
+        // ~700 satır; agresif cache + tag-based invalidation ile pool'a
+        // baskı yapmaz.
+        const universities = await getUniversitiesCatalog();
+        return jsonSchoolCatalog({ universities });
       }
 
       case 'districts': {
