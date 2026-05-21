@@ -39,6 +39,7 @@ export type AdminAuditAction =
   // User/role management
   | "user.role.update"
   | "user.fix_student_roles"
+  | "user.credits.grant"
   // Course builder
   | "course.create"
   | "course.update"

@@ -2,6 +2,7 @@ import {
   AlertTriangle,
   BarChart3,
   BookOpen,
+  CreditCard,
   LayoutDashboard,
   Megaphone,
   School,
@@ -42,6 +43,7 @@ export const ADMIN_NAV: AdminNavItem[] = [
     badgeKey: "listingsPendingReview",
   },
   { href: "/admin/course-builder", label: "Kurs Oluşturucu", icon: BookOpen },
+  { href: "/admin/credits", label: "Kredi Yönetimi", icon: CreditCard },
   {
     href: "/admin/errors",
     label: "Hata Kayıtları",

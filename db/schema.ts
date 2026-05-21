@@ -865,6 +865,51 @@ export const creditTransactionsRelations = relations(creditTransactions, ({ one 
   }),
 }));
 
+/**
+ * Admin'in manuel olarak yaptığı kredi ayarlamalarının defteri.
+ *  - `creditTransactions` ödeme bazlı satın alımları kayıt altına alır.
+ *  - `creditAdjustments` ödeme dışı hareketleri (hediye, iade, düzeltme).
+ *  - `delta` pozitifse verme, negatifse düşürme.
+ *  - `balanceAfter` işlemden sonraki `available_credits`; geçmiş bakiye
+ *    izini takip için.
+ *  - Aynı işlem ayrıca `admin_audit`'a da yazılır (forensic trail).
+ */
+export const creditAdjustments = pgTable(
+  "credit_adjustments",
+  {
+    id: bigserial("id", { mode: "number" }).primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    adminId: text("admin_id").notNull(),
+    adminEmail: text("admin_email"),
+    delta: integer("delta").notNull(),
+    reason: text("reason").notNull(),
+    balanceAfter: integer("balance_after").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (table) => ({
+    userCreatedIdx: index("idx_credit_adjustments_user_created").on(
+      table.userId,
+      table.createdAt,
+    ),
+    adminCreatedIdx: index("idx_credit_adjustments_admin_created").on(
+      table.adminId,
+      table.createdAt,
+    ),
+  }),
+);
+
+export const creditAdjustmentsRelations = relations(
+  creditAdjustments,
+  ({ one }) => ({
+    user: one(users, {
+      fields: [creditAdjustments.userId],
+      references: [users.id],
+    }),
+  }),
+);
+
 // Payment Logs - stores raw Iyzico responses for debugging/auditing
 export const paymentLogs = pgTable("payment_logs", {
   id: serial("id").primaryKey(),

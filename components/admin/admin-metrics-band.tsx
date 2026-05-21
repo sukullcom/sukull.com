@@ -7,46 +7,79 @@ import {
 } from "@/db/schema";
 import { eq, count } from "drizzle-orm";
 import { UsersRound, Clock, CheckCircle, XCircle, Megaphone, Handshake } from "lucide-react";
+import { logger } from "@/lib/logger";
+
+/**
+ * Aşağıdaki sorgular `<Suspense>` içinde stream edilir. Herhangi biri fırlatırsa
+ * React #419 ("server could not finish this Suspense boundary") tetiklenir —
+ * tarayıcıda gürültülü bir log düşer. Her sorguyu küçük catch ile sarıyoruz;
+ * tek bir sayım başarısız olursa o kart 0 gösterir, panel diğer rakamlarla
+ * stream edilmeye devam eder.
+ */
+async function safeCount(label: string, fn: () => Promise<{ value: number }[]>) {
+  try {
+    const r = await fn();
+    return r[0]?.value ?? 0;
+  } catch (err) {
+    logger.error({
+      message: "admin metrics count query failed",
+      error: err,
+      location: "admin/admin-metrics-band",
+      fields: { metric: label },
+    });
+    return 0;
+  }
+}
 
 export async function AdminMetricsBand() {
   const [
-    [totalUsersRow],
-    [teacherPendingRow],
-    [teacherApprovedRow],
-    [teacherRejectedRow],
-    [listingsPendingReviewRow],
-    [pendingOffersRow],
+    totalUsersRow,
+    teacherPendingRow,
+    teacherApprovedRow,
+    teacherRejectedRow,
+    listingsPendingReviewRow,
+    pendingOffersRow,
   ] = await Promise.all([
-    db.select({ value: count() }).from(users),
-    db
-      .select({ value: count() })
-      .from(teacherApplications)
-      .where(eq(teacherApplications.status, "pending")),
-    db
-      .select({ value: count() })
-      .from(teacherApplications)
-      .where(eq(teacherApplications.status, "approved")),
-    db
-      .select({ value: count() })
-      .from(teacherApplications)
-      .where(eq(teacherApplications.status, "rejected")),
-    db
-      .select({ value: count() })
-      .from(listings)
-      .where(eq(listings.status, "pending_review")),
-    db
-      .select({ value: count() })
-      .from(listingOffers)
-      .where(eq(listingOffers.status, "pending")),
+    safeCount("totalUsers", () => db.select({ value: count() }).from(users)),
+    safeCount("teacherPending", () =>
+      db
+        .select({ value: count() })
+        .from(teacherApplications)
+        .where(eq(teacherApplications.status, "pending")),
+    ),
+    safeCount("teacherApproved", () =>
+      db
+        .select({ value: count() })
+        .from(teacherApplications)
+        .where(eq(teacherApplications.status, "approved")),
+    ),
+    safeCount("teacherRejected", () =>
+      db
+        .select({ value: count() })
+        .from(teacherApplications)
+        .where(eq(teacherApplications.status, "rejected")),
+    ),
+    safeCount("listingsPendingReview", () =>
+      db
+        .select({ value: count() })
+        .from(listings)
+        .where(eq(listings.status, "pending_review")),
+    ),
+    safeCount("pendingOffers", () =>
+      db
+        .select({ value: count() })
+        .from(listingOffers)
+        .where(eq(listingOffers.status, "pending")),
+    ),
   ]);
 
   const stats = {
-    totalUsers: totalUsersRow?.value ?? 0,
-    teacherPending: teacherPendingRow?.value ?? 0,
-    teacherApproved: teacherApprovedRow?.value ?? 0,
-    teacherRejected: teacherRejectedRow?.value ?? 0,
-    listingsPendingReview: listingsPendingReviewRow?.value ?? 0,
-    pendingOffers: pendingOffersRow?.value ?? 0,
+    totalUsers: totalUsersRow,
+    teacherPending: teacherPendingRow,
+    teacherApproved: teacherApprovedRow,
+    teacherRejected: teacherRejectedRow,
+    listingsPendingReview: listingsPendingReviewRow,
+    pendingOffers: pendingOffersRow,
   };
 
   const metricCards = [

@@ -314,6 +314,18 @@ export const RATE_LIMITS = {
    */
   accountDelete: { max: 3, windowSeconds: 24 * 60 * 60 },
 
+  /**
+   * Admin manuel kredi atama / iade işlemleri. Hata payı ve fan-out için
+   * dakikada 30 atom. Yıkıcı / para-değerinde işlem olduğu için adminin
+   * çoklu sekmede klavye-kaza ihtimalini hafifletir.
+   */
+  adminCreditsGrant: { max: 30, windowSeconds: 60 },
+  /**
+   * Admin kullanıcı araması (kredi atamak için). Klavye yazımıyla yüksek
+   * frekansta vurabilir ama yalnızca admin kullanır.
+   */
+  adminCreditsSearch: { max: 120, windowSeconds: 60 },
+
   // --- Reads — user-scoped ---
   /** Genel kullanıcı sıralaması — paylaşılan IP (kampüs Wi‑Fi) ile okunabilir. */
   leaderboard: { max: 180, windowSeconds: 60 },

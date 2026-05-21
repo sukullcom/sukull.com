@@ -1,6 +1,7 @@
 import Link from "next/link";
 import db from "@/db/drizzle";
 import { ArrowRight } from "lucide-react";
+import { logger } from "@/lib/logger";
 
 type ActivityItem = {
   id: number | string;
@@ -10,20 +11,56 @@ type ActivityItem = {
   status: string;
 };
 
+/**
+ * Suspense altında stream edilen RSC; herhangi bir query fırlatırsa
+ * React #419'a (gürültülü stream hatası) yol açar. Bu yüzden her sorguyu
+ * try/catch ile boş listeye düşürüyoruz — panel ayakta kalır.
+ */
+type RecentTeachersQuery = ReturnType<
+  typeof db.query.teacherApplications.findMany
+>;
+type RecentTeachers = Awaited<RecentTeachersQuery>;
+
+type RecentListingsResult = Array<{
+  id: number;
+  title: string | null;
+  subject: string | null;
+  status: string;
+  createdAt: Date;
+  student: { name: string | null } | null;
+}>;
+
 export async function AdminActivityBand() {
-  const [recentTeachers, recentListings] = await Promise.all([
-    db.query.teacherApplications.findMany({
+  const recentTeachers: RecentTeachers = await db.query.teacherApplications
+    .findMany({
       orderBy: (t, { desc }) => [desc(t.createdAt)],
       limit: 6,
-    }),
-    db.query.listings.findMany({
+    })
+    .catch((err) => {
+      logger.error({
+        message: "recent teacher applications query failed",
+        error: err,
+        location: "admin/admin-activity-band/recentTeachers",
+      });
+      return [] as RecentTeachers;
+    });
+
+  const recentListings: RecentListingsResult = (await db.query.listings
+    .findMany({
       orderBy: (t, { desc }) => [desc(t.createdAt)],
       limit: 6,
       with: {
         student: { columns: { name: true } },
       },
-    }),
-  ]);
+    })
+    .catch((err) => {
+      logger.error({
+        message: "recent listings query failed",
+        error: err,
+        location: "admin/admin-activity-band/recentListings",
+      });
+      return [];
+    })) as RecentListingsResult;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
