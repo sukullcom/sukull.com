@@ -10,6 +10,7 @@ import Image from "next/image";
 import { ChatThread } from "./_components/chat-thread";
 import { PrivateLessonContactStrip } from "@/components/private-lesson/private-lesson-contact-strip";
 import { getCanReviewOverview } from "@/db/queries/teacher-reviews";
+import { isTeacher } from "@/db/queries/applications";
 
 export const dynamic = "force-dynamic";
 
@@ -62,19 +63,15 @@ export default async function MessageThreadPage({
     .orderBy(asc(studyBuddyMessages.created_at))
     .limit(500);
 
-  const viewer = await db.query.users.findFirst({
-    where: eq(users.id, user.id),
-    columns: { role: true },
-  });
-  const viewerRole = viewer?.role ?? "user";
-
   let reviewBanner: { teacherId: string } | null = null;
-  if (otherProfile?.role === "teacher" && viewerRole !== "teacher" && viewerRole !== "admin") {
-    const overview = await getCanReviewOverview(user.id, otherProfile.id);
+  if (otherId && (await isTeacher(otherId))) {
+    const overview = await getCanReviewOverview(user.id, otherId);
     if (overview.canReview) {
-      reviewBanner = { teacherId: otherProfile.id };
+      reviewBanner = { teacherId: otherId };
     }
   }
+
+  const otherIsTeacher = otherId ? await isTeacher(otherId) : false;
 
   return (
     <div className="max-w-3xl mx-auto px-3 sm:px-6 pb-6 sm:pb-8 min-h-0">
@@ -102,10 +99,10 @@ export default async function MessageThreadPage({
               {otherProfile?.name ?? "Kullanıcı"}
             </div>
             <div className="text-[11px] text-muted-foreground">
-              {otherProfile?.role === "teacher" ? "Eğitmen" : "Öğrenci"}
+              {otherIsTeacher ? "Eğitmen" : "Öğrenci"}
             </div>
           </div>
-          {otherProfile?.role === "teacher" && (
+          {otherIsTeacher && otherProfile && (
             <Link
               href={`/private-lesson/teachers/${otherProfile.id}`}
               className="ml-auto text-xs text-suk-brand-border hover:underline"

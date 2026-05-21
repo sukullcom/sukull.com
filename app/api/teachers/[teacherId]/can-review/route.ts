@@ -11,9 +11,6 @@ import {
   rateLimitHeaders,
 } from "@/lib/rate-limit-db";
 import { getCanReviewOverview, assertTeacherExists } from "@/db/queries/teacher-reviews";
-import db from "@/db/drizzle";
-import { users } from "@/db/schema";
-import { eq } from "drizzle-orm";
 
 type Ctx = { params: { teacherId: string } };
 
@@ -50,20 +47,6 @@ export async function GET(request: NextRequest, ctx: Ctx) {
         canReview: false,
         alreadyReviewed: false,
         reason: "self",
-      });
-    }
-
-    const me = await db.query.users.findFirst({
-      where: eq(users.id, user.id),
-      columns: { role: true },
-    });
-    const myRole = me?.role ?? "user";
-
-    if (myRole === "teacher" || myRole === "admin") {
-      return NextResponse.json({
-        canReview: false,
-        alreadyReviewed: false,
-        reason: "role",
       });
     }
 

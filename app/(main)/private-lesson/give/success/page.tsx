@@ -1,23 +1,23 @@
 "use client";
 
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { FeedWrapper } from "@/components/feed-wrapper";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Confetti from "@/components/lazy-confetti";
 import Image from "next/image";
-import { 
-  CheckCircle2, 
-  ArrowRight, 
-  Clock, 
-  Mail, 
+import {
+  CheckCircle2,
+  ArrowRight,
+  Clock,
+  Mail,
   FileText,
-  GraduationCap
+  GraduationCap,
+  BookOpen,
 } from "lucide-react";
 
 export default function TeacherSuccessPage() {
-  const router = useRouter();
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   
   useEffect(() => {
@@ -108,24 +108,18 @@ export default function TeacherSuccessPage() {
               </div>
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 pt-4">
-              <Button
-                variant="primary"
-                size="lg"
-                onClick={() => router.push("/private-lesson")}
-                className="flex-1"
-              >
-                Özel derse dön
-                <ArrowRight className="w-4 h-4 ml-2" />
+            <div className="flex flex-col gap-2 pt-4 sm:flex-row">
+              <Button asChild variant="primary" className="sm:flex-1">
+                <Link href="/private-lesson" prefetch={false}>
+                  Özel derse dön
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
               </Button>
-              <Button
-                variant="primaryOutline"
-                size="lg"
-                onClick={() => router.push("/courses")}
-                className="flex-1"
-              >
-                Kurslara göz at
+              <Button asChild variant="secondary" className="sm:flex-1">
+                <Link href="/courses" prefetch={false}>
+                  <BookOpen className="mr-2 h-4 w-4" />
+                  Kurslara göz at
+                </Link>
               </Button>
             </div>
           </CardContent>

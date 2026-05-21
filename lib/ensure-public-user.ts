@@ -104,6 +104,8 @@ export async function ensurePublicUserFromAuth(
         links: [],
         referralCode,
         referredByUserId,
+        roles: ["user", "student"],
+        role: "user",
       })
       .onConflictDoNothing({ target: users.id })
       .returning({ id: users.id });

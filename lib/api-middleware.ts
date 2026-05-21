@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
 import { isAdmin } from "@/lib/admin";
 import { isTeacher as checkTeacherRole } from "@/db/queries";
+import { getUserRoles } from "@/db/queries/user-roles";
+import { hasUserRole, primaryRoleFromRoles } from "@/lib/user-roles";
 import { getRequestLogger } from "@/lib/logger";
 import {
   checkRateLimit,
@@ -49,11 +51,12 @@ export function withAuth(handler: AuthenticatedHandler) {
         );
       }
 
+      const roles = await getUserRoles(user.id);
       const authUser: AuthenticatedUser = {
         id: user.id,
         email: user.email || "",
         name: user.email || "",
-        role: user.role,
+        role: primaryRoleFromRoles(roles),
       };
 
       return handler(request, authUser, params);
@@ -76,9 +79,10 @@ export function withAuth(handler: AuthenticatedHandler) {
 
 export function withRole(roles: string[], handler: AuthenticatedHandler) {
   return withAuth(async (request, user, params) => {
-    const userRole = user.role || "student";
+    const userRoles = await getUserRoles(user.id);
+    const allowed = roles.some((r) => hasUserRole(userRoles, r as "user" | "student" | "teacher" | "admin"));
 
-    if (!roles.includes(userRole)) {
+    if (!allowed) {
       return NextResponse.json(
         { error: "Bu işlem için yetkiniz yok." },
         { status: 403 },

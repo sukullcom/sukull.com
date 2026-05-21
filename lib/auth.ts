@@ -1,10 +1,9 @@
 // lib/auth.ts
 import { createClient } from '@/utils/supabase/server'
-import db from '@/db/drizzle'
-import { users } from '@/db/schema'
-import { eq } from 'drizzle-orm'
 import { redirect } from 'next/navigation'
 import { isTeacher as userHasTeacherAccess } from '@/db/queries/applications'
+import { getUserRoles } from '@/db/queries/user-roles'
+import { hasUserRole, type UserRole } from '@/lib/user-roles'
 
 export async function getServerUser() {
   try {
@@ -26,7 +25,7 @@ export async function getServerUser() {
  * @param role The role to check for ("user", "teacher", or "admin")
  * @returns true if the user has the specified role, false otherwise
  */
-export async function checkUserRole(role: "user" | "teacher" | "admin") {
+export async function checkUserRole(role: UserRole) {
   const user = await getServerUser()
   if (!user) return false
 
@@ -34,11 +33,8 @@ export async function checkUserRole(role: "user" | "teacher" | "admin") {
     return userHasTeacherAccess(user.id)
   }
 
-  const userRecord = await db.query.users.findFirst({
-    where: eq(users.id, user.id),
-  })
-
-  return userRecord?.role === role
+  const roles = await getUserRoles(user.id)
+  return hasUserRole(roles, role)
 }
 
 /**
@@ -46,7 +42,7 @@ export async function checkUserRole(role: "user" | "teacher" | "admin") {
  * Redirects to unauthorized page if the user doesn't have the required role
  * @param role The required role ("user", "teacher", or "admin")
  */
-export async function requireRole(role: "user" | "teacher" | "admin") {
+export async function requireRole(role: UserRole) {
   const hasRole = await checkUserRole(role)
   
   if (!hasRole) {

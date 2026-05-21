@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getServerUser } from "@/lib/auth";
-import { isTeacher } from "@/db/queries/applications";
 import UserCreditsDisplay from "@/components/user-credits-display";
 import { ArrowLeft, Megaphone } from "lucide-react";
 import { NewListingForm } from "./_components/new-listing-form";
@@ -11,12 +10,6 @@ export const dynamic = "force-dynamic";
 export default async function NewListingPage() {
   const user = await getServerUser();
   if (!user) redirect("/login");
-
-  // Teachers shouldn't post demand listings — they make offers instead.
-  // Talep ilanı yalnızca öğrenci akışı; eğitmenler teklif verir (ilan açamaz).
-  if (await isTeacher(user.id)) {
-    redirect("/private-lesson/listings");
-  }
 
   return (
     <div className="max-w-2xl mx-auto px-3 sm:px-6 pb-10">

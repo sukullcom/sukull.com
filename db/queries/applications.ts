@@ -14,6 +14,8 @@ import {
   normalizeCapabilities,
   type TeachingCapability,
 } from "@/lib/teaching-offerings";
+import { hasUserRole, normalizeUserRoles, withRoleRemoved } from "@/lib/user-roles";
+import { addUserRole, getUserRoles, persistUserRoles } from "@/db/queries/user-roles";
 import db from "@/db/drizzle";
 import { teacherApplications, teacherFields, users, listingOffers } from "@/db/schema";
 import { and, eq, or, ilike, sql } from "drizzle-orm";
@@ -294,13 +296,9 @@ export async function approveTeacherApplication(id: number) {
     })
     .where(eq(teacherApplications.id, id));
 
-  const roleUpdateResult = await db
-    .update(users)
-    .set({ role: "teacher" })
-    .where(eq(users.id, application.userId))
-    .returning({ id: users.id, role: users.role });
-
-  if (roleUpdateResult.length === 0) {
+  try {
+    await addUserRole(application.userId, "teacher");
+  } catch {
     log.error({
       message: "no user found for role update",
       source: "server-action",
@@ -312,7 +310,7 @@ export async function approveTeacherApplication(id: number) {
     );
   }
 
-  log.debug("teacher role updated", { userId: application.userId });
+  log.debug("teacher role added to roles[]", { userId: application.userId });
 
   await syncTeacherFieldsForUser(application.userId, application);
 
@@ -450,11 +448,8 @@ export async function updateApprovedTeacherProfile(
  * `teacher_fields` ve `teacher_applications` silinir; rol `teacher` ise `user` olur.
  */
 export async function leaveTeacherProgram(userId: string) {
-  const userRow = await db.query.users.findFirst({
-    where: eq(users.id, userId),
-    columns: { role: true },
-  });
-  if (userRow?.role === "admin") {
+  const roles = await getUserRoles(userId);
+  if (hasUserRole(roles, "admin")) {
     throw new Error("Yönetici hesapları bu akışla öğretmenlikten ayrılamaz.");
   }
 
@@ -475,13 +470,12 @@ export async function leaveTeacherProgram(userId: string) {
       .delete(teacherApplications)
       .where(eq(teacherApplications.userId, userId));
 
-    if (userRow?.role === "teacher") {
-      await tx
-        .update(users)
-        .set({ role: "user", updated_at: new Date() })
-        .where(eq(users.id, userId));
-    }
   });
+
+  const current = await getUserRoles(userId);
+  if (current.includes("teacher")) {
+    await persistUserRoles(userId, withRoleRemoved(current, "teacher"));
+  }
 
   log.info("teacher left program", { userId });
   return { success: true as const };
@@ -506,10 +500,11 @@ export async function getAvailableFieldOptions() {
 export async function isTeacher(userId: string) {
   const user = await db.query.users.findFirst({
     where: eq(users.id, userId),
-    columns: { role: true },
+    columns: { role: true, roles: true },
   });
 
-  if (user?.role === "teacher") return true;
+  const roles = normalizeUserRoles(user?.roles, user?.role);
+  if (hasUserRole(roles, "teacher")) return true;
 
   const approved = await db.query.teacherApplications.findFirst({
     where: and(

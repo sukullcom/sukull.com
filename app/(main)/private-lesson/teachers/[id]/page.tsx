@@ -228,13 +228,19 @@ export default async function TeacherDetailPage({
                   Müsait Olduğu Saatler
                 </h2>
               </div>
-              <p className="text-sm text-foreground/90 whitespace-pre-wrap">
-                {teacher.availableHours}
-              </p>
-              <p className="text-[11px] text-muted-foreground/80 mt-2">
-                Not: Bilgi amaçlıdır. Sukull üzerinden randevu veya rezervasyon
-                yapılmaz; ders düzeni, ücret ve uygun saatler eğitmenle
-                mesajlaşarak taraflar arasında netleşir.
+              <ul className="flex flex-wrap gap-2">
+                {teacher.availableHours.split(/,\s*/).filter(Boolean).map((slot) => (
+                  <li
+                    key={slot}
+                    className="rounded-lg border border-suk-brand/25 bg-suk-brand-soft/50 px-2.5 py-1 text-sm text-foreground"
+                  >
+                    {slot}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-[11px] text-muted-foreground/80 mt-3 leading-relaxed">
+                Bu aralıklar bilgilendirme amaçlıdır; kesin gün ve saat mesajlaşarak
+                netleşir. Sukull üzerinden otomatik randevu alınmaz.
               </p>
             </section>
           )}

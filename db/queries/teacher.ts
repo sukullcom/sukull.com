@@ -15,6 +15,7 @@ import { teacherApplications, teacherFields, users } from "@/db/schema";
 import { CACHE_TAGS, CACHE_TTL } from "@/lib/cache-tags";
 import { queryResultRows } from "@/lib/query-result";
 import { teacherPrivateLessonDisplayName } from "@/lib/teacher-private-lesson-name";
+import { isTeacher } from "@/db/queries/applications";
 
 // ---------------------------------------------------------------------------
 // Directory — "rehber" listing on /private-lesson/teachers
@@ -65,7 +66,7 @@ const _getTeachersDirectoryCached = unstable_cache(
         ON ta.user_id = u.id AND ta.status = 'approved'
       LEFT JOIN teacher_fields tf
         ON tf.teacher_id = u.id AND tf.is_active = true
-      WHERE u.role = 'teacher'
+      WHERE ('teacher' = ANY(u.roles) OR ta.user_id IS NOT NULL)
       GROUP BY u.id, u.name, u.email, u.avatar, u.description,
                ta.hourly_rate_online, ta.hourly_rate_in_person,
                ta.lesson_mode, ta.city, ta.district,
@@ -157,7 +158,7 @@ export async function getTeacherProfile(teacherId: string) {
     }),
   ]);
 
-  if (!user || user.role !== "teacher") return null;
+  if (!user || !(await isTeacher(teacherId))) return null;
 
   const displayName = teacherPrivateLessonDisplayName(
     application?.teacherName,

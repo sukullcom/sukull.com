@@ -40,6 +40,14 @@ export const users = pgTable("users", {
   /** Shown to the other party after private-lesson unlock or listing offer. */
   phone: text("phone"),
   role: userRoleEnum("role").default("user").notNull(),
+  /**
+   * Çoklu rol — `user` + `student` varsayılan; onaylı eğitmen `teacher`, env admin `admin` eklenir.
+   * `role` sütunu birincil özet (geriye dönük uyumluluk).
+   */
+  roles: text("roles")
+    .array()
+    .notNull()
+    .default(sql`ARRAY['user','student']::text[]`),
   /** Paylaşılabilir davet kodu (ör. SK + 8 hex). */
   referralCode: text("referral_code").notNull(),
   /** Bu hesabı hangi kullanıcının davetiyle açtığı (bir kez, değişmez). */

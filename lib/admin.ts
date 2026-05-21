@@ -5,6 +5,13 @@ import db from "@/db/drizzle";
 import { users } from "@/db/schema";
 
 import { getServerUser } from "./auth";
+import {
+  hasUserRole,
+  normalizeUserRoles,
+  withRoleAdded,
+  withRoleRemoved,
+} from "@/lib/user-roles";
+import { getUserRoles, persistUserRoles } from "@/db/queries/user-roles";
 
 /**
  * Admin role resolution.
@@ -54,10 +61,11 @@ export const isAdmin = cache(async (): Promise<boolean | null> => {
 
   const userRecord = await db.query.users.findFirst({
     where: eq(users.id, user.id),
-    columns: { role: true },
+    columns: { role: true, roles: true },
   });
 
-  return userRecord?.role === "admin";
+  const roles = normalizeUserRoles(userRecord?.roles, userRecord?.role);
+  return hasUserRole(roles, "admin");
 });
 
 /**
@@ -97,22 +105,14 @@ export async function syncAdminRoleFromEmail(authUser: {
 
   const shouldBeAdmin = adminEmails.includes(authUser.email.toLowerCase());
 
-  const current = await db.query.users.findFirst({
-    where: eq(users.id, authUser.id),
-    columns: { role: true },
-  });
-  if (!current) return false;
-
-  const isCurrentlyAdmin = current.role === "admin";
+  const currentRoles = await getUserRoles(authUser.id);
+  const isCurrentlyAdmin = hasUserRole(currentRoles, "admin");
   if (shouldBeAdmin === isCurrentlyAdmin) return false;
 
-  await db
-    .update(users)
-    .set({
-      role: shouldBeAdmin ? "admin" : "user",
-      updated_at: new Date(),
-    })
-    .where(eq(users.id, authUser.id));
+  const next = shouldBeAdmin
+    ? withRoleAdded(currentRoles, "admin")
+    : withRoleRemoved(currentRoles, "admin");
+  await persistUserRoles(authUser.id, next);
 
   return true;
 }

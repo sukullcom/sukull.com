@@ -1,25 +1,19 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq, or } from "drizzle-orm";
 import db from "@/db/drizzle";
 import { messageUnlocks, teacherApplications, users } from "@/db/schema";
-
-function isTeacherRole(role: string): boolean {
-  return role === "teacher";
-}
+import { isTeacher } from "@/db/queries/applications";
 
 /**
  * Resolves a display phone: profile `users.phone` first, then for
  * teachers the approved application phone.
  */
-export async function resolvePhoneForUser(
-  userId: string,
-  role: string,
-): Promise<string | null> {
+export async function resolvePhoneForUser(userId: string): Promise<string | null> {
   const row = await db.query.users.findFirst({
     where: eq(users.id, userId),
     columns: { phone: true },
   });
   if (row?.phone?.trim()) return row.phone.trim();
-  if (isTeacherRole(role)) {
+  if (await isTeacher(userId)) {
     const app = await db.query.teacherApplications.findFirst({
       where: and(
         eq(teacherApplications.userId, userId),
@@ -39,7 +33,8 @@ export type PrivateLessonContactPayload = {
 
 /**
  * Returns contact details for a student–teacher pair only if
- * `message_unlocks` exists (student paid, teacher offered, or both).
+ * `message_unlocks` exists. Roller çoklu olabilir; öğrenci/eğitmen kimliği
+ * kilidi tablosundan okunur.
  */
 export async function getPrivateLessonContactForPair(
   viewerId: string,
@@ -51,39 +46,33 @@ export async function getPrivateLessonContactForPair(
   const [viewer, other] = await Promise.all([
     db.query.users.findFirst({
       where: eq(users.id, viewerId),
-      columns: { id: true, name: true, email: true, role: true },
+      columns: { id: true, name: true, email: true },
     }),
     db.query.users.findFirst({
       where: eq(users.id, otherUserId),
-      columns: { id: true, name: true, email: true, role: true },
+      columns: { id: true, name: true, email: true },
     }),
   ]);
   if (!viewer || !other) return { ok: false, code: "not_found" };
 
-  let studentId: string;
-  let teacherId: string;
-  if (isTeacherRole(viewer.role) && !isTeacherRole(other.role)) {
-    studentId = other.id;
-    teacherId = viewer.id;
-  } else if (!isTeacherRole(viewer.role) && isTeacherRole(other.role)) {
-    studentId = viewer.id;
-    teacherId = other.id;
-  } else {
-    return { ok: false, code: "invalid_pair" };
-  }
-
   const unlock = await db.query.messageUnlocks.findFirst({
-    where: and(
-      eq(messageUnlocks.studentId, studentId),
-      eq(messageUnlocks.teacherId, teacherId),
+    where: or(
+      and(
+        eq(messageUnlocks.studentId, viewerId),
+        eq(messageUnlocks.teacherId, otherUserId),
+      ),
+      and(
+        eq(messageUnlocks.studentId, otherUserId),
+        eq(messageUnlocks.teacherId, viewerId),
+      ),
     ),
-    columns: { id: true },
+    columns: { id: true, studentId: true, teacherId: true },
   });
   if (!unlock) return { ok: false, code: "not_unlocked" };
 
   const [yourPhone, theirPhone] = await Promise.all([
-    resolvePhoneForUser(viewer.id, viewer.role),
-    resolvePhoneForUser(other.id, other.role),
+    resolvePhoneForUser(viewer.id),
+    resolvePhoneForUser(other.id),
   ]);
 
   return {

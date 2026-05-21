@@ -16,6 +16,7 @@ import {
   TeachingCapabilityRowsField,
   type CapabilityRow,
 } from "@/components/private-lesson/teaching-capability-rows-field";
+import { TeacherAvailableHoursField } from "@/components/private-lesson/teacher-available-hours-field";
 import {
   ArrowRight,
   BookOpen,
@@ -30,7 +31,6 @@ import {
   Loader2,
   Briefcase,
   Monitor,
-  Calendar,
   Wallet,
   FileText,
 } from "lucide-react";
@@ -420,39 +420,26 @@ export default function GiveLessonPage() {
                 </div>
               </div>
 
-              {/* Target Levels & Availability */}
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="targetLevels" className="flex items-center gap-2">
-                    <BookOpen className="w-4 h-4" />
-                    Ders Vereceğin Seviye
-                  </Label>
-                  <Select value={formData.targetLevels} onValueChange={(value) => handleSelectChange("targetLevels", value)}>
-                    <SelectValue placeholder="Hedef seviye seç" />
-                    <SelectItem value="İlkokul (1-4)">İlkokul (1-4)</SelectItem>
-                    <SelectItem value="Ortaokul (5-8)">Ortaokul (5-8)</SelectItem>
-                    <SelectItem value="Lise (9-12)">Lise (9-12)</SelectItem>
-                    <SelectItem value="Üniversite Hazırlık">Üniversite Hazırlık</SelectItem>
-                    <SelectItem value="Üniversite">Üniversite</SelectItem>
-                    <SelectItem value="Tüm seviyeler">Tüm seviyeler</SelectItem>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="availableHours" className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4" />
-                    Müsait Olduğun Saatler
-                  </Label>
-                  <Select value={formData.availableHours} onValueChange={(value) => handleSelectChange("availableHours", value)}>
-                    <SelectValue placeholder="Saat aralığı seç" />
-                    <SelectItem value="Sabah (09:00-12:00)">Sabah (09:00-12:00)</SelectItem>
-                    <SelectItem value="Öğleden sonra (12:00-17:00)">Öğleden sonra (12:00-17:00)</SelectItem>
-                    <SelectItem value="Akşam (17:00-21:00)">Akşam (17:00-21:00)</SelectItem>
-                    <SelectItem value="Hafta sonu">Hafta sonu</SelectItem>
-                    <SelectItem value="Esnek">Esnek / Farketmez</SelectItem>
-                  </Select>
-                </div>
+              <div className="space-y-2">
+                <Label htmlFor="targetLevels" className="flex items-center gap-2">
+                  <BookOpen className="w-4 h-4" />
+                  Ders Vereceğin Seviye
+                </Label>
+                <Select value={formData.targetLevels} onValueChange={(value) => handleSelectChange("targetLevels", value)}>
+                  <SelectValue placeholder="Hedef seviye seç" />
+                  <SelectItem value="İlkokul (1-4)">İlkokul (1-4)</SelectItem>
+                  <SelectItem value="Ortaokul (5-8)">Ortaokul (5-8)</SelectItem>
+                  <SelectItem value="Lise (9-12)">Lise (9-12)</SelectItem>
+                  <SelectItem value="Üniversite Hazırlık">Üniversite Hazırlık</SelectItem>
+                  <SelectItem value="Üniversite">Üniversite</SelectItem>
+                  <SelectItem value="Tüm seviyeler">Tüm seviyeler</SelectItem>
+                </Select>
               </div>
+
+              <TeacherAvailableHoursField
+                value={formData.availableHours}
+                onChange={(value) => handleSelectChange("availableHours", value)}
+              />
 
               {/* Lesson Mode */}
               <div className="space-y-2">

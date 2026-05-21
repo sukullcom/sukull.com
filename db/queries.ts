@@ -88,6 +88,12 @@ export {
   isTeacher,
   isApprovedStudent,
 } from "./queries/applications";
+export {
+  getUserRoles,
+  persistUserRoles,
+  addUserRole,
+  removeUserRole,
+} from "./queries/user-roles";
 
 // ---------------------------------------------------------------------------
 // Teacher directory (public rehber + profile page)

@@ -14,6 +14,7 @@ import {
 import { CACHE_TAGS, CACHE_TTL } from "@/lib/cache-tags";
 import { queryResultRows } from "@/lib/query-result";
 import { getMessageUnlock } from "@/db/queries/messages";
+import { isTeacher } from "@/db/queries/applications";
 import {
   REVIEW_MESSAGE_MIN_PER_SIDE,
   REVIEW_MESSAGE_RECENCY_DAYS,
@@ -272,7 +273,8 @@ export function anonymizeStudentName(name: string | null | undefined): string {
 export async function assertTeacherExists(teacherId: string) {
   const u = await db.query.users.findFirst({
     where: eq(users.id, teacherId),
-    columns: { id: true, role: true },
+    columns: { id: true },
   });
-  return u?.role === "teacher" ? u : null;
+  if (!u || !(await isTeacher(teacherId))) return null;
+  return u;
 }

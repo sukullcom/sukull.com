@@ -47,9 +47,12 @@ const ICON_MAP: Record<PrivateLessonIconKey, LucideIcon> = {
 export function PrivateLessonNav({
   items,
   isTeacherMode,
+  showStudentListingHighlight = !isTeacherMode,
 }: {
   items: PrivateLessonNavItem[];
   isTeacherMode: boolean;
+  /** Çoklu rol: eğitmen iken de kendi ilan detayında «İlanlarım» vurgulansın */
+  showStudentListingHighlight?: boolean;
 }) {
   const pathname = usePathname() ?? "";
 
@@ -60,7 +63,7 @@ export function PrivateLessonNav({
     if (path === "/private-lesson/listings/new") return pathname === path;
     // Öğrenci: kendi ilan detayı `/listings/[id]` — sekmede "İlanlarım" aktif kalsın.
     if (
-      !isTeacherMode &&
+      showStudentListingHighlight &&
       path === "/private-lesson/my-listings" &&
       /^\/private-lesson\/listings\/\d+$/.test(pathname)
     ) {

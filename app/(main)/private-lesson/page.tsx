@@ -11,20 +11,18 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { FeedWrapper } from "@/components/feed-wrapper";
-import { BookOpen, GraduationCap, Megaphone } from "lucide-react";
+import { ArrowRight, BookOpen, GraduationCap, Megaphone } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
 /**
- * Öğrenci girişi: davetkâr kopya; onaylı eğitmenler doğrudan panele yönlendirilir.
+ * Özel ders pazarı girişi — öğrenci ve eğitmen akışları aynı hesapta birlikte kullanılabilir.
  */
 export default async function PrivateLessonPage() {
   const user = await getServerUser();
   if (!user) redirect("/login");
 
-  if (await isTeacher(user.id)) {
-    redirect("/private-lesson/teacher-dashboard");
-  }
+  const teacherMode = await isTeacher(user.id);
 
   return (
     <div className="mx-auto flex w-full max-w-[960px] flex-1 flex-row px-3 lg:px-0">
@@ -109,12 +107,31 @@ export default async function PrivateLessonPage() {
                 İlk teklif için &quot;mükemmel an&quot; beklemene gerek yok; kısa bir merhaba
                 bile yeter.
               </p>
-              <Button asChild variant="primary" className="w-full sm:w-auto">
-                <Link href="/private-lesson/give" prefetch={false}>
-                  <GraduationCap className="mr-2 h-4 w-4" />
-                  Eğitmen başvurusuna atla
-                </Link>
-              </Button>
+              {teacherMode ? (
+                <div className="flex flex-col gap-2 pt-2 sm:flex-row sm:flex-wrap">
+                  <Button asChild variant="primary" className="sm:flex-1">
+                    <Link href="/private-lesson/teacher-dashboard" prefetch={false}>
+                      Eğitmen paneline git
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button asChild variant="secondary" className="sm:flex-1">
+                    <Link
+                      href="/private-lesson/teacher-dashboard/settings"
+                      prefetch={false}
+                    >
+                      Profilini güncelle
+                    </Link>
+                  </Button>
+                </div>
+              ) : (
+                <Button asChild variant="primary" className="w-full sm:w-auto">
+                  <Link href="/private-lesson/give" prefetch={false}>
+                    <GraduationCap className="mr-2 h-4 w-4" />
+                    Eğitmen başvurusuna atla
+                  </Link>
+                </Button>
+              )}
             </CardContent>
           </Card>
         </div>

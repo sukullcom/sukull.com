@@ -14,6 +14,7 @@ import {
   TeachingCapabilityRowsField,
   type CapabilityRow,
 } from "@/components/private-lesson/teaching-capability-rows-field";
+import { TeacherAvailableHoursField } from "@/components/private-lesson/teacher-available-hours-field";
 import { ConfirmActionDialog } from "@/components/confirm-action-dialog";
 import {
   BookOpen,
@@ -25,7 +26,6 @@ import {
   Loader2,
   Briefcase,
   Monitor,
-  Calendar,
   Wallet,
   FileText,
   ArrowLeft,
@@ -421,26 +421,12 @@ export function TeacherProfileSettingsClient() {
                   <SelectItem value="Tüm seviyeler">Tüm seviyeler</SelectItem>
                 </Select>
               </div>
-              <div className="space-y-2">
-                <Label className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
-                  Müsaitlik
-                </Label>
-                <Select
-                  value={formData.availableHours}
-                  onValueChange={(v) => handleSelectChange("availableHours", v)}
-                >
-                  <SelectValue placeholder="Seç" />
-                  <SelectItem value="Sabah (09:00-12:00)">Sabah (09:00-12:00)</SelectItem>
-                  <SelectItem value="Öğleden sonra (12:00-17:00)">
-                    Öğleden sonra (12:00-17:00)
-                  </SelectItem>
-                  <SelectItem value="Akşam (17:00-21:00)">Akşam (17:00-21:00)</SelectItem>
-                  <SelectItem value="Hafta sonu">Hafta sonu</SelectItem>
-                  <SelectItem value="Esnek">Esnek / Farketmez</SelectItem>
-                </Select>
-              </div>
             </div>
+
+            <TeacherAvailableHoursField
+              value={formData.availableHours}
+              onChange={(v) => handleSelectChange("availableHours", v)}
+            />
 
             <div className="space-y-2">
               <Label className="flex items-center gap-2">
