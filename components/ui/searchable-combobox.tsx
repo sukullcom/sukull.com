@@ -139,11 +139,11 @@ export function SearchableCombobox({
   }, [open]);
 
   const commit = (next: string | null, source?: string) => {
-    if (process.env.NODE_ENV !== "production") {
-      // Debug: hangi event tipinden geldiğini görelim. Üretimde devre dışı.
-      // eslint-disable-next-line no-console
-      console.log("[combobox] commit", { next, source });
-    }
+    // Production'da da console'a düşüyor (gerekirse temizleyeceğiz);
+    // amaç: "tıklıyorum ama seçilmiyor" gibi vakalarda kullanıcının
+    // DevTools'tan rahatça paylaşabileceği bir iz bırakmak.
+    // eslint-disable-next-line no-console
+    console.log("[combobox] commit", { next, source });
     onChange(next);
     setOpen(false);
   };
@@ -259,17 +259,8 @@ export function SearchableCombobox({
                     role="option"
                     aria-selected={false}
                     className="cursor-pointer border-t px-3 py-2 hover:bg-suk-brand-soft"
-                    // onMouseDown + preventDefault, search input'tan odak
-                    // koparken oluşan blur'un click event'ini yutmasını
-                    // engeller. Headless-UI / Radix de aynı kalıbı kullanır.
-                    onMouseDown={(e) => {
-                      e.preventDefault();
-                      commit(query.trim());
-                    }}
-                    onTouchEnd={(e) => {
-                      e.preventDefault();
-                      commit(query.trim());
-                    }}
+                    onMouseDown={(e) => e.preventDefault()}
+                    onClick={() => commit(query.trim(), "free-text")}
                   >
                     <span className="text-foreground">
                       &ldquo;{query.trim()}&rdquo; olarak ekle
@@ -292,56 +283,33 @@ export function SearchableCombobox({
                       isSelected && "font-medium text-suk-brand-border",
                     )}
                     onMouseEnter={() => setActiveIndex(i)}
-                    // Birden fazla event tipini dinliyoruz çünkü farklı
-                    // tarayıcı/cihaz kombinasyonlarında **hangisinin
-                    // gerçekten ateşlendiği değişebiliyor**:
-                    //   • Masaüstü Chrome/Edge → mousedown OK
-                    //   • iOS Safari → touchend + synthesized mousedown
-                    //   • Bazı Android Chrome sürümlerinde focus shift
-                    //     nedeniyle native `click` düşebiliyor
-                    // commit idempotent (onChange + setOpen aynı değer
-                    // için no-op'a yakın); birden çok kez ateşlense de
-                    // fonksiyonel sorun yok, sadece dev console'da log
-                    // mükerrer görünür.
-                    onPointerDown={(e) => {
-                      if (process.env.NODE_ENV !== "production") {
-                        // eslint-disable-next-line no-console
-                        console.log("[combobox] li.onPointerDown", {
-                          value: o.value,
-                          pointerType: e.pointerType,
-                        });
-                      }
-                      e.preventDefault();
-                      commit(o.value, `pointerdown:${e.pointerType}`);
-                    }}
+                    // Headless UI / Radix UI'da kullanılan klasik kalıp:
+                    //   • onMouseDown ile SADECE preventDefault — odak,
+                    //     search input'ta kalır; mousedown anında dropdown
+                    //     unmount edilmez, bir sonraki click event'i
+                    //     `<li>`'ye sağ salim ulaşır.
+                    //   • onClick ile commit — native click event hem
+                    //     fare hem dokunmatik (kaydırmasız tap) için
+                    //     güvenilir biçimde ateşlenir.
+                    //   • onTouchEnd kullanmıyoruz — kaydırma sırasında
+                    //     da ateşlendiği için kullanıcının liste içinde
+                    //     gezinmesini engelliyordu.
                     onMouseDown={(e) => {
-                      if (process.env.NODE_ENV !== "production") {
-                        // eslint-disable-next-line no-console
-                        console.log("[combobox] li.onMouseDown", {
-                          value: o.value,
-                        });
-                      }
+                      // Search input odağı koparsa bazı tarayıcılar
+                      // sonraki click'i yutuyor. preventDefault odağı
+                      // input'ta tutar.
                       e.preventDefault();
-                      commit(o.value, "mousedown");
-                    }}
-                    onTouchEnd={(e) => {
-                      if (process.env.NODE_ENV !== "production") {
-                        // eslint-disable-next-line no-console
-                        console.log("[combobox] li.onTouchEnd", {
-                          value: o.value,
-                        });
-                      }
-                      e.preventDefault();
-                      commit(o.value, "touchend");
+                      // eslint-disable-next-line no-console
+                      console.log("[combobox] li.onMouseDown (focus hold)", {
+                        value: o.value,
+                      });
                     }}
                     onClick={(e) => {
-                      // Son güvence: pointerdown/mousedown bir nedenle
-                      // ateşlenmezse click yine commit yapar.
-                      if (process.env.NODE_ENV !== "production") {
-                        // eslint-disable-next-line no-console
-                        console.log("[combobox] li.onClick", { value: o.value });
-                      }
-                      e.preventDefault();
+                      // eslint-disable-next-line no-console
+                      console.log("[combobox] li.onClick", {
+                        value: o.value,
+                        detail: e.detail,
+                      });
                       commit(o.value, "click");
                     }}
                   >
