@@ -94,11 +94,23 @@ export function SearchableCombobox({
   }, [options, query]);
 
   // Dışarı tıkla & Esc ile kapat.
+  //
+  // ÖNEMLİ: `pointerdown` dinlemiyoruz — Pointer Events spec'inde target,
+  // mousedown/touchstart'a göre farklı davranabilir (özellikle scroll
+  // sırasında). `mousedown`/`touchstart` daha güvenilir. Ayrıca bir
+  // microtask gecikmesiyle çalıştırıyoruz ki içeride `onMouseDown` ile
+  // commit ettiğimizde, state update'ler önce uygulansın ve burada
+  // setOpen(false) çağırılması zararsız no-op olsun.
   useEffect(() => {
     if (!open) return;
     const handle = (e: MouseEvent | TouchEvent) => {
-      if (!rootRef.current) return;
-      if (!rootRef.current.contains(e.target as Node)) {
+      const root = rootRef.current;
+      if (!root) return;
+      const target = e.target as Node | null;
+      // target null/undefined olabilir (Shadow DOM, eski tarayıcılar).
+      // Bu durumda kapatma kararını verme — defansif.
+      if (!target) return;
+      if (!root.contains(target)) {
         setOpen(false);
       }
     };
@@ -126,7 +138,12 @@ export function SearchableCombobox({
     }
   }, [open]);
 
-  const commit = (next: string | null) => {
+  const commit = (next: string | null, source?: string) => {
+    if (process.env.NODE_ENV !== "production") {
+      // Debug: hangi event tipinden geldiğini görelim. Üretimde devre dışı.
+      // eslint-disable-next-line no-console
+      console.log("[combobox] commit", { next, source });
+    }
     onChange(next);
     setOpen(false);
   };
@@ -275,18 +292,57 @@ export function SearchableCombobox({
                       isSelected && "font-medium text-suk-brand-border",
                     )}
                     onMouseEnter={() => setActiveIndex(i)}
-                    // onMouseDown ile commit ediyoruz; click event'i bazı
-                    // tarayıcılarda odak değişimi sırasında düşebiliyor
-                    // ("liste kapanıyor ama seçilmiyor" şikayetinin
-                    // klasik sebebi). onTouchEnd ile mobil tıklama da
-                    // garantiye alındı.
-                    onMouseDown={(e) => {
+                    // Birden fazla event tipini dinliyoruz çünkü farklı
+                    // tarayıcı/cihaz kombinasyonlarında **hangisinin
+                    // gerçekten ateşlendiği değişebiliyor**:
+                    //   • Masaüstü Chrome/Edge → mousedown OK
+                    //   • iOS Safari → touchend + synthesized mousedown
+                    //   • Bazı Android Chrome sürümlerinde focus shift
+                    //     nedeniyle native `click` düşebiliyor
+                    // commit idempotent (onChange + setOpen aynı değer
+                    // için no-op'a yakın); birden çok kez ateşlense de
+                    // fonksiyonel sorun yok, sadece dev console'da log
+                    // mükerrer görünür.
+                    onPointerDown={(e) => {
+                      if (process.env.NODE_ENV !== "production") {
+                        // eslint-disable-next-line no-console
+                        console.log("[combobox] li.onPointerDown", {
+                          value: o.value,
+                          pointerType: e.pointerType,
+                        });
+                      }
                       e.preventDefault();
-                      commit(o.value);
+                      commit(o.value, `pointerdown:${e.pointerType}`);
+                    }}
+                    onMouseDown={(e) => {
+                      if (process.env.NODE_ENV !== "production") {
+                        // eslint-disable-next-line no-console
+                        console.log("[combobox] li.onMouseDown", {
+                          value: o.value,
+                        });
+                      }
+                      e.preventDefault();
+                      commit(o.value, "mousedown");
                     }}
                     onTouchEnd={(e) => {
+                      if (process.env.NODE_ENV !== "production") {
+                        // eslint-disable-next-line no-console
+                        console.log("[combobox] li.onTouchEnd", {
+                          value: o.value,
+                        });
+                      }
                       e.preventDefault();
-                      commit(o.value);
+                      commit(o.value, "touchend");
+                    }}
+                    onClick={(e) => {
+                      // Son güvence: pointerdown/mousedown bir nedenle
+                      // ateşlenmezse click yine commit yapar.
+                      if (process.env.NODE_ENV !== "production") {
+                        // eslint-disable-next-line no-console
+                        console.log("[combobox] li.onClick", { value: o.value });
+                      }
+                      e.preventDefault();
+                      commit(o.value, "click");
                     }}
                   >
                     <Check

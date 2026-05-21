@@ -97,15 +97,24 @@ export function UniversityPicker({
         options={options}
         value={selectedId != null ? String(selectedId) : null}
         onChange={(v) => {
+          if (process.env.NODE_ENV !== "production") {
+            // eslint-disable-next-line no-console
+            console.log("[uni-picker] onChange received", {
+              v,
+              type: typeof v,
+              universitiesCount: universities.length,
+            });
+          }
           if (v == null) {
             setSelectedId(null);
             return;
           }
           const id = Number(v);
           if (!Number.isFinite(id) || id <= 0) {
-            // Beklenmedik gönderim. Erken bail-out yerine logluyoruz ki
-            // bir daha olursa yakalayalım — sessiz "tıklanmıyor" sürecini
-            // engellemek istiyoruz.
+            if (process.env.NODE_ENV !== "production") {
+              // eslint-disable-next-line no-console
+              console.warn("[uni-picker] invalid id, bailing", { v, id });
+            }
             clientLogger.error({
               message: "university picker received non-numeric value",
               location: "onboarding/UniversityPicker",
@@ -114,6 +123,13 @@ export function UniversityPicker({
             return;
           }
           const hit = universities.find((u) => u.id === id);
+          if (process.env.NODE_ENV !== "production") {
+            // eslint-disable-next-line no-console
+            console.log("[uni-picker] applying selection", {
+              id,
+              hit: hit ? { id: hit.id, name: hit.name } : null,
+            });
+          }
           // Yerel state'i HER zaman güncelle — combobox tetikleyici
           // buton yeni etiketi yansıtır, kullanıcı "tıklanmadı sanki"
           // hissi yaşamaz.
