@@ -46,8 +46,10 @@ export function PwaInstallPrompt() {
     if (isStandalone) return;
 
     const handler = (event: Event) => {
-      event.preventDefault();
+      // Yalnızca kendi banner'ımızı göstereceksek preventDefault: aksi halde tarayıcının
+      // yerleşik «Uygulamayı yükle» davranışı da kaybolur (Daha sonra = 30 gün sessizlik).
       if (!shouldShowAfterDismiss()) return;
+      event.preventDefault();
       setDeferred(event as BeforeInstallPromptEvent);
       setVisible(true);
     };
