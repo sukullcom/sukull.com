@@ -253,6 +253,22 @@ export default function CreditPurchase() {
     }
   }
 
+  // Son kullanma alanı için tek-kutulu "AA/YY" formatlama.
+  // Kullanıcı 2. rakamdan sonra `/` görmüş gibi olsun; backspace ile geri
+  // silebilsin diye değer üretimi sadece rakam sayısına bakar.
+  const formatExpiry = (month: string, year: string) => {
+    if (!month && !year) return ''
+    if (year) return `${month}/${year}`
+    return month
+  }
+  const parseExpiry = (raw: string) => {
+    const digits = raw.replace(/\D/g, '').slice(0, 4)
+    return {
+      month: digits.slice(0, 2),
+      year: digits.slice(2, 4),
+    }
+  }
+
   // Format card number with spaces
   const formatCardNumber = (value: string) => {
     const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
@@ -407,27 +423,24 @@ export default function CreditPurchase() {
                 />
               </div>
               
-              <div className="grid grid-cols-3 gap-3 sm:gap-4">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-muted-foreground mb-1.5">Ay</label>
+                  <label className="block text-sm font-medium text-muted-foreground mb-1.5">
+                    Son kullanma (AA/YY)
+                  </label>
                   <Input
                     className="border-border/90 focus-visible:ring-ring/40"
                     type="text"
-                    placeholder="12"
-                    value={expireMonth}
-                    onChange={(e) => setExpireMonth(e.target.value.replace(/\D/g, '').slice(0, 2))}
-                    maxLength={2}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-muted-foreground mb-1.5">Yıl</label>
-                  <Input
-                    className="border-border/90 focus-visible:ring-ring/40"
-                    type="text"
-                    placeholder="25"
-                    value={expireYear}
-                    onChange={(e) => setExpireYear(e.target.value.replace(/\D/g, '').slice(0, 2))}
-                    maxLength={2}
+                    inputMode="numeric"
+                    autoComplete="cc-exp"
+                    placeholder="AA/YY"
+                    value={formatExpiry(expireMonth, expireYear)}
+                    onChange={(e) => {
+                      const { month, year } = parseExpiry(e.target.value)
+                      setExpireMonth(month)
+                      setExpireYear(year)
+                    }}
+                    maxLength={5}
                   />
                 </div>
                 <div>
@@ -435,6 +448,8 @@ export default function CreditPurchase() {
                   <Input
                     className="border-border/90 focus-visible:ring-ring/40"
                     type="text"
+                    inputMode="numeric"
+                    autoComplete="cc-csc"
                     placeholder="123"
                     value={cvc}
                     onChange={(e) => setCvc(e.target.value.replace(/\D/g, '').slice(0, 3))}
@@ -486,8 +501,10 @@ export default function CreditPurchase() {
                 <label className="block text-sm font-medium text-muted-foreground mb-1.5">Telefon</label>
                 <Input
                   className="border-border/90 focus-visible:ring-ring/40"
-                  type="text"
-                  placeholder="+90 555 123 4567"
+                  type="tel"
+                  inputMode="tel"
+                  autoComplete="tel"
+                  placeholder="0555 123 45 67"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                 />

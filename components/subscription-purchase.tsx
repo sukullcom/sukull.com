@@ -157,6 +157,22 @@ export default function SubscriptionPurchase({ onCancel }: SubscriptionPurchaseP
     setCardNumber(formatted);
   };
 
+  // Son kullanma tarihi: kullanıcının tek bir "AA/YY" kutusu görmesini
+  // sağlıyoruz; alttaki state hâlâ ay/yıl ayrı duruyor ki payload (Iyzico)
+  // değişmesin.
+  const formatExpiry = (month: string, year: string) => {
+    if (!month && !year) return '';
+    if (year) return `${month}/${year}`;
+    return month;
+  };
+  const parseExpiry = (raw: string) => {
+    const digits = raw.replace(/\D/g, '').slice(0, 4);
+    return {
+      month: digits.slice(0, 2),
+      year: digits.slice(2, 4),
+    };
+  };
+
   return (
     <div className="max-w-2xl mx-auto p-6">
       <div className="mb-6">
@@ -218,31 +234,31 @@ export default function SubscriptionPurchase({ onCancel }: SubscriptionPurchaseP
               />
             </div>
             
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium mb-1">Ay</label>
+                <label className="block text-sm font-medium mb-1">
+                  Son kullanma (AA/YY)
+                </label>
                 <Input
                   type="text"
-                  placeholder="MM"
-                  value={expireMonth}
-                  onChange={(e) => setExpireMonth(e.target.value.replace(/\D/g, '').slice(0, 2))}
-                  maxLength={2}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">Yıl</label>
-                <Input
-                  type="text"
-                  placeholder="YY"
-                  value={expireYear}
-                  onChange={(e) => setExpireYear(e.target.value.replace(/\D/g, '').slice(0, 2))}
-                  maxLength={2}
+                  inputMode="numeric"
+                  autoComplete="cc-exp"
+                  placeholder="AA/YY"
+                  value={formatExpiry(expireMonth, expireYear)}
+                  onChange={(e) => {
+                    const { month, year } = parseExpiry(e.target.value);
+                    setExpireMonth(month);
+                    setExpireYear(year);
+                  }}
+                  maxLength={5}
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium mb-1">CVC</label>
                 <Input
                   type="text"
+                  inputMode="numeric"
+                  autoComplete="cc-csc"
                   placeholder="123"
                   value={cvc}
                   onChange={(e) => setCvc(e.target.value.replace(/\D/g, '').slice(0, 3))}
@@ -300,7 +316,9 @@ export default function SubscriptionPurchase({ onCancel }: SubscriptionPurchaseP
               <label className="block text-sm font-medium mb-1">Telefon</label>
               <Input
                 type="tel"
-                placeholder="+90 535 123 45 67"
+                inputMode="tel"
+                autoComplete="tel"
+                placeholder="0535 123 45 67"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />
