@@ -3,6 +3,12 @@ import { getTopUsers } from "@/db/queries";
 import { checkRateLimit, getClientIp, rateLimitHeaders, RATE_LIMITS } from "@/lib/rate-limit-db";
 import { getRequestLogger } from "@/lib/logger";
 
+// Rate limit IP üzerinden çalıştığı ve `request.headers` okuduğu için
+// route dinamik olmak zorunda. Aksi halde Next.js statik render denemesi
+// sırasında "Dynamic server usage: Route … couldn't be rendered statically
+// because it used `request.headers`" atıyordu (bkz. error_log 3444+).
+export const dynamic = "force-dynamic";
+
 export async function GET(request: NextRequest) {
   try {
     const ip = getClientIp(request);

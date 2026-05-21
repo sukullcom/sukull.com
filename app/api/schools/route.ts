@@ -93,9 +93,16 @@ const getUniversitiesCatalog = unstable_cache(
         // (kampüs ayrı il/ilçede). Eğitmen başvurusu sadece ada ihtiyaç
         // duyuyor; onboarding'de ise `userProgress.schoolId` kaydı için
         // kanonik bir id de döndürüyoruz — MIN(id) yeterli ve stabil.
-        id: sql<number>`MIN(${schools.id})`,
+        //
+        // KRİTİK: `.as('id')` / `.as('city')` ZORUNLU. Drizzle `sql<T>`
+        // ifadelerini otomatik aliaslamıyor; bu durumda PostgreSQL hem
+        // MIN(schools.id)'yi hem MIN(schools.city)'yi `min` kolonu olarak
+        // döndürür ve ikincisi ilkini ezerek `id` alanını JSON response'tan
+        // siliyordu. Sonuç: client'ta `String(u.id) === "undefined"`,
+        // onboarding combobox'ında bütün üniversite seçimleri patlardı.
+        id: sql<number>`MIN(${schools.id})`.as('id'),
         name: schools.name,
-        city: sql<string>`MIN(${schools.city})`,
+        city: sql<string>`MIN(${schools.city})`.as('city'),
       })
       .from(schools)
       .where(eq(schools.type, 'university'))
@@ -103,7 +110,9 @@ const getUniversitiesCatalog = unstable_cache(
       .orderBy(schools.name);
     return rows;
   },
-  ['schools-universities-v2'],
+  // v3: alias düzeltmesinden sonra cache'i bust et — eski JSON `id`
+  // içermiyordu.
+  ['schools-universities-v3'],
   { tags: [CACHE_TAGS.schoolsMaster], revalidate: CACHE_TTL.schoolsMaster },
 );
 

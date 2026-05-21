@@ -80,11 +80,24 @@ export function UniversityPicker({
 
   const options = useMemo<ComboboxOption[]>(
     () =>
-      universities.map((u) => ({
-        value: String(u.id),
-        label: u.name,
-        hint: u.city ?? undefined,
-      })),
+      universities
+        // Defansif: API yanıtında id eksikse (geçmişte Drizzle alias bug'ı
+        // nedeniyle olmuştu) o satırı listeye HİÇ dahil etme — kullanıcı
+        // bozuk satıra tıklayıp "undefined" commit etmesin.
+        .filter(
+          (u): u is University =>
+            u != null &&
+            typeof u.id === "number" &&
+            Number.isFinite(u.id) &&
+            u.id > 0 &&
+            typeof u.name === "string" &&
+            u.name.length > 0,
+        )
+        .map((u) => ({
+          value: String(u.id),
+          label: u.name,
+          hint: u.city ?? undefined,
+        })),
     [universities],
   );
 
