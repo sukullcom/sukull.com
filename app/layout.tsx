@@ -28,14 +28,23 @@ export const metadata: Metadata = {
   },
   description:
     "Derslerini tamamla, beyin oyunlarıyla pratik yap, arkadaşlarınla yarış ve özel derslerle ilerle. Sukull ile öğrenmek hiç bu kadar keyifli olmamıştı.",
+  // Sıra önemli: tarayıcılar listedeki ilk uygun ikonu kullanır. PNG'yi
+  // (Next.js dinamik `/icon` endpoint, ~50KB) önce sıralıyoruz; ham mascot
+  // SVG'si (~1.4MB) yedek olarak kalsın. Eski `public/favicon.svg`/`.ico`
+  // dosyaları (stylize edilmiş "S" — marka değil) bilinçli olarak
+  // silindi; tarayıcılar artık `<link rel="icon">` etiketlerini takip ediyor.
   icons: {
     icon: [
-      { url: "/heads/happy_excited_purple.svg", type: "image/svg+xml" },
       { url: "/icon", type: "image/png", sizes: "512x512" },
+      { url: "/icon", type: "image/png", sizes: "192x192" },
+      { url: "/heads/happy_excited_purple.svg", type: "image/svg+xml" },
     ],
     apple: [{ url: "/apple-icon", type: "image/png", sizes: "180x180" }],
+    shortcut: [{ url: "/icon", type: "image/png" }],
   },
-  // Maskot: `public/heads/happy_excited_purple.svg`; PNG: `app/icon.tsx`, `app/apple-icon.tsx`.
+  // Maskot kaynak dosyası: `public/heads/happy_excited_purple.svg`
+  // PNG üreteci (PWA / favicon / splash): `app/icon.tsx`, `app/apple-icon.tsx`
+  // Manifest: `app/manifest.ts`
   openGraph: {
     type: "website",
     locale: "tr_TR",

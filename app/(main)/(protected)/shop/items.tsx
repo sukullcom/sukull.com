@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { InfinityIcon, ShieldCheck } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import SubscriptionPurchase from "@/components/subscription-purchase";
+import { InstallAppCard } from "@/components/install-app-card";
 
 type Props = {
   hearts: number;
@@ -153,6 +154,9 @@ export const Items = ({
           {hasInfiniteHearts ? "Aktif" : "100₺/ay"}
         </Button>
       </div>
+
+      {/* PWA install — yüklüyse "Yüklendi", yüklenebilirse "Yükle" butonu. */}
+      <InstallAppCard />
 
       <Dialog open={showSubscriptionDialog} onOpenChange={setShowSubscriptionDialog}>
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto bg-card border border-border shadow-xl">

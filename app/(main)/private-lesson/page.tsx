@@ -128,7 +128,7 @@ export default async function PrivateLessonPage() {
                 <Button asChild variant="primary" className="w-full sm:w-auto">
                   <Link href="/private-lesson/give" prefetch={false}>
                     <GraduationCap className="mr-2 h-4 w-4" />
-                    Eğitmen başvurusuna atla
+                    Eğitmen başvurusu
                   </Link>
                 </Button>
               )}

@@ -6,71 +6,15 @@ import { X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { BRAND_MASCOT_PATH } from "@/lib/brand-mascot";
-
-/**
- * BeforeInstallPromptEvent is not in the TS DOM lib.
- */
-type BeforeInstallPromptEvent = Event & {
-  prompt: () => Promise<void>;
-  userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
-};
-
-const DISMISS_KEY = "sukull-pwa-install-dismissed-at";
-/** «Daha sonra» sonrası kendi banner'ımızı sakla; tarayıcı menüsü engellenmez. */
-const DISMISS_COOLDOWN_MS = 30 * 24 * 60 * 60 * 1000;
-
-function isStandaloneMode(): boolean {
-  if (typeof window === "undefined") return false;
-  return (
-    window.matchMedia("(display-mode: standalone)").matches ||
-    (window.navigator as Navigator & { standalone?: boolean }).standalone === true
-  );
-}
-
-function shouldShowCustomBanner(): boolean {
-  if (isStandaloneMode()) return false;
-  try {
-    const raw = localStorage.getItem(DISMISS_KEY);
-    if (!raw) return true;
-    const dismissedAt = Number(raw);
-    if (!Number.isFinite(dismissedAt)) return true;
-    return Date.now() - dismissedAt > DISMISS_COOLDOWN_MS;
-  } catch {
-    return true;
-  }
-}
-
-/**
- * Tek global dinleyici — React mount'tan önce gelen `beforeinstallprompt` kaçmasın.
- * `preventDefault` yalnızca kendi banner'ımızı göstereceğimizde çağrılır; «Daha sonra»
- * (30 gün) süresince tarayıcının yerleşik yükle teklifi serbest kalır.
- */
-let capturedDeferred: BeforeInstallPromptEvent | null = null;
-const readySubscribers = new Set<(event: BeforeInstallPromptEvent) => void>();
-let globalListenerAttached = false;
-
-function notifyReady(event: BeforeInstallPromptEvent) {
-  readySubscribers.forEach((cb) => cb(event));
-}
-
-function attachGlobalInstallListener() {
-  if (globalListenerAttached || typeof window === "undefined") return;
-  globalListenerAttached = true;
-
-  window.addEventListener("beforeinstallprompt", (event: Event) => {
-    if (!shouldShowCustomBanner()) return;
-    event.preventDefault();
-    const bip = event as BeforeInstallPromptEvent;
-    capturedDeferred = bip;
-    notifyReady(bip);
-  });
-
-  window.addEventListener("appinstalled", () => {
-    capturedDeferred = null;
-  });
-}
-
-attachGlobalInstallListener();
+import {
+  getCapturedDeferred,
+  hasDismissedRecently,
+  isStandaloneMode,
+  markDismissed,
+  subscribeInstalled,
+  subscribeReady,
+  type BeforeInstallPromptEvent,
+} from "@/lib/pwa-install";
 
 export function PwaInstallPrompt() {
   const [deferred, setDeferred] = useState<BeforeInstallPromptEvent | null>(null);
@@ -80,36 +24,34 @@ export function PwaInstallPrompt() {
     if (isStandaloneMode()) return;
 
     const onReady = (event: BeforeInstallPromptEvent) => {
+      // Bu banner kullanıcı "Daha sonra" dediyse 30 gün gizlenir; ama
+      // Mağaza'daki manuel "Uygulama olarak yükle" kartı bu cooldown'a
+      // bağlı değildir (bkz. lib/pwa-install.ts).
+      if (hasDismissedRecently()) return;
       setDeferred(event);
       setVisible(true);
     };
 
-    readySubscribers.add(onReady);
+    const unsubReady = subscribeReady(onReady);
 
-    if (capturedDeferred && shouldShowCustomBanner()) {
-      onReady(capturedDeferred);
+    const captured = getCapturedDeferred();
+    if (captured && !hasDismissedRecently()) {
+      onReady(captured);
     }
 
-    const onInstalled = () => {
-      capturedDeferred = null;
+    const unsubInstalled = subscribeInstalled(() => {
       setVisible(false);
       setDeferred(null);
-    };
-    window.addEventListener("appinstalled", onInstalled);
+    });
 
     return () => {
-      readySubscribers.delete(onReady);
-      window.removeEventListener("appinstalled", onInstalled);
+      unsubReady();
+      unsubInstalled();
     };
   }, []);
 
   const dismiss = () => {
-    try {
-      localStorage.setItem(DISMISS_KEY, String(Date.now()));
-    } catch {
-      /* private mode */
-    }
-    capturedDeferred = null;
+    markDismissed();
     setVisible(false);
     setDeferred(null);
   };
@@ -120,7 +62,6 @@ export function PwaInstallPrompt() {
       await deferred.prompt();
       const { outcome } = await deferred.userChoice;
       if (outcome === "accepted") {
-        capturedDeferred = null;
         setVisible(false);
         setDeferred(null);
       } else {
