@@ -187,18 +187,19 @@ export async function POST(
         // Best-effort: idempotency `chat_first_message_notifications` PK
         // ile garanti — paralel istek veya retry'da bile yalnız bir e-posta
         // gider. Hata kullanıcının mesaj göndermesini engellemesin.
+        //
+        // Helper kendi içinde skip nedenlerini `error_log`'a yazar; bu
+        // catch yalnızca beklenmeyen rejection için son sığınak.
         void notifyFirstMessageIfApplicable({
           chatId,
           senderId: user.id,
           messagePreview: content,
         }).catch((error: unknown) => {
-          logger.warn("private lesson first-message email failed (non-blocking)", {
-            chatId,
+          logger.error({
+            message: "private lesson first-message email rejected (non-blocking)",
+            error,
             location: "api/private-lesson/messages/[chatId]/POST",
-            error:
-              error instanceof Error
-                ? { name: error.name, message: error.message }
-                : { raw: String(error) },
+            fields: { chatId },
           });
         });
       }

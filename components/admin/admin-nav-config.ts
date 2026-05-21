@@ -1,6 +1,7 @@
 import {
   AlertTriangle,
   BarChart3,
+  Bell,
   BookOpen,
   CreditCard,
   LayoutDashboard,
@@ -51,6 +52,7 @@ export const ADMIN_NAV: AdminNavItem[] = [
     badgeKey: "errors24h",
   },
   { href: "/admin/anomalies", label: "Anomali İzleme", icon: ShieldAlert },
+  { href: "/admin/notifications", label: "Bildirim Tanısı", icon: Bell },
   { href: "/admin/audit", label: "Yönetici Günlüğü", icon: ShieldCheck },
 ];
 

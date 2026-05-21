@@ -16,6 +16,11 @@
  *  - Bağlamı (private-lesson vs study-buddy) `messageUnlocks` satırının
  *    varlığından otomatik tespit ediyoruz; çağıran tarafın bunu vermesine
  *    gerek yok.
+ *
+ *  - Gözlemlenebilirlik: skip nedenleri `logger.error` ile `error_log`'a
+ *    yazılır (admin paneli `/admin/errors` üzerinden görür). Başarılı
+ *    gönderimde de info log düşer. "Sessiz başarısızlık" ihtimalini
+ *    sıfıra indirir.
  */
 
 import db from "@/db/drizzle";
@@ -33,9 +38,45 @@ import {
   sendEmailViaResend,
 } from "@/lib/transactional-email-resend";
 
+type SkipReason =
+  | "invalid_chat_id"
+  | "chat_not_pair"
+  | "sender_not_participant"
+  | "no_recipient"
+  | "already_notified"
+  | "recipient_no_email"
+  | "resend_failed"
+  | "claim_failed";
+
 type NotifyResult =
   | { sent: true; recipientId: string }
-  | { sent: false; reason: string };
+  | { sent: false; reason: SkipReason };
+
+const LOCATION = "first-message-email/notifyFirstMessageIfApplicable";
+
+/**
+ * Bildirim sıkıntılarını `error_log`'a yazmak için tek noktadan helper.
+ * Bunlar yıkıcı hata değil, ama operatörün görmesi gereken anomaliler:
+ *  - Resend env eksik
+ *  - Migration uygulanmamış (`relation … does not exist`)
+ *  - Alıcının e-postası yok
+ *  - Resend API'sinden 4xx/5xx
+ *
+ * `logger.error` `error_log`'a INSERT atar; warn yalnız console'da kalır,
+ * Vercel logları kullanıcı tarafından görülmediğinden tanı zorlaşıyor.
+ */
+function logAnomaly(
+  message: string,
+  fields: Record<string, unknown>,
+  error?: unknown,
+): void {
+  logger.error({
+    message,
+    error,
+    location: LOCATION,
+    fields,
+  });
+}
 
 export async function notifyFirstMessageIfApplicable(input: {
   chatId: number;
@@ -53,9 +94,17 @@ export async function notifyFirstMessageIfApplicable(input: {
   });
   const participants = chat?.participants ?? [];
   if (participants.length !== 2) {
+    logAnomaly("First-message email skipped: chat_not_pair", {
+      chatId,
+      participantsCount: participants.length,
+    });
     return { sent: false, reason: "chat_not_pair" };
   }
   if (!participants.includes(input.senderId)) {
+    logAnomaly("First-message email skipped: sender not participant", {
+      chatId,
+      senderId: input.senderId,
+    });
     return { sent: false, reason: "sender_not_participant" };
   }
   const recipientId = participants.find((p) => p !== input.senderId);
@@ -71,18 +120,36 @@ export async function notifyFirstMessageIfApplicable(input: {
     : "study-buddy";
 
   // Idempotency claim — yalnız ilk başaranın e-posta gönderme hakkı olur.
-  const inserted = await db
-    .insert(chatFirstMessageNotifications)
-    .values({
-      chatId,
-      recipientId,
-      senderId: input.senderId,
-      context,
-    })
-    .onConflictDoNothing({ target: chatFirstMessageNotifications.chatId })
-    .returning({ chatId: chatFirstMessageNotifications.chatId });
+  let inserted: { chatId: number }[] = [];
+  try {
+    inserted = await db
+      .insert(chatFirstMessageNotifications)
+      .values({
+        chatId,
+        recipientId,
+        senderId: input.senderId,
+        context,
+      })
+      .onConflictDoNothing({ target: chatFirstMessageNotifications.chatId })
+      .returning({ chatId: chatFirstMessageNotifications.chatId });
+  } catch (err) {
+    // Tipik kök sebep: migration 0050 üretime uygulanmamış (`relation
+    // "chat_first_message_notifications" does not exist`). Sessiz kalmayalım.
+    logAnomaly(
+      "First-message email skipped: idempotency claim failed (migration uygulanmadı olabilir)",
+      { chatId, recipientId, context },
+      err,
+    );
+    return { sent: false, reason: "claim_failed" };
+  }
 
   if (inserted.length === 0) {
+    logger.info("First-message email skipped: already_notified", {
+      chatId,
+      recipientId,
+      context,
+      location: LOCATION,
+    });
     return { sent: false, reason: "already_notified" };
   }
 
@@ -99,7 +166,12 @@ export async function notifyFirstMessageIfApplicable(input: {
 
   const to = recipient?.email?.trim();
   if (!to) {
-    logger.debug("First-message email skipped: recipient has no email", {
+    // Alıcı e-postasını eklerse bir sonraki ilk-mesaj denemesinde bildirim
+    // gitebilsin diye iddiayı GERİ ALIYORUZ. Aksi halde "sohbete bir kere
+    // ilk-mesaj denedik, ileride hiçbir zaman atmayız" durumu kalır.
+    await rollbackClaim(chatId, "recipient_no_email");
+    logAnomaly("First-message email skipped: recipient has no email", {
+      chatId,
       recipientId,
       context,
     });
@@ -143,22 +215,15 @@ export async function notifyFirstMessageIfApplicable(input: {
 
   const ok = await sendEmailViaResend({ to, subject, html });
   if (!ok) {
-    // Resend hata verdi: idempotency satırını GERİ AL → bir sonraki denemede
-    // tekrar yollayabilelim. Aksi halde başarısız bir bildirim sonsuza dek
-    // "gönderilmiş" sayılır.
-    await db
-      .delete(chatFirstMessageNotifications)
-      .where(eq(chatFirstMessageNotifications.chatId, chatId))
-      .catch((err) => {
-        logger.warn("Failed to roll back idempotency row", {
-          chatId,
-          location: "first-message-email/notifyFirstMessageIfApplicable",
-          error:
-            err instanceof Error
-              ? { name: err.name, message: err.message }
-              : { raw: String(err) },
-        });
-      });
+    // Resend yapılandırılmamış (env eksik) ya da API 4xx/5xx döndü.
+    // Idempotency satırını geri al ki kullanıcı sonra düzeltirse tekrar
+    // denenebilsin. `sendEmailViaResend` ayrıntılı hata logunu kendisi
+    // basıyor; biz burada anomaliyi `error_log`'a kalıcı olarak yazıyoruz.
+    await rollbackClaim(chatId, "resend_failed");
+    logAnomaly(
+      "First-message email failed (Resend kapalı veya yapılandırma eksik)",
+      { chatId, recipientId, context },
+    );
     return { sent: false, reason: "resend_failed" };
   }
 
@@ -166,8 +231,25 @@ export async function notifyFirstMessageIfApplicable(input: {
     chatId,
     recipientId,
     context,
-    location: "first-message-email/notifyFirstMessageIfApplicable",
+    location: LOCATION,
   });
 
   return { sent: true, recipientId };
+}
+
+async function rollbackClaim(chatId: number, reason: string): Promise<void> {
+  await db
+    .delete(chatFirstMessageNotifications)
+    .where(eq(chatFirstMessageNotifications.chatId, chatId))
+    .catch((err) => {
+      logger.warn("Failed to roll back idempotency row", {
+        chatId,
+        reason,
+        location: LOCATION,
+        error:
+          err instanceof Error
+            ? { name: err.name, message: err.message }
+            : { raw: String(err) },
+      });
+    });
 }

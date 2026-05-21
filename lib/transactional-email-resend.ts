@@ -15,8 +15,16 @@ export async function sendEmailViaResend(input: SendEmailInput): Promise<boolean
   const apiKey = process.env.RESEND_API_KEY?.trim();
   const from = process.env.RESEND_FROM?.trim();
   if (!apiKey || !from) {
-    logger.debug("Resend skipped: RESEND_API_KEY or RESEND_FROM unset", {
+    // Bu "yapılandırma eksik" durumu üretimde bildirim sessizliğinin en
+    // sık nedeni — debug yerine `error` ile `error_log`'a yazıyoruz ki
+    // admin /admin/notifications panelinde 1 saniyede görsün.
+    logger.error({
+      message: "Resend skipped: RESEND_API_KEY or RESEND_FROM unset",
       location: "transactional-email-resend/sendEmailViaResend",
+      fields: {
+        hasApiKey: Boolean(apiKey),
+        hasFrom: Boolean(from),
+      },
     });
     return false;
   }
