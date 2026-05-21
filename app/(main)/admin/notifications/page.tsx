@@ -55,6 +55,18 @@ type ErrorRecent = {
 };
 
 type Diagnostics = {
+  provider: "smtp" | "resend" | "none";
+  smtp: {
+    configured: boolean;
+    hasHost: boolean;
+    hasPort: boolean;
+    hasUser: boolean;
+    hasPass: boolean;
+    hasFrom: boolean;
+    host: string | null;
+    port: string | null;
+    from: string | null;
+  };
   resend: {
     configured: boolean;
     hasApiKey: boolean;
@@ -188,35 +200,99 @@ export default function AdminNotificationsPage() {
       {data && (
         <>
           <Card>
-            <CardContent className="p-5 space-y-3">
-              <div className="flex items-center gap-2">
-                <Mail className="h-5 w-5 text-foreground" />
-                <h2 className="font-semibold">Resend yapılandırması</h2>
+            <CardContent className="p-5 space-y-4">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <Mail className="h-5 w-5 text-foreground" />
+                  <h2 className="font-semibold">E-posta sağlayıcısı</h2>
+                </div>
+                <Badge
+                  className={
+                    data.provider === "smtp"
+                      ? "bg-green-100 text-green-800"
+                      : data.provider === "resend"
+                        ? "bg-blue-100 text-blue-800"
+                        : "bg-red-100 text-red-800"
+                  }
+                >
+                  Aktif:{" "}
+                  {data.provider === "smtp"
+                    ? "SMTP (Nodemailer)"
+                    : data.provider === "resend"
+                      ? "Resend HTTP API"
+                      : "Yapılandırılmamış"}
+                </Badge>
               </div>
-              <div className="flex flex-wrap gap-2 text-sm">
-                <ConfigBadge
-                  ok={data.resend.hasApiKey}
-                  okLabel="RESEND_API_KEY: var"
-                  failLabel="RESEND_API_KEY: yok"
-                />
-                <ConfigBadge
-                  ok={data.resend.hasFrom}
-                  okLabel={`RESEND_FROM: ${data.resend.from ?? "?"}`}
-                  failLabel="RESEND_FROM: yok"
-                />
-              </div>
-              {!data.resend.configured && (
+
+              {data.provider === "none" && (
                 <p className="text-sm text-red-700 bg-red-50 border border-red-200 rounded p-2">
-                  Resend yapılandırılmamış. Vercel/üretim ortamında{" "}
-                  <code className="font-mono text-xs">RESEND_API_KEY</code> ve{" "}
-                  <code className="font-mono text-xs">RESEND_FROM</code> env
-                  değişkenleri ayarlanmalı.
+                  Hiçbir e-posta sağlayıcısı yapılandırılmamış. Aşağıdaki SMTP
+                  veya Resend env değişkenlerinden birini ayarlayın ve
+                  redeploy edin.
                 </p>
               )}
+
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">
+                  SMTP (Nodemailer) — birincil
+                </p>
+                <div className="flex flex-wrap gap-2 text-sm">
+                  <ConfigBadge
+                    ok={data.smtp.hasHost}
+                    okLabel={`SMTP_HOST: ${data.smtp.host ?? "?"}`}
+                    failLabel="SMTP_HOST: yok"
+                  />
+                  <ConfigBadge
+                    ok={data.smtp.hasPort}
+                    okLabel={`SMTP_PORT: ${data.smtp.port ?? "?"}`}
+                    failLabel="SMTP_PORT: yok"
+                  />
+                  <ConfigBadge
+                    ok={data.smtp.hasUser}
+                    okLabel="SMTP_USER: var"
+                    failLabel="SMTP_USER: yok"
+                  />
+                  <ConfigBadge
+                    ok={data.smtp.hasPass}
+                    okLabel="SMTP_PASS: var"
+                    failLabel="SMTP_PASS: yok"
+                  />
+                  <ConfigBadge
+                    ok={data.smtp.hasFrom}
+                    okLabel={`SMTP_FROM: ${data.smtp.from ?? "?"}`}
+                    failLabel="SMTP_FROM: yok"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">
+                  Resend HTTP API — yedek (SMTP yoksa devreye girer)
+                </p>
+                <div className="flex flex-wrap gap-2 text-sm">
+                  <ConfigBadge
+                    ok={data.resend.hasApiKey}
+                    okLabel="RESEND_API_KEY: var"
+                    failLabel="RESEND_API_KEY: yok"
+                  />
+                  <ConfigBadge
+                    ok={data.resend.hasFrom}
+                    okLabel={`RESEND_FROM: ${data.resend.from ?? "?"}`}
+                    failLabel="RESEND_FROM: yok"
+                  />
+                </div>
+              </div>
+
               <div className="pt-2 border-t">
                 <p className="text-xs text-muted-foreground mb-2">
                   Test e-postası gönder (boş bırakırsanız adminin auth
-                  e-postasına gider):
+                  e-postasına gider). Aktif sağlayıcı: <strong>
+                    {data.provider === "smtp"
+                      ? "SMTP"
+                      : data.provider === "resend"
+                        ? "Resend HTTP"
+                        : "—"}
+                  </strong>
                 </p>
                 <div className="flex flex-col sm:flex-row gap-2">
                   <Input
@@ -228,7 +304,7 @@ export default function AdminNotificationsPage() {
                   />
                   <Button
                     onClick={sendTestEmail}
-                    disabled={sending}
+                    disabled={sending || data.provider === "none"}
                     size="sm"
                   >
                     {sending ? (

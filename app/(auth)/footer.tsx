@@ -37,7 +37,7 @@ export function Footer() {
           Matematik
         </Button>
         <Button size="lg" variant="ghost" className="flex-shrink-0">
-          <Image
+          <Image 
             src="/pointing_finger_happy_orange.svg"
             alt="Fen Bilimleri dersi"
             height={32}

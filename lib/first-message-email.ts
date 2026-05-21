@@ -33,10 +33,7 @@ import {
 import { getApiUrl } from "@/lib/utils";
 import { eq } from "drizzle-orm";
 import { logger } from "@/lib/logger";
-import {
-  escapeHtml,
-  sendEmailViaResend,
-} from "@/lib/transactional-email-resend";
+import { escapeHtml, sendEmail } from "@/lib/transactional-email";
 
 type SkipReason =
   | "invalid_chat_id"
@@ -213,15 +210,15 @@ export async function notifyFirstMessageIfApplicable(input: {
     <p style="font-size:12px;color:#64748b;">Bu e-posta yalnızca sohbetin ilk mesajı için gönderilir; sonraki yazışmalarda bildirim gitmez.</p>
   `.trim();
 
-  const ok = await sendEmailViaResend({ to, subject, html });
+  const ok = await sendEmail({ to, subject, html });
   if (!ok) {
-    // Resend yapılandırılmamış (env eksik) ya da API 4xx/5xx döndü.
-    // Idempotency satırını geri al ki kullanıcı sonra düzeltirse tekrar
-    // denenebilsin. `sendEmailViaResend` ayrıntılı hata logunu kendisi
-    // basıyor; biz burada anomaliyi `error_log`'a kalıcı olarak yazıyoruz.
-    await rollbackClaim(chatId, "resend_failed");
+    // Sağlayıcı (SMTP veya Resend HTTP) hata verdi ya da hiç
+    // yapılandırılmamış. Idempotency satırını geri al ki sonra düzeltilirse
+    // tekrar denenebilsin. Sağlayıcı katmanları ayrıntılı hatayı zaten
+    // `error_log`'a yazdı; biz burada bildirim seviyesinde özet basıyoruz.
+    await rollbackClaim(chatId, "email_failed");
     logAnomaly(
-      "First-message email failed (Resend kapalı veya yapılandırma eksik)",
+      "First-message email failed (e-posta sağlayıcısı kapalı veya yapılandırma eksik)",
       { chatId, recipientId, context },
     );
     return { sent: false, reason: "resend_failed" };

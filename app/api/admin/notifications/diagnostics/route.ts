@@ -34,8 +34,11 @@ import {
 import { isTrustedApiOrigin } from "@/lib/same-origin-api";
 import {
   escapeHtml,
-  sendEmailViaResend,
-} from "@/lib/transactional-email-resend";
+  getEmailProvider,
+  isResendConfigured,
+  sendEmail,
+} from "@/lib/transactional-email";
+import { isSmtpConfigured } from "@/lib/transactional-email-smtp";
 
 const RECENT_LIMIT = 15;
 
@@ -53,9 +56,9 @@ export async function GET() {
       );
     }
 
-    const resendConfigured = Boolean(
-      process.env.RESEND_API_KEY?.trim() && process.env.RESEND_FROM?.trim(),
-    );
+    const provider = getEmailProvider();
+    const smtpConfigured = isSmtpConfigured();
+    const resendConfigured = isResendConfigured();
 
     let tableExists = true;
     let totalNotifications = 0;
@@ -132,6 +135,19 @@ export async function GET() {
       .catch(() => []);
 
     return NextResponse.json({
+      provider,
+      smtp: {
+        configured: smtpConfigured,
+        hasHost: Boolean(process.env.SMTP_HOST?.trim()),
+        hasPort: Boolean(process.env.SMTP_PORT?.trim()),
+        hasUser: Boolean(process.env.SMTP_USER?.trim()),
+        hasPass: Boolean(process.env.SMTP_PASS?.trim()),
+        hasFrom: Boolean(process.env.SMTP_FROM?.trim()),
+        host: process.env.SMTP_HOST?.trim() ?? null,
+        port: process.env.SMTP_PORT?.trim() ?? null,
+        from: process.env.SMTP_FROM?.trim() ?? null,
+        // SMTP_USER ve SMTP_PASS gizli; sadece "var/yok"
+      },
       resend: {
         configured: resendConfigured,
         hasApiKey: Boolean(process.env.RESEND_API_KEY?.trim()),
@@ -245,7 +261,7 @@ export async function POST(request: NextRequest) {
       <p style="color:#64748b;font-size:12px;">Gönderen: ${escapeHtml(actor.email ?? actor.id)}</p>
     `.trim();
 
-    const ok = await sendEmailViaResend({ to, subject, html });
+    const ok = await sendEmail({ to, subject, html });
 
     logAdminActionAsync({
       actorId: actor.id,
