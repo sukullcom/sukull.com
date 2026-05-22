@@ -47,10 +47,10 @@ function OAuthButtons({ isLoading, onLoadingChange, redirectUrl, termsAccepted =
     <Button
       variant="default"
       type="button"
-      disabled={loading || !termsAccepted}
+      disabled={loading}
       onClick={handleGoogleSignIn}
       className="w-full transition-opacity"
-      style={{ opacity: loading ? 0.6 : 1, cursor: loading ? 'not-allowed' : 'pointer' }}
+      style={{ opacity: loading ? 0.6 : 1, cursor: loading ? "not-allowed" : "pointer" }}
     >
       {providerLoading ? (
         <>
@@ -68,8 +68,16 @@ function OAuthButtons({ isLoading, onLoadingChange, redirectUrl, termsAccepted =
 }
 
 export function OAuthSignIn(props: Props) {
+  const showTermsHint = props.termsAccepted === false;
+
   return (
     <div className="w-full">
+      {showTermsHint ? (
+        <p className="mb-3 text-center text-xs text-muted-foreground">
+          Google ile devam etmek için yukarıdaki KVKK / Gizlilik / Kullanım Şartları
+          onay kutusunu işaretleyin.
+        </p>
+      ) : null}
       {/* -----
         The line + text + line container 
         (removes absolute positioning, 
