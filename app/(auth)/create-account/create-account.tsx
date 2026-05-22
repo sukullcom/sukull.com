@@ -133,10 +133,6 @@ export function CreateAccountForm({ referralCodeFromUrl }: CreateAccountFormProp
         autoComplete="new-password"
       />
 
-      <p className="text-xs text-muted-foreground">
-        Ücretsiz hesap açılışıdır; bu adımda ödeme veya abonelik başlatılmaz.
-      </p>
-
       <label className="flex w-full min-w-0 cursor-pointer items-start gap-2 text-xs leading-snug text-muted-foreground">
         <input
           id="legalAccepted"

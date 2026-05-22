@@ -32,10 +32,35 @@ function detectExamFromTitle(title: string): (typeof EXAM_ORDER)[number] | null 
   return null;
 }
 
-function detectTopic(title: string): "ingilizce" | "diger" {
+/**
+ * Sınıf veya sınav etiketi olmayan kursları konularına göre sınıflandırır.
+ *
+ * "ingilizce" ve "genel_kultur" konuları **cross-class** kabul edilir:
+ * LGS / TYT-AYT / yetişkin yollarının hepsinde liste içinde görünürler.
+ * Sebep: CEFR seviyeli İngilizce ve genel kültür içeriği yaşa/sınıfa bağlı
+ * değildir; çocuk 5. sınıf öğrencisinden KPSS adayına kadar herkese
+ * EASY/MEDIUM/HARD difficulty'lerle hizmet eder.
+ *
+ * Yeni cross-class konu eklenirken hem bu döndürme tipi hem de
+ * `isCrossPathTopic`'i çağıran iki filtre dalı güncellenir.
+ */
+function detectTopic(title: string): "ingilizce" | "genel_kultur" | "diger" {
   const t = title.toLocaleLowerCase("tr");
   if (t.includes("ingilizce") || t.includes("english")) return "ingilizce";
+  if (
+    t.includes("genel kültür") ||
+    t.includes("genel kultur") ||
+    t.includes("genel-kultur") ||
+    t.includes("genelkultur")
+  ) {
+    return "genel_kultur";
+  }
   return "diger";
+}
+
+function isCrossPathTopic(title: string): boolean {
+  const topic = detectTopic(title);
+  return topic === "ingilizce" || topic === "genel_kultur";
 }
 
 export function filterCoursesByLearningPath(
@@ -50,8 +75,9 @@ export function filterCoursesByLearningPath(
       if (exam) return exam === "YDT" || exam === "KPSS" || exam === "ALES" || exam === "YDS";
       const g = parseGradeFromTitle(c.title);
       if (g !== null) return false; // 5–12 sınıf bloku
-      if (detectTopic(c.title) === "ingilizce") return true; // CEFR vb.
-      return false;
+      // CEFR İngilizce + Genel Kültür gibi sınıf/sınav etiketi olmayan
+      // cross-class konular her yolda görünür.
+      return isCrossPathTopic(c.title);
     });
   }
   if (path === "lgs" || path === "tyt_ayt") {
@@ -74,8 +100,9 @@ export function filterCoursesByLearningPath(
         if (g === null) return grade >= 9 && grade <= 12;
         return grade === g;
       }
-      // Konu: İngilizce herkese; diğer sınıf denkliği olmayan dersler sadece full
-      return detectTopic(c.title) === "ingilizce";
+      // Konu: İngilizce + Genel Kültür herkese; diğer sınıf denkliği olmayan
+      // dersler sadece `full` yolda görünür.
+      return isCrossPathTopic(c.title);
     });
   }
   return allCourses;
