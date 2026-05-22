@@ -1,12 +1,16 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { getCurrentDayProgress } from "@/actions/daily-streak";
 import { getTimeBonusInfo, getRemainingHoursInDay, type TimeBonusInfo } from "@/lib/time-bonus";
 import { PROGRESS_UPDATED_EVENT } from "@/lib/progress-events";
 import Image from "next/image";
 import { RefreshCw, AlertCircle, Sparkles, Flame, Sunrise, Clock } from "lucide-react";
 import { clientLogger } from "@/lib/client-logger";
+import {
+  isDocumentVisible,
+  isTransientNetworkError,
+} from "@/lib/is-transient-network-error";
 
 interface DailyProgressData {
   pointsEarnedToday: number;
@@ -24,21 +28,64 @@ export function DailyProgress() {
   const [timeBonus, setTimeBonus] = useState<TimeBonusInfo | null>(null);
   const [remainingHours, setRemainingHours] = useState<number | null>(null);
 
+  /**
+   * Unmount sonrası state update etmemek için "alive" referansı. Component
+   * sayfası ekrandan kalkmış olsa bile in-flight server action gelmeye
+   * devam edebilir; o anda `setHasError(true)` ya da `setProgressData(...)`
+   * yapmak React'tan uyarı toplar ve içerikte yanıp sönen "hata kutusu"
+   * etkisi yaratır.
+   */
+  const aliveRef = useRef(true);
+  useEffect(() => {
+    aliveRef.current = true;
+    return () => {
+      aliveRef.current = false;
+    };
+  }, []);
+
   const loadProgress = useCallback(async (showRefreshIndicator = false) => {
     try {
       if (showRefreshIndicator) {
         setIsRefreshing(true);
       }
       const data = await getCurrentDayProgress();
+      if (!aliveRef.current) return;
       setProgressData(data);
       setHasError(false);
     } catch (error) {
-      clientLogger.error({ message: "load daily progress failed", error, location: "daily-progress" });
-      setHasError(true);
+      // Geçici ağ gürültüsünü (Failed to fetch / AbortError / offline /
+      // bfcache navigasyonu) error_log'a yazma. Bu mesaj genellikle
+      // kullanıcı sayfayı değiştirirken in-flight server action'ın iptali
+      // ile gelir; gerçek bir bug değildir.
+      const transient = isTransientNetworkError(error);
+      if (transient) {
+        clientLogger.warn("daily-progress fetch aborted by browser", {
+          location: "daily-progress",
+          reason:
+            error instanceof Error
+              ? { name: error.name, message: error.message }
+              : { raw: String(error) },
+        });
+        // Doküman gizli/unloading ise UI'ı hata moduna çevirmeyelim;
+        // kullanıcı zaten ayrılıyor ya da sekme arka planda. Sayfaya
+        // dönünce visibilitychange tekrar tetiklenip taze veri çekecek.
+        if (aliveRef.current && isDocumentVisible()) {
+          setHasError(true);
+        }
+      } else {
+        clientLogger.error({
+          message: "load daily progress failed",
+          error,
+          location: "daily-progress",
+        });
+        if (aliveRef.current) setHasError(true);
+      }
     } finally {
-      setLoading(false);
+      if (aliveRef.current) setLoading(false);
       if (showRefreshIndicator) {
-        setTimeout(() => setIsRefreshing(false), 500);
+        setTimeout(() => {
+          if (aliveRef.current) setIsRefreshing(false);
+        }, 500);
       }
     }
   }, []);
