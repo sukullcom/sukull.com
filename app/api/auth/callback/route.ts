@@ -21,6 +21,51 @@ const sanitizeReason = (msg: unknown): string => {
   return cleaned.slice(0, 120) || 'unknown';
 };
 
+/**
+ * Supabase `AuthApiError`'larını "kullanıcı tarafı" vs. "altyapı tarafı"
+ * olarak sınıflandırır. Süresi geçmiş / iki kez tıklanmış e-posta linki,
+ * yanlış parola, PKCE cookie eksikliği gibi durumlar 400-class HTTP
+ * statüsleriyle gelir; bunlar `error_log` tablosunun gerçek müşterisi
+ * değil — operasyona yansıyacak bir bug yok, sadece kullanıcı davranışı.
+ *
+ * Statüsü olmayan (network / unknown) veya 500+ hatalar gerçekten
+ * incelenmesi gereken olaylardır; onları `error` seviyesinde tutuyoruz.
+ *
+ * Bilinen ekstra kullanıcı-tarafı `code` değerleri için isim eşleştirmesi
+ * de yapıyoruz; Supabase bazı sürümlerde 200 + `code` ile dönmeyi tercih
+ * edebiliyor (örn. eski `otp_expired`).
+ */
+const USER_SIDE_AUTH_CODES = new Set<string>([
+  'otp_expired',
+  'otp_disabled',
+  'invalid_credentials',
+  'email_not_confirmed',
+  'email_address_not_authorized',
+  'invalid_grant',
+  'bad_oauth_state',
+  'access_denied',
+  'invalid_request',
+  'token_already_used',
+  'invalid_token',
+  'token_not_found',
+  'flow_state_expired',
+  'flow_state_not_found',
+]);
+
+function isUserSideAuthError(err: unknown): boolean {
+  if (!err || typeof err !== 'object') return false;
+  const e = err as { status?: unknown; code?: unknown; name?: unknown };
+
+  if (typeof e.code === 'string' && USER_SIDE_AUTH_CODES.has(e.code)) {
+    return true;
+  }
+  if (typeof e.status === 'number') {
+    return e.status >= 400 && e.status < 500;
+  }
+  // Statüsü yok → ağ kaynaklı olabilir; sistem hatası olarak değerlendir.
+  return false;
+}
+
 type PendingCookie = { name: string; value: string; options: CookieOptions };
 
 /**
@@ -84,13 +129,29 @@ export async function GET(request: NextRequest) {
       });
 
       if (verifyError) {
-        log.error({
-          message: 'token verification failed',
-          error: verifyError,
-          source: 'api-route',
-          location: 'auth/callback/verifyOtp',
-          fields: { type },
-        });
+        // Süresi geçmiş / iki kez tıklanmış link gibi 400-class hatalar
+        // operasyona değer üretmez; warn olarak stdout'a düşer, error_log'a
+        // satır yazılmaz. Beklenmedik bir altyapı arızasında (5xx / status
+        // yok) error seviyesinde kalmaya devam eder.
+        const userSide = isUserSideAuthError(verifyError);
+        const verifyMeta = {
+          type,
+          authErrorStatus:
+            (verifyError as { status?: number }).status ?? null,
+          authErrorCode:
+            (verifyError as { code?: string }).code ?? null,
+        };
+        if (userSide) {
+          log.warn('token verification rejected (user-side)', verifyMeta);
+        } else {
+          log.error({
+            message: 'token verification failed',
+            error: verifyError,
+            source: 'api-route',
+            location: 'auth/callback/verifyOtp',
+            fields: verifyMeta,
+          });
+        }
         // Use a stable error code in the URL instead of the raw
         // `verifyError.message`. Supabase messages can include internal
         // hints (e.g. "Token has expired or is invalid") that end up in
@@ -122,21 +183,29 @@ export async function GET(request: NextRequest) {
           referrerHost = null;
         }
 
-        log.error({
-          message: 'code exchange failed',
-          error: authError,
-          source: 'api-route',
-          location: 'auth/callback/exchangeCode',
-          fields: {
-            codeExchangeMessage: authError.message,
-            authErrorStatus: (authError as { status?: number }).status ?? null,
-            authErrorCode: (authError as { code?: string }).code ?? null,
-            callbackHost: requestUrl.host,
-            referrerHost,
-            sbCookieCount: sbNames.length,
-            hasCodeVerifierCookie: hasCodeVerifier,
-          },
-        });
+        const exchangeMeta = {
+          codeExchangeMessage: authError.message,
+          authErrorStatus: (authError as { status?: number }).status ?? null,
+          authErrorCode: (authError as { code?: string }).code ?? null,
+          callbackHost: requestUrl.host,
+          referrerHost,
+          sbCookieCount: sbNames.length,
+          hasCodeVerifierCookie: hasCodeVerifier,
+        };
+        // PKCE cookie eksikliği / kullanılmış code 400-class döner;
+        // operasyonel bug değil, kullanıcı tıklama desenidir. Beklenmedik
+        // upstream arızası (5xx / network) hâlâ error olarak loglanır.
+        if (isUserSideAuthError(authError)) {
+          log.warn('code exchange rejected (user-side)', exchangeMeta);
+        } else {
+          log.error({
+            message: 'code exchange failed',
+            error: authError,
+            source: 'api-route',
+            location: 'auth/callback/exchangeCode',
+            fields: exchangeMeta,
+          });
+        }
 
         const errorUrl = new URL('/auth-error', requestUrl.origin);
         errorUrl.searchParams.set('error_code', 'code_exchange_failed');

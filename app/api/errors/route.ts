@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
+import { isClientNoise } from "@/lib/client-noise-patterns";
 import { logErrorAsync } from "@/lib/error-logger";
 import { checkRateLimit, getClientIp, RATE_LIMITS } from "@/lib/rate-limit-db";
 
@@ -107,6 +108,15 @@ export async function POST(req: NextRequest) {
 
     if (!body || !body.message || typeof body.message !== "string") {
       return NextResponse.json({ ok: false, error: "invalid payload" }, { status: 400 });
+    }
+
+    // Defense-in-depth: eski (cache'lenmiş, filter'siz) client build'leri
+    // bilinen 3. taraf gürültüsünü buraya yollamaya devam edebilir; saf
+    // pattern dosyası `lib/client-noise-patterns.ts` her iki tarafta da
+    // tek doğru kaynaktır. Sessizce 200 dönüyoruz çünkü 4xx/5xx, eski
+    // client'ı yeniden denemeye iter — bizim için anlamsız trafik artışı.
+    if (isClientNoise(body.message, body.stack ?? null)) {
+      return NextResponse.json({ ok: true, filtered: "client-noise" });
     }
 
     let userId: string | null = null;

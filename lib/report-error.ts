@@ -1,3 +1,5 @@
+import { isClientNoise } from "@/lib/client-noise-patterns";
+
 const CLIENT_DEDUPE_MS = 10 * 60 * 1000; // 10 dk — aynı oturumda tekrar POST yok
 
 function clientDedupeKey(message: string, location?: string): string {
@@ -8,6 +10,7 @@ function clientDedupeKey(message: string, location?: string): string {
   }
   return `client-err:${loc}:${norm}`;
 }
+
 
 /**
  * Client-side error reporter. Fire-and-forget; never throws.
@@ -29,6 +32,13 @@ export function reportClientError(input: {
           ? error
           : JSON.stringify(error);
     const stack = error instanceof Error ? error.stack : undefined;
+
+    // Bilinen 3. taraf / tarayıcı gürültüsü → DB'ye götürme. Dedupe
+    // sessionStorage'ını da kirletmemek için filtre dedupe'tan ÖNCE
+    // uygulanır.
+    if (isClientNoise(message || "", stack)) {
+      return;
+    }
 
     try {
       const key = clientDedupeKey(message || "", location);
