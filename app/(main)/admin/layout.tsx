@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { and, count, eq, gte } from "drizzle-orm";
 import { getServerUser } from "@/lib/auth";
-import { isAdmin } from "@/lib/admin";
+import { isAdmin, syncAdminRoleFromEmail } from "@/lib/admin";
 import db from "@/db/drizzle";
 import {
   teacherApplications,
@@ -29,9 +29,20 @@ export default async function AdminLayout({
     const user = await getServerUser();
     if (!user) redirect("/login");
 
-    // Centralised admin check: DB role is source of truth, but if the user's
-    // email is in ADMIN_EMAILS and the DB role hasn't been synced yet,
-    // isAdmin() promotes them automatically.
+    // ADMIN_EMAILS → DB `admin` rolü yalnızca auth callback'te değil, /admin
+    // girişinde de senkronize edilir (idempotent). Aksi halde .env'e e-posta
+    // eklense bile eski oturumla /unauthorized görülür.
+    try {
+      await syncAdminRoleFromEmail({ id: user.id, email: user.email });
+    } catch (syncErr) {
+      (await getRequestLogger({ labels: { route: "admin/layout" } })).error({
+        message: "admin role sync failed",
+        error: syncErr,
+        location: "admin/layout/syncAdminRoleFromEmail",
+        userId: user.id,
+      });
+    }
+
     const allowed = await isAdmin();
     if (!allowed) redirect("/unauthorized");
 
