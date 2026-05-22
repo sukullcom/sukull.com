@@ -1,9 +1,39 @@
 import "server-only";
 import { pgPool } from "@/db/drizzle";
-import { logger } from "@/lib/logger";
+import { logger, type Logger } from "@/lib/logger";
 import { normalizeRateLimitRow, resolveAllowed } from "@/lib/rate-limit-allowed";
 
-const log = logger.child({ labels: { module: "rate-limit-db" } });
+/**
+ * Lazy module logger.
+ *
+ * Niye top-level `const log = logger.child(...)` değil?
+ *   `logger.ts` → `error-logger.ts` → `error-log-coalesce.ts` → `rate-limit-db.ts` →
+ *   `logger.ts` şeklinde döngüsel import zinciri var. Çağrı yapan ilk modül
+ *   (örn. `app/api/activity-log/route.ts`) `logger.ts`'i değerlendirirken, bu
+ *   dosya da hoisted import'lar üzerinden tekrar `logger.ts`'e dönüyor; o anda
+ *   `logger` bağlaması TDZ'de olduğu için top-level `logger.child(...)`
+ *   minified prod build'te "Cannot access 'u' before initialization" atıyor ve
+ *   Next "Collecting page data" aşamasını bozuyor.
+ *
+ *   Lazy çözüm: `logger`'ı yalnızca fonksiyon çalışırken (yani tüm modül
+ *   gövdeleri tamamlanmışken) tükettiğimiz için TDZ tetiklenmiyor; döngü
+ *   "kâğıt üstünde" kalıyor, runtime'da masum.
+ */
+let _moduleLog: Logger | null = null;
+function getModuleLog(): Logger {
+  if (_moduleLog) return _moduleLog;
+  _moduleLog = logger.child({ labels: { module: "rate-limit-db" } });
+  return _moduleLog;
+}
+
+/**
+ * `shouldPersistErrorToDb` bizi çağırırken kullanılan anahtar prefix'i.
+ * Hata yolu (logger.error → logError → shouldPersistErrorToDb → checkRateLimit)
+ * sırasında catch bloğunda `getModuleLog().error(...)` çağrılırsa aynı zincir
+ * yeniden tetiklenir ve farklı fingerprint'lerle özyineleme zinciri oluşur.
+ * Bu prefix gördüğümüzde DB'ye değil yalnızca stdout'a yazıyoruz.
+ */
+const ERROR_COALESCE_KEY_PREFIX = "error-log-coalesce:";
 
 export type RateLimitResult = {
   allowed: boolean;
@@ -80,12 +110,19 @@ export async function checkRateLimit({
     const resetRaw = row.reset_at;
     const resetAt = new Date(resetRaw as string);
     if (Number.isNaN(resetAt.getTime())) {
-      log.warn("check_rate_limit returned invalid reset_at", {
-        source: "rate-limit-db",
-        location: "checkRateLimit/resetAt",
-        key,
-        resetRaw,
-      });
+      if (key.startsWith(ERROR_COALESCE_KEY_PREFIX)) {
+        console.warn(
+          "[rate-limit-db] check_rate_limit returned invalid reset_at during error-log coalesce",
+          { key, resetRaw },
+        );
+      } else {
+        getModuleLog().warn("check_rate_limit returned invalid reset_at", {
+          source: "rate-limit-db",
+          location: "checkRateLimit/resetAt",
+          key,
+          resetRaw,
+        });
+      }
     }
     const retryAfter = Math.max(0, Math.ceil((resetAt.getTime() - Date.now()) / 1000));
     const allowed = resolveAllowed(row, max);
@@ -102,23 +139,35 @@ export async function checkRateLimit({
     const errMsg = error instanceof Error ? error.message : String(error);
     const missingRateLimitFn =
       errMsg.includes("check_rate_limit") && errMsg.includes("does not exist");
-    log.error({
-      message: "check_rate_limit failed",
-      error,
-      source: "middleware",
-      location: "rate-limit-db/checkRateLimit",
-      fields: {
-        key,
-        max,
-        windowSeconds,
-        onStoreError,
-        ...(missingRateLimitFn
-          ? {
-              hint: "DB'de check_rate_limit yok — npm run db:apply -- supabase/migrations/0019_add_rate_limits.sql",
-            }
-          : {}),
-      },
-    });
+
+    if (key.startsWith(ERROR_COALESCE_KEY_PREFIX)) {
+      // Bu çağrı zaten bir error-log coalesce'inin parçası. `getModuleLog().error`
+      // → logErrorAsync → logError → shouldPersistErrorToDb → checkRateLimit
+      // şeklinde geri dönerse, başarısız DB altında farklı fingerprint'lerle
+      // özyineleme zinciri oluşur. Bu nedenle yalnızca stdout'a yazıyoruz;
+      // gerçek hata zaten ana çağrıda DB'ye yazılmaya çalışılırken görülecek.
+      console.error(
+        `[rate-limit-db] check_rate_limit failed during error-log coalesce (${errMsg})`,
+      );
+    } else {
+      getModuleLog().error({
+        message: "check_rate_limit failed",
+        error,
+        source: "middleware",
+        location: "rate-limit-db/checkRateLimit",
+        fields: {
+          key,
+          max,
+          windowSeconds,
+          onStoreError,
+          ...(missingRateLimitFn
+            ? {
+                hint: "DB'de check_rate_limit yok — npm run db:apply -- supabase/migrations/0019_add_rate_limits.sql",
+              }
+            : {}),
+        },
+      });
+    }
     const fallback =
       onStoreError === "closed"
         ? fallbackDeny(windowSeconds)
