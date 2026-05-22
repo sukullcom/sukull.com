@@ -4,6 +4,7 @@ import {
   Bell,
   BookOpen,
   CreditCard,
+  GraduationCap,
   LayoutDashboard,
   Megaphone,
   School,
@@ -44,6 +45,7 @@ export const ADMIN_NAV: AdminNavItem[] = [
     badgeKey: "listingsPendingReview",
   },
   { href: "/admin/course-builder", label: "Kurs Oluşturucu", icon: BookOpen },
+  { href: "/admin/schools", label: "Okul Yönetimi", icon: GraduationCap },
   { href: "/admin/credits", label: "Kredi Yönetimi", icon: CreditCard },
   {
     href: "/admin/errors",

@@ -379,6 +379,19 @@ export const RATE_LIMITS = {
    * frekansta vurabilir ama yalnızca admin kullanır.
    */
   adminCreditsSearch: { max: 120, windowSeconds: 60 },
+  /**
+   * Admin tarafından okul ekleme (`/api/admin/schools` POST). Eksik okulların
+   * tek tek eklenmesi yıkıcı değil ama duplicate / hatalı yazım açısından
+   * insanı yavaşlatan bir kova istiyoruz. 30/dakika klavye-kazasını engeller,
+   * meşru toplu girişi (~1 okul/2sn) rahatlıkla geçirir.
+   */
+  adminSchoolWrite: { max: 30, windowSeconds: 60 },
+  /**
+   * Admin okul araması (duplicate kontrolü için). Form alanında debounce'lu
+   * arama tetiklendiği için kullanıcı bazında 120/dakika yüksek görünebilir,
+   * ama yalnızca admin kullanır.
+   */
+  adminSchoolSearch: { max: 120, windowSeconds: 60 },
 
   // --- Reads — user-scoped ---
   /** Genel kullanıcı sıralaması — paylaşılan IP (kampüs Wi‑Fi) ile okunabilir. */
