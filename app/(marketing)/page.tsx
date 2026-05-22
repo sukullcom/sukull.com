@@ -30,7 +30,14 @@ export default function Home() {
   return (
     <div className="max-w-[988px] mx-auto flex-1 w-full flex flex-col lg:flex-row items-center justify-center p-4 gap-2">
       <div className="relative aspect-square max-h-[300px] w-full">
-        <Image src="/hero.svg" fill alt="Hero" sizes="100vw" />
+        <Image
+          src="/hero.svg"
+          fill
+          alt="Hero"
+          sizes="100vw"
+          unoptimized
+          priority
+        />
       </div>
       <div className="flex flex-col items-center gap-y-8">
         <h1 className="text-xl lg:text-3xl font-bold text-muted-foreground max-w-[480px] text-center">

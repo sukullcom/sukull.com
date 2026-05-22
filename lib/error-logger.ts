@@ -1,5 +1,10 @@
 import db from "@/db/drizzle";
 import { errorLog } from "@/db/schema";
+import {
+  buildErrorFingerprint,
+  normalizeErrorMessageForCoalesce,
+  shouldPersistErrorToDb,
+} from "@/lib/error-log-coalesce";
 
 /**
  * Lightweight, Postgres-backed error logger.
@@ -12,13 +17,10 @@ import { errorLog } from "@/db/schema";
  * Client-side errors should POST to `/api/errors` which forwards here.
  *
  * ## Coalesce (gürültü kontrolü)
- * Aynı `source|location|message` parmak izi 60 sn içinde tekrar gelirse
- * DB insert atlanır; sadece proses içi sayaç artar. TTL dolduktan sonra
- * gelen ilk satıra `metadata.suppressedCount` eklenir — kaç çağrı
- * görmezden gelindiği görünür. Vercel serverless'ta her container kendi
- * sayaçlarını tutar; cross-instance koalesleme rate_limit tablosuna
- * geçmeye gerek bırakmıyor çünkü tek instance içinde hot loop'lar zaten
- * volume'un büyük çoğunluğunu üretiyor.
+ * Aynı parmak izi 60 sn içinde (aynı serverless instance) tekrar gelirse
+ * insert atlanır. **Dağıtık** dedupe için `error-log-coalesce.ts` — aynı
+ * hata tüm instance'larda 6 saatte en fazla 1 kez DB'ye yazılır (React #419
+ * gibi sürekli hydration gürültüsü için).
  *
  * Üretim ölçeğinde fayda: tek bir bozuk hot-path saniyede 50 hata bassa
  * bile DB'ye dakikada en fazla 1 satır düşer; insert bant genişliği 99%
@@ -78,9 +80,7 @@ type CoalesceEntry = {
 const coalesceMap = new Map<string, CoalesceEntry>();
 
 function fingerprint(opts: LogErrorOptions, message: string): string {
-  // Parmak izinde userId / requestId yok: aynı bug 10 farklı kullanıcıda
-  // tekrarlanıyorsa hâlâ tek "burst" sayılsın istiyoruz.
-  return `${opts.source}|${opts.location ?? ""}|${opts.level ?? "error"}|${message.slice(0, 200)}`;
+  return buildErrorFingerprint(opts, message);
 }
 
 /**
@@ -119,7 +119,17 @@ function tryReserveInsert(opts: LogErrorOptions, message: string): {
 export async function logError(opts: LogErrorOptions): Promise<void> {
   try {
     const { message, stack } = extractMessage(opts.error);
-    const reservation = tryReserveInsert(opts, message);
+    const normalizedMessage = normalizeErrorMessageForCoalesce(message);
+
+    const persist = await shouldPersistErrorToDb(opts, message);
+    if (!persist) {
+      console.error(
+        `[error-logger] distributed coalesce ${opts.source}|${opts.location ?? "?"}`,
+      );
+      return;
+    }
+
+    const reservation = tryReserveInsert(opts, normalizedMessage);
     if (!reservation) {
       // Insert atlanıyor; stdout'a kısa bir not bırak ki dev tarafında da
       // sessiz kalmasın. Üretimde JSON log drainini gereksiz şişirmemek
@@ -144,7 +154,7 @@ export async function logError(opts: LogErrorOptions): Promise<void> {
       source: opts.source,
       location: opts.location ?? null,
       level: opts.level ?? "error",
-      message: message.slice(0, 4000),
+      message: normalizedMessage.slice(0, 4000),
       stack: stack ? stack.slice(0, 8000) : null,
       userId: opts.userId ?? null,
       requestId: opts.requestId ?? null,

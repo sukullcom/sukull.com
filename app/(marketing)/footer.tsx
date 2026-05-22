@@ -82,7 +82,8 @@ export const Footer = () => {
             </a>
           </nav>
           <p className="text-[11px] text-muted-foreground/90 sm:text-right">
-            © {year} {brandName}. Tüm hakları saklıdır.
+            © <span suppressHydrationWarning>{year}</span> {brandName}. Tüm hakları
+            saklıdır.
           </p>
         </div>
       </div>

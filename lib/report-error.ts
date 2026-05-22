@@ -1,3 +1,14 @@
+const CLIENT_DEDUPE_MS = 10 * 60 * 1000; // 10 dk — aynı oturumda tekrar POST yok
+
+function clientDedupeKey(message: string, location?: string): string {
+  const loc = location ?? "unknown";
+  let norm = message.trim().slice(0, 120);
+  if (/Minified React error #419/i.test(norm)) {
+    norm = "React hydration mismatch (#419)";
+  }
+  return `client-err:${loc}:${norm}`;
+}
+
 /**
  * Client-side error reporter. Fire-and-forget; never throws.
  * POSTs to /api/errors which persists into Postgres `error_log`.
@@ -18,6 +29,20 @@ export function reportClientError(input: {
           ? error
           : JSON.stringify(error);
     const stack = error instanceof Error ? error.stack : undefined;
+
+    try {
+      const key = clientDedupeKey(message || "", location);
+      const raw = sessionStorage.getItem(key);
+      if (raw) {
+        const last = Number(raw);
+        if (Number.isFinite(last) && Date.now() - last < CLIENT_DEDUPE_MS) {
+          return;
+        }
+      }
+      sessionStorage.setItem(key, String(Date.now()));
+    } catch {
+      /* private mode / storage full */
+    }
 
     const body = JSON.stringify({
       message: message || "Unknown client error",

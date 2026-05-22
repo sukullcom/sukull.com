@@ -48,6 +48,7 @@ export const LoadingSpinner = ({ size = "md" }: LoadingSpinnerProps) => {
           width={width}
           height={height}
           priority
+          unoptimized
         />
       </div>
       <p className="text-muted-foreground text-sm animate-pulse">Yükleniyor...</p>
