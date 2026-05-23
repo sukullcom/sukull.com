@@ -17,7 +17,7 @@ import { normalizeAvatarUrl } from "@/utils/avatar";
 import { CACHE_TAGS, CACHE_TTL } from "@/lib/cache-tags";
 import { queryResultRows } from "@/lib/query-result";
 import { SCHOOL_LEADERBOARD_LIST_MAX } from "@/lib/school-leaderboard-limits";
-import { LEADERBOARD_MIN_ACTIVE_STUDENTS } from "@/lib/leaderboard-constants";
+import { schoolHasStudentWithPoints } from "@/lib/school-leaderboard-eligibility";
 
 /**
  * Leaderboard city filter list. Caching for 24h as school data is static.
@@ -98,13 +98,9 @@ const _getSchoolPointsByTypeCached = unstable_cache(
     offset: number,
     city?: string,
   ) => {
-    // Eşiği geçmeyen okul listeye girmez (Bayesian smoothing zaten skor
-    // üretir ama az aktiviteli okul göstermek istemiyoruz; bkz. migration
-    // 0053). Sıralama: bayes skor → tie-break aktif öğrenci → ad.
-    const conditions = [
-      eq(schools.type, schoolType),
-      sql`${schools.activeStudentCount} >= ${LEADERBOARD_MIN_ACTIVE_STUDENTS}`,
-    ];
+    // Listeye girmek: okulda puanı > 0 en az bir öğrenci. Sıralama: bayes
+    // skor → tie-break aktif öğrenci → ad.
+    const conditions = [eq(schools.type, schoolType), schoolHasStudentWithPoints()];
     if (city) {
       conditions.push(eq(schools.city, city.toUpperCase()));
     }
@@ -129,7 +125,7 @@ const _getSchoolPointsByTypeCached = unstable_cache(
       .limit(limit)
       .offset(offset);
   },
-  ["school-points-by-type-v2"],
+  ["school-points-by-type-v3-points-eligibility"],
   {
     tags: [CACHE_TAGS.schoolLeaderboard],
     revalidate: CACHE_TTL.schoolLeaderboard,
@@ -237,16 +233,17 @@ async function computeUserRankForUser(userId: string) {
     };
   }
 
-  // Okul sıralaması artık Bayesian skora göre — büyük okul küçük okulu
-  // sadece sayısal üstünlükle ezmesin. Eşiği geçmeyen okullar da hesabın
-  // dışındadır; kullanıcının okulu eşiğin altındaysa schoolRank null
-  // dönerek "henüz listede değiliz" mesajı verebiliriz.
+  // Okul sıralaması Bayesian skora göre; listede sayılan okullar = puanlı
+  // öğrencisi olanlar (aktif-30-gün şartı yok).
   const schoolRankResult = await db.execute(sql`
     SELECT COUNT(*) + 1 AS rank
     FROM schools target_self
     JOIN schools other
       ON other.type = target_self.type
-     AND other.active_student_count >= ${LEADERBOARD_MIN_ACTIVE_STUDENTS}
+     AND EXISTS (
+       SELECT 1 FROM user_progress up_o
+       WHERE up_o.school_id = other.id AND up_o.points > 0
+     )
      AND (
        other.top_avg_score > target_self.top_avg_score
        OR (
@@ -255,7 +252,10 @@ async function computeUserRankForUser(userId: string) {
        )
      )
     WHERE target_self.id = ${schoolId}
-      AND target_self.active_student_count >= ${LEADERBOARD_MIN_ACTIVE_STUDENTS}
+      AND EXISTS (
+        SELECT 1 FROM user_progress up_t
+        WHERE up_t.school_id = target_self.id AND up_t.points > 0
+      )
   `);
 
   const schoolRankRow = queryResultRows<{ rank: unknown }>(schoolRankResult)[0];

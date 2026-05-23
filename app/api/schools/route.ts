@@ -13,7 +13,7 @@ import {
 import { getRequestLogger } from '@/lib/logger';
 import { clampPositiveInt } from '@/lib/pagination';
 import { SCHOOL_LEADERBOARD_LIST_MAX } from '@/lib/school-leaderboard-limits';
-import { LEADERBOARD_MIN_ACTIVE_STUDENTS } from '@/lib/leaderboard-constants';
+import { schoolHasStudentWithPoints } from '@/lib/school-leaderboard-eligibility';
 import { sortSchoolCategories } from '@/lib/school-catalog';
 import {
   isValidSchoolCity,
@@ -287,7 +287,7 @@ export async function GET(request: NextRequest) {
         // total_points sıralaması büyük okulları haksızca öne çıkarıyordu.
         const leaderboardConditions = [
           eq(schools.type, type as SchoolType),
-          sql`${schools.activeStudentCount} >= ${LEADERBOARD_MIN_ACTIVE_STUDENTS}`,
+          schoolHasStudentWithPoints(),
         ];
 
         if (city) {
@@ -374,7 +374,7 @@ export async function POST(request: NextRequest) {
     for (const schoolType of schoolTypes) {
       const whereConditions = [
         eq(schools.type, schoolType),
-        sql`${schools.activeStudentCount} >= ${LEADERBOARD_MIN_ACTIVE_STUDENTS}`,
+        schoolHasStudentWithPoints(),
       ];
 
       if (city) {

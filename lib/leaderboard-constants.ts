@@ -15,14 +15,22 @@
  *                   robust; tek bir uçtan-mega-okul prior'ı bozmasın).
  *
  * Sıralama: bayes_score DESC, active_student_count DESC, name ASC.
- * Listede yer almak için: active_student_count >= MIN_ACTIVE_STUDENTS.
+ * Listede yer almak için (şimdilik): okulda en az bir öğrencinin
+ * `user_progress.points > 0` olması — bkz. `schoolHasStudentWithPoints()`.
+ * Cron'daki `MIN_ACTIVE_STUDENTS` yalnızca tip bazlı prior medyanı içindir.
  */
 
-/** Aktiflik penceresi — son N gün. */
+/** Aktiflik penceresi — son N gün (Bayesian skor / active_student_count). */
 export const LEADERBOARD_ACTIVE_WINDOW_DAYS = 30;
 
-/** Listede yer almak için gereken aktif öğrenci sayısı. */
+/**
+ * Tip bazlı prior medyanında hangi okullar dikkate alınsın (cron).
+ * Liste görünürlüğü için kullanılmaz.
+ */
 export const LEADERBOARD_MIN_ACTIVE_STUDENTS = 1;
+
+/** Listede görünmek için okulda gereken asgari puanlı öğrenci (şimdilik 1). */
+export const LEADERBOARD_MIN_STUDENTS_WITH_POINTS = 1;
 
 /**
  * Bayesian prior'ın "ağırlığı". Eşikle simetrik: 10 aktif öğrencili okul
