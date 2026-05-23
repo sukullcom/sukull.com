@@ -17,3 +17,11 @@ export function schoolHasStudentWithPoints() {
       AND ${userProgress.points} > 0
   )`;
 }
+
+/** Okulda puanı > 0 olan kayıtlı öğrenci sayısı (liste alt metni için). */
+export const schoolPointingStudentCountSql = sql<number>`(
+  SELECT COUNT(*)::int
+  FROM ${userProgress}
+  WHERE ${userProgress.schoolId} = ${schools.id}
+    AND ${userProgress.points} > 0
+)`;

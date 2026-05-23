@@ -13,7 +13,10 @@ import {
 import { getRequestLogger } from '@/lib/logger';
 import { clampPositiveInt } from '@/lib/pagination';
 import { SCHOOL_LEADERBOARD_LIST_MAX } from '@/lib/school-leaderboard-limits';
-import { schoolHasStudentWithPoints } from '@/lib/school-leaderboard-eligibility';
+import {
+  schoolHasStudentWithPoints,
+  schoolPointingStudentCountSql,
+} from '@/lib/school-leaderboard-eligibility';
 import { sortSchoolCategories } from '@/lib/school-catalog';
 import {
   isValidSchoolCity,
@@ -307,6 +310,7 @@ export async function GET(request: NextRequest) {
             topAvgScore: schools.topAvgScore,
             rawAvgPoints: schools.rawAvgPoints,
             activeStudentCount: schools.activeStudentCount,
+            pointingStudentCount: schoolPointingStudentCountSql,
           })
           .from(schools)
           .where(and(...leaderboardConditions))
@@ -322,6 +326,7 @@ export async function GET(request: NextRequest) {
           ...r,
           topAvgScore: Number(r.topAvgScore ?? 0),
           rawAvgPoints: Number(r.rawAvgPoints ?? 0),
+          pointingStudentCount: Number(r.pointingStudentCount ?? 0),
         }));
 
         return NextResponse.json({ schools: leaderboardResults });
@@ -394,6 +399,7 @@ export async function POST(request: NextRequest) {
           topAvgScore: schools.topAvgScore,
           rawAvgPoints: schools.rawAvgPoints,
           activeStudentCount: schools.activeStudentCount,
+          pointingStudentCount: schoolPointingStudentCountSql,
         })
         .from(schools)
         .where(and(...whereConditions))
@@ -408,6 +414,7 @@ export async function POST(request: NextRequest) {
         ...r,
         topAvgScore: Number(r.topAvgScore ?? 0),
         rawAvgPoints: Number(r.rawAvgPoints ?? 0),
+        pointingStudentCount: Number(r.pointingStudentCount ?? 0),
       }));
     }
 

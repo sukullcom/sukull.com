@@ -39,6 +39,8 @@ type SchoolEntry = {
   topAvgScore: number;
   /** Aktif öğrenci sayısı (son 30 gün). Tie-breaker ve gösterim için. */
   activeStudentCount: number;
+  /** Puanı > 0 olan kayıtlı öğrenci sayısı. */
+  pointingStudentCount?: number;
   rawAvgPoints?: number;
   city?: string;
 };
@@ -51,9 +53,21 @@ type SchoolsLeaderboardJson = {
     topAvgScore: number;
     rawAvgPoints?: number;
     activeStudentCount: number;
+    pointingStudentCount?: number;
     city?: string;
   }>;
 };
+
+function schoolMemberLabel(s: SchoolEntry): string {
+  if (s.activeStudentCount > 0) {
+    return `${s.activeStudentCount.toLocaleString("tr-TR")} aktif`;
+  }
+  const pointed = s.pointingStudentCount ?? 0;
+  if (pointed > 0) {
+    return `${pointed.toLocaleString("tr-TR")} puanlı`;
+  }
+  return "0 aktif";
+}
 
 const TABS = [
   { id: "users" as const, label: "Bireysel", icon: User },
@@ -139,6 +153,7 @@ export const LeaderboardClient = ({
             topAvgScore: s.topAvgScore,
             rawAvgPoints: s.rawAvgPoints,
             activeStudentCount: s.activeStudentCount,
+            pointingStudentCount: s.pointingStudentCount,
             city: s.city,
           }));
           setSchoolData((prev) => ({ ...prev, [currentSchoolType]: mapped }));
@@ -276,16 +291,19 @@ export const LeaderboardClient = ({
                   {s.city && <span aria-hidden>·</span>}
                   <span className="inline-flex items-center gap-0.5 shrink-0">
                     <Users className="h-3 w-3" />
-                    {s.activeStudentCount.toLocaleString("tr-TR")} aktif
+                    {schoolMemberLabel(s)}
                   </span>
                 </div>
               </div>
               <div className="text-right shrink-0">
+                <p className="text-[10px] text-muted-foreground leading-tight">
+                  Skor
+                </p>
                 <p className="text-xs sm:text-sm font-semibold text-foreground">
                   {Math.round(s.topAvgScore).toLocaleString("tr-TR")}
                 </p>
-                <p className="text-[10px] text-muted-foreground">
-                  Top: {s.totalPoints.toLocaleString("tr-TR")}
+                <p className="text-[10px] text-muted-foreground mt-0.5">
+                  Toplam: {s.totalPoints.toLocaleString("tr-TR")}
                 </p>
               </div>
             </div>

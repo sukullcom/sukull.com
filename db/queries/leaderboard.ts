@@ -17,7 +17,10 @@ import { normalizeAvatarUrl } from "@/utils/avatar";
 import { CACHE_TAGS, CACHE_TTL } from "@/lib/cache-tags";
 import { queryResultRows } from "@/lib/query-result";
 import { SCHOOL_LEADERBOARD_LIST_MAX } from "@/lib/school-leaderboard-limits";
-import { schoolHasStudentWithPoints } from "@/lib/school-leaderboard-eligibility";
+import {
+  schoolHasStudentWithPoints,
+  schoolPointingStudentCountSql,
+} from "@/lib/school-leaderboard-eligibility";
 
 /**
  * Leaderboard city filter list. Caching for 24h as school data is static.
@@ -113,6 +116,7 @@ const _getSchoolPointsByTypeCached = unstable_cache(
         topAvgScore: schools.topAvgScore,
         rawAvgPoints: schools.rawAvgPoints,
         activeStudentCount: schools.activeStudentCount,
+        pointingStudentCount: schoolPointingStudentCountSql,
         city: schools.city,
       })
       .from(schools)
@@ -125,7 +129,7 @@ const _getSchoolPointsByTypeCached = unstable_cache(
       .limit(limit)
       .offset(offset);
   },
-  ["school-points-by-type-v3-points-eligibility"],
+  ["school-points-by-type-v4-pointing-count"],
   {
     tags: [CACHE_TAGS.schoolLeaderboard],
     revalidate: CACHE_TTL.schoolLeaderboard,
@@ -152,6 +156,7 @@ export const getSchoolPointsByType = cache(
       ...r,
       topAvgScore: Number(r.topAvgScore ?? 0),
       rawAvgPoints: Number(r.rawAvgPoints ?? 0),
+      pointingStudentCount: Number(r.pointingStudentCount ?? 0),
     }));
   },
 );
