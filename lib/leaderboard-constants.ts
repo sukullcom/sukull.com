@@ -22,7 +22,7 @@
 export const LEADERBOARD_ACTIVE_WINDOW_DAYS = 30;
 
 /** Listede yer almak için gereken aktif öğrenci sayısı. */
-export const LEADERBOARD_MIN_ACTIVE_STUDENTS = 10;
+export const LEADERBOARD_MIN_ACTIVE_STUDENTS = 1;
 
 /**
  * Bayesian prior'ın "ağırlığı". Eşikle simetrik: 10 aktif öğrencili okul

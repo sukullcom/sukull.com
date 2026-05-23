@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import type { LeaderboardSchoolTab } from "@/lib/learning-path";
 import { fetchSchoolCatalogJson } from "@/lib/fetch-school-catalog";
+import { LEADERBOARD_MIN_ACTIVE_STUDENTS } from "@/lib/leaderboard-constants";
 import { SCHOOL_LEADERBOARD_LIST_MAX } from "@/lib/school-leaderboard-limits";
 import { toast } from "sonner";
 import { clientLogger } from "@/lib/client-logger";
@@ -243,8 +244,10 @@ export const LeaderboardClient = ({
           <p className="font-medium">Bu kategoride henüz yeterli okul yok.</p>
           <p className="text-xs mt-1">
             Liderlik tablosunda görünmek için bir okulda en az{" "}
-            <span className="font-semibold">10 aktif öğrenci</span> olması
-            gerekir.
+            <span className="font-semibold">
+              {LEADERBOARD_MIN_ACTIVE_STUDENTS} aktif öğrenci
+            </span>{" "}
+            olması gerekir.
           </p>
         </div>
       );
@@ -361,7 +364,10 @@ export const LeaderboardClient = ({
               Az aktif öğrencisi olan okullar, anormal değerlerden etkilenmemek
               için istatistiksel olarak ortalamaya çekilir (Bayesian smoothing).
               Liste için en az{" "}
-              <span className="font-semibold">10 aktif öğrenci</span> gerekir.
+              <span className="font-semibold">
+                {LEADERBOARD_MIN_ACTIVE_STUDENTS} aktif öğrenci
+              </span>{" "}
+              gerekir.
             </p>
             <p>
               Eşit ortalamada{" "}
