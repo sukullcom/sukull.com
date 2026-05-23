@@ -36,7 +36,11 @@ export function reportClientError(input: {
     // Bilinen 3. taraf / tarayıcı gürültüsü → DB'ye götürme. Dedupe
     // sessionStorage'ını da kirletmemek için filtre dedupe'tan ÖNCE
     // uygulanır.
-    if (isClientNoise(message || "", stack)) {
+    const filename =
+      metadata && typeof metadata.filename === "string"
+        ? metadata.filename
+        : undefined;
+    if (isClientNoise(message || "", stack, filename)) {
       return;
     }
 

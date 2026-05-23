@@ -115,7 +115,13 @@ export async function POST(req: NextRequest) {
     // pattern dosyası `lib/client-noise-patterns.ts` her iki tarafta da
     // tek doğru kaynaktır. Sessizce 200 dönüyoruz çünkü 4xx/5xx, eski
     // client'ı yeniden denemeye iter — bizim için anlamsız trafik artışı.
-    if (isClientNoise(body.message, body.stack ?? null)) {
+    const reportFilename =
+      body.metadata &&
+      typeof body.metadata === "object" &&
+      typeof body.metadata.filename === "string"
+        ? body.metadata.filename
+        : null;
+    if (isClientNoise(body.message, body.stack ?? null, reportFilename)) {
       return NextResponse.json({ ok: true, filtered: "client-noise" });
     }
 
