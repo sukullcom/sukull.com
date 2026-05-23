@@ -315,7 +315,7 @@ export async function GET(request: NextRequest) {
           .from(schools)
           .where(and(...leaderboardConditions))
           .orderBy(
-            desc(schools.topAvgScore),
+            desc(schools.totalPoints),
             desc(schools.activeStudentCount),
             schools.name,
           )
@@ -404,7 +404,7 @@ export async function POST(request: NextRequest) {
         .from(schools)
         .where(and(...whereConditions))
         .orderBy(
-          desc(schools.topAvgScore),
+          desc(schools.totalPoints),
           desc(schools.activeStudentCount),
           schools.name,
         )

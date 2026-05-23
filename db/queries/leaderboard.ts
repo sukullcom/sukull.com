@@ -101,8 +101,8 @@ const _getSchoolPointsByTypeCached = unstable_cache(
     offset: number,
     city?: string,
   ) => {
-    // Listeye girmek: okulda puanı > 0 en az bir öğrenci. Sıralama: bayes
-    // skor → tie-break aktif öğrenci → ad.
+    // Listeye girmek: okulda puanı > 0 en az bir öğrenci. Sıralama (şimdilik):
+    // toplam puan → tie-break aktif öğrenci → ad.
     const conditions = [eq(schools.type, schoolType), schoolHasStudentWithPoints()];
     if (city) {
       conditions.push(eq(schools.city, city.toUpperCase()));
@@ -122,14 +122,14 @@ const _getSchoolPointsByTypeCached = unstable_cache(
       .from(schools)
       .where(and(...conditions))
       .orderBy(
-        desc(schools.topAvgScore),
+        desc(schools.totalPoints),
         desc(schools.activeStudentCount),
         asc(schools.name),
       )
       .limit(limit)
       .offset(offset);
   },
-  ["school-points-by-type-v4-pointing-count"],
+  ["school-points-by-type-v5-total-points-rank"],
   {
     tags: [CACHE_TAGS.schoolLeaderboard],
     revalidate: CACHE_TTL.schoolLeaderboard,
@@ -250,9 +250,9 @@ async function computeUserRankForUser(userId: string) {
        WHERE up_o.school_id = other.id AND up_o.points > 0
      )
      AND (
-       other.top_avg_score > target_self.top_avg_score
+       other.total_points > target_self.total_points
        OR (
-         other.top_avg_score = target_self.top_avg_score
+         other.total_points = target_self.total_points
          AND other.active_student_count > target_self.active_student_count
        )
      )

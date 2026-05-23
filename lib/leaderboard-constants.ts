@@ -33,6 +33,12 @@ export const LEADERBOARD_MIN_ACTIVE_STUDENTS = 1;
 export const LEADERBOARD_MIN_STUDENTS_WITH_POINTS = 1;
 
 /**
+ * Şimdilik okul liderliği sıralaması ve UI'daki ana "Skor" alanı
+ * `schools.total_points` (Bayesian `top_avg_score` değil).
+ */
+export const LEADERBOARD_SCHOOL_RANK_BY_TOTAL_POINTS = true;
+
+/**
  * Bayesian prior'ın "ağırlığı". Eşikle simetrik: 10 aktif öğrencili okul
  * prior_mean ile yarı yarıya karışır; 100 aktif öğrencili okul kendi
  * ortalamasını ~%91 oranında korur.

@@ -300,10 +300,7 @@ export const LeaderboardClient = ({
                   Skor
                 </p>
                 <p className="text-xs sm:text-sm font-semibold text-foreground">
-                  {Math.round(s.topAvgScore).toLocaleString("tr-TR")}
-                </p>
-                <p className="text-[10px] text-muted-foreground mt-0.5">
-                  Toplam: {s.totalPoints.toLocaleString("tr-TR")}
+                  {s.totalPoints.toLocaleString("tr-TR")}
                 </p>
               </div>
             </div>
@@ -328,7 +325,7 @@ export const LeaderboardClient = ({
     return schoolData[type].slice(0, 3).map((s) => ({
       id: s.schoolId,
       name: s.schoolName,
-      points: Math.round(s.topAvgScore),
+      points: s.totalPoints,
     }));
   };
 
@@ -367,19 +364,16 @@ export const LeaderboardClient = ({
           </summary>
           <div className="mt-2 space-y-1.5 leading-relaxed">
             <p>
-              Okullar büyüklüğe göre değil,{" "}
-              <span className="font-semibold">
-                aktif öğrencilerin ortalama puanına
-              </span>{" "}
-              göre sıralanır. Böylece 10 bin öğrencili bir okul, 200 öğrencili
-              bir okulu sırf kalabalık olduğu için ezemez.
+              Okul sıralaması şimdilik{" "}
+              <span className="font-semibold">okulun toplam puanına</span> göre
+              yapılır (o okuldaki tüm öğrencilerin puanlarının toplamı).
             </p>
             <p>
-              Az aktif öğrencisi olan okullar, anormal değerlerden etkilenmemek
-              için istatistiksel olarak ortalamaya çekilir (Bayesian smoothing).
-              Listede, en az bir öğrencisinin puanı olan okullar yer alır;
-              sıralama skoru son 30 günde aktif öğrencilerin ortalamasına
-              dayanır.
+              Listede, en az bir öğrencisinin puanı olan okullar yer alır.
+              Eşit toplam puanda önce{" "}
+              <span className="font-semibold">aktif öğrenci sayısı</span>,
+              sonra okul adı dikkate alınır. Aktif = son 30 günde ders veya oyun
+              tamamlamış öğrenci.
             </p>
             <p>
               Eşit ortalamada{" "}
