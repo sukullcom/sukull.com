@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image, { type StaticImageData } from "next/image";
+import { cn } from "@/lib/utils";
 
 type Props = {
   label: string;
@@ -25,11 +26,22 @@ export const SidebarItem = ({
 
   return (
     <Button
-      variant={active ? "sidebarOutline" : "sidebar"}
-      className="justify-start h-[52px] flex items-center"
+      variant="sidebar"
+      className={cn(
+        "group relative h-[52px] w-full justify-start px-3",
+        "rounded-2xl border-2 border-transparent",
+        active &&
+          cn(
+            "border-border/35 bg-muted/55 font-semibold text-foreground shadow-sm",
+            /** Sol şerit vurgu + hafif kapsül algısı (yeşil dolgu yerine). */
+            "before:pointer-events-none before:absolute before:inset-y-2 before:left-2 before:w-1 before:rounded-full before:bg-suk-brand",
+            "before:transition-opacity hover:before:opacity-90",
+          ),
+        !active && "hover:bg-suk-surface-muted",
+      )}
       asChild
     >
-      <Link prefetch={false} href={href} className="flex items-center">
+      <Link prefetch={false} href={href} className="flex flex-1 items-center pl-2">
         <Image
           src={iconSrc}
           alt={label}

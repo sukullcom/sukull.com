@@ -2,11 +2,7 @@ type Props = {
     children: React.ReactNode;
 }
 
-/**
- * Sağ kenar sticky paneli (puan + günlük hedef + günlük görev + Quests).
- * Genişlik Duolingo'daki ile karşılaştırmalı olarak biraz daha cömert:
- * 368 → 400 px. İçerikler (rozet listeleri, davet metni) artık nefes alır.
- */
+/** Sağ kenar sticky paneli (puan, günlük hedef, görevler vb.). Varsayılan 400px; içeriğe nefes bırakır. */
 export const StickyWrapper = ({ children }: Props) => {
     return (
         <div className="hidden lg:block w-[400px] sticky self-end bottom-6">
