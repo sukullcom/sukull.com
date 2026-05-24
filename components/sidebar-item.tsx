@@ -32,16 +32,25 @@ export const SidebarItem = ({
         "rounded-2xl border-2 border-transparent",
         active &&
           cn(
-            "border-border/35 bg-muted/55 font-semibold text-foreground shadow-sm",
-            /** Sol şerit vurgu + hafif kapsül algısı (yeşil dolgu yerine). */
-            "before:pointer-events-none before:absolute before:inset-y-2 before:left-2 before:w-1 before:rounded-full before:bg-suk-brand",
-            "before:transition-opacity hover:before:opacity-90",
+            "border-0 font-semibold text-foreground shadow-sm ring-1 ring-black/[0.05] dark:ring-white/[0.08]",
+            "rounded-[14px] bg-muted/35",
+            /* Sol accent: kenara yakın, içerik pl ile ikondan uzak tutuluyor */
+            "before:pointer-events-none before:absolute before:inset-y-2.5 before:left-3 before:z-0 before:w-[2px] before:rounded-full before:bg-primary",
+            "before:transition-opacity hover:before:opacity-80",
           ),
         !active && "hover:bg-suk-surface-muted",
       )}
       asChild
     >
-      <Link prefetch={false} href={href} className="flex flex-1 items-center pl-2">
+      <Link
+        prefetch={false}
+        href={href}
+        className={cn(
+          "relative z-[1] flex min-w-0 flex-1 items-center",
+          /* Aktifken çubuktan sonra yeterli boşluk (ikon 42px) */
+          active ? "pl-5" : "pl-2",
+        )}
+      >
         <Image
           src={iconSrc}
           alt={label}

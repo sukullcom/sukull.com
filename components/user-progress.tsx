@@ -80,7 +80,7 @@ export const UserProgress = ({
         İstikrar sayacı eskiden `text-suk-brand` (yeşil) idi; üç sayaç (puan,
         can, istikrar) içinde tek başına farklı bir renk olunca görsel
         hiyerarşi dağılıyordu. Puan ile aynı `text-suk-warning` (sarı/turuncu)
-        kullanmak Duolingo'nun streak/XP tutarlılığına da yakın.
+        ile hizalı tek bir vurgu kullanıyoruz.
       */}
       <Link prefetch={false} href="/profile" className="shrink-0">
         <Button variant="ghost" className="p-2 text-sm font-bold text-suk-warning">

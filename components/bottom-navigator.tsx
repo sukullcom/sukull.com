@@ -16,11 +16,13 @@ type NavItem = {
   label: string;
 };
 
-/** Sidebar `sidebarOutline` ile aynı yeşil yüzey — mobil alt menü aktif öğe */
-const navItemActiveClass =
-  "bg-suk-brand-soft/40 text-suk-brand-soft-fg border-suk-brand/25 border-2";
+/** Sidebar ile uyumlu: nötr yüzey + üstte ortalanmış ince primary çizgi (ikonla çakışmaz). */
+const navItemActiveClass = cn(
+  "relative rounded-xl border-2 border-transparent bg-muted/35 font-semibold text-foreground shadow-sm ring-1 ring-black/[0.05] dark:ring-white/[0.08]",
+  "before:pointer-events-none before:absolute before:left-1/2 before:top-1 before:h-0.5 before:w-8 before:-translate-x-1/2 before:rounded-full before:bg-primary",
+);
 const navItemInactiveClass =
-  "border-2 border-transparent text-muted-foreground";
+  "border-2 border-transparent bg-transparent text-muted-foreground";
 
 export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
   const pathname = usePathname();
@@ -61,14 +63,14 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
 
   const itemShellClass = (active: boolean) =>
     cn(
-      "flex min-w-[3.25rem] max-w-[4.5rem] flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-1.5 py-1 transition-none",
+      "flex min-w-[3.25rem] max-w-[4.5rem] flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-1.5 py-1.5 transition-none pt-2",
       active ? navItemActiveClass : navItemInactiveClass,
     );
 
   return (
     <div
       className={cn(
-        "fixed bottom-0 left-0 right-0 z-50 flex flex-col border-t-2 border-border bg-card px-2 pt-1 pb-[max(0.5rem,env(safe-area-inset-bottom,0px))] lg:hidden",
+        "fixed bottom-0 left-0 right-0 z-50 flex flex-col border-t border-border/40 bg-card shadow-[0_-4px_24px_-12px_rgba(15,23,42,0.08)] dark:shadow-[0_-4px_24px_-12px_rgba(0,0,0,0.35)] px-2 pt-1 pb-[max(0.5rem,env(safe-area-inset-bottom,0px))] lg:hidden",
         className,
       )}
     >
@@ -93,7 +95,7 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
               <span
                 className={cn(
                   "w-full truncate text-center text-[10px] font-semibold leading-tight",
-                  isActive ? "text-suk-brand-soft-fg" : "text-muted-foreground",
+                  isActive ? "text-foreground" : "text-muted-foreground",
                 )}
               >
                 {item.label}
@@ -124,7 +126,7 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
               className={cn(
                 "w-full truncate text-center text-[10px] font-semibold leading-tight",
                 isMoreActive || isDropdownOpen
-                  ? "text-suk-brand-soft-fg"
+                  ? "text-foreground"
                   : "text-muted-foreground",
               )}
             >
@@ -146,10 +148,10 @@ export const BottomNavigator = ({ className }: BottomNavigatorProps) => {
                         href={item.href}
                         role="menuitem"
                         className={cn(
-                          "flex items-center px-4 py-2.5 text-sm transition-none",
+                          "flex items-center border-l-[3px] py-2.5 pl-[calc(theme(spacing.4)-3px)] pr-4 text-sm transition-none",
                           isActive
-                            ? "bg-suk-brand-soft/40 text-suk-brand-soft-fg font-semibold"
-                            : "hover:bg-muted text-foreground",
+                            ? "border-l-primary bg-muted/30 font-semibold text-foreground"
+                            : "border-l-transparent text-foreground hover:bg-muted",
                         )}
                         onClick={() => setDropdownOpen(false)}
                       >

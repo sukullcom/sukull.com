@@ -21,12 +21,12 @@ export const Sidebar = ({ className }: Props) => {
   return (
     <div
       className={cn(
-        "flex h-full w-full flex-col bg-background lg:sticky lg:top-0 lg:h-screen",
-        /** Geniş akışkan: masaüstünde ideal 280px, dar alanda daralır. */
-        "lg:min-w-0 lg:max-w-[min(280px,100%)] lg:w-[min(280px,92vw)]",
-        "border-r border-border/40 shadow-[4px_0_24px_-12px_rgba(15,23,42,0.08)] dark:shadow-[4px_0_28px_-10px_rgba(0,0,0,0.35)]",
-        "px-4",
-        className
+        "flex h-full w-full shrink-0 flex-col bg-background px-4",
+        /* ~280px masaüstünde sabit; dar alanda taşmadan sığması için akışkan tavan */
+        "lg:w-[min(280px,100%)] lg:sticky lg:top-0 lg:h-screen",
+        "border-r border-border/35",
+        "shadow-[4px_0_24px_-16px_rgba(15,23,42,0.12)] dark:shadow-[4px_0_24px_-16px_rgba(0,0,0,0.35)]",
+        className,
       )}
     >
       <Link prefetch={false} href="/learn">
