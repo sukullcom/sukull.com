@@ -60,7 +60,7 @@ export const CompletionModal = () => {
         <div className="flex items-center justify-center mb-4">
           <div className="bg-gradient-to-r from-green-400 to-blue-500 rounded-lg p-4 text-white text-center">
             <div className="flex items-center justify-center gap-2 mb-2">
-              <Image src="/points.svg" alt="Puan" width={28} height={28} />
+              <Image src="/points_icon.svg" alt="Puan" width={28} height={28} />
               <span className="text-2xl font-bold">+{points}</span>
             </div>
             <p className="text-sm opacity-90">Puan kazandın!</p>

@@ -314,7 +314,7 @@ const HangmanGame = ({
     <div className="border-2 rounded-xl p-6 space-y-2 shadow-lg bg-card w-full relative">
       {/* Points with Icon */}
       <div className="absolute top-9 right-8 flex items-center space-x-2">
-        <Image src="/points.svg" alt="Points Icon" width={24} height={24} className="w-6 h-6" />
+        <Image src="/points_icon.svg" alt="Points Icon" width={24} height={24} className="w-6 h-6" />
         <span className="text-lg font-bold text-foreground">
           {totalPoints}
         </span>

@@ -28,7 +28,7 @@ const MORE_ROW_KEY = "__more__";
 
 const PRIMARY_NAV: NavItem[] = [
   { href: "/learn", iconSrc: "/learn.svg", label: "Dersler" },
-  { href: "/leaderboard", iconSrc: "/leaderboard.svg", label: "Sıralama" },
+  { href: "/leaderboard", iconSrc: "/leaderboard_icon.svg", label: "Sıralama" },
   {
     href: "/private-lesson",
     iconSrc: "/private_lesson.svg",
@@ -44,7 +44,7 @@ const DROPDOWN_NAV: NavItem[] = [
     iconSrc: "/study_buddy.svg",
   },
   { label: "Oyunlar", href: "/games", iconSrc: "/games.svg" },
-  { label: "Mağaza", href: "/shop", iconSrc: "/shop.svg" },
+  { label: "Mağaza", href: "/shop", iconSrc: "/shop_icon.svg" },
   { label: "Hedefler", href: "/quests", iconSrc: "/quests.svg" },
 ];
 

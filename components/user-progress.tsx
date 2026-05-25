@@ -49,9 +49,9 @@ export const UserProgress = ({
         </Button>
       </Link>
       <Link prefetch={false} href="/shop" className="shrink-0">
-        <Button variant="ghost" className="p-2 text-sm font-bold text-suk-warning">
+        <Button variant="ghost" className="p-2 text-sm font-bold text-purple-600">
           <Image
-            src="/points.svg"
+            src="/points_icon.svg"
             height={22}
             width={22}
             alt="Puan"
@@ -77,10 +77,7 @@ export const UserProgress = ({
         </Button>
       </Link>
       {/*
-        İstikrar sayacı eskiden `text-suk-brand` (yeşil) idi; üç sayaç (puan,
-        can, istikrar) içinde tek başına farklı bir renk olunca görsel
-        hiyerarşi dağılıyordu. Puan ile aynı `text-suk-warning` (sarı/turuncu)
-        kullanmak Duolingo'nun streak/XP tutarlılığına da yakın.
+        Puan: mor ikon + mor metin. İstikrar ayrı renkte kalır (`text-suk-warning`).
       */}
       <Link prefetch={false} href="/profile" className="shrink-0">
         <Button variant="ghost" className="p-2 text-sm font-bold text-suk-warning">

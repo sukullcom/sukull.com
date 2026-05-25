@@ -89,7 +89,7 @@ export const Items = ({
             "Dolu"
           ) : (
             <div className="flex items-center">
-              <Image src="/points.svg" alt="Puan" height={20} width={20} />
+              <Image src="/points_icon.svg" alt="Puan" height={20} width={20} />
               <p>{POINTS_TO_REFILL}</p>
             </div>
           )}
@@ -118,7 +118,7 @@ export const Items = ({
           disabled={pending || localPoints < freezeCost}
         >
           <div className="flex items-center">
-            <Image src="/points.svg" alt="Puan" height={20} width={20} />
+            <Image src="/points_icon.svg" alt="Puan" height={20} width={20} />
             <p>{freezeCost}</p>
           </div>
         </Button>

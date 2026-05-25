@@ -305,7 +305,7 @@ export default function ProfilePageClient({
               </div>
               {s && (
                 <>
-                  <div className="flex items-center gap-1.5 text-sm text-suk-payment">
+                  <div className="flex items-center gap-1.5 text-sm text-purple-600">
                     <Trophy className="h-4 w-4" />
                     <span className="font-semibold">{s.totalPoints.toLocaleString("tr-TR")} puan</span>
                   </div>

@@ -169,7 +169,7 @@ export default function LyricsGame({ lyrics, difficulty = "Kolay" }: LyricsGameP
       <div className="sticky top-0 bg-card rounded-xl p-4 border-b border-border">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-2">
-            <Image src="/points.svg" alt="Points Icon" width={24} height={24} className="w-6 h-6" />
+            <Image src="/points_icon.svg" alt="Points Icon" width={24} height={24} className="w-6 h-6" />
             <h2 className="text-xl font-semibold text-foreground">Puan: {points}</h2>
           </div>
           <div className="text-right flex items-center gap-4">{actionElement}</div>

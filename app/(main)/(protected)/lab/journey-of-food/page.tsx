@@ -226,7 +226,7 @@ const FoodSimulationPage = () => {
       {/* Matching Game Card */}
       <div className="border-2 rounded-xl p-6 space-y-4 shadow-lg bg-card w-full max-w-4xl relative">
         <div className="absolute top-4 right-8 flex items-center space-x-2">
-          <Image src="/points.svg" alt="Points Icon" width={32} height={32} className="w-8 h-8" />
+          <Image src="/points_icon.svg" alt="Points Icon" width={32} height={32} className="w-8 h-8" />
           <span className="text-lg font-bold text-foreground">
             {totalPoints}
           </span>

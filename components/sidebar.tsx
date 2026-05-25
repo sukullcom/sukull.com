@@ -11,9 +11,9 @@ import type { SidebarRailButtonBox } from "./sidebar-rail";
 import { SidebarRailSvg } from "./sidebar-rail";
 
 import learnIcon from "@/public/learn.svg";
-import leaderboardIcon from "@/public/leaderboard.svg";
+import leaderboardIcon from "@/public/leaderboard_icon.svg";
 import questsIcon from "@/public/quests.svg";
-import shopIcon from "@/public/shop.svg";
+import shopIcon from "@/public/shop_icon.svg";
 import gameIcon from "@/public/games.svg";
 import privateLessonIcon from "@/public/private_lesson.svg";
 import studyBuddyIcon from "@/public/study_buddy.svg";

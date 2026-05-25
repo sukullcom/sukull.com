@@ -1,6 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { NotebookText, CheckCircle, Lock } from "lucide-react";
+import { CheckCircle, Lock } from "lucide-react";
 import type { SubjectColorConfig } from "@/lib/subject-colors";
 
 type Props = {
@@ -46,7 +47,14 @@ export const UnitBanner = ({ title, description, activeLessonId, hasContent = tr
             variant="ghost"
             className="hidden xl:flex border-2 border-b-4 border-white/30 border-b-white/15 bg-white/20 text-white hover:bg-white/30 active:border-b-2"
           >
-            <NotebookText className="mr-2" />
+            <Image
+              src="/continue_icon.svg"
+              alt=""
+              width={24}
+              height={24}
+              className="mr-2 h-6 w-6"
+              aria-hidden
+            />
             Devam Et
           </Button>
         </Link>
