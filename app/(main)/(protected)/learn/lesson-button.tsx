@@ -1,10 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { Check, Crown, Star } from "lucide-react";
 import { CircularProgressbarWithChildren } from "react-circular-progressbar";
 
-import { cn } from "@/lib/utils";
 import "react-circular-progressbar/dist/styles.css";
 import { Button } from "@/components/ui/button";
 import type { SubjectColorConfig } from "@/lib/subject-colors";
@@ -49,9 +48,24 @@ export const LessonButton = ({
   const isLast = index === totalCount;
   const isCompleted = !current && !locked;
 
-  const Icon = isCompleted ? Check : isLast ? Crown : Star;
-
   const href = locked ? "#" : `/lesson/${id}`;
+
+  const lessonIconSrc = (() => {
+    if (isCompleted) return "/belt_icon.svg";
+    if (isLast) return current ? "/gate_active.svg" : "/gate_inactive.svg";
+    return current ? "/active_lesson_icon.svg" : "/inactive_lesson_icon.svg";
+  })();
+
+  const lessonIcon = (
+    <Image
+      src={lessonIconSrc}
+      alt=""
+      width={40}
+      height={40}
+      className="h-10 w-10"
+      aria-hidden
+    />
+  );
 
   const buttonStyle: React.CSSProperties | undefined = locked
     ? undefined
@@ -98,15 +112,7 @@ export const LessonButton = ({
                   className="h-[70px] w-[70px] border-b-8"
                   style={buttonStyle}
                 >
-                  <Icon
-                    className={cn(
-                      "h-10 w-10",
-                      locked
-                        ? "fill-neutral-400 text-muted-foreground stroke-neutral-400"
-                        : "fill-primary-foreground text-primary-foreground",
-                      isCompleted && "fill-none stroke-[4]"
-                    )}
-                  />
+                  {lessonIcon}
                 </Button>
               </CircularProgressbarWithChildren>
             </div>
@@ -118,15 +124,7 @@ export const LessonButton = ({
             className="h-[70px] w-[70px] border-b-8"
             style={buttonStyle}
           >
-            <Icon
-              className={cn(
-                "h-10 w-10",
-                locked
-                  ? "fill-neutral-400 text-muted-foreground stroke-neutral-400"
-                  : "fill-primary-foreground text-primary-foreground",
-                isCompleted && "fill-none stroke-[4]"
-              )}
-            />
+            {lessonIcon}
           </Button>
         )}
       </div>
