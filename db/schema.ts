@@ -71,14 +71,22 @@ export const referralRewards = pgTable(
     referrerUserId: text("referrer_user_id")
       .references(() => users.id, { onDelete: "cascade" })
       .notNull(),
-    refereeUserId: text("referee_user_id")
-      .references(() => users.id, { onDelete: "cascade" })
-      .notNull(),
+    /** Silinen hesapta NULL kalır; ödül kaydı ve sayaç korunur. */
+    refereeUserId: text("referee_user_id").references(() => users.id, {
+      onDelete: "set null",
+    }),
+    /** Aynı davet edilen kişi (e-posta) için tek ödül — yeniden kayıt engeli. */
+    refereeEmailNormalized: text("referee_email_normalized").notNull(),
     referrerPoints: integer("referrer_points").notNull(),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => ({
-    refereeUnique: uniqueIndex("referral_rewards_referee_unique").on(table.refereeUserId),
+    refereeUserUnique: uniqueIndex("referral_rewards_referee_user_unique")
+      .on(table.refereeUserId)
+      .where(sql`referee_user_id IS NOT NULL`),
+    referrerRefereeEmailUnique: uniqueIndex(
+      "referral_rewards_referrer_referee_email_key",
+    ).on(table.referrerUserId, table.refereeEmailNormalized),
     referrerIdx: index("referral_rewards_referrer_idx").on(table.referrerUserId),
   }),
 );

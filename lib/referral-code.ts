@@ -14,6 +14,14 @@ export function normalizeReferralCode(raw: string | null | undefined): string | 
   return CODE_REGEX.test(t) ? t : null;
 }
 
+/** Davet ödülü idempotency — hesap silinip aynı e-postayla yeniden kayıtta tekrar ödül engeli. */
+export function normalizeRefereeEmail(raw: string | null | undefined): string | null {
+  if (raw == null) return null;
+  const normalized = String(raw).trim().toLowerCase();
+  if (!normalized.includes("@")) return null;
+  return normalized;
+}
+
 export function mintReferralCodeCandidate(): string {
   const body = randomBytes(REFERRAL_SYSTEM.CODE_BODY_LENGTH / 2)
     .toString("hex")

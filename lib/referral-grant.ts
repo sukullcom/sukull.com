@@ -1,11 +1,11 @@
-import { eq, sql } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 
 import db from "@/db/drizzle";
 import { REFERRAL_SYSTEM } from "@/constants";
 import { referralRewards, schools, userProgress, users } from "@/db/schema";
 import { logActivity } from "@/lib/activity-logger";
 import { logger } from "@/lib/logger";
-import { mintReferralCodeCandidate } from "@/lib/referral-code";
+import { mintReferralCodeCandidate, normalizeRefereeEmail } from "@/lib/referral-code";
 
 type Tx = Parameters<Parameters<typeof db.transaction>[0]>[0];
 
@@ -28,16 +28,21 @@ export async function allocateUniqueReferralCodeStandalone(): Promise<string> {
 }
 
 /**
- * Yeni `public.users` satırı için: yönlendirene puan + okul özeti + tek seferlik ödül kaydı.
- * Çağıran taraf transaction içinde olmalı; idempotent (referee unique).
+ * Yeni davetli için: yönlendirene puan + okul özeti + tek seferlik ödül kaydı.
+ * Idempotent: aynı `(referrer, davetli e-posta)` veya aynı `refereeUserId` ikinci kez ödül vermez.
  */
 export async function recordReferralSignupRewardTx(
   tx: Tx,
-  input: { referrerUserId: string; refereeUserId: string },
+  input: {
+    referrerUserId: string;
+    refereeUserId: string;
+    refereeEmail: string;
+  },
 ): Promise<boolean> {
   const { referrerUserId, refereeUserId } = input;
+  const refereeEmailNormalized = normalizeRefereeEmail(input.refereeEmail);
   const pts = REFERRAL_SYSTEM.REFERRER_POINTS;
-  if (pts <= 0) return false;
+  if (pts <= 0 || !refereeEmailNormalized) return false;
 
   const refProg = await tx.query.userProgress.findFirst({
     where: eq(userProgress.userId, referrerUserId),
@@ -48,7 +53,19 @@ export async function recordReferralSignupRewardTx(
     log.warn("referrer has no user_progress; referral reward deferred", {
       referrerUserId,
       refereeUserId,
+      refereeEmailNormalized,
     });
+    return false;
+  }
+
+  const priorClaim = await tx.query.referralRewards.findFirst({
+    where: and(
+      eq(referralRewards.referrerUserId, referrerUserId),
+      eq(referralRewards.refereeEmailNormalized, refereeEmailNormalized),
+    ),
+    columns: { id: true },
+  });
+  if (priorClaim) {
     return false;
   }
 
@@ -57,9 +74,15 @@ export async function recordReferralSignupRewardTx(
     .values({
       referrerUserId,
       refereeUserId,
+      refereeEmailNormalized,
       referrerPoints: pts,
     })
-    .onConflictDoNothing({ target: referralRewards.refereeUserId })
+    .onConflictDoNothing({
+      target: [
+        referralRewards.referrerUserId,
+        referralRewards.refereeEmailNormalized,
+      ],
+    })
     .returning({ id: referralRewards.id });
 
   if (inserted.length === 0) {
@@ -107,13 +130,14 @@ export async function flushDeferredReferralRewardsForReferrer(
 
     const referees = await tx.query.users.findMany({
       where: eq(users.referredByUserId, referrerUserId),
-      columns: { id: true },
+      columns: { id: true, email: true },
     });
 
-    for (const { id: refereeUserId } of referees) {
+    for (const { id: refereeUserId, email } of referees) {
       const ok = await recordReferralSignupRewardTx(tx, {
         referrerUserId,
         refereeUserId,
+        refereeEmail: email,
       });
       if (ok) granted.push(refereeUserId);
     }

@@ -118,6 +118,7 @@ export async function ensurePublicUserFromAuth(
       const paid = await recordReferralSignupRewardTx(tx, {
         referrerUserId: referredByUserId,
         refereeUserId: authUser.id,
+        refereeEmail: email,
       });
       if (paid) {
         referralGrant.current = {

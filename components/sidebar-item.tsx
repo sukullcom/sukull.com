@@ -7,6 +7,8 @@ import Image, { type StaticImageData } from "next/image";
 import { cn } from "@/lib/utils";
 
 type Props = {
+  /** Belirtilirse rota ile eşleşme yerine doğrudan bu değer kullanılır (sidebar rayı ile aynı eşlemeyi paylaşmak için). */
+  active?: boolean;
   label: string;
   // Accept both forms `next/image`'s `src` prop supports: a string
   // URL/path (`"/study_buddy.svg"`) and a `StaticImageData` produced
@@ -17,39 +19,34 @@ type Props = {
 };
 
 export const SidebarItem = ({
+  active: activeControlled,
   label,
   iconSrc,
   href,
 }: Props) => {
   const pathname = usePathname();
-  const active = pathname.startsWith(href);
+  const activeFallback =
+    pathname === href ||
+    pathname.startsWith(href + "/");
+  const active =
+    typeof activeControlled === "boolean"
+      ? activeControlled
+      : activeFallback;
 
   return (
     <Button
       variant="sidebar"
       className={cn(
-        "group relative h-[52px] w-full justify-start px-3",
-        "rounded-2xl border-2 border-transparent",
+        "group relative h-[52px] w-full shrink-0 justify-start px-3 rounded-2xl transition-none",
         active &&
-          cn(
-            "border-0 font-semibold text-foreground shadow-sm ring-1 ring-black/[0.05] dark:ring-white/[0.08]",
-            "rounded-[14px] bg-muted/35",
-            /* Sol accent: kenara yakın, içerik pl ile ikondan uzak tutuluyor */
-            "before:pointer-events-none before:absolute before:inset-y-2.5 before:left-3 before:z-0 before:w-[2px] before:rounded-full before:bg-primary",
-            "before:transition-opacity hover:before:opacity-80",
-          ),
-        !active && "hover:bg-suk-surface-muted",
+          "text-foreground font-semibold"
       )}
       asChild
     >
       <Link
         prefetch={false}
         href={href}
-        className={cn(
-          "relative z-[1] flex min-w-0 flex-1 items-center",
-          /* Aktifken çubuktan sonra yeterli boşluk (ikon 42px) */
-          active ? "pl-5" : "pl-2",
-        )}
+        className="flex w-full min-w-0 items-center"
       >
         <Image
           src={iconSrc}
@@ -58,7 +55,7 @@ export const SidebarItem = ({
           height={42}
           width={42}
         />
-        <span className="text-left">{label}</span> 
+        <span className="text-left">{label}</span>
       </Link>
     </Button>
   );
