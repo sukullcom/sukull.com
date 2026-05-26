@@ -1,0 +1,3326 @@
+{
+  "course": {
+    "title": "6. Sınıf Matematik",
+    "imageSrc": ""
+  },
+  "units": [
+    {
+      "title": "Doğal Sayılarla İşlemler ve Çarpanlar",
+      "description": "Üslü doğal sayılar, işlem önceliği, bölünebilme kuralları, asal sayılar, asal çarpanlara ayırma, EBOB ve EKOK (MEB 2024 - Sayılar ve Nicelikler temasına dayalı)",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "Üslü Doğal Sayılar",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "$2^4$ ifadesinin değeri kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["üs", "kuvvet"],
+              "explanation": "$2^4=2\\cdot 2\\cdot 2\\cdot 2=16$. Üs, taban kendisiyle kaç kez çarpılacağını gösterir.",
+              "options": [
+                {"text": "$8$", "correct": false},
+                {"text": "$12$", "correct": false},
+                {"text": "$16$", "correct": true},
+                {"text": "$24$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$5^3$ ifadesinin değeri kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["üs"],
+              "explanation": "$5^3=5\\cdot 5\\cdot 5=125$.",
+              "options": [
+                {"text": "$15$", "correct": false},
+                {"text": "$25$", "correct": false},
+                {"text": "$125$", "correct": true},
+                {"text": "$75$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "$10^4$ kaça eşittir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["10 un kuvvetleri"],
+              "explanation": "$10$'un kuvvetinde üs kadar sıfır yazılır: $10^4=10000$.",
+              "options": [
+                {"text": "$1000$", "correct": false},
+                {"text": "$10000$", "correct": true},
+                {"text": "$100000$", "correct": false},
+                {"text": "$40$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$3^2 + 2^3 = $ {1}",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["üs", "toplama"],
+              "explanation": "$3^2=9$, $2^3=8$. Toplam $17$.",
+              "options": [
+                {"text": "$17$", "correct": true, "isBlank": true},
+                {"text": "$13$", "correct": false},
+                {"text": "$36$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: üslü ifade — değeri",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["üs"],
+              "explanation": "Üslü ifade tabanın üs kadar çarpılmasıdır.",
+              "options": [
+                {"text": "$4^2$", "correct": false, "pairId": 1},
+                {"text": "$16$", "correct": false, "pairId": 1},
+                {"text": "$2^5$", "correct": false, "pairId": 2},
+                {"text": "$32$", "correct": false, "pairId": 2},
+                {"text": "$10^3$", "correct": false, "pairId": 3},
+                {"text": "$1000$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "$4^3$ ifadesini hesaplama adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["üs hesaplama"],
+              "explanation": "Tabanı üs kadar yan yana yazıp soldan sağa çarp.",
+              "options": [
+                {"text": "$4\\cdot 4\\cdot 4$ olarak yaz", "correct": false, "correctOrder": 1},
+                {"text": "İlk iki çarpan: $4\\cdot 4=16$", "correct": false, "correctOrder": 2},
+                {"text": "Üçüncü çarpanla çarp: $16\\cdot 4$", "correct": false, "correctOrder": 3},
+                {"text": "Sonuç: $64$", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Doğal Sayılarda İşlem Önceliği",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "$5 + 3 \\cdot 4$ işleminin sonucu kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["işlem önceliği"],
+              "explanation": "Önce çarpma: $3\\cdot 4=12$. Sonra $5+12=17$.",
+              "options": [
+                {"text": "$32$", "correct": false},
+                {"text": "$17$", "correct": true},
+                {"text": "$20$", "correct": false},
+                {"text": "$12$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$20 - 8 : 2$ işleminin sonucu kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["bölme önceliği"],
+              "explanation": "Önce bölme: $8:2=4$. Sonra $20-4=16$.",
+              "options": [
+                {"text": "$6$", "correct": false},
+                {"text": "$16$", "correct": true},
+                {"text": "$12$", "correct": false},
+                {"text": "$8$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "$(4+6)\\cdot 2 - 3^2$ işleminin sonucu kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["parantez", "üs"],
+              "explanation": "Önce parantez: $(4+6)=10$. Sonra üs: $3^2=9$. $10\\cdot 2=20$, $20-9=11$.",
+              "options": [
+                {"text": "$8$", "correct": false},
+                {"text": "$11$", "correct": true},
+                {"text": "$20$", "correct": false},
+                {"text": "$1$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$15 - 2\\cdot 3 + 4 = $ {1}",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["karma işlem"],
+              "explanation": "Çarpma önce: $2\\cdot 3=6$. $15-6+4=13$.",
+              "options": [
+                {"text": "$13$", "correct": true, "isBlank": true},
+                {"text": "$17$", "correct": false},
+                {"text": "$43$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: işlem grubu — öncelik sırası",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["öncelik"],
+              "explanation": "Parantez → üs → çarpma/bölme → toplama/çıkarma.",
+              "options": [
+                {"text": "1. öncelik", "correct": false, "pairId": 1},
+                {"text": "Parantez", "correct": false, "pairId": 1},
+                {"text": "2. öncelik", "correct": false, "pairId": 2},
+                {"text": "Üs", "correct": false, "pairId": 2},
+                {"text": "3. öncelik", "correct": false, "pairId": 3},
+                {"text": "Çarpma / bölme", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "$2^3 + 4\\cdot(7-2) : 5$ işlemini sırayla yapın.",
+              "type": "SEQUENCE",
+              "difficulty": "HARD",
+              "tags": ["sıra"],
+              "explanation": "Parantez → üs → çarpma/bölme → toplama.",
+              "options": [
+                {"text": "Parantez: $7-2=5$", "correct": false, "correctOrder": 1},
+                {"text": "Üs: $2^3=8$", "correct": false, "correctOrder": 2},
+                {"text": "Çarpma/bölme: $4\\cdot 5 : 5=4$", "correct": false, "correctOrder": 3},
+                {"text": "Toplama: $8+4=12$", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Bölünebilme Kuralları",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Aşağıdaki sayılardan hangisi $5$'e tam bölünür?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["bölünebilme"],
+              "explanation": "$5$'e bölünme: son basamak $0$ veya $5$. $135$'in son basamağı $5$.",
+              "options": [
+                {"text": "$132$", "correct": false},
+                {"text": "$148$", "correct": false},
+                {"text": "$135$", "correct": true},
+                {"text": "$121$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$372$ sayısı hangisiyle bölünmez?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["bölünebilme"],
+              "explanation": "$372$: rakamlar toplamı $3+7+2=12 \\Rightarrow 3$'e bölünür. Son basamak çift $\\Rightarrow 2$'ye bölünür. $4$'e bölünme: son iki basamak $72 \\Rightarrow 4$'e bölünür. Son basamak $0/5$ değil $\\Rightarrow 5$'e bölünmez.",
+              "options": [
+                {"text": "$2$", "correct": false},
+                {"text": "$3$", "correct": false},
+                {"text": "$5$", "correct": true},
+                {"text": "$4$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "İki basamaklı bir doğal sayı hem $2$ hem $3$ ile bölünüyorsa aşağıdakilerden hangisi olabilir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["EKOK", "bölünebilme"],
+              "explanation": "$2$ ve $3$ ile bölünen $6$'nın katıdır: $54=6\\cdot 9$.",
+              "options": [
+                {"text": "$45$", "correct": false},
+                {"text": "$54$", "correct": true},
+                {"text": "$32$", "correct": false},
+                {"text": "$25$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$10$'a tam bölünebilmek için sayının son basamağı {1} olmalıdır.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["10 bölünebilme"],
+              "explanation": "Son basamak yalnızca $0$ olmalı.",
+              "options": [
+                {"text": "$0$", "correct": true, "isBlank": true},
+                {"text": "$5$", "correct": false},
+                {"text": "Çift", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: bölünebilme — kural",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["bölünebilme kuralı"],
+              "explanation": "Her bölen için ayrı bir kural vardır.",
+              "options": [
+                {"text": "$2$'ye", "correct": false, "pairId": 1},
+                {"text": "Son basamak çift", "correct": false, "pairId": 1},
+                {"text": "$3$'e", "correct": false, "pairId": 2},
+                {"text": "Rakamlar toplamı $3$'ün katı", "correct": false, "pairId": 2},
+                {"text": "$9$'a", "correct": false, "pairId": 3},
+                {"text": "Rakamlar toplamı $9$'un katı", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "$2376$'nın $3$'e bölünebilirliğini kontrol etme adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["yöntem"],
+              "explanation": "Rakamlar toplamına bak.",
+              "options": [
+                {"text": "Rakamları topla: $2+3+7+6$", "correct": false, "correctOrder": 1},
+                {"text": "Toplam: $18$", "correct": false, "correctOrder": 2},
+                {"text": "$18$'i $3$'e böl: $18:3=6$", "correct": false, "correctOrder": 3},
+                {"text": "Tam bölündüğü için $2376$ da $3$'e bölünür", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Asal Sayılar ve Asal Çarpanlara Ayırma",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Aşağıdakilerden hangisi asal sayıdır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["asal"],
+              "explanation": "Asal sayı yalnızca $1$ ve kendisine bölünür. $9=3\\cdot 3$, $15=3\\cdot 5$, $21=3\\cdot 7$. $17$ asaldır.",
+              "options": [
+                {"text": "$9$", "correct": false},
+                {"text": "$15$", "correct": false},
+                {"text": "$17$", "correct": true},
+                {"text": "$21$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$1$ asal sayı mıdır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["asal tanım"],
+              "explanation": "Asal sayının tanımında iki farklı pozitif böleni olmalıdır. $1$'in yalnızca bir böleni vardır; asal değildir.",
+              "options": [
+                {"text": "Evet", "correct": false},
+                {"text": "Hayır", "correct": true},
+                {"text": "Bazen", "correct": false},
+                {"text": "Sonsuzdur", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "$60$ sayısının asal çarpanlarına ayrılmış hâli hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["asal çarpanlara ayırma"],
+              "explanation": "$60=2\\cdot 30=2\\cdot 2\\cdot 15=2\\cdot 2\\cdot 3\\cdot 5=2^2\\cdot 3\\cdot 5$.",
+              "options": [
+                {"text": "$2\\cdot 3\\cdot 5$", "correct": false},
+                {"text": "$2^2\\cdot 3\\cdot 5$", "correct": true},
+                {"text": "$2^3\\cdot 5$", "correct": false},
+                {"text": "$2\\cdot 5\\cdot 6$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$36$ sayısının asal çarpanlara ayrılmış hâli {1} dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["asal çarpan"],
+              "explanation": "$36=4\\cdot 9=2^2\\cdot 3^2$.",
+              "options": [
+                {"text": "$2^2\\cdot 3^2$", "correct": true, "isBlank": true},
+                {"text": "$2^3\\cdot 3$", "correct": false},
+                {"text": "$6^2$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: sayı — asal çarpanları",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["asal çarpan"],
+              "explanation": "Her sayı en küçük asaldan başlanarak ayrılır.",
+              "options": [
+                {"text": "$12$", "correct": false, "pairId": 1},
+                {"text": "$2^2\\cdot 3$", "correct": false, "pairId": 1},
+                {"text": "$18$", "correct": false, "pairId": 2},
+                {"text": "$2\\cdot 3^2$", "correct": false, "pairId": 2},
+                {"text": "$45$", "correct": false, "pairId": 3},
+                {"text": "$3^2\\cdot 5$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "$48$'i asal çarpanlara ayırma adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["yöntem"],
+              "explanation": "En küçük asaldan başlanır ve bölüm $1$ olana kadar devam edilir.",
+              "options": [
+                {"text": "$48 : 2 = 24$", "correct": false, "correctOrder": 1},
+                {"text": "$24 : 2 = 12 \\Rightarrow 12 : 2 = 6 \\Rightarrow 6 : 2 = 3$", "correct": false, "correctOrder": 2},
+                {"text": "$3 : 3 = 1$", "correct": false, "correctOrder": 3},
+                {"text": "$48 = 2^4\\cdot 3$", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "EBOB (En Büyük Ortak Bölen)",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "$12$ ve $18$ sayılarının EBOB'u kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["EBOB"],
+              "explanation": "$12=2^2\\cdot 3$, $18=2\\cdot 3^2$. Ortak asal çarpanların en küçük üsleri: $2\\cdot 3=6$.",
+              "options": [
+                {"text": "$3$", "correct": false},
+                {"text": "$6$", "correct": true},
+                {"text": "$12$", "correct": false},
+                {"text": "$36$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$24$ ve $36$ sayılarının EBOB'u kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["EBOB"],
+              "explanation": "$24=2^3\\cdot 3$, $36=2^2\\cdot 3^2$. EBOB $=2^2\\cdot 3=12$.",
+              "options": [
+                {"text": "$6$", "correct": false},
+                {"text": "$12$", "correct": true},
+                {"text": "$24$", "correct": false},
+                {"text": "$72$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Eni $30$ cm, boyu $45$ cm olan dikdörtgen bir kâğıt, kareli bölgelere ayrılacaktır. En büyük karenin bir kenarı kaç cm olur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["EBOB problemi"],
+              "explanation": "EBOB$(30,45)=15$. Karenin kenarı $15$ cm.",
+              "options": [
+                {"text": "$5$", "correct": false},
+                {"text": "$10$", "correct": false},
+                {"text": "$15$", "correct": true},
+                {"text": "$30$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$8$ ve $20$ sayılarının EBOB'u {1} dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["EBOB"],
+              "explanation": "$8=2^3$, $20=2^2\\cdot 5$. EBOB $=2^2=4$.",
+              "options": [
+                {"text": "$4$", "correct": true, "isBlank": true},
+                {"text": "$2$", "correct": false},
+                {"text": "$8$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: sayı ikilisi — EBOB",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["EBOB"],
+              "explanation": "Ortak çarpanların en küçük üsleri çarpılır.",
+              "options": [
+                {"text": "$6$ ve $9$", "correct": false, "pairId": 1},
+                {"text": "$3$", "correct": false, "pairId": 1},
+                {"text": "$10$ ve $25$", "correct": false, "pairId": 2},
+                {"text": "$5$", "correct": false, "pairId": 2},
+                {"text": "$16$ ve $24$", "correct": false, "pairId": 3},
+                {"text": "$8$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Asal çarpanlarla EBOB bulma adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["yöntem"],
+              "explanation": "Ortak çarpanların en küçük üsleri seçilir.",
+              "options": [
+                {"text": "Sayıları asal çarpanlarına ayır", "correct": false, "correctOrder": 1},
+                {"text": "Ortak asal çarpanları belirle", "correct": false, "correctOrder": 2},
+                {"text": "Her ortak çarpanın en küçük üssünü al", "correct": false, "correctOrder": 3},
+                {"text": "Çarpımı EBOB'tur", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "EKOK (En Küçük Ortak Kat)",
+          "order": 6,
+          "challenges": [
+            {
+              "question": "$4$ ve $6$ sayılarının EKOK'u kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["EKOK"],
+              "explanation": "$4=2^2$, $6=2\\cdot 3$. EKOK $=2^2\\cdot 3=12$.",
+              "options": [
+                {"text": "$2$", "correct": false},
+                {"text": "$12$", "correct": true},
+                {"text": "$24$", "correct": false},
+                {"text": "$6$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$8$ ve $12$ sayılarının EKOK'u kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["EKOK"],
+              "explanation": "$8=2^3$, $12=2^2\\cdot 3$. EKOK $=2^3\\cdot 3=24$.",
+              "options": [
+                {"text": "$24$", "correct": true},
+                {"text": "$48$", "correct": false},
+                {"text": "$12$", "correct": false},
+                {"text": "$96$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "İki minibüs aynı duraktan kalkıyor; biri $15$ dakikada, diğeri $20$ dakikada gidiyor. Aynı anda tekrar kalkmaları için kaç dakika geçmelidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["EKOK problemi"],
+              "explanation": "EKOK$(15,20)=60$.",
+              "options": [
+                {"text": "$30$", "correct": false},
+                {"text": "$45$", "correct": false},
+                {"text": "$60$", "correct": true},
+                {"text": "$300$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$6$ ve $9$ sayılarının EKOK'u {1} dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["EKOK"],
+              "explanation": "$6=2\\cdot 3$, $9=3^2$. EKOK $=2\\cdot 3^2=18$.",
+              "options": [
+                {"text": "$18$", "correct": true, "isBlank": true},
+                {"text": "$3$", "correct": false},
+                {"text": "$54$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: sayı ikilisi — EKOK",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["EKOK"],
+              "explanation": "Tüm çarpanların en büyük üsleri çarpılır.",
+              "options": [
+                {"text": "$3$ ve $5$", "correct": false, "pairId": 1},
+                {"text": "$15$", "correct": false, "pairId": 1},
+                {"text": "$4$ ve $10$", "correct": false, "pairId": 2},
+                {"text": "$20$", "correct": false, "pairId": 2},
+                {"text": "$12$ ve $18$", "correct": false, "pairId": 3},
+                {"text": "$36$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Asal çarpanlarla EKOK bulma adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["yöntem"],
+              "explanation": "Tüm çarpanların en büyük üsleri alınır.",
+              "options": [
+                {"text": "Sayıları asal çarpanlarına ayır", "correct": false, "correctOrder": 1},
+                {"text": "Tüm asal çarpanları yaz", "correct": false, "correctOrder": 2},
+                {"text": "Her birinin en büyük üssünü al", "correct": false, "correctOrder": 3},
+                {"text": "Çarpımı EKOK'tur", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Tam Sayılar",
+      "description": "Tam sayıların tanımı, sayı doğrusunda gösterimi, sıralanması, mutlak değeri ve toplama-çıkarma işlemleri (MEB 2024 - Sayılar ve Nicelikler temasının ikinci bölümü)",
+      "order": 2,
+      "lessons": [
+        {
+          "title": "Tam Sayıların Tanımı ve Sayı Doğrusunda Gösterimi",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Aşağıdakilerden hangisi bir tam sayıdır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["tam sayı tanım"],
+              "explanation": "Pozitif/negatif doğal sayılar ve $0$ tam sayıdır. $-7$ tam sayıdır.",
+              "options": [
+                {"text": "$\\dfrac{1}{2}$", "correct": false},
+                {"text": "$-7$", "correct": true},
+                {"text": "$0{,}5$", "correct": false},
+                {"text": "$\\pi$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$-3$ sayı doğrusunda $0$'ın hangi yönündedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["sayı doğrusu"],
+              "explanation": "Negatif sayılar $0$'ın solunda yer alır.",
+              "options": [
+                {"text": "Solunda", "correct": true},
+                {"text": "Sağında", "correct": false},
+                {"text": "Üstünde", "correct": false},
+                {"text": "$0$'a eşit", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bir asansör $-2.$ kattan $+3.$ kata çıkıyor. Kaç kat yukarı çıkmıştır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yön", "sayı doğrusu"],
+              "explanation": "$-2$'den $+3$'e: $|3-(-2)|=5$.",
+              "options": [
+                {"text": "$1$", "correct": false},
+                {"text": "$3$", "correct": false},
+                {"text": "$5$", "correct": true},
+                {"text": "$6$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$+8$ in karşıt işaretlisi {1} dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["karşıt işaretli"],
+              "explanation": "Pozitif bir sayının karşıtı negatif, negatifin karşıtı pozitiftir.",
+              "options": [
+                {"text": "$-8$", "correct": true, "isBlank": true},
+                {"text": "$+8$", "correct": false},
+                {"text": "$0$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: günlük durum — tam sayı",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["günlük yaşam"],
+              "explanation": "Yön/değişim bilgisine göre işaret seçilir.",
+              "options": [
+                {"text": "Sıcaklık $7\\,°C$", "correct": false, "pairId": 1},
+                {"text": "$+7$", "correct": false, "pairId": 1},
+                {"text": "Borç $15$ TL", "correct": false, "pairId": 2},
+                {"text": "$-15$", "correct": false, "pairId": 2},
+                {"text": "Deniz seviyesi altında $40$ m", "correct": false, "pairId": 3},
+                {"text": "$-40$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bir tam sayıyı sayı doğrusunda gösterme adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["sayı doğrusu"],
+              "explanation": "$0$'dan başlanır, işaret yönü belirlenir.",
+              "options": [
+                {"text": "Sayı doğrusunu çiz ve $0$'ı işaretle", "correct": false, "correctOrder": 1},
+                {"text": "Birimleri eşit aralıklarla işaretle", "correct": false, "correctOrder": 2},
+                {"text": "İşarete göre yönü seç (sağa $+$, sola $-$)", "correct": false, "correctOrder": 3},
+                {"text": "Sayının mutlak değeri kadar adım sayıp işaretle", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Tam Sayıların Sıralanması",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "$-3,\\ +2,\\ -5,\\ 0$ tam sayılarını küçükten büyüğe sıralayın.",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["sıralama"],
+              "explanation": "Negatifler küçük, $0$ ortada, pozitifler büyüktür: $-5<-3<0<+2$.",
+              "options": [
+                {"text": "$-3,-5,0,+2$", "correct": false},
+                {"text": "$-5,-3,0,+2$", "correct": true},
+                {"text": "$+2,0,-3,-5$", "correct": false},
+                {"text": "$-5,0,-3,+2$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$-7$ ile $-2$ den hangisi daha büyüktür?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["negatif sıralama"],
+              "explanation": "Negatif sayılarda mutlak değeri küçük olan büyüktür.",
+              "options": [
+                {"text": "$-7$", "correct": false},
+                {"text": "$-2$", "correct": true},
+                {"text": "Eşit", "correct": false},
+                {"text": "Karşılaştırılamaz", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "$-1 < x \\le +3$ koşulunu sağlayan kaç tam sayı vardır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["aralık"],
+              "explanation": "$x \\in \\{0,1,2,3\\}$ → $4$ tane.",
+              "options": [
+                {"text": "$3$", "correct": false},
+                {"text": "$4$", "correct": true},
+                {"text": "$5$", "correct": false},
+                {"text": "$2$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$-6,\\ +1,\\ -10,\\ +4$ sayılarının en büyüğü {1} dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["en büyük"],
+              "explanation": "Pozitifler içinde $+4$ en büyük.",
+              "options": [
+                {"text": "$+4$", "correct": true, "isBlank": true},
+                {"text": "$+1$", "correct": false},
+                {"text": "$-6$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: ikili — büyük olan",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["karşılaştırma"],
+              "explanation": "Sayı doğrusunda sağda olan büyüktür.",
+              "options": [
+                {"text": "$-5$ ile $-2$", "correct": false, "pairId": 1},
+                {"text": "$-2$", "correct": false, "pairId": 1},
+                {"text": "$0$ ile $-1$", "correct": false, "pairId": 2},
+                {"text": "$0$", "correct": false, "pairId": 2},
+                {"text": "$+3$ ile $-3$", "correct": false, "pairId": 3},
+                {"text": "$+3$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Tam sayıları sıralama adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["yöntem"],
+              "explanation": "Önce işarete bakılır, sonra mutlak değere.",
+              "options": [
+                {"text": "Sayıları işaretlerine göre ayır", "correct": false, "correctOrder": 1},
+                {"text": "Pozitif sayılarda büyüklüğe bak", "correct": false, "correctOrder": 2},
+                {"text": "Negatif sayılarda mutlak değeri küçük olan büyüktür", "correct": false, "correctOrder": 3},
+                {"text": "Negatifler önce, $0$, pozitifler sonra sırala", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Mutlak Değer",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "$|-9|$ kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["mutlak değer"],
+              "explanation": "Mutlak değer, sayının $0$'a uzaklığıdır; daima sıfır veya pozitiftir.",
+              "options": [
+                {"text": "$-9$", "correct": false},
+                {"text": "$9$", "correct": true},
+                {"text": "$0$", "correct": false},
+                {"text": "$1$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$|+7| + |-5|$ kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["mutlak değer toplama"],
+              "explanation": "$7+5=12$.",
+              "options": [
+                {"text": "$2$", "correct": false},
+                {"text": "$12$", "correct": true},
+                {"text": "$-12$", "correct": false},
+                {"text": "$35$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Sayı doğrusunda $-6$ ve $+3$ noktaları arasındaki uzaklık kaç birimdir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["uzaklık"],
+              "explanation": "Uzaklık $=|{-6}-3|=9$ birim.",
+              "options": [
+                {"text": "$3$", "correct": false},
+                {"text": "$9$", "correct": true},
+                {"text": "$-9$", "correct": false},
+                {"text": "$18$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$|x|=4$ olduğuna göre $x$ in alabileceği büyük değer {1} dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["mutlak değer denklem"],
+              "explanation": "$|x|=4 \\Rightarrow x=4$ veya $x=-4$. Büyük olan $4$.",
+              "options": [
+                {"text": "$4$", "correct": true, "isBlank": true},
+                {"text": "$-4$", "correct": false},
+                {"text": "$0$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: ifade — değer",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["mutlak değer"],
+              "explanation": "Mutlak değer her zaman pozitif veya sıfırdır.",
+              "options": [
+                {"text": "$|0|$", "correct": false, "pairId": 1},
+                {"text": "$0$", "correct": false, "pairId": 1},
+                {"text": "$|-12|$", "correct": false, "pairId": 2},
+                {"text": "$12$", "correct": false, "pairId": 2},
+                {"text": "$|+25|$", "correct": false, "pairId": 3},
+                {"text": "$25$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "$|-3|\\cdot |+4| - |-5|$ işlemini sırayla yapın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["sıra"],
+              "explanation": "Önce mutlak değerleri al, sonra çarpma/çıkarma yap.",
+              "options": [
+                {"text": "Mutlak değerleri al: $3, 4, 5$", "correct": false, "correctOrder": 1},
+                {"text": "Önce çarpma: $3\\cdot 4=12$", "correct": false, "correctOrder": 2},
+                {"text": "Çıkarma: $12-5$", "correct": false, "correctOrder": 3},
+                {"text": "Sonuç: $7$", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Tam Sayılarda Toplama",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "$(-7)+(+3)$ işleminin sonucu kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["toplama", "farklı işaret"],
+              "explanation": "Farklı işaretli sayılarda mutlak değeri büyük olanın işareti alınır, mutlak değerler farkı yazılır: $-(7-3)=-4$.",
+              "options": [
+                {"text": "$-4$", "correct": true},
+                {"text": "$+4$", "correct": false},
+                {"text": "$-10$", "correct": false},
+                {"text": "$+10$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$(-5)+(-8)$ işleminin sonucu kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["toplama", "aynı işaret"],
+              "explanation": "Aynı işaretli: mutlak değerler toplanır, ortak işaret yazılır. $-(5+8)=-13$.",
+              "options": [
+                {"text": "$+13$", "correct": false},
+                {"text": "$-13$", "correct": true},
+                {"text": "$-3$", "correct": false},
+                {"text": "$+3$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "$(+12)+(-7)+(-3)$ işleminin sonucu kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["toplama", "üç sayı"],
+              "explanation": "Soldan sağa: $12-7=5$, $5-3=2$.",
+              "options": [
+                {"text": "$2$", "correct": true},
+                {"text": "$22$", "correct": false},
+                {"text": "$-2$", "correct": false},
+                {"text": "$-22$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$(-14)+(+9) = $ {1}",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["farklı işaret"],
+              "explanation": "$-(14-9)=-5$.",
+              "options": [
+                {"text": "$-5$", "correct": true, "isBlank": true},
+                {"text": "$+5$", "correct": false},
+                {"text": "$+23$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: toplama — kural",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["işaret kuralı"],
+              "explanation": "Aynı işaretliler toplanır; farklı işaretliler çıkarılır.",
+              "options": [
+                {"text": "$(+)+(+)$", "correct": false, "pairId": 1},
+                {"text": "Pozitif", "correct": false, "pairId": 1},
+                {"text": "$(-)+(-)$", "correct": false, "pairId": 2},
+                {"text": "Negatif", "correct": false, "pairId": 2},
+                {"text": "$(+)+(-)$", "correct": false, "pairId": 3},
+                {"text": "Büyük olanın işareti", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "$(-6)+(+11)$ işlemini sırayla yapın.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["sıra"],
+              "explanation": "Mutlak değer farkı alınır, büyük olanın işareti yazılır.",
+              "options": [
+                {"text": "Mutlak değerleri al: $6$ ve $11$", "correct": false, "correctOrder": 1},
+                {"text": "Mutlak değeri büyük olanın işaretini seç: $+$", "correct": false, "correctOrder": 2},
+                {"text": "Farkı al: $11-6=5$", "correct": false, "correctOrder": 3},
+                {"text": "Sonuç: $+5$", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Tam Sayılarda Çıkarma",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "$(+5)-(+9)$ işleminin sonucu kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["çıkarma"],
+              "explanation": "$5-9=-4$.",
+              "options": [
+                {"text": "$+4$", "correct": false},
+                {"text": "$-4$", "correct": true},
+                {"text": "$+14$", "correct": false},
+                {"text": "$-14$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$(-3)-(-8)$ işleminin sonucu kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["çıkarma", "negatif"],
+              "explanation": "Eksi eksi artı olur: $-3+8=5$.",
+              "options": [
+                {"text": "$-11$", "correct": false},
+                {"text": "$+5$", "correct": true},
+                {"text": "$-5$", "correct": false},
+                {"text": "$+11$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "$(-7)-(+4)$ işleminin sonucu kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["çıkarma"],
+              "explanation": "$-7-4=-11$.",
+              "options": [
+                {"text": "$-3$", "correct": false},
+                {"text": "$+11$", "correct": false},
+                {"text": "$-11$", "correct": true},
+                {"text": "$+3$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$0-(-6) = $ {1}",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["çıkarma"],
+              "explanation": "$0+6=6$.",
+              "options": [
+                {"text": "$+6$", "correct": true, "isBlank": true},
+                {"text": "$-6$", "correct": false},
+                {"text": "$0$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: işlem — sonuç",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["çıkarma"],
+              "explanation": "Çıkarma, ikinci sayının karşıt işaretlisinin toplanmasıyla yapılır.",
+              "options": [
+                {"text": "$(+8)-(+3)$", "correct": false, "pairId": 1},
+                {"text": "$+5$", "correct": false, "pairId": 1},
+                {"text": "$(-2)-(+5)$", "correct": false, "pairId": 2},
+                {"text": "$-7$", "correct": false, "pairId": 2},
+                {"text": "$(-4)-(-1)$", "correct": false, "pairId": 3},
+                {"text": "$-3$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "$(-9)-(-12)$ işlemini sırayla yapın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["yöntem"],
+              "explanation": "Çıkarmayı toplamaya çevir.",
+              "options": [
+                {"text": "Çıkarmayı toplamaya çevir", "correct": false, "correctOrder": 1},
+                {"text": "İkinci sayının işaretini değiştir: $-(-12)=+12$", "correct": false, "correctOrder": 2},
+                {"text": "İşlem: $-9+12$", "correct": false, "correctOrder": 3},
+                {"text": "Sonuç: $+3$", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Tam Sayılarla Problem Çözme",
+          "order": 6,
+          "challenges": [
+            {
+              "question": "Sıcaklık öğle $+5\\,°C$, akşam $-3\\,°C$ olmuştur. Sıcaklık kaç derece düşmüştür?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["sıcaklık"],
+              "explanation": "Fark $=5-(-3)=8\\,°C$.",
+              "options": [
+                {"text": "$2$", "correct": false},
+                {"text": "$5$", "correct": false},
+                {"text": "$8$", "correct": true},
+                {"text": "$3$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Ali'nin bankada $250$ TL'si var. $80$ TL borç ödüyor, sonra $150$ TL daha yatırıyor. Kalan bakiye kaç TL dir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["bakiye"],
+              "explanation": "$250-80+150=320$.",
+              "options": [
+                {"text": "$320$", "correct": true},
+                {"text": "$280$", "correct": false},
+                {"text": "$220$", "correct": false},
+                {"text": "$400$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bir dalgıç $-12$ m derinlikten $+3$ m yüksekliğe çıkıyor. Toplam kaç metre yukarı çıkmıştır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yükseklik farkı"],
+              "explanation": "$+3-(-12)=15$ m.",
+              "options": [
+                {"text": "$9$", "correct": false},
+                {"text": "$15$", "correct": true},
+                {"text": "$-15$", "correct": false},
+                {"text": "$12$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Sıcaklık başlangıçta $-4\\,°C$ idi; $3$ saatte $7\\,°C$ artarsa son sıcaklık {1} $°C$ olur.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["sıcaklık"],
+              "explanation": "$-4+7=+3$.",
+              "options": [
+                {"text": "$+3$", "correct": true, "isBlank": true},
+                {"text": "$-3$", "correct": false},
+                {"text": "$+11$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: olay — tam sayı işlemi",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["modelleme"],
+              "explanation": "Verilen durum tam sayı işlemine çevrilir.",
+              "options": [
+                {"text": "$-3$ deki sıcaklık $8$ derece artıyor", "correct": false, "pairId": 1},
+                {"text": "$-3+8=+5$", "correct": false, "pairId": 1},
+                {"text": "$100$ TL bakiyeden $40$ TL çekiliyor", "correct": false, "pairId": 2},
+                {"text": "$100-40=60$", "correct": false, "pairId": 2},
+                {"text": "$-2.$ kattan $5$ kat yukarı", "correct": false, "pairId": 3},
+                {"text": "$-2+5=+3$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Tam sayı problemini çözme adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["yöntem"],
+              "explanation": "Veri → modelle → hesapla → yorumla.",
+              "options": [
+                {"text": "Verilen durumu tam sayı işaretiyle yaz", "correct": false, "correctOrder": 1},
+                {"text": "İşaretlere göre toplama / çıkarma seç", "correct": false, "correctOrder": 2},
+                {"text": "İşlemi yap", "correct": false, "correctOrder": 3},
+                {"text": "Sonucu birim ile yorumla", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kesirler ve Ondalık Gösterim",
+      "description": "Kesirlerle dört işlem, ondalık gösterim ve ondalık sayılarla işlemler, yuvarlama, yüzde kavramı (MEB 2024 - Sayılar ve Nicelikler temasının kesir kısmı)",
+      "order": 3,
+      "lessons": [
+        {
+          "title": "Kesirlerle Toplama ve Çıkarma",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "$\\dfrac{1}{4}+\\dfrac{2}{4}$ kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["aynı payda"],
+              "explanation": "Aynı paydalı kesirlerde paylar toplanır: $\\dfrac{1+2}{4}=\\dfrac{3}{4}$.",
+              "options": [
+                {"text": "$\\dfrac{3}{4}$", "correct": true},
+                {"text": "$\\dfrac{3}{8}$", "correct": false},
+                {"text": "$\\dfrac{2}{8}$", "correct": false},
+                {"text": "$\\dfrac{1}{2}$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$\\dfrac{1}{2}+\\dfrac{1}{3}$ kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["farklı payda"],
+              "explanation": "Payda EKOK $=6$: $\\dfrac{3}{6}+\\dfrac{2}{6}=\\dfrac{5}{6}$.",
+              "options": [
+                {"text": "$\\dfrac{2}{5}$", "correct": false},
+                {"text": "$\\dfrac{5}{6}$", "correct": true},
+                {"text": "$\\dfrac{2}{6}$", "correct": false},
+                {"text": "$\\dfrac{1}{6}$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "$\\dfrac{5}{8}-\\dfrac{1}{4}$ kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["çıkarma"],
+              "explanation": "Payda $8$: $\\dfrac{5}{8}-\\dfrac{2}{8}=\\dfrac{3}{8}$.",
+              "options": [
+                {"text": "$\\dfrac{4}{4}$", "correct": false},
+                {"text": "$\\dfrac{3}{8}$", "correct": true},
+                {"text": "$\\dfrac{1}{4}$", "correct": false},
+                {"text": "$\\dfrac{4}{8}$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$\\dfrac{3}{5}+\\dfrac{1}{10} = $ {1}",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["payda eşitleme"],
+              "explanation": "$\\dfrac{6}{10}+\\dfrac{1}{10}=\\dfrac{7}{10}$.",
+              "options": [
+                {"text": "$\\dfrac{7}{10}$", "correct": true, "isBlank": true},
+                {"text": "$\\dfrac{4}{15}$", "correct": false},
+                {"text": "$\\dfrac{4}{10}$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: işlem — sonuç",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["toplama çıkarma"],
+              "explanation": "Paydalar eşitlenir, paylar işlenir.",
+              "options": [
+                {"text": "$\\dfrac{1}{2}+\\dfrac{1}{4}$", "correct": false, "pairId": 1},
+                {"text": "$\\dfrac{3}{4}$", "correct": false, "pairId": 1},
+                {"text": "$\\dfrac{2}{3}-\\dfrac{1}{6}$", "correct": false, "pairId": 2},
+                {"text": "$\\dfrac{1}{2}$", "correct": false, "pairId": 2},
+                {"text": "$\\dfrac{3}{4}+\\dfrac{1}{4}$", "correct": false, "pairId": 3},
+                {"text": "$1$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Farklı paydalı iki kesri toplama adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["yöntem"],
+              "explanation": "Önce paydaları eşitle, sonra payları topla.",
+              "options": [
+                {"text": "Paydaların EKOK'unu bul", "correct": false, "correctOrder": 1},
+                {"text": "Genişletme katsayısını payla çarp", "correct": false, "correctOrder": 2},
+                {"text": "Payları topla", "correct": false, "correctOrder": 3},
+                {"text": "Gerekirse sadeleştir", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Kesirlerle Çarpma",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "$\\dfrac{2}{3}\\cdot\\dfrac{4}{5}$ kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["çarpma"],
+              "explanation": "Paylar payla, paydalar paydayla çarpılır: $\\dfrac{8}{15}$.",
+              "options": [
+                {"text": "$\\dfrac{6}{8}$", "correct": false},
+                {"text": "$\\dfrac{8}{15}$", "correct": true},
+                {"text": "$\\dfrac{2}{15}$", "correct": false},
+                {"text": "$\\dfrac{6}{15}$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$\\dfrac{3}{4}\\cdot\\dfrac{8}{9}$ kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sadeleştirme"],
+              "explanation": "Çapraz sadeleştir: $\\dfrac{3}{9}\\cdot\\dfrac{8}{4}=\\dfrac{1}{3}\\cdot 2=\\dfrac{2}{3}$.",
+              "options": [
+                {"text": "$\\dfrac{2}{3}$", "correct": true},
+                {"text": "$\\dfrac{24}{36}$", "correct": false},
+                {"text": "$\\dfrac{11}{13}$", "correct": false},
+                {"text": "$\\dfrac{3}{2}$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bir bahçenin $\\dfrac{3}{5}$'i ekili. Ekili alanın $\\dfrac{1}{3}$'ü domatesli. Toplam bahçenin ne kadarı domateslidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["uygulama"],
+              "explanation": "$\\dfrac{3}{5}\\cdot\\dfrac{1}{3}=\\dfrac{1}{5}$.",
+              "options": [
+                {"text": "$\\dfrac{4}{8}$", "correct": false},
+                {"text": "$\\dfrac{1}{5}$", "correct": true},
+                {"text": "$\\dfrac{3}{15}$ (sadeleştirilmemiş)", "correct": false},
+                {"text": "$\\dfrac{2}{5}$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$\\dfrac{5}{6}\\cdot\\dfrac{12}{25} = $ {1}",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["sadeleştirme"],
+              "explanation": "$\\dfrac{5}{25}\\cdot\\dfrac{12}{6}=\\dfrac{1}{5}\\cdot 2=\\dfrac{2}{5}$.",
+              "options": [
+                {"text": "$\\dfrac{2}{5}$", "correct": true, "isBlank": true},
+                {"text": "$\\dfrac{60}{150}$", "correct": false},
+                {"text": "$\\dfrac{1}{30}$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: çarpım — sonuç",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["çarpma"],
+              "explanation": "Paylar payla, paydalar paydayla çarpılır.",
+              "options": [
+                {"text": "$\\dfrac{1}{2}\\cdot\\dfrac{1}{3}$", "correct": false, "pairId": 1},
+                {"text": "$\\dfrac{1}{6}$", "correct": false, "pairId": 1},
+                {"text": "$\\dfrac{2}{5}\\cdot\\dfrac{5}{2}$", "correct": false, "pairId": 2},
+                {"text": "$1$", "correct": false, "pairId": 2},
+                {"text": "$3\\cdot\\dfrac{2}{9}$", "correct": false, "pairId": 3},
+                {"text": "$\\dfrac{2}{3}$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "İki kesri çarpma adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["yöntem"],
+              "explanation": "Önce sadeleştir, sonra çarp.",
+              "options": [
+                {"text": "Kesirleri yan yana yaz", "correct": false, "correctOrder": 1},
+                {"text": "Mümkünse çapraz sadeleştir", "correct": false, "correctOrder": 2},
+                {"text": "Pay ve paydaları çarp", "correct": false, "correctOrder": 3},
+                {"text": "Gerekirse son sonucu sadeleştir", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Kesirlerle Bölme",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "$\\dfrac{3}{4}:\\dfrac{1}{2}$ kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["bölme"],
+              "explanation": "İkinci kesir ters çevrilir: $\\dfrac{3}{4}\\cdot\\dfrac{2}{1}=\\dfrac{6}{4}=\\dfrac{3}{2}$.",
+              "options": [
+                {"text": "$\\dfrac{3}{2}$", "correct": true},
+                {"text": "$\\dfrac{3}{8}$", "correct": false},
+                {"text": "$\\dfrac{1}{2}$", "correct": false},
+                {"text": "$\\dfrac{6}{8}$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$\\dfrac{5}{6}:\\dfrac{10}{3}$ kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sadeleştirme"],
+              "explanation": "$\\dfrac{5}{6}\\cdot\\dfrac{3}{10}$; sadeleştir: $\\dfrac{1}{2}\\cdot\\dfrac{1}{2}=\\dfrac{1}{4}$.",
+              "options": [
+                {"text": "$\\dfrac{1}{4}$", "correct": true},
+                {"text": "$\\dfrac{50}{18}$", "correct": false},
+                {"text": "$4$", "correct": false},
+                {"text": "$\\dfrac{5}{20}$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "$4 : \\dfrac{2}{3}$ kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["sayı/kesir"],
+              "explanation": "$4\\cdot\\dfrac{3}{2}=6$.",
+              "options": [
+                {"text": "$\\dfrac{8}{3}$", "correct": false},
+                {"text": "$6$", "correct": true},
+                {"text": "$3$", "correct": false},
+                {"text": "$\\dfrac{2}{12}$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$\\dfrac{7}{8}:\\dfrac{7}{8}$ {1} dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["bölme"],
+              "explanation": "Bir kesir kendisine bölünürse sonuç $1$ olur.",
+              "options": [
+                {"text": "$1$", "correct": true, "isBlank": true},
+                {"text": "$0$", "correct": false},
+                {"text": "$\\dfrac{49}{64}$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: kesir — çarpmaya göre tersi",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["ters"],
+              "explanation": "Pay ve payda yer değiştirir.",
+              "options": [
+                {"text": "$\\dfrac{2}{5}$", "correct": false, "pairId": 1},
+                {"text": "$\\dfrac{5}{2}$", "correct": false, "pairId": 1},
+                {"text": "$\\dfrac{1}{4}$", "correct": false, "pairId": 2},
+                {"text": "$4$", "correct": false, "pairId": 2},
+                {"text": "$\\dfrac{7}{3}$", "correct": false, "pairId": 3},
+                {"text": "$\\dfrac{3}{7}$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Kesirde bölme adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["yöntem"],
+              "explanation": "Bölme işlemi ikinci kesrin tersine çarpmaya dönüştürülür.",
+              "options": [
+                {"text": "Bölme işlemini çarpmaya dönüştür", "correct": false, "correctOrder": 1},
+                {"text": "İkinci kesrin pay ve paydasını yer değiştir", "correct": false, "correctOrder": 2},
+                {"text": "Çapraz sadeleştir", "correct": false, "correctOrder": 3},
+                {"text": "Pay ve paydaları çarp", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Ondalık Gösterim ve Dört İşlem",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "$\\dfrac{3}{4}$ kesrinin ondalık gösterimi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["kesir-ondalık"],
+              "explanation": "$3:4=0{,}75$.",
+              "options": [
+                {"text": "$0{,}43$", "correct": false},
+                {"text": "$0{,}75$", "correct": true},
+                {"text": "$0{,}34$", "correct": false},
+                {"text": "$7{,}5$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$0{,}3 + 0{,}45$ işleminin sonucu nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ondalık toplama"],
+              "explanation": "Virgülleri alt alta yaz: $0{,}30+0{,}45=0{,}75$.",
+              "options": [
+                {"text": "$0{,}75$", "correct": true},
+                {"text": "$0{,}48$", "correct": false},
+                {"text": "$0{,}345$", "correct": false},
+                {"text": "$7{,}5$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "$1{,}5 \\cdot 0{,}4$ kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ondalık çarpma"],
+              "explanation": "Virgülleri kaldır: $15\\cdot 4=60$. Toplam $2$ ondalık basamak: $0{,}60$.",
+              "options": [
+                {"text": "$6$", "correct": false},
+                {"text": "$0{,}6$", "correct": true},
+                {"text": "$0{,}06$", "correct": false},
+                {"text": "$60$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$0{,}5$ ondalık sayısının kesir hâli {1} dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["ondalık-kesir"],
+              "explanation": "$0{,}5=\\dfrac{5}{10}=\\dfrac{1}{2}$.",
+              "options": [
+                {"text": "$\\dfrac{1}{2}$", "correct": true, "isBlank": true},
+                {"text": "$\\dfrac{5}{1}$", "correct": false},
+                {"text": "$\\dfrac{1}{5}$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: ondalık — kesir",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["dönüşüm"],
+              "explanation": "Basamak sayısı kadar payda 10 katlanır, sadeleştirilir.",
+              "options": [
+                {"text": "$0{,}25$", "correct": false, "pairId": 1},
+                {"text": "$\\dfrac{1}{4}$", "correct": false, "pairId": 1},
+                {"text": "$0{,}2$", "correct": false, "pairId": 2},
+                {"text": "$\\dfrac{1}{5}$", "correct": false, "pairId": 2},
+                {"text": "$0{,}125$", "correct": false, "pairId": 3},
+                {"text": "$\\dfrac{1}{8}$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "$2{,}4 : 0{,}3$ işlemini sırayla yapın.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["ondalık bölme"],
+              "explanation": "Bölme yapabilmek için paydadaki virgül kaldırılır.",
+              "options": [
+                {"text": "İki tarafı da $10$ ile çarp", "correct": false, "correctOrder": 1},
+                {"text": "$24 : 3$ hâline gelir", "correct": false, "correctOrder": 2},
+                {"text": "İşlemi yap: $24:3$", "correct": false, "correctOrder": 3},
+                {"text": "Sonuç: $8$", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Ondalık Sayılarda Yuvarlama ve Tahmin",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "$3{,}472$ sayısının en yakın yüzde birliğe yuvarlanmış hâli nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["yuvarlama"],
+              "explanation": "Yuvarlanacak basamağın sağındakine bakılır. Bin de birler basamağı $2<5$ → değişmez: $3{,}47$.",
+              "options": [
+                {"text": "$3{,}47$", "correct": true},
+                {"text": "$3{,}48$", "correct": false},
+                {"text": "$3{,}5$", "correct": false},
+                {"text": "$3{,}4$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$2{,}81$ sayısının en yakın onda birliğe yuvarlanmış hâli nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["yuvarlama"],
+              "explanation": "Yüzde birler basamağı $1<5$: değişmez. $2{,}8$.",
+              "options": [
+                {"text": "$2{,}8$", "correct": true},
+                {"text": "$2{,}9$", "correct": false},
+                {"text": "$3$", "correct": false},
+                {"text": "$2{,}81$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "$5{,}68$ sayısının en yakın tam sayıya yuvarlanmış hâli nedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yuvarlama"],
+              "explanation": "Onda birler basamağı $6 \\ge 5$: bir artırılır → $6$.",
+              "options": [
+                {"text": "$5$", "correct": false},
+                {"text": "$6$", "correct": true},
+                {"text": "$5{,}7$", "correct": false},
+                {"text": "$5{,}68$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$9{,}495$ sayısının en yakın yüzde birliğe yuvarlanmış hâli {1} dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["yuvarlama"],
+              "explanation": "Bin de birler basamağı $5$ → yüzde birler $9$ bir artar $10$, taşıma yapılır: $9{,}50$.",
+              "options": [
+                {"text": "$9{,}50$", "correct": true, "isBlank": true},
+                {"text": "$9{,}49$", "correct": false},
+                {"text": "$9{,}5$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: sayı — en yakın tam sayıya yuvarlanmış hâli",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["yuvarlama"],
+              "explanation": "Onda birler basamağı $5$ veya daha büyükse yukarı yuvarlanır.",
+              "options": [
+                {"text": "$3{,}2$", "correct": false, "pairId": 1},
+                {"text": "$3$", "correct": false, "pairId": 1},
+                {"text": "$4{,}5$", "correct": false, "pairId": 2},
+                {"text": "$5$", "correct": false, "pairId": 2},
+                {"text": "$8{,}7$", "correct": false, "pairId": 3},
+                {"text": "$9$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "$6{,}248$ sayısını en yakın onda birliğe yuvarlama adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["yöntem"],
+              "explanation": "Yuvarlanacak basamağın sağındaki rakama bak.",
+              "options": [
+                {"text": "Yuvarlama basamağını belirle (onda birler)", "correct": false, "correctOrder": 1},
+                {"text": "Sağındaki rakama bak (yüzde birler $=4$)", "correct": false, "correctOrder": 2},
+                {"text": "$4<5$ olduğundan basamak değişmez", "correct": false, "correctOrder": 3},
+                {"text": "Sonuç: $6{,}2$", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Yüzde Kavramı",
+          "order": 6,
+          "challenges": [
+            {
+              "question": "$\\%25$ kesir olarak {1} dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["yüzde-kesir"],
+              "explanation": "$\\%25=\\dfrac{25}{100}=\\dfrac{1}{4}$.",
+              "options": [
+                {"text": "$\\dfrac{1}{4}$", "correct": true, "isBlank": true},
+                {"text": "$\\dfrac{1}{25}$", "correct": false},
+                {"text": "$\\dfrac{25}{10}$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$200$'ün $\\%10$'u kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["yüzde alma"],
+              "explanation": "$\\dfrac{10}{100}\\cdot 200=20$.",
+              "options": [
+                {"text": "$10$", "correct": false},
+                {"text": "$20$", "correct": true},
+                {"text": "$50$", "correct": false},
+                {"text": "$100$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "$\\%50$'si $60$ olan sayı kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["bütün"],
+              "explanation": "$\\%50$ yarısı demektir. Yarısı $60$ ise tamamı $120$.",
+              "options": [
+                {"text": "$30$", "correct": false},
+                {"text": "$120$", "correct": true},
+                {"text": "$100$", "correct": false},
+                {"text": "$300$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$50$, $200$'ün yüzde kaçıdır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yüzde oran"],
+              "explanation": "$\\dfrac{50}{200}\\cdot 100=25$.",
+              "options": [
+                {"text": "$\\%10$", "correct": false},
+                {"text": "$\\%25$", "correct": true},
+                {"text": "$\\%50$", "correct": false},
+                {"text": "$\\%40$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: kesir / ondalık — yüzde",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["dönüşüm"],
+              "explanation": "Kesri yüzdeye çevirmek için $100$ ile çarp.",
+              "options": [
+                {"text": "$\\dfrac{1}{2}$", "correct": false, "pairId": 1},
+                {"text": "$\\%50$", "correct": false, "pairId": 1},
+                {"text": "$0{,}3$", "correct": false, "pairId": 2},
+                {"text": "$\\%30$", "correct": false, "pairId": 2},
+                {"text": "$\\dfrac{3}{4}$", "correct": false, "pairId": 3},
+                {"text": "$\\%75$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "$\\%20$ indirimli $500$ TL'lik bir ürünün yeni fiyatını hesaplama adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["yüzde indirim"],
+              "explanation": "İndirim tutarı bulunup eski fiyattan çıkarılır.",
+              "options": [
+                {"text": "Önce $500$'ün $\\%20$'sini bul: $100$", "correct": false, "correctOrder": 1},
+                {"text": "İndirim tutarı $100$ TL", "correct": false, "correctOrder": 2},
+                {"text": "Eski fiyattan çıkar: $500-100$", "correct": false, "correctOrder": 3},
+                {"text": "Yeni fiyat: $400$ TL", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Oran ve Cebirsel İfadeler",
+      "description": "Oran kavramı, iki çokluğun karşılaştırılması, cebirsel ifadelerde terim/değişken/katsayı, ifadelerin değerini bulma ve basit cebirsel işlemler (MEB 2024 - Cebirsel Düşünme)",
+      "order": 4,
+      "lessons": [
+        {
+          "title": "Oran Kavramı",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "$3$ elma ile $5$ armut için elmaların armutlara oranı kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["oran"],
+              "explanation": "İlk büyüklük paya, ikinci paydaya yazılır: $\\dfrac{3}{5}$.",
+              "options": [
+                {"text": "$\\dfrac{3}{5}$", "correct": true},
+                {"text": "$\\dfrac{5}{3}$", "correct": false},
+                {"text": "$3:8$", "correct": false},
+                {"text": "$\\dfrac{8}{5}$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$20$ ve $25$ sayılarının en sade oranı nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["sadeleştirme"],
+              "explanation": "EBOB $5$: $20:5=4$, $25:5=5 \\Rightarrow 4:5$.",
+              "options": [
+                {"text": "$2:3$", "correct": false},
+                {"text": "$4:5$", "correct": true},
+                {"text": "$5:4$", "correct": false},
+                {"text": "$20:25$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bir sınıfta $12$ kız, $18$ erkek vardır. Erkeklerin kızlara oranı en sade hâliyle hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["oran sıralama"],
+              "explanation": "$\\dfrac{18}{12}=\\dfrac{3}{2}$.",
+              "options": [
+                {"text": "$\\dfrac{2}{3}$", "correct": false},
+                {"text": "$\\dfrac{3}{2}$", "correct": true},
+                {"text": "$\\dfrac{1}{2}$", "correct": false},
+                {"text": "$\\dfrac{12}{18}$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$8:24$ oranının en sade hâli {1} dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["sadeleştirme"],
+              "explanation": "EBOB $8$: $1:3$.",
+              "options": [
+                {"text": "$1:3$", "correct": true, "isBlank": true},
+                {"text": "$3:1$", "correct": false},
+                {"text": "$8:24$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: ifade — oran",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["oran kurma"],
+              "explanation": "İfadedeki sıra korunur.",
+              "options": [
+                {"text": "$6$ kalem, $8$ defter", "correct": false, "pairId": 1},
+                {"text": "$3:4$", "correct": false, "pairId": 1},
+                {"text": "$9$ kız, $6$ erkek", "correct": false, "pairId": 2},
+                {"text": "$3:2$", "correct": false, "pairId": 2},
+                {"text": "$10$ TL, $30$ TL", "correct": false, "pairId": 3},
+                {"text": "$1:3$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "İki büyüklük arasında oran yazma adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["yöntem"],
+              "explanation": "Birimleri eşle, kesir biçiminde yaz, sadeleştir.",
+              "options": [
+                {"text": "Aynı türden iki büyüklük seç", "correct": false, "correctOrder": 1},
+                {"text": "Birimlerini eşle", "correct": false, "correctOrder": 2},
+                {"text": "Kesir biçiminde yaz", "correct": false, "correctOrder": 3},
+                {"text": "EBOB ile sadeleştir", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Birden Fazla Çokluğun Oranlanması",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "$a$ ile $b$ nin oranı $2:3$ ve $a+b=20$ ise $a$ kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["oran"],
+              "explanation": "$a=2k, b=3k$; $5k=20 \\Rightarrow k=4 \\Rightarrow a=8$.",
+              "options": [
+                {"text": "$6$", "correct": false},
+                {"text": "$8$", "correct": true},
+                {"text": "$10$", "correct": false},
+                {"text": "$12$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Üç sayının oranı $1:2:3$ ve toplamı $36$ ise en büyük sayı kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["oran"],
+              "explanation": "$k+2k+3k=6k=36 \\Rightarrow k=6 \\Rightarrow$ en büyük $3k=18$.",
+              "options": [
+                {"text": "$12$", "correct": false},
+                {"text": "$18$", "correct": true},
+                {"text": "$24$", "correct": false},
+                {"text": "$6$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "$x:y = 3:4$ ve $y=12$ ise $x$ kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["oran"],
+              "explanation": "$\\dfrac{x}{12}=\\dfrac{3}{4} \\Rightarrow x=9$.",
+              "options": [
+                {"text": "$9$", "correct": true},
+                {"text": "$8$", "correct": false},
+                {"text": "$16$", "correct": false},
+                {"text": "$12$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Bir karışım $2:5$ oranında portakal ve nar suyu içeriyor. Toplam $14$ L ise portakal suyu {1} L dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["karışım"],
+              "explanation": "$2k+5k=7k=14 \\Rightarrow k=2 \\Rightarrow$ portakal $2k=4$.",
+              "options": [
+                {"text": "$4$", "correct": true, "isBlank": true},
+                {"text": "$10$", "correct": false},
+                {"text": "$2$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: oran — toplama göre paylar",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["oran"],
+              "explanation": "Oranlar birleştirilirken her büyüklük $k$ katı olarak yazılır.",
+              "options": [
+                {"text": "$1:2$, toplam $9$", "correct": false, "pairId": 1},
+                {"text": "$3$ ve $6$", "correct": false, "pairId": 1},
+                {"text": "$2:3$, toplam $20$", "correct": false, "pairId": 2},
+                {"text": "$8$ ve $12$", "correct": false, "pairId": 2},
+                {"text": "$3:5$, toplam $32$", "correct": false, "pairId": 3},
+                {"text": "$12$ ve $20$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Verilen orana göre paylaşım yapma adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["yöntem"],
+              "explanation": "Toplam pay sayısı bulunup birim payın değeri hesaplanır.",
+              "options": [
+                {"text": "Pay sayılarını topla", "correct": false, "correctOrder": 1},
+                {"text": "Toplam çokluğu pay toplamına böl ($k$)", "correct": false, "correctOrder": 2},
+                {"text": "Her büyüklüğü ilgili payla $k$'yı çarp", "correct": false, "correctOrder": 3},
+                {"text": "Sonuçları yaz ve kontrol et", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Cebirsel İfadeler: Terim, Değişken, Katsayı",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "$4x+7$ ifadesinde $x$'in katsayısı kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["katsayı"],
+              "explanation": "$4x$ teriminde $x$'in katsayısı $4$'tür.",
+              "options": [
+                {"text": "$7$", "correct": false},
+                {"text": "$4$", "correct": true},
+                {"text": "$x$", "correct": false},
+                {"text": "$11$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$3x+5y-7$ ifadesinde sabit terim hangisidir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["sabit terim"],
+              "explanation": "Değişken içermeyen terim sabittir: $-7$.",
+              "options": [
+                {"text": "$3$", "correct": false},
+                {"text": "$5$", "correct": false},
+                {"text": "$-7$", "correct": true},
+                {"text": "$7$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "$2a+3b+5a-b$ ifadesinde benzer terimleri sadeleştirin.",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["benzer terim"],
+              "explanation": "$a$ler: $2+5=7a$; $b$ler: $3-1=2b$ → $7a+2b$.",
+              "options": [
+                {"text": "$7a+2b$", "correct": true},
+                {"text": "$7a+4b$", "correct": false},
+                {"text": "$9ab$", "correct": false},
+                {"text": "$5a+2b$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$5x$ ile $-2x$ benzer terim midir? Cevap: {1}",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["benzer terim"],
+              "explanation": "Aynı değişken, aynı kuvvet → benzer terim. Evet.",
+              "options": [
+                {"text": "Evet", "correct": true, "isBlank": true},
+                {"text": "Hayır", "correct": false},
+                {"text": "Bazen", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: terim — açıklaması",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["terim"],
+              "explanation": "Bir terimde katsayı sayısal çarpan, değişken ise harftir.",
+              "options": [
+                {"text": "$6y$", "correct": false, "pairId": 1},
+                {"text": "Katsayı $6$, değişken $y$", "correct": false, "pairId": 1},
+                {"text": "$-3$", "correct": false, "pairId": 2},
+                {"text": "Sabit terim", "correct": false, "pairId": 2},
+                {"text": "$x$", "correct": false, "pairId": 3},
+                {"text": "Katsayı $1$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bir cebirsel ifadeyi sadeleştirme adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["yöntem"],
+              "explanation": "Benzer terimler birleştirilir.",
+              "options": [
+                {"text": "Benzer terimleri belirle", "correct": false, "correctOrder": 1},
+                {"text": "Katsayılarını topla / çıkar", "correct": false, "correctOrder": 2},
+                {"text": "Sabit terimleri ayrı topla", "correct": false, "correctOrder": 3},
+                {"text": "Sade hâli yaz", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Cebirsel İfadelerin Değerini Hesaplama",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "$3x+5$ ifadesinin $x=4$ için değeri kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["değer"],
+              "explanation": "$3\\cdot 4+5=12+5=17$.",
+              "options": [
+                {"text": "$17$", "correct": true},
+                {"text": "$15$", "correct": false},
+                {"text": "$20$", "correct": false},
+                {"text": "$32$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$2a-3b$ ifadesinin $a=5,\\ b=2$ için değeri kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["değer"],
+              "explanation": "$2\\cdot 5-3\\cdot 2=10-6=4$.",
+              "options": [
+                {"text": "$4$", "correct": true},
+                {"text": "$-1$", "correct": false},
+                {"text": "$13$", "correct": false},
+                {"text": "$16$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bir kalem $x$ TL ise $4$ kalem ve $1$ defter ($10$ TL) için harcanan toplam tutar hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ifade kurma"],
+              "explanation": "$4x+10$.",
+              "options": [
+                {"text": "$4x-10$", "correct": false},
+                {"text": "$4x+10$", "correct": true},
+                {"text": "$x+10$", "correct": false},
+                {"text": "$4(x+10)$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$5(x+2)$ ifadesinin $x=3$ için değeri {1} dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["değer", "dağılma"],
+              "explanation": "$5\\cdot(3+2)=5\\cdot 5=25$.",
+              "options": [
+                {"text": "$25$", "correct": true, "isBlank": true},
+                {"text": "$17$", "correct": false},
+                {"text": "$5$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: ifade — değeri ($x=2$)",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["değer"],
+              "explanation": "Her ifadede $x$ yerine $2$ yazılır.",
+              "options": [
+                {"text": "$x+5$", "correct": false, "pairId": 1},
+                {"text": "$7$", "correct": false, "pairId": 1},
+                {"text": "$3x-1$", "correct": false, "pairId": 2},
+                {"text": "$5$", "correct": false, "pairId": 2},
+                {"text": "$2x+4$", "correct": false, "pairId": 3},
+                {"text": "$8$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bir ifadenin değerini bulma adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["yöntem"],
+              "explanation": "Önce yerine koy, sonra işlem önceliğine göre hesapla.",
+              "options": [
+                {"text": "Değişkenin değerini ifadede yerine koy", "correct": false, "correctOrder": 1},
+                {"text": "Parantezleri çöz", "correct": false, "correctOrder": 2},
+                {"text": "Çarpma/bölme önce, toplama/çıkarma sonra", "correct": false, "correctOrder": 3},
+                {"text": "Sonucu yaz", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Cebirsel İfadelerde Toplama ve Çıkarma",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "$(2x+5)+(3x+1)$ kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["toplama"],
+              "explanation": "$2x+3x=5x$, $5+1=6 \\Rightarrow 5x+6$.",
+              "options": [
+                {"text": "$5x+6$", "correct": true},
+                {"text": "$5x+5$", "correct": false},
+                {"text": "$6x+5$", "correct": false},
+                {"text": "$x+6$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$(4y+3)-(y+1)$ kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["çıkarma"],
+              "explanation": "$-(y+1)=-y-1 \\Rightarrow 4y+3-y-1=3y+2$.",
+              "options": [
+                {"text": "$3y+4$", "correct": false},
+                {"text": "$3y+2$", "correct": true},
+                {"text": "$5y+4$", "correct": false},
+                {"text": "$3y-2$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "$(3a+2b)+(a-b)$ kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["iki değişken"],
+              "explanation": "$a$ler: $3+1=4a$; $b$ler: $2-1=b$. Sonuç $4a+b$.",
+              "options": [
+                {"text": "$4a+b$", "correct": true},
+                {"text": "$4a+3b$", "correct": false},
+                {"text": "$4ab$", "correct": false},
+                {"text": "$2a+b$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$(5x+8) - (2x+3) = $ {1}",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["çıkarma"],
+              "explanation": "$5x-2x=3x$, $8-3=5 \\Rightarrow 3x+5$.",
+              "options": [
+                {"text": "$3x+5$", "correct": true, "isBlank": true},
+                {"text": "$3x+11$", "correct": false},
+                {"text": "$7x+5$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: işlem — sonuç",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["toplama-çıkarma"],
+              "explanation": "Benzer terimler birleştirilir.",
+              "options": [
+                {"text": "$(x)+(x)$", "correct": false, "pairId": 1},
+                {"text": "$2x$", "correct": false, "pairId": 1},
+                {"text": "$(3a)-(a)$", "correct": false, "pairId": 2},
+                {"text": "$2a$", "correct": false, "pairId": 2},
+                {"text": "$(x+3)+(2x-1)$", "correct": false, "pairId": 3},
+                {"text": "$3x+2$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Parantezli ifadelerin toplanma adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["parantez aç"],
+              "explanation": "Önce parantezi aç, sonra benzer terimleri topla.",
+              "options": [
+                {"text": "Parantez önündeki işareti her terime dağıt", "correct": false, "correctOrder": 1},
+                {"text": "Benzer terimleri belirle", "correct": false, "correctOrder": 2},
+                {"text": "Katsayıları topla / çıkar", "correct": false, "correctOrder": 3},
+                {"text": "Sade hâli yaz", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Kuralla Verilen Örüntüler",
+          "order": 6,
+          "challenges": [
+            {
+              "question": "$3, 6, 9, 12, \\ldots$ örüntüsünün $n.$ terimi nedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["örüntü"],
+              "explanation": "Her terim $3$'ün katı: $a_n=3n$.",
+              "options": [
+                {"text": "$3n$", "correct": true},
+                {"text": "$n+3$", "correct": false},
+                {"text": "$3n-3$", "correct": false},
+                {"text": "$3+n^2$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$2, 5, 8, 11, \\ldots$ örüntüsünün $5.$ terimi kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["örüntü"],
+              "explanation": "Artış $3$: $a_n=3n-1 \\Rightarrow a_5=14$.",
+              "options": [
+                {"text": "$12$", "correct": false},
+                {"text": "$14$", "correct": true},
+                {"text": "$15$", "correct": false},
+                {"text": "$11$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Kuralı $a_n=4n+1$ olan örüntünün ilk terimi kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["örüntü kural"],
+              "explanation": "$n=1$ için $a_1=4\\cdot 1+1=5$.",
+              "options": [
+                {"text": "$4$", "correct": false},
+                {"text": "$5$", "correct": true},
+                {"text": "$1$", "correct": false},
+                {"text": "$9$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kuralı $a_n=2n+3$ olan örüntünün $6.$ terimi {1} dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["örüntü"],
+              "explanation": "$2\\cdot 6+3=15$.",
+              "options": [
+                {"text": "$15$", "correct": true, "isBlank": true},
+                {"text": "$12$", "correct": false},
+                {"text": "$9$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: örüntü — kural",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["örüntü"],
+              "explanation": "Sabit fark $d$: $a_n=a_1+(n-1)d$.",
+              "options": [
+                {"text": "$1,3,5,7,\\ldots$", "correct": false, "pairId": 1},
+                {"text": "$2n-1$", "correct": false, "pairId": 1},
+                {"text": "$5,10,15,\\ldots$", "correct": false, "pairId": 2},
+                {"text": "$5n$", "correct": false, "pairId": 2},
+                {"text": "$4,7,10,\\ldots$", "correct": false, "pairId": 3},
+                {"text": "$3n+1$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bir örüntünün $n.$ terim kuralını bulma adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["yöntem"],
+              "explanation": "Terim numarası ve değer ilişkisi kullanılır.",
+              "options": [
+                {"text": "Terimler arasındaki sabit farkı bul", "correct": false, "correctOrder": 1},
+                {"text": "Katsayıyı belirle (sabit fark)", "correct": false, "correctOrder": 2},
+                {"text": "İlk terimden sabit kısmı çöz", "correct": false, "correctOrder": 3},
+                {"text": "$a_n = d\\cdot n + c$ olarak yaz", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Geometri: Açılar, Üçgen-Paralelkenar Alanı ve Çember",
+      "description": "Açıları ölçme, açıortay, komşu/karşı açılar; üçgen çeşitleri; üçgen ve paralelkenarın alanı; çember ve daire tanıtımı (MEB 2024 - Geometrik Nicelikler ve Geometrik Şekiller temaları)",
+      "order": 5,
+      "lessons": [
+        {
+          "title": "Açıları Ölçme ve Çeşitleri",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Ölçüsü $90^\\circ$ olan açıya ne ad verilir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["açı çeşidi"],
+              "explanation": "$90^\\circ$ dik açıdır.",
+              "options": [
+                {"text": "Dar açı", "correct": false},
+                {"text": "Dik açı", "correct": true},
+                {"text": "Geniş açı", "correct": false},
+                {"text": "Doğru açı", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Ölçüsü $120^\\circ$ olan açı hangi türdür?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["açı çeşidi"],
+              "explanation": "$90^\\circ < 120^\\circ < 180^\\circ$ → geniş açı.",
+              "options": [
+                {"text": "Dar", "correct": false},
+                {"text": "Dik", "correct": false},
+                {"text": "Geniş", "correct": true},
+                {"text": "Doğru", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bir saat 12'yi gösterirken akrep ile yelkovan arasındaki açı kaç derecedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["günlük yaşam"],
+              "explanation": "İkisi de 12'yi gösterdiği için aralarındaki açı $0^\\circ$'dir.",
+              "options": [
+                {"text": "$30^\\circ$", "correct": false},
+                {"text": "$0^\\circ$", "correct": true},
+                {"text": "$90^\\circ$", "correct": false},
+                {"text": "$180^\\circ$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Doğru açı $180^\\circ$, tam açı {1} derecedir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["tam açı"],
+              "explanation": "Tam açı $360^\\circ$'dir.",
+              "options": [
+                {"text": "$360$", "correct": true, "isBlank": true},
+                {"text": "$180$", "correct": false},
+                {"text": "$270$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: ölçü — açı türü",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["açı tanımları"],
+              "explanation": "Açı türlerinin tanımları.",
+              "options": [
+                {"text": "$45^\\circ$", "correct": false, "pairId": 1},
+                {"text": "Dar açı", "correct": false, "pairId": 1},
+                {"text": "$90^\\circ$", "correct": false, "pairId": 2},
+                {"text": "Dik açı", "correct": false, "pairId": 2},
+                {"text": "$180^\\circ$", "correct": false, "pairId": 3},
+                {"text": "Doğru açı", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bir açıyı iletkiyle ölçme adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["iletki"],
+              "explanation": "İletkinin merkezini açının köşesine koyup okumak gerekir.",
+              "options": [
+                {"text": "İletkinin merkezini açının köşesine yerleştir", "correct": false, "correctOrder": 1},
+                {"text": "$0^\\circ$ çizgisini açının bir kenarıyla çakıştır", "correct": false, "correctOrder": 2},
+                {"text": "Diğer kenarın gösterdiği değeri oku", "correct": false, "correctOrder": 3},
+                {"text": "Açının türünü belirle", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Açıortay, Komşu ve Karşı Açılar",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Bir açıyı iki eş açıya bölen ışına ne ad verilir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["açıortay"],
+              "explanation": "Açıortay, açıyı iki eş parçaya böler.",
+              "options": [
+                {"text": "Yükseklik", "correct": false},
+                {"text": "Açıortay", "correct": true},
+                {"text": "Kenarortay", "correct": false},
+                {"text": "Açı kolları", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$80^\\circ$'lik bir açının açıortayı bu açıyı kaç derecelik açılara böler?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["açıortay"],
+              "explanation": "$80:2=40^\\circ$.",
+              "options": [
+                {"text": "$30^\\circ$", "correct": false},
+                {"text": "$40^\\circ$", "correct": true},
+                {"text": "$80^\\circ$", "correct": false},
+                {"text": "$160^\\circ$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Kesişen iki doğrunun ters açıları arasında nasıl bir ilişki vardır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ters açı"],
+              "explanation": "Ters açılar birbirine eşittir.",
+              "options": [
+                {"text": "Toplamı $180^\\circ$", "correct": false},
+                {"text": "Birbirine eşit", "correct": true},
+                {"text": "Toplamı $90^\\circ$", "correct": false},
+                {"text": "Birbirinin iki katı", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Komşu bütünler iki açıdan biri $110^\\circ$ ise diğeri {1} derecedir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["komşu bütünler"],
+              "explanation": "$180-110=70$.",
+              "options": [
+                {"text": "$70$", "correct": true, "isBlank": true},
+                {"text": "$90$", "correct": false},
+                {"text": "$110$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: açı çifti — özellik",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["açı çiftleri"],
+              "explanation": "Açı çiftleri ve toplam özellikleri.",
+              "options": [
+                {"text": "Komşu bütünler", "correct": false, "pairId": 1},
+                {"text": "Toplamı $180^\\circ$", "correct": false, "pairId": 1},
+                {"text": "Komşu tümler", "correct": false, "pairId": 2},
+                {"text": "Toplamı $90^\\circ$", "correct": false, "pairId": 2},
+                {"text": "Ters açılar", "correct": false, "pairId": 3},
+                {"text": "Birbirine eşit", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bir açıortay çizme adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["çizim"],
+              "explanation": "Pergel ve cetvelle açıortay çizilir.",
+              "options": [
+                {"text": "Açının köşesine pergel sıçrasını yerleştir ve bir yay çiz", "correct": false, "correctOrder": 1},
+                {"text": "Yay açı kollarını iki noktada keser", "correct": false, "correctOrder": 2},
+                {"text": "Bu iki noktadan aynı yarıçapla yay çiz", "correct": false, "correctOrder": 3},
+                {"text": "Yayların kesişimi ile köşeyi birleştir", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Üçgen Çeşitleri",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Tüm kenar uzunlukları eşit olan üçgene ne ad verilir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["üçgen çeşidi"],
+              "explanation": "Eşkenar üçgenin üç kenarı eşittir.",
+              "options": [
+                {"text": "Eşkenar", "correct": true},
+                {"text": "İkizkenar", "correct": false},
+                {"text": "Çeşitkenar", "correct": false},
+                {"text": "Dik", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Bir iç açısı $90^\\circ$ olan üçgene ne ad verilir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["dik üçgen"],
+              "explanation": "Dik açıya sahip üçgen dik üçgendir.",
+              "options": [
+                {"text": "Geniş açılı", "correct": false},
+                {"text": "Dar açılı", "correct": false},
+                {"text": "Dik", "correct": true},
+                {"text": "Eşkenar", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bir üçgenin iç açılarının toplamı kaç derecedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["iç açı toplamı"],
+              "explanation": "Her üçgende iç açıların toplamı $180^\\circ$'dir.",
+              "options": [
+                {"text": "$90^\\circ$", "correct": false},
+                {"text": "$180^\\circ$", "correct": true},
+                {"text": "$270^\\circ$", "correct": false},
+                {"text": "$360^\\circ$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Üçgende iki açı $40^\\circ$ ve $70^\\circ$ ise üçüncü açı {1} derecedir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["iç açı"],
+              "explanation": "$180-(40+70)=70$.",
+              "options": [
+                {"text": "$70$", "correct": true, "isBlank": true},
+                {"text": "$110$", "correct": false},
+                {"text": "$80$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: üçgen — özelliği",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["üçgen tanımı"],
+              "explanation": "Üçgenler kenar ve açı özelliklerine göre sınıflanır.",
+              "options": [
+                {"text": "Eşkenar", "correct": false, "pairId": 1},
+                {"text": "Tüm kenarlar eşit", "correct": false, "pairId": 1},
+                {"text": "İkizkenar", "correct": false, "pairId": 2},
+                {"text": "İki kenar eşit", "correct": false, "pairId": 2},
+                {"text": "Çeşitkenar", "correct": false, "pairId": 3},
+                {"text": "Tüm kenarlar farklı", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bir üçgende bilinmeyen açıyı bulma adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["yöntem"],
+              "explanation": "İç açılar toplamı $180^\\circ$ kullanılır.",
+              "options": [
+                {"text": "Bilinen açıları topla", "correct": false, "correctOrder": 1},
+                {"text": "Toplamı $180^\\circ$ den çıkar", "correct": false, "correctOrder": 2},
+                {"text": "Sonucu bilinmeyene yaz", "correct": false, "correctOrder": 3},
+                {"text": "Tüm açıların toplamını kontrol et", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Üçgen ve Paralelkenarın Alanı",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Tabanı $10$ cm, yüksekliği $6$ cm olan üçgenin alanı kaç cm$^2$ dir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["üçgen alan"],
+              "explanation": "Alan $=\\dfrac{\\text{taban}\\cdot\\text{yükseklik}}{2}=\\dfrac{10\\cdot 6}{2}=30$.",
+              "options": [
+                {"text": "$30$", "correct": true},
+                {"text": "$60$", "correct": false},
+                {"text": "$16$", "correct": false},
+                {"text": "$15$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Tabanı $8$ cm, yüksekliği $5$ cm olan paralelkenarın alanı kaç cm$^2$ dir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["paralelkenar"],
+              "explanation": "Alan $=$ taban $\\cdot$ yükseklik $=8\\cdot 5=40$.",
+              "options": [
+                {"text": "$13$", "correct": false},
+                {"text": "$40$", "correct": true},
+                {"text": "$20$", "correct": false},
+                {"text": "$80$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bir üçgenin alanı $24$ cm$^2$ ve yüksekliği $6$ cm ise taban uzunluğu kaç cm dir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ters formül"],
+              "explanation": "$\\dfrac{t\\cdot 6}{2}=24 \\Rightarrow 3t=24 \\Rightarrow t=8$.",
+              "options": [
+                {"text": "$4$", "correct": false},
+                {"text": "$8$", "correct": true},
+                {"text": "$12$", "correct": false},
+                {"text": "$6$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kenarı $7$ cm olan karenin alanı {1} cm$^2$ dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["kare alan"],
+              "explanation": "$a^2=7^2=49$.",
+              "options": [
+                {"text": "$49$", "correct": true, "isBlank": true},
+                {"text": "$28$", "correct": false},
+                {"text": "$14$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: şekil — alan formülü",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["formül"],
+              "explanation": "Şekle göre alan formülü değişir.",
+              "options": [
+                {"text": "Kare", "correct": false, "pairId": 1},
+                {"text": "$a^2$", "correct": false, "pairId": 1},
+                {"text": "Dikdörtgen", "correct": false, "pairId": 2},
+                {"text": "$a\\cdot b$", "correct": false, "pairId": 2},
+                {"text": "Üçgen", "correct": false, "pairId": 3},
+                {"text": "$\\dfrac{t\\cdot h}{2}$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bir paralelkenarın alanını bulma adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["yöntem"],
+              "explanation": "Tabana ait yükseklik seçilir.",
+              "options": [
+                {"text": "Taban kenarını belirle", "correct": false, "correctOrder": 1},
+                {"text": "Bu tabana ait yüksekliği bul", "correct": false, "correctOrder": 2},
+                {"text": "Taban $\\cdot$ yükseklik çarp", "correct": false, "correctOrder": 3},
+                {"text": "Sonucu cm$^2$ olarak yaz", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Çember ve Daire (Tanıtım)",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Bir çemberde merkezden çember üzerindeki bir noktaya olan uzaklığa ne ad verilir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["yarıçap"],
+              "explanation": "Bu uzaklık yarıçap ($r$) olarak adlandırılır.",
+              "options": [
+                {"text": "Çap", "correct": false},
+                {"text": "Yarıçap", "correct": true},
+                {"text": "Kiriş", "correct": false},
+                {"text": "Teğet", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Yarıçapı $9$ cm olan çemberin çapı kaç cm dir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["çap"],
+              "explanation": "Çap $=2r=18$.",
+              "options": [
+                {"text": "$4{,}5$", "correct": false},
+                {"text": "$9$", "correct": false},
+                {"text": "$18$", "correct": true},
+                {"text": "$81$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Çember üzerinde alınan iki noktayı birleştiren doğru parçasına ne ad verilir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kiriş"],
+              "explanation": "İki noktayı birleştiren doğru parçası kiriştir; merkezden geçerse çap olur.",
+              "options": [
+                {"text": "Yay", "correct": false},
+                {"text": "Kiriş", "correct": true},
+                {"text": "Teğet", "correct": false},
+                {"text": "Yarıçap", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Yarıçapı $5$ cm olan çemberin çapı {1} cm dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["çap"],
+              "explanation": "$2\\cdot 5=10$.",
+              "options": [
+                {"text": "$10$", "correct": true, "isBlank": true},
+                {"text": "$5$", "correct": false},
+                {"text": "$25$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: kavram — tanım",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["çember"],
+              "explanation": "Çember-daire bileşenlerinin tanımları.",
+              "options": [
+                {"text": "Yarıçap", "correct": false, "pairId": 1},
+                {"text": "Merkez-nokta uzaklığı", "correct": false, "pairId": 1},
+                {"text": "Çap", "correct": false, "pairId": 2},
+                {"text": "Merkezden geçen kiriş", "correct": false, "pairId": 2},
+                {"text": "Yay", "correct": false, "pairId": 3},
+                {"text": "Çemberin iki nokta arasındaki parçası", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bir çemberde elemanları belirleme adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["yöntem"],
+              "explanation": "Önce merkezi sonra diğer elemanları tanı.",
+              "options": [
+                {"text": "Merkezi belirle", "correct": false, "correctOrder": 1},
+                {"text": "Yarıçap ve çapı işaretle", "correct": false, "correctOrder": 2},
+                {"text": "Kiriş ve teğeti işaretle", "correct": false, "correctOrder": 3},
+                {"text": "Yay ve daire dilimini ayırt et", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Çevre Hesabı ve Karma Problemler",
+          "order": 6,
+          "challenges": [
+            {
+              "question": "Kenarları $5$ cm ve $9$ cm olan dikdörtgenin çevresi kaç cm dir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["çevre"],
+              "explanation": "$2(a+b)=2(14)=28$.",
+              "options": [
+                {"text": "$14$", "correct": false},
+                {"text": "$28$", "correct": true},
+                {"text": "$45$", "correct": false},
+                {"text": "$36$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kenarı $12$ cm olan eşkenar üçgenin çevresi kaç cm dir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["eşkenar üçgen"],
+              "explanation": "$3\\cdot 12=36$.",
+              "options": [
+                {"text": "$24$", "correct": false},
+                {"text": "$36$", "correct": true},
+                {"text": "$48$", "correct": false},
+                {"text": "$60$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bir karenin alanı $36$ cm$^2$ ise çevresi kaç cm dir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["kare"],
+              "explanation": "$a^2=36 \\Rightarrow a=6$; çevre $=4\\cdot 6=24$.",
+              "options": [
+                {"text": "$24$", "correct": true},
+                {"text": "$18$", "correct": false},
+                {"text": "$36$", "correct": false},
+                {"text": "$12$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Bir dikdörtgenin eni $4$ cm, alanı $32$ cm$^2$ ise boyu {1} cm dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["alan-boyut"],
+              "explanation": "$4\\cdot b=32 \\Rightarrow b=8$.",
+              "options": [
+                {"text": "$8$", "correct": true, "isBlank": true},
+                {"text": "$28$", "correct": false},
+                {"text": "$16$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: şekil — çevre formülü",
+              "type": "MATCH_PAIRS",
+              "difficulty": "EASY",
+              "tags": ["çevre formülü"],
+              "explanation": "Düzgün çokgenlerde çevre $=n\\cdot a$.",
+              "options": [
+                {"text": "Kare", "correct": false, "pairId": 1},
+                {"text": "$4a$", "correct": false, "pairId": 1},
+                {"text": "Eşkenar üçgen", "correct": false, "pairId": 2},
+                {"text": "$3a$", "correct": false, "pairId": 2},
+                {"text": "Dikdörtgen", "correct": false, "pairId": 3},
+                {"text": "$2(a+b)$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Karışık geometri problemini çözme adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["problem çözme"],
+              "explanation": "Şekli belirle, formülü seç, hesabı yap.",
+              "options": [
+                {"text": "Şekli ve verileni belirle", "correct": false, "correctOrder": 1},
+                {"text": "Uygun formülü yaz", "correct": false, "correctOrder": 2},
+                {"text": "Hesabı yap", "correct": false, "correctOrder": 3},
+                {"text": "Sonucu birimle yaz", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Geometrik Cisimler ve Veri",
+      "description": "Dikdörtgenler prizmasının yüzey alanı ve hacmi, sıvı ölçü birimleri, araştırma soruları, aritmetik ortalama ve daire grafiği yorumlama (MEB 2024 - Geometrik Şekiller ve İstatistiksel Araştırma Süreci)",
+      "order": 6,
+      "lessons": [
+        {
+          "title": "Dikdörtgenler Prizmasının Yüzey Alanı",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Bir dikdörtgenler prizmasının kaç yüzü vardır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["prizma"],
+              "explanation": "Karşılıklı yüzler ikişerli olmak üzere toplam $6$ yüzü vardır.",
+              "options": [
+                {"text": "$4$", "correct": false},
+                {"text": "$5$", "correct": false},
+                {"text": "$6$", "correct": true},
+                {"text": "$8$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kenar uzunlukları $3, 4, 5$ cm olan bir dikdörtgenler prizmasının yüzey alanı kaç cm$^2$ dir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yüzey alanı"],
+              "explanation": "$2(ab+ac+bc)=2(12+15+20)=94$.",
+              "options": [
+                {"text": "$60$", "correct": false},
+                {"text": "$94$", "correct": true},
+                {"text": "$47$", "correct": false},
+                {"text": "$120$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bir küpün kenar uzunluğu $4$ cm ise yüzey alanı kaç cm$^2$ dir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["küp yüzey"],
+              "explanation": "$6a^2=6\\cdot 16=96$.",
+              "options": [
+                {"text": "$16$", "correct": false},
+                {"text": "$48$", "correct": false},
+                {"text": "$96$", "correct": true},
+                {"text": "$64$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kenarları $2, 3, 6$ cm olan dikdörtgenler prizmasının yüzey alanı {1} cm$^2$ dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["yüzey alanı"],
+              "explanation": "$2(2\\cdot 3+2\\cdot 6+3\\cdot 6)=2(6+12+18)=72$.",
+              "options": [
+                {"text": "$72$", "correct": true, "isBlank": true},
+                {"text": "$36$", "correct": false},
+                {"text": "$22$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: cisim — yüzey alanı formülü",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["formül"],
+              "explanation": "Küp özel bir dikdörtgenler prizmasıdır.",
+              "options": [
+                {"text": "Küp (kenar $a$)", "correct": false, "pairId": 1},
+                {"text": "$6a^2$", "correct": false, "pairId": 1},
+                {"text": "Dikdörtgenler prizması ($a,b,c$)", "correct": false, "pairId": 2},
+                {"text": "$2(ab+ac+bc)$", "correct": false, "pairId": 2},
+                {"text": "Dikdörtgenler prizması yan yüz alanı (taban çevresi $\\cdot h$)", "correct": false, "pairId": 3},
+                {"text": "$P_{\\text{taban}}\\cdot h$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Dikdörtgenler prizmasının yüzey alanını bulma adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["yöntem"],
+              "explanation": "Her ikili yüzün alanını topla, $2$ ile çarp.",
+              "options": [
+                {"text": "Kenar uzunluklarını ($a,b,c$) belirle", "correct": false, "correctOrder": 1},
+                {"text": "Üç farklı yüz alanı: $ab, ac, bc$", "correct": false, "correctOrder": 2},
+                {"text": "Bunları topla", "correct": false, "correctOrder": 3},
+                {"text": "Sonucu $2$ ile çarp", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Dikdörtgenler Prizmasının Hacmi",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Kenarları $3, 4, 5$ cm olan dikdörtgenler prizmasının hacmi kaç cm$^3$ dür?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["hacim"],
+              "explanation": "Hacim $=$ uzunluk $\\cdot$ genişlik $\\cdot$ yükseklik $=3\\cdot 4\\cdot 5=60$.",
+              "options": [
+                {"text": "$12$", "correct": false},
+                {"text": "$60$", "correct": true},
+                {"text": "$120$", "correct": false},
+                {"text": "$15$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Kenar uzunluğu $5$ cm olan küpün hacmi kaç cm$^3$ dür?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["küp hacim"],
+              "explanation": "$a^3=5^3=125$.",
+              "options": [
+                {"text": "$25$", "correct": false},
+                {"text": "$125$", "correct": true},
+                {"text": "$15$", "correct": false},
+                {"text": "$75$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Taban alanı $20$ cm$^2$, yüksekliği $7$ cm olan bir dikdörtgenler prizmasının hacmi kaç cm$^3$ dür?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["hacim"],
+              "explanation": "Hacim $=$ taban alanı $\\cdot$ yükseklik $=20\\cdot 7=140$.",
+              "options": [
+                {"text": "$27$", "correct": false},
+                {"text": "$140$", "correct": true},
+                {"text": "$100$", "correct": false},
+                {"text": "$70$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Kenarları $2, 5, 10$ cm olan prizmanın hacmi {1} cm$^3$ dür.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["hacim"],
+              "explanation": "$2\\cdot 5\\cdot 10=100$.",
+              "options": [
+                {"text": "$100$", "correct": true, "isBlank": true},
+                {"text": "$50$", "correct": false},
+                {"text": "$17$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: cisim — hacim formülü",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["formül"],
+              "explanation": "Hacim, taban alanıyla yüksekliğin çarpımıdır.",
+              "options": [
+                {"text": "Küp", "correct": false, "pairId": 1},
+                {"text": "$a^3$", "correct": false, "pairId": 1},
+                {"text": "Dikdörtgenler prizması", "correct": false, "pairId": 2},
+                {"text": "$a\\cdot b\\cdot c$", "correct": false, "pairId": 2},
+                {"text": "Genel prizma", "correct": false, "pairId": 3},
+                {"text": "Taban alanı $\\cdot$ yükseklik", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Dikdörtgenler prizmasının hacmini bulma adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["yöntem"],
+              "explanation": "Taban alanını bulup yükseklikle çarp.",
+              "options": [
+                {"text": "Kenar uzunluklarını yaz", "correct": false, "correctOrder": 1},
+                {"text": "Taban alanını hesapla ($a\\cdot b$)", "correct": false, "correctOrder": 2},
+                {"text": "Yükseklikle çarp", "correct": false, "correctOrder": 3},
+                {"text": "Sonucu cm$^3$ olarak yaz", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Sıvı Ölçü Birimleri",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "$1$ litre kaç mililitredir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["birim"],
+              "explanation": "$1$ L $= 1000$ mL.",
+              "options": [
+                {"text": "$10$", "correct": false},
+                {"text": "$100$", "correct": false},
+                {"text": "$1000$", "correct": true},
+                {"text": "$10000$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$2{,}5$ L kaç mL dir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["birim dönüşüm"],
+              "explanation": "$2{,}5\\cdot 1000=2500$.",
+              "options": [
+                {"text": "$25$", "correct": false},
+                {"text": "$250$", "correct": false},
+                {"text": "$2500$", "correct": true},
+                {"text": "$25000$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "$1$ cm$^3$ kaç mL dir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["hacim-sıvı"],
+              "explanation": "$1$ cm$^3 = 1$ mL.",
+              "options": [
+                {"text": "$10$", "correct": false},
+                {"text": "$1$", "correct": true},
+                {"text": "$100$", "correct": false},
+                {"text": "$1000$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$3500$ mL kaç L dir? Cevap: {1} L",
+              "type": "FILL_BLANK",
+              "difficulty": "MEDIUM",
+              "tags": ["dönüşüm"],
+              "explanation": "$3500:1000=3{,}5$.",
+              "options": [
+                {"text": "$3{,}5$", "correct": true, "isBlank": true},
+                {"text": "$35$", "correct": false},
+                {"text": "$0{,}35$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: ölçü — eşdeğer",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["birimler"],
+              "explanation": "Litre, mililitre ve cm$^3$ arasında bağlar vardır.",
+              "options": [
+                {"text": "$1$ L", "correct": false, "pairId": 1},
+                {"text": "$1000$ mL", "correct": false, "pairId": 1},
+                {"text": "$1$ mL", "correct": false, "pairId": 2},
+                {"text": "$1$ cm$^3$", "correct": false, "pairId": 2},
+                {"text": "$1$ L", "correct": false, "pairId": 3},
+                {"text": "$1000$ cm$^3$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "$2$ L $= ?$ cm$^3$ dönüşüm adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["birim dönüşüm"],
+              "explanation": "Önce L→mL, sonra mL=cm$^3$ kabul edilir.",
+              "options": [
+                {"text": "$1$ L $= 1000$ mL", "correct": false, "correctOrder": 1},
+                {"text": "$2$ L $= 2000$ mL", "correct": false, "correctOrder": 2},
+                {"text": "$1$ mL $= 1$ cm$^3$", "correct": false, "correctOrder": 3},
+                {"text": "$2$ L $= 2000$ cm$^3$", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Araştırma Soruları ve Veri Toplama",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Aşağıdakilerden hangisi araştırma sorusu olabilir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["araştırma sorusu"],
+              "explanation": "Araştırma sorusu veri toplayarak yanıtlanabilir.",
+              "options": [
+                {"text": "Mavi en güzel renk midir?", "correct": false},
+                {"text": "Sınıfımızdaki öğrencilerin en çok sevdiği renk hangisidir?", "correct": true},
+                {"text": "Yaz iyidir.", "correct": false},
+                {"text": "Matematik gereksizdir.", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Bir sınıftaki öğrencilerin günde kaç saat ders çalıştığını öğrenmek için en uygun yöntem hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["veri toplama"],
+              "explanation": "Doğrudan kişilere sormak için anket kullanılır.",
+              "options": [
+                {"text": "Anket", "correct": true},
+                {"text": "Deney", "correct": false},
+                {"text": "Tahmin", "correct": false},
+                {"text": "İnternet araması", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Bir araştırma için toplanan ham veriyi düzenlemek için önce hangisi yapılmalı?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["veri düzenleme"],
+              "explanation": "Veri sıklık tablosu hâlinde düzenlenir, sonra grafiklere aktarılır.",
+              "options": [
+                {"text": "Grafik çiz", "correct": false},
+                {"text": "Sıklık tablosu yap", "correct": true},
+                {"text": "Rapor yaz", "correct": false},
+                {"text": "Sonucu paylaş", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "Bir sınıftaki öğrenci sayılarına göre $5, 7, 7, 9, 12$ verilerinin sayı toplamı {1} dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["toplam"],
+              "explanation": "$5+7+7+9+12=40$.",
+              "options": [
+                {"text": "$40$", "correct": true, "isBlank": true},
+                {"text": "$35$", "correct": false},
+                {"text": "$45$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: terim — açıklama",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["araştırma süreci"],
+              "explanation": "Veri toplama süreci üzerinde kavramlar.",
+              "options": [
+                {"text": "Anket", "correct": false, "pairId": 1},
+                {"text": "Sorularla bilgi toplama", "correct": false, "pairId": 1},
+                {"text": "Sıklık tablosu", "correct": false, "pairId": 2},
+                {"text": "Verilerin tekrar sayısını gösterme", "correct": false, "pairId": 2},
+                {"text": "Veri kaynakları", "correct": false, "pairId": 3},
+                {"text": "Bilgilerin geldiği yerler", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Bir araştırma sürecinin adımlarını sırayla dizin.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["süreç"],
+              "explanation": "Soru → planla → topla → analiz → yorumla.",
+              "options": [
+                {"text": "Araştırma sorusunu belirle", "correct": false, "correctOrder": 1},
+                {"text": "Veri toplamayı planla", "correct": false, "correctOrder": 2},
+                {"text": "Veriyi topla ve düzenle", "correct": false, "correctOrder": 3},
+                {"text": "Sonucu yorumla ve paylaş", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Aritmetik Ortalama",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "$4, 6, 8, 10$ sayılarının aritmetik ortalaması kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["aritmetik ortalama"],
+              "explanation": "Toplam / sayı $=28/4=7$.",
+              "options": [
+                {"text": "$6$", "correct": false},
+                {"text": "$7$", "correct": true},
+                {"text": "$8$", "correct": false},
+                {"text": "$28$", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "Bir öğrenci $4$ sınavda $70, 80, 75, 85$ aldı. Ortalaması kaçtır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["ortalama"],
+              "explanation": "$(70+80+75+85)/4=310/4=77{,}5$.",
+              "options": [
+                {"text": "$77{,}5$", "correct": true},
+                {"text": "$80$", "correct": false},
+                {"text": "$75$", "correct": false},
+                {"text": "$310$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Beş sayının ortalaması $12$ ise toplamı kaçtır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["ters formül"],
+              "explanation": "Toplam $=$ ortalama $\\cdot$ sayı $=12\\cdot 5=60$.",
+              "options": [
+                {"text": "$30$", "correct": false},
+                {"text": "$60$", "correct": true},
+                {"text": "$12$", "correct": false},
+                {"text": "$50$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$3, 5, 7, 9$ sayılarının ortalaması {1} dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["ortalama"],
+              "explanation": "$(3+5+7+9)/4=24/4=6$.",
+              "options": [
+                {"text": "$6$", "correct": true, "isBlank": true},
+                {"text": "$5$", "correct": false},
+                {"text": "$8$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: veri seti — ortalama",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["aritmetik ortalama"],
+              "explanation": "Aritmetik ortalama $=$ toplam $/$ sayı.",
+              "options": [
+                {"text": "$2,4,6$", "correct": false, "pairId": 1},
+                {"text": "$4$", "correct": false, "pairId": 1},
+                {"text": "$1,1,4$", "correct": false, "pairId": 2},
+                {"text": "$2$", "correct": false, "pairId": 2},
+                {"text": "$10,20,30,40$", "correct": false, "pairId": 3},
+                {"text": "$25$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Aritmetik ortalamayı hesaplama adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "EASY",
+              "tags": ["yöntem"],
+              "explanation": "Tüm verileri topla, sayıya böl.",
+              "options": [
+                {"text": "Tüm değerleri topla", "correct": false, "correctOrder": 1},
+                {"text": "Veri sayısını belirle", "correct": false, "correctOrder": 2},
+                {"text": "Toplamı veri sayısına böl", "correct": false, "correctOrder": 3},
+                {"text": "Sonucu yorumla", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        },
+        {
+          "title": "Daire Grafiği Yorumlama",
+          "order": 6,
+          "challenges": [
+            {
+              "question": "Bir daire grafiğinde tüm dilimlerin merkez açıları toplamı kaç derecedir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": ["daire grafiği"],
+              "explanation": "Tam daire $360^\\circ$'dir.",
+              "options": [
+                {"text": "$180^\\circ$", "correct": false},
+                {"text": "$270^\\circ$", "correct": false},
+                {"text": "$360^\\circ$", "correct": true},
+                {"text": "Verilere göre değişir", "correct": false}
+              ],
+              "order": 1
+            },
+            {
+              "question": "$50$ kişi arasında $20$ kişi futbol diyorsa futbol diliminin merkez açısı kaç derecedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["merkez açı"],
+              "explanation": "$\\dfrac{20}{50}\\cdot 360=144^\\circ$.",
+              "options": [
+                {"text": "$72^\\circ$", "correct": false},
+                {"text": "$120^\\circ$", "correct": false},
+                {"text": "$144^\\circ$", "correct": true},
+                {"text": "$180^\\circ$", "correct": false}
+              ],
+              "order": 2
+            },
+            {
+              "question": "Daire grafiğinde bir dilim $\\%30$'a karşılık geliyorsa merkez açısı kaç derecedir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": ["yüzdeden açı"],
+              "explanation": "$0{,}30\\cdot 360=108^\\circ$.",
+              "options": [
+                {"text": "$72^\\circ$", "correct": false},
+                {"text": "$108^\\circ$", "correct": true},
+                {"text": "$30^\\circ$", "correct": false},
+                {"text": "$120^\\circ$", "correct": false}
+              ],
+              "order": 3
+            },
+            {
+              "question": "$200$ kişilik bir araştırmada mavi diyenler $50$ kişi ise mavinin payı {1} dir.",
+              "type": "FILL_BLANK",
+              "difficulty": "EASY",
+              "tags": ["yüzde"],
+              "explanation": "$50/200=\\%25$.",
+              "options": [
+                {"text": "$\\%25$", "correct": true, "isBlank": true},
+                {"text": "$\\%50$", "correct": false},
+                {"text": "$\\%30$", "correct": false}
+              ],
+              "order": 4
+            },
+            {
+              "question": "Eşleştirin: pay — merkez açı",
+              "type": "MATCH_PAIRS",
+              "difficulty": "MEDIUM",
+              "tags": ["dönüşüm"],
+              "explanation": "Tüm pay $360^\\circ$'a karşılık gelir.",
+              "options": [
+                {"text": "$\\dfrac{1}{2}$", "correct": false, "pairId": 1},
+                {"text": "$180^\\circ$", "correct": false, "pairId": 1},
+                {"text": "$\\dfrac{1}{4}$", "correct": false, "pairId": 2},
+                {"text": "$90^\\circ$", "correct": false, "pairId": 2},
+                {"text": "$\\dfrac{1}{3}$", "correct": false, "pairId": 3},
+                {"text": "$120^\\circ$", "correct": false, "pairId": 3}
+              ],
+              "order": 5
+            },
+            {
+              "question": "Daire grafiği çizme adımları.",
+              "type": "SEQUENCE",
+              "difficulty": "MEDIUM",
+              "tags": ["çizim"],
+              "explanation": "Pay × 360 ile merkez açıyı bul.",
+              "options": [
+                {"text": "Her kategorinin payını hesapla", "correct": false, "correctOrder": 1},
+                {"text": "Pay $\\times 360^\\circ$ ile merkez açıyı bul", "correct": false, "correctOrder": 2},
+                {"text": "İletkiyle dilimleri çiz", "correct": false, "correctOrder": 3},
+                {"text": "Dilimleri etiketle / renklendir", "correct": false, "correctOrder": 4}
+              ],
+              "order": 6
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

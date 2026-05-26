@@ -55,6 +55,13 @@ export type AdminAuditAction =
   | "challenge.delete"
   // Schools master data (eksik okulların admin tarafından eklenmesi)
   | "school.create"
+  // Promotions / giveaways
+  | "promotion.create"
+  | "promotion.update"
+  | "promotion.delete"
+  | "promotion.toggle_active"
+  | "promotion.pick_winner"
+  | "promotion.clear_winner"
   // Maintenance / data ops
   | "admin.migrate_teacher_fields"
   | "admin.fix_sequence_orders"

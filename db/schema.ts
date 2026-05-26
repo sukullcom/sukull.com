@@ -1038,6 +1038,124 @@ export const errorLog = pgTable("error_log", {
   userIdIdx: index("error_log_user_id_idx").on(table.userId),
 }));
 
+// =============================================================================
+// Promotions / giveaways
+// =============================================================================
+//
+// `promotions` stores admin-managed campaigns shown as eye-catching banners on
+// the learn dashboard. `kind` is currently "giveaway" but kept open so we can
+// slot in other campaign types (contest, survey, etc.) without a schema
+// migration. Each user can enter a given promotion at most once — enforced by
+// the unique index on (promotion_id, user_id) in `promotion_entries`.
+//
+// A row is "live" when `is_active = true AND now() BETWEEN starts_at AND
+// ends_at`. The right-rail banner reads with that predicate so a campaign
+// disappears the moment it expires.
+//
+// Winner picking is intentionally simple: an admin clicks "Rastgele kazanan
+// seç" which selects a uniformly-random row from `promotion_entries` and
+// stamps `winner_user_id` + `winner_picked_at`. We persist the winner so the
+// pick is auditable and survives table churn.
+
+export const promotions = pgTable(
+  "promotions",
+  {
+    id: serial("id").primaryKey(),
+    /**
+     * Campaign kind. Stays open-ended (text rather than enum) so adding a
+     * new banner variant doesn't require a migration. The UI defaults to
+     * `giveaway`.
+     */
+    kind: text("kind").notNull().default("giveaway"),
+    title: text("title").notNull(),
+    description: text("description"),
+    prize: text("prize").notNull(),
+    /** Button label shown on the banner; default "Çekilişe Katıl". */
+    ctaLabel: text("cta_label").notNull().default("Çekilişe Katıl"),
+    /** Optional small print: eligibility, draw method, etc. */
+    rules: text("rules"),
+    /**
+     * Banner accent — drives the gradient tone. Free-form text so we can add
+     * presets later without a migration; validated at the action layer.
+     */
+    accentColor: text("accent_color").notNull().default("violet"),
+    /** Optional image URL/path shown alongside the title. */
+    imageUrl: text("image_url"),
+    startsAt: timestamp("starts_at", { withTimezone: true }).notNull(),
+    endsAt: timestamp("ends_at", { withTimezone: true }).notNull(),
+    /**
+     * Admin toggle. Lets us pause a campaign without losing entries; the
+     * banner is hidden whenever this is false even inside the time window.
+     */
+    isActive: boolean("is_active").notNull().default(true),
+    /** Set when an admin picks (or manually records) a winner. */
+    winnerUserId: text("winner_user_id").references((): AnyPgColumn => users.id, {
+      onDelete: "set null",
+    }),
+    winnerPickedAt: timestamp("winner_picked_at", { withTimezone: true }),
+    createdBy: text("created_by").references((): AnyPgColumn => users.id, {
+      onDelete: "set null",
+    }),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    activeWindowIdx: index("promotions_active_window_idx").on(
+      table.isActive,
+      table.startsAt,
+      table.endsAt,
+    ),
+    kindIdx: index("promotions_kind_idx").on(table.kind),
+  }),
+);
+
+export const promotionEntries = pgTable(
+  "promotion_entries",
+  {
+    id: bigserial("id", { mode: "number" }).primaryKey(),
+    promotionId: integer("promotion_id")
+      .notNull()
+      .references(() => promotions.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references((): AnyPgColumn => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    promotionUserUnique: uniqueIndex("promotion_entries_promotion_user_unique").on(
+      table.promotionId,
+      table.userId,
+    ),
+    promotionIdx: index("promotion_entries_promotion_idx").on(table.promotionId),
+    userIdx: index("promotion_entries_user_idx").on(table.userId),
+  }),
+);
+
+export const promotionsRelations = relations(promotions, ({ one, many }) => ({
+  entries: many(promotionEntries),
+  winner: one(users, {
+    fields: [promotions.winnerUserId],
+    references: [users.id],
+    relationName: "promotionWinner",
+  }),
+  creator: one(users, {
+    fields: [promotions.createdBy],
+    references: [users.id],
+    relationName: "promotionCreator",
+  }),
+}));
+
+export const promotionEntriesRelations = relations(promotionEntries, ({ one }) => ({
+  promotion: one(promotions, {
+    fields: [promotionEntries.promotionId],
+    references: [promotions.id],
+  }),
+  user: one(users, {
+    fields: [promotionEntries.userId],
+    references: [users.id],
+  }),
+}));
+
 // Admin audit trail (see migration 0024). Every privileged admin action
 // lands here: role changes, application approvals, course edits, etc.
 export const adminAudit = pgTable("admin_audit", {

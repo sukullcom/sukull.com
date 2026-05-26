@@ -8,6 +8,7 @@ import { UserProgress } from "@/components/user-progress";
 import { Quests } from "@/components/quests";
 import { DailyProgress } from "@/components/daily-progress";
 import { DailyChallenge } from "@/components/daily-challenge";
+import { ActivePromotionBanners } from "@/components/active-promotion-banners";
 import { checkStreakContinuity, getStreakCount } from "@/actions/daily-streak";
 
 export default async function ProtectedLayout({
@@ -46,6 +47,9 @@ export default async function ProtectedLayout({
           hasInfiniteHearts={userProgress.hasInfiniteHearts || false}
         />
 
+        {/* Aktif çekiliş(ler) — yoksa hiçbir DOM çıkmaz. */}
+        <ActivePromotionBanners />
+
         <DailyProgress />
         <DailyChallenge />
         <Quests
@@ -60,6 +64,7 @@ export default async function ProtectedLayout({
 
       <div className="flex-1 min-w-0">
         <div className="lg:hidden px-3 mb-4 space-y-3">
+          <ActivePromotionBanners />
           <DailyProgress />
           <DailyChallenge />
         </div>
