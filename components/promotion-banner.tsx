@@ -8,7 +8,8 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { joinPromotion } from "@/actions/promotions";
 import { cn } from "@/lib/utils";
-import type { ActivePromotion, PromotionAccent } from "@/lib/promotions";
+import type { ActivePromotion } from "@/lib/promotions";
+import type { PromotionAccent } from "@/lib/promotion-accents";
 import { clientLogger } from "@/lib/client-logger";
 
 type Props = {

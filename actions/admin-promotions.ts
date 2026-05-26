@@ -9,7 +9,6 @@ import { getAdminActor, isAdmin } from "@/lib/admin";
 import { logAdminAction } from "@/lib/admin-audit";
 import {
   type PromotionAccent,
-  PROMOTION_ACCENTS,
   clearWinner as clearWinnerDb,
   isPromotionAccent,
   pickRandomWinner as pickRandomWinnerDb,
@@ -457,8 +456,6 @@ export async function clearPromotionWinner(
     return { ok: false, error: "internal" };
   }
 }
-
-export const PROMOTION_ACCENT_CHOICES = PROMOTION_ACCENTS;
 
 /**
  * Re-export for the admin UI (`is admin?` quick check inside Server

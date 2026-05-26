@@ -8,17 +8,22 @@ import { promotions, promotionEntries } from "@/db/schema";
 import { getServerUser } from "@/lib/auth";
 import { queryResultRows } from "@/lib/query-result";
 
-/**
- * Promotion accent presets used by the banner gradient. Stored as plain text
- * on the row so admins can add new keys in the future; the UI degrades to
- * `violet` for unknown values.
- */
-export const PROMOTION_ACCENTS = ["violet", "amber", "rose", "emerald", "sky"] as const;
-export type PromotionAccent = (typeof PROMOTION_ACCENTS)[number];
+// Accent presets live in a client-safe module so client components can
+// consume them as plain values. We re-export here for server-side
+// convenience (admin loaders, validation, etc.).
+import {
+  PROMOTION_ACCENTS,
+  PROMOTION_ACCENT_CHOICES,
+  isPromotionAccent,
+  type PromotionAccent,
+} from "@/lib/promotion-accents";
 
-export function isPromotionAccent(value: string | null | undefined): value is PromotionAccent {
-  return !!value && (PROMOTION_ACCENTS as readonly string[]).includes(value);
-}
+export {
+  PROMOTION_ACCENTS,
+  PROMOTION_ACCENT_CHOICES,
+  isPromotionAccent,
+  type PromotionAccent,
+};
 
 export type PromotionRow = typeof promotions.$inferSelect;
 

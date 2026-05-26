@@ -46,14 +46,16 @@ import {
   pickPromotionWinner,
   togglePromotionActive,
   updatePromotion,
-  PROMOTION_ACCENT_CHOICES,
   type AdminPromotionFormInput,
 } from "@/actions/admin-promotions";
 import {
   loadPromotionEntries,
   type AdminEntriesResult,
 } from "./entries-action";
-import type { PromotionAccent } from "@/lib/promotions";
+import {
+  PROMOTION_ACCENT_CHOICES,
+  type PromotionAccent,
+} from "@/lib/promotion-accents";
 
 interface AdminPromotionListItem {
   id: number;
