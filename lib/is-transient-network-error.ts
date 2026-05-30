@@ -29,6 +29,26 @@ const TRANSIENT_FETCH_MESSAGES = [
   "cancelled", // bazı Safari sürümlerinde alt-tab iptali
 ];
 
+/**
+ * Server Action transport/runtime hataları. Bunlar action **gövdesi**
+ * çalışmadan, framework katmanında oluşur ve uygulama hatası değildir:
+ *
+ *   - "illegal access": eski bir sekme yeni bir deployment'a (dpl_… değişti)
+ *     server action çağırınca Next.js runtime'ının attığı imza. Action
+ *     gövdelerimiz zaten kendi try/catch'leriyle güvenli; client tarafına
+ *     ulaşan tek şey bu non-actionable transport hatasıdır.
+ *   - "Connection closed" / "fetch failed": serverless soğuk başlatma veya
+ *     deploy rotasyonu sırasında kopan action isteği.
+ *
+ * `error_log`'a `error` seviyesinde yazmak yerine `warn`'a düşürüyoruz.
+ */
+const TRANSIENT_SERVER_ACTION_MESSAGES = [
+  "illegal access",
+  "Connection closed",
+  "Failed to load response data",
+  "An unexpected response was received from the server",
+];
+
 export function isTransientNetworkError(error: unknown): boolean {
   // Çevrimdışıyız: her fetch hatası bu kovaya girer.
   if (
@@ -50,13 +70,19 @@ export function isTransientNetworkError(error: unknown): boolean {
     const message = typeof e.message === "string" ? e.message : "";
     if (!message) return false;
 
-    if (TRANSIENT_FETCH_MESSAGES.some((m) => message.includes(m))) {
+    if (
+      TRANSIENT_FETCH_MESSAGES.some((m) => message.includes(m)) ||
+      TRANSIENT_SERVER_ACTION_MESSAGES.some((m) => message.includes(m))
+    ) {
       return true;
     }
   }
 
   if (typeof error === "string") {
-    return TRANSIENT_FETCH_MESSAGES.some((m) => error.includes(m));
+    return (
+      TRANSIENT_FETCH_MESSAGES.some((m) => error.includes(m)) ||
+      TRANSIENT_SERVER_ACTION_MESSAGES.some((m) => error.includes(m))
+    );
   }
 
   return false;

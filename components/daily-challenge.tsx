@@ -13,6 +13,7 @@ import { Trophy, Gift, CheckCircle, Clock, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Confetti from "@/components/lazy-confetti";
 import { clientLogger } from "@/lib/client-logger";
+import { isTransientNetworkError } from "@/lib/is-transient-network-error";
 
 const DAY_NAMES = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"];
 
@@ -42,7 +43,27 @@ export function DailyChallenge() {
       const data = await getTodayChallenge();
       setChallenge(data as ChallengeData | null);
     } catch (error) {
-      clientLogger.error({ message: "load daily challenge failed", error, location: "daily-challenge" });
+      // `getTodayChallenge` kendi içinde her hatayı yakalayıp null döner;
+      // buraya yalnızca transport/framework seviyesi hatalar düşer (kullanıcı
+      // sayfadan ayrılırken iptal olan istek = "Failed to fetch", ya da eski
+      // sekmeden yeni deployment'a giden server action = "illegal access").
+      // Bunlar uygulama bug'ı değil → `warn` (yalnız console), error_log'u
+      // şişirmesin.
+      if (isTransientNetworkError(error)) {
+        clientLogger.warn("daily-challenge fetch aborted/transient", {
+          location: "daily-challenge",
+          reason:
+            error instanceof Error
+              ? { name: error.name, message: error.message }
+              : { raw: String(error) },
+        });
+      } else {
+        clientLogger.error({
+          message: "load daily challenge failed",
+          error,
+          location: "daily-challenge",
+        });
+      }
     } finally {
       setLoading(false);
     }
