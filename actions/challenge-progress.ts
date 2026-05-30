@@ -21,7 +21,7 @@ import { SCORING_SYSTEM } from "@/constants";
 import { applyTimeBonus } from "@/lib/time-bonus";
 import { updateChallengeProgress } from "./daily-challenges";
 import { logActivity } from "@/lib/activity-logger";
-import { resolvePointsCap } from "@/lib/api-limits";
+import { classifyPointsSubmission } from "@/lib/api-limits";
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit-db";
 import { logger } from "@/lib/logger";
 import { CACHE_TAGS } from "@/lib/cache-tags";
@@ -336,20 +336,34 @@ export async function addPointsToUser(
   }
 
   const gameType = typeof meta?.gameType === "string" ? meta.gameType : undefined;
-  const cap = resolvePointsCap(gameType);
-  if (pointsToAdd > cap) {
-    // Log to error_log so we can investigate whether it's an honest bug or abuse.
-    log.error({
-      message: "addPointsToUser rejected: over cap",
+  const verdict = classifyPointsSubmission(pointsToAdd, gameType);
+
+  if (verdict.kind === "reject") {
+    // Beyond any plausible finished round → treat as tampering. `warn` (not
+    // `error`) keeps this queryable for abuse review without polluting the
+    // error_log error stream with an expected, handled rejection.
+    log.warn("addPointsToUser rejected: abnormal score", {
       location: "addPointsToUser",
       source: "server-action",
-      fields: { pointsToAdd, gameType, cap },
+      fields: { pointsToAdd, gameType, cap: verdict.cap },
     });
     throw new PointsValidationError(
       "over_cap",
-      `Puan üst sınırı aşıldı (max: ${cap}).`,
+      `Puan üst sınırı aşıldı (max: ${verdict.cap}).`,
     );
   }
+
+  // Honest overshoot (e.g. exponential game scoring): award the cap instead
+  // of rejecting so the player keeps their round. Recorded at info level for
+  // balance telemetry — handy for tuning GAME_MAX_SCORE_PER_CALL.
+  if (verdict.kind === "clamp") {
+    log.info("addPointsToUser clamped to cap", {
+      location: "addPointsToUser",
+      fields: { claimed: verdict.claimed, awarded: verdict.points, gameType },
+    });
+  }
+
+  const effectivePoints = verdict.points;
 
   const user = await getServerUser();
   if (!user) throw new Error("Giriş yapmanız gerekiyor.");
@@ -376,7 +390,7 @@ export async function addPointsToUser(
   });
   if (!currentUserProgress) throw new Error("İlerleme bilgisi bulunamadı.");
 
-  const { total: adjustedPoints } = applyTimeBonus(pointsToAdd);
+  const { total: adjustedPoints } = applyTimeBonus(effectivePoints);
   const schoolId = currentUserProgress.schoolId;
 
   // Atomic user+school increment. The previous implementation

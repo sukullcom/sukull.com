@@ -60,6 +60,8 @@ export default async function PromotionsAdminPage() {
             : new Date(promo.endsAt).toISOString(),
           isActive: promo.isActive,
           winnerUserId: promo.winnerUserId,
+          winnerName: promo.winnerName,
+          winnerAnnounced: promo.winnerAnnounced,
           winnerPickedAt: promo.winnerPickedAt
             ? (promo.winnerPickedAt instanceof Date
                 ? promo.winnerPickedAt.toISOString()

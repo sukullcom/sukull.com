@@ -1,10 +1,21 @@
 import "server-only";
 
 import { cache } from "react";
-import { and, count, desc, eq, lte, gte, sql, inArray } from "drizzle-orm";
+import {
+  and,
+  count,
+  desc,
+  eq,
+  lte,
+  gte,
+  or,
+  isNotNull,
+  sql,
+  inArray,
+} from "drizzle-orm";
 
 import db from "@/db/drizzle";
-import { promotions, promotionEntries } from "@/db/schema";
+import { promotions, promotionEntries, users } from "@/db/schema";
 import { getServerUser } from "@/lib/auth";
 import { queryResultRows } from "@/lib/query-result";
 
@@ -45,6 +56,15 @@ export interface ActivePromotion {
   joined: boolean;
   /** Already drawn? Once a winner is picked the banner shows result mode. */
   winnerSelected: boolean;
+  /**
+   * Winner is publicly announced — banner shows the winner card to everyone
+   * (even after `endsAt`) until an admin hides it.
+   */
+  winnerAnnounced: boolean;
+  /** Display name of the winner (when announced); falls back to null. */
+  winnerName: string | null;
+  /** True when the current viewer is the winner — banner congratulates them. */
+  isWinner: boolean;
 }
 
 function normaliseAccent(value: string | null | undefined): PromotionAccent {
@@ -70,14 +90,24 @@ export const getActivePromotionsForCurrentUser = cache(
 
     const now = new Date();
 
+    // Two reasons a promotion shows up:
+    //  (a) it's live (active + inside its window), or
+    //  (b) its winner is announced — kept visible to everyone regardless of
+    //      the window/active flag until an admin hides it.
     const rows = await db
       .select()
       .from(promotions)
       .where(
-        and(
-          eq(promotions.isActive, true),
-          lte(promotions.startsAt, now),
-          gte(promotions.endsAt, now),
+        or(
+          and(
+            eq(promotions.isActive, true),
+            lte(promotions.startsAt, now),
+            gte(promotions.endsAt, now),
+          ),
+          and(
+            eq(promotions.winnerAnnounced, true),
+            isNotNull(promotions.winnerUserId),
+          ),
         ),
       )
       .orderBy(desc(promotions.startsAt));
@@ -85,6 +115,25 @@ export const getActivePromotionsForCurrentUser = cache(
     if (rows.length === 0) return [];
 
     const ids = rows.map((row) => row.id);
+
+    // Collect winner names for the announced rows in one small lookup.
+    const winnerIds = Array.from(
+      new Set(
+        rows
+          .map((row) => row.winnerUserId)
+          .filter((id): id is string => !!id),
+      ),
+    );
+    const winnerNameMap = new Map<string, string | null>();
+    if (winnerIds.length > 0) {
+      const winnerRows = await db
+        .select({ id: users.id, name: users.name })
+        .from(users)
+        .where(inArray(users.id, winnerIds));
+      for (const w of winnerRows) {
+        winnerNameMap.set(w.id, w.name ?? null);
+      }
+    }
 
     // Two cheap aggregates in parallel beat a JOIN here because both
     // queries hit the same partial index on promotion_id and we avoid
@@ -123,13 +172,23 @@ export const getActivePromotionsForCurrentUser = cache(
       participantCount: countMap.get(row.id) ?? 0,
       joined: joinedSet.has(row.id),
       now,
+      winnerName: row.winnerUserId
+        ? winnerNameMap.get(row.winnerUserId) ?? null
+        : null,
+      isWinner: !!row.winnerUserId && row.winnerUserId === user.id,
     }));
   },
 );
 
 function mapRowToActive(
   row: PromotionRow,
-  ctx: { participantCount: number; joined: boolean; now: Date },
+  ctx: {
+    participantCount: number;
+    joined: boolean;
+    now: Date;
+    winnerName: string | null;
+    isWinner: boolean;
+  },
 ): ActivePromotion {
   const endsAt = row.endsAt instanceof Date ? row.endsAt : new Date(row.endsAt);
   const startsAt = row.startsAt instanceof Date ? row.startsAt : new Date(row.startsAt);
@@ -153,6 +212,9 @@ function mapRowToActive(
     participantCount: ctx.participantCount,
     joined: ctx.joined,
     winnerSelected: !!row.winnerUserId,
+    winnerAnnounced: row.winnerAnnounced && !!row.winnerUserId,
+    winnerName: ctx.winnerName,
+    isWinner: ctx.isWinner,
   };
 }
 
@@ -227,27 +289,31 @@ export interface AdminPromotionInput {
 
 export interface AdminPromotionRowWithCounts extends PromotionRow {
   participantCount: number;
+  winnerName: string | null;
 }
 
 /**
- * Lists every promotion (active, scheduled, ended) with entry counts. Used by
- * the admin index page; intentionally not cached so the count is always
- * fresh after a join.
+ * Lists every promotion (active, scheduled, ended) with entry counts and the
+ * winner's display name. Used by the admin index page; intentionally not
+ * cached so the count is always fresh after a join.
  */
 export async function listPromotionsForAdmin(): Promise<AdminPromotionRowWithCounts[]> {
   const rows = await db
     .select({
       promo: promotions,
       participantCount: sql<number>`COALESCE(COUNT(${promotionEntries.id}), 0)`,
+      winnerName: sql<string | null>`MAX(${users.name})`,
     })
     .from(promotions)
     .leftJoin(promotionEntries, eq(promotionEntries.promotionId, promotions.id))
+    .leftJoin(users, eq(users.id, promotions.winnerUserId))
     .groupBy(promotions.id)
     .orderBy(desc(promotions.createdAt));
 
-  return rows.map(({ promo, participantCount }) => ({
+  return rows.map(({ promo, participantCount, winnerName }) => ({
     ...promo,
     participantCount: Number(participantCount ?? 0),
+    winnerName: winnerName ?? null,
   }));
 }
 
@@ -336,7 +402,8 @@ export async function pickRandomWinner(
     ), updated AS (
       UPDATE promotions
       SET winner_user_id = (SELECT user_id FROM picked),
-          winner_picked_at = NOW()
+          winner_picked_at = NOW(),
+          winner_announced = true
       WHERE id = ${promotionId} AND EXISTS (SELECT 1 FROM picked)
       RETURNING winner_user_id, winner_picked_at
     )
@@ -371,6 +438,21 @@ export async function pickRandomWinner(
 export async function clearWinner(promotionId: number): Promise<void> {
   await db
     .update(promotions)
-    .set({ winnerUserId: null, winnerPickedAt: null })
+    .set({ winnerUserId: null, winnerPickedAt: null, winnerAnnounced: false })
+    .where(eq(promotions.id, promotionId));
+}
+
+/**
+ * Toggles public visibility of an already-picked winner without re-drawing.
+ * `false` hides the winner card from the learn dashboard; `true` shows it
+ * again. No-op effect on rows without a winner.
+ */
+export async function setWinnerAnnounced(
+  promotionId: number,
+  announced: boolean,
+): Promise<void> {
+  await db
+    .update(promotions)
+    .set({ winnerAnnounced: announced })
     .where(eq(promotions.id, promotionId));
 }

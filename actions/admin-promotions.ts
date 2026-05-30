@@ -12,6 +12,7 @@ import {
   clearWinner as clearWinnerDb,
   isPromotionAccent,
   pickRandomWinner as pickRandomWinnerDb,
+  setWinnerAnnounced as setWinnerAnnouncedDb,
 } from "@/lib/promotions";
 import { logger } from "@/lib/logger";
 
@@ -452,6 +453,44 @@ export async function clearPromotionWinner(
       location: "actions/admin-promotions/clearPromotionWinner",
       userId: gate.actor.id,
       fields: { promotionId: id },
+    });
+    return { ok: false, error: "internal" };
+  }
+}
+
+/**
+ * Shows/hides the picked winner on the public banner without re-drawing.
+ * `announced = false` hides the winner card from the learn dashboard;
+ * `true` shows it again. The winner record itself is preserved either way.
+ */
+export async function setPromotionWinnerAnnounced(
+  id: number,
+  announced: boolean,
+): Promise<AdminPromotionResult> {
+  const gate = await requireAdminActor();
+  if (!gate.ok) return { ok: false, error: "unauthorized" };
+  if (!Number.isFinite(id) || id <= 0) return { ok: false, error: "not_found" };
+
+  try {
+    await setWinnerAnnouncedDb(id, announced);
+    await logAdminAction({
+      actorId: gate.actor.id,
+      actorEmail: gate.actor.email,
+      action: "promotion.toggle_winner_announced",
+      targetType: "promotion",
+      targetId: id,
+      metadata: { winnerAnnounced: announced },
+    });
+    revalidatePath("/admin/promotions");
+    revalidatePath("/learn");
+    return { ok: true, id };
+  } catch (err) {
+    log.error({
+      message: "setPromotionWinnerAnnounced failed",
+      error: err,
+      location: "actions/admin-promotions/setPromotionWinnerAnnounced",
+      userId: gate.actor.id,
+      fields: { promotionId: id, announced },
     });
     return { ok: false, error: "internal" };
   }

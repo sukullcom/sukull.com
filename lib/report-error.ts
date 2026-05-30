@@ -33,6 +33,19 @@ export function reportClientError(input: {
           : JSON.stringify(error);
     const stack = error instanceof Error ? error.stack : undefined;
 
+    // Next.js attaches a `digest` to Server Component render errors and hides
+    // the real message in production. The digest is the ONLY way to correlate
+    // this client report with the server-side error_log entry, so always
+    // forward it when present.
+    const digest =
+      error && typeof error === "object" && "digest" in error
+        ? String((error as { digest?: unknown }).digest ?? "")
+        : undefined;
+    const mergedMetadata =
+      digest && digest.length > 0
+        ? { ...(metadata ?? {}), digest }
+        : metadata;
+
     // Bilinen 3. taraf / tarayıcı gürültüsü → DB'ye götürme. Dedupe
     // sessionStorage'ını da kirletmemek için filtre dedupe'tan ÖNCE
     // uygulanır.
@@ -63,7 +76,7 @@ export function reportClientError(input: {
       stack,
       location,
       url: window.location.href,
-      metadata,
+      metadata: mergedMetadata,
     });
 
     // Prefer sendBeacon so the request survives page navigation/unloads.

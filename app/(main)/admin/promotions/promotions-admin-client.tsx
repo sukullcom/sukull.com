@@ -44,6 +44,7 @@ import {
   createPromotion,
   deletePromotion,
   pickPromotionWinner,
+  setPromotionWinnerAnnounced,
   togglePromotionActive,
   updatePromotion,
   type AdminPromotionFormInput,
@@ -71,6 +72,8 @@ interface AdminPromotionListItem {
   endsAt: string;
   isActive: boolean;
   winnerUserId: string | null;
+  winnerName: string | null;
+  winnerAnnounced: boolean;
   winnerPickedAt: string | null;
   createdAt: string;
   participantCount: number;
@@ -233,6 +236,30 @@ export function PromotionsAdminClient({ initialPromotions }: Props) {
     [refresh],
   );
 
+  const handleToggleAnnounced = useCallback(
+    (promo: AdminPromotionListItem) => {
+      setBusyId(promo.id);
+      startTransition(async () => {
+        const result = await setPromotionWinnerAnnounced(
+          promo.id,
+          !promo.winnerAnnounced,
+        );
+        setBusyId(null);
+        if (!result.ok) {
+          toast.error("Güncellenemedi");
+          return;
+        }
+        toast.success(
+          promo.winnerAnnounced
+            ? "Kazanan gizlendi"
+            : "Kazanan kullanıcılara gösteriliyor",
+        );
+        refresh();
+      });
+    },
+    [refresh],
+  );
+
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -325,10 +352,32 @@ export function PromotionsAdminClient({ initialPromotions }: Props) {
                       {promo.winnerUserId && (
                         <span className="inline-flex items-center gap-1 text-emerald-700">
                           <Trophy className="h-3.5 w-3.5" />
-                          Kazanan belirlendi
+                          Kazanan: {promo.winnerName?.trim() || promo.winnerUserId}
                           {promo.winnerPickedAt
                             ? ` · ${trFormatter.format(new Date(promo.winnerPickedAt))}`
                             : ""}
+                        </span>
+                      )}
+                      {promo.winnerUserId && (
+                        <span
+                          className={cn(
+                            "inline-flex items-center gap-1",
+                            promo.winnerAnnounced
+                              ? "text-emerald-700"
+                              : "text-muted-foreground",
+                          )}
+                        >
+                          {promo.winnerAnnounced ? (
+                            <>
+                              <Eye className="h-3.5 w-3.5" />
+                              Kullanıcılara görünür
+                            </>
+                          ) : (
+                            <>
+                              <EyeOff className="h-3.5 w-3.5" />
+                              Gizli
+                            </>
+                          )}
                         </span>
                       )}
                     </div>
@@ -360,6 +409,33 @@ export function PromotionsAdminClient({ initialPromotions }: Props) {
                       )}
                       {promo.winnerUserId ? "Yeniden seç" : "Kazanan seç"}
                     </Button>
+                    {promo.winnerUserId && (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleToggleAnnounced(promo)}
+                        disabled={busyId === promo.id && isPending}
+                        className="gap-1.5"
+                        title={
+                          promo.winnerAnnounced
+                            ? "Kazananı kullanıcılardan gizle"
+                            : "Kazananı kullanıcılara göster"
+                        }
+                      >
+                        {promo.winnerAnnounced ? (
+                          <>
+                            <EyeOff className="h-4 w-4" />
+                            Kazananı gizle
+                          </>
+                        ) : (
+                          <>
+                            <Eye className="h-4 w-4" />
+                            Kazananı göster
+                          </>
+                        )}
+                      </Button>
+                    )}
                     {promo.winnerUserId && (
                       <Button
                         type="button"

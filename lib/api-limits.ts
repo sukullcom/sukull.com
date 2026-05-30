@@ -57,6 +57,40 @@ export const GAME_MAX_SCORE_PER_CALL: Readonly<Record<string, number>> = {
 export const GLOBAL_POINTS_HARD_CEILING = 2000;
 
 /**
+ * Multiplier separating "honest overshoot" from "tampering".
+ *
+ * Some games (e.g. pattern-memory) use exponential scoring, so a genuinely
+ * skilled run can land a bit above the per-call cap. Rather than reject and
+ * make a real player lose the whole round + see an error, we *clamp* such
+ * submissions to the cap. Only a submission beyond `cap * this` is treated
+ * as fabricated (no finished round can produce it) and rejected outright.
+ */
+export const POINTS_ABUSE_MULTIPLIER = 10;
+
+export type PointsSubmissionVerdict =
+  | { kind: "ok"; points: number }
+  | { kind: "clamp"; points: number; claimed: number; cap: number }
+  | { kind: "reject"; claimed: number; cap: number };
+
+/**
+ * Classifies an incoming point submission against the resolved cap:
+ *   • at/below cap          → accept as-is
+ *   • cap < x ≤ cap*ABUSE   → clamp to cap (honest overshoot)
+ *   • x > cap*ABUSE         → reject (tampering)
+ */
+export function classifyPointsSubmission(
+  pointsToAdd: number,
+  gameType?: string,
+): PointsSubmissionVerdict {
+  const cap = resolvePointsCap(gameType);
+  if (pointsToAdd <= cap) return { kind: "ok", points: pointsToAdd };
+  if (pointsToAdd <= cap * POINTS_ABUSE_MULTIPLIER) {
+    return { kind: "clamp", points: cap, claimed: pointsToAdd, cap };
+  }
+  return { kind: "reject", claimed: pointsToAdd, cap };
+}
+
+/**
  * Resolve the appropriate per-call cap given a `gameType`.
  *
  * - No `gameType` → `MAX_POINTS_ADD_PER_REQUEST`.

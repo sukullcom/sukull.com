@@ -1093,6 +1093,12 @@ export const promotions = pgTable(
       onDelete: "set null",
     }),
     winnerPickedAt: timestamp("winner_picked_at", { withTimezone: true }),
+    /**
+     * When true, the winner is shown publicly on the banner (to all users)
+     * even after the time window closes — until an admin hides it. Picking a
+     * winner flips this on; clearing the winner resets it.
+     */
+    winnerAnnounced: boolean("winner_announced").notNull().default(false),
     createdBy: text("created_by").references((): AnyPgColumn => users.id, {
       onDelete: "set null",
     }),
@@ -1106,6 +1112,9 @@ export const promotions = pgTable(
       table.endsAt,
     ),
     kindIdx: index("promotions_kind_idx").on(table.kind),
+    winnerAnnouncedIdx: index("promotions_winner_announced_idx").on(
+      table.winnerAnnounced,
+    ),
   }),
 );
 

@@ -62,6 +62,7 @@ export type AdminAuditAction =
   | "promotion.toggle_active"
   | "promotion.pick_winner"
   | "promotion.clear_winner"
+  | "promotion.toggle_winner_announced"
   // Maintenance / data ops
   | "admin.migrate_teacher_fields"
   | "admin.fix_sequence_orders"

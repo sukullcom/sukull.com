@@ -69,8 +69,17 @@ export default function RootLayout({
   const isDev = process.env.NODE_ENV === "development";
 
   return (
-    <html lang="tr">
-      <body className={`${nunito.className} antialiased`}>
+    // suppressHydrationWarning: in-app browsers (Instagram/Facebook), auto
+    // page-translation, and extensions routinely inject attributes/classes
+    // onto <html>/<body> before React hydrates, producing #418/#419/#425
+    // "hydration mismatch" noise that is not an app bug. Suppressing here
+    // covers only these two top-level nodes; genuine mismatches deeper in the
+    // tree still surface normally.
+    <html lang="tr" suppressHydrationWarning>
+      <body
+        className={`${nunito.className} antialiased`}
+        suppressHydrationWarning
+      >
         {isDev && <DevConsolePatch />}
         <GlobalErrorListener />
         <CustomToaster />

@@ -82,16 +82,20 @@ interface CountdownParts {
   seconds: number;
 }
 
-function computeRemaining(target: number): CountdownParts | null {
-  const diffMs = target - Date.now();
-  if (diffMs <= 0) return null;
-  const totalSeconds = Math.floor(diffMs / 1000);
+function partsFromSeconds(totalSeconds: number): CountdownParts | null {
+  if (totalSeconds <= 0) return null;
   return {
     days: Math.floor(totalSeconds / 86_400),
     hours: Math.floor((totalSeconds % 86_400) / 3600),
     minutes: Math.floor((totalSeconds % 3600) / 60),
     seconds: totalSeconds % 60,
   };
+}
+
+function computeRemaining(target: number): CountdownParts | null {
+  const diffMs = target - Date.now();
+  if (diffMs <= 0) return null;
+  return partsFromSeconds(Math.floor(diffMs / 1000));
 }
 
 function pad(value: number): string {
@@ -106,8 +110,11 @@ export function PromotionBanner({ promotion }: Props) {
     [promotion.endsAt],
   );
 
+  // Seed from the server-provided snapshot (stable across SSR + first client
+  // render) to avoid a hydration mismatch; the effect below switches to a
+  // live `Date.now()` tick once mounted.
   const [remaining, setRemaining] = useState<CountdownParts | null>(() =>
-    computeRemaining(endsAtMs),
+    partsFromSeconds(promotion.secondsRemaining),
   );
 
   /**
@@ -133,6 +140,19 @@ export function PromotionBanner({ promotion }: Props) {
     const id = window.setInterval(tick, 1000);
     return () => window.clearInterval(id);
   }, [endsAtMs]);
+
+  // When the winner is publicly announced the banner becomes a result card
+  // that stays up regardless of the countdown — render it before the
+  // "countdown hit zero → hide" early return below.
+  if (promotion.winnerAnnounced) {
+    return (
+      <WinnerCard
+        promotion={promotion}
+        accent={accent}
+        participantCount={count}
+      />
+    );
+  }
 
   const handleJoin = useCallback(() => {
     if (joined || isPending || winnerSelected) return;
@@ -279,7 +299,7 @@ export function PromotionBanner({ promotion }: Props) {
             )}
           >
             <Trophy className="h-4 w-4" />
-            Kazanan açıklandı — sonuçlar duyuruldu.
+            Çekiliş sonuçlandı.
           </div>
         ) : joined ? (
           <Button
@@ -312,6 +332,134 @@ export function PromotionBanner({ promotion }: Props) {
             {promotion.ctaLabel || "Çekilişe Katıl"}
           </Button>
         )}
+
+        {promotion.rules && (
+          <details className="text-xs opacity-90">
+            <summary className="cursor-pointer select-none font-semibold">
+              Çekiliş kuralları
+            </summary>
+            <p className="mt-1 whitespace-pre-wrap leading-relaxed">
+              {promotion.rules}
+            </p>
+          </details>
+        )}
+      </div>
+    </section>
+  );
+}
+
+function WinnerCard({
+  promotion,
+  accent,
+  participantCount,
+}: {
+  promotion: ActivePromotion;
+  accent: (typeof ACCENT_STYLES)[PromotionAccent];
+  participantCount: number;
+}) {
+  const winnerLabel = promotion.winnerName?.trim() || "Bir katılımcı";
+  return (
+    <section
+      aria-label={`Çekiliş sonucu: ${promotion.title}`}
+      className={cn(
+        "relative overflow-hidden rounded-2xl px-4 py-4 ring-1",
+        accent.surface,
+        accent.ring,
+      )}
+    >
+      <Sparkles
+        aria-hidden
+        className="pointer-events-none absolute -top-2 -right-2 h-16 w-16 opacity-30"
+      />
+      <Sparkles
+        aria-hidden
+        className="pointer-events-none absolute -bottom-3 -left-3 h-12 w-12 opacity-20"
+      />
+
+      <div className="relative flex flex-col gap-3">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <span
+              className={cn(
+                "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide",
+                accent.chip,
+              )}
+            >
+              <Trophy className="h-3 w-3" />
+              Sonuç
+            </span>
+            <h3 className="text-base font-extrabold leading-tight">
+              {promotion.title}
+            </h3>
+          </div>
+          {promotion.imageUrl ? (
+            <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-lg ring-2 ring-white/30">
+              <Image
+                src={promotion.imageUrl}
+                alt=""
+                fill
+                sizes="40px"
+                className="object-cover"
+              />
+            </div>
+          ) : (
+            <Trophy aria-hidden className="h-6 w-6 shrink-0 opacity-90" />
+          )}
+        </div>
+
+        <div
+          className={cn(
+            "flex flex-col items-center gap-1 rounded-xl px-3 py-4 text-center",
+            accent.chip,
+          )}
+        >
+          <Trophy className="h-7 w-7" />
+          {promotion.isWinner ? (
+            <>
+              <p className="text-lg font-extrabold leading-tight">
+                Tebrikler, kazandın! 🎉
+              </p>
+              <p className="text-sm opacity-95">
+                Ödül: <span className="font-bold">{promotion.prize}</span>
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="text-xs font-semibold uppercase tracking-wide opacity-90">
+                Kazanan
+              </p>
+              <p className="text-lg font-extrabold leading-tight">
+                {winnerLabel}
+              </p>
+              <p className="text-sm opacity-95">
+                Ödül: <span className="font-bold">{promotion.prize}</span>
+              </p>
+            </>
+          )}
+        </div>
+
+        <div className="flex flex-wrap items-center justify-center gap-2 text-sm">
+          <span
+            className={cn(
+              "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold",
+              accent.chip,
+            )}
+          >
+            <Users className="h-3.5 w-3.5" />
+            {participantCount.toLocaleString("tr-TR")} katılımcı
+          </span>
+          {promotion.joined && !promotion.isWinner && (
+            <span
+              className={cn(
+                "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold",
+                accent.chip,
+              )}
+            >
+              <CheckCircle2 className="h-3.5 w-3.5" />
+              Katıldın
+            </span>
+          )}
+        </div>
 
         {promotion.rules && (
           <details className="text-xs opacity-90">
