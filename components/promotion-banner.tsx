@@ -141,19 +141,6 @@ export function PromotionBanner({ promotion }: Props) {
     return () => window.clearInterval(id);
   }, [endsAtMs]);
 
-  // When the winner is publicly announced the banner becomes a result card
-  // that stays up regardless of the countdown — render it before the
-  // "countdown hit zero → hide" early return below.
-  if (promotion.winnerAnnounced) {
-    return (
-      <WinnerCard
-        promotion={promotion}
-        accent={accent}
-        participantCount={count}
-      />
-    );
-  }
-
   const handleJoin = useCallback(() => {
     if (joined || isPending || winnerSelected) return;
     setJoined(true);
@@ -203,6 +190,19 @@ export function PromotionBanner({ promotion }: Props) {
     promotion.participantCount,
     winnerSelected,
   ]);
+
+  // When the winner is publicly announced the banner becomes a result card
+  // that stays up regardless of the countdown. Placed after all hooks so the
+  // hook order stays stable (rules-of-hooks).
+  if (promotion.winnerAnnounced) {
+    return (
+      <WinnerCard
+        promotion={promotion}
+        accent={accent}
+        participantCount={count}
+      />
+    );
+  }
 
   if (!remaining) {
     // Countdown reached zero on the client: hide the banner so the page
@@ -460,6 +460,11 @@ function WinnerCard({
             </span>
           )}
         </div>
+
+        <p className="text-center text-sm font-medium opacity-95">
+          Katılan herkese teşekkürler! Bir sonraki çekiliş veya yarışmada
+          görüşmek üzere 👋
+        </p>
 
         {promotion.rules && (
           <details className="text-xs opacity-90">
