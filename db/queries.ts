@@ -48,6 +48,7 @@ export {
   getSchoolCities,
   getTopTenUsers,
   getTopUsers,
+  getTopUsersByStreak,
   getSchoolPointsByType,
   getUniversityPoints,
   getHighSchoolPoints,

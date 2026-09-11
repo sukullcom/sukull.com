@@ -16,6 +16,7 @@ import {
   Loader2,
   Info,
   Users,
+  Flame,
 } from "lucide-react";
 import type { LeaderboardSchoolTab } from "@/lib/learning-path";
 import { fetchSchoolCatalogJson } from "@/lib/fetch-school-catalog";
@@ -29,6 +30,13 @@ type UserEntry = {
   userName: string;
   userImageSrc: string;
   points: number;
+};
+
+type StreakEntry = {
+  userId: string;
+  userName: string;
+  userImageSrc: string;
+  istikrar: number;
 };
 
 type SchoolEntry = {
@@ -71,6 +79,7 @@ function schoolMemberLabel(s: SchoolEntry): string {
 
 const TABS = [
   { id: "users" as const, label: "Bireysel", icon: User },
+  { id: "istikrar" as const, label: "İstikrar", icon: Flame },
   { id: "university" as const, label: "Üniversiteler", icon: GraduationCap },
   { id: "high_school" as const, label: "Liseler", icon: School },
   { id: "secondary_school" as const, label: "Ortaokullar", icon: BookOpen },
@@ -87,6 +96,7 @@ type SchoolType =
 
 type LeaderboardClientProps = {
   initialUsers: UserEntry[];
+  initialStreakUsers: StreakEntry[];
   initialSchools: Record<SchoolType, SchoolEntry[]>;
   currentUserId: string | null;
   currentSchoolId: number | null;
@@ -97,6 +107,7 @@ type LeaderboardClientProps = {
 
 export const LeaderboardClient = ({
   initialUsers,
+  initialStreakUsers,
   initialSchools,
   currentUserId,
   currentSchoolId,
@@ -105,19 +116,24 @@ export const LeaderboardClient = ({
 }: LeaderboardClientProps) => {
   const tabsToShow = useMemo(() => {
     if (visibleSchoolTabs === "all") return [...TABS];
-    const allow = new Set<string>(["users", ...visibleSchoolTabs]);
+    const allow = new Set<string>(["users", "istikrar", ...visibleSchoolTabs]);
     return TABS.filter((t) => allow.has(t.id));
   }, [visibleSchoolTabs]);
 
   const [activeTab, setActiveTab] = useState<TabId>("users");
   const [users, setUsers] = useState(initialUsers);
+  const [streakUsers, setStreakUsers] = useState(initialStreakUsers);
   const [schoolData, setSchoolData] = useState(initialSchools);
   const [selectedCity, setSelectedCity] = useState<string>("");
   const [loadingMore, startLoadMore] = useTransition();
   const [hasMoreUsers, setHasMoreUsers] = useState(initialUsers.length >= 50);
+  const [hasMoreStreaks, setHasMoreStreaks] = useState(
+    initialStreakUsers.length >= 50,
+  );
   const [cityLoading, startCityLoad] = useTransition();
 
-  const isSchoolTab = activeTab !== "users";
+  const isStreakTab = activeTab === "istikrar";
+  const isSchoolTab = activeTab !== "users" && !isStreakTab;
   const currentSchoolType = isSchoolTab ? (activeTab as SchoolType) : null;
 
   const handleCityChange = useCallback(
@@ -181,12 +197,16 @@ export const LeaderboardClient = ({
     }
   }, [tabsToShow, activeTab]);
 
-  const loadMoreUsers = () => {
+  const loadMoreUsers = (sort: "points" | "istikrar") => {
     startLoadMore(async () => {
+      const offset = sort === "istikrar" ? streakUsers.length : users.length;
       try {
-        const res = await fetch(
-          `/api/leaderboard?limit=25&offset=${users.length}`,
-        );
+        const params = new URLSearchParams({
+          limit: "25",
+          offset: String(offset),
+        });
+        if (sort === "istikrar") params.set("sort", "istikrar");
+        const res = await fetch(`/api/leaderboard?${params.toString()}`);
         if (!res.ok) {
           const msg =
             res.status === 429
@@ -196,54 +216,108 @@ export const LeaderboardClient = ({
           return;
         }
         const data = await res.json();
-        const newUsers: UserEntry[] = data.users || [];
-        if (newUsers.length < 25) setHasMoreUsers(false);
-        setUsers((prev) => [...prev, ...newUsers]);
+        if (sort === "istikrar") {
+          const newUsers: StreakEntry[] = data.users || [];
+          if (newUsers.length < 25) setHasMoreStreaks(false);
+          setStreakUsers((prev) => [...prev, ...newUsers]);
+        } else {
+          const newUsers: UserEntry[] = data.users || [];
+          if (newUsers.length < 25) setHasMoreUsers(false);
+          setUsers((prev) => [...prev, ...newUsers]);
+        }
       } catch (e) {
         toast.error(getClientAuthTransientErrorMessage(e));
         clientLogger.error({
           message: "load more users failed",
           error: e,
           location: "leaderboard-client/loadMoreUsers",
+          fields: { sort },
         });
       }
     });
   };
 
+  const renderPersonRows = (
+    items: Array<{
+      userId: string;
+      userName: string;
+      userImageSrc: string;
+      score: number;
+    }>,
+    scoreSuffix: string,
+    highlightClass: string,
+  ) =>
+    items.map((u, i) => {
+      const rank = i + 4;
+      const isMe = u.userId === currentUserId;
+      return (
+        <div
+          key={u.userId}
+          className={cn(
+            "flex items-center w-full px-3 py-2.5 border-b border-gray-100 transition-colors",
+            isMe && highlightClass,
+          )}
+        >
+          <span className="w-8 text-center font-bold text-sm text-muted-foreground shrink-0">
+            {rank}
+          </span>
+          <Avatar className="h-8 w-8 sm:h-9 sm:w-9 mx-2 shrink-0 border bg-green-500">
+            <AvatarImage src={u.userImageSrc} className="object-cover" />
+            <AvatarFallback>{u.userName.charAt(0)}</AvatarFallback>
+          </Avatar>
+          <p className="font-semibold text-sm text-foreground flex-1 truncate mr-2">
+            {u.userName}
+          </p>
+          <p className="text-xs sm:text-sm text-muted-foreground shrink-0 font-medium">
+            {u.score.toLocaleString("tr-TR")} {scoreSuffix}
+          </p>
+        </div>
+      );
+    });
+
   const renderList = () => {
     if (activeTab === "users") {
-      const items = users.slice(3);
       return (
         <>
-          {items.map((u, i) => {
-            const rank = i + 4;
-            const isMe = u.userId === currentUserId;
-            return (
-              <div
-                key={u.userId}
-                className={cn(
-                  "flex items-center w-full px-3 py-2.5 border-b border-gray-100 transition-colors",
-                  isMe && "bg-blue-50 border-l-4 border-l-blue-500",
-                )}
-              >
-                <span className="w-8 text-center font-bold text-sm text-muted-foreground shrink-0">
-                  {rank}
-                </span>
-                <Avatar className="h-8 w-8 sm:h-9 sm:w-9 mx-2 shrink-0 border bg-green-500">
-                  <AvatarImage src={u.userImageSrc} className="object-cover" />
-                  <AvatarFallback>{u.userName.charAt(0)}</AvatarFallback>
-                </Avatar>
-                <p className="font-semibold text-sm text-foreground flex-1 truncate mr-2">
-                  {u.userName}
-                </p>
-                <p className="text-xs sm:text-sm text-muted-foreground shrink-0 font-medium">
-                  {u.points.toLocaleString("tr-TR")} Puan
-                </p>
-              </div>
-            );
-          })}
+          {renderPersonRows(
+            users.slice(3).map((u) => ({ ...u, score: u.points })),
+            "Puan",
+            "bg-blue-50 border-l-4 border-l-blue-500",
+          )}
           {hasMoreUsers && (
-            <LoadMoreButton loading={loadingMore} onClick={loadMoreUsers} />
+            <LoadMoreButton
+              loading={loadingMore}
+              onClick={() => loadMoreUsers("points")}
+            />
+          )}
+        </>
+      );
+    }
+
+    if (isStreakTab) {
+      if (streakUsers.length === 0) {
+        return (
+          <div className="text-center py-10 px-4 text-sm text-muted-foreground">
+            <Flame className="h-8 w-8 mx-auto mb-2 opacity-40" />
+            <p className="font-medium">Henüz istikrar sıralaması yok.</p>
+            <p className="text-xs mt-1">
+              Günlük hedefini tutturan öğrenciler burada görünür.
+            </p>
+          </div>
+        );
+      }
+      return (
+        <>
+          {renderPersonRows(
+            streakUsers.slice(3).map((u) => ({ ...u, score: u.istikrar })),
+            "gün",
+            "bg-orange-50 border-l-4 border-l-orange-500",
+          )}
+          {hasMoreStreaks && (
+            <LoadMoreButton
+              loading={loadingMore}
+              onClick={() => loadMoreUsers("istikrar")}
+            />
           )}
         </>
       );
@@ -319,9 +393,16 @@ export const LeaderboardClient = ({
         imageSrc: u.userImageSrc,
       }));
     }
+    if (isStreakTab) {
+      return streakUsers.slice(0, 3).map((u) => ({
+        id: u.userId,
+        name: u.userName,
+        points: u.istikrar,
+        imageSrc: u.userImageSrc,
+        scoreSuffix: "gün",
+      }));
+    }
     const type = activeTab as SchoolType;
-    // Podyumda da Bayesian skoru gösteriyoruz (sıralama buna göre); sayı
-    // okunaklı olsun diye yuvarlıyoruz.
     return schoolData[type].slice(0, 3).map((s) => ({
       id: s.schoolId,
       name: s.schoolName,
@@ -353,9 +434,21 @@ export const LeaderboardClient = ({
         ))}
       </div>
 
-      {/* Okul sekmelerinde sıralama mantığını şeffafça anlatan bilgi şeridi.
-          Bireysel sekme zaten direkt puan toplamına dayalı; açıklamaya gerek
-          yok. */}
+      {isStreakTab && (
+        <details className="mb-4 rounded-lg border border-orange-100 bg-orange-50/60 px-3 py-2 text-xs text-orange-950">
+          <summary className="flex cursor-pointer items-center gap-1.5 font-medium select-none">
+            <Info className="h-3.5 w-3.5" />
+            Sıralama nasıl çalışıyor?
+          </summary>
+          <p className="mt-2 leading-relaxed">
+            Sıralama mevcut{" "}
+            <span className="font-semibold">istikrar gününe</span> göredir.
+            İstikrarı 0 olan öğrenciler listede yer almaz. Eşit günde puanı
+            yüksek olan üstte durur.
+          </p>
+        </details>
+      )}
+
       {isSchoolTab && (
         <details className="mb-4 rounded-lg border border-emerald-100 bg-emerald-50/60 px-3 py-2 text-xs text-emerald-900">
           <summary className="flex cursor-pointer items-center gap-1.5 font-medium select-none">
@@ -412,7 +505,7 @@ export const LeaderboardClient = ({
       {/* Podium */}
       <Podium
         entries={podiumEntries()}
-        variant={activeTab === "users" ? "user" : "school"}
+        variant={isSchoolTab ? "school" : "user"}
       />
 
       {/* List */}

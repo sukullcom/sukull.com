@@ -1,6 +1,7 @@
 import {
   getSchoolCities,
   getTopUsers,
+  getTopUsersByStreak,
   getUserProgress,
   getSchoolPointsByType,
   getUserRank,
@@ -21,11 +22,12 @@ const INITIAL_USER_LIMIT = 50;
 
 const LeaderboardPage = async () => {
   try {
-    const [userProgress, user, topUsers, userAndSchoolRank, cities] =
+    const [userProgress, user, topUsers, streakUsers, userAndSchoolRank, cities] =
       await Promise.all([
         getUserProgress(),
         getServerUser(),
         getTopUsers(INITIAL_USER_LIMIT, 0),
+        getTopUsersByStreak(INITIAL_USER_LIMIT, 0),
         getUserRank(),
         getSchoolCities(),
       ]);
@@ -101,6 +103,7 @@ const LeaderboardPage = async () => {
 
           <LeaderboardClient
             initialUsers={topUsers}
+            initialStreakUsers={streakUsers}
             initialSchools={initialSchools}
             currentUserId={user?.id ?? null}
             currentSchoolId={userAndSchoolRank?.schoolId ?? null}

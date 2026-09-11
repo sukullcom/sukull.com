@@ -17,7 +17,7 @@
 export const CACHE_TAGS = {
   /** All `courses` rows + child units/lessons graph when fetched by id. */
   courses: "courses",
-  /** Top-N leaderboard (user_progress sorted by points). */
+  /** Top-N leaderboard (user_progress sorted by points or istikrar). */
   leaderboard: "leaderboard",
   /** Teacher listing with ratings + fields. */
   teachers: "teachers",

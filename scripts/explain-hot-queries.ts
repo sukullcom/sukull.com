@@ -110,6 +110,21 @@ const cases: QueryCase[] = [
     params: ["high_school"],
   },
   {
+    name: "user_progress: istikrar leaderboard",
+    expectIndex: [
+      "idx_user_progress_istikrar_leaderboard",
+      "idx_user_progress_points",
+    ],
+    sql: `
+      EXPLAIN ANALYZE
+      SELECT user_id, user_name, user_image_src, istikrar
+      FROM   user_progress
+      WHERE  istikrar > 0
+      ORDER  BY istikrar DESC, points DESC
+      LIMIT  50
+    `,
+  },
+  {
     // Use a selective search term: the trigram index only beats a seq scan
     // when the term matches a small fraction of rows. A very common term
     // like "anadolu" matches ~99% of Turkish school names and the planner

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getTopUsers } from "@/db/queries";
+import { getTopUsers, getTopUsersByStreak } from "@/db/queries";
 import { checkRateLimit, getClientIp, rateLimitHeaders, RATE_LIMITS } from "@/lib/rate-limit-db";
 import { getRequestLogger } from "@/lib/logger";
 
@@ -26,8 +26,12 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const limit = Math.min(parseInt(searchParams.get("limit") || "25"), 100);
     const offset = parseInt(searchParams.get("offset") || "0");
+    const sort = searchParams.get("sort") === "istikrar" ? "istikrar" : "points";
 
-    const users = await getTopUsers(limit, offset);
+    const users =
+      sort === "istikrar"
+        ? await getTopUsersByStreak(limit, offset)
+        : await getTopUsers(limit, offset);
     return NextResponse.json({ users });
   } catch (error) {
     const log = await getRequestLogger({ labels: { module: "leaderboard" } });

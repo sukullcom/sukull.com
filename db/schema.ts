@@ -430,6 +430,10 @@ export const userProgress = pgTable("user_progress", {
   schoolIdx: index("idx_user_progress_school_id").on(table.schoolId),
   activeCourseIdx: index("idx_user_progress_active_course").on(table.activeCourseId),
   pointsIdx: index("idx_user_progress_points").on(table.points),
+  /** İstikrar liderliği: `istikrar > 0` ORDER BY istikrar DESC, points DESC. */
+  istikrarLeaderboardIdx: index("idx_user_progress_istikrar_leaderboard")
+    .on(table.istikrar, table.points)
+    .where(sql`${table.istikrar} > 0`),
 }));
 
 export const userProgressRelations = relations(userProgress, ({ one }) => ({

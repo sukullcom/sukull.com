@@ -41,17 +41,20 @@ Railway → servis → **Variables** → Production:
 
 ### 4. Supabase Auth & e-posta (10 dk)
 
+**Authentication → Providers → Email**
+
+- **Confirm email**: **kapalı** (kayıt doğrulama maili yok; hesap anında aktif)
+
+**Authentication → Sessions** (varsa)
+
+- Time-box / inactivity timeout: **kapalı** (manuel çıkışa kadar oturum)
+
 **Authentication → URL Configuration**
 
 - Site URL: `https://sukull.com`
 - Redirect URLs: `https://sukull.com/auth/confirm`, `https://sukull.com/api/auth/callback`
 
-**Authentication → Email Templates → Confirm signup**
-
-- Subject: `Sukull — E-postanı doğrula`
-- Gövde: Türkçe şablon (önceki mesajdaki HTML)
-
-**Project Settings → Auth → SMTP**
+**Project Settings → Auth → SMTP** (şifre sıfırlama için)
 
 - Sender: `Sukull <noreply@sukull.com>` (veya `auth@sukull.com`)
 

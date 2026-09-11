@@ -137,17 +137,6 @@ export function LoginForm({ referralFromUrl }: LoginFormProps) {
       </p>
       
       <p className="text-center text-sm mt-3">
-        E-posta doğrulama linki almadınız mı?{" "}
-        <Link
-          prefetch={false}
-          href="/resend-verification"
-          className="font-semibold text-suk-brand underline hover:text-suk-brand-hover"
-        >
-          Yeniden Gönder
-        </Link>
-      </p>
-      
-      <p className="text-center text-sm mt-3">
         Hesabın yok mu?{" "}
         <Link
           prefetch={false}

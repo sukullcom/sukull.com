@@ -57,7 +57,7 @@ export const getAuthError = (
       case 'invalid_credentials':
         return { type: 'InvalidCredentials', message: 'Geçersiz e-posta veya şifre. Lütfen bilgilerinizi kontrol edip tekrar deneyiniz.' };
       case 'email_not_confirmed':
-        return { type: 'EmailNotConfirmed', message: 'Lütfen giriş yapmadan önce e-postanızı doğrulayınız.' };
+        return { type: 'EmailNotConfirmed', message: 'Giriş tamamlanamadı. Lütfen tekrar deneyiniz.' };
       case 'user_already_exists':
       case 'email_exists':
       case 'email_address_already_in_use':
@@ -106,7 +106,7 @@ export const getAuthError = (
   }
 
   if (msg.includes('email not confirmed') || msg.includes('email is not confirmed')) {
-    return { type: 'EmailNotConfirmed', message: 'Lütfen giriş yapmadan önce e-postanızı doğrulayınız. Doğrulama e-postası gelmediyse yeniden gönderebilirsiniz.' };
+    return { type: 'EmailNotConfirmed', message: 'Giriş tamamlanamadı. Lütfen tekrar deneyiniz.' };
   }
 
   if (msg.includes('user already registered') || msg.includes('already registered') || msg.includes('already been registered')) {
@@ -175,3 +175,7 @@ export const getAuthError = (
     message: 'Bir hata oluştu. Lütfen tekrar deneyiniz.',
   };
 };
+
+export function isEmailNotConfirmedError(error: unknown): boolean {
+  return getAuthError(error).type === 'EmailNotConfirmed';
+}

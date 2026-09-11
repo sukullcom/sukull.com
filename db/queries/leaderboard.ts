@@ -88,6 +88,39 @@ export const getTopUsers = cache(
   },
 );
 
+/**
+ * Global streak (istikrar) ranking. Only rows with `istikrar > 0` so the
+ * scan stays small; ordered by streak then points as a stable tie-break.
+ */
+const _getTopUsersByStreakCached = unstable_cache(
+  async (limit: number, offset: number) => {
+    return db.query.userProgress.findMany({
+      where: (up, { gt }) => gt(up.istikrar, 0),
+      orderBy: (up, { desc }) => [desc(up.istikrar), desc(up.points)],
+      limit,
+      offset,
+      columns: {
+        userId: true,
+        userName: true,
+        userImageSrc: true,
+        istikrar: true,
+      },
+    });
+  },
+  ["top-users-by-streak"],
+  { tags: [CACHE_TAGS.leaderboard], revalidate: CACHE_TTL.leaderboard },
+);
+
+export const getTopUsersByStreak = cache(
+  async (limit: number = 50, offset: number = 0) => {
+    const data = await _getTopUsersByStreakCached(limit, offset);
+    return data.map((user) => ({
+      ...user,
+      userImageSrc: normalizeAvatarUrl(user.userImageSrc),
+    }));
+  },
+);
+
 type SchoolLeaderboardType =
   | "university"
   | "high_school"

@@ -1,139 +1,54 @@
-# Email Verification Setup Guide
+# Kayıt ve oturum (e-posta doğrulama yok)
 
-## Overview
+E-posta + şifre ile kayıt **doğrulama maili göndermez**. Kullanıcı kayıt butonuna basınca hesap oluşur ve oturum açılır.
 
-The email verification system is now fully implemented and configured. When users create accounts, they will receive verification emails that they must click to activate their accounts.
+Şifre sıfırlama e-postaları ayrı bir akıştır; bu dosya onları kapsamaz.
 
-## ✅ Current Implementation
+## Kayıt akışı
 
-### 1. Email Verification Flow
+1. Kullanıcı `/create-account` formunu doldurur.
+2. `signUpWithEmail` (`app/(auth)/create-account/actions.ts`) IP rate limit + `public.users` e-posta kontrolü uygular.
+3. Service-role `auth.admin.createUser({ email_confirm: true })` hesabı **onaylı** oluşturur (GoTrue confirmation maili yok).
+4. Aynı istekte `signInWithPassword` oturum çerezlerini yazar.
+5. `ensurePublicUserFromAuth` `public.users` satırını ekler.
+6. İstemci `/courses` yönlendirir (onboarding bitmemişse orası `/onboarding`’e alır).
 
-1. **User Registration**: User fills out the signup form with username, email, and password
-2. **Account Creation**: System creates Supabase auth user with email confirmation required
-3. **Email Sent**: Supabase automatically sends verification email to user
-4. **User Clicks Link**: User clicks verification link in email
-5. **Verification**: Link redirects to `/callback` which processes the verification
-6. **Success**: User is redirected to login page with success message
+Eski, hiç doğrulanmamış hesaplar girişte otomatik onaylanır (`lib/confirm-auth-email.ts`).
 
-### 2. Key Features
+## Oturum süresi
 
-- ✅ **Automatic email sending** on account creation
-- ✅ **Email confirmation required** before login
-- ✅ **Success notifications** when email is verified
-- ✅ **Resend verification email** functionality
-- ✅ **Proper error handling** for unverified accounts
-- ✅ **Username preservation** during verification process
+Uygulama **hareketsizlik yüzünden otomatik çıkış yapmaz**. Çıkış yalnızca kullanıcının “Çıkış” demesiyle (veya tarayıcının çerezi silmesiyle) olur.
 
-### 3. Enhanced Components
+Auth çerezleri ~400 gün tutulur; access JWT (~1 saat) arka planda yenilenir.
 
-#### Auth System
-- **E-posta + şifre kaydı**: `app/(auth)/create-account/actions.ts` → `signUpWithEmail` (server action): IP rate limit, `public.users` e-posta kontrolü (Drizzle), `emailRedirectTo` için `getServerAuthCallbackUrl()` (`NEXT_PUBLIC_APP_URL` + `/api/auth/callback`).
-- `utils/auth.ts`: OAuth, çıkış, şifre sıfırlama, doğrulama e-postası yeniden gönderme (istemci Supabase).
-- `resendVerificationEmail()`: Yeni doğrulama e-postası talebi
-- Enhanced logging for debugging
+Supabase Dashboard’da da bunu bozmayın:
 
-#### Callback Handler (`app/api/auth/callback/route.ts`)
-- Handles both OAuth and email verification
-- Preserves username from metadata
-- Redirects to appropriate pages based on verification type
+1. **Authentication → Providers → Email**
+   - **Confirm email**: **kapalı**
+2. **Authentication → Sessions** (varsa)
+   - **Time-box user sessions**: kapalı
+   - **Inactivity timeout**: kapalı
 
-#### Login Form (`app/(auth)/login/login-form.tsx`)
-- Shows success message when user arrives after verification
-- Includes link to resend verification emails
+Şifre sıfırlama için SMTP / Resend ayarları durabilir.
 
-#### New Resend Verification Page (`app/(auth)/resend-verification/`)
-- Dedicated page for users to request new verification emails
-- User-friendly interface with clear instructions
+## URL Configuration
 
-## 🔧 Supabase Configuration Required
+**Authentication → URL Configuration**
 
-To ensure email verification works properly, verify these settings in your Supabase dashboard:
+- Site URL: `https://sukull.com` (prod) / `http://localhost:3000` (dev)
+- Redirect URLs (OAuth + şifre sıfırlama):
+  - `https://sukull.com/api/auth/callback`
+  - `https://sukull.com/auth/confirm`
+  - aynı path’ler localhost için
 
-### 1. Email Settings
-Go to **Authentication > Settings > Email**:
+## Eski `/resend-verification`
 
-- ✅ **Confirm email**: Should be **ENABLED**
-- ✅ **Enable email confirmations**: Should be **ENABLED**
+Sayfa artık `/login`’e yönlendirir. Bookmark’lar kırılmaz.
 
-### 2. URL Configuration
-Go to **Authentication > Settings > URL Configuration**:
+## Test
 
-- **Site URL**: `https://sukull.com` (production) or `http://localhost:3000` (development)
-- **Redirect URLs**: 
-  - `https://sukull.com/callback`
-  - `http://localhost:3000/callback`
-
-### 3. Email Templates (Optional)
-Go to **Authentication > Email Templates**:
-
-You can customize the verification email template to match your branding.
-
-## 🧪 Testing Email Verification
-
-### 1. Local Testing
-
-1. Start your development server:
-   ```bash
-   npm run dev
-   ```
-
-2. Navigate to `/create-account`
-3. Create a new account with a real email address
-4. Check your email (including spam folder)
-5. Click the verification link
-6. Verify you're redirected to login with success message
-
-### 2. Production Testing
-
-1. Deploy your application
-2. Update Supabase URLs to production URLs
-3. Test the same flow with real email addresses
-
-## 🔍 Troubleshooting
-
-### Email Not Received
-
-1. **Check Spam Folder**: Verification emails often end up in spam
-2. **Resend Email**: Use the "Yeniden Gönder" link on the login page
-3. **Check Supabase Logs**: Go to Authentication > Users in Supabase dashboard
-4. **Verify Configuration**: Ensure email confirmation is enabled in Supabase
-
-### Verification Link Not Working
-
-1. **Check URLs**: Ensure redirect URLs are correctly configured
-2. **Check Console**: Look for errors in browser console
-3. **Check Network**: Verify the callback route is accessible
-
-### User Not Appearing in Database
-
-1. **Check Callback Route**: Ensure `/api/auth/callback` is working
-2. **Check User Creation**: `ensurePublicUserFromAuth` (callback + `signUpWithEmail` + `login` server action) `public.users` satırını `onConflictDoNothing` ile oluşturur.
-3. **Check Database**: Verify user record is created after verification
-
-## 📝 Available Routes
-
-- `/create-account` - User registration
-- `/login` - User login (shows verification success)
-- `/resend-verification` - Request new verification email
-- `/callback` - Handles email verification (automatic)
-
-## 🚀 Next Steps
-
-1. **Test thoroughly** with real email addresses
-2. **Customize email templates** in Supabase (optional)
-3. **Monitor verification rates** in Supabase analytics
-4. **Consider adding phone verification** for additional security (future enhancement)
-
-## 💡 Tips
-
-- Always test with real email addresses, not temporary ones
-- Monitor your Supabase email quota if you have high volume
-- Consider implementing email rate limiting to prevent abuse
-- Keep verification links simple and clear in emails
-
-## 🔐 Security Notes
-
-- Email verification prevents unauthorized access to accounts
-- Users cannot login until they verify their email
-- Verification links expire after a set time (configurable in Supabase)
-- The system prevents multiple accounts with the same email 
+1. `/create-account` → gerçek bir e-posta ile kayıt
+2. Doğrulama maili **gelmemeli**
+3. Doğrudan `/courses` (veya onboarding) açılmalı
+4. Tarayıcıyı kapatıp açınca hâlâ girişli olmalı
+5. Manuel çıkış sonrası tekrar şifre ile giriş

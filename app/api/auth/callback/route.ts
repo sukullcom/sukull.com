@@ -4,6 +4,7 @@ import { type NextRequest, NextResponse } from 'next/server';
 import { ensurePublicUserFromAuth } from '@/lib/ensure-public-user';
 import { getRequestLogger } from '@/lib/logger';
 import { syncAdminRoleFromEmail } from '@/lib/admin';
+import { AUTH_COOKIE_OPTIONS } from '@/utils/supabase/cookie-options';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -80,11 +81,16 @@ function buildSupabaseForRequest(request: NextRequest) {
     throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY');
   }
   const supabase = createServerClient(supabaseUrl, supabaseKey, {
+    cookieOptions: AUTH_COOKIE_OPTIONS,
     cookies: {
       getAll: () => request.cookies.getAll(),
       setAll: ((toSet) => {
         toSet.forEach(({ name, value, options }) => {
-          pendingCookies.push({ name, value, options: options as CookieOptions });
+          pendingCookies.push({
+            name,
+            value,
+            options: { ...AUTH_COOKIE_OPTIONS, ...options } as CookieOptions,
+          });
         });
       }) satisfies SetAllCookies,
     },

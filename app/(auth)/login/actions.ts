@@ -4,10 +4,14 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { headers } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
-import { getAuthError } from '@/utils/auth-errors'
+import { getAuthError, isEmailNotConfirmedError } from '@/utils/auth-errors'
 import { checkRateLimit, getClientIpFromHeaders, RATE_LIMITS } from '@/lib/rate-limit-db'
 import { logger } from '@/lib/logger'
 import { ensurePublicUserFromAuth } from '@/lib/ensure-public-user'
+import {
+  confirmAuthUserEmail,
+  findAuthUserIdByEmail,
+} from '@/lib/confirm-auth-email'
 
 const log = logger.child({ labels: { module: 'auth/login' } })
 
@@ -72,10 +76,31 @@ export async function login(formData: FormData) {
     }
   }
 
-  const { data, error } = await supabase.auth.signInWithPassword({
+  let { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   })
+
+  if (error && isEmailNotConfirmedError(error)) {
+    try {
+      const existingId = await findAuthUserIdByEmail(email)
+      if (existingId) {
+        await confirmAuthUserEmail(existingId)
+        const retried = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        })
+        data = retried.data
+        error = retried.error
+      }
+    } catch (e) {
+      log.error({
+        message: 'auto-confirm unconfirmed user on login failed',
+        error: e,
+        location: 'auth/login/autoConfirm',
+      })
+    }
+  }
 
   if (error) {
     const { message } = getAuthError(error)

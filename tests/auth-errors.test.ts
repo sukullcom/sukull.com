@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { getAuthError } from "@/utils/auth-errors";
+import { getAuthError, isEmailNotConfirmedError } from "@/utils/auth-errors";
 
 describe("getAuthError", () => {
   describe("returns Turkish messages — never English", () => {
@@ -12,7 +12,7 @@ describe("getAuthError", () => {
     it("translates email not confirmed", () => {
       const r = getAuthError({ message: "Email not confirmed" });
       expect(r.type).toBe("EmailNotConfirmed");
-      expect(r.message).toContain("e-postanızı doğrulayınız");
+      expect(r.message).toMatch(/tekrar deneyiniz/i);
     });
 
     it("translates user already registered", () => {
@@ -46,6 +46,11 @@ describe("getAuthError", () => {
     it("uses email_exists code", () => {
       const r = getAuthError({ code: "email_exists", message: "" });
       expect(r.type).toBe("EmailInUse");
+    });
+
+    it("uses email_not_confirmed code", () => {
+      const r = getAuthError({ code: "email_not_confirmed", message: "" });
+      expect(r.type).toBe("EmailNotConfirmed");
     });
 
     it("uses weak_password code", () => {
@@ -86,6 +91,14 @@ describe("getAuthError", () => {
         error_description: "Invalid login credentials",
       });
       expect(r.type).toBe("InvalidCredentials");
+    });
+  });
+
+  describe("isEmailNotConfirmedError", () => {
+    it("detects code and message variants", () => {
+      expect(isEmailNotConfirmedError({ code: "email_not_confirmed" })).toBe(true);
+      expect(isEmailNotConfirmedError({ message: "Email not confirmed" })).toBe(true);
+      expect(isEmailNotConfirmedError({ code: "invalid_credentials" })).toBe(false);
     });
   });
 });

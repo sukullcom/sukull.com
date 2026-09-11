@@ -1,5 +1,6 @@
 import { createServerClient, type CookieOptions, type SetAllCookies } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { AUTH_COOKIE_OPTIONS } from '@/utils/supabase/cookie-options'
 
 /**
  * Wraps `createServerClient` with Supabase-aware cookie handling.
@@ -30,11 +31,12 @@ export function createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
+      cookieOptions: AUTH_COOKIE_OPTIONS,
       cookies: {
         getAll: () => request.cookies.getAll(),
         setAll: ((cookiesToSet) => {
           cookiesToSet.forEach(({ name, value, options }) => {
-            response.cookies.set(name, value, options as CookieOptions)
+            response.cookies.set(name, value, { ...AUTH_COOKIE_OPTIONS, ...options } as CookieOptions)
           })
         }) satisfies SetAllCookies,
       },

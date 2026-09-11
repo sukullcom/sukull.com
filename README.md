@@ -63,7 +63,7 @@ is the runbook; follow links from there for deeper topics.
 | `docs/PAYMENTS.md`                         | Credit system design + Iyzico payment flow                           |
 | `docs/STREAKS.md`                          | Daily streak (istikrar) engine                                       |
 | `docs/SECURE_LOGOUT.md`                    | Sign-out + session revocation flow                                   |
-| `docs/EMAIL_VERIFICATION_SETUP.md`         | Supabase email verification configuration                            |
+| `docs/EMAIL_VERIFICATION_SETUP.md`         | Signup without email confirmation + session lifetime                 |
 | `docs/SCHOOL_SYSTEM_SETUP.md`              | Schools catalog + per-school leaderboard                             |
 | `docs/LATEX_MATH_SUPPORT.md`               | KaTeX rendering in lesson content                                    |
 | `docs/TURKEY_TIMEZONE_UTC+3_IMPLEMENTATION.md` | How server-side day boundaries stay locked to Turkey time        |

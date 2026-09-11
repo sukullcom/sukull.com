@@ -9,6 +9,7 @@ type PodiumEntry = {
   name: string;
   points: number;
   imageSrc?: string;
+  scoreSuffix?: string;
 };
 
 type PodiumProps = {
@@ -121,7 +122,8 @@ export const Podium = ({ entries, variant }: PodiumProps) => {
                 {entry.name}
               </p>
               <p className={cn("text-[11px] sm:text-xs font-bold mb-2 mt-1", style.text)}>
-                {entry.points.toLocaleString("tr-TR")} Puan
+                {entry.points.toLocaleString("tr-TR")}{" "}
+                {entry.scoreSuffix ?? "Puan"}
               </p>
             </div>
           </div>

@@ -81,10 +81,9 @@ export function CreateAccountForm({ referralCodeFromUrl }: CreateAccountFormProp
         setIsLoading(false);
         return;
       }
-      toast.success(
-        "Kayıt işlemi başarılı! E-postanıza doğrulama linki gönderildi. Lütfen e-postanızı kontrol edin ve spam klasörünü de kontrol etmeyi unutmayın.",
-      );
-      router.push("/login");
+      toast.success("Hesabınız oluşturuldu. Hoş geldiniz!");
+      router.push("/courses");
+      router.refresh();
     } catch (err) {
       toast.error(getClientAuthTransientErrorMessage(err));
       setIsLoading(false);

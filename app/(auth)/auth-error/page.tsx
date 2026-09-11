@@ -56,7 +56,7 @@ const ERROR_COPY: Record<string, ErrorDetails> = {
       'Bağlantı kopyalanırken bozulmuş olabilir',
     ],
     solutions: [
-      'Giriş ekranından yeni bir doğrulama bağlantısı isteyin',
+      'Giriş sayfasından yeniden deneyin',
       'E-postayı aynı tarayıcıda açtığınızdan emin olun',
       'Sorun sürerse destek ekibine ulaşın',
     ],
