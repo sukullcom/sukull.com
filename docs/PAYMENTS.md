@@ -4,7 +4,9 @@ This document describes the credit-based payment system implemented using Iyzico
 
 ## Overview
 
-The platform uses a **usage-right (hak) / service package** model backed by numeric balances in `user_credits`: rights are spent on **private-lesson marketplace** actions (e.g. student message unlock, teacher listing offers) rather than a legacy in-app lesson booking flow.
+The platform uses a **usage-right (hak) / service package** model backed by numeric balances in `user_credits`. Iyzico purchases still credit this balance for shop / other paid products.
+
+**Private-lesson marketplace no longer spends usage rights.** Listing, messaging (`unlockMessageThread`), and listing offers (`createOffer`) are free. Contact (email/phone) is still revealed only after a `message_unlocks` row exists. The `/private-lesson/credits` route remains for historical package links; marketplace navigation no longer points there.
 
 > **Ürün dili:** Kullanıcıya dönük metinlerde “kredi/coin” yerine *hizmet paketi* ve *kullanım hakkı* kullanılır. Bu belgedeki *credit* ifadeleri kod ve veritabanı adlarıyla (`user_credits`, `credit_transactions`) uyumluluk içindir.
 
@@ -12,7 +14,7 @@ The platform uses a **usage-right (hak) / service package** model backed by nume
 
 - **Credit Purchase**: Students and teachers can buy credit packages (see `credit-purchase.tsx` / payment-server for current tiers)
 - **Secure Payments**: Integrated with Iyzico (Turkey-based payment provider)
-- **Credit Management**: Automatic credit deduction when a paid marketplace action succeeds (message unlock, offer creation, etc.)
+- **Credit Management**: Automatic credit deduction when a paid shop action succeeds (see payment-server). The private-lesson marketplace does **not** deduct credits.
 - **Transaction Logging**: Complete audit trail of all payments and transactions
 - **Responsive UI**: Modern payment form with validation
 
@@ -37,7 +39,7 @@ The platform uses a **usage-right (hak) / service package** model backed by nume
 
 - `POST /api/payment/create`: Process credit purchases via Iyzico
 - `GET /api/user/credits`: Fetch user's current credit balance
-- `POST /api/private-lesson/messages/unlock`, `POST /api/private-lesson/listings/[id]/offers`, etc.: paid flows that deduct credits (see marketplace routes)
+- `POST /api/private-lesson/messages/unlock`, `POST /api/private-lesson/listings/[id]/offers`: marketplace mutations (free; auth + CSRF + rate limit still apply)
 
 ## Configuration
 
@@ -63,11 +65,11 @@ For production, replace sandbox credentials with live Iyzico credentials:
 
 ### For Students
 
-1. **Navigate to packages page**: Open "Paketler" (or the credits route) from the private-lesson area
+1. **Navigate to packages page**: Open `/private-lesson/credits` if you still need shop packages (not linked from marketplace nav)
 2. **Select package**: Choose a tier (e.g. 1, 4, 8, or 12 usage rights per package)
 3. **Enter Payment Details**: Fill out card information and billing address
 4. **Complete Purchase**: Click "Öde" to process payment
-5. **Use your rights**: Unlock messaging with a teacher, submit offers on student listings, and other marketplace actions that consume one usage right per paid step (see API routes above)
+5. **Balance**: Credits are stored on `user_credits`. The private-lesson marketplace does not consume them.
 
 ### For Developers
 
@@ -132,12 +134,9 @@ npm run dev
 
 ## Integration with the private-lesson marketplace
 
-Credit checks run **before** rate limits on the heaviest money-adjacent routes (e.g. message unlock, listing offers) so users see **402 insufficient credits** instead of being blocked by **429** when retrying without balance.
+The marketplace (listings, message unlock, teacher offers) is **free**. Those routes still require authentication (or the inline identity gate), CSRF, trusted origin, and rate limits. They do **not** check or deduct `user_credits`.
 
-Paid actions generally:
-- Verify the user is authenticated and allowed to perform the action
-- Deduct credits inside a DB transaction where applicable
-- Log usage in `credit_usage` / related tables
+Shop / Iyzico credit packages remain available for other products; they are not required to use the private-lesson pazar.
 
 ## Troubleshooting
 
@@ -145,7 +144,7 @@ Paid actions generally:
 
 1. **Payment Fails**: Check Iyzico credentials and network connectivity
 2. **Credits Not Added**: Check payment logs for transaction status
-3. **Paid action fails**: Verify the user has sufficient credits and that the marketplace preconditions (listing open, teacher approved, etc.) are met
+3. **Paid action fails**: For shop purchases, verify Iyzico status. Marketplace listing/message/offer failures are auth, validation, or rate-limit — not credit balance.
 
 ### Debug Tools
 

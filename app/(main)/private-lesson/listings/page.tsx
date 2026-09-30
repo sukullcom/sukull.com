@@ -1,9 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { getServerUser } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import { getOpenListings, isTeacher } from "@/db/queries";
-import UserCreditsDisplay from "@/components/user-credits-display";
 import { ListingsFilters } from "./_components/listings-filters";
 import { ListingCard } from "./_components/listing-card";
 import { Button } from "@/components/ui/button";
@@ -18,9 +16,8 @@ type SearchParams = {
 };
 
 /**
- * Talep ilanları — yalnızca onaylı eğitmenler tüm açık ilanları burada görür
- * ve teklif verebilir. Öğrenciler yönlendirilir; kendi ilanları için
- * `/private-lesson/my-listings` kullanılır (gizlilik + doğru ürün akışı).
+ * Açık talep ilanları — misafir ve öğrenci tüm yayındaki ilanları görür
+ * (iletişim yok). Onaylı eğitmen: branş eşleşmeli teklif görünümü.
  */
 export default async function ListingsIndexPage({
   searchParams,
@@ -28,12 +25,7 @@ export default async function ListingsIndexPage({
   searchParams: SearchParams;
 }) {
   const user = await getServerUser();
-  if (!user) redirect("/login");
-
-  const viewerIsTeacher = await isTeacher(user.id);
-  if (!viewerIsTeacher) {
-    redirect("/private-lesson/my-listings");
-  }
+  const viewerIsTeacher = user ? await isTeacher(user.id) : false;
 
   const listings = await getOpenListings({
     subject: searchParams.subject || undefined,
@@ -44,13 +36,11 @@ export default async function ListingsIndexPage({
       | undefined) || undefined,
     city: searchParams.city || undefined,
     limit: 50,
-    viewerTeacherId: user.id,
+    viewerTeacherId: viewerIsTeacher && user ? user.id : undefined,
   });
 
   return (
     <div className="max-w-5xl mx-auto px-3 sm:px-6 pb-10">
-      <UserCreditsDisplay className="mb-4" />
-
       <div className="flex items-start sm:items-center justify-between gap-3 mb-4 flex-col sm:flex-row">
         <div>
           <div className="flex items-center gap-3 mb-1">
@@ -62,16 +52,21 @@ export default async function ListingsIndexPage({
             </h1>
           </div>
           <p className="text-sm text-muted-foreground">
-            Yayında olan talep ilanları; yalnızca başvurunda seçtiğin ders
-            konularıyla eşleşen ilanlar listelenir. Teklif vermek 1 kullanım hakkıdır; onay
-            sonrası öğrencinin kayıtlı iletişim bilgileri sohbet üzerinden
-            paylaşılır. İlan başına en fazla 4 teklif.
+            {viewerIsTeacher
+              ? "Yayında olan talep ilanları; yalnızca başvurunda seçtiğin ders konularıyla eşleşen ilanlar listelenir. Teklif ücretsizdir; onay sonrası öğrencinin kayıtlı iletişim bilgileri sohbet üzerinden paylaşılır. İlan başına en fazla 4 teklif."
+              : "Yayındaki öğrenci talep ilanları. İletişim bilgileri yalnızca sohbet veya teklif sonrası görünür. Kendi ilanını açmak ücretsizdir; yayın için yönetici onayı gerekir."}
           </p>
         </div>
         <div className="flex gap-2 w-full sm:w-auto">
-          <Button asChild variant="primaryOutline" size="sm">
-            <Link href="/private-lesson/teacher-dashboard">Eğitmen paneli</Link>
-          </Button>
+          {viewerIsTeacher ? (
+            <Button asChild variant="primaryOutline" size="sm">
+              <Link href="/private-lesson/teacher-dashboard">Eğitmen paneli</Link>
+            </Button>
+          ) : (
+            <Button asChild variant="primary" size="sm">
+              <Link href="/private-lesson/listings/new">İlan aç</Link>
+            </Button>
+          )}
         </div>
       </div>
 

@@ -1,5 +1,4 @@
 import { getServerUser } from "@/lib/auth";
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import { isTeacher } from "@/db/queries/applications";
 import { Button } from "@/components/ui/button";
@@ -20,9 +19,7 @@ export const dynamic = "force-dynamic";
  */
 export default async function PrivateLessonPage() {
   const user = await getServerUser();
-  if (!user) redirect("/login");
-
-  const teacherMode = await isTeacher(user.id);
+  const teacherMode = user ? await isTeacher(user.id) : false;
 
   return (
     <div className="mx-auto flex w-full max-w-[960px] flex-1 flex-row px-3 lg:px-0">
@@ -32,8 +29,9 @@ export default async function PrivateLessonPage() {
             Özel ders pazarı
           </h1>
           <p className="mt-3 max-w-2xl text-base text-muted-foreground sm:text-lg">
-            Öğrenciler eğitmen arar veya ilan açar; eğitmenler teklif verir, mesajlaşır.
-            İkisini de buradan yürütürsün.
+            Eğitmenleri ve açık ilanları kayıtsız inceleyebilirsin. İlan açmak,
+            mesaj yazmak veya teklif vermek için kısa bir kimlik yeter; kurs
+            kaydı gerekmez.
           </p>
         </header>
 
@@ -59,8 +57,8 @@ export default async function PrivateLessonPage() {
             <CardContent className="space-y-4 text-sm leading-relaxed text-muted-foreground">
               <p>
                 Eğitmen listesinde gezebilir veya ne aradığını yazarak ilan açabilirsin.
-                İlgilenenler teklif gönderebilir (ilan başına en fazla dört). Mesaj için
-                paketten kullanım hakkı kullanırsın.
+                İlgilenenler teklif gönderebilir (ilan başına en fazla dört). Mesaj ve
+                teklif ücretsizdir; iletişim bilgileri yalnızca sohbet açıldıktan sonra görünür.
               </p>
               <p className="text-xs text-muted-foreground/90">
                 Merak ettiğin branşa bir göz atmak çoğu zaman yeterli olur.
@@ -91,8 +89,8 @@ export default async function PrivateLessonPage() {
                 Ders veriyorsan…
               </CardTitle>
               <CardDescription className="text-base text-muted-foreground">
-                Başvurun onaylanınca öğrenciler yazabilir; açık ilanlara sen de teklif
-                verirsin.
+                Eğitmen olmak için hesap ve yönetici onayı gerekir. Onaydan sonra
+                öğrenciler yazabilir; açık ilanlara ücretsiz teklif verirsin.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4 text-sm leading-relaxed text-muted-foreground">

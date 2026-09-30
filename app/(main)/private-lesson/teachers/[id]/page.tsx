@@ -1,4 +1,4 @@
-import { redirect, notFound } from "next/navigation";
+import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { getServerUser } from "@/lib/auth";
@@ -13,7 +13,6 @@ import {
 } from "@/db/queries/teacher-reviews";
 import { MessageTeacherButton } from "@/components/private-lesson/message-teacher-button";
 import { TeacherReviewsSection } from "@/components/teacher-reviews-section";
-import UserCreditsDisplay from "@/components/user-credits-display";
 import { normalizeAvatarUrl } from "@/utils/avatar";
 import {
   Banknote,
@@ -37,26 +36,27 @@ export default async function TeacherDetailPage({
   searchParams?: { review?: string };
 }) {
   const user = await getServerUser();
-  if (!user) redirect("/login");
 
   const teacher = await getTeacherProfile(params.id);
   if (!teacher) notFound();
 
-  const unlock = await getMessageUnlock(user.id, teacher.id);
-  const isSelf = user.id === teacher.id;
+  const unlock = user ? await getMessageUnlock(user.id, teacher.id) : null;
+  const isSelf = Boolean(user && user.id === teacher.id);
 
   const [meRow, aggregate, firstReviews] = await Promise.all([
-    db.query.users.findFirst({
-      where: eq(users.id, user.id),
-      columns: { role: true },
-    }),
+    user
+      ? db.query.users.findFirst({
+          where: eq(users.id, user.id),
+          columns: { role: true },
+        })
+      : Promise.resolve(undefined),
     getTeacherReviewAggregate(teacher.id),
     listTeacherReviewsPage(teacher.id, { limit: 10, cursor: null }),
   ]);
   const myRole = meRow?.role ?? "user";
 
   const reviewGate =
-    !isSelf && myRole !== "teacher" && myRole !== "admin"
+    user && !isSelf && myRole !== "teacher" && myRole !== "admin"
       ? await getCanReviewOverview(user.id, teacher.id)
       : null;
 
@@ -64,8 +64,6 @@ export default async function TeacherDetailPage({
 
   return (
     <div className="max-w-4xl mx-auto px-3 sm:px-6 pb-10">
-      <UserCreditsDisplay className="mb-4" />
-
       <Link
         href="/private-lesson/teachers"
         className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4"
@@ -109,15 +107,15 @@ export default async function TeacherDetailPage({
                   teacherName={teacher.name ?? undefined}
                   alreadyUnlocked={Boolean(unlock)}
                   existingChatId={unlock?.chatId ?? null}
+                  isAuthenticated={Boolean(user)}
                   fullWidth
                   variant="primary"
                   size="lg"
                 />
                 {!unlock && (
                   <p className="text-[11px] text-muted-foreground mt-2">
-                    Tek sefer 1 kullanım hakkı; iade edilmez. Onayladığında
-                    eğitmenin ve senin kayıtlı iletişim bilgileriniz sohbet
-                    ekranında paylaşılır.
+                    Sohbet ücretsiz açılır. Onayladığında eğitmenin ve senin
+                    kayıtlı iletişim bilgileriniz sohbet ekranında paylaşılır.
                   </p>
                 )}
               </div>

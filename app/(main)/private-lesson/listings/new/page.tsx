@@ -1,7 +1,5 @@
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getServerUser } from "@/lib/auth";
-import UserCreditsDisplay from "@/components/user-credits-display";
 import { ArrowLeft, Megaphone } from "lucide-react";
 import { NewListingForm } from "./_components/new-listing-form";
 
@@ -9,17 +7,17 @@ export const dynamic = "force-dynamic";
 
 export default async function NewListingPage() {
   const user = await getServerUser();
-  if (!user) redirect("/login");
 
   return (
     <div className="max-w-2xl mx-auto px-3 sm:px-6 pb-10">
-      <UserCreditsDisplay className="mb-4" />
-
       <Link
-        href="/private-lesson/my-listings"
+        href={
+          user ? "/private-lesson/my-listings" : "/private-lesson/listings"
+        }
         className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4"
       >
-        <ArrowLeft className="h-4 w-4" /> İlanlarım
+        <ArrowLeft className="h-4 w-4" />{" "}
+        {user ? "İlanlarım" : "İlanlar"}
       </Link>
 
       <div className="mb-4">
@@ -32,10 +30,10 @@ export default async function NewListingPage() {
           </h1>
         </div>
         <p className="text-sm text-muted-foreground">
-          Tüm zorunlu alanları eksiksiz doldur. Bir ilana en fazla 4 eğitmen teklif
-          gönderebilir; teklif almak senin için ücretsizdir. Teklif veren
-          eğitmenler, kaydettiğin cep telefonuna ve ilgili bilgilere sohbet
-          üzerinden erişebilir.
+          Tüm zorunlu alanları eksiksiz doldur. İlan açmak ücretsizdir; yayın
+          için yönetici onayı gerekir. Bir ilana en fazla 4 eğitmen teklif
+          gönderebilir. Teklif veren eğitmenler, kaydettiğin cep telefonuna ve
+          ilgili bilgilere sohbet üzerinden erişebilir.
         </p>
       </div>
 

@@ -1,18 +1,15 @@
 /**
  * Student ↔ teacher messaging, built on top of the existing study-buddy
- * chat tables. A student must first "unlock" a thread with a teacher
- * by spending one credit (`unlockMessageThread`). After that the same
- * chat row is reused forever — no per-message charge.
+ * chat tables. A student first "unlocks" a thread with a teacher
+ * (`unlockMessageThread`). After that the same chat row is reused forever.
  */
 import { and, eq, inArray, sql } from "drizzle-orm";
 import db from "@/db/drizzle";
 import {
-  creditUsage,
   messageUnlocks,
   studyBuddyChats,
   studyBuddyMessages,
   teacherApplications,
-  userCredits,
   users,
 } from "@/db/schema";
 import { queryResultRows } from "@/lib/query-result";
@@ -175,15 +172,13 @@ export type UnlockResult =
       code:
         | "self_unlock_forbidden"
         | "teacher_not_found"
-        | "insufficient_credits"
         | "unknown";
       message?: string;
     };
 
 /**
- * Consume one credit from the student and open (or re-open) a chat
- * with the given teacher. Idempotent: if the pair was already
- * unlocked, returns the existing chatId without charging again.
+ * Open (or re-open) a chat with the given teacher. Idempotent: if the
+ * pair was already unlocked, returns the existing chatId.
  */
 export async function unlockMessageThread(input: {
   studentId: string;
@@ -230,42 +225,12 @@ export async function unlockMessageThread(input: {
         return { ok: false as const, code: "teacher_not_found" as const };
       }
 
-      const creditResult = await tx
-        .update(userCredits)
-        .set({
-          usedCredits: sql`${userCredits.usedCredits} + 1`,
-          availableCredits: sql`${userCredits.availableCredits} - 1`,
-          updatedAt: new Date(),
-        })
-        .where(
-          and(
-            eq(userCredits.userId, input.studentId),
-            sql`${userCredits.availableCredits} >= 1`,
-          ),
-        )
-        .returning({ id: userCredits.id });
-
-      if (creditResult.length === 0) {
-        return {
-          ok: false as const,
-          code: "insufficient_credits" as const,
-        };
-      }
-
       const chatId = await ensureChat(tx, input.studentId, input.teacherId);
 
       await tx.insert(messageUnlocks).values({
         studentId: input.studentId,
         teacherId: input.teacherId,
         chatId,
-      });
-
-      await tx.insert(creditUsage).values({
-        userId: input.studentId,
-        reason: "message_unlock",
-        creditsUsed: 1,
-        refType: "teacher",
-        refId: input.teacherId,
       });
 
       return { ok: true as const, chatId, alreadyUnlocked: false };
@@ -328,10 +293,9 @@ async function ensureChat(
 }
 
 /**
- * When a teacher spends 1 credit on a listing offer, we open the same
- * student–teacher 1:1 thread as a paid message unlock (no second credit).
- * The student can reply without accepting the offer; either side can use
- * the thread immediately.
+ * When a teacher submits a listing offer, we open the same student–teacher
+ * 1:1 thread as a message unlock. The student can reply without accepting
+ * the offer; either side can use the thread immediately.
  */
 export async function ensureUnlockedThreadForOfferTx(
   tx: TxClient,

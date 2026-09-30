@@ -1,6 +1,9 @@
 import { getServerUser } from "@/lib/auth";
 import { isTeacher } from "@/db/queries/applications";
-import { PrivateLessonNav, type PrivateLessonNavItem } from "./private-lesson-nav";
+import {
+  PrivateLessonNav,
+  type PrivateLessonNavItem,
+} from "./private-lesson-nav";
 
 const TEACHER_ONLY: PrivateLessonNavItem[] = [
   { name: "Panelim", path: "/private-lesson/teacher-dashboard", icon: "dashboard" },
@@ -20,7 +23,14 @@ const STUDENT_ITEMS: PrivateLessonNavItem[] = [
 const SHARED_ITEMS: PrivateLessonNavItem[] = [
   { name: "İlanlar", path: "/private-lesson/listings", icon: "megaphone" },
   { name: "Mesajlar", path: "/private-lesson/messages", icon: "message" },
-  { name: "Paketler", path: "/private-lesson/credits", icon: "credit" },
+];
+
+const GUEST_ITEMS: PrivateLessonNavItem[] = [
+  { name: "Eğitmenler", path: "/private-lesson/teachers", icon: "users" },
+  { name: "İlanlar", path: "/private-lesson/listings", icon: "megaphone" },
+  { name: "İlan Aç", path: "/private-lesson/listings/new", icon: "plus" },
+  { name: "Eğitmen ol", path: "/private-lesson/give", icon: "graduation" },
+  { name: "Giriş yap", path: "/login?next=/private-lesson", icon: "login" },
 ];
 
 function mergePrivateLessonNav(teacherMode: boolean): PrivateLessonNavItem[] {
@@ -43,11 +53,19 @@ function mergePrivateLessonNav(teacherMode: boolean): PrivateLessonNavItem[] {
 }
 
 /**
- * Özel ders navigasyonu — eğitmen ve öğrenci rolleri birlikteyse tek menüde birleşir.
+ * Özel ders navigasyonu — misafir gezinti + eğitmen/öğrenci rolleri.
  */
 export default async function PrivateLessonHeader() {
   const user = await getServerUser();
-  if (!user) return null;
+  if (!user) {
+    return (
+      <PrivateLessonNav
+        items={GUEST_ITEMS}
+        isTeacherMode={false}
+        showStudentListingHighlight={false}
+      />
+    );
+  }
 
   const teacherMode = await isTeacher(user.id);
   const items = mergePrivateLessonNav(teacherMode);

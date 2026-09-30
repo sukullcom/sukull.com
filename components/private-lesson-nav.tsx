@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  CreditCard,
   ClipboardList,
+  GraduationCap,
   LayoutDashboard,
+  LogIn,
   Megaphone,
   MessageCircle,
+  Plus,
   Settings,
   Users,
   type LucideIcon,
@@ -19,8 +21,10 @@ export type PrivateLessonIconKey =
   | "users"
   | "clipboard"
   | "message"
-  | "credit"
-  | "settings";
+  | "settings"
+  | "graduation"
+  | "login"
+  | "plus";
 
 export type PrivateLessonNavItem = {
   name: string;
@@ -34,8 +38,10 @@ const ICON_MAP: Record<PrivateLessonIconKey, LucideIcon> = {
   users: Users,
   clipboard: ClipboardList,
   message: MessageCircle,
-  credit: CreditCard,
   settings: Settings,
+  graduation: GraduationCap,
+  login: LogIn,
+  plus: Plus,
 };
 
 /**

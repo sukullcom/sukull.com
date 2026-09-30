@@ -1,7 +1,7 @@
 /**
  * GET  /api/private-lesson/listings
- *   Yalnızca onaylı eğitmenler açık talep ilanlarını listeler (branş/sınıf
- *   eşleşmesi `viewerTeacherId` ile). Öğrenci: 403.
+ *   Açık talep ilanları. Misafir ve öğrenci tüm açık ilanları görür
+ *   (iletişim yok). Onaylı eğitmen: branş/sınıf eşleşmesi (`viewerTeacherId`).
  *   Query params: ?subject=&city=&lessonMode=&limit=&offset=
  *
  * POST /api/private-lesson/listings
@@ -12,6 +12,7 @@
  * /listings/[id]/offers.
  */
 import { NextRequest, NextResponse } from "next/server";
+import { getServerUser } from "@/lib/auth";
 import { getRequestLogger } from "@/lib/logger";
 import { RATE_LIMITS } from "@/lib/rate-limit-db";
 import { secureApi } from "@/lib/api-middleware";
@@ -34,23 +35,17 @@ import { eq } from "drizzle-orm";
 
 const VALID_LESSON_MODES: ListingLessonMode[] = ["online", "in_person", "both"];
 
-export const GET = secureApi.authRateLimited(
+export const GET = secureApi.rateLimited(
   {
     bucket: "listings-list",
-    keyKind: "user",
+    keyKind: "ip",
     ...RATE_LIMITS.listingsRead,
   },
-  async (request, user) => {
+  async (request) => {
     try {
-      if (!(await isTeacher(user.id))) {
-        return NextResponse.json(
-          {
-            error:
-              "Tüm talep ilanlarını yalnızca onaylı eğitmenler görüntüleyebilir.",
-          },
-          { status: 403 },
-        );
-      }
+      const user = await getServerUser();
+      const viewerTeacherId =
+        user && (await isTeacher(user.id)) ? user.id : undefined;
 
       const { searchParams } = new URL(request.url);
       const subject = searchParams.get("subject") ?? undefined;
@@ -69,7 +64,7 @@ export const GET = secureApi.authRateLimited(
         lessonMode,
         limit,
         offset,
-        viewerTeacherId: user.id,
+        viewerTeacherId,
       });
 
       return NextResponse.json({ listings: rows });

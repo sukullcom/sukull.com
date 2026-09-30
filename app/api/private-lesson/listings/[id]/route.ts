@@ -1,22 +1,22 @@
 /**
  * GET    /api/private-lesson/listings/[id]
- *   Any authenticated user can read a single listing. For the owner we
- *   include offers (teacher bids) so the student can accept/reject.
+ *   Open listings are readable without a session (no offers / contact).
+ *   Owner gets offers. pending_review / rejected: owner or admin only.
  *
  * PATCH  /api/private-lesson/listings/[id]
  *   Owner-only: close the listing. (Full field edit is intentionally
- *   not exposed yet — price haggling happens via offers, so editing a
- *   live listing mid-flight would confuse teachers who already paid a
- *   credit to bid.)
+ *   not exposed yet — price haggling happens via offers.)
  *
  * DELETE /api/private-lesson/listings/[id]
  *   Owner-only, soft-close. We keep the row for audit/credit history.
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
+import { isAdmin } from "@/lib/admin";
 import { getRequestLogger } from "@/lib/logger";
 import {
   checkRateLimit,
+  getClientIp,
   RATE_LIMITS,
   rateLimitHeaders,
 } from "@/lib/rate-limit-db";
@@ -31,25 +31,18 @@ import { isTrustedApiOrigin } from "@/lib/same-origin-api";
 type RouteContext = { params: { id: string } };
 
 export async function GET(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: RouteContext,
 ) {
   try {
     const user = await getServerUser();
-    if (!user) {
-      return NextResponse.json(
-        { error: "Giriş yapmanız gerekiyor" },
-        { status: 401 },
-      );
-    }
 
-    // Per-user read cap. `getListingById` + `getListingWithOffers` run
-    // uncached joins across listings/offers/users; without a ceiling a
-    // logged-in scraper can iterate every id at wire speed. 90/min is
-    // generous for a student refreshing their own offers while bidders
-    // come in, but caps the pathological case.
+    // Per-user or per-IP read cap. `getListingById` + `getListingWithOffers`
+    // run uncached joins; without a ceiling a scraper can iterate every id.
     const rl = await checkRateLimit({
-      key: `listingsRead:user:${user.id}`,
+      key: user
+        ? `listingsRead:user:${user.id}`
+        : `listingsRead:ip:${getClientIp(request)}`,
       ...RATE_LIMITS.listingsRead,
     });
     if (!rl.allowed) {
@@ -72,8 +65,29 @@ export async function GET(
       );
     }
 
+    const isOwner = Boolean(user && listing.studentId === user.id);
+    if (
+      (listing.status === "pending_review" || listing.status === "rejected") &&
+      !isOwner
+    ) {
+      const admin = user ? await isAdmin() : false;
+      if (!admin) {
+        return NextResponse.json(
+          { error: "İlan bulunamadı" },
+          { status: 404 },
+        );
+      }
+    }
+
+    if (!user && listing.status !== "open") {
+      return NextResponse.json(
+        { error: "İlan bulunamadı" },
+        { status: 404 },
+      );
+    }
+
     // Owner gets the listing + all offers (so they can accept/reject).
-    if (listing.studentId === user.id) {
+    if (isOwner) {
       const full = await getListingWithOffers(id);
       return NextResponse.json({ listing: full });
     }

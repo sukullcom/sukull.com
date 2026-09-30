@@ -16,6 +16,10 @@ import {
   LISTING_PREFERRED_HOURS_MIN_LEN,
 } from "@/lib/private-lesson-listings";
 import { isValidTurkeyMobileForProfile } from "@/lib/teacher-profile-mutation";
+import {
+  fetchAfterMarketplaceIdentity,
+  useMarketplaceIdentityGate,
+} from "@/components/private-lesson/marketplace-identity-gate";
 
 /**
  * Talep ilanı: konu, sınıf, bütçe, saatler, açıklama ve cep telefonu
@@ -24,6 +28,7 @@ import { isValidTurkeyMobileForProfile } from "@/lib/teacher-profile-mutation";
 export function NewListingForm() {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
+  const { ensureIdentity, gate } = useMarketplaceIdentityGate();
 
   const [subject, setSubject] = useState("");
   const [grade, setGrade] = useState("");
@@ -74,33 +79,35 @@ export function NewListingForm() {
 
     setSubmitting(true);
     try {
-      const token = await mintCsrfToken();
-      if (!token) {
-        toast.error("Güvenlik doğrulaması başarısız. Sayfayı yenileyip tekrar dene.");
-        return;
-      }
-      const res = await fetch("/api/private-lesson/listings", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          ...csrfHeader(token),
-        },
-        body: JSON.stringify({
-          subject,
-          grade,
-          title: title.trim(),
-          description: description.trim(),
-          lessonMode,
-          city: city.trim() || null,
-          district: district.trim() || null,
-          budgetMin: bMin,
-          budgetMax: bMax,
-          preferredHours: preferredHours.trim(),
-          contactPhone: contactPhone.trim(),
-        }),
-      });
+      const res = await fetchAfterMarketplaceIdentity(async () => {
+        const token = await mintCsrfToken();
+        if (!token) {
+          throw new Error("csrf");
+        }
+        return fetch("/api/private-lesson/listings", {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            ...csrfHeader(token),
+          },
+          body: JSON.stringify({
+            subject,
+            grade,
+            title: title.trim(),
+            description: description.trim(),
+            lessonMode,
+            city: city.trim() || null,
+            district: district.trim() || null,
+            budgetMin: bMin,
+            budgetMax: bMax,
+            preferredHours: preferredHours.trim(),
+            contactPhone: contactPhone.trim(),
+          }),
+        });
+      }, ensureIdentity);
       const data = await res.json().catch(() => ({}));
+      if (res.status === 401) return;
       if (!res.ok) {
         toast.error(data.error || "İlan oluşturulamadı");
         return;
@@ -108,6 +115,10 @@ export function NewListingForm() {
       toast.success("İlan gönderildi; yayın için yönetici onayı bekleniyor.");
       router.push(`/private-lesson/listings/${data.listing.id}?yeni=1`);
     } catch (error) {
+      if (error instanceof Error && error.message === "csrf") {
+        toast.error("Güvenlik doğrulaması başarısız. Sayfayı yenileyip tekrar dene.");
+        return;
+      }
       clientLogger.error({
         message: "create listing failed",
         error,
@@ -134,9 +145,8 @@ export function NewListingForm() {
           <strong className="font-semibold">İletişim ve gizlilik:</strong>{" "}
           Girdiğin cep telefonu, profilindeki numara ile birleştirilir ve{" "}
           <strong>teklif veren eğitmenlerle</strong> (sohbet ve teklif ekranı
-          üzerinden) paylaşılır. Teklif veya mesaj kilidi sonrası karşı
-          tarafın e-posta ve telefon bilgileri de sohbet içinde görünür; kullanım hakkı
-          kullanıldıktan sonra iade yapılmaz.
+          üzerinden) paylaşılır. Teklif veya sohbet sonrası karşı tarafın
+          e-posta ve telefon bilgileri de sohbet içinde görünür.
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -367,6 +377,7 @@ export function NewListingForm() {
           "İlanı Gönder"
         )}
       </Button>
+      {gate}
     </form>
   );
 }

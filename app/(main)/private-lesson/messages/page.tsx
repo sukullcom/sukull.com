@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { getServerUser } from "@/lib/auth";
 import { listStudentConversations } from "@/db/queries";
-import UserCreditsDisplay from "@/components/user-credits-display";
 import { Button } from "@/components/ui/button";
 import { normalizeAvatarUrl } from "@/utils/avatar";
 import { MessageCircle } from "lucide-react";
@@ -18,8 +17,6 @@ export default async function MessagesIndexPage() {
 
   return (
     <div className="max-w-3xl mx-auto px-3 sm:px-6 pb-10">
-      <UserCreditsDisplay className="mb-4" />
-
       <div className="mb-4">
         <div className="flex items-center gap-3 mb-1">
           <div className="p-2 bg-suk-brand-soft rounded-lg">
@@ -30,11 +27,9 @@ export default async function MessagesIndexPage() {
           </h1>
         </div>
         <p className="text-sm text-muted-foreground">
-          Eğitmenlerle veya öğrencilerle açılmış sohbetlerin. Öğrenci olarak yeni
-          sohbet açmak için eğitmen rehberinden bir profile tek seferlik 1 kullanım hakkı
-          kullanılır; onay sonrası tarafların kayıtlı e-posta ve telefon bilgileri
-          sohbet üzerinde paylaşılır. Sonrasında mesajlaşma ücretsizdir; harcanan
-          hak iade edilmez.
+          Eğitmenlerle veya öğrencilerle açılmış sohbetlerin. Yeni sohbet
+          eğitmen rehberinden ücretsiz açılır; ardından tarafların kayıtlı
+          e-posta ve telefon bilgileri sohbet üzerinde paylaşılır.
         </p>
       </div>
 

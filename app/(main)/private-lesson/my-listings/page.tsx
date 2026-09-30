@@ -2,7 +2,6 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getServerUser } from "@/lib/auth";
 import { getMyListings } from "@/db/queries";
-import UserCreditsDisplay from "@/components/user-credits-display";
 import { ListingCard } from "../listings/_components/listing-card";
 import { Button } from "@/components/ui/button";
 import { ClipboardList, Plus } from "lucide-react";
@@ -17,8 +16,6 @@ export default async function MyListingsPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-3 sm:px-6 pb-10">
-      <UserCreditsDisplay className="mb-4" />
-
       <div className="flex items-start sm:items-center justify-between gap-3 mb-4 flex-col sm:flex-row">
         <div>
           <div className="flex items-center gap-3 mb-1">

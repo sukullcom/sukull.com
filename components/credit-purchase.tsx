@@ -296,12 +296,9 @@ export default function CreditPurchase() {
           Pazaryeri hizmet paketi
         </h1>
         <p className="mx-auto max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-          Satın aldığınız paket, özel ders pazarında <strong>dijital platform hizmeti</strong>{" "}
-          (mesajlaşma kanalı ve teklif süreçleri) için geçerli <b className="text-foreground">kullanım hakları</b>{" "}
-          sağlar. Öğrenciler bir eğitmenle sohbeti açmak için{" "}
-          <b className="text-foreground">1 kullanım hakkı</b>, eğitmenler bir talep ilanına teklif
-          vermek için <b className="text-foreground">1 kullanım hakkı</b> kullanır. Daha büyük paket
-          aldıkça hak başına birim fiyat düşer.
+          Satın aldığınız paket, hesabınıza dijital platform <b className="text-foreground">kullanım hakları</b>{" "}
+          ekler. Özel ders pazarında ilan, mesaj ve teklif artık hak harcamaz;
+          bu bakiye diğer ücretli ürünler içindir.
         </p>
       </div>
 

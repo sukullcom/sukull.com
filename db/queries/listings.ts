@@ -2,8 +2,8 @@
  * Student listings ("İlanlar") — the supply-side of the marketplace.
  *
  * Read helpers here only concern themselves with shapes for the UI.
- * Mutations that charge credit (teacher submitting an offer, student
- * unlocking a chat) live in `./offers.ts` and `./messages.ts` and
+ * Mutations that open a chat (teacher submitting an offer, student
+ * unlocking a thread) live in `./offers.ts` and `./messages.ts` and
  * always run inside a DB transaction.
  */
 import { and, desc, eq, exists, inArray, or, sql } from "drizzle-orm";
@@ -56,7 +56,9 @@ export type ListingWithOffersRow = ListingRow & {
 };
 
 // ---------------------------------------------------------------------------
-// Browsing (eğitmen): açık talep ilanları — öğrenci tarafı `/my-listings`.
+// Browsing: açık talep ilanları — misafir/öğrenci tüm açık ilanlar;
+// eğitmen tarafı branş eşleşmesi (`viewerTeacherId`). Öğrenci kendi
+// ilanları için `/my-listings`.
 // ---------------------------------------------------------------------------
 
 export type ListingFilters = {

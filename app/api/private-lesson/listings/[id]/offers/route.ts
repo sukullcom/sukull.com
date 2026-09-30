@@ -5,9 +5,8 @@
  *     total count + cap, so the browse UI can show "3/4 teklif".
  *
  * POST /api/private-lesson/listings/[id]/offers
- *   Teacher submits a bid. Atomic: 1 credit is deducted and an offer
- *   row is inserted. The 4-offer cap is enforced both at the
- *   application layer and by a DB trigger (see migration 0026).
+ *   Teacher submits a bid. Atomic: an offer row is inserted. The 4-offer
+ *   cap is enforced both at the application layer and by a DB trigger.
  */
 import { NextRequest, NextResponse } from "next/server";
 import { getServerUser } from "@/lib/auth";
@@ -23,7 +22,6 @@ import {
   getListingById,
   getOffersForListing,
   getOffersForListingByTeacher,
-  hasAvailableCredits,
   hasTeacherOfferedOnListing,
   isTeacher,
   MAX_OFFERS_PER_LISTING,
@@ -163,12 +161,7 @@ export async function POST(
         ? body.note.trim().slice(0, 500)
         : null;
 
-    // Zaten teklif varsa kullanım hakkı gerekmez (409). Yeni teklif için hak
-    // yoksa 402 — rate limit'ten önce; yoksa denemeler 429'a düşer.
-    const [alreadyOffered, hasCredits] = await Promise.all([
-      hasTeacherOfferedOnListing(id, user.id),
-      hasAvailableCredits(user.id, 1),
-    ]);
+    const alreadyOffered = await hasTeacherOfferedOnListing(id, user.id);
     if (alreadyOffered) {
       return NextResponse.json(
         { error: "Bu ilana zaten teklif verdiniz" },
@@ -176,17 +169,6 @@ export async function POST(
       );
     }
 
-    if (!hasCredits) {
-      return NextResponse.json(
-        { error: "Teklif vermek için en az 1 kullanım hakkın olmalı. Paket satın alıp tekrar dene." },
-        { status: 402 },
-      );
-    }
-
-    // Money flow: each offer attempt debits 1 credit inside the
-    // transaction downstream. Fail-closed on limiter outage keeps a
-    // stuck retry loop from spending a teacher's balance while the DB
-    // is already in trouble.
     const rl = await checkRateLimit({
       key: `listingOffer:user:${user.id}`,
       ...RATE_LIMITS.listingOffer,
@@ -242,7 +224,6 @@ function offerErrorToHttp(
     | "listing_closed"
     | "offer_cap_reached"
     | "already_offered"
-    | "insufficient_credits"
     | "self_offer_forbidden"
     | "listing_subject_mismatch"
     | "try_again"
@@ -267,8 +248,6 @@ function offerErrorToHttp(
       return [409, "Bu ilana en fazla 4 teklif verilebilir"];
     case "already_offered":
       return [409, "Bu ilana zaten teklif verdiniz"];
-    case "insufficient_credits":
-      return [402, "Yetersiz kullanım hakkı. Hizmet paketi satın alıp tekrar deneyin."];
     case "self_offer_forbidden":
       return [400, "Kendi ilanınıza teklif veremezsiniz"];
     default:

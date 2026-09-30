@@ -1,4 +1,4 @@
-import { redirect, notFound } from "next/navigation";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { getServerUser } from "@/lib/auth";
@@ -11,7 +11,6 @@ import {
   teacherMatchesListingSubjects,
 } from "@/db/queries";
 import { isAdmin } from "@/lib/admin";
-import UserCreditsDisplay from "@/components/user-credits-display";
 import { normalizeAvatarUrl } from "@/utils/avatar";
 import {
   ArrowLeft,
@@ -43,7 +42,6 @@ export default async function ListingDetailPage({
   searchParams?: { yeni?: string | string[] };
 }) {
   const user = await getServerUser();
-  if (!user) redirect("/login");
 
   const listingId = Number.parseInt(params.id, 10);
   if (!Number.isFinite(listingId) || listingId <= 0) notFound();
@@ -51,10 +49,10 @@ export default async function ListingDetailPage({
   const base = await getListingById(listingId);
   if (!base) notFound();
 
-  const isOwner = base.studentId === user.id;
+  const isOwner = Boolean(user && base.studentId === user.id);
   const showNewListingNudge =
     isOwner && firstSearchParam(searchParams?.yeni) === "1";
-  const admin = await isAdmin();
+  const admin = user ? await isAdmin() : false;
   if (
     (base.status === "pending_review" || base.status === "rejected") &&
     !isOwner &&
@@ -62,14 +60,18 @@ export default async function ListingDetailPage({
   ) {
     notFound();
   }
+  if (!user && base.status !== "open") {
+    notFound();
+  }
 
-  const listingViewerIsTeacher = await isTeacher(user.id);
+  const listingViewerIsTeacher = user ? await isTeacher(user.id) : false;
   const teacherOffered =
-    listingViewerIsTeacher && !isOwner
+    listingViewerIsTeacher && user && !isOwner
       ? await hasTeacherOfferedOnListing(listingId, user.id)
       : false;
 
   if (
+    user &&
     base.status === "open" &&
     listingViewerIsTeacher &&
     !isOwner &&
@@ -87,18 +89,16 @@ export default async function ListingDetailPage({
 
   return (
     <div className="max-w-4xl mx-auto px-3 sm:px-6 pb-10">
-      <UserCreditsDisplay className="mb-4" />
-
       <Link
         href={
-          listingViewerIsTeacher && !isOwner
-            ? "/private-lesson/listings"
-            : "/private-lesson/my-listings"
+          isOwner
+            ? "/private-lesson/my-listings"
+            : "/private-lesson/listings"
         }
         className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4"
       >
         <ArrowLeft className="h-4 w-4" />{" "}
-        {listingViewerIsTeacher && !isOwner ? "İlanlar" : "İlanlarım"}
+        {isOwner ? "İlanlarım" : "İlanlar"}
       </Link>
 
       {showNewListingNudge && (
@@ -119,9 +119,7 @@ export default async function ListingDetailPage({
                 >
                   eğitmen rehberinden
                 </Link>{" "}
-                konuna uygun birine{" "}
-                <span className="font-semibold">1 kullanım hakkı</span> ile mesaj
-                kilidini açarak doğrudan iletişim kurabilirsin.
+                konuna uygun birine doğrudan mesaj yazarak iletişim kurabilirsin.
               </p>
             </div>
           </div>

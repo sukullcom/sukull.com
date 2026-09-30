@@ -1,9 +1,8 @@
 /**
  * POST /api/private-lesson/messages/unlock
- *   Student spends 1 credit to open a 1-on-1 chat with a teacher
- *   (eğitmen rehberinde listelenen profiller). Idempotent: if the pair
- *   has already been unlocked, returns the existing chat without
- *   charging again.
+ *   Student opens a 1-on-1 chat with a teacher (eğitmen rehberinde
+ *   listelenen profiller). Idempotent: if the pair has already been
+ *   unlocked, returns the existing chat.
  *
  *   Body: { teacherId: string }
  *   Response: { chatId: number, alreadyUnlocked: boolean }
@@ -18,7 +17,6 @@ import {
 } from "@/lib/rate-limit-db";
 import {
   getMessageUnlock,
-  hasAvailableCredits,
   unlockMessageThread,
 } from "@/db/queries";
 import { verifyCsrf } from "@/lib/csrf";
@@ -34,7 +32,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Spends 1 credit + reveals counterparty PII once unlocked, so we
+    // Spends no credit; still reveals counterparty PII once unlocked, so we
     // gate it the same way as offer POST: trusted origin + CSRF double
     // submit. Other private-lesson mutations follow this exact pattern.
     if (!isTrustedApiOrigin(request) || !verifyCsrf(request)) {
@@ -83,15 +81,6 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const canPay = await hasAvailableCredits(user.id, 1);
-    if (!canPay) {
-      return NextResponse.json(
-        { error: "Yetersiz kullanım hakkı. Hizmet paketi satın alıp tekrar deneyin." },
-        { status: 402 },
-      );
-    }
-
-    // Yalnızca yeni kilit (satır yok) + kullanılabilir hak varken sayaç artar.
     const rl = await checkRateLimit({
       key: `messageUnlock:user:${user.id}`,
       ...RATE_LIMITS.messageUnlock,
@@ -145,7 +134,6 @@ function unlockErrorToHttp(
   code:
     | "self_unlock_forbidden"
     | "teacher_not_found"
-    | "insufficient_credits"
     | "unknown",
 ): [number, string] {
   switch (code) {
@@ -153,8 +141,6 @@ function unlockErrorToHttp(
       return [400, "Kendinize mesaj gönderemezsiniz"];
     case "teacher_not_found":
       return [404, "Eğitmen bulunamadı"];
-    case "insufficient_credits":
-      return [402, "Yetersiz kullanım hakkı. Hizmet paketi satın alıp tekrar deneyin."];
     default:
       return [500, "İşlem başarısız"];
   }

@@ -9,6 +9,7 @@ import {
   tryExtractTokenExpiry,
 } from '@/utils/supabase/session-cache'
 import { getApiAllowedOrigins } from '@/lib/same-origin-api'
+import { isPublicPrivateLessonPath } from '@/lib/private-lesson-public'
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -247,7 +248,8 @@ function classifyCachePolicy(pathname: string, isAuthenticatedRoute: boolean): C
       pathname.startsWith('/yasal/') ||
       pathname === '/unauthorized' ||
       pathname === '/robots.txt' ||
-      pathname === '/sitemap.xml')
+      pathname === '/sitemap.xml' ||
+      isPublicPrivateLessonPath(pathname))
   ) {
     return 'shared';
   }
@@ -341,6 +343,7 @@ export async function middleware(req: NextRequest) {
     pathname === '/manifest.webmanifest' ||
     pathname === '/robots.txt' ||
     pathname === '/sitemap.xml';
+  const isPrivateLessonBrowse = isPublicPrivateLessonPath(pathname);
   const isPublic =
     pathname === '/' ||
     publicPaths.some((p) => pathname === p || pathname.startsWith(p)) ||
@@ -423,7 +426,7 @@ export async function middleware(req: NextRequest) {
   if (!hasAuthCookie) {
     const response = NextResponse.next({ request: { headers: forwardedHeaders } });
     applyHeaders(response, pathname, requestId, false, req);
-    if (isPublic) return response;
+    if (isPublic || isPrivateLessonBrowse) return response;
 
     const url = req.nextUrl.clone();
     url.pathname = '/login';
@@ -495,6 +498,9 @@ export async function middleware(req: NextRequest) {
   // Protected page — must have a valid session
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
+    if (isPrivateLessonBrowse) {
+      return response;
+    }
     const url = req.nextUrl.clone();
     url.pathname = '/login';
     url.searchParams.set('next', pathname);

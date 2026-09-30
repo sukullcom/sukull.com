@@ -2,18 +2,14 @@ import Link from "next/link";
 import { getServerUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import db from "@/db/drizzle";
-import { eq, desc, and, sql } from "drizzle-orm";
+import { eq, desc, sql } from "drizzle-orm";
 import {
-  creditUsage,
   listingOffers,
   listings,
-  userCredits,
 } from "@/db/schema";
-import UserCreditsDisplay from "@/components/user-credits-display";
 import {
   Handshake,
   Megaphone,
-  Wallet,
   Activity,
   Users,
   Settings,
@@ -22,72 +18,37 @@ import {
 export const dynamic = "force-dynamic";
 
 /**
- * Teacher-side control panel after the marketplace refactor. Replaces
- * the old bookings/availability/income dashboard with:
- *   - Credit balance + shortcut to /credits.
- *   - Summary of active/pending/accepted/rejected offers.
- *   - Recent offers table (with listing titles) for drill-in.
- *   - Quick links to the listings browse and the message inbox.
- *
- * Layout is render-time SQL-heavy; keep it under the (main) cache
- * boundary. The wallet card itself is a client component so we can
- * live-refresh it after a credit purchase.
+ * Eğitmen paneli: teklif özeti, son teklifler, açık ilanlar ve mesajlar.
  */
 export default async function TeacherDashboardPage() {
   const user = await getServerUser();
   if (!user) redirect("/login");
 
-  const [creditsRow, offerBuckets, recentOffers, recentSpends] =
-    await Promise.all([
-      db.query.userCredits.findFirst({
-        where: eq(userCredits.userId, user.id),
-        columns: {
-          totalCredits: true,
-          usedCredits: true,
-          availableCredits: true,
-        },
-      }),
-      db
-        .select({
-          status: listingOffers.status,
-          count: sql<number>`count(*)::int`,
-        })
-        .from(listingOffers)
-        .where(eq(listingOffers.teacherId, user.id))
-        .groupBy(listingOffers.status),
-      db
-        .select({
-          offerId: listingOffers.id,
-          priceProposal: listingOffers.priceProposal,
-          status: listingOffers.status,
-          createdAt: listingOffers.createdAt,
-          listingId: listings.id,
-          listingTitle: listings.title,
-          listingSubject: listings.subject,
-        })
-        .from(listingOffers)
-        .leftJoin(listings, eq(listings.id, listingOffers.listingId))
-        .where(eq(listingOffers.teacherId, user.id))
-        .orderBy(desc(listingOffers.createdAt))
-        .limit(10),
-      db
-        .select({
-          id: creditUsage.id,
-          reason: creditUsage.reason,
-          creditsUsed: creditUsage.creditsUsed,
-          createdAt: creditUsage.createdAt,
-          refId: creditUsage.refId,
-        })
-        .from(creditUsage)
-        .where(
-          and(
-            eq(creditUsage.userId, user.id),
-            eq(creditUsage.reason, "listing_offer"),
-          ),
-        )
-        .orderBy(desc(creditUsage.createdAt))
-        .limit(5),
-    ]);
+  const [offerBuckets, recentOffers] = await Promise.all([
+    db
+      .select({
+        status: listingOffers.status,
+        count: sql<number>`count(*)::int`,
+      })
+      .from(listingOffers)
+      .where(eq(listingOffers.teacherId, user.id))
+      .groupBy(listingOffers.status),
+    db
+      .select({
+        offerId: listingOffers.id,
+        priceProposal: listingOffers.priceProposal,
+        status: listingOffers.status,
+        createdAt: listingOffers.createdAt,
+        listingId: listings.id,
+        listingTitle: listings.title,
+        listingSubject: listings.subject,
+      })
+      .from(listingOffers)
+      .leftJoin(listings, eq(listings.id, listingOffers.listingId))
+      .where(eq(listingOffers.teacherId, user.id))
+      .orderBy(desc(listingOffers.createdAt))
+      .limit(10),
+  ]);
 
   const buckets = {
     pending: 0,
@@ -99,23 +60,19 @@ export default async function TeacherDashboardPage() {
     buckets[row.status] = Number(row.count ?? 0);
   }
 
-  const available = creditsRow?.availableCredits ?? 0;
-
   return (
     <div className="max-w-5xl mx-auto px-3 sm:px-6 pb-10">
-      <UserCreditsDisplay className="mb-4" />
-
       <div className="mb-4">
         <h1 className="text-xl sm:text-2xl font-bold text-foreground">
           Eğitmen paneli
         </h1>
         <p className="text-sm text-muted-foreground">
-          Tekliflerini, kullanım hakkınla karşıladığın mesaj ve teklif hareketlerini ve açık
-          talep ilanlarına erişimi buradan yönet.
+          Tekliflerini, mesajlarını ve açık talep ilanlarını buradan yönet.
+          Teklif vermek ücretsizdir.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
         <SummaryCard
           label="Bekleyen Teklif"
           value={buckets.pending ?? 0}
@@ -133,12 +90,6 @@ export default async function TeacherDashboardPage() {
           value={buckets.rejected ?? 0}
           icon={Users}
           tone="danger"
-        />
-        <SummaryCard
-          label="Kullanılabilir hak"
-          value={available}
-          icon={Wallet}
-          tone="payment"
         />
       </div>
 
@@ -207,38 +158,6 @@ export default async function TeacherDashboardPage() {
           </div>
         )}
       </section>
-
-      <section className="bg-card border rounded-xl overflow-hidden">
-        <div className="px-4 py-3 border-b bg-muted/50">
-          <h2 className="font-semibold text-foreground">Son kullanım hakkı harcamaları</h2>
-        </div>
-        {recentSpends.length === 0 ? (
-          <div className="p-6 text-center text-sm text-muted-foreground">
-            Henüz kullanım hakkı harcamadın.
-          </div>
-        ) : (
-          <div className="divide-y">
-            {recentSpends.map((s) => (
-              <div
-                key={s.id}
-                className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm"
-              >
-                <div className="text-foreground/90">
-                  Teklif gönderimi (ilan #{s.refId ?? "?"})
-                </div>
-                <div className="flex items-center gap-3 text-muted-foreground">
-                  <span className="text-xs">
-                    {new Date(s.createdAt).toLocaleDateString("tr-TR")}
-                  </span>
-                  <span className="font-medium text-suk-danger">
-                    -{s.creditsUsed}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
     </div>
   );
 }
@@ -252,15 +171,13 @@ function SummaryCard({
   label: string;
   value: number;
   icon: React.ComponentType<{ className?: string }>;
-  tone: "warning" | "brand" | "danger" | "payment";
+  tone: "warning" | "brand" | "danger";
 }) {
   const toneClass: Record<typeof tone, string> = {
     warning:
       "bg-suk-warning-soft text-suk-warning-soft-fg border-suk-warning-border",
     brand: "bg-suk-brand-soft text-suk-brand-border border-suk-brand/25",
     danger: "bg-suk-danger-soft text-suk-danger border-suk-danger-line",
-    payment:
-      "bg-suk-payment-soft text-suk-payment-soft-fg border-suk-payment-ring/40",
   };
   return (
     <div className={`border rounded-xl p-3 ${toneClass[tone]}`}>

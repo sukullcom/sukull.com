@@ -8,16 +8,18 @@ import { Loader2, Handshake } from "lucide-react";
 import { clientLogger } from "@/lib/client-logger";
 import { csrfHeader, mintCsrfToken } from "@/lib/mint-csrf-client";
 import { ConfirmActionDialog } from "@/components/confirm-action-dialog";
+import {
+  fetchAfterMarketplaceIdentity,
+  useMarketplaceIdentityGate,
+} from "@/components/private-lesson/marketplace-identity-gate";
 
 /**
  * Teacher-facing form to submit a bid on a student listing.
  *
  * Flow:
  *   1. Teacher enters a price and optional note.
- *   2. We warn once with the credit cost + max-4 cap.
- *   3. POST /listings/[id]/offers → server deducts 1 credit and
- *      writes the offer row (transactional). On 402 we bounce the
- *      teacher to the credits page.
+ *   2. Confirm dialog (contact sharing + 4-offer cap).
+ *   3. POST /listings/[id]/offers → writes the offer and opens chat.
  */
 export function OfferForm({
   listingId,
@@ -33,6 +35,7 @@ export function OfferForm({
   const [note, setNote] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [creditDialogOpen, setCreditDialogOpen] = useState(false);
+  const { ensureIdentity, gate } = useMarketplaceIdentityGate();
 
   const priceNum = Number(price);
   const priceOk = Number.isFinite(priceNum) && priceNum > 0;
@@ -47,14 +50,12 @@ export function OfferForm({
     setCreditDialogOpen(false);
     setSubmitting(true);
     try {
-      const token = await mintCsrfToken();
-      if (!token) {
-        toast.error("Güvenlik doğrulaması başarısız. Sayfayı yenileyip tekrar dene.");
-        return;
-      }
-      const res = await fetch(
-        `/api/private-lesson/listings/${listingId}/offers`,
-        {
+      const res = await fetchAfterMarketplaceIdentity(async () => {
+        const token = await mintCsrfToken();
+        if (!token) {
+          throw new Error("csrf");
+        }
+        return fetch(`/api/private-lesson/listings/${listingId}/offers`, {
           method: "POST",
           credentials: "include",
           headers: {
@@ -65,17 +66,11 @@ export function OfferForm({
             priceProposal: Math.round(priceNum),
             note: note.trim() || null,
           }),
-        },
-      );
+        });
+      }, ensureIdentity);
       const data = await res.json().catch(() => ({}));
 
-      if (res.status === 402) {
-        toast.error(
-          data.error || "Yetersiz kullanım hakkı. Hizmet paketi satın alıp tekrar deneyin.",
-        );
-        router.push("/private-lesson/credits");
-        return;
-      }
+      if (res.status === 401) return;
       if (!res.ok) {
         if (res.status === 503 || res.status === 504) {
           toast.error(
@@ -98,6 +93,10 @@ export function OfferForm({
         router.refresh();
       }
     } catch (error) {
+      if (error instanceof Error && error.message === "csrf") {
+        toast.error("Güvenlik doğrulaması başarısız. Sayfayı yenileyip tekrar dene.");
+        return;
+      }
       clientLogger.error({
         message: "submit offer failed",
         error,
@@ -113,9 +112,8 @@ export function OfferForm({
   const creditDescription = (
     <>
       <span className="block mb-2">
-        Teklif göndermek <span className="font-semibold">1 kullanım hakkı</span> kullanır.
-        Ödeme sonrası hak iade edilmez; sohbet açılır ve öğrenci kabulünü
-        beklemeden mesaj yazabilirsin.
+        Teklif ücretsiz gönderilir. Sohbet açılır ve öğrenci kabulünü beklemeden
+        mesaj yazabilirsin.
       </span>
       <span className="block text-muted-foreground mb-2">
         Onayladığında, sohbet üzerinden{" "}
@@ -123,7 +121,7 @@ export function OfferForm({
           öğrencinin kayıtlı e-posta ve telefon bilgilerine
         </span>{" "}
         erişirsin; senin kayıtlı e-posta ve telefon bilgilerin de öğrenciyle
-        paylaşılır. İletişim bilgilerinin doğru olduğundan emin ol.
+        paylaşılır.
       </span>
       {creditHint ? (
         <span className="block text-suk-warning-soft-fg">{creditHint}</span>
@@ -138,9 +136,9 @@ export function OfferForm({
         <h2 className="font-semibold text-foreground">Teklif Ver</h2>
       </div>
       <p className="text-xs text-muted-foreground mb-4">
-        1 kullanım hakkı ile teklif gönderirsin. Öğrenci kabulünü beklemeden sohbet açılır;
+        Teklif ücretsizdir. Öğrenci kabulünü beklemeden sohbet açılır;
         tarafların kayıtlı e-posta ve telefon bilgileri sohbet içinde paylaşılır.
-        İlana en fazla 4 teklif düşer; kullanılan hak iade edilmez.
+        İlana en fazla 4 teklif düşer.
       </p>
 
       <div className="space-y-3">
@@ -194,16 +192,17 @@ export function OfferForm({
               Gönderiliyor...
             </>
           ) : (
-            "Teklifi Gönder (1 kullanım hakkı)"
+            "Teklifi gönder"
           )}
         </Button>
       </div>
+      {gate}
       <ConfirmActionDialog
         open={creditDialogOpen}
         onOpenChange={setCreditDialogOpen}
-        title="Kullanımı onayla"
+        title="Teklifi gönder?"
         description={creditDescription}
-        confirmLabel="Evet, 1 kullanım hakkı kullan"
+        confirmLabel="Teklifi gönder"
         cancelLabel="Vazgeç"
         confirmVariant="primary"
         pending={submitting}

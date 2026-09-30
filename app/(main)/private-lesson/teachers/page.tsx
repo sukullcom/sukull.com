@@ -1,11 +1,9 @@
 import { Suspense } from "react";
-import { redirect } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { getServerUser } from "@/lib/auth";
 import { getTeachersDirectory, getMessageUnlocksForStudent } from "@/db/queries";
 import { MessageTeacherButton } from "@/components/private-lesson/message-teacher-button";
-import UserCreditsDisplay from "@/components/user-credits-display";
 import { normalizeAvatarUrl } from "@/utils/avatar";
 import {
   MapPin,
@@ -37,19 +35,16 @@ export default async function TeachersDirectoryPage({
   searchParams: SearchParams;
 }) {
   const user = await getServerUser();
-  if (!user) redirect("/login");
 
   const teachers = await getTeachersDirectory();
 
   // Öğrenci→öğretmen unlock haritasını **tek sorgu** ile çek.
-  // Önceki sürüm her satır için ayrı `getMessageUnlock` (N+1) yapıyordu;
-  // eğitmen sayısı büyüdükçe sayfa belirgin yavaşlıyor + pool baskısı
-  // oluşturuyordu. Bulk lookup, "Mesaj Gönder" butonunun açılmış sohbete
-  // doğrudan götürme davranışı aynen kalıyor.
-  const unlockMap = await getMessageUnlocksForStudent(
-    user.id,
-    teachers.map((t) => t.id),
-  );
+  const unlockMap = user
+    ? await getMessageUnlocksForStudent(
+        user.id,
+        teachers.map((t) => t.id),
+      )
+    : new Map<string, { chatId: number | null }>();
 
   const fieldFilter = searchParams.field ?? "";
   const lessonModeFilter = searchParams.lessonMode ?? "";
@@ -104,8 +99,6 @@ export default async function TeachersDirectoryPage({
 
   return (
     <div className="max-w-5xl mx-auto px-3 sm:px-6 pb-10">
-      <UserCreditsDisplay className="mb-4" />
-
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-2">
           <div className="p-2 bg-suk-brand-soft rounded-lg">
@@ -117,9 +110,8 @@ export default async function TeachersDirectoryPage({
         </div>
         <p className="text-sm text-muted-foreground">
           Sukull tarafından onaylanmış eğitmenlerin listesi. Saatlik ücretleri
-          görebilir, 1 kullanım hakkı ile mesajlaşmayı açabilirsin — tek seferlik ödeme,
-          sohbet kalıcıdır ve hak iade edilmez. Onay sonrası tarafların kayıtlı
-          e-posta ve telefon bilgileri sohbet üzerinden paylaşılır.
+          görebilir, ücretsiz sohbet açabilirsin. Sohbet açıldıktan sonra
+          tarafların kayıtlı e-posta ve telefon bilgileri paylaşılır.
         </p>
       </div>
 
@@ -247,12 +239,13 @@ export default async function TeachersDirectoryPage({
                   >
                     Profili Gör
                   </Link>
-                  {t.id !== user.id && (
+                  {(!user || t.id !== user.id) && (
                     <MessageTeacherButton
                       teacherId={t.id}
                       teacherName={t.name}
                       alreadyUnlocked={alreadyUnlocked}
                       existingChatId={unlock?.chatId ?? null}
+                      isAuthenticated={Boolean(user)}
                       size="default"
                       variant="primary"
                       className="flex-1"

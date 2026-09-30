@@ -9,6 +9,10 @@ import { MessageCircle, Loader2 } from "lucide-react";
 import { clientLogger } from "@/lib/client-logger";
 import { csrfHeader, mintCsrfToken } from "@/lib/mint-csrf-client";
 import { ConfirmActionDialog } from "@/components/confirm-action-dialog";
+import {
+  fetchAfterMarketplaceIdentity,
+  useMarketplaceIdentityGate,
+} from "@/components/private-lesson/marketplace-identity-gate";
 
 type Props = {
   teacherId: string;
@@ -18,21 +22,13 @@ type Props = {
   className?: string;
   size?: "sm" | "default" | "lg";
   variant?: VariantProps<typeof buttonVariants>["variant"];
-  /** Full-width on mobile. */
   fullWidth?: boolean;
+  isAuthenticated?: boolean;
 };
 
 /**
- * Button students press to open a conversation with a listed teacher.
- *
- * Behavior:
- *   - First click (not unlocked yet) → confirm dialog explaining the
- *     1-credit cost; on OK, POST to /messages/unlock and navigate to
- *     the resulting chat.
- *   - Already unlocked → navigate straight to the chat.
- *
- * All server-side error cases (insufficient credits, self-unlock,
- * rate limit) surface as toasts; we don't silently fall through.
+ * Öğrencinin listelenen eğitmenle sohbet açması.
+ * 401 olursa pazar kimliği kapısı, ardından işlem tekrarlanır.
  */
 export function MessageTeacherButton({
   teacherId,
@@ -43,30 +39,33 @@ export function MessageTeacherButton({
   size = "default",
   variant = "primary",
   fullWidth = false,
+  isAuthenticated = true,
 }: Props) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [creditDialogOpen, setCreditDialogOpen] = useState(false);
+  const { ensureIdentity, gate } = useMarketplaceIdentityGate();
 
   const doUnlock = async () => {
     if (loading) return;
     setCreditDialogOpen(false);
     setLoading(true);
     try {
-      const token = await mintCsrfToken();
-      if (!token) {
-        toast.error("Güvenlik doğrulaması başarısız. Sayfayı yenileyip tekrar dene.");
-        return;
-      }
-      const res = await fetch("/api/private-lesson/messages/unlock", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-          ...csrfHeader(token),
-        },
-        body: JSON.stringify({ teacherId }),
-      });
+      const res = await fetchAfterMarketplaceIdentity(async () => {
+        const token = await mintCsrfToken();
+        if (!token) {
+          throw new Error("csrf");
+        }
+        return fetch("/api/private-lesson/messages/unlock", {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            ...csrfHeader(token),
+          },
+          body: JSON.stringify({ teacherId }),
+        });
+      }, ensureIdentity);
       const data = (await res.json().catch(() => ({}))) as {
         error?: string;
         chatId?: number;
@@ -74,13 +73,7 @@ export function MessageTeacherButton({
         retryAfterSeconds?: number;
       };
 
-      if (res.status === 402) {
-        toast.error(
-          data.error || "Yetersiz kullanım hakkı. Hizmet paketi satın alıp tekrar deneyin.",
-        );
-        router.push("/private-lesson/credits");
-        return;
-      }
+      if (res.status === 401) return;
       if (res.status === 429) {
         const ra =
           typeof data.retryAfterSeconds === "number" && Number.isFinite(data.retryAfterSeconds)
@@ -110,10 +103,14 @@ export function MessageTeacherButton({
       }
 
       if (!data.alreadyUnlocked) {
-        toast.success("Sohbet açıldı! 1 kullanım hakkı kullanıldı.");
+        toast.success("Sohbet açıldı.");
       }
       router.push(`/private-lesson/messages/${data.chatId}`);
     } catch (error) {
+      if (error instanceof Error && error.message === "csrf") {
+        toast.error("Güvenlik doğrulaması başarısız. Sayfayı yenileyip tekrar dene.");
+        return;
+      }
       clientLogger.error({
         message: "unlock message thread failed",
         error,
@@ -125,11 +122,15 @@ export function MessageTeacherButton({
     }
   };
 
-  const handleOpenClick = () => {
+  const handleOpenClick = async () => {
     if (loading) return;
     if (alreadyUnlocked && existingChatId) {
       router.push(`/private-lesson/messages/${existingChatId}`);
       return;
+    }
+    if (!isAuthenticated) {
+      const ok = await ensureIdentity();
+      if (!ok) return;
     }
     setCreditDialogOpen(true);
   };
@@ -138,9 +139,8 @@ export function MessageTeacherButton({
   const messageDescription = (
     <>
       <span className="block mb-2">
-        {label} ile mesajlaşmayı açmak için{" "}
-        <span className="font-semibold">1 kullanım hakkı</span> kullanılır. Ödeme tek
-        seferlidir; aynı sohbet için tekrar ücret alınmaz ve hak iade edilmez.
+        {label} ile sohbeti ücretsiz açacaksın. Aynı sohbet için tekrar işlem
+        gerekmez.
       </span>
       <span className="block text-muted-foreground">
         Onayladığında, sohbet ekranında{" "}
@@ -148,8 +148,7 @@ export function MessageTeacherButton({
           eğitmenin kayıtlı e-posta ve telefon bilgileri
         </span>{" "}
         sana gösterilir; senin kayıtlı e-posta ve telefon bilgilerin de eğitmenle
-        paylaşılır. Devam etmeden önce profilindeki iletişim bilgilerinin güncel
-        olduğundan emin ol.
+        paylaşılır.
       </span>
     </>
   );
@@ -158,7 +157,7 @@ export function MessageTeacherButton({
     <>
       <Button
         type="button"
-        onClick={handleOpenClick}
+        onClick={() => void handleOpenClick()}
         disabled={loading}
         variant={variant}
         size={size}
@@ -171,12 +170,13 @@ export function MessageTeacherButton({
         )}
         {alreadyUnlocked ? "Sohbete Git" : "Mesaj Gönder"}
       </Button>
+      {gate}
       <ConfirmActionDialog
         open={creditDialogOpen}
         onOpenChange={setCreditDialogOpen}
-        title="Mesajı aç?"
+        title="Sohbeti aç?"
         description={messageDescription}
-        confirmLabel="Evet, 1 kullanım hakkı kullan"
+        confirmLabel="Sohbeti aç"
         cancelLabel="Vazgeç"
         confirmVariant="primary"
         pending={loading}

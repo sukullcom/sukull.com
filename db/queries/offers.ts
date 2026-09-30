@@ -1,19 +1,15 @@
 /**
  * Listing offers — teacher-side bids on student listings.
  *
- * `createOffer` is the hot path: it consumes one credit, writes an
- * offer row, and bumps `listings.offer_count` via an AFTER trigger.
- * A DB-level BEFORE trigger also caps pending offers at
- * `MAX_OFFERS_PER_LISTING` so the invariant holds even if a bug in
- * the action layer bypasses our explicit check.
+ * `createOffer` writes an offer row and bumps `listings.offer_count`
+ * via an AFTER trigger. A DB-level BEFORE trigger also caps pending
+ * offers at `MAX_OFFERS_PER_LISTING`.
  */
 import { and, asc, desc, eq, sql } from "drizzle-orm";
 import db from "@/db/drizzle";
 import {
-  creditUsage,
   listingOffers,
   listings,
-  userCredits,
 } from "@/db/schema";
 import { queryResultRows } from "@/lib/query-result";
 import { ensureUnlockedThreadForOfferTx } from "@/db/queries/messages";
@@ -99,7 +95,6 @@ export type CreateOfferResult =
         | "listing_closed"
         | "offer_cap_reached"
         | "already_offered"
-        | "insufficient_credits"
         | "self_offer_forbidden"
         | "listing_subject_mismatch"
         | "try_again"
@@ -111,12 +106,10 @@ export type CreateOfferResult =
  * Create a teacher offer on a student listing. Runs atomically:
  *   1. Pre-flight listing + subject match (outside the write transaction
  *      so we hold row locks / transaction time as short as possible).
- *   2. Deduct 1 credit from the teacher's userCredits row (fails if
- *      availableCredits < 1).
- *   3. Insert the offer. The BEFORE trigger on listing_offers enforces
+ *   2. Insert the offer. The BEFORE trigger on listing_offers enforces
  *      the 4-offer cap; if it raises, we catch and surface a typed
  *      error instead of leaking the raw Postgres text.
- *   4. Write a credit_usage log row.
+ *   3. Open the student–teacher message thread.
  */
 export async function createOffer(input: {
   listingId: number;
@@ -210,25 +203,6 @@ export async function createOffer(input: {
         return { ok: false as const, code: "already_offered" as const };
       }
 
-      const creditResult = await tx
-        .update(userCredits)
-        .set({
-          usedCredits: sql`${userCredits.usedCredits} + 1`,
-          availableCredits: sql`${userCredits.availableCredits} - 1`,
-          updatedAt: new Date(),
-        })
-        .where(
-          and(
-            eq(userCredits.userId, input.teacherId),
-            sql`${userCredits.availableCredits} >= 1`,
-          ),
-        )
-        .returning({ id: userCredits.id });
-
-      if (creditResult.length === 0) {
-        return { ok: false as const, code: "insufficient_credits" as const };
-      }
-
       const [offer] = await tx
         .insert(listingOffers)
         .values({
@@ -238,14 +212,6 @@ export async function createOffer(input: {
           note: input.note ?? null,
         })
         .returning();
-
-      await tx.insert(creditUsage).values({
-        userId: input.teacherId,
-        reason: "listing_offer",
-        creditsUsed: 1,
-        refType: "listing",
-        refId: String(input.listingId),
-      });
 
       const { chatId } = await ensureUnlockedThreadForOfferTx(tx, {
         studentId: listing.studentId,

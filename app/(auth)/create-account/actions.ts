@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
-import { sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 import db from "@/db/drizzle";
 import { users } from "@/db/schema";
@@ -21,6 +21,7 @@ import { createClient } from "@/utils/supabase/server";
 import { getSupabaseAdminClient } from "@/utils/supabase/admin";
 import { logger } from "@/lib/logger";
 import { normalizeReferralCode } from "@/lib/referral-code";
+import { isValidTurkeyMobileForProfile } from "@/lib/teacher-profile-mutation";
 
 const log = logger.child({ labels: { module: "auth/create-account" } });
 
@@ -69,6 +70,19 @@ export async function signUpWithEmail(
       ok: false,
       error: `Şifre en az ${MIN_PASSWORD_LEN} karakter olmalıdır.`,
     };
+  }
+
+  const phoneRaw = String(formData.get("phone") ?? "").trim();
+  let phoneStored: string | null = null;
+  if (phoneRaw) {
+    if (!isValidTurkeyMobileForProfile(phoneRaw)) {
+      return {
+        ok: false,
+        error:
+          "Geçerli bir Türkiye cep telefonu girilmelidir (05xx…).",
+      };
+    }
+    phoneStored = normalizeMarketplacePhone(phoneRaw);
   }
 
   const h = await headers();
@@ -136,6 +150,7 @@ export async function signUpWithEmail(
           email: emailRaw,
           password,
           username: usernameRaw,
+          phone: phoneStored,
         });
         if (signedIn === "signed-in") {
           return { ok: true };
@@ -172,6 +187,12 @@ export async function signUpWithEmail(
 
     try {
       await ensurePublicUserFromAuth(data.user, usernameRaw);
+      if (phoneStored) {
+        await db
+          .update(users)
+          .set({ phone: phoneStored, updated_at: new Date() })
+          .where(eq(users.id, data.user.id));
+      }
     } catch (e) {
       log.error({
         message: "ensurePublicUserFromAuth after signup failed",
@@ -204,11 +225,13 @@ async function signInExistingUnconfirmedAccount({
   email,
   password,
   username,
+  phone,
 }: {
   supabase: Awaited<ReturnType<typeof createClient>>;
   email: string;
   password: string;
   username: string;
+  phone: string | null;
 }): Promise<"signed-in" | "not-signed-in"> {
   try {
     const existingId = await findAuthUserIdByEmail(email);
@@ -225,6 +248,12 @@ async function signInExistingUnconfirmedAccount({
 
     try {
       await ensurePublicUserFromAuth(data.user, username);
+      if (phone) {
+        await db
+          .update(users)
+          .set({ phone, updated_at: new Date() })
+          .where(eq(users.id, data.user.id));
+      }
     } catch (e) {
       log.error({
         message: "ensurePublicUserFromAuth after leftover signup confirm failed",
@@ -244,4 +273,8 @@ async function signInExistingUnconfirmedAccount({
     });
     return "not-signed-in";
   }
+}
+
+function normalizeMarketplacePhone(v: string): string {
+  return v.replace(/[^\d+]/g, "").replace(/^\+{2,}/, "+");
 }
