@@ -2,6 +2,10 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { getServerUser } from "@/lib/auth";
 import { getOpenListings, isTeacher } from "@/db/queries";
+import {
+  redactListingForPublic,
+  shouldRedactListingForPublic,
+} from "@/lib/private-lesson-listing-public";
 import { ListingsFilters } from "./_components/listings-filters";
 import { ListingCard } from "./_components/listing-card";
 import { Button } from "@/components/ui/button";
@@ -54,7 +58,7 @@ export default async function ListingsIndexPage({
           <p className="text-sm text-muted-foreground">
             {viewerIsTeacher
               ? "Yayında olan talep ilanları; yalnızca başvurunda seçtiğin ders konularıyla eşleşen ilanlar listelenir. Teklif ücretsizdir; onay sonrası öğrencinin kayıtlı iletişim bilgileri sohbet üzerinden paylaşılır. İlan başına en fazla 4 teklif."
-              : "Yayındaki öğrenci talep ilanları. İletişim bilgileri yalnızca sohbet veya teklif sonrası görünür. Kendi ilanını açmak ücretsizdir; yayın için yönetici onayı gerekir."}
+              : "Yayındaki öğrenci talep ilanları. Açık listede yalnızca şehir, baş harfler, konu, sınıf, başlık, açıklama ve bütçe görünür. İletişim bilgileri sohbet veya teklif sonrası paylaşılır."}
           </p>
         </div>
         <div className="flex gap-2 w-full sm:w-auto">
@@ -96,9 +100,20 @@ export default async function ListingsIndexPage({
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {listings.map((l) => (
-            <ListingCard key={l.id} listing={l} variant="browse" />
-          ))}
+          {listings.map((l) => {
+            const publicPreview = shouldRedactListingForPublic({
+              isOwner: Boolean(user && l.studentId === user.id),
+              isTeacher: viewerIsTeacher,
+            });
+            return (
+              <ListingCard
+                key={l.id}
+                listing={publicPreview ? redactListingForPublic(l) : l}
+                variant="browse"
+                publicPreview={publicPreview}
+              />
+            );
+          })}
         </div>
       )}
     </div>

@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 
 export default async function MessagesIndexPage() {
   const user = await getServerUser();
-  if (!user) redirect("/login");
+  if (!user) redirect("/login?next=/private-lesson/messages");
 
   const conversations = await listStudentConversations(user.id);
 

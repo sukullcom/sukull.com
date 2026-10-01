@@ -24,6 +24,10 @@ import {
 import { OfferForm } from "./_components/offer-form";
 import { OfferList } from "./_components/offer-list";
 import { CloseListingButton } from "./_components/close-listing-button";
+import {
+  listingDisplayInitials,
+  shouldRedactListingForPublic,
+} from "@/lib/private-lesson-listing-public";
 
 export const dynamic = "force-dynamic";
 
@@ -86,6 +90,14 @@ export default async function ListingDetailPage({
   // Teacher view: surface whether they've already bid so we hide the form.
   const alreadyOffered =
     !isOwner && listingViewerIsTeacher ? teacherOffered : false;
+  const publicPreview = shouldRedactListingForPublic({
+    isOwner,
+    isTeacher: listingViewerIsTeacher,
+    isAdmin: admin,
+  });
+  const posterLabel = publicPreview
+    ? listingDisplayInitials(base.studentName)
+    : base.studentName;
 
   return (
     <div className="max-w-4xl mx-auto px-3 sm:px-6 pb-10">
@@ -135,17 +147,23 @@ export default async function ListingDetailPage({
         </div>
 
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-          <Image
-            src={normalizeAvatarUrl(base.studentAvatar ?? undefined)}
-            alt={base.studentName}
-            width={28}
-            height={28}
-            unoptimized={base.studentAvatar?.startsWith("http") ?? false}
-            className="rounded-full object-cover w-7 h-7"
-          />
-          <span>{base.studentName}</span>
-          <span className="text-border">•</span>
-          <span>{new Date(base.createdAt).toLocaleDateString("tr-TR")}</span>
+          {!publicPreview && (
+            <Image
+              src={normalizeAvatarUrl(base.studentAvatar ?? undefined)}
+              alt={base.studentName}
+              width={28}
+              height={28}
+              unoptimized={base.studentAvatar?.startsWith("http") ?? false}
+              className="rounded-full object-cover w-7 h-7"
+            />
+          )}
+          <span>{posterLabel}</span>
+          {!publicPreview && (
+            <>
+              <span className="text-border">•</span>
+              <span>{new Date(base.createdAt).toLocaleDateString("tr-TR")}</span>
+            </>
+          )}
         </div>
 
         <div className="flex flex-wrap gap-2 mb-4">
@@ -166,17 +184,21 @@ export default async function ListingDetailPage({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm border-t pt-4">
-          <div className="flex items-center gap-2">
-            <Monitor className="h-4 w-4 text-muted-foreground" />
-            <span className="text-foreground/90">
-              {formatLessonMode(base.lessonMode)}
-            </span>
-          </div>
-          {(base.city || base.district) && (
+          {!publicPreview && (
+            <div className="flex items-center gap-2">
+              <Monitor className="h-4 w-4 text-muted-foreground" />
+              <span className="text-foreground/90">
+                {formatLessonMode(base.lessonMode)}
+              </span>
+            </div>
+          )}
+          {base.city && (
             <div className="flex items-center gap-2">
               <MapPin className="h-4 w-4 text-muted-foreground" />
               <span className="text-foreground/90">
-                {[base.district, base.city].filter(Boolean).join(", ")}
+                {publicPreview
+                  ? base.city
+                  : [base.district, base.city].filter(Boolean).join(", ")}
               </span>
             </div>
           )}
@@ -188,18 +210,20 @@ export default async function ListingDetailPage({
               </span>
             </div>
           )}
-          {base.preferredHours && (
+          {!publicPreview && base.preferredHours && (
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-muted-foreground" />
               <span className="text-foreground/90">{base.preferredHours}</span>
             </div>
           )}
-          <div className="flex items-center gap-2 col-span-full">
-            <Users className="h-4 w-4 text-muted-foreground" />
-            <span className="text-foreground/90">
-              {base.offerCount} / {MAX_OFFERS_PER_LISTING} teklif
-            </span>
-          </div>
+          {!publicPreview && (
+            <div className="flex items-center gap-2 col-span-full">
+              <Users className="h-4 w-4 text-muted-foreground" />
+              <span className="text-foreground/90">
+                {base.offerCount} / {MAX_OFFERS_PER_LISTING} teklif
+              </span>
+            </div>
+          )}
         </div>
 
         {isOwner && base.status === "open" && (

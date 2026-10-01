@@ -27,7 +27,7 @@ export default async function MessageThreadPage({
   params: { chatId: string };
 }) {
   const user = await getServerUser();
-  if (!user) redirect("/login");
+  if (!user) redirect(`/login?next=/private-lesson/messages/${params.chatId}`);
 
   const chatId = Number.parseInt(params.chatId, 10);
   if (!Number.isFinite(chatId) || chatId <= 0) notFound();

@@ -24,9 +24,11 @@ import {
   closeListing,
   getListingById,
   getListingWithOffers,
+  isTeacher,
 } from "@/db/queries";
 import { verifyCsrf } from "@/lib/csrf";
 import { isTrustedApiOrigin } from "@/lib/same-origin-api";
+import { redactListingForPublic, shouldRedactListingForPublic } from "@/lib/private-lesson-listing-public";
 
 type RouteContext = { params: { id: string } };
 
@@ -90,6 +92,18 @@ export async function GET(
     if (isOwner) {
       const full = await getListingWithOffers(id);
       return NextResponse.json({ listing: full });
+    }
+
+    const teacher = user ? await isTeacher(user.id) : false;
+    const admin = user ? await isAdmin() : false;
+    if (
+      shouldRedactListingForPublic({
+        isOwner: false,
+        isTeacher: teacher,
+        isAdmin: admin,
+      })
+    ) {
+      return NextResponse.json({ listing: redactListingForPublic(listing) });
     }
 
     return NextResponse.json({ listing });

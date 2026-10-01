@@ -19,6 +19,7 @@ import { secureApi } from "@/lib/api-middleware";
 import { verifyCsrf } from "@/lib/csrf";
 import { isTrustedApiOrigin } from "@/lib/same-origin-api";
 import { createListing, getOpenListings, isTeacher } from "@/db/queries";
+import { redactListingForPublic } from "@/lib/private-lesson-listing-public";
 import type { ListingLessonMode } from "@/db/queries/listings";
 import {
   isValidTeachingGrade,
@@ -67,7 +68,12 @@ export const GET = secureApi.rateLimited(
         viewerTeacherId,
       });
 
-      return NextResponse.json({ listings: rows });
+      const listings =
+        viewerTeacherId != null
+          ? rows
+          : rows.map((row) => redactListingForPublic(row));
+
+      return NextResponse.json({ listings });
     } catch (error) {
       const log = await getRequestLogger({
         labels: { route: "api/private-lesson/listings", op: "list" },

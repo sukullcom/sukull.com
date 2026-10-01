@@ -1,23 +1,39 @@
-import { NextResponse } from "next/server";
-import { secureApi } from "@/lib/api-middleware";
-import { RATE_LIMITS } from "@/lib/rate-limit-db";
+import { NextRequest, NextResponse } from "next/server";
+import { getServerUser } from "@/lib/auth";
+import {
+  checkRateLimit,
+  getClientIp,
+  RATE_LIMITS,
+  rateLimitClosedDenyPayload,
+} from "@/lib/rate-limit-db";
 import { newCsrfToken, setCsrfCookie } from "@/lib/csrf";
 
 /**
  * Issues a fresh CSRF token and sets the companion cookie (double-submit).
- * Call before mutating APIs (öğretmen profili, ilan/teklif, sohbet mesajı, …);
- * send the returned token in the `x-csrf-token` header on PATCH/POST.
+ * Public (IP-limited) so marketplace guests can mint before identity signup;
+ * logged-in users share the same cookie pattern.
  */
-export const GET = secureApi.authRateLimited(
-  {
-    bucket: "csrf-mint",
-    keyKind: "user",
+export async function GET(request: NextRequest) {
+  const user = await getServerUser();
+  const scope = user ? `user:${user.id}` : `ip:${getClientIp(request)}`;
+  const rl = await checkRateLimit({
+    key: `csrf-mint:${scope}`,
     ...RATE_LIMITS.csrfMint,
-  },
-  async () => {
-    const token = newCsrfToken();
-    const res = NextResponse.json({ ok: true, csrfToken: token });
-    setCsrfCookie(res, token);
-    return res;
-  },
-);
+  });
+  if (!rl.allowed) {
+    const deny = rateLimitClosedDenyPayload(rl, {
+      rateLimited: "Çok fazla istek. Lütfen biraz bekleyin.",
+      storeUnavailable:
+        "İstek sınırı şu an doğrulanamıyor. Bir dakika sonra tekrar dene.",
+    });
+    return NextResponse.json(deny.body, {
+      status: deny.status,
+      headers: deny.headers,
+    });
+  }
+
+  const token = newCsrfToken();
+  const res = NextResponse.json({ ok: true, csrfToken: token });
+  setCsrfCookie(res, token);
+  return res;
+}

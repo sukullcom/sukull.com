@@ -15,8 +15,8 @@ export function PrivateLessonPanelEntry({
   return (
     <div className={showAudienceLabel ? "mb-6 w-full space-y-2" : "w-full"}>
       {showAudienceLabel ? (
-        <p className="text-center text-sm font-semibold text-muted-foreground">
-          Öğretmen veya öğrenciysen
+        <p className="text-center text-3xl font-bold text-suk-payment">
+          Eğitmen veya öğrenciysen
         </p>
       ) : null}
       <Button asChild variant="payment" size={size} className="w-full">

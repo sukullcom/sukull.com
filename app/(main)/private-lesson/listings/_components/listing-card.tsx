@@ -9,15 +9,17 @@ type Variant = "browse" | "mine";
 
 /**
  * Compact listing summary card. `variant="mine"` drops the student
- * avatar (it's your own listing) and shows status prominently; the
- * default "browse" variant targets the teacher-facing feed.
+ * avatar (it's your own listing) and shows status prominently.
+ * `publicPreview` hides identity and extra fields for guests/students.
  */
 export function ListingCard({
   listing,
   variant = "browse",
+  publicPreview = false,
 }: {
   listing: ListingRow;
   variant?: Variant;
+  publicPreview?: boolean;
 }) {
   const href = `/private-lesson/listings/${listing.id}`;
   const showStudent = variant === "browse";
@@ -28,7 +30,7 @@ export function ListingCard({
       className="block bg-card border rounded-xl p-4 hover:border-suk-brand/35 hover:shadow-sm transition-all"
     >
       <div className="flex items-start gap-3">
-        {showStudent && (
+        {showStudent && !publicPreview && (
           <Image
             src={normalizeAvatarUrl(listing.studentAvatar ?? undefined)}
             alt={listing.studentName}
@@ -43,7 +45,7 @@ export function ListingCard({
             <h3 className="font-semibold text-foreground line-clamp-1">
               {listing.title}
             </h3>
-            <StatusBadge status={listing.status} />
+            {variant === "mine" ? <StatusBadge status={listing.status} /> : null}
           </div>
 
           {showStudent && (
@@ -67,7 +69,8 @@ export function ListingCard({
             {listing.description}
           </p>
 
-          {showStudent &&
+          {!publicPreview &&
+            showStudent &&
             variant === "browse" &&
             listing.offerCount === MAX_OFFERS_PER_LISTING - 1 && (
               <p className="mt-2 text-xs font-semibold text-suk-danger">
@@ -75,7 +78,8 @@ export function ListingCard({
                 {MAX_OFFERS_PER_LISTING} teklif
               </p>
             )}
-          {showStudent &&
+          {!publicPreview &&
+            showStudent &&
             variant === "browse" &&
             listing.offerCount === 2 && (
               <p className="mt-2 text-xs font-medium text-suk-warning-soft-fg">
@@ -85,15 +89,19 @@ export function ListingCard({
             )}
 
           <div className="grid grid-cols-2 gap-2 mt-3 text-[11px] text-muted-foreground">
-            <div className="flex items-center gap-1.5">
-              <Monitor className="h-3 w-3 text-muted-foreground/70" />
-              {formatLessonMode(listing.lessonMode)}
-            </div>
-            {(listing.city || listing.district) && (
+            {!publicPreview && (
+              <div className="flex items-center gap-1.5">
+                <Monitor className="h-3 w-3 text-muted-foreground/70" />
+                {formatLessonMode(listing.lessonMode)}
+              </div>
+            )}
+            {listing.city && (
               <div className="flex items-center gap-1.5">
                 <MapPin className="h-3 w-3 text-muted-foreground/70" />
                 <span className="truncate">
-                  {[listing.district, listing.city].filter(Boolean).join(", ")}
+                  {publicPreview
+                    ? listing.city
+                    : [listing.district, listing.city].filter(Boolean).join(", ")}
                 </span>
               </div>
             )}
@@ -103,7 +111,7 @@ export function ListingCard({
                 <span>{formatBudget(listing.budgetMin, listing.budgetMax)}</span>
               </div>
             )}
-            {listing.preferredHours && (
+            {!publicPreview && listing.preferredHours && (
               <div className="flex items-center gap-1.5">
                 <Clock className="h-3 w-3 text-muted-foreground/70" />
                 <span className="truncate">{listing.preferredHours}</span>
@@ -111,15 +119,17 @@ export function ListingCard({
             )}
           </div>
 
-          <div className="mt-3 flex items-center justify-between">
-            <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-              <Users className="h-3.5 w-3.5" />
-              {listing.offerCount} / {MAX_OFFERS_PER_LISTING} teklif
+          {!publicPreview && (
+            <div className="mt-3 flex items-center justify-between">
+              <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                <Users className="h-3.5 w-3.5" />
+                {listing.offerCount} / {MAX_OFFERS_PER_LISTING} teklif
+              </div>
+              <span className="text-[11px] text-muted-foreground/80">
+                {new Date(listing.createdAt).toLocaleDateString("tr-TR")}
+              </span>
             </div>
-            <span className="text-[11px] text-muted-foreground/80">
-              {new Date(listing.createdAt).toLocaleDateString("tr-TR")}
-            </span>
-          </div>
+          )}
         </div>
       </div>
     </Link>

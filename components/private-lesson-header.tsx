@@ -30,7 +30,7 @@ const GUEST_ITEMS: PrivateLessonNavItem[] = [
   { name: "İlanlar", path: "/private-lesson/listings", icon: "megaphone" },
   { name: "İlan Aç", path: "/private-lesson/listings/new", icon: "plus" },
   { name: "Eğitmen ol", path: "/private-lesson/give", icon: "graduation" },
-  { name: "Giriş yap", path: "/login?next=/private-lesson", icon: "login" },
+  { name: "Mesajlar", path: "/private-lesson/messages", icon: "message" },
 ];
 
 function mergePrivateLessonNav(teacherMode: boolean): PrivateLessonNavItem[] {
