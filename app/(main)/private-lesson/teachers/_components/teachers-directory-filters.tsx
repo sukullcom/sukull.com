@@ -34,8 +34,6 @@ interface Props {
   initialLessonMode: string;
   initialCity: string;
   initialUniversity: string;
-  resultCount: number;
-  totalCount: number;
 }
 
 /**
@@ -58,8 +56,6 @@ export function TeachersDirectoryFilters({
   initialLessonMode,
   initialCity,
   initialUniversity,
-  resultCount,
-  totalCount,
 }: Props) {
   const router = useRouter();
   const search = useSearchParams();
@@ -380,12 +376,8 @@ export function TeachersDirectoryFilters({
         </div>
       )}
 
-      {/* Sonuç sayacı */}
-      <div className="mt-3 flex items-center justify-between text-[11px] text-muted-foreground">
-        <span>
-          {resultCount} / {totalCount} eğitmen
-        </span>
-        {anyActive && (
+      {anyActive && (
+        <div className="mt-3 flex items-center justify-end text-[11px] text-muted-foreground">
           <button
             type="button"
             onClick={clearAll}
@@ -393,8 +385,8 @@ export function TeachersDirectoryFilters({
           >
             <X className="h-3 w-3" /> Filtreleri temizle
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </section>
   );
 }

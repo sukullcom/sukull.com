@@ -129,8 +129,6 @@ export default async function TeachersDirectoryPage({
           initialLessonMode={lessonModeFilter}
           initialCity={cityFilter}
           initialUniversity={universityFilter}
-          resultCount={filtered.length}
-          totalCount={teachers.length}
         />
       </Suspense>
 
