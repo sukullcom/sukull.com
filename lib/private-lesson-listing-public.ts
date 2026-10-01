@@ -18,7 +18,7 @@ export function listingDisplayInitials(name: string): string {
 export function shouldRedactListingForPublic(opts: {
   isOwner: boolean;
   isTeacher: boolean;
-  isAdmin?: boolean;
+  isAdmin?: boolean | null;
 }): boolean {
   return !opts.isOwner && !opts.isTeacher && !opts.isAdmin;
 }
