@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { normalizeReferralCode } from "@/lib/referral-code";
+import { PrivateLessonPanelEntry } from "@/components/private-lesson/private-lesson-panel-entry";
 import { CreateAccountForm } from "./create-account";
 
 export default function CreateAccountPage({
@@ -25,6 +26,7 @@ export default function CreateAccountPage({
         </div>
 
         <div className="w-full min-w-0 max-w-md rounded-3xl border-2 border-border bg-card p-6 shadow-xl sm:p-7">
+          <PrivateLessonPanelEntry showAudienceLabel />
           <h1 className="mb-6 text-center text-3xl font-bold text-suk-brand">
             Kayıt Ol
           </h1>

@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
+import { PrivateLessonPanelEntry } from '@/components/private-lesson/private-lesson-panel-entry';
 
 const supabaseClient = createClient();
 
@@ -44,6 +45,7 @@ export default function Home() {
           Öğren, yarış, geliş hepsi tek platformda
         </h1>
         <div className="flex flex-col items-center gap-y-3 max-w-[330px] w-full">
+          <PrivateLessonPanelEntry />
           {!session && (
             <>
               <Button
