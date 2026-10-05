@@ -3,10 +3,18 @@
 import { useEffect, useState } from "react";
 import { Phone, Mail, User, AlertCircle, Loader2 } from "lucide-react";
 import { clientLogger } from "@/lib/client-logger";
+import type { ContactChannel } from "@/lib/private-lesson-contact-channel";
+
+type ContactSide = {
+  name: string;
+  email: string;
+  phone: string | null;
+  contactChannel?: ContactChannel | null;
+};
 
 type Contact = {
-  you: { name: string; email: string; phone: string | null };
-  other: { name: string; email: string; phone: string | null };
+  you: ContactSide;
+  other: ContactSide;
 };
 
 /**
@@ -71,9 +79,8 @@ export function PrivateLessonContactStrip({ chatId }: { chatId: number }) {
       <p className="flex items-start gap-1.5 text-[11px] text-muted-foreground">
         <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-suk-brand" />
         <span>
-          Açık mesaj hattı için iletişim bilgileri. Telefonu görmek için
-          profilinde &quot;Telefon&quot; alanını doldurabilirsin; eğitmenler için
-          numara eğitmen başvurusundaki kayıttan alınır.
+          Açık mesaj hattı. Öğrenci e-posta tercih ettiyse numarası
+          paylaşılmaz; eğitmen numarası başvuru kaydından gelir.
         </span>
       </p>
       <div className="grid sm:grid-cols-2 gap-2 text-xs">
@@ -90,7 +97,11 @@ export function PrivateLessonContactStrip({ chatId }: { chatId: number }) {
               {other.email}
             </a>
           </div>
-          {other.phone ? (
+          {other.contactChannel === "email" ? (
+            <p className="pl-5 text-[11px] text-muted-foreground">
+              E-posta ile iletişim tercih ediyor
+            </p>
+          ) : other.phone ? (
             <div className="flex items-center gap-1.5 font-medium text-foreground">
               <Phone className="h-3.5 w-3.5 shrink-0" />
               <a href={`tel:${other.phone.replace(/\s/g, "")}`} className="hover:underline">
@@ -103,13 +114,15 @@ export function PrivateLessonContactStrip({ chatId }: { chatId: number }) {
         </div>
         <div className="space-y-1 rounded-lg border border-border bg-muted/50 p-2.5 text-muted-foreground">
           <p className="text-[10px] uppercase tracking-wide">Senin kaydın</p>
-          {you.phone ? (
+          {you.contactChannel === "email" ? (
+            <p className="text-[11px]">E-posta ile iletişim tercih ediyorsun.</p>
+          ) : you.phone ? (
             <p className="text-xs text-foreground">
               <Phone className="inline h-3 w-3 mr-1" />
               {you.phone}
             </p>
           ) : (
-            <p className="text-[11px]">Telefon eklemedin — ilan formunda veya ileride profilinden ekleyebilirsin.</p>
+            <p className="text-[11px]">Kayıtlı telefon yok.</p>
           )}
         </div>
       </div>

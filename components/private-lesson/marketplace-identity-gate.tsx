@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { toast } from "sonner";
@@ -17,14 +17,29 @@ import {
 import { signUpWithEmail } from "@/app/(auth)/create-account/actions";
 import { isValidTurkeyMobileForProfile } from "@/lib/teacher-profile-mutation";
 import { getClientAuthTransientErrorMessage } from "@/lib/auth-flow-client-errors";
+import { ContactChannelField } from "@/components/private-lesson/contact-channel-field";
+import type { ContactChannel } from "@/lib/private-lesson-contact-channel";
+
+type IdentityGateOptions = {
+  /**
+   * Öğrenci / ilan sahibi: iletişim için telefon veya e-posta seçer.
+   * Eğitmen teklif kapısında kapalı kalır; orada telefon zorunludur.
+   */
+  studentContactChoice?: boolean;
+  presetContactChannel?: ContactChannel | "";
+  presetPhone?: string;
+};
 
 /**
  * İlan / mesaj / teklif için onboarding’siz pazar kimliği.
  * 401 sonrası çağrılır; hesap açılınca işlemi tekrarlamak için `true` döner.
  */
-export function useMarketplaceIdentityGate() {
+export function useMarketplaceIdentityGate(options?: IdentityGateOptions) {
   const [open, setOpen] = useState(false);
   const resolverRef = useRef<((ok: boolean) => void) | null>(null);
+  const studentContactChoice = options?.studentContactChoice ?? false;
+  const presetContactChannel = options?.presetContactChannel ?? "";
+  const presetPhone = options?.presetPhone ?? "";
 
   const ensureIdentity = useCallback(() => {
     return new Promise<boolean>((resolve) => {
@@ -42,6 +57,9 @@ export function useMarketplaceIdentityGate() {
   const gate = (
     <MarketplaceIdentityGate
       open={open}
+      studentContactChoice={studentContactChoice}
+      presetContactChannel={presetContactChannel}
+      presetPhone={presetPhone}
       onOpenChange={(next) => {
         if (!next) settle(false);
         else setOpen(true);
@@ -66,10 +84,16 @@ export async function fetchAfterMarketplaceIdentity(
 
 function MarketplaceIdentityGate({
   open,
+  studentContactChoice,
+  presetContactChannel,
+  presetPhone,
   onOpenChange,
   onSuccess,
 }: {
   open: boolean;
+  studentContactChoice: boolean;
+  presetContactChannel: ContactChannel | "";
+  presetPhone: string;
   onOpenChange: (open: boolean) => void;
   onSuccess: () => void;
 }) {
@@ -80,8 +104,18 @@ function MarketplaceIdentityGate({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [contactChannel, setContactChannel] = useState<ContactChannel | "">("");
   const [password, setPassword] = useState("");
   const [legalAccepted, setLegalAccepted] = useState(false);
+  const wasOpenRef = useRef(false);
+
+  useEffect(() => {
+    if (open && !wasOpenRef.current && studentContactChoice) {
+      if (presetContactChannel) setContactChannel(presetContactChannel);
+      if (presetPhone) setPhone(presetPhone);
+    }
+    wasOpenRef.current = open;
+  }, [open, studentContactChoice, presetContactChannel, presetPhone]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -101,7 +135,19 @@ function MarketplaceIdentityGate({
       toast.error("Şifre en az 8 karakter olmalıdır.");
       return;
     }
-    if (!isValidTurkeyMobileForProfile(phone)) {
+    if (studentContactChoice) {
+      if (contactChannel !== "phone" && contactChannel !== "email") {
+        toast.error("İletişim için telefon veya e-posta seç.");
+        return;
+      }
+      if (
+        contactChannel === "phone" &&
+        !isValidTurkeyMobileForProfile(phone)
+      ) {
+        toast.error("Geçerli bir Türkiye cep telefonu gir (05xx…).");
+        return;
+      }
+    } else if (!isValidTurkeyMobileForProfile(phone)) {
       toast.error("Geçerli bir Türkiye cep telefonu gir (05xx…).");
       return;
     }
@@ -112,8 +158,13 @@ function MarketplaceIdentityGate({
       fd.set("username", name.trim());
       fd.set("email", email.trim());
       fd.set("password", password);
-      fd.set("phone", phone.trim());
       fd.set("legalAccepted", "1");
+      if (studentContactChoice) {
+        fd.set("contactChannel", contactChannel);
+        if (contactChannel === "phone") fd.set("phone", phone.trim());
+      } else {
+        fd.set("phone", phone.trim());
+      }
       const result = await signUpWithEmail(fd);
       if (!result.ok) {
         toast.error(result.error);
@@ -135,8 +186,9 @@ function MarketplaceIdentityGate({
         <DialogHeader>
           <DialogTitle>Kısa kimlik</DialogTitle>
           <DialogDescription>
-            İlan, mesaj veya teklif için ad, e-posta, telefon ve şifre yeter.
-            Kurs kaydı veya onboarding yok.
+            {studentContactChoice
+              ? "Ad, e-posta ve şifre yeter. İletişim için telefon veya e-posta seçersin. Kurs kaydı yok."
+              : "Teklif için ad, e-posta, telefon ve şifre yeter. Kurs kaydı yok."}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-3">
@@ -161,18 +213,27 @@ function MarketplaceIdentityGate({
             disabled={isLoading}
             required
           />
-          <input
-            type="tel"
-            inputMode="tel"
-            autoComplete="tel"
-            placeholder="Cep telefonu (05xx…)"
-            className="w-full rounded-xl border border-border bg-background p-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            disabled={isLoading}
-            required
-            maxLength={30}
-          />
+          {studentContactChoice ? (
+            <ContactChannelField
+              value={contactChannel}
+              onChange={setContactChannel}
+              disabled={isLoading}
+            />
+          ) : null}
+          {studentContactChoice && contactChannel !== "phone" ? null : (
+            <input
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel"
+              placeholder="Cep telefonu (05xx…)"
+              className="w-full rounded-xl border border-border bg-background p-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              disabled={isLoading}
+              required
+              maxLength={30}
+            />
+          )}
           <PasswordInput
             id="marketplace-password"
             placeholder="Şifre (en az 8 karakter)"

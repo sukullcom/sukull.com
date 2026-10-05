@@ -40,6 +40,11 @@ export const users = pgTable("users", {
   links: json("links").$type<IUserLink[]>().notNull().default([]),
   /** Shown to the other party after private-lesson unlock or listing offer. */
   phone: text("phone"),
+  /**
+   * Öğrenci ilan / pazar kimliği iletişim tercihi: `phone` | `email`.
+   * Eğitmenlerde boş kalır; numara başvuru kaydından gelir.
+   */
+  contactChannel: text("contact_channel"),
   role: userRoleEnum("role").default("user").notNull(),
   /**
    * Çoklu rol — `user` + `student` varsayılan; onaylı eğitmen `teacher`, env admin `admin` eklenir.

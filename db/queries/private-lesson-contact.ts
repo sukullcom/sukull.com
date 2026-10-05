@@ -2,6 +2,10 @@ import { and, eq, or } from "drizzle-orm";
 import db from "@/db/drizzle";
 import { messageUnlocks, teacherApplications, users } from "@/db/schema";
 import { isTeacher } from "@/db/queries/applications";
+import {
+  parseContactChannel,
+  type ContactChannel,
+} from "@/lib/private-lesson-contact-channel";
 
 /**
  * Resolves a display phone: profile `users.phone` first, then for
@@ -26,9 +30,16 @@ export async function resolvePhoneForUser(userId: string): Promise<string | null
   return null;
 }
 
+export type PrivateLessonContactSide = {
+  name: string;
+  email: string;
+  phone: string | null;
+  contactChannel: ContactChannel | null;
+};
+
 export type PrivateLessonContactPayload = {
-  you: { name: string; email: string; phone: string | null };
-  other: { name: string; email: string; phone: string | null };
+  you: PrivateLessonContactSide;
+  other: PrivateLessonContactSide;
 };
 
 /**
@@ -46,11 +57,11 @@ export async function getPrivateLessonContactForPair(
   const [viewer, other] = await Promise.all([
     db.query.users.findFirst({
       where: eq(users.id, viewerId),
-      columns: { id: true, name: true, email: true },
+      columns: { id: true, name: true, email: true, contactChannel: true },
     }),
     db.query.users.findFirst({
       where: eq(users.id, otherUserId),
-      columns: { id: true, name: true, email: true },
+      columns: { id: true, name: true, email: true, contactChannel: true },
     }),
   ]);
   if (!viewer || !other) return { ok: false, code: "not_found" };
@@ -74,6 +85,8 @@ export async function getPrivateLessonContactForPair(
     resolvePhoneForUser(viewer.id),
     resolvePhoneForUser(other.id),
   ]);
+  const yourChannel = parseContactChannel(viewer.contactChannel);
+  const theirChannel = parseContactChannel(other.contactChannel);
 
   return {
     ok: true,
@@ -81,13 +94,24 @@ export async function getPrivateLessonContactForPair(
       you: {
         name: viewer.name,
         email: viewer.email,
-        phone: yourPhone,
+        phone: phoneVisibleForChannel(yourPhone, yourChannel),
+        contactChannel: yourChannel,
       },
       other: {
         name: other.name,
         email: other.email,
-        phone: theirPhone,
+        phone: phoneVisibleForChannel(theirPhone, theirChannel),
+        contactChannel: theirChannel,
       },
     },
   };
+}
+
+/** E-posta tercihinde numara paylaşılmaz. Eğitmenlerde kanal boştur, numara görünür. */
+function phoneVisibleForChannel(
+  phone: string | null,
+  channel: ContactChannel | null,
+): string | null {
+  if (channel === "email") return null;
+  return phone;
 }

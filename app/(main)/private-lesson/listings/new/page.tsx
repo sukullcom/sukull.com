@@ -32,8 +32,8 @@ export default async function NewListingPage() {
         <p className="text-sm text-muted-foreground">
           Tüm zorunlu alanları eksiksiz doldur. İlan açmak ücretsizdir; yayın
           için yönetici onayı gerekir. Bir ilana en fazla 4 eğitmen teklif
-          gönderebilir. Teklif veren eğitmenler, kaydettiğin cep telefonuna ve
-          ilgili bilgilere sohbet üzerinden erişebilir.
+          gönderebilir. Teklif veren eğitmenler, tercih ettiğin iletişim
+          bilgisine (telefon veya e-posta) sohbet üzerinden erişebilir.
         </p>
       </div>
 

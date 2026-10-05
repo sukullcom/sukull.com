@@ -49,6 +49,7 @@ export default async function AdminListingsPage({
       studentName: users.name,
       studentEmail: users.email,
       studentPhone: users.phone,
+      studentContactChannel: users.contactChannel,
       lessonMode: listings.lessonMode,
       city: listings.city,
       district: listings.district,
@@ -82,8 +83,8 @@ export default async function AdminListingsPage({
           <p className="text-xs text-gray-500">
             Yeni ilanlar önce incelemede listelenir; onay sonrası yalnızca ilan
             konusuyla eşleşen eğitmenlere gösterilir. Tabloda öğrencinin
-            profilindeki telefon ve e-posta (ilan oluştururken güncellenmiş
-            cep) ile ilan metni yer alır; doğrulama için arayabilirsin.
+            profilindeki e-posta ve, telefonu tercih ettiyse, cep numarası
+            yer alır. E-posta tercihinde numara zorunlu değildir.
           </p>
         </div>
       </div>
@@ -159,7 +160,9 @@ export default async function AdminListingsPage({
                         {r.studentEmail ?? "—"}
                       </div>
                       <div className="text-xs">
-                        {r.studentPhone ? (
+                        {r.studentContactChannel === "email" ? (
+                          <span className="text-sky-800">E-posta tercih ediyor</span>
+                        ) : r.studentPhone ? (
                           <a
                             href={`tel:${r.studentPhone.replace(/\s/g, "")}`}
                             className="font-mono text-green-800 hover:underline"

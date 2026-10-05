@@ -20,15 +20,24 @@ import {
   fetchAfterMarketplaceIdentity,
   useMarketplaceIdentityGate,
 } from "@/components/private-lesson/marketplace-identity-gate";
+import { ContactChannelField } from "@/components/private-lesson/contact-channel-field";
+import type { ContactChannel } from "@/lib/private-lesson-contact-channel";
 
 /**
- * Talep ilanı: konu, sınıf, bütçe, saatler, açıklama ve cep telefonu
- * sunucuda zorunludur. İlan admin onayından sonra yayına (`open`) alınır.
+ * Talep ilanı: konu, sınıf, bütçe, saatler ve açıklama zorunludur.
+ * İletişim tercihi telefon ise cep numarası da zorunludur; e-posta ise
+ * hesap adresi kullanılır. İlan admin onayından sonra yayına (`open`) alınır.
  */
 export function NewListingForm() {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
-  const { ensureIdentity, gate } = useMarketplaceIdentityGate();
+  const [contactChannel, setContactChannel] = useState<ContactChannel | "">("");
+  const [contactPhone, setContactPhone] = useState("");
+  const { ensureIdentity, gate } = useMarketplaceIdentityGate({
+    studentContactChoice: true,
+    presetContactChannel: contactChannel,
+    presetPhone: contactPhone,
+  });
 
   const [subject, setSubject] = useState("");
   const [grade, setGrade] = useState("");
@@ -42,7 +51,6 @@ export function NewListingForm() {
   const [budgetMin, setBudgetMin] = useState("");
   const [budgetMax, setBudgetMax] = useState("");
   const [preferredHours, setPreferredHours] = useState("");
-  const [contactPhone, setContactPhone] = useState("");
 
   const needsLocation = lessonMode === "in_person" || lessonMode === "both";
 
@@ -54,7 +62,9 @@ export function NewListingForm() {
     budgetMin.trim().length > 0 &&
     budgetMax.trim().length > 0 &&
     preferredHours.trim().length >= LISTING_PREFERRED_HOURS_MIN_LEN &&
-    isValidTurkeyMobileForProfile(contactPhone) &&
+    (contactChannel === "email" ||
+      (contactChannel === "phone" &&
+        isValidTurkeyMobileForProfile(contactPhone))) &&
     (!needsLocation || city.trim().length > 0) &&
     !submitting;
 
@@ -102,7 +112,9 @@ export function NewListingForm() {
             budgetMin: bMin,
             budgetMax: bMax,
             preferredHours: preferredHours.trim(),
-            contactPhone: contactPhone.trim(),
+            contactChannel,
+            contactPhone:
+              contactChannel === "phone" ? contactPhone.trim() : null,
           }),
         });
       }, ensureIdentity);
@@ -143,10 +155,9 @@ export function NewListingForm() {
       <div className="rounded-lg border border-border bg-muted/40 px-3 py-2.5 text-xs text-muted-foreground space-y-1.5">
         <p>
           <strong className="font-semibold">İletişim ve gizlilik:</strong>{" "}
-          Girdiğin cep telefonu, profilindeki numara ile birleştirilir ve{" "}
-          <strong>teklif veren eğitmenlerle</strong> (sohbet ve teklif ekranı
-          üzerinden) paylaşılır. Teklif veya sohbet sonrası karşı tarafın
-          e-posta ve telefon bilgileri de sohbet içinde görünür.
+          Telefonu seçersen numaran, e-postayı seçersen hesap adresin{" "}
+          <strong>teklif veren eğitmenlerle</strong> paylaşılır. Eğitmenin
+          kayıtlı iletişim bilgisi de sohbet içinde görünür.
         </p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -258,26 +269,30 @@ export function NewListingForm() {
         </div>
       </div>
 
-      <div>
-        <label className="block text-xs font-medium text-muted-foreground mb-1">
-          Cep telefonu * (05xx…, teklif veren eğitmenlerle paylaşılır)
-        </label>
-        <input
-          type="tel"
-          inputMode="tel"
-          autoComplete="tel"
-          value={contactPhone}
-          onChange={(e) => setContactPhone(e.target.value)}
-          maxLength={30}
-          placeholder="Örn. 05xx xxx xx xx"
-          className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-suk-brand focus:ring-1 focus:ring-suk-brand/20"
-          required
-        />
-        <p className="text-[10px] text-muted-foreground mt-1">
-          Türkiye cep numarası zorunludur. Kayıtlı numaran güncellenir; teklif
-          atan eğitmenler ve açık sohbet ekranında kullanılır.
-        </p>
-      </div>
+      <ContactChannelField
+        value={contactChannel}
+        onChange={setContactChannel}
+        disabled={submitting}
+      />
+
+      {contactChannel === "phone" ? (
+        <div>
+          <label className="block text-xs font-medium text-muted-foreground mb-1">
+            Cep telefonu * (05xx…, teklif veren eğitmenlerle paylaşılır)
+          </label>
+          <input
+            type="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            value={contactPhone}
+            onChange={(e) => setContactPhone(e.target.value)}
+            maxLength={30}
+            placeholder="Örn. 05xx xxx xx xx"
+            className="w-full px-3 py-2 text-sm border rounded-lg focus:outline-none focus:border-suk-brand focus:ring-1 focus:ring-suk-brand/20"
+            required
+          />
+        </div>
+      ) : null}
 
       {needsLocation && (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

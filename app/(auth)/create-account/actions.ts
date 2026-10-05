@@ -22,6 +22,10 @@ import { getSupabaseAdminClient } from "@/utils/supabase/admin";
 import { logger } from "@/lib/logger";
 import { normalizeReferralCode } from "@/lib/referral-code";
 import { isValidTurkeyMobileForProfile } from "@/lib/teacher-profile-mutation";
+import {
+  parseContactChannel,
+  type ContactChannel,
+} from "@/lib/private-lesson-contact-channel";
 
 const log = logger.child({ labels: { module: "auth/create-account" } });
 
@@ -72,14 +76,17 @@ export async function signUpWithEmail(
     };
   }
 
+  const contactChannel = parseContactChannel(formData.get("contactChannel"));
   const phoneRaw = String(formData.get("phone") ?? "").trim();
   let phoneStored: string | null = null;
-  if (phoneRaw) {
+  if (contactChannel === "phone" || phoneRaw) {
     if (!isValidTurkeyMobileForProfile(phoneRaw)) {
       return {
         ok: false,
         error:
-          "Geçerli bir Türkiye cep telefonu girilmelidir (05xx…).",
+          contactChannel === "phone"
+            ? "Telefonu tercih ettiğin için geçerli bir Türkiye cep telefonu gir (05xx…)."
+            : "Geçerli bir Türkiye cep telefonu girilmelidir (05xx…).",
       };
     }
     phoneStored = normalizeMarketplacePhone(phoneRaw);
@@ -151,6 +158,7 @@ export async function signUpWithEmail(
           password,
           username: usernameRaw,
           phone: phoneStored,
+          contactChannel,
         });
         if (signedIn === "signed-in") {
           return { ok: true };
@@ -187,12 +195,7 @@ export async function signUpWithEmail(
 
     try {
       await ensurePublicUserFromAuth(data.user, usernameRaw);
-      if (phoneStored) {
-        await db
-          .update(users)
-          .set({ phone: phoneStored, updated_at: new Date() })
-          .where(eq(users.id, data.user.id));
-      }
+      await persistMarketplaceContact(data.user.id, phoneStored, contactChannel);
     } catch (e) {
       log.error({
         message: "ensurePublicUserFromAuth after signup failed",
@@ -226,12 +229,14 @@ async function signInExistingUnconfirmedAccount({
   password,
   username,
   phone,
+  contactChannel,
 }: {
   supabase: Awaited<ReturnType<typeof createClient>>;
   email: string;
   password: string;
   username: string;
   phone: string | null;
+  contactChannel: ContactChannel | null;
 }): Promise<"signed-in" | "not-signed-in"> {
   try {
     const existingId = await findAuthUserIdByEmail(email);
@@ -248,12 +253,7 @@ async function signInExistingUnconfirmedAccount({
 
     try {
       await ensurePublicUserFromAuth(data.user, username);
-      if (phone) {
-        await db
-          .update(users)
-          .set({ phone, updated_at: new Date() })
-          .where(eq(users.id, data.user.id));
-      }
+      await persistMarketplaceContact(data.user.id, phone, contactChannel);
     } catch (e) {
       log.error({
         message: "ensurePublicUserFromAuth after leftover signup confirm failed",
@@ -277,4 +277,21 @@ async function signInExistingUnconfirmedAccount({
 
 function normalizeMarketplacePhone(v: string): string {
   return v.replace(/[^\d+]/g, "").replace(/^\+{2,}/, "+");
+}
+
+async function persistMarketplaceContact(
+  userId: string,
+  phone: string | null,
+  contactChannel: ContactChannel | null,
+) {
+  if (!phone && !contactChannel) return;
+  await db
+    .update(users)
+    .set({
+      ...(contactChannel ? { contactChannel } : {}),
+      ...(contactChannel === "email" ? { phone: null } : {}),
+      ...(phone && contactChannel !== "email" ? { phone } : {}),
+      updated_at: new Date(),
+    })
+    .where(eq(users.id, userId));
 }

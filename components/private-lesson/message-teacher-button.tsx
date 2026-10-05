@@ -44,7 +44,9 @@ export function MessageTeacherButton({
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [creditDialogOpen, setCreditDialogOpen] = useState(false);
-  const { ensureIdentity, gate } = useMarketplaceIdentityGate();
+  const { ensureIdentity, gate } = useMarketplaceIdentityGate({
+    studentContactChoice: true,
+  });
 
   const doUnlock = async () => {
     if (loading) return;
@@ -147,8 +149,8 @@ export function MessageTeacherButton({
         <span className="font-semibold">
           eğitmenin kayıtlı e-posta ve telefon bilgileri
         </span>{" "}
-        sana gösterilir; senin kayıtlı e-posta ve telefon bilgilerin de eğitmenle
-        paylaşılır.
+        sana gösterilir; senin tercih ettiğin iletişim bilgisi (e-posta veya
+        telefon) da eğitmenle paylaşılır.
       </span>
     </>
   );

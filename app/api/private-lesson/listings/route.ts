@@ -30,6 +30,7 @@ import {
   LISTING_PREFERRED_HOURS_MIN_LEN,
 } from "@/lib/private-lesson-listings";
 import { isValidTurkeyMobileForProfile } from "@/lib/teacher-profile-mutation";
+import { parseContactChannel } from "@/lib/private-lesson-contact-channel";
 import db from "@/db/drizzle";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -195,22 +196,33 @@ export const POST = secureApi.authRateLimited(
       );
     }
 
-    const phoneRaw = str(body.contactPhone);
-    if (!isValidTurkeyMobileForProfile(phoneRaw)) {
+    const contactChannel = parseContactChannel(body.contactChannel);
+    if (!contactChannel) {
       return NextResponse.json(
-        {
-          error:
-            "Geçerli bir Türkiye cep telefonu girilmelidir. Teklif veren eğitmenlerle paylaşılır.",
-        },
+        { error: "İletişim için telefon veya e-posta seçilmelidir." },
         { status: 400 },
       );
     }
-    const contactPhone = normalizeContactPhone(phoneRaw);
-    if (!contactPhone) {
-      return NextResponse.json(
-        { error: "Telefon numarası işlenemedi. Lütfen kontrol edin." },
-        { status: 400 },
-      );
+
+    let contactPhone: string | null = null;
+    if (contactChannel === "phone") {
+      const phoneRaw = str(body.contactPhone);
+      if (!isValidTurkeyMobileForProfile(phoneRaw)) {
+        return NextResponse.json(
+          {
+            error:
+              "Telefonu tercih ettiğin için geçerli bir Türkiye cep telefonu girilmelidir.",
+          },
+          { status: 400 },
+        );
+      }
+      contactPhone = normalizeContactPhone(phoneRaw);
+      if (!contactPhone) {
+        return NextResponse.json(
+          { error: "Telefon numarası işlenemedi. Lütfen kontrol edin." },
+          { status: 400 },
+        );
+      }
     }
 
     const cityTrim = str(body.city);
@@ -244,7 +256,11 @@ export const POST = secureApi.authRateLimited(
 
     await db
       .update(users)
-      .set({ phone: contactPhone, updated_at: new Date() })
+      .set({
+        contactChannel,
+        phone: contactChannel === "phone" ? contactPhone : null,
+        updated_at: new Date(),
+      })
       .where(eq(users.id, user.id));
 
     return NextResponse.json({ listing: row }, { status: 201 });
