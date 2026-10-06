@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { GraduationCap, Handshake, Loader2, Megaphone } from "lucide-react";
 import { clientLogger } from "@/lib/client-logger";
 import { csrfHeader, mintCsrfToken } from "@/lib/mint-csrf-client";
 import {
@@ -28,7 +29,11 @@ import type { ContactChannel } from "@/lib/private-lesson-contact-channel";
  * İletişim tercihi telefon ise cep numarası da zorunludur; e-posta ise
  * hesap adresi kullanılır. İlan admin onayından sonra yayına (`open`) alınır.
  */
-export function NewListingForm() {
+export function NewListingForm({
+  viewerIsTeacher = false,
+}: {
+  viewerIsTeacher?: boolean;
+}) {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
   const [contactChannel, setContactChannel] = useState<ContactChannel | "">("");
@@ -147,6 +152,63 @@ export function NewListingForm() {
       onSubmit={handleSubmit}
       className="bg-card border rounded-xl p-5 space-y-4"
     >
+      <div
+        className="rounded-xl border-2 border-suk-payment bg-suk-payment-soft px-4 py-3.5 text-sm text-foreground shadow-sm"
+        role="note"
+      >
+        <p className="font-bold text-suk-payment text-base leading-snug">
+          Bu form yalnızca öğrenci talebi içindir
+        </p>
+        <div className="mt-3 grid gap-2.5 sm:grid-cols-2">
+          <div className="flex gap-2.5 rounded-lg border border-suk-payment/25 bg-card/80 px-3 py-2.5 text-xs leading-relaxed">
+            <Megaphone
+              className="h-4 w-4 shrink-0 text-suk-payment mt-0.5"
+              aria-hidden
+            />
+            <p>
+              <strong className="text-foreground">Öğrenci:</strong> Ne
+              öğrenmek istediğini yaz, ilanı gönder — eğitmenler sana{" "}
+              <strong>teklif</strong> gönderir.
+            </p>
+          </div>
+          <div className="flex gap-2.5 rounded-lg border border-suk-payment/25 bg-card/80 px-3 py-2.5 text-xs leading-relaxed">
+            <Handshake
+              className="h-4 w-4 shrink-0 text-suk-payment mt-0.5"
+              aria-hidden
+            />
+            <p>
+              <strong className="text-foreground">Eğitmen:</strong> Burada ilan
+              açmazsın.{" "}
+              <Link
+                href="/private-lesson/listings"
+                className="font-semibold text-suk-payment underline underline-offset-2 hover:text-suk-payment/90"
+              >
+                Açık ilanlara teklif ver
+              </Link>
+              .
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {viewerIsTeacher ? (
+        <div className="rounded-lg border border-amber-300 bg-amber-50 px-3 py-2.5 text-xs text-amber-950 dark:border-amber-700 dark:bg-amber-950/40 dark:text-amber-100">
+          <p className="flex items-start gap-2">
+            <GraduationCap className="h-4 w-4 shrink-0 mt-0.5" aria-hidden />
+            <span>
+              Onaylı eğitmen olarak bu sayfayı görüyorsun. Ders vermek için{" "}
+              <Link
+                href="/private-lesson/listings"
+                className="font-semibold underline underline-offset-2"
+              >
+                öğrenci ilanlarına teklif ver
+              </Link>
+              ; öğrenci adına talep açacaksan formu kullanabilirsin.
+            </span>
+          </p>
+        </div>
+      ) : null}
+
       <div className="rounded-lg border border-suk-warning-border bg-suk-warning-soft px-3 py-2.5 text-xs text-suk-warning-soft-fg">
         <strong className="font-semibold">İnceleme:</strong> İlanın önce
         yönetici onayından geçer. Onay sonrası ilanındaki konuyla eşleşen
@@ -389,7 +451,7 @@ export function NewListingForm() {
             Oluşturuluyor...
           </>
         ) : (
-          "İlanı Gönder"
+          "Talep ilanını gönder"
         )}
       </Button>
       {gate}
