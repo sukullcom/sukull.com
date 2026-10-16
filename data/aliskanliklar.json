@@ -1,0 +1,436 @@
+{
+  "course": {
+    "title": "Düşünce kitapları",
+    "imageSrc": "/courses/genel-kultur.svg",
+    "section": "kitaplar"
+  },
+  "units": [
+    {
+      "title": "Atomik Alışkanlıklar",
+      "description": "James Clear’ın Atomik Alışkanlıklar kitabında işlenen alışkanlık fikirleri. Her ders üç okuma ve bu okumadan cevaplanan bir sorudan oluşur.",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "Küçük adım birikir",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Metne göre bir davranışın asıl gücü nereden gelir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": "atomik-aliskanliklar,kucuk-adim",
+              "explanation": "Kitap, gücün o günkü coşkuda değil, küçük tekrarın kesilmeden sürmesinde olduğunu söyler.",
+              "metadata": "{\"reading\":\"Atomik Alışkanlıklar, bir davranışın işe yarayıp yaramadığını o günkü coşkuyla değil, ertesi gün de tekrarlanıp tekrarlanmadığıyla ölçer. Bir kez iki saat çalışmak güzel hissettirir. On dakika çalışıp bunu haftanın her günü yapmak ise başka bir şey biriktirir. Kitap, küçük tekrarların tek başlarına fark edilmediğini, üst üste geldiklerinde ise insanın başlangıçtaki halinden belirgin biçimde uzaklaştığını anlatır.\\n\\nBu yüzden bugün çok az yaptım cümlesi, tekrarın durduğu gün tehlikeli bulunur. Az yapmak, hiç yapmamaktan ayrı tutulur. Zincir kırılmadığında bir sonraki gün aynı işe dönmek kolaylaşır.\"}",
+              "options": [
+                {
+                  "text": "O gün duyulan coşkudan",
+                  "correct": false
+                },
+                {
+                  "text": "Tek seferde ayrılan uzun süreden",
+                  "correct": false
+                },
+                {
+                  "text": "Küçük tekrarın kesilmeden sürmesinden",
+                  "correct": true
+                },
+                {
+                  "text": "Başkalarının gördüğü büyük sonuçtan",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Metne göre insanlar küçük tekrarı neden erken bırakır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": "atomik-aliskanliklar,kucuk-adim",
+              "explanation": "İlk günlerde fark görünmediği için tekrar işe yaramıyormuş gibi gelir.",
+              "metadata": "{\"reading\":\"Kitap, birikimin başta görünmediğini söyler. İlk günlerde on dakikalık tekrar, dünkü hal ile bugünkü hal arasında elle tutulur bir fark bırakmaz. İnsan bu yüzden işe yaramıyor deyip bırakır.\\n\\nOysa fark, tekrarın sayısı arttıkça ortaya çıkar. Aynı küçük davranış haftalar boyunca sürdüğünde artık tek bir günün emeği değil, günlerin toplamı konuşur. Sabırsızlık, tam da sonucun henüz görünmediği bu aralıkta bırakmaya iter.\\n\\nKitabın önerdiği ölçü, bugünkü heyecan değil, yarın da aynı küçük işin yapılıp yapılmayacağıdır.\"}",
+              "options": [
+                {
+                  "text": "İlk günlerde sonuç görünmediği için",
+                  "correct": true
+                },
+                {
+                  "text": "On dakika çok uzun sürdüğü için",
+                  "correct": false
+                },
+                {
+                  "text": "Büyük hedefler yasak olduğu için",
+                  "correct": false
+                },
+                {
+                  "text": "Tekrar ancak başkası izlerse işe yaradığı için",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Metne göre büyük bir hedef tek başına neden yetersizdir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": "atomik-aliskanliklar,kucuk-adim",
+              "explanation": "Hedef bir yön gösterir. Bugün yapılacak dar işi söylemez.",
+              "metadata": "{\"reading\":\"Kitapta büyük bir hedefin, o hedefe bugün atılacak adımı söylemediği belirtilir. Daha düzenli biri olacağım cümlesi bir yön gösterir. Hangi saatte, hangi işin, ne kadar süreceği ise boş kalır.\\n\\nKüçük adım bu boşluğu doldurur. Bugün yapılacak iş o kadar dar tanımlanır ki ertesi güne taşması için bahane azalır. Dar iş bittiğinde zincire bir halka eklenmiş olur. Halka koparsa birikim de durur.\\n\\nBu yüzden ölçülecek şey niyetin büyüklüğü değil, bugünkü halkanın yerine oturup oturmadığıdır.\"}",
+              "options": [
+                {
+                  "text": "Hedefler her zaman kendiliğinden gerçekleştiği için",
+                  "correct": false
+                },
+                {
+                  "text": "Bugün yapılacak dar işi söylemediği için",
+                  "correct": true
+                },
+                {
+                  "text": "Küçük adımlar hedefi bozduğu için",
+                  "correct": false
+                },
+                {
+                  "text": "Hedefin yalnızca bir kez söylenmesi gerektiği için",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Alışkanlık bir döngüdür",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Metne göre alışkanlık döngüsü hangi sırayla ilerler?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": "atomik-aliskanliklar,dongu",
+              "explanation": "Sıra işaret, istek, davranış ve ödüldür.",
+              "metadata": "{\"reading\":\"Kitap, bir alışkanlığı dört parçanın art arda gelmesi olarak anlatır. Önce bir işaret vardır. Telefonun ekranı, masadaki fincan, akşam eve girilen kapı. İşaret bir isteği uyandırır. İstek, davranışa yol açar. Davranışın ardından gelen ödül, beynin bu diziyi bir sonraki sefere de hatırlamasını sağlar.\\n\\nDöngü tamamlandıkça işaret ile davranış birbirine yaklaşır. Bir süre sonra insan karar verdiğini sanır. Kitaba göre çoğu kez işaret gelmiş, döngü kendiliğinden işlemiştir.\"}",
+              "options": [
+                {
+                  "text": "Ödül, işaret, istek, davranış",
+                  "correct": false
+                },
+                {
+                  "text": "İşaret, istek, davranış, ödül",
+                  "correct": true
+                },
+                {
+                  "text": "Davranış, işaret, ödül, istek",
+                  "correct": false
+                },
+                {
+                  "text": "İstek, ödül, işaret, davranış",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Metne göre döngüyü saklayan parça hangisidir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": "atomik-aliskanliklar,dongu",
+              "explanation": "Davranışın hemen ardından gelen ödül, döngünün bir sonraki sefere hatırlanmasını sağlar.",
+              "metadata": "{\"reading\":\"Kitapta döngüyü kırmak için bütün hayatı değiştirmek gerekmediği anlatılır. İşareti fark etmek çoğu zaman yeterince güçlü bir ilk adımdır. Aynı saat, aynı yer, aynı nesne bir davranışı çağırıyorsa, o çağrıyı görünür kılmak döngüyü yavaşlatır.\\n\\nİstek de tek başına suçlu tutulmaz. İstek, işaretten sonra gelir. Ödül ise döngüyü kapatır. Ödül hoşsa beyin döngüyü saklar. Ödül yoksa ya da davranışın hemen ardından can sıkıcı bir sonuç geliyorsa, döngü zayıflar.\"}",
+              "options": [
+                {
+                  "text": "Davranışın hemen ardından gelen ödül",
+                  "correct": true
+                },
+                {
+                  "text": "İnsanın sabah kurduğu cümle",
+                  "correct": false
+                },
+                {
+                  "text": "Hedefin büyüklüğü",
+                  "correct": false
+                },
+                {
+                  "text": "Başkalarının tavsiyesi",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Metne göre irade neden zayıf bir plandır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": "atomik-aliskanliklar,dongu",
+              "explanation": "İşaret, istek ve çabuk ödül dururken irade her seferinde hayır demeyi ister.",
+              "metadata": "{\"reading\":\"Kitap, kötü bir alışkanlığın iradesizlikle açıklanmasını yetersiz bulur. Döngü başka bir şey söyler. İşaret hâlâ oradadır, istek hâlâ uyanıyordur, ödül hâlâ çabuk geliyordur. İrade, bu üçü dururken her seferinde hayır demeye çalışmaktır.\\n\\nDaha kestirme yol, işaretin yerini değiştirmek, ödülü geciktirmek ya da davranışı daha zor ulaşılır hale getirmektir. Döngünün bir parçası değişince aynı istek eski kadar kolay davranışa dönüşmez.\"}",
+              "options": [
+                {
+                  "text": "İrade hiç işe yaramadığı için",
+                  "correct": false
+                },
+                {
+                  "text": "İşaret, istek ve çabuk ödül dururken her seferinde hayır demeyi gerektirdiği için",
+                  "correct": true
+                },
+                {
+                  "text": "İrade yalnızca sabahları bulunduğu için",
+                  "correct": false
+                },
+                {
+                  "text": "Döngünün ödül parçası iradeyle aynı şey olduğu için",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Ortam, niyetten güçlüdür",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Metne göre bir sonraki hareketi en çok ne belirler?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": "atomik-aliskanliklar,ortam",
+              "explanation": "Eşyanın durduğu yer, bir sonraki hareketi niyetten önce dizer.",
+              "metadata": "{\"reading\":\"Kitapta bir davranışın, niyetten çok bulunduğu yere benzediği anlatılır. Masada defter açıksa yazmak, masada telefon açıksa kaydırmak kolaydır. İnsan bugün çalışacağım der. Oda ise bir sonraki hareketi önceden dizmiştir.\\n\\nBu yüzden alışkanlık değiştirmek, çoğu zaman karakter değiştirmek değildir. Eşyanın yerini değiştirmektir. Görmediğin şey seni daha az çağırır. Elinin altında duran şey ise karar beklemeden başlar.\"}",
+              "options": [
+                {
+                  "text": "Sabah söylenen niyet",
+                  "correct": false
+                },
+                {
+                  "text": "Eşyanın durduğu yer",
+                  "correct": true
+                },
+                {
+                  "text": "Kişilik testi",
+                  "correct": false
+                },
+                {
+                  "text": "Haftalık hedef listesinin uzunluğu",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Metne göre aynı yere iki iş yüklemek neden karıştırır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": "atomik-aliskanliklar,ortam",
+              "explanation": "Aynı yer iki işareti birden taşır. Yorgunluk ile kaydırma birbirine karışır.",
+              "metadata": "{\"reading\":\"Kitap, aynı odayı hem dinlenmek hem çalışmak için kullanmanın odaya iki işaret birden yüklediğini söyler. Yatak hem uyku hem telefon demekse, yorgunluk ile kaydırma birbirine karışır.\\n\\nDavranışa ayrı bir yer vermek işareti sadeleştirir. Bir sandalye yalnızca okumak için kullanıldığında, o sandalyeye oturmak okumayı çağırır. Yer dar olabilir. Önemli olan genişlik değil, o köşenin tek bir işe ayrılmasıdır.\"}",
+              "options": [
+                {
+                  "text": "Oda iki işareti birden taşır",
+                  "correct": true
+                },
+                {
+                  "text": "Dar odalar öğrenmeyi kendiliğinden engeller",
+                  "correct": false
+                },
+                {
+                  "text": "Sandalye yalnızca uyku için uygundur",
+                  "correct": false
+                },
+                {
+                  "text": "İki işin bir günde bitmesi zorunlu olduğu için",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Metne göre istenmeyen bir davranışı azaltmanın ortam yoluyla karşılığı nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": "atomik-aliskanliklar,ortam",
+              "explanation": "İstenmeyen şey, ulaşması bir adım daha zahmetli bir yere konur.",
+              "metadata": "{\"reading\":\"Kitapta istenmeyen davranışı zorlaştırmanın da ortam işi olduğu belirtilir. Telefon başka odadaysa, almak için ayağa kalkmak gerekir. Atıştırmalık göz hizasındaysa, el kendiliğinden gider.\\n\\nİstenen davranışı kolaylaştırmak bunun tersidir. Kitap çantadan çıkıp yastığın yanına konduğunda, gece onu açmak bir aramadan kısa sürer. Ortam, doğru işi az çabayla, yanlış işi ise bir adım daha uzakta tuttuğunda iradeye daha az iş düşer.\"}",
+              "options": [
+                {
+                  "text": "Onu ulaşılması daha zahmetli bir yere koymak",
+                  "correct": true
+                },
+                {
+                  "text": "Onu her gün daha uzun süre yapmak",
+                  "correct": false
+                },
+                {
+                  "text": "Onu bir hedef cümlesine yazmak",
+                  "correct": false
+                },
+                {
+                  "text": "Onu başkasına anlatmak",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Yeni davranışı eskiye bağla",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Metne göre yeni bir davranış nereye bağlanır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": "atomik-aliskanliklar,bag",
+              "explanation": "Yeni iş, zaten yapılmakta olan bir işin hemen ardına yazılır.",
+              "metadata": "{\"reading\":\"Kitap, yeni bir davranışın boş bir saate konduğunda unutulduğunu anlatır. Gün zaten doludur. Yeni işin tutunacağı bir yer yoksa, akşam bugün de olmadı denir.\\n\\nTutunan davranışlar, zaten yapılan bir işin hemen ardına yazılır. Kahve bittiğinde bir sayfa. Dişler fırçalandığında iki dakika esneme. Eski davranış işarettir. Yeni davranış, o işaretin arkasına takılmış kısa bir ektir. Böylece yeni iş için ayrı bir hatırlatıcı aranmaz. Eski iş onu çağırır.\"}",
+              "options": [
+                {
+                  "text": "Günün en boş saatine",
+                  "correct": false
+                },
+                {
+                  "text": "Zaten yapılmakta olan bir işin hemen ardına",
+                  "correct": true
+                },
+                {
+                  "text": "Yalnızca pazar gününe",
+                  "correct": false
+                },
+                {
+                  "text": "Başkası hatırlatınca",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Metne göre bağın ilk hali neden kısa tutulur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": "atomik-aliskanliklar,bag",
+              "explanation": "Uzun ek, eski işin çağırabileceğinden büyüktür ve bağ ilk gün kopar.",
+              "metadata": "{\"reading\":\"Kitapta bağın çok uzun olursa koptuğu söylenir. Kahveden sonra bir saat çalışmak, kahvenin çağırabileceğinden büyüktür. Çağrı kısa olmalıdır. Eski iş biter, yeni iş bir iki dakika sürer, sonra gün devam eder.\\n\\nKısa ek, birkaç gün üst üste gelince eski işin parçası gibi hissedilmeye başlar. O zaman süre, istenirse yavaş yavaş uzatılır. Başlangıçta uzun tutmak, bağı daha ilk gün koparır.\"}",
+              "options": [
+                {
+                  "text": "Uzun ek, eski işin çağırabileceğinden büyük olduğu için",
+                  "correct": true
+                },
+                {
+                  "text": "Kısa işler bilgi içermediği için",
+                  "correct": false
+                },
+                {
+                  "text": "Kahve yalnızca bir dakika sürdüğü için",
+                  "correct": false
+                },
+                {
+                  "text": "Uzun işler her zaman kendiliğinden unutulduğu için",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Metne göre sağlam bir bağ cümlesinde neler birlikte durur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": "atomik-aliskanliklar,bag",
+              "explanation": "Eski iş, yeni iş ve yeni işin küçüklüğü aynı cümlede durur.",
+              "metadata": "{\"reading\":\"Kitap, bağ kurarken cümlenin net olması gerektiğini belirtir. Daha çok okuyacağım bir bağ değildir. Akşam yemeği bittiğinde masadaki kitaptan bir sayfa okuyacağım bir bağdır.\\n\\nEski iş, yeni iş ve yeni işin küçüklüğü aynı cümlede durur. Cümle bu kadar dar olunca, akşam karar vermek gerekmez. Yemek bitmiştir, sayfa başlar. Karar, bağ kurulduğu anda verilmiş olur.\"}",
+              "options": [
+                {
+                  "text": "Yalnızca büyük hedef",
+                  "correct": false
+                },
+                {
+                  "text": "Eski iş, yeni iş ve yeni işin küçüklüğü",
+                  "correct": true
+                },
+                {
+                  "text": "Haftanın bütün planı",
+                  "correct": false
+                },
+                {
+                  "text": "Başkalarının beklentisi",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "İlk adımı küçült",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Metne göre ilk adım neden yaklaşık iki dakikaya indirilir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": "atomik-aliskanliklar,baslangic",
+              "explanation": "Kısa ilk adım, başlamamak için kurulan bahaneyi zayıflatır.",
+              "metadata": "{\"reading\":\"Kitapta bir işin zor kısmının çoğu zaman sürdürmek değil başlamak olduğu anlatılır. Başlamak, işin tamamını gözünün önüne getirince ağırlaşır. Koşacağım dendiğinde akla uzun bir tur gelir. Ayakkabıyı giyeceğim dendiğinde ise kapıya kadar bir hareket kalır.\\n\\nİlk adım yaklaşık iki dakikaya inince, başlamamak için kurulan bahane zayıflar. İki dakika bitince devam etmek serbesttir. Zorunlu olan, yalnızca o ilk parçadır.\"}",
+              "options": [
+                {
+                  "text": "İki dakikadan uzun işler yasak olduğu için",
+                  "correct": false
+                },
+                {
+                  "text": "Başlamamak için kurulan bahanenin zayıflaması için",
+                  "correct": true
+                },
+                {
+                  "text": "İki dakikanın başlı başına bir antrenman sayılması için",
+                  "correct": false
+                },
+                {
+                  "text": "Uzun turların sağlıksız olduğu için",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Metne göre yalnızca ilk adımı yapıp devam etmemek neden yine de sayılır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": "atomik-aliskanliklar,baslangic",
+              "explanation": "Eşik geçilmiştir. Zincir, devam etmeyen günde bile kopmuş sayılmaz.",
+              "metadata": "{\"reading\":\"Kitap, küçültülmüş ilk adımın işin kendisinin yerine geçmediğini söyler. Ayakkabıyı giymek koşmak değildir. Ama koşmanın önündeki eşiği düşürür. Eşik düşünce insan çoğu gün eşiği geçer ve işin devamına kendiliğinden uzanır.\\n\\nUzamadığı gün de başlangıç yapılmış sayılır. Çünkü eşik geçilmiştir. Bugün yalnızca ayakkabı giydim cümlesi, bugün hiç başlamadım cümlesinden farklı bir zincirdir. Zincir, devam etmeyen günde bile kopmamış olur.\"}",
+              "options": [
+                {
+                  "text": "İlk adım işin tamamı olduğu için",
+                  "correct": false
+                },
+                {
+                  "text": "Eşik geçildiği ve zincir kopmadığı için",
+                  "correct": true
+                },
+                {
+                  "text": "Devam etmek zararlı olduğu için",
+                  "correct": false
+                },
+                {
+                  "text": "Ayakkabı giymek koşuya eşit olduğu için",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Metne göre süre ne zaman uzatılır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": "atomik-aliskanliklar,baslangic",
+              "explanation": "Uzatma, küçük başlangıç oturduktan sonra gelir.",
+              "metadata": "{\"reading\":\"Kitapta ilk adımı küçültmenin, hedefi küçümsemek olmadığı belirtilir. Hedef büyük kalabilir. Küçülen, bugün kapıdan içeri giren parçadır.\\n\\nParça her gün aynı kalırsa iş büyümeyebilir. Bu yüzden küçük başlangıç bir süre sonra, aynı saatte biraz daha uzun tutulabilir. Uzatma, başlangıç oturduktan sonra gelir. Önce kapıdan girmek öğrenilir. Sonra içeride kalınan süre artar. Sırayı tersine çevirmek, daha ilk günde kapının önünde bırakır.\"}",
+              "options": [
+                {
+                  "text": "Hedefin söylendiği gün",
+                  "correct": false
+                },
+                {
+                  "text": "Küçük başlangıç oturduktan sonra",
+                  "correct": true
+                },
+                {
+                  "text": "İnsan yorulduğu anda",
+                  "correct": false
+                },
+                {
+                  "text": "İlk günden, işin tamamı bitene kadar",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

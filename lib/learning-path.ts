@@ -35,32 +35,30 @@ function detectExamFromTitle(title: string): (typeof EXAM_ORDER)[number] | null 
 /**
  * Sınıf veya sınav etiketi olmayan kursları konularına göre sınıflandırır.
  *
- * "ingilizce" ve "genel_kultur" konuları **cross-class** kabul edilir:
+ * "ingilizce" ve section'ı `kitaplar` olan kurslar **cross-class** kabul edilir:
  * LGS / TYT-AYT / yetişkin yollarının hepsinde liste içinde görünürler.
- * Sebep: CEFR seviyeli İngilizce ve genel kültür içeriği yaşa/sınıfa bağlı
- * değildir; çocuk 5. sınıf öğrencisinden KPSS adayına kadar herkese
- * EASY/MEDIUM/HARD difficulty'lerle hizmet eder.
+ * Sebep: Kitaplar bölümü ve CEFR seviyeli İngilizce yaşa/sınıfa bağlı değildir.
  *
  * Yeni cross-class konu eklenirken hem bu döndürme tipi hem de
  * `isCrossPathTopic`'i çağıran iki filtre dalı güncellenir.
  */
-function detectTopic(title: string): "ingilizce" | "genel_kultur" | "diger" {
+export const PUBLIC_SECTIONS = ["kitaplar"] as const;
+
+export type PublicSection = (typeof PUBLIC_SECTIONS)[number];
+
+function detectTopic(title: string): "ingilizce" | "diger" {
   const t = title.toLocaleLowerCase("tr");
   if (t.includes("ingilizce") || t.includes("english")) return "ingilizce";
-  if (
-    t.includes("genel kültür") ||
-    t.includes("genel kultur") ||
-    t.includes("genel-kultur") ||
-    t.includes("genelkultur")
-  ) {
-    return "genel_kultur";
-  }
   return "diger";
 }
 
-function isCrossPathTopic(title: string): boolean {
-  const topic = detectTopic(title);
-  return topic === "ingilizce" || topic === "genel_kultur";
+function isPublicCourse(course: Course): boolean {
+  return Boolean(course.section && (PUBLIC_SECTIONS as readonly string[]).includes(course.section));
+}
+
+function isCrossPathTopic(course: Course): boolean {
+  if (isPublicCourse(course)) return true;
+  return detectTopic(course.title) === "ingilizce";
 }
 
 export function filterCoursesByLearningPath(
@@ -75,9 +73,8 @@ export function filterCoursesByLearningPath(
       if (exam) return exam === "YDT" || exam === "KPSS" || exam === "ALES" || exam === "YDS";
       const g = parseGradeFromTitle(c.title);
       if (g !== null) return false; // 5–12 sınıf bloku
-      // CEFR İngilizce + Genel Kültür gibi sınıf/sınav etiketi olmayan
-      // cross-class konular her yolda görünür.
-      return isCrossPathTopic(c.title);
+      // Kitaplar bölümü ve İngilizce her yolda görünür.
+      return isCrossPathTopic(c);
     });
   }
   if (path === "lgs" || path === "tyt_ayt") {
@@ -100,9 +97,9 @@ export function filterCoursesByLearningPath(
         if (g === null) return grade >= 9 && grade <= 12;
         return grade === g;
       }
-      // Konu: İngilizce + Genel Kültür herkese; diğer sınıf denkliği olmayan
-      // dersler sadece `full` yolda görünür.
-      return isCrossPathTopic(c.title);
+      // Kitaplar bölümü ve İngilizce herkese görünür. Sınıf denkliği olmayan
+      // diğer dersler sadece `full` yolda görünür.
+      return isCrossPathTopic(c);
     });
   }
   return allCourses;

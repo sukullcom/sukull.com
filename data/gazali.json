@@ -1,0 +1,436 @@
+{
+  "course": {
+    "title": "Gazali",
+    "imageSrc": "/courses/genel-kultur.svg",
+    "section": "islam"
+  },
+  "units": [
+    {
+      "title": "Ey Oğul",
+      "description": "Gazali’nin Ey Oğul diye bilinen öğüdünde işlenen fikirler. Anlatım bizim cümlemizdir. Her ders üç okuma ve bu okumadan cevaplanan bir sorudan oluşur.",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "İlim amel ister",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Gazali ilmi neye bağlar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": "gazali,ilim",
+              "explanation": "İlim, amel için biriktirilir.",
+              "metadata": "{\"reading\":\"Ey Oğul'da ilmin, amel edilmeyen bir yük olarak kaldığı anlatılır. Bilmek, yapmak için biriktirilir. Yapılmayan bilgi, sahibine bir övünç değil, bir sorumluluk olur. Eserde bahsedilen, çok bilmenin kendiliğinden olgunluk sayılması değildir.\\n\\nİlim, amele inmezse eksik kalır.\"}",
+              "options": [
+                {
+                  "text": "Yalnızca ezbere",
+                  "correct": false
+                },
+                {
+                  "text": "Amele",
+                  "correct": true
+                },
+                {
+                  "text": "Başkasına anlatıp bırakmaya",
+                  "correct": false
+                },
+                {
+                  "text": "Sayıca çok olmaya",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Yapılmayan bilgi eserde nasıl durur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": "gazali,ilim",
+              "explanation": "Yapılmayan bilgi sorumluluk olur.",
+              "metadata": "{\"reading\":\"Gazali, bilip de yapmayanın haline bakılmasını ister. O bilgi, yol göstermesi gerekirken sahibinin aleyhine dönebilir. Eserde bahsedilen, öğrenmenin yasaklanması değildir. Öğrenilenin hayata inmemesidir sorun.\\n\\nBilgi, rafta kaldıkça öğüt olmaktan çıkar.\"}",
+              "options": [
+                {
+                  "text": "Her zaman bir övünç olarak",
+                  "correct": false
+                },
+                {
+                  "text": "Yapılmazsa sorumluluk olarak",
+                  "correct": true
+                },
+                {
+                  "text": "Unutulunca sevaba döndüğü",
+                  "correct": false
+                },
+                {
+                  "text": "Hiç öğrenilmemesi gerektiği",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Eser çok bilmeyi nasıl görür?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": "gazali,ilim",
+              "explanation": "Üstünlük, bilinenin yaşanmasındadır.",
+              "metadata": "{\"reading\":\"Ey Oğul'da bahsedilen, sayfası çok olanın herkesten üstün olduğudur değil. Üstünlük, bilinenin yaşanmasındadır. Az bilip yapan, çok bilip bırakanın önüne geçebilir. Ölçü, dağarcık değil, ameldir.\\n\\nGazali öğüdü bu ölçüyle açar.\"}",
+              "options": [
+                {
+                  "text": "Sayfa çokluğunun yeter olduğu",
+                  "correct": false
+                },
+                {
+                  "text": "Yaşanan bilginin önde olduğu",
+                  "correct": true
+                },
+                {
+                  "text": "Amelin ilmi sildiği",
+                  "correct": false
+                },
+                {
+                  "text": "Hiç bilmemenin daha güvenli olduğu",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Dili tutmak",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Gazali dili neden tehlikeli sayar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": "gazali,dil",
+              "explanation": "Tehlike, ölçüsüz açılan dildedir.",
+              "metadata": "{\"reading\":\"Ey Oğul'da dil, en kolay işleyen ve en çok zarar veren organ olarak anlatılır. Bir cümle, bir gıybet, bir övünme, geri alınması zor bir izin bırakır. Eserde bahsedilen, konuşmanın haram kılınması değildir.\\n\\nTehlike, ölçüsüz açılan dildedir.\"}",
+              "options": [
+                {
+                  "text": "Hiç konuşulmadığı için",
+                  "correct": false
+                },
+                {
+                  "text": "Ölçüsüz açıldığı için",
+                  "correct": true
+                },
+                {
+                  "text": "Yalnızca şiir söylediği için",
+                  "correct": false
+                },
+                {
+                  "text": "Susmak farz olduğu için",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Boş söz eserde neye benzer?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": "gazali,dil",
+              "explanation": "Hayırsız söz, vaktin ve kalbin israfıdır.",
+              "metadata": "{\"reading\":\"Gazali, hayır taşımayan sözün insanı meşgul edip kalbi dağıttığını anlatır. Eserde bahsedilen, her sessizliğin ibadet sayılması değildir. Hayırsız söz, vaktin ve kalbin israfıdır.\\n\\nDil tutulunca kalp de toplanır.\"}",
+              "options": [
+                {
+                  "text": "Bir ibadet",
+                  "correct": false
+                },
+                {
+                  "text": "Vaktin ve kalbin israfı",
+                  "correct": true
+                },
+                {
+                  "text": "İlmin kendisi",
+                  "correct": false
+                },
+                {
+                  "text": "Bir farz",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Öğüt dil hakkında ne ister?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": "gazali,dil",
+              "explanation": "Hayır yoksa susmak bir edeptir.",
+              "metadata": "{\"reading\":\"Ey Oğul'da bahsedilen, öğrencinin bildiği her şeyi hemen söylemesidir değil. Söylemeden önce o sözün hayır getirip getirmediğine bakılır. Hayır yoksa susmak, bir eksiklik değil, bir edeptir.\\n\\nGazali dili bir kapı gibi tutmayı öğütler.\"}",
+              "options": [
+                {
+                  "text": "Her bilginin hemen söylenmesi",
+                  "correct": false
+                },
+                {
+                  "text": "Hayır yoksa susulması",
+                  "correct": true
+                },
+                {
+                  "text": "Susmanın yasaklanması",
+                  "correct": false
+                },
+                {
+                  "text": "Sözün hiç tartılmaması",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Az uyku az lokma",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Gazali uykuyu nasıl sınırlar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": "gazali,nefis",
+              "explanation": "Fazla uyku bırakılır ki ibadete yer açılsın.",
+              "metadata": "{\"reading\":\"Ey Oğul'da çok uykunun kalbi ağırlaştırdığı anlatılır. Uyku ihtiyaçtır. Fazlası ise geceyi ve sabahı siler. Eserde bahsedilen, hiç uyumamanın bir üstünlük sayılması değildir.\\n\\nAz uyku, ibadet ve ilim için yer açmaktır.\"}",
+              "options": [
+                {
+                  "text": "Hiç uyumamak",
+                  "correct": false
+                },
+                {
+                  "text": "Fazlasını bırakıp ibadete yer açmak",
+                  "correct": true
+                },
+                {
+                  "text": "Gündüz hiç uyanmamak",
+                  "correct": false
+                },
+                {
+                  "text": "Uykuyu tamamen unutmak",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Lokma hakkında ne denir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": "gazali,nefis",
+              "explanation": "Yeten kadar lokma, kalbi hafif tutar.",
+              "metadata": "{\"reading\":\"Gazali, doyurucu çok yemeğin nefsi şımartıp bedeni uyuşturduğunu söyler. Az lokma, açlığı bir işkenceye çevirmek için değil, kalbi hafif tutmak içindir. Eserde bahsedilen, yemeğin haram kılınması değildir.\\n\\nÖlçü, sofranın gösterişi değil, yeten kadardır.\"}",
+              "options": [
+                {
+                  "text": "Sofranın dolu olması",
+                  "correct": false
+                },
+                {
+                  "text": "Yeten kadar, kalbi ağırlaştırmayan lokma",
+                  "correct": true
+                },
+                {
+                  "text": "Hiç yenmemesi",
+                  "correct": false
+                },
+                {
+                  "text": "Yalnızca tatlı yenmesi",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Nefis bu öğütte nerede durur?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": "gazali,nefis",
+              "explanation": "Nefis ölçülü tutulur.",
+              "metadata": "{\"reading\":\"Ey Oğul'da bahsedilen, nefsin her istediğinin hemen verilmesi değildir. Çok uyku ve çok lokma nefsi güçlendirir, kalbi gevşetir. Azaltmak, nefsi kırmak için bir gösteri değil, kulluğa yer açmaktır.\\n\\nGazali bedeni düşman ilan etmez. Onu ölçülü tutar.\"}",
+              "options": [
+                {
+                  "text": "Her istediği verilir",
+                  "correct": false
+                },
+                {
+                  "text": "Ölçülü tutulur ki kulluğa yer açılsın",
+                  "correct": true
+                },
+                {
+                  "text": "Tamamen yok sayılır",
+                  "correct": false
+                },
+                {
+                  "text": "Yalnızca başkası doyurur",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Dünyaya bağ",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Gazali dünyayı nasıl görür?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": "gazali,dunya",
+              "explanation": "Dünya, geçilen bir uğraktır.",
+              "metadata": "{\"reading\":\"Ey Oğul'da dünya, kalıcı bir yurt olarak sevilmemesi gereken bir uğrak diye anlatılır. İnsan oradan geçmektedir. Eserde bahsedilen, dünyadaki helal işin terk edilmesi değildir. Kalbin oraya çakılmasıdır sakınca.\\n\\nBağ, geçici olanı ebedi sanmaktır.\"}",
+              "options": [
+                {
+                  "text": "Ebedi bir yurt olarak",
+                  "correct": false
+                },
+                {
+                  "text": "Geçilen bir uğrak olarak",
+                  "correct": true
+                },
+                {
+                  "text": "Hiç var olmayan bir yer olarak",
+                  "correct": false
+                },
+                {
+                  "text": "Yalnızca bir ceza olarak",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Mal ve makam eserde neye benzer?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": "gazali,dunya",
+              "explanation": "Mal ve makam, kalbin birinci sırasına oturursa oyalar.",
+              "metadata": "{\"reading\":\"Gazali, malın ve makamın insanı oyalayıp asıl işten alıkoyabildiğini söyler. Eserde bahsedilen, rızkın haram sayılması değildir. Onların kalpte birinci sıraya oturmasıdır. Birinci sıra Allah'a ait kalmalıdır.\\n\\nOyalanma, dünyanın en sessiz bağıdır.\"}",
+              "options": [
+                {
+                  "text": "Rızkın haram olduğu",
+                  "correct": false
+                },
+                {
+                  "text": "Kalpte birinci sıraya otururlarsa oyaladıkları",
+                  "correct": true
+                },
+                {
+                  "text": "Makamın ibadet sayıldığı",
+                  "correct": false
+                },
+                {
+                  "text": "Malın ilmi sildiği",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Öğüt dünyayı terk etmeyi nasıl anlar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": "gazali,dunya",
+              "explanation": "Terk, kalbin köle olmamasıdır.",
+              "metadata": "{\"reading\":\"Ey Oğul'da bahsedilen, dağa çıkıp her helali bırakmak değildir. Kalbin dünyaya köle olmamasıdır. İnsan işini görür, rızkını kazanır, ama orayı son durak sanmaz. Bağ kopunca dünya eşya olarak kalır, ilah olmaz.\\n\\nGazali bu ayrımı öğüdün ortasına koyar.\"}",
+              "options": [
+                {
+                  "text": "Her helalin bırakılması",
+                  "correct": false
+                },
+                {
+                  "text": "Kalbin dünyaya köle olmaması",
+                  "correct": true
+                },
+                {
+                  "text": "İşin terk edilmesi",
+                  "correct": false
+                },
+                {
+                  "text": "Rızkın reddedilmesi",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Gece ve pişmanlık",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Gazali geceyi neye ayırır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": "gazali,gece",
+              "explanation": "Gecenin bir kısmı uyanışa ayrılır.",
+              "metadata": "{\"reading\":\"Ey Oğul'da gecenin bir kısmı, gaflet uykusuna değil, bir uyanışa ayrılır. Kul o saatte kendi haline bakar. Eserde bahsedilen, bütün geceyi ibadet sayıp gündüzü silmek değildir.\\n\\nGece, pişmanlığın ve yönelişin vaktidir.\"}",
+              "options": [
+                {
+                  "text": "Yalnızca daha çok uykuya",
+                  "correct": false
+                },
+                {
+                  "text": "Bir uyanışa ve yönelişe",
+                  "correct": true
+                },
+                {
+                  "text": "Eğlenceye",
+                  "correct": false
+                },
+                {
+                  "text": "İş bitirmeye",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Pişmanlık eserde nasıl durur?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": "gazali,gece",
+              "explanation": "Pişmanlık, kalbin diri olduğunun işaretidir.",
+              "metadata": "{\"reading\":\"Gazali, hatadan sonra dönmeyi bir zayıflık diye koymaz. Pişmanlık, kalbin hâlâ diri olduğunun işaretidir. Eserde bahsedilen, günahı övmek değildir. Günahın üstünü örtüp yoluna devam etmeyi reddetmektir.\\n\\nDönüş, öğüdün kapanışıdır.\"}",
+              "options": [
+                {
+                  "text": "Bir zayıflık olarak",
+                  "correct": false
+                },
+                {
+                  "text": "Kalbin diri olduğunun işareti olarak",
+                  "correct": true
+                },
+                {
+                  "text": "Günahın övgüsü olarak",
+                  "correct": false
+                },
+                {
+                  "text": "Gereksiz bir duygu olarak",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Öğüt öğrenciden en son ne ister?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": "gazali,gece",
+              "explanation": "Öğrenciden, bildiğini yapması ve dönebilmesi istenir.",
+              "metadata": "{\"reading\":\"Ey Oğul'da bahsedilen, bilginin artıp kalbin aynı kalması değildir. Öğrenci bildiğini yapacak, dilini tutacak, dünyaya köle olmayacak ve hata ederse dönecektir. Gece bu dönüşün hatırlatıcısıdır.\\n\\nGazali mektubu bir ünvan değil, bir yol bırakır.\"}",
+              "options": [
+                {
+                  "text": "Daha uzun bir ünvan",
+                  "correct": false
+                },
+                {
+                  "text": "Bildğini yapması ve hata ederse dönmesi",
+                  "correct": true
+                },
+                {
+                  "text": "Geceyi tamamen uyku yapması",
+                  "correct": false
+                },
+                {
+                  "text": "Dünyayı ilk sıraya koyması",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

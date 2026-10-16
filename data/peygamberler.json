@@ -1,0 +1,421 @@
+{
+  "title": "Peygamberler",
+  "description": "Kur’an’da anlatılan peygamber kıssaları. Her ders, bilinen sahnenin altında duran bir ayrımı okutur.",
+  "lessons": [
+    {
+      "title": "Nuh",
+      "challenges": [
+        {
+          "question": "Nuh’un oğlu gemiye neden soy sayesinde binemez?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "peygamberler,nuh",
+          "explanation": "Oğul, soy adıyla ehil sayılmaz. Kurtuluş kandan geçmez.",
+          "metadata": "{\"reading\":\"Kıssada Nuh, oğlu için yakarır. Cevap, oğlunun onun ehli sayılmayacağıdır. Ehil, soy adıyla değil, oğlun tuttuğu işle kurulur. Kan, geminin kapısını açmaz.\\n\\nKıssada bahsedilen, akrabalığın silindiğidir değil. Kurtuluşun soydan geçmediğidir. Peygamberin evladı olmak, tek başına biniş hakkı vermez.\"}",
+          "options": [
+            {
+              "text": "Gemiye yer kalmadığı için",
+              "correct": false
+            },
+            {
+              "text": "Ehil, soy adıyla değil tutulan işle kurulduğu için",
+              "correct": true
+            },
+            {
+              "text": "Nuh oğlunu çağırmadığı için",
+              "correct": false
+            },
+            {
+              "text": "Oğul gemiyi reddetmeden önce boğulduğu için sure onu anmaz",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Gemi neden sular gelmeden kurulur?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "peygamberler,nuh",
+          "explanation": "Gemi, su görünmeden kurulur. Emir, delilden önce gelir.",
+          "metadata": "{\"reading\":\"Kıssada Nuh gemiyi karada, kavmin alayı altında kurar. Su henüz yoktur. Emir, delilden önce gelir. Kıssada bahsedilen, alayın Nuh’u durdurduğudur değil.\\n\\nGören, kuru toprakta bir tekne görür ve güler. Tekne, görülen delile göre değil, gelen emre göre kurulur.\"}",
+          "options": [
+            {
+              "text": "Su kıssada hiç anılmadığı için",
+              "correct": false
+            },
+            {
+              "text": "Emir, görünen delilden önce geldiği için",
+              "correct": true
+            },
+            {
+              "text": "Kavim gemiyi birlikte istediği için",
+              "correct": false
+            },
+            {
+              "text": "Gemi bir depo olarak kullanıldığı için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Uzun çağrı kıssada neyi ölçmez?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "peygamberler,nuh",
+          "explanation": "Uzun süre ve büyük kalabalık, hakkın ölçüsü değildir.",
+          "metadata": "{\"reading\":\"Kıssada çağrı uzun sürer. Uyanlar azdır. Sürenin uzunluğu, kalabalığın haklılığını ölçmez. Çoğunluk geminin dışında kalır. Kıssada bahsedilen, çağrının boşa gittiğidir değil.\\n\\nÖlçü, kaç yıl söylendiği değil, söylenenin ne olduğudur. Az biner. Çokluk, dışarıda kalanı haklı çıkarmaz.\"}",
+          "options": [
+            {
+              "text": "Çağrının kabul oranını",
+              "correct": false
+            },
+            {
+              "text": "Kalabalığın haklı olup olmadığını",
+              "correct": true
+            },
+            {
+              "text": "Geminin büyüklüğünü",
+              "correct": false
+            },
+            {
+              "text": "Tufanın gününü",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "İbrahim",
+      "challenges": [
+        {
+          "question": "Yıldız, ay ve güneş kıssada neden elenir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "peygamberler,ibrahim",
+          "explanation": "Parlaklık yetmez. Batan, kalıcı Rab olamaz.",
+          "metadata": "{\"reading\":\"Kıssada İbrahim yıldızı, ayı ve güneşi görür. Batanı sevmem der. Elenen, parlak oldukları için değil, kayboldukları içindir. Kalıcı olmayan, Rab diye duramaz.\\n\\nKıssada bahsedilen, göğün yok sayıldığıdır değil. Batanın ilah olamayacağıdır. Delil, ışığın gücünde değil, ışığın kesilmesindedir.\"}",
+          "options": [
+            {
+              "text": "Az parladıkları için",
+              "correct": false
+            },
+            {
+              "text": "Battıkları için. Kalmayan, Rab diye duramaz",
+              "correct": true
+            },
+            {
+              "text": "Yalnızca put oldukları için gök hiç anılmaz",
+              "correct": false
+            },
+            {
+              "text": "Kavim onları hiç tanımadığı için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Büyük putu kırmayıp bırakması neyi söyletir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "peygamberler,ibrahim",
+          "explanation": "Delil onların cümlesidir. Konuşamayanı ilah diye bırakamazlar.",
+          "metadata": "{\"reading\":\"Kıssada İbrahim putları kırar, büyüğünü bırakır. Kavme, bunu o yaptı, sorun ona dersiniz. Kavim, putların konuşamayacağını kendi ağzıyla söyler. Delil, İbrahim’in nutku değil, onların cümlesidir.\\n\\nKıssada bahsedilen, büyüğün gerçekten kırdığıdır değil. Konuşamayan ilahın, ilah olamayacağının onların sözünden çıkmasıdır.\"}",
+          "options": [
+            {
+              "text": "Büyük putun gerçekten diğerlerini kırdığını",
+              "correct": false
+            },
+            {
+              "text": "Kavmin, putlar konuşamaz cümlesini kendi ağzından kurduğunu",
+              "correct": true
+            },
+            {
+              "text": "Putların bir kısmının helal sayıldığını",
+              "correct": false
+            },
+            {
+              "text": "İbrahim’in kırmaktan vazgeçtiğini",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Ateş kıssada nasıl söner?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "peygamberler,ibrahim",
+          "explanation": "Ateşe emir verilir. Söndüren, İbrahim’in tekniği değildir.",
+          "metadata": "{\"reading\":\"Kıssada ateşe, İbrahim’e karşı serin ve esen ol denir. Söndüren, İbrahim’in bir tekniği değildir. Silah diye kullanılan şeyin kendisine bir emir verilir. Kıssada bahsedilen, ateşin hiç yanmadığıdır değil.\\n\\nTehlike yerindedir. Koruma, o tehlikeye söylenen sözdedir.\"}",
+          "options": [
+            {
+              "text": "İbrahim’in üzerine su dökmesiyle",
+              "correct": false
+            },
+            {
+              "text": "Ateşin kendisine serin ve esen ol denmesiyle",
+              "correct": true
+            },
+            {
+              "text": "Kavmin pişman olup söndürmesiyle",
+              "correct": false
+            },
+            {
+              "text": "Ateşin kıssada hiç yakılmamasıyla",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Yusuf",
+      "challenges": [
+        {
+          "question": "Yakup rüyayı kardeşlerden neden saklar?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "peygamberler,yusuf",
+          "explanation": "Rüya saklanır çünkü kardeşler onu bir rütbe kavgası diye okuyabilir.",
+          "metadata": "{\"reading\":\"Kıssada Yusuf rüyayı babasına anlatır. Yakup, bunu kardeşlerine anlatmamasını ister. Rüya, kardeşlerin dilinde bir üstünlük kavgasına dönecektir. Kıssada bahsedilen, rüyanın yanlış olduğudur değil.\\n\\nSaklamak, rüyayı inkâr etmek değildir. Kardeşliğin, bir rütbe haberiyle parçalanmasını önlemektir.\"}",
+          "options": [
+            {
+              "text": "Rüya yalan olduğu için",
+              "correct": false
+            },
+            {
+              "text": "Kardeşlerin onu bir üstünlük kavgası diye okumasın diye",
+              "correct": true
+            },
+            {
+              "text": "Yusuf rüyayı unutsun diye",
+              "correct": false
+            },
+            {
+              "text": "Şehir duymasın diye rüya hiç anlatılmaz",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Zindandan çıkış neden «beni an» cümlesiyle gelmez?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "peygamberler,yusuf",
+          "explanation": "«Beni an» tutmaz. Çıkış, kral rüyaya muhtaç olunca gelir.",
+          "metadata": "{\"reading\":\"Kıssada Yusuf, kralın adamına zindandan çıkınca beni an der. Adam unutur. Yusuf yıllarca daha kalır. Çıkış, o ricayla kurulmuş bir bağlantıdan gelmez. Kral bir rüya görünce, yorum için ona ihtiyaç doğar.\\n\\nKıssada bahsedilen, vesilenin günah olduğudur değil. Vesile tutmayabilir. Kurtuluş, o cümlenin başarısına bağlanmaz.\"}",
+          "options": [
+            {
+              "text": "Yusuf kimseye bir şey söylemediği için",
+              "correct": false
+            },
+            {
+              "text": "Adam unutur ve çıkış, kralın rüyaya muhtaç olduğu anda geldiği için",
+              "correct": true
+            },
+            {
+              "text": "Zindan kıssada bir gün sürdüğü için",
+              "correct": false
+            },
+            {
+              "text": "Kral Yusuf’u baştan tanıdığı için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Aklanınca Yusuf nefsi neden temize çıkarmaz?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "peygamberler,yusuf",
+          "explanation": "Aklanınca «ben temizdim» demez. Kurtuluşu nefsine yazmaz.",
+          "metadata": "{\"reading\":\"Kıssada iftira düşüp Yusuf yükselince, nefsi temize çıkarmadığını söyler. Nefis kötülüğe yaslanır. Ancak Rabbi’nin merhamet ettikleri bunun dışındadır. Aklanma, «ben zaten temizdim» cümlesine dönmez.\\n\\nKıssada bahsedilen, Yusuf’un suçu olduğudur değil. Kurtuluşu kendi nefsinin sağlamlığına yazmadığıdır.\"}",
+          "options": [
+            {
+              "text": "Suçu kabul ettiği için",
+              "correct": false
+            },
+            {
+              "text": "Kurtuluşu nefsinin sağlamlığına yazmadığı için",
+              "correct": true
+            },
+            {
+              "text": "Kral öyle istediği için",
+              "correct": false
+            },
+            {
+              "text": "Kardeşleri ısrar ettiği için",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Musa",
+      "challenges": [
+        {
+          "question": "Çağrı Musa’ya nerede gelir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "peygamberler,musa",
+          "explanation": "Çağrı, ailesi için ateş aradığı gecede gelir. Saray töreninde değil.",
+          "metadata": "{\"reading\":\"Kıssada Musa, ailesi için bir ateş ararken ağaç tarafından çağrılır. Bu, sarayda kurulmuş bir tören değildir. Evinin gecesi için çıktığı bir işin içindedir. Peygamberlik, o ev işinin ortasında gelir.\\n\\nKıssada bahsedilen, görevin küçük olduğudur değil. Görevin, insanın gündelik halinin içinde aradığıdır.\"}",
+          "options": [
+            {
+              "text": "Firavun’un taht odasında",
+              "correct": false
+            },
+            {
+              "text": "Ailesi için ateş aradığı bir gecede",
+              "correct": true
+            },
+            {
+              "text": "Ordu toplanmışken",
+              "correct": false
+            },
+            {
+              "text": "Yalnızca rüyada, uyanınca silinerek",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Musa Harun’u neden ister?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "peygamberler,musa",
+          "explanation": "Musa dilinin zorluğunu söyler ve Harun’u ister. Görev, kusursuz hatiplik değildir.",
+          "metadata": "{\"reading\":\"Kıssada Musa, göğsünün daraldığını ve dilinin açılmadığını söyler. Kardeşi Harun’un yanında gönderilmesini ister. Zayıflığı gizlemez. Görev, kusursuz bir hatip şartına bağlanmaz.\\n\\nKıssada bahsedilen, Musa’nın konuşamadığıdır değil. Konuşmanın zorluğunu söyleyip yardım istemesidir. Risalet, o isteği küçültmez.\"}",
+          "options": [
+            {
+              "text": "Harun Firavun’u tanıdığı için saltanat ona kalsın diye",
+              "correct": false
+            },
+            {
+              "text": "Dilinin zorlandığını söyleyip görevi kusursuz hatiplik şartından çıkardığı için",
+              "correct": true
+            },
+            {
+              "text": "Kendisi gitmek istemediği için",
+              "correct": false
+            },
+            {
+              "text": "Harun daha önce peygamber olduğu için Musa susar",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Sihirbazlar secde edince neyi ayırt etmiş olur?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "peygamberler,musa",
+          "explanation": "Sihirbazlar, kendi işleri olan hile ile ayeti ayırır.",
+          "metadata": "{\"reading\":\"Kıssada Firavun’un sihirbazları, Musa’nın asasından çıkanı görünce secde eder. Onlar göz bağının ustasıdır. Gördükleri, kendi işlerinin türünden değildir. Firavun ellerini keseceğini söyleyince de dönmezler.\\n\\nKıssada bahsedilen, her büyünün ayet olduğudur değil. İşi hile olanların, hile olmayanı tanımasıdır.\"}",
+          "options": [
+            {
+              "text": "Firavun’un da inandığını",
+              "correct": false
+            },
+            {
+              "text": "Kendi işleri olan hile ile ayeti ayırdıklarını",
+              "correct": true
+            },
+            {
+              "text": "Asanın bir sihir tekniği olduğunu",
+              "correct": false
+            },
+            {
+              "text": "Secdenin bir savaş hilesi olduğunu",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Risalet",
+      "challenges": [
+        {
+          "question": "Çağrı birken muhatap neden değişir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "peygamberler,risalet",
+          "explanation": "Söz birdir. Her kıssa onu, o yerin reddine söyler.",
+          "metadata": "{\"reading\":\"Nuh’un karşısında alay eden bir kavim, İbrahim’in karşısında put, Yusuf’un karşısında kıskançlık ve zindan, Musa’nın karşısında bir saltanat vardır. Söz aynıdır: Allah birdir, zulüm ve şirk karşısında susulmaz. Sureler bu sözü her seferinde o yerin reddine göre kurar.\\n\\nKıssada bahsedilen, her peygamberin başka bir din getirdiğidir değil. Aynı çağrının, o kavmin hayır dediği yere söylendiğidir.\"}",
+          "options": [
+            {
+              "text": "Her peygamber başka bir ilah söylediği için",
+              "correct": false
+            },
+            {
+              "text": "Aynı çağrı, o kavmin hayır dediği yere söylendiği için",
+              "correct": true
+            },
+            {
+              "text": "Muhatap hiç değişmediği için kıssalar aynı sahneyi tekrar eder",
+              "correct": false
+            },
+            {
+              "text": "Çağrı yalnızca bir kavme ait olduğu için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kıssalar zayıflığı neden gizlemez?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "peygamberler,risalet",
+          "explanation": "Zayıflık gizlenmez. Görev, o halin yok sayılmasına bağlı değildir.",
+          "metadata": "{\"reading\":\"Nuh alay altında gemi kurar. İbrahim ateşe atılır. Yusuf yıllarca zindanda kalır. Musa dilinin zorlandığını söyler. Kıssa, peygamberi kusursuz bir kahraman diye çizmez. Zayıflık anılır. Görev o anının üstünden de gider.\\n\\nKıssada bahsedilen, korkunun görevden düşürdüğüdür değil. Görevin, korkunun ve zorluğun yok sayılmasına bağlı olmadığıdır.\"}",
+          "options": [
+            {
+              "text": "Zayıflık görevi düşürdüğü için anılır",
+              "correct": false
+            },
+            {
+              "text": "Görev, korkunun ve zorluğun yok sayılmasına bağlı olmadığı için",
+              "correct": true
+            },
+            {
+              "text": "Kıssalar yalnızca yenilgi anlattığı için",
+              "correct": false
+            },
+            {
+              "text": "Peygamberler yardım istemediği için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Nuh’un oğlu risalet hakkında neyi kapatır?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "peygamberler,risalet",
+          "explanation": "Peygamberin yakarışı da soy için istisna açmaz.",
+          "metadata": "{\"reading\":\"Peygamberin yakarışı, soy için bir istisna açmaz. Oğul, işi yüzünden ehil sayılmaz. Makam da kan da ölçüyü değiştirmez. Kıssada bahsedilen, duanın yasak olduğudur değil.\\n\\nDua edilir. Cevap, ölçüyü bozmaz. Risalet, yakınlara ayrı bir kapı demek değildir.\"}",
+          "options": [
+            {
+              "text": "Peygamberin duasının her zaman kabul olduğunu",
+              "correct": false
+            },
+            {
+              "text": "Yakınlığa ayrı bir kurtuluş kapısı açılmadığını",
+              "correct": true
+            },
+            {
+              "text": "Oğlun gemiye bindiğini",
+              "correct": false
+            },
+            {
+              "text": "Soyun ibadetin yerine geçtiğini",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

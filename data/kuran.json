@@ -1,0 +1,338 @@
+{
+  "title": "Kur'an",
+  "description": "Namazda okunan kısa sureler. Her ders, ezberlenen cümlenin altında duran bir ayrımı okutur ve soruyu o ayrımdan sorar.",
+  "lessons": [
+    {
+      "title": "Fatiha",
+      "challenges": [
+        {
+          "question": "Fatiha neden bir nimet listesiyle açılmaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "kuran,fatiha",
+          "explanation": "Hamd nimet listesi değildir. Allah'ın kim olduğuna dair övgüdür. İstek sonra gelir.",
+          "metadata": "{\"reading\":\"Diyanet meali, «Hamd, âlemlerin Rabbi Allah'a mahsustur» diye açılır. Hamd, o gün ele geçenleri sayıp teşekkür etmek değildir. Şükür, gelene karşıdır. Hamd, Allah'ın kim olduğuna karşıdır. Sure, kulun isteğinden önce âlemlerin Rabbini anar.\\n\\nİstek, «bizi doğru yola ilet» ile sonra gelir. Açılış bir dilekçe değildir. Önce övgü kurulur, yol onun ardından istenir.\"}",
+          "options": [
+            {
+              "text": "Hamd, kulun sayabildiği nimetlerin listesidir",
+              "correct": false
+            },
+            {
+              "text": "Hamd, geleni saymak değil, âlemlerin Rabbi olan Allah'ın kendisi içindir",
+              "correct": true
+            },
+            {
+              "text": "Sure nimet kelimesini hiç kullanmadığı için dua eksik kalır",
+              "correct": false
+            },
+            {
+              "text": "İstek ayeti surenin ilk cümlesidir",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Namazı tek başına kılan neden «ederim» değil «ederiz» der?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "kuran,fatiha",
+          "explanation": "Tek kişi de çoğul söyler. Kulluk, bir kişinin özel başarısı olmaktan çıkar.",
+          "metadata": "{\"reading\":\"Meal, «Yalnız sana kulluk eder, yalnız senden yardım dileriz» der. Fiil çoğuldur. O an camide tek kişi de olsa cümle «ederim»e dönmez. Sure, kulluğu bir kişinin özel başarısı olmaktan çıkarır.\\n\\nÇoğul, gösteriş için konmuş bir süs değildir. Kul yol isterken kendini bir ümmetin ağzında sayar. Yardım da aynı ağızdan istenir.\"}",
+          "options": [
+            {
+              "text": "Fatiha yalnızca cemaatle kılınan namazda okunduğu için",
+              "correct": false
+            },
+            {
+              "text": "Ayet yalnızca imama söyletildiği için",
+              "correct": false
+            },
+            {
+              "text": "Sure kulluğu tek kişinin başarısı olmaktan çıkarıp bir ümmetin ağzına verdiği için",
+              "correct": true
+            },
+            {
+              "text": "Tekil fiil bu surede yasak bir kelime olduğu için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Son ayet gazaba uğrayanla sapmışı neden aynı kelimede birleştirmez?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "kuran,fatiha",
+          "explanation": "Biri bilip direnir, öbürü yolu kaybeder. Sure bu iki hali aynı saymaz.",
+          "metadata": "{\"reading\":\"Meal, doğru yolun nimet verilenlerin yolu olduğunu, gazaba uğrayanların ve sapmışların yolunun bundan ayrıldığını söyler. Bu iki grup aynı sapma değildir. Gazaba uğrayan, hakkı görüp yüz çevirendir. Sapmış, yolu kaybedendir. Biri bilip direnir. Öbürü bilmeden dağılır.\\n\\nİstenen yol da bir sloganın adı değildir. Nimet verilenlerin yürüdüğü izdir. Ve bu yol, din gününün sahibinden istenir. Kariyer cümlesi değil, o güne dayanacak yoldur.\"}",
+          "options": [
+            {
+              "text": "İkisi de aynı günah olduğu için ayet yalnızca tekrar eder",
+              "correct": false
+            },
+            {
+              "text": "Biri hakkı görüp yüz çevirir, öbürü yolu kaybeder. Sure bu iki sapmayı ayırır",
+              "correct": true
+            },
+            {
+              "text": "Gazap bir millete, sapma bir kişiye kilitlendiği için",
+              "correct": false
+            },
+            {
+              "text": "Son ayet yol istemez, yalnızca iki grubu över",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "İhlas",
+      "challenges": [
+        {
+          "question": "Sure neden «inan» diye değil «de ki» diye açılır?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "kuran,ihlas",
+          "explanation": "Sure tevhidi içte bırakmaz. Söylenecek bir ikrar yapar.",
+          "metadata": "{\"reading\":\"Diyanet meali, «De ki: O, Allah'tır, bir tektir» diye açılır. Tevhid burada yalnızca içte saklanan bir duygu olarak bırakılmaz. Söylenecek bir cümledir. Sure, inancı ağza verir.\\n\\n«De ki» emri, bu cümlenin bir tartışmanın içinde söylendiğini de gösterir. Muhatap, Allah'ın nesebini ve benzerini soran bir sorudur. Cevap, tarif değil, ikrardır.\"}",
+          "options": [
+            {
+              "text": "Sure okunmak için değil, yalnızca ezberlenmek için indiği için",
+              "correct": false
+            },
+            {
+              "text": "Tevhid içte kalsın diye söylenmesi yasaklandığı için",
+              "correct": false
+            },
+            {
+              "text": "Tevhid, içte kalan bir duygu değil, söylenecek bir ikrar olduğu için",
+              "correct": true
+            },
+            {
+              "text": "«De ki» yalnızca peygambere özel olup ümmete geçmediği için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Samed, «bir» demenin üstüne ne ekler?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "kuran,ihlas",
+          "explanation": "Bir, sayıdaki tekliktir. Samed, her şeyin O'na muhtaç olup O'nun hiçbir şeye muhtaç olmamasıdır.",
+          "metadata": "{\"reading\":\"Meal Allah'ı bir der ve ardından Samed der. Bir olmak, sayıdaki tekilliktir. Samed, her şeyin kendisine muhtaç olduğu, kendisi hiçbir şeye muhtaç olmayandır. Yanına konacak bir ilah da bir şeye muhtaç olurdu. Samed, o ihtimali düşürür.\\n\\nBu yüzden sure, «Allah tektir» deyip susmaz. Muhtaç olmayan tekliği ayrıca söyler. Sayı ile muhtaçsızlık aynı cümle değildir.\"}",
+          "options": [
+            {
+              "text": "Samed, Allah'ın bir çocuk sahibi olduğunu söyler",
+              "correct": false
+            },
+            {
+              "text": "Samed, sayıdaki tekliğin yanına muhtaç olmama halini ekler",
+              "correct": true
+            },
+            {
+              "text": "Samed, bir kelimesinin eş anlamlısı olduğu için sure onu süs diye koyar",
+              "correct": false
+            },
+            {
+              "text": "Samed, yalnızca insanların Rabbi olduğu, başka varlıkları kapsamadığı anlamına gelir",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Son ayetler hangi üç bağı kapatır?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "kuran,ihlas",
+          "explanation": "Doğurmak, doğurulmak ve denk olmak kapanır. Üçü de Allah'ı bir zincire bağlardı.",
+          "metadata": "{\"reading\":\"Meal, Allah'ın doğurmadığını, doğurulmadığını ve hiçbir şeyin O'na denk olmadığını söyler. Üç ret vardır. Doğurmak, soyu aşağı doğru bağlamaktır. Doğurulmak, soyu yukarı doğru bağlamaktır. Denk olmak, yanına bir türdeş koymaktır.\\n\\nSure Allah'ı bir aileye, bir başlangıca ve bir benzerine kapatır. Tevhid burada bir slogan değil, bu üç kapının kapanmasıdır.\"}",
+          "options": [
+            {
+              "text": "Yalnızca putların adını sayarak",
+              "correct": false
+            },
+            {
+              "text": "Soyu aşağı, soyu yukarı ve yanına konacak bir dengi kapatarak",
+              "correct": true
+            },
+            {
+              "text": "Namazın vakitlerini belirleyerek",
+              "correct": false
+            },
+            {
+              "text": "Allah'ın bir yerde oturduğunu tarif ederek",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Felak",
+      "challenges": [
+        {
+          "question": "Sure şerri neden ayrı bir ilah gibi kurmaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "kuran,felak",
+          "explanation": "Şer, yaratılmışın yönüdür. Sığınma, ayrı bir şer ilahına değil, felakın Rabbine olur.",
+          "metadata": "{\"reading\":\"Diyanet meali, yaratılan şeylerin şerrinden felakın Rabbine sığınmayla açılır. Felak, yarıp ortaya çıkarmaktır. Sabahın karanlıktan ayrılması bu kelimenin taşıdığı görüntüdür. Sığınılan, şerri yaratan bir ikinci güç değil, karanlığı yaran Rabdir.\\n\\n«Yarattığı şeylerin şerrinden» demek, şerri yaratılışın dışında bir ilaha vermemektir. Şer, yaratılmışın bir yönüdür. Sığınma da o yönün sahibine değil, yaratana olur.\"}",
+          "options": [
+            {
+              "text": "Şer, Allah'ın yanında duran ikinci bir yaratıcıdır",
+              "correct": false
+            },
+            {
+              "text": "Şer yaratılmışın bir yönüdür. Sure ona ayrı bir ilah vermez",
+              "correct": true
+            },
+            {
+              "text": "Felak, şerrin adıdır",
+              "correct": false
+            },
+            {
+              "text": "Sure yalnızca insanlardan gelen şerri sayar, yaratılmışı dışarıda bırakır",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Karanlık ayeti şerri neden bir saate bağlar?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "kuran,felak",
+          "explanation": "Şer her saatte aynı görünmez. Karanlık, örtülen işin vaktidir.",
+          "metadata": "{\"reading\":\"Meal, karanlığı çöktüğü zaman onun şerrinden sığınmayı da söyler. Şer her saatte aynı kılıkta görünmez. Gündüzün açık işi ile karanlığın örttüğü iş ayrılır. Sure, kötülüğü soyut bir kelime olarak bırakmaz. Bir vakte yerleştirir.\\n\\nKaranlık basınca gizlenen, gündüz söylenemeyen ve örtülen şer bu ayetin konusudur. Sığınma, o saati de Allah'a bağlar.\"}",
+          "options": [
+            {
+              "text": "Karanlıkta şer olmadığı için ayet geceyi över",
+              "correct": false
+            },
+            {
+              "text": "Şer her saatte aynı göründüğü için vakit fark etmez",
+              "correct": false
+            },
+            {
+              "text": "Örtülen şer, karanlık çökünce başka bir kılığa girdiği için",
+              "correct": true
+            },
+            {
+              "text": "Sure gündüz namazını kaldırdığı için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Haset surenin konusu hangi anda olur?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "kuran,felak",
+          "explanation": "Sure mizacı değil, hasedin harekete geçtiği anı konu eder.",
+          "metadata": "{\"reading\":\"Meal, haset ettiği zaman hasetçinin şerrinden sığınmayı söyler. Kıskançlık bir mizaç olarak dururken sure onu lanetlemez. Haset eden haset ettiği anda, duygu bir şerre döndüğünde sığınma başlar. Aynı sure, düğümlere üfleyenlerin şerrini de sayar. Gizli bir bağlama işidir bu.\\n\\nSure şerri tek biçime indirgemez. Yaratılmışın şerri, karanlığın şerri, gizli bağın şerri ve harekete geçmiş hasedin şerri ayrı ayrı anılır.\"}",
+          "options": [
+            {
+              "text": "Kıskançlık hissedildiği anda, daha hiç davranışa dökülmeden",
+              "correct": false
+            },
+            {
+              "text": "Haset eden haset ettiği anda, duygu şerre döndüğünde",
+              "correct": true
+            },
+            {
+              "text": "Yalnızca hasetçi tövbe ettiğinde",
+              "correct": false
+            },
+            {
+              "text": "Haset surenin dışında bırakıldığı için hiç",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Nas",
+      "challenges": [
+        {
+          "question": "Sure sığınmayı neden tek isimle bırakmaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "kuran,nas",
+          "explanation": "Rab, Melik ve İlah üç ayrı bağdır. Vesvese her birine sokulur.",
+          "metadata": "{\"reading\":\"Diyanet meali, insanların Rabbine, insanların hükümdarına ve insanların ilahına sığınmayla açılır. Üç bağ vardır. Rab, var edip büyüten. Melik, hükmeden. İlah, kendisine yönelinen. Vesvese bu bağların her birine sokulur. «Seni büyüten o değil», «söz sahibi o değil», «yalnız ona yönelme.»\\n\\nTek isim, bu üç sızıntının hepsini kapatmaz. Sure sığınmayı, insanın Allah'la kurduğu üç ilişkiyi birden sayarak kurar.\"}",
+          "options": [
+            {
+              "text": "Üç isim aynı anlama geldiği için sure yalnızca tekrar eder",
+              "correct": false
+            },
+            {
+              "text": "Vesvese terbiye, hüküm ve kulluk bağlarının her birine sokulduğu için",
+              "correct": true
+            },
+            {
+              "text": "Rab insanlara, Melik cinlere, İlah meleklere ait olduğu için",
+              "correct": false
+            },
+            {
+              "text": "Sure isim saymayı bir süs olarak koyduğu için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Hannâs kelimesi vesvese hakkında neyi gösterir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "kuran,nas",
+          "explanation": "Hannâs, sokulup sinendir. Vesvese anılınca geri çekilen bir fısıltıdır.",
+          "metadata": "{\"reading\":\"Meal, sinsi vesvesecinin şerrinden sığınmayı bildirir. Hannâs, sokulup sonra sinendir. Vesvese ele geçiren bir sahip gibi kurulmaz. Fısıltı gelir, Allah anılınca geri çekilir. Sure, kötülüğü insanın içini tamamen ele geçirmiş bir zorunluluk diye anlatmaz.\\n\\nBu, vesveseyi hafife almak değildir. Kaynağı göğüslerin içidir. Kulakla duyulan bir ses değildir. Yine de anılınca sinen bir fısıltıdır. Sığınma, o sinmenin adıdır.\"}",
+          "options": [
+            {
+              "text": "Vesvesenin hiç geri çekilmeyen bir sahip olduğunu",
+              "correct": false
+            },
+            {
+              "text": "Fısıltının Allah anılınca sinip geri çekildiğini",
+              "correct": true
+            },
+            {
+              "text": "Vesvesenin yalnızca kulaktan giren bir ses olduğunu",
+              "correct": false
+            },
+            {
+              "text": "Hannâs'ın surenin dışında bir kelime olduğunu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Sure vesveseyi neden yalnızca cine bağlamaz?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "kuran,nas",
+          "explanation": "Vesvese cinden de insandan da gelir. Sure bahaneyi cine kilitlemez.",
+          "metadata": "{\"reading\":\"Meal, vesvesenin cinlerden ve insanlardan geleceğini söyler. Kötülük görünmeyen bir varlığa kilitlenmez. Bir insanın fısıltısı da aynı şerri taşır. Sure, bahaneyi cine devredip insanın payını silmez.\\n\\nİki kaynak da göğse bırakılan fısıltıda birleşir. Sığınma ikisine birden karşıdır. Cinni anıp insanı temize çıkarmak, ayetin saydığı ikinci kapıyı kapatır.\"}",
+          "options": [
+            {
+              "text": "İnsan vesvese veremediği için ayet onu yalnızca cinle sınırlar",
+              "correct": false
+            },
+            {
+              "text": "Cin ve insan aynı fısıltıyı taşıyabildiği için",
+              "correct": true
+            },
+            {
+              "text": "İnsanların vesvesesi sevap sayıldığı için",
+              "correct": false
+            },
+            {
+              "text": "Sure kaynağı hiç söylemediği için",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

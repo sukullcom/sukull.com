@@ -70,6 +70,19 @@ const useAudio = (config: { src: string; autoPlay: boolean }) => {
   return [null, null, controls] as const;
 };
 
+function readingFromMetadata(metadata: string | null | undefined): string | null {
+  if (!metadata) return null;
+  try {
+    const parsed = JSON.parse(metadata) as { reading?: unknown };
+    if (typeof parsed.reading === "string" && parsed.reading.trim()) {
+      return parsed.reading.trim();
+    }
+  } catch {
+    return null;
+  }
+  return null;
+}
+
 const useWindowSize = () => {
   const [size, setSize] = useState({ width: 0, height: 0 });
   
@@ -483,6 +496,7 @@ export const Quiz = ({
   // 7) Render the ongoing challenge
   // *******************************
   const showWrongHint = status === "wrong" && Boolean(challenge.explanation?.trim());
+  const reading = readingFromMetadata(challenge.metadata);
 
   return (
     <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
@@ -500,6 +514,13 @@ export const Quiz = ({
           )}
         >
             <div className="lg:min-h-0 lg:w-[600px] mx-auto w-full flex flex-col gap-y-8 lg:gap-y-12">
+            {reading ? (
+              <div className="space-y-4 text-base leading-7 text-foreground">
+                {reading.split(/\n\n+/).map((paragraph) => (
+                  <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+                ))}
+              </div>
+            ) : null}
             <h1 className="text-lg lg:text-3xl text-center lg:text-start font-bold text-foreground">
               <MathRenderer>{title}</MathRenderer>
             </h1>

@@ -8,7 +8,8 @@ import { upsertUserProgress } from "@/actions/user-progress";
 import { toast } from "sonner";
 import { extractSubject } from "@/lib/subject-colors";
 import { examKeysForLearningPath } from "@/lib/learning-path";
-import { Globe, BookOpen, GraduationCap, Lock } from "lucide-react";
+import { Globe, BookOpen, GraduationCap, Lock, Library } from "lucide-react";
+import { PUBLIC_SECTIONS, type PublicSection } from "@/lib/learning-path";
 
 type Course = typeof coursesTable.$inferSelect;
 
@@ -43,6 +44,12 @@ const TOPIC_META: Record<string, { label: string; icon: React.ReactNode; color: 
   ingilizce: { label: "İngilizce", icon: <Globe className="w-5 h-5 text-white" />, color: "text-rose-700", gradient: "from-rose-400 to-rose-500" },
   diger:     { label: "Diğer",     icon: <BookOpen className="w-5 h-5 text-white" />, color: "text-foreground", gradient: "from-gray-500 to-gray-600" },
 };
+
+const SHELF_META: Record<PublicSection, { label: string; icon: React.ReactNode; color: string; gradient: string }> = {
+  kitaplar: { label: "Kitaplar", icon: <Library className="w-5 h-5 text-white" />, color: "text-amber-800", gradient: "from-amber-500 to-orange-600" },
+};
+
+const KITAPLAR_ORDER = ["Düşünce kitapları", "İslamiyet", "Deneyler"];
 
 // ─── Exam definitions ──────────────────────────────────────────────────────
 // Order matches the way most students progress through them.
@@ -166,12 +173,19 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
     [pending, activeCourseId, router]
   );
 
-  const { gradeGroups, topicGroups, examGroups } = useMemo(() => {
+  const { gradeGroups, topicGroups, shelfGroups, examGroups } = useMemo(() => {
     const grades: Record<number, Course[]> = {};
     const topics: Record<string, Course[]> = {};
+    const shelves: Record<string, Course[]> = {};
     const exams: Record<string, Course[]> = {};
 
     courses.forEach((course) => {
+      if (course.section && course.section in SHELF_META) {
+        if (!shelves[course.section]) shelves[course.section] = [];
+        shelves[course.section].push(course);
+        return;
+      }
+
       const examKey = detectExam(course.title);
       if (examKey) {
         if (!exams[examKey]) exams[examKey] = [];
@@ -233,6 +247,25 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
       };
     });
 
+    const shelfGroups: SectionGroup[] = PUBLIC_SECTIONS
+      .filter((key) => shelves[key]?.length)
+      .map((key) => {
+        const meta = SHELF_META[key];
+        const coursesInShelf = [...shelves[key]].sort((a, b) => {
+          const ia = KITAPLAR_ORDER.indexOf(a.title);
+          const ib = KITAPLAR_ORDER.indexOf(b.title);
+          return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+        });
+        return {
+          key,
+          label: meta.label,
+          icon: meta.icon,
+          color: meta.color,
+          gradient: meta.gradient,
+          courses: coursesInShelf,
+        };
+      });
+
     const topicKeys = ["ingilizce", "diger"];
     const topicGroups: SectionGroup[] = topicKeys
       .filter((k) => topics[k]?.length)
@@ -262,11 +295,12 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
       courses: exams[e.key] ?? [],
     }));
 
-    return { gradeGroups, topicGroups, examGroups };
+    return { gradeGroups, topicGroups, shelfGroups, examGroups };
   }, [courses, learningPath]);
 
   const totalSchoolCourses = gradeGroups.reduce((n, g) => n + g.courses.length, 0)
-    + topicGroups.reduce((n, g) => n + g.courses.length, 0);
+    + topicGroups.reduce((n, g) => n + g.courses.length, 0)
+    + shelfGroups.reduce((n, g) => n + g.courses.length, 0);
   const totalExamCourses = examGroups.reduce((n, g) => n + g.courses.length, 0);
 
   const renderSection = (
@@ -297,7 +331,9 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
             : extractTopicLabel(course.title);
           const cardCategory = mode === "grade"
             ? SUBJECT_STYLES[extractSubject(course.title)] || "diger"
-            : "ingilizce";
+            : group.key === "ingilizce"
+              ? "ingilizce"
+              : "diger";
 
           return (
             <Card
@@ -446,8 +482,10 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
       {/* ─── Content ─────────────────────────────────────────────────────── */}
       {activeTab === "school" ? (
         <div className="space-y-10">
+          {shelfGroups.map((g) => renderSection(g, "topic"))}
           {gradeGroups.map((g) => renderSection(g, "grade"))}
-          {topicGroups.map((g) => renderSection(g, "topic"))}
+          {topicGroups.filter((g) => g.key === "ingilizce").map((g) => renderSection(g, "topic"))}
+          {topicGroups.filter((g) => g.key === "diger").map((g) => renderSection(g, "topic"))}
         </div>
       ) : (
         <div className="space-y-10">

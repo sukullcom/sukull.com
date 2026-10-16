@@ -1,0 +1,421 @@
+{
+  "title": "Ashab-ı Kehf",
+  "description": "Ashab-ı Kehf. Anlatım bizim cümlemizdir. Her ders, kıssanın meşhur sahnesinin altında duran ayrımı okutur.",
+  "lessons": [
+    {
+      "title": "Şehirden ayrılış",
+      "challenges": [
+        {
+          "question": "Sure bu kıssayı neden bir harika diye öne çıkarmaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "kissa,ayrilis",
+          "explanation": "Sure, uykuyu ayetler içinde tek harika sanmayı kapatır.",
+          "metadata": "{\"reading\":\"Kehf suresi kıssaya, «mağara ve kitabe ehlinin bizim ayetlerimiz içinde bir harika mı sandın» diye girer. Uyku meşhurdur. Sure o uykuyu ayetlerin içinde tek mucize diye kurmaz. Bir ayettir. Ayetlerin tamamı değildir.\\n\\nBu giriş, anlatıyı küçültmez. Seyircinin «bundan daha şaşırtıcısı yok» cümlesini kapatır. Asıl olan, gençlerin neye inandığıdır.\"}",
+          "options": [
+            {
+              "text": "Mağaranın hiç var olmadığını söylemek için",
+              "correct": false
+            },
+            {
+              "text": "Uykuyu ayetlerin içinde tek harika sanmayı kapatmak için",
+              "correct": true
+            },
+            {
+              "text": "Kıssayı yalnızca bir masal diye işaretlemek için",
+              "correct": false
+            },
+            {
+              "text": "Gençlerin inancını anlatmamak için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Gençler mağaraya bir planla mı çıkar?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "kissa,ayrilis",
+          "explanation": "Çıkıştan önce rahmet ve doğrultu istenir. Bu bir sefer planı değildir.",
+          "metadata": "{\"reading\":\"Kıssada onlar, Rablerinden bir rahmet ve işlerinde bir doğruluk ister. Şehir, Allah'tan başkasına da kulluk istemektedir. Ayrılış bir sefer planı değildir. Önce dua vardır. Reşat, yani işin doğrultulması, mağaradan önce istenir.\\n\\nKıssada bahsedilen, cesaretin duayı gereksiz kıldığıdır değil. Çıkış, doğrultu istendikten sonra olur.\"}",
+          "options": [
+            {
+              "text": "Evet. Şehri ele geçirecek bir düzen kurmuşlardır",
+              "correct": false
+            },
+            {
+              "text": "Hayır. Önce rahmet ve işlerinin doğrultulması istenir",
+              "correct": true
+            },
+            {
+              "text": "Evet. Sayıları belli olsun diye sayım yapmışlardır",
+              "correct": false
+            },
+            {
+              "text": "Hayır. Mağarayı tesadüfen bulup orada kalmışlardır",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Şehrin istediği kulluk neden kalmalarını zorlaştırır?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "kissa,ayrilis",
+          "explanation": "Şehir inancı eğmek ister. Onlar eğilmeyince ayrılırlar.",
+          "metadata": "{\"reading\":\"Kıssada şehir, inancı ortak koşmaya doğru eğer. Gençler Rabbi tek bilir. Eğilmeden kalmak, o şehirde görünmez bir uzlaşı ister. Onlar uzlaşmayınca ayrılık kaçınılmaz olur.\\n\\nKıssada bahsedilen, her yolculuğun hicret olduğudur değil. Bu ayrılış, inancı şehrin istediği kalıba sokmamaktır.\"}",
+          "options": [
+            {
+              "text": "Vergi yüzünden",
+              "correct": false
+            },
+            {
+              "text": "İnancın, şehrin istediği ortak koşmaya eğilmemesi yüzünden",
+              "correct": true
+            },
+            {
+              "text": "Ticaret yolu kapandığı için",
+              "correct": false
+            },
+            {
+              "text": "Sayıları fazla olduğu için",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Mağara",
+      "challenges": [
+        {
+          "question": "Mağaraya bakan biri kıssada neden korkarak döner?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "kissa,magara",
+          "explanation": "Bakan, rahat bir uyku tablosu değil, ürperten bir hal görür.",
+          "metadata": "{\"reading\":\"Kıssada onlara bakacak olsan, korkuyla dönüp kaçarsın. Mağara, anlatıldığı gibi ılık bir saklanış değildir. Uyuyanların hali, bakanı ürpertir. Sure, sığınağı bir huzur resmi diye çizmez.\\n\\nKorku, Allah'ın onları tuttuğu halin dışarıdan görünen yüzüdür. Seyirci rahat bir tablo bekler. Ayet o tabloyu bozar.\"}",
+          "options": [
+            {
+              "text": "Mağara boş olduğu için",
+              "correct": false
+            },
+            {
+              "text": "Uyanık sandığı halde ürperten bir halle karşılaştığı için",
+              "correct": true
+            },
+            {
+              "text": "Köpek havladığı için",
+              "correct": false
+            },
+            {
+              "text": "Güneş mağarayı yaktığı için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Güneş kıssada neden gelişigüzel doğmaz?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "kissa,magara",
+          "explanation": "Işık vardır. Yakmayacak biçimde dolaştırılır. Koruma uykunun içindedir.",
+          "metadata": "{\"reading\":\"Anlatıda güneş doğarken mağaranın sağından, batarken solundan dolaşır. Onlar güneşin altında kavrulmaz. Sure, uykuyu karanlık bir çukura kilitlemez. Işık vardır. Işık yakmayacak biçimde çevrilir.\\n\\nKoruma, uykunun içindedir. Güneş de o korumanın düzenine bağlanır.\"}",
+          "options": [
+            {
+              "text": "Mağara yerin altında hiç ışık almadığı için",
+              "correct": false
+            },
+            {
+              "text": "Işık vardır ama yakmayacak biçimde dolaştırıldığı için",
+              "correct": true
+            },
+            {
+              "text": "Güneş o yıllarda doğmadığı için",
+              "correct": false
+            },
+            {
+              "text": "Gençler güneşi kendileri perdelediği için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Köpek bu sahnede neden silinmez?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "kissa,magara",
+          "explanation": "Köpek eşikte, sahnenin parçası olarak durur. Merhamet onu da içine alır.",
+          "metadata": "{\"reading\":\"Kıssada köpek, mağaranın eşiğinde kollarını uzatmış durur. İçeri alınmayan bir yabancı gibi değil, sahnenin parçası olarak anılır. Sure, merhametin çizildiği yere onu da koyar.\\n\\nKıssada bahsedilen, köpeğin sayıyı değiştirdiğidir değil. Eşikte duran da bu tutuluşun içindedir.\"}",
+          "options": [
+            {
+              "text": "Sayının asıl parçası olduğu için",
+              "correct": false
+            },
+            {
+              "text": "Eşikte duran da bu tutuluşun içine katıldığı için",
+              "correct": true
+            },
+            {
+              "text": "Şehirde bırakıldığı için",
+              "correct": false
+            },
+            {
+              "text": "Kıssada hiç anılmadığı için",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Uzun uyku",
+      "challenges": [
+        {
+          "question": "Uykunun uzunluğu onlara neden bir gün gibi gelir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "kissa,uyku",
+          "explanation": "Hisleri bir gün der. Süreyi ölçmek ellerinden alınmıştır.",
+          "metadata": "{\"reading\":\"Kıssada uyandırılınca birbirlerine sorarlar. Bir gün ya da bir günün bir parçası kadar kaldıklarını sanırlar. Sure, mucizeyi yalnızca bedenin uyumasında bırakmaz. Kalan süreyi ölçemezler. Saat, uyuyanın elinden alınmıştır.\\n\\nKıssada bahsedilen, zamanın gerçekten bir gün olduğudur değil. Onların hissi bir gündür. Aradan geçen, Allah'ın tuttuğu süredir.\"}",
+          "options": [
+            {
+              "text": "Gerçekten bir gün uyudukları için",
+              "correct": false
+            },
+            {
+              "text": "Süreyi ölçecek saat ellerinden alındığı için",
+              "correct": true
+            },
+            {
+              "text": "Şehir saati mağarada durduğu için",
+              "correct": false
+            },
+            {
+              "text": "Birbirlerine sormayı unuttukları için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Sure onları neden uyandırır?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "kissa,uyku",
+          "explanation": "Uyandırılış, süreyi birbirlerine sordurmak içindir. Cevap onlarda değildir.",
+          "metadata": "{\"reading\":\"Kıssada uyandırılış, uykunun bittiğini seyrettirmek için değildir. Birbirlerine ne kadar kaldıklarını sorsunlar diye uyandırılırlar. Soru, cevabı bilmediklerini ortaya çıkarır. Mucize, sorunun cevapsız kalmasında da durur.\\n\\nBilen, o süreyi tutandır. Uyanan, sorandır.\"}",
+          "options": [
+            {
+              "text": "Şehre hemen dönsünler diye",
+              "correct": false
+            },
+            {
+              "text": "Ne kadar kaldıklarını birbirlerine sorsunlar diye",
+              "correct": true
+            },
+            {
+              "text": "Köpeği uyandırsınlar diye",
+              "correct": false
+            },
+            {
+              "text": "Sayılarını saysınlar diye",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Bu uyku insanların kurduğu bir plan mıdır?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "kissa,uyku",
+          "explanation": "Uykunun düzeni Allah'ındır. Gençlerin tedbiri süreyi açıklamaz.",
+          "metadata": "{\"reading\":\"Kıssada onları mağarada yıllarca tutan, gençlerin tedbir listesi değildir. Kulakları mühürlenir, yanları çevrilir, güneş dolaştırılır. Düzen Allah'ındır. Kıssada bahsedilen, tedbirin hiç olmadığıdır değil. Tedbir, bu uykunun süresini açıklamaz.\\n\\nUyku bir ayettir. Ayeti gençler üretmez.\"}",
+          "options": [
+            {
+              "text": "Evet. Ne kadar uyuyacaklarını baştan kararlaştırmışlardır",
+              "correct": false
+            },
+            {
+              "text": "Hayır. Süreyi ve düzeni Allah tutar. Tedbir bu uykuyu açıklamaz",
+              "correct": true
+            },
+            {
+              "text": "Evet. Nöbetleşe uyumuşlardır",
+              "correct": false
+            },
+            {
+              "text": "Hayır. Hiç uyumamış, yalnızca susmuşlardır",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Uyanış",
+      "challenges": [
+        {
+          "question": "Şehre inen gencin parası neyi ele verir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "kissa,uyanis",
+          "explanation": "Eski para, mağarada ölçülemeyen süreyi çarşıda ele verir.",
+          "metadata": "{\"reading\":\"Kıssada içlerinden biri, en temiz yiyecek için şehre gönderilir. Gizlice girmesi istenir. Elindeki para, o günün parası değildir. Gören, zamanın geçtiğini paradan anlar. Kıssada bahsedilen, paranın yalnızca alışveriş aracı olduğudur değil.\\n\\nPara, mağarada ölçülemeyen süreyi çarşıda okunur kılar.\"}",
+          "options": [
+            {
+              "text": "Gencin zengin olduğunu",
+              "correct": false
+            },
+            {
+              "text": "Mağarada ölçülemeyen süreyi",
+              "correct": true
+            },
+            {
+              "text": "Şehrin hiç değişmediğini",
+              "correct": false
+            },
+            {
+              "text": "Yiyeceğin pahalı olduğunu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Gizlice girmek neden istenir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "kissa,uyanis",
+          "explanation": "İniş bir duyuru değildir. Değişmiş şehre temkinli bir adımdır.",
+          "metadata": "{\"reading\":\"Kıssada genç, tanınmadan ve incelikle girmesi için gönderilir. Şehir, onları kovan şehir olmayabilir. Yine de karşılaşma hazırlıksız bir kalabalık işi diye kurulmaz. Kıssada bahsedilen, korkunun imanı sildiğidir değil.\\n\\nİnmek, bir duyuru değildir. Süreyi henüz bilmeyen birinin, değişmiş şehre temkinli adımıdır.\"}",
+          "options": [
+            {
+              "text": "Yiyecek çalsın diye",
+              "correct": false
+            },
+            {
+              "text": "Değişmiş şehre tanınmadan ve temkinli girsin diye",
+              "correct": true
+            },
+            {
+              "text": "Eski evine yerleşsin diye",
+              "correct": false
+            },
+            {
+              "text": "Ordu toplasın diye",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Şehir onları bulunca kıssa neye döner?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "kissa,uyanis",
+          "explanation": "Bulunanlar bina tartışmasına girer. Sure, merkezin anıt olmadığını gösterir.",
+          "metadata": "{\"reading\":\"Kıssada durumları açığa çıkınca insanlar bir bina tartışmasına girer. Kimi üzerlerine bir yapı dikelim der, kimi mescit. Gençlerin imanı, bulunanların elinde bir anıt kavgasına döner. Kıssada bahsedilen, anıtın kıssanın merkezi olduğudur değil.\\n\\nSure, keşfin coşkusunu bir yapı yarışında bırakır. Okuyan, anıtın değil, Allah'ın vaadinin doğrulandığını görsün diye bu sahne konur.\"}",
+          "options": [
+            {
+              "text": "Gençlerin şehri yönetmesine",
+              "correct": false
+            },
+            {
+              "text": "İmanın bir anıt kavgasına çevrilmesine",
+              "correct": true
+            },
+            {
+              "text": "Paranın yeniden basılmasına",
+              "correct": false
+            },
+            {
+              "text": "Uykunun hiç yaşanmadığının anlaşılmasına",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Süre Allah'ın bilgisindedir",
+      "challenges": [
+        {
+          "question": "İnsanların üç, beş, yedi demesi neden tahmindir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "kissa,sure",
+          "explanation": "Üç, beş, yedi bir sayım değil, gayb hakkında tahmindir.",
+          "metadata": "{\"reading\":\"Kıssada kimi üç der, köpekleri dördüncü. Kimi beş der, köpekleri altıncı. Kimi yedi der, köpekleri sekizinci. Sure, gayb hakkında atılan bu sayıları tahmin diye kapatır. Sayıyı bilenin az olduğunu, bu yüzden o tartışmaya girilmemesini söyler.\\n\\nMerkez, kaç kişi oldukları değildir. Tahmin, görünmeyeni saymaya kalkmaktır.\"}",
+          "options": [
+            {
+              "text": "Sayılar ayette hiç geçmediği için",
+              "correct": false
+            },
+            {
+              "text": "Görünmeyeni saymaya kalktığı için",
+              "correct": true
+            },
+            {
+              "text": "Köpek sayılmadığı için",
+              "correct": false
+            },
+            {
+              "text": "Herkes aynı sayıyı tutturduğu için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Üç yüz yıl ve üzerine dokuz, tartışmayı neden kapatmaz?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "kissa,sure",
+          "explanation": "Sayı verilir ve hemen Allah'ın bilgisine bırakılır. Kesinlik yarışı kapanır.",
+          "metadata": "{\"reading\":\"Kıssada mağarada üç yüz yıl kaldıkları ve buna dokuz eklendiği anılır. Hemen ardından süre Allah'ın bilgisine bırakılır. Bir okuma, üç yüzü güneş yılı, eklenen dokuzu ay yılı farkı diye kurar. Ayet bu okumayı bir yarışın birincisi ilan etmez.\\n\\nSayı bir uç verir. Kesinlik verilmez. «Allah daha iyi bilir» cümlesi, sayının üstüne konur.\"}",
+          "options": [
+            {
+              "text": "Üç yüz kesin güneş yılı olduğu için kapatır",
+              "correct": false
+            },
+            {
+              "text": "Sayı anılır ama kesinlik hemen Allah'ın bilgisine bırakıldığı için kapatmaz",
+              "correct": true
+            },
+            {
+              "text": "Dokuz sayısı ayette olmadığı için",
+              "correct": false
+            },
+            {
+              "text": "Süre hiç söylenmediği için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kıssa neden «yarın şöyle yapacağım» cümlesine bağlanır?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "kissa,sure",
+          "explanation": "Yarın diye kesin konuşmak, süreyi elinde sanmaktır. Kıssa o sınırı gündelik söze de koyar.",
+          "metadata": "{\"reading\":\"Sure, süre tartışmasının yanına bir söz kuralı koyar. Yarın şunu yapacağım diyen, Allah dilerse demeden konuşmasın. Unutursa sonra ansın. Mağarada saat ellerinden alınmıştı. Aynı sınır, gündelik cümleye de konur.\\n\\nKıssada bahsedilen, planın yasak olduğudur değil. Plan, sürenin sahibiymiş gibi kurulmasın. Süre, uyuyanın da konuşanın da elinde değildir.\"}",
+          "options": [
+            {
+              "text": "Plan kurmak yasaklandığı için",
+              "correct": false
+            },
+            {
+              "text": "Sürenin, uyuyanın da konuşanın da elinde olmadığını göstermek için",
+              "correct": true
+            },
+            {
+              "text": "Yarın kelimesi mağarada geçtiği için",
+              "correct": false
+            },
+            {
+              "text": "Gençler söz vermeden ayrıldığı için",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

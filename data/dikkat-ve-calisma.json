@@ -1,0 +1,352 @@
+{
+  "course": {
+    "title": "Dikkat ve çalışma",
+    "imageSrc": "/courses/genel-kultur.svg",
+    "section": "hayat"
+  },
+  "units": [
+    {
+      "title": "Bir işe oturmak",
+      "description": "Öğrencinin dersin başına oturmasını kolaylaştıran özgün notlar. Kitap özeti değildir. Her ders üç okuma ve bu okumadan cevaplanan bir sorudan oluşur.",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "Uyku",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Metne göre uykusuz sabah neyi bozar?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": "hayat,uyku",
+              "explanation": "Uykusuz sabah, ertesi günün dikkatini bozar.",
+              "metadata": "{\"reading\":\"Bir işe oturmanın ilk şartı, o sabah ayakta olmaktır. Gece geç yatıp sabah mahmur kalkan kişi, dersi zor sandığı için değil, zihni henüz açılmadığı için dağılır. Uyku bir ödül gibi ertelenirse ertesi günün dikkati peşin harcanmış olur.\\n\\nMetinde bahsedilen, çok uyumanın erdem sayılması değildir. Yeterince uyumadan masaya oturmanın dikkat sanılmasıdır hata.\"}",
+              "options": [
+                {
+                  "text": "Dersin konusunu",
+                  "correct": false
+                },
+                {
+                  "text": "Ertesi günün dikkatini",
+                  "correct": true
+                },
+                {
+                  "text": "Kalemin mürekkebini",
+                  "correct": false
+                },
+                {
+                  "text": "Sınıfın sırasını",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Metne göre uyku ne zaman ayarlanır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": "hayat,uyku",
+              "explanation": "Uyku, sıradan gecelerde aynı saatte kurulur.",
+              "metadata": "{\"reading\":\"Uyku, sınav gecesi birden düzelmez. Beden, her gece aynı saatte kapanmaya alışır. Metinde bahsedilen, yatış saatini yalnızca önemli günden bir gece önce çekmektir değil. Alışkanlık, sıradan gecelerde kurulur.\\n\\nSabahki netlik, önceki gecenin saatine benzer.\"}",
+              "options": [
+                {
+                  "text": "Yalnızca sınav gecesi",
+                  "correct": false
+                },
+                {
+                  "text": "Sıradan gecelerde, aynı saatte",
+                  "correct": true
+                },
+                {
+                  "text": "Öğleden sonra bir kez",
+                  "correct": false
+                },
+                {
+                  "text": "Hiç uyumadan",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Metin erken kalkmayı neye bağlar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": "hayat,uyku",
+              "explanation": "Erken kalkış, zamanında yatmanın devamıdır.",
+              "metadata": "{\"reading\":\"Erken kalkmak bir irade gösterisi olarak anlatılmaz. Gece zamanında yatılmışsa sabah kendiliğinden gelir. Metinde bahsedilen, alarmın insanı uyandırıp uykunun yerini tutmasıdır değil.\\n\\nErken saat, önceki gecenin devamıdır.\"}",
+              "options": [
+                {
+                  "text": "Yalnızca güçlü bir alarma",
+                  "correct": false
+                },
+                {
+                  "text": "Önceki gece zamanında yatmaya",
+                  "correct": true
+                },
+                {
+                  "text": "Hiç uyumamaya",
+                  "correct": false
+                },
+                {
+                  "text": "Sabah kahvesine",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Telefon",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Metne göre telefon masada neden çalışmayı böler?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": "hayat,telefon",
+              "explanation": "Gelme ihtimali bile dikkati böler.",
+              "metadata": "{\"reading\":\"Telefon gözün önündeyken zihin işin içinde kalamaz. Bildirim gelmese de gelme ihtimali dikkati bölmüştür. Metinde bahsedilen, telefonun yasak bir eşya olması değildir. Ders süresince başka bir odada durmasıdır.\\n\\nGörünen cihaz, görünmeyen bir çağrıdır.\"}",
+              "options": [
+                {
+                  "text": "Bildirim sesi kapalı olduğu için bölmez",
+                  "correct": false
+                },
+                {
+                  "text": "Gelme ihtimali dikkati böldüğü için",
+                  "correct": true
+                },
+                {
+                  "text": "Yalnızca şarjı bitince",
+                  "correct": false
+                },
+                {
+                  "text": "Masada durunca suskun kaldığı için",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Metne göre kısa bir bakış ne kadar sürer?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": "hayat,telefon",
+              "explanation": "Geri dönüş, bakıştan uzun sürer.",
+              "metadata": "{\"reading\":\"Bir bakış, ekranda birkaç dakika sanılır. Geri dönünce cümlenin yeri kaybolmuştur. Metinde bahsedilen, bakışın bedava olduğu değildir. İşin yeniden kurulması, bakışın kendisinden uzun sürer.\\n\\nKısa sandığımız ara, dersi ikiye böler.\"}",
+              "options": [
+                {
+                  "text": "Hiç sürmez",
+                  "correct": false
+                },
+                {
+                  "text": "İşin yeniden kurulması bakıştan uzun sürer",
+                  "correct": true
+                },
+                {
+                  "text": "Tam bir ders saati sayılmaz",
+                  "correct": false
+                },
+                {
+                  "text": "Yalnızca bir saniye sürer ve iz bırakmaz",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Metin telefonu nereye koyar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": "hayat,telefon",
+              "explanation": "Telefon, ders bitene kadar başka odada durur.",
+              "metadata": "{\"reading\":\"Ders bitene kadar telefon başka odadadır. Çanta da yetmez. Elin değdiği yer, bir süre sonra açılır. Metinde bahsedilen, iradeyle ekrana bakmamaktır değil. Eşyayı uzakta tutmaktır.\\n\\nMesafe, dikkatin yerine geçer.\"}",
+              "options": [
+                {
+                  "text": "Masanın üstüne, ters çevrilmiş",
+                  "correct": false
+                },
+                {
+                  "text": "Başka odaya",
+                  "correct": true
+                },
+                {
+                  "text": "Yastığın altına",
+                  "correct": false
+                },
+                {
+                  "text": "Elin içine",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Sınav kaygısı",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Metne göre kaygı dersi ne zaman yer?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": "hayat,kaygi",
+              "explanation": "Kaygı, çalışılmayan günlerin boşluğundan beslenir.",
+              "metadata": "{\"reading\":\"Kaygı, sınav sabahı birden gelmez. Çalışılmayan günlerin boşluğu, o sabah korku diye görünür. Metinde bahsedilen, korkunun bir karakter kusuru olmasıdır değil. Hazırlığın yokluğudur.\\n\\nKüçük tekrar, kaygının beslendiği boşluğu daraltır.\"}",
+              "options": [
+                {
+                  "text": "Yalnızca sınav sabahı",
+                  "correct": false
+                },
+                {
+                  "text": "Çalışılmayan günlerin boşluğunda",
+                  "correct": true
+                },
+                {
+                  "text": "Yalnızca çok çalışanlarda",
+                  "correct": false
+                },
+                {
+                  "text": "Uykudan bağımsız",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Metne göre bütün konuyu bir gecede bitirmek ne yapar?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": "hayat,kaygi",
+              "explanation": "Yetişmeyecek yığın, korkuyu büyütür.",
+              "metadata": "{\"reading\":\"Bir gece her şeyi bitirme planı, kaygıyı azaltmaz. Yetişmeyecek bir yığın, korkuyu büyütür. Metinde bahsedilen, o gecenin bir kahramanlık sayılmasıdır değil. Dar bir parçanın bitirilmesidir o günün işi.\\n\\nBitirilen parça, yığından daha sakinleştirir.\"}",
+              "options": [
+                {
+                  "text": "Kaygıyı siler",
+                  "correct": false
+                },
+                {
+                  "text": "Yetişmeyecek yığın korkuyu büyütür",
+                  "correct": true
+                },
+                {
+                  "text": "Her zaman en iyi yoldur",
+                  "correct": false
+                },
+                {
+                  "text": "Uykunun yerini tutar",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Metin sınav sabahı için neyi yeterli sayar?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": "hayat,kaygi",
+              "explanation": "Sabah, bitmiş parçaların üstünden geçilir.",
+              "metadata": "{\"reading\":\"Sabah, yeni bir kitap açma vakti değildir. Daha önce bitirilmiş küçük parçaların üstünden geçilir. Metinde bahsedilen, sabahın boş olması değildir. Yeni yük bindirilmemesidir.\\n\\nTanıdık bir sayfa, tanımadığı bir yığından daha az korkutur.\"}",
+              "options": [
+                {
+                  "text": "Yeni bir kitabın açılması",
+                  "correct": false
+                },
+                {
+                  "text": "Bitmiş parçaların üstünden geçilmesi",
+                  "correct": true
+                },
+                {
+                  "text": "Hiç bakılmaması",
+                  "correct": false
+                },
+                {
+                  "text": "Bütün yılın o sabah okunması",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Başlamak",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Metne göre iş neden ağır görünür?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": "hayat,baslamak",
+              "explanation": "İş, tamamı bir anda düşünülünce ağır görünür.",
+              "metadata": "{\"reading\":\"İş, tamamı bir anda düşünülünce ağırlaşır. Bir sayfa, bir soru, on dakika düşünülünce kapı açılır. Metinde bahsedilen, hedefin küçültülmesi değildir. İlk adımın küçültülmesidir.\\n\\nBaşlamak, bitirmekten ayrı bir iştir.\"}",
+              "options": [
+                {
+                  "text": "Hedef küçük olduğu için",
+                  "correct": false
+                },
+                {
+                  "text": "Tamamı bir anda düşünüldüğü için",
+                  "correct": true
+                },
+                {
+                  "text": "On dakika uzun olduğu için",
+                  "correct": false
+                },
+                {
+                  "text": "Sayfa yasak olduğu için",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Metne göre ilk on dakika ne işe yarar?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": "hayat,baslamak",
+              "explanation": "İlk on dakika, oturmayı başlatır.",
+              "metadata": "{\"reading\":\"İlk on dakika işi bitirmez. Masaya oturmayı başlatır. Metinde bahsedilen, o sürenin bir aldatmaca olmasıdır değil. Eşik geçilince birçok gün iş kendiliğinden uzar. Uzamazsa da oturuş kopmuş sayılmaz.\\n\\nOn dakika, bahanesini zayıflatır.\"}",
+              "options": [
+                {
+                  "text": "İşi tamamen bitirir",
+                  "correct": false
+                },
+                {
+                  "text": "Masaya oturmayı başlatır",
+                  "correct": true
+                },
+                {
+                  "text": "Hiçbir işe yaramaz",
+                  "correct": false
+                },
+                {
+                  "text": "Yalnızca süreyi uzatır",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Metin yarım kalan güne ne der?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": "hayat,baslamak",
+              "explanation": "Yarım gün, hiç başlanmayan günden ayrıdır.",
+              "metadata": "{\"reading\":\"Yarım kalan gün, hiç oturulmayan günden ayrıdır. Eşik geçilmiştir. Metinde bahsedilen, yarım işin tam işe eşit olmasıdır değil. Zincirin koptuğu yerin, hiç başlanmayan yer olmadığıdır.\\n\\nErtesi gün, aynı küçük adımla yeniden açılır.\"}",
+              "options": [
+                {
+                  "text": "Hiç oturulmayan günle aynı olduğu",
+                  "correct": false
+                },
+                {
+                  "text": "Eşik geçildiği için zincirin kopmadığı",
+                  "correct": true
+                },
+                {
+                  "text": "Tam iş sayıldığı",
+                  "correct": false
+                },
+                {
+                  "text": "Silinmesi gerektiği",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

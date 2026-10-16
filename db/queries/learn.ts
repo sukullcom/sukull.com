@@ -84,7 +84,7 @@ const _getCoursesCached = unstable_cache(
     const data = await db.query.courses.findMany();
     return data;
   },
-  ["courses-list"],
+  ["courses-list-v2"],
   { tags: [CACHE_TAGS.courses], revalidate: CACHE_TTL.courses },
 );
 

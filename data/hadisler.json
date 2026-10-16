@@ -1,0 +1,421 @@
+{
+  "title": "Hadisler",
+  "description": "Niyet ve amel üzerine hadisler. Her ders, herkesin ezberlediği cümlenin altında duran ayrımı okutur.",
+  "lessons": [
+    {
+      "title": "Ameller niyetlere göredir",
+      "challenges": [
+        {
+          "question": "Hadis kuralı söyledikten sonra hicreti neden örnek verir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "hadis,niyet",
+          "explanation": "Hicret örneği, aynı dış hareketin iki ayrı amel olabildiğini gösterir.",
+          "metadata": "{\"reading\":\"Hadiste amellerin niyetlere göre olduğu belirtilir. Ardından hicret anılır. Allah ve Resulü için çıkan ile dünyalık bir bağ ya da bir evlilik için çıkan aynı yolu yürümüş olabilir. Gideceği yer, adımın değil, niyetin gösterdiği yerdir.\\n\\nÖrnek, kuralı süslemek için konmaz. Aynı dış hareketin iki amel olabildiğini göstermek için konur. Hicret gibi ağır bir iş bile niyet değişince başka işe döner.\"}",
+          "options": [
+            {
+              "text": "Hicret niyetsiz de aynı sevabı verdiği için",
+              "correct": false
+            },
+            {
+              "text": "Aynı gidişin, niyet değişince başka amel olduğunu göstermek için",
+              "correct": true
+            },
+            {
+              "text": "Yalnızca hicretin amel sayıldığını, başka işlerin sayılmadığını söylemek için",
+              "correct": false
+            },
+            {
+              "text": "Niyetin yalnızca yolculukta arandığını belirtmek için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Görenlerin övdüğü iş hadiste neden ölçü olmaz?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "hadis,niyet",
+          "explanation": "Aynı görünen iş, kimin için yapıldığına göre iki amel olur.",
+          "metadata": "{\"reading\":\"Hadiste kişinin varacağı yer, niyetinde taşıdığıdır. Dışarıdan bakınca iki hareket aynı durabilir. Biri Allah için, öbürü görülsün diye yapılmışsa amel ikiye ayrılır. Hadiste bahsedilen, gösterişin niyeti bozmayacağı değildir.\\n\\nÖlçü, alkışın büyüklüğü değil, işin kimin için kurulduğudur. Övülen iş de bu ölçüye girer.\"}",
+          "options": [
+            {
+              "text": "Alkış büyüdükçe niyet kendiliğinden düzeldiği için",
+              "correct": false
+            },
+            {
+              "text": "Dışarıdan aynı görünen iş, kimin için yapıldığına göre ayrıldığı için",
+              "correct": true
+            },
+            {
+              "text": "Gösteriş yalnızca farz ibadetlerde arandığı için",
+              "correct": false
+            },
+            {
+              "text": "Niyet bir kez kurulunca sonradan değişmediği için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Hadis niyeti işin neresine koyar?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "hadis,niyet",
+          "explanation": "Niyet sonradan yapışan etiket değildir. Hareketi baştan bir amele çevirir.",
+          "metadata": "{\"reading\":\"Hadiste niyet, iş bittikten sonra yapıştırılan bir etiket değildir. İş, niyetiyle birlikte o iş olur. Dünya için çıkan, hicret etmiş sayılmaz. Allah için çıkan, aynı kapıdan başka bir amele varır.\\n\\nBu, niyeti sözle süslemek değildir. Niyet, hareketin hangi amele dönüşeceğini baştan belirler.\"}",
+          "options": [
+            {
+              "text": "İş bittikten sonra söylenen bir cümle olarak",
+              "correct": false
+            },
+            {
+              "text": "Hareketin hangi amele dönüşeceğini baştan belirleyen yön olarak",
+              "correct": true
+            },
+            {
+              "text": "Yalnızca kalabalık işlerde aranan bir şart olarak",
+              "correct": false
+            },
+            {
+              "text": "Ameli değiştirmediği için gereksiz bir his olarak",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Devamlı olan amel",
+      "challenges": [
+        {
+          "question": "Az ama süren amel, taşan büyük amelden neden sevimli sayılır?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "hadis,devam",
+          "explanation": "Sevimli olan büyüklük değil, ertesi gün de duran ameldir.",
+          "metadata": "{\"reading\":\"Hadiste Allah'a en sevimli amelin, az da olsa devamlı olan olduğu belirtilir. Ölçü, ilk günün coşkusu değildir. Amelin hayatı, ertesi gün de yerinde durmasındadır. Bir kez taşan iş bırakılınca amel durur. Küçük iş sürerse amel yarın da vardır.\\n\\nSevimli olan, göze büyük gelen değildir. Kopmayan olandır. Az burada küçümseme değil, sürdürülebilir olandır.\"}",
+          "options": [
+            {
+              "text": "Az amel daha kısa sürdüğü için",
+              "correct": false
+            },
+            {
+              "text": "Amelin hayatı ertesi gün de durmasında olduğu için",
+              "correct": true
+            },
+            {
+              "text": "Büyük amel hadiste yasaklandığı için",
+              "correct": false
+            },
+            {
+              "text": "Coşku kendiliğinden devam sayıldığı için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Bir gecelik uzun ibadet hadiste neden öne geçmez?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "hadis,devam",
+          "explanation": "Taşan gece yarına kalmazsa amel kopar. Devam, miktarın önündedir.",
+          "metadata": "{\"reading\":\"Hadiste bahsedilen, o gecenin değersiz olduğudur değil. Taşan gece, sabahı da aynı yükle kurmuyorsa amel kopar. Küçük ve her gün dönen iş, o kopuşu yaşamaz. Ölçü, bir gecenin uzunluğu değil, işin yarına kalıp kalmadığıdır.\\n\\nBu yüzden hadiste devam, miktarın önüne konur.\"}",
+          "options": [
+            {
+              "text": "Uzun ibadet hiç sevap yazılmadığı için",
+              "correct": false
+            },
+            {
+              "text": "Taşan gece yarına kalmayınca amelin koptuğu için",
+              "correct": true
+            },
+            {
+              "text": "Yalnızca farzların devamının sayıldığı için",
+              "correct": false
+            },
+            {
+              "text": "Gece ibadeti hadiste anılmadığı için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Hadis «az» kelimesini ne anlamda kullanır?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "hadis,devam",
+          "explanation": "Az, önemsiz demek değildir. Kaldırılan ve bırakılmayan miktardır.",
+          "metadata": "{\"reading\":\"Hadiste az, önemsiz demek değildir. Elden gelen ve bırakılmayan miktardır. İnsan kaldıramayacağı yükü alıp üçüncü gün bırakacağına, kaldırdığı küçük işi yerinde tutar. Hadiste bahsedilen, büyük hedefi silmek değildir.\\n\\nBüyük hedef, ancak dönen küçük işle ayakta kalır.\"}",
+          "options": [
+            {
+              "text": "Amelin önemsiz ve isteğe bağlı olduğu anlamında",
+              "correct": false
+            },
+            {
+              "text": "Kaldırılabilen ve bırakılmayan miktar anlamında",
+              "correct": true
+            },
+            {
+              "text": "Yalnızca bir kez yapılan iş anlamında",
+              "correct": false
+            },
+            {
+              "text": "Başkasına devredilen iş anlamında",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Güzel ahlak",
+      "challenges": [
+        {
+          "question": "Hadis iyiliği neden bir törenle değil huy ile tarif eder?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "hadis,ahlak",
+          "explanation": "İyilik hadiste güzel ahlaktır. Törenin tamamlanmış görünmesi yetmez.",
+          "metadata": "{\"reading\":\"Hadiste iyiliğin güzel ahlak olduğu belirtilir. İyilik, dışarıdan tamamlanmış bir hareketin adı olarak bırakılmaz. İnsanın başkasına ve kendine karşı duruşudur. Aynı doğru iş, huy bozuksa iyilik cümlesini taşımayabilir.\\n\\nHadiste bahsedilen, ibadetin ahlaktan ayrı bir süs olduğudur değil. İyilik, huyla belli olur.\"}",
+          "options": [
+            {
+              "text": "Dış hareket hiç iyilik sayılmadığı için",
+              "correct": false
+            },
+            {
+              "text": "İyilik, tamamlanmış bir tören değil, huy olduğu için",
+              "correct": true
+            },
+            {
+              "text": "Ahlak yalnızca oruçta arandığı için",
+              "correct": false
+            },
+            {
+              "text": "Güzel huyun ibadeti sildiği için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "İçteki burukluk hangi durumda ölçü olur?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "hadis,ahlak",
+          "explanation": "Burukluk, bilinen yasağın yerine geçmez. Hüküm net değilken verilen işarettir.",
+          "metadata": "{\"reading\":\"Hadiste günah, içte burukluk bırakan ve insanların duymasını istemediğin şey diye de anılır. Bu, bilinen yasağın yerine konmuş bir ölçü değildir. Haram olduğu açık olan iş, iç rahat diye helal olmaz. Burukluk, hükmün henüz netleşmediği yerde kişiye verilen bir işarettir.\\n\\nİç daralıyor ve gözlerden gizlemek istiyorsan, o iş sana «burada dur» der. Alkış bu işareti silmez.\"}",
+          "options": [
+            {
+              "text": "Bilinen haramı, iç rahat diye helal ettiği durumda",
+              "correct": false
+            },
+            {
+              "text": "Hüküm henüz net değilken, iç daralması ve gizlemek isteme durumunda",
+              "correct": true
+            },
+            {
+              "text": "Yalnızca başkası o işi günah saydığı durumda",
+              "correct": false
+            },
+            {
+              "text": "Burukluk hiç ölçü olmadığı için hiçbir durumda",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "İnsanların duymasını istememek hadiste neyi ele verir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "hadis,ahlak",
+          "explanation": "Gizlemek isteği, hüküm bulanıkken içteki rahatsızlığı ele verir.",
+          "metadata": "{\"reading\":\"Hadiste bahsedilen, her gizli işin günah olduğudur değil. Gizlemek istediğin şey, içinin o işten rahatsız olduğunun işaretidir. Rahatsızlık yoksa ve işin hükmü de biliniyorsa ölçü zaten bellidir. Rahatsızlık varsa ve hüküm bulanıksa, gizleme isteği o bulanıklığı sana gösterir.\\n\\nÖlçü, alkışın rahatlığı değil, göstermeye utanılan yerdir.\"}",
+          "options": [
+            {
+              "text": "Her gizli işin günah olduğunu",
+              "correct": false
+            },
+            {
+              "text": "Hüküm bulanıkken içindeki rahatsızlığı ele verdiğini",
+              "correct": true
+            },
+            {
+              "text": "Gizlemenin kendisinin sevap olduğunu",
+              "correct": false
+            },
+            {
+              "text": "Açıkça yapılan hiçbir işin günah olmayacağını",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kalp",
+      "challenges": [
+        {
+          "question": "Aynı namazı kılan iki kişi hadiste neden bir sayılmaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "hadis,kalp",
+          "explanation": "Aynı görünen namaz, kalp bozuksa aynı amel olmaktan çıkar.",
+          "metadata": "{\"reading\":\"Hadiste, bedende bir et parçası olduğu, o düzelirse bedenin düzeleceği, bozulursa bedenin bozulacağı anlatılır. O parça kalptir. İki kişi aynı vakitte aynı namazı kılmış görünebilir. Kalp bozulmuşsa bedenin o ameli de bozulur.\\n\\nHadiste bahsedilen, namazın şeklinin önemsiz olduğudur değil. Şekil yerinde durur. Onu ayakta tutan parça kalptir.\"}",
+          "options": [
+            {
+              "text": "Namazın şekli hadiste hiç aranmadığı için",
+              "correct": false
+            },
+            {
+              "text": "Kalp bozuksa bedenin aynı görünen ameli de bozulduğu için",
+              "correct": true
+            },
+            {
+              "text": "İki kişinin namazı zaten hiç bir olmadığı için",
+              "correct": false
+            },
+            {
+              "text": "Kalp yalnızca sadakada arandığı için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Hadis bakılan yeri neden suretten ve maldan ayırır?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "hadis,kalp",
+          "explanation": "Bakılan yer suret ve mal değildir. Kalp ve ameldir.",
+          "metadata": "{\"reading\":\"Hadiste Allah'ın suretlere ve mallara değil, kalplere ve amellere baktığı belirtilir. Suret ve mal görünür. Kalp görünmez. Hadis, görünen üstünlüğü ölçü olmaktan çıkarır. Güzel yüz ya da çok mal, bakılan yer değildir.\\n\\nBu, bedeni hor görmek değildir. Ölçünün adresini değiştirmektir. Adres kalp ve o kalple yapılan ameldir.\"}",
+          "options": [
+            {
+              "text": "Suret de mal da kalple aynı ölçüde bakıldığı için",
+              "correct": false
+            },
+            {
+              "text": "Görünen üstünlük ölçü olmaktan çıkarıldığı için",
+              "correct": true
+            },
+            {
+              "text": "Amelin hiç bakılmadığı için",
+              "correct": false
+            },
+            {
+              "text": "Malın kalbi kendiliğinden düzelttiği için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kalp düzelince hadise göre beden neden düzelir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "hadis,kalp",
+          "explanation": "Kalp hükmeder. O düzelince azalar o yöne döner.",
+          "metadata": "{\"reading\":\"Hadiste kalp, bedenin içinde hükmeden parça diye konur. O sağlanırsa azalar da o yöne döner. O bozulursa dil, el ve göz de bozulur. Hadiste bahsedilen, azaların kalpten bağımsız bir hayat sürdüğüdür değil.\\n\\nBu yüzden dışı düzeltip içi bırakmak, hadisin tarifine uymaz. İç, dışın hükmüdür.\"}",
+          "options": [
+            {
+              "text": "Azalar kalpten bağımsız yaşadığı için düzelmez",
+              "correct": false
+            },
+            {
+              "text": "Kalp bedenin hükmü olduğu için azalar ona döner",
+              "correct": true
+            },
+            {
+              "text": "Beden düzelince kalp kendiliğinden düzeldiği için",
+              "correct": false
+            },
+            {
+              "text": "Hadis yalnızca kalbi anıp bedeni dışarıda bıraktığı için",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Söz ve susmak",
+      "challenges": [
+        {
+          "question": "«Hayır söyle ya da sus» ile «seni ilgilendirmeyeni bırak» aynı şey midir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "hadis,soz",
+          "explanation": "Biri ne söylendiğine, öbürü o sözün sana ait olup olmadığına bakar.",
+          "metadata": "{\"reading\":\"Bir hadiste, hayır söylemek ya da susmak gerektiği belirtilir. Bu, sözün içeriğine bakar. Başka bir hadiste, kişinin kendisini ilgilendirmeyen şeyi bırakması, İslam'ının güzelliğinden sayılır. Bu, sözün doğru olup olmadığına değil, o sözün kişiye düşüp düşmediğine bakar.\\n\\nDoğru bir cümle de kişiyi ilgilendirmeyebilir. İki hadis iki ayrı sınırdır. Biri ne söylendiği, öbürü söylemenin sana ait olup olmadığıdır.\"}",
+          "options": [
+            {
+              "text": "Evet. İkisi de yalnızca yalanı yasaklar",
+              "correct": false
+            },
+            {
+              "text": "Hayır. Biri sözün içeriğine, öbürü o sözün sana düşüp düşmediğine bakar",
+              "correct": true
+            },
+            {
+              "text": "Evet. İlgilendirmeyen her söz zaten hayırdır",
+              "correct": false
+            },
+            {
+              "text": "Hayır. İkinci hadis susmayı yasaklar",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Doğru bir gıybet bu ikinci hadiste neden düşer?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "hadis,soz",
+          "explanation": "Doğruluk, sana düşmeyen sözü ağzına vermez.",
+          "metadata": "{\"reading\":\"Hadiste bahsedilen, yalanın tek yasak olduğudur değil. Kardeşini ilgilendiren, senin işin olmayan doğru bir söz de «seni ilgilendirmeyen»in içine girer. Doğruluk, o sözü senin ağzına vermez.\\n\\nİslam'ın güzelliği burada, her doğruyu her yerde söylemek değil, sana düşmeyen doğruyu da bırakmaktır.\"}",
+          "options": [
+            {
+              "text": "Doğru söz her zaman kişinin işine girdiği için düşmez",
+              "correct": false
+            },
+            {
+              "text": "Doğru olsa da sana düşmeyen söz, ilgilendirmeyenin içinde kaldığı için",
+              "correct": true
+            },
+            {
+              "text": "Gıybet yalnızca yalan olunca yasak olduğu için",
+              "correct": false
+            },
+            {
+              "text": "İkinci hadis yalnızca yalan yemin için söylendiği için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Susmak hadiste ne zaman amel olur?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "hadis,soz",
+          "explanation": "Susmak, hayır yokken ya da söz sana ait değilken bir ameldir.",
+          "metadata": "{\"reading\":\"Hadiste hayır yoksa susmak, boş bir ara değildir. O anda bir ameldir. Konuşmak da, ilgilendirmeyen bir doğruyu taşımak da ameldir. Dil her açılışta sevap biriktirmez.\\n\\nİki sınır yan yana durur. Söz hayır taşımıyorsa susulur. Söz doğru olsa da sana ait değilse bırakılır.\"}",
+          "options": [
+            {
+              "text": "Yalnızca kızgınlık geçince",
+              "correct": false
+            },
+            {
+              "text": "Hayır yokken ya da söz sana ait değilken",
+              "correct": true
+            },
+            {
+              "text": "Hiçbir zaman, çünkü susmak amel sayılmaz",
+              "correct": false
+            },
+            {
+              "text": "Yalnızca namazın içinde",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

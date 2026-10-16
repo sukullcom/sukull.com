@@ -1,0 +1,343 @@
+{
+  "title": "Asch’ın çizgi deneyi",
+  "description": "Solomon Asch’ın uyma deneyinde grubun yanlışta birleşmesi. Her ders üç okuma ve bu okumadan cevaplanan bir sorudan oluşur.",
+  "order": 2,
+  "lessons": [
+    {
+      "title": "Grubun yanlış çizgisi",
+      "order": 1,
+      "challenges": [
+        {
+          "question": "Asch kişiden neyi karşılaştırmasını ister?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "asch,cizgi",
+          "explanation": "Soru, hangi çizginin eşit olduğudur. Göz bunu kolayca ayırır.",
+          "metadata": "{\"reading\":\"Asch, masaya basit çizgiler koyar. Bir çizgi, üç çizgiden hangisine eşittir? Göz bunu kolayca ayırır. Gruptaki diğer kişiler önceden anlaşılmıştır ve ara sıra hep birlikte yanlış çizgiyi söyler.\\n\\nAsıl denek, cevabı en son verir. Gördüğü ile duyduğu burada ayrılır.\"}",
+          "options": [
+            {
+              "text": "Bir matematik sorusunu",
+              "correct": false
+            },
+            {
+              "text": "Hangi çizginin eşit olduğunu",
+              "correct": true
+            },
+            {
+              "text": "Bir tarih bilgisini",
+              "correct": false
+            },
+            {
+              "text": "Bir yüzü",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Grup neden yanlışta birleşir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "asch,cizgi",
+          "explanation": "Yanlış, anlaşmalı grubun oybirliğinden gelir.",
+          "metadata": "{\"reading\":\"Çalışmada birleşenler denek değildir. Deneyci onlardan yanlış söylemelerini istemiştir. Denek bunu bilmez. Duyduğu, odadaki herkesin aynı yanlışta rahat olduğudur.\\n\\nBaskı, bir bağırışla değil, oybirliğiyle kurulur.\"}",
+          "options": [
+            {
+              "text": "Hepsi gerçekten yanıldığı için",
+              "correct": false
+            },
+            {
+              "text": "Anlaşmalı kişiler aynı yanlışı söylediği için",
+              "correct": true
+            },
+            {
+              "text": "Çizgiler silindiği için",
+              "correct": false
+            },
+            {
+              "text": "Işık kapandığı için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Sorunun kolay olması neyi keskinleştirir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "asch,cizgi",
+          "explanation": "Doğru apaçıkken de grup baskısı işler.",
+          "metadata": "{\"reading\":\"Asch, zor bir bilgi sormaz. Çizgi açıktır. İnsan yine de grubun yanlışına uyabiliyorsa baskı, bilgisizlikten gelmiyordur. Çalışmada bahsedilen, gözün bozulduğudur her zaman değil.\\n\\nKimi gördüğünü söyler, kimi grubu söyler.\"}",
+          "options": [
+            {
+              "text": "Baskının bilgisizlikten geldiğini",
+              "correct": false
+            },
+            {
+              "text": "Baskının, doğru apaçıkken de işlediğini",
+              "correct": true
+            },
+            {
+              "text": "Çizginin görünmediğini",
+              "correct": false
+            },
+            {
+              "text": "Kimsenin uymadığını",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kendi gözü",
+      "order": 2,
+      "challenges": [
+        {
+          "question": "Denekler grubun yanlışını ne sıklıkla tekrarlar?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "asch,goz",
+          "explanation": "Yanlış, grup konuşunca belirir. Yalnızken aynı kişi doğruyu görür.",
+          "metadata": "{\"reading\":\"Asch’ın anlattığı düzende deneklerin önemli bir kısmı, en az bir kez grubun yanlış çizgisini söyler. Yalnız kaldıklarında aynı çizgiyi neredeyse hiç kaçırmazlar. Çalışmada bahsedilen, gözlerinin zayıf olduğudur değil.\\n\\nHata, çizgide değil, sıra kendilerine gelince ortaya çıkar.\"}",
+          "options": [
+            {
+              "text": "Yalnızken de aynı oranda",
+              "correct": false
+            },
+            {
+              "text": "Grup yanlış deyince, yalnızken kaçırmadıkları çizgide",
+              "correct": true
+            },
+            {
+              "text": "Hiçbir zaman",
+              "correct": false
+            },
+            {
+              "text": "Yalnızca karanlıkta",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Uyan kişi çizgiyi görmez mi?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "asch,goz",
+          "explanation": "Kimi doğruyu saklar, kimi gördüğünü grubun cevabına çevirir.",
+          "metadata": "{\"reading\":\"Çalışmada uyduğu halde sonra ‘gözüm öyle görmedi, gruba uydum’ diyenler vardır. Bir kısmı ise bir süre sonra grubun doğru olduğuna inanır. Çalışmada bahsedilen, her uyanın aynı gerekçeyi kurduğudur değil.\\n\\nKimi bildiğini saklar. Kimi gördüğünü grubun sözüne çevirir.\"}",
+          "options": [
+            {
+              "text": "Hiçbiri çizgiyi görmez",
+              "correct": false
+            },
+            {
+              "text": "Kimi saklar, kimi gördüğünü grubun sözüne çevirir",
+              "correct": true
+            },
+            {
+              "text": "Hepsi kör olur",
+              "correct": false
+            },
+            {
+              "text": "Hepsi baştan reddeder",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Asch bu uyarıyı neye karşı koyar?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "asch,goz",
+          "explanation": "Oybirliği, apaçık bir yanlışı kanıt gibi gösterebilir.",
+          "metadata": "{\"reading\":\"Çalışma, insanın grup içinde kendi duyusuna güvenmesinin sandığımız kadar otomatik olmadığını gösterir. Oybirliği, apaçık bir çizgiyi bile eğebilir. Çalışmada bahsedilen, yalnızlığın her zaman doğru olduğu değildir.\\n\\nUyarı, kalabalığın rahat yanlışının bir kanıt sayılmasıdır.\"}",
+          "options": [
+            {
+              "text": "Yalnızlığın kutsallığına",
+              "correct": false
+            },
+            {
+              "text": "Oybirliğini kanıt sanmaya",
+              "correct": true
+            },
+            {
+              "text": "Çizgi çizmeye",
+              "correct": false
+            },
+            {
+              "text": "Laboratuvarı kapatmaya",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Tek yandaş",
+      "order": 3,
+      "challenges": [
+        {
+          "question": "Grupta bir kişi daha doğruyu söylerse ne olur?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "asch,yandas",
+          "explanation": "Tek bir doğru ses, uymayı düşürür.",
+          "metadata": "{\"reading\":\"Asch, anlaşmalı gruba bir kişi daha koyar ve ondan doğru çizgiyi söylemesini ister. Denek artık tamamen yalnız değildir. Uyma belirgin biçimde düşer. Çalışmada bahsedilen, kalabalığın dağıldığıdır değil.\\n\\nTek bir yandaş, oybirliğini kırar.\"}",
+          "options": [
+            {
+              "text": "Uyma artar",
+              "correct": false
+            },
+            {
+              "text": "Uyma belirgin biçimde düşer",
+              "correct": true
+            },
+            {
+              "text": "Denek odayı terk eder",
+              "correct": false
+            },
+            {
+              "text": "Çizgiler değişir",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Yandaşın uzman olması gerekir mi?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "asch,yandas",
+          "explanation": "Ünvansız bir ikinci doğru ses de yeter.",
+          "metadata": "{\"reading\":\"Çalışmada o kişi sıradan bir katılımcı gibi durur. Ünvanı yoktur. Yine de denek, ‘bir kişi daha benim gördüğümü görüyor’ diyebilir. Çalışmada bahsedilen, otoritenin şart olduğudur değil.\\n\\nKırılan şey oybirliğidir, rütbe değil.\"}",
+          "options": [
+            {
+              "text": "Profesör olması gerekir",
+              "correct": false
+            },
+            {
+              "text": "Sıradan bir ikinci ses de oybirliğini kırar",
+              "correct": true
+            },
+            {
+              "text": "Bağırması gerekir",
+              "correct": false
+            },
+            {
+              "text": "Çizgiyi yeniden çizmesi gerekir",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Bu sonuç Milgram’ın odasıyla nerede birleşir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "asch,yandas",
+          "explanation": "Yanında bir doğru ses olunca durmak kolaylaşır.",
+          "metadata": "{\"reading\":\"Milgram’ın odasında devam emrinden başka ses yoktur. Asch’ın masasında ise bir yandaş, yanlış oybirliğini deler. İki çalışma da şunu bırakır: insanın durması, yanında bir doğru ses olunca kolaylaşır.\\n\\nYalnız kalan göz ve yalnız kalan vicdan, kalabalığa daha çabuk teslim olur.\"}",
+          "options": [
+            {
+              "text": "İkisinin de ilgisiz olduğu",
+              "correct": false
+            },
+            {
+              "text": "İkinci bir doğru sesin durmayı kolaylaştırdığı",
+              "correct": true
+            },
+            {
+              "text": "Yandaşın itaati artırdığı",
+              "correct": false
+            },
+            {
+              "text": "Çizginin emir olduğu",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Neden uyar",
+      "order": 4,
+      "challenges": [
+        {
+          "question": "Asch uymanın iki yolunu nasıl ayırır?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "asch,neden",
+          "explanation": "Biri gördüğünü grubun sözüne çevirir, öbürü bildiğini saklar.",
+          "metadata": "{\"reading\":\"Kimi denek, grubun gördüğünü kendinin de gördüğüne inanır. Kimi, gördüğünü bilir ve yine de grubun sözünü söyler, dışarıda kalmamak için. Çalışmada bahsedilen, ikisinin aynı olduğu değildir.\\n\\nBiri algının eğilmesi, öbürü ait olma kaygısıdır.\"}",
+          "options": [
+            {
+              "text": "İkisi de yalnızca korkudur",
+              "correct": false
+            },
+            {
+              "text": "Biri gördüğünü çevirir, öbürü bildiğini saklar",
+              "correct": true
+            },
+            {
+              "text": "İkisi de körlüktür",
+              "correct": false
+            },
+            {
+              "text": "İkisi de isyandır",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Ait olmak neden çizgiyi eğer?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "asch,neden",
+          "explanation": "Tehdit yoktur. Farklı görünmek yeterince ağırdır.",
+          "metadata": "{\"reading\":\"Çalışmada denek, birkaç yabancının yanındadır. Yine de farklı cevabı söylemek yüzünü ısıtır. Asch, bu ısının büyük bir ceza olmadığını yazar. Küçük bir ayrılık bile yeter. Çalışmada bahsedilen, grubun tehdit savurduğudur değil.\\n\\nFark edilmek, bazıları için yanlış çizgiyi söylemekten ağırdır.\"}",
+          "options": [
+            {
+              "text": "Grup tehdit savurduğu için",
+              "correct": false
+            },
+            {
+              "text": "Küçük bir ayrılık bile ağır geldiği için",
+              "correct": true
+            },
+            {
+              "text": "Çizgi silindiği için",
+              "correct": false
+            },
+            {
+              "text": "Işık zayıf olduğu için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Deneyin bıraktığı ölçü nedir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "asch,neden",
+          "explanation": "Ölçü, kalabalığın rahatlığı değil, kişinin gördüğüdür.",
+          "metadata": "{\"reading\":\"Asch, insanın grupta yanlış bir çizgiyi söyleyebildiğini gösterir. Ölçü, kalabalığın rahatlığı değil, kişinin kendi gördüğüdür. Yanında bir yandaş varsa o ölçüye dönmek kolaylaşır.\\n\\nÇizgi basittir. Basit olduğu için sonuç ağırdır.\"}",
+          "options": [
+            {
+              "text": "Kalabalığın rahatlığı",
+              "correct": false
+            },
+            {
+              "text": "Kişinin kendi gördüğü",
+              "correct": true
+            },
+            {
+              "text": "En yüksek ses",
+              "correct": false
+            },
+            {
+              "text": "İlk söylenen cevap",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

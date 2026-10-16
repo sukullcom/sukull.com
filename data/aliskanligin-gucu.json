@@ -1,0 +1,427 @@
+{
+  "title": "Alışkanlığın Gücü",
+  "description": "Charles Duhigg’in Alışkanlığın Gücü kitabında işlenen alışkanlık fikirleri. Her ders üç okuma ve bu okumadan cevaplanan bir sorudan oluşur.",
+  "order": 5,
+  "lessons": [
+    {
+      "title": "Döngü",
+      "order": 1,
+      "challenges": [
+        {
+          "question": "Kitap alışkanlığı hangi üç parçayla anlatır?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "aliskanligin-gucu,dongu",
+          "explanation": "Döngü işaret, davranış ve ödülden kurulur.",
+          "metadata": "{\"reading\":\"Alışkanlığın Gücü, alışkanlığı bir döngü diye kurar. Önce bir işaret gelir. Sonra bilinen davranış çalışır. En sonda bir ödül o davranışı yerinde tutar. Kitapta bahsedilen, iradenin her seferinde baştan karar verdiğidir değil.\\n\\nDöngü bir kez oturunca beyin, işaretle ödül arasında kestirme yapar.\"}",
+          "options": [
+            {
+              "text": "Yalnızca güçlü bir karar",
+              "correct": false
+            },
+            {
+              "text": "İşaret, davranış ve ödül",
+              "correct": true
+            },
+            {
+              "text": "Tek bir büyük ceza",
+              "correct": false
+            },
+            {
+              "text": "Başkalarının alkışı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitaba göre işaret ne işe yarar?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "aliskanligin-gucu,dongu",
+          "explanation": "İşaret, davranışı başlatan kapıdır.",
+          "metadata": "{\"reading\":\"Kitap, işareti döngünün kapısı diye anlatır. Bir saat, bir yer, bir duygu, davranışı başlatır. İşaret görünmezse insan alışkanlığı karakter sanır. Kitapta bahsedilen, işaretin her zaman bir alarm sesi olduğudur değil.\\n\\nKapı fark edilince döngü de görünür olur.\"}",
+          "options": [
+            {
+              "text": "Döngüyü kapattığı",
+              "correct": false
+            },
+            {
+              "text": "Davranışı başlattığı",
+              "correct": true
+            },
+            {
+              "text": "Ödülü sildiği",
+              "correct": false
+            },
+            {
+              "text": "İradeyi büyüttüğü",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Ödül döngüde neden kalır?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "aliskanligin-gucu,dongu",
+          "explanation": "Ödül, davranışın tekrarını öğretir.",
+          "metadata": "{\"reading\":\"Kitapta ödül, davranışın boşuna olmadığını bedene öğretir. Ödül kalkınca döngü zayıflar. Ödül durdukça işaret bir sonraki seferde yine aynı davranışı çağırır. Kitapta bahsedilen, ödülün yalnızca büyük bir hediye olduğudur değil.\\n\\nKüçük bir rahatlama da ödül olabilir.\"}",
+          "options": [
+            {
+              "text": "Döngüyü bitirdiği için",
+              "correct": false
+            },
+            {
+              "text": "Davranışın tekrarını öğrettiği için",
+              "correct": true
+            },
+            {
+              "text": "İşareti yasakladığı için",
+              "correct": false
+            },
+            {
+              "text": "İradenin yerini tuttuğu için",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kilit alışkanlık",
+      "order": 2,
+      "challenges": [
+        {
+          "question": "Kitap kilit alışkanlığı nasıl tarif eder?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "aliskanligin-gucu,kilit",
+          "explanation": "Kilit alışkanlık, diğerlerini de oynatır.",
+          "metadata": "{\"reading\":\"Alışkanlığın Gücü, bazı alışkanlıkların diğerlerini de yerinden oynattığını anlatır. Biri düzelince uyku, söz ve düzen de ona uyar. Kitapta bahsedilen, her alışkanlığın aynı ağırlıkta olduğudur değil.\\n\\nKilit olan, kapıyı açan davranıştır.\"}",
+          "options": [
+            {
+              "text": "En uzun süren davranış",
+              "correct": false
+            },
+            {
+              "text": "Diğerlerini de yerinden oynatan davranış",
+              "correct": true
+            },
+            {
+              "text": "Yalnızca sabah yapılan iş",
+              "correct": false
+            },
+            {
+              "text": "Başkasına devredilen iş",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitap neden her şeyi birden değiştirmeyi önermez?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "aliskanligin-gucu,kilit",
+          "explanation": "Bir kilit, sonraki değişimlere yol verir.",
+          "metadata": "{\"reading\":\"Kitapta dağınık bir yenilenme, hiçbir döngüyü tam kuramaz. Bir kilit seçilince dikkat orada toplanır. Diğer değişimler o kilidin ardından gelir. Kitapta bahsedilen, küçük işlerin önemsiz olduğudur değil.\\n\\nDar bir kapı, geniş bir odayı açabilir.\"}",
+          "options": [
+            {
+              "text": "Küçük iş yasak olduğu için",
+              "correct": false
+            },
+            {
+              "text": "Tek kapı diğer değişimlere yol verdiği için",
+              "correct": true
+            },
+            {
+              "text": "İnsan yalnızca bir iş yapabildiği için",
+              "correct": false
+            },
+            {
+              "text": "Listeler çalışmadığı için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kilit alışkanlık neye benzemez?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "aliskanligin-gucu,kilit",
+          "explanation": "Söylenip bırakılan niyet kilit olmaz.",
+          "metadata": "{\"reading\":\"Kitap, kilit alışkanlığı bir kimlik ilanı diye koymaz. O, ölçülebilir ve tekrarlanan bir davranıştır. Söylenip bırakılan bir niyet kapı açmaz. Kitapta bahsedilen, niyetin gereksiz olduğudur değil.\\n\\nNiyet, ancak dönen bir davranışa bağlanınca kilit olur.\"}",
+          "options": [
+            {
+              "text": "Tekrarlanan bir davranış",
+              "correct": false
+            },
+            {
+              "text": "Söylenip bırakılan bir niyet",
+              "correct": true
+            },
+            {
+              "text": "İşaretli bir döngü",
+              "correct": false
+            },
+            {
+              "text": "Küçük bir ödül",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Özlem",
+      "order": 3,
+      "challenges": [
+        {
+          "question": "Kitap özlemi döngünün neresine koyar?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "aliskanligin-gucu,ozlem",
+          "explanation": "Özlem, işaretle birlikte uyanır.",
+          "metadata": "{\"reading\":\"Alışkanlığın Gücü, ödülün kendisinden çok ödüle duyulan özlemin döngüyü çevirdiğini anlatır. İşaret gelince beden, daha davranış başlamadan o rahatlamayı ister. Kitapta bahsedilen, özlemin iradeyle susturulabildiğidir değil.\\n\\nÖzlem, görünmeyen motordur.\"}",
+          "options": [
+            {
+              "text": "Döngünün dışında",
+              "correct": false
+            },
+            {
+              "text": "İşaretle birlikte uyanan istekte",
+              "correct": true
+            },
+            {
+              "text": "Yalnızca büyük ödüllerde",
+              "correct": false
+            },
+            {
+              "text": "Ceza korkusunda",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitaba göre yeni bir alışkanlık neden tutunmaz?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "aliskanligin-gucu,ozlem",
+          "explanation": "Yeni davranış eski özlemin yerini almazsa tutunmaz.",
+          "metadata": "{\"reading\":\"Kitapta yeni davranış, eski özlemin yerine geçmezse döngü yarım kalır. İnsan doğru işi bir kez yapar, beden o işi istemez. Kitapta bahsedilen, tekrarın gereksiz olduğudur değil.\\n\\nTekrar, ancak özlem o davranışa bağlanırsa alışkanlık olur.\"}",
+          "options": [
+            {
+              "text": "Bir kez yapılınca bittiği için",
+              "correct": false
+            },
+            {
+              "text": "Eski özlemin yerini almadığı için",
+              "correct": true
+            },
+            {
+              "text": "İşaret silindiği için",
+              "correct": false
+            },
+            {
+              "text": "Ödül fazla olduğu için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitap özlemi fark etmeyi neye yarar?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "aliskanligin-gucu,ozlem",
+          "explanation": "Özlem görülünce işaret de görünür.",
+          "metadata": "{\"reading\":\"Bu kitapta özlem, döngünün parçası olarak durur. İnsan neyi özlediğini görünce işareti de görür. Kitapta bahsedilen, özlemin bir utanç olduğu değildir.\\n\\nGörülen özlem, değiştirilebilir bir parçadır.\"}",
+          "options": [
+            {
+              "text": "Özlemin gizlenmesi",
+              "correct": false
+            },
+            {
+              "text": "İşaretin de görünür olması",
+              "correct": true
+            },
+            {
+              "text": "Döngünün yasaklanması",
+              "correct": false
+            },
+            {
+              "text": "Ödülün büyütülmesi",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Ortam",
+      "order": 4,
+      "challenges": [
+        {
+          "question": "Kitap alışkanlığın nerede kırıldığını söyler?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "aliskanligin-gucu,ortam",
+          "explanation": "Eski işaret ortamda duruyorsa döngü çağrılır.",
+          "metadata": "{\"reading\":\"Alışkanlığın Gücü, döngünün çoğu zaman kişinin içinde değil, işaretin durduğu yerde kırıldığını anlatır. Aynı oda, aynı saat, aynı eşya eski davranışı çağırır. Kitapta bahsedilen, karakterin hiç payı olmadığı değildir.\\n\\nOrtam değişmeden niyet, eski işaretle baş başa kalır.\"}",
+          "options": [
+            {
+              "text": "Yalnızca karakterde",
+              "correct": false
+            },
+            {
+              "text": "Eski işareti taşıyan ortamda",
+              "correct": true
+            },
+            {
+              "text": "Yalnızca ödülün adında",
+              "correct": false
+            },
+            {
+              "text": "Başkasının sözünde",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitaba göre yeni ortam ne sağlar?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "aliskanligin-gucu,ortam",
+          "explanation": "Yeni ortam, eski işareti bir süre susturur.",
+          "metadata": "{\"reading\":\"Kitap, işaretlerin değiştiği bir yerde eski döngünün bir süre boş kaldığını söyler. O boşluk, yeni davranış için yer açar. Kitapta bahsedilen, taşınmanın sihirli bir çözüm olduğudur değil.\\n\\nYeni yer, ancak yeni döngü kurulursa işe yarar.\"}",
+          "options": [
+            {
+              "text": "Eski döngünün kendiliğinden silinmesi",
+              "correct": false
+            },
+            {
+              "text": "Eski işaretin bir süre susması",
+              "correct": true
+            },
+            {
+              "text": "İradenin sonsuz olması",
+              "correct": false
+            },
+            {
+              "text": "Ödülün gerekmemesi",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitap ortamı değiştirmeden neyin zor olduğunu söyler?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "aliskanligin-gucu,ortam",
+          "explanation": "Aynı işaretlerin içinde irade çabuk tükenir.",
+          "metadata": "{\"reading\":\"Kitapta aynı işaretlerin içinde yeni bir niyet, her gün yeniden savaş ister. Savaş yorulur. Ortam, savaşı küçültür. Kitapta bahsedilen, iradenin hiç işe yaramadığı değildir.\\n\\nİrade, işaretler aynı kaldıkça çabuk tükenir.\"}",
+          "options": [
+            {
+              "text": "Yeni niyetin kolay kazanması",
+              "correct": false
+            },
+            {
+              "text": "İradenin çabuk tükenmesi",
+              "correct": true
+            },
+            {
+              "text": "Döngünün kendiliğinden değişmesi",
+              "correct": false
+            },
+            {
+              "text": "Ödülün büyümesi",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "İradenin sınırı",
+      "order": 5,
+      "challenges": [
+        {
+          "question": "Kitap iradeyi neye benzetir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "aliskanligin-gucu,irade",
+          "explanation": "İrade, gün içinde tükenen bir kastır.",
+          "metadata": "{\"reading\":\"Alışkanlığın Gücü, iradeyi tükenen bir kas diye anlatır. Sabah güçlüdür. Gün içinde kararlar biriktikçe zayıflar. Kitapta bahsedilen, iradenin hiç olmadığı değildir.\\n\\nAkşam aynı savaşı sabahki güçle vermek zordur.\"}",
+          "options": [
+            {
+              "text": "Hiç tükenmeyen bir kaynak",
+              "correct": false
+            },
+            {
+              "text": "Gün içinde tükenen bir kas",
+              "correct": true
+            },
+            {
+              "text": "Yalnızca ceza korkusu",
+              "correct": false
+            },
+            {
+              "text": "Başkasından ödünç alınan bir güç",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitaba göre alışkanlık iradenin yerini nasıl alır?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "aliskanligin-gucu,irade",
+          "explanation": "Oturmuş döngü, her adımda yeni karar istemez.",
+          "metadata": "{\"reading\":\"Kitapta oturmuş döngü, her seferinde karar istemez. İşaret gelir, davranış akar. İrade o sırada başka bir işe kalır. Kitapta bahsedilen, düşünmenin bittiğidir değil.\\n\\nAlışkanlık, iradeyi her küçük adımda harcamamak için kurulur.\"}",
+          "options": [
+            {
+              "text": "Her adımda yeni bir karar isteyerek",
+              "correct": false
+            },
+            {
+              "text": "İşaret gelince davranışı akıtarak",
+              "correct": true
+            },
+            {
+              "text": "Ödülü kaldırarak",
+              "correct": false
+            },
+            {
+              "text": "Ortamı yok sayarak",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitabın son ölçüsü nedir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "aliskanligin-gucu,irade",
+          "explanation": "Sınırlı irade, kurulmuş döngüye devredilir.",
+          "metadata": "{\"reading\":\"Kitap, iyi niyeti küçümsemez. Niyet, döngü, kilit ve ortam kurulmadan günü taşıyamaz. İrade sınırlıdır. Sınırı bilen, savaşı alışkanlığa devreder.\\n\\nAlışkanlığın Gücü bu yüzden karakter vaadi değil, döngü vaadi olarak okunur.\"}",
+          "options": [
+            {
+              "text": "İradenin sınırsız olduğu",
+              "correct": false
+            },
+            {
+              "text": "Sınırlı iradenin döngüye devredildiği",
+              "correct": true
+            },
+            {
+              "text": "Ortamın önemsiz olduğu",
+              "correct": false
+            },
+            {
+              "text": "Kilit alışkanlığın yasak olduğu",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,343 @@
+{
+  "title": "Bilişsel çelişki",
+  "description": "Leon Festinger’in, davranış ile inanç çatışınca insanın kendini nasıl haklı çıkardığı üzerine çalışması. Her ders üç okuma ve bu okumadan cevaplanan bir sorudan oluşur.",
+  "order": 3,
+  "lessons": [
+    {
+      "title": "Çatışma",
+      "order": 1,
+      "challenges": [
+        {
+          "question": "Festinger çelişkiyi nerede görür?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "celiski,catisma",
+          "explanation": "Çelişki, davranış ile inancın uyuşmamasıdır.",
+          "metadata": "{\"reading\":\"Festinger, insanın iki bilgisinin birbiriyle uyuşmamasına çelişki der. Biri davranışıdır, öbürü inancıdır. Sigarayı zararlı bilip içmek, buna küçük bir örnektir. Çalışmada bahsedilen, her tereddüdün çelişki olduğudur değil.\\n\\nÇelişki, kişi o uyuşmazlığı taşıyamayınca başlar.\"}",
+          "options": [
+            {
+              "text": "Her unutmada",
+              "correct": false
+            },
+            {
+              "text": "Davranış ile inanç uyuşmayınca",
+              "correct": true
+            },
+            {
+              "text": "Yalnızca yalan söyleyince",
+              "correct": false
+            },
+            {
+              "text": "Grup susunca",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Çelişki neden rahatsız eder?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "celiski,catisma",
+          "explanation": "Kişi, tutarsız görünmeyi taşımakta zorlanır.",
+          "metadata": "{\"reading\":\"Festinger, insanın kendini tutarlı görmek istediğini anlatır. Uyuşmazlık bu resmi bozar. Bozulan resim, bir sıkıntı olarak durur. Çalışmada bahsedilen, sıkıntının her zaman doğru yolu gösterdiğidir değil.\\n\\nSıkıntı, bazen davranışı değiştirir, bazen inancı.\"}",
+          "options": [
+            {
+              "text": "Hiç hissedilmediği için",
+              "correct": false
+            },
+            {
+              "text": "Kişi kendini tutarsız gördüğü için",
+              "correct": true
+            },
+            {
+              "text": "Yalnızca başkası bağırdığı için",
+              "correct": false
+            },
+            {
+              "text": "Ceza kesin olduğu için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Çalışma hangi yolu daha çok izler?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "celiski,catisma",
+          "explanation": "Geri alınamayan davranıştan sonra inanç eğilir.",
+          "metadata": "{\"reading\":\"Festinger, davranışı geri almanın her zaman mümkün olmadığını söyler. İş işten geçince kişi, inancı davranşa uydurur. Çalışmada bahsedilen, bunun bilinçli bir kandırmaca olarak başladığı değildir her seferinde.\\n\\nİnanç, olanı haklı çıkarmak için eğilir.\"}",
+          "options": [
+            {
+              "text": "Davranışın her zaman silindiği",
+              "correct": false
+            },
+            {
+              "text": "İnancın, olanı haklı çıkarmak için eğildiği",
+              "correct": true
+            },
+            {
+              "text": "Çelişkinin yok sayıldığı",
+              "correct": false
+            },
+            {
+              "text": "Grubun çizgiyi değiştirdiği",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Haklı çıkarmak",
+      "order": 2,
+      "challenges": [
+        {
+          "question": "Sıkıcı bir işi az ücretle yapan neden işi över?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "celiski,hakli",
+          "explanation": "Küçük karşılık yalanı açıklamaz. Kişi işi ilginç hatırlayarak açığı kapatır.",
+          "metadata": "{\"reading\":\"Festinger ve Carlsmith’in anlattığı düzende, sıkıcı bir işi bitiren bazı kişilerden, kapıdaki bir sonrakine işin eğlenceli olduğunu söylemeleri istenir. Bunu çok küçük bir karşılıkla yapanlar, sonra işi gerçekten daha ilginç hatırlar.\\n\\nBüyük karşılık alanların buna ihtiyacı azdır. ‘Para için söyledim’ diyebilirler.\"}",
+          "options": [
+            {
+              "text": "Büyük para aldıkları için",
+              "correct": false
+            },
+            {
+              "text": "Küçük karşılık, yalanı açıklamaya yetmediği için",
+              "correct": true
+            },
+            {
+              "text": "İş gerçekten eğlenceli olduğu için",
+              "correct": false
+            },
+            {
+              "text": "Kapıdaki kişi ısrar ettiği için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Büyük karşılık neden inancı daha az eğer?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "celiski,hakli",
+          "explanation": "Büyük karşılık, ‘para için söyledim’ gerekçesini verir.",
+          "metadata": "{\"reading\":\"Çalışmada büyük ücret, ‘bunu para için söyledim’ cümlesine yeter. Çelişki kapanır, iş hâlâ sıkıcı kalabilir. Küçük ücret o cümleyi kuramaz. Kişi başka bir kapanış arar.\\n\\nKapanış, olanı değiştirmek değil, olanı güzel hatırlamaktır.\"}",
+          "options": [
+            {
+              "text": "İşi sildiği için",
+              "correct": false
+            },
+            {
+              "text": "Yalanın gerekçesi hazır olduğu için",
+              "correct": true
+            },
+            {
+              "text": "Ücreti gizlediği için",
+              "correct": false
+            },
+            {
+              "text": "Deneyi bozduğu için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Bu sonuç kendini kandırmak mıdır?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "celiski,hakli",
+          "explanation": "Sıkıntı, hatırayı eğebilir. Kişi sonra o hatıraya inanır.",
+          "metadata": "{\"reading\":\"Festinger, kişinin her zaman bilerek yalan kurduğunu söylemez. Sıkıntı, hatırayı da eğebilir. Sonra kişi, eğilmiş hatıraya inanır. Çalışmada bahsedilen, hafızanın çelik bir kayıt olduğudur değil.\\n\\nHaklı çıkmış hissetmek, olanın üstünü örtebilir.\"}",
+          "options": [
+            {
+              "text": "Hafıza hiç eğilmediği için hayır",
+              "correct": false
+            },
+            {
+              "text": "Sıkıntı hatırayı da eğebildiği için bu bir örtmedir",
+              "correct": true
+            },
+            {
+              "text": "Ücret hatırayı sildiği için hayır",
+              "correct": false
+            },
+            {
+              "text": "Kapıdaki kişi hatırayı yazdığı için",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Ne zaman büyür",
+      "order": 3,
+      "challenges": [
+        {
+          "question": "Çelişki hangi seçimde daha çok büyür?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "celiski,buyume",
+          "explanation": "Kendi seçimi ve geri dönememek, çelişkiyi büyütür.",
+          "metadata": "{\"reading\":\"Festinger, zorla yaptırılan işte çelişkinin küçük kaldığını anlatır. Kişi ‘mecburdum’ diyebilir. Kendi seçtiği, geri dönüşü zor ve sonucu ağır bir işte ise mecburiyet cümlesi kurulamaz.\\n\\nSeçim kişide kaldıkça, olanı haklı çıkarma ihtiyacı artar.\"}",
+          "options": [
+            {
+              "text": "Tamamen zorlandığı seçimde",
+              "correct": false
+            },
+            {
+              "text": "Kendi seçtiği ve geri dönemediği işte",
+              "correct": true
+            },
+            {
+              "text": "Ücretsiz bir ankette",
+              "correct": false
+            },
+            {
+              "text": "Başkası karar verince",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Emek neden bağlar?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "celiski,buyume",
+          "explanation": "Çok emek, ‘boşunaydı’ cümlesini zorlaştırır.",
+          "metadata": "{\"reading\":\"Çalışmada bir işe çok emek veren, o işin boş olduğunu kabul etmekte zorlanır. Emek, ‘boşuna değildi’ cümlesini gerektirir. Çalışmada bahsedilen, emeğin her zaman doğru hedefi seçtiğidir değil.\\n\\nÇok ödenen bedel, yanlış bir yolu da kutsal gösterebilir.\"}",
+          "options": [
+            {
+              "text": "Hedefi kendiliğinden düzelttiği için",
+              "correct": false
+            },
+            {
+              "text": "Boşuna olduğu kabulünü zorlaştırdığı için",
+              "correct": true
+            },
+            {
+              "text": "Çelişkiyi sildiği için",
+              "correct": false
+            },
+            {
+              "text": "Seçimi geri aldığı için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Festinger küçümsemeyi nereye koyar?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "celiski,buyume",
+          "explanation": "Seçilmeyen yolu küçümsemek, seçileni parlatır.",
+          "metadata": "{\"reading\":\"Kişi, seçmediği yolu küçümseyince seçtiği yol parlar. İki yol da başta yakınsa bu küçümseme daha çok işe yarar. Çalışmada bahsedilen, seçilmeyenin gerçekten kötü olduğunun ispatı değildir.\\n\\nParlama, çelişkiyi kapatmak için de üretilmiş olabilir.\"}",
+          "options": [
+            {
+              "text": "Seçilmeyenin ölçülmüş kötülüğü",
+              "correct": false
+            },
+            {
+              "text": "Seçileni parlatmak için üretilen bir küçümseme",
+              "correct": true
+            },
+            {
+              "text": "Zorlamanın sonucu",
+              "correct": false
+            },
+            {
+              "text": "Ücretin büyüklüğü",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Karardan sonra",
+      "order": 4,
+      "challenges": [
+        {
+          "question": "Karar verildikten sonra ne değişir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "celiski,karar",
+          "explanation": "Karardan sonra seçilen parlar, seçilmeyen kararır.",
+          "metadata": "{\"reading\":\"Festinger, seçim yapılınca seçilenin iyi yanlarının, seçilmeyenin kötü yanlarının büyüdüğünü anlatır. Karardan önce tereddüt vardır. Karardan sonra tereddüt, haklı çıkmış bir hikâyeye döner.\\n\\nÇalışmada bahsedilen, kararın her zaman yanlış olduğudur değil.\"}",
+          "options": [
+            {
+              "text": "Tereddüt büyür",
+              "correct": false
+            },
+            {
+              "text": "Seçilen parlar, seçilmeyen kararır",
+              "correct": true
+            },
+            {
+              "text": "İki yol eşit kalır",
+              "correct": false
+            },
+            {
+              "text": "Kişi seçimi unutur",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Bu parlama neden tehlikelidir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "celiski,karar",
+          "explanation": "Haklı çıkmış hikâye, yeni bilgiye kapıyı kapatabilir.",
+          "metadata": "{\"reading\":\"Kişi, kararını gözden geçireceği anda elinde eğilmiş bir hatıra bulur. Yeni bilgi gelse de ‘ben zaten doğru seçmiştim’ cümlesi kapıyı kapatır. Çalışmada bahsedilen, pişmanlığın imkânsız olduğudur değil.\\n\\nPişmanlık, ancak eğilmiş hatıra fark edilince içeri girer.\"}",
+          "options": [
+            {
+              "text": "Yeni bilginin kolay girdiği",
+              "correct": false
+            },
+            {
+              "text": "Haklı çıkmış hikâyenin yeni bilgiye kapıyı kapattığı",
+              "correct": true
+            },
+            {
+              "text": "Kararın silindiği",
+              "correct": false
+            },
+            {
+              "text": "Grubun çizgiyi düzelttiği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Festinger’in bıraktığı ölçü nedir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "celiski,karar",
+          "explanation": "Ölçü, karardan sonra kurulan haklılık hikâyesini yeniden okumaktır.",
+          "metadata": "{\"reading\":\"Çalışma, tutarlılığı bir erdem diye övmez. Uyardığı, davranış ile inanç çatışınca insanın çoğu zaman davranışı değil, inancı eğmesidir. Milgram’ın odasında devam eden de, Asch’ın masasında uyan da sonra o anı kendine haklı kurabilir.\\n\\nÖlçü, kararın ardından kurulan hikâyeyi bir kez daha okumaktır.\"}",
+          "options": [
+            {
+              "text": "Tutarlılığın her zaman doğru olduğu",
+              "correct": false
+            },
+            {
+              "text": "Karardan sonra kurulan hikâyenin yeniden okunması",
+              "correct": true
+            },
+            {
+              "text": "Çelişkinin hiç yaşanmadığı",
+              "correct": false
+            },
+            {
+              "text": "Emeğin hedefi düzelttiği",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,427 @@
+{
+  "title": "Dil Belası",
+  "description": "Gazali’nin İhya’dan dilin afetleri üzerine bilinen öğüdü. Her ders üç okuma ve bu okumadan cevaplanan bir sorudan oluşur.",
+  "order": 3,
+  "lessons": [
+    {
+      "title": "Susmak",
+      "order": 1,
+      "challenges": [
+        {
+          "question": "Gazali dile neden tehlikeli bir aza der?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "dil-belasi,susmak",
+          "explanation": "Dil, yorulmadan zarar verebildiği için tehlikelidir.",
+          "metadata": "{\"reading\":\"Gazali, dilin afetlerinde insanın en çok karşı koyan azasının dil olduğunu anlatır. Dil yorulmaz, cephaneye ihtiyaç duymaz. Bir cümle, bir gıybet, bir yemin, geri alınması zor bir izin bırakır. Kitapta bahsedilen, konuşmanın kendisinin yasaklanması değildir.\\n\\nTehlike, ölçüsüz açılan dildedir. Gazali bu yüzden susmayı bir kaçış değil, dilin ilk terbiyesi sayar.\"}",
+          "options": [
+            {
+              "text": "Az konuştuğu için",
+              "correct": false
+            },
+            {
+              "text": "Yorulmadan ve kolayca zarar verdiği için",
+              "correct": true
+            },
+            {
+              "text": "Yalnızca şiir söylediği için",
+              "correct": false
+            },
+            {
+              "text": "Hiç kullanılmadığı için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitapta susmak neye yarar?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "dil-belasi,susmak",
+          "explanation": "Hayır yoksa susmak, dilin terbiyesidir.",
+          "metadata": "{\"reading\":\"Gazali, hayır taşımayan sözün kalbi dağıttığını anlatır. Susmak, o anda bir eksiklik değildir. Söylemeden önce sözün hayır getirip getirmediğine bakılır. Hayır yoksa dil tutulur.\\n\\nKitapta bahsedilen, insanın hiç konuşmaması değildir. Dilin, övülecek ile kınanacak sözü ayırt etmeden açılmamasıdır.\"}",
+          "options": [
+            {
+              "text": "Her bilginin hemen söylenmesi",
+              "correct": false
+            },
+            {
+              "text": "Hayır yoksa dilin tutulması",
+              "correct": true
+            },
+            {
+              "text": "Susmanın yasaklanması",
+              "correct": false
+            },
+            {
+              "text": "Sözün hiç tartılmaması",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Gazali konuşmayı neden ağır bir iş sayar?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "dil-belasi,susmak",
+          "explanation": "Hangi sözün övüleceğini bilmek zordur.",
+          "metadata": "{\"reading\":\"Kitapta, insanın dilini kullandığında övüleceği yeri bilmesinin zor olduğu belirtilir. Dilin yaratılış gayesine göre konuşmak, çoğu kişiye ağır gelir. İnsanlar dilin tuzaklarında dikkatsizdir.\\n\\nGazali bu ağırlığı, şeytanın en büyük kozunun dil olmasıyla anlatır. Söz kolay çıktığı için hafif sanılır. Hesabı ise kolay değildir.\"}",
+          "options": [
+            {
+              "text": "Sözün hesabı olmadığı için",
+              "correct": false
+            },
+            {
+              "text": "Övülecek sözü ayırt etmek zor olduğu için",
+              "correct": true
+            },
+            {
+              "text": "Konuşmak farz sayıldığı için",
+              "correct": false
+            },
+            {
+              "text": "Susmak her zaman günah olduğu için",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Boş söz",
+      "order": 2,
+      "challenges": [
+        {
+          "question": "Gazali boş sözü neden afet sayar?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "dil-belasi,bos-soz",
+          "explanation": "Boş söz fayda vermez, vakti ve kalbi dağıtır.",
+          "metadata": "{\"reading\":\"Gazali, malayaniyi, fayda vermeyen söz diye anlatır. İnsan o sözle ne öğrenir ne de bir iş düzelir. Vakit ve kalp dağılır. Kitapta bahsedilen, her sessizliğin ibadet sayılması değildir.\\n\\nBoş söz, dilin en sık düştüğü afettir. Çünkü yasak gibi görünmez. Yine de insanı asıl sözden alıkoyar.\"}",
+          "options": [
+            {
+              "text": "İlim sayıldığı için",
+              "correct": false
+            },
+            {
+              "text": "Fayda vermeden vakti ve kalbi dağıttığı için",
+              "correct": true
+            },
+            {
+              "text": "Her zaman sevap biriktirdiği için",
+              "correct": false
+            },
+            {
+              "text": "Yalnızca şiirde geçtiği için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Fuzuli konuşmak malayaniden nasıl ayrılır?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "dil-belasi,bos-soz",
+          "explanation": "Yerinde söz uzatılınca ölçü bozulur.",
+          "metadata": "{\"reading\":\"Gazali, faydasız sözün yanında bir de lüzumsuz uzatmayı sayar. Sözün bir kısmı yerindedir. Fazlası ise aynı kapıdan içeri girer ve ölçüyü bozar. Kitapta bahsedilen, az sözün her zaman eksik olduğudur değil.\\n\\nYerinde bir cümle yeterken uzatmak, dilin ikinci tuzağıdır.\"}",
+          "options": [
+            {
+              "text": "Kısa sözün yasak olduğu",
+              "correct": false
+            },
+            {
+              "text": "Yerinde sözün uzatılınca ölçüyü bozduğu",
+              "correct": true
+            },
+            {
+              "text": "Her uzatmanın ilim olduğu",
+              "correct": false
+            },
+            {
+              "text": "Fuzulinin hiç zarar vermediği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitap boş söze karşı ne ister?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "dil-belasi,bos-soz",
+          "explanation": "Söylemeden önce sözün faydasına bakılır.",
+          "metadata": "{\"reading\":\"Gazali, dilin her açılışının sevap biriktirdiğini söylemez. Faydası olmayan söz, söylenmemiş olsa daha iyi durur. İnsan bunu bir kural diye ezberlemez. Her cümleden önce o sözün bir işe yarayıp yaramadığına bakar.\\n\\nBakış kalkınca boş söz afet olmaktan çıkar, alışkanlık olur.\"}",
+          "options": [
+            {
+              "text": "Her cümlenin hayır sayılması",
+              "correct": false
+            },
+            {
+              "text": "Sözün bir işe yarayıp yaramadığına bakılması",
+              "correct": true
+            },
+            {
+              "text": "Boş sözün övülmesi",
+              "correct": false
+            },
+            {
+              "text": "Konuşmanın tamamen bırakılması",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Yalan",
+      "order": 3,
+      "challenges": [
+        {
+          "question": "Gazali yalanı dilin neresine koyar?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "dil-belasi,yalan",
+          "explanation": "Yalan, gerçeği bilerek tersine çevirmektir.",
+          "metadata": "{\"reading\":\"Gazali, yalanı dilin ağır afetlerinden sayar. Söz, olanı olduğundan başka göstermek için açılır. Kitapta bahsedilen, şakanın her türünün yalanla bir tutulması değildir. Bilerek gerçeğin tersine konuşmaktır asıl bozulma.\\n\\nYalan bir kez kolaylaşınca yemin de vaat de aynı kapıdan geçer.\"}",
+          "options": [
+            {
+              "text": "Her şakanın yalan sayıldığı",
+              "correct": false
+            },
+            {
+              "text": "Gerçeğin bilerek tersine çevrildiği",
+              "correct": true
+            },
+            {
+              "text": "Susmanın yalan olduğu",
+              "correct": false
+            },
+            {
+              "text": "Yalnızca yazıda geçtiği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Yalan vaat kitapta neden ayrıca durur?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "dil-belasi,yalan",
+          "explanation": "Tutulmayacağı bilinen vaat, yalana komşudur.",
+          "metadata": "{\"reading\":\"Gazali, söz verip tutmamayı yalana komşu bir afet diye anlatır. Vaat, geleceğe bırakılmış bir sözdür. Tutulmayacağı bilinerek verilirse yalan o anda söylenmiş olur. Kitapta bahsedilen, unutulan her vaadin aynı kefeye konması değildir.\\n\\nİnsan tutamayacağı sözü diline dolamadan önce durmalıdır.\"}",
+          "options": [
+            {
+              "text": "Her unutmanın yalan olduğu",
+              "correct": false
+            },
+            {
+              "text": "Tutulmayacak vaadin yalana komşu olduğu",
+              "correct": true
+            },
+            {
+              "text": "Vadin hiç verilmemesi gerektiği",
+              "correct": false
+            },
+            {
+              "text": "Vaidin hesaba girmeyeceği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitap yalanın yayılmasını nasıl anlatır?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "dil-belasi,yalan",
+          "explanation": "Bir yalan, örtmek için ikincisini çağırır.",
+          "metadata": "{\"reading\":\"Gazali’de yalan tek cümlede kalmaz. Bir yalan, onu örtecek ikinci sözü çağırır. Dil bu yüzden bir afetle yetinmez. Kitapta bahsedilen, küçük bir ters sözün zararsız kaldığıdır değil.\\n\\nİlk yalan kapıyı açar. Sonrakiler o kapıdan girer.\"}",
+          "options": [
+            {
+              "text": "Tek cümlede kapandığı",
+              "correct": false
+            },
+            {
+              "text": "Bir yalanın ikincisini çağırdığı",
+              "correct": true
+            },
+            {
+              "text": "Yalanın susmayla silindiği",
+              "correct": false
+            },
+            {
+              "text": "Örtmenin sevap olduğu",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Gıybet",
+      "order": 4,
+      "challenges": [
+        {
+          "question": "Gazali gıybeti nasıl tarif eder?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "dil-belasi,giybet",
+          "explanation": "Gıybet, kişiyi yokken hoşlanmayacağı şeyle anmaktır.",
+          "metadata": "{\"reading\":\"Gazali, gıybeti, bir kardeşini onun hoşlanmayacağı bir şeyle anmak diye anlatır. Söz doğru olsa da, o yokken ve rahatsız olacağı biçimde söylenmişse gıybettir. Kitapta bahsedilen, her doğru sözün serbest olduğudur değil.\\n\\nDoğruluk, arkadan konuşmayı temize çıkarmaz.\"}",
+          "options": [
+            {
+              "text": "Yalnızca yalan olduğu",
+              "correct": false
+            },
+            {
+              "text": "Yokken, hoşlanmayacağı bir şeyle anmak olduğu",
+              "correct": true
+            },
+            {
+              "text": "Yüzüne söylenince de aynı kaldığı",
+              "correct": false
+            },
+            {
+              "text": "Övgü sayıldığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitapta gıybet neden ağır durur?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "dil-belasi,giybet",
+          "explanation": "Gıybet, ayıbı yokken yaymaktır.",
+          "metadata": "{\"reading\":\"Gazali, gıybeti dilin en çok yayıldığı afetlerden sayar. İnsan onu sohbet sanır. Oysa kardeşinin etini, o yokken dile dolamıştır. Kitapta bahsedilen, ayıbı örtmenin gereksiz olduğudur değil.\\n\\nAyıp varsa yol, onu çoğaltmak değil, örtmek ya da kendisine söylemektir.\"}",
+          "options": [
+            {
+              "text": "Sohbet sayıldığı için hafif kaldığı",
+              "correct": false
+            },
+            {
+              "text": "Kardeşin ayıbını yokken yaydığı için",
+              "correct": true
+            },
+            {
+              "text": "Yalnızca yalan olunca günah olduğu",
+              "correct": false
+            },
+            {
+              "text": "Örtmenin yasak olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Gazali gıybeti dinleyen için ne der?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "dil-belasi,giybet",
+          "explanation": "Gıybeti durdurmayan da o söze ortak olur.",
+          "metadata": "{\"reading\":\"Kitapta, gıybeti dinleyip durdurmayanın da o sofraya oturduğu sezdirilir. Söz ağızdan çıkmıştır ama onu büyüten, susan meclistir. Gazali’nin anlattığı, yalnızca söyleyenin sorumlu olduğudur değil.\\n\\nDinlemek, o afeti ikinci kez işlemek olabilir.\"}",
+          "options": [
+            {
+              "text": "Dinleyenin sorumlu olmadığı",
+              "correct": false
+            },
+            {
+              "text": "Durdurmayan dinleyicinin de o söze ortak olduğu",
+              "correct": true
+            },
+            {
+              "text": "Susmanın gıybeti sildiği",
+              "correct": false
+            },
+            {
+              "text": "Meclisin hiç duymadığı",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Söz taşımak",
+      "order": 5,
+      "challenges": [
+        {
+          "question": "Gazali söz taşımayı neden ayrı bir afet sayar?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "dil-belasi,soz-tasimak",
+          "explanation": "Söz taşımak, arasını açmak için haber götürmektir.",
+          "metadata": "{\"reading\":\"Gazali, laf taşımada bir kişinin sözünün, bozmak için başkasına götürüldüğünü anlatır. Gıybet arkadan anar. Söz taşımak ise iki tarafın arasını açar. Kitapta bahsedilen, her haberin taşınmasının aynı olduğu değildir.\\n\\nAmaç, bir kardeşliği bozmaksa o haber afettir.\"}",
+          "options": [
+            {
+              "text": "Her haberin yararlı olduğu",
+              "correct": false
+            },
+            {
+              "text": "İki tarafın arasını açmak için söz götürüldüğü",
+              "correct": true
+            },
+            {
+              "text": "Susmanın söz taşımak olduğu",
+              "correct": false
+            },
+            {
+              "text": "Yalnızca mektupla olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitapta iki dillilik neye benzer?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "dil-belasi,soz-tasimak",
+          "explanation": "İki yüzde iki türlü konuşmak güveni yer.",
+          "metadata": "{\"reading\":\"Gazali, bir yüzde bir, öbür yüzde başka konuşmayı dilin afetlerinden sayar. İnsan her mecliste kendini sevdirir, arada kalan gerçeği ise ikiye böler. Kitapta bahsedilen, herkese aynı sertlikte konuşma zorunluluğu değildir.\\n\\nİki dil, güveni iki taraftan da yer.\"}",
+          "options": [
+            {
+              "text": "Herkese aynı sözün farz olduğu",
+              "correct": false
+            },
+            {
+              "text": "Her yüzde başka konuşmanın güveni yediği",
+              "correct": true
+            },
+            {
+              "text": "İki dilin edep sayıldığı",
+              "correct": false
+            },
+            {
+              "text": "Susmanın iki dillilik olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Gazali bu afetlere karşı dilde ne bırakır?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "dil-belasi,soz-tasimak",
+          "explanation": "Söz ya hayır taşır ya da tutulur.",
+          "metadata": "{\"reading\":\"Kitapta dilin yirmi afeti sayılır. Hepsi bir ders olmaz. Ortak çizgi şudur: söz, ya hayır taşır ya da tutulur. Gıybet, yalan ve taşınan laf bu çizginin dışındadır.\\n\\nGazali öğrenciden uzun bir liste ezberlemesini değil, söylemeden önce o çizgiye bakmasını ister.\"}",
+          "options": [
+            {
+              "text": "Yirmi afetin ezberlenmesi",
+              "correct": false
+            },
+            {
+              "text": "Sözün hayır taşıması ya da tutulması",
+              "correct": true
+            },
+            {
+              "text": "Her haberin iletilmesi",
+              "correct": false
+            },
+            {
+              "text": "Dilin hiç açılmaması",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

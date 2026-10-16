@@ -1,0 +1,436 @@
+{
+  "course": {
+    "title": "Başarı ve çevre",
+    "imageSrc": "/courses/genel-kultur.svg",
+    "section": "dusunce"
+  },
+  "units": [
+    {
+      "title": "Çizginin Dışındakiler",
+      "description": "Malcolm Gladwell’in Çizginin Dışındakiler kitabında işlenen başarı fikirleri. Her ders üç okuma ve bu okumadan cevaplanan bir sorudan oluşur.",
+      "order": 1,
+      "lessons": [
+        {
+          "title": "On bin saat",
+          "order": 1,
+          "challenges": [
+            {
+              "question": "Kitaba göre ustalık nerede birikir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": "cizginin-disindakiler,sure",
+              "explanation": "Kitap ustalığı, aynı işin yıllarca tekrarında görür.",
+              "metadata": "{\"reading\":\"Çizginin Dışındakiler, ustalığı bir gecede parlayan bir yetenek olarak anlatmaz. Aynı işin yıllarca, kesintisiz tekrarlanmasıdır asıl birikim. Kitapta on bin saat, sihirli bir sayıdan çok, erken yaşta başlayan uzun bir emeğin kısaltması olarak durur.\\n\\nKısa bir heves bu süreyi doldurmaz. Saat, ancak aynı işe dönüldükçe işe yarar. Kitap, parlak görünen insanların gerisinde bu uzun tekrarın bulunduğunu söyler.\"}",
+              "options": [
+                {
+                  "text": "Doğuştan gelen bir ışıltıda",
+                  "correct": false
+                },
+                {
+                  "text": "Aynı işin yıllarca tekrarında",
+                  "correct": true
+                },
+                {
+                  "text": "Tek bir şanslı günde",
+                  "correct": false
+                },
+                {
+                  "text": "Başkalarının alkışında",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Kitaba göre on bin saat neden tek başına sihirli bir sayı değildir?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": "cizginin-disindakiler,sure",
+              "explanation": "Erken ve kesintisiz tekrar, sayının kendisinden daha belirleyicidir.",
+              "metadata": "{\"reading\":\"Kitap, saatin kendisini bir tılsım gibi koymaz. Önemli olan o sürenin erken başlaması ve aynı işte kalmasıdır. Geç başlayan, dağınık tekrar, sayıyı tutturmuş gibi görünse de aynı birikimi vermez.\\n\\nBu yüzden kitap, başarıyı yalnızca toplam saate bakarak açıklamaz. Saatin hangi yaşta ve ne kadar kesintisiz dolduğu da anlatının parçasıdır.\"}",
+              "options": [
+                {
+                  "text": "Sayı tutturulunca iş bittiği için",
+                  "correct": false
+                },
+                {
+                  "text": "Sürecin erken ve kesintisiz olması gerektiği için",
+                  "correct": true
+                },
+                {
+                  "text": "Saat saymak yasak olduğu için",
+                  "correct": false
+                },
+                {
+                  "text": "Yalnızca akşam saatleri sayıldığı için",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Kitaba göre parlak görünen insanın gerisinde ne vardır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": "cizginin-disindakiler,sure",
+              "explanation": "Parlak sonucun gerisinde uzun tekrar vardır.",
+              "metadata": "{\"reading\":\"Kitap, dışarıdan bir anda yükselmiş gibi duran insanların gerisine bakar. Orada gizli bir mucize değil, aynı işe ayrılmış uzun bir zaman bulunur. Seyirci sonucu görür. Kitap ise o sonuca varan tekrarı gösterir.\\n\\nBu bakış, yeteneği inkâr etmez. Yeteneğin, tekrar olmadan görünür bir ustalığa dönmediğini söyler.\"}",
+              "options": [
+                {
+                  "text": "Gizli bir mucize",
+                  "correct": false
+                },
+                {
+                  "text": "Uzun ve aynı işe ayrılmış zaman",
+                  "correct": true
+                },
+                {
+                  "text": "Yalnızca şanslı bir soyadı",
+                  "correct": false
+                },
+                {
+                  "text": "Tek bir sınav gecesi",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Doğum ayı",
+          "order": 2,
+          "challenges": [
+            {
+              "question": "Kitaba göre aynı yıl doğan çocuklar neden eşit başlamaz?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": "cizginin-disindakiler,takvim",
+              "explanation": "Kesim tarihi, aynı yıl içinde bir kısmını daha hazır gösterir.",
+              "metadata": "{\"reading\":\"Kitap, aynı yıl doğan çocukların takvim karşısında eşit durmadığını anlatır. Yaş grubu bir tarihte kesilince, o kesime yakın doğan çocuk arkadaşlarından aylarca büyüktür. Bu fark ilk bakışta küçüktür. Seçilince ise antrenman ve ilgi de ona gider.\\n\\nKitap, avantajın karakterden önce takvimden gelebileceğini söyler.\"}",
+              "options": [
+                {
+                  "text": "Hepsi aynı gün okula başladığı için",
+                  "correct": false
+                },
+                {
+                  "text": "Kesim tarihine yakın doğan daha büyük göründüğü için",
+                  "correct": true
+                },
+                {
+                  "text": "Küçük olan her zaman seçildiği için",
+                  "correct": false
+                },
+                {
+                  "text": "Ayın hiçbir önemi olmadığı için",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Kitaba göre küçük yaş farkı sonradan nasıl büyür?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": "cizginin-disindakiler,takvim",
+              "explanation": "Seçilmek daha çok pratik getirir, fark büyür.",
+              "metadata": "{\"reading\":\"Kitapta ilk seçilme, ikinci fırsatı da getirir. Biraz daha büyük görünen çocuk takıma alınır. Takım daha çok idman demektir. İdman da bir sonraki seçimde yine onu öne çıkarır. Başlangıçtaki birkaç ay, yıllar sonra yetenek gibi görünür.\\n\\nKitap bu döngüye, farkın kendiliğinden kapandığı bir şey olarak bakmaz.\"}",
+              "options": [
+                {
+                  "text": "Fark kendiliğinden kapandığı için büyümez",
+                  "correct": false
+                },
+                {
+                  "text": "Seçilmek daha çok idman ve ilgi getirdiği için",
+                  "correct": true
+                },
+                {
+                  "text": "Küçük olanlar idmandan men edildiği için",
+                  "correct": false
+                },
+                {
+                  "text": "Takvim yalnızca bir yıl geçerli olduğu için",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Kitaba göre yıllar sonra yetenek sandığımız şey ne olabilir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": "cizginin-disindakiler,takvim",
+              "explanation": "Görünen yetenek, erken seçilmenin biriktirdiği pratik olabilir.",
+              "metadata": "{\"reading\":\"Kitap, sonradan yetenek diye okunan bazı farkların izini takvime kadar sürer. Erken doğmuş olmak, erken seçilmek ve daha çok çalışmak birbirine eklenir. Dışarıdan bakınca yalnızca üstün bir çocuk görülür.\\n\\nKitabın uyarısı, görünen sonucu doğuştan bir üstünlük sanmamaktır.\"}",
+              "options": [
+                {
+                  "text": "Her zaman doğuştan bir üstünlük",
+                  "correct": false
+                },
+                {
+                  "text": "Erken seçilmenin biriktirdiği pratik",
+                  "correct": true
+                },
+                {
+                  "text": "Yalnızca son sınavın puanı",
+                  "correct": false
+                },
+                {
+                  "text": "Arkadaşların kıskançlığı",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Fırsatın yılı",
+          "order": 3,
+          "challenges": [
+            {
+              "question": "Kitaba göre bazı insanların şansı neye denk gelir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": "cizginin-disindakiler,firsat",
+              "explanation": "Şans, doğulan yılın açık bir kapıya denk gelmesidir.",
+              "metadata": "{\"reading\":\"Kitap, bazı yükselişleri kişisel bir sihirle açıklamaz. Doğulan yıl, o sırada açılan bir kapıya denk gelmiş olabilir. Bilgisayar ucuzlarken genç olan, o kapının önündedir. Aynı zekâ, kapı kapandıktan on yıl sonra aynı yolu bulamaz.\\n\\nKitap, hazır olmayı küçümsemez. Hazırlığın, kapının açık olduğu zamana denk gelmesi gerektiğini söyler.\"}",
+              "options": [
+                {
+                  "text": "Her yıl aynı kapının açık olmasına",
+                  "correct": false
+                },
+                {
+                  "text": "Doğulan yılın açık bir kapıya denk gelmesine",
+                  "correct": true
+                },
+                {
+                  "text": "Kapıların hiç kapanmamasına",
+                  "correct": false
+                },
+                {
+                  "text": "Yalnızca soyadının uzunluğuna",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Kitaba göre aynı zekâ neden her zaman aynı yolu bulamaz?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": "cizginin-disindakiler,firsat",
+              "explanation": "Kapı herkese aynı anda açılmaz.",
+              "metadata": "{\"reading\":\"Kitapta yol, yalnızca zekânın ürünü değildir. Yolun açık olduğu yıllar vardır. O yıllarda hazır olan girer. Aynı yetenek, kapı kapandıktan sonra başka bir işin içine doğar ve o işi de doldurur. Fark, insanın değerinden çok zamanlamasındadır.\\n\\nBu anlatı, geç kalanı suçlamaz. Kapının herkese aynı anda açılmadığını gösterir.\"}",
+              "options": [
+                {
+                  "text": "Zekâ yıllar içinde silindiği için",
+                  "correct": false
+                },
+                {
+                  "text": "Kapı herkese aynı anda açılmadığı için",
+                  "correct": true
+                },
+                {
+                  "text": "Geç doğanlar okula alınmadığı için",
+                  "correct": false
+                },
+                {
+                  "text": "Zekâ yalnızca bir yıl sürdüğü için",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Kitabın hazır olmakla ilgili söylediği nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": "cizginin-disindakiler,firsat",
+              "explanation": "Fırsat, hazırlığın açık kapıyla karşılaşmasıdır.",
+              "metadata": "{\"reading\":\"Kitap, kapının önünde boş durmayı övmez. Kapı açıldığında içeri girecek birikim gerekir. Birikim de kendiliğinden o yıl bitmez. Yıllar süren bir hazırlık, tam o açıklığa denk gelince görünür olur.\\n\\nBu yüzden kitap, fırsatı şans kelimesine hapsetmez. Şans, hazırlığın zamanla karşılaşmasıdır.\"}",
+              "options": [
+                {
+                  "text": "Hazırlık gereksizdir",
+                  "correct": false
+                },
+                {
+                  "text": "Fırsat, hazırlığın açık kapıyla karşılaşmasıdır",
+                  "correct": true
+                },
+                {
+                  "text": "Kapı açılınca hazırlık silinir",
+                  "correct": false
+                },
+                {
+                  "text": "Yalnızca beklemek yeter",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Kültürün izi",
+          "order": 4,
+          "challenges": [
+            {
+              "question": "Kitaba göre zor anda davranış yalnızca neye bağlı değildir?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": "cizginin-disindakiler,kultur",
+              "explanation": "Zor an, büyünülen kültürün alışkanlığını da taşır.",
+              "metadata": "{\"reading\":\"Kitap, insanın zor anda nasıl davrandığını yalnızca o anki kişiliğine bağlamaz. Büyüdüğü kültürün alışkanlıkları da o anda devrededir. Bir yerde büyüğe itiraz etmek ayıp sayılıyorsa, tehlike görüldüğünde ses çıkarmak da zorlaşır.\\n\\nKitap bunu bir özür olarak değil, görünmeyen bir miras olarak anlatır.\"}",
+              "options": [
+                {
+                  "text": "Yalnızca o anki cesarete",
+                  "correct": false
+                },
+                {
+                  "text": "Büyüdüğü kültürün alışkanlıklarına da",
+                  "correct": true
+                },
+                {
+                  "text": "Yalnızca o günkü havaya",
+                  "correct": false
+                },
+                {
+                  "text": "Yalnızca mesleğin adına",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Kitaba göre otoriteye itirazın zor olduğu yerde ne zorlaşır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": "cizginin-disindakiler,kultur",
+              "explanation": "İtiraz alışkanlığı yoksa tehlike anında ses çıkarmak zorlaşır.",
+              "metadata": "{\"reading\":\"Kitap, hiyerarşinin yalnızca nezaket kuralı olarak kalmadığını söyler. Üstteki yanıldığında ses çıkarmamak öğretilmişse, bu alışkanlık tehlike anında da suskunluk üretir. İnsan korkak olduğu için değil, itiraz etmenin yolunu öğrenmediği için susar.\\n\\nKitabın örneği, sonucun kişilik etiketiyle kapanmaması gerektiğidir.\"}",
+              "options": [
+                {
+                  "text": "Daha çok konuşmak",
+                  "correct": false
+                },
+                {
+                  "text": "Tehlike görülünce ses çıkarmak",
+                  "correct": true
+                },
+                {
+                  "text": "Üstü övmek",
+                  "correct": false
+                },
+                {
+                  "text": "İşi bırakmak",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Kitap bu mirası nasıl adlandırır?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": "cizginin-disindakiler,kultur",
+              "explanation": "Kültürün izi, fark edilmeden çalışan bir mirastır.",
+              "metadata": "{\"reading\":\"Kitap, kültürün izini bir suç ya da bir övgü diye koymaz. İnsan o izle büyümüştür. İz, karar anında fark edilmeden çalışır. Bunu görmek, kişiyi küçültmez. Davranışın bir kısmının nereden geldiğini gösterir.\\n\\nKitaba göre değiştirilebilecek olan da önce görülen bu izdir.\"}",
+              "options": [
+                {
+                  "text": "Kişiyi küçülten bir suç olarak",
+                  "correct": false
+                },
+                {
+                  "text": "Fark edilmeden çalışan görünmeyen bir miras olarak",
+                  "correct": true
+                },
+                {
+                  "text": "Yalnızca bir övgü olarak",
+                  "correct": false
+                },
+                {
+                  "text": "Unutulması gereken bir hata olarak",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Zekâ yetmez",
+          "order": 5,
+          "challenges": [
+            {
+              "question": "Kitaba göre yüksek zekâ insanı nereye kadar taşır?",
+              "type": "SELECT",
+              "difficulty": "EASY",
+              "tags": "cizginin-disindakiler,zeka",
+              "explanation": "Zekâ bir yere kadar taşır. Sonrası fırsat ve çalışmadır.",
+              "metadata": "{\"reading\":\"Kitap, zekâyı yok saymaz. Yüksek zekâ bir yere kadar kapı açar. O kapıdan sonra fırsat, destek ve sürdürülen çalışma belirleyici olur. Zekâ tek başına, açılmayan bir kapının önünde beklemek demektir.\\n\\nKitabın cümlesi, parlak zihnin çevresiz kalabileceğidir.\"}",
+              "options": [
+                {
+                  "text": "Her kapıyı kendiliğinden açar",
+                  "correct": false
+                },
+                {
+                  "text": "Bir yere kadar taşır, sonrası çevreye kalır",
+                  "correct": true
+                },
+                {
+                  "text": "Hiçbir işe yaramaz",
+                  "correct": false
+                },
+                {
+                  "text": "Yalnızca sınavda işe yarar",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Kitaba göre aynı zekâdaki iki insan neden ayrılır?",
+              "type": "SELECT",
+              "difficulty": "MEDIUM",
+              "tags": "cizginin-disindakiler,zeka",
+              "explanation": "Ayrım, zekânın kullanıldığı fırsattadır.",
+              "metadata": "{\"reading\":\"Kitap, benzer ölçüdeki zihinlerin farklı yerlere vardığını anlatır. Biri desteklenmiş, denenmiş ve işin içine alınmıştır. Diğeri aynı ölçüyle kapının dışında kalmıştır. Ayrım, testin sonucundan çok o sonucun kullanıldığı yerdedir.\\n\\nBu yüzden kitap, başarı listesini bir zekâ listesi olarak okumaz.\"}",
+              "options": [
+                {
+                  "text": "Test her şeyi açıkladığı için ayrılmazlar",
+                  "correct": false
+                },
+                {
+                  "text": "Biri işin içine alınmış, diğeri dışarıda kaldığı için",
+                  "correct": true
+                },
+                {
+                  "text": "Zekâ yıllar içinde eşitlendiği için",
+                  "correct": false
+                },
+                {
+                  "text": "İkisi de aynı kapıdan geçtiği için",
+                  "correct": false
+                }
+              ]
+            },
+            {
+              "question": "Kitabın başarı listesi hakkında söylediği nedir?",
+              "type": "SELECT",
+              "difficulty": "HARD",
+              "tags": "cizginin-disindakiler,zeka",
+              "explanation": "Başarı listesi, çevreyi gizlememelidir.",
+              "metadata": "{\"reading\":\"Kitap, yukarıdaki isimlere bakıp yalnızca doğuştan bir üstünlük okumayı eksik bulur. O isimlerin yanında yıl, takvim, kültür ve uzun tekrar vardır. Liste, bu çevreyi gizlediğinde adaletsiz bir hikâye anlatır.\\n\\nKitaba göre dürüst okuma, ismin yanına o çevreyi de yazmaktır.\"}",
+              "options": [
+                {
+                  "text": "Listenin yalnızca zekâyı gösterdiği",
+                  "correct": false
+                },
+                {
+                  "text": "İsmin yanına yıl, tekrar ve çevrenin de yazılması gerektiği",
+                  "correct": true
+                },
+                {
+                  "text": "Listenin hiç okunmaması gerektiği",
+                  "correct": false
+                },
+                {
+                  "text": "Çevrenin ismi sildiği",
+                  "correct": false
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

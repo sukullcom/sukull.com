@@ -114,6 +114,8 @@ export const courses = pgTable("courses", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
   imageSrc: text("image_src").notNull(),
+  /** Herkese açık raf. Şu an tek değer: kitaplar. Boşsa başlıktan tahmin edilir. */
+  section: text("section"),
 });
 
 export const coursesRelations = relations(courses, ({ many }) => ({

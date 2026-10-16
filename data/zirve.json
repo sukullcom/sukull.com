@@ -1,0 +1,427 @@
+{
+  "title": "Zirve",
+  "description": "Anders Ericsson ve Robert Pool’un Zirve kitabında işlenen uzmanlık fikirleri. Her ders üç okuma ve bu okumadan cevaplanan bir sorudan oluşur.",
+  "order": 6,
+  "lessons": [
+    {
+      "title": "Bilinçli pratik",
+      "order": 1,
+      "challenges": [
+        {
+          "question": "Kitap sıradan tekrarı uzmanlıktan nasıl ayırır?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "zirve,pratik",
+          "explanation": "Bilinçli pratik, zayıf noktayı zorlayıp düzeltir.",
+          "metadata": "{\"reading\":\"Zirve, aynı işi yıllarca yapmanın kendiliğinden ustalık vermediğini anlatır. Bilinçli pratik, belirli bir zayıf noktaya yönelir, zorlar ve hemen düzeltilir. Kitapta bahsedilen, sürenin hiç önemi olmadığı değildir.\\n\\nSüre, ancak o süre zorlayıcı ve düzeltiliyorsa birikir.\"}",
+          "options": [
+            {
+              "text": "Her tekrarın aynı olduğu",
+              "correct": false
+            },
+            {
+              "text": "Zayıf noktaya yönelip düzeltilen tekrar",
+              "correct": true
+            },
+            {
+              "text": "Yalnızca seyretmenin yettiği",
+              "correct": false
+            },
+            {
+              "text": "Rahat tempoda uzun süre",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitaba göre rahat tekrar ne yapmaz?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "zirve,pratik",
+          "explanation": "Rahat tekrar, kişiyi tanıdık yerde tutar.",
+          "metadata": "{\"reading\":\"Kitap, insanın iyi olduğu yeri tekrar tekrar oynamasının ustayı yerinde tuttuğunu, ileri götürmediğini söyler. Rahat bölge tanıdıktır. Hata azdır. Gelişme de azdır. Kitapta bahsedilen, ısınmanın yasak olduğudur değil.\\n\\nIsınma biter, asıl çalışma hata çıkan yerde başlar.\"}",
+          "options": [
+            {
+              "text": "İnsanı ileri götürdüğü",
+              "correct": false
+            },
+            {
+              "text": "Tanıdık yerde kişiyi tuttuğu",
+              "correct": true
+            },
+            {
+              "text": "Hata ürettiği",
+              "correct": false
+            },
+            {
+              "text": "Geri bildirim verdiği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitap bilinçli pratiği neyle karıştırmaz?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "zirve,pratik",
+          "explanation": "Yorgunluk, hedefin doğru olduğunu göstermez.",
+          "metadata": "{\"reading\":\"Zirve, çok çalışmayı bilinçli pratik sanmamayı öğütler. Yorgunluk, hedefin doğru seçildiğini göstermez. Hedef, yapılamayan küçük bir parçadır. Kitapta bahsedilen, emeğin küçümsenmesi değildir.\\n\\nEmek, yanlış yere dökülünce saat dolar, ustalık dolmaz.\"}",
+          "options": [
+            {
+              "text": "Küçük bir zayıf parçayla",
+              "correct": false
+            },
+            {
+              "text": "Yalnızca yorgunlukla",
+              "correct": true
+            },
+            {
+              "text": "Seyretmekle",
+              "correct": false
+            },
+            {
+              "text": "Alkışla",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "On bin saat",
+      "order": 2,
+      "challenges": [
+        {
+          "question": "Kitap on bin saat fikrini nasıl görür?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "zirve,saat",
+          "explanation": "Süre gerekir. Aynı sayı her işin eşiği değildir.",
+          "metadata": "{\"reading\":\"Zirve, uzun emeğin gerekli olduğunu kabul eder. Aynı sayının her iş için sihirli bir eşik olduğunu kabul etmez. Kimi alan daha uzun, kimi daha kısa bir birikim ister. Kitapta bahsedilen, saatin hiç sayılmaması değildir.\\n\\nSayı, o saatin nasıl doldurulduğundan ayrı okunamaz.\"}",
+          "options": [
+            {
+              "text": "Her iş için sihirli bir eşik",
+              "correct": false
+            },
+            {
+              "text": "Süreyi gerekli, sayıyı işe göre değişen bir ölçü",
+              "correct": true
+            },
+            {
+              "text": "Saatin yasak olduğu bir kural",
+              "correct": false
+            },
+            {
+              "text": "Yalnızca bir günün hesabı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitaba göre saat neden tek başına yetmez?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "zirve,saat",
+          "explanation": "Saatin nasıl dolduğu, toplamdan daha belirleyicidir.",
+          "metadata": "{\"reading\":\"Kitap, doldurulan saatin rahat tekrarla da birikebileceğini söyler. O saatler uzun görünür, ustalık getirmez. Bilinçli pratikte ise saat daha az olsa da her dilim bir zayıf noktaya gider.\\n\\nÇizginin Dışındakiler’in sadeleştirdiği sayıyı Zirve yeniden niteler.\"}",
+          "options": [
+            {
+              "text": "Rahat saatin de aynı ustalığı verdiği",
+              "correct": false
+            },
+            {
+              "text": "Saatin nasıl dolduğunun belirleyici olduğu",
+              "correct": true
+            },
+            {
+              "text": "Kısa çalışmanın yasak olduğu",
+              "correct": false
+            },
+            {
+              "text": "Sayının hiç anılmadığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitap erken başlayan uzun emeği nereye koyar?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "zirve,saat",
+          "explanation": "Erken başlamak, bilinçli pratiğe daha uzun süre açar.",
+          "metadata": "{\"reading\":\"Zirve, erken yaşta başlayan çalışmayı yok saymaz. Erken başlamak, bilinçli pratiğe daha çok yıl açar. Yıl, otomatik ustalık değildir. Kitapta bahsedilen, geç başlayanın hiç yetişemeyeceğidir değil.\\n\\nGeç başlayan da zayıf noktaya çalışırsa yol alır. Erken başlayan, o yolu daha uzun yürümüş olur.\"}",
+          "options": [
+            {
+              "text": "Otomatik ustalık saydığı",
+              "correct": false
+            },
+            {
+              "text": "Bilinçli pratiğe daha uzun bir süre açtığı",
+              "correct": true
+            },
+            {
+              "text": "Geç başlayanı sildiği",
+              "correct": false
+            },
+            {
+              "text": "Saati tamamen reddettiği",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Zayıf nokta",
+      "order": 3,
+      "challenges": [
+        {
+          "question": "Kitap çalışmanın hedefini nereye koyar?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "zirve,zayif",
+          "explanation": "Hedef, takılınan parçadır.",
+          "metadata": "{\"reading\":\"Zirve, çalışmanın iyi gidene değil, takılana yönelmesini ister. İyi giden parça gösteri olur. Takılan parça ders olur. Kitapta bahsedilen, güçlü yanın unutulması değildir.\\n\\nUstalık, yapılamayanın küçültülmesiyle ilerler.\"}",
+          "options": [
+            {
+              "text": "En iyi parçanın tekrarında",
+              "correct": false
+            },
+            {
+              "text": "Takılınan parçanın üstünde",
+              "correct": true
+            },
+            {
+              "text": "Seyircinin istediği yerde",
+              "correct": false
+            },
+            {
+              "text": "En kolay egzersizde",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitaba göre hata ne işe yarar?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "zirve,zayif",
+          "explanation": "Hata, sonraki çalışmanın adresidir.",
+          "metadata": "{\"reading\":\"Kitap, hatayı utanç diye koymaz. Hata, zayıf noktanın adresidir. Adres gizlenirse çalışma rahat bölgede kalır. Kitapta bahsedilen, her hatanın aynı değerde olduğudur değil.\\n\\nİşlenen hata, bir sonraki dilimin hedefi olur.\"}",
+          "options": [
+            {
+              "text": "Gizlenmesi gerektiği",
+              "correct": false
+            },
+            {
+              "text": "Bir sonraki çalışmanın adresi olduğu",
+              "correct": true
+            },
+            {
+              "text": "Çalışmayı bitirdiği",
+              "correct": false
+            },
+            {
+              "text": "Yeteneğin olmadığını kanıtladığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitap küçük hedefi neden büyüğe tercih eder?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "zirve,zayif",
+          "explanation": "Düzelen küçük parça, sırayı sonrakine bırakır.",
+          "metadata": "{\"reading\":\"Zirve, bütün ustalığı bir günde istemeyi dağınık bulur. Küçük bir parça düzelince o parça artık zayıf değildir. Sıra sonrakine gelir. Kitapta bahsedilen, büyük hedefin yasak olduğudur değil.\\n\\nBüyük hedef, küçük parçalara bölünmeden çalışılmaz.\"}",
+          "options": [
+            {
+              "text": "Büyük hedef yasak olduğu için",
+              "correct": false
+            },
+            {
+              "text": "Düzelen parça sırayı sonrakine bıraktığı için",
+              "correct": true
+            },
+            {
+              "text": "Küçük hedefin görünmediği için",
+              "correct": false
+            },
+            {
+              "text": "Hata çıkmasın diye",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Geri bildirim",
+      "order": 4,
+      "challenges": [
+        {
+          "question": "Kitap yalnız çalışmayı neden eksik bulur?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "zirve,geri-bildirim",
+          "explanation": "Geri bildirim, kişinin görmediği hatayı gösterir.",
+          "metadata": "{\"reading\":\"Zirve, kişinin kendi hatasını her zaman göremediğini anlatır. Geri bildirim, o kör noktayı dışarıdan gösterir. Kitapta bahsedilen, öğretmenin sihirli olduğu değildir.\\n\\nGören bir göz yoksa tekrar, aynı hatayı pekiştirir.\"}",
+          "options": [
+            {
+              "text": "Hatayı kendiliğinden sildiği için",
+              "correct": false
+            },
+            {
+              "text": "Kör noktayı gösterdiği için",
+              "correct": true
+            },
+            {
+              "text": "Süreyi kısalttığı için",
+              "correct": false
+            },
+            {
+              "text": "Rahat bölgeyi övdüğü için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitaba göre geç gelen düzeltme ne yapar?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "zirve,geri-bildirim",
+          "explanation": "Geç düzeltme, hatayla sonraki hareketin bağını kaçırır.",
+          "metadata": "{\"reading\":\"Kitap, hatanın üstünden günler geçince düzeltmenin zayıfladığını söyler. Çalışma biterken görülen hata, bir sonraki harekete hemen bağlanır. Geç gelen söz, o bağı kaçırır.\\n\\nHemen düzeltmek, bilinçli pratiğin parçasıdır.\"}",
+          "options": [
+            {
+              "text": "Bağı güçlendirdiği",
+              "correct": false
+            },
+            {
+              "text": "Hatanın bir sonraki harekete bağlanmasını kaçırdığı",
+              "correct": true
+            },
+            {
+              "text": "Öğrenmeyi hızlandırdığı",
+              "correct": false
+            },
+            {
+              "text": "Zayıf noktayı sildiği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitap geri bildirimi övgüden nasıl ayırır?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "zirve,geri-bildirim",
+          "explanation": "İşine yarayan geri bildirim, yanlışın adresini verir.",
+          "metadata": "{\"reading\":\"Zirve, alkışı bir duygu, düzeltmeyi bir adres sayar. Alkış çalışmayı tatlılaştırabilir. Adres vermezse bir sonraki dilim yine rastgele seçilir. Kitapta bahsedilen, övgünün yasak olduğudur değil.\\n\\nİşine yarayan söz, neyin yanlış olduğunu söyleyen sözdür.\"}",
+          "options": [
+            {
+              "text": "Yalnızca alkış",
+              "correct": false
+            },
+            {
+              "text": "Neyin yanlış olduğunu söyleyen söz",
+              "correct": true
+            },
+            {
+              "text": "Seyircinin sayısı",
+              "correct": false
+            },
+            {
+              "text": "Süreyi öven cümle",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Konforun dışı",
+      "order": 5,
+      "challenges": [
+        {
+          "question": "Kitap gelişmenin nerede durduğunu söyler?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "zirve,konfor",
+          "explanation": "Gelişme, yapılamayan parçanın zorlandığı yerde başlar.",
+          "metadata": "{\"reading\":\"Zirve, gelişmenin konforun bittiği yerde başladığını anlatır. Orada hareket bozulur, tempo düşer, hata artar. Kitapta bahsedilen, acının amaç olduğu değildir.\\n\\nZorlama, yapılamayan parçayı yapılabilir kılmak içindir.\"}",
+          "options": [
+            {
+              "text": "Rahat tempoda",
+              "correct": false
+            },
+            {
+              "text": "Yapılamayan parçanın zorlandığı yerde",
+              "correct": true
+            },
+            {
+              "text": "Alkışın en yüksek olduğu anda",
+              "correct": false
+            },
+            {
+              "text": "Hiç hata çıkmayan turda",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitaba göre sürekli rahat çalışmak ne üretir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "zirve,konfor",
+          "explanation": "Rahat yıllar, aynı yerde biriken deneyim olabilir.",
+          "metadata": "{\"reading\":\"Kitap, rahat bölgede geçen yılların insanı işinde tuttuğunu, zirveye taşımadığını söyler. O yıllar deneyim diye adlandırılır. Deneyim, aynı hatanın uzun hafızası da olabilir.\\n\\nUzun deneyim, bilinçli pratik değilse aynı yerde birikir.\"}",
+          "options": [
+            {
+              "text": "Kendiliğinden zirve",
+              "correct": false
+            },
+            {
+              "text": "Aynı yerde biriken bir deneyim",
+              "correct": true
+            },
+            {
+              "text": "Her yıl yeni bir ustalık",
+              "correct": false
+            },
+            {
+              "text": "Hatasız bir yükselme",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitabın son ayrımı nedir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "zirve,konfor",
+          "explanation": "Tavan, düzeltilen zorlamayla yükselir.",
+          "metadata": "{\"reading\":\"Zirve, yeteneği inkâr etmez. Yetenek, başlangıçta bir kolaylık verebilir. Kolaylık, zayıf noktaya çalışmanın yerini tutmaz. Kitapta bahsedilen, herkesin aynı tavana vardığıdır değil.\\n\\nTavan, saatin sihriyle değil, düzeltilen zorlamayla yükselir.\"}",
+          "options": [
+            {
+              "text": "Kolaylığın çalışmanın yerini tuttuğu",
+              "correct": false
+            },
+            {
+              "text": "Düzeltilen zorlamanın tavanı yükselttiği",
+              "correct": true
+            },
+            {
+              "text": "Yeteneğin yasak olduğu",
+              "correct": false
+            },
+            {
+              "text": "Rahat bölgenin yeter olduğu",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

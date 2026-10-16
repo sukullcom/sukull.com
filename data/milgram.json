@@ -1,0 +1,427 @@
+{
+  "title": "Milgram deneyi",
+  "description": "Stanley Milgram’ın Otoriteye İtaat çalışmasında sorduğu soru. Her ders üç okuma ve bu okumadan cevaplanan bir sorudan oluşur.",
+  "order": 1,
+  "lessons": [
+    {
+      "title": "Eichmann’ın sorusu",
+      "order": 1,
+      "challenges": [
+        {
+          "question": "Milgram deneyi hangi sorudan doğar?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "milgram,soru",
+          "explanation": "Soru, emir altındaki sıradan insanın sınırıdır.",
+          "metadata": "{\"reading\":\"Milgram, savaş suçlusu Eichmann’ın ‘emir aldım’ demesini ciddiye alır. Sıradan bir insan, otorite isteyince başkasına zarar verecek bir noktaya gider mi? Kitapta bahsedilen, bunun yalnızca canilerin sorusu olduğudur değil.\\n\\nDeney, kötülüğü bir karakter damgası sanmadan önce durumu ölçmek ister.\"}",
+          "options": [
+            {
+              "text": "Bir zekâ yarışından",
+              "correct": false
+            },
+            {
+              "text": "Emir alan sıradan insanın nereye kadar gideceğinden",
+              "correct": true
+            },
+            {
+              "text": "Bir hafıza şampiyonasından",
+              "correct": false
+            },
+            {
+              "text": "Bir arkadaşlık testinden",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Deney neden ‘caniler yapar’ cevabıyla yetinmez?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "milgram,soru",
+          "explanation": "Karakter damgası, emri ve uyan insanı gizler.",
+          "metadata": "{\"reading\":\"Milgram, zulmü yalnızca hasta ruhlara bağlamanın kolay bir kapanış olduğunu düşünür. O kapanış, emri veren düzeni ve uyan insanı görünmez kılar. Çalışmada bahsedilen, herkesin aynı şeyi yapacağının peşin hükmü değildir.\\n\\nSoru açıktır: kaç kişi durur, kaç kişi devam eder?\"}",
+          "options": [
+            {
+              "text": "Her kesin aynı olduğu peşin bilindiği için",
+              "correct": false
+            },
+            {
+              "text": "Düzeni ve uyan insanı görünmez kıldığı için",
+              "correct": true
+            },
+            {
+              "text": "Caninin olmadığı için",
+              "correct": false
+            },
+            {
+              "text": "Emrin önemsiz olduğu için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Çalışmanın ölçtüğü şey nedir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "milgram,soru",
+          "explanation": "Ölçülen, acıya rağmen emre devam edip etmemektir.",
+          "metadata": "{\"reading\":\"Milgram itaatı bir erdem cümlesiyle değil, bir sınırla ölçer. Kişi, karşısındakinin acı çektiğini duyduğu halde otoritenin ‘devam edin’ sözüne uyar mı? Çalışmada bahsedilen, itaatin her zaman kötü olduğudur değil.\\n\\nÖlçülen, itaatin zarar görene rağmen sürüp sürmediğidir.\"}",
+          "options": [
+            {
+              "text": "Kişinin nezaketi",
+              "correct": false
+            },
+            {
+              "text": "Zarar görene rağmen emre uyulup uyulmadığı",
+              "correct": true
+            },
+            {
+              "text": "Hafızanın gücü",
+              "correct": false
+            },
+            {
+              "text": "Laboratuvarın büyüklüğü",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Laboratuvar",
+      "order": 2,
+      "challenges": [
+        {
+          "question": "Katılımcı kendisini hangi rolde sanır?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "milgram,laboratuvar",
+          "explanation": "Katılımcı, kendini bir öğrenme çalışmasının öğretmeni sanır.",
+          "metadata": "{\"reading\":\"Çalışmada gelen kişi, öğrenme üzerine bir araştırmaya katıldığını sanır. Ona öğretmen rolü verilir. Yanlış cevapta karşıdaki kişiye, giderek yükselen bir ceza uygulanacaktır. Cezayı alan kişi aslında oyuncudur ve ceza gerçek değildir. Bunu öğretmen bilmez.\\n\\nDüzen, bilimsel bir oda ve beyaz önlükle ciddi görünür.\"}",
+          "options": [
+            {
+              "text": "Bir tiyatro yönetmeni",
+              "correct": false
+            },
+            {
+              "text": "Öğrenme araştırmasında öğretmen",
+              "correct": true
+            },
+            {
+              "text": "Bir doktor",
+              "correct": false
+            },
+            {
+              "text": "Bir yargıç",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Karşıdaki kişinin sesi neyi bozar?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "milgram,laboratuvar",
+          "explanation": "İtiraz ve çığlık, cezanın bir kişiye dokunduğunu hissettirir.",
+          "metadata": "{\"reading\":\"Öğretmen, cezayı arttırdıkça karşıdan itiraz, sonra çığlık, sonra sessizlik duyar. Çalışmada bahsedilen, odanın sessiz kaldığıdır değil. Ses, ‘bu yalnızca bir deney’ cümlesini zorlar.\\n\\nYine de birçok kişi, otorite devam edin deyince ele bakmadan ilerler.\"}",
+          "options": [
+            {
+              "text": "Deneyin bittiğini",
+              "correct": false
+            },
+            {
+              "text": "Cezanın birisine dokunduğunu hissettiren itirazı",
+              "correct": true
+            },
+            {
+              "text": "Öğretmenin kazanmasını",
+              "correct": false
+            },
+            {
+              "text": "Önlüğün düştüğünü",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Beyaz önlük bu düzende ne iş görür?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "milgram,laboratuvar",
+          "explanation": "Önlük, görevi meşru bir kurum işi gibi gösterir.",
+          "metadata": "{\"reading\":\"Milgram, otoriteyi bağıran bir komutan diye kurmaz. Sakin bir araştırmacı, bilimsel bir dille devam edin der. Çalışmada bahsedilen, önlüğün sihirli olduğu değildir. Kurumun ciddiyeti, sorumluluğu kişinin omzundan alır gibi durur.\\n\\nİtaat, korkunç bir üniformalıdan çok, meşru görünen bir görevden de doğar.\"}",
+          "options": [
+            {
+              "text": "Katılımcıyı güldürdüğü",
+              "correct": false
+            },
+            {
+              "text": "Görevi meşru ve kurumsal gösterdiği",
+              "correct": true
+            },
+            {
+              "text": "Cezayı durdurduğu",
+              "correct": false
+            },
+            {
+              "text": "Öğretmeni evine gönderdiği",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Son kol",
+      "order": 3,
+      "challenges": [
+        {
+          "question": "Temel düzende çoğu kişi nereye kadar gider?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "milgram,son-kol",
+          "explanation": "Büyük bölüm, en yüksek kola kadar gider.",
+          "metadata": "{\"reading\":\"Milgram’ın anlattığı temel düzende katılımcıların büyük bölümü, karşıdaki susup cevap vermez olduktan sonra da en yüksek kolu çevirir. Çalışmada bahsedilen, herkesin bunu gülerek yaptığı değildir. Birçoğu terler, itiraz eder, yine de devam eder.\\n\\nSonuç, ‘birkaç sapkın’ diye kapanmaz.\"}",
+          "options": [
+            {
+              "text": "İlk itirazda durur",
+              "correct": false
+            },
+            {
+              "text": "En yüksek kola kadar devam eder",
+              "correct": true
+            },
+            {
+              "text": "Deneyi baştan reddeder",
+              "correct": false
+            },
+            {
+              "text": "Rolü oyuncuya bırakır",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "İtiraz edip yine devam etmek neyi gösterir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "milgram,son-kol",
+          "explanation": "Rahatsız olmak, devam etmeyi kendiliğinden kesmez.",
+          "metadata": "{\"reading\":\"Çalışmada birçok öğretmen ‘bırakayım’ der, araştırmacı sakin sakin devam etmesini ister, öğretmen döner. Çalışmada bahsedilen, içlerinden razı olduklarıdır değil.\\n\\nRahatsızlık, itaati kendiliğinden kesmez. Kesiş, ancak davranışı durdurunca olur.\"}",
+          "options": [
+            {
+              "text": "İçlerinin rahat olduğu",
+              "correct": false
+            },
+            {
+              "text": "Rahatsızlığın davranışı kendiliğinden durdurmadığı",
+              "correct": true
+            },
+            {
+              "text": "Emrin işitilmediği",
+              "correct": false
+            },
+            {
+              "text": "Oyuncunun güldüğü",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Sonuç neden karakter listesine yazılmaz?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "milgram,son-kol",
+          "explanation": "Sıradan insanlar da son kola varır. Bu yüzden sonuç bir cani listesi değildir.",
+          "metadata": "{\"reading\":\"Milgram, gelenlerin cani olmak üzere seçilmediğini vurgular. Sıradan insanlar, meşru görünen bir emir altında son kola varır. Çalışmada bahsedilen, insanın hiç duramayacağıdır değil. Bir azınlık durur.\\n\\nAsıl sarsıntı, çoğunluğun durmamasıdır.\"}",
+          "options": [
+            {
+              "text": "Katılımcılar cani diye seçildiği için",
+              "correct": false
+            },
+            {
+              "text": "Sıradan insanların da son kola vardığı için",
+              "correct": true
+            },
+            {
+              "text": "Kimse devam etmediği için",
+              "correct": false
+            },
+            {
+              "text": "Deney bir anket olduğu için",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Sorumluluk",
+      "order": 4,
+      "challenges": [
+        {
+          "question": "Devam eden kişi sorumluluğu nereye bırakır?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "milgram,sorumluluk",
+          "explanation": "Devam eden, sonucu emri verene bırakır.",
+          "metadata": "{\"reading\":\"Milgram, devam edenlerin çoğunun ‘bana söylendi, sonuç araştırmacının’ diye düşündüğünü anlatır. Emir, kararı kişinin elinden almış gibi olur. Çalışmada bahsedilen, bu devrin kişiyi gerçekten akladığı değildir.\\n\\nKişi düğmeye basmıştır. Anlamı ise otoriteye devretmiştir.\"}",
+          "options": [
+            {
+              "text": "Tamamen kendine",
+              "correct": false
+            },
+            {
+              "text": "Emri verene",
+              "correct": true
+            },
+            {
+              "text": "Karşıdaki oyuncuya",
+              "correct": false
+            },
+            {
+              "text": "Sokağa",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Araştırmacı neden bağırmadan etkili olur?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "milgram,sorumluluk",
+          "explanation": "Sakin kurum dili, itirazı kapatır.",
+          "metadata": "{\"reading\":\"Çalışmada devam emri dört kısa cümleyle, sakin bir sesle verilir. Bağırış yoktur. Yine de cümleler sırayla kişinin itirazını kapatır. Çalışmada bahsedilen, nazik emrin zayıf olduğudur değil.\\n\\nKurumun dili, şiddetten daha kolay itaat üretebilir.\"}",
+          "options": [
+            {
+              "text": "Kimse duymadığı için",
+              "correct": false
+            },
+            {
+              "text": "Sakin ve kurumsal dil itirazı kapattığı için",
+              "correct": true
+            },
+            {
+              "text": "Öğretmen emri yazdığı için",
+              "correct": false
+            },
+            {
+              "text": "Oyuncu güldüğü için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Eichmann cümlesi deneyde nerede yeniden duyulur?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "milgram,sorumluluk",
+          "explanation": "Kişi görevi parçalar ve her parçayı otoriteye bırakır.",
+          "metadata": "{\"reading\":\"Milgram, ‘ben yalnızca isteneni yaptım’ sözünün laboratuvarda da kurulduğunu göstermek ister. Kişi kötü bir kimlik satın almaz. Görevi parçalara böler ve her parçayı otoriteye havale eder. Çalışmada bahsedilen, tarihin bire bir kopyası olduğudur değil.\\n\\nAynı cümle, daha küçük bir odada da kurulabilir.\"}",
+          "options": [
+            {
+              "text": "Kimse söylemediği",
+              "correct": false
+            },
+            {
+              "text": "Görevin parçalanıp otoriteye havale edildiği",
+              "correct": true
+            },
+            {
+              "text": "Oyuncunun itiraf ettiği",
+              "correct": false
+            },
+            {
+              "text": "Önlüğün yırtıldığı",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Duran azınlık",
+      "order": 5,
+      "challenges": [
+        {
+          "question": "Deneyi bırakanlar ne yapar?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "milgram,azinlik",
+          "explanation": "Duranlar, emir tekrarlansa da devam etmez.",
+          "metadata": "{\"reading\":\"Milgram, bir azınlığın araştırmacının tekrarlayan emrine rağmen durduğunu yazar. Onlar da tereddüt eder. Fark, tereddüdün davranışa dönmesidir. Çalışmada bahsedilen, duranların korkusuz doğduğu değildir.\\n\\nDurmak, rahatsızlığı son kola kadar taşımayı reddetmektir.\"}",
+          "options": [
+            {
+              "text": "Baştan hiç oturmadıkları",
+              "correct": false
+            },
+            {
+              "text": "Emir tekrarlansa da cezayı kestikleri",
+              "correct": true
+            },
+            {
+              "text": "Oyuncuyla anlaştıkları",
+              "correct": false
+            },
+            {
+              "text": "Önlüğü giydikleri",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Durmak bu odada neden zordur?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "milgram,azinlik",
+          "explanation": "Odada devam emrinden başka bir ses yoktur. Durmak bu yüzden zordur.",
+          "metadata": "{\"reading\":\"Milgram, kişinin içinden ‘bu yanlış’ demesinin her zaman ele durdurmadığını gösterir. Yanında duran başka bir itiraz da yoktur. Tek otorite devam edin der. Çalışmada bahsedilen, insanın hiç seçimi olmadığı değildir.\\n\\nSeçim vardır. Odada o seçimi hatırlatan ikinci bir ses yoktur.\"}",
+          "options": [
+            {
+              "text": "Herkes birden bağırdığı için",
+              "correct": false
+            },
+            {
+              "text": "Devam emrinden başka bir ses olmadığı için",
+              "correct": true
+            },
+            {
+              "text": "Oyuncu güldüğü için",
+              "correct": false
+            },
+            {
+              "text": "Öğretmen emri kendi yazdığı için",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Milgram’ın bıraktığı uyarı nedir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "milgram,azinlik",
+          "explanation": "Uyarı, zarar büyürken emrin ele hükmetmesidir.",
+          "metadata": "{\"reading\":\"Çalışma, itaati yasaklamaz. Uyardığı şey, meşru görünen bir emrin, zarar büyürken de sürdürülmesidir. Sıradan insan bundan muaf değildir. Çalışmada bahsedilen, her emrin suç olduğudur değil.\\n\\nSoru, emir ile vicdan çatışınca hangisinin ele hükmettiğidir.\"}",
+          "options": [
+            {
+              "text": "Her emrin suç olduğu",
+              "correct": false
+            },
+            {
+              "text": "Zarar büyürken emrin ele hükmedip etmediği",
+              "correct": true
+            },
+            {
+              "text": "Kimsenin duramayacağı",
+              "correct": false
+            },
+            {
+              "text": "Laboratuvarın kapanması gerektiği",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
