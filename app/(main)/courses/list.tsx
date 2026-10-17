@@ -49,7 +49,7 @@ const SHELF_META: Record<PublicSection, { label: string; icon: React.ReactNode; 
   kitaplar: { label: "Kitaplar", icon: <Library className="w-5 h-5 text-white" />, color: "text-amber-800", gradient: "from-amber-500 to-orange-600" },
 };
 
-const KITAPLAR_ORDER = ["Düşünce kitapları", "İslamiyet", "Deneyler"];
+const KITAPLAR_ORDER = ["Düşünce kitapları", "İslamiyet", "Deneyler", "İç dünya"];
 
 // ─── Exam definitions ──────────────────────────────────────────────────────
 // Order matches the way most students progress through them.
@@ -426,7 +426,7 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
         <div
           role="tablist"
           aria-label="Ders kategorileri"
-          className="mx-4 sm:mx-6 inline-flex rounded-2xl bg-muted p-1 shadow-sm"
+          className="mx-4 sm:mx-6 inline-flex rounded-2xl border border-slate-300/70 bg-gradient-to-b from-slate-200 via-slate-100 to-slate-200 p-1 shadow-[inset_0_2px_4px_rgba(148,163,184,0.45)]"
         >
           <button
             role="tab"
@@ -435,8 +435,8 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
             className={[
               "flex items-center gap-2 rounded-xl px-3 sm:px-4 py-2 text-sm font-semibold transition-all",
               activeTab === "school"
-                ? "bg-card text-foreground shadow"
-                : "text-muted-foreground hover:text-foreground",
+                ? "border border-emerald-700/40 bg-gradient-to-b from-suk-brand to-emerald-600 text-suk-brand-fg shadow-[0_3px_0_hsl(var(--suk-brand-border))]"
+                : "border border-transparent text-muted-foreground hover:text-foreground",
             ].join(" ")}
           >
             <BookOpen className="h-4 w-4" />
@@ -445,7 +445,7 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
               className={[
                 "ml-1 rounded-md px-1.5 py-0.5 text-[11px] font-bold",
                 activeTab === "school"
-                  ? "bg-green-100 text-green-700"
+                  ? "bg-white/25 text-white"
                   : "bg-muted text-muted-foreground",
               ].join(" ")}
             >
@@ -459,8 +459,8 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
             className={[
               "flex items-center gap-2 rounded-xl px-3 sm:px-4 py-2 text-sm font-semibold transition-all",
               activeTab === "exams"
-                ? "bg-card text-foreground shadow"
-                : "text-muted-foreground hover:text-foreground",
+                ? "border border-emerald-700/40 bg-gradient-to-b from-suk-brand to-emerald-600 text-suk-brand-fg shadow-[0_3px_0_hsl(var(--suk-brand-border))]"
+                : "border border-transparent text-muted-foreground hover:text-foreground",
             ].join(" ")}
           >
             <GraduationCap className="h-4 w-4" />
@@ -469,7 +469,7 @@ export const List = ({ courses, activeCourseId, learningPath = "full" }: Props) 
               className={[
                 "ml-1 rounded-md px-1.5 py-0.5 text-[11px] font-bold",
                 activeTab === "exams"
-                  ? "bg-amber-100 text-amber-700"
+                  ? "bg-white/25 text-white"
                   : "bg-muted text-muted-foreground",
               ].join(" ")}
             >

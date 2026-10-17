@@ -12,12 +12,12 @@ const buttonVariants = cva(
     variants: {
       variant: {
         locked:
-          "bg-suk-neutral-locked text-suk-neutral-locked-fg hover:bg-suk-neutral-locked/90 border-suk-neutral-locked-border border-b-4 active:border-b-0",
+          "bg-gradient-to-b from-slate-300 to-slate-400 text-slate-500 border border-slate-400/50 shadow-[0_6px_0_#94a3b8]",
         default:
-          "bg-suk-surface-card text-suk-fg-muted border-suk-border border-2 border-b-4 active:border-b-2 hover:bg-suk-surface-muted",
+          "bg-gradient-to-b from-slate-50 to-slate-100 text-slate-700 border-2 border-slate-200 shadow-[0_5px_0_#cbd5e1,0_8px_14px_-2px_rgba(100,116,139,0.12)] hover:bg-slate-100 hover:border-slate-300 active:translate-y-[4px] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.1),0_1px_0_#cbd5e1]",
         /** Birincil eylem — marka yeşili, dolu 3D */
         primary:
-          "bg-suk-brand text-suk-brand-fg hover:bg-suk-brand-hover border-suk-brand-border border-b-4 active:border-b-0",
+          "bg-gradient-to-b from-suk-brand to-emerald-600 text-suk-brand-fg border border-emerald-700/40 shadow-[0_6px_0_hsl(var(--suk-brand-border)),0_10px_16px_-2px_rgba(22,163,74,0.35)] hover:brightness-105 active:translate-y-[4px] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.25),0_2px_0_hsl(var(--suk-brand-border)),0_2px_4px_rgba(22,163,74,0.2)] active:brightness-95",
         primaryOutline:
           "bg-suk-surface-card text-suk-brand border-2 border-suk-brand hover:bg-suk-brand-soft",
         /** Çerçevesiz ikincil — tam genişlik CTA satırı, çıkış vb. */
@@ -30,34 +30,34 @@ const buttonVariants = cva(
          * Aynı ekranda çerçeveli ikinci eylem gerekiyorsa `secondaryOutline` / `primaryOutline` kullanın.
          */
         secondary:
-          "bg-suk-brand text-suk-brand-fg hover:bg-suk-brand-hover border-suk-brand-border border-b-4 active:border-b-0",
+          "bg-gradient-to-b from-suk-brand to-emerald-600 text-suk-brand-fg border border-emerald-700/40 shadow-[0_6px_0_hsl(var(--suk-brand-border)),0_10px_16px_-2px_rgba(22,163,74,0.35)] hover:brightness-105 active:translate-y-[4px] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.25),0_2px_0_hsl(var(--suk-brand-border)),0_2px_4px_rgba(22,163,74,0.2)] active:brightness-95",
         secondaryOutline:
           "bg-suk-surface-card text-suk-brand border-2 border-suk-brand hover:bg-suk-brand-soft",
         danger:
-          "bg-suk-danger text-suk-danger-fg hover:bg-suk-danger-hover border-suk-danger-border border-b-4 active:border-b-0",
+          "bg-gradient-to-b from-suk-danger to-rose-600 text-suk-danger-fg border border-rose-700/40 shadow-[0_6px_0_hsl(var(--suk-danger-border)),0_10px_16px_-2px_rgba(225,29,72,0.35)] hover:brightness-105 active:translate-y-[4px] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.25),0_2px_0_hsl(var(--suk-danger-border)),0_2px_4px_rgba(225,29,72,0.2)] active:brightness-95",
         /** shadcn adıyla aynı renk ailesi — `danger` ile özdeş */
         destructive:
-          "bg-suk-danger text-suk-danger-fg hover:bg-suk-danger-hover border-suk-danger-border border-b-4 active:border-b-0",
+          "bg-gradient-to-b from-suk-danger to-rose-600 text-suk-danger-fg border border-rose-700/40 shadow-[0_6px_0_hsl(var(--suk-danger-border)),0_10px_16px_-2px_rgba(225,29,72,0.35)] hover:brightness-105 active:translate-y-[4px] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.25),0_2px_0_hsl(var(--suk-danger-border)),0_2px_4px_rgba(225,29,72,0.2)] active:brightness-95",
         dangerOutline:
           "bg-suk-surface-card text-suk-danger border-2 border-suk-danger-line hover:bg-suk-danger-soft",
         destructiveOutline:
           "bg-suk-surface-card text-suk-danger border-2 border-suk-danger-line hover:bg-suk-danger-soft",
         /** İptal / ikincil nötr — `default` ile aynı palet, daha belirgin dolgu */
         muted:
-          "bg-muted text-foreground border-border border-2 border-b-4 active:border-b-2 hover:bg-muted/85",
+          "bg-muted text-foreground border-border border-2 border-b-4 active:border-b-2 active:translate-y-[2px] hover:bg-muted/85",
         /** Çerçeveli nötr (gri aile) */
         outline:
-          "bg-background text-foreground border-border border-2 border-b-4 active:border-b-2 hover:bg-muted",
+          "bg-background text-foreground border-border border-2 border-b-4 active:border-b-2 active:translate-y-[2px] hover:bg-muted",
         /** Ödeme / paket satın alma / checkout */
         payment:
-          "bg-suk-payment text-suk-payment-fg hover:bg-suk-payment-hover border-suk-payment-border border-b-4 active:border-b-0",
+          "bg-gradient-to-b from-suk-payment to-indigo-600 text-suk-payment-fg border border-indigo-700/40 shadow-[0_6px_0_hsl(var(--suk-payment-border)),0_10px_16px_-2px_rgba(99,102,241,0.35)] hover:brightness-105 active:translate-y-[4px] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.25),0_2px_0_hsl(var(--suk-payment-border)),0_2px_4px_rgba(99,102,241,0.2)] active:brightness-95",
         paymentOutline:
-          "bg-suk-surface-card text-suk-payment-soft-fg border-2 border-suk-payment-ring border-b-4 border-b-suk-payment-border hover:bg-suk-payment-soft active:border-b-2",
+          "bg-suk-surface-card text-suk-payment-soft-fg border-2 border-suk-payment-ring border-b-4 border-b-suk-payment-border hover:bg-suk-payment-soft active:border-b-2 active:translate-y-[2px]",
         /** İstikrar / bonus / puan harcama — amber, dikkat (ödeme değil) */
         warning:
-          "bg-suk-warning text-white hover:brightness-105 border border-black/10 border-b-4 border-b-suk-warning-soft-fg/35 active:border-b-2",
+          "bg-suk-warning text-white hover:brightness-105 border border-black/10 border-b-4 border-b-suk-warning-soft-fg/35 active:border-b-2 active:translate-y-[2px]",
         super:
-          "bg-suk-play text-suk-play-fg hover:bg-suk-play-hover border-suk-play-border border-b-4 active:border-b-0",
+          "bg-gradient-to-b from-suk-play to-purple-600 text-suk-play-fg border border-purple-700/40 shadow-[0_6px_0_hsl(var(--suk-play-border)),0_10px_16px_-2px_rgba(168,85,247,0.35)] hover:brightness-105 active:translate-y-[4px] active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.25),0_2px_0_hsl(var(--suk-play-border)),0_2px_4px_rgba(168,85,247,0.2)] active:brightness-95",
         superOutline:
           "bg-suk-surface-card text-suk-play border-2 border-suk-play-line hover:bg-suk-play-soft",
         ghost:

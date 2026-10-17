@@ -1,0 +1,427 @@
+{
+  "title": "Hızlı ve Yavaş Düşünme",
+  "description": "Kahneman’ın Hızlı ve Yavaş Düşünme’sinde hızlı hükmün yavaş imzası. Her ders üç okuma ve bu okumadan cevaplanan bir sorudan oluşur.",
+  "order": 10,
+  "lessons": [
+    {
+      "title": "İmza",
+      "order": 1,
+      "challenges": [
+        {
+          "question": "Yavaş düşünce neden her zaman yöneten taraf değildir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "hizli,sistem",
+          "explanation": "Yavaş sistem çoğu zaman incelmez, imzalar.",
+          "metadata": "{\"reading\":\"Kitapta hızlı olan önerir. Yavaş olan çoğu zaman o öneriyi incelmez, imzalar. Yavaş düşünebilmek ile o an yavaş düşünmek ayrıdır.\\n\\nKişi ikinci sistemi taşıdığını bilir. Taşımak, her hükümde onu çalıştırmak değildir.\"}",
+          "options": [
+            {
+              "text": "Hızlı olanın hiç hüküm vermediği",
+              "correct": false
+            },
+            {
+              "text": "Yavaş olanın çoğu zaman öneriyi yalnızca imzaladığı",
+              "correct": true
+            },
+            {
+              "text": "İmzanın inceleme olduğu",
+              "correct": false
+            },
+            {
+              "text": "İkinci sistemin her an çalıştığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Taşımak neden kullanmak değildir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "hizli,sistem",
+          "explanation": "Yavaş sistem her hükümde yetişmez. Bu olağan hâldir.",
+          "metadata": "{\"reading\":\"Kişi mantıklı düşünebildiğini söyler. Söylemek, o cümlenin kurulduğu anda yavaş sistemin uyanık olduğunu göstermez. Hızlı hüküm çoktan kurulmuştur. Yavaş olan yetişirse düzeltir. Yetişmeyebilir.\\n\\nKitap bu yetişmemeyi bir arıza diye değil, olağan hâli diye anlatır.\"}",
+          "options": [
+            {
+              "text": "Hızlı hükmün her zaman düzeltildiği",
+              "correct": false
+            },
+            {
+              "text": "Yavaş sistemin yetişmeyebildiği ve bunun olağan olduğu",
+              "correct": true
+            },
+            {
+              "text": "Söylemenin uyanıklık olduğu",
+              "correct": false
+            },
+            {
+              "text": "Arızanın imkânsız olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "İmza neden bir düşünce başarı sayılmaz?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "hizli,sistem",
+          "explanation": "Kişi, imzaladığı hükmü yavaşça bulduğunu sanabilir.",
+          "metadata": "{\"reading\":\"İmza, önerinin üstünden geçmektir. Geçmek, öneriyi kurmakla karışır. Kişi imzaladığı hükmü, yavaşça bulduğu hüküm sanır.\\n\\nKahneman o sanıyı, sistemin tembelliği olarak bırakır. Tembel olan aptal değildir. Çoğu zaman çalışmamayı seçer.\"}",
+          "options": [
+            {
+              "text": "İmzanın hükmü kurduğu",
+              "correct": false
+            },
+            {
+              "text": "İmzalanan hükmün yavaşça bulunmuş sanıldığı",
+              "correct": true
+            },
+            {
+              "text": "Tembelliğin aptallık olduğu",
+              "correct": false
+            },
+            {
+              "text": "Hızlı önerinin hiç imzalanmadığı",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Görünen yeter",
+      "order": 2,
+      "challenges": [
+        {
+          "question": "Zihin neden elindeki bilgiyi bütün sanır?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "hizli,gorunen",
+          "explanation": "Eksik parça yokmuş gibi durur. Hikâye bundan emin olur.",
+          "metadata": "{\"reading\":\"Hızlı ve Yavaş Düşünme’de zihin, önündekilerle eksiksiz bir hikâye kurar. Eksik parça, eksik diye değil, yokmuş gibi durur. Hikâye bu yüzden kendinden emin olur.\\n\\nEminlik, bilginin tamam olduğunun kanıtı değildir. Tamam sanmanın kendisidir.\"}",
+          "options": [
+            {
+              "text": "Eksik parçanın hesaba katıldığı",
+              "correct": false
+            },
+            {
+              "text": "Eksik parçanın yokmuş gibi durması",
+              "correct": true
+            },
+            {
+              "text": "Eminliğin bilgiyi tamamladığı",
+              "correct": false
+            },
+            {
+              "text": "Hikâyenin şüphe ürettiği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Emin hikâye neden tehlikelidir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "hizli,gorunen",
+          "explanation": "Delik görünmezse arama durur.",
+          "metadata": "{\"reading\":\"Kişi, gördüğüne uyan bir son yazar. Uymayan bilgi henüz gelmemiştir. Gelmemiş olmak, hikâyede bir delik olarak görünmez. Delik görünmeyince arama da durur.\\n\\nKitap aramayı, eminliğin susturduğunu söyler.\"}",
+          "options": [
+            {
+              "text": "Eminliğin aramayı açtığı",
+              "correct": false
+            },
+            {
+              "text": "Delik görünmeyince aramanın durduğu",
+              "correct": true
+            },
+            {
+              "text": "Uymayan bilginin hikâyeye girdiği",
+              "correct": false
+            },
+            {
+              "text": "Sonun şüpheli kaldığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Daha fazla bilgi neden her zaman aynı hikâyeyi bozar?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "hizli,gorunen",
+          "explanation": "Kendini tamam sanan hikâye, yeni bilgiye direnir.",
+          "metadata": "{\"reading\":\"Yeni bilgi, kurulmuş hikâyeye uymuyorsa hikâye direnir. Direniş, kişinin inatçı olmasından önce, hikâyenin kendini tamam sanmasından gelir.\\n\\nTamam sanılan hikâye, eklemeyi bir tehdit gibi karşılar.\"}",
+          "options": [
+            {
+              "text": "Yeni bilginin hemen içeri girdiği",
+              "correct": false
+            },
+            {
+              "text": "Tamam sanılan hikâyenin eklemeye direndiği",
+              "correct": true
+            },
+            {
+              "text": "Direnişin yalnızca inat olduğu",
+              "correct": false
+            },
+            {
+              "text": "Tehdidin bilgiyi çoğalttığı",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kayıp ve kazanç",
+      "order": 3,
+      "challenges": [
+        {
+          "question": "Aynı miktar neden inişte ve çıkışta aynı his değildir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "hizli,kayip",
+          "explanation": "Kayıp, aynı büyüklükteki kazançtan daha ağır basar.",
+          "metadata": "{\"reading\":\"Kitapta kayıp, aynı büyüklükteki kazançtan daha ağır basar. Yüz lira bulmak ile yüz lira kaybetmek, hesapta simetriktir. His o simetriyi tanımaz.\\n\\nKarar çoğu zaman hesaba değil, bu ağırlığa göre kurulur.\"}",
+          "options": [
+            {
+              "text": "Hesabın hisle aynı olduğu",
+              "correct": false
+            },
+            {
+              "text": "Kaybın, aynı kazançtan daha ağır basması",
+              "correct": true
+            },
+            {
+              "text": "Çıkışın her zaman daha acı verdiği",
+              "correct": false
+            },
+            {
+              "text": "Simetrinin kararı yönettiği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kişi neden kazancı korumayı kazancı aramaktan önde tutar?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "hizli,kayip",
+          "explanation": "Eldekinden olmamak, yeni kazancın önüne geçebilir.",
+          "metadata": "{\"reading\":\"Ağır basan kayıp, eldekinden olmamayı birinci iş yapar. Yeni kazanç ikinci sıraya düşer. Bu bir cimrilik ilanı değildir. Tartının nasıl eğildiğinin adıdır.\\n\\nEğik tartı, iki seçeneği eşit görmez.\"}",
+          "options": [
+            {
+              "text": "İki seçeneğin eşit görüldüğü",
+              "correct": false
+            },
+            {
+              "text": "Eldekinden olmamak isteğinin yeni kazancın önüne geçtiği",
+              "correct": true
+            },
+            {
+              "text": "Cimriliğin tartıyı düzelttiği",
+              "correct": false
+            },
+            {
+              "text": "Kazancın her zaman birinci olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Eğik tartı neden bir hesap hatası sayılmaz?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "hizli,kayip",
+          "explanation": "Doğru hesap, kaybın daha ağır yaşanmasını silmez.",
+          "metadata": "{\"reading\":\"Kişi toplama yapabilir ve yine de kaybı ağır yaşar. Hata, dört işlemin yanlış olması değildir. Dört işlem doğru olsa da karar o işlemin dışındaki ağırlıkla verilir.\\n\\nKahneman o ağırlığı bir kusur diye silmez. Kararın içine yazar.\"}",
+          "options": [
+            {
+              "text": "Toplamanın her zaman yanlış olduğu",
+              "correct": false
+            },
+            {
+              "text": "Doğru hesabın da kaybın ağırlığını silmediği",
+              "correct": true
+            },
+            {
+              "text": "Ağırlığın karara girmediği",
+              "correct": false
+            },
+            {
+              "text": "Kusurun tartıyı düzelttiği",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Hatırlanan gün",
+      "order": 4,
+      "challenges": [
+        {
+          "question": "Anlatılan gün neden yaşanan gün değildir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "hizli,hatira",
+          "explanation": "Hatıra zirveyi ve sonu ağırlaştırır, aradaki saatleri inceltir.",
+          "metadata": "{\"reading\":\"Kitap, yaşayan ben ile hatırlayan beni ayırır. Yaşayan, saatleri tek tek geçer. Hatırlayan, zirveyi ve sonu ağırlaştırır. Arada kalan saatler hikâyede incelir.\\n\\nKişi incelmiş saatleri yaşamamış gibi konuşabilir. Yaşamıştır. Hikâye onları taşımaz.\"}",
+          "options": [
+            {
+              "text": "Her saatin eşit hatırlandığı",
+              "correct": false
+            },
+            {
+              "text": "Zirve ile sonun, aradaki saatleri incelttiği",
+              "correct": true
+            },
+            {
+              "text": "Yaşayan benin hikâyeyi kurduğu",
+              "correct": false
+            },
+            {
+              "text": "Sonun hiç ağırlık taşımadığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kötü bir son neden güzel saatleri silebilir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "hizli,hatira",
+          "explanation": "Koyu bir son, önceki saatleri hatırada karartabilir.",
+          "metadata": "{\"reading\":\"Son, hatırlayanın elindeki son fırçadır. Fırça koyuysa önceki açık saatler kararır. Kararma, o saatlerin yaşanmadığı anlamına gelmez.\\n\\nKitap bu kararmayı bir yalan diye değil, hatıranın kuralı diye anlatır.\"}",
+          "options": [
+            {
+              "text": "Sonun önceki saatleri değiştirmediği",
+              "correct": false
+            },
+            {
+              "text": "Koyu bir sonun önceki saatleri hatırada kararttığı",
+              "correct": true
+            },
+            {
+              "text": "Yaşanmış saatin silindiği",
+              "correct": false
+            },
+            {
+              "text": "Fırçanın hesabı düzelttiği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Karar neden yaşanan saate değil hatıraya bakabilir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "hizli,hatira",
+          "explanation": "Tekrar edilen tercih, en çok hatırlanan hâli seçer.",
+          "metadata": "{\"reading\":\"Kişi bir sonraki seçimi, saatlerin ortalamasına göre kurmaz. Kurduğu şey, aklında kalan zirve ve sondur. Ortalama daha adil olabilir. Adil olan, kararı yönetmeyebilir.\\n\\nBu yüzden tekrar edilen tercih, en uzun süren hâli değil, en çok hatırlanan hâli seçer.\"}",
+          "options": [
+            {
+              "text": "Ortalamanın kararı yönettiği",
+              "correct": false
+            },
+            {
+              "text": "Tercihin, en uzun hâli değil en çok hatırlanan hâli seçtiği",
+              "correct": true
+            },
+            {
+              "text": "Zirvenin hesaba girmediği",
+              "correct": false
+            },
+            {
+              "text": "Adil ölçünün her zaman kazanması",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "İçerden plan",
+      "order": 5,
+      "challenges": [
+        {
+          "question": "Plan neden benzer işlerin süresini atlar?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "hizli,plan",
+          "explanation": "Plan bu işin içinden kurulur, benzer süreler dışarıda kalır.",
+          "metadata": "{\"reading\":\"Hızlı ve Yavaş Düşünme’de plan, bu işin içinden kurulur. Umut, engel ve niyet oradadır. Benzer işlerin gerçekte ne kadar sürdüğü dışarıda kalır. İçerideki hikâye, dışarıdaki süreyi gereksiz sanır.\\n\\nGereksiz sanılan süre, sonunda takvimi bozar.\"}",
+          "options": [
+            {
+              "text": "Dışarıdaki sürenin plana girdiği",
+              "correct": false
+            },
+            {
+              "text": "Planın bu işin umuduyla kurulup benzer süreleri dışarıda bıraktığı",
+              "correct": true
+            },
+            {
+              "text": "Takvimin umudu düzelttiği",
+              "correct": false
+            },
+            {
+              "text": "Benzer işin hiç var olmadığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Umut neden bir süre ölçüsü değildir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "hizli,plan",
+          "explanation": "Umut, benzer işin sürdüğü yerin yerine geçebilir.",
+          "metadata": "{\"reading\":\"Umut, işin nasıl gitmesini istediğini söyler. Süre, benzer işin nasıl gittiğini söyler. İkisi aynı cümlede durunca umut, sürenin yerine geçer.\\n\\nKitap o geçişi plan yanılması diye adlandırır.\"}",
+          "options": [
+            {
+              "text": "Umudun süreyi ölçtüğü",
+              "correct": false
+            },
+            {
+              "text": "Umudun, benzer işin süresinin yerine geçebildiği",
+              "correct": true
+            },
+            {
+              "text": "Yanılmanın takvimi kısalttığı",
+              "correct": false
+            },
+            {
+              "text": "Benzer işin umudu doğruladığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Dışarıdaki süre neden moral bozmak için hatırlanmaz?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "hizli,plan",
+          "explanation": "Benzer süre umudu iptal etmez, takvimin yerini değiştirir.",
+          "metadata": "{\"reading\":\"Benzer işin uzamış olması, bu işin değersiz olduğunu söylemez. Söylediği, takvimin içerideki hikâyeye göre çizilmemesidir. Çizgi dışarıdan gelince umut iptal olmaz. Yeri değişir.\\n\\nUmut işi ister. Süre, isteğin takvimini düzeltir.\"}",
+          "options": [
+            {
+              "text": "Uzayan işin değersiz olduğu",
+              "correct": false
+            },
+            {
+              "text": "Dış sürenin umudu iptal etmeden takvimi düzelttiği",
+              "correct": true
+            },
+            {
+              "text": "Moralin süreyi kısalttığı",
+              "correct": false
+            },
+            {
+              "text": "İç hikâyenin her zaman tuttuğu",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

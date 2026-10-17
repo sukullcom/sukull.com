@@ -1,0 +1,427 @@
+{
+  "title": "Yaşama tutunmak",
+  "description": "Matt Haig’in Yaşama Tutunmak İçin Nedenler’inde duygunun gelecek hükmü. Her ders üç okuma ve bu okumadan cevaplanan bir sorudan oluşur. Bu bir tedavi değildir.",
+  "order": 3,
+  "lessons": [
+    {
+      "title": "Yarının hükmü",
+      "order": 1,
+      "challenges": [
+        {
+          "question": "Kitap duygunun yarın hakkında neden hüküm kurduğunu ayırır?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "tutunmak,yarin",
+          "explanation": "Duygu bir hâldir. Yarının haberi değildir.",
+          "metadata": "{\"reading\":\"Haig yirmi dört yaşındayken duygu, geleceği çoktan bitmiş bir haber gibi getirir. Haber sıkıdır. Kitap o sıkılığı, yarının kendisi diye kabul etmez. Duygu bir hâldir. Hâl, takvim değildir.\\n\\nTakvim sanılan hâl, kişiyi yarın yokmuş gibi konuşturur.\"}",
+          "options": [
+            {
+              "text": "Duygunun takvim olduğu",
+              "correct": false
+            },
+            {
+              "text": "Hâlin, yarının haberi sanılmaması",
+              "correct": true
+            },
+            {
+              "text": "Yarının kitapta bittiği",
+              "correct": false
+            },
+            {
+              "text": "Sıkılığın geleceği düzelttiği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Sıkı haber neden inandırıcıdır?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "tutunmak,yarin",
+          "explanation": "O saatin sesi, yarının kendisi sanılır.",
+          "metadata": "{\"reading\":\"Hâl, bağırarak gelince kişi onu bir yorum sanmaz. Sanmadığı için tartışmaz. Kitap tartışmanın, bağırışın içinde yapılamadığını gösterir. Yapılamaması, haberin doğru olduğunu göstermez.\\n\\nDoğru sanılan şey, o saatin sesidir.\"}",
+          "options": [
+            {
+              "text": "Bağırışın haberin doğruluğu olduğu",
+              "correct": false
+            },
+            {
+              "text": "O saatin sesinin, yarının kendisi sanıldığı",
+              "correct": true
+            },
+            {
+              "text": "Tartışmanın bağırtıyı yendiği",
+              "correct": false
+            },
+            {
+              "text": "Yorumun her an mümkün olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Hâl ile haber ayrılınca ne değişir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "tutunmak,yarin",
+          "explanation": "Gelmemiş yarın, o saatin hükmüyle bitmiş sayılmaz.",
+          "metadata": "{\"reading\":\"Kişi yarını iptal etmiş olmaz. İptal ettiği, hâlin yarın üzerinde kurduğu tek söz hakkıdır. Yarın hâlâ gelmemiştir. Gelmemiş olan, bitmiş sayılamaz.\\n\\nKitap bitmemiş olanı, hissedilenin elinden geri alır.\"}",
+          "options": [
+            {
+              "text": "Yarının iptal olduğu",
+              "correct": false
+            },
+            {
+              "text": "Hissedilenin, gelmemiş yarın üzerinde tek söz hakkı olmadığı",
+              "correct": true
+            },
+            {
+              "text": "Hâlin susması gerektiği",
+              "correct": false
+            },
+            {
+              "text": "Geri almanın acıyı sildiği",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Küçük tutamak",
+      "order": 2,
+      "challenges": [
+        {
+          "question": "Kitap tutunmayı neden büyük bir hayat lafzına bağlamaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "tutunmak,kucuk",
+          "explanation": "Ağır saatte elde duran, küçük tutamaktır.",
+          "metadata": "{\"reading\":\"Yaşama tutunmak, anlam üzerine bir söylev diye kurulmaz. Tutamak küçüktür. Okumak, yürümek, bir günü geçirmek. Büyük laf, en ağır saatte elde durmaz.\\n\\nElde duran, küçük olandır. Kitap küçüğü hafif diye küçümsemez.\"}",
+          "options": [
+            {
+              "text": "Büyük lafzın o saatte yettiği",
+              "correct": false
+            },
+            {
+              "text": "Elde duranın küçük tutamak olduğu",
+              "correct": true
+            },
+            {
+              "text": "Yürümenin anlam söylevi olduğu",
+              "correct": false
+            },
+            {
+              "text": "Küçüğün hafif sayıldığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Küçük tutamak neden iyileşme vaadi değildir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "tutunmak,kucuk",
+          "explanation": "Küçük tutamak o saati taşır, hastalığı kapatmaz.",
+          "metadata": "{\"reading\":\"Bir yürüyüş, hastalığı kapatmaz. Kapamadan da o saati taşır. Kitap taşımayı kapatmakla karıştırmaz.\\n\\nKarıştıran, yürüyüş işe yaramadı diye küçük olanı atar. Atılan şey, tam da taşımış olandır.\"}",
+          "options": [
+            {
+              "text": "Yürüyüşün hastalığı kapattığı",
+              "correct": false
+            },
+            {
+              "text": "Taşımanın, kapatmak sayılmaması",
+              "correct": true
+            },
+            {
+              "text": "Küçük olanın atılınca güçlendiği",
+              "correct": false
+            },
+            {
+              "text": "Vaadin kitapta yürüyüşe konduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Büyük laf neden en ağır saatte elde durmaz?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "tutunmak,kucuk",
+          "explanation": "Ağır saat, masada kurulan büyük cümleyi içeri almaz.",
+          "metadata": "{\"reading\":\"Söylev, sakin bir masada kurulur. Ağır saat o masayı kapatır. Kapanan masadaki cümle, kişiyle birlikte odaya girmez.\\n\\nHaig bu yüzden odaya giren şeyi, masada hazırlanan büyük cümlede aramaz.\"}",
+          "options": [
+            {
+              "text": "Söylevin odaya birlikte girdiği",
+              "correct": false
+            },
+            {
+              "text": "Ağır saatin, masada kurulan büyük cümleyi içeri almadığı",
+              "correct": true
+            },
+            {
+              "text": "Küçük tutamağın söylev olduğu",
+              "correct": false
+            },
+            {
+              "text": "Masanın her saatte açık olduğu",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Düz çizgi değil",
+      "order": 3,
+      "challenges": [
+        {
+          "question": "İyi bir haftadan sonraki kötü gün neden başa dönmek değildir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "tutunmak,cizgi",
+          "explanation": "Kötü gün sayacı sıfırlamaz. Kırık, başa dönüş değildir.",
+          "metadata": "{\"reading\":\"Kitap iyileşmeyi yükselen bir çizgi diye çizmez. İyi günler gelmişken kötü bir gün, sayacı sıfırlamaz. Sıfır sanılan yer, çizginin kırığıdır. Kırık, başladığı yere dönüş değildir.\\n\\nDönüş sanılınca kişi, aradaki günleri de siler.\"}",
+          "options": [
+            {
+              "text": "Kötü günün sayacı sıfırladığı",
+              "correct": false
+            },
+            {
+              "text": "Kırığın, başa dönüş sayılmaması",
+              "correct": true
+            },
+            {
+              "text": "Çizginin yalnızca yükseldiği",
+              "correct": false
+            },
+            {
+              "text": "Aradaki günlerin hiç yaşanmadığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Aradaki günler neden silinir sanılır?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "tutunmak,cizgi",
+          "explanation": "Son kötü gün, önceki hafif günleri yok etmez.",
+          "metadata": "{\"reading\":\"Kişi son kötü güne bakar ve önceki hafif günleri saymamış olur. Saymamak, o günlerin hükmünü kaldırır. Kitap hükmü, son güne vermez.\\n\\nSon gün gürültülüdür. Gürültü, önceki günlerin yokluğu değildir.\"}",
+          "options": [
+            {
+              "text": "Son günün önceki günleri sildiği",
+              "correct": false
+            },
+            {
+              "text": "Gürültülü günün, öncekilerin yokluğu olmadığı",
+              "correct": true
+            },
+            {
+              "text": "Hafif günün hiç hükmü olmadığı",
+              "correct": false
+            },
+            {
+              "text": "Sayacın yalnızca kötü günü tuttuğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Çizgi metaforu neden zarar verir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "tutunmak,cizgi",
+          "explanation": "Kırığı ihanet sanmak, yolu bıraktırır.",
+          "metadata": "{\"reading\":\"Yükselen çizgi, her kırığı bir ihanet gibi gösterir. Kitap o metaforu kullanmaz. Kullanmayan yerde kırık, yolun şeklidir.\\n\\nŞekil bozulunca kişi yolu bırakır. Bıraktığı şey, bozuk bir grafik değil, kendi günüdür.\"}",
+          "options": [
+            {
+              "text": "Yükselen çizginin kitabı anlattığı",
+              "correct": false
+            },
+            {
+              "text": "Kırığı ihanet sanmanın yolu bıraktırdığı",
+              "correct": true
+            },
+            {
+              "text": "Grafiğin günü düzelttiği",
+              "correct": false
+            },
+            {
+              "text": "Şeklin her zaman düz olduğu",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kalıcı değil",
+      "order": 4,
+      "challenges": [
+        {
+          "question": "En ağır saati neden tek bir cümle taşımaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "tutunmak,sure",
+          "explanation": "O saatin bağırışı, kişinin değişmez adı değildir.",
+          "metadata": "{\"reading\":\"Haig o saatten, parlak bir fikirle çıkmış gibi anlatmaz. Taşıyan, duygunun kalıcı bir kimlik olmamasıdır. Saat bağırır. Bağırış, kişinin değişmez adı değildir.\\n\\nAd sanılan bağırış, süreye yenilir. Yenilme o saatin içinde hissedilmeyebilir.\"}",
+          "options": [
+            {
+              "text": "Parlak fikrin saati bitirdiği",
+              "correct": false
+            },
+            {
+              "text": "Bağırışın, kişinin değişmez adı olmadığı",
+              "correct": true
+            },
+            {
+              "text": "Kimliğin o saatte kurulduğu",
+              "correct": false
+            },
+            {
+              "text": "Sürenin bağırışı büyüttüğü",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Hissedilmeyen yenilgi neden yine yenilgidir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "tutunmak,sure",
+          "explanation": "O anda görülmese de süre işler.",
+          "metadata": "{\"reading\":\"Kişi o anda sürenin işlediğini görmez. Görmemek, sürenin durduğu anlamına gelmez. Kitap görmeden de geçen zamanı hesaba katar.\\n\\nHesap, o saatte teselli diye sunulmaz. Sonradan bakınca görülen yapıdır.\"}",
+          "options": [
+            {
+              "text": "Görülmeyenin durduğu",
+              "correct": false
+            },
+            {
+              "text": "O anda görülmese de sürenin işlediği",
+              "correct": true
+            },
+            {
+              "text": "Tesellinin saati bitirdiği",
+              "correct": false
+            },
+            {
+              "text": "Yapının bağırışla aynı olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kalıcı sanmak neden hâli kimliğe çevirir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "tutunmak,sure",
+          "explanation": "Bir saat bütün hayatın adı yapılmaz. Acı yok sayılmaz.",
+          "metadata": "{\"reading\":\"Kişi bu benim diyebilir. Diyen, bir saati bütün hayata yayar. Kitap yayılan saati geri çağırır. Geri çağrı, acıyı inkâr değildir.\\n\\nİnkâr, saati yok sayar. Kitap saati yerinde bırakır, bütün hayatın adı yapmaz.\"}",
+          "options": [
+            {
+              "text": "Saatin bütün hayat olduğu",
+              "correct": false
+            },
+            {
+              "text": "Bir saatin bütün hayatın adı yapılmaması",
+              "correct": true
+            },
+            {
+              "text": "İnkârın kitabın yöntemi olduğu",
+              "correct": false
+            },
+            {
+              "text": "Geri çağırmanın acıyı sildiği",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kafanın haritası",
+      "order": 5,
+      "challenges": [
+        {
+          "question": "Kafanın içindeki dünya neden dünya değildir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "tutunmak,harita",
+          "explanation": "Canlı bir harita, arazinin kendisi değildir.",
+          "metadata": "{\"reading\":\"Kitapta zihin, çok canlı bir harita çizebilir. Canlılık, haritanın araziyi doğru gösterdiğini kanıtlamaz. Kişi haritanın içinden çıkamayınca araziyi de harita sanır.\\n\\nSanmak, arazinin kaybolduğu anlamına gelmez. Görüşün kilitlendiği anlamına gelir.\"}",
+          "options": [
+            {
+              "text": "Canlı haritanın araziyi kanıtladığı",
+              "correct": false
+            },
+            {
+              "text": "Görüşün kilitlenmesinin araziyi yok etmediği",
+              "correct": true
+            },
+            {
+              "text": "Zihnin harita çizmediği",
+              "correct": false
+            },
+            {
+              "text": "Kilidin dünyayı düzelttiği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Çıkamamak haritayı neden doğru yapmaz?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "tutunmak,harita",
+          "explanation": "Odadan çıkamamak, odadaki resmi bütün şehir yapmaz.",
+          "metadata": "{\"reading\":\"Kişi odadan çıkamayınca, odadaki resmi bütün şehir sanır. Şehir odanın dışında durmaya devam eder. Kitap bu devamı, hissin inkârı diye değil, hissin sınırı diye koyar.\\n\\nSınır, acının sahte olduğunu söylemez. Acının, şehrin tamamı olmadığını söyler.\"}",
+          "options": [
+            {
+              "text": "Odanın şehri kapattığı",
+              "correct": false
+            },
+            {
+              "text": "Çıkamamış olmanın haritayı doğru kılmadığı",
+              "correct": true
+            },
+            {
+              "text": "Sınırın acıyı sahtelediği",
+              "correct": false
+            },
+            {
+              "text": "Şehrin odada bittiği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Haritayı şüpheli bulmak neden duygusuzluk değildir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "tutunmak,harita",
+          "explanation": "Haritayı şüpheli bulmak, acıyı değil onun çizdiği yarını bırakır.",
+          "metadata": "{\"reading\":\"Kişi haritaya itiraz edince duygusunu inkâr etmiş sayılabilir. Kitap itirazı inkâr diye kurmaz. İtiraz, duygunun varlığını bırakır, onun çizdiği yarını bırakır.\\n\\nBırakılan yarın, bırakılan acı değildir.\"}",
+          "options": [
+            {
+              "text": "İtirazın duyguyu sildiği",
+              "correct": false
+            },
+            {
+              "text": "Şüphenin, acıyı değil acının çizdiği yarını bıraktığı",
+              "correct": true
+            },
+            {
+              "text": "Duygusuzluğun kitabın hedefi olduğu",
+              "correct": false
+            },
+            {
+              "text": "Yarının acıyla birlikte gittiği",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

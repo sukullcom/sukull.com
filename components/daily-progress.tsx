@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { Progress } from "@/components/ui/progress";
 import { getCurrentDayProgress } from "@/actions/daily-streak";
 import { getTimeBonusInfo, getRemainingHoursInDay, type TimeBonusInfo } from "@/lib/time-bonus";
 import { PROGRESS_UPDATED_EVENT } from "@/lib/progress-events";
@@ -132,8 +133,8 @@ export function DailyProgress() {
 
   if (loading) {
     return (
-      <div className="border-2 border-border rounded-2xl p-4">
-        <div className="animate-pulse">
+    <div className="rounded-2xl border-2 border-slate-200 bg-gradient-to-b from-slate-50 to-slate-100 p-4 shadow-[0_5px_0_#cbd5e1]">
+      <div className="animate-pulse">
           <div className="h-4 bg-muted rounded mb-2"></div>
           <div className="h-6 bg-muted rounded mb-2"></div>
           <div className="h-4 bg-muted rounded"></div>
@@ -145,7 +146,7 @@ export function DailyProgress() {
   if (!progressData) {
     if (hasError) {
       return (
-        <div className="border-2 border-border rounded-2xl p-4">
+        <div className="rounded-2xl border-2 border-slate-200 bg-gradient-to-b from-slate-50 to-slate-100 p-4 shadow-[0_5px_0_#cbd5e1]">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <AlertCircle className="h-4 w-4" />
@@ -172,7 +173,7 @@ export function DailyProgress() {
       : 0;
 
   return (
-    <div className="border-2 border-border rounded-2xl p-4">
+    <div className="rounded-2xl border-2 border-slate-200 bg-gradient-to-b from-slate-50 to-slate-100 p-4 shadow-[0_5px_0_#cbd5e1]">
       <div className="flex items-center justify-between mb-3">
         <h3 className="text-base font-bold text-foreground">Günlük İlerleme</h3>
         <div className="flex items-center gap-2">
@@ -214,12 +215,15 @@ export function DailyProgress() {
             {targetPercentOfGoal}%
           </span>
         </div>
-        <div className="w-full bg-muted rounded-full h-2.5">
-          <div
-            className={`h-2.5 rounded-full transition-all duration-500 ease-out ${achieved ? "bg-suk-brand" : "bg-suk-payment"}`}
-            style={{ width: `${Math.max(0, Math.min(achieved ? 100 : progressPercentage, 100))}%` }}
-          ></div>
-        </div>
+        <Progress
+          value={Math.max(0, Math.min(achieved ? 100 : progressPercentage, 100))}
+          className="h-3.5"
+          indicatorClassName={
+            achieved
+              ? undefined
+              : "from-suk-payment to-indigo-700 shadow-[inset_0_-2px_3px_rgba(67,56,202,0.35)]"
+          }
+        />
       </div>
 
       <div className="text-sm text-muted-foreground">

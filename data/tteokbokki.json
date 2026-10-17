@@ -1,0 +1,427 @@
+{
+  "title": "Tteokbokki",
+  "description": "Baek Sehee’nin Ölmek İstiyorum Ama Tteokbokki de Yemek İstiyorum kitabında süren alçaklık. Her ders üç okuma ve bu okumadan cevaplanan bir sorudan oluşur. Bu bir tedavi değildir.",
+  "order": 1,
+  "lessons": [
+    {
+      "title": "Süren alçaklık",
+      "order": 1,
+      "challenges": [
+        {
+          "question": "Kitap bu hâli neden tek bir çöküş sahnesi diye kurmaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "tteok,distimi",
+          "explanation": "Gün yürürken de alçaklık sürebilir.",
+          "metadata": "{\"reading\":\"Tteokbokki, bir günün içinde biten bir kriz diye yazılmaz. Distimi, kişi işine devam ederken süren alçak bir hâldir. Mesaj cevaplanır. Gün yürür. Yürüyen gün, içerinin de yürüdüğünü göstermez.\\n\\nKitapta anlatılan, acının hafif olduğu değildir. Acının, günü durdurmadan da durabildiğidir.\"}",
+          "options": [
+            {
+              "text": "Acının hafif olduğu",
+              "correct": false
+            },
+            {
+              "text": "Günün yürürken de alçaklığın sürebileceği",
+              "correct": true
+            },
+            {
+              "text": "Çöküşün hiç olmadığı",
+              "correct": false
+            },
+            {
+              "text": "Mesajın iyileşmeyi kanıtladığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "İdare etmek neden iyileşmek sayılmaz?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "tteok,distimi",
+          "explanation": "Yürüyen gün, sağlam gün değildir.",
+          "metadata": "{\"reading\":\"Kişi toplantıya girer, işi bitirir, eve döner. Dışarıdan bakınca idare vardır. Kitap o idareyi, içerideki hâlin ölçüsü yapmaz.\\n\\nÖlçü karışınca, yürüyen gün sağlam gün sanılır.\"}",
+          "options": [
+            {
+              "text": "Toplantının içeriyi ölçtüğü",
+              "correct": false
+            },
+            {
+              "text": "Yürüyen günün sağlam gün sanılmaması",
+              "correct": true
+            },
+            {
+              "text": "İdarenin acıyı sildiği",
+              "correct": false
+            },
+            {
+              "text": "Eve dönmenin teşhis olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Sessiz süren hâl neden geç fark edilir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "tteok,distimi",
+          "explanation": "Haber vermeyen alçaklık, huy sanılabilir.",
+          "metadata": "{\"reading\":\"Bağıran bir kriz etrafa haber verir. Süren alçaklık haber vermez. Kişi de bunu huyu sanabilir. Kitap huy ile hastalığı ayırır.\\n\\nAyırmayınca yıllar, karakter diye taşınır.\"}",
+          "options": [
+            {
+              "text": "Krizin her zaman sessiz olduğu",
+              "correct": false
+            },
+            {
+              "text": "Haber vermeyen hâlin huy sanılabildiği",
+              "correct": true
+            },
+            {
+              "text": "Yılların teşhisi kolaylaştırdığı",
+              "correct": false
+            },
+            {
+              "text": "Karakterin hastalığı bitirdiği",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "İki istek",
+      "order": 2,
+      "challenges": [
+        {
+          "question": "Tteokbokki istemek acıyı neden yalan çıkarmaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "tteok,istek",
+          "explanation": "İki istek birbirini silmeden durabilir.",
+          "metadata": "{\"reading\":\"Kitabın adı iki cümleyi birden tutar. Ölmek istemek, küçük bir iştahın öldüğünü göstermez. Tteokbokki istemek de acının numara olduğunu göstermez.\\n\\nİki cümle birbirini silmez. Silinmeyi bekleyen okuma, kitabın kurduğu hâli kaçırır.\"}",
+          "options": [
+            {
+              "text": "İştahın acıyı sildiği",
+              "correct": false
+            },
+            {
+              "text": "İki cümlenin birbirini silmeden durabildiği",
+              "correct": true
+            },
+            {
+              "text": "Küçük isteğin numara olduğu",
+              "correct": false
+            },
+            {
+              "text": "Adın tek bir duygu taşıdığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Küçük iştah neden iyileşme kanıtı değildir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "tteok,istek",
+          "explanation": "Küçük istek, ağır olanı iptal etmez.",
+          "metadata": "{\"reading\":\"Kişi bir şeyi hâlâ isteyebilir ve aynı saatte yaşamayı ağır bulabilir. İstek, terazinin diğer kefesini kaldırmaz. Kitap o kefeyi kaldırmadan da iştahı ciddiye alır.\\n\\nCiddiye almak, acıyı küçültmek değildir.\"}",
+          "options": [
+            {
+              "text": "İştahın kefeyi kaldırdığı",
+              "correct": false
+            },
+            {
+              "text": "Küçük isteğin, ağır olanı iptal etmediği",
+              "correct": true
+            },
+            {
+              "text": "Acının iştahı yasakladığı",
+              "correct": false
+            },
+            {
+              "text": "Terazinin tek kefesi olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Tek cümleye indirmek neden kitabı eksiltir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "tteok,istek",
+          "explanation": "Rahatlamak için taraflardan birini atmak, kitabı eksiltir.",
+          "metadata": "{\"reading\":\"Yalnızca ölmek istemeyi okuyan, günün içindeki iştahı atar. Yalnızca tteokbokkiyi okuyan, acıyı şakaya çevirir. Kitap ikisini de atmaz.\\n\\nAtılan taraf, okurun rahatladığı taraftır. Rahatlama, kitabın cümlesi değildir.\"}",
+          "options": [
+            {
+              "text": "Tek cümlenin kitabı tamamladığı",
+              "correct": false
+            },
+            {
+              "text": "Rahatlamak için atılan tarafın kitabın cümlesi olmadığı",
+              "correct": true
+            },
+            {
+              "text": "İştahın şaka olduğu",
+              "correct": false
+            },
+            {
+              "text": "Acının okunmaması gerektiği",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "İyi yüz",
+      "order": 3,
+      "challenges": [
+        {
+          "question": "Dışarıdan idare etmek içeriyi neden ölçmez?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "tteok,yuz",
+          "explanation": "Görenin rahatlığı, yaşayanın ölçüsü değildir.",
+          "metadata": "{\"reading\":\"Sehee’nin anlattığı yerde yüz, işini görür. Gören, o yüzü hâl sanır. Kitap yüz ile hâl arasındaki boşlukta durur.\\n\\nBoşluk kapanmış gibi konuşmak, görenin rahatlığıdır. Yaşayanın ölçüsü değildir.\"}",
+          "options": [
+            {
+              "text": "Yüzün hâli gösterdiği",
+              "correct": false
+            },
+            {
+              "text": "Görenin rahatlığının yaşayanın ölçüsü olmadığı",
+              "correct": true
+            },
+            {
+              "text": "Boşluğun kapandığı",
+              "correct": false
+            },
+            {
+              "text": "İdarenin içeriyi düzelttiği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "İyi görünen kişiye neden soru sorulmaz?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "tteok,yuz",
+          "explanation": "Dağılmadan süren hâle çoğu zaman soru sorulmaz.",
+          "metadata": "{\"reading\":\"Soru, dağılmış olana gider. Dağılmadan süren alçaklık soru almaz. Kitap bu suskunluğu bir nezaket diye değil, bir körlük diye bırakır.\\n\\nNezaket sanılan şey, bakmamaktır.\"}",
+          "options": [
+            {
+              "text": "Nezaketin bakmak olduğu",
+              "correct": false
+            },
+            {
+              "text": "Dağılmadan süren hâlin soru dışı kalması",
+              "correct": true
+            },
+            {
+              "text": "Sorunun yalnızca meraklı olduğu",
+              "correct": false
+            },
+            {
+              "text": "İyi yüzün davet ettiği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kişi kendi yüzüne neden inanır?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "tteok,yuz",
+          "explanation": "Yüz iş görürse kişi, yoklamayı bırakabilir.",
+          "metadata": "{\"reading\":\"Yüz iş gördükçe kişi de işin görüldüğünü, kendisinin de görüldüğünü sanabilir. Sanmak, içeriyi yoklamaz. Kitap yoklamanın yüzün başarısından ayrı olduğunu söyler.\\n\\nBaşarı, yoklamanın yerine geçerse hâl adını kaybeder.\"}",
+          "options": [
+            {
+              "text": "Başarının hâli adlandırdığı",
+              "correct": false
+            },
+            {
+              "text": "Yüzün başarısının yoklamanın yerine geçebildiği",
+              "correct": true
+            },
+            {
+              "text": "İnanmanın teşhis olduğu",
+              "correct": false
+            },
+            {
+              "text": "İçerinin yüzle aynı kaldığı",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Başkasının notu",
+      "order": 4,
+      "challenges": [
+        {
+          "question": "Kitap öz değeri neden yalnızca üzüntüye bağlamaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "tteok,bakis",
+          "explanation": "Kişi, başkasının bakışını kendi değeri sanabilir.",
+          "metadata": "{\"reading\":\"Kayıtlarda dönen düğümlerden biri, kişinin kendini başkasının bakışıyla notlamasıdır. Üzüntü tek konu değildir. Konu, o notu kendi değeri sanmaktır.\\n\\nBakış değişince not değişir. Değer de bakışla birlikte oynar. Kitap bu oynamayı bir karakter kusuru diye kapatmaz.\"}",
+          "options": [
+            {
+              "text": "Üzüntünün tek konu olduğu",
+              "correct": false
+            },
+            {
+              "text": "Değerin, başkasının bakışının notu sanılması",
+              "correct": true
+            },
+            {
+              "text": "Notun sabit kaldığı",
+              "correct": false
+            },
+            {
+              "text": "Bakışın kişiyi iyileştirdiği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Not değişince değer neden de değişiyor sanılır?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "tteok,bakis",
+          "explanation": "Dışarıdaki hava, kişinin kendi tartısının yerine geçebilir.",
+          "metadata": "{\"reading\":\"Övgü gelince kişi yükselir. İlgisizlik gelince düşer. İkisi de dışarıdaki havadır. Kitap, havayı içerideki ölçü diye kullanan hâli gösterir.\\n\\nHava ölçüsü olunca, kişinin kendi tartısı boş kalır.\"}",
+          "options": [
+            {
+              "text": "Havanın içerideki tartı olduğu",
+              "correct": false
+            },
+            {
+              "text": "Dışarıdaki havanın tartının yerine geçmesi",
+              "correct": true
+            },
+            {
+              "text": "Övgünün tartıyı kurduğu",
+              "correct": false
+            },
+            {
+              "text": "İlgisizliğin her zaman doğru ölçtüğü",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Bu düğüm neden bir utanma hikâyesi değildir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "tteok,bakis",
+          "explanation": "Bu bir ayıp listesi değil, değerin nereden ödünç alındığıdır.",
+          "metadata": "{\"reading\":\"Başkasının notuyla yaşamak, kitabın teşhir ettiği bir ayıp değildir. Teşhis ettiği bir bağdır. Bağ görülünce utanmak yetmez. Görülen şey, değerin nereden ödünç alındığıdır.\\n\\nÖdünç alınan değer, sahibinin sandığı yerde durmaz.\"}",
+          "options": [
+            {
+              "text": "Utanmanın teşhis olduğu",
+              "correct": false
+            },
+            {
+              "text": "Bağın bir ayıp değil, değerin ödünç alındığı yer olduğu",
+              "correct": true
+            },
+            {
+              "text": "Notun kişiye ait olduğu",
+              "correct": false
+            },
+            {
+              "text": "Ödüncün sahibini değiştirmediği",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Rehber değil",
+      "order": 5,
+      "challenges": [
+        {
+          "question": "Seans kaydı neden bir tedavi yöntemi sayılmaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "tteok,rehber",
+          "explanation": "Kayıt bir tedavi usulü değildir. Okumak, odada olmak değildir.",
+          "metadata": "{\"reading\":\"Sehee kayıtları önce kendisi için tutar. Kitap, distimiyi bitiren bir usul sunmaz. Birinin odada söylediği, okuyanın tedavisinin yerine geçmez.\\n\\nOkumak, o odada olmak değildir. Bilinen bir acıda quiz de tedavi değildir.\"}",
+          "options": [
+            {
+              "text": "Okumanın tedavi olduğu",
+              "correct": false
+            },
+            {
+              "text": "Kaydın, hastalığı bitiren bir usul olarak yazılmadığı",
+              "correct": true
+            },
+            {
+              "text": "Quiz’in odanın yerine geçtiği",
+              "correct": false
+            },
+            {
+              "text": "Usulün kitapta tamamlandığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Başkasının seansı neden kişinin kendi hâlinin tarifi olmaz?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "tteok,rehber",
+          "explanation": "Tanıdık bir cümle, muayene değildir.",
+          "metadata": "{\"reading\":\"Tanıdık bir cümle, aynı hastalığın aynı yerde durduğunu göstermez. Kitap bir ayna tutabilir. Ayna, muayene değildir.\\n\\nTanımak rahatlatır. Rahatlama, bir hükmün yerine geçmez.\"}",
+          "options": [
+            {
+              "text": "Aynanın muayene olduğu",
+              "correct": false
+            },
+            {
+              "text": "Tanıdık cümlenin muayenenin yerine geçmediği",
+              "correct": true
+            },
+            {
+              "text": "Rahatlamanın teşhis olduğu",
+              "correct": false
+            },
+            {
+              "text": "Aynı cümlenin aynı hastalık olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitap neden bitiş vaat etmez?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "tteok,rehber",
+          "explanation": "Kayıt bir final değildir. Son sayfa hâli kapamaz.",
+          "metadata": "{\"reading\":\"Son sayfa, hâlin kapandığı yer değildir. Kayıt, bir sürecin ortasından alınmıştır. Orta, finale benzetilirse okur yanlış bir eşik bekler.\\n\\nEşik gelmeyince kitap başarısız olmuş sayılır. Sayılmaz. Kitap o eşiği kurmamıştır.\"}",
+          "options": [
+            {
+              "text": "Son sayfanın hâli kapattığı",
+              "correct": false
+            },
+            {
+              "text": "Kaydın bir final değil, sürecin ortası olduğu",
+              "correct": true
+            },
+            {
+              "text": "Eşiğin kitapta vaat edildiği",
+              "correct": false
+            },
+            {
+              "text": "Ortada bitenin başarısızlık olduğu",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

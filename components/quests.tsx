@@ -126,7 +126,7 @@ export const Quests = ({
                 </div>
                 <p className="text-xs text-muted-foreground mb-2">{rule.description}</p>
                 {!status.isUnlocked && (
-                  <Progress value={status.percentage} className="h-1.5" />
+                  <Progress value={status.percentage} className="h-2.5" />
                 )}
               </div>
             </div>
@@ -193,7 +193,7 @@ export const Quests = ({
                             {b.progress}/{b.target}
                           </span>
                         </div>
-                        <Progress value={pct} className="h-1.5" />
+                        <Progress value={pct} className="h-2.5" />
                       </div>
                     )}
                   </div>

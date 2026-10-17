@@ -1,6 +1,9 @@
 "use client";
 
+import { useId } from "react";
+
 import {
+  sidebarRailTabPaths,
   sidebarRailWrapButtonPath,
 } from "./sidebar-rail";
 
@@ -142,18 +145,32 @@ export function BottomNavRailSvg({
   activeButton,
   className,
 }: BottomNavRailSvgProps) {
+  const rawId = useId().replace(/:/g, "");
   const w = Math.max(1, widthPx);
   const h = Math.max(1, heightPx);
   const yRail = round2(Math.min(Math.max(yRailPx, 1), h));
-  const d =
+  const xRailSidebar = round2(h - yRail);
+  const tab =
     activeButton !== null
-      ? bottomNavRailWrapButtonPath({
-          width: w,
-          height: h,
-          yRail,
-          btn: activeButton,
+      ? sidebarRailTabPaths({
+          height: w,
+          width: h,
+          xRail: xRailSidebar,
+          btn: {
+            left: activeButton.top,
+            top: activeButton.left,
+            right: activeButton.bottom,
+            bottom: activeButton.right,
+            rx: activeButton.rx,
+          },
         })
-      : bottomNavRailStraightPath(w, yRail);
+      : null;
+  const d = tab
+    ? sidebarPathToBottomNavPath(tab.stroke, h)
+    : bottomNavRailStraightPath(w, yRail);
+  const fill = tab?.fill
+    ? sidebarPathToBottomNavPath(tab.fill, h)
+    : "";
 
   return (
     <svg
@@ -163,10 +180,35 @@ export function BottomNavRailSvg({
       height={h}
       viewBox={`0 0 ${w} ${h}`}
       fill="none"
+      overflow="hidden"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <defs>
+        <filter id={`${rawId}-inset`} x="-40%" y="-40%" width="180%" height="180%">
+          <feComponentTransfer in="SourceAlpha" result="inverted">
+            <feFuncA type="table" tableValues="1 0" />
+          </feComponentTransfer>
+          <feGaussianBlur in="inverted" stdDeviation="3.4" result="blurred" />
+          <feOffset in="blurred" dx="3" dy="4" result="darkOffset" />
+          <feFlood floodColor="#8ea0b5" floodOpacity="0.55" result="darkColor" />
+          <feComposite in="darkColor" in2="darkOffset" operator="in" result="darkShadow" />
+          <feComposite in="darkShadow" in2="SourceAlpha" operator="in" result="darkInner" />
+          <feMerge>
+            <feMergeNode in="SourceGraphic" />
+            <feMergeNode in="darkInner" />
+          </feMerge>
+        </filter>
+      </defs>
+      {fill ? (
+        <path
+          d={fill}
+          fill="hsl(var(--background))"
+          filter={`url(#${rawId}-inset)`}
+        />
+      ) : null}
       <path
         d={d}
+        fill="none"
         stroke="hsl(var(--border))"
         strokeWidth={2}
         strokeLinecap="butt"

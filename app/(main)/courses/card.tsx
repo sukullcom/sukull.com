@@ -47,9 +47,9 @@ export const Card = memo(
         }}
         className={cn(
           "shrink-0 w-[140px] sm:w-auto",
-          "relative border-2 rounded-2xl cursor-pointer flex flex-col items-center p-3 pb-3 transition-all",
-          "hover:shadow-md hover:-translate-y-0.5 active:translate-y-0",
-          "bg-card border-border",
+          "relative flex cursor-pointer flex-col items-center rounded-2xl border-2 p-3 pb-3 transition-all",
+          "border-slate-200 bg-gradient-to-b from-slate-50 to-slate-100",
+          "shadow-[0_5px_0_#cbd5e1] hover:brightness-[1.02] active:translate-y-[4px] active:shadow-[inset_0_2px_4px_rgba(15,23,42,0.08),0_1px_0_#cbd5e1]",
           active && style.activeBorder,
           disabled && "pointer-events-none opacity-50"
         )}

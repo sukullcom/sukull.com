@@ -198,15 +198,15 @@ export const MatchPairsChallenge = forwardRef<MatchPairsChallengeHandle | null, 
               key={card.id}
               onClick={() => handleCardClick(card.id)}
               className={cn(
-                "aspect-square cursor-pointer transition-all duration-300",
-                "rounded-lg border-2 p-4",
+                "aspect-square cursor-pointer transition-all duration-75 select-none",
+                "rounded-2xl border-2 border-b-[5px] p-4",
                 "flex flex-col items-center justify-center",
-                "bg-card shadow-md hover:shadow-lg",
-                !disabled && !isMatched && "hover:scale-105",
-                isSelected && "border-suk-payment-ring bg-suk-payment-soft scale-105",
-                isMismatching && "border-suk-danger-line bg-suk-danger-soft",
-                isMatched && "border-suk-brand/50 bg-suk-brand-soft",
-                !isSelected && !isMatched && "border-border",
+                "active:translate-y-[2px] active:border-b-[3px]",
+                !disabled && !isMatched && "hover:bg-black/[0.02] dark:hover:bg-white/[0.04]",
+                !isSelected && !isMatched && !isMismatching && "bg-card border-suk-border border-b-suk-border-strong text-foreground",
+                isSelected && "border-suk-payment-ring border-b-suk-payment-border bg-suk-payment-soft text-suk-payment shadow-sm",
+                isMismatching && "border-suk-danger-line border-b-suk-danger-border bg-suk-danger-soft text-suk-danger shadow-sm",
+                isMatched && "border-suk-brand/50 border-b-suk-brand-border bg-suk-brand-soft text-suk-brand opacity-80 pointer-events-none",
                 disabled && "cursor-not-allowed opacity-50",
               )}
             >

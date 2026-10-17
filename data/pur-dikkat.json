@@ -1,0 +1,427 @@
+{
+  "title": "Pür Dikkat",
+  "description": "Cal Newport’un Pür Dikkat’inde bölünmeyen iş ile meşgul günün ayrımı. Her ders üç okuma ve bu okumadan cevaplanan bir sorudan oluşur.",
+  "order": 9,
+  "lessons": [
+    {
+      "title": "Pür ve sığ",
+      "order": 1,
+      "challenges": [
+        {
+          "question": "Kitap iki işi neden aynı mesai saymaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "pur,is",
+          "explanation": "Biri zor kopyalanır, diğeri devredilebilir.",
+          "metadata": "{\"reading\":\"Pür Dikkat, bölünmeden yapılan işi, kopyası zor bir değer olarak anlatır. Sığ iş ise lojistiktir. Yerine başkası geçebilir, dikkat dağılsa da yürür.\\n\\nİkisi de yorabilir. Yorulmak, yapılan işin türünü değiştirmez.\"}",
+          "options": [
+            {
+              "text": "İkisinin de aynı değeri ürettiği",
+              "correct": false
+            },
+            {
+              "text": "Birinin kopyasının zor, diğerinin devredilebilir olduğu",
+              "correct": true
+            },
+            {
+              "text": "Sığ işin hiç yormadığı",
+              "correct": false
+            },
+            {
+              "text": "Pür işin lojistik olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Yorulmak neden işin derinliğini göstermez?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "pur,is",
+          "explanation": "Dağınık bir gün de bitkin bırakabilir.",
+          "metadata": "{\"reading\":\"Gün, haber ve küçük kararlarla da dolabilir. Kişi akşam bitkin olur. Bitkinlik, o gün kopyası zor bir şey üretildiğinin kanıtı değildir.\\n\\nKitap yorgunluğu bir ölçü diye kullanmaz.\"}",
+          "options": [
+            {
+              "text": "Bitkinliğin eseri kanıtladığı",
+              "correct": false
+            },
+            {
+              "text": "Dağınık günün de bitkin bırakabildiği",
+              "correct": true
+            },
+            {
+              "text": "Sığ işin dinlendirdiği",
+              "correct": false
+            },
+            {
+              "text": "Ölçünün yorgunluk olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Devredilen iş neden değersiz sayılmaz?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "pur,is",
+          "explanation": "Sığ iş günü doldurursa pür işe yer kalmaz.",
+          "metadata": "{\"reading\":\"Newport sığ işi yasaklamaz. O iş olmazsa gün durur. Ayrım, durduran işin bütün güne yayılmasıdır. Yayılınca, kopyası zor olan işe yer kalmaz.\\n\\nYer kalmaması, sığ işin suçudur diye kurulmaz. Günün onu tek iş sanmasıdır.\"}",
+          "options": [
+            {
+              "text": "Sığ işin yasak olduğu",
+              "correct": false
+            },
+            {
+              "text": "Sığ iş günü tek başına doldurunca pür işe yer kalmadığı",
+              "correct": true
+            },
+            {
+              "text": "Lojistiğin değeri olmadığı",
+              "correct": false
+            },
+            {
+              "text": "Devretmenin üretimi bitirdiği",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Dikkat kalıntısı",
+      "order": 2,
+      "challenges": [
+        {
+          "question": "İş değiştirmek neden zihni sıfırlamaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "pur,kalinti",
+          "explanation": "Bırakılan iş, yeni işin masasında kalır.",
+          "metadata": "{\"reading\":\"Kitapta, bırakılan işin dikkatte bir kalıntı bıraktığı anlatılır. Yeni iş, boş bir masada başlamaz. Önceki iş hâlâ masadadır.\\n\\nHızlı geçiş bu yüzden iki işi birden yapmak değildir. İkisini de yarım bir zihinle taşımaktır.\"}",
+          "options": [
+            {
+              "text": "Yeni işin boş masada başladığı",
+              "correct": false
+            },
+            {
+              "text": "Bırakılan işin dikkatte kaldığı",
+              "correct": true
+            },
+            {
+              "text": "Geçişin iki işi tamamladığı",
+              "correct": false
+            },
+            {
+              "text": "Kalıntının yalnızca yorgunluk olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Hızlı geçiş neden verim sanılır?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "pur,kalinti",
+          "explanation": "Çok işe değmek, onları bitirmek değildir.",
+          "metadata": "{\"reading\":\"Gün çok işe değdiği için dolu görünür. Değmek, bitirmek değildir. Kalıntı, değilen her işten bir parça alıkoyar. Parçalar akşam bir başarı listesi gibi durur.\\n\\nListe, yarım kalan dikkatleri sayar.\"}",
+          "options": [
+            {
+              "text": "Listenin biten işi saydığı",
+              "correct": false
+            },
+            {
+              "text": "Değmenin bitirmek sanılması",
+              "correct": true
+            },
+            {
+              "text": "Kalıntının listeyi sildiği",
+              "correct": false
+            },
+            {
+              "text": "Çok işin zihni boşalttığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kalıntı neden yalnızca mola eksikliği değildir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "pur,kalinti",
+          "explanation": "Dinlenmiş zihin de önceki işi taşıyabilir.",
+          "metadata": "{\"reading\":\"Mola, yorgunluğu indirir. Kalıntı ise konu değiştirince de durur. Dinlenmiş bir zihin, az önce bıraktığı dosyayı hâlâ taşıyabilir.\\n\\nKitap bu yüzden süreyi bölmekle dinlenmeyi ayırır.\"}",
+          "options": [
+            {
+              "text": "Molanın kalıntıyı sildiği",
+              "correct": false
+            },
+            {
+              "text": "Dinlenmiş zihnin de önceki işi taşıyabildiği",
+              "correct": true
+            },
+            {
+              "text": "Dosyanın molada bittiği",
+              "correct": false
+            },
+            {
+              "text": "Süreyi bölmenin dinlenmek olduğu",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Nadirlik",
+      "order": 3,
+      "challenges": [
+        {
+          "question": "Bölünmeyen dikkat neden pahalılaşır?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "pur,nadir",
+          "explanation": "Bölünmeme, etraf tersini ödüllendirdiği için seyrek kalır.",
+          "metadata": "{\"reading\":\"Pür Dikkat, günün dikkati bölmek üzerine kurulduğunu anlatır. Her boşluk bir uyarıyla dolar. Bu ortamda bölünmeden durabilmek seyrek kalır. Seyrek kalan, pahalanır.\\n\\nPahalık, kişinin özel bir yetenekle doğmasından gelmez. Etrafın tersini ödüllendirmesinden gelir.\"}",
+          "options": [
+            {
+              "text": "Yeteneğin doğuştan pahalı olduğu",
+              "correct": false
+            },
+            {
+              "text": "Etraf bölünmeyi ödüllendirdiği için bölünmemenin seyrek kaldığı",
+              "correct": true
+            },
+            {
+              "text": "Uyarının işi derinleştirdiği",
+              "correct": false
+            },
+            {
+              "text": "Pahaların meşguliyetten geldiği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Uyarı neden nötr bir araç değildir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "pur,nadir",
+          "explanation": "Bölünme varsayılan olursa gün derinliği kendiliğinden vermez.",
+          "metadata": "{\"reading\":\"Araç, haber taşıyabilir. Taşıdığı sırada açık olan işi de böler. Kitap aracı yasak bir eşya diye kurmaz. Aracın, dikkatin varsayılan hâli olmasını sorar.\\n\\nVarsayılan bölünme olunca, bölünmeme bir tercih olarak kalır. Tercih edilmeyeni gün kendiliğinden vermez.\"}",
+          "options": [
+            {
+              "text": "Aracın yasak olduğu",
+              "correct": false
+            },
+            {
+              "text": "Bölünmenin varsayılan olunca kendiliğinden derinleşilmediği",
+              "correct": true
+            },
+            {
+              "text": "Haberin işi bitirdiği",
+              "correct": false
+            },
+            {
+              "text": "Tercihin gün tarafından verildiği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kıymet neden meşgul olanın değil, durabilenin üstünde toplanır?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "pur,nadir",
+          "explanation": "Kıymet, seyrek kalan bölünmemede toplanır.",
+          "metadata": "{\"reading\":\"Meşgul olan çoğalır. Durabilen azalır. Newport kıymeti, azalan tarafa koyar. Çoğalan taraf günü doldurur, kopyası zor olan işi değil.\\n\\nDolu gün ile kıymetli gün bu yüzden ayrılır.\"}",
+          "options": [
+            {
+              "text": "Meşgul olanın azaldığı",
+              "correct": false
+            },
+            {
+              "text": "Kıymetin, seyrek kalan bölünmemede toplandığı",
+              "correct": true
+            },
+            {
+              "text": "Dolu günün kopyasının zor olduğu",
+              "correct": false
+            },
+            {
+              "text": "Azalan tarafın değersiz olduğu",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Meşgul takvim",
+      "order": 4,
+      "challenges": [
+        {
+          "question": "Dolu bir takvim neden işin ölçüsü olmaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "pur,mesgul",
+          "explanation": "Takvim dolu olabilir ve iş yine sığ kalabilir.",
+          "metadata": "{\"reading\":\"Kitapta takvim, sığ işlerle de ağzına kadar dolabilir. Doluluk bir hareket hissi verir. Hareket, kopyası zor bir üretimin yerine geçebilir.\\n\\nAkşam sorulacak soru, günün dolu olup olmadığı değildir. Günün hangi tür işle dolduğudur.\"}",
+          "options": [
+            {
+              "text": "Dolu günün derin olduğu",
+              "correct": false
+            },
+            {
+              "text": "Doluluğun, işin türünü gizleyebildiği",
+              "correct": true
+            },
+            {
+              "text": "Boş günün her zaman üretken olduğu",
+              "correct": false
+            },
+            {
+              "text": "Hareketin eseri kanıtladığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Hareket hissi neden tehlikelidir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "pur,mesgul",
+          "explanation": "Cevap vermek ilerleme hissi verir, ilerlemeyi ölçmez.",
+          "metadata": "{\"reading\":\"Kişi gün boyu cevap vermiştir. Cevap vermek, bir şeyin ilerlediği duygusunu üretir. Duygu, ilerlemeyi ölçmez. Kitap bu duyguyu bir rapor diye kabul etmez.\\n\\nRapor, biten derin işi sorar.\"}",
+          "options": [
+            {
+              "text": "Cevabın ilerleme olduğu",
+              "correct": false
+            },
+            {
+              "text": "Cevap vermenin ilerleme duygusu üretip ilerlemeyi ölçmediği",
+              "correct": true
+            },
+            {
+              "text": "Raporun duyguya baktığı",
+              "correct": false
+            },
+            {
+              "text": "Boş cevabın derin iş olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Akşam sorusu neden saat saymaz?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "pur,mesgul",
+          "explanation": "Günün uzunluğu, işin derinliğini söylemez.",
+          "metadata": "{\"reading\":\"Sekiz saat, sekiz saat sığ iş de olabilir. Saat, türü söylemez. Pür Dikkat türü sorar. Tür sorulmazsa uzun gün, kendiliğinden kıymetli gün olur.\\n\\nOlmaz. Uzunluk ile derinlik ayrı eksenlerdir.\"}",
+          "options": [
+            {
+              "text": "Saatin türü söylediği",
+              "correct": false
+            },
+            {
+              "text": "Uzun günün kendiliğinden derin olmadığı",
+              "correct": true
+            },
+            {
+              "text": "Sığ işin kısa sürdüğü",
+              "correct": false
+            },
+            {
+              "text": "Eksenlerin aynı olduğu",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Sıkıntı",
+      "order": 5,
+      "challenges": [
+        {
+          "question": "Kitap sıkıntıyı neden bir arıza saymaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "pur,sikinti",
+          "explanation": "Boş dakika, dikkatin tek işte durma idmanıdır.",
+          "metadata": "{\"reading\":\"Pür Dikkat’te boş dakika hemen doldurulursa zihin, tek bir zor şeyin yanında durmayı çalışmamış olur. Sıkıntı o çalışmanın boş sahasıdır. Saha kapanırsa derin iş, istenince birden gelmez.\\n\\nSıkıntı bir erdem gösterisi değildir. Dikkatin idmanıdır.\"}",
+          "options": [
+            {
+              "text": "Sıkıntının erdem gösterisi olduğu",
+              "correct": false
+            },
+            {
+              "text": "Boş dakikanın, tek işin yanında durma idmanı olduğu",
+              "correct": true
+            },
+            {
+              "text": "Doldurmanın dikkati eğittiği",
+              "correct": false
+            },
+            {
+              "text": "Derin işin istenince geldiği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Boşluğu doldurmak neden dinlenmek değildir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "pur,sikinti",
+          "explanation": "Boşluğu doldurmak, dikkati başka bir uyarıya bağlar.",
+          "metadata": "{\"reading\":\"Dinlenmek, dikkati bir işten çözer. Doldurmak, onu başka bir uyarıya bağlar. Kişi ikisini aynı sanır. Kitap bağlamayı dinlenme diye yazmaz.\\n\\nBağlı dikkat, boş görünen dakikada da meşguldür.\"}",
+          "options": [
+            {
+              "text": "Uyarının dinlendirdiği",
+              "correct": false
+            },
+            {
+              "text": "Doldurmanın dikkati başka bir uyarıya bağladığı",
+              "correct": true
+            },
+            {
+              "text": "Çözmenin meşguliyet olduğu",
+              "correct": false
+            },
+            {
+              "text": "Boş dakikanın uyarı sayıldığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Derin iş neden canı isteyince başlamaz?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "pur,sikinti",
+          "explanation": "Her boşlukta kaçan zihin, zor işin yanında duramaz.",
+          "metadata": "{\"reading\":\"Zihin, her boşlukta kaçmaya alışmışsa zor işin yanında duracak kası yoktur. Newport o kası, sıkıntıya katlanılan küçük aralıklarda arar. Aralık yoksa istek de işi taşımaz.\\n\\nİstek bir kıvılcımdır. Kas yoksa kıvılcım söner.\"}",
+          "options": [
+            {
+              "text": "İsteğin kasın yerini tuttuğu",
+              "correct": false
+            },
+            {
+              "text": "Kaçmaya alışmış zihnin zor işin yanında duramadığı",
+              "correct": true
+            },
+            {
+              "text": "Aralığın işi böldüğü",
+              "correct": false
+            },
+            {
+              "text": "Kıvılcımın idmanı bitirdiği",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,427 @@
+{
+  "title": "Paranın Psikolojisi",
+  "description": "Morgan Housel’in Paranın Psikolojisi’nde para kararının bilgi değil huy oluşu. Her ders üç okuma ve bu okumadan cevaplanan bir sorudan oluşur.",
+  "order": 8,
+  "lessons": [
+    {
+      "title": "Aynı bilgi, ayrı huy",
+      "order": 1,
+      "challenges": [
+        {
+          "question": "Kitap para başarısını neden zekâya bağlamaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "para,huy",
+          "explanation": "Aynı bilgi, ayrı bir huy ile ayrı yaşanır.",
+          "metadata": "{\"reading\":\"Paranın Psikolojisi, aynı bilgiyi bilen iki kişinin ayrı yaşayabildiğini anlatır. Formül ortadadır. Parayı yerinde tutan, formülü daha hızlı söyleyen değildir. Tutuş, bir huydur.\\n\\nKitapta anlatılan, bilginin işe yaramadığı değildir. Bilginin, huyun yerine geçememesidir.\"}",
+          "options": [
+            {
+              "text": "Formülün gizli olduğu",
+              "correct": false
+            },
+            {
+              "text": "Aynı bilgiyi bilenlerin ayrı yaşayabildiği",
+              "correct": true
+            },
+            {
+              "text": "Zekânın parayı iptal ettiği",
+              "correct": false
+            },
+            {
+              "text": "Huyun öğrenilemediği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Formülü hızlı söylemek neden tutuş sayılmaz?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "para,huy",
+          "explanation": "Doğru cümle, ertesi sabahki isteği durdurmaz.",
+          "metadata": "{\"reading\":\"Toplantıda doğru cümle kurulabilir. Cümle, ertesi sabah gelen isteği durdurmaz. Kitap o isteği bir hesap hatası diye görmez. Hesap doğru, davranış başka yerden gelir.\\n\\nDoğru cümle ile yapılan iş arasındaki boşluk, kitabın konusu olur.\"}",
+          "options": [
+            {
+              "text": "Cümlenin hesabı bozduğu",
+              "correct": false
+            },
+            {
+              "text": "Doğru cümlenin isteği durdurmadığı",
+              "correct": true
+            },
+            {
+              "text": "İsteğin her zaman hesap olduğu",
+              "correct": false
+            },
+            {
+              "text": "Hızlı söyleyenin kazandığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Huy neden tablodan okunmaz?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "para,huy",
+          "explanation": "Karar çoğu zaman tablonun dışında, sofrada kurulur.",
+          "metadata": "{\"reading\":\"Housel, kararın çoğu zaman sofrada kurulduğunu anlatır. Tablo o an orada değildir. Kişinin gördüğü hayat, egosu ve o güne kadarki payı oradadır.\\n\\nTabloyu ezberlemek, sofradaki kararı açıklamaz.\"}",
+          "options": [
+            {
+              "text": "Sofranın tabloyu kopyaladığı",
+              "correct": false
+            },
+            {
+              "text": "Kararın, ezberlenen tablonun dışında kurulduğu",
+              "correct": true
+            },
+            {
+              "text": "Egonun hesaba girmediği",
+              "correct": false
+            },
+            {
+              "text": "Payın herkeste aynı olduğu",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kimse deli değil",
+      "order": 2,
+      "challenges": [
+        {
+          "question": "Başkasının para kararı neden dışarıdan delice görünür?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "para,tecrube",
+          "explanation": "Karar, bakanın örnekleminden değil yaşanan tarihten çıkar.",
+          "metadata": "{\"reading\":\"Kitap, herkesin kendi gördüğü tarihle makul bir karar kurduğunu söyler. O tarih başkasının tarihi değildir. Dışarıdan bakan, kendi örneklemine uymayan seçimi hata sanır.\\n\\nHata sandığı şey, o hayatın içinden bakınca bir devam olabilir.\"}",
+          "options": [
+            {
+              "text": "Herkesin aynı tarihi yaşadığı",
+              "correct": false
+            },
+            {
+              "text": "Kararın, bakanın örnekleminden değil yaşanan tarihten çıktığı",
+              "correct": true
+            },
+            {
+              "text": "Makul kararın olmadığı",
+              "correct": false
+            },
+            {
+              "text": "Deli seçimin övüldüğü",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kendi örneklemi neden başkasının hatasını büyütür?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "para,tecrube",
+          "explanation": "Kişinin normal sandığı çizgi, herkesin çizgisi değildir.",
+          "metadata": "{\"reading\":\"Kişi, paranın kendi gençliğinde ne yaptığını normal sanır. Başkası başka bir on yıl görmüştür. Normal sandığı çizgi, evrensel bir çizgi değildir.\\n\\nKitap bu yüzden alay etmeden önce örneklemi sorar.\"}",
+          "options": [
+            {
+              "text": "On yılın herkeste aynı olduğu",
+              "correct": false
+            },
+            {
+              "text": "Normal sandığı çizginin evrensel olmadığı",
+              "correct": true
+            },
+            {
+              "text": "Alayın teşhis olduğu",
+              "correct": false
+            },
+            {
+              "text": "Gençliğin hesabı bitirdiği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Anlamak neden hak vermekle aynı şey değildir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "para,tecrube",
+          "explanation": "Kararın nereden çıktığını görmek, onu doğru ilan etmek değildir.",
+          "metadata": "{\"reading\":\"Bir kararın nereden çıktığını görmek, o kararı doğru ilan etmek değildir. Kitap deli demeyi bırakır. Yerine, bu hayat bu kararı neden makul buldu diye sorar.\\n\\nSoru, onayın yerine geçer.\"}",
+          "options": [
+            {
+              "text": "Her kararın doğru olduğu",
+              "correct": false
+            },
+            {
+              "text": "Kökeni görmenin onay sayılmadığı",
+              "correct": true
+            },
+            {
+              "text": "Sormanın alay olduğu",
+              "correct": false
+            },
+            {
+              "text": "Makulün her zaman kazandırdığı",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Yeter çizgisi",
+      "order": 3,
+      "challenges": [
+        {
+          "question": "Kitap en zor para hünerini neden yeter diye adlandırır?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "para,yeter",
+          "explanation": "Yürüyen çıta, biriken yılı yer.",
+          "metadata": "{\"reading\":\"Housel’de kazanç, hedef çıtası her kaydığında yenilir. Çıta yürürse, biriken yıl o yürüyüşün altında kalır. Yeter, daha fazlasını bilmemek değildir. Çıtanın yürümesini durdurmaktır.\\n\\nBileşik büyüme, duran bir çizgiye ihtiyaç duyar. Çizgi kaçarsa zamanın işi harcanır.\"}",
+          "options": [
+            {
+              "text": "Daha fazlasını bilmemek",
+              "correct": false
+            },
+            {
+              "text": "Yürüyen çıtanın biriken yılı yemesi",
+              "correct": true
+            },
+            {
+              "text": "Çıtanın hiç olmaması",
+              "correct": false
+            },
+            {
+              "text": "Zamanın hedefi büyüttüğü",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Yeter neden azla yetinmek değildir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "para,yeter",
+          "explanation": "Başkasının çıtasından kaçmak da yeter değildir.",
+          "metadata": "{\"reading\":\"Azla yetinmek bir yoksunluk olabilir. Kitaptaki yeter, kişinin kendi çizgisini tanımasıdır. Tanımadan yapılan kısıtlama, yine başkasının çıtasından kaçıştır.\\n\\nKaçış da yürümek de çizgiyi kişinin elinden alır.\"}",
+          "options": [
+            {
+              "text": "Kısıtlamanın yeter olduğu",
+              "correct": false
+            },
+            {
+              "text": "Başkasının çıtasından kaçışın da yeter sayılmadığı",
+              "correct": true
+            },
+            {
+              "text": "Çizginin başkasına ait olduğu",
+              "correct": false
+            },
+            {
+              "text": "Yoksunluğun hüner olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Bileşik büyüme neden sabit bir isteğe muhtaçtır?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "para,yeter",
+          "explanation": "Yer her yıl değişirse zamanın çalışacağı para kalmaz.",
+          "metadata": "{\"reading\":\"Yıl, ancak aynı yerde bırakılan para üzerinde çalışır. İstek her yıl yeri değiştirirse yılın çalışacağı para kalmaz. Hüner, daha iyi bir formül bulmak değil, yeri değiştirmemektir.\\n\\nFormül doğru olsa da yer değişince sonuç dağılır.\"}",
+          "options": [
+            {
+              "text": "Formülün yeri önemsiz kıldığı",
+              "correct": false
+            },
+            {
+              "text": "İstek yeri değiştirince yılın çalışacağı paranın kalmadığı",
+              "correct": true
+            },
+            {
+              "text": "Her yıl yer değiştirmenin büyüttüğü",
+              "correct": false
+            },
+            {
+              "text": "Sabit isteğin büyümeyi durdurduğu",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Görünmeyen servet",
+      "order": 4,
+      "challenges": [
+        {
+          "question": "Kitap serveti neden görünen eşyada aramaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "para,servet",
+          "explanation": "Servet, alınan şeyde değil, duran parada aranır.",
+          "metadata": "{\"reading\":\"Görünen alış, paranın çıktığı yerdir. Kalan para görünmez. Housel serveti, alınmamış olanda arar. Alınmış olan, servetin kendisi gibi dolaşır.\\n\\nKomşu o dolaşanı görür. Görmediği, duran paradır.\"}",
+          "options": [
+            {
+              "text": "Alınmış olanın servet olduğu",
+              "correct": false
+            },
+            {
+              "text": "Kalan paranın görünmemesi",
+              "correct": true
+            },
+            {
+              "text": "Eşyanın birikimi büyüttüğü",
+              "correct": false
+            },
+            {
+              "text": "Komşunun duran parayı gördüğü",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Gösterilen hayat neden zenginlik ölçüsü olmaz?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "para,servet",
+          "explanation": "Gösterilen hayat, harcanmış olanıdır.",
+          "metadata": "{\"reading\":\"Gösterilen şey, harcanmış olmaktır. Harcamak bir zevk olabilir. Zevk, duran paranın kanıtı değildir. Kitap bu ikisini ayırır.\\n\\nÖlçüyü gösterilene koyan, çıkışı giriş sanır.\"}",
+          "options": [
+            {
+              "text": "Harcamanın duran parayı gösterdiği",
+              "correct": false
+            },
+            {
+              "text": "Gösterilenin harcanmış olmak olduğu",
+              "correct": true
+            },
+            {
+              "text": "Zevkin servet sayıldığı",
+              "correct": false
+            },
+            {
+              "text": "Çıkışın girişle aynı olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Komşunun gördüğü neden yanıltır?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "para,servet",
+          "explanation": "Kıyas, serveti değil servetten çıkanı yarıştırır.",
+          "metadata": "{\"reading\":\"Komşu yalnızca sokağa çıkanı görür. Sokağa çıkmayan para, kıyasın dışında kalır. Kıyas bu yüzden serveti değil, servetten çıkanı yarıştırır.\\n\\nYarış, duran parayı küçültür. Çünkü duran para yarışa gelmez.\"}",
+          "options": [
+            {
+              "text": "Sokağa çıkmayan paranın görüldüğü",
+              "correct": false
+            },
+            {
+              "text": "Kıyasın, duran parayı değil çıkanı yarıştırdığı",
+              "correct": true
+            },
+            {
+              "text": "Yarışın serveti büyüttüğü",
+              "correct": false
+            },
+            {
+              "text": "Komşunun kasayı bildiği",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Oyunda kalmak",
+      "order": 5,
+      "challenges": [
+        {
+          "question": "Kitap her yıl haklı çıkmayı neden asıl hüner saymaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "para,sure",
+          "explanation": "Az sayıda olay sonucu taşır. Düşmek, doğru yılları da götürür.",
+          "metadata": "{\"reading\":\"Paranın Psikolojisi’nde sonucun büyük kısmını az sayıda olay taşır. Her yıl doğru olmak, o olaylar gelene kadar oyunda kalmaktan daha az iş görür. Bir kez oyundan düşmek, doğru yılları da götürür.\\n\\nHata payı bu yüzden bir korkaklık değil, sürenin şartıdır.\"}",
+          "options": [
+            {
+              "text": "Her yılın eşit ağırlıkta olduğu",
+              "correct": false
+            },
+            {
+              "text": "Az sayıda olayın sonucu taşıması ve düşmenin yılları götürmesi",
+              "correct": true
+            },
+            {
+              "text": "Hata payının kazancı iptal ettiği",
+              "correct": false
+            },
+            {
+              "text": "Doğru yılın düşmeyi önlediği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Hata payı neden ihtiyatlı bir süs değildir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "para,sure",
+          "explanation": "Hata payı, plan tutmazsa masada kalmak için durur.",
+          "metadata": "{\"reading\":\"Pay, plan tutmazsa kişinin masada kalması için bırakılır. Süs olan ihtiyat, ilk sıkıntıda harcanır. Kitaptaki pay, harcanmasın diye durur.\\n\\nDurduğu için zaman, işini yapacak birini bulur.\"}",
+          "options": [
+            {
+              "text": "Payın ilk sıkıntıda harcandığı",
+              "correct": false
+            },
+            {
+              "text": "Payın, plan tutmazsa masada kalmak için durduğu",
+              "correct": true
+            },
+            {
+              "text": "İhtiyatın zamanı durdurduğu",
+              "correct": false
+            },
+            {
+              "text": "Süsün süre sayıldığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Zaman neden haklı çıkmaktan daha çok çalışır?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "para,sure",
+          "explanation": "Zaman, masada kalanın üzerinden geçer.",
+          "metadata": "{\"reading\":\"Haklı çıkmak bir yılın olayıdır. Zaman, oyunda kalanın üzerinden tekrar tekrar geçer. Kitap bu geçişi, zekânın tek atışından daha ağır sayar.\\n\\nTek atış parlaktır. Parlak atış, masa boşaldıysa iş göremez.\"}",
+          "options": [
+            {
+              "text": "Tek atışın zamanı yendiği",
+              "correct": false
+            },
+            {
+              "text": "Zamanın, masada kalanın üzerinden geçtiği",
+              "correct": true
+            },
+            {
+              "text": "Parlak yılın payı sildiği",
+              "correct": false
+            },
+            {
+              "text": "Haklı çıkmanın süre olduğu",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

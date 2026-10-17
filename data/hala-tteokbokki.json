@@ -1,0 +1,427 @@
+{
+  "title": "Hâlâ tteokbokki",
+  "description": "Aynı yazarın Ölmek İstiyorum Ama Hâlâ Tteokbokki Yemek İstiyorum kitabında süren tedavi. Her ders üç okuma ve bu okumadan cevaplanan bir sorudan oluşur. Bu bir tedavi değildir.",
+  "order": 2,
+  "lessons": [
+    {
+      "title": "Kapanmayan kitap",
+      "order": 1,
+      "challenges": [
+        {
+          "question": "İkinci kitap neden birincinin mutlu sonu değildir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "hala,son",
+          "explanation": "İkinci kitap, kapanmayan hâlin kaydıdır.",
+          "metadata": "{\"reading\":\"Hâlâ tteokbokki, ilk kitabın distimiyi bitirmediği için vardır. Son sayfa bir eşik sanılmıştır. Eşik, hastalığın takvimi değildir.\\n\\nDevam kitabı, bir zafer turu diye yazılmaz. Süren hâlin ikinci kaydıdır.\"}",
+          "options": [
+            {
+              "text": "İlk kitabın hastalığı bitirdiği",
+              "correct": false
+            },
+            {
+              "text": "Devamın, kapanmayan hâlin ikinci kaydı olduğu",
+              "correct": true
+            },
+            {
+              "text": "Son sayfanın eşik olduğu",
+              "correct": false
+            },
+            {
+              "text": "İkinci kitabın zafer turu olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Eşik beklentisi neden okuru yanlıştır?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "hala,son",
+          "explanation": "Kurulmayan eşiği aramak, süren hâli başarısızlık sandırır.",
+          "metadata": "{\"reading\":\"Okur, birinci kitabın sonunda bir düzelme hakkı ister. İstemek, yazarın kurduğu şeyi değiştirmez. Kitap o hakkı vaat etmemiştir.\\n\\nVaat edilmeyen eşiği aramak, süren hâli bir başarısızlık gibi okutur.\"}",
+          "options": [
+            {
+              "text": "Vaat edilen eşiğin geldiği",
+              "correct": false
+            },
+            {
+              "text": "Kurulmayan eşiği aramanın süren hâli başarısızlık sandırdığı",
+              "correct": true
+            },
+            {
+              "text": "Düzelmenin takvim olduğu",
+              "correct": false
+            },
+            {
+              "text": "Okurun vaadi tamamladığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Devam etmek neden aynı şeyi tekrar etmek değildir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "hala,son",
+          "explanation": "Hâl kapanmadığı için atılan tur, aynı cümlenin ezberi değildir.",
+          "metadata": "{\"reading\":\"Aynı oda, aynı konu sanılabilir. İkinci kayıt, birincinin fotokopisi değildir. Hâl kapanmadığı için yeni bir tur atılır. Tur, aynı cümleyi ezberletmez.\\n\\nEzber arayan, turdaki değişen düğümü kaçırır.\"}",
+          "options": [
+            {
+              "text": "İkinci kaydın fotokopi olduğu",
+              "correct": false
+            },
+            {
+              "text": "Kapanmadığı için atılan turda düğümün değişebildiği",
+              "correct": true
+            },
+            {
+              "text": "Aynı odanın aynı cümle olduğu",
+              "correct": false
+            },
+            {
+              "text": "Tekrarın derinleşmeyi bitirdiği",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Karmaşıklaşan iç",
+      "order": 2,
+      "challenges": [
+        {
+          "question": "Tedavi sürdükçe iç neden sadeleşmez?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "hala,dugum",
+          "explanation": "Bakıldıkça çatışma daha karmaşık görünebilir.",
+          "metadata": "{\"reading\":\"İkinci kitapta çatışma, çözüldükçe sadeleşen bir düğüm değildir. Bakıldıkça daha karmaşık hâle gelir. İyileşme, hissin azalması sanılır. Kitap, hissin adının çoğalabildiğini gösterir.\\n\\nAdı çoğalan his, daha hafif olmak zorunda değildir.\"}",
+          "options": [
+            {
+              "text": "Hissin tedaviyle sadeleştiği",
+              "correct": false
+            },
+            {
+              "text": "Bakıldıkça çatışmanın daha karmaşık görünebildiği",
+              "correct": true
+            },
+            {
+              "text": "Adı çoğalan hissin hafiflediği",
+              "correct": false
+            },
+            {
+              "text": "Düğümün ilk seansta çözüldüğü",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Daha iyi bir hafta neden düğümü bitirmez?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "hala,dugum",
+          "explanation": "Hafif bir hafta, düğümün çözüldüğü hafta değildir.",
+          "metadata": "{\"reading\":\"Hafta hafifleyebilir. Hafifleyen hafta, düğümün çözüldüğü hafta değildir. Kişi hafifliği final sanır. Final sanılan yerden dönünce her şey başa sarılmış gibi olur.\\n\\nSarılmaz. Hafiflik, çözümün kendisi değildir.\"}",
+          "options": [
+            {
+              "text": "Hafif haftanın final olduğu",
+              "correct": false
+            },
+            {
+              "text": "Hafifliğin, düğümün çözümü sayılmadığı",
+              "correct": true
+            },
+            {
+              "text": "Dönüşün her şeyi sildiği",
+              "correct": false
+            },
+            {
+              "text": "Çözümün hafiflikle aynı olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Karmaşa neden tedavinin bozulması değildir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "hala,dugum",
+          "explanation": "Görünen karmaşa, örtülen şeyin açılması olabilir.",
+          "metadata": "{\"reading\":\"Kişi, daha çok düğüm görünce odanın işe yaramadığını düşünebilir. Kitap o görünmeyi, işe yaramamak diye yazmaz. Örtülen şey açılmıştır.\\n\\nAçılan örtü, dağınıklık gibi durur. Dağınıklık, örtünün altındayken de oradadır.\"}",
+          "options": [
+            {
+              "text": "Çok düğümün odayı iptal ettiği",
+              "correct": false
+            },
+            {
+              "text": "Görünen karmaşanın, örtülen şeyin açılması olduğu",
+              "correct": true
+            },
+            {
+              "text": "Örtünün düğümü sildiği",
+              "correct": false
+            },
+            {
+              "text": "Açıklığın bozulma olduğu",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Aynı oda",
+      "order": 3,
+      "challenges": [
+        {
+          "question": "İkinci kitap neden yeni bir yöntem getirmez?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "hala,oda",
+          "explanation": "İkinci kitap yeni bir teknik getirmez. Aynı odada devam eder.",
+          "metadata": "{\"reading\":\"Hâlâ tteokbokki, başka bir teknikle gelen bir el kitabı değildir. Yine psikiyatristin odasıdır. Yöntem değişmemiştir. Süren, konuşmanın kendisidir.\\n\\nYeni bir kapak, yeni bir usul sanılır. Kapak değişir. Usul aynı odada kalır.\"}",
+          "options": [
+            {
+              "text": "Kapağın usulü değiştirdiği",
+              "correct": false
+            },
+            {
+              "text": "Sürecin aynı odada, yeni bir teknik olmadan devam ettiği",
+              "correct": true
+            },
+            {
+              "text": "El kitabının ikinci ciltte başladığı",
+              "correct": false
+            },
+            {
+              "text": "Konuşmanın yerini yöntemin aldığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Aynı oda neden sıkıcı bir tekrar sayılmaz?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "hala,oda",
+          "explanation": "Oda aynı kalabilir, düğüm donmak zorunda değildir.",
+          "metadata": "{\"reading\":\"Oda değişmeyince okur, konunun da değişmediğini sanabilir. Konu aynı kişi olabilir. Düğüm aynı yerde durmak zorunda değildir.\\n\\nKitap mekânı sabit tutar, düğümü değil.\"}",
+          "options": [
+            {
+              "text": "Mekân değişmeyince düğümün de donduğu",
+              "correct": false
+            },
+            {
+              "text": "Odanın sabit, düğümün ise donmak zorunda olmadığı",
+              "correct": true
+            },
+            {
+              "text": "Tekrarın her sayfada aynı olduğu",
+              "correct": false
+            },
+            {
+              "text": "Kişinin değişmediği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Usul aramak neden bu kitabı kaçırır?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "hala,oda",
+          "explanation": "Uygulanacak adım aramak, kayıttaki bağı atlar.",
+          "metadata": "{\"reading\":\"Okur, uygulanacak bir adım ister. Kitap adım vermek için yazılmamıştır. Adım arayan, kaydın gösterdiği bağı atlar.\\n\\nAtlanan bağ, tam da süren hâlin bağdır.\"}",
+          "options": [
+            {
+              "text": "Kitabın bir adımlar listesi olduğu",
+              "correct": false
+            },
+            {
+              "text": "Adım arayanın, kayıttaki bağı atladığı",
+              "correct": true
+            },
+            {
+              "text": "Usulün bağı çözdüğü",
+              "correct": false
+            },
+            {
+              "text": "Listenin ikinci kitabın konusu olduğu",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Tanımak",
+      "order": 4,
+      "challenges": [
+        {
+          "question": "Kitap genç okura neden bir teknik yüzünden ulaşmaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "hala,okur",
+          "explanation": "Kitap, bağırmadan süren hâli tanıyan kişiye gider.",
+          "metadata": "{\"reading\":\"Sehee, sesinin bu kadar gence gideceğini beklememiştir. Gidiş, öğretilen bir numara yüzünden değildir. Giden, günü yürürken süren hâli tanıyan kişidir.\\n\\nTanımak, aynı hastalığı paylaşmak zorunda değildir. Tanıdık olan, acının bağırarak gelmek zorunda olmamasıdır.\"}",
+          "options": [
+            {
+              "text": "Numaranın kitabı taşıdığı",
+              "correct": false
+            },
+            {
+              "text": "Okurun, bağırmadan süren hâli tanıması",
+              "correct": true
+            },
+            {
+              "text": "Gençliğin teşhis olduğu",
+              "correct": false
+            },
+            {
+              "text": "Beklentinin yöntemi değiştirdiği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Tanımak neden aynı teşhise sahip olmak değildir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "hala,okur",
+          "explanation": "Benzerlik görmek, aynı teşhise sahip olmak değildir.",
+          "metadata": "{\"reading\":\"Okur kendi gününde bir benzerlik görebilir. Benzerlik, aynı hastalığın kopyası değildir. Kitap bu kopya sanısını kurmaz.\\n\\nKurulsaydı her tanıyan, aynı odanın hastası olurdu. Olmaz.\"}",
+          "options": [
+            {
+              "text": "Her tanıyanın aynı hasta olduğu",
+              "correct": false
+            },
+            {
+              "text": "Benzerliğin, aynı teşhisin kopyası olmadığı",
+              "correct": true
+            },
+            {
+              "text": "Günün teşhisi koyduğu",
+              "correct": false
+            },
+            {
+              "text": "Kopyanın kitabı tamamladığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Yayılmak neden kitabın vaadini değiştirmez?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "hala,okur",
+          "explanation": "Çok okunmak, kaydı bir tedavi usulüne çevirmez.",
+          "metadata": "{\"reading\":\"Çok kişi okuyunca kitap bir çözüm sanılabilir. Okur sayısı, vaat edilen şeyi büyütmez. Vaat, baştan dardır. Dar olan, bir kayıttır.\\n\\nKalabalık, kaydı bir usule çevirmez.\"}",
+          "options": [
+            {
+              "text": "Kalabalığın kaydı usule çevirdiği",
+              "correct": false
+            },
+            {
+              "text": "Okur sayısının, kitabın vaadini büyütmediği",
+              "correct": true
+            },
+            {
+              "text": "Dar vaadin başarısızlık olduğu",
+              "correct": false
+            },
+            {
+              "text": "Çözümün baskıyla geldiği",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Eşlik",
+      "order": 5,
+      "challenges": [
+        {
+          "question": "Kitap el uzatmayı neden iyileştirmek saymaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "hala,eslik",
+          "explanation": "Eşlik, hastalığı bitiren el değildir.",
+          "metadata": "{\"reading\":\"İkinci kitap, çaresizliği bir ömürlük iş olarak gören kişiye eşlik eder. Eşlik, o işi bitiren el değildir. Yanında durmaktır.\\n\\nDurmak, tedavi vaadi kurulunca bozulur. Kitap o vaadi kurmaz.\"}",
+          "options": [
+            {
+              "text": "Eşliğin tedaviyi bitirdiği",
+              "correct": false
+            },
+            {
+              "text": "Yanında durmanın, işi bitiren el olmadığı",
+              "correct": true
+            },
+            {
+              "text": "Vaadin kitapta kurulduğu",
+              "correct": false
+            },
+            {
+              "text": "Ömürlük işin bir bölüm olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Ömürlük iş neden bir yenilgi ilanı değildir?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "hala,eslik",
+          "explanation": "Bitmeyen hâl, bir maç skoru değildir.",
+          "metadata": "{\"reading\":\"Bitmeyen hâl, kişinin kaybettiği anlamına gelmez. Kitap bitmeyeni, utanç verici bir skor diye yazmaz. Skor arayan, süren işi bir maça çevirir.\\n\\nMaç olmayan yerde beraberlik de bozgun da yanlış sözdür.\"}",
+          "options": [
+            {
+              "text": "Bitmeyenin yenilgi olduğu",
+              "correct": false
+            },
+            {
+              "text": "Süren işin bir maç skoruna çevrilemeyeceği",
+              "correct": true
+            },
+            {
+              "text": "Beraberliğin tedavi olduğu",
+              "correct": false
+            },
+            {
+              "text": "Utancın kitabın ölçüsü olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Yanında durmak neden öğüt vermek değildir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "hala,eslik",
+          "explanation": "Bir sonraki adımı koymak, eşliği yeniden rehbere çevirir.",
+          "metadata": "{\"reading\":\"Öğüt, karşıdakinin hâline bir sonraki adımı koyar. Eşlik, o adımı koymaz. Koyunca kayıt yine bir rehbere döner.\\n\\nKitap rehbere dönmemek için yanında kalır. Kalmak, söyleyecek sözün bittiği yer değildir. Sözün yerini değiştirdiği yerdir.\"}",
+          "options": [
+            {
+              "text": "Öğüdün eşlik olduğu",
+              "correct": false
+            },
+            {
+              "text": "Adım koyan sözün kaydı yeniden rehber yaptığı",
+              "correct": true
+            },
+            {
+              "text": "Susmanın eşlik sayıldığı",
+              "correct": false
+            },
+            {
+              "text": "Rehberin ikinci kitapta başladığı",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

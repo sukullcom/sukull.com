@@ -1,0 +1,427 @@
+{
+  "title": "Bu Ülke",
+  "description": "Cemil Meriç’in Bu Ülke’sinde irfan, aydın ve kelime üzerine ayrımlar. Her ders üç okuma ve bu okumadan cevaplanan bir sorudan oluşur.",
+  "order": 7,
+  "lessons": [
+    {
+      "title": "İrfan ve kültür",
+      "order": 1,
+      "challenges": [
+        {
+          "question": "Meriç kültür kelimesini neden irfanın yerine koymaz?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "bu-ulke,irfan",
+          "explanation": "Kültür adı, irfanın yerini alabilir.",
+          "metadata": "{\"reading\":\"Bu Ülke’de kültür, raftan alınmış bir vitrin gibi durabilir. İrfan ise o vitrinin örtmediği bir bilme hâli olarak kalır. Kelimeler aynı cümlede geçince aynı şey olmazlar.\\n\\nKitapta anlatılan, kültürün değersiz sayılması değildir. Kültür adının, irfanın yerini sessizce almasıdır.\"}",
+          "options": [
+            {
+              "text": "Kültürün hiç olmadığı",
+              "correct": false
+            },
+            {
+              "text": "Kültür adının irfanın yerine geçebildiği",
+              "correct": true
+            },
+            {
+              "text": "İrfanın yalnızca Batı’da bulunduğu",
+              "correct": false
+            },
+            {
+              "text": "İkisinin aynı raf olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Vitrindeki kelime neden bilme sayılmaz?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "bu-ulke,irfan",
+          "explanation": "Kelimeyi kullanmak, onu taşımış olmak değildir.",
+          "metadata": "{\"reading\":\"Meriç, edinilmiş kelimenin sahibini bilgin yapmadığını anlatır. Kelime rafta durur. Bilme, o kelimenin örttüğü şeyi taşımaktır. Taşımayan kişi kelimeyi kullanır, bilmeyi değil.\\n\\nAyrım buradadır. Söylemek, bilmiş olmanın kanıtı değildir.\"}",
+          "options": [
+            {
+              "text": "Söylemenin bilmek olduğu",
+              "correct": false
+            },
+            {
+              "text": "Kelimeyi taşımayan kişinin onu yalnızca kullandığı",
+              "correct": true
+            },
+            {
+              "text": "Vitrinin irfan sayıldığı",
+              "correct": false
+            },
+            {
+              "text": "Bilmenin kelimesiz kaldığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "İrfan kültürden neden daha dar bir kapıdır?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "bu-ulke,irfan",
+          "explanation": "İrfan, dışarıdan gelen adın bittiği yerde aranır.",
+          "metadata": "{\"reading\":\"Kültür geniş bir ad olarak her şeyi içine alabilir. İrfan o genişliğe sığmaz. Bir yerin kendi bilme yolunu, dışarıdan gelen adın bitirdiği yerde arar.\\n\\nBu yüzden iki kelimeyi yan yana yazmak, aralarındaki kapıyı kapatmaz.\"}",
+          "options": [
+            {
+              "text": "İrfanın daha kolay öğrenildiği",
+              "correct": false
+            },
+            {
+              "text": "İrfanın dışarıdan gelen adla bitmediği",
+              "correct": true
+            },
+            {
+              "text": "Kültürün kapalı bir liste olduğu",
+              "correct": false
+            },
+            {
+              "text": "İkisinin birbirini iptal ettiği",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Çeviren aydın",
+      "order": 2,
+      "challenges": [
+        {
+          "question": "Yalnızca Batı’yı okuyan aydın neden hâlâ çevirmen kalabilir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "bu-ulke,aydin",
+          "explanation": "Başkasının cümlesini eve getirmek, düşünmüş olmak değildir.",
+          "metadata": "{\"reading\":\"Bu Ülke’de aydın, başkasının cümlesini kendi malı sanabilir. Okumak bir cümleyi eve getirmektir. Getirilen cümle, düşünce olmaz. Düşünce, o cümlenin bu yerde neye değdiğini sormaktır.\\n\\nKitapta anlatılan, Batı’yı okumanın yasak olduğudur değil. Okumanın çeviri olarak kalabilmesidir.\"}",
+          "options": [
+            {
+              "text": "Okumanın yasak olduğu",
+              "correct": false
+            },
+            {
+              "text": "Getirilen cümlenin düşünce sayılmayabildiği",
+              "correct": true
+            },
+            {
+              "text": "Aydının hiç okumadığı",
+              "correct": false
+            },
+            {
+              "text": "Çevirinin her zaman özgün olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Meriç mal edinmeyi neden tehlikeli sayar?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "bu-ulke,aydin",
+          "explanation": "Kaynağı unutmak, cümleyi kişinin malı yapmaz.",
+          "metadata": "{\"reading\":\"Başkasının hükmü, tekrar edilince sahibinin hükmü gibi durur. Aydın o tekrarı bir keşif sanabilir. Keşif, cümlenin geldiği yeri unutunca başlar sanılır. Kitap tam tersini söyler. Gelen yeri unutmak, düşünceyi kaybettirir.\\n\\nMal sandığı şey, hâlâ başkasının cüzdanındadır.\"}",
+          "options": [
+            {
+              "text": "Tekrarın keşif olduğu",
+              "correct": false
+            },
+            {
+              "text": "Unutulan kaynağın cümleyi mal yapmadığı",
+              "correct": true
+            },
+            {
+              "text": "Hükmün bu ülkede doğduğu",
+              "correct": false
+            },
+            {
+              "text": "Okumanın hafızayı sildiği",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Bu yerde sormak neden okumaktan ayrı bir iştir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "bu-ulke,aydin",
+          "explanation": "Cümle bu yere çarpmıyorsa aktarımda kalır.",
+          "metadata": "{\"reading\":\"Okumak cümleyi taşır. Sormak, o cümlenin bu sokakta neye çarptığını arar. Çarpışma yoksa aydın bir aktarıcı olarak kalır. Aktarıcı faydalı olabilir. Düşünmüş olmak başka bir iştir.\\n\\nBu Ülke o iki işi birbirine yapıştırmaz.\"}",
+          "options": [
+            {
+              "text": "Sormanın gereksiz olduğu",
+              "correct": false
+            },
+            {
+              "text": "Çarpışmayan cümlenin aktarımda kaldığı",
+              "correct": true
+            },
+            {
+              "text": "Aktarmanın düşünceyi bitirdiği",
+              "correct": false
+            },
+            {
+              "text": "Sokağın kitaba girmemesi",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kelime ve hafıza",
+      "order": 3,
+      "challenges": [
+        {
+          "question": "Sözlük neden bir kelime listesi değildir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "bu-ulke,kelime",
+          "explanation": "Kelime gidince hatıra söyleyecek yer bulamaz.",
+          "metadata": "{\"reading\":\"Meriç’te sözlük, bir yerin neyi hatırlayabildiğinin rafıdır. Kelime düşünce listeye eklenmez. Kelime gidince, o kelimenin taşıdığı hatıra da söyleyecek yer bulamaz.\\n\\nKitapta anlatılan, eski kelimelere dönme emri değildir. Kelimesiz kalan bir yerin, kendi geçmişini adlandıramamasıdır.\"}",
+          "options": [
+            {
+              "text": "Eski kelimeye dönme emri",
+              "correct": false
+            },
+            {
+              "text": "Kelime gidince hatıranın adlandırılamaması",
+              "correct": true
+            },
+            {
+              "text": "Listenin hafıza sayılması",
+              "correct": false
+            },
+            {
+              "text": "Sözlüğün yalnızca imla kitabı olması",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Yeni kelime eski hatırayı neden her zaman taşımaz?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "bu-ulke,kelime",
+          "explanation": "Yerine konan kelime, gidenin gördüğünü görmeyebilir.",
+          "metadata": "{\"reading\":\"Bir kavramın yerine başka bir kelime konabilir. Konulan kelime, gidenin gördüğü şeyi görmeyebilir. Çeviri o zaman bir köprü değil, bir örtüdür.\\n\\nBu Ülke bu örtüyü ilerleme sanmama konusunda durur.\"}",
+          "options": [
+            {
+              "text": "Her yeni kelimenin köprü olduğu",
+              "correct": false
+            },
+            {
+              "text": "Yeni kelimenin gidenin gördüğünü görmeyebildiği",
+              "correct": true
+            },
+            {
+              "text": "Örtünün hafızayı çoğalttığı",
+              "correct": false
+            },
+            {
+              "text": "Eski kelimenin boş olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Hafıza kaybı neden unutkanlıkla aynı şey değildir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "bu-ulke,kelime",
+          "explanation": "Ortak kelime gidince geçmiş dilsiz kalır.",
+          "metadata": "{\"reading\":\"Unutkanlık bir kişinin aklından çıkar. Burada kaybolan, bir yerin ortak söyleme gücüdür. Kişi hatırlar sandığı şeyi, elindeki kelimelerle kuramayabilir.\\n\\nKuramayınca geçmiş silinmiş gibi değil, dilsiz kalmış gibi durur.\"}",
+          "options": [
+            {
+              "text": "Kişinin adını unuttuğu",
+              "correct": false
+            },
+            {
+              "text": "Ortak söyleme gücü gidince geçmişin dilsiz kaldığı",
+              "correct": true
+            },
+            {
+              "text": "Hafızanın kelimeden bağımsız olduğu",
+              "correct": false
+            },
+            {
+              "text": "Listenin geçmişi sakladığı",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Doğu ve Batı",
+      "order": 4,
+      "challenges": [
+        {
+          "question": "Doğu ile Batı bu kitapta neden bir harita sorusu değildir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "bu-ulke,bati",
+          "explanation": "Yara, bakışın bu ayrıma teslim olmasıdır.",
+          "metadata": "{\"reading\":\"Bu Ülke, hangi kıtanın üstün olduğunu sormaz. Sorduğu, bir yerin kendine bakarken bu ayrımı ödünç almasıdır. Ayrım coğrafyada duruyor sanılır. Asıl yara, bakışın bu ayrıma teslim olmasıdır.\\n\\nKitapta anlatılan, iki tarafı birleştirme sloganı da değildir.\"}",
+          "options": [
+            {
+              "text": "Hangi kıtanın üstün olduğu",
+              "correct": false
+            },
+            {
+              "text": "Bakışın ödünç bir ayrıma teslim olması",
+              "correct": true
+            },
+            {
+              "text": "Haritanın yanlış çizildiği",
+              "correct": false
+            },
+            {
+              "text": "İki tarafın aynı olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Ödünç ayrım neden kişinin kendi yerini örter?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "bu-ulke,bati",
+          "explanation": "Taraf adı, adlandırılmayan hali örter.",
+          "metadata": "{\"reading\":\"Kişi kendini Doğu ya da Batı diye adlandırınca, adlandırmadığı hali göremez. Ad, bakışı rahatlatır. Rahatlama, görme değildir.\\n\\nMeriç bu rahatlığı bir açıklama diye kabul etmez.\"}",
+          "options": [
+            {
+              "text": "Adın görmeyi kolaylaştırdığı",
+              "correct": false
+            },
+            {
+              "text": "Adın, adlandırılmayan hali örttüğü",
+              "correct": true
+            },
+            {
+              "text": "Coğrafyanın bakışı düzelttiği",
+              "correct": false
+            },
+            {
+              "text": "Rahatlamanın teşhis olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Kitap iki tarafı neden barıştırmaya kalkmaz?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "bu-ulke,bati",
+          "explanation": "Ayrım sorgulanmadan kurulan barış, yarayı örter.",
+          "metadata": "{\"reading\":\"Barıştırma, ayrımı doğru kabul edip üstüne bir nezaket koyar. Bu Ülke o nezaketi istemez. Önce ayrımın bu yerde ne iş gördüğünü sorar.\\n\\nİş görülmeden kurulan barış, yarayı kapatmış gibi durur.\"}",
+          "options": [
+            {
+              "text": "Nezaketin yeteceği",
+              "correct": false
+            },
+            {
+              "text": "Ayrımın ne iş gördüğü sorulmadan barışın yara örttüğü",
+              "correct": true
+            },
+            {
+              "text": "Tarafların silineceği",
+              "correct": false
+            },
+            {
+              "text": "Haritanın atılacağı",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Teşhis",
+      "order": 5,
+      "challenges": [
+        {
+          "question": "Bu ülke adı neden bir övgü ya da sövgü değildir?",
+          "type": "SELECT",
+          "difficulty": "EASY",
+          "tags": "bu-ulke,teshis",
+          "explanation": "Ad, duyguya değil bakılan hâle konur.",
+          "metadata": "{\"reading\":\"Meriç bu adı bir manzara kartı gibi kullanmaz. Öven de söven de yeri bir duyguya indirger. Kitapta ad, bakılan yerin hâline konan bir teşhistir.\\n\\nTeşhis, sevmek ya da nefret etmekten önce gelir. İkisi de bakmayı bırakabilir.\"}",
+          "options": [
+            {
+              "text": "Yerin övülmesi",
+              "correct": false
+            },
+            {
+              "text": "Adın bir duyguya değil bir hâle konması",
+              "correct": true
+            },
+            {
+              "text": "Sövgünün daha doğru olduğu",
+              "correct": false
+            },
+            {
+              "text": "Manzaranın yeterli olduğu",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Öven ile söven neden aynı yerde buluşur?",
+          "type": "SELECT",
+          "difficulty": "MEDIUM",
+          "tags": "bu-ulke,teshis",
+          "explanation": "Övmek de sövmek de bakmayı bitirebilir.",
+          "metadata": "{\"reading\":\"Biri yeri yükseltir, biri yerin dibine batırır. İkisi de bakmayı bitirir. Teşhis ise hâli adlandırmaya devam eder. Bu Ülke o devamı ister.\\n\\nDuygu güçlü olabilir. Güçlü duygu, görmenin yerine geçmez.\"}",
+          "options": [
+            {
+              "text": "İkisinin de teşhis koyduğu",
+              "correct": false
+            },
+            {
+              "text": "Yükseltmenin de batırmanın da bakmayı bitirdiği",
+              "correct": true
+            },
+            {
+              "text": "Sövgünün övgüden üstün olduğu",
+              "correct": false
+            },
+            {
+              "text": "Duygunun görmeyi tamamladığı",
+              "correct": false
+            }
+          ]
+        },
+        {
+          "question": "Teşhis neden sevmekten önce gelir?",
+          "type": "SELECT",
+          "difficulty": "HARD",
+          "tags": "bu-ulke,teshis",
+          "explanation": "Ad konmazsa sevgi, hâli örtebilir.",
+          "metadata": "{\"reading\":\"Seven, sevdiği şeyi düzeltmeden bırakabilir. Teşhis, bırakmadan önce hâlin adını koyar. Ad konmazsa sevgi bir örtü olur.\\n\\nKitap örtünün altında kalan hâli ister.\"}",
+          "options": [
+            {
+              "text": "Sevginin teşhis sayıldığı",
+              "correct": false
+            },
+            {
+              "text": "Ad konmazsa sevginin hâli örtebildiği",
+              "correct": true
+            },
+            {
+              "text": "Nefretin daha dürüst olduğu",
+              "correct": false
+            },
+            {
+              "text": "Hâlin adsız kalması gerektiği",
+              "correct": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 "use client";
 
+import { useId } from "react";
+
 /** Buton kutusu sidebar köke göre; `rounded-2xl` ≈ 16px */
 export type SidebarRailButtonBox = {
   left: number;
@@ -30,12 +32,31 @@ export function sidebarRailStraightPath(height: number, xRail: number) {
  * Sekme-optiği: üst/altta **aynı `tabR`, `hingeX`, `kTab`** — alt yay, üsttekinin **buton eksenine paralel eksende**
  * aynası: `x`'te ortak ikinci kontrol (`topC2x`), `y`'ler `T ↔ B`; `hinge`'den yansıtılmış `x` yanlış cusp çıkarır.
  */
+export type SidebarRailTabPaths = {
+  stroke: string;
+  fill: string;
+};
+
 export function sidebarRailWrapButtonPath(params: {
   height: number;
   width: number;
   xRail: number;
   btn: SidebarRailButtonBox;
 }): string {
+  return sidebarRailTabPaths(params).stroke;
+}
+
+/**
+ * Stroke: açık U (sayfa kenarı kapalı değil).
+ * Fill: aynı U, açık kenardan dışarı taşar — clip ile o kenardaki gölge kesilir,
+ * böylece sekme sayfaya birleşir.
+ */
+export function sidebarRailTabPaths(params: {
+  height: number;
+  width: number;
+  xRail: number;
+  btn: SidebarRailButtonBox;
+}): SidebarRailTabPaths {
   const H = Math.max(0, params.height);
   const W = Math.max(1, params.width);
   const xRail = round2(Math.min(Math.max(params.xRail, 1), W));
@@ -53,6 +74,7 @@ export function sidebarRailWrapButtonPath(params: {
     )
   );
 
+  const straight = sidebarRailStraightPath(H, xRail);
   if (
     !Number.isFinite(H) ||
     xRail <= R ||
@@ -61,7 +83,7 @@ export function sidebarRailWrapButtonPath(params: {
     R < 8 ||
     R > W + 1
   ) {
-    return sidebarRailStraightPath(H, xRail);
+    return { stroke: straight, fill: "" };
   }
 
   /** Kenar ↔ buton yatayı — giriş eğrisi genişliği */
@@ -109,10 +131,7 @@ export function sidebarRailWrapButtonPath(params: {
   /** Sol/üst–alt pill köşe Bézier’leri (sekme optiğinden bağımsız) */
   const k = rr * BEZIER_QUARTER_CIRCLE_COEFFICIENT;
 
-  return [
-    `M ${xRail},0`,
-    `L ${xRail},${yVertTop}`,
-    /* Üst sekme köşesi (Bézier çeyrek): dikey eksen → üst kenar */
+  const scoopPath = [
     `C ${xRail},${round2(T - tabR + kTab)} ${topC2x},${T} ${hingeX},${T}`,
     `L ${Ri},${T}`,
     `L ${Lj},${T}`,
@@ -120,12 +139,27 @@ export function sidebarRailWrapButtonPath(params: {
     `L ${L},${Bm}`,
     `C ${L},${Bm + k} ${Lj - k},${B} ${Lj},${B}`,
     `L ${Ri},${B}`,
-    /* Üstte `C(rail→hinge)` + `L(hinge→Ri)` ile aynı yapı: `L(Ri→hinge)` + `C(hinge→rail)` — yatay simetri */
     `L ${hingeX},${B}`,
-    /** Alt kübik: üst kübik ile aynı `topC2x`; `botC=2 hinge−topC` cusp’a neden olur */
     `C ${topC2x},${B} ${xRail},${round2(B + tabR - kTab)} ${xRail},${yRailBot}`,
+  ].join(" ");
+
+  const stroke = [
+    `M ${xRail},0`,
+    `L ${xRail},${yVertTop}`,
+    scoopPath,
     `L ${xRail},${H}`,
   ].join(" ");
+
+  const openX = round2(W + 96);
+  const fill = [
+    `M ${xRail},${yVertTop}`,
+    scoopPath,
+    `L ${openX},${yRailBot}`,
+    `L ${openX},${yVertTop}`,
+    "Z",
+  ].join(" ");
+
+  return { stroke, fill };
 }
 
 type SidebarRailSvgProps = {
@@ -145,17 +179,20 @@ export function SidebarRailSvg({
   activeButton,
   className,
 }: SidebarRailSvgProps) {
+  const rawId = useId().replace(/:/g, "");
   const w = Math.max(1, widthPx);
   const h = Math.max(1, heightPx);
-  const d =
+  const xRail = round2(Math.min(Math.max(xRailPx, 1), w));
+  const tab =
     activeButton !== null
-      ? sidebarRailWrapButtonPath({
+      ? sidebarRailTabPaths({
           height: h,
           width: w,
-          xRail: round2(Math.min(Math.max(xRailPx, 1), w)),
+          xRail,
           btn: activeButton,
         })
-      : sidebarRailStraightPath(h, round2(Math.min(Math.max(xRailPx, 1), w)));
+      : null;
+  const d = tab?.stroke ?? sidebarRailStraightPath(h, xRail);
 
   return (
     <svg
@@ -165,10 +202,35 @@ export function SidebarRailSvg({
       height={h}
       viewBox={`0 0 ${w} ${h}`}
       fill="none"
+      overflow="hidden"
       xmlns="http://www.w3.org/2000/svg"
     >
+      <defs>
+        <filter id={`${rawId}-inset`} x="-40%" y="-40%" width="180%" height="180%">
+          <feComponentTransfer in="SourceAlpha" result="inverted">
+            <feFuncA type="table" tableValues="1 0" />
+          </feComponentTransfer>
+          <feGaussianBlur in="inverted" stdDeviation="3.4" result="blurred" />
+          <feOffset in="blurred" dx="3" dy="4" result="darkOffset" />
+          <feFlood floodColor="#8ea0b5" floodOpacity="0.55" result="darkColor" />
+          <feComposite in="darkColor" in2="darkOffset" operator="in" result="darkShadow" />
+          <feComposite in="darkShadow" in2="SourceAlpha" operator="in" result="darkInner" />
+          <feMerge>
+            <feMergeNode in="SourceGraphic" />
+            <feMergeNode in="darkInner" />
+          </feMerge>
+        </filter>
+      </defs>
+      {tab?.fill ? (
+        <path
+          d={tab.fill}
+          fill="hsl(var(--background))"
+          filter={`url(#${rawId}-inset)`}
+        />
+      ) : null}
       <path
         d={d}
+        fill="none"
         stroke="hsl(var(--border))"
         strokeWidth={2}
         strokeLinecap="butt"

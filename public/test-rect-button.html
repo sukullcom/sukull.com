@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>3D UI Comparison</title>
+  <style>
+    body {
+      background: #f8fafc;
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+    .container {
+      max-width: 900px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+    .group {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    }
+    h3 { margin: 0; font-size: 16px; color: #334155; }
+    .btn-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* 3D Button */
+    .btn-3d {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 75ms ease-out, box-shadow 75ms ease-out, filter 75ms ease-out;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      outline: none;
+      height: 48px;
+      padding: 0 28px;
+    }
+
+    .btn-3d-primary {
+      background: linear-gradient(180deg, #4ade80 0%, #22c55e 55%, #16a34a 100%);
+      color: #ffffff;
+      box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        0 6px 0 #15803d,
+        0 10px 16px -2px rgba(22, 163, 74, 0.35);
+    }
+    .btn-3d-primary:hover {
+      filter: brightness(1.05);
+    }
+    .btn-3d-primary:active, .btn-3d-primary.is-pressed {
+      transform: translateY(4px);
+      box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.25),
+        0 2px 0 #15803d,
+        0 3px 6px rgba(22, 163, 74, 0.2);
+      filter: brightness(0.95);
+    }
+
+    .btn-3d-danger {
+      background: linear-gradient(180deg, #fb7185 0%, #f43f5e 55%, #e11d48 100%);
+      color: #ffffff;
+      box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        0 6px 0 #be123c,
+        0 10px 16px -2px rgba(225, 29, 72, 0.35);
+    }
+    .btn-3d-danger:hover {
+      filter: brightness(1.05);
+    }
+    .btn-3d-danger:active, .btn-3d-danger.is-pressed {
+      transform: translateY(4px);
+      box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.25),
+        0 2px 0 #be123c,
+        0 3px 6px rgba(225, 29, 72, 0.2);
+      filter: brightness(0.95);
+    }
+
+    .btn-3d-default {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 60%, #f1f5f9 100%);
+      color: #334155;
+      border: 2px solid #e2e8f0;
+      box-shadow: 
+        inset 0 1px 0 #ffffff,
+        0 5px 0 #cbd5e1,
+        0 8px 14px -2px rgba(100, 116, 139, 0.12);
+    }
+    .btn-3d-default:active, .btn-3d-default.is-pressed {
+      transform: translateY(3px);
+      box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.08),
+        0 2px 0 #cbd5e1;
+      background: #f1f5f9;
+    }
+
+    /* Cards */
+    .card-3d {
+      flex: 1;
+      min-width: 180px;
+      min-height: 84px;
+      padding: 18px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 75ms ease-out, box-shadow 75ms ease-out, background 75ms ease-out;
+    }
+
+    .card-default {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 60%, #f1f5f9 100%);
+      color: #334155;
+      border: 2px solid #e2e8f0;
+      box-shadow: 
+        inset 0 1px 0 #ffffff,
+        0 5px 0 #cbd5e1,
+        0 8px 14px -2px rgba(100, 116, 139, 0.12);
+    }
+    .card-default:hover {
+      border-color: #cbd5e1;
+    }
+    .card-default:active, .card-default.is-pressed {
+      transform: translateY(3px);
+      box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.08),
+        0 2px 0 #cbd5e1;
+      background: #f1f5f9;
+    }
+
+    .card-selected {
+      background: linear-gradient(180deg, #eef2ff 0%, #e0e7ff 60%, #c7d2fe 100%);
+      color: #3730a3;
+      border: 2px solid #818cf8;
+      box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        0 5px 0 #6366f1,
+        0 8px 14px -2px rgba(99, 102, 241, 0.25);
+    }
+    .card-selected:active, .card-selected.is-pressed {
+      transform: translateY(3px);
+      box-shadow: 
+        inset 0 2px 4px rgba(67, 56, 202, 0.2),
+        0 2px 0 #6366f1;
+      background: #c7d2fe;
+    }
+
+    .card-correct {
+      background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 60%, #bbf7d0 100%);
+      color: #166534;
+      border: 2px solid #4ade80;
+      box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        0 5px 0 #22c55e,
+        0 8px 14px -2px rgba(34, 197, 94, 0.25);
+    }
+
+    .card-wrong {
+      background: linear-gradient(180deg, #fff1f2 0%, #ffe4e6 60%, #fecdd3 100%);
+      color: #9f1239;
+      border: 2px solid #fb7185;
+      box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        0 5px 0 #f43f5e,
+        0 8px 14px -2px rgba(244, 63, 94, 0.25);
+    }
+
+    /* Unit Banner 3D */
+    .unit-banner-3d {
+      border-radius: 20px;
+      padding: 22px 26px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      background: linear-gradient(180deg, #818cf8 0%, #6366f1 55%, #4f46e5 100%);
+      box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        0 6px 0 #3730a3,
+        0 12px 24px -4px rgba(79, 70, 229, 0.28);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>3D Dikdörtgen Arayüz Sistemi</h2>
+
+    <!-- Unit Banner -->
+    <div class="unit-banner-3d">
+      <div>
+        <h2 style="margin: 0 0 6px 0; font-size: 24px; font-weight: 800;">Ünite 1: Atomik Alışkanlıklar</h2>
+        <p style="margin: 0; opacity: 0.92; font-size: 16px;">Küçük değişimlerin olağanüstü sonuçları üzerine 5 temel ders.</p>
+      </div>
+      <button class="btn-3d" style="background: rgba(255,255,255,0.25); border: 2px solid rgba(255,255,255,0.4); color: white; box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 0 rgba(0,0,0,0.2);">
+        Devam Et
+      </button>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="group">
+      <h3>Ders ve Genel Butonlar (Primary, Danger, Default)</h3>
+      <div class="btn-row">
+        <button class="btn-3d btn-3d-primary">KONTROL ET</button>
+        <button class="btn-3d btn-3d-primary is-pressed">KONTROL ET (BASILI)</button>
+        <button class="btn-3d btn-3d-danger">TEKRAR DENE</button>
+        <button class="btn-3d btn-3d-danger is-pressed">TEKRAR DENE (BASILI)</button>
+        <button class="btn-3d btn-3d-default">İPTAL ET</button>
+      </div>
+    </div>
+
+    <!-- Challenge Option Cards -->
+    <div class="group">
+      <h3>Challenge Seçenek Kartları (Normal Dikdörtgen + 3D)</h3>
+      <div class="btn-row">
+        <div class="card-3d card-default">Seçenek A</div>
+        <div class="card-3d card-default is-pressed">Seçenek A (Basılı)</div>
+        <div class="card-3d card-selected">Seçenek B (Seçili)</div>
+        <div class="card-3d card-selected is-pressed">Seçenek B (Basılı)</div>
+      </div>
+      <div class="btn-row">
+        <div class="card-3d card-correct">Doğru Cevap ✓</div>
+        <div class="card-3d card-wrong">Yanlış Cevap ✗</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.btn-3d, .card-3d').forEach(el => {
+      el.addEventListener('mousedown', () => el.classList.add('is-pressed'));
+      el.addEventListener('mouseup', () => el.classList.remove('is-pressed'));
+      el.addEventListener('mouseleave', () => el.classList.remove('is-pressed'));
+    });
+  </script>
+</body>
+</html>

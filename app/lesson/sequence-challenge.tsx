@@ -190,12 +190,12 @@ export const SequenceChallenge = forwardRef<SequenceChallengeHandle | null, Prop
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           className={cn(
-                            "flex items-center p-6 rounded-lg border-2 transition-all",
-                            "bg-card shadow-sm",
-                            snapshot.isDragging && "shadow-lg rotate-1",
-                            itemStatus === "correct" && "border-green-300 bg-green-50",
-                            itemStatus === "wrong" && "border-rose-300 bg-rose-50",
-                            itemStatus === "none" && "border-input",
+                            "flex items-center p-5 lg:p-6 rounded-2xl border-2 border-b-[5px] transition-all select-none",
+                            "bg-card shadow-sm active:translate-y-[2px] active:border-b-[3px]",
+                            snapshot.isDragging && "shadow-xl rotate-1 scale-[1.02]",
+                            itemStatus === "correct" && "border-suk-brand border-b-suk-brand-border bg-suk-brand-soft",
+                            itemStatus === "wrong" && "border-suk-danger-line border-b-suk-danger-border bg-suk-danger-soft",
+                            itemStatus === "none" && "border-suk-border border-b-suk-border-strong",
                             disabled && "opacity-50",
                           )}
                         >

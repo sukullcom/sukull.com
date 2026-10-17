@@ -280,9 +280,9 @@ export const DragDropChallenge = ({
               <div
                 key={item.id}
                 className={cn(
-                  "p-4 rounded-lg border-2 cursor-move transition-all",
-                  "hover:shadow-md active:scale-95",
-                  "border-input bg-card",
+                  "p-4 rounded-2xl border-2 border-b-[5px] cursor-move transition-all select-none",
+                  "border-suk-border border-b-suk-border-strong bg-card",
+                  "hover:bg-slate-50 dark:hover:bg-slate-800/60 active:translate-y-[2px] active:border-b-[3px]",
                   draggedItem === item.id && "opacity-50",
                   disabled && "cursor-not-allowed opacity-50"
                 )}
