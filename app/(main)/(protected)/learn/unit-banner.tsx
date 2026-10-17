@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import { CheckCircle, Lock } from "lucide-react";
 import type { SubjectColorConfig } from "@/lib/subject-colors";
 
