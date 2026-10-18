@@ -206,7 +206,14 @@ export function SidebarRailSvg({
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        <filter id={`${rawId}-edge`} x="-10%" y="-15%" width="160%" height="130%">
+        <filter
+          id={`${rawId}-edge`}
+          filterUnits="userSpaceOnUse"
+          x={-8}
+          y={-8}
+          width={w + 24}
+          height={h + 16}
+        >
           <feGaussianBlur in="SourceAlpha" stdDeviation="1.2" result="blur" />
           <feOffset in="blur" dx="2" dy="0" result="off" />
           <feFlood floodColor="#94a3b8" floodOpacity="0.28" result="color" />

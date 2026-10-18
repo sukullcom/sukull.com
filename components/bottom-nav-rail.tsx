@@ -181,7 +181,14 @@ export function BottomNavRailSvg({
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        <filter id={`${rawId}-edge`} x="-10%" y="-40%" width="120%" height="160%">
+        <filter
+          id={`${rawId}-edge`}
+          filterUnits="userSpaceOnUse"
+          x={-8}
+          y={-12}
+          width={w + 16}
+          height={h + 24}
+        >
           <feGaussianBlur in="SourceAlpha" stdDeviation="1.2" result="blur" />
           <feOffset in="blur" dx="0" dy="-2" result="off" />
           <feFlood floodColor="#94a3b8" floodOpacity="0.28" result="color" />
