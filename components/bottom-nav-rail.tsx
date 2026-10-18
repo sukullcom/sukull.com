@@ -168,9 +168,6 @@ export function BottomNavRailSvg({
   const d = tab
     ? sidebarPathToBottomNavPath(tab.stroke, h)
     : bottomNavRailStraightPath(w, yRail);
-  const fill = tab?.fill
-    ? sidebarPathToBottomNavPath(tab.fill, h)
-    : "";
 
   return (
     <svg
@@ -180,32 +177,21 @@ export function BottomNavRailSvg({
       height={h}
       viewBox={`0 0 ${w} ${h}`}
       fill="none"
-      overflow="hidden"
+      overflow="visible"
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        <filter id={`${rawId}-inset`} x="-40%" y="-40%" width="180%" height="180%">
-          <feComponentTransfer in="SourceAlpha" result="inverted">
-            <feFuncA type="table" tableValues="1 0" />
-          </feComponentTransfer>
-          <feGaussianBlur in="inverted" stdDeviation="3.4" result="blurred" />
-          <feOffset in="blurred" dx="3" dy="4" result="darkOffset" />
-          <feFlood floodColor="#8ea0b5" floodOpacity="0.55" result="darkColor" />
-          <feComposite in="darkColor" in2="darkOffset" operator="in" result="darkShadow" />
-          <feComposite in="darkShadow" in2="SourceAlpha" operator="in" result="darkInner" />
+        <filter id={`${rawId}-edge`} x="-10%" y="-40%" width="120%" height="160%">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="1.2" result="blur" />
+          <feOffset in="blur" dx="0" dy="-2" result="off" />
+          <feFlood floodColor="#94a3b8" floodOpacity="0.28" result="color" />
+          <feComposite in="color" in2="off" operator="in" result="shadow" />
           <feMerge>
+            <feMergeNode in="shadow" />
             <feMergeNode in="SourceGraphic" />
-            <feMergeNode in="darkInner" />
           </feMerge>
         </filter>
       </defs>
-      {fill ? (
-        <path
-          d={fill}
-          fill="hsl(var(--background))"
-          filter={`url(#${rawId}-inset)`}
-        />
-      ) : null}
       <path
         d={d}
         fill="none"
@@ -213,6 +199,7 @@ export function BottomNavRailSvg({
         strokeWidth={2}
         strokeLinecap="butt"
         strokeLinejoin="round"
+        filter={`url(#${rawId}-edge)`}
       />
     </svg>
   );

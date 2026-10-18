@@ -159,7 +159,7 @@ export const Sidebar = ({ className }: Props) => {
     <div
       ref={rootRef}
       className={cn(
-        "relative flex h-full w-full flex-col overflow-visible bg-background px-4 pb-6 lg:sticky lg:top-0 lg:h-screen lg:w-[256px]",
+        "relative z-20 flex h-full w-full flex-col overflow-visible bg-background px-4 pb-6 lg:sticky lg:top-0 lg:h-screen lg:w-[256px]",
         className
       )}
     >

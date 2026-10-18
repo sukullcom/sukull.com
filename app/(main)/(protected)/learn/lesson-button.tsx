@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import type { SubjectColorConfig } from "@/lib/subject-colors";
 
@@ -67,7 +67,7 @@ function unitVec(x: number, y: number): [number, number] {
   return [x / len, y / len];
 }
 
-function roundedPolygon(points: Array<[number, number]>, radius: number) {
+function roundedPolygon(points: Array<[number, number]>, radius: number | number[]) {
   const commands: string[] = [];
   const count = points.length;
   for (let i = 0; i < count; i++) {
@@ -76,7 +76,8 @@ function roundedPolygon(points: Array<[number, number]>, radius: number) {
     const next = points[(i + 1) % count];
     const prevLen = Math.hypot(prev[0] - curr[0], prev[1] - curr[1]);
     const nextLen = Math.hypot(next[0] - curr[0], next[1] - curr[1]);
-    const r = Math.min(radius, prevLen / 2.4, nextLen / 2.4);
+    const want = Array.isArray(radius) ? radius[i] ?? 0 : radius;
+    const r = Math.min(want, prevLen / 2.4, nextLen / 2.4);
     const toPrev = unitVec(prev[0] - curr[0], prev[1] - curr[1]);
     const toNext = unitVec(next[0] - curr[0], next[1] - curr[1]);
     const start: [number, number] = [curr[0] + toPrev[0] * r, curr[1] + toPrev[1] * r];
@@ -88,7 +89,7 @@ function roundedPolygon(points: Array<[number, number]>, radius: number) {
   return `${commands.join(" ")} Z`;
 }
 
-function roundedRhombus(cx: number, cy: number, rx: number, ry: number, radius: number) {
+function roundedRhombus(cx: number, cy: number, rx: number, ry: number, radius: number | number[]) {
   return roundedPolygon(
     [
       [cx, cy - ry],
@@ -97,6 +98,21 @@ function roundedRhombus(cx: number, cy: number, rx: number, ry: number, radius: 
       [cx - rx, cy],
     ],
     radius,
+  );
+}
+
+/** Üst yüz ile aşağı kaymış tabanı sağ/sol uçta dik kenarla birleştirir. */
+function extrusionWall(cx: number, cy: number, rx: number, ry: number, lip: number) {
+  return roundedPolygon(
+    [
+      [cx + rx, cy],
+      [cx + rx, cy + lip],
+      [cx, cy + ry + lip],
+      [cx - rx, cy + lip],
+      [cx - rx, cy],
+      [cx, cy + ry],
+    ],
+    [2, 2, 12, 2, 2, 10],
   );
 }
 
@@ -109,8 +125,30 @@ export const LessonButton = ({
   percentage,
   subjectColor,
 }: Props) => {
-  const [pressed, setPressed] = useState(false);
+  const lip = 8;
+  const sinkRef = useRef(0);
+  const frameRef = useRef(0);
+  const [sink, setSink] = useState(0);
+  const [holding, setHolding] = useState(false);
   const rawId = useId().replace(/:/g, "");
+
+  const animateSink = (target: number) => {
+    cancelAnimationFrame(frameRef.current);
+    const from = sinkRef.current;
+    const start = performance.now();
+    const duration = 90;
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - (1 - t) * (1 - t);
+      const value = from + (target - from) * eased;
+      sinkRef.current = value;
+      setSink(value);
+      if (t < 1) frameRef.current = requestAnimationFrame(tick);
+    };
+    frameRef.current = requestAnimationFrame(tick);
+  };
+
+  useEffect(() => () => cancelAnimationFrame(frameRef.current), []);
   const cycleLength = 8;
   const cycleIndex = index % cycleLength;
 
@@ -127,7 +165,6 @@ export const LessonButton = ({
   const colored = Boolean(current || isCompleted);
   const palette = buttonPalette(colored, subjectColor.hex, subjectColor.hexDark);
   const href = locked ? "#" : `/lesson/${id}`;
-  const lip = 12;
 
   const lessonIconSrc = (() => {
     if (isCompleted) return "/belt_icon.svg";
@@ -139,7 +176,9 @@ export const LessonButton = ({
   const cy = 62;
   const rx = 44;
   const ry = 38;
-  const face = roundedRhombus(cx, cy, rx, ry, 12);
+  const face = roundedRhombus(cx, cy, rx, ry, [12, 3, 12, 3]);
+  const remain = Math.max(0, lip - sink);
+  const wall = remain > 0.4 ? extrusionWall(cx, cy + sink, rx, ry, remain) : null;
   const progress = roundedPolygon(
     [
       [cx, cy - ry - 10],
@@ -160,11 +199,22 @@ export const LessonButton = ({
       aria-disabled={locked}
       style={{ pointerEvents: locked ? "none" : "auto" }}
       onPointerDown={() => {
-        if (!locked) setPressed(true);
+        if (locked) return;
+        setHolding(true);
+        animateSink(lip);
       }}
-      onPointerUp={() => setPressed(false)}
-      onPointerLeave={() => setPressed(false)}
-      onPointerCancel={() => setPressed(false)}
+      onPointerUp={() => {
+        setHolding(false);
+        animateSink(0);
+      }}
+      onPointerLeave={() => {
+        setHolding(false);
+        animateSink(0);
+      }}
+      onPointerCancel={() => {
+        setHolding(false);
+        animateSink(0);
+      }}
     >
       <div
         className="relative"
@@ -175,19 +225,24 @@ export const LessonButton = ({
       >
         {current ? (
           <div
-            className="absolute -top-8 left-1/2 z-20 -translate-x-1/2 rounded-xl border-2 px-3 py-2 font-bold uppercase tracking-wide animate-bounce"
-            style={{
-              color: "#ffffff",
-              background: `linear-gradient(180deg, ${subjectColor.hex} 0%, ${subjectColor.hexDark} 100%)`,
-              borderColor: subjectColor.hexDark,
-              boxShadow: `0 4px 0 ${mix(subjectColor.hexDark, "#000000", 0.35)}`,
-            }}
+            className="absolute left-1/2 z-20"
+            style={{ top: -4, transform: "translate(-50%, -100%)" }}
           >
-            Başla
             <div
-              className="absolute left-1/2 -bottom-[7px] h-0 w-0 -translate-x-1/2 border-x-[7px] border-x-transparent border-t-[7px]"
-              style={{ borderTopColor: subjectColor.hexDark }}
-            />
+              className="relative animate-bounce rounded-xl border-2 px-3 py-2 font-bold uppercase tracking-wide"
+              style={{
+                color: "#ffffff",
+                background: `linear-gradient(180deg, ${subjectColor.hex} 0%, ${subjectColor.hexDark} 100%)`,
+                borderColor: subjectColor.hexDark,
+                boxShadow: `0 4px 0 ${mix(subjectColor.hexDark, "#000000", 0.35)}`,
+              }}
+            >
+              Başla
+              <div
+                className="absolute left-1/2 -bottom-[7px] h-0 w-0 -translate-x-1/2 border-x-[7px] border-x-transparent border-t-[7px]"
+                style={{ borderTopColor: subjectColor.hexDark }}
+              />
+            </div>
           </div>
         ) : null}
 
@@ -271,19 +326,13 @@ export const LessonButton = ({
               </>
             ) : null}
 
-            <g filter={pressed ? undefined : `url(#${rawId}-raised)`}>
-              <path d={face} fill={palette.rim} transform={`translate(0 ${lip + 2})`} />
-              <path d={face} fill={`url(#${rawId}-side)`} transform={`translate(0 ${lip})`} />
-              <g
-                style={{
-                  transform: pressed ? "translateY(12px)" : "translateY(0px)",
-                  transition: "transform 90ms ease-out",
-                }}
-              >
+            <g filter={holding ? undefined : `url(#${rawId}-raised)`}>
+              {wall ? <path d={wall} fill={`url(#${rawId}-side)`} /> : null}
+              <g style={{ transform: `translateY(${sink}px)` }}>
                 <path
                   d={face}
-                  fill={pressed ? palette.canvas : `url(#${rawId}-face)`}
-                  filter={pressed ? `url(#${rawId}-inset)` : undefined}
+                  fill={holding ? palette.canvas : `url(#${rawId}-face)`}
+                  filter={holding ? `url(#${rawId}-inset)` : undefined}
                 />
               </g>
             </g>
@@ -294,8 +343,7 @@ export const LessonButton = ({
             className="pointer-events-none absolute left-1/2"
             style={{
               top: 46,
-              transform: pressed ? "translate(-50%, calc(-50% + 12px))" : "translate(-50%, -50%)",
-              transition: "transform 90ms ease-out",
+              transform: `translate(-50%, calc(-50% + ${sink}px))`,
             }}
           >
             <Image
