@@ -217,12 +217,6 @@ export function SidebarRailSvg({
           </feMerge>
         </filter>
       </defs>
-      {tab?.fill ? (
-        <path
-          d={tab.fill}
-          fill="hsl(var(--background))"
-        />
-      ) : null}
       <path
         d={d}
         fill="none"

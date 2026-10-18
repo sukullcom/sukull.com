@@ -15,19 +15,19 @@ type Props = {
 };
 
 const CATEGORY_STYLES: Record<string, { activeBorder: string; badge: string }> = {
-  matematik:  { activeBorder: "border-blue-500 bg-blue-50/40",     badge: "bg-blue-100 text-blue-700" },
-  turkce:     { activeBorder: "border-orange-500 bg-orange-50/40", badge: "bg-orange-100 text-orange-700" },
-  fen:        { activeBorder: "border-emerald-500 bg-emerald-50/40", badge: "bg-emerald-100 text-emerald-700" },
-  fizik:      { activeBorder: "border-cyan-500 bg-cyan-50/40",     badge: "bg-cyan-100 text-cyan-700" },
-  kimya:      { activeBorder: "border-violet-500 bg-violet-50/40", badge: "bg-violet-100 text-violet-700" },
-  biyoloji:   { activeBorder: "border-lime-500 bg-lime-50/40",     badge: "bg-lime-100 text-lime-700" },
-  tarih:      { activeBorder: "border-amber-500 bg-amber-50/40",   badge: "bg-amber-100 text-amber-700" },
-  cografya:   { activeBorder: "border-teal-500 bg-teal-50/40",     badge: "bg-teal-100 text-teal-700" },
-  felsefe:    { activeBorder: "border-slate-500 bg-muted/40",   badge: "bg-muted text-foreground" },
-  dinkulturu: { activeBorder: "border-slate-500 bg-muted/40",   badge: "bg-muted text-foreground" },
-  sosyal:     { activeBorder: "border-amber-500 bg-amber-50/40",   badge: "bg-amber-100 text-amber-700" },
-  ingilizce:  { activeBorder: "border-rose-500 bg-rose-50/40",     badge: "bg-rose-100 text-rose-700" },
-  diger:      { activeBorder: "border-gray-500 bg-muted/40",     badge: "bg-muted text-foreground" },
+  matematik:  { activeBorder: "border-blue-300 bg-blue-50/40",     badge: "bg-blue-100 text-blue-700" },
+  turkce:     { activeBorder: "border-orange-300 bg-orange-50/40", badge: "bg-orange-100 text-orange-700" },
+  fen:        { activeBorder: "border-emerald-300 bg-emerald-50/40", badge: "bg-emerald-100 text-emerald-700" },
+  fizik:      { activeBorder: "border-cyan-300 bg-cyan-50/40",     badge: "bg-cyan-100 text-cyan-700" },
+  kimya:      { activeBorder: "border-violet-300 bg-violet-50/40", badge: "bg-violet-100 text-violet-700" },
+  biyoloji:   { activeBorder: "border-lime-300 bg-lime-50/40",     badge: "bg-lime-100 text-lime-700" },
+  tarih:      { activeBorder: "border-amber-300 bg-amber-50/40",   badge: "bg-amber-100 text-amber-700" },
+  cografya:   { activeBorder: "border-teal-300 bg-teal-50/40",     badge: "bg-teal-100 text-teal-700" },
+  felsefe:    { activeBorder: "border-slate-300 bg-muted/40",   badge: "bg-muted text-foreground" },
+  dinkulturu: { activeBorder: "border-slate-300 bg-muted/40",   badge: "bg-muted text-foreground" },
+  sosyal:     { activeBorder: "border-amber-300 bg-amber-50/40",   badge: "bg-amber-100 text-amber-700" },
+  ingilizce:  { activeBorder: "border-rose-300 bg-rose-50/40",     badge: "bg-rose-100 text-rose-700" },
+  diger:      { activeBorder: "border-slate-300 bg-muted/40",     badge: "bg-muted text-foreground" },
 };
 
 export const Card = memo(
@@ -55,8 +55,8 @@ export const Card = memo(
         )}
       >
         {active && (
-          <div className="absolute -top-1.5 -right-1.5 rounded-full bg-green-500 flex items-center justify-center w-6 h-6 shadow-sm">
-            <Check className="text-white stroke-[3] h-3.5 w-3.5" />
+          <div className="absolute -top-2 -right-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-green-500 shadow-sm">
+            <Check className="h-4 w-4 text-white stroke-[2.5]" />
           </div>
         )}
 
