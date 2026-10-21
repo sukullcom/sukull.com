@@ -6,7 +6,7 @@ export type RequestDraft = {
   serviceSlug: string;
   answers: { id: string; answer: string }[];
   details: string;
-  timing: "scheduled" | "two_months" | "six_months";
+  timing: "scheduled" | "two_months" | "six_months" | "price_check";
   scheduledAt?: string | null;
   contactChannel?: "phone" | "email";
   phone?: string | null;
@@ -83,6 +83,9 @@ export function resolveExpiry(
   }
   if (timing === "six_months") {
     return { ok: true, scheduledAt: null, expiresAt: addMonths(now, 6) };
+  }
+  if (timing === "price_check") {
+    return { ok: true, scheduledAt: null, expiresAt: addMonths(now, 1) };
   }
   if (timing !== "scheduled" || !scheduledAt) {
     return { ok: false, error: "Tarih ve saat seç." };

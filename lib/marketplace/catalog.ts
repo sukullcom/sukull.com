@@ -30,6 +30,8 @@ export type ServiceDef = {
   categorySlug: string;
   aliases: string[];
   popular?: boolean;
+  /** İş uzaktan veya şehirler arası yapılır; ilan her şehirdeki hizmet verene gider. */
+  anywhere?: boolean;
   questions: ServiceQuestion[];
 };
 
@@ -80,7 +82,7 @@ const ROOM_COUNTS: ServiceOption[] = ["1", "2", "3", "4", "5", "6+"].map((label)
 
 const MATERIAL: ServiceOption[] = [
   { value: "Dahil olsun", label: "Dahil olsun" },
-  { value: "Dahil olmasın", label: "Dahil olmasın" },
+  { value: "Hariç - sadece işçilik", label: "Hariç - sadece işçilik" },
   { value: "Fark etmez", label: "Fark etmez" },
 ];
 
@@ -224,6 +226,8 @@ export const SERVICES: ServiceDef[] = [
       { id: "oda", kind: "single", prompt: "Kaç oda boyanacak?", options: ROOM_COUNTS, when: (answers) => (answers.tur ?? "").includes("İç cephe") },
       { id: "metrekare", kind: "single", prompt: "Yaklaşık kaç metrekare?", options: AREA_SIZES },
       { id: "malzeme", kind: "single", prompt: "Fiyata malzeme dahil olsun mu?", options: MATERIAL },
+      { ...choice("esya", "Boyanacak alan eşyalı mı olacak?", ["Eşyalı olacak", "Boş olacak"]), when: (answers) => (answers.tur ?? "").includes("İç cephe") },
+      { ...choice("tavan", "Tavanlar da boyanacak mı?", ["Evet", "Hayır"]), when: (answers) => (answers.tur ?? "").includes("İç cephe") },
     ],
   },
   {
@@ -277,6 +281,9 @@ export const SERVICES: ServiceDef[] = [
           "Sadece birkaç eşya taşınacak",
         ].map((label) => ({ value: label, label })),
       },
+      { ...choice("kat", "Eşyalar kaçıncı katta?", ["Giriş veya bahçe katı", "1-2. kat", "3-5. kat", "6. kat veya üstü"]), when: (answers) => answers.tur === "Evden eve nakliyat hizmeti" },
+      { ...choice("asansor", "Binada asansör var mı?", ["Var", "Yok"]), when: (answers) => answers.tur === "Evden eve nakliyat hizmeti" },
+      { ...choice("paket", "Paketleme de yapılsın mı?", ["Paketleme de yapılsın", "Kendimiz toplayacağız"]), when: (answers) => answers.tur === "Evden eve nakliyat hizmeti" },
     ],
   },
   {
@@ -407,6 +414,7 @@ export const SERVICES: ServiceDef[] = [
     categorySlug: "yazilim",
     popular: true,
     aliases: ["yazilim", "software", "web", "uygulama", "android", "ios", "site", "oyun", "veri", "analiz", "yapay zeka", "eticaret", "otomasyon"],
+    anywhere: true,
     questions: [
       area(
         "tur",
@@ -630,6 +638,7 @@ export const SERVICES: ServiceDef[] = [
     questions: [
       area("cihaz", "Hangi cihaz?", ["Buzdolabı", "Çamaşır makinesi", "Bulaşık makinesi", "Kurutma makinesi", "Fırın", "Ocak", "Mikrodalga", "Derin dondurucu", "Diğer"], { allLabel: "Tüm cihazlar", pickLabel: "Cihazları seç", suffix: "tamiri" }),
       choice("marka", "Markası?", ["Arçelik", "Beko", "Bosch", "Siemens", "Vestel", "Samsung", "LG", "Profilo", "Diğer"]),
+      choice("sorun", "Cihazdaki sorun nedir?", ["Hiç çalışmıyor", "Su akıtıyor", "Soğutmuyor veya ısıtmıyor", "Ses yapıyor", "Hata kodu veriyor", "Diğer"]),
     ],
   },
   {
@@ -763,6 +772,7 @@ export const SERVICES: ServiceDef[] = [
     category: "Yazılım",
     categorySlug: "yazilim",
     aliases: ["grafik", "logo", "tasarim", "afis", "brosur", "kartvizit"],
+    anywhere: true,
     questions: [
       area("tur", "Ne tasarlanacak?", ["Logo", "Kurumsal kimlik", "Sosyal medya tasarımı", "Afiş veya broşür", "Ambalaj ve etiket", "Kartvizit", "İllüstrasyon", "Sunum", "Diğer"], { allLabel: "Tüm tasarımlar", pickLabel: "Tasarım türlerini seç" }, "multi"),
     ],
@@ -1070,8 +1080,11 @@ export const SERVICES: ServiceDef[] = [
     categorySlug: "nakliyat",
     popular: true,
     aliases: ["sehirler arasi", "il disi", "uzak mesafe"],
+    anywhere: true,
     questions: [
+      { id: "hedef", kind: "text", prompt: "Hangi şehre taşınacak?" },
       choice("oda", "Kaç odalı ev?", ["1+1", "2+1", "3+1", "4+1 veya daha büyük", "Sadece birkaç eşya"]),
+      choice("paket", "Paketleme de yapılsın mı?", ["Paketleme de yapılsın", "Kendimiz toplayacağız"]),
     ],
   },
   {
@@ -1339,6 +1352,7 @@ export const SERVICES: ServiceDef[] = [
     category: "Yazılım",
     categorySlug: "yazilim",
     aliases: ["sosyal medya", "instagram", "reklam", "icerik"],
+    anywhere: true,
     questions: [
       area("platform", "Hangi platformlar?", ["Instagram", "TikTok", "Facebook", "YouTube", "LinkedIn", "X (Twitter)"], { allLabel: "Tüm platformlar", pickLabel: "Platformları seç" }, "multi"),
       choice("hesap", "Kaç hesap?", ["1", "2-3", "4 veya daha fazla"]),
@@ -1350,6 +1364,7 @@ export const SERVICES: ServiceDef[] = [
     category: "Yazılım",
     categorySlug: "yazilim",
     aliases: ["video kurgu", "montaj", "edit", "reels"],
+    anywhere: true,
     questions: [
       area("tur", "Ne tür video?", ["YouTube videosu", "Reels / TikTok", "Düğün videosu", "Tanıtım ve reklam filmi", "Animasyon ve motion", "Diğer"], { allLabel: "Tüm video türleri", pickLabel: "Video türlerini seç" }),
       choice("sure", "Video uzunluğu?", ["1 dakikadan kısa", "1-5 dakika", "5 dakikadan uzun"]),
@@ -1361,6 +1376,7 @@ export const SERVICES: ServiceDef[] = [
     category: "Yazılım",
     categorySlug: "yazilim",
     aliases: ["seo", "google", "dijital pazarlama", "reklam"],
+    anywhere: true,
     questions: [
       area("tur", "Ne lazım?", ["SEO", "Google reklamları", "Sosyal medya reklamları", "E-posta pazarlama", "Dijital pazarlama danışmanlığı"], { allLabel: "Tüm pazarlama işleri", pickLabel: "İş türlerini seç" }, "multi"),
     ],

@@ -37,7 +37,7 @@ export function MarketFrame({
   const wide = guest && pathname === "/";
 
   return (
-    <div className="mk-press min-h-dvh bg-background text-foreground">
+    <div className="mk-theme mk-press min-h-dvh bg-background text-foreground">
       <header className="sticky top-0 z-30 border-b-2 border-border bg-background/95 backdrop-blur">
         <div className={`mx-auto flex h-16 items-center justify-between px-4 ${wide ? "max-w-6xl" : "max-w-3xl"}`}>
           <Link href="/" className="flex items-center gap-2.5" aria-label="Sukull ana sayfa">

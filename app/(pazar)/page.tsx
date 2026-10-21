@@ -3,10 +3,11 @@ import type { Metadata } from "next";
 import { ServiceSearch } from "@/components/marketplace/service-search";
 import { RequestPreviewList, type RequestPreviewItem } from "@/components/marketplace/request-preview";
 import { ReviewShowcase } from "@/components/marketplace/review-showcase";
-import { listOpenRequestPreviews } from "@/db/queries/marketplace";
+import { listOpenRequestPreviews, listPublicReviews } from "@/db/queries/marketplace";
 import { getServerUser } from "@/lib/auth";
-import { formatWhen, publicCustomerName, requestHeadline } from "@/lib/marketplace/format";
-import { SHOWCASE_REQUESTS, SHOWCASE_REVIEWS, showcaseWhen } from "@/lib/marketplace/showcase";
+import { getService } from "@/lib/marketplace/catalog";
+import { formatPlace, formatWhen, publicCustomerName, requestHeadline } from "@/lib/marketplace/format";
+import { SHOWCASE_REQUESTS, SHOWCASE_REVIEWS, showcaseWhen, type ShowcaseReview } from "@/lib/marketplace/showcase";
 
 export const metadata: Metadata = {
   title: "Hizmet al",
@@ -16,18 +17,21 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 const PREVIEW_LIMIT = 8;
+const REVIEW_LIMIT = 9;
 
 export default async function MarketplaceHomePage() {
   const user = await getServerUser();
   if (user) return <ServiceSearch />;
 
-  const rows = await listOpenRequestPreviews(PREVIEW_LIMIT);
+  const [rows, reviewRows] = await Promise.all([listOpenRequestPreviews(PREVIEW_LIMIT), listPublicReviews(REVIEW_LIMIT)]);
   const realItems: RequestPreviewItem[] = rows.map((row) => ({
     id: row.id,
     name: publicCustomerName(row.firstName ?? "", row.lastName ?? "", row.username),
     title: requestHeadline(row.serviceSlug, row.answers),
     details: row.details,
     when: formatWhen(row.timingType, row.scheduledAt),
+    place: formatPlace("", row.district, row.city),
+    answers: row.answers,
     href: null,
     lock: "account",
   }));
@@ -40,9 +44,20 @@ export default async function MarketplaceHomePage() {
     title: request.title,
     details: request.details,
     when: showcaseWhen(request),
+    place: request.place,
+    answers: request.answers,
     href: null,
     lock: "account",
   }));
+
+  const realReviews: ShowcaseReview[] = reviewRows.map((row) => ({
+    name: publicCustomerName(row.firstName ?? "", row.lastName ?? "", row.username),
+    place: formatPlace("", row.district, row.city),
+    service: getService(row.serviceSlug)?.name ?? "Hizmet",
+    rating: row.stars,
+    text: row.body.trim(),
+  }));
+  const reviews = [...realReviews, ...SHOWCASE_REVIEWS].slice(0, Math.max(REVIEW_LIMIT, realReviews.length));
 
   return (
     <div className="space-y-10">
@@ -56,7 +71,7 @@ export default async function MarketplaceHomePage() {
           <RequestPreviewList items={[...realItems, ...showcaseItems]} empty="Şu an görünen açık ilan yok." />
         </aside>
       </div>
-      <ReviewShowcase reviews={SHOWCASE_REVIEWS} />
+      <ReviewShowcase reviews={reviews} />
     </div>
   );
 }

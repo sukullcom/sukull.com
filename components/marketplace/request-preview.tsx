@@ -1,5 +1,6 @@
 "use client";
 
+import { CalendarDays, MapPin } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -12,9 +13,14 @@ export type RequestPreviewItem = {
   title: string;
   details: string;
   when: string;
+  place?: string;
+  answers?: { prompt: string; answer: string }[];
   href: string | null;
   lock: "account" | "mode" | "service" | null;
 };
+
+/** Kartta gösterilen en fazla soru-cevap; tamamı ilan detayında. */
+const PREVIEW_ANSWERS = 6;
 
 export function RequestPreviewList({
   items,
@@ -53,14 +59,34 @@ export function RequestPreviewList({
 }
 
 function PreviewCard({ item, onLocked }: { item: RequestPreviewItem; onLocked: () => void }) {
+  const answers = (item.answers ?? []).slice(0, PREVIEW_ANSWERS);
   const body = (
     <>
-      <p className="text-sm font-bold text-suk-brand">{item.name}</p>
-      <p className="mt-1 font-extrabold text-foreground">{item.title}</p>
-      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-        {clipText(item.details, 140) || "Açıklama yazılmamış."}
+      <p className="font-extrabold text-foreground">{item.title}</p>
+      <p className="mt-1 flex items-center gap-1.5 text-sm font-semibold">
+        <CalendarDays className="h-4 w-4 shrink-0 text-muted-foreground" aria-hidden />
+        {item.when}
       </p>
-      <p className="mt-2 text-sm font-semibold">{item.when}</p>
+      {item.place && (
+        <p className="mt-0.5 flex items-center gap-1.5 text-sm text-muted-foreground">
+          <MapPin className="h-4 w-4 shrink-0" aria-hidden />
+          {item.place}
+        </p>
+      )}
+      {answers.length > 0 && (
+        <dl className="mt-3 space-y-1.5 border-t border-border pt-3 text-sm">
+          {answers.map((answer) => (
+            <div key={answer.prompt}>
+              <dt className="text-xs text-muted-foreground">{answer.prompt}</dt>
+              <dd className="font-semibold text-foreground">{answer.answer}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+        {clipText(item.details, 160) || "Açıklama yazılmamış."}
+      </p>
+      <p className="mt-2 text-xs font-bold text-suk-brand">{item.name}</p>
     </>
   );
   const className = "mk-card-press p-4";

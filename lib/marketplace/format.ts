@@ -140,10 +140,12 @@ export function formatWhen(timingType: string, scheduledAt: Date | null): string
     return new Intl.DateTimeFormat("tr-TR", {
       dateStyle: "medium",
       timeStyle: "short",
+      timeZone: "Europe/Istanbul",
     }).format(scheduledAt);
   }
   if (timingType === "two_months") return "İki ay içinde";
   if (timingType === "six_months") return "Altı ay içinde";
+  if (timingType === "price_check") return "Sadece fiyat bakıyorum";
   return "Tarih belirtilmedi";
 }
 

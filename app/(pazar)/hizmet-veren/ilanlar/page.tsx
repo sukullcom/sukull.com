@@ -1,10 +1,11 @@
+import { MapPin } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
 import { RequestPreviewList, type RequestPreviewItem } from "@/components/marketplace/request-preview";
 import { Button } from "@/components/ui/button";
 import { listProviderFeed } from "@/db/queries/marketplace";
-import { formatWhen, publicCustomerName, requestHeadline } from "@/lib/marketplace/format";
+import { formatPlace, formatWhen, publicCustomerName, requestHeadline } from "@/lib/marketplace/format";
 import { requireMarketAccount } from "@/lib/marketplace/session";
 
 export const dynamic = "force-dynamic";
@@ -21,6 +22,31 @@ export default async function ProviderListingsPage() {
         Yalnızca Hizmetlerim listene eklediğin işler burada görünür. Bir talebe en fazla 4 teklif gelir.
         Hizmetlerim sayfasından her hizmet için detay seçersen sadece uyan ilanları görürsün. Kendi talebin İlanlarım&apos;da durur.
       </p>
+      {feed.slugs.length > 0 && (
+        feed.place.city ? (
+          <p className="mk-card flex items-start gap-2 px-4 py-3 text-sm">
+            <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-suk-brand" aria-hidden />
+            <span>
+              Yerinde yapılan işlerde yalnızca <b>{feed.place.city}</b> ilanlarını görürsün
+              {feed.place.district ? <>, {feed.place.district} ilanları en üstte</> : null}. Online ve uzaktan yapılan işler
+              her şehirden gelir.{" "}
+              <Link href="/ayarlar/profil/konum" className="font-bold text-suk-brand underline-offset-2 hover:underline">
+                Konumu değiştir
+              </Link>
+            </span>
+          </p>
+        ) : (
+          <div className="mk-card space-y-3 border-amber-300 bg-amber-50 px-4 py-3 text-sm dark:bg-amber-950/30">
+            <p>
+              <b>Konumunu ekle.</b> Konum eklemeden yalnızca online ve uzaktan yapılan işleri görürsün. Yerinde yapılan işler
+              (boya, temizlik, tamir gibi) bulunduğun ildeki hizmet verenlere gösterilir.
+            </p>
+            <Button asChild variant="primary" size="sm">
+              <Link href="/ayarlar/profil/konum">Konum ekle</Link>
+            </Button>
+          </div>
+        )
+      )}
       {feed.slugs.length === 0 ? (
         <div className="mk-empty">
           <p>Henüz hizmet eklemedin.</p>
@@ -42,6 +68,8 @@ export default async function ProviderListingsPage() {
             title: requestHeadline(request.serviceSlug, request.answers),
             details: request.details,
             when: formatWhen(request.timingType, request.scheduledAt),
+            place: formatPlace(request.neighborhood, request.district, request.city),
+            answers: request.answers,
             href: request.mine ? `/islerim/${request.id}` : `/hizmet-veren/ilanlar/${request.id}`,
             lock: null,
           }))}

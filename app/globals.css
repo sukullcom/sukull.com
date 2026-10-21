@@ -34,7 +34,7 @@ body,
   --suk-fg-primary: 222 47% 11%;
   --suk-fg-secondary: 215 19% 35%;
   --suk-fg-muted: 215 16% 47%;
-  /* Marka / birincil — akla ilk gelen “klasik yeşil” (Tailwind green-500 / zümrüt hattı) */
+  /* Marka / birincil — öğrenme tarafı. İlan tarafı `.mk-theme` ile ayrılır. */
   --suk-brand: 142 76% 40%;
   --suk-brand-fg: 0 0% 100%;
   --suk-brand-hover: 142 76% 35%;
@@ -103,6 +103,21 @@ body,
   .app-main-content-minh {
     min-height: var(--app-main-inner-minh);
   }
+}
+
+/*
+ * İlan tarafı. Yeşil, Armut ile karışıyor; maskottaki mor banda yakın koyu çivit
+ * daha sakin ve logodan ayrı duruyor. Öğrenme tarafındaki yeşil burada ezilir.
+ */
+.mk-theme {
+  --suk-brand: 252 46% 36%;
+  --suk-brand-hover: 252 48% 30%;
+  --suk-brand-border: 252 50% 24%;
+  --suk-brand-soft: 250 55% 96%;
+  --suk-brand-soft-fg: 252 42% 26%;
+  /* :root bu ikisini yeşile çözüyor; ilan tarafında yeniden bağlanır. */
+  --primary: var(--suk-brand);
+  --ring: var(--suk-brand);
 }
 
 /* Pazar yeri: öğrenme alanındaki 3D kart ve buton diliyle aynı. */

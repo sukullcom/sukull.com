@@ -3,6 +3,7 @@ import "server-only";
 import { and, eq, gt, inArray, lt, ne, or, sql } from "drizzle-orm";
 
 import db from "@/db/drizzle";
+import { getProviderPlace, visibleToProviderSql } from "@/db/queries/marketplace";
 import {
   marketplaceEmailSends,
   marketplaceNotificationPrefs,
@@ -304,6 +305,7 @@ async function sendOneDigest(
   const slugs = entries.map((entry) => entry.slug);
   if (slugs.length === 0) return false;
   const windowStart = digestSince(candidate.lastDigestAt, now);
+  const place = await getProviderPlace(candidate.userId);
 
   const rows = await db
     .select({
@@ -320,6 +322,7 @@ async function sendOneDigest(
         gt(serviceRequests.expiresAt, now),
         lt(serviceRequests.quoteCount, 4),
         ne(serviceRequests.customerId, candidate.userId),
+        visibleToProviderSql(place.city),
         or(gt(serviceRequests.createdAt, windowStart), gt(serviceRequests.reviewedAt, windowStart)),
         sql`not exists (select 1 from service_quotes q where q.request_id = ${serviceRequests.id} and q.provider_id = ${candidate.userId})`,
       ),

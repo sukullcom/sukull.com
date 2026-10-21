@@ -9,7 +9,7 @@ import { LocationFields } from "@/components/marketplace/location-fields";
 import { Button } from "@/components/ui/button";
 import type { Province } from "@/lib/marketplace/address";
 import { getService, visibleQuestions, type ServiceQuestion } from "@/lib/marketplace/catalog";
-import { requestNeedsPlace } from "@/lib/marketplace/validate-request";
+import { requestNeedsPlace, type RequestDraft } from "@/lib/marketplace/validate-request";
 
 function mobileReady(raw: string): boolean {
   let digits = raw.replace(/\D/g, "");
@@ -48,7 +48,7 @@ export function RequestWizard({
     districtId: null,
     neighborhood: "",
   });
-  const [timing, setTiming] = useState<"scheduled" | "two_months" | "six_months" | "">("");
+  const [timing, setTiming] = useState<RequestDraft["timing"] | "">("");
   const [scheduledAt, setScheduledAt] = useState("");
   const [contact, setContact] = useState<"phone" | "email" | "">("");
   const [phoneInput, setPhoneInput] = useState(phone.replace(/^\+90/, ""));
@@ -275,6 +275,7 @@ export function RequestWizard({
               ["scheduled", "Belli bir zaman (üç hafta içinde)"],
               ["two_months", "İki ay içinde"],
               ["six_months", "Altı ay içinde"],
+              ["price_check", "Sadece fiyat bakıyorum"],
             ] as const
           ).map(([value, label]) => (
             <button

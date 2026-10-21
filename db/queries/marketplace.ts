@@ -1,6 +1,6 @@
 import "server-only";
 
-import { and, desc, eq, gt, inArray, lt, sql } from "drizzle-orm";
+import { and, desc, eq, gt, inArray, lt, or, sql } from "drizzle-orm";
 
 import db from "@/db/drizzle";
 import {
@@ -13,6 +13,7 @@ import {
   users,
   type ServiceRequestAnswer,
 } from "@/db/schema";
+import { ANYWHERE_SLUGS, ONLINE_CITY, nearbyFirst, providerCanSee } from "@/lib/marketplace/location";
 import { cleanFilters, requestMatchesEntry, type ProviderServiceEntry } from "@/lib/marketplace/provider-match";
 
 export async function getMarketAccount(userId: string) {
@@ -161,10 +162,28 @@ export async function providerRatings(providerIds: string[]): Promise<Map<string
 /** Akışta taranan en yeni açık ilan sayısı; eşleşme süzgeci bundan sonra uygulanır. */
 const FEED_SCAN_LIMIT = 500;
 
+export async function getProviderPlace(userId: string): Promise<{ city: string | null; district: string | null }> {
+  const [row] = await db
+    .select({ city: marketplaceProfiles.city, district: marketplaceProfiles.district })
+    .from(marketplaceProfiles)
+    .where(eq(marketplaceProfiles.userId, userId))
+    .limit(1);
+  return { city: row?.city || null, district: row?.district || null };
+}
+
+/** Online, şehirden bağımsız ya da hizmet verenin ilindeki ilanlar. */
+export function visibleToProviderSql(city: string | null) {
+  const anywhere = [
+    eq(serviceRequests.city, ONLINE_CITY),
+    ...(ANYWHERE_SLUGS.length ? [inArray(serviceRequests.serviceSlug, ANYWHERE_SLUGS)] : []),
+  ];
+  return city ? or(...anywhere, eq(serviceRequests.city, city)) : or(...anywhere);
+}
+
 export async function listProviderFeed(providerId: string) {
-  const entries = await listProviderServiceEntries(providerId);
+  const [entries, place] = await Promise.all([listProviderServiceEntries(providerId), getProviderPlace(providerId)]);
   const slugs = entries.map((entry) => entry.slug);
-  if (slugs.length === 0) return { slugs, requests: [] };
+  if (slugs.length === 0) return { slugs, place, requests: [] };
   const filtersBySlug = new Map(entries.map((entry) => [entry.slug, entry.filters]));
 
   const rows = await db
@@ -195,20 +214,24 @@ export async function listProviderFeed(providerId: string) {
         gt(serviceRequests.expiresAt, new Date()),
         lt(serviceRequests.quoteCount, 4),
         sql`not exists (select 1 from service_quotes q where q.request_id = ${serviceRequests.id} and q.provider_id = ${providerId})`,
+        or(eq(serviceRequests.customerId, providerId), visibleToProviderSql(place.city)),
       ),
     )
     .orderBy(desc(serviceRequests.createdAt))
     .limit(FEED_SCAN_LIMIT);
 
+  const matched = rows
+    .filter(
+      (row) =>
+        row.customerId === providerId ||
+        requestMatchesEntry(row.serviceSlug, filtersBySlug.get(row.serviceSlug), (row.answers ?? []) as ServiceRequestAnswer[]),
+    )
+    .slice(0, FEED_PAGE_SIZE);
+
   return {
     slugs,
-    requests: rows
-      .filter(
-        (row) =>
-          row.customerId === providerId ||
-          requestMatchesEntry(row.serviceSlug, filtersBySlug.get(row.serviceSlug), (row.answers ?? []) as ServiceRequestAnswer[]),
-      )
-      .slice(0, FEED_PAGE_SIZE)
+    place,
+    requests: nearbyFirst(matched, place.district)
       .map((row) => ({
         id: row.id,
         serviceSlug: row.serviceSlug,
@@ -237,6 +260,8 @@ export async function listOpenRequestPreviews(limit = 8) {
       serviceSlug: serviceRequests.serviceSlug,
       answers: serviceRequests.answers,
       details: serviceRequests.details,
+      city: serviceRequests.city,
+      district: serviceRequests.district,
       timingType: serviceRequests.timingType,
       scheduledAt: serviceRequests.scheduledAt,
       username: users.name,
@@ -260,6 +285,30 @@ export async function listOpenRequestPreviews(limit = 8) {
     ...row,
     answers: (row.answers ?? []) as ServiceRequestAnswer[],
   }));
+}
+
+/** Ana sayfadaki yorumlar için yazılı, 4-5 yıldızlı son değerlendirmeler. */
+export async function listPublicReviews(limit = 9) {
+  return db
+    .select({
+      id: serviceReviews.id,
+      stars: serviceReviews.stars,
+      body: serviceReviews.body,
+      serviceSlug: serviceRequests.serviceSlug,
+      answers: serviceRequests.answers,
+      city: serviceRequests.city,
+      district: serviceRequests.district,
+      username: users.name,
+      firstName: marketplaceProfiles.firstName,
+      lastName: marketplaceProfiles.lastName,
+    })
+    .from(serviceReviews)
+    .innerJoin(serviceRequests, eq(serviceRequests.id, serviceReviews.requestId))
+    .innerJoin(users, eq(users.id, serviceReviews.customerId))
+    .leftJoin(marketplaceProfiles, eq(marketplaceProfiles.userId, serviceReviews.customerId))
+    .where(and(gt(serviceReviews.stars, 3), sql`char_length(trim(${serviceReviews.body})) >= 20`))
+    .orderBy(desc(serviceReviews.createdAt))
+    .limit(limit);
 }
 
 export async function getProviderRequest(providerId: string, requestId: number) {
@@ -293,6 +342,7 @@ export async function getProviderRequest(providerId: string, requestId: number) 
   const entry = entries.find((item) => item.slug === request.serviceSlug);
   if (!entry) return null;
   if (!requestMatchesEntry(request.serviceSlug, entry.filters, (request.answers ?? []) as ServiceRequestAnswer[])) return null;
+  if (!providerCanSee((await getProviderPlace(providerId)).city, request)) return null;
   if (request.status !== "open" || request.expiresAt <= new Date() || request.quoteCount >= 4) {
     return null;
   }

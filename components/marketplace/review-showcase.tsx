@@ -8,8 +8,8 @@ export function ReviewShowcase({ reviews }: { reviews: ShowcaseReview[] }) {
         Hizmet alanlar ne diyor?
       </h2>
       <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {reviews.map((review) => (
-          <li key={`${review.name}-${review.service}`} className="mk-card flex flex-col p-4">
+        {reviews.map((review, index) => (
+          <li key={`${index}-${review.name}`} className="mk-card flex flex-col p-4">
             <div className="flex items-center justify-between gap-2">
               <span className="rounded-full bg-suk-brand-soft px-2.5 py-0.5 text-xs font-bold text-suk-brand">
                 {review.service}
