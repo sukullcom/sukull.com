@@ -22,7 +22,8 @@ export default async function PrivacyPage() {
           görünmez; yalnızca ilanına teklif veren kişi sohbette görür.
         </p>
         <p>
-          Hizmet verenlere, seçtikleri hizmetlerde yeni ilan varsa 3 günde bir özet e-posta gider. Bunu{" "}
+          Hizmet verenlere, seçtikleri hizmetlerde yeni ilan varsa 3 günde bir kısa bir e-posta gider. İlanlar
+          e-postada yazılmaz. Bunu{" "}
           <Link href="/ayarlar/bildirimler" className="font-semibold text-suk-brand">
             Bildirimler
           </Link>{" "}

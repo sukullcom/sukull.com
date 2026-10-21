@@ -26,10 +26,11 @@ export default async function NotificationSettingsPage() {
             className="mt-1 h-4 w-4 shrink-0 rounded border-input text-suk-brand focus:ring-2 focus:ring-ring"
           />
           <span>
-            <span className="font-bold text-foreground">Yeni ilan özeti</span>
+            <span className="font-bold text-foreground">Yeni ilanlar</span>
             <span className="mt-1 block text-muted-foreground">
-              Hizmetlerim’de seçtiğin işlere uyan yeni ilan olursa 3 günde bir e-posta gelir. İlan yoksa mail
-              gitmez. Teklif ve kabul mailleri bu anahtardan etkilenmez.
+              Hizmetlerim’de seçtiğin işlere uyan yeni ilan olursa 3 günde bir kısa bir e-posta gelir. İlanlar
+              mailde yazılmaz; siteye girince görürsün. İlan yoksa mail gitmez. Teklif ve kabul mailleri bu
+              anahtardan etkilenmez.
             </span>
           </span>
         </label>

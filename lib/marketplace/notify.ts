@@ -25,7 +25,6 @@ const LOCATION = "marketplace/notify";
 /** Resend ücretsiz planda günde 100 e-posta. Teklif ve kabul için pay bırakılır. */
 const DAILY_MAIL_BUDGET = 80;
 const DIGEST_BATCH = 40;
-const DIGEST_LIST = 5;
 
 function baseUrl(): string {
   return getApiUrl().replace(/\/$/, "");
@@ -312,12 +311,6 @@ async function sendOneDigest(
       serviceSlug: serviceRequests.serviceSlug,
       customerId: serviceRequests.customerId,
       answers: serviceRequests.answers,
-      details: serviceRequests.details,
-      city: serviceRequests.city,
-      district: serviceRequests.district,
-      neighborhood: serviceRequests.neighborhood,
-      timingType: serviceRequests.timingType,
-      scheduledAt: serviceRequests.scheduledAt,
     })
     .from(serviceRequests)
     .where(
@@ -344,33 +337,22 @@ async function sendOneDigest(
   const claimed = await claimSend("digest", ref, candidate.userId);
   if (!claimed) return false;
 
-  const shown = matches.slice(0, DIGEST_LIST);
-  const items = shown
-    .map((row) => {
-      const title = requestHeadline(row.serviceSlug, row.answers);
-      const place = formatPlace(row.neighborhood, row.district, row.city);
-      const href = `${baseUrl()}/hizmet-veren/ilanlar/${row.id}`;
-      return `<li style="margin:0 0 10px;"><a href="${escapeHtml(href)}"><strong>${escapeHtml(title)}</strong></a><br>${escapeHtml(place)}<br>${escapeHtml(clipText(row.details, 120) || "Açıklama yazılmamış.")}</li>`;
-    })
-    .join("");
-  const more = matches.length > shown.length ? `<p>ve ${matches.length - shown.length} ilan daha.</p>` : "";
   const stop = unsubscribeHref(candidate.userId);
   const greeting = greetingName(candidate.firstName ?? "", candidate.lastName ?? "", candidate.username);
+  const link = `${baseUrl()}/hizmet-veren/ilanlar`;
   const html = `
     <p>Merhaba ${escapeHtml(greeting)},</p>
-    <p>Seçtiğin hizmetlere uyan yeni ilanlar var.</p>
-    <ul style="padding-left:18px;">${items}</ul>
-    ${more}
-    <p><a href="${escapeHtml(`${baseUrl()}/hizmet-veren/ilanlar`)}">İlanları aç</a></p>
-    <p style="font-size:12px;color:#64748b;">Bu özet, yeni ilan varsa 3 günde bir gelir. Sukull ücret almaz.${
-      stop ? ` <a href="${escapeHtml(stop)}">Özeti kapat</a>.` : ""
+    <p>Seçtiğin hizmetlere uyan yeni ilanlar var. Siteye girip inceleyebilirsin.</p>
+    <p><a href="${escapeHtml(link)}">İlanlara git</a></p>
+    <p style="font-size:12px;color:#64748b;">Bu e-posta, yeni ilan varsa 3 günde bir gelir.${
+      stop ? ` <a href="${escapeHtml(stop)}">Bu e-postayı kapat</a>.` : ""
     }</p>
   `.trim();
   const ok = await sendEmail({
     to: candidate.email.trim(),
-    subject: "Sukull — Sana uygun yeni ilanlar var",
+    subject: "Sukull — Yeni ilanlar var",
     html,
-    text: shown.map((row) => requestHeadline(row.serviceSlug, row.answers)).join(", "),
+    text: `Seçtiğin hizmetlere uyan yeni ilanlar var. Siteye girip inceleyebilirsin. ${link}`,
   });
   if (!ok) {
     await releaseSend("digest", ref);
