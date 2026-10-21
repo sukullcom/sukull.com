@@ -3,6 +3,8 @@ import {
   BarChart3,
   Bell,
   BookOpen,
+  ClipboardCheck,
+  PieChart,
   CreditCard,
   Gift,
   GraduationCap,
@@ -19,7 +21,7 @@ export type AdminNavItem = {
   label: string;
   icon: LucideIcon;
   /** Eğer bir sayı döndürülürse sidebar'da küçük rozet olarak gösterilir. */
-  badgeKey?: "teacherPending" | "listingsPendingReview" | "errors24h";
+  badgeKey?: "teacherPending" | "listingsPendingReview" | "errors24h" | "servicePending";
 };
 
 /**
@@ -33,6 +35,13 @@ export type AdminNavItem = {
 export const ADMIN_NAV: AdminNavItem[] = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/analytics", label: "Analitik", icon: BarChart3 },
+  {
+    href: "/admin/hizmet-ilanlari",
+    label: "Hizmet İlanları",
+    icon: ClipboardCheck,
+    badgeKey: "servicePending",
+  },
+  { href: "/admin/hizmet-ilanlari/analitik", label: "İlan Analitiği", icon: PieChart },
   {
     href: "/admin/teacher-applications",
     label: "Eğitmen Başvuruları",

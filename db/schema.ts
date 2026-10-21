@@ -1195,3 +1195,165 @@ export const adminAudit = pgTable("admin_audit", {
   actionCreatedIdx: index("admin_audit_action_created_idx").on(table.action, table.createdAt),
   targetIdx: index("admin_audit_target_idx").on(table.targetType, table.targetId),
 }));
+
+export type ServiceRequestAnswer = {
+  id: string;
+  prompt: string;
+  answer: string;
+};
+
+/** Hizmet pazaryeri profili. Telefon ve fotoğraf `users` üzerinde kalır. */
+export const marketplaceProfiles = pgTable("marketplace_profiles", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => users.id, { onDelete: "cascade" }),
+  firstName: text("first_name").notNull().default(""),
+  lastName: text("last_name").notNull().default(""),
+  city: text("city"),
+  district: text("district"),
+  neighborhood: text("neighborhood"),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
+export const providerServices = pgTable(
+  "provider_services",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    serviceSlug: text("service_slug").notNull(),
+    /** Seçilen çeşitler, ör. { variants: ["Matematik"] }. Boş: hizmetin tüm talepleri. */
+    filters: jsonb("filters").$type<{ variants?: string[] }>().notNull().default({}),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    pk: primaryKey({ columns: [table.userId, table.serviceSlug] }),
+    slugIdx: index("idx_provider_services_slug").on(table.serviceSlug),
+  }),
+);
+
+export const serviceRequests = pgTable(
+  "service_requests",
+  {
+    id: serial("id").primaryKey(),
+    customerId: text("customer_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    serviceSlug: text("service_slug").notNull(),
+    answers: jsonb("answers").$type<ServiceRequestAnswer[]>().notNull().default([]),
+    details: text("details").notNull().default(""),
+    city: text("city").notNull(),
+    district: text("district").notNull(),
+    neighborhood: text("neighborhood").notNull(),
+    timingType: text("timing_type").notNull(),
+    scheduledAt: timestamp("scheduled_at", { withTimezone: true }),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    /** pending (incelemede) | open | accepted | expired | rejected */
+    status: text("status").notNull().default("pending"),
+    quoteCount: integer("quote_count").notNull().default(0),
+    contactChannel: text("contact_channel"),
+    rejectionNote: text("rejection_note"),
+    reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
+    reviewedBy: text("reviewed_by").references(() => users.id, { onDelete: "set null" }),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    customerIdx: index("idx_service_requests_customer").on(table.customerId, table.expiresAt),
+    feedIdx: index("idx_service_requests_open_feed").on(
+      table.serviceSlug,
+      table.status,
+      table.expiresAt,
+    ),
+  }),
+);
+
+export const serviceQuotes = pgTable(
+  "service_quotes",
+  {
+    id: serial("id").primaryKey(),
+    requestId: integer("request_id")
+      .notNull()
+      .references(() => serviceRequests.id, { onDelete: "cascade" }),
+    providerId: text("provider_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    priceTl: integer("price_tl").notNull(),
+    message: text("message").notNull(),
+    status: text("status").notNull().default("pending"),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    pair: uniqueIndex("idx_service_quotes_request_provider").on(table.requestId, table.providerId),
+    providerIdx: index("idx_service_quotes_provider").on(table.providerId, table.createdAt),
+  }),
+);
+
+export const serviceMessages = pgTable(
+  "service_messages",
+  {
+    id: serial("id").primaryKey(),
+    quoteId: integer("quote_id")
+      .notNull()
+      .references(() => serviceQuotes.id, { onDelete: "cascade" }),
+    senderId: text("sender_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    body: text("body").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    quoteIdx: index("idx_service_messages_quote").on(table.quoteId, table.createdAt),
+  }),
+);
+
+export const serviceReviews = pgTable(
+  "service_reviews",
+  {
+    id: serial("id").primaryKey(),
+    quoteId: integer("quote_id")
+      .notNull()
+      .unique()
+      .references(() => serviceQuotes.id, { onDelete: "cascade" }),
+    requestId: integer("request_id")
+      .notNull()
+      .references(() => serviceRequests.id, { onDelete: "cascade" }),
+    customerId: text("customer_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    providerId: text("provider_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    stars: smallint("stars").notNull(),
+    body: text("body").notNull().default(""),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    providerIdx: index("idx_service_reviews_provider").on(table.providerId, table.createdAt),
+  }),
+);
+
+/** İlan özeti e-postası. Satır yoksa özet açıktır. */
+export const marketplaceNotificationPrefs = pgTable("marketplace_notification_prefs", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => users.id, { onDelete: "cascade" }),
+  digestEnabled: boolean("digest_enabled").notNull().default(true),
+  lastDigestAt: timestamp("last_digest_at", { withTimezone: true }),
+});
+
+/** Teklif, kabul ve özet e-postalarının tekrarını engeller. */
+export const marketplaceEmailSends = pgTable(
+  "marketplace_email_sends",
+  {
+    id: serial("id").primaryKey(),
+    kind: text("kind").notNull(),
+    ref: text("ref").notNull(),
+    userId: text("user_id").references(() => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    kindRef: uniqueIndex("marketplace_email_sends_kind_ref").on(table.kind, table.ref),
+    createdIdx: index("idx_marketplace_email_sends_created").on(table.createdAt),
+  }),
+);

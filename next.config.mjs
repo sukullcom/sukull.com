@@ -32,6 +32,8 @@ const nextConfig = {
     // on Next 15+ or critters is fixed for our tree.
     optimizeCss: false,
     serverComponentsExternalPackages: ["@supabase/supabase-js"],
+    // Dinamik sayfalar istemci önbelleğinden bayat gösterilmesin (Next 15 varsayılanı).
+    staleTimes: { dynamic: 0 },
   },
   /**
    * Legacy endpoint rewrites.

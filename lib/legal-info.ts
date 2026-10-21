@@ -80,10 +80,10 @@ export const LEGAL_COMPANY = {
  * ve sitemap `lastModified` alanı da bu tarihi yansıtır.
  */
 export const LEGAL_UPDATED = {
-  kvkk: "2026-05-08",
+  kvkk: "2026-10-21",
   gizlilik: "2026-04-06",
   cerez: "2026-04-06",
-  kullanimSartlari: "2026-05-08",
+  kullanimSartlari: "2026-10-21",
   mesafeliSatis: "2026-05-08",
   onBilgilendirme: "2026-05-08",
   caymaIade: "2026-04-06",

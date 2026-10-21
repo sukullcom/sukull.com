@@ -105,6 +105,35 @@ body,
   }
 }
 
+/* Pazar yeri: öğrenme alanındaki 3D kart ve buton diliyle aynı. */
+@layer components {
+  .mk-card {
+    @apply rounded-2xl border-2 border-b-4 border-border bg-card;
+  }
+  .mk-card-press {
+    @apply mk-card block w-full text-left transition-all hover:bg-muted/40 active:translate-y-[2px] active:border-b-2;
+  }
+  .mk-empty {
+    @apply rounded-2xl border-2 border-dashed border-border px-4 py-10 text-center text-muted-foreground;
+  }
+  .mk-input {
+    @apply w-full rounded-xl border-2 border-border bg-background px-3 py-3 text-base outline-none transition-colors focus:border-suk-brand;
+  }
+  .mk-option {
+    @apply block w-full rounded-xl border-2 border-b-4 border-border bg-card px-4 py-3 text-left text-base transition-all active:translate-y-[2px] active:border-b-2;
+  }
+  .mk-option-on {
+    @apply border-suk-brand bg-suk-brand-soft font-semibold;
+  }
+}
+
+/* Çerçevesiz metin bağlantıları ve düğmeleri basılınca hafifçe göçer. Button bileşeni kendi efektini korur. */
+@layer base {
+  .mk-press :where(a, button):active {
+    transform: translateY(1px) scale(0.98);
+  }
+}
+
 @layer base {
   :root {
     /**

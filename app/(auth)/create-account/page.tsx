@@ -1,6 +1,4 @@
-import Image from "next/image";
 import { normalizeReferralCode } from "@/lib/referral-code";
-import { PrivateLessonPanelEntry } from "@/components/private-lesson/private-lesson-panel-entry";
 import { CreateAccountForm } from "./create-account";
 
 export default function CreateAccountPage({
@@ -12,26 +10,14 @@ export default function CreateAccountPage({
     normalizeReferralCode(searchParams?.ref ?? "") ?? undefined;
 
   return (
-    <div className="max-w-[988px] mx-auto flex-1 w-full flex flex-col items-center justify-center p-4 gap-8">
-      <div className="w-full flex flex-col lg:flex-row items-center justify-center gap-6 sm:gap-8 lg:gap-10">
-        <div className="relative mx-auto aspect-square w-40 shrink-0 sm:w-48 lg:w-56">
-          <Image
-            src="/hero.svg"
-            fill
-            alt="Sukull"
-            className="object-contain"
-            sizes="(max-width: 640px) 160px, (max-width: 1024px) 192px, 224px"
-            priority
-          />
-        </div>
-
-        <div className="w-full min-w-0 max-w-md rounded-3xl border-2 border-border bg-card p-6 shadow-xl sm:p-7">
-          <PrivateLessonPanelEntry showAudienceLabel />
-          <h1 className="mb-6 text-center text-3xl font-bold text-suk-brand">
-            Kayıt Ol
-          </h1>
-          <CreateAccountForm referralCodeFromUrl={referralFromUrl} />
-        </div>
+    <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center px-4 py-8">
+      <p className="text-sm font-bold uppercase tracking-wide text-suk-brand">Sukull</p>
+      <h1 className="mt-2 text-3xl font-extrabold text-foreground">Hesap oluştur</h1>
+      <p className="mb-6 mt-2 text-sm leading-relaxed text-muted-foreground">
+        Hizmet al veya hizmet ver. Hesap ücretsiz; Sukull ücret almaz.
+      </p>
+      <div className="w-full rounded-3xl border border-border bg-card p-6 shadow-sm sm:p-7">
+        <CreateAccountForm referralCodeFromUrl={referralFromUrl} />
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import { performDailyReset, applyDailyStreakBonuses } from "@/actions/daily-stre
 import { expireStaleInfiniteHeartsSubscriptions } from "@/actions/subscription-cleanup";
 import { updateTotalPointsForSchools } from "@/actions/user-progress";
 import { reconcilePaymentsCronStep } from "@/actions/payment-reconciliation";
+import { sendMarketplaceDigests } from "@/lib/marketplace/notify";
 import { getRequestLogger } from "@/lib/logger";
 import { verifyCronAuth } from "@/lib/cron-auth";
 
@@ -187,6 +188,10 @@ async function runDaily(request: NextRequest) {
       // reconcile süreci için admin panelinden listelenebilir.
       return await reconcilePaymentsCronStep();
     }),
+  );
+
+  steps.push(
+    await runStep("marketplace-digest", () => sendMarketplaceDigests()),
   );
 
   steps.push(

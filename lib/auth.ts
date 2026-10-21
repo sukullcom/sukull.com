@@ -1,11 +1,13 @@
 // lib/auth.ts
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
+import { cache } from 'react'
 import { isTeacher as userHasTeacherAccess } from '@/db/queries/applications'
 import { getUserRoles } from '@/db/queries/user-roles'
 import { hasUserRole, type UserRole } from '@/lib/user-roles'
 
-export async function getServerUser() {
+/** Aynı istek içinde layout, sayfa ve yardımcılar tek bir Supabase Auth çağrısını paylaşır. */
+export const getServerUser = cache(async () => {
   try {
     const supabase = await createClient()
     const { data, error } = await supabase.auth.getUser()
@@ -18,7 +20,7 @@ export async function getServerUser() {
   } catch {
     return null;
   }
-}
+});
 
 /**
  * Check if a user has a specific role

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ADMIN_NAV, type AdminNavBadges } from "./admin-nav-config";
+import { ADMIN_NAV, findAdminNavItem, type AdminNavBadges } from "./admin-nav-config";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -31,10 +31,7 @@ export function AdminSidebar({ badges = {}, onNavigate }: Props) {
 
       <ul className="flex flex-col gap-0.5">
         {ADMIN_NAV.map(({ href, label, icon: Icon, badgeKey }) => {
-          const active =
-            href === "/admin"
-              ? pathname === href
-              : pathname === href || pathname.startsWith(`${href}/`);
+          const active = href === "/admin" ? pathname === href : findAdminNavItem(pathname)?.href === href;
           const badge = badgeKey ? badges[badgeKey] : undefined;
           return (
             <li key={href}>

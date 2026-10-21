@@ -32,6 +32,9 @@ export type AdminAuditAction =
   // Listings moderation
   | "listing.approve"
   | "listing.reject"
+  // Hizmet pazarı talep moderasyonu
+  | "service_request.approve"
+  | "service_request.reject"
   // Student applications
   | "student_application.approve"
   | "student_application.reject"

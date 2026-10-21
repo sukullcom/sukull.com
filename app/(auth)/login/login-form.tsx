@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useTransition, useRef } from "react";
-import { useSearchParams } from "next/navigation";
+import { safeNextPath } from "@/lib/safe-next";
 import { toast } from "sonner";
 import Link from "next/link";
 
@@ -15,34 +15,28 @@ import { getClientAuthTransientErrorMessage } from "@/lib/auth-flow-client-error
 
 type LoginFormProps = {
   referralFromUrl?: string;
+  nextPath?: string;
+  verified?: boolean;
+  loggedOut?: boolean;
 };
 
-export function LoginForm({ referralFromUrl }: LoginFormProps) {
+export function LoginForm({ referralFromUrl, nextPath, verified, loggedOut }: LoginFormProps) {
   const [isPending, startTransition] = useTransition();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const referralCookieSynced = useRef(false);
-  const searchParams = useSearchParams();
-  
-  // Combined loading state - true if EITHER is true
   const isLoading = isPending || isSubmitting;
 
-  // Check for email verification success and logout
   useEffect(() => {
-    const verified = searchParams?.get('verified');
-    const logout = searchParams?.get('logout');
-    
-    if (verified === 'true') {
+    if (verified) {
       toast.success("E-postanız başarıyla doğrulandı! Artık giriş yapabilirsiniz.");
     }
-    
-    // Clean up URL parameters
-    if (verified || logout) {
+    if (verified || loggedOut) {
       const newUrl = new URL(window.location.href);
-      newUrl.searchParams.delete('verified');
-      newUrl.searchParams.delete('logout');
-      window.history.replaceState({}, '', newUrl.toString());
+      newUrl.searchParams.delete("verified");
+      newUrl.searchParams.delete("logout");
+      window.history.replaceState({}, "", newUrl.toString());
     }
-  }, [searchParams]);
+  }, [verified, loggedOut]);
 
   useEffect(() => {
     if (!referralFromUrl || referralCookieSynced.current) return;
@@ -56,27 +50,19 @@ export function LoginForm({ referralFromUrl }: LoginFormProps) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    // Prevent multiple submissions
     if (isLoading) return;
-    
     setIsSubmitting(true);
-    
     const formData = new FormData(e.currentTarget);
-    const next = searchParams?.get('next') || '/courses';
-    formData.append('next', next);
-    
+    formData.append("next", safeNextPath(nextPath, "/"));
     startTransition(async () => {
       try {
         const result = await login(formData);
-        
         if (result?.error) {
           toast.error(result.error);
           setIsSubmitting(false);
         }
-        // If no error, server action will redirect
       } catch (error) {
-        clientLogger.error({ message: 'login submit failed', error, location: 'auth/login-form' });
+        clientLogger.error({ message: "login submit failed", error, location: "auth/login-form" });
         toast.error(getClientAuthTransientErrorMessage(error));
         setIsSubmitting(false);
       }
@@ -109,10 +95,10 @@ export function LoginForm({ referralFromUrl }: LoginFormProps) {
         type="submit"
         disabled={isLoading}
         variant="secondary"
-        style={{ 
-          opacity: isLoading ? 0.6 : 1, 
-          cursor: isLoading ? 'not-allowed' : 'pointer',
-          pointerEvents: isLoading ? 'none' : 'auto' // Prevent ANY clicks during loading
+        style={{
+          opacity: isLoading ? 0.6 : 1,
+          cursor: isLoading ? "not-allowed" : "pointer",
+          pointerEvents: isLoading ? "none" : "auto",
         }}
       >
         {isLoading ? (
@@ -121,7 +107,7 @@ export function LoginForm({ referralFromUrl }: LoginFormProps) {
             Giriş yapılıyor...
           </>
         ) : (
-          'E-posta ile Giriş'
+          "E-posta ile Giriş"
         )}
       </Button>
 
@@ -135,7 +121,7 @@ export function LoginForm({ referralFromUrl }: LoginFormProps) {
           Şifremi Unuttum
         </Link>
       </p>
-      
+
       <p className="text-center text-sm mt-3">
         Hesabın yok mu?{" "}
         <Link
@@ -151,7 +137,7 @@ export function LoginForm({ referralFromUrl }: LoginFormProps) {
         </Link>
       </p>
 
-      <OAuthSignIn isLoading={isLoading} onLoadingChange={setIsSubmitting} />
+      <OAuthSignIn isLoading={isLoading} onLoadingChange={setIsSubmitting} redirectUrl={nextPath} />
     </form>
   );
 }

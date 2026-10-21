@@ -319,13 +319,7 @@ export const RATE_LIMITS = {
   signupIp: { max: 500, windowSeconds: 60 * 60 },
   /** Davet çerezi (httpOnly) — paylaşılan IP altında kötüye kullanım sınırı. */
   referralSetCookieIp: { max: 40, windowSeconds: 60 },
-  /**
-   * Şu an doğrudan bir route'tan tüketilmiyor: `utils/auth.ts` client-side
-   * çalışıyor ve Supabase Auth'un kendi rate-limit'i (GoTrue) tek otorite.
-   * E-posta gönderim spam'i veya brute-force için ek uygulama-katmanı kotası
-   * gerekirse, bu çağrıları bir server action veya API route'a sarmalayıp
-   * burada `checkRateLimit` ile bağlanmalı (e-posta key'i + ip key'i).
-   */
+  /** Şifre sıfırlama maili — forgot-password server action. */
   resetPassword: { max: 5, windowSeconds: 60 * 60 },
   /** Aynı not — bkz. `resetPassword`. */
   resendVerification: { max: 30, windowSeconds: 15 * 60 },
@@ -352,6 +346,10 @@ export const RATE_LIMITS = {
   listingWrite: { max: 20, windowSeconds: 60 * 60 },
   /** Teacher offering on a student listing. Money-adjacent (usage credit deducted). */
   listingOffer: { max: 60, windowSeconds: 60 * 60 },
+  /** Hizmet pazarı: müşteri ilanı, hizmet veren teklifi ve yazışma mesajı (kullanıcı başına). */
+  serviceRequestCreate: { max: 5, windowSeconds: 24 * 60 * 60 },
+  serviceQuoteCreate: { max: 20, windowSeconds: 24 * 60 * 60 },
+  serviceMessageSend: { max: 120, windowSeconds: 60 * 60 },
   /**
    * Yeni mesaj kilidi (öğrenci başına). Var olan kilit satırı için sayaç
    * artmaz; yalnızca gerçekten yeni açılışlar ve başarısız denemeler

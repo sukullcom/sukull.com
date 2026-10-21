@@ -3,6 +3,7 @@ import { Session, AuthChangeEvent } from '@supabase/supabase-js';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 import { useSecureLogout } from '@/hooks/use-secure-logout';
@@ -40,18 +41,18 @@ export const Header = () => {
   return (
     <header className="h-16 w-full border-b-2 border-border px-3 sm:h-20 sm:px-4">
       <div className="lg:max-w-screen-lg mx-auto flex items-center justify-between gap-2 h-full">
-        <div className="flex items-center gap-x-2 sm:gap-x-3 min-w-0">
+        <Link href="/" className="flex items-center gap-x-2 sm:gap-x-3 min-w-0">
           <Image
             src={BRAND_MASCOT_DISPLAY_PATH}
             height={40}
             width={40}
-            alt="Sukull"
+            alt=""
             className="h-8 w-8 shrink-0 object-contain sm:h-10 sm:w-10"
           />
-          <h1 className="truncate text-xl font-extrabold tracking-wide text-suk-brand sm:text-2xl">
+          <span className="truncate text-xl font-extrabold tracking-wide text-suk-brand sm:text-2xl">
             Sukull
-          </h1>
-        </div>
+          </span>
+        </Link>
         {loading && <div className="text-xs text-muted-foreground sm:text-sm">Yükleniyor...</div>}
         {!loading && session ? (
           <Button

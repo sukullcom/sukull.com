@@ -68,8 +68,9 @@ export default function KvkkPage() {
           <strong>Kimlik Bilgisi:</strong> Ad, soyad, kullanıcı adı.
         </li>
         <li>
-          <strong>İletişim Bilgisi:</strong> E-posta adresi, (eğitmenler
-          için) telefon numarası.
+          <strong>İletişim Bilgisi:</strong> E-posta adresi, telefon numarası
+          (eğitmenler ve telefonla iletişimi seçen Hizmet Pazaryeri
+          kullanıcıları için).
         </li>
         <li>
           <strong>Müşteri İşlem Bilgisi:</strong> Satın alma geçmişi, dijital hizmet
@@ -91,6 +92,13 @@ export default function KvkkPage() {
         <li>
           <strong>Görsel İçerik:</strong> Profil fotoğrafı / avatar.
         </li>
+        <li>
+          <strong>Hizmet Pazaryeri bilgileri:</strong> Hizmet talebinin türü,
+          sorulara verilen cevaplar, açıklama, hizmet zamanı; hizmetin verileceği
+          il, ilçe ve mahalle; talep için tercih edilen iletişim kanalı (telefon
+          numarası veya e-posta adresi); Hizmet Veren&apos;ler için verilen hizmetler,
+          teklif fiyatı ve mesajı; taraflar arasındaki mesajlar ve değerlendirmeler.
+        </li>
       </ul>
 
       <h2>3. Kişisel Verilerin İşlenme Amaçları</h2>
@@ -103,6 +111,11 @@ export default function KvkkPage() {
         <li>Eğitim içeriği sunma ve ilerlemenin takibi,</li>
         <li>
           Sözleşmenin kurulması ve ifası (ödeme, fatura, abonelik yenileme),
+        </li>
+        <li>
+          Hizmet Pazaryeri&apos;nde talebin ilgili hizmeti veren kullanıcılara
+          gösterilmesi, teklif ve mesajlaşmanın sağlanması, ilanların
+          incelenmesi ve yayından kaldırılması,
         </li>
         <li>Müşteri destek taleplerinin karşılanması,</li>
         <li>Yasal yükümlülüklerin yerine getirilmesi,</li>
@@ -125,9 +138,42 @@ export default function KvkkPage() {
         <li>
           <strong>Yurt dışında:</strong> Bulut altyapı hizmeti sağlayıcıları
           (Vercel, Supabase); KVKK'nın 9. maddesi kapsamında gerekli
-          güvenlik tedbirleri alınmaktadır.
+          güvenlik tedbirleri alınmaktadır. Hizmet Pazaryeri&apos;nde konumunuzu
+          cihazınızdan bulmayı seçerseniz, koordinatlarınız yalnızca il, ilçe ve
+          mahalleye çevrilmek üzere OpenStreetMap (Nominatim) hizmetine
+          gönderilir; koordinatlar tarafımızca saklanmaz.
         </li>
       </ul>
+      <h3>Hizmet Pazaryeri&apos;nde kullanıcılar arasında görünen bilgiler</h3>
+      <p>
+        Hizmet Pazaryeri&apos;nin çalışması, talebinizin ve teklifinizin karşı tarafa
+        gösterilmesini gerektirir. Bu paylaşım, talebi oluşturmanızla veya teklif
+        vermenizle kurulan sözleşmenin ifası (KVKK m. 5/2-c) amacıyla yapılır:
+      </p>
+      <ul>
+        <li>
+          <strong>Talebiniz yayındayken:</strong> İlgili hizmeti veren
+          kullanıcılar; adınızı, soyadınızın baş harfini, profil fotoğrafınızı,
+          talebin ayrıntılarını ve hizmetin verileceği il, ilçe ve mahalleyi
+          görür. Telefon numaranız ve e-posta adresiniz bu aşamada gösterilmez.
+        </li>
+        <li>
+          <strong>Talebinize teklif verildiğinde:</strong> Teklif veren Hizmet
+          Veren, talep oluştururken seçtiğiniz iletişim bilgisini (telefon veya
+          e-posta) teklif sohbetinde görür.
+        </li>
+        <li>
+          <strong>Teklif verdiğinizde:</strong> Hizmet Alan; adınızı, profil
+          fotoğrafınızı, teklif fiyatınızı, mesajlarınızı ve hakkınızdaki
+          değerlendirmeleri görür.
+        </li>
+      </ul>
+      <p>
+        Bu bilgilere erişen kullanıcılar, Kullanım Şartları uyarınca bunları
+        yalnızca ilgili hizmet için kullanmakla yükümlüdür. Bir kullanıcının
+        bilgilerinizi bu amaç dışında kullanması hâlinde, o kullanıcı bu
+        kullanım bakımından ayrıca sorumludur.
+      </p>
 
       <h2>5. Kişisel Verilerin Toplanma Yöntemi ve Hukuki Sebep</h2>
       <p>

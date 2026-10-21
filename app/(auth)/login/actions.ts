@@ -8,6 +8,7 @@ import { getAuthError, isEmailNotConfirmedError } from '@/utils/auth-errors'
 import { checkRateLimit, getClientIpFromHeaders, RATE_LIMITS } from '@/lib/rate-limit-db'
 import { logger } from '@/lib/logger'
 import { ensurePublicUserFromAuth } from '@/lib/ensure-public-user'
+import { safeNextPath } from '@/lib/safe-next'
 import {
   confirmAuthUserEmail,
   findAuthUserIdByEmail,
@@ -36,7 +37,7 @@ export async function login(formData: FormData) {
 
   const email = formData.get('email') as string
   const password = formData.get('password') as string
-  const next = formData.get('next') as string || '/courses'
+  const next = safeNextPath(formData.get('next') as string | null, '/')
 
   const h = await headers()
   const ip = getClientIpFromHeaders(h)

@@ -402,6 +402,7 @@ export async function middleware(req: NextRequest) {
   // isn't hit for a static document view.
   if (
     pathname === '/hakkimizda' ||
+    pathname === '/bildirim/iptal' ||
     pathname === '/yasal' ||
     pathname.startsWith('/yasal/') ||
     pathname === '/courses' ||
@@ -429,8 +430,10 @@ export async function middleware(req: NextRequest) {
     if (isPublic || isPrivateLessonBrowse) return response;
 
     const url = req.nextUrl.clone();
+    const next = `${pathname}${url.search}`;
     url.pathname = '/login';
-    url.searchParams.set('next', pathname);
+    url.search = '';
+    url.searchParams.set('next', next);
     const redirect = NextResponse.redirect(url);
     redirect.headers.set(REQUEST_ID_HEADER, requestId);
     return redirect;
@@ -457,7 +460,7 @@ export async function middleware(req: NextRequest) {
       if (publicPaths.some((p) => pathname === p)) {
         if (pathname === '/reset-password' || pathname === '/clear-session') return response;
         if (pathname === '/login' && req.nextUrl.searchParams.get('logout') === 'true') return response;
-        const redirect = NextResponse.redirect(new URL('/learn', req.url));
+        const redirect = NextResponse.redirect(new URL('/', req.url));
         redirect.headers.set(REQUEST_ID_HEADER, requestId);
         return redirect;
       }
@@ -483,7 +486,7 @@ export async function middleware(req: NextRequest) {
     if (user && publicPaths.some(p => pathname === p)) {
       if (pathname === '/reset-password' || pathname === '/clear-session') return response;
       if (pathname === '/login' && req.nextUrl.searchParams.get('logout') === 'true') return response;
-      const redirect = NextResponse.redirect(new URL('/learn', req.url));
+      const redirect = NextResponse.redirect(new URL('/', req.url));
       redirect.headers.set(REQUEST_ID_HEADER, requestId);
       return redirect;
     }
@@ -502,8 +505,10 @@ export async function middleware(req: NextRequest) {
       return response;
     }
     const url = req.nextUrl.clone();
+    const next = `${pathname}${url.search}`;
     url.pathname = '/login';
-    url.searchParams.set('next', pathname);
+    url.search = '';
+    url.searchParams.set('next', next);
     const redirect = NextResponse.redirect(url);
     redirect.headers.set(REQUEST_ID_HEADER, requestId);
     return redirect;

@@ -4,6 +4,7 @@ import { type NextRequest, NextResponse } from 'next/server';
 import { ensurePublicUserFromAuth } from '@/lib/ensure-public-user';
 import { getRequestLogger } from '@/lib/logger';
 import { syncAdminRoleFromEmail } from '@/lib/admin';
+import { safeNextPath } from '@/lib/safe-next';
 import { AUTH_COOKIE_OPTIONS } from '@/utils/supabase/cookie-options';
 
 export const dynamic = 'force-dynamic';
@@ -229,7 +230,7 @@ export async function GET(request: NextRequest) {
                                 next === '/reset-password' ||
                                 requestUrl.href.includes('type=recovery');
 
-    let redirectTo = '/courses';
+    let redirectTo = '/';
     
     if (isPasswordRecovery) {
       redirectTo = '/reset-password';
@@ -273,7 +274,7 @@ export async function GET(request: NextRequest) {
       }
       
       if (next && next !== '/reset-password') {
-        redirectTo = next;
+        redirectTo = safeNextPath(next, '/');
       }
     }
     

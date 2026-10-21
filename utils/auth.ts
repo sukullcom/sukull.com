@@ -2,11 +2,14 @@ import { createClient } from '@/utils/supabase/client'
 import { getApiAuthCallbackUrl } from '@/lib/oauth-callback-url'
 import { clientLogger } from '@/lib/client-logger'
 
-const supabase = createClient()
+function browserClient() {
+  return createClient()
+}
 
 export const auth = {
   async signInWithOAuth(provider: 'google', nextUrl?: string) {
     const redirectTo = getApiAuthCallbackUrl();
+    const supabase = browserClient();
     
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
@@ -44,7 +47,7 @@ export const auth = {
         localStorage.removeItem('auth_redirect_url');
       }
       
-      const { error } = await supabase.auth.signOut({ scope: 'local' });
+      const { error } = await browserClient().auth.signOut({ scope: 'local' });
       
       if (error) {
         throw error;
@@ -61,45 +64,8 @@ export const auth = {
     }
   },
 
-  async resetPasswordRequest(email: string) {
-    const { data, error } = await supabase.rpc("auth_lookup_provider_by_email", {
-      p_email: email,
-    });
-    if (error) {
-      clientLogger.error({
-        message: "auth_lookup_provider_by_email failed",
-        error,
-        location: "utils/auth/resetPasswordRequest",
-        fields: { email },
-      });
-      // RPC kırığında "link gönderildi" iddiası kullanıcıyı oyalar; nötr metin
-      // ile yeniden denemeye yönlendir — enumerasyon riski yok, üst dal zaten
-      // "hesap mevcutsa…" şeklinde dürüst silenced-success kullanıyor.
-      return {
-        success: false,
-        message:
-          "Şu an doğrulama yapamıyoruz. Lütfen biraz sonra tekrar dene.",
-      };
-    }
-    const row = Array.isArray(data) ? data[0] : data;
-    const provider = row && typeof row === "object" && "provider" in row ? (row as { provider: string }).provider : null;
-
-    // If user doesn't exist or is not 'email' provider, do a "silent success"
-    if (!provider || provider !== "email") {
-      return { success: true, message: 'Hesap mevcutsa şifre sıfırlama bağlantısı gönderilecektir.' }
-    }
-
-    const res = await supabase.auth.resetPasswordForEmail(email)
-    if (res.error) throw res.error
-
-    return {
-      success: true,
-      message: 'Hesap mevcutsa şifre sıfırlama bağlantısı gönderilecektir.',
-    }
-  },
-
   async resetPassword(newPassword: string) {
-    const { data, error } = await supabase.auth.updateUser({ password: newPassword })
+    const { data, error } = await browserClient().auth.updateUser({ password: newPassword })
     if (error) throw error
     return data
   },

@@ -8,8 +8,7 @@ import { toast } from "sonner";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 
-import { auth } from "@/utils/auth";
-import { getAuthError } from "@/utils/auth-errors";
+import { requestPasswordReset } from "./actions";
 
 export function ForgotPasswordForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,16 +19,15 @@ export function ForgotPasswordForm() {
     e.preventDefault();
     try {
       setIsLoading(true);
-      const response = await auth.resetPasswordRequest(email);
+      const response = await requestPasswordReset(email);
       if (response.success) {
         toast.success(response.message);
         router.push("/login");
       } else {
         toast.error(response.message);
       }
-    } catch (error) {
-      const { message } = getAuthError(error);
-      toast.error(message);
+    } catch {
+      toast.error("E-posta gönderilemedi. Biraz sonra tekrar dene.");
     } finally {
       setIsLoading(false);
     }

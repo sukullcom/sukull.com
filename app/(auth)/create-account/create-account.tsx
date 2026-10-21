@@ -82,7 +82,7 @@ export function CreateAccountForm({ referralCodeFromUrl }: CreateAccountFormProp
         return;
       }
       toast.success("Hesabınız oluşturuldu. Hoş geldiniz!");
-      router.push("/courses");
+      router.push("/");
       router.refresh();
     } catch (err) {
       toast.error(getClientAuthTransientErrorMessage(err));
@@ -93,6 +93,9 @@ export function CreateAccountForm({ referralCodeFromUrl }: CreateAccountFormProp
 
   return (
     <form onSubmit={handleSubmit} className="flex w-full min-w-0 flex-col space-y-4">
+      <p className="text-sm leading-relaxed text-muted-foreground">
+        Aynı hesapla talep açabilir veya hizmet verebilirsin. Kayıt ücretsizdir.
+      </p>
       <input
         id="username"
         type="text"
@@ -213,7 +216,7 @@ export function CreateAccountForm({ referralCodeFromUrl }: CreateAccountFormProp
       <OAuthSignIn
         isLoading={isLoading}
         onLoadingChange={setIsLoading}
-        redirectUrl="/courses"
+        redirectUrl="/"
         termsAccepted={legalAccepted}
       />
     </form>

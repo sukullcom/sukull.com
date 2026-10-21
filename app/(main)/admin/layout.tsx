@@ -13,6 +13,7 @@ import { AdminSidebar } from "@/components/admin/admin-sidebar";
 import { AdminTopbar } from "@/components/admin/admin-topbar";
 import type { AdminNavBadges } from "@/components/admin/admin-nav-config";
 import { getRequestLogger } from "@/lib/logger";
+import { countPendingServiceRequests } from "@/db/queries/marketplace-admin";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
@@ -77,7 +78,7 @@ async function loadBadges(): Promise<AdminNavBadges> {
   try {
     const since24h = new Date(Date.now() - 24 * 60 * 60 * 1000);
 
-    const [teacherRow, listingsPendingRow, errorsRow] = await Promise.all([
+    const [teacherRow, listingsPendingRow, errorsRow, servicePending] = await Promise.all([
       db
         .select({ value: count() })
         .from(teacherApplications)
@@ -90,12 +91,14 @@ async function loadBadges(): Promise<AdminNavBadges> {
         .select({ value: count() })
         .from(errorLog)
         .where(and(gte(errorLog.createdAt, since24h))),
+      countPendingServiceRequests(),
     ]);
 
     return {
       teacherPending: Number(teacherRow[0]?.value ?? 0),
       listingsPendingReview: Number(listingsPendingRow[0]?.value ?? 0),
       errors24h: Number(errorsRow[0]?.value ?? 0),
+      servicePending,
     };
   } catch (err) {
     (await (await import("@/lib/logger")).getRequestLogger({ labels: { module: "admin/layout" } }))
