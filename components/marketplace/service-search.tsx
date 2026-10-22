@@ -6,7 +6,9 @@ import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 
 import { CategoryTiles } from "@/components/marketplace/category-tiles";
+import { ReviewShowcase } from "@/components/marketplace/review-showcase";
 import { searchSuggestions, suggestionHref, type ServiceSuggestion } from "@/lib/marketplace/search";
+import type { ShowcaseReview } from "@/lib/marketplace/showcase";
 
 const STEPS = [
   { title: "İhtiyacını anlat", text: "Birkaç soruyu cevapla, yeri ve zamanı seç." },
@@ -14,7 +16,7 @@ const STEPS = [
   { title: "Karşılaştır ve seç", text: "Sana uyan teklifi kabul et, sonra yazış." },
 ];
 
-export function ServiceSearch() {
+export function ServiceSearch({ reviews }: { reviews?: ShowcaseReview[] }) {
   const router = useRouter();
   const searchRef = useRef<HTMLDivElement>(null);
   const [query, setQuery] = useState("");
@@ -99,28 +101,41 @@ export function ServiceSearch() {
         <CategoryTiles onSelect={chooseCategory} />
       </div>
 
-      <section>
-        <h2 className="mb-3 text-lg font-extrabold">Nasıl çalışır?</h2>
-        <ol className="grid gap-3 sm:grid-cols-3">
-          {STEPS.map((step, index) => (
-            <li key={step.title} className="mk-card p-4">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-suk-brand text-sm font-bold text-suk-brand-fg">
-                {index + 1}
-              </span>
-              <p className="mt-3 font-bold">{step.title}</p>
-              <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
+      <HowItWorks />
+      {reviews && reviews.length > 0 && <ReviewShowcase reviews={reviews} />}
+      <MarketHomeFooter />
+    </div>
+  );
+}
 
+export function HowItWorks() {
+  return (
+    <section>
+      <h2 className="mb-3 text-lg font-extrabold">Nasıl çalışır?</h2>
+      <ol className="grid gap-3 sm:grid-cols-3">
+        {STEPS.map((step, index) => (
+          <li key={step.title} className="mk-card p-4">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-suk-brand text-sm font-bold text-suk-brand-fg">
+              {index + 1}
+            </span>
+            <p className="mt-3 font-bold">{step.title}</p>
+            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
+}
+
+export function MarketHomeFooter() {
+  return (
+    <div className="space-y-3">
       <p className="text-center text-sm text-muted-foreground">
         Hizmet mi veriyorsun?{" "}
         <Link href="/hizmet-ver" className="font-bold text-suk-brand">
           Komisyonsuz nasıl iş alırsın
         </Link>
       </p>
-
       <nav aria-label="Yasal" className="flex flex-wrap justify-center gap-x-4 gap-y-1 pb-2 text-xs text-muted-foreground">
         <Link href="/yasal/kullanim-sartlari" className="hover:text-foreground hover:underline">
           Kullanım şartları

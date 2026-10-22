@@ -7,7 +7,7 @@ export function ReviewShowcase({ reviews }: { reviews: ShowcaseReview[] }) {
       <h2 id="yorumlar-baslik" className="mb-3 text-lg font-extrabold">
         Hizmet alanlar ne diyor?
       </h2>
-      <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid gap-3 sm:grid-cols-2">
         {reviews.map((review, index) => (
           <li key={`${index}-${review.name}`} className="mk-card flex flex-col p-4">
             <div className="flex items-center justify-between gap-2">

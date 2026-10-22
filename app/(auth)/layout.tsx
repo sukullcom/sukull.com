@@ -16,12 +16,14 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <PublicShell
-      header={<Header />}
-      footer={<Footer />}
-      mainClassName="bg-card"
-    >
-      {children}
-    </PublicShell>
+    <div className="mk-theme mk-press">
+      <PublicShell
+        header={<Header />}
+        footer={<Footer />}
+        mainClassName="bg-card"
+      >
+        {children}
+      </PublicShell>
+    </div>
   );
 }

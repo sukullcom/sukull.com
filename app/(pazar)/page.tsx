@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 
 import { ServiceSearch } from "@/components/marketplace/service-search";
 import { RequestPreviewList, type RequestPreviewItem } from "@/components/marketplace/request-preview";
-import { ReviewShowcase } from "@/components/marketplace/review-showcase";
 import { listOpenRequestPreviews, listPublicReviews } from "@/db/queries/marketplace";
 import { getServerUser } from "@/lib/auth";
 import { getService } from "@/lib/marketplace/catalog";
@@ -29,9 +28,10 @@ const REVIEW_LIMIT = 9;
 
 export default async function MarketplaceHomePage() {
   const user = await getServerUser();
-  if (user) return <ServiceSearch />;
-
-  const [rows, reviewRows] = await Promise.all([listOpenRequestPreviews(PREVIEW_LIMIT), listPublicReviews(REVIEW_LIMIT)]);
+  const [rows, reviewRows] = await Promise.all([
+    user ? Promise.resolve([]) : listOpenRequestPreviews(PREVIEW_LIMIT),
+    listPublicReviews(REVIEW_LIMIT),
+  ]);
   const realItems: RequestPreviewItem[] = rows.map((row) => ({
     id: row.id,
     name: publicCustomerName(row.firstName ?? "", row.lastName ?? "", row.username),
@@ -67,11 +67,13 @@ export default async function MarketplaceHomePage() {
   }));
   const reviews = [...realReviews, ...SHOWCASE_REVIEWS].slice(0, Math.max(REVIEW_LIMIT, realReviews.length));
 
+  if (user) return <ServiceSearch reviews={reviews} />;
+
   return (
     <div className="space-y-10">
       <JsonLd data={[websiteJsonLd(), faqJsonLd()]} />
       <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.85fr)]">
-        <ServiceSearch />
+        <ServiceSearch reviews={reviews} />
         <aside className="space-y-3 lg:sticky lg:top-24">
           <h2 className="text-lg font-bold">Açık ilanlar</h2>
           <p className="text-sm text-muted-foreground">
@@ -80,7 +82,6 @@ export default async function MarketplaceHomePage() {
           <RequestPreviewList items={[...realItems, ...showcaseItems]} empty="Şu an görünen açık ilan yok." />
         </aside>
       </div>
-      <ReviewShowcase reviews={reviews} />
     </div>
   );
 }
