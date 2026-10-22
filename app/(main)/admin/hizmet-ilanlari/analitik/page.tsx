@@ -28,6 +28,7 @@ export default async function AdminServiceAnalyticsPage() {
     { label: "Ortalama teklif", value: stats.avgPriceTl === null ? "—" : formatPriceTl(stats.avgPriceTl) },
     { label: "Mesaj", value: String(stats.messages) },
     { label: "Hizmet veren", value: String(stats.providers), hint: "En az bir hizmet ekleyen" },
+    { label: "Hizmet alan", value: String(stats.seekers), hint: "Hiç hizmet eklememiş" },
     { label: "Talep oluşturan", value: String(stats.customers) },
     { label: "Yorum", value: String(stats.reviews), hint: stats.avgStars === null ? undefined : `Ortalama ${stats.avgStars}/5` },
     { label: "Süresi dolan", value: String(stats.byStatus.expired) },

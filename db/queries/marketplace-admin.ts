@@ -1,6 +1,6 @@
 import "server-only";
 
-import { and, count, countDistinct, desc, eq, gt, gte, inArray, isNotNull, lte, sql } from "drizzle-orm";
+import { and, count, countDistinct, desc, eq, exists, gt, gte, inArray, isNotNull, lte, notExists, or, sql } from "drizzle-orm";
 import { CATEGORIES, getService, servicesInCategory } from "@/lib/marketplace/catalog";
 
 import db from "@/db/drizzle";
@@ -175,6 +175,7 @@ export async function getMarketplaceStats() {
     [messageTotals],
     [reviewTotals],
     [providerTotals],
+    [seekerTotals],
     [customerTotals],
     [reviewSpeed],
     topServices,
@@ -201,6 +202,19 @@ export async function getMarketplaceStats() {
     db.select({ value: count() }).from(serviceMessages),
     db.select({ total: count(), avg: sql<number | null>`round(avg(${serviceReviews.stars})::numeric, 1)` }).from(serviceReviews),
     db.select({ value: countDistinct(providerServices.userId) }).from(providerServices),
+    db
+      .select({ value: count() })
+      .from(users)
+      .where(
+        and(
+          notExists(db.select({ id: providerServices.userId }).from(providerServices).where(eq(providerServices.userId, users.id))),
+          or(
+            exists(db.select({ id: marketplaceProfiles.userId }).from(marketplaceProfiles).where(eq(marketplaceProfiles.userId, users.id))),
+            exists(db.select({ id: serviceRequests.customerId }).from(serviceRequests).where(eq(serviceRequests.customerId, users.id))),
+            exists(db.select({ id: serviceQuotes.providerId }).from(serviceQuotes).where(eq(serviceQuotes.providerId, users.id))),
+          ),
+        ),
+      ),
     db.select({ value: countDistinct(serviceRequests.customerId) }).from(serviceRequests),
     db
       .select({
@@ -269,6 +283,7 @@ export async function getMarketplaceStats() {
     reviews: Number(reviewTotals?.total ?? 0),
     avgStars: reviewTotals?.avg === null || reviewTotals?.avg === undefined ? null : Number(reviewTotals.avg),
     providers: Number(providerTotals?.value ?? 0),
+    seekers: Number(seekerTotals?.value ?? 0),
     customers: Number(customerTotals?.value ?? 0),
     avgReviewHours: reviewSpeed?.hours === null || reviewSpeed?.hours === undefined ? null : Number(reviewSpeed.hours),
     topServices: topServices.map((row) => ({ slug: row.slug, value: Number(row.value) })),
