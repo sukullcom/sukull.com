@@ -21,6 +21,15 @@ export default async function ProviderListingsPage() {
       <p className="text-sm text-muted-foreground">
         Yalnızca Hizmetlerim listene eklediğin işler burada görünür. Bir talebe en fazla 4 teklif gelir.
         Hizmetlerim sayfasından her hizmet için detay seçersen sadece uyan ilanları görürsün. Kendi talebin İlanlarım&apos;da durur.
+        {feed.slugs.length > 0 && (
+          <>
+            {" "}
+            Uyan yeni ilan olursa 3 günde bir kısa bir e-posta gelir.{" "}
+            <Link href="/ayarlar/bildirimler" className="font-bold text-suk-brand">
+              Bildirimler
+            </Link>
+          </>
+        )}
       </p>
       {feed.slugs.length > 0 && (
         feed.place.city ? (

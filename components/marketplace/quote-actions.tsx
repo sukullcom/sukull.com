@@ -76,8 +76,8 @@ export function AcceptQuoteButton({ quoteId, otherQuotes }: { quoteId: number; o
       <p className="text-sm font-semibold">Bu teklifi kabul etmek istediğine emin misin?</p>
       <p className="text-sm text-muted-foreground">
         {otherQuotes > 0
-          ? `İlan kapanır, diğer ${otherQuotes} teklif kabul edilmedi olarak işaretlenir. Bu geri alınamaz.`
-          : "İlan kapanır ve yeni teklif gelmez. Bu geri alınamaz."}
+          ? `İlan kapanır, diğer ${otherQuotes} teklif kabul edilmedi olarak işaretlenir. Hizmet verene e-posta gider. Bu geri alınamaz.`
+          : "İlan kapanır ve yeni teklif gelmez. Hizmet verene e-posta gider. Bu geri alınamaz."}
       </p>
       <div className="grid grid-cols-2 gap-2">
         <Button type="button" variant="secondaryOutline" disabled={pending} onClick={() => setConfirming(false)}>
@@ -237,6 +237,9 @@ export function QuoteForm({ requestId }: { requestId: number }) {
       <Button type="submit" variant="primary" className="w-full" disabled={pending}>
         Teklif ver
       </Button>
+      <p className="text-xs leading-relaxed text-muted-foreground">
+        Gönderince müşteriye e-posta gider. Teklifin kabul edilirse sana da haber gelir.
+      </p>
     </form>
   );
 }

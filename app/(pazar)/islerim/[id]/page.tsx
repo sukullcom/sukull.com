@@ -24,6 +24,11 @@ import { RatingBadge } from "@/components/marketplace/rating-badge";
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "İlanım" };
 
+function mailTarget(email: string | null | undefined): string {
+  const value = email?.trim();
+  return value ? `${value} adresine` : "hesabındaki e-posta adresine";
+}
+
 export default async function JobDetailPage({
   params,
 }: {
@@ -57,8 +62,8 @@ export default async function JobDetailPage({
       </header>
       {job.status === "pending" && (
         <p className="rounded-2xl border-2 border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-          İlanın inceleniyor. Onaylanınca hizmet verenler görür ve teklif
-          gönderebilir.
+          İlanın inceleniyor. Onaylanınca hizmet verenler görür ve teklif gönderebilir. Teklif gelince{" "}
+          {mailTarget(account.email)} haber veririz.
         </p>
       )}
       {job.status === "rejected" && (
@@ -99,7 +104,13 @@ export default async function JobDetailPage({
         <section className="space-y-3">
           <div>
             <h2 className="text-lg font-extrabold">Teklifler</h2>
-            {job.quotes.length > 0 && (
+            {job.status === "open" && (
+              <p className="text-sm text-muted-foreground">
+                Yeni teklif gelince {mailTarget(account.email)} haber veririz.
+                {job.quotes.length > 0 ? " Bir teklife dokun, o kişiyle ayrı sohbet açılır." : ""}
+              </p>
+            )}
+            {job.status !== "open" && job.quotes.length > 0 && (
               <p className="text-sm text-muted-foreground">
                 Bir teklife dokun, o kişiyle ayrı sohbet açılır.
               </p>

@@ -10,7 +10,7 @@ import { searchSuggestions, suggestionHref, type ServiceSuggestion } from "@/lib
 
 const STEPS = [
   { title: "İhtiyacını anlat", text: "Birkaç soruyu cevapla, yeri ve zamanı seç." },
-  { title: "Teklif al", text: "Hizmet verenler fiyat ve mesaj gönderir. En fazla dört teklif gelir." },
+  { title: "Teklif al", text: "Hizmet verenler fiyat ve mesaj gönderir. Teklif gelince hesabındaki e-postaya haber veririz. En fazla dört teklif gelir." },
   { title: "Karşılaştır ve seç", text: "Sana uyan teklifi kabul et, sonra yazış." },
 ];
 
