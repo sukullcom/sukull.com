@@ -106,15 +106,15 @@ body,
 }
 
 /*
- * İlan tarafı. Yeşil, Armut ile karışıyor; maskottaki mor banda yakın koyu çivit
- * daha sakin ve logodan ayrı duruyor. Öğrenme tarafındaki yeşil burada ezilir.
+ * İlan tarafı. Evine birini çağıran kişi için sakin, koyu mavi.
+ * Öğrenme tarafındaki yeşil burada ezilir.
  */
 .mk-theme {
-  --suk-brand: 252 46% 36%;
-  --suk-brand-hover: 252 48% 30%;
-  --suk-brand-border: 252 50% 24%;
-  --suk-brand-soft: 250 55% 96%;
-  --suk-brand-soft-fg: 252 42% 26%;
+  --suk-brand: 215 64% 34%;
+  --suk-brand-hover: 215 66% 28%;
+  --suk-brand-border: 215 70% 22%;
+  --suk-brand-soft: 214 72% 96%;
+  --suk-brand-soft-fg: 215 62% 24%;
   /* :root bu ikisini yeşile çözüyor; ilan tarafında yeniden bağlanır. */
   --primary: var(--suk-brand);
   --ring: var(--suk-brand);
