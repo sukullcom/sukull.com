@@ -8,10 +8,18 @@ import { getServerUser } from "@/lib/auth";
 import { getService } from "@/lib/marketplace/catalog";
 import { formatPlace, formatWhen, publicCustomerName, requestHeadline } from "@/lib/marketplace/format";
 import { SHOWCASE_REQUESTS, SHOWCASE_REVIEWS, showcaseWhen, type ShowcaseReview } from "@/lib/marketplace/showcase";
+import { MARKET_ORIGIN, faqJsonLd, websiteJsonLd } from "@/lib/marketplace/seo";
+import { JsonLd } from "@/components/marketplace/json-ld";
 
 export const metadata: Metadata = {
   title: "Hizmet al",
-  description: "Sukull'da ihtiyacın olan hizmeti seç, talep aç ve teklifleri karşılaştır. Ücret yok.",
+  description: "İhtiyacın olan hizmeti seç, ücretsiz ilan aç, teklifleri karşılaştır. Sukull komisyon almaz.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "Hizmet al | Sukull",
+    description: "Ücretsiz ilan aç, en fazla dört teklif karşılaştır. Komisyon yok.",
+    url: MARKET_ORIGIN,
+  },
 };
 
 export const dynamic = "force-dynamic";
@@ -61,6 +69,7 @@ export default async function MarketplaceHomePage() {
 
   return (
     <div className="space-y-10">
+      <JsonLd data={[websiteJsonLd(), faqJsonLd()]} />
       <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.85fr)]">
         <ServiceSearch />
         <aside className="space-y-3 lg:sticky lg:top-24">

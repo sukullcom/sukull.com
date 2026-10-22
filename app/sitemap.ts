@@ -3,6 +3,7 @@ import db from "@/db/drizzle";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { isCodeEditorEnabled, isLabEnabled } from "@/lib/feature-flags";
+import { MARKET_ORIGIN, sitemapServicePaths } from "@/lib/marketplace/seo";
 import { logger } from "@/lib/logger";
 
 const log = logger.child({ labels: { module: "sitemap" } });
@@ -18,6 +19,11 @@ type Entry = MetadataRoute.Sitemap[number];
 function buildStaticEntries(): Entry[] {
   const entries: Entry[] = [
     { url: BASE_URL, changeFrequency: "weekly", priority: 1 },
+    ...sitemapServicePaths().map((path) => ({
+      url: `${MARKET_ORIGIN}${path}`,
+      changeFrequency: "weekly" as const,
+      priority: path === "/hizmet" || path === "/hizmet-ver" ? 0.8 : 0.7,
+    })),
     { url: `${BASE_URL}/learn`, changeFrequency: "daily", priority: 0.9 },
     { url: `${BASE_URL}/courses`, changeFrequency: "weekly", priority: 0.8 },
     { url: `${BASE_URL}/leaderboard`, changeFrequency: "daily", priority: 0.7 },

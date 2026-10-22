@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import { createServiceRequest } from "@/actions/marketplace";
+import { trackMarketplace } from "@/lib/marketplace/track";
 import { LocationFields } from "@/components/marketplace/location-fields";
 import { Button } from "@/components/ui/button";
 import type { Province } from "@/lib/marketplace/address";
@@ -147,6 +148,7 @@ export function RequestWizard({
       toast.error(result.error);
       return;
     }
+    trackMarketplace("ilan_gonderildi", { hizmet: service.slug });
     router.push(`/islerim/${result.id}`);
     router.refresh();
   }

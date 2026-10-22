@@ -5,6 +5,7 @@ import { ArrowLeft, Check, ChevronDown, Minus, Search, X } from "lucide-react";
 import { toast } from "sonner";
 
 import { saveProviderServices } from "@/actions/marketplace-account";
+import { trackMarketplace } from "@/lib/marketplace/track";
 import { CategoryTiles } from "@/components/marketplace/category-tiles";
 import { CATEGORIES, SERVICES, getService, type ServiceDef } from "@/lib/marketplace/catalog";
 import { serviceVariants, variantMatchesQuery, type ProviderServiceEntry } from "@/lib/marketplace/provider-match";
@@ -92,6 +93,10 @@ export function ServicesForm({ selected }: { selected: ProviderServiceEntry[] })
         latest.current = saved.current;
         setEntries(saved.current);
         break;
+      }
+      if (snapshot.length > 0) {
+        trackMarketplace("hizmet_eklendi", { adet: snapshot.length });
+        if (saved.current.length === 0) trackMarketplace("hizmet_veren_kayit");
       }
       saved.current = snapshot;
     } while (dirty.current);

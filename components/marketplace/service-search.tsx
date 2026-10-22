@@ -90,7 +90,12 @@ export function ServiceSearch() {
       </div>
 
       <div>
-        <h2 className="mb-3 text-lg font-extrabold">Kategoriler</h2>
+        <div className="mb-3 flex items-baseline justify-between gap-3">
+          <h2 className="text-lg font-extrabold">Kategoriler</h2>
+          <Link href="/hizmet" className="text-sm font-bold text-suk-brand">
+            Tüm hizmetler
+          </Link>
+        </div>
         <CategoryTiles onSelect={chooseCategory} />
       </div>
 
@@ -108,6 +113,13 @@ export function ServiceSearch() {
           ))}
         </ol>
       </section>
+
+      <p className="text-center text-sm text-muted-foreground">
+        Hizmet mi veriyorsun?{" "}
+        <Link href="/hizmet-ver" className="font-bold text-suk-brand">
+          Komisyonsuz nasıl iş alırsın
+        </Link>
+      </p>
 
       <nav aria-label="Yasal" className="flex flex-wrap justify-center gap-x-4 gap-y-1 pb-2 text-xs text-muted-foreground">
         <Link href="/yasal/kullanim-sartlari" className="hover:text-foreground hover:underline">
