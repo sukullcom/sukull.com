@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { BarChart3 } from "lucide-react";
+import { BarChart3, ChevronRight } from "lucide-react";
 
-import { getMarketplaceStats } from "@/db/queries/marketplace-admin";
+import { getMarketplaceStats, getServiceCoverage } from "@/db/queries/marketplace-admin";
 import { isAdmin } from "@/lib/admin";
 import { getService } from "@/lib/marketplace/catalog";
 import { formatPriceTl } from "@/lib/marketplace/format";
@@ -13,7 +13,7 @@ const dayLabel = new Intl.DateTimeFormat("tr-TR", { day: "numeric", month: "shor
 
 export default async function AdminServiceAnalyticsPage() {
   if (!(await isAdmin())) redirect("/unauthorized");
-  const stats = await getMarketplaceStats();
+  const [stats, coverage] = await Promise.all([getMarketplaceStats(), getServiceCoverage()]);
   const peak = Math.max(1, ...stats.days.map((day) => day.value));
   const topServiceMax = Math.max(1, ...stats.topServices.map((row) => row.value));
   const topCityMax = Math.max(1, ...stats.topCities.map((row) => row.value));
@@ -63,6 +63,8 @@ export default async function AdminServiceAnalyticsPage() {
         ))}
       </div>
 
+      <CoverageTable rows={coverage} />
+
       <section className="rounded-xl border bg-white p-4">
         <h2 className="mb-3 text-sm font-semibold text-gray-900">Son 14 gün yeni ilan</h2>
         <div className="flex h-40 items-end gap-1.5">
@@ -93,6 +95,53 @@ export default async function AdminServiceAnalyticsPage() {
         />
       </div>
     </div>
+  );
+}
+
+function CoverageTable({ rows }: { rows: Awaited<ReturnType<typeof getServiceCoverage>> }) {
+  const services = rows.flatMap((row) => row.services);
+  const withProviders = services.filter((service) => service.providers > 0).length;
+  const withRequests = services.filter((service) => service.requests > 0).length;
+
+  return (
+    <section className="rounded-xl border bg-white p-4">
+      <h2 className="text-sm font-semibold text-gray-900">Kategoriler</h2>
+      <p className="mt-1 text-xs text-gray-500">
+        {withProviders} hizmette hizmet veren var, {withRequests} hizmette ilan var. Bir kişi aynı kategorideki birden
+        fazla hizmette tek sayılır. İlan sayısı tüm durumları kapsar.
+      </p>
+      <div className="mt-3">
+        <div className="flex items-center gap-3 border-b pb-2 text-[11px] font-semibold uppercase tracking-wide text-gray-400">
+          <span className="h-4 w-4 shrink-0" />
+          <span className="min-w-0 flex-1">Kategori</span>
+          <span className="w-20 shrink-0 text-right sm:w-24">Hizmet veren</span>
+          <span className="w-16 shrink-0 text-right sm:w-24">İlan</span>
+        </div>
+        {rows.map((category) => (
+          <details key={category.slug} open={category.providers > 0 || category.requests > 0} className="group border-b py-2 last:border-b-0">
+            <summary className="flex cursor-pointer list-none items-center gap-3 text-sm [&::-webkit-details-marker]:hidden">
+              <ChevronRight className="h-4 w-4 shrink-0 text-gray-400 transition-transform group-open:rotate-90" />
+              <span className="min-w-0 flex-1 truncate font-semibold text-gray-900">{category.name}</span>
+              <span className="w-20 shrink-0 text-right text-xs text-gray-500 sm:w-24">
+                <b className="text-gray-900">{category.providers}</b>
+              </span>
+              <span className="w-16 shrink-0 text-right text-xs text-gray-500 sm:w-24">
+                <b className="text-gray-900">{category.requests}</b>
+              </span>
+            </summary>
+            <ul className="mt-1 space-y-1 pl-7">
+              {category.services.map((service) => (
+                <li key={service.slug} className="flex items-center gap-3 text-xs text-gray-600">
+                  <span className="min-w-0 flex-1 truncate">{service.name}</span>
+                  <span className="w-20 shrink-0 text-right sm:w-24">{service.providers}</span>
+                  <span className="w-16 shrink-0 text-right sm:w-24">{service.requests}</span>
+                </li>
+              ))}
+            </ul>
+          </details>
+        ))}
+      </div>
+    </section>
   );
 }
 

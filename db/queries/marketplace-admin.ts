@@ -1,6 +1,7 @@
 import "server-only";
 
 import { and, count, countDistinct, desc, eq, gt, gte, inArray, isNotNull, lte, sql } from "drizzle-orm";
+import { CATEGORIES, getService, servicesInCategory } from "@/lib/marketplace/catalog";
 
 import db from "@/db/drizzle";
 import {
@@ -60,6 +61,82 @@ export async function listRequestsForReview(tab: ReviewTab, limit = 200) {
     .limit(limit);
 
   return rows.map((row) => ({ ...row, answers: (row.answers ?? []) as ServiceRequestAnswer[] }));
+}
+
+export type ServiceCoverage = {
+  slug: string;
+  name: string;
+  /** Bu kategoride en az bir hizmeti olan farklı kişi sayısı. */
+  providers: number;
+  /** Bu kategorideki tüm ilanlar. */
+  requests: number;
+  services: { slug: string; name: string; providers: number; requests: number }[];
+};
+
+/** Katalogdaki her kategori ve hizmet için hizmet veren ve ilan sayıları. Boş olanlar da durur. */
+export async function getServiceCoverage(): Promise<ServiceCoverage[]> {
+  const [providers, requests] = await Promise.all([
+    db.select({ userId: providerServices.userId, slug: providerServices.serviceSlug }).from(providerServices),
+    db.select({ slug: serviceRequests.serviceSlug, value: count() }).from(serviceRequests).groupBy(serviceRequests.serviceSlug),
+  ]);
+
+  const requestCount = new Map(requests.map((row) => [row.slug, Number(row.value)]));
+  const providersBySlug = new Map<string, string[]>();
+  for (const row of providers) {
+    const list = providersBySlug.get(row.slug) ?? [];
+    if (!list.includes(row.userId)) list.push(row.userId);
+    providersBySlug.set(row.slug, list);
+  }
+
+  const known = new Set(CATEGORIES.map((category) => category.slug));
+  const rows = CATEGORIES.map((category) => {
+    const people: string[] = [];
+    const services = servicesInCategory(category.slug).map((service) => {
+      const offering = providersBySlug.get(service.slug) ?? [];
+      for (const userId of offering) {
+        if (!people.includes(userId)) people.push(userId);
+      }
+      return {
+        slug: service.slug,
+        name: service.name,
+        providers: offering.length,
+        requests: requestCount.get(service.slug) ?? 0,
+      };
+    });
+    return {
+      slug: category.slug,
+      name: category.name,
+      providers: people.length,
+      requests: services.reduce((sum, service) => sum + service.requests, 0),
+      services,
+    };
+  });
+
+  const slugs: string[] = [];
+  providersBySlug.forEach((_users, slug) => slugs.push(slug));
+  requestCount.forEach((_value, slug) => {
+    if (!slugs.includes(slug)) slugs.push(slug);
+  });
+  const straySlugs = slugs.filter((slug) => !getService(slug) || !known.has(getService(slug)?.categorySlug ?? ""));
+  if (straySlugs.length > 0) {
+    const people: string[] = [];
+    const services = straySlugs.map((slug) => {
+      const offering = providersBySlug.get(slug) ?? [];
+      for (const userId of offering) {
+        if (!people.includes(userId)) people.push(userId);
+      }
+      return { slug, name: getService(slug)?.name ?? slug, providers: offering.length, requests: requestCount.get(slug) ?? 0 };
+    });
+    rows.push({
+      slug: "diger",
+      name: "Katalog dışı",
+      providers: people.length,
+      requests: services.reduce((sum, service) => sum + service.requests, 0),
+      services,
+    });
+  }
+
+  return rows;
 }
 
 export async function countPendingServiceRequests(): Promise<number> {
