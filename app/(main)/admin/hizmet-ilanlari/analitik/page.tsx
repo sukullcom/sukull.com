@@ -101,40 +101,50 @@ export default async function AdminServiceAnalyticsPage() {
 function CoverageTable({ rows }: { rows: Awaited<ReturnType<typeof getServiceCoverage>> }) {
   const services = rows.flatMap((row) => row.services);
   const withProviders = services.filter((service) => service.providers > 0).length;
-  const withRequests = services.filter((service) => service.requests > 0).length;
+  const withListings = services.filter((service) => service.active > 0 || service.past > 0).length;
 
   return (
     <section className="rounded-xl border bg-white p-4">
       <h2 className="text-sm font-semibold text-gray-900">Kategoriler</h2>
       <p className="mt-1 text-xs text-gray-500">
-        {withProviders} hizmette hizmet veren var, {withRequests} hizmette ilan var. Bir kişi aynı kategorideki birden
-        fazla hizmette tek sayılır. İlan sayısı tüm durumları kapsar.
+        {withProviders} hizmette hizmet veren var, {withListings} hizmette ilan var. Bir kişi aynı kategorideki birden
+        fazla hizmette tek sayılır. Aktif olanların zamanı henüz dolmamış. Geçmiş, zamanı dolmuş veya kapanmış
+        ilanlardır. Reddedilenler bu iki sayıya girmez.
       </p>
       <div className="mt-3">
         <div className="flex items-center gap-3 border-b pb-2 text-[11px] font-semibold uppercase tracking-wide text-gray-400">
           <span className="h-4 w-4 shrink-0" />
           <span className="min-w-0 flex-1">Kategori</span>
-          <span className="w-20 shrink-0 text-right sm:w-24">Hizmet veren</span>
-          <span className="w-16 shrink-0 text-right sm:w-24">İlan</span>
+          <span className="w-14 shrink-0 text-right sm:w-24">Hizmet veren</span>
+          <span className="w-12 shrink-0 text-right sm:w-16">Aktif</span>
+          <span className="w-14 shrink-0 text-right sm:w-16">Geçmiş</span>
         </div>
         {rows.map((category) => (
-          <details key={category.slug} open={category.providers > 0 || category.requests > 0} className="group border-b py-2 last:border-b-0">
+          <details
+            key={category.slug}
+            open={category.providers > 0 || category.active > 0 || category.past > 0}
+            className="group border-b py-2 last:border-b-0"
+          >
             <summary className="flex cursor-pointer list-none items-center gap-3 text-sm [&::-webkit-details-marker]:hidden">
               <ChevronRight className="h-4 w-4 shrink-0 text-gray-400 transition-transform group-open:rotate-90" />
               <span className="min-w-0 flex-1 truncate font-semibold text-gray-900">{category.name}</span>
-              <span className="w-20 shrink-0 text-right text-xs text-gray-500 sm:w-24">
+              <span className="w-14 shrink-0 text-right text-xs text-gray-500 sm:w-24">
                 <b className="text-gray-900">{category.providers}</b>
               </span>
-              <span className="w-16 shrink-0 text-right text-xs text-gray-500 sm:w-24">
-                <b className="text-gray-900">{category.requests}</b>
+              <span className="w-12 shrink-0 text-right text-xs text-gray-500 sm:w-16">
+                <b className="text-gray-900">{category.active}</b>
+              </span>
+              <span className="w-14 shrink-0 text-right text-xs text-gray-500 sm:w-16">
+                <b className="text-gray-900">{category.past}</b>
               </span>
             </summary>
             <ul className="mt-1 space-y-1 pl-7">
               {category.services.map((service) => (
                 <li key={service.slug} className="flex items-center gap-3 text-xs text-gray-600">
                   <span className="min-w-0 flex-1 truncate">{service.name}</span>
-                  <span className="w-20 shrink-0 text-right sm:w-24">{service.providers}</span>
-                  <span className="w-16 shrink-0 text-right sm:w-24">{service.requests}</span>
+                  <span className="w-14 shrink-0 text-right sm:w-24">{service.providers}</span>
+                  <span className="w-12 shrink-0 text-right sm:w-16">{service.active}</span>
+                  <span className="w-14 shrink-0 text-right sm:w-16">{service.past}</span>
                 </li>
               ))}
             </ul>

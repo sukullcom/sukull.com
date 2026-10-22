@@ -68,19 +68,28 @@ export type ServiceCoverage = {
   name: string;
   /** Bu kategoride en az bir hizmeti olan farklı kişi sayısı. */
   providers: number;
-  /** Bu kategorideki tüm ilanlar. */
-  requests: number;
-  services: { slug: string; name: string; providers: number; requests: number }[];
+  /** Zamanı henüz dolmamış inceleme, yayında ve kabul edilmiş ilanlar. */
+  active: number;
+  /** Zamanı dolmuş veya kapanmış ilanlar. */
+  past: number;
+  services: { slug: string; name: string; providers: number; active: number; past: number }[];
 };
 
 /** Katalogdaki her kategori ve hizmet için hizmet veren ve ilan sayıları. Boş olanlar da durur. */
 export async function getServiceCoverage(): Promise<ServiceCoverage[]> {
   const [providers, requests] = await Promise.all([
     db.select({ userId: providerServices.userId, slug: providerServices.serviceSlug }).from(providerServices),
-    db.select({ slug: serviceRequests.serviceSlug, value: count() }).from(serviceRequests).groupBy(serviceRequests.serviceSlug),
+    db
+      .select({
+        slug: serviceRequests.serviceSlug,
+        active: sql<number>`count(*) filter (where ${serviceRequests.expiresAt} > now() and ${serviceRequests.status} in ('pending', 'open', 'accepted'))`,
+        past: sql<number>`count(*) filter (where ${serviceRequests.status} <> 'rejected' and (${serviceRequests.expiresAt} <= now() or ${serviceRequests.status} in ('expired', 'closed')))`,
+      })
+      .from(serviceRequests)
+      .groupBy(serviceRequests.serviceSlug),
   ]);
 
-  const requestCount = new Map(requests.map((row) => [row.slug, Number(row.value)]));
+  const requestCount = new Map(requests.map((row) => [row.slug, { active: Number(row.active), past: Number(row.past) }]));
   const providersBySlug = new Map<string, string[]>();
   for (const row of providers) {
     const list = providersBySlug.get(row.slug) ?? [];
@@ -96,18 +105,21 @@ export async function getServiceCoverage(): Promise<ServiceCoverage[]> {
       for (const userId of offering) {
         if (!people.includes(userId)) people.push(userId);
       }
+      const counts = requestCount.get(service.slug) ?? { active: 0, past: 0 };
       return {
         slug: service.slug,
         name: service.name,
         providers: offering.length,
-        requests: requestCount.get(service.slug) ?? 0,
+        active: counts.active,
+        past: counts.past,
       };
     });
     return {
       slug: category.slug,
       name: category.name,
       providers: people.length,
-      requests: services.reduce((sum, service) => sum + service.requests, 0),
+      active: services.reduce((sum, service) => sum + service.active, 0),
+      past: services.reduce((sum, service) => sum + service.past, 0),
       services,
     };
   });
@@ -125,13 +137,15 @@ export async function getServiceCoverage(): Promise<ServiceCoverage[]> {
       for (const userId of offering) {
         if (!people.includes(userId)) people.push(userId);
       }
-      return { slug, name: getService(slug)?.name ?? slug, providers: offering.length, requests: requestCount.get(slug) ?? 0 };
+      const counts = requestCount.get(slug) ?? { active: 0, past: 0 };
+      return { slug, name: getService(slug)?.name ?? slug, providers: offering.length, active: counts.active, past: counts.past };
     });
     rows.push({
       slug: "diger",
       name: "Katalog dışı",
       providers: people.length,
-      requests: services.reduce((sum, service) => sum + service.requests, 0),
+      active: services.reduce((sum, service) => sum + service.active, 0),
+      past: services.reduce((sum, service) => sum + service.past, 0),
       services,
     });
   }
