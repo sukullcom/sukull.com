@@ -9,6 +9,7 @@ import { PracticeModal } from "@/components/modals/practice-modal";
 import { GlobalErrorListener } from "@/components/global-error-listener";
 import { PwaInstallPrompt } from "@/components/pwa-install-prompt";
 import { DevConsolePatch } from "@/components/dev-console-patch";
+import { GoogleAdsTag } from "@/components/analytics/google-ads-tag";
 import { PWA_ICON_192, PWA_ICON_512 } from "@/lib/pwa-icons";
 
 const nunito = Nunito({ subsets: ["latin", "latin-ext"] });
@@ -80,6 +81,7 @@ export default function RootLayout({
         className={`${nunito.className} antialiased`}
         suppressHydrationWarning
       >
+        <GoogleAdsTag />
         {isDev && <DevConsolePatch />}
         <GlobalErrorListener />
         <CustomToaster />
