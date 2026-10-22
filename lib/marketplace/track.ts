@@ -8,7 +8,9 @@ declare global {
 }
 
 const ADS_CONVERSIONS: Record<string, string | undefined> = {
-  ilan_gonderildi: process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_ILAN,
+  ilan_gonderildi:
+    process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_ILAN ??
+    "AW-18531702851/EPi8CL6-xaYdEMOwzYRF",
   hizmet_veren_kayit: process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_HIZMET_VER,
 };
 
@@ -26,6 +28,11 @@ export function trackMarketplace(event: string, params: TrackParams = {}) {
   window.gtag("event", event, payload);
   const sendTo = ADS_CONVERSIONS[event];
   if (sendTo) {
-    window.gtag("event", "conversion", { send_to: sendTo, ...payload });
+    window.gtag("event", "conversion", {
+      send_to: sendTo,
+      value: 1.0,
+      currency: "TRY",
+      ...payload,
+    });
   }
 }
