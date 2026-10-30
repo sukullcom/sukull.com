@@ -119,6 +119,9 @@ function CoverageTable({ rows }: { rows: Awaited<ReturnType<typeof getServiceCov
           <span className="w-14 shrink-0 text-right sm:w-24">Hizmet veren</span>
           <span className="w-12 shrink-0 text-right sm:w-16">Aktif</span>
           <span className="w-14 shrink-0 text-right sm:w-16">Geçmiş</span>
+          <span className="hidden w-14 shrink-0 text-right sm:table-cell sm:w-16">Teklif</span>
+          <span className="hidden w-20 shrink-0 text-right lg:table-cell">Ort. teklif</span>
+          <span className="hidden w-14 shrink-0 text-right lg:table-cell">Kabul %</span>
         </div>
         {rows.map((category) => (
           <details
@@ -138,6 +141,11 @@ function CoverageTable({ rows }: { rows: Awaited<ReturnType<typeof getServiceCov
               <span className="w-14 shrink-0 text-right text-xs text-gray-500 sm:w-16">
                 <b className="text-gray-900">{category.past}</b>
               </span>
+              <span className="hidden w-14 shrink-0 text-right text-xs text-gray-500 sm:table-cell sm:w-16">
+                <b className="text-gray-900">{category.services.reduce((sum, s) => sum + s.quotes, 0)}</b>
+              </span>
+              <span className="hidden w-20 shrink-0 text-right text-xs text-gray-400 lg:table-cell">—</span>
+              <span className="hidden w-14 shrink-0 text-right text-xs text-gray-400 lg:table-cell">—</span>
             </summary>
             <ul className="mt-1 space-y-1 pl-7">
               {category.services.map((service) => (
@@ -146,6 +154,13 @@ function CoverageTable({ rows }: { rows: Awaited<ReturnType<typeof getServiceCov
                   <span className="w-14 shrink-0 text-right sm:w-24">{service.providers}</span>
                   <span className="w-12 shrink-0 text-right sm:w-16">{service.active}</span>
                   <span className="w-14 shrink-0 text-right sm:w-16">{service.past}</span>
+                  <span className="hidden w-14 shrink-0 text-right sm:table-cell sm:w-16">{service.quotes || "—"}</span>
+                  <span className="hidden w-20 shrink-0 text-right lg:table-cell">
+                    {service.avgPriceTl === null ? "—" : formatPriceTl(service.avgPriceTl)}
+                  </span>
+                  <span className="hidden w-14 shrink-0 text-right lg:table-cell">
+                    {service.acceptRate === null ? "—" : `%${service.acceptRate}`}
+                  </span>
                 </li>
               ))}
             </ul>

@@ -16,6 +16,7 @@ export function LocationFields({
   neighborhood,
   onChange,
   showGeo = false,
+  cityOnly = false,
 }: {
   provinces: Province[];
   provinceId: number | null;
@@ -23,6 +24,7 @@ export function LocationFields({
   neighborhood: string;
   onChange: (next: { provinceId: number | null; districtId: number | null; neighborhood: string }) => void;
   showGeo?: boolean;
+  cityOnly?: boolean;
 }) {
   const province = provinces.find((item) => item.id === provinceId) ?? null;
   const [neighborhoods, setNeighborhoods] = useState<string[]>([]);
@@ -55,8 +57,8 @@ export function LocationFields({
         if (result.provinceId) {
           onChange({
             provinceId: result.provinceId,
-            districtId: result.districtId,
-            neighborhood: result.neighborhood,
+            districtId: cityOnly ? null : result.districtId,
+            neighborhood: cityOnly ? "" : result.neighborhood,
           });
         }
         if (result.error) toast.error(result.error);
@@ -71,7 +73,7 @@ export function LocationFields({
 
   return (
     <div className="space-y-3">
-      {showGeo && (
+      {showGeo && !cityOnly && (
         <button
           type="button"
           onClick={useMyLocation}
@@ -99,6 +101,8 @@ export function LocationFields({
           ))}
         </select>
       </label>
+      {!cityOnly && (
+        <>
       <label className="block text-sm font-semibold text-foreground">
         İlçe
         <select
@@ -137,6 +141,8 @@ export function LocationFields({
           ))}
         </select>
       </label>
+        </>
+      )}
     </div>
   );
 }

@@ -90,16 +90,43 @@ export async function saveEmail(email: string) {
 
 export async function saveLocation(input: {
   provinceId: number;
-  districtId: number;
-  neighborhood: string;
+  districtId?: number | null;
+  neighborhood?: string;
+  /** Hizmet veren: yalnızca il; ilan eşleşmesi şehir bazında. */
+  cityOnly?: boolean;
 }) {
   const user = await requireUserId();
   if (!user) return { error: "Giriş yap." };
   const province = findProvince(input.provinceId);
-  const district = province?.districts.find((item) => item.id === input.districtId);
-  if (!province || !district) return { error: "İl ve ilçe seç." };
+  if (!province) return { error: "İl seç." };
+
+  if (input.cityOnly || input.districtId == null) {
+    await db
+      .insert(marketplaceProfiles)
+      .values({
+        userId: user.id,
+        city: province.name,
+        district: null,
+        neighborhood: null,
+      })
+      .onConflictDoUpdate({
+        target: marketplaceProfiles.userId,
+        set: {
+          city: province.name,
+          district: null,
+          neighborhood: null,
+          updatedAt: new Date(),
+        },
+      });
+    revalidatePath("/ayarlar");
+    revalidatePath("/hizmet-veren/ilanlar");
+    return { ok: true as const };
+  }
+
+  const district = province.districts.find((item) => item.id === input.districtId);
+  if (!district) return { error: "İl ve ilçe seç." };
   const neighborhoods = getNeighborhoods(province.id, district.id);
-  const neighborhood = input.neighborhood.trim();
+  const neighborhood = (input.neighborhood ?? "").trim();
   if (!neighborhood) return { error: "Mahalle seç." };
   if (neighborhoods.length > 0 && !neighborhoods.includes(neighborhood)) {
     return { error: "Mahalle listeden seçilmeli." };

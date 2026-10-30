@@ -18,16 +18,22 @@ import {
 export const REVIEW_TABS = ["pending", "open", "rejected", "accepted", "expired", "all"] as const;
 export type ReviewTab = (typeof REVIEW_TABS)[number];
 
+function reviewExpiredWhere(now: Date) {
+  return and(lte(serviceRequests.expiresAt, now), sql`${serviceRequests.status} <> 'rejected'`);
+}
+
 export async function listRequestsForReview(tab: ReviewTab, limit = 200) {
   const now = new Date();
   const where =
     tab === "all"
       ? undefined
       : tab === "expired"
-        ? and(inArray(serviceRequests.status, ["open", "expired"]), lte(serviceRequests.expiresAt, now))
+        ? reviewExpiredWhere(now)
         : tab === "open"
           ? and(eq(serviceRequests.status, "open"), gt(serviceRequests.expiresAt, now))
-          : eq(serviceRequests.status, tab);
+          : tab === "pending"
+            ? and(eq(serviceRequests.status, "pending"), gt(serviceRequests.expiresAt, now))
+            : eq(serviceRequests.status, tab);
 
   const rows = await db
     .select({
@@ -72,12 +78,21 @@ export type ServiceCoverage = {
   active: number;
   /** Zamanı dolmuş veya kapanmış ilanlar. */
   past: number;
-  services: { slug: string; name: string; providers: number; active: number; past: number }[];
+  services: {
+    slug: string;
+    name: string;
+    providers: number;
+    active: number;
+    past: number;
+    quotes: number;
+    avgPriceTl: number | null;
+    acceptRate: number | null;
+  }[];
 };
 
 /** Katalogdaki her kategori ve hizmet için hizmet veren ve ilan sayıları. Boş olanlar da durur. */
 export async function getServiceCoverage(): Promise<ServiceCoverage[]> {
-  const [providers, requests] = await Promise.all([
+  const [providers, requests, quoteRows] = await Promise.all([
     db.select({ userId: providerServices.userId, slug: providerServices.serviceSlug }).from(providerServices),
     db
       .select({
@@ -87,9 +102,33 @@ export async function getServiceCoverage(): Promise<ServiceCoverage[]> {
       })
       .from(serviceRequests)
       .groupBy(serviceRequests.serviceSlug),
+    db
+      .select({
+        slug: serviceRequests.serviceSlug,
+        quotes: count(serviceQuotes.id),
+        accepted: sql<number>`count(*) filter (where ${serviceQuotes.status} = 'accepted')`,
+        avgPriceTl: sql<number | null>`round(avg(${serviceQuotes.priceTl}))`,
+      })
+      .from(serviceQuotes)
+      .innerJoin(serviceRequests, eq(serviceQuotes.requestId, serviceRequests.id))
+      .groupBy(serviceRequests.serviceSlug),
   ]);
 
   const requestCount = new Map(requests.map((row) => [row.slug, { active: Number(row.active), past: Number(row.past) }]));
+  const quoteBySlug = new Map(
+    quoteRows.map((row) => {
+      const quotes = Number(row.quotes);
+      const accepted = Number(row.accepted);
+      return [
+        row.slug,
+        {
+          quotes,
+          avgPriceTl: row.avgPriceTl === null || row.avgPriceTl === undefined ? null : Number(row.avgPriceTl),
+          acceptRate: quotes > 0 ? Math.round((accepted / quotes) * 100) : null,
+        },
+      ];
+    }),
+  );
   const providersBySlug = new Map<string, string[]>();
   for (const row of providers) {
     const list = providersBySlug.get(row.slug) ?? [];
@@ -106,12 +145,14 @@ export async function getServiceCoverage(): Promise<ServiceCoverage[]> {
         if (!people.includes(userId)) people.push(userId);
       }
       const counts = requestCount.get(service.slug) ?? { active: 0, past: 0 };
+      const quoteStats = quoteBySlug.get(service.slug) ?? { quotes: 0, avgPriceTl: null, acceptRate: null };
       return {
         slug: service.slug,
         name: service.name,
         providers: offering.length,
         active: counts.active,
         past: counts.past,
+        ...quoteStats,
       };
     });
     return {
@@ -138,7 +179,15 @@ export async function getServiceCoverage(): Promise<ServiceCoverage[]> {
         if (!people.includes(userId)) people.push(userId);
       }
       const counts = requestCount.get(slug) ?? { active: 0, past: 0 };
-      return { slug, name: getService(slug)?.name ?? slug, providers: offering.length, active: counts.active, past: counts.past };
+      const quoteStats = quoteBySlug.get(slug) ?? { quotes: 0, avgPriceTl: null, acceptRate: null };
+      return {
+        slug,
+        name: getService(slug)?.name ?? slug,
+        providers: offering.length,
+        active: counts.active,
+        past: counts.past,
+        ...quoteStats,
+      };
     });
     rows.push({
       slug: "diger",
@@ -154,7 +203,11 @@ export async function getServiceCoverage(): Promise<ServiceCoverage[]> {
 }
 
 export async function countPendingServiceRequests(): Promise<number> {
-  const [row] = await db.select({ value: count() }).from(serviceRequests).where(eq(serviceRequests.status, "pending"));
+  const now = new Date();
+  const [row] = await db
+    .select({ value: count() })
+    .from(serviceRequests)
+    .where(and(eq(serviceRequests.status, "pending"), gt(serviceRequests.expiresAt, now)));
   return Number(row?.value ?? 0);
 }
 
@@ -248,10 +301,10 @@ export async function getMarketplaceStats() {
   const byStatus = { pending: 0, open: 0, rejected: 0, accepted: 0, expired: 0 };
   for (const row of statusRows) {
     const n = Number(row.value);
-    if (row.status === "pending") byStatus.pending += n;
-    else if (row.status === "rejected") byStatus.rejected += n;
-    else if (row.status === "accepted") byStatus.accepted += n;
+    if (row.status === "rejected") byStatus.rejected += n;
+    else if (row.status === "accepted" && row.live) byStatus.accepted += n;
     else if (row.status === "open" && row.live) byStatus.open += n;
+    else if (row.status === "pending" && row.live) byStatus.pending += n;
     else byStatus.expired += n;
   }
   const totalRequests = Object.values(byStatus).reduce((sum, n) => sum + n, 0);

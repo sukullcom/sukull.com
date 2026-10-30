@@ -170,11 +170,13 @@ export function LocationForm({
   provinceId,
   districtId,
   neighborhood,
+  cityOnly = false,
 }: {
   provinces: Province[];
   provinceId: number | null;
   districtId: number | null;
   neighborhood: string;
+  cityOnly?: boolean;
 }) {
   const router = useRouter();
   const [place, setPlace] = useState({ provinceId, districtId, neighborhood });
@@ -184,15 +186,20 @@ export function LocationForm({
       className="space-y-4"
       onSubmit={async (event) => {
         event.preventDefault();
-        if (!place.provinceId || !place.districtId) {
+        if (!place.provinceId) {
+          toast.error("İl seç.");
+          return;
+        }
+        if (!cityOnly && !place.districtId) {
           toast.error("İl ve ilçe seç.");
           return;
         }
         setPending(true);
         const result = await saveLocation({
           provinceId: place.provinceId,
-          districtId: place.districtId,
-          neighborhood: place.neighborhood,
+          districtId: cityOnly ? null : place.districtId,
+          neighborhood: cityOnly ? "" : place.neighborhood,
+          cityOnly,
         });
         setPending(false);
         if ("error" in result && result.error) {
@@ -203,7 +210,12 @@ export function LocationForm({
         router.refresh();
       }}
     >
-      <LocationFields provinces={provinces} {...place} onChange={setPlace} showGeo />
+      <LocationFields provinces={provinces} {...place} onChange={setPlace} showGeo={!cityOnly} cityOnly={cityOnly} />
+      {cityOnly && (
+        <p className="text-xs text-muted-foreground">
+          Yerinde yapılan işlerde aynı ildaki ilanları görürsün. İlanlarda müşterinin ilçe ve mahallesi yine gösterilir.
+        </p>
+      )}
       <Button type="submit" variant="primary" className="w-full" disabled={pending}>
         Kaydet
       </Button>

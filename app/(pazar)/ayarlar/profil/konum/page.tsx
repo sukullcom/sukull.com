@@ -20,6 +20,7 @@ export default async function LocationPage() {
         provinceId={province?.id ?? null}
         districtId={district?.id ?? null}
         neighborhood={account.neighborhood ?? ""}
+        cityOnly
       />
     </Subpage>
   );
