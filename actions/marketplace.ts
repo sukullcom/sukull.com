@@ -7,6 +7,7 @@ import db from "@/db/drizzle";
 import { serviceMessages, serviceQuotes, serviceRequests, serviceReviews, users } from "@/db/schema";
 import { getProviderRequest } from "@/db/queries/marketplace";
 import { getServerUser } from "@/lib/auth";
+import { ensureCustomServices } from "@/lib/marketplace/custom-services";
 import { checkRateLimit, RATE_LIMITS } from "@/lib/rate-limit-db";
 import { findProvince, getNeighborhoods } from "@/lib/marketplace/address";
 import { chatOpen } from "@/lib/marketplace/format";
@@ -57,6 +58,7 @@ export async function createServiceRequest(
     neighborhood: string;
   },
 ): Promise<ActionError | { id: number }> {
+  await ensureCustomServices();
   const auth = await userId();
   if (typeof auth !== "string") return auth;
 
@@ -132,6 +134,7 @@ export async function submitQuote(input: {
   priceTl: number;
   message: string;
 }): Promise<ActionError | { id: number }> {
+  await ensureCustomServices();
   const auth = await userId();
   if (typeof auth !== "string") return auth;
 

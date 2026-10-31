@@ -4,6 +4,7 @@ import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { isCodeEditorEnabled, isLabEnabled } from "@/lib/feature-flags";
 import { MARKET_ORIGIN, sitemapServicePaths } from "@/lib/marketplace/seo";
+import { ensureCustomServices } from "@/lib/marketplace/custom-services";
 import { logger } from "@/lib/logger";
 
 const log = logger.child({ labels: { module: "sitemap" } });
@@ -78,6 +79,7 @@ async function safe<T>(fn: () => Promise<T>, fallback: T): Promise<T> {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  await ensureCustomServices();
   const now = new Date();
 
   // Only teacher profile pages have a per-id public route at the moment

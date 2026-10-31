@@ -17,6 +17,7 @@ import {
 import { digestIsDue, digestSince, pickDigestRequests } from "@/lib/marketplace/digest";
 import { digestSecret, readDigestToken, signDigestToken } from "@/lib/marketplace/email-token";
 import { clipText, formatPlace, formatPriceTl, greetingName, publicCustomerName, requestHeadline } from "@/lib/marketplace/format";
+import { ensureCustomServices } from "@/lib/marketplace/custom-services";
 import { cleanFilters } from "@/lib/marketplace/provider-match";
 import { logger } from "@/lib/logger";
 import { escapeHtml, sendEmail } from "@/lib/transactional-email";
@@ -220,6 +221,7 @@ export async function sendMarketplaceDigests(now = new Date()): Promise<{
   deferred: number;
   budgetLeft: number;
 }> {
+  await ensureCustomServices();
   const empty = { sent: 0, skipped: 0, deferred: 0, budgetLeft: 0 };
   try {
     const sinceDay = new Date(now.getTime() - 24 * 60 * 60 * 1000);

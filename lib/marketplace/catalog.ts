@@ -658,6 +658,25 @@ export const SERVICES: ServiceDef[] = [
     questions: [choice("adet", "Kaç parça kurulacak?", ["1", "2-3", "4-6", "7 veya daha fazla"])],
   },
   {
+    slug: "koltuk-kanepe-doseme",
+    name: "Koltuk ve kanepe döşeme",
+    category: "Tamir",
+    categorySlug: "tamir",
+    aliases: ["kanepe", "koltuk doseme", "dosemeci", "doseme", "kumas", "deri", "berjer", "chester", "cekyat"],
+    questions: [
+      area(
+        "parca",
+        "Ne döşenecek?",
+        ["Kanepe", "Tekli koltuk", "İkili koltuk", "Üçlü koltuk", "Köşe takımı", "Berjer", "Sandalye", "Yatak başlığı"],
+        { allLabel: "Tüm döşeme işleri", pickLabel: "Döşenecek parçaları seç", suffix: "döşeme" },
+        "multi",
+      ),
+      choice("adet", "Kaç parça?", ["1", "2", "3", "4 veya daha fazla"]),
+      choice("islem", "Ne yapılacak?", ["Kumaş değişimi", "Deri kaplama", "Sünger değişimi", "Yırtık tamiri"]),
+      { id: "malzeme", kind: "single", prompt: "Fiyata kumaş veya deri dahil olsun mu?", options: MATERIAL },
+    ],
+  },
+  {
     slug: "dusakabin",
     name: "Duşakabin",
     category: "Tadilat",
@@ -1031,6 +1050,23 @@ export const SERVICES: ServiceDef[] = [
     ],
   },
   {
+    slug: "duvar-resmi",
+    name: "Duvar resmi",
+    category: "Tadilat",
+    categorySlug: "tadilat",
+    aliases: ["mural", "duvar boyama", "dekoratif duvar", "duvar cizim"],
+    questions: [
+      area(
+        "tur",
+        "Ne tür resim?",
+        ["Tek duvar", "Tüm oda", "Çocuk odası", "Dış cephe", "Tablo veya kanvas"],
+        { allLabel: "Tüm duvar resimleri", pickLabel: "Resim türlerini seç" },
+      ),
+      choice("yer", "Nereye yapılacak?", ["İç mekan", "Dış mekan"]),
+      { id: "malzeme", kind: "single", prompt: "Fiyata boya dahil olsun mu?", options: MATERIAL },
+    ],
+  },
+  {
     slug: "duvar-kagidi",
     name: "Duvar kağıdı",
     category: "Tadilat",
@@ -1385,12 +1421,34 @@ export const SERVICES: ServiceDef[] = [
 
 const bySlug = new Map(SERVICES.map((service) => [service.slug, service]));
 
+/** Admin’in eklediği hizmetler. İstemci ve sunucu kendi kopyasını tutar. */
+let runtimeExtras: ServiceDef[] = [];
+
+export function replaceRuntimeServices(services: ServiceDef[]) {
+  runtimeExtras = services;
+}
+
+export function runtimeServices(): ServiceDef[] {
+  return runtimeExtras;
+}
+
+export function isBuiltInService(slug: string): boolean {
+  return bySlug.has(slug);
+}
+
+/** Sabit katalog + admin’den eklenenler. Aynı slug sabit katalogda kalır. */
+export function allServices(extra: ServiceDef[] = runtimeExtras): ServiceDef[] {
+  if (extra.length === 0) return SERVICES;
+  const extraOnly = extra.filter((service) => !bySlug.has(service.slug));
+  return extraOnly.length === 0 ? SERVICES : [...SERVICES, ...extraOnly];
+}
+
 export function getService(slug: string): ServiceDef | undefined {
-  return bySlug.get(slug);
+  return bySlug.get(slug) ?? runtimeExtras.find((service) => service.slug === slug);
 }
 
 export function servicesInCategory(categorySlug: string): ServiceDef[] {
-  return SERVICES.filter((service) => service.categorySlug === categorySlug);
+  return allServices().filter((service) => service.categorySlug === categorySlug);
 }
 
 export function visibleQuestions(

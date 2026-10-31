@@ -1,4 +1,4 @@
-import { SERVICES, servicesInCategory, type ServiceDef } from "@/lib/marketplace/catalog";
+import { allServices, servicesInCategory, type ServiceDef } from "@/lib/marketplace/catalog";
 
 export const MARKET_ORIGIN = "https://sukull.com";
 
@@ -97,6 +97,6 @@ export function websiteJsonLd() {
 }
 
 export function sitemapServicePaths() {
-  return ["/hizmet", "/hizmet-ver", ...SERVICES.map((service) => servicePath(service.slug))];
+  return ["/hizmet", "/hizmet-ver", ...allServices().map((service) => servicePath(service.slug))];
 }
 

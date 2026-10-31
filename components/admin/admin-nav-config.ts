@@ -4,6 +4,7 @@ import {
   Bell,
   BookOpen,
   ClipboardCheck,
+  Layers,
   PieChart,
   CreditCard,
   Gift,
@@ -42,6 +43,7 @@ export const ADMIN_NAV: AdminNavItem[] = [
     badgeKey: "servicePending",
   },
   { href: "/admin/hizmet-ilanlari/analitik", label: "İlan Analitiği", icon: PieChart },
+  { href: "/admin/hizmetler", label: "Hizmet Ekle", icon: Layers },
   {
     href: "/admin/teacher-applications",
     label: "Eğitmen Başvuruları",

@@ -19,7 +19,7 @@ type SearchRow = { key: string; service: ServiceDef; variant?: string };
 const SERVICE_ORDER = new Map(SERVICES.map((service, index) => [service.slug, index]));
 
 function sortEntries(entries: ProviderServiceEntry[]) {
-  return [...entries].sort((a, b) => (SERVICE_ORDER.get(a.slug) ?? 0) - (SERVICE_ORDER.get(b.slug) ?? 0));
+  return [...entries].sort((a, b) => (SERVICE_ORDER.get(a.slug) ?? 10_000) - (SERVICE_ORDER.get(b.slug) ?? 10_000));
 }
 
 /** Seçili çeşitler; "tümü" seçiliyse hepsi. */

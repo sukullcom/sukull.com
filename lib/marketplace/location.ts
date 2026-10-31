@@ -1,9 +1,14 @@
-import { SERVICES, getService } from "@/lib/marketplace/catalog";
+import { allServices, SERVICES, getService } from "@/lib/marketplace/catalog";
 
 export const ONLINE_CITY = "Online";
 
 /** Şehirden bağımsız gösterilen hizmetler (yazılım, tasarım, şehirler arası taşıma...). */
 export const ANYWHERE_SLUGS = SERVICES.filter((service) => service.anywhere).map((service) => service.slug);
+
+/** Sabit liste + admin’in “her şehir” işaretlediği hizmetler. */
+export function anywhereSlugs(): string[] {
+  return allServices().filter((service) => service.anywhere).map((service) => service.slug);
+}
 
 /** Yerinde yapılan iş mi: online seçilmedi ve hizmet uzaktan yapılamıyor. */
 export function isLocalRequest(slug: string, city: string): boolean {

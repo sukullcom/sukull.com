@@ -2,6 +2,7 @@ import "server-only";
 
 import { and, count, countDistinct, desc, eq, exists, gt, gte, inArray, isNotNull, lte, notExists, or, sql } from "drizzle-orm";
 import { CATEGORIES, getService, servicesInCategory } from "@/lib/marketplace/catalog";
+import { ensureCustomServices } from "@/lib/marketplace/custom-services";
 
 import db from "@/db/drizzle";
 import {
@@ -23,6 +24,7 @@ function reviewExpiredWhere(now: Date) {
 }
 
 export async function listRequestsForReview(tab: ReviewTab, limit = 200) {
+  await ensureCustomServices();
   const now = new Date();
   const where =
     tab === "all"
@@ -92,6 +94,7 @@ export type ServiceCoverage = {
 
 /** Katalogdaki her kategori ve hizmet için hizmet veren ve ilan sayıları. Boş olanlar da durur. */
 export async function getServiceCoverage(): Promise<ServiceCoverage[]> {
+  await ensureCustomServices();
   const [providers, requests, quoteRows] = await Promise.all([
     db.select({ userId: providerServices.userId, slug: providerServices.serviceSlug }).from(providerServices),
     db

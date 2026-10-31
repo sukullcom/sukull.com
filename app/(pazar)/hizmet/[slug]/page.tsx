@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/marketplace/json-ld";
 import { Button } from "@/components/ui/button";
 import { SERVICES, getService } from "@/lib/marketplace/catalog";
+import { ensureCustomServices } from "@/lib/marketplace/custom-services";
 import {
   MARKET_FAQS,
   MARKET_ORIGIN,
@@ -21,7 +22,8 @@ export function generateStaticParams() {
   return SERVICES.map((service) => ({ slug: service.slug }));
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  await ensureCustomServices();
   const service = getService(params.slug);
   if (!service) return { title: "Hizmet" };
   const meta = serviceMeta(service);
@@ -38,7 +40,8 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   };
 }
 
-export default function ServiceLandingPage({ params }: { params: { slug: string } }) {
+export default async function ServiceLandingPage({ params }: { params: { slug: string } }) {
+  await ensureCustomServices();
   const service = getService(params.slug);
   if (!service) notFound();
   const questions = listedQuestions(service);

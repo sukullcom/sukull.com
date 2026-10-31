@@ -5,6 +5,7 @@ import { RequestPreviewList, type RequestPreviewItem } from "@/components/market
 import { listOpenRequestPreviews, listPublicReviews } from "@/db/queries/marketplace";
 import { getServerUser } from "@/lib/auth";
 import { getService } from "@/lib/marketplace/catalog";
+import { ensureCustomServices } from "@/lib/marketplace/custom-services";
 import { formatPlace, formatWhen, publicCustomerName, requestHeadline } from "@/lib/marketplace/format";
 import { SHOWCASE_REQUESTS, SHOWCASE_REVIEWS, showcaseWhen, type ShowcaseReview } from "@/lib/marketplace/showcase";
 import { MARKET_ORIGIN, faqJsonLd, websiteJsonLd } from "@/lib/marketplace/seo";
@@ -27,6 +28,7 @@ const PREVIEW_LIMIT = 8;
 const REVIEW_LIMIT = 9;
 
 export default async function MarketplaceHomePage() {
+  await ensureCustomServices();
   const user = await getServerUser();
   const [rows, reviewRows] = await Promise.all([
     user ? Promise.resolve([]) : listOpenRequestPreviews(PREVIEW_LIMIT),

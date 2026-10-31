@@ -213,7 +213,7 @@ export function LocationForm({
       <LocationFields provinces={provinces} {...place} onChange={setPlace} showGeo={!cityOnly} cityOnly={cityOnly} />
       {cityOnly && (
         <p className="text-xs text-muted-foreground">
-          Yerinde yapılan işlerde aynı ildaki ilanları görürsün. İlanlarda müşterinin ilçe ve mahallesi yine gösterilir.
+          Yerinde yapılan işlerde aynı ildeki ilanları görürsün. İlanlarda müşterinin ilçe ve mahallesi yine gösterilir.
         </p>
       )}
       <Button type="submit" variant="primary" className="w-full" disabled={pending}>

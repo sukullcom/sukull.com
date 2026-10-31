@@ -10,6 +10,7 @@ import { marketplaceProfiles, providerServices, userProgress, users } from "@/db
 import { getServerUser } from "@/lib/auth";
 import { findProvince, getNeighborhoods, getProvinces, matchPlaceName } from "@/lib/marketplace/address";
 import { getService } from "@/lib/marketplace/catalog";
+import { ensureCustomServices } from "@/lib/marketplace/custom-services";
 import { cleanFilters, type ProviderServiceEntry } from "@/lib/marketplace/provider-match";
 import { createClient } from "@/utils/supabase/server";
 
@@ -264,6 +265,7 @@ export async function uploadAvatar(formData: FormData) {
 export async function saveProviderServices(entries: ProviderServiceEntry[]) {
   const user = await requireUserId();
   if (!user) return { error: "Giriş yap." };
+  await ensureCustomServices();
   if (!Array.isArray(entries)) return { error: "Geçersiz hizmet listesi." };
   const bySlug = new Map<string, ProviderServiceEntry>();
   for (const entry of entries) {

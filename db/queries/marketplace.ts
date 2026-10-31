@@ -13,7 +13,7 @@ import {
   users,
   type ServiceRequestAnswer,
 } from "@/db/schema";
-import { ANYWHERE_SLUGS, ONLINE_CITY, nearbyFirst, providerCanSee } from "@/lib/marketplace/location";
+import { anywhereSlugs, ONLINE_CITY, nearbyFirst, providerCanSee } from "@/lib/marketplace/location";
 import { cleanFilters, requestMatchesEntry, type ProviderServiceEntry } from "@/lib/marketplace/provider-match";
 
 export async function getMarketAccount(userId: string) {
@@ -175,7 +175,7 @@ export async function getProviderPlace(userId: string): Promise<{ city: string |
 export function visibleToProviderSql(city: string | null) {
   const anywhere = [
     eq(serviceRequests.city, ONLINE_CITY),
-    ...(ANYWHERE_SLUGS.length ? [inArray(serviceRequests.serviceSlug, ANYWHERE_SLUGS)] : []),
+    ...(anywhereSlugs().length ? [inArray(serviceRequests.serviceSlug, anywhereSlugs())] : []),
   ];
   return city ? or(...anywhere, eq(serviceRequests.city, city)) : or(...anywhere);
 }

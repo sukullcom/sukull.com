@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { JsonLd } from "@/components/marketplace/json-ld";
 import { CATEGORIES, servicesInCategory } from "@/lib/marketplace/catalog";
+import { ensureCustomServices } from "@/lib/marketplace/custom-services";
 import { MARKET_ORIGIN, faqJsonLd, servicePath } from "@/lib/marketplace/seo";
 
 export const metadata: Metadata = {
@@ -16,7 +17,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ServicesHubPage() {
+export default async function ServicesHubPage() {
+  await ensureCustomServices();
   return (
     <div className="space-y-8">
       <JsonLd data={faqJsonLd()} />

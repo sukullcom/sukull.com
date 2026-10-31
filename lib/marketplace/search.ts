@@ -1,4 +1,4 @@
-import { SERVICES, getService, type ServiceDef } from "@/lib/marketplace/catalog";
+import { allServices, getService, type ServiceDef } from "@/lib/marketplace/catalog";
 
 export function normalizeTr(value: string): string {
   return value
@@ -57,6 +57,7 @@ const CONCEPTS: { terms: string[]; services: string[]; options?: { slug: string;
   { terms: ["elektrik", "priz", "sigorta", "avize", "lamba", "kablo"], services: ["elektrikci"] },
   { terms: ["kapi", "kilit", "anahtar"], services: ["cilingir"] },
   { terms: ["boya", "badana", "duvar", "boyaci"], services: ["boya-badana"] },
+  { terms: ["duvar resmi", "mural", "duvar boyama", "dekoratif duvar"], services: ["duvar-resmi"] },
   { terms: ["tasima", "tasinma", "nakliye", "evden eve", "esya", "kamyon"], services: ["nakliyat"] },
   {
     terms: ["araba", "araç", "arac", "oto", "otomobil", "lastik", "yol", "ehliyet"],
@@ -77,6 +78,10 @@ const CONCEPTS: { terms: string[]; services: string[]; options?: { slug: string;
   { terms: ["serinlik", "klima", "sogutma"], services: ["klima"] },
   { terms: ["buzdolabi", "camasir makinesi", "bulasik makinesi", "firin", "beyaz esya"], services: ["beyaz-esya"] },
   { terms: ["mutfak", "dolap", "banyo", "dus", "fayans", "seramik"], services: ["mutfak-dolabi", "dusakabin", "fayans"] },
+  {
+    terms: ["kanepe", "koltuk doseme", "dosemeci", "doseme", "kumas kaplama", "deri kaplama", "berjer", "chester"],
+    services: ["koltuk-kanepe-doseme"],
+  },
 ];
 
 /** Öneri üretilebilecek seçenekli sorular. Adet, metrekare gibi sayılar öneri olmaz. */
@@ -127,7 +132,8 @@ function directScore(q: string, service: ServiceDef): number {
 export function searchSuggestions(query: string, limit = 8): ServiceSuggestion[] {
   const q = normalizeTr(query);
   if (!q) {
-    return SERVICES.filter((service) => service.popular)
+    return allServices()
+      .filter((service) => service.popular)
       .slice(0, limit)
       .map((service) => ({ key: service.slug, label: service.name, hint: service.category, service, score: 1 }));
   }
@@ -138,7 +144,7 @@ export function searchSuggestions(query: string, limit = 8): ServiceSuggestion[]
     if (!current || current.score < item.score) out.set(item.key, item);
   }
 
-  for (const service of SERVICES) {
+  for (const service of allServices()) {
     const score = directScore(q, service);
     if (score > 0) add({ key: service.slug, label: service.name, hint: service.category, service, score });
   }
@@ -167,7 +173,7 @@ export function searchSuggestions(query: string, limit = 8): ServiceSuggestion[]
   }
 
   // Seçenek adı aranıyorsa ("matematik", "kilit değişimi") doğrudan o seçenekle başlat.
-  for (const service of SERVICES) {
+  for (const service of allServices()) {
     for (const question of service.questions) {
       if (!OPTION_QUESTIONS.has(question.id)) continue;
       for (const option of question.options ?? []) {

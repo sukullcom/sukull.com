@@ -1215,6 +1215,19 @@ export const marketplaceProfiles = pgTable("marketplace_profiles", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
 });
 
+/** Admin’in kataloga eklediği hizmetler. Sabit katalogdaki slug’ların üzerine yazılmaz. */
+export const customMarketplaceServices = pgTable("custom_marketplace_services", {
+  slug: text("slug").primaryKey(),
+  name: text("name").notNull(),
+  categorySlug: text("category_slug").notNull(),
+  aliases: jsonb("aliases").$type<string[]>().notNull().default([]),
+  prompt: text("prompt"),
+  options: jsonb("options").$type<string[]>().notNull().default([]),
+  variant: boolean("variant").notNull().default(false),
+  anywhere: boolean("anywhere").notNull().default(false),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
 export const providerServices = pgTable(
   "provider_services",
   {

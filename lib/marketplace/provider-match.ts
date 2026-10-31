@@ -118,10 +118,10 @@ const variantCache = new Map<string, VariantSet | null>();
  * sorular; online/yüz yüze, metrekare, adet gibi detaylar ilanı süzmez.
  */
 function variantSet(slug: string): VariantSet | null {
-  if (!variantCache.has(slug)) {
-    variantCache.set(slug, CUSTOM_VARIANTS[slug]?.() ?? questionVariants(slug));
-  }
-  return variantCache.get(slug) ?? null;
+  if (variantCache.has(slug)) return variantCache.get(slug) ?? null;
+  const set = CUSTOM_VARIANTS[slug]?.() ?? questionVariants(slug);
+  if (set) variantCache.set(slug, set);
+  return set;
 }
 
 /** Çeşit adında geçmeyen ama aynı çeşidi anlatan kelimeler (normalize edilmiş). */

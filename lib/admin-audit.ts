@@ -35,6 +35,8 @@ export type AdminAuditAction =
   // Hizmet pazarı talep moderasyonu
   | "service_request.approve"
   | "service_request.reject"
+  | "custom_service.create"
+  | "custom_service.delete"
   // Student applications
   | "student_application.approve"
   | "student_application.reject"
