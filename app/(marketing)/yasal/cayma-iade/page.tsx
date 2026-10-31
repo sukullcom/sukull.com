@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   description:
     "14 günlük cayma hakkı, dijital ürünlerdeki istisnalar ve iade / iptal sürecinin nasıl işlediği.",
   alternates: { canonical: "/yasal/cayma-iade" },
+  robots: { index: false, follow: false },
 };
 
 export default function CaymaIadePage() {

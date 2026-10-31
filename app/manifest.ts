@@ -16,10 +16,10 @@ import {
 export default function manifest(): MetadataRoute.Manifest {
   return {
     id: PWA_MANIFEST_ID,
-    name: "Sukull — Öğrenmeyi Eğlenceli Hale Getiren Platform",
+    name: "Sukull — Ücretsiz hizmet ilanı",
     short_name: "Sukull",
     description:
-      "Derslerini tamamla, beyin oyunlarıyla pratik yap, arkadaşlarınla yarış ve özel derslerle ilerle.",
+      "İhtiyacın olan hizmeti seç, ücretsiz ilan aç, teklifleri karşılaştır. Komisyon yok.",
     lang: "tr",
     start_url: "/learn",
     scope: "/",

@@ -3,23 +3,14 @@
    otherwise force us to HTML-escape, making the source unreadable. */
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  BookOpen,
-  Cookie,
-  FileText,
-  Handshake,
-  Receipt,
-  RefreshCcw,
-  ShieldCheck,
-  Truck,
-} from "lucide-react";
+import { BookOpen, Cookie, FileText, ShieldCheck } from "lucide-react";
 
 import { LEGAL_UPDATED } from "@/lib/legal-info";
 
 export const metadata: Metadata = {
   title: "Yasal Bilgiler | Sukull",
   description:
-    "Sukull'un KVKK aydınlatma metni, gizlilik politikası, kullanım şartları, mesafeli satış sözleşmesi ve iade koşulları.",
+    "Sukull ilan platformunun KVKK aydınlatma metni, gizlilik politikası ve kullanım şartları.",
   alternates: { canonical: "/yasal" },
   robots: { index: true, follow: true },
 };
@@ -65,38 +56,6 @@ const LEGAL_LINKS: readonly LegalLink[] = [
     icon: BookOpen,
     updatedAtKey: "kullanimSartlari",
   },
-  {
-    href: "/yasal/mesafeli-satis",
-    title: "Mesafeli Satış Sözleşmesi",
-    description:
-      "6502 sayılı Tüketicinin Korunması Hakkında Kanun çerçevesinde ürün / hizmet satışı sözleşme metni.",
-    icon: Handshake,
-    updatedAtKey: "mesafeliSatis",
-  },
-  {
-    href: "/yasal/on-bilgilendirme",
-    title: "Ön Bilgilendirme Formu",
-    description:
-      "Satın alma öncesinde okumanız gereken yasal bilgilendirme formu.",
-    icon: Receipt,
-    updatedAtKey: "onBilgilendirme",
-  },
-  {
-    href: "/yasal/teslimat-ve-iade",
-    title: "Teslimat ve İade Şartları",
-    description:
-      "Dijital ürün ve hizmetlerin teslim şekli; iade ve cayma belgelerine köprü.",
-    icon: Truck,
-    updatedAtKey: "teslimatVeIade",
-  },
-  {
-    href: "/yasal/cayma-iade",
-    title: "Cayma Hakkı ve İade Koşulları",
-    description:
-      "14 günlük cayma hakkı, dijital ürünlerdeki istisnalar ve iade sürecinin işleyişi.",
-    icon: RefreshCcw,
-    updatedAtKey: "caymaIade",
-  },
 ] as const;
 
 export default function LegalIndexPage() {
@@ -107,8 +66,8 @@ export default function LegalIndexPage() {
           Yasal Bilgiler
         </h1>
         <p className="mt-2 text-base text-muted-foreground">
-          Sukull'u kullanmanıza ilişkin tüm yasal belgeler. Tebligat, KVKK
-          başvurusu ve mesafeli satış koşullarını burada bulabilirsiniz.
+          Sukull ilan platformunu kullanmanıza ilişkin yasal belgeler. KVKK
+          başvurusu ve gizlilik koşullarını burada bulabilirsiniz.
         </p>
       </header>
 

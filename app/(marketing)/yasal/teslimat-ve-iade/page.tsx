@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   description:
     "Dijital ürün ve hizmetlerin teslim şekli, süreleri ve iade / cayma süreçleri (özet).",
   alternates: { canonical: "/yasal/teslimat-ve-iade" },
+  robots: { index: false, follow: false },
 };
 
 export default function TeslimatVeIadePage() {

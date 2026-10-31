@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   description:
     "6502 sayılı Tüketicinin Korunması Hakkında Kanun çerçevesinde dijital ürün ve hizmet satışına ilişkin mesafeli satış sözleşmesi.",
   alternates: { canonical: "/yasal/mesafeli-satis" },
+  robots: { index: false, follow: false },
 };
 
 export default function MesafeliSatisPage() {

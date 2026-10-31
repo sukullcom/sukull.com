@@ -25,11 +25,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://sukull.com"),
   title: {
-    default: "Sukull - Öğrenmeyi Eğlenceli Hale Getiren Platform",
+    default: "Sukull — Ücretsiz hizmet ilanı",
     template: "%s | Sukull",
   },
   description:
-    "Derslerini tamamla, beyin oyunlarıyla pratik yap, arkadaşlarınla yarış ve özel derslerle ilerle. Sukull ile öğrenmek hiç bu kadar keyifli olmamıştı.",
+    "İhtiyacın olan hizmeti seç, ücretsiz ilan aç, teklifleri karşılaştır. Sukull komisyon almaz.",
   // Statik maskot PNG (`public/icons/`, `?v=` ile önbellek kırma).
   // `app/icon.png` → Next `/icon`; `app/apple-icon.png` → `/apple-icon`.
   icons: {
@@ -45,16 +45,15 @@ export const metadata: Metadata = {
     locale: "tr_TR",
     url: "https://sukull.com",
     siteName: "Sukull",
-    title: "Sukull - Öğrenmeyi Eğlenceli Hale Getiren Platform",
+    title: "Sukull — Ücretsiz hizmet ilanı",
     description:
-      "Derslerini tamamla, beyin oyunlarıyla pratik yap, arkadaşlarınla yarış ve özel derslerle ilerle. Sukull ile öğrenmek hiç bu kadar keyifli olmamıştı.",
-    // The image is emitted by app/opengraph-image.tsx as a 1200×630 PNG.
+      "İhtiyacın olan hizmeti seç, ücretsiz ilan aç, teklifleri karşılaştır. Komisyon yok.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sukull - Öğrenmeyi Eğlenceli Hale Getiren Platform",
+    title: "Sukull — Ücretsiz hizmet ilanı",
     description:
-      "Derslerini tamamla, beyin oyunlarıyla pratik yap, arkadaşlarınla yarış ve özel derslerle ilerle. Sukull ile öğrenmek hiç bu kadar keyifli olmamıştı.",
+      "İhtiyacın olan hizmeti seç, ücretsiz ilan aç, teklifleri karşılaştır. Komisyon yok.",
   },
   robots: {
     index: true,

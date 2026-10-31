@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   description:
     "Mesafeli sözleşme öncesi Tüketicinin Korunması Hakkında Kanun uyarınca sunulan ön bilgilendirme formu.",
   alternates: { canonical: "/yasal/on-bilgilendirme" },
+  robots: { index: false, follow: false },
 };
 
 export default function OnBilgilendirmePage() {
