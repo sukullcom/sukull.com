@@ -42,6 +42,7 @@ export const CATEGORIES: { slug: string; name: string }[] = [
   { slug: "tamir", name: "Tamir" },
   { slug: "ozel-ders", name: "Özel Ders" },
   { slug: "yazilim", name: "Yazılım" },
+  { slug: "danismanlik", name: "Danışmanlık" },
   { slug: "ulasim", name: "Ulaşım" },
   { slug: "organizasyon", name: "Organizasyon" },
   { slug: "saglik", name: "Sağlık" },
@@ -825,10 +826,10 @@ export const SERVICES: ServiceDef[] = [
   },
   {
     slug: "fizyoterapist",
-    name: "Fizyoterapist",
+    name: "Fizik Tedavi (Fizyoterapist)",
     category: "Sağlık",
     categorySlug: "saglik",
-    aliases: ["fizik tedavi", "fizyo", "bel", "boyun", "masaj"],
+    aliases: ["fizyoterapist", "fizik tedavi", "fizyo", "bel", "boyun", "masaj"],
     questions: [
       area("sorun", "Hangi sorun için?", ["Bel fıtığı", "Boyun fıtığı", "Diz ağrısı", "Omuz ağrısı", "Spor yaralanması", "Ameliyat sonrası", "İnme ve nörolojik hastalıklar", "Skolyoz ve duruş bozukluğu", "Çocuk fizyoterapisi", "Diğer"], { allLabel: "Tüm sorunlar", pickLabel: "Uzmanlık alanlarını seç" }),
       choice("yer", "Seans nerede olsun?", ["Evde", "Uzmanın yerinde", "Fark etmez"]),
@@ -1415,6 +1416,57 @@ export const SERVICES: ServiceDef[] = [
     anywhere: true,
     questions: [
       area("tur", "Ne lazım?", ["SEO", "Google reklamları", "Sosyal medya reklamları", "E-posta pazarlama", "Dijital pazarlama danışmanlığı"], { allLabel: "Tüm pazarlama işleri", pickLabel: "İş türlerini seç" }, "multi"),
+    ],
+  },
+  {
+    slug: "mali-musavir",
+    name: "Mali müşavir",
+    category: "Danışmanlık",
+    categorySlug: "danismanlik",
+    aliases: ["muhasebe", "muhasebeci", "smmm", "vergi", "beyanname", "efatura", "bordro", "defter"],
+    questions: [
+      area(
+        "is",
+        "Ne için mali müşavir arıyorsun?",
+        ["Aylık muhasebe", "Vergi beyannamesi", "E-fatura ve e-defter", "SGK ve bordro", "Vergi danışmanlığı", "Teşvik başvurusu"],
+        { allLabel: "Tüm mali müşavirlik işleri", pickLabel: "İş türlerini seç" },
+        "multi",
+      ),
+      choice("sirket", "İşletmenin türü nedir?", ["Henüz şirket yok", "Şahıs şirketi", "Limited şirket", "Anonim şirket", "Dernek veya vakıf"]),
+      { id: "nasil", kind: "single", prompt: "Görüşme nasıl olsun?", options: [{ value: "Online", label: "Online" }, { value: "Yüz yüze", label: "Yüz yüze" }] },
+    ],
+  },
+  {
+    slug: "sirket-kurulusu",
+    name: "Şirket kuruluşu",
+    category: "Danışmanlık",
+    categorySlug: "danismanlik",
+    aliases: ["sirket kurma", "limited", "anonim", "sahis sirketi", "ticaret sicil", "sirket kapatma"],
+    questions: [
+      area(
+        "tur",
+        "Hangi yapı?",
+        ["Şahıs şirketi", "Limited şirket", "Anonim şirket", "Şube"],
+        { allLabel: "Tüm şirket türleri", pickLabel: "Şirket türlerini seç" },
+      ),
+      choice("islem", "Ne yapılacak?", ["Yeni kuruluş", "Hisse veya ortak değişikliği", "Adres veya unvan değişikliği", "Tasfiye ve kapanış"]),
+      { id: "nasil", kind: "single", prompt: "Görüşme nasıl olsun?", options: [{ value: "Online", label: "Online" }, { value: "Yüz yüze", label: "Yüz yüze" }] },
+    ],
+  },
+  {
+    slug: "marka-tescil",
+    name: "Marka tescil danışmanlığı",
+    category: "Danışmanlık",
+    categorySlug: "danismanlik",
+    aliases: ["marka", "patent", "tescil", "faydali model", "endustriyel tasarim"],
+    questions: [
+      area(
+        "tur",
+        "Ne için danışman arıyorsun?",
+        ["Marka başvurusu", "Marka yenileme", "Patent", "Faydalı model", "Endüstriyel tasarım"],
+        { allLabel: "Tüm tescil işleri", pickLabel: "İş türlerini seç" },
+      ),
+      { id: "nasil", kind: "single", prompt: "Görüşme nasıl olsun?", options: [{ value: "Online", label: "Online" }, { value: "Yüz yüze", label: "Yüz yüze" }] },
     ],
   },
 ];

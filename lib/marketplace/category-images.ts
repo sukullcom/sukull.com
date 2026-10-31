@@ -39,6 +39,12 @@ export const CATEGORY_IMAGES: Record<string, { src: string; source: string; lice
     license: "CC0",
     author: "Negative Space",
   },
+  danismanlik: {
+    src: "/marketplace/categories/danismanlik.webp",
+    source: "https://commons.wikimedia.org/wiki/File:Cascading_Style_Sheets.jpg",
+    license: "CC0",
+    author: "Negative Space",
+  },
   ulasim: {
     src: "/marketplace/categories/ulasim.webp",
     source: "https://commons.wikimedia.org/wiki/File:Someone_handing_a_key_over.jpg",

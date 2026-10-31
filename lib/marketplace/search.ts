@@ -69,6 +69,7 @@ const CONCEPTS: { terms: string[]; services: string[]; options?: { slug: string;
     services: ["yazilim-projesi", "ozel-ders"],
   },
   { terms: ["saglik", "agri", "bel", "boyun", "terapi", "spor"], services: ["fizyoterapist", "psikolog"] },
+  { terms: ["fizik tedavi", "fizyoterapist", "fizyo"], services: ["fizyoterapist"] },
   { terms: ["psikolog", "terapist", "danisman", "stres", "kaygi", "depresyon"], services: ["psikolog"] },
   { terms: ["kedi", "kopek", "hayvan", "pet", "evcil"], services: ["evcil-hayvan-bakimi", "kopek-gezdirme"] },
   { terms: ["foto", "fotograf", "cekim", "dugun", "nisan", "video"], services: ["fotografci", "organizasyon"] },
@@ -82,6 +83,15 @@ const CONCEPTS: { terms: string[]; services: string[]; options?: { slug: string;
     terms: ["kanepe", "koltuk doseme", "dosemeci", "doseme", "kumas kaplama", "deri kaplama", "berjer", "chester"],
     services: ["koltuk-kanepe-doseme"],
   },
+  {
+    terms: ["mali musavir", "muhasebe", "muhasebeci", "smmm", "beyanname", "efatura", "e fatura", "bordro"],
+    services: ["mali-musavir"],
+  },
+  {
+    terms: ["sirket kurma", "sirket kurulumu", "limited sirket", "anonim sirket", "sahis sirketi", "ticaret sicil"],
+    services: ["sirket-kurulusu"],
+  },
+  { terms: ["marka tescil", "marka basvurusu", "patent", "faydali model"], services: ["marka-tescil"] },
 ];
 
 /** Öneri üretilebilecek seçenekli sorular. Adet, metrekare gibi sayılar öneri olmaz. */

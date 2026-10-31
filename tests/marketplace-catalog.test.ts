@@ -56,6 +56,11 @@ describe("marketplace catalog", () => {
     expect(searchServices("kanepe", 5).map((service) => service.slug)).toContain("koltuk-kanepe-doseme");
     expect(searchServices("koltuk döşeme", 5).map((service) => service.slug)).toContain("koltuk-kanepe-doseme");
     expect(searchServices("duvar resmi", 5).map((service) => service.slug)).toContain("duvar-resmi");
+    expect(searchServices("mali müşavir", 5).map((service) => service.slug)).toContain("mali-musavir");
+    expect(searchServices("şirket kurma", 5).map((service) => service.slug)).toContain("sirket-kurulusu");
+    expect(searchServices("marka tescil", 5).map((service) => service.slug)).toContain("marka-tescil");
+    expect(searchServices("fizik tedavi", 5).map((service) => service.slug)).toContain("fizyoterapist");
+    expect(searchServices("fizyoterapist", 5)[0]?.slug).toBe("fizyoterapist");
     expect(parsePreset("ozel-ders", "spor:Tenis")).toEqual({ ders: "Spor", spor: "Tenis" });
   });
 });

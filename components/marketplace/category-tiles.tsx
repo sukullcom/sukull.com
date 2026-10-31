@@ -1,4 +1,5 @@
 import {
+  Briefcase,
   Camera,
   Car,
   Check,
@@ -26,6 +27,7 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
   tamir: Wrench,
   "ozel-ders": GraduationCap,
   yazilim: Code,
+  danismanlik: Briefcase,
   ulasim: Car,
   organizasyon: PartyPopper,
   saglik: HeartPulse,
@@ -40,6 +42,7 @@ const CATEGORY_TONE: Record<string, string> = {
   tamir: "from-slate-100 to-slate-300",
   "ozel-ders": "from-violet-100 to-violet-300",
   yazilim: "from-indigo-100 to-indigo-300",
+  danismanlik: "from-blue-100 to-blue-300",
   ulasim: "from-emerald-100 to-emerald-300",
   organizasyon: "from-rose-100 to-rose-300",
   saglik: "from-teal-100 to-teal-300",
