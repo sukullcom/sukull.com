@@ -3,7 +3,7 @@ import { ChevronRight, MessageCircle } from "lucide-react";
 
 import { RatingBadge } from "@/components/marketplace/rating-badge";
 import { StatusDot } from "@/components/marketplace/status-dot";
-import { formatPriceTl, publicCustomerName } from "@/lib/marketplace/format";
+import { formatPriceTl } from "@/lib/marketplace/format";
 
 export const metadata: Metadata = {
   title: "Kaleci kiralama örneği",
@@ -12,40 +12,40 @@ export const metadata: Metadata = {
 
 const QUOTES = [
   {
-    firstName: "Can",
-    lastName: "Yılmaz",
+    name: "Thibaut Courtois",
+    initial: "T",
     priceTl: 650,
-    rating: 4.8,
-    reviews: 52,
+    rating: 4.9,
+    reviews: 128,
     tone: "bg-sky-100 text-sky-800",
-    message: "Kadıköy’de oynuyorum, 21:00’den önce sahadayım. Eldivenim var.",
+    message: "Real Madrid’de 8 yıldır kaleciyim. Kadıköy 21:00’e gelirim, eldiven bende.",
   },
   {
-    firstName: "Mert",
-    lastName: "Aksoy",
+    name: "Manuel Neuer",
+    initial: "M",
     priceTl: 750,
     rating: 4.9,
-    reviews: 86,
+    reviews: 96,
     tone: "bg-emerald-100 text-emerald-800",
-    message: "Halı saha maçlarına düzenli çıkıyorum. Forma bende, erken gelirim.",
+    message: "Bayern Münih’te 15 yıldır kaleyi tutuyorum. Halı sahada da çıkarım.",
   },
   {
-    firstName: "Emre",
-    lastName: "Şahin",
+    name: "Alisson Becker",
+    initial: "A",
     priceTl: 900,
     rating: 5,
-    reviews: 34,
+    reviews: 74,
     tone: "bg-amber-100 text-amber-800",
-    message: "Kaleyi ben tutarım, maç sonuna kadar kalırım.",
+    message: "Liverpool’da 8 yıldır kaleciyim. Maç bitene kadar kalırım.",
   },
   {
-    firstName: "Burak",
-    lastName: "Demir",
+    name: "Gianluigi Buffon",
+    initial: "G",
     priceTl: 1100,
-    rating: 4.7,
-    reviews: 121,
+    rating: 5,
+    reviews: 210,
     tone: "bg-violet-100 text-violet-800",
-    message: "10 yıldır kaleciyim. Halı saha ve turnuva maçına çıkarım.",
+    message: "Juventus’ta 20 yıl kalecilik yaptım. Bu maça da yetişirim.",
   },
 ] as const;
 
@@ -86,19 +86,18 @@ export default function GoalkeeperAdSamplePage() {
         </div>
         <ul className="space-y-3">
           {QUOTES.map((quote) => {
-            const name = publicCustomerName(quote.firstName, quote.lastName, "");
             return (
-              <li key={name}>
+              <li key={quote.name}>
                 <article className="mk-card flex items-center gap-3 p-4">
                   <span
                     className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-base font-extrabold ${quote.tone}`}
                     aria-hidden
                   >
-                    {quote.firstName.slice(0, 1)}
+                    {quote.initial}
                   </span>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between gap-2">
-                      <p className="truncate font-bold">{name}</p>
+                      <p className="font-bold">{quote.name}</p>
                       <p className="shrink-0 text-lg font-extrabold text-suk-brand">{formatPriceTl(quote.priceTl)}</p>
                     </div>
                     <RatingBadge average={quote.rating} count={quote.reviews} />
