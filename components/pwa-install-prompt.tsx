@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -17,11 +18,13 @@ import {
 } from "@/lib/pwa-install";
 
 export function PwaInstallPrompt() {
+  const pathname = usePathname();
   const [deferred, setDeferred] = useState<BeforeInstallPromptEvent | null>(null);
   const [visible, setVisible] = useState(false);
+  const sample = pathname === "/ornek/kaleci-kiralama";
 
   useEffect(() => {
-    if (isStandaloneMode()) return;
+    if (sample || isStandaloneMode()) return;
 
     const onReady = (event: BeforeInstallPromptEvent) => {
       // Bu banner kullanıcı "Daha sonra" dediyse 30 gün gizlenir; ama
@@ -48,7 +51,7 @@ export function PwaInstallPrompt() {
       unsubReady();
       unsubInstalled();
     };
-  }, []);
+  }, [sample]);
 
   const dismiss = () => {
     markDismissed();
@@ -72,7 +75,7 @@ export function PwaInstallPrompt() {
     }
   };
 
-  if (!visible || !deferred) return null;
+  if (sample || !visible || !deferred) return null;
 
   return (
     <div

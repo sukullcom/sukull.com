@@ -9,7 +9,7 @@ import {
   tryExtractTokenExpiry,
 } from '@/utils/supabase/session-cache'
 import { getApiAllowedOrigins } from '@/lib/same-origin-api'
-import { isPublicMarketplacePath, isPublicShareImage } from '@/lib/marketplace/public-path'
+import { isPublicExamplePath, isPublicMarketplacePath, isPublicShareImage } from '@/lib/marketplace/public-path'
 import { isPublicPrivateLessonPath } from '@/lib/private-lesson-public'
 
 const isProd = process.env.NODE_ENV === 'production';
@@ -251,6 +251,7 @@ function classifyCachePolicy(pathname: string, isAuthenticatedRoute: boolean): C
       pathname === '/robots.txt' ||
       pathname === '/sitemap.xml' ||
       isPublicMarketplacePath(pathname) ||
+      isPublicExamplePath(pathname) ||
       isPublicShareImage(pathname) ||
       isPublicPrivateLessonPath(pathname))
   ) {
@@ -351,6 +352,7 @@ export async function middleware(req: NextRequest) {
     pathname === '/' ||
     publicPaths.some((p) => pathname === p || pathname.startsWith(p)) ||
     isPublicMarketplacePath(pathname) ||
+    isPublicExamplePath(pathname) ||
     isPublicShareImage(pathname) ||
     isAuthApi ||
     isPublicDocument;
@@ -413,6 +415,7 @@ export async function middleware(req: NextRequest) {
     pathname === '/courses' ||
     pathname.startsWith('/courses/') ||
     isPublicMarketplacePath(pathname) ||
+    isPublicExamplePath(pathname) ||
     isPublicShareImage(pathname)
   ) {
     const response = NextResponse.next({ request: { headers: forwardedHeaders } });

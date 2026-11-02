@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { isPublicMarketplacePath, isPublicShareImage } from "@/lib/marketplace/public-path";
+import { isPublicExamplePath, isPublicMarketplacePath, isPublicShareImage } from "@/lib/marketplace/public-path";
 
 describe("pazar vitrin yolları", () => {
   it("hizmet ve hizmet-ver girişsiz açılır", () => {
@@ -12,6 +12,12 @@ describe("pazar vitrin yolları", () => {
   it("hizmet veren paneli kapalı kalır", () => {
     expect(isPublicMarketplacePath("/hizmet-veren")).toBe(false);
     expect(isPublicMarketplacePath("/hizmet-veren/ilanlar")).toBe(false);
+  });
+
+  it("reklam örneği girişsiz açılır, ilan paneli sayılmaz", () => {
+    expect(isPublicExamplePath("/ornek/kaleci-kiralama")).toBe(true);
+    expect(isPublicExamplePath("/ornek/baska")).toBe(false);
+    expect(isPublicMarketplacePath("/ornek/kaleci-kiralama")).toBe(false);
   });
 
   it("paylaşım görselleri açıktır", () => {

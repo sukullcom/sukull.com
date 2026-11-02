@@ -9,6 +9,7 @@ import {
   Paintbrush,
   PartyPopper,
   PawPrint,
+  Scissors,
   Sparkles,
   Truck,
   Wrench,
@@ -31,6 +32,7 @@ const CATEGORY_ICONS: Record<string, LucideIcon> = {
   ulasim: Car,
   organizasyon: PartyPopper,
   saglik: HeartPulse,
+  bakim: Scissors,
   "evcil-hayvan": PawPrint,
   fotograf: Camera,
 };
@@ -46,6 +48,7 @@ const CATEGORY_TONE: Record<string, string> = {
   ulasim: "from-emerald-100 to-emerald-300",
   organizasyon: "from-rose-100 to-rose-300",
   saglik: "from-teal-100 to-teal-300",
+  bakim: "from-cyan-100 to-cyan-300",
   "evcil-hayvan": "from-lime-100 to-lime-300",
   fotograf: "from-fuchsia-100 to-fuchsia-300",
 };

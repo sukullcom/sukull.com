@@ -63,6 +63,12 @@ export const CATEGORY_IMAGES: Record<string, { src: string; source: string; lice
     license: "CC0",
     author: "chiaravdberg",
   },
+  bakim: {
+    src: "/marketplace/categories/bakim.webp",
+    source: "https://commons.wikimedia.org/wiki/File:Shiatsu.jpg",
+    license: "CC0",
+    author: "chiaravdberg",
+  },
   "evcil-hayvan": {
     src: "/marketplace/categories/evcil-hayvan.webp",
     source: "https://commons.wikimedia.org/wiki/File:Saline_dog_(Unsplash).jpg",

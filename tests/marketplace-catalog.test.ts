@@ -61,6 +61,16 @@ describe("marketplace catalog", () => {
     expect(searchServices("marka tescil", 5).map((service) => service.slug)).toContain("marka-tescil");
     expect(searchServices("fizik tedavi", 5).map((service) => service.slug)).toContain("fizyoterapist");
     expect(searchServices("fizyoterapist", 5)[0]?.slug).toBe("fizyoterapist");
+    expect(searchServices("osmanlı türkçesi", 5)[0]?.slug).toBe("osmanli-turkcesi");
+    expect(searchServices("seslendirme", 5)[0]?.slug).toBe("seslendirme");
+    expect(searchServices("dublaj", 5).map((service) => service.slug)).toContain("seslendirme");
+    expect(searchServices("berber", 5)[0]?.slug).toBe("berber");
+    expect(searchServices("kuaför", 5)[0]?.slug).toBe("kuafor");
+    expect(searchServices("havuz bakım", 5)[0]?.slug).toBe("havuz-bakim");
+    expect(searchServices("duvar çıtalama", 5)[0]?.slug).toBe("duvar-citalama");
+    expect(searchServices("lambri", 5)[0]?.slug).toBe("lambri");
+    expect(searchServices("kaleci", 5)[0]?.slug).toBe("kaleci-kiralama");
+    expect(searchServices("hakem", 5)[0]?.slug).toBe("hakem-kiralama");
     expect(parsePreset("ozel-ders", "spor:Tenis")).toEqual({ ders: "Spor", spor: "Tenis" });
   });
 });

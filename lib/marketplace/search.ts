@@ -92,6 +92,21 @@ const CONCEPTS: { terms: string[]; services: string[]; options?: { slug: string;
     services: ["sirket-kurulusu"],
   },
   { terms: ["marka tescil", "marka basvurusu", "patent", "faydali model"], services: ["marka-tescil"] },
+  {
+    terms: ["osmanli", "osmanlica", "osmanli turkcesi", "eski yazi"],
+    services: ["osmanli-turkcesi"],
+  },
+  {
+    terms: ["seslendirme", "dublaj", "sesli kitap", "reklam sesi", "voice over"],
+    services: ["seslendirme"],
+  },
+  { terms: ["berber", "sakal", "tiras", "erkek berber"], services: ["berber"] },
+  { terms: ["kuafor", "sac boyama", "fon", "gelin saci"], services: ["kuafor"] },
+  { terms: ["havuz", "havuz bakimi", "havuz temizligi", "havuz kimyasal"], services: ["havuz-bakim"] },
+  { terms: ["cita", "citalama", "duvar cita", "supurgelik"], services: ["duvar-citalama"] },
+  { terms: ["lambri", "lambiri", "ahsap kaplama"], services: ["lambri"] },
+  { terms: ["kaleci", "kiralik kaleci", "hali saha kaleci"], services: ["kaleci-kiralama"] },
+  { terms: ["hakem", "mac hakemi", "futbol hakemi"], services: ["hakem-kiralama"] },
 ];
 
 /** Öneri üretilebilecek seçenekli sorular. Adet, metrekare gibi sayılar öneri olmaz. */

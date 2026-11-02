@@ -9,7 +9,7 @@ import { ClipboardList, Home, Settings, Tag } from "lucide-react";
 import { setMarketMode } from "@/actions/marketplace-account";
 import { Button } from "@/components/ui/button";
 import { BRAND_MASCOT_DISPLAY_PATH } from "@/lib/brand-mascot";
-import { isPublicMarketplacePath } from "@/lib/marketplace/public-path";
+import { isPublicExamplePath, isPublicMarketplacePath } from "@/lib/marketplace/public-path";
 
 const customerTabs = [
   { href: "/", label: "Hizmet al", icon: Home },
@@ -36,8 +36,10 @@ export function MarketFrame({
   const tabs = mode === "provider" ? providerTabs : customerTabs;
   const [pending, setPending] = useState(false);
   const publicSeo = isPublicMarketplacePath(pathname);
-  const wide = guest && (pathname === "/" || publicSeo);
-  const hideAppNav = guest && publicSeo;
+  const example = isPublicExamplePath(pathname);
+  const showGuestChrome = guest || example;
+  const wide = showGuestChrome && (pathname === "/" || publicSeo);
+  const hideAppNav = example || (guest && publicSeo);
 
   return (
     <div className="mk-theme mk-press min-h-dvh bg-background text-foreground">
@@ -47,7 +49,7 @@ export function MarketFrame({
             <Image src={BRAND_MASCOT_DISPLAY_PATH} alt="" width={40} height={40} priority className="h-9 w-9 object-contain sm:h-10 sm:w-10" />
             <span className="text-2xl font-extrabold tracking-wide text-primary sm:text-[1.75rem]">Sukull</span>
           </Link>
-          {guest ? (
+          {showGuestChrome ? (
             <Button asChild variant="primary" size="sm">
               <Link href={pathname === "/hizmet-ver" ? "/" : "/hizmet-ver"}>
                 {pathname === "/hizmet-ver" ? "Hizmet al" : "Hizmet ver"}
