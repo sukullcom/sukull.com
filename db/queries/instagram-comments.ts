@@ -1,3 +1,5 @@
+import { desc } from "drizzle-orm";
+
 import db from "@/db/drizzle";
 import { instagramLiveComments } from "@/db/schema";
 import type { InstagramCommentEvent } from "@/lib/instagram/webhook";
@@ -19,4 +21,19 @@ export async function saveInstagramComment(event: InstagramCommentEvent): Promis
       eventTime: event.eventTime,
     })
     .onConflictDoNothing({ target: instagramLiveComments.commentId });
+}
+
+export async function listRecentInstagramComments(limit = 50) {
+  return db
+    .select({
+      id: instagramLiveComments.id,
+      field: instagramLiveComments.field,
+      body: instagramLiveComments.body,
+      username: instagramLiveComments.username,
+      mediaProductType: instagramLiveComments.mediaProductType,
+      receivedAt: instagramLiveComments.receivedAt,
+    })
+    .from(instagramLiveComments)
+    .orderBy(desc(instagramLiveComments.receivedAt))
+    .limit(limit);
 }

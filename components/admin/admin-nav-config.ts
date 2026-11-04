@@ -11,6 +11,7 @@ import {
   GraduationCap,
   LayoutDashboard,
   Megaphone,
+  Radio,
   School,
   ShieldAlert,
   ShieldCheck,
@@ -35,6 +36,7 @@ export type AdminNavItem = {
  */
 export const ADMIN_NAV: AdminNavItem[] = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/instagram", label: "Canlı Yorumlar", icon: Radio },
   { href: "/admin/analytics", label: "Analitik", icon: BarChart3 },
   {
     href: "/admin/hizmet-ilanlari",
