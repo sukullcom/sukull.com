@@ -1370,3 +1370,33 @@ export const marketplaceEmailSends = pgTable(
     createdIdx: index("idx_marketplace_email_sends_created").on(table.createdAt),
   }),
 );
+
+/**
+ * Instagram canlı yayın ve gönderi yorumları.
+ * Meta `live_comments` / `comments` webhook’undan gelir; oyun girdisi buradan okunur.
+ * PostgREST’e kapalıdır (RLS, politika yok). Yazma yalnız sunucu bağlantısıyla olur.
+ */
+export const instagramLiveComments = pgTable(
+  "instagram_live_comments",
+  {
+    id: bigserial("id", { mode: "number" }).primaryKey(),
+    commentId: text("comment_id").notNull(),
+    /** `live_comments` veya `comments`. */
+    field: text("field").notNull(),
+    body: text("body").notNull().default(""),
+    username: text("username"),
+    commenterId: text("commenter_id"),
+    mediaId: text("media_id"),
+    mediaProductType: text("media_product_type"),
+    /** Yayını açan profesyonel hesabın kimliği. */
+    accountId: text("account_id"),
+    parentId: text("parent_id"),
+    eventTime: timestamp("event_time", { withTimezone: true }),
+    receivedAt: timestamp("received_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => ({
+    commentIdKey: uniqueIndex("instagram_live_comments_comment_id_key").on(table.commentId),
+    receivedIdx: index("instagram_live_comments_received_idx").on(table.receivedAt),
+    mediaIdx: index("instagram_live_comments_media_idx").on(table.mediaId),
+  }),
+);
