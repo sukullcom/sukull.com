@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { saveInstagramComment } from "@/db/queries/instagram-comments";
+import {
+  recordInstagramWebhookEvent,
+  saveInstagramComment,
+} from "@/db/queries/instagram-comments";
 import { logger } from "@/lib/logger";
 import {
+  describeInstagramPayload,
   parseInstagramCommentEvents,
   secretsMatch,
   verifyMetaSignature,
@@ -13,6 +17,20 @@ export const dynamic = "force-dynamic";
 
 const log = logger.child({ labels: { module: "api/instagram/webhook" } });
 const MAX_BODY_BYTES = 1_000_000;
+
+async function note(outcome: string, commentCount: number, detail: string) {
+  try {
+    await recordInstagramWebhookEvent(outcome, commentCount, detail);
+  } catch (error) {
+    log.error({
+      message: "instagram webhook event log failed",
+      error,
+      location: "api/instagram/webhook",
+      source: "api-route",
+      fields: { outcome },
+    });
+  }
+}
 
 /**
  * GET /api/instagram/webhook
@@ -68,6 +86,7 @@ export function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const raw = await req.text();
   if (raw.length > MAX_BODY_BYTES) {
+    await note("too_large", 0, "payload too large");
     return new NextResponse("payload too large", { status: 413 });
   }
 
@@ -78,12 +97,14 @@ export async function POST(req: NextRequest) {
       location: "api/instagram/webhook",
       source: "api-route",
     });
+    await note("secret_missing", 0, "INSTAGRAM_APP_SECRET is not set");
     return new NextResponse("app secret is not configured", { status: 503 });
   }
 
   const signature = req.headers.get("x-hub-signature-256");
   if (!verifyMetaSignature(raw, signature, appSecret)) {
     log.warn("instagram webhook signature rejected");
+    await note("signature_rejected", 0, signature ? "signature mismatch" : "signature header missing");
     return new NextResponse("invalid signature", { status: 403 });
   }
 
@@ -92,10 +113,12 @@ export async function POST(req: NextRequest) {
     payload = JSON.parse(raw) as unknown;
   } catch {
     log.warn("instagram webhook payload was not json");
+    await note("invalid_json", 0, "body was not json");
     return NextResponse.json({ received: 0 });
   }
 
   const events = parseInstagramCommentEvents(payload);
+  const summary = describeInstagramPayload(payload);
   try {
     for (const event of events) {
       await saveInstagramComment(event);
@@ -108,8 +131,11 @@ export async function POST(req: NextRequest) {
       source: "api-route",
       fields: { count: events.length },
     });
+    await note("save_failed", events.length, summary);
     return new NextResponse("save failed", { status: 500 });
   }
+
+  await note(events.length > 0 ? "stored" : "no_comment", events.length, summary);
 
   if (events.length > 0) {
     log.info("instagram comments stored", {

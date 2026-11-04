@@ -48,6 +48,26 @@ export function verifyMetaSignature(
  * Facebook Login ve Unified Login aynı olayı `changes` dizisinde gönderir.
  * Meta’nın örnek gövdesi bazen tek nesne, bazen dizi olur.
  */
+/** İmzalı gövdede hangi alan adları var? Yorum metnini saklamaz. */
+export function describeInstagramPayload(payload: unknown): string {
+  const fields = new Set<string>();
+  const visit = (node: unknown) => {
+    if (Array.isArray(node)) {
+      node.forEach(visit);
+      return;
+    }
+    const record = asRecord(node);
+    if (!record) return;
+    const field = readString(record.field);
+    if (field) fields.add(field);
+    if (Array.isArray(record.entry)) visit(record.entry);
+    if (Array.isArray(record.changes)) visit(record.changes);
+  };
+  visit(payload);
+  const names = Array.from(fields);
+  return names.length > 0 ? names.join(",") : "no-field";
+}
+
 export function parseInstagramCommentEvents(payload: unknown): InstagramCommentEvent[] {
   const events: InstagramCommentEvent[] = [];
   for (const root of unwrapRoots(payload)) {

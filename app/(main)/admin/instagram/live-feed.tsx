@@ -11,8 +11,27 @@ type Comment = {
   receivedAt: string;
 };
 
+type WebhookEvent = {
+  id: number;
+  outcome: string;
+  commentCount: number;
+  note: string | null;
+  receivedAt: string;
+};
+
+const OUTCOME_LABEL: Record<string, string> = {
+  signature_rejected: "İstek geldi, imza uymadı. App secret kontrol edilmeli.",
+  secret_missing: "İstek geldi, sunucuda app secret yok.",
+  invalid_json: "İstek geldi, gövde okunamadı.",
+  no_comment: "İstek geldi ama içinde yorum alanı yoktu.",
+  stored: "Yorum kaydedildi.",
+  save_failed: "Yorum geldi, kayıt sırasında hata oldu.",
+  too_large: "İstek çok büyüktü.",
+};
+
 export function InstagramLiveFeed() {
   const [comments, setComments] = useState<Comment[]>([]);
+  const [events, setEvents] = useState<WebhookEvent[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [updatedAt, setUpdatedAt] = useState<Date | null>(null);
 
@@ -23,9 +42,10 @@ export function InstagramLiveFeed() {
       try {
         const response = await fetch("/api/instagram/comments", { cache: "no-store" });
         if (!response.ok) throw new Error(String(response.status));
-        const data = (await response.json()) as { comments: Comment[] };
+        const data = (await response.json()) as { comments: Comment[]; events?: WebhookEvent[] };
         if (cancelled) return;
         setComments(data.comments);
+        setEvents(data.events ?? []);
         setError(null);
         setUpdatedAt(new Date());
       } catch {
@@ -55,7 +75,7 @@ export function InstagramLiveFeed() {
         <div className="rounded-xl border bg-card px-6 py-16 text-center">
           <p className="text-xl font-semibold">Henüz yorum yok</p>
           <p className="mt-2 text-muted-foreground">
-            Yayın açıkken ikinci hesaptan bir yorum yaz. Yeni satır burada belirir.
+            Sunucu bu yorumları hiç almadı. Yayın açıkken, test kullanıcısı olan ikinci hesaptan yaz.
           </p>
         </div>
       ) : (
@@ -77,6 +97,29 @@ export function InstagramLiveFeed() {
           ))}
         </ul>
       )}
+
+      <section className="rounded-xl border bg-card px-5 py-4">
+        <h2 className="text-sm font-semibold">Son webhook istekleri</h2>
+        {events.length === 0 ? (
+          <p className="mt-2 text-sm text-muted-foreground">
+            Henüz istek yok. Meta bu adrese yorum bildirimi göndermedi.
+          </p>
+        ) : (
+          <ul className="mt-3 space-y-2 text-sm">
+            {events.map((event) => (
+              <li key={event.id} className="flex items-baseline justify-between gap-3">
+                <span>
+                  {OUTCOME_LABEL[event.outcome] ?? event.outcome}
+                  {event.note ? ` (${event.note})` : ""}
+                </span>
+                <time className="shrink-0 text-xs text-muted-foreground" dateTime={event.receivedAt}>
+                  {new Date(event.receivedAt).toLocaleTimeString("tr-TR")}
+                </time>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
     </div>
   );
 }

@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 
-import { listRecentInstagramComments } from "@/db/queries/instagram-comments";
+import {
+  listRecentInstagramComments,
+  listRecentInstagramWebhookEvents,
+} from "@/db/queries/instagram-comments";
 import { isAdmin } from "@/lib/admin";
 
 export const runtime = "nodejs";
@@ -13,9 +16,12 @@ export async function GET() {
     return NextResponse.json({ error: "forbidden" }, { status: 403 });
   }
 
-  const comments = await listRecentInstagramComments(50);
+  const [comments, events] = await Promise.all([
+    listRecentInstagramComments(50),
+    listRecentInstagramWebhookEvents(8),
+  ]);
   return NextResponse.json(
-    { comments },
+    { comments, events },
     { headers: { "Cache-Control": "no-store" } },
   );
 }

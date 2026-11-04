@@ -1400,3 +1400,18 @@ export const instagramLiveComments = pgTable(
     mediaIdx: index("instagram_live_comments_media_idx").on(table.mediaId),
   }),
 );
+
+/** Webhook’un gerçekten çağrılıp çağrılmadığı. Yorum gelmese de bir satır düşer. */
+export const instagramWebhookEvents = pgTable(
+  "instagram_webhook_events",
+  {
+    id: bigserial("id", { mode: "number" }).primaryKey(),
+    receivedAt: timestamp("received_at", { withTimezone: true }).defaultNow().notNull(),
+    outcome: text("outcome").notNull(),
+    commentCount: integer("comment_count").notNull().default(0),
+    note: text("note"),
+  },
+  (table) => ({
+    receivedIdx: index("instagram_webhook_events_received_idx").on(table.receivedAt),
+  }),
+);

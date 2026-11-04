@@ -1,7 +1,7 @@
 import { desc } from "drizzle-orm";
 
 import db from "@/db/drizzle";
-import { instagramLiveComments } from "@/db/schema";
+import { instagramLiveComments, instagramWebhookEvents } from "@/db/schema";
 import type { InstagramCommentEvent } from "@/lib/instagram/webhook";
 
 /** Aynı yorum ikinci kez gelirse (Meta yeniden dener) satır çoğalmaz. */
@@ -35,5 +35,31 @@ export async function listRecentInstagramComments(limit = 50) {
     })
     .from(instagramLiveComments)
     .orderBy(desc(instagramLiveComments.receivedAt))
+    .limit(limit);
+}
+
+export async function recordInstagramWebhookEvent(
+  outcome: string,
+  commentCount: number,
+  note: string,
+): Promise<void> {
+  await db.insert(instagramWebhookEvents).values({
+    outcome,
+    commentCount,
+    note: note.slice(0, 300),
+  });
+}
+
+export async function listRecentInstagramWebhookEvents(limit = 8) {
+  return db
+    .select({
+      id: instagramWebhookEvents.id,
+      outcome: instagramWebhookEvents.outcome,
+      commentCount: instagramWebhookEvents.commentCount,
+      note: instagramWebhookEvents.note,
+      receivedAt: instagramWebhookEvents.receivedAt,
+    })
+    .from(instagramWebhookEvents)
+    .orderBy(desc(instagramWebhookEvents.receivedAt))
     .limit(limit);
 }

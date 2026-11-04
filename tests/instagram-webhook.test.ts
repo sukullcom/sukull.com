@@ -2,6 +2,7 @@ import { createHmac } from "node:crypto";
 import { describe, expect, it } from "vitest";
 
 import {
+  describeInstagramPayload,
   parseInstagramCommentEvents,
   secretsMatch,
   verifyMetaSignature,
@@ -98,5 +99,14 @@ describe("parseInstagramCommentEvents", () => {
       mediaId: "live-2",
     });
     expect(events[0]?.eventTime?.toISOString()).toBe("2019-09-23T18:14:46.134Z");
+  });
+
+  it("names the webhook fields without keeping comment text", () => {
+    expect(
+      describeInstagramPayload({
+        entry: [{ field: "live_comments", value: { text: "gizli" } }],
+      }),
+    ).toBe("live_comments");
+    expect(describeInstagramPayload({ entry: [] })).toBe("no-field");
   });
 });
